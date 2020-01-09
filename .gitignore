@@ -1,0 +1,8 @@
+.idea/
+.DS_Store
+node_modules
+/vendor
+/assets/css
+/assets/js
+/build
+phpunit.xml
