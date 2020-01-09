@@ -1,0 +1,57 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import Modal from 'react-modal';
+
+/**
+ * WordPress dependencies
+ */
+import { render } from '@wordpress/element';
+import domReady from '@wordpress/dom-ready';
+
+/**
+ * Internal dependencies
+ */
+import App from './app';
+import './style.css'; // This way the general editor styles are loaded before all the component styles.
+
+/**
+ * Initializes the block editor in the widgets screen.
+ *
+ * @param {string} id       ID of the root element to render the screen in.
+ * @param {Object} config   Story editor settings.
+ */
+const initialize = ( id, config ) => {
+	const appElement = document.getElementById( id );
+
+	// see http://reactcommunity.org/react-modal/accessibility/
+	Modal.setAppElement( appElement );
+
+	render(
+		<App
+			config={ config }
+		/>,
+		appElement,
+	);
+};
+
+domReady( () => {
+	const { id, config } = window.ampStoriesEditSettings;
+	initialize( id, config );
+} );

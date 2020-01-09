@@ -1,0 +1,37 @@
+{
+  "name": "google/web-stories-wp",
+  "type": "wordpress-plugin",
+  "description": "Visual storytelling for WordPress.",
+  "homepage": "https://github.com/google/web-stories-wp",
+  "license": "Apache-2.0",
+  "require": {
+    "php": "^5.6 || ^7.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "automattic/vipwpcs": "dev-develop",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.6",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
+    "roave/security-advisories": "dev-master",
+    "sirbrillig/phpcs-variable-analysis": "^2.8",
+    "wp-coding-standards/wpcs": "^2.2"
+  },
+  "config": {
+    "platform": {
+      "php": "5.6"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Google\\Web_Stories\\": "includes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
+    }
+  },
+  "prefer-stable": true
+}
