@@ -1,16 +1,17 @@
 /**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { useCallback } from '@wordpress/element';
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../app/api';
 import { useStory } from '../app/story';
+import { useConfig } from '../app/config';
 
-function useUploadVideoFrame( videoId, src, id ) {
+function useUploadVideoFrame( { videoId, src, id } ) {
 	const { actions: { uploadMedia, saveMedia } } = useAPI();
-
+	const { storyId } = useConfig();
 	const { actions: { updateElementById } } = useStory();
 	const setProperties = useCallback(
 		( properties ) => updateElementById( { elementId: id, properties } ),
@@ -55,9 +56,11 @@ function useUploadVideoFrame( videoId, src, id ) {
 				meta: {
 					amp_is_poster: true,
 				},
+				post: storyId,
 			} );
 			await saveMedia( videoId, {
 				featured_media: featuredMedia,
+				post: storyId,
 			} );
 			const newState = { featuredMedia, featuredMediaSrc };
 			setProperties( newState );

@@ -44,7 +44,7 @@ function VideoDisplay( props ) {
 		id,
 	} = props;
 
-	const { uploadVideoFrame } = useUploadVideoFrame( videoId, src, id );
+	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
 	useEffect( () => {
 		if ( videoId && ! featuredMedia ) {
 			uploadVideoFrame();
