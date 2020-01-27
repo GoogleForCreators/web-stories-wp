@@ -34,15 +34,15 @@ const FramesPageArea = withOverlay( styled( PageArea ).attrs( { className: 'cont
 
 function FramesLayer() {
 	const { state: { currentPage } } = useStory();
-
 	return (
 		<Layer pointerEvents={ false }>
 			<FramesPageArea>
 				{ currentPage && currentPage.elements.map( ( { id, ...rest } ) => {
+					const isBackground = currentPage.backgroundElementId === id;
 					return (
 						<FrameElement
 							key={ id }
-							element={ { id, ...rest } }
+							element={ { id, ...rest, isBackground } }
 						/>
 					);
 				} ) }

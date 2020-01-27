@@ -36,10 +36,10 @@ const Wrapper = styled.div`
 
 function DesignInspector() {
 	const {
-		state: { selectedElements },
+		state: { selectedElements, currentPage },
 		actions: { deleteSelectedElements, updateSelectedElements },
 	} = useStory();
-	const panels = getPanels( selectedElements );
+	const panels = getPanels( selectedElements, currentPage );
 
 	const handleSetProperties = useCallback( ( properties ) => {
 		// Filter out empty properties (empty strings specifically)

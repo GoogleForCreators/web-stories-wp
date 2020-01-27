@@ -49,9 +49,9 @@ function DisplayElement( {
 		height,
 		rotationAngle,
 		isFullbleed,
+		isBackground,
 		...rest
 	},
-	isBackground,
 } ) {
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Display } = getDefinitionForType( type );

@@ -33,6 +33,7 @@ export const hasEditMode = true;
 export const editModeGrayout = true;
 
 export const panels = [
+	PanelTypes.BACKGROUND,
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,
