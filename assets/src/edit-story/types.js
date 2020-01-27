@@ -51,4 +51,37 @@ StoryPropTypes.elements.image = PropTypes.shape( {
 	focalY: PropTypes.number,
 } );
 
+StoryPropTypes.elements.video = PropTypes.shape( {
+	...StoryElementPropsTypes,
+	mimeType: PropTypes.string.isRequired,
+	src: PropTypes.string.isRequired,
+	loop: PropTypes.bool,
+	videoId: PropTypes.number.isRequired,
+	posterId: PropTypes.number,
+} );
+
+StoryPropTypes.elements.text = PropTypes.shape( {
+	...StoryElementPropsTypes,
+	content: PropTypes.string,
+	color: PropTypes.string,
+	backgroundColor: PropTypes.string,
+	fontFamily: PropTypes.string,
+	fontFallback: PropTypes.array,
+	fontSize: PropTypes.number,
+	fontWeight: PropTypes.number,
+	fontStyle: PropTypes.string,
+	letterSpacing: PropTypes.oneOfType( [
+		PropTypes.string,
+		PropTypes.number,
+	] ),
+	lineHeight: PropTypes.number,
+	padding: PropTypes.number,
+	textAlign: PropTypes.string,
+} );
+
+StoryPropTypes.elements.square = PropTypes.shape( {
+	...StoryElementPropsTypes,
+	backgroundColor: PropTypes.string,
+} );
+
 export default StoryPropTypes;

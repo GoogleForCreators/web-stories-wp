@@ -66,11 +66,6 @@ function DisplayElement( { element } ) {
 		}
 	} );
 
-	// QQQQQ
-	if ( type !== 'image' ) {
-		return null;
-	}
-
 	return (
 		<Wrapper
 			ref={ wrapperRef }

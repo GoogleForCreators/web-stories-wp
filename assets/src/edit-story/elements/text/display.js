@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -36,6 +35,7 @@ import {
 	ElementWithFontColor,
 	ElementWithStyle,
 } from '../shared';
+import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
@@ -48,18 +48,20 @@ const Element = styled.p`
 `;
 
 function TextDisplay( {
-	content,
-	color,
-	backgroundColor,
-	fontFamily,
-	fontFallback,
-	fontSize,
-	fontWeight,
-	fontStyle,
-	letterSpacing,
-	lineHeight,
-	padding,
-	textAlign,
+	element: {
+		content,
+		color,
+		backgroundColor,
+		fontFamily,
+		fontFallback,
+		fontSize,
+		fontWeight,
+		fontStyle,
+		letterSpacing,
+		lineHeight,
+		padding,
+		textAlign,
+	},
 } ) {
 	const props = {
 		color,
@@ -91,21 +93,7 @@ function TextDisplay( {
 }
 
 TextDisplay.propTypes = {
-	content: PropTypes.string,
-	color: PropTypes.string,
-	backgroundColor: PropTypes.string,
-	fontFamily: PropTypes.string,
-	fontFallback: PropTypes.array,
-	fontSize: PropTypes.number,
-	fontWeight: PropTypes.number,
-	fontStyle: PropTypes.string,
-	letterSpacing: PropTypes.oneOfType( [
-		PropTypes.string,
-		PropTypes.number,
-	] ),
-	lineHeight: PropTypes.number,
-	padding: PropTypes.number,
-	textAlign: PropTypes.string,
+	element: StoryPropTypes.elements.text.isRequired,
 };
 
 export default TextDisplay;
