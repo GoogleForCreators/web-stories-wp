@@ -1,0 +1,25 @@
+name: Update Dependencies
+on:
+  schedule:
+    - cron:  '0 12 * * 1'
+jobs:
+  update-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Update list of Google fonts
+        id: vars
+        run: |
+          npm install
+          npm run download-fonts
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update list of Google Fonts
+          title: Update list of Google Fonts
+          body: Fetched the currently available fonts on Google Fonts to update them in the project.
+          branch: update/google-fonts
