@@ -57,6 +57,13 @@ function Title() {
 		[ updateStory ],
 	);
 
+	// TODO Make sure that Auto Draft checks translations.
+	const titleFormatted = useCallback(
+		( rawTitle ) => {
+			return ( rawTitle === __( 'Auto Draft', 'web-stories' ) ) ? '' : rawTitle;
+		}, [],
+	);
+
 	const handleBlur = useCallback(
 		() => {
 			if ( ! slug || slug === storyId ) {
@@ -64,13 +71,6 @@ function Title() {
 				updateStory( { properties: { slug: cleanSlug } } );
 			}
 		}, [ slug, storyId, title, titleFormatted, updateStory ],
-	);
-
-	// TODO Make sure that Auto Draft checks translations.
-	const titleFormatted = useCallback(
-		( rawTitle ) => {
-			return ( rawTitle === __( 'Auto Draft', 'web-stories' ) ) ? '' : rawTitle;
-		}, [],
 	);
 
 	if ( typeof title !== 'string' ) {
