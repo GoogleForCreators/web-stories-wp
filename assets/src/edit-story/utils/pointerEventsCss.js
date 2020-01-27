@@ -20,7 +20,7 @@
 import { css } from 'styled-components';
 
 const PointerEventsCss = css`
-  ${ ( { pointerEvents } ) => {
+	${ ( { pointerEvents } ) => {
 		if ( typeof pointerEvents === 'boolean' ) {
 			return `pointer-events: ${ pointerEvents ? 'initial' : 'none' };`;
 		}

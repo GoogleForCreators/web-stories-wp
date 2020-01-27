@@ -30,13 +30,13 @@ import { Layer, PageArea } from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled( Layer )`
-  background-color: ${ ( { grayout, theme } ) => grayout ? theme.colors.grayout : 'transparent' };
+	background-color: ${ ( { grayout, theme } ) => grayout ? theme.colors.grayout : 'transparent' };
 `;
 
 const EditPageArea = withOverlay( styled( PageArea ).attrs( { className: 'container' } )`
-  position: relative;
-  width: 100%;
-  height: 100%;
+	position: relative;
+	width: 100%;
+	height: 100%;
 ` );
 
 function EditLayer( {} ) {

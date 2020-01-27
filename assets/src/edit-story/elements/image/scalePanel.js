@@ -40,20 +40,20 @@ const OFFSET_Y = 8;
 const MAX_SCALE = 400;
 
 const Container = styled.div`
-  position: absolute;
-  left: ${ ( { x, width } ) => `${ x + ( ( width - Math.max( width, MIN_WIDTH ) ) / 2 ) }px` };
-  top: ${ ( { y, height } ) => `${ y + height + OFFSET_Y }px` };
-  width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
-  height: ${ HEIGHT }px;
+	position: absolute;
+	left: ${ ( { x, width } ) => `${ x + ( ( width - Math.max( width, MIN_WIDTH ) ) / 2 ) }px` };
+	top: ${ ( { y, height } ) => `${ y + height + OFFSET_Y }px` };
+	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
+	height: ${ HEIGHT }px;
 
-  background: ${ ( { theme } ) => theme.colors.bg.v7 };
-  border-radius: 4px;
+	background: ${ ( { theme } ) => theme.colors.bg.v7 };
+	border-radius: 4px;
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  padding: 0 4px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	padding: 0 4px;
 `;
 
 const Range = styled.input.attrs( {
@@ -62,22 +62,22 @@ const Range = styled.input.attrs( {
 	max: MAX_SCALE,
 	step: 10,
 } )`
-  flex: 1 1;
-  margin: 4px;
-  min-width: 100px;
-  cursor: pointer;
+	flex: 1 1;
+	margin: 4px;
+	min-width: 100px;
+	cursor: pointer;
 `;
 
 const ResetButton = styled.button`
-  flex: 0 0;
-  margin-left: 4px;
-  height: 20px;
-  text-transform: uppercase;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  border: none;
+	flex: 0 0;
+	margin-left: 4px;
+	height: 20px;
+	text-transform: uppercase;
+	font-size: 10px;
+	color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+	border: none;
 `;
 
 function ScalePanel( { setProperties, width, height, x, y, scale } ) {

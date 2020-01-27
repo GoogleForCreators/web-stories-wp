@@ -70,9 +70,7 @@ function UploadButton( {
 		evt.preventDefault();
 	};
 
-	const Button = styled.button`
-		${ buttonCSS }
-	`;
+	const Button = styled.button`${ buttonCSS }`;
 
 	return (
 		<Button onClick={ mediaPicker }>

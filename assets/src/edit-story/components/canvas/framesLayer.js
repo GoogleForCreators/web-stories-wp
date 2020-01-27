@@ -29,7 +29,7 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 
 const FramesPageArea = withOverlay( styled( PageArea ).attrs( { className: 'container', pointerEvents: true } )`
-  background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
 ` );
 
 function FramesLayer() {

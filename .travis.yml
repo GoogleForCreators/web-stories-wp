@@ -70,7 +70,7 @@ script:
     if [ "$LINT" = "1" ]; then
       composer validate --no-check-all
       composer normalize --dry-run
-      npm run lint || true # allow failure for now because of stylelint
+      npm run lint
     fi
   - |
     if [ "$JS" = "1" ]; then
