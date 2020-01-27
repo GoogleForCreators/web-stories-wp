@@ -33,7 +33,7 @@ PANTHEON_SITE="wordpress-amp"
 PANTHEON_BRANCH="stories-new"
 PANTHEON_UUID="6b7f1eeb-705b-4201-864d-2007030c8372"
 
-SSH_IDENTITY=
+SSH_IDENTITY="$(pwd)/.travis_deploy_key"
 
 cd "$(dirname "$0")/.."
 project_dir="$(pwd)"
