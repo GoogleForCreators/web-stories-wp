@@ -26,6 +26,9 @@ export const defaultAttributes = {
 	controls: false,
 	loop: false,
 	autoPlay: true,
+	featuredMedia: 0,
+	featuredMediaSrc: '',
+	videoId: 0,
 };
 
 export const hasEditMode = false;
@@ -35,4 +38,5 @@ export const panels = [
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,
 	PanelTypes.ROTATION_ANGLE,
+	PanelTypes.VIDEO_POSTER,
 ];
