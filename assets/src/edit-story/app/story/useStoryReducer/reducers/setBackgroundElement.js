@@ -60,7 +60,7 @@ function setBackgroundElement( state, { elementId } ) {
 		let pageElements = page.elements;
 
 		// Check if we already had a background id.
-		const hadBackground = page.backgroundElementId !== null;
+		const hadBackground = Boolean( page.backgroundElementId );
 		if ( hadBackground ) {
 			// If so, slice first element out and update position
 			pageElements = pageElements.slice( 1 );
