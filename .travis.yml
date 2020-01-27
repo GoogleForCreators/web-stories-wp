@@ -128,12 +128,14 @@ jobs:
         - npm run build-storybook
       deploy:
         - provider: pages
+          edge: true
           github_token: $GITHUB_TOKEN
           keep_history: true
           local_dir: build/storybook
           on:
             branch: master
         - provider: script
+          edge: true
           # This script also runs `npm run build`.
           script: bin/deploy-to-test-environment.sh
           on:
