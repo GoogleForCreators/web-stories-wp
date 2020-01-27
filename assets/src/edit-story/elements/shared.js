@@ -86,12 +86,13 @@ export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) 
 	};
 } );
 
-export function getBox( { x, y, width, height, rotationAngle, isFullbleed } ) {
+export function getBox( { x, y, width, height, rotationAngle, isFullbleed, isBackground } ) {
+	const displayFull = isFullbleed || isBackground;
 	return {
-		x: isFullbleed ? 0 : x,
-		y: isFullbleed ? 0 : y,
-		width: isFullbleed ? PAGE_WIDTH : width,
-		height: isFullbleed ? PAGE_HEIGHT : height,
-		rotationAngle: isFullbleed ? 0 : rotationAngle,
+		x: displayFull ? 0 : x,
+		y: displayFull ? 0 : y,
+		width: displayFull ? PAGE_WIDTH : width,
+		height: displayFull ? PAGE_HEIGHT : height,
+		rotationAngle: displayFull ? 0 : rotationAngle,
 	};
 }

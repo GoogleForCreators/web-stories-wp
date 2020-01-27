@@ -31,7 +31,8 @@ function Library() {
 		data: { tabs: { MEDIA, TEXT, SHAPES, LINKS } },
 	} = useLibrary();
 	const {
-		actions: { addElement },
+		actions: { addElement, setBackgroundElement },
+		state: { currentPage },
 	} = useStory();
 	const ContentLibrary = ( {
 		[ MEDIA ]: MediaLibrary,
@@ -39,6 +40,9 @@ function Library() {
 		[ SHAPES ]: ShapeLibrary,
 		[ LINKS ]: LinkLibrary,
 	} )[ tab ];
+	const isMedia = ( type ) => {
+		return 'image' === type || 'video' === type;
+	};
 	const handleInsert = ( type, props ) => {
 		const element = createNewElement( type, {
 			...props,
@@ -46,6 +50,9 @@ function Library() {
 			y: Math.round( 70 * Math.random() ),
 		} );
 		addElement( { element } );
+		if ( isMedia( type ) && ! currentPage.elements.some( ( { type: elType } ) => isMedia( elType ) ) ) {
+			setBackgroundElement( { elementId: element.id } );
+		}
 	};
 	return <ContentLibrary onInsert={ handleInsert } />;
 }

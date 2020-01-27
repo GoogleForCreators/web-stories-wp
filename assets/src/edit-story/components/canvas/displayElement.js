@@ -51,13 +51,13 @@ function DisplayElement( {
 		isFullbleed,
 		...rest
 	},
+	isBackground,
 } ) {
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Display } = getDefinitionForType( type );
 
 	const wrapperRef = useRef( null );
-
-	const box = getBox( { x, y, width, height, rotationAngle, isFullbleed } );
+	const box = getBox( { x, y, width, height, rotationAngle, isFullbleed, isBackground } );
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const props = { ...box, ...rest, id };
 
@@ -87,6 +87,7 @@ function DisplayElement( {
 
 DisplayElement.propTypes = {
 	element: PropTypes.object.isRequired,
+	isBackground: PropTypes.bool,
 };
 
 export default DisplayElement;
