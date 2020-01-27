@@ -1,3 +1,4 @@
+.travis_deploy_key
 .idea/
 .DS_Store
 node_modules
