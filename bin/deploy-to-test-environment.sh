@@ -25,10 +25,9 @@ echo "Initializing deployment to Web Stories test environment"
 echo "Start the ssh-agent in the background"
 eval "$(ssh-agent -s)"
 
-#openssl aes-256-cbc -K $ENCRYPTED_PANTHEON_KEY -iv $ENCRYPTED_PANTHEON_IV -in bin/keys/id_rsa_pantheon.enc -out bin/keys/id_rsa_pantheon -d
-#chmod 600 bin/keys/id_rsa_pantheon
-
-#ssh-add $(pwd)/bin/keys/id_rsa_pantheon
+openssl openssl aes-256-cbc -K $encrypted_d8cd72ebe8d4_key -iv $encrypted_d8cd72ebe8d4_iv -in .travis_deploy_key.enc -out .travis_deploy_key -d
+chmod 600 .travis_deploy_key
+ssh-add .travis_deploy_key
 
 PANTHEON_SITE="wordpress-amp"
 PANTHEON_BRANCH="stories-new"
@@ -102,7 +101,7 @@ git add -A "wp-content/plugins/web-stories/"
 git commit -F /tmp/commit-message.txt
 
 echo "Pushing new build to remot repository"
-#git push origin $PANTHEON_BRANCH
+git push origin $PANTHEON_BRANCH
 
 echo "View site at http://$PANTHEON_BRANCH-$PANTHEON_SITE.pantheonsite.io/"
 echo "Access Pantheon dashboard at https://dashboard.pantheon.io/sites/$PANTHEON_UUID#$PANTHEON_BRANCH"
