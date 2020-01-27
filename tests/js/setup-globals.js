@@ -1,53 +1,19 @@
-// Set up `wp.*` aliases.
-global.wp = {
-	media: {
-		controller: {
-			Library: jest.fn(),
-			Cropper: {
-				extend: jest.fn(),
-			},
-		},
-		View: {
-			extend: jest.fn(),
-		},
-		view: {
-			Toolbar: {
-				Select: {
-					extend: jest.fn(),
-				},
-			},
-			MediaFrame: {
-				Select: {
-					extend: jest.fn(),
-				},
-			},
-		},
-	},
-};
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-global.ampStoriesFonts = [
-	{
-		name: 'Arial',
-		slug: 'arial',
-	},
-	{
-		name: 'Roboto',
-		slug: 'roboto',
-		handle: 'roboto-font',
-		src: 'https://fonts.googleapis.com/css?family=Roboto%3A400%2C700&subset=latin%2Clatin-ext',
-	},
-	{
-		name: 'Ubuntu',
-		slug: 'ubuntu',
-		src: 'https://fonts.googleapis.com/css?family=Ubuntu%3A400%2C700&subset=latin%2Clatin-ext',
-	},
-	{
-		name: 'Verdana',
-		slug: 'verdana',
-		handle: 'verdana-font',
-	},
-];
+window.ampStoriesEditSettings = {
 
-global.ampStoriesEditorSettings = {
-	allowedVideoMimeTypes: [ 'video/mp4', 'video/webm' ],
 };

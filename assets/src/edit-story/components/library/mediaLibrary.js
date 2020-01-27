@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * External dependencies
  */
@@ -120,9 +136,9 @@ const SUPPORTED_VIDEO_TYPES = [
 ];
 
 const FILTERS = [
-	{ filter: '', name: __( 'All', 'amp' ) },
-	{ filter: 'image', name: __( 'Images', 'amp' ) },
-	{ filter: 'video', name: __( 'Video', 'amp' ) },
+	{ filter: '', name: __( 'All', 'web-stories' ) },
+	{ filter: 'image', name: __( 'Images', 'web-stories' ) },
+	{ filter: 'video', name: __( 'Video', 'web-stories' ) },
 ];
 
 const DEFAULT_WIDTH = 150;
@@ -271,7 +287,7 @@ function MediaLibrary( { onInsert } ) {
 		<>
 			<Header>
 				<Title>
-					{ __( 'Media', 'amp' ) }
+					{ __( 'Media', 'web-stories' ) }
 					{ ( ! isMediaLoaded || isMediaLoading ) &&
 						<Spinner />
 					}
@@ -287,7 +303,7 @@ function MediaLibrary( { onInsert } ) {
 				<Icon icon="search" />
 				<Search
 					value={ searchTerm }
-					placeholder={ __( 'Search Media', 'amp' ) }
+					placeholder={ __( 'Search Media', 'web-stories' ) }
 					onChange={ onSearch } />
 			</SearchField>
 
@@ -306,7 +322,7 @@ function MediaLibrary( { onInsert } ) {
 
 			{ ( isMediaLoaded && ! media.length ) ? (
 				<Message>
-					{ __( 'No media found', 'amp' ) }
+					{ __( 'No media found', 'web-stories' ) }
 				</Message>
 			) : (
 				<Container>

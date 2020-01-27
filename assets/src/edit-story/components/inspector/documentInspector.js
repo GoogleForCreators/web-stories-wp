@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * WordPress dependencies
  */
@@ -92,10 +108,10 @@ function DocumentInspector() {
 	return (
 		<>
 			<h2>
-				{ __( 'Document', 'amp' ) }
+				{ __( 'Document', 'web-stories' ) }
 			</h2>
 			{ capabilities && capabilities.hasPublishAction && statuses && <SelectMenu
-				label={ __( 'Status', 'amp' ) }
+				label={ __( 'Status', 'web-stories' ) }
 				name="status"
 				options={ allStatuses }
 				disabled={ isSaving }
@@ -103,7 +119,7 @@ function DocumentInspector() {
 				onChange={ handleChangeValue( 'status' ) }
 			/> }
 			{ capabilities && capabilities.hasPublishAction && status !== 'private' && <InputGroup
-				label={ __( 'Password', 'amp' ) }
+				label={ __( 'Password', 'web-stories' ) }
 				type={ 'password' }
 				value={ password }
 				disabled={ isSaving }
@@ -112,14 +128,14 @@ function DocumentInspector() {
 
 			<RemoveButton onClick={ handleRemoveStory } dangerouslySetInnerHTML={ { __html: 'Move to trash' } } />
 			<InputGroup
-				label={ __( 'Published date', 'amp' ) }
+				label={ __( 'Published date', 'web-stories' ) }
 				type={ 'datetime-local' }
 				value={ date }
 				disabled={ isSaving }
 				onChange={ handleChangeValue( 'date' ) }
 			/>
 			{ capabilities && capabilities.hasAssignAuthorAction && users && <SelectMenu
-				label={ __( 'Author', 'amp' ) }
+				label={ __( 'Author', 'web-stories' ) }
 				name="user"
 				options={ users }
 				value={ author }
@@ -128,7 +144,7 @@ function DocumentInspector() {
 			/> }
 
 			<InputGroup
-				label={ __( 'Excerpt', 'amp' ) }
+				label={ __( 'Excerpt', 'web-stories' ) }
 				type={ 'text' }
 				value={ excerpt }
 				disabled={ isSaving }
@@ -136,7 +152,7 @@ function DocumentInspector() {
 			/>
 
 			<InputGroup
-				label={ __( 'Slug', 'amp' ) }
+				label={ __( 'Slug', 'web-stories' ) }
 				type={ 'text' }
 				value={ slug }
 				disabled={ isSaving }
@@ -148,10 +164,10 @@ function DocumentInspector() {
 
 				{ postThumbnails && <UploadButton
 					onSelect={ handleChangeImage }
-					title={ __( 'Select as featured image', 'amp' ) }
+					title={ __( 'Select as featured image', 'web-stories' ) }
 					type={ 'image' }
-					buttonInsertText={ __( 'Set as featured image', 'amp' ) }
-					buttonText={ featuredMediaUrl ? __( 'Replace image', 'amp' ) : __( 'Set featured image', 'amp' ) }
+					buttonInsertText={ __( 'Set as featured image', 'web-stories' ) }
+					buttonText={ featuredMediaUrl ? __( 'Replace image', 'web-stories' ) : __( 'Set featured image', 'web-stories' ) }
 					buttonCSS={ ButtonCSS }
 				/> }
 			</Group>

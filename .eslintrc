@@ -5,6 +5,9 @@
     "plugin:import/recommended",
     "plugin:eslint-comments/recommended"
   ],
+  "plugins": [
+    "jsx-a11y"
+  ],
   "rules": {
     "block-scoped-var": "error",
     "complexity": ["error", { "max": 20 } ],

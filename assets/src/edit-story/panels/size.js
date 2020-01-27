@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * External dependencies
  */
@@ -30,10 +46,10 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 	return (
 		<Panel onSubmit={ handleSubmit }>
 			<Title>
-				{ __( 'Size', 'amp' ) }
+				{ __( 'Size', 'web-stories' ) }
 			</Title>
 			<InputGroup
-				label={ __( 'Width', 'amp' ) }
+				label={ __( 'Width', 'web-stories' ) }
 				value={ state.width }
 				isMultiple={ width === '' }
 				onChange={ ( value ) => {
@@ -45,11 +61,11 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 						height: typeof newWidth === 'number' && lockRatio ? newWidth / ratio : height,
 					} );
 				} }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'amp' ) }
+				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
 				disabled={ isFullbleed }
 			/>
 			<InputGroup
-				label={ __( 'Height', 'amp' ) }
+				label={ __( 'Height', 'web-stories' ) }
 				value={ state.height }
 				isMultiple={ height === '' }
 				onChange={ ( value ) => {
@@ -61,12 +77,12 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 						width: typeof newHeight === 'number' && lockRatio ? newHeight * ratio : width,
 					} );
 				} }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'amp' ) }
+				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
 				disabled={ isFullbleed }
 			/>
 			<InputGroup
 				type="checkbox"
-				label={ __( 'Keep ratio', 'amp' ) }
+				label={ __( 'Keep ratio', 'web-stories' ) }
 				value={ lockRatio }
 				isMultiple={ false }
 				onChange={ ( value ) => {

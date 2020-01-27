@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * External dependencies
  */
@@ -47,15 +63,15 @@ function FontProvider( { children } ) {
 	const getFontWeight = useCallback(
 		( name ) => {
 			const fontWeightNames = {
-				100: __( 'Hairline', 'amp' ),
-				200: __( 'Thin', 'amp' ),
-				300: __( 'Light', 'amp' ),
-				400: __( 'Normal', 'amp' ),
-				500: __( 'Medium', 'amp' ),
-				600: __( 'Semi bold', 'amp' ),
-				700: __( 'Bold', 'amp' ),
-				800: __( 'Extra bold', 'amp' ),
-				900: __( 'Super bold', 'amp' ),
+				100: __( 'Hairline', 'web-stories' ),
+				200: __( 'Thin', 'web-stories' ),
+				300: __( 'Light', 'web-stories' ),
+				400: __( 'Normal', 'web-stories' ),
+				500: __( 'Medium', 'web-stories' ),
+				600: __( 'Semi bold', 'web-stories' ),
+				700: __( 'Bold', 'web-stories' ),
+				800: __( 'Extra bold', 'web-stories' ),
+				900: __( 'Super bold', 'web-stories' ),
 			};
 
 			const defaultFontWeights = [
