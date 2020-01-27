@@ -61,7 +61,7 @@ before_script:
       composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
     fi
   - |
-    if [ "COVERAGE" != "1" ]; then
+    if [ "$COVERAGE" != "1" ]; then
       phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
     fi
 
@@ -74,7 +74,7 @@ script:
     fi
   - |
     if [ "$JS" = "1" ]; then
-      if [ "COVERAGE" = "1" ]; then
+      if [ "$COVERAGE" = "1" ]; then
         npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
         bash <(curl -s https://codecov.io/bash) -cF javascript -f build/logs/lcov.info
       else
@@ -84,7 +84,7 @@ script:
   - |
     if [ "$PHP" = "1" ]; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost
-      if [ "COVERAGE" = "1" ]; then
+      if [ "$COVERAGE" = "1" ]; then
         npm run test:php -- --coverage-clover build/logs/clover.xml
         bash <(curl -s https://codecov.io/bash) -cF php -f build/logs/clover.xml
       else
@@ -125,7 +125,7 @@ jobs:
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
-        - npm run storybook:build
+        - npm run build-storybook
       deploy:
         - provider: pages
           github_token: $GITHUB_TOKEN
