@@ -179,15 +179,17 @@ function SingleSelectionMovable( {
 				setTransformStyle( target );
 			} }
 			onResizeEnd={ ( { target } ) => {
-				if ( frame.resize[ 0 ] !== 0 && frame.resize[ 1 ] !== 0 ) {
+				const editorWidth = frame.resize[ 0 ];
+				const editorHeight = frame.resize[ 1 ];
+				if ( editorWidth !== 0 && editorHeight !== 0 ) {
 					const properties = {
-						width: editorToDataX( frame.resize[ 0 ] ),
-						height: editorToDataY( frame.resize[ 1 ] ),
+						width: editorToDataX( editorWidth ),
+						height: editorToDataY( editorHeight ),
 						x: selectedElement.x + editorToDataX( frame.translate[ 0 ] ),
 						y: selectedElement.y + editorToDataY( frame.translate[ 1 ] ),
 					};
 					if ( shouldAdjustFontSize ) {
-						properties.fontSize = calculateFitTextFontSize( target.firstChild, properties.height, properties.width );
+						properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth ) );
 					}
 					updateSelectedElements( { properties } );
 				}

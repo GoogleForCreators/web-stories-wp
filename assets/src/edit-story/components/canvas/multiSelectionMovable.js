@@ -30,6 +30,7 @@ import { useRef, useEffect } from '@wordpress/element';
 import Movable from '../movable';
 import { useStory } from '../../app/story';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
+import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = [ 'nw', 'ne', 'sw', 'se' ];
@@ -47,19 +48,18 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 
 	const { actions: { updateElementsById } } = useStory();
 	const { actions: { pushTransform } } = useCanvas();
+	const { actions: { editorToDataX, editorToDataY } } = useUnits();
 
 	// Create targets list including nodes and also necessary attributes.
-	const targetList = selectedElements.map( ( element ) => {
-		return {
-			node: nodesById[ element.id ],
-			id: element.id,
-			x: element.x,
-			y: element.y,
-			rotationAngle: element.rotationAngle,
-			type: element.type,
-			content: element.content,
-		};
-	} );
+	const targetList = selectedElements.map( ( element ) => ( {
+		node: nodesById[ element.id ],
+		id: element.id,
+		x: element.x,
+		y: element.y,
+		rotationAngle: element.rotationAngle,
+		type: element.type,
+		content: element.content,
+	} ) );
 	// Not all targets have been defined yet.
 	if ( targetList.some( ( { node } ) => node === undefined ) ) {
 		return null;
@@ -115,19 +115,21 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 	const onGroupEventEnd = ( { targets, isRotate, isResize } ) => {
 		targets.forEach( ( target, i ) => {
 			// Update position in all cases.
+			const frame = frames[ i ];
+			const [ editorWidth, editorHeight ] = frame.resize;
 			const properties = {
-				x: targetList[ i ].x + frames[ i ].translate[ 0 ],
-				y: targetList[ i ].y + frames[ i ].translate[ 1 ],
+				x: targetList[ i ].x + editorToDataX( frame.translate[ 0 ] ),
+				y: targetList[ i ].y + editorToDataY( frame.translate[ 1 ] ),
 			};
 			if ( isRotate ) {
-				properties.rotationAngle = frames[ i ].rotate;
+				properties.rotationAngle = frame.rotate;
 			}
-			if ( isResize ) {
-				properties.width = frames[ i ].resize.width;
-				properties.height = frames[ i ].resize.height;
+			if ( isResize && editorWidth !== 0 && editorHeight !== 0 ) {
+				properties.width = editorToDataX( editorWidth );
+				properties.height = editorToDataY( editorHeight );
 				const isText = 'text' === targetList[ i ].type;
 				if ( isText ) {
-					properties.fontSize = calculateFitTextFontSize( target.firstChild, properties.height, properties.width );
+					properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth ) );
 				}
 			}
 			updateElementsById( { elementIds: [ targetList[ i ].id ], properties } );
