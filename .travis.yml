@@ -33,13 +33,64 @@ branches:
   only:
     - master
 
+env:
+  global:
+    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
 install:
-  - nvm install
-  - composer install
-  - npm ci
+  - |
+    if [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+      nvm install
+      npm ci
+    fi
+  - |
+    if [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+      composer install
+    fi
+  - |
+    if [ "$DEPLOY_PLUGIN" = "1" ]; then
+      # WP-CLI is needed for building the plugin in the deploy step.
+      curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+      chmod +x wp-cli.phar
+      mv wp-cli.phar $HOME/wp
+    fi
 
 before_script:
-  - phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
+  - |
+    if [ "LINT" = "1" ]; then
+      composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
+    fi
+  - |
+    if [ "COVERAGE" != "1" ]; then
+      phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
+    fi
+
+script:
+  - |
+    if [ "$LINT" = "1" ]; then
+      composer validate --no-check-all
+      composer normalize --dry-run
+      npm run lint || true # allow failure for now because of stylelint
+    fi
+  - |
+    if [ "$JS" = "1" ]; then
+      if [ "COVERAGE" = "1" ]; then
+        npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+        bash <(curl -s https://codecov.io/bash) -cF javascript -f build/logs/lcov.info
+      else
+        npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache"
+      fi
+    fi
+  - |
+    if [ "$PHP" = "1" ]; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost
+      if [ "COVERAGE" = "1" ]; then
+        npm run test:php -- --coverage-clover build/logs/clover.xml
+        bash <(curl -s https://codecov.io/bash) -cF php -f build/logs/clover.xml
+      else
+        npm run test:php
+      fi
+    fi
 
 jobs:
   fast_finish: true
@@ -47,60 +98,36 @@ jobs:
     - stage: lint
       name: Lint (PHP, JavaScript, CSS, and configuration files)
       php: 7.4
-      before_script:
-        - phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
-        - composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
-      script:
-        - composer validate --no-check-all
-        - composer normalize --dry-run
-        - npm run lint || true # allow failure for now because of stylelint
+      env: JS=1 PHP=1 LINT=1
     - stage: test
       name: JavaScript unit tests
-      script:
-        - npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache"
     - name: PHP unit tests (7.4, WordPress latest)
       php: 7.4
-      env: WP_VERSION=latest
-      script:
-        - npm run test:php
+      env: PHP=1 WP_VERSION=latest
     - name: PHP unit tests (7.3, WordPress latest)
       php: 7.3
-      env: WP_VERSION=latest
-      script:
-        - npm run test:php
+      env: PHP=1 WP_VERSION=latest
     - name: PHP unit tests (7.0, WordPress latest)
       php: 7.0
-      env: WP_VERSION=latest
-      script:
-        - npm run test:php
+      env: PHP=1 WP_VERSION=latest
     - name: PHP unit tests (5.6, WordPress latest)
       php: 5.6
-      env: WP_VERSION=latest
-      script:
-        - npm run test:php
+      env: PHP=1 WP_VERSION=latest
     - name: PHP unit tests (nightly, WordPress trunk)
       php: nightly
-      env: WP_VERSION=trunk
-      script:
-        - npm run test:php
+      env: PHP=1 WP_VERSION=trunk
     - name: PHP and JavaScript unit tests (7.4, WordPress latest, with code coverage)
       if: branch = master AND type = push
       php: 7.4
-      env: WP_VERSION=latest
-      script:
-        - npm run build
-        - npm run test:php -- --coverage-clover build/logs/clover.xml
-        - bash <(curl -s https://codecov.io/bash) -cF php -f build/logs/clover.xml
-        - npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
-        - bash <(curl -s https://codecov.io/bash) -cF javascript -f build/logs/lcov.info
+      env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       name: Deploy Storybook / Playground
+      env: DEPLOY_PLUGIN=1
       before_deploy:
         - npm run storybook:build
       deploy:
         - provider: pages
-          skip_cleanup: true
           github_token: $GITHUB_TOKEN
           keep_history: true
           local_dir: build/storybook
@@ -111,3 +138,6 @@ jobs:
           script: bin/deploy-to-test-environment.sh
           on:
             branch: master
+
+services:
+  - mysql
