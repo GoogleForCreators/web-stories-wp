@@ -25,7 +25,7 @@ echo "Initializing deployment to Web Stories test environment"
 echo "Start the ssh-agent in the background"
 eval "$(ssh-agent -s)"
 
-openssl openssl aes-256-cbc -K $encrypted_d8cd72ebe8d4_key -iv $encrypted_d8cd72ebe8d4_iv -in .travis_deploy_key.enc -out .travis_deploy_key -d
+openssl aes-256-cbc -K $encrypted_d8cd72ebe8d4_key -iv $encrypted_d8cd72ebe8d4_iv -in .travis_deploy_key.enc -out .travis_deploy_key -d
 chmod 600 .travis_deploy_key
 ssh-add .travis_deploy_key
 
