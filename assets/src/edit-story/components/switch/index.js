@@ -41,18 +41,20 @@ const Label = styled.span`
 `;
 
 const Checkbox = styled.input.attrs( { type: 'checkbox' } )`
-	// Hide checkbox visually but remain accessible to screen readers.
-  // Source: https://polished.js.org/docs/#hidevisually
-  border: 0;
-  clip: rect(0 0 0 0);
-  clippath: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+	/*
+	Hide checkbox visually but remain accessible to screen readers.
+	Source: https://polished.js.org/docs/#hidevisually
+	*/
+	border: 0;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 `;
 
 const Slider = styled.span`
@@ -80,6 +82,7 @@ const Slider = styled.span`
 
 	${ Checkbox }:checked + & {
 		border-color: ${ ( { theme } ) => theme.colors.action };
+
 		&::after {
 			background-color: ${ ( { theme } ) => theme.colors.action };
 			left: 11px;

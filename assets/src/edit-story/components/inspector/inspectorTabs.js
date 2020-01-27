@@ -37,11 +37,10 @@ const Tabs = styled.div`
 
 const Tab = styled.button.attrs( { role: 'tab' } )`
 	width: 33.33%;
-	line-height: 40px;
 	height: 100%;
 	text-align: center;
 	cursor: pointer;
-	border: 0px none;
+	border: none;
 	background: none;
 	text-transform: uppercase;
 	color: ${ ( { theme } ) => theme.colors.fg.v0 };
@@ -50,7 +49,8 @@ const Tab = styled.button.attrs( { role: 'tab' } )`
 	line-height: ${ ( { theme } ) => theme.fonts.tab.lineHeight };
 	word-break: break-word;
 
-	&:focus, &:active {
+	&:focus,
+	&:active {
 		outline: none;
 	}
 
