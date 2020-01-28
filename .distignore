@@ -4,6 +4,7 @@
 assets/src
 bin
 build
+docs
 node_modules
 tests
 .browserslistrc
@@ -18,6 +19,7 @@ tests
 .stylelintrc
 .travis.yml
 babel.config.js
+CONTRIBUTING.md
 composer.json
 composer.lock
 package.json
