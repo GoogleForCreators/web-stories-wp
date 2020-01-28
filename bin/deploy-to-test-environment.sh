@@ -86,13 +86,13 @@ echo "Starting build process..."
 echo "Installing npm dependencies"
 npm install --silent
 
-#echo "Removing non-development composer dependencies"
-#composer update --no-dev --optimize-autoloader --quiet
+echo "Removing non-development composer dependencies"
+composer update --no-dev --optimize-autoloader --quiet
 
 echo "Building plugin"
-npm run build:js
-npm run build:php -- --debug || true
-(cd ..; wp dist-archive "$project_dir" "$project_dir"/build/web-stories --create-target-dir --debug; cd "$project_dir";)
+npm run build:js --silent
+# npm run build:plugin - does not seem to work on CI
+(cd ..; wp dist-archive "$project_dir" "$project_dir"/build/web-stories --create-target-dir; cd "$project_dir";)
 
 echo "Unzipping dist archive"
 unzip -oq build/web-stories.zip -d build/dist
