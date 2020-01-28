@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useStory from '../app/story/useStory';
-import { Panel, Title, InputGroup, ActionButton } from './shared';
+import { Panel, Title, ActionButton } from './shared';
 
 // @todo Only display if one element selected.
 function BackgroundPanel( { selectedElements, onSetProperties } ) {
