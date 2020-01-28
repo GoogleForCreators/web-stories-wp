@@ -284,29 +284,6 @@ class Story_Post_Type {
 		// Only add currently supported mime types.
 		$allowed_video_mime_types = array_values( array_intersect( $allowed_video_mime_types, wp_get_mime_types() ) );
 
-		/**
-		 * Filters the list of allowed post types for use in page attachments.
-		 *
-		 * @since 1.3
-		 *
-		 * @param array Allowed post types.
-		 */
-		$page_attachment_post_types = apply_filters(
-			'amp_story_allowed_page_attachment_post_types',
-			[
-				'page',
-				'post',
-			]
-		);
-		$post_types                 = [];
-		foreach ( $page_attachment_post_types as $post_type ) {
-			$post_type_object = get_post_type_object( $post_type );
-
-			if ( $post_type_object ) {
-				$post_types[ $post_type ] = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			}
-		}
-
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
 		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
@@ -322,7 +299,6 @@ class Story_Post_Type {
 				'id'     => 'edit-story',
 				'config' => [
 					'allowedVideoMimeTypes'          => $allowed_video_mime_types,
-					'allowedPageAttachmentPostTypes' => $post_types,
 					'postType'                       => self::POST_TYPE_SLUG,
 					'postThumbnails'                 => $post_thumbnails,
 					'storyId'                        => $story_id,
