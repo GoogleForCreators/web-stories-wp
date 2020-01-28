@@ -47,17 +47,17 @@ function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 	return (
 		<Panel onSubmit={ handleSubmit }>
 			<Title>
-				{ __( 'Poster image', 'amp' ) }
+				{ __( 'Poster image', 'web-stories' ) }
 			</Title>
 			<div>
 				{ state.featuredMediaSrc && <Img src={ state.featuredMediaSrc } /> }
 
 				<UploadButton
 					onSelect={ handleChangeImage }
-					title={ __( 'Select as video poster', 'amp' ) }
+					title={ __( 'Select as video poster', 'web-stories' ) }
 					type={ 'image' }
-					buttonInsertText={ __( 'Set as video poster', 'amp' ) }
-					buttonText={ state.featuredMediaSrc ? __( 'Replace poster image', 'amp' ) : __( 'Set poster image', 'amp' ) }
+					buttonInsertText={ __( 'Set as video poster', 'web-stories' ) }
+					buttonText={ state.featuredMediaSrc ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
 					buttonCSS={ ButtonCSS }
 				/>
 			</div>
