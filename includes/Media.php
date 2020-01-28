@@ -70,7 +70,7 @@ class Media {
 	 *
 	 * @var string
 	 */
-	const POSTER_POST_META_KEY = 'amp_is_poster';
+	const POSTER_POST_META_KEY = '_web_stories_is_poster';
 
 	/**
 	 * Init.
