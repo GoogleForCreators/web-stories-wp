@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PAGE_NAV_WIDTH, PAGE_WIDTH, PAGE_HEIGHT, HEADER_HEIGHT } from '../../constants';
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT, HEADER_HEIGHT, PAGE_NAV_WIDTH } from '../../constants';
 import PointerEventsCss from '../../utils/pointerEventsCss';
 import useResizeEffect from '../../utils/useResizeEffect';
 import useCanvas from './useCanvas';
@@ -35,7 +35,7 @@ import useCanvas from './useCanvas';
 const MENU_HEIGHT = 48;
 const MIN_CAROUSEL_HEIGHT = 80;
 const ALLOWED_PAGE_SIZES = [
-	[ PAGE_WIDTH, PAGE_HEIGHT ],
+	[ DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT ],
 	[ 268, 476 ],
 	[ 223, 396 ],
 ];

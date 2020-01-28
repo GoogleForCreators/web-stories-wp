@@ -28,7 +28,7 @@ import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
 import UnitsProvider from '../../units/unitsProvider';
 import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
@@ -37,7 +37,10 @@ import Context from './context';
 function CanvasProvider( { children } ) {
 	const [ lastSelectionEvent, setLastSelectionEvent ] = useState( null );
 
-	const [ pageSize, setPageSize ] = useState( { width: PAGE_WIDTH, height: PAGE_HEIGHT } );
+	const [ pageSize, setPageSize ] = useState( {
+		width: DEFAULT_EDITOR_PAGE_WIDTH,
+		height: DEFAULT_EDITOR_PAGE_HEIGHT,
+	} );
 	const [ pageContainer, setPageContainer ] = useState( null );
 
 	const {
