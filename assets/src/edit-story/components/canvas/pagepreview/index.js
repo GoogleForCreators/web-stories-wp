@@ -63,9 +63,10 @@ function PagePreview( { index, forwardedRef, ...props } ) {
 			<PreviewWrapper>
 				{ page.elements.map( ( { type, ...rest } ) => {
 					const { id: elId } = rest;
+					const isBackground = page.backgroundElementId === elId;
 					// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 					const { Preview } = getDefinitionForType( type );
-					return <Preview previewSizeMultiplier={ sizeMultiplier } key={ 'element-' + elId } { ...rest } />;
+					return <Preview isBackground={ isBackground } previewSizeMultiplier={ sizeMultiplier } key={ 'element-' + elId } { ...rest } />;
 				} ) }
 			</PreviewWrapper>
 		</Page>

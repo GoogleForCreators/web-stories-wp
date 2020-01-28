@@ -23,9 +23,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { getCommonAttributes } from '../shared';
-import { getBackgroundStyle } from './util';
 
-function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle } ) {
+function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle, isBackground } ) {
 	const sourceProps = {
 		type: mimeType,
 		src,
@@ -35,10 +34,24 @@ function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle }
 		id: 'el-' + id,
 	};
 
-	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
+	const style = isBackground ?
+		{
+			width: '100%',
+			height: '100%',
+			top: 0,
+			left: 0,
+			rotationAngle: 0,
+		} :
+		getCommonAttributes( { width, height, x, y, rotationAngle } );
+
+	const videoStyle = {
+		height: '100%',
+		width: 'auto',
+		maxWidth: 'initial',
+	};
 	return (
 		<div style={ { ...style } } { ...wrapperProps } >
-			<video { ...sourceProps } />
+			<video style={ { ...videoStyle } } { ...sourceProps } />
 		</div>
 	);
 }
@@ -47,6 +60,7 @@ VideoPreview.propTypes = {
 	rotationAngle: PropTypes.number.isRequired,
 	controls: PropTypes.bool,
 	autoPlay: PropTypes.bool,
+	isBackground: PropTypes.bool,
 	loop: PropTypes.bool,
 	mimeType: PropTypes.string.isRequired,
 	src: PropTypes.string.isRequired,
