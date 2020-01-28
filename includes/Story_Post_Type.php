@@ -447,28 +447,108 @@ class Story_Post_Type {
 	 * @return array Allowed tags.
 	 */
 	public static function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! class_exists( '\AMP_Allowed_Tags_Generated' ) ) {
-			return $allowed_tags;
-		}
-
 		$story_components = [
-			'amp-story',
-			'amp-story-page',
-			'amp-story-grid-layer',
-			'amp-story-cta-layer',
-			'amp-story-page-attachment',
-			'amp-img',
-			'amp-video',
-			'img',
+			'amp-story'                 => [
+				'background-audio'     => true,
+				'live-story'           => true,
+				'live-story-disabled'  => true,
+				'poster-landscape-src' => true,
+				'poster-portrait-src'  => true,
+				'poster-square-src'    => true,
+				'publisher'            => true,
+				'publisher-logo-src'   => true,
+				'standalone'           => true,
+				'supports-landscape'   => true,
+				'title'                => true,
+			],
+			'amp-story-page'            => [
+				'auto-advance-after' => true,
+				'background-audio'   => true,
+				'id'                 => true,
+			],
+			'amp-story-page-attachment' => [
+				'theme' => true,
+			],
+			'amp-story-grid-layer'      => [
+				'position' => true,
+				'template' => true,
+			],
+			'amp-story-cta-layer'       => [],
+			'amp-img'                   => [
+				'alt'                       => true,
+				'attribution'               => true,
+				'data-amp-bind-alt'         => true,
+				'data-amp-bind-attribution' => true,
+				'data-amp-bind-src'         => true,
+				'data-amp-bind-srcset'      => true,
+				'lightbox'                  => true,
+				'lightbox-thumbnail-id'     => true,
+				'media'                     => true,
+				'noloading'                 => true,
+				'object-fit'                => true,
+				'object-position'           => true,
+				'placeholder'               => true,
+				'src'                       => true,
+				'srcset'                    => true,
+			],
+			'amp-video'                 => [
+				'album'                      => true,
+				'alt'                        => true,
+				'artist'                     => true,
+				'artwork'                    => true,
+				'attribution'                => true,
+				'autoplay'                   => true,
+				'controls'                   => true,
+				'controlslist'               => true,
+				'crossorigin'                => true,
+				'data-amp-bind-album'        => true,
+				'data-amp-bind-alt'          => true,
+				'data-amp-bind-artist'       => true,
+				'data-amp-bind-artwork'      => true,
+				'data-amp-bind-attribution'  => true,
+				'data-amp-bind-controls'     => true,
+				'data-amp-bind-controlslist' => true,
+				'data-amp-bind-loop'         => true,
+				'data-amp-bind-poster'       => true,
+				'data-amp-bind-preload'      => true,
+				'data-amp-bind-src'          => true,
+				'data-amp-bind-title'        => true,
+				'disableremoteplayback'      => true,
+				'dock'                       => true,
+				'lightbox'                   => true,
+				'lightbox-thumbnail-id'      => true,
+				'loop'                       => true,
+				'media'                      => true,
+				'muted'                      => true,
+				'noaudio'                    => true,
+				'noloading'                  => true,
+				'object-fit'                 => true,
+				'object-position'            => true,
+				'placeholder'                => true,
+				'poster'                     => true,
+				'preload'                    => true,
+				'rotate-to-fullscreen'       => true,
+				'src'                        => true,
+			],
+			'img'                       => [
+				'alt'           => true,
+				'attribution'   => true,
+				'border'        => true,
+				'decoding'      => true,
+				'height'        => true,
+				'importance'    => true,
+				'intrinsicsize' => true,
+				'ismap'         => true,
+				'loading'       => true,
+				'longdesc'      => true,
+				'sizes'         => true,
+				'src'           => true,
+				'srcset'        => true,
+				'srcwidth'      => true,
+			],
 		];
-		foreach ( $story_components as $story_component ) {
-			$attributes = array_fill_keys( array_keys( \AMP_Allowed_Tags_Generated::get_allowed_attributes() ), true );
-			$rule_specs = \AMP_Allowed_Tags_Generated::get_allowed_tag( $story_component );
-			foreach ( $rule_specs as $rule_spec ) {
-				$attributes = array_merge( $attributes, array_fill_keys( array_keys( $rule_spec[ AMP_Rule_Spec::ATTR_SPEC_LIST ] ), true ) );
-			}
-			$allowed_tags[ $story_component ] = $attributes;
-		}
+
+		array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
