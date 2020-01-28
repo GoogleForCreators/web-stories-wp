@@ -31,6 +31,7 @@ import Movable from '../movable';
 import { useStory } from '../../app/story';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = [ 'nw', 'ne', 'sw', 'se' ];
@@ -48,7 +49,12 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 
 	const { actions: { updateElementsById } } = useStory();
 	const { actions: { pushTransform } } = useCanvas();
-	const { actions: { editorToDataX, editorToDataY } } = useUnits();
+	const { actions: { dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const minMaxFontSize = {
+		minFontSize: dataToEditorY( MIN_FONT_SIZE ),
+		maxFontSize: dataToEditorY( MAX_FONT_SIZE ),
+	};
 
 	// Create targets list including nodes and also necessary attributes.
 	const targetList = selectedElements.map( ( element ) => ( {
@@ -129,7 +135,7 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 				properties.height = editorToDataY( editorHeight );
 				const isText = 'text' === targetList[ i ].type;
 				if ( isText ) {
-					properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth ) );
+					properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth, minMaxFontSize ) );
 				}
 			}
 			updateElementsById( { elementIds: [ targetList[ i ].id ], properties } );
@@ -193,7 +199,7 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 					target.style.height = `${ height }px`;
 					if ( isText ) {
 						// For text: update font size, too.
-						target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width );
+						target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 					}
 					sFrame.translate = drag.beforeTranslate;
 					sFrame.resize = [ width, height ];

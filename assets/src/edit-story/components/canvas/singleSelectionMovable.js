@@ -32,6 +32,7 @@ import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const ALL_HANDLES = [ 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se' ];
@@ -46,7 +47,12 @@ function SingleSelectionMovable( {
 
 	const { actions: { updateSelectedElements } } = useStory();
 	const { actions: { pushTransform } } = useCanvas();
-	const { actions: { getBox, editorToDataX, editorToDataY } } = useUnits();
+	const { actions: { getBox, dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const minMaxFontSize = {
+		minFontSize: dataToEditorY( MIN_FONT_SIZE ),
+		maxFontSize: dataToEditorY( MAX_FONT_SIZE ),
+	};
 
 	const latestEvent = useRef();
 
@@ -174,7 +180,7 @@ function SingleSelectionMovable( {
 				frame.resize = [ newWidth, newHeight ];
 				frame.translate = drag.beforeTranslate;
 				if ( shouldAdjustFontSize ) {
-					target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width );
+					target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 				}
 				setTransformStyle( target );
 			} }
@@ -189,7 +195,7 @@ function SingleSelectionMovable( {
 						y: selectedElement.y + editorToDataY( frame.translate[ 1 ] ),
 					};
 					if ( shouldAdjustFontSize ) {
-						properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth ) );
+						properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth, minMaxFontSize ) );
 					}
 					updateSelectedElements( { properties } );
 				}
