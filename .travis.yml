@@ -40,12 +40,12 @@ env:
 
 install:
   - |
-    if [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install
     fi
   - |
@@ -100,9 +100,11 @@ jobs:
     - stage: lint
       name: Lint (PHP, JavaScript, CSS, and configuration files)
       php: 7.4
-      env: JS=1 PHP=1 LINT=1
+      env: LINT=1
     - stage: test
       name: JavaScript unit tests
+      php: 7.4
+      env: JS=1
     - name: PHP unit tests (7.4, WordPress latest)
       php: 7.4
       env: PHP=1 WP_VERSION=latest
