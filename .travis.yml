@@ -28,6 +28,7 @@ cache:
     - $HOME/.jest-cache
     - $HOME/.npm
     - $HOME/.nvm/.cache
+    - $HOME/.wp-cli/.cache
 
 branches:
   only:
@@ -39,25 +40,26 @@ env:
 
 install:
   - |
-    if [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install
     fi
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
-      # WP-CLI is needed for building the plugin in the deploy step.
       curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
       chmod +x wp-cli.phar
       mv wp-cli.phar $HOME/wp
+      export PATH="$HOME:$PATH"
+      wp package install git@github.com:wp-cli/dist-archive-command.git
     fi
 
 before_script:
   - |
-    if [ "LINT" = "1" ]; then
+    if [ "$LINT" = "1" ]; then
       composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
     fi
   - |
@@ -98,9 +100,11 @@ jobs:
     - stage: lint
       name: Lint (PHP, JavaScript, CSS, and configuration files)
       php: 7.4
-      env: JS=1 PHP=1 LINT=1
+      env: LINT=1
     - stage: test
       name: JavaScript unit tests
+      php: 7.4
+      env: JS=1
     - name: PHP unit tests (7.4, WordPress latest)
       php: 7.4
       env: PHP=1 WP_VERSION=latest
@@ -122,6 +126,7 @@ jobs:
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
+      php: 7.3
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
