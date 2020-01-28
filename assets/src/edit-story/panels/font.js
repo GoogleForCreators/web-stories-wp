@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * External dependencies
  */
@@ -40,14 +56,14 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const fontStyles = [
-		{ name: __( 'Normal', 'amp' ), slug: 'normal', thisValue: 'normal' },
-		{ name: __( 'Italic', 'amp' ), slug: 'italic', thisValue: 'italic' },
+		{ name: __( 'Normal', 'web-stories' ), slug: 'normal', thisValue: 'normal' },
+		{ name: __( 'Italic', 'web-stories' ), slug: 'italic', thisValue: 'italic' },
 	];
 
 	return (
-		<SimplePanel name="font" title={ __( 'Font', 'amp' ) } onSubmit={ handleSubmit }>
+		<SimplePanel name="font" title={ __( 'Font', 'web-stories' ) } onSubmit={ handleSubmit }>
 			{ fonts && <SelectMenu
-				label={ __( 'Font family', 'amp' ) }
+				label={ __( 'Font family', 'web-stories' ) }
 				options={ fonts }
 				value={ state.fontFamily }
 				isMultiple={ fontFamily === '' }
@@ -60,14 +76,14 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 				} }
 			/> }
 			<SelectMenu
-				label={ __( 'Font style', 'amp' ) }
+				label={ __( 'Font style', 'web-stories' ) }
 				options={ fontStyles }
 				isMultiple={ fontStyle === '' }
 				value={ state.fontStyle }
 				onChange={ ( value ) => setState( { ...state, fontStyle: value } ) }
 			/>
 			{ state.fontWeights && <SelectMenu
-				label={ __( 'Font weight', 'amp' ) }
+				label={ __( 'Font weight', 'web-stories' ) }
 				options={ state.fontWeights }
 				value={ state.fontWeight }
 				isMultiple={ fontWeight === '' }
@@ -75,7 +91,7 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 			/> }
 			<InputGroup
 				type="number"
-				label={ __( 'Font size', 'amp' ) }
+				label={ __( 'Font size', 'web-stories' ) }
 				value={ state.fontSize }
 				isMultiple={ fontSize === '' }
 				postfix={ 'px' }

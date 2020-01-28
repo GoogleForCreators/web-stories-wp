@@ -26,8 +26,8 @@ import { SimplePanel } from '../../panels/panel';
 
 function PrepublishInspector() {
 	return (
-		<SimplePanel title={ __( 'Prepublish', 'amp' ) }>
-			{ __( 'Prepublish panel to be implemented here', 'amp' ) }
+		<SimplePanel title={ __( 'Prepublish', 'web-stories' ) }>
+			{ __( 'Prepublish panel to be implemented here', 'web-stories' ) }
 		</SimplePanel>
 	);
 }

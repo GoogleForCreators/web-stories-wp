@@ -107,9 +107,9 @@ function DocumentInspector() {
 	);
 
 	return (
-		<SimplePanel title={ __( 'Document', 'amp' ) }>
+		<SimplePanel title={ __( 'Document', 'web-stories' ) }>
 			{ capabilities && capabilities.hasPublishAction && statuses && <SelectMenu
-				label={ __( 'Status', 'amp' ) }
+				label={ __( 'Status', 'web-stories' ) }
 				name="status"
 				options={ allStatuses }
 				disabled={ isSaving }
@@ -117,7 +117,7 @@ function DocumentInspector() {
 				onChange={ handleChangeValue( 'status' ) }
 			/> }
 			{ capabilities && capabilities.hasPublishAction && status !== 'private' && <InputGroup
-				label={ __( 'Password', 'amp' ) }
+				label={ __( 'Password', 'web-stories' ) }
 				type={ 'password' }
 				value={ password }
 				disabled={ isSaving }
@@ -126,14 +126,14 @@ function DocumentInspector() {
 
 			<RemoveButton onClick={ handleRemoveStory } dangerouslySetInnerHTML={ { __html: 'Move to trash' } } />
 			<InputGroup
-				label={ __( 'Published date', 'amp' ) }
+				label={ __( 'Published date', 'web-stories' ) }
 				type={ 'datetime-local' }
 				value={ date }
 				disabled={ isSaving }
 				onChange={ handleChangeValue( 'date' ) }
 			/>
 			{ capabilities && capabilities.hasAssignAuthorAction && users && <SelectMenu
-				label={ __( 'Author', 'amp' ) }
+				label={ __( 'Author', 'web-stories' ) }
 				name="user"
 				options={ users }
 				value={ author }
@@ -142,7 +142,7 @@ function DocumentInspector() {
 			/> }
 
 			<InputGroup
-				label={ __( 'Excerpt', 'amp' ) }
+				label={ __( 'Excerpt', 'web-stories' ) }
 				type={ 'text' }
 				value={ excerpt }
 				disabled={ isSaving }
@@ -150,7 +150,7 @@ function DocumentInspector() {
 			/>
 
 			<InputGroup
-				label={ __( 'Slug', 'amp' ) }
+				label={ __( 'Slug', 'web-stories' ) }
 				type={ 'text' }
 				value={ slug }
 				disabled={ isSaving }
@@ -162,10 +162,10 @@ function DocumentInspector() {
 
 				{ postThumbnails && <UploadButton
 					onSelect={ handleChangeImage }
-					title={ __( 'Select as featured image', 'amp' ) }
+					title={ __( 'Select as featured image', 'web-stories' ) }
 					type={ 'image' }
-					buttonInsertText={ __( 'Set as featured image', 'amp' ) }
-					buttonText={ featuredMediaUrl ? __( 'Replace image', 'amp' ) : __( 'Set featured image', 'amp' ) }
+					buttonInsertText={ __( 'Set as featured image', 'web-stories' ) }
+					buttonText={ featuredMediaUrl ? __( 'Replace image', 'web-stories' ) : __( 'Set featured image', 'web-stories' ) }
 					buttonCSS={ ButtonCSS }
 				/> }
 			</Group>

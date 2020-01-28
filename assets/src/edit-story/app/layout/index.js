@@ -52,7 +52,7 @@ const Area = styled.div`
 	grid-area: ${ ( { area } ) => area };
 	position: relative;
 	z-index: ${ ( { area } ) => area === 'canv' ? 1 : 2 };
-  overflow: hidden;
+	overflow: hidden;
 `;
 
 function Layout() {
