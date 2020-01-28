@@ -1,19 +1,3 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /**
  * External dependencies
  */
@@ -28,7 +12,9 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { SimplePanel } from './panel';
+import { InputGroup } from './components';
+import getCommonValue from './utils/getCommonValue';
 
 function ScalePanel( { selectedElements, onSetProperties } ) {
 	const scale = getCommonValue( selectedElements, 'scale' );
@@ -47,32 +33,29 @@ function ScalePanel( { selectedElements, onSetProperties } ) {
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Image actual size', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="scale" title={ __( 'Image actual size', 'amp' ) } onSubmit={ handleSubmit }>
 			<InputGroup
-				label={ __( 'Scale', 'web-stories' ) }
+				label={ __( 'Scale', 'amp' ) }
 				value={ typeof state.scale === 'number' ? state.scale : '(auto)' }
 				isMultiple={ scale === '' }
 				onChange={ ( value ) => setState( { ...state, scale: isNaN( value ) || value === '' ? '(auto)' : parseFloat( value ) } ) }
-				postfix={ _x( '%', 'Percentage', 'web-stories' ) }
+				postfix={ _x( '%', 'Percentage', 'amp' ) }
 			/>
 			<InputGroup
-				label={ __( 'Focal X', 'web-stories' ) }
+				label={ __( 'Focal X', 'amp' ) }
 				value={ typeof state.focalX === 'number' ? state.focalX : '(auto)' }
 				isMultiple={ focalX === '' }
 				onChange={ ( value ) => setState( { ...state, focalX: isNaN( value ) || value === '' ? '(auto)' : parseFloat( value ) } ) }
-				postfix={ _x( '%', 'Percentage', 'web-stories' ) }
+				postfix={ _x( '%', 'Percentage', 'amp' ) }
 			/>
 			<InputGroup
-				label={ __( 'Focal Y', 'web-stories' ) }
+				label={ __( 'Focal Y', 'amp' ) }
 				value={ typeof state.focalY === 'number' ? state.focalY : '(auto)' }
 				isMultiple={ focalY === '' }
 				onChange={ ( value ) => setState( { ...state, focalY: isNaN( value ) || value === '' ? '(auto)' : parseFloat( value ) } ) }
-				postfix={ _x( '%', 'Percentage', 'web-stories' ) }
+				postfix={ _x( '%', 'Percentage', 'amp' ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

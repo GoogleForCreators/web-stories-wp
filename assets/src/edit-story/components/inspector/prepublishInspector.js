@@ -19,11 +19,16 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { SimplePanel } from '../../panels/panel';
+
 function PrepublishInspector() {
 	return (
-		<h2>
-			{ __( 'Prepublish', 'web-stories' ) }
-		</h2>
+		<SimplePanel title={ __( 'Prepublish', 'amp' ) }>
+			{ __( 'Prepublish panel to be implemented here', 'amp' ) }
+		</SimplePanel>
 	);
 }
 

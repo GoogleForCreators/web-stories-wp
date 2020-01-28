@@ -27,10 +27,8 @@ import DocumentInspector from './documentInspector';
 import PrepublishInspector from './prepublishInspector';
 import { getTabId } from './shared';
 
-const InspectorWrapper = styled.div.attrs( { tabIndex: '0', role: 'tabpanel' } )``;
-const InspectorForm = styled.form`
-	display: flex;
-	flex-direction: column;
+const InspectorWrapper = styled.div.attrs( { tabIndex: '0', role: 'tabpanel' } )`
+	height: 100%;
 `;
 
 function Inspector() {
@@ -47,9 +45,7 @@ function Inspector() {
 
 	return (
 		<InspectorWrapper aria-labelledby={ tab } id={ getTabId( tab ) }>
-			<InspectorForm>
-				<ContentInspector />
-			</InspectorForm>
+			<ContentInspector />
 		</InspectorWrapper>
 	);
 }

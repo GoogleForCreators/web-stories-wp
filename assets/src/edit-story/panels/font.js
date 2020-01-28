@@ -1,19 +1,3 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /**
  * External dependencies
  */
@@ -30,7 +14,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { useFont } from '../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
-import { Panel, Title, InputGroup, getCommonValue, SelectMenu } from './shared';
+import { SimplePanel } from './panel';
+import { InputGroup, SelectMenu } from './components';
+import getCommonValue from './utils/getCommonValue';
 
 function FontPanel( { selectedElements, onSetProperties } ) {
 	const fontFamily = getCommonValue( selectedElements, 'fontFamily' );
@@ -54,17 +40,14 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const fontStyles = [
-		{ name: __( 'Normal', 'web-stories' ), slug: 'normal', thisValue: 'normal' },
-		{ name: __( 'Italic', 'web-stories' ), slug: 'italic', thisValue: 'italic' },
+		{ name: __( 'Normal', 'amp' ), slug: 'normal', thisValue: 'normal' },
+		{ name: __( 'Italic', 'amp' ), slug: 'italic', thisValue: 'italic' },
 	];
 
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Font', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="font" title={ __( 'Font', 'amp' ) } onSubmit={ handleSubmit }>
 			{ fonts && <SelectMenu
-				label={ __( 'Font family', 'web-stories' ) }
+				label={ __( 'Font family', 'amp' ) }
 				options={ fonts }
 				value={ state.fontFamily }
 				isMultiple={ fontFamily === '' }
@@ -77,14 +60,14 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 				} }
 			/> }
 			<SelectMenu
-				label={ __( 'Font style', 'web-stories' ) }
+				label={ __( 'Font style', 'amp' ) }
 				options={ fontStyles }
 				isMultiple={ fontStyle === '' }
 				value={ state.fontStyle }
 				onChange={ ( value ) => setState( { ...state, fontStyle: value } ) }
 			/>
 			{ state.fontWeights && <SelectMenu
-				label={ __( 'Font weight', 'web-stories' ) }
+				label={ __( 'Font weight', 'amp' ) }
 				options={ state.fontWeights }
 				value={ state.fontWeight }
 				isMultiple={ fontWeight === '' }
@@ -92,7 +75,7 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 			/> }
 			<InputGroup
 				type="number"
-				label={ __( 'Font size', 'web-stories' ) }
+				label={ __( 'Font size', 'amp' ) }
 				value={ state.fontSize }
 				isMultiple={ fontSize === '' }
 				postfix={ 'px' }
@@ -100,7 +83,7 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 				max={ MAX_FONT_SIZE }
 				onChange={ ( value ) => setState( { ...state, fontSize: parseInt( value ) } ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 
