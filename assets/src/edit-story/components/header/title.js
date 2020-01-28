@@ -40,7 +40,7 @@ const Input = styled.input`
 	line-height: ${ ( { theme } ) => theme.fonts.body1.lineHeight };
 	letter-spacing: ${ ( { theme } ) => theme.fonts.body1.letterSpacing };
 	background: none !important;
-	border: 0px none !important;
+	border: none !important;
 	text-align: start;
 `;
 

@@ -53,8 +53,8 @@ const Icon = styled.a`
 	}
 
 	${ ( { isActive } ) => ! isActive && `
-		opacity: .4;
-		&:hover { opacity: 1; }
+	opacity: .4;
+	&:hover { opacity: 1; }
 	` }
 
 	svg {

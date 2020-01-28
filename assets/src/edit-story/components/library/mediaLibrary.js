@@ -35,8 +35,8 @@ import useLibrary from './useLibrary';
 
 const Container = styled.div`
 	display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr;
+	grid-gap: 10px;
+	grid-template-columns: 1fr 1fr;
 `;
 
 const Column = styled.div``;
@@ -57,16 +57,15 @@ const Video = styled.video`
 
 const Title = styled.h3`
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	margin: 0px;
+	margin: 0;
 	font-size: 19px;
-	line-height: 20px;
-	line-height: 1.4em;
+	line-height: 1.4;
 	flex: 3 0 0;
 `;
 
 const Header = styled.div`
 	display: flex;
-	margin: 0px 0px 25px;
+	margin: 0 0 25px;
 `;
 
 const Message = styled.div`
@@ -75,16 +74,16 @@ const Message = styled.div`
 `;
 
 const FilterButtons = styled.div`
-	border-bottom:  2px solid ${ ( { theme } ) => theme.colors.mg.v1 };
-	padding: 18px 0px;
-	margin: 10px 0px 15px;
+	border-bottom: 2px solid ${ ( { theme } ) => theme.colors.mg.v1 };
+	padding: 18px 0;
+	margin: 10px 0 15px;
 `;
 
 const FilterButton = styled.button`
-	border: 0px;
+	border: 0;
 	background: none;
-	padding: 0px;
-	margin: 0px 28px 0px 0px;
+	padding: 0;
+	margin: 0 28px 0 0;
 	color: ${ ( { theme, active } ) => ( active ? theme.colors.fg.v1 : theme.colors.mg.v1 ) };
 	font-weight: ${ ( { active } ) => ( active ? 'bold' : 'normal' ) };
 	font-size: 13px;
@@ -101,8 +100,9 @@ const Search = styled.input.attrs( { type: 'text' } )`
 	border-color: ${ ( { theme } ) => theme.colors.mg.v1 } !important;
 	color: ${ ( { theme } ) => theme.colors.mg.v2 } !important;
 	padding: 2px 10px 2px 33px !important;
+
 	&::placeholder {
-	  color: ${ ( { theme } ) => theme.colors.mg.v2 };
+		color: ${ ( { theme } ) => theme.colors.mg.v2 };
 	}
 `;
 
@@ -114,14 +114,14 @@ const Icon = styled( Dashicon )`
 `;
 
 const ButtonCSS = css`
-	 background: none;
-	 color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	 padding: 5px;
-	 font-weight: bold;
-	 flex: 1 0 0;
-	 text-align: center;
-	 border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 };
-	 border-radius: 3px;
+	background: none;
+	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	padding: 5px;
+	font-weight: bold;
+	flex: 1 0 0;
+	text-align: center;
+	border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 };
+	border-radius: 3px;
 `;
 
 const SUPPORTED_IMAGE_TYPES = [

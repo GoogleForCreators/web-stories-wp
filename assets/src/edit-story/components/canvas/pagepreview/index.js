@@ -34,14 +34,16 @@ const Page = styled.button`
 	margin: 0;
 	border: none;
 	outline: ${ PAGE_THUMB_OUTLINE }px solid ${ ( { isActive, theme } ) => isActive ? theme.colors.selection : theme.colors.bg.v1 };
-	&:focus, &:hover {
-		outline: ${ PAGE_THUMB_OUTLINE }px solid ${ ( { theme } ) => theme.colors.selection };
-	}
 	height: ${ ( { height } ) => height }px;
 	width: ${ ( { width } ) => width }px;
 	background-color: ${ ( { theme } ) => theme.colors.mg.v1 };
 	flex: none;
 	transition: width .2s ease, height .2s ease;
+
+	&:focus,
+	&:hover {
+		outline: ${ PAGE_THUMB_OUTLINE }px solid ${ ( { theme } ) => theme.colors.selection };
+	}
 `;
 
 const PreviewWrapper = styled.div`

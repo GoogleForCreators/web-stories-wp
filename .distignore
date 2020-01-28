@@ -1,9 +1,11 @@
 .git
+.github
 .idea
 .storybook
 assets/src
 bin
 build
+docs
 node_modules
 tests
 .browserslistrc
@@ -17,7 +19,11 @@ tests
 .stylelintignore
 .stylelintrc
 .travis.yml
+.travis_deploy_key
+.travis_deploy_key.enc
 babel.config.js
+codecov.yml
+CONTRIBUTING.md
 composer.json
 composer.lock
 package.json

@@ -33,8 +33,8 @@ import { createPage } from '../../../elements';
 /**
  * Get the permission by checking for fields in the REST API.
  *
- * @param post Current post object
- * @param field Requested field.
+ * @param {Object} post Current post object.
+ * @param {string} field Requested field.
  * @return {boolean} If user has capability, defaults to false.
  */
 const getPerm = ( post, field ) => {

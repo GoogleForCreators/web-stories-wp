@@ -58,8 +58,8 @@ const Box = styled.div`
 const PageCount = styled.div`
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
 	width: 62px;
-	font-family: Roboto;
-	font-size: 16px;
+	font-family: ${ ( { theme } ) => theme.fonts.body1.family };
+	font-size: ${ ( { theme } ) => theme.fonts.body1.size };
 	line-height: 24px;
 `;
 
@@ -89,8 +89,8 @@ const Icon = styled.button`
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
 
 	${ ( { disabled } ) => disabled && `
-		opacity: .3;
-		pointer-events: none;
+	opacity: .3;
+	pointer-events: none;
 	` }
 
 	svg {

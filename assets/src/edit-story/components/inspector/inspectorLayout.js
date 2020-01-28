@@ -35,7 +35,7 @@ const Layout = styled.div`
 `;
 
 const TabsArea = styled.div`
-	grid-area: tabs
+	grid-area: tabs;
 `;
 
 const InspectorBackground = styled.div`
