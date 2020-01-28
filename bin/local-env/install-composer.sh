@@ -35,7 +35,6 @@ if [ "$TRAVIS" != "true" ] && ! [[ "$(composer --version)" == "Composer version 
 	echo ' done!'
 fi
 
-
 # Install/update packages
 echo -e $(status_message "Installing and updating Composer packages..." )
-composer install
+composer install --optimize-autoloader --no-interaction --prefer-dist --no-suggest --ignore-platform-reqs
