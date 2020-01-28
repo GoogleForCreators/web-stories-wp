@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-module.exports = {
-	stories: [
-		'./stories/**/*.js',
-		'../assets/src/edit-story/**/stories/*.(js|mdx)',
-	],
-	addons: [
-		'@storybook/addon-a11y/register',
-		'@storybook/addon-docs',
-		'@storybook/addon-knobs/register',
-		'@storybook/addon-storysource/register',
-		'@storybook/addon-viewport/register',
-	],
+/**
+ * Internal dependencies
+ */
+import UploadButton from '../';
+
+export default {
+	title: 'Components/UploadButton',
+	component: UploadButton,
+};
+
+export const _default = () => {
+	return (
+		<UploadButton
+			onSelect={ null }
+		/>
+	);
 };
