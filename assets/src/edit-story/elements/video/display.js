@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { ElementFillContent } from '../shared';
+import { getBackgroundStyle } from './util';
 
 const Element = styled.video`
 	${ ElementFillContent }
@@ -38,13 +39,7 @@ function VideoDisplay( {
 } ) {
 	let style = {};
 	if ( isBackground ) {
-		const styleProps = {
-			minWidth: '100%',
-			minHeight: '100%',
-			width: 'auto',
-			height: 'auto',
-			maxWidth: 'initial',
-		};
+		const styleProps = getBackgroundStyle();
 		style = {
 			...style,
 			...styleProps,

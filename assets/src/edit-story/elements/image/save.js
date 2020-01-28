@@ -47,7 +47,7 @@ function ImageSave( { id, src, width, height, x, y, rotationAngle, isFill } ) {
 
 	return (
 		<div style={ { ...style } } { ...wrapperProps }>
-			<amp-img className={ isFill ? 'full-bleed' : '' } { ...props } />
+			<amp-img className={ isFill ? 'is-fill' : '' } { ...props } />
 		</div>
 	);
 }

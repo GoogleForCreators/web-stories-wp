@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { getCommonAttributes } from '../shared';
+import { getBackgroundStyle } from './util';
 
 function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle } ) {
 	const sourceProps = {

@@ -40,9 +40,10 @@ const getStoryMarkupFromPages = ( pages ) => {
 				<amp-story-grid-layer template="vertical">
 					{ page.elements.map( ( { type, ...rest } ) => {
 						const { id: elId } = rest;
+						const isBackground = page.backgroundElementId === elId;
 						// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 						const { Save } = getDefinitionForType( type );
-						return <Save key={ 'element-' + elId } { ...rest } />;
+						return <Save key={ 'element-' + elId } isBackground={ isBackground } { ...rest } />;
 					} ) }
 				</amp-story-grid-layer>
 			</amp-story-page>,
