@@ -66,7 +66,7 @@ const Area = styled.div`
 	${ PointerEventsCss }
 
 	grid-area: ${ ( { area } ) => area };
-	overflow: ${ ( { overflow } ) => overflow ? 'visible' : 'hidden' };
+	overflow: ${ ( { overflowAllowed } ) => overflowAllowed ? 'visible' : 'hidden' };
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -74,13 +74,13 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled( Area ).attrs( { area: 'page', overflow: true } )``;
+const PageArea = styled( Area ).attrs( { area: 'page', overflowAllowed: true } )``;
 
-const HeadArea = styled( Area ).attrs( { area: 'head', overflow: false } )``;
+const HeadArea = styled( Area ).attrs( { area: 'head', overflowAllowed: false } )``;
 
-const MenuArea = styled( Area ).attrs( { area: 'menu', overflow: false } )``;
+const MenuArea = styled( Area ).attrs( { area: 'menu', overflowAllowed: false } )``;
 
-const NavArea = styled( Area ).attrs( { overflow: false } )`
+const NavArea = styled( Area ).attrs( { overflowAllowed: false } )`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -90,7 +90,7 @@ const NavPrevArea = styled( NavArea ).attrs( { area: 'prev' } )``;
 
 const NavNextArea = styled( NavArea ).attrs( { area: 'next' } )``;
 
-const CarouselArea = styled( Area ).attrs( { area: 'carousel', overflow: false } )``;
+const CarouselArea = styled( Area ).attrs( { area: 'carousel', overflowAllowed: false } )``;
 
 /**
  * @param {!{current: ?Element}} containerRef

@@ -27,7 +27,7 @@ import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
-const DisplayPageArea = styled( PageArea ).attrs( { className: 'container', overflow: false } )`
+const DisplayPageArea = styled( PageArea ).attrs( { className: 'container', overflowAllowed: false } )`
 	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
 `;
 
