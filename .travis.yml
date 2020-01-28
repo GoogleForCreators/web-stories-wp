@@ -50,13 +50,10 @@ install:
     fi
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
-      # WP-CLI is needed for building the plugin in the deploy step.
-      echo "Installing WP-CLI..."
       curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
       chmod +x wp-cli.phar
       mv wp-cli.phar $HOME/wp
       export PATH="$HOME:$PATH"
-      which wp
       wp package install git@github.com:wp-cli/dist-archive-command.git
     fi
 

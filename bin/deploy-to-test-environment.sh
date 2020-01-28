@@ -87,13 +87,15 @@ echo "Installing npm dependencies"
 npm install --silent
 
 #echo "Removing non-development composer dependencies"
-#composer update --no-dev --optimize-autoloader
+#composer update --no-dev --optimize-autoloader --quiet
 
 echo "Building plugin"
-npm run build
+npm run build:js
+npm run build:php -- --debug || true
+(cd ..; wp dist-archive "$project_dir" "$project_dir"/build/web-stories --create-target-dir --debug; cd "$project_dir";)
 
 echo "Unzipping dist archive"
-unzip -o build/web-stories.zip -d build/dist
+unzip -oq build/web-stories.zip -d build/dist
 
 echo "Moving files to repository"
 rsync -avz --delete ./build/dist/web-stories-wp/ "$repo_dir/wp-content/plugins/web-stories/"
