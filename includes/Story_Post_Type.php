@@ -298,12 +298,12 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
-					'allowedVideoMimeTypes'          => $allowed_video_mime_types,
-					'postType'                       => self::POST_TYPE_SLUG,
-					'postThumbnails'                 => $post_thumbnails,
-					'storyId'                        => $story_id,
-					'previewLink'                    => get_preview_post_link( $story_id ),
-					'api'                            => [
+					'allowedVideoMimeTypes' => $allowed_video_mime_types,
+					'postType'              => self::POST_TYPE_SLUG,
+					'postThumbnails'        => $post_thumbnails,
+					'storyId'               => $story_id,
+					'previewLink'           => get_preview_post_link( $story_id ),
+					'api'                   => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',
 						'users'    => '/wp/v2/users',
