@@ -59,7 +59,7 @@ install:
 
 before_script:
   - |
-    if [ "LINT" = "1" ]; then
+    if [ "$LINT" = "1" ]; then
       composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
     fi
   - |
