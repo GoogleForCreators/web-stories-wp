@@ -274,7 +274,7 @@ class Story_Post_Type {
 		 *
 		 * @param array Allowed video mime types.
 		 */
-		$allowed_video_mime_types = apply_filters( 'amp_story_allowed_video_types', [ 'video/mp4' ] );
+		$allowed_video_mime_types = apply_filters( 'web_stories_allowed_video_types', [ 'video/mp4' ] );
 
 		// If `$allowed_video_mime_types` doesn't have valid data or is empty add default supported type.
 		if ( ! is_array( $allowed_video_mime_types ) || empty( $allowed_video_mime_types ) ) {
