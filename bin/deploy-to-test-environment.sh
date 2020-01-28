@@ -87,7 +87,7 @@ echo "Installing npm dependencies"
 npm install --silent
 
 echo "Removing non-development composer dependencies"
-composer update --no-dev --optimize-autoloader --quiet
+composer update --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-suggest || echo "Could not optimize autoloader"
 
 echo "Building plugin"
 npm run build:js --silent
