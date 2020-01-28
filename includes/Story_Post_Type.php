@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use WP_Post;
 use WP_Screen;
 
 /**
@@ -196,8 +197,8 @@ class Story_Post_Type {
 	/**
 	 * Highjack editor with custom editor.
 	 *
-	 * @param bool     $replace Bool if to replace editor or not.
-	 * @param \WP_Post $post    Current post object.
+	 * @param bool    $replace Bool if to replace editor or not.
+	 * @param WP_Post $post    Current post object.
 	 *
 	 * @return bool
 	 */
@@ -328,7 +329,7 @@ class Story_Post_Type {
 	/**
 	 * Load font from story data.
 	 *
-	 * @param \WP_Post $post Post Object.
+	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_fonts( $post ) {
 		$post_story_data = json_decode( $post->post_content_filtered, true );
@@ -379,7 +380,7 @@ class Story_Post_Type {
 	/**
 	 * Load font in admin from story data.
 	 *
-	 * @param \WP_Post $post Post Object.
+	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_admin_fonts( $post ) {
 		$post_story_data = json_decode( $post->post_content_filtered, true );
@@ -574,5 +575,95 @@ class Story_Post_Type {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Get the publisher logo.
+	 *
+	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
+	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
+	 *
+	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
+	 */
+	private static function get_publisher_logo() {
+		$logo_image_url = null;
+
+		// This should be square, at least 96px in width/height. The 512 is used because the site icon would have this size generated.
+		$logo_width  = 512;
+		$logo_height = 512;
+
+		// Use the Custom Logo if set, but only if it is square.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( has_custom_logo() && $custom_logo_id ) {
+			$custom_logo_img = wp_get_attachment_image_src( $custom_logo_id, [ $logo_width, $logo_height ], false );
+			if ( $custom_logo_img && ( $custom_logo_img[2] === $custom_logo_img[1] ) ) {
+				$logo_image_url = $custom_logo_img[0];
+			}
+		}
+
+		// Try Site Icon, though it is not ideal for non-Story because it should be square.
+		$site_icon_id = get_option( 'site_icon' );
+		if ( empty( $logo_image_url ) && $site_icon_id ) {
+			$site_icon_src = wp_get_attachment_image_src( $site_icon_id, [ $logo_width, $logo_height ], false );
+			if ( ! empty( $site_icon_src ) ) {
+				$logo_image_url = $site_icon_src[0];
+			}
+		}
+
+		// Fallback to serving the WordPress logo.
+		if ( empty( $logo_image_url ) ) {
+			$logo_image_url = plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-wordpress-publisher-logo.png';
+		}
+
+		return $logo_image_url;
+	}
+
+	/**
+	 * Get schema.org metadata for the current query.
+	 *
+	 * @return array $metadata All schema.org metadata for the post.
+	 */
+	public static function get_schemaorg_metadata() {
+		$metadata = [
+			'@context'  => 'http://schema.org',
+			'publisher' => [
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+			],
+		];
+
+		$publisher_logo = self::get_publisher_logo();
+
+		if ( $publisher_logo ) {
+			$metadata['publisher']['logo'] = $publisher_logo;
+		}
+
+		$post = get_queried_object();
+
+		$metadata = array_merge(
+			$metadata,
+			[
+				'@type'            => 'BlogPosting',
+				'mainEntityOfPage' => get_permalink(),
+				'headline'         => get_the_title(),
+				'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
+				'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
+			]
+		);
+
+		$post_author = get_userdata( $post->post_author );
+
+		if ( $post_author ) {
+			$metadata['author'] = [
+				'@type' => 'Person',
+				'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
+			];
+		}
+
+		if ( has_post_thumbnail( $post->ID ) ) {
+			$metadata['image'] = wp_get_attachment_image_url( get_post_thumbnail_id( $post->ID ), 'full' );
+		}
+
+		return $metadata;
 	}
 }

@@ -26,7 +26,10 @@
 
 the_post();
 
+use \Google\Web_Stories\Story_Post_Type;
 use \Google\Web_Stories\Media;
+
+$metadata = Story_Post_Type::get_schemaorg_metadata();
 
 ?>
 <!DOCTYPE html>
@@ -46,6 +49,7 @@ use \Google\Web_Stories\Media;
 			object-fit: cover;
 		}
 	</style>
+	<script type="application/ld+json"><?php echo wp_json_encode( $metadata, JSON_UNESCAPED_UNICODE ); ?></script>
 
 	<?php
 	/**
@@ -58,7 +62,7 @@ use \Google\Web_Stories\Media;
 </head>
 <body>
 <?php
-$metadata = function_exists( 'amp_get_schemaorg_metadata' ) ? amp_get_schemaorg_metadata() : [];
+
 if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 	$publisher_logo_src = $metadata['publisher']['logo']['url'];
 } elseif ( isset( $metadata['publisher']['logo'] ) && is_string( $metadata['publisher']['logo'] ) ) {
@@ -70,15 +74,15 @@ $publisher = isset( $metadata['publisher']['name'] ) ? $metadata['publisher']['n
 
 $meta_images = Media::get_story_meta_images();
 
+$poster_portrait = isset( $meta_images['poster-portrait'] ) ? $meta_images['poster-portrait'] : plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-poster.jpg';
+
 ?>
 <amp-story
 	standalone
 	publisher-logo-src="<?php echo esc_url( $publisher_logo_src ); ?>"
 	publisher="<?php echo esc_attr( $publisher ); ?>"
 	title="<?php the_title_attribute(); ?>"
-	<?php if ( isset( $meta_images['poster-portrait'] ) ) : ?>
-		poster-portrait-src="<?php echo esc_url( $meta_images['poster-portrait'] ); ?>"
-	<?php endif; ?>
+	poster-portrait-src="<?php echo esc_url( $poster_portrait ); ?>"
 	<?php if ( isset( $meta_images['poster-square'] ) ) : ?>
 		poster-square-src="<?php echo esc_url( $meta_images['poster-square'] ); ?>"
 	<?php endif; ?>
