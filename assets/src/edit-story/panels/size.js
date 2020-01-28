@@ -33,7 +33,7 @@ import { Panel, Title, InputGroup, getCommonValue } from './shared';
 function SizePanel( { selectedElements, onSetProperties } ) {
 	const width = getCommonValue( selectedElements, 'width' );
 	const height = getCommonValue( selectedElements, 'height' );
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
+	const isFill = getCommonValue( selectedElements, 'isFill' );
 	const [ state, setState ] = useState( { width, height } );
 	const [ lockRatio, setLockRatio ] = useState( true );
 	useEffect( () => {
@@ -62,7 +62,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 					} );
 				} }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 			<InputGroup
 				label={ __( 'Height', 'web-stories' ) }
@@ -78,7 +78,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 					} );
 				} }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 			<InputGroup
 				type="checkbox"
@@ -88,7 +88,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 				onChange={ ( value ) => {
 					setLockRatio( value );
 				} }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 		</Panel>
 	);

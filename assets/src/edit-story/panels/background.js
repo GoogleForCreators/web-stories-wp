@@ -41,7 +41,7 @@ function BackgroundPanel( { selectedElements, onSetProperties } ) {
 				{ __( 'Background', 'amp' ) }
 			</Title>
 			<ActionButton onClick={ handleClick }>
-				{ state.isFullbleed ? __( 'Remove as Background', 'amp' ) : __( 'Set as background', 'amp' ) }
+				{ state.isBackground ? __( 'Remove as Background', 'amp' ) : __( 'Set as background', 'amp' ) }
 			</ActionButton>
 		</Panel>
 	);

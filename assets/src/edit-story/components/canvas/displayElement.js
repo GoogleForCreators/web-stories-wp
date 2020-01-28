@@ -48,7 +48,7 @@ function DisplayElement( {
 		width,
 		height,
 		rotationAngle,
-		isFullbleed,
+		isFill,
 		isBackground,
 		...rest
 	},
@@ -57,7 +57,7 @@ function DisplayElement( {
 	const { Display } = getDefinitionForType( type );
 
 	const wrapperRef = useRef( null );
-	const box = getBox( { x, y, width, height, rotationAngle, isFullbleed, isBackground } );
+	const box = getBox( { x, y, width, height, rotationAngle, isFill, isBackground } );
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const props = { ...box, ...rest, id };
 

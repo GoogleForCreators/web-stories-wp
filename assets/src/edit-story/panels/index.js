@@ -22,7 +22,7 @@ import ActionsPanel from './actions';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
-import FullbleedPanel from './fullbleed';
+import FillPanel from './fill';
 import FontPanel from './font';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
@@ -40,7 +40,7 @@ const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
 const SIZE = 'size';
 const POSITION = 'position';
-const FULLBLEED = 'fullbleed';
+const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 
@@ -56,7 +56,7 @@ export const PanelTypes = {
 	STYLE,
 	TEXT,
 	ROTATION_ANGLE,
-	FULLBLEED,
+	FILL,
 };
 
 const ALL = Object.values( PanelTypes );
@@ -93,7 +93,7 @@ export function getPanels( elements, currentPage ) {
 					case SCALE: return { type, Panel: ScalePanel };
 					case ROTATION_ANGLE: return { type, Panel: RotationPanel };
 					case SIZE: return { type, Panel: SizePanel };
-					case FULLBLEED: return { type, Panel: FullbleedPanel };
+					case FILL: return { type, Panel: FillPanel };
 					case BACKGROUND_COLOR: return { type, Panel: BackgroundColorPanel };
 					case COLOR: return { type, Panel: ColorPanel };
 					case FONT: return { type, Panel: FontPanel };

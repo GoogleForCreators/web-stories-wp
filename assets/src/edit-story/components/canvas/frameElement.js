@@ -53,7 +53,7 @@ function FrameElement( {
 		width,
 		height,
 		rotationAngle,
-		isFullbleed,
+		isFill,
 		isBackground,
 		...rest
 	},
@@ -75,7 +75,7 @@ function FrameElement( {
 
 	const isSelected = selectedElements.includes( id );
 
-	const box = getBox( { x, y, width, height, rotationAngle, isFullbleed, isBackground } );
+	const box = getBox( { x, y, width, height, rotationAngle, isFill, isBackground } );
 	const props = { ...box, ...rest, id };
 
 	return (

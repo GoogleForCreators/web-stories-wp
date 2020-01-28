@@ -33,7 +33,7 @@ import { Panel, Title, InputGroup, getCommonValue } from './shared';
 function PositionPanel( { selectedElements, onSetProperties } ) {
 	const x = getCommonValue( selectedElements, 'x' );
 	const y = getCommonValue( selectedElements, 'y' );
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
+	const isFill = getCommonValue( selectedElements, 'isFill' );
 	const [ state, setState ] = useState( { x, y } );
 	useEffect( () => {
 		setState( { x, y } );
@@ -53,7 +53,7 @@ function PositionPanel( { selectedElements, onSetProperties } ) {
 				isMultiple={ x === '' }
 				onChange={ ( value ) => setState( { ...state, x: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 			<InputGroup
 				label={ _x( 'Y', 'The Y axis', 'web-stories' ) }
@@ -61,7 +61,7 @@ function PositionPanel( { selectedElements, onSetProperties } ) {
 				isMultiple={ y === '' }
 				onChange={ ( value ) => setState( { ...state, y: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 		</Panel>
 	);

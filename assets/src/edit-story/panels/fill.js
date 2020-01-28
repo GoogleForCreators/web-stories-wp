@@ -30,34 +30,34 @@ import { __ } from '@wordpress/i18n';
  */
 import { ActionButton, Panel, Title, getCommonValue } from './shared';
 
-function FullbleedPanel( { selectedElements, onSetProperties } ) {
-	// The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
-	// the element to the previous non-fullbleed position/size.
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { isFullbleed } );
+function FillPanel( { selectedElements, onSetProperties } ) {
+	// The x/y/w/h/r are kept unchanged so that toggling fill will return
+	// the element to the previous non-fill position/size.
+	const isFill = getCommonValue( selectedElements, 'isFill' );
+	const [ state, setState ] = useState( { isFill } );
 	useEffect( () => {
-		setState( { isFullbleed } );
-	}, [ isFullbleed ] );
+		setState( { isFill } );
+	}, [ isFill ] );
 	const handleClick = ( ) => {
-		const newState = { isFullbleed: ! state.isFullbleed };
+		const newState = { isFill: ! state.isFill };
 		setState( newState );
 		onSetProperties( newState );
 	};
 	return (
 		<Panel onSubmit={ ( event ) => event.preventDefault() }>
 			<Title>
-				{ __( 'Fullbleed', 'web-stories' ) }
+				{ __( 'Fill', 'web-stories' ) }
 			</Title>
 			<ActionButton onClick={ handleClick }>
-				{ state.isFullbleed ? __( 'Unset as fullbleed', 'web-stories' ) : __( 'Set as fullbleed', 'web-stories' ) }
+				{ state.isFill ? __( 'Unset as fill', 'web-stories' ) : __( 'Set as fill', 'web-stories' ) }
 			</ActionButton>
 		</Panel>
 	);
 }
 
-FullbleedPanel.propTypes = {
+FillPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default FullbleedPanel;
+export default FillPanel;
