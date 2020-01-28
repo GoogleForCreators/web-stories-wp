@@ -27,13 +27,13 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
  * @param {string} axis Axis, either `x` or `y`.
  * @return {number} Value in percentage.
  */
-function getPercentageFromPixels( px, axis ) {
-	if ( 'x' === axis ) {
-		return Number( ( ( px / PAGE_WIDTH ) * 100 ).toFixed( 2 ) );
-	} else if ( 'y' === axis ) {
-		return Number( ( ( px / PAGE_HEIGHT ) * 100 ).toFixed( 2 ) );
-	}
-	return 0;
+function getPercentageFromPixels(px, axis) {
+  if ('x' === axis) {
+    return Number(((px / PAGE_WIDTH) * 100).toFixed(2));
+  } else if ('y' === axis) {
+    return Number(((px / PAGE_HEIGHT) * 100).toFixed(2));
+  }
+  return 0;
 }
 
 export default getPercentageFromPixels;

@@ -30,34 +30,34 @@ import { __ } from '@wordpress/i18n';
  */
 import { ActionButton, Panel, Title, getCommonValue } from './shared';
 
-function FullbleedPanel( { selectedElements, onSetProperties } ) {
-	// The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
-	// the element to the previous non-fullbleed position/size.
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { isFullbleed } );
-	useEffect( () => {
-		setState( { isFullbleed } );
-	}, [ isFullbleed ] );
-	const handleClick = ( ) => {
-		const newState = { isFullbleed: ! state.isFullbleed };
-		setState( newState );
-		onSetProperties( newState );
-	};
-	return (
-		<Panel onSubmit={ ( event ) => event.preventDefault() }>
-			<Title>
-				{ __( 'Fullbleed', 'web-stories' ) }
-			</Title>
-			<ActionButton onClick={ handleClick }>
-				{ state.isFullbleed ? __( 'Unset as fullbleed', 'web-stories' ) : __( 'Set as fullbleed', 'web-stories' ) }
-			</ActionButton>
-		</Panel>
-	);
+function FullbleedPanel({ selectedElements, onSetProperties }) {
+  // The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
+  // the element to the previous non-fullbleed position/size.
+  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
+  const [state, setState] = useState({ isFullbleed });
+  useEffect(() => {
+    setState({ isFullbleed });
+  }, [isFullbleed]);
+  const handleClick = () => {
+    const newState = { isFullbleed: ! state.isFullbleed };
+    setState(newState);
+    onSetProperties(newState);
+  };
+  return (
+    <Panel onSubmit={(event) => event.preventDefault()}>
+      <Title>
+        { __('Fullbleed', 'web-stories') }
+      </Title>
+      <ActionButton onClick={handleClick}>
+        { state.isFullbleed ? __('Unset as fullbleed', 'web-stories') : __('Set as fullbleed', 'web-stories') }
+      </ActionButton>
+    </Panel>
+  );
 }
 
 FullbleedPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default FullbleedPanel;

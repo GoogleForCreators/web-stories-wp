@@ -40,24 +40,24 @@ const TabsArea = styled.div`
 
 const InspectorBackground = styled.div`
 	grid-area: inspector;
-	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	background-color: ${({ theme }) => theme.colors.fg.v1};
 	height: 100%;
 	padding: 0 1em;
-	color: ${ ( { theme } ) => theme.colors.bg.v4 };
+	color: ${({ theme }) => theme.colors.bg.v4};
 	overflow: auto;
 `;
 
 function InspectorLayout() {
-	return (
-		<Layout>
-			<TabsArea>
-				<InspectorTabs />
-			</TabsArea>
-			<InspectorBackground>
-				<InspectorContent />
-			</InspectorBackground>
-		</Layout>
-	);
+  return (
+    <Layout>
+      <TabsArea>
+        <InspectorTabs />
+      </TabsArea>
+      <InspectorBackground>
+        <InspectorContent />
+      </InspectorBackground>
+    </Layout>
+  );
 }
 
 export default InspectorLayout;

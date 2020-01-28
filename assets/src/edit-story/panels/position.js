@@ -30,46 +30,46 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { Panel, Title, InputGroup, getCommonValue } from './shared';
 
-function PositionPanel( { selectedElements, onSetProperties } ) {
-	const x = getCommonValue( selectedElements, 'x' );
-	const y = getCommonValue( selectedElements, 'y' );
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { x, y } );
-	useEffect( () => {
-		setState( { x, y } );
-	}, [ x, y ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Position', 'web-stories' ) }
-			</Title>
-			<InputGroup
-				label={ _x( 'X', 'The X axis', 'web-stories' ) }
-				value={ state.x }
-				isMultiple={ x === '' }
-				onChange={ ( value ) => setState( { ...state, x: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
-			/>
-			<InputGroup
-				label={ _x( 'Y', 'The Y axis', 'web-stories' ) }
-				value={ state.y }
-				isMultiple={ y === '' }
-				onChange={ ( value ) => setState( { ...state, y: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
-			/>
-		</Panel>
-	);
+function PositionPanel({ selectedElements, onSetProperties }) {
+  const x = getCommonValue(selectedElements, 'x');
+  const y = getCommonValue(selectedElements, 'y');
+  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
+  const [state, setState] = useState({ x, y });
+  useEffect(() => {
+    setState({ x, y });
+  }, [x, y]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <Panel onSubmit={handleSubmit}>
+      <Title>
+        { __('Position', 'web-stories') }
+      </Title>
+      <InputGroup
+        label={_x('X', 'The X axis', 'web-stories')}
+        value={state.x}
+        isMultiple={x === ''}
+        onChange={(value) => setState({ ...state, x: isNaN(value) || value === '' ? '' : parseFloat(value) })}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFullbleed}
+      />
+      <InputGroup
+        label={_x('Y', 'The Y axis', 'web-stories')}
+        value={state.y}
+        isMultiple={y === ''}
+        onChange={(value) => setState({ ...state, y: isNaN(value) || value === '' ? '' : parseFloat(value) })}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFullbleed}
+      />
+    </Panel>
+  );
 }
 
 PositionPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default PositionPanel;

@@ -30,35 +30,35 @@ import { __ } from '@wordpress/i18n';
  */
 import { Panel, Title, InputGroup, getCommonValue } from './shared';
 
-function ColorPanel( { selectedElements, onSetProperties } ) {
-	const color = getCommonValue( selectedElements, 'color' );
-	const [ state, setState ] = useState( { color } );
-	useEffect( () => {
-		setState( { color } );
-	}, [ color ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Color', 'web-stories' ) }
-			</Title>
-			<InputGroup
-				type="color"
-				label={ __( 'Color', 'web-stories' ) }
-				value={ state.color }
-				isMultiple={ color === '' }
-				onChange={ ( value ) => setState( { ...state, color: value } ) }
-			/>
-		</Panel>
-	);
+function ColorPanel({ selectedElements, onSetProperties }) {
+  const color = getCommonValue(selectedElements, 'color');
+  const [state, setState] = useState({ color });
+  useEffect(() => {
+    setState({ color });
+  }, [color]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <Panel onSubmit={handleSubmit}>
+      <Title>
+        { __('Color', 'web-stories') }
+      </Title>
+      <InputGroup
+        type="color"
+        label={__('Color', 'web-stories')}
+        value={state.color}
+        isMultiple={color === ''}
+        onChange={(value) => setState({ ...state, color: value })}
+      />
+    </Panel>
+  );
 }
 
 ColorPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default ColorPanel;

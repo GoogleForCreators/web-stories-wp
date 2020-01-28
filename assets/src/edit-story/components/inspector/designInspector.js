@@ -35,34 +35,34 @@ const Wrapper = styled.div`
 `;
 
 function DesignInspector() {
-	const {
-		state: { selectedElements },
-		actions: { deleteSelectedElements, updateSelectedElements },
-	} = useStory();
-	const panels = getPanels( selectedElements );
+  const {
+    state: { selectedElements },
+    actions: { deleteSelectedElements, updateSelectedElements },
+  } = useStory();
+  const panels = getPanels(selectedElements);
 
-	const handleSetProperties = useCallback( ( properties ) => {
-		// Filter out empty properties (empty strings specifically)
-		const updatedKeys = Object.keys( properties )
-			.filter( ( key ) => properties[ key ] !== '' );
+  const handleSetProperties = useCallback((properties) => {
+    // Filter out empty properties (empty strings specifically)
+    const updatedKeys = Object.keys(properties)
+      .filter((key) => properties[key] !== '');
 
-		if ( updatedKeys.length === 0 ) {
-			// Of course abort if no keys have a value
-			return;
-		}
+    if (updatedKeys.length === 0) {
+      // Of course abort if no keys have a value
+      return;
+    }
 
-		const actualProperties = updatedKeys
-			.reduce( ( obj, key ) => ( { ...obj, [ key ]: properties[ key ] } ), {} );
-		updateSelectedElements( { properties: actualProperties } );
-	}, [ updateSelectedElements ] );
-	return (
+    const actualProperties = updatedKeys
+      .reduce((obj, key) => ({ ...obj, [key]: properties[key] }), {});
+    updateSelectedElements({ properties: actualProperties });
+  }, [updateSelectedElements]);
+  return (
 
-		<Wrapper>
-			{ panels.map( ( { Panel, type } ) => (
-				<Panel key={ type } deleteSelectedElements={ deleteSelectedElements } selectedElements={ selectedElements } onSetProperties={ handleSetProperties } />
-			) ) }
-		</Wrapper>
-	);
+    <Wrapper>
+      { panels.map(({ Panel, type }) => (
+        <Panel key={type} deleteSelectedElements={deleteSelectedElements} selectedElements={selectedElements} onSetProperties={handleSetProperties} />
+      )) }
+    </Wrapper>
+  );
 }
 
 export default DesignInspector;

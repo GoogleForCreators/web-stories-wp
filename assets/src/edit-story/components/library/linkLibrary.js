@@ -19,12 +19,12 @@
  */
 import { __ } from '@wordpress/i18n';
 
-function LinkLibrary( { } ) {
-	return (
-		<p>
-			{ __( 'Still empty', 'web-stories' ) }
-		</p>
-	);
+function LinkLibrary({ }) {
+  return (
+    <p>
+      { __('Still empty', 'web-stories') }
+    </p>
+  );
 }
 
 export default LinkLibrary;

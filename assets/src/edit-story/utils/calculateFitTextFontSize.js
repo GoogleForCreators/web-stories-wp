@@ -31,64 +31,64 @@ import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
  *
  * @return {number|boolean} Calculated font size. False if calculation wasn't possible.
  */
-function calculateFitTextFontSize( measurer, expectedHeight, expectedWidth ) {
-	let maxFontSize = MAX_FONT_SIZE;
-	let minFontSize = MIN_FONT_SIZE;
+function calculateFitTextFontSize(measurer, expectedHeight, expectedWidth) {
+  let maxFontSize = MAX_FONT_SIZE;
+  let minFontSize = MIN_FONT_SIZE;
 
-	// Return false if calculation is not possible due to width and height missing, e.g. in disabled preview.
-	if ( ! measurer.offsetHeight || ! measurer.offsetWidth ) {
-		return false;
-	}
+  // Return false if calculation is not possible due to width and height missing, e.g. in disabled preview.
+  if (! measurer.offsetHeight || ! measurer.offsetWidth) {
+    return false;
+  }
 
-	const setStyle = ( style ) => {
-		const rules = Object.entries( style );
-		for ( const [ k, value ] of rules ) {
-			measurer.style[ k ] = value;
-		}
-	};
+  const setStyle = (style) => {
+    const rules = Object.entries(style);
+    for (const [k, value] of rules) {
+      measurer.style[k] = value;
+    }
+  };
 
-	const { display, height, width, position } = measurer.style;
-	const originalStyle = {
-		display,
-		height,
-		width,
-		position,
-	};
+  const { display, height, width, position } = measurer.style;
+  const originalStyle = {
+    display,
+    height,
+    width,
+    position,
+  };
 
-	const measuringStyle = {
-		display: 'inline-block',
-		height: 'initial',
-		width: 'initial',
-		position: 'absolute',
-	};
+  const measuringStyle = {
+    display: 'inline-block',
+    height: 'initial',
+    width: 'initial',
+    position: 'absolute',
+  };
 
-	// Add necessary styles for measuring:
-	setStyle( measuringStyle );
+  // Add necessary styles for measuring:
+  setStyle(measuringStyle);
 
-	// Add 1px extra room for font size for preventing flickering.
-	// @todo Is there a better way?
-	expectedWidth++;
-	maxFontSize++;
+  // Add 1px extra room for font size for preventing flickering.
+  // @todo Is there a better way?
+  expectedWidth++;
+  maxFontSize++;
 
-	// Binomial search for the best font size.
-	while ( maxFontSize - minFontSize > 1 ) {
-		const mid = Math.floor( ( minFontSize + maxFontSize ) / 2 );
-		measurer.style.fontSize = mid + 'px';
-		const currentHeight = measurer.offsetHeight;
-		const currentWidth = measurer.offsetWidth;
-		if ( currentHeight > expectedHeight || currentWidth > expectedWidth ) {
-			maxFontSize = mid;
-		} else {
-			minFontSize = mid;
-		}
-	}
+  // Binomial search for the best font size.
+  while (maxFontSize - minFontSize > 1) {
+    const mid = Math.floor((minFontSize + maxFontSize) / 2);
+    measurer.style.fontSize = mid + 'px';
+    const currentHeight = measurer.offsetHeight;
+    const currentWidth = measurer.offsetWidth;
+    if (currentHeight > expectedHeight || currentWidth > expectedWidth) {
+      maxFontSize = mid;
+    } else {
+      minFontSize = mid;
+    }
+  }
 
-	// Let's restore the correct font size, too.
-	measurer.style.fontSize = minFontSize + 'px';
-	// Restore style values.
-	setStyle( originalStyle );
+  // Let's restore the correct font size, too.
+  measurer.style.fontSize = minFontSize + 'px';
+  // Restore style values.
+  setStyle(originalStyle);
 
-	return minFontSize;
+  return minFontSize;
 }
 
 export default calculateFitTextFontSize;

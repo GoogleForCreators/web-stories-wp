@@ -48,71 +48,71 @@ const Space = styled.div`
 `;
 
 function PreviewButton() {
-	const {
-		state: { meta: { isSaving }, story: { link } },
-	} = useStory();
+  const {
+    state: { meta: { isSaving }, story: { link } },
+  } = useStory();
 
-	/**
-	 * Open a preview of the story in current window.
-	 */
-	const openPreviewLink = () => {
-		const previewLink = addQueryArgs( link, { preview: 'true' } );
-		window.open( previewLink, '_blank' );
-	};
-	return (
-		<Outline onClick={ openPreviewLink } isDisabled={ isSaving }>
-			{ __( 'Preview', 'web-stories' ) }
-		</Outline>
-	);
+  /**
+   * Open a preview of the story in current window.
+   */
+  const openPreviewLink = () => {
+    const previewLink = addQueryArgs(link, { preview: 'true' });
+    window.open(previewLink, '_blank');
+  };
+  return (
+    <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+      { __('Preview', 'web-stories') }
+    </Outline>
+  );
 }
 
 function Publish() {
-	const {
-		state: { meta: { isSaving }, story: { status } },
-		actions: { saveStory },
-	} = useStory();
+  const {
+    state: { meta: { isSaving }, story: { status } },
+    actions: { saveStory },
+  } = useStory();
 
-	let text;
+  let text;
 
-	switch ( status ) {
-		case 'publish':
-		case 'private':
-			text = __( 'Update', 'web-stories' );
-			break;
-		case 'future':
-			text = __( 'Scheduled', 'web-stories' );
-			break;
-		default:
-			text = __( 'Save draft', 'web-stories' );
-			break;
-	}
+  switch (status) {
+  case 'publish':
+  case 'private':
+    text = __('Update', 'web-stories');
+    break;
+  case 'future':
+    text = __('Scheduled', 'web-stories');
+    break;
+  default:
+    text = __('Save draft', 'web-stories');
+    break;
+  }
 
-	return (
-		<Primary onClick={ saveStory } isDisabled={ isSaving }>
-			{ text }
-		</Primary>
-	);
+  return (
+    <Primary onClick={saveStory} isDisabled={isSaving}>
+      { text }
+    </Primary>
+  );
 }
 
 function Loading() {
-	const {
-		state: { isSaving },
-	} = useStory();
+  const {
+    state: { isSaving },
+  } = useStory();
 
-	return ( isSaving ) ? <Spinner /> : <Space />;
+  return (isSaving) ? <Spinner /> : <Space />;
 }
 
 function Buttons() {
-	return (
-		<ButtonList>
-			<List>
-				<Loading />
-				<PreviewButton />
-				<Space />
-				<Publish />
-				<Space />
-			</List>
-		</ButtonList>
-	);
+  return (
+    <ButtonList>
+      <List>
+        <Loading />
+        <PreviewButton />
+        <Space />
+        <Publish />
+        <Space />
+      </List>
+    </ButtonList>
+  );
 }
 export default Buttons;

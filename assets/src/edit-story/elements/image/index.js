@@ -33,9 +33,9 @@ export const hasEditMode = true;
 export const editModeGrayout = true;
 
 export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FULLBLEED,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
+  PanelTypes.SCALE,
+  PanelTypes.ROTATION_ANGLE,
+  PanelTypes.FULLBLEED,
 ];

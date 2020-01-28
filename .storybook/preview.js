@@ -33,33 +33,33 @@ import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
 const wp = {};
 window.wp = window.wp || wp;
 window.wp.media = {
-	controller: {
-		Library: {
-			prototype: {
-				defaults: {},
-			},
-		},
-	},
+  controller: {
+    Library: {
+      prototype: {
+        defaults: {},
+      },
+    },
+  },
 };
 
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
-addParameters( {
-	viewport: {
-		viewports: {
-			ipad,
-			ipad10p,
-			ipad12p,
-		},
-	},
-} );
+addParameters({
+  viewport: {
+    viewports: {
+      ipad,
+      ipad10p,
+      ipad12p,
+    },
+  },
+});
 
-addDecorator( withA11y );
-addDecorator( withKnobs );
+addDecorator(withA11y);
+addDecorator(withKnobs);
 
-addDecorator( ( story ) => (
-	<ThemeProvider theme={ theme }>
-		<GlobalStyle />
-		{ story() }
-	</ThemeProvider>
-) );
+addDecorator((story) => (
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    { story() }
+  </ThemeProvider>
+));

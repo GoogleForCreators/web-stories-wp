@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import {
-	Popover,
-	SlotFillProvider,
+  Popover,
+  SlotFillProvider,
 } from '@wordpress/components';
 
 /**
@@ -41,41 +41,41 @@ import { useFont, FontProvider } from './font';
 import { useStory, StoryProvider } from './story';
 import Layout from './layout';
 
-function App( { config } ) {
-	const { storyId } = config;
-	return (
-		<SlotFillProvider>
-			<ThemeProvider theme={ theme }>
-				<ConfigProvider config={ config }>
-					<APIProvider>
-						<HistoryProvider size={ 50 }>
-							<StoryProvider storyId={ storyId }>
-								<FontProvider>
-									<GlobalStyle />
-									<CropMoveableGlobalStyle />
-									<ModalGlobalStyle />
-									<Layout />
-									<Popover.Slot />
-								</FontProvider>
-							</StoryProvider>
-						</HistoryProvider>
-					</APIProvider>
-				</ConfigProvider>
-			</ThemeProvider>
-		</SlotFillProvider>
-	);
+function App({ config }) {
+  const { storyId } = config;
+  return (
+    <SlotFillProvider>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider config={config}>
+          <APIProvider>
+            <HistoryProvider size={50}>
+              <StoryProvider storyId={storyId}>
+                <FontProvider>
+                  <GlobalStyle />
+                  <CropMoveableGlobalStyle />
+                  <ModalGlobalStyle />
+                  <Layout />
+                  <Popover.Slot />
+                </FontProvider>
+              </StoryProvider>
+            </HistoryProvider>
+          </APIProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </SlotFillProvider>
+  );
 }
 
 App.propTypes = {
-	config: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 export default App;
 
 export {
-	useHistory,
-	useAPI,
-	useStory,
-	useConfig,
-	useFont,
+  useHistory,
+  useAPI,
+  useStory,
+  useConfig,
+  useFont,
 };

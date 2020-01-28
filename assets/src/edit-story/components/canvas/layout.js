@@ -33,7 +33,7 @@ import PointerEventsCss from '../../utils/pointerEventsCss';
 // @todo: the menu and carousel heights are not correct until we make a var-size
 // page.
 const Layer = styled.div`
-	${ PointerEventsCss }
+	${PointerEventsCss}
 
 	position: absolute;
 	top: 0;
@@ -43,20 +43,20 @@ const Layer = styled.div`
 
 	display: grid;
 	grid:
-		"head      head      head      head      head    " ${ HEADER_HEIGHT }px
+		"head      head      head      head      head    " ${HEADER_HEIGHT}px
 		".         .         .         .         .       " 1fr
-		".         prev      page      next      .       " ${ PAGE_HEIGHT }px
+		".         prev      page      next      .       " ${PAGE_HEIGHT}px
 		".         .         menu      .         .       " 48px
 		".         .         .         .         .       " 1fr
 		"carousel  carousel  carousel  carousel  carousel" 65px
-		/ 1fr ${ PAGE_NAV_WIDTH }px ${ PAGE_WIDTH }px ${ PAGE_NAV_WIDTH }px 1fr;
+		/ 1fr ${PAGE_NAV_WIDTH}px ${PAGE_WIDTH}px ${PAGE_NAV_WIDTH}px 1fr;
 `;
 
 const Area = styled.div`
-	${ PointerEventsCss }
+	${PointerEventsCss}
 
-	grid-area: ${ ( { area } ) => area };
-	overflow: ${ ( { overflow } ) => overflow ? 'visible' : 'hidden' };
+	grid-area: ${({ area }) => area};
+	overflow: ${({ overflow }) => overflow ? 'visible' : 'hidden'};
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -64,30 +64,30 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled( Area ).attrs( { area: 'page', overflow: true } )``;
+const PageArea = styled(Area).attrs({ area: 'page', overflow: true })``;
 
-const HeadArea = styled( Area ).attrs( { area: 'head', overflow: false } )``;
+const HeadArea = styled(Area).attrs({ area: 'head', overflow: false })``;
 
-const MenuArea = styled( Area ).attrs( { area: 'menu', overflow: false } )``;
+const MenuArea = styled(Area).attrs({ area: 'menu', overflow: false })``;
 
-const NavArea = styled( Area ).attrs( { overflow: false } )`
+const NavArea = styled(Area).attrs({ overflow: false })`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 `;
 
-const NavPrevArea = styled( NavArea ).attrs( { area: 'prev' } )``;
+const NavPrevArea = styled(NavArea).attrs({ area: 'prev' })``;
 
-const NavNextArea = styled( NavArea ).attrs( { area: 'next' } )``;
+const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
 
-const CarouselArea = styled( Area ).attrs( { area: 'carousel', overflow: false } )``;
+const CarouselArea = styled(Area).attrs({ area: 'carousel', overflow: false })``;
 
 export {
-	Layer,
-	PageArea,
-	HeadArea,
-	MenuArea,
-	NavPrevArea,
-	NavNextArea,
-	CarouselArea,
+  Layer,
+  PageArea,
+  HeadArea,
+  MenuArea,
+  NavPrevArea,
+  NavNextArea,
+  CarouselArea,
 };

@@ -33,23 +33,23 @@ import useDoubleClick from '../../utils/useDoubleClick';
 import { ElementFillContent } from '../shared';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ElementFillContent}
 `;
 
-function ImageFrame( { id } ) {
-	const {
-		actions: { setEditingElement },
-	} = useCanvas();
-	const handleSingleClick = useCallback( () => {}, [] );
-	const handleDoubleClick = useCallback( () => setEditingElement( id ), [ id, setEditingElement ] );
-	const getHandleClick = useDoubleClick( handleSingleClick, handleDoubleClick );
-	return (
-		<Element onClick={ getHandleClick( id ) } />
-	);
+function ImageFrame({ id }) {
+  const {
+    actions: { setEditingElement },
+  } = useCanvas();
+  const handleSingleClick = useCallback(() => {}, []);
+  const handleDoubleClick = useCallback(() => setEditingElement(id), [id, setEditingElement]);
+  const getHandleClick = useDoubleClick(handleSingleClick, handleDoubleClick);
+  return (
+    <Element onClick={getHandleClick(id)} />
+  );
 }
 
 ImageFrame.propTypes = {
-	id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default ImageFrame;

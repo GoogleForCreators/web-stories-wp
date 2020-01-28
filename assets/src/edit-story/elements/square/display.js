@@ -24,26 +24,26 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import {
-	ElementFillContent,
-	ElementWithBackgroundColor,
+  ElementFillContent,
+  ElementWithBackgroundColor,
 } from '../shared';
 
 const Element = styled.div`
-	${ ElementFillContent }
-	${ ElementWithBackgroundColor }
+	${ElementFillContent}
+	${ElementWithBackgroundColor}
 `;
 
-function SquareDisplay( { backgroundColor } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
+function SquareDisplay({ backgroundColor }) {
+  const props = {
+    backgroundColor,
+  };
+  return (
+    <Element {...props} />
+  );
 }
 
 SquareDisplay.propTypes = {
-	backgroundColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
 };
 
 export default SquareDisplay;

@@ -41,8 +41,8 @@ const GRID_GAP = 20;
 const Wrapper = styled.div`
 	position: relative;
 	display: grid;
-	grid-template-columns: ${ ( { scale } ) => `repeat(auto-fit, minmax(${ scale * PAGE_WIDTH }px, max-content))` };
-	grid-gap: ${ GRID_GAP }px;
+	grid-template-columns: ${({ scale }) => `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
+	grid-gap: ${GRID_GAP}px;
 	justify-content: center;
 	justify-items: center;
 	align-items: center;
@@ -59,7 +59,7 @@ const rangeThumb = css`
 	width: 28px;
 	height: 28px;
 	border-radius: 100%;
-	background: ${ ( { theme } ) => theme.colors.fg.v1 };
+	background: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const rangeTrack = css`
@@ -71,9 +71,9 @@ const rangeTrack = css`
 `;
 
 // Lots of repetition to avoid browsers dropping unknown selectors.
-const RangeInput = styled.input.attrs( () => ( {
-	type: 'range',
-} ) )`
+const RangeInput = styled.input.attrs(() => ({
+  type: 'range',
+}))`
 	appearance: none;
 	background: transparent;
 	display: block;
@@ -81,29 +81,29 @@ const RangeInput = styled.input.attrs( () => ( {
 	margin: 0 20px;
 
 	&::-webkit-slider-thumb {
-		${ rangeThumb }
+		${rangeThumb}
 		appearance: none;
 		margin-top: -12px;
 	}
 
 	&::-moz-range-thumb {
-		${ rangeThumb }
+		${rangeThumb}
 	}
 
 	&::-ms-thumb {
-		${ rangeThumb }
+		${rangeThumb}
 	}
 
 	&::-webkit-slider-runnable-track {
-		${ rangeTrack }
+		${rangeTrack}
 	}
 
 	&::-moz-range-track {
-		${ rangeTrack }
+		${rangeTrack}
 	}
 
 	&::-ms-track {
-		${ rangeTrack }
+		${rangeTrack}
 	}
 `;
 
@@ -112,72 +112,66 @@ const Rectangle = styled.div`
 	justify-content: center;
 	align-items: center;
 	font-size: 32px;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	color: ${({ theme }) => theme.colors.fg.v1};
 
 	svg {
-		width: ${ ( { isLarge } ) => isLarge ? '20px' : '12px' };
+		width: ${({ isLarge }) => isLarge ? '20px' : '12px'};
 		height: auto;
 		shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
 	}
 `;
 
-function RangeControl( { value, onChange } ) {
-	return (
-		<RangeInputWrapper>
-			<Rectangle>
-				<RectangleIcon />
-			</Rectangle>
-			<RangeInput
-				min="1"
-				max="3"
-				step="1"
-				value={ value }
-				onChange={ ( evt ) => onChange( Number( evt.target.value ) ) }
+function RangeControl({ value, onChange }) {
+  return (
+    <RangeInputWrapper>
+      <Rectangle>
+        <RectangleIcon />
+      </Rectangle>
+      <RangeInput
+        min="1"
+        max="3"
+        step="1"
+        value={value}
+        onChange={(evt) => onChange(Number(evt.target.value))}
 			/>
-			<Rectangle isLarge>
-				<RectangleIcon />
-			</Rectangle>
-		</RangeInputWrapper>
-	);
+      <Rectangle isLarge>
+        <RectangleIcon />
+      </Rectangle>
+    </RangeInputWrapper>
+  );
 }
 
 RangeControl.propTypes = {
-	value: PropTypes.number.isRequired,
-	onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 function GridView() {
-	const { state: { pages, currentPageIndex } } = useStory();
-	const [ zoomLevel, setZoomLevel ] = useState( 2 );
+  const { state: { pages, currentPageIndex } } = useStory();
+  const [zoomLevel, setZoomLevel] = useState(2);
 
-	return (
-		<>
-			<RangeControl
-				value={ zoomLevel }
-				onChange={ setZoomLevel }
+  return (
+    <>
+      <RangeControl
+        value={zoomLevel}
+        onChange={setZoomLevel}
 			/>
-			<Wrapper scale={ zoomLevel }>
-				{ pages.map( ( page, index ) => {
-					const isCurrentPage = index === currentPageIndex;
-
-					return (
-						<DraggablePage
-							key={ index }
-							ariaLabel={ isCurrentPage ?
-								sprintf( __( 'Page %s (current page)', 'web-stories' ), index + 1 ) :
-								sprintf( __( 'Page %s', 'web-stories' ), index + 1 )
-							}
-							isActive={ isCurrentPage }
-							pageIndex={ index }
-							width={ zoomLevel * PAGE_WIDTH }
-							height={ zoomLevel * PAGE_HEIGHT }
-							dragIndicatorOffset={ GRID_GAP / 2 }
-						/>
-					);
-				} ) }
-			</Wrapper>
-		</>
-	);
+      <Wrapper scale={zoomLevel}>
+        {pages.map((page, index) => {
+          const isCurrentPage = index === currentPageIndex;
+          return (
+            <DraggablePage
+              key={index}
+              ariaLabel={isCurrentPage ? sprintf(__('Page %s (current page)', 'web-stories'), index + 1) : sprintf(__('Page %s', 'web-stories'), index + 1)}
+              isActive={isCurrentPage}
+              pageIndex={index}
+              width={zoomLevel * PAGE_WIDTH}
+              height={zoomLevel * PAGE_HEIGHT}
+              dragIndicatorOffset={GRID_GAP / 2} />);
+        })}
+      </Wrapper>
+    </>
+  );
 }
 
 export default GridView;

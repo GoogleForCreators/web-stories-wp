@@ -41,12 +41,12 @@ const MAX_SCALE = 400;
 
 const Container = styled.div`
 	position: absolute;
-	left: ${ ( { x, width } ) => `${ x + ( ( width - Math.max( width, MIN_WIDTH ) ) / 2 ) }px` };
-	top: ${ ( { y, height } ) => `${ y + height + OFFSET_Y }px` };
-	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
-	height: ${ HEIGHT }px;
+	left: ${({ x, width }) => `${x + ((width - Math.max(width, MIN_WIDTH)) / 2)}px`};
+	top: ${({ y, height }) => `${y + height + OFFSET_Y}px`};
+	width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
+	height: ${HEIGHT}px;
 
-	background: ${ ( { theme } ) => theme.colors.bg.v7 };
+	background: ${({ theme }) => theme.colors.bg.v7};
 	border-radius: 4px;
 
 	display: flex;
@@ -56,12 +56,12 @@ const Container = styled.div`
 	padding: 0 4px;
 `;
 
-const Range = styled.input.attrs( {
-	type: 'range',
-	min: 100,
-	max: MAX_SCALE,
-	step: 10,
-} )`
+const Range = styled.input.attrs({
+  type: 'range',
+  min: 100,
+  max: MAX_SCALE,
+  step: 10,
+})`
 	flex: 1 1;
 	margin: 4px;
 	min-width: 100px;
@@ -80,30 +80,30 @@ const ResetButton = styled.button`
 	border: none;
 `;
 
-function ScalePanel( { setProperties, width, height, x, y, scale } ) {
-	return (
-		<InOverlay zIndex={ Z_INDEX_CANVAS.FLOAT_PANEL } pointerEvents={ true } >
-			<Container x={ x } y={ y } width={ width } height={ height } >
-				<Range
-					value={ scale }
-					onChange={ ( evt ) => setProperties( { scale: evt.target.valueAsNumber } ) }
-				/>
-				<ResetButton
-					onClick={ () => setProperties( { scale: 100 } ) }>
-					{ __( 'Reset', 'web-stories' ) }
-				</ResetButton>
-			</Container>
-		</InOverlay>
-	);
+function ScalePanel({ setProperties, width, height, x, y, scale }) {
+  return (
+    <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents={true} >
+      <Container x={x} y={y} width={width} height={height} >
+        <Range
+          value={scale}
+          onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
+        />
+        <ResetButton
+          onClick={() => setProperties({ scale: 100 })}>
+          { __('Reset', 'web-stories') }
+        </ResetButton>
+      </Container>
+    </InOverlay>
+  );
 }
 
 ScalePanel.propTypes = {
-	setProperties: PropTypes.func.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	scale: PropTypes.number.isRequired,
+  setProperties: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  scale: PropTypes.number.isRequired,
 };
 
 export default ScalePanel;

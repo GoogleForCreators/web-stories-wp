@@ -29,35 +29,35 @@ import { __ } from '@wordpress/i18n';
  */
 import { Panel, Title, InputGroup, getCommonValue } from './shared';
 
-function TextPanel( { selectedElements, onSetProperties } ) {
-	const content = getCommonValue( selectedElements, 'content' );
-	const [ state, setState ] = useState( { content } );
-	useEffect( () => {
-		setState( { content } );
-	}, [ content ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Text', 'web-stories' ) }
-			</Title>
-			<InputGroup
-				type="text"
-				label={ __( 'Text content', 'web-stories' ) }
-				value={ state.content }
-				isMultiple={ content === '' }
-				onChange={ ( value ) => setState( { ...state, content: value } ) }
-			/>
-		</Panel>
-	);
+function TextPanel({ selectedElements, onSetProperties }) {
+  const content = getCommonValue(selectedElements, 'content');
+  const [state, setState] = useState({ content });
+  useEffect(() => {
+    setState({ content });
+  }, [content]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <Panel onSubmit={handleSubmit}>
+      <Title>
+        { __('Text', 'web-stories') }
+      </Title>
+      <InputGroup
+        type="text"
+        label={__('Text content', 'web-stories')}
+        value={state.content}
+        isMultiple={content === ''}
+        onChange={(value) => setState({ ...state, content: value })}
+      />
+    </Panel>
+  );
 }
 
 TextPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default TextPanel;

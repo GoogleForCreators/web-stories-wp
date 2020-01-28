@@ -42,42 +42,42 @@ const HEIGHT = 28;
 const Wrapper = styled.div`
 	display: flex;
 	align-items: flex-end;
-	height: ${ 20 + HEIGHT }px;
+	height: ${20 + HEIGHT}px;
 `;
 
 const Box = styled.div`
-	background-color: ${ ( { theme } ) => theme.colors.bg.v1 };
+	background-color: ${({ theme }) => theme.colors.bg.v1};
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	height: ${ HEIGHT }px;
+	height: ${HEIGHT}px;
 	width: 100%;
 `;
 
 const PageCount = styled.div`
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	color: ${({ theme }) => theme.colors.fg.v1};
 	width: 62px;
-	font-family: ${ ( { theme } ) => theme.fonts.body1.family };
-	font-size: ${ ( { theme } ) => theme.fonts.body1.size };
+	font-family: ${({ theme }) => theme.fonts.body1.family};
+	font-size: ${({ theme }) => theme.fonts.body1.size};
 	line-height: 24px;
 `;
 
 const Options = styled.div`
 	display: flex;
 	align-items: center;
-	color: ${ ( { theme } ) => theme.colors.fg.v2 };
+	color: ${({ theme }) => theme.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	background-color: ${({ theme }) => theme.colors.fg.v1};
 	opacity: .3;
-	height: ${ HEIGHT }px;
+	height: ${HEIGHT}px;
 	width: 1px;
 `;
 
 const Space = styled.div`
-	width: ${ ( { isDouble } ) => isDouble ? 20 : 10 }px;
+	width: ${({ isDouble }) => isDouble ? 20 : 10}px;
 `;
 
 const Icon = styled.button`
@@ -86,12 +86,12 @@ const Icon = styled.button`
 	border: 0;
 	padding: 0;
 	display: block;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	color: ${({ theme }) => theme.colors.fg.v1};
 
-	${ ( { disabled } ) => disabled && `
+	${({ disabled }) => disabled && `
 	opacity: .3;
 	pointer-events: none;
-	` }
+	`}
 
 	svg {
 		width: 28px;
@@ -101,76 +101,76 @@ const Icon = styled.button`
 `;
 
 function PageMenu() {
-	const { state: { canUndo, canRedo }, actions: { undo, redo } } = useHistory();
-	const { state: { currentPageNumber, currentPage }, actions: { deleteCurrentPage, addPage } } = useStory();
+  const { state: { canUndo, canRedo }, actions: { undo, redo } } = useHistory();
+  const { state: { currentPageNumber, currentPage }, actions: { deleteCurrentPage, addPage } } = useStory();
 
-	const handleDeletePage = useCallback(
-		() => deleteCurrentPage(),
-		[ deleteCurrentPage ],
-	);
+  const handleDeletePage = useCallback(
+    () => deleteCurrentPage(),
+    [deleteCurrentPage],
+  );
 
-	const handleAddPage = useCallback(
-		() => addPage( { page: createPage() } ),
-		[ addPage ],
-	);
+  const handleAddPage = useCallback(
+    () => addPage({ page: createPage() }),
+    [addPage],
+  );
 
-	const handleDuplicatePage = useCallback(
-		() => addPage( { page: createPage( currentPage ) } ),
-		[ addPage, currentPage ],
-	);
+  const handleDuplicatePage = useCallback(
+    () => addPage({ page: createPage(currentPage) }),
+    [addPage, currentPage],
+  );
 
-	const handleUndo = useCallback(
-		() => undo(),
-		[ undo ],
-	);
+  const handleUndo = useCallback(
+    () => undo(),
+    [undo],
+  );
 
-	const handleRedo = useCallback(
-		() => redo(),
-		[ redo ],
-	);
+  const handleRedo = useCallback(
+    () => redo(),
+    [redo],
+  );
 
-	return (
-		<Wrapper>
-			<Box>
-				<Options>
-					<PageCount>
-						{ `Page ${ currentPageNumber }` }
-					</PageCount>
-					<Space />
-					<Icon onClick={ handleDeletePage }>
-						<Delete />
-					</Icon>
-					<Space />
-					<Icon onClick={ handleDuplicatePage }>
-						<Duplicate />
-					</Icon>
-					<Space />
-					<Icon onClick={ handleAddPage }>
-						<Add />
-					</Icon>
-					<Space />
-					<Divider />
-					<Space />
-					<Icon disabled={ ! canUndo } onClick={ handleUndo }>
-						<Undo />
-					</Icon>
-					<Space />
-					<Icon disabled={ ! canRedo } onClick={ handleRedo }>
-						<Redo />
-					</Icon>
-				</Options>
-				<Options>
-					<Icon disabled>
-						<Layout />
-					</Icon>
-					<Space isDouble />
-					<Icon disabled>
-						<Text />
-					</Icon>
-				</Options>
-			</Box>
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      <Box>
+        <Options>
+          <PageCount>
+            { `Page ${currentPageNumber}` }
+          </PageCount>
+          <Space />
+          <Icon onClick={handleDeletePage}>
+            <Delete />
+          </Icon>
+          <Space />
+          <Icon onClick={handleDuplicatePage}>
+            <Duplicate />
+          </Icon>
+          <Space />
+          <Icon onClick={handleAddPage}>
+            <Add />
+          </Icon>
+          <Space />
+          <Divider />
+          <Space />
+          <Icon disabled={! canUndo} onClick={handleUndo}>
+            <Undo />
+          </Icon>
+          <Space />
+          <Icon disabled={! canRedo} onClick={handleRedo}>
+            <Redo />
+          </Icon>
+        </Options>
+        <Options>
+          <Icon disabled>
+            <Layout />
+          </Icon>
+          <Space isDouble />
+          <Icon disabled>
+            <Text />
+          </Icon>
+        </Options>
+      </Box>
+    </Wrapper>
+  );
 }
 
 export default PageMenu;

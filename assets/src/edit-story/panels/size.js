@@ -30,73 +30,73 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { Panel, Title, InputGroup, getCommonValue } from './shared';
 
-function SizePanel( { selectedElements, onSetProperties } ) {
-	const width = getCommonValue( selectedElements, 'width' );
-	const height = getCommonValue( selectedElements, 'height' );
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { width, height } );
-	const [ lockRatio, setLockRatio ] = useState( true );
-	useEffect( () => {
-		setState( { width, height } );
-	}, [ width, height ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Size', 'web-stories' ) }
-			</Title>
-			<InputGroup
-				label={ __( 'Width', 'web-stories' ) }
-				value={ state.width }
-				isMultiple={ width === '' }
-				onChange={ ( value ) => {
-					const ratio = width / height;
-					const newWidth = isNaN( value ) || value === '' ? '' : parseFloat( value );
-					setState( {
-						...state,
-						width: newWidth,
-						height: typeof newWidth === 'number' && lockRatio ? newWidth / ratio : height,
-					} );
-				} }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
-			/>
-			<InputGroup
-				label={ __( 'Height', 'web-stories' ) }
-				value={ state.height }
-				isMultiple={ height === '' }
-				onChange={ ( value ) => {
-					const ratio = width / height;
-					const newHeight = isNaN( value ) || value === '' ? '' : parseFloat( value );
-					setState( {
-						...state,
-						height: newHeight,
-						width: typeof newHeight === 'number' && lockRatio ? newHeight * ratio : width,
-					} );
-				} }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
-			/>
-			<InputGroup
-				type="checkbox"
-				label={ __( 'Keep ratio', 'web-stories' ) }
-				value={ lockRatio }
-				isMultiple={ false }
-				onChange={ ( value ) => {
-					setLockRatio( value );
-				} }
-				disabled={ isFullbleed }
-			/>
-		</Panel>
-	);
+function SizePanel({ selectedElements, onSetProperties }) {
+  const width = getCommonValue(selectedElements, 'width');
+  const height = getCommonValue(selectedElements, 'height');
+  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
+  const [state, setState] = useState({ width, height });
+  const [lockRatio, setLockRatio] = useState(true);
+  useEffect(() => {
+    setState({ width, height });
+  }, [width, height]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <Panel onSubmit={handleSubmit}>
+      <Title>
+        {__('Size', 'web-stories')}
+      </Title>
+      <InputGroup
+        label={__('Width', 'web-stories')}
+        value={state.width}
+        isMultiple={width === ''}
+        onChange={(value) => {
+          const ratio = width / height;
+          const newWidth = isNaN(value) || value === '' ? '' : parseFloat(value);
+          setState({
+            ...state,
+            width: newWidth,
+            height: typeof newWidth === 'number' && lockRatio ? newWidth / ratio : height,
+          });
+        }}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFullbleed}
+      />
+      <InputGroup
+        label={__('Height', 'web-stories')}
+        value={state.height}
+        isMultiple={height === ''}
+        onChange={(value) => {
+          const ratio = width / height;
+          const newHeight = isNaN(value) || value === '' ? '' : parseFloat(value);
+          setState({
+            ...state,
+            height: newHeight,
+            width: typeof newHeight === 'number' && lockRatio ? newHeight * ratio : width,
+          });
+        }}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFullbleed}
+      />
+      <InputGroup
+        type="checkbox"
+        label={__('Keep ratio', 'web-stories')}
+        value={lockRatio}
+        isMultiple={false}
+        onChange={(value) => {
+          setLockRatio(value);
+        }}
+        disabled={isFullbleed}
+      />
+    </Panel>
+  );
 }
 
 SizePanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default SizePanel;

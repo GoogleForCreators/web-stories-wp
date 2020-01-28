@@ -20,11 +20,11 @@
 import { __ } from '@wordpress/i18n';
 
 function PrepublishInspector() {
-	return (
-		<h2>
-			{ __( 'Prepublish', 'web-stories' ) }
-		</h2>
-	);
+  return (
+    <h2>
+      { __('Prepublish', 'web-stories') }
+    </h2>
+  );
 }
 
 export default PrepublishInspector;

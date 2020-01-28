@@ -41,28 +41,28 @@ import { Panel, Title } from './shared';
 
 const Delete = styled.a`
 	cursor: pointer;
-	color: ${ ( { theme } ) => theme.colors.action };
+	color: ${({ theme }) => theme.colors.action};
 
 	&:hover {
-		color: ${ ( { theme } ) => theme.colors.danger };
+		color: ${({ theme }) => theme.colors.danger};
 	}
 `;
 
-function ActionsPanel( { deleteSelectedElements } ) {
-	return (
-		<Panel>
-			<Title>
-				{ __( 'Actions', 'web-stories' ) }
-			</Title>
-			<Delete onClick={ deleteSelectedElements } >
-				{ __( 'Remove element', 'web-stories' ) }
-			</Delete>
-		</Panel>
-	);
+function ActionsPanel({ deleteSelectedElements }) {
+  return (
+    <Panel>
+      <Title>
+        { __('Actions', 'web-stories') }
+      </Title>
+      <Delete onClick={deleteSelectedElements} >
+        { __('Remove element', 'web-stories') }
+      </Delete>
+    </Panel>
+  );
 }
 
 ActionsPanel.propTypes = {
-	deleteSelectedElements: PropTypes.func.isRequired,
+  deleteSelectedElements: PropTypes.func.isRequired,
 };
 
 export default ActionsPanel;

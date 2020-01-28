@@ -29,7 +29,7 @@ const Background = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: ${ ( { theme } ) => theme.colors.bg.v1 };
+	background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
 
 const Head = styled.header`
@@ -42,16 +42,16 @@ const ButtonCell = styled.header`
 `;
 
 function HeaderLayout() {
-	return (
-		<Background>
-			<Head>
-				<Title />
-			</Head>
-			<ButtonCell>
-				<Buttons />
-			</ButtonCell>
-		</Background>
-	);
+  return (
+    <Background>
+      <Head>
+        <Title />
+      </Head>
+      <ButtonCell>
+        <Buttons />
+      </ButtonCell>
+    </Background>
+  );
 }
 
 export default HeaderLayout;

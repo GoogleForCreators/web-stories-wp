@@ -27,24 +27,24 @@ import { useCallback } from '@wordpress/element';
  * @param {Array} refs  List of refs to synchronize
  * @return {Function} A callback to be used as `ref` for element.
  */
-function useCombinedRefs( ...refs ) {
-	const setRef = useCallback( ( node ) => {
-		refs.forEach( ( ref ) => {
-			if ( ! ref ) {
-				// Ignore non-existing refs
-				return;
-			}
+function useCombinedRefs(...refs) {
+  const setRef = useCallback((node) => {
+    refs.forEach((ref) => {
+      if (! ref) {
+        // Ignore non-existing refs
+        return;
+      }
 
-			// Set ref value correctly
-			if ( typeof ref === 'function' ) {
-				ref( node );
-			} else {
-				ref.current = node;
-			}
-		} );
-	}, [ refs ] );
+      // Set ref value correctly
+      if (typeof ref === 'function') {
+        ref(node);
+      } else {
+        ref.current = node;
+      }
+    });
+  }, [refs]);
 
-	return setRef;
+  return setRef;
 }
 
 export default useCombinedRefs;

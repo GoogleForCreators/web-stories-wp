@@ -30,7 +30,7 @@ const Layout = styled.div`
 	height: 100%;
 	display: grid;
 	grid:
-		"tabs   " ${ HEADER_HEIGHT }px
+		"tabs   " ${HEADER_HEIGHT}px
 		"library" 1fr
 		/ 1fr;
 `;
@@ -41,23 +41,23 @@ const TabsArea = styled.div`
 
 const LibraryBackground = styled.div`
 	grid-area: library;
-	background-color: ${ ( { theme } ) => theme.colors.bg.v4 };
+	background-color: ${({ theme }) => theme.colors.bg.v4};
 	padding: 1em;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	color: ${({ theme }) => theme.colors.fg.v1};
 	overflow: auto;
 `;
 
 function LibraryLayout() {
-	return (
-		<Layout>
-			<TabsArea>
-				<LibraryTabs />
-			</TabsArea>
-			<LibraryBackground>
-				<LibraryContent />
-			</LibraryBackground>
-		</Layout>
-	);
+  return (
+    <Layout>
+      <TabsArea>
+        <LibraryTabs />
+      </TabsArea>
+      <LibraryBackground>
+        <LibraryContent />
+      </LibraryBackground>
+    </Layout>
+  );
 }
 
 export default LibraryLayout;

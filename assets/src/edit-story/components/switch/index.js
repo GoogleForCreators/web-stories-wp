@@ -40,7 +40,7 @@ const Label = styled.span`
 	text-transform: uppercase;
 `;
 
-const Checkbox = styled.input.attrs( { type: 'checkbox' } )`
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
 	/*
 	Hide checkbox visually but remain accessible to screen readers.
 	Source: https://polished.js.org/docs/#hidevisually
@@ -63,7 +63,7 @@ const Slider = styled.span`
 	height: 14px;
 	position: relative;
 	border-radius: 6px;
-	border: 2px solid ${ ( { theme } ) => theme.colors.fg.v3 };
+	border: 2px solid ${({ theme }) => theme.colors.fg.v3};
 	transition: border-color .2s ease;
 
 	&::after {
@@ -75,58 +75,58 @@ const Slider = styled.span`
 		width: 6px;
 		height: 6px;
 		border-radius: 3px;
-		background-color: ${ ( { theme } ) => theme.colors.fg.v3 };
+		background-color: ${({ theme }) => theme.colors.fg.v3};
 		transition: border-color .2s ease;
 		transition-property: border-color, left, width;
 	}
 
-	${ Checkbox }:checked + & {
-		border-color: ${ ( { theme } ) => theme.colors.action };
+	${Checkbox}:checked + & {
+		border-color: ${({ theme }) => theme.colors.action};
 
 		&::after {
-			background-color: ${ ( { theme } ) => theme.colors.action };
+			background-color: ${({ theme }) => theme.colors.action};
 			left: 11px;
 		}
 	}
 
-	${ Checkbox }:active + &::after {
+	${Checkbox}:active + &::after {
 		width: 9px;
 	}
 
-	${ Checkbox }:active:checked + &::after {
+	${Checkbox}:active:checked + &::after {
 		left: 8px;
 	}
 `;
 
-function Switch( { label, checked, onChange } ) {
-	const [ on, setOn ] = useState( checked );
-	const handleChange = ( evt ) => {
-		setOn( evt.target.checked );
-		if ( onChange ) {
-			onChange( evt.target.checked );
-		}
-	};
-	useEffect( () => setOn( checked ), [ checked ] );
-	return (
-		<Group>
-			<Label>
-				{ label }
-			</Label>
-			<Space />
-			<Checkbox checked={ on } onChange={ handleChange } />
-			<Slider />
-		</Group>
-	);
+function Switch({ label, checked, onChange }) {
+  const [on, setOn] = useState(checked);
+  const handleChange = (evt) => {
+    setOn(evt.target.checked);
+    if (onChange) {
+      onChange(evt.target.checked);
+    }
+  };
+  useEffect(() => setOn(checked), [checked]);
+  return (
+    <Group>
+      <Label>
+        { label }
+      </Label>
+      <Space />
+      <Checkbox checked={on} onChange={handleChange} />
+      <Slider />
+    </Group>
+  );
 }
 
 Switch.propTypes = {
-	label: PropTypes.string.isRequired,
-	checked: PropTypes.bool,
-	onChange: PropTypes.func,
+  label: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 Switch.defaultProps = {
-	checked: false,
+  checked: false,
 };
 
 export default Switch;
