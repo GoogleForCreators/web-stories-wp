@@ -46,15 +46,16 @@ function EditElement( {
 		height,
 		rotationAngle,
 		isFill,
+		isBackground,
 		...rest
 	},
 } ) {
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Edit } = getDefinitionForType( type );
 
-	const box = getBox( { x, y, width, height, rotationAngle, isFill } );
+	const box = getBox( { x, y, width, height, rotationAngle, isFill, isBackground } );
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const props = { ...box, ...rest, id };
+	const props = { ...box, ...rest, isFill, isBackground, id };
 
 	return (
 		<Wrapper

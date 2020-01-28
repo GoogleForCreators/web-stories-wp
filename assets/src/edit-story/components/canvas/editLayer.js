@@ -54,6 +54,11 @@ function EditLayer( {} ) {
 
 	const { editModeGrayout } = getDefinitionForType( editingElement.type );
 
+	const isBackground = editingElement.id === currentPage.backgroundElementId;
+	if ( isBackground ) {
+		editingElement.isBackground = isBackground;
+	}
+
 	return (
 		<LayerWithGrayout grayout={ editModeGrayout } pointerEvents={ false }>
 			<EditPageArea>

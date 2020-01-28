@@ -70,7 +70,7 @@ const CropImg = styled.img`
 	${ ImageWithScale }
 `;
 
-function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, isFill } ) {
+function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, isFill, isBackground } ) {
 	const [ fullImage, setFullImage ] = useState( null );
 	const [ croppedImage, setCroppedImage ] = useState( null );
 	const [ cropBox, setCropBox ] = useState( null );
@@ -88,8 +88,7 @@ function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, fo
 			<CropBox ref={ setCropBox }>
 				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
 			</CropBox>
-
-			{ ! isFill && cropBox && croppedImage && (
+			{ ! isFill && ! isBackground && cropBox && croppedImage && (
 				<EditCropMovable
 					setProperties={ setProperties }
 					cropBox={ cropBox }
@@ -140,6 +139,7 @@ ImageEdit.propTypes = {
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
+	isBackground: PropTypes.bool,
 	isFill: PropTypes.bool,
 	scale: PropTypes.number,
 	focalX: PropTypes.number,

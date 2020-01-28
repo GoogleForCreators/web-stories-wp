@@ -44,7 +44,7 @@ function SingleSelectionMovable( {
 	const moveable = useRef();
 	const [ isResizingFromCorner, setIsResizingFromCorner ] = useState( true );
 
-	const { actions: { updateSelectedElements } } = useStory();
+	const { actions: { updateSelectedElements }, state: { currentPage } } = useStory();
 	const { actions: { pushTransform } } = useCanvas();
 
 	const latestEvent = useRef();
@@ -112,14 +112,15 @@ function SingleSelectionMovable( {
 	const isTextElement = 'text' === selectedElement.type;
 	const shouldAdjustFontSize = isTextElement && selectedElement.content.length && isResizingFromCorner;
 
+	const actionsEnabled = ! selectedElement.isFill && selectedElement.id !== currentPage.backgroundElementId;
 	return (
 		<Movable
 			zIndex={ 0 }
 			ref={ moveable }
 			target={ targetEl }
-			draggable={ ! selectedElement.isFill }
-			resizable={ ! selectedElement.isFill }
-			rotatable={ ! selectedElement.isFill }
+			draggable={ actionsEnabled }
+			resizable={ actionsEnabled }
+			rotatable={ actionsEnabled }
 			onDrag={ ( { target, beforeTranslate } ) => {
 				frame.translate = beforeTranslate;
 				setTransformStyle( target );
