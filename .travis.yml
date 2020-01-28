@@ -127,7 +127,7 @@ jobs:
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
-      php: 7.4
+      php: 7.3
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
