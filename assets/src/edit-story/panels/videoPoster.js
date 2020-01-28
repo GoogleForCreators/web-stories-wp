@@ -22,7 +22,7 @@ const ButtonCSS = css`
 `;
 const Img = styled.img`
 	width: 100%;
-	max-height: 300px
+	max-height: 300px;
 `;
 
 function VideoPosterPanel( { selectedElements, onSetProperties } ) {
