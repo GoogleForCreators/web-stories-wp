@@ -5,6 +5,7 @@
 assets/src
 bin
 build
+docs
 node_modules
 tests
 .browserslistrc
@@ -22,6 +23,7 @@ tests
 .travis_deploy_key.enc
 babel.config.js
 codecov.yml
+CONTRIBUTING.md
 composer.json
 composer.lock
 package.json
