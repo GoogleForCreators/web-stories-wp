@@ -32,12 +32,13 @@ import { getCommonAttributes } from '../shared';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFill } ) {
+function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFill, isBackground } ) {
+	const displayFull = isFill || isBackground;
 	const props = {
 		layout: 'fill',
 		src,
 		style: {
-			objectFit: isFill ? 'cover' : null,
+			objectFit: displayFull ? 'cover' : null,
 			width: '100%',
 			height: '100%',
 		},
@@ -47,7 +48,7 @@ function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFill } )
 	};
 	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
 	// @todo This is missing focal point handling which will be resolved separately.
-	if ( isFill ) {
+	if ( displayFull ) {
 		style.top = 0;
 		style.left = 0;
 		style.width = '100%';
@@ -70,6 +71,7 @@ ImagePreview.propTypes = {
 	y: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
 	isFill: PropTypes.bool,
+	isBackground: PropTypes.bool,
 };
 
 export default ImagePreview;
