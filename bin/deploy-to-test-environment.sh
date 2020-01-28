@@ -84,11 +84,11 @@ cd "$project_dir"
 echo "Building plugin"
 
 npm install --silent
-composer update --no-dev --optimize-autoloader --quiet
+composer update --no-dev --optimize-autoloader
 
-npm run build --silent
+npm run build
 
-unzip -oq build/web-stories.zip -d build/dist
+unzip -o build/web-stories.zip -d build/dist
 
 rsync -avz --delete ./build/dist/web-stories-wp/ "$repo_dir/wp-content/plugins/web-stories/"
 git --no-pager log -1 --format="Build Web Stories plugin at %h: %s" > /tmp/commit-message.txt

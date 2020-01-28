@@ -50,9 +50,11 @@ install:
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
       # WP-CLI is needed for building the plugin in the deploy step.
+      echo "Installing WP-CLI"
       curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
       chmod +x wp-cli.phar
       mv wp-cli.phar $HOME/wp
+      export PATH="$HOME:$PATH"
     fi
 
 before_script:
@@ -122,6 +124,7 @@ jobs:
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
+      php: 7.4
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
