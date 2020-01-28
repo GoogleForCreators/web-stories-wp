@@ -81,15 +81,21 @@ fi
 # Install and build.
 cd "$project_dir"
 
-echo "Building plugin"
+echo "Starting build process..."
 
+echo "Installing npm dependencies"
 npm install --silent
-composer update --no-dev --optimize-autoloader
 
+#echo "Removing non-development composer dependencies"
+#composer update --no-dev --optimize-autoloader
+
+echo "Building plugin"
 npm run build
 
+echo "Unzipping dist archive"
 unzip -o build/web-stories.zip -d build/dist
 
+echo "Moving files to repository"
 rsync -avz --delete ./build/dist/web-stories-wp/ "$repo_dir/wp-content/plugins/web-stories/"
 git --no-pager log -1 --format="Build Web Stories plugin at %h: %s" > /tmp/commit-message.txt
 
@@ -100,7 +106,7 @@ cd "$repo_dir"
 git add -A "wp-content/plugins/web-stories/"
 git commit -F /tmp/commit-message.txt
 
-echo "Pushing new build to remot repository"
+echo "Pushing new build to remote repository"
 git push origin $PANTHEON_BRANCH
 
 echo "View site at http://$PANTHEON_BRANCH-$PANTHEON_SITE.pantheonsite.io/"
