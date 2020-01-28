@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - name: Update list of Google fonts
+      - name: Update list of Google Fonts
         id: vars
         run: |
           npm install
