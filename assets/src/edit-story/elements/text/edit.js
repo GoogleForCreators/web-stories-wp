@@ -32,6 +32,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback } from '@word
  */
 import { useStory, useFont } from '../../app';
 import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
 import {
 	ElementFillContent,
 	ElementWithFont,
@@ -84,13 +85,14 @@ function TextEdit( {
 		height,
 	},
 } ) {
+	const { actions: { dataToEditorY } } = useUnits();
 	const props = {
 		color,
 		backgroundColor,
 		fontFamily,
 		fontFallback,
 		fontStyle,
-		fontSize,
+		fontSize: dataToEditorY( fontSize ),
 		fontWeight,
 		textAlign,
 		letterSpacing,

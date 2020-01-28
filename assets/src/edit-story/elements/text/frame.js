@@ -30,6 +30,7 @@ import { useRef, useEffect, useCallback, useState } from '@wordpress/element';
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
 import {
 	ElementFillContent,
 	ElementWithFont,
@@ -61,11 +62,12 @@ function TextFrame( {
 		fontStyle,
 	},
 } ) {
+	const { actions: { dataToEditorY } } = useUnits();
 	const props = {
 		fontFamily: generateFontFamily( fontFamily, fontFallback ),
 		fontFallback,
 		fontStyle,
-		fontSize,
+		fontSize: dataToEditorY( fontSize ),
 		fontWeight,
 	};
 	const {

@@ -33,10 +33,11 @@ import useCanvas from './useCanvas';
  */
 
 const MENU_HEIGHT = 48;
-const MIN_CAROUSEL_HEIGHT = 65;
+const MIN_CAROUSEL_HEIGHT = 80;
 const ALLOWED_PAGE_SIZES = [
 	[ PAGE_WIDTH, PAGE_HEIGHT ],
 	[ 268, 476 ],
+	[ 223, 396 ],
 ];
 
 // @todo: the menu and carousel heights are not correct until we make a var-size

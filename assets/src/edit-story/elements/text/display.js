@@ -28,6 +28,7 @@ import { useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import { useFont } from '../../app';
+import { useUnits } from '../../units';
 import {
 	ElementFillContent,
 	ElementWithFont,
@@ -63,13 +64,14 @@ function TextDisplay( {
 		textAlign,
 	},
 } ) {
+	const { actions: { dataToEditorY } } = useUnits();
 	const props = {
 		color,
 		backgroundColor,
 		fontFamily: generateFontFamily( fontFamily, fontFallback ),
 		fontFallback,
 		fontStyle,
-		fontSize,
+		fontSize: dataToEditorY( fontSize ),
 		fontWeight,
 		letterSpacing,
 		lineHeight,
