@@ -21,8 +21,8 @@ HOST_PORT=$(dc port $CONTAINER 80 | awk -F : '{printf $2}')
 # responding to requests.
 echo -en $(status_message "Attempting to connect to WordPress...")
 until $(curl -L http://localhost:$HOST_PORT -so - 2>&1 | grep -q "WordPress"); do
-    echo -n '.'
-    sleep 5
+	echo -n '.'
+	sleep 5
 done
 echo ''
 
@@ -41,17 +41,17 @@ fi
 
 # Install WordPress.
 echo -e $(status_message "Installing WordPress...")
-wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT  --quiet
+wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT --quiet
 
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
-wp user create editor editor@example.com --role=editor --user_pass=password --quiet
+wp user create editor editor@example.com --role=editor --user_pass=password --quiet || echo -e "User \"editor\" already exists"
 echo -e $(status_message "Editor created! Username: editor Password: password")
-wp user create author author@example.com --role=author --user_pass=password --quiet
+wp user create author author@example.com --role=author --user_pass=password --quiet || echo -e "User \"author\" already exists"
 echo -e $(status_message "Author created! Username: author Password: password")
-wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
+wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet || echo -e "User \"contributor\" already exists"
 echo -e $(status_message "Contributor created! Username: contributor Password: password")
-wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet
+wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet || echo -e "User \"subscriber\" already exists"
 echo -e $(status_message "Subscriber created! Username: subscriber Password: password")
 
 # Make sure the uploads and upgrade folders exist and we have permissions to add files.
