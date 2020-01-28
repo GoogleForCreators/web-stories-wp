@@ -29,25 +29,44 @@ const Element = styled.video`
 	${ ElementFillContent }
 `;
 
-function VideoDisplay( props ) {
-	const {
-		mimeType,
-		src,
-	} = props;
+function VideoDisplay( {
+	autoPlay,
+	mimeType,
+	src,
+	isBackground,
+	...rest
+} ) {
+	let style = {};
+	if ( isBackground ) {
+		const styleProps = {
+			minWidth: '100%',
+			minHeight: '100%',
+			width: 'auto',
+			height: 'auto',
+			maxWidth: 'initial',
+		};
+		style = {
+			...style,
+			...styleProps,
+		};
+		autoPlay = true;
+	}
 
 	return (
-		<Element { ...props } >
+		<Element autoPlay={ autoPlay } { ...rest } style={ { ...style } } >
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);
 }
 
 VideoDisplay.propTypes = {
-	controls: PropTypes.bool,
 	autoPlay: PropTypes.bool,
+	controls: PropTypes.bool,
+	isBackground: PropTypes.bool,
 	loop: PropTypes.bool,
 	mimeType: PropTypes.string.isRequired,
 	src: PropTypes.string.isRequired,
+	style: PropTypes.object,
 };
 
 export default VideoDisplay;

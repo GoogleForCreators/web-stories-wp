@@ -29,9 +29,10 @@ function BackgroundPanel( { selectedElements, onSetProperties } ) {
 		setState( { isBackground } );
 	}, [ isBackground ] );
 	const handleClick = ( ) => {
-		const newState = { isBackground: ! state.isBackground, opacity: 100, overlay: null };
+		const newIsBackground = ! state.isBackground;
+		const newState = { isBackground: newIsBackground, opacity: 100, overlay: null };
 		setState( newState );
-		const backgroundId = state.isBackground ? selectedElements[ 0 ].id : null;
+		const backgroundId = newIsBackground ? selectedElements[ 0 ].id : null;
 		setBackgroundElement( { elementId: backgroundId } );
 		onSetProperties( newState );
 	};

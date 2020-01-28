@@ -31,6 +31,7 @@ export const defaultAttributes = {
 export const hasEditMode = false;
 
 export const panels = [
+	PanelTypes.BACKGROUND,
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,

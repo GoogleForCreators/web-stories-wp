@@ -59,7 +59,7 @@ function DisplayElement( {
 	const wrapperRef = useRef( null );
 	const box = getBox( { x, y, width, height, rotationAngle, isFill, isBackground } );
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const props = { ...box, ...rest, id };
+	const props = { ...box, ...rest, id, isBackground };
 
 	useTransformHandler( id, ( transform ) => {
 		const target = wrapperRef.current;
