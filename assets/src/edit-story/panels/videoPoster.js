@@ -16,7 +16,7 @@ import { __ } from '@wordpress/i18n';
 import UploadButton from '../components/uploadButton';
 import { Panel, Title, getCommonValue } from './shared';
 
-const ButtonCSS = css`
+const buttonStyles = css`
 	color: ${ ( { theme } ) => theme.colors.mg.v1 };
 	font-size: 11px;
 `;
@@ -58,7 +58,7 @@ function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 					type={ 'image' }
 					buttonInsertText={ __( 'Set as video poster', 'web-stories' ) }
 					buttonText={ state.poster ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
-					buttonCSS={ ButtonCSS }
+					buttonCSS={ buttonStyles }
 				/>
 			</div>
 		</Panel>

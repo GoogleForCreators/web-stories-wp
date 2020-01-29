@@ -113,7 +113,7 @@ const Icon = styled( Dashicon )`
 	fill: ${ ( { theme } ) => theme.colors.mg.v2 };
 `;
 
-const ButtonCSS = css`
+const buttonStyles = css`
 	 background: none;
 	 color: ${ ( { theme } ) => theme.colors.fg.v1 };
 	 padding: 5px;
@@ -301,7 +301,7 @@ function MediaLibrary( { onInsert } ) {
 				<UploadButton
 					onClose={ onClose }
 					onSelect={ onSelect }
-					buttonCSS={ ButtonCSS }
+					buttonCSS={ buttonStyles }
 				/>
 			</Header>
 
