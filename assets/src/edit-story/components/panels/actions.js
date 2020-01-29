@@ -27,13 +27,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Panel, Title } from './shared';
+
+/**
+ * Internal dependencies
+ */
+import { SimplePanel } from './panel';
 
 /**
  * WordPress dependencies
@@ -50,14 +51,11 @@ const Delete = styled.a`
 
 function ActionsPanel( { deleteSelectedElements } ) {
 	return (
-		<Panel>
-			<Title>
-				{ __( 'Actions', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="actions" title={ __( 'Actions', 'web-stories' ) }>
 			<Delete onClick={ deleteSelectedElements } >
 				{ __( 'Remove element', 'web-stories' ) }
 			</Delete>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

@@ -75,7 +75,7 @@ function FontProvider( { children } ) {
 			};
 
 			const defaultFontWeights = [
-				{ name: fontWeightNames[ 400 ], slug: 400, thisValue: 400 },
+				{ name: fontWeightNames[ 400 ], value: 400 },
 			];
 
 			const currentFont = getFontByName( name );
@@ -83,7 +83,7 @@ function FontProvider( { children } ) {
 			if ( currentFont ) {
 				const { weights } = currentFont;
 				if ( weights ) {
-					fontWeights = weights.map( ( weight ) => ( { name: fontWeightNames[ weight ], slug: weight, thisValue: weight } ) );
+					fontWeights = weights.map( ( weight ) => ( { name: fontWeightNames[ weight ], value: weight } ) );
 				}
 			}
 			return fontWeights;

@@ -24,41 +24,39 @@ import PropTypes from 'prop-types';
  */
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
-function ColorPanel( { selectedElements, onSetProperties } ) {
-	const color = getCommonValue( selectedElements, 'color' );
-	const [ state, setState ] = useState( { color } );
+function TextPanel( { selectedElements, onSetProperties } ) {
+	const content = getCommonValue( selectedElements, 'content' );
+	const [ state, setState ] = useState( { content } );
 	useEffect( () => {
-		setState( { color } );
-	}, [ color ] );
+		setState( { content } );
+	}, [ content ] );
 	const handleSubmit = ( evt ) => {
 		onSetProperties( state );
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Color', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="text" title={ __( 'Text', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
-				type="color"
-				label={ __( 'Color', 'web-stories' ) }
-				value={ state.color }
-				isMultiple={ color === '' }
-				onChange={ ( value ) => setState( { ...state, color: value } ) }
+				type="text"
+				label={ __( 'Text content', 'web-stories' ) }
+				value={ state.content }
+				isMultiple={ content === '' }
+				onChange={ ( value ) => setState( { ...state, content: value } ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 
-ColorPanel.propTypes = {
+TextPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default ColorPanel;
+export default TextPanel;

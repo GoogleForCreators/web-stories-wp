@@ -28,7 +28,9 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 function ScalePanel( { selectedElements, onSetProperties } ) {
 	const scale = getCommonValue( selectedElements, 'scale' );
@@ -47,10 +49,7 @@ function ScalePanel( { selectedElements, onSetProperties } ) {
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Image actual size', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="scale" title={ __( 'Image actual size', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
 				label={ __( 'Scale', 'web-stories' ) }
 				value={ typeof state.scale === 'number' ? state.scale : '(auto)' }
@@ -72,7 +71,7 @@ function ScalePanel( { selectedElements, onSetProperties } ) {
 				onChange={ ( value ) => setState( { ...state, focalY: isNaN( value ) || value === '' ? '(auto)' : parseFloat( value ) } ) }
 				postfix={ _x( '%', 'Percentage', 'web-stories' ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

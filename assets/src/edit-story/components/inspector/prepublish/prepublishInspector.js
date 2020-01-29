@@ -15,28 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
+import { SimplePanel } from '../../panels/panel';
 
-export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
-};
+function PrepublishInspector() {
+	return (
+		<SimplePanel name="prepublish" title={ __( 'Prepublish', 'web-stories' ) }>
+			{ __( 'Prepublish panel to be implemented here', 'web-stories' ) }
+		</SimplePanel>
+	);
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-];
+export default PrepublishInspector;

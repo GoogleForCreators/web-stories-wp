@@ -28,9 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useFont } from '../app';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
-import { Panel, Title, InputGroup, getCommonValue, SelectMenu } from './shared';
+import { InputGroup, SelectMenu } from '../form';
+import { useFont } from '../../app';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 function FontPanel( { selectedElements, onSetProperties } ) {
 	const fontFamily = getCommonValue( selectedElements, 'fontFamily' );
@@ -54,15 +56,12 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const fontStyles = [
-		{ name: __( 'Normal', 'web-stories' ), slug: 'normal', thisValue: 'normal' },
-		{ name: __( 'Italic', 'web-stories' ), slug: 'italic', thisValue: 'italic' },
+		{ name: __( 'Normal', 'web-stories' ), value: 'normal' },
+		{ name: __( 'Italic', 'web-stories' ), value: 'italic' },
 	];
 
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Font', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="font" title={ __( 'Font', 'web-stories' ) } onSubmit={ handleSubmit }>
 			{ fonts && <SelectMenu
 				label={ __( 'Font family', 'web-stories' ) }
 				options={ fonts }
@@ -100,7 +99,7 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 				max={ MAX_FONT_SIZE }
 				onChange={ ( value ) => setState( { ...state, fontSize: parseInt( value ) } ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

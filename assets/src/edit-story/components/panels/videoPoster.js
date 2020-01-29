@@ -13,8 +13,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import UploadButton from '../components/uploadButton';
-import { Panel, Title, getCommonValue } from './shared';
+import UploadButton from '../uploadButton';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 const buttonStyles = css`
 	color: ${ ( { theme } ) => theme.colors.mg.v1 };
@@ -45,23 +46,18 @@ function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Poster image', 'web-stories' ) }
-			</Title>
-			<div>
-				{ state.poster && <Img src={ state.poster } /> }
+		<SimplePanel name="videoPoster" title={ __( 'Poster image', 'web-stories' ) } onSubmit={ handleSubmit }>
+			{ state.poster && <Img src={ state.poster } /> }
 
-				<UploadButton
-					onSelect={ handleChangeImage }
-					title={ __( 'Select as video poster', 'web-stories' ) }
-					type={ 'image' }
-					buttonInsertText={ __( 'Set as video poster', 'web-stories' ) }
-					buttonText={ state.poster ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
-					buttonCSS={ buttonStyles }
-				/>
-			</div>
-		</Panel>
+			<UploadButton
+				onSelect={ handleChangeImage }
+				title={ __( 'Select as video poster', 'web-stories' ) }
+				type={ 'image' }
+				buttonInsertText={ __( 'Set as video poster', 'web-stories' ) }
+				buttonText={ state.poster ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
+				buttonCSS={ buttonStyles }
+			/>
+		</SimplePanel>
 	);
 }
 

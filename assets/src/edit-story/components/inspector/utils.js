@@ -15,28 +15,11 @@
  */
 
 /**
- * Internal dependencies
+ * Helper to generate tab html ID.
+ *
+ * @param {string}id ID as string
+ * @return {string} Formatted ID.
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
-
-export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
+export const getTabId = ( id ) => {
+	return `${ id }-tab`;
 };
-
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-];

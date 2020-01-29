@@ -15,28 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
+import styled from 'styled-components';
 
-export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
-};
+const Group = styled.label`
+	color: ${ ( { theme } ) => theme.colors.mg.v1 };
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	opacity: ${ ( { disabled } ) => disabled ? 0.7 : 1 };
+`;
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-];
+export default Group;

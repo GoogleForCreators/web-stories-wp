@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use WP_Post;
 use WP_Screen;
 
 /**
@@ -160,6 +161,8 @@ class Story_Post_Type {
 			0
 		);
 
+		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
+
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_resource_hints', 2 );
@@ -196,8 +199,8 @@ class Story_Post_Type {
 	/**
 	 * Highjack editor with custom editor.
 	 *
-	 * @param bool     $replace Bool if to replace editor or not.
-	 * @param \WP_Post $post    Current post object.
+	 * @param bool    $replace Bool if to replace editor or not.
+	 * @param WP_Post $post    Current post object.
 	 *
 	 * @return bool
 	 */
@@ -264,49 +267,6 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		/**
-		 * Filter list of allowed video mime types.
-		 *
-		 * This can be used to add additionally supported formats, for example by plugins
-		 * that do video transcoding.
-		 *
-		 * @since 1.3
-		 *
-		 * @param array Allowed video mime types.
-		 */
-		$allowed_video_mime_types = apply_filters( 'amp_story_allowed_video_types', [ 'video/mp4' ] );
-
-		// If `$allowed_video_mime_types` doesn't have valid data or is empty add default supported type.
-		if ( ! is_array( $allowed_video_mime_types ) || empty( $allowed_video_mime_types ) ) {
-			$allowed_video_mime_types = [ 'video/mp4' ];
-		}
-
-		// Only add currently supported mime types.
-		$allowed_video_mime_types = array_values( array_intersect( $allowed_video_mime_types, wp_get_mime_types() ) );
-
-		/**
-		 * Filters the list of allowed post types for use in page attachments.
-		 *
-		 * @since 1.3
-		 *
-		 * @param array Allowed post types.
-		 */
-		$page_attachment_post_types = apply_filters(
-			'amp_story_allowed_page_attachment_post_types',
-			[
-				'page',
-				'post',
-			]
-		);
-		$post_types                 = [];
-		foreach ( $page_attachment_post_types as $post_type ) {
-			$post_type_object = get_post_type_object( $post_type );
-
-			if ( $post_type_object ) {
-				$post_types[ $post_type ] = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			}
-		}
-
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
 		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
@@ -321,13 +281,12 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
-					'allowedVideoMimeTypes'          => $allowed_video_mime_types,
-					'allowedPageAttachmentPostTypes' => $post_types,
-					'postType'                       => self::POST_TYPE_SLUG,
-					'postThumbnails'                 => $post_thumbnails,
-					'storyId'                        => $story_id,
-					'previewLink'                    => get_preview_post_link( $story_id ),
-					'api'                            => [
+					'allowedMimeTypes' => self::get_allowed_mime_types(),
+					'postType'         => self::POST_TYPE_SLUG,
+					'postThumbnails'   => $post_thumbnails,
+					'storyId'          => $story_id,
+					'previewLink'      => get_preview_post_link( $story_id ),
+					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',
 						'users'    => '/wp/v2/users',
@@ -346,13 +305,55 @@ class Story_Post_Type {
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
+	}
 
+	/**
+	 * Returns a list of allowed mime types per media type (image, audio, video).
+	 *
+	 * @return array List of allowed mime types.
+	 */
+	protected static function get_allowed_mime_types() {
+		$default_allowed_mime_types = [
+			'image' => [
+				'image/png',
+				'image/jpeg',
+				'image/jpg',
+				'image/gif',
+			],
+			'audio' => [], // todo: support audio uploads.
+			'video' => [
+				'video/mp4',
+			],
+		];
+
+		/**
+		 * Filter list of allowed mime types.
+		 *
+		 * This can be used to add additionally supported formats, for example by plugins
+		 * that do video transcoding.
+		 *
+		 * @since 1.3
+		 *
+		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 */
+		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
+
+		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
+			if ( ! is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
+				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
+			}
+
+			// Only add currently supported mime types.
+			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], wp_get_mime_types() ) );
+		}
+
+		return $allowed_mime_types;
 	}
 
 	/**
 	 * Load font from story data.
 	 *
-	 * @param \WP_Post $post Post Object.
+	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_fonts( $post ) {
 		$post_story_data = json_decode( $post->post_content_filtered, true );
@@ -403,7 +404,7 @@ class Story_Post_Type {
 	/**
 	 * Load font in admin from story data.
 	 *
-	 * @param \WP_Post $post Post Object.
+	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_admin_fonts( $post ) {
 		$post_story_data = json_decode( $post->post_content_filtered, true );
@@ -471,28 +472,108 @@ class Story_Post_Type {
 	 * @return array Allowed tags.
 	 */
 	public static function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! class_exists( '\AMP_Allowed_Tags_Generated' ) ) {
-			return $allowed_tags;
-		}
-
 		$story_components = [
-			'amp-story',
-			'amp-story-page',
-			'amp-story-grid-layer',
-			'amp-story-cta-layer',
-			'amp-story-page-attachment',
-			'amp-img',
-			'amp-video',
-			'img',
+			'amp-story'                 => [
+				'background-audio'     => true,
+				'live-story'           => true,
+				'live-story-disabled'  => true,
+				'poster-landscape-src' => true,
+				'poster-portrait-src'  => true,
+				'poster-square-src'    => true,
+				'publisher'            => true,
+				'publisher-logo-src'   => true,
+				'standalone'           => true,
+				'supports-landscape'   => true,
+				'title'                => true,
+			],
+			'amp-story-page'            => [
+				'auto-advance-after' => true,
+				'background-audio'   => true,
+				'id'                 => true,
+			],
+			'amp-story-page-attachment' => [
+				'theme' => true,
+			],
+			'amp-story-grid-layer'      => [
+				'position' => true,
+				'template' => true,
+			],
+			'amp-story-cta-layer'       => [],
+			'amp-img'                   => [
+				'alt'                       => true,
+				'attribution'               => true,
+				'data-amp-bind-alt'         => true,
+				'data-amp-bind-attribution' => true,
+				'data-amp-bind-src'         => true,
+				'data-amp-bind-srcset'      => true,
+				'lightbox'                  => true,
+				'lightbox-thumbnail-id'     => true,
+				'media'                     => true,
+				'noloading'                 => true,
+				'object-fit'                => true,
+				'object-position'           => true,
+				'placeholder'               => true,
+				'src'                       => true,
+				'srcset'                    => true,
+			],
+			'amp-video'                 => [
+				'album'                      => true,
+				'alt'                        => true,
+				'artist'                     => true,
+				'artwork'                    => true,
+				'attribution'                => true,
+				'autoplay'                   => true,
+				'controls'                   => true,
+				'controlslist'               => true,
+				'crossorigin'                => true,
+				'data-amp-bind-album'        => true,
+				'data-amp-bind-alt'          => true,
+				'data-amp-bind-artist'       => true,
+				'data-amp-bind-artwork'      => true,
+				'data-amp-bind-attribution'  => true,
+				'data-amp-bind-controls'     => true,
+				'data-amp-bind-controlslist' => true,
+				'data-amp-bind-loop'         => true,
+				'data-amp-bind-poster'       => true,
+				'data-amp-bind-preload'      => true,
+				'data-amp-bind-src'          => true,
+				'data-amp-bind-title'        => true,
+				'disableremoteplayback'      => true,
+				'dock'                       => true,
+				'lightbox'                   => true,
+				'lightbox-thumbnail-id'      => true,
+				'loop'                       => true,
+				'media'                      => true,
+				'muted'                      => true,
+				'noaudio'                    => true,
+				'noloading'                  => true,
+				'object-fit'                 => true,
+				'object-position'            => true,
+				'placeholder'                => true,
+				'poster'                     => true,
+				'preload'                    => true,
+				'rotate-to-fullscreen'       => true,
+				'src'                        => true,
+			],
+			'img'                       => [
+				'alt'           => true,
+				'attribution'   => true,
+				'border'        => true,
+				'decoding'      => true,
+				'height'        => true,
+				'importance'    => true,
+				'intrinsicsize' => true,
+				'ismap'         => true,
+				'loading'       => true,
+				'longdesc'      => true,
+				'sizes'         => true,
+				'src'           => true,
+				'srcset'        => true,
+				'srcwidth'      => true,
+			],
 		];
-		foreach ( $story_components as $story_component ) {
-			$attributes = array_fill_keys( array_keys( \AMP_Allowed_Tags_Generated::get_allowed_attributes() ), true );
-			$rule_specs = \AMP_Allowed_Tags_Generated::get_allowed_tag( $story_component );
-			foreach ( $rule_specs as $rule_spec ) {
-				$attributes = array_merge( $attributes, array_fill_keys( array_keys( $rule_spec[ AMP_Rule_Spec::ATTR_SPEC_LIST ] ), true ) );
-			}
-			$allowed_tags[ $story_component ] = $attributes;
-		}
+
+		array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
@@ -518,5 +599,119 @@ class Story_Post_Type {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Get the publisher logo.
+	 *
+	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
+	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
+	 *
+	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
+	 */
+	private static function get_publisher_logo() {
+		$logo_image_url = null;
+
+		// This should be square, at least 96px in width/height. The 512 is used because the site icon would have this size generated.
+		$logo_width  = 512;
+		$logo_height = 512;
+
+		// Use the Custom Logo if set, but only if it is square.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( has_custom_logo() && $custom_logo_id ) {
+			$custom_logo_img = wp_get_attachment_image_src( $custom_logo_id, [ $logo_width, $logo_height ], false );
+			if ( $custom_logo_img && ( $custom_logo_img[2] === $custom_logo_img[1] ) ) {
+				$logo_image_url = $custom_logo_img[0];
+			}
+		}
+
+		// Try Site Icon, though it is not ideal for non-Story because it should be square.
+		$site_icon_id = get_option( 'site_icon' );
+		if ( empty( $logo_image_url ) && $site_icon_id ) {
+			$site_icon_src = wp_get_attachment_image_src( $site_icon_id, [ $logo_width, $logo_height ], false );
+			if ( ! empty( $site_icon_src ) ) {
+				$logo_image_url = $site_icon_src[0];
+			}
+		}
+
+		// Fallback to serving the WordPress logo.
+		if ( empty( $logo_image_url ) ) {
+			$logo_image_url = plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-wordpress-publisher-logo.png';
+		}
+
+		/**
+		 * Filters the publisher's logo.
+		 *
+		 * This should point to a square image.
+		 *
+		 * @param string $logo_image_url URL to the publisher's logo.
+		 */
+		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
+	}
+
+	/**
+	 * Prints the schema.org metadata on the single story template.
+	 */
+	public static function print_schemaorg_metadata() {
+		$metadata = self::get_schemaorg_metadata();
+
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $metadata, JSON_UNESCAPED_UNICODE ); ?></script>
+		<?php
+	}
+
+	/**
+	 * Get schema.org metadata for the current query.
+	 *
+	 * @return array $metadata All schema.org metadata for the post.
+	 */
+	public static function get_schemaorg_metadata() {
+		$metadata = [
+			'@context'  => 'http://schema.org',
+			'publisher' => [
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+			],
+		];
+
+		$publisher_logo = self::get_publisher_logo();
+
+		if ( $publisher_logo ) {
+			$metadata['publisher']['logo'] = $publisher_logo;
+		}
+
+		$post = get_queried_object();
+
+		$metadata = array_merge(
+			$metadata,
+			[
+				'@type'            => 'BlogPosting',
+				'mainEntityOfPage' => get_permalink(),
+				'headline'         => get_the_title(),
+				'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
+				'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
+			]
+		);
+
+		$post_author = get_userdata( $post->post_author );
+
+		if ( $post_author ) {
+			$metadata['author'] = [
+				'@type' => 'Person',
+				'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
+			];
+		}
+
+		if ( has_post_thumbnail( $post->ID ) ) {
+			$metadata['image'] = wp_get_attachment_image_url( get_post_thumbnail_id( $post->ID ), 'full' );
+		}
+
+		/**
+		 * Filters the schema.org metadata for a given story.
+		 *
+		 * @param array $metadata The structured data.
+		 * @param WP_Post $post The current post object.
+		 */
+		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
 	}
 }

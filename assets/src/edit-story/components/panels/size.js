@@ -28,7 +28,9 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 function SizePanel( { selectedElements, onSetProperties } ) {
 	const width = getCommonValue( selectedElements, 'width' );
@@ -44,10 +46,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Size', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="size" title={ __( 'Size', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
 				label={ __( 'Width', 'web-stories' ) }
 				value={ state.width }
@@ -90,7 +89,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 				} }
 				disabled={ isFullbleed }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

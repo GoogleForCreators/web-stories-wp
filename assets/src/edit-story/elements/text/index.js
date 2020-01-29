@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../panels';
+import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';

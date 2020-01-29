@@ -18,36 +18,41 @@
  * External dependencies
  */
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import useInspector from './useInspector';
-import DesignInspector from './design';
-import DocumentInspector from './document';
-import PrepublishInspector from './prepublish';
-import { getTabId } from './utils';
+import { LayerPanel, ColorPresetPanel } from '../../panels';
+import DesignPanels from './designPanels';
 
-const InspectorWrapper = styled.div.attrs( { tabIndex: '0', role: 'tabpanel' } )`
+const Wrapper = styled.div`
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 `;
 
-function Inspector() {
-	const {
-		state: { tab },
-		data: { tabs: { DESIGN, DOCUMENT, PREPUBLISH } },
-	} = useInspector();
+const TopPanels = styled.div`
+	flex: 1 1;
+	overflow: auto;
+`;
 
-	const ContentInspector = ( {
-		[ DESIGN ]: DesignInspector,
-		[ DOCUMENT ]: DocumentInspector,
-		[ PREPUBLISH ]: PrepublishInspector,
-	} )[ tab ];
+const BottomPanels = styled.div`
+	flex: 0 0;
+`;
 
+function DesignInspector() {
 	return (
-		<InspectorWrapper aria-labelledby={ tab } id={ getTabId( tab ) }>
-			<ContentInspector />
-		</InspectorWrapper>
+		<Wrapper>
+			<TopPanels>
+				<ColorPresetPanel />
+				<DesignPanels />
+			</TopPanels>
+			<BottomPanels>
+				<LayerPanel />
+			</BottomPanels>
+		</Wrapper>
 	);
 }
 
-export default Inspector;
+export default DesignInspector;

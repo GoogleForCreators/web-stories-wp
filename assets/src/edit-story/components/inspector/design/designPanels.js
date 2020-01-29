@@ -17,26 +17,16 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
+import useDesignPanels from './useDesignPanels';
 
-export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
-};
+function DesignPanels() {
+	const {
+		panels,
+		panelProperties,
+	} = useDesignPanels();
+	return panels.map( ( { Panel, type } ) => (
+		<Panel key={ type } { ...panelProperties } />
+	) );
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-];
+export default DesignPanels;

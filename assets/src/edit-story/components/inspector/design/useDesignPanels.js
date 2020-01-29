@@ -15,54 +15,52 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
 
-const Wrapper = styled.div`
-	min-height: 100%;
-`;
-
-function DesignInspector() {
+function useDesignPanels() {
 	const {
 		state: { selectedElements },
 		actions: { deleteSelectedElements, updateSelectedElements },
 	} = useStory();
-	const panels = getPanels( selectedElements );
 
-	const handleSetProperties = useCallback( ( properties ) => {
+	const panels = useMemo(
+		() => getPanels( selectedElements ),
+		[ selectedElements ],
+	);
+
+	const onSetProperties = useCallback( ( newProperties ) => {
 		// Filter out empty properties (empty strings specifically)
-		const updatedKeys = Object.keys( properties )
-			.filter( ( key ) => properties[ key ] !== '' );
+		const updatedKeys = Object.keys( newProperties )
+			.filter( ( key ) => newProperties[ key ] !== '' );
 
 		if ( updatedKeys.length === 0 ) {
 			// Of course abort if no keys have a value
 			return;
 		}
 
-		const actualProperties = updatedKeys
-			.reduce( ( obj, key ) => ( { ...obj, [ key ]: properties[ key ] } ), {} );
-		updateSelectedElements( { properties: actualProperties } );
-	}, [ updateSelectedElements ] );
-	return (
+		const properties = Object.fromEntries(
+			updatedKeys.map( ( key ) => [ key, newProperties[ key ] ] ),
+		);
 
-		<Wrapper>
-			{ panels.map( ( { Panel, type } ) => (
-				<Panel key={ type } deleteSelectedElements={ deleteSelectedElements } selectedElements={ selectedElements } onSetProperties={ handleSetProperties } />
-			) ) }
-		</Wrapper>
-	);
+		updateSelectedElements( { properties } );
+	}, [ updateSelectedElements ] );
+
+	return {
+		panels,
+		panelProperties: {
+			onSetProperties,
+			deleteSelectedElements,
+			selectedElements,
+		},
+	};
 }
 
-export default DesignInspector;
+export default useDesignPanels;
