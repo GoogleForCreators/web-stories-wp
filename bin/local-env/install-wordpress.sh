@@ -45,14 +45,26 @@ wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=passwo
 
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
-wp user create editor editor@example.com --role=editor --user_pass=password --quiet || echo -e "User \"editor\" already exists"
-echo -e $(status_message "Editor created! Username: editor Password: password")
-wp user create author author@example.com --role=author --user_pass=password --quiet || echo -e "User \"author\" already exists"
-echo -e $(status_message "Author created! Username: author Password: password")
-wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet || echo -e "User \"contributor\" already exists"
-echo -e $(status_message "Contributor created! Username: contributor Password: password")
-wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet || echo -e "User \"subscriber\" already exists"
-echo -e $(status_message "Subscriber created! Username: subscriber Password: password")
+if [ ! "$(wp user get editor --field=login)" ]; then
+	wp user create editor editor@example.com --role=editor --user_pass=password --quiet
+else
+ echo -e $(status_message "User \"editor\" already exists, skipping...")
+fi
+if [ ! "$(wp user get author --field=login)" ]; then
+	wp user create author author@example.com --role=author --user_pass=password --quiet
+else
+ echo -e $(status_message "User \"author\" already exists, skipping...")
+fi
+if [ ! "$(wp user get contributor --field=login)" ]; then
+	wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
+else
+ echo -e $(status_message "User \"contributor\" already exists, skipping...")
+fi
+if [ ! "$(wp user get subscriber --field=login)" ]; then
+	wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet
+else
+ echo -e $(status_message "User \"subscriber\" already exists, skipping...")
+fi
 
 # Make sure the uploads and upgrade folders exist and we have permissions to add files.
 echo -e $(status_message "Ensuring that files can be uploaded...")
