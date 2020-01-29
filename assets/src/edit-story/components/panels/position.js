@@ -28,7 +28,9 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 function PositionPanel( { selectedElements, onSetProperties } ) {
 	const x = getCommonValue( selectedElements, 'x' );
@@ -43,10 +45,7 @@ function PositionPanel( { selectedElements, onSetProperties } ) {
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Position', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="position" title={ __( 'Position', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
 				label={ _x( 'X', 'The X axis', 'web-stories' ) }
 				value={ state.x }
@@ -63,7 +62,7 @@ function PositionPanel( { selectedElements, onSetProperties } ) {
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
 				disabled={ isFullbleed }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

@@ -15,22 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import styled from 'styled-components';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+const Label = styled.span`
+	color: ${ ( { theme } ) => theme.colors.mg.v1 };
+	font-size: 11px;
+	line-height: 16px;
+	flex-basis: 80px;
+`;
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default Label;

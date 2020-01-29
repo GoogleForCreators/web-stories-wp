@@ -15,22 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import styled from 'styled-components';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+const Group = styled.label`
+	color: ${ ( { theme } ) => theme.colors.mg.v1 };
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	opacity: ${ ( { disabled } ) => disabled ? 0.7 : 1 };
+`;
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default Group;

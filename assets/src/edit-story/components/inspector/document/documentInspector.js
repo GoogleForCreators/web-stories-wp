@@ -28,11 +28,12 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app/story';
-import { useConfig } from '../../app/config';
-import UploadButton from '../uploadButton';
-import useInspector from './useInspector';
-import { SelectMenu, InputGroup } from './shared';
+import { useStory } from '../../../app/story';
+import { useConfig } from '../../../app/config';
+import { SimplePanel } from '../../panels/panel';
+import UploadButton from '../../uploadButton';
+import { SelectMenu, InputGroup } from '../../form';
+import useInspector from '../useInspector';
 
 const ButtonCSS = css`
 	color: ${ ( { theme } ) => theme.colors.mg.v1 };
@@ -45,13 +46,6 @@ const ButtonCSS = css`
 const Img = styled.img`
 	width: 100%;
 	max-height: 300px;
-`;
-
-const Group = styled.div`
-	border-color: ${ ( { theme } ) => theme.colors.mg.v1 };
-	display: block;
-	align-items: center;
-	margin: 15px 0;
 `;
 
 const RemoveButton = styled.button`
@@ -107,58 +101,60 @@ function DocumentInspector() {
 
 	return (
 		<>
-			<h2>
-				{ __( 'Document', 'web-stories' ) }
-			</h2>
-			{ capabilities && capabilities.hasPublishAction && statuses && <SelectMenu
-				label={ __( 'Status', 'web-stories' ) }
-				name="status"
-				options={ allStatuses }
-				disabled={ isSaving }
-				value={ status }
-				onChange={ handleChangeValue( 'status' ) }
-			/> }
-			{ capabilities && capabilities.hasPublishAction && status !== 'private' && <InputGroup
-				label={ __( 'Password', 'web-stories' ) }
-				type={ 'password' }
-				value={ password }
-				disabled={ isSaving }
-				onChange={ handleChangeValue( 'password' ) }
-			/> }
+			<SimplePanel name="status" title={ __( 'Status & Visibility', 'web-stories' ) }>
+				<InputGroup
+					label={ __( 'Published date', 'web-stories' ) }
+					type={ 'datetime-local' }
+					value={ date }
+					disabled={ isSaving }
+					onChange={ handleChangeValue( 'date' ) }
+				/>
+				{ capabilities && capabilities.hasAssignAuthorAction && users && <SelectMenu
+					label={ __( 'Author', 'web-stories' ) }
+					name="user"
+					options={ users }
+					value={ author }
+					disabled={ isSaving }
+					onChange={ handleChangeValue( 'author' ) }
+				/> }
+				{ capabilities && capabilities.hasPublishAction && statuses && <SelectMenu
+					label={ __( 'Visibility', 'web-stories' ) }
+					name="status"
+					options={ allStatuses }
+					disabled={ isSaving }
+					value={ status }
+					onChange={ handleChangeValue( 'status' ) }
+				/> }
+				{ capabilities && capabilities.hasPublishAction && status !== 'private' && <InputGroup
+					label={ __( 'Password', 'web-stories' ) }
+					type={ 'password' }
+					value={ password }
+					disabled={ isSaving }
+					onChange={ handleChangeValue( 'password' ) }
+				/> }
 
-			<RemoveButton onClick={ handleRemoveStory } dangerouslySetInnerHTML={ { __html: 'Move to trash' } } />
-			<InputGroup
-				label={ __( 'Published date', 'web-stories' ) }
-				type={ 'datetime-local' }
-				value={ date }
-				disabled={ isSaving }
-				onChange={ handleChangeValue( 'date' ) }
-			/>
-			{ capabilities && capabilities.hasAssignAuthorAction && users && <SelectMenu
-				label={ __( 'Author', 'web-stories' ) }
-				name="user"
-				options={ users }
-				value={ author }
-				disabled={ isSaving }
-				onChange={ handleChangeValue( 'author' ) }
-			/> }
+				<RemoveButton onClick={ handleRemoveStory } dangerouslySetInnerHTML={ { __html: 'Move to trash' } } />
 
-			<InputGroup
-				label={ __( 'Excerpt', 'web-stories' ) }
-				type={ 'text' }
-				value={ excerpt }
-				disabled={ isSaving }
-				onChange={ handleChangeValue( 'excerpt' ) }
-			/>
-
-			<InputGroup
-				label={ __( 'Slug', 'web-stories' ) }
-				type={ 'text' }
-				value={ slug }
-				disabled={ isSaving }
-				onChange={ handleChangeValue( 'slug' ) }
-			/>
-			<Group>
+			</SimplePanel>
+			<SimplePanel name="excerpt" title={ __( 'Excerpt', 'web-stories' ) }>
+				<InputGroup
+					label={ __( 'Write an excerpt (optional)', 'web-stories' ) }
+					type={ 'text' }
+					value={ excerpt }
+					disabled={ isSaving }
+					onChange={ handleChangeValue( 'excerpt' ) }
+				/>
+			</SimplePanel>
+			<SimplePanel name="permalink" title={ __( 'Permalink', 'web-stories' ) }>
+				<InputGroup
+					label={ __( 'URL Slug', 'web-stories' ) }
+					type={ 'text' }
+					value={ slug }
+					disabled={ isSaving }
+					onChange={ handleChangeValue( 'slug' ) }
+				/>
+			</SimplePanel>
+			<SimplePanel name="featureImage" title={ __( 'Featured image', 'web-stories' ) }>
 				{ featuredMediaUrl && <Img src={ featuredMediaUrl } /> }
 				{ featuredMediaUrl && <RemoveButton onClick={ handleRemoveImage } dangerouslySetInnerHTML={ { __html: 'Remove image' } } /> }
 
@@ -170,8 +166,7 @@ function DocumentInspector() {
 					buttonText={ featuredMediaUrl ? __( 'Replace image', 'web-stories' ) : __( 'Set featured image', 'web-stories' ) }
 					buttonCSS={ ButtonCSS }
 				/> }
-			</Group>
-
+			</SimplePanel>
 		</>
 	);
 }

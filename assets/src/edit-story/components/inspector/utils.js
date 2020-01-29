@@ -15,22 +15,11 @@
  */
 
 /**
- * Internal dependencies
+ * Helper to generate tab html ID.
+ *
+ * @param {string}id ID as string
+ * @return {string} Formatted ID.
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
-
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
+export const getTabId = ( id ) => {
+	return `${ id }-tab`;
 };
-
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];

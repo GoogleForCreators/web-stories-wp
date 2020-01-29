@@ -23,41 +23,43 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
-function TextPanel( { selectedElements, onSetProperties } ) {
-	const content = getCommonValue( selectedElements, 'content' );
-	const [ state, setState ] = useState( { content } );
+function RotationPanel( { selectedElements, onSetProperties } ) {
+	const rotationAngle = getCommonValue( selectedElements, 'rotationAngle' );
+	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
+	const [ state, setState ] = useState( { rotationAngle } );
 	useEffect( () => {
-		setState( { content } );
-	}, [ content ] );
+		setState( { rotationAngle } );
+	}, [ rotationAngle ] );
 	const handleSubmit = ( evt ) => {
 		onSetProperties( state );
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Text', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="rotation" title={ __( 'Rotation', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
-				type="text"
-				label={ __( 'Text content', 'web-stories' ) }
-				value={ state.content }
-				isMultiple={ content === '' }
-				onChange={ ( value ) => setState( { ...state, content: value } ) }
+				label={ __( 'Rotation angle', 'web-stories' ) }
+				value={ state.rotationAngle }
+				isMultiple={ rotationAngle === '' }
+				onChange={ ( value ) => setState( { ...state, rotationAngle: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
+				postfix={ _x( 'deg', 'Degrees, 0 - 360. ', 'web-stories' ) }
+				disabled={ isFullbleed }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 
-TextPanel.propTypes = {
+RotationPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default TextPanel;
+export default RotationPanel;

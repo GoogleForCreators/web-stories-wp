@@ -15,22 +15,28 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import { Panel, PanelTitle, PanelContent } from './panel';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function LayerPanel() {
+	return (
+		<Panel name="layers" initialHeight={ 240 }>
+			<PanelTitle isPrimary isResizable>
+				{ __( 'Layers', 'web-stories' ) }
+			</PanelTitle>
+			<PanelContent>
+				<p>
+					{ __( 'Layer contents', 'web-stories' ) }
+				</p>
+			</PanelContent>
+		</Panel>
+	);
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default LayerPanel;

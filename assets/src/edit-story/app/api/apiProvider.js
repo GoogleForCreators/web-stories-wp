@@ -135,7 +135,7 @@ function APIProvider( { children } ) {
 			return apiFetch( { path: fonts } )
 				.then( ( data ) => data.map(
 					( font ) => ( {
-						thisValue: font.name,
+						value: font.name,
 						...font,
 					} ),
 				) );

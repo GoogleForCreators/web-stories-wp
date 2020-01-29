@@ -15,22 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import { createContext } from '@wordpress/element';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+const panelContext = createContext( { state: {}, actions: {} } );
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default panelContext;

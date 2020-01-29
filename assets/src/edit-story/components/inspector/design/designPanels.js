@@ -17,20 +17,16 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import useDesignPanels from './useDesignPanels';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function DesignPanels() {
+	const {
+		panels,
+		panelProperties,
+	} = useDesignPanels();
+	return panels.map( ( { Panel, type } ) => (
+		<Panel key={ type } { ...panelProperties } />
+	) );
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default DesignPanels;

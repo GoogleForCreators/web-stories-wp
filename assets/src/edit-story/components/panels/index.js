@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { elementTypes } from '../elements';
+import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
@@ -29,6 +29,8 @@ import PositionPanel from './position';
 import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
+export { default as LayerPanel } from './layer';
+export { default as ColorPresetPanel } from './colorPreset';
 
 const ACTIONS = 'actions';
 const COLOR = 'color';

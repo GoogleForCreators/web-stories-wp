@@ -15,22 +15,28 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import { Panel, PanelTitle, PanelContent } from './panel';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function ColorPresetPanel() {
+	return (
+		<Panel name="colorpreset">
+			<PanelTitle isPrimary>
+				{ __( 'Color presets', 'web-stories' ) }
+			</PanelTitle>
+			<PanelContent>
+				<p>
+					{ __( 'Color presets go here', 'web-stories' ) }
+				</p>
+			</PanelContent>
+		</Panel>
+	);
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default ColorPresetPanel;

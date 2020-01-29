@@ -28,7 +28,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, Title, InputGroup, getCommonValue } from './shared';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
+import getCommonValue from './utils/getCommonValue';
 
 function BackgroundColorPanel( { selectedElements, onSetProperties } ) {
 	const backgroundColor = getCommonValue( selectedElements, 'backgroundColor' );
@@ -41,10 +43,7 @@ function BackgroundColorPanel( { selectedElements, onSetProperties } ) {
 		evt.preventDefault();
 	};
 	return (
-		<Panel onSubmit={ handleSubmit }>
-			<Title>
-				{ __( 'Background color', 'web-stories' ) }
-			</Title>
+		<SimplePanel name="bgcolor" title={ __( 'Background color', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
 				type="color"
 				label={ __( 'Background color', 'web-stories' ) }
@@ -52,7 +51,7 @@ function BackgroundColorPanel( { selectedElements, onSetProperties } ) {
 				isMultiple={ backgroundColor === '' }
 				onChange={ ( value ) => setState( { ...state, backgroundColor: value } ) }
 			/>
-		</Panel>
+		</SimplePanel>
 	);
 }
 

@@ -15,22 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import { SimplePanel } from '../../panels/panel';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function PrepublishInspector() {
+	return (
+		<SimplePanel name="prepublish" title={ __( 'Prepublish', 'web-stories' ) }>
+			{ __( 'Prepublish panel to be implemented here', 'web-stories' ) }
+		</SimplePanel>
+	);
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-];
+export default PrepublishInspector;
