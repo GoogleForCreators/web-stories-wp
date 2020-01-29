@@ -267,26 +267,6 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		/**
-		 * Filter list of allowed video mime types.
-		 *
-		 * This can be used to add additionally supported formats, for example by plugins
-		 * that do video transcoding.
-		 *
-		 * @since 1.3
-		 *
-		 * @param array Allowed video mime types.
-		 */
-		$allowed_video_mime_types = apply_filters( 'web_stories_allowed_video_types', [ 'video/mp4' ] );
-
-		// If `$allowed_video_mime_types` doesn't have valid data or is empty add default supported type.
-		if ( ! is_array( $allowed_video_mime_types ) || empty( $allowed_video_mime_types ) ) {
-			$allowed_video_mime_types = [ 'video/mp4' ];
-		}
-
-		// Only add currently supported mime types.
-		$allowed_video_mime_types = array_values( array_intersect( $allowed_video_mime_types, wp_get_mime_types() ) );
-
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
 		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
@@ -301,12 +281,12 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
-					'allowedVideoMimeTypes' => $allowed_video_mime_types,
-					'postType'              => self::POST_TYPE_SLUG,
-					'postThumbnails'        => $post_thumbnails,
-					'storyId'               => $story_id,
-					'previewLink'           => get_preview_post_link( $story_id ),
-					'api'                   => [
+					'allowedMimeTypes' => self::get_allowed_mime_types(),
+					'postType'         => self::POST_TYPE_SLUG,
+					'postThumbnails'   => $post_thumbnails,
+					'storyId'          => $story_id,
+					'previewLink'      => get_preview_post_link( $story_id ),
+					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',
 						'users'    => '/wp/v2/users',
@@ -325,7 +305,49 @@ class Story_Post_Type {
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
+	}
 
+	/**
+	 * Returns a list of allowed mime types per media type (image, audio, video).
+	 *
+	 * @return array List of allowed mime types.
+	 */
+	protected static function get_allowed_mime_types() {
+		$default_allowed_mime_types = [
+			'image' => [
+				'image/png',
+				'image/jpeg',
+				'image/jpg',
+				'image/gif',
+			],
+			'audio' => [], // todo: support audio uploads.
+			'video' => [
+				'video/mp4',
+			],
+		];
+
+		/**
+		 * Filter list of allowed mime types.
+		 *
+		 * This can be used to add additionally supported formats, for example by plugins
+		 * that do video transcoding.
+		 *
+		 * @since 1.3
+		 *
+		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 */
+		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
+
+		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
+			if ( ! is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
+				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
+			}
+
+			// Only add currently supported mime types.
+			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], wp_get_mime_types() ) );
+		}
+
+		return $allowed_mime_types;
 	}
 
 	/**
