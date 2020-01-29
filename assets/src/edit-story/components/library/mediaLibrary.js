@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import UploadButton from '../uploadButton';
+import DragandDrop from '../draganddrop';
 import useLibrary from './useLibrary';
 
 const Container = styled.div`
@@ -284,7 +285,7 @@ function MediaLibrary( { onInsert } ) {
 	};
 
 	return (
-		<>
+		<DragandDrop>
 			<Header>
 				<Title>
 					{ __( 'Media', 'web-stories' ) }
@@ -341,7 +342,7 @@ function MediaLibrary( { onInsert } ) {
 			)
 			}
 
-		</>
+		</DragandDrop>
 	);
 }
 
