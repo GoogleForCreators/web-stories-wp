@@ -684,6 +684,12 @@ class Story_Post_Type {
 			$metadata['image'] = wp_get_attachment_image_url( get_post_thumbnail_id( $post->ID ), 'full' );
 		}
 
-		return $metadata;
+		/**
+		 * Filters the schema.org metadata for a given story.
+		 *
+		 * @param array $metadata The structured data.
+		 * @param WP_Post $post The current post object.
+		 */
+		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
 	}
 }
