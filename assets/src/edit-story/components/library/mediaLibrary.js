@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../app/config';
 import UploadButton from '../uploadButton';
 import useLibrary from './useLibrary';
 
@@ -124,17 +125,6 @@ const ButtonCSS = css`
 	border-radius: 3px;
 `;
 
-const SUPPORTED_IMAGE_TYPES = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-];
-
-const SUPPORTED_VIDEO_TYPES = [
-	'video/mp4',
-];
-
 const FILTERS = [
 	{ filter: '', name: __( 'All', 'web-stories' ) },
 	{ filter: 'image', name: __( 'Images', 'web-stories' ) },
@@ -148,6 +138,7 @@ function MediaLibrary( { onInsert } ) {
 		state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
 		actions: { loadMedia, setIsMediaLoading, setIsMediaLoaded, setMediaType, setSearchTerm },
 	} = useLibrary();
+	const { allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
 
 	useEffect( loadMedia );
 
@@ -212,7 +203,7 @@ function MediaLibrary( { onInsert } ) {
 		const { src, mimeType, oWidth, oHeight } = attachment;
 		const origRatio = oWidth / oHeight;
 		const height = width / origRatio;
-		if ( SUPPORTED_IMAGE_TYPES.includes( mimeType ) ) {
+		if ( allowedImageMimeTypes.includes( mimeType ) ) {
 			return onInsert( 'image', {
 				src,
 				width,
@@ -224,7 +215,7 @@ function MediaLibrary( { onInsert } ) {
 				origWidth: oWidth,
 				origHeight: oHeight,
 			} );
-		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
+		} else if ( allowedVideoMimeTypes.includes( mimeType ) ) {
 			return onInsert( 'video', {
 				src,
 				width,
@@ -252,7 +243,7 @@ function MediaLibrary( { onInsert } ) {
 		const { src, oWidth, oHeight, mimeType } = mediaEl;
 		const origRatio = oWidth / oHeight;
 		const height = width / origRatio;
-		if ( SUPPORTED_IMAGE_TYPES.includes( mimeType ) ) {
+		if ( allowedImageMimeTypes.includes( mimeType ) ) {
 			return ( <Image
 				key={ src }
 				src={ src }
@@ -261,7 +252,7 @@ function MediaLibrary( { onInsert } ) {
 				loading={ 'lazy' }
 				onClick={ () => insertMediaElement( mediaEl, width ) }
 			/> );
-		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
+		} else if ( allowedVideoMimeTypes.includes( mimeType ) ) {
 			/* eslint-disable react/jsx-closing-tag-location */
 			return ( <Video
 				key={ src }
