@@ -137,10 +137,11 @@ function SingleSelectionMovable( {
 			} }
 			onDragEnd={ ( { target } ) => {
 				// When dragging finishes, set the new properties based on the original + what moved meanwhile.
-				if ( frame.translate[ 0 ] !== 0 && frame.translate[ 1 ] !== 0 ) {
+				const [ deltaX, deltaY ] = frame.translate;
+				if ( deltaX !== 0 && deltaY !== 0 ) {
 					const properties = {
-						x: selectedElement.x + editorToDataX( frame.translate[ 0 ] ),
-						y: selectedElement.y + editorToDataY( frame.translate[ 1 ] ),
+						x: selectedElement.x + editorToDataX( deltaX ),
+						y: selectedElement.y + editorToDataY( deltaY ),
 					};
 					updateSelectedElements( { properties } );
 				}
@@ -185,14 +186,14 @@ function SingleSelectionMovable( {
 				setTransformStyle( target );
 			} }
 			onResizeEnd={ ( { target } ) => {
-				const editorWidth = frame.resize[ 0 ];
-				const editorHeight = frame.resize[ 1 ];
+				const [ editorWidth, editorHeight ] = frame.resize;
+				const [ deltaX, deltaY ] = frame.translate;
 				if ( editorWidth !== 0 && editorHeight !== 0 ) {
 					const properties = {
 						width: editorToDataX( editorWidth ),
 						height: editorToDataY( editorHeight ),
-						x: selectedElement.x + editorToDataX( frame.translate[ 0 ] ),
-						y: selectedElement.y + editorToDataY( frame.translate[ 1 ] ),
+						x: selectedElement.x + editorToDataX( deltaX ),
+						y: selectedElement.y + editorToDataY( deltaY ),
 					};
 					if ( shouldAdjustFontSize ) {
 						properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth, minMaxFontSize ) );

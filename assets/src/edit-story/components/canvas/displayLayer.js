@@ -41,7 +41,7 @@ function DisplayLayer() {
 	} = useCanvas();
 
 	return (
-		<Layer pointerEvents={ false }>
+		<Layer pointerEvents="none">
 			<DisplayPageArea ref={ setPageContainer }>
 				{ currentPage && currentPage.elements.map( ( { id, ...rest } ) => {
 					if ( editingElement === id ) {
