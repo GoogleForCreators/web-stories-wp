@@ -37,7 +37,7 @@ const Form = styled.form`
 	${ ( { hidden } ) => hidden && 'display: none' }
 `;
 
-function Content( { children, ...rest } ) {
+function Content( { children, onSubmit, ...rest } ) {
 	const { state: { isCollapsed, height, panelContentId } } = useContext( panelContext );
 
 	const formStyle = {
@@ -45,7 +45,13 @@ function Content( { children, ...rest } ) {
 	};
 
 	return (
-		<Form style={ formStyle } { ...rest } id={ panelContentId } hidden={ isCollapsed }>
+		<Form
+			style={ formStyle }
+			onSubmit={ onSubmit }
+			{ ...rest }
+			id={ panelContentId }
+			hidden={ isCollapsed }
+		>
 			{ children }
 		</Form>
 	);
@@ -56,6 +62,11 @@ Content.propTypes = {
 		PropTypes.arrayOf( PropTypes.node ),
 		PropTypes.node,
 	] ).isRequired,
+	onSubmit: PropTypes.func,
+};
+
+Content.defaultProps = {
+	onSubmit: ( evt ) => evt.preventDefault(),
 };
 
 export default Content;
