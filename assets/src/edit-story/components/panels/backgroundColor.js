@@ -28,36 +28,36 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../components/form';
+import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function ColorPanel( { selectedElements, onSetProperties } ) {
-	const color = getCommonValue( selectedElements, 'color' );
-	const [ state, setState ] = useState( { color } );
+function BackgroundColorPanel( { selectedElements, onSetProperties } ) {
+	const backgroundColor = getCommonValue( selectedElements, 'backgroundColor' );
+	const [ state, setState ] = useState( { backgroundColor } );
 	useEffect( () => {
-		setState( { color } );
-	}, [ color ] );
+		setState( { backgroundColor } );
+	}, [ backgroundColor ] );
 	const handleSubmit = ( evt ) => {
 		onSetProperties( state );
 		evt.preventDefault();
 	};
 	return (
-		<SimplePanel name="color" title={ __( 'Color', 'web-stories' ) } onSubmit={ handleSubmit }>
+		<SimplePanel name="bgcolor" title={ __( 'Background color', 'web-stories' ) } onSubmit={ handleSubmit }>
 			<InputGroup
 				type="color"
-				label={ __( 'Color', 'web-stories' ) }
-				value={ state.color }
-				isMultiple={ color === '' }
-				onChange={ ( value ) => setState( { ...state, color: value } ) }
+				label={ __( 'Background color', 'web-stories' ) }
+				value={ state.backgroundColor }
+				isMultiple={ backgroundColor === '' }
+				onChange={ ( value ) => setState( { ...state, backgroundColor: value } ) }
 			/>
 		</SimplePanel>
 	);
 }
 
-ColorPanel.propTypes = {
+BackgroundColorPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default ColorPanel;
+export default BackgroundColorPanel;

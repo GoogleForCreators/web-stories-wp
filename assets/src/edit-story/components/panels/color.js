@@ -28,35 +28,36 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ActionButton } from '../components/button';
+import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function FullbleedPanel( { selectedElements, onSetProperties } ) {
-	// The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
-	// the element to the previous non-fullbleed position/size.
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { isFullbleed } );
+function ColorPanel( { selectedElements, onSetProperties } ) {
+	const color = getCommonValue( selectedElements, 'color' );
+	const [ state, setState ] = useState( { color } );
 	useEffect( () => {
-		setState( { isFullbleed } );
-	}, [ isFullbleed ] );
-	const handleClick = ( ) => {
-		const newState = { isFullbleed: ! state.isFullbleed };
-		setState( newState );
-		onSetProperties( newState );
+		setState( { color } );
+	}, [ color ] );
+	const handleSubmit = ( evt ) => {
+		onSetProperties( state );
+		evt.preventDefault();
 	};
 	return (
-		<SimplePanel name="fullbleed" title={ __( 'Fullbleed', 'web-stories' ) }>
-			<ActionButton onClick={ handleClick }>
-				{ state.isFullbleed ? __( 'Unset as fullbleed', 'web-stories' ) : __( 'Set as fullbleed', 'web-stories' ) }
-			</ActionButton>
+		<SimplePanel name="color" title={ __( 'Color', 'web-stories' ) } onSubmit={ handleSubmit }>
+			<InputGroup
+				type="color"
+				label={ __( 'Color', 'web-stories' ) }
+				value={ state.color }
+				isMultiple={ color === '' }
+				onChange={ ( value ) => setState( { ...state, color: value } ) }
+			/>
 		</SimplePanel>
 	);
 }
 
-FullbleedPanel.propTypes = {
+ColorPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default FullbleedPanel;
+export default ColorPanel;

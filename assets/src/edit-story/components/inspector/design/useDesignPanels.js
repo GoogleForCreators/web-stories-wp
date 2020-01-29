@@ -23,7 +23,7 @@ import { useCallback, useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { getPanels } from '../../../panels';
+import { getPanels } from '../../panels';
 
 function useDesignPanels() {
 	const {

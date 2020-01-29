@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { elementTypes } from '../elements';
+import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';

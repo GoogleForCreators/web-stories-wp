@@ -28,7 +28,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup, SelectMenu } from '../components/form';
+import { InputGroup, SelectMenu } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 

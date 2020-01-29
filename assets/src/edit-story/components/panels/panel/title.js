@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useInspector from '../../components/inspector/useInspector';
+import useInspector from '../../inspector/useInspector';
 import panelContext from './context';
 import DragHandle from './handle';
 import Arrow from './arrow.svg';

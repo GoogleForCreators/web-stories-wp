@@ -30,7 +30,7 @@ import styled, { css } from 'styled-components';
  */
 import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
-import { SimplePanel } from '../../../panels/panel';
+import { SimplePanel } from '../../panels/panel';
 import UploadButton from '../../uploadButton';
 import { SelectMenu, InputGroup } from '../../form';
 import useInspector from '../useInspector';

@@ -23,43 +23,40 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { useEffect, useState } from '@wordpress/element';
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../components/form';
+import { ActionButton } from '../button';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function RotationPanel( { selectedElements, onSetProperties } ) {
-	const rotationAngle = getCommonValue( selectedElements, 'rotationAngle' );
+function FullbleedPanel( { selectedElements, onSetProperties } ) {
+	// The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
+	// the element to the previous non-fullbleed position/size.
 	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { rotationAngle } );
+	const [ state, setState ] = useState( { isFullbleed } );
 	useEffect( () => {
-		setState( { rotationAngle } );
-	}, [ rotationAngle ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
+		setState( { isFullbleed } );
+	}, [ isFullbleed ] );
+	const handleClick = ( ) => {
+		const newState = { isFullbleed: ! state.isFullbleed };
+		setState( newState );
+		onSetProperties( newState );
 	};
 	return (
-		<SimplePanel name="rotation" title={ __( 'Rotation', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<InputGroup
-				label={ __( 'Rotation angle', 'web-stories' ) }
-				value={ state.rotationAngle }
-				isMultiple={ rotationAngle === '' }
-				onChange={ ( value ) => setState( { ...state, rotationAngle: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'deg', 'Degrees, 0 - 360. ', 'web-stories' ) }
-				disabled={ isFullbleed }
-			/>
+		<SimplePanel name="fullbleed" title={ __( 'Fullbleed', 'web-stories' ) }>
+			<ActionButton onClick={ handleClick }>
+				{ state.isFullbleed ? __( 'Unset as fullbleed', 'web-stories' ) : __( 'Set as fullbleed', 'web-stories' ) }
+			</ActionButton>
 		</SimplePanel>
 	);
 }
 
-RotationPanel.propTypes = {
+FullbleedPanel.propTypes = {
 	selectedElements: PropTypes.array.isRequired,
 	onSetProperties: PropTypes.func.isRequired,
 };
 
-export default RotationPanel;
+export default FullbleedPanel;
