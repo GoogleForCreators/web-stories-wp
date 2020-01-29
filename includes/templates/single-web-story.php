@@ -29,8 +29,6 @@ the_post();
 use \Google\Web_Stories\Story_Post_Type;
 use \Google\Web_Stories\Media;
 
-$metadata = Story_Post_Type::get_schemaorg_metadata();
-
 ?>
 <!DOCTYPE html>
 <html amp <?php language_attributes(); ?>>
@@ -49,7 +47,6 @@ $metadata = Story_Post_Type::get_schemaorg_metadata();
 			object-fit: cover;
 		}
 	</style>
-	<script type="application/ld+json"><?php echo wp_json_encode( $metadata, JSON_UNESCAPED_UNICODE ); ?></script>
 
 	<?php
 	/**
@@ -63,6 +60,8 @@ $metadata = Story_Post_Type::get_schemaorg_metadata();
 <body>
 <?php
 
+$metadata = Story_Post_Type::get_schemaorg_metadata();
+
 if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 	$publisher_logo_src = $metadata['publisher']['logo']['url'];
 } elseif ( isset( $metadata['publisher']['logo'] ) && is_string( $metadata['publisher']['logo'] ) ) {
@@ -70,6 +69,7 @@ if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 } else {
 	$publisher_logo_src = admin_url( 'images/wordpress-logo.png' );
 }
+
 $publisher = isset( $metadata['publisher']['name'] ) ? $metadata['publisher']['name'] : get_option( 'blogname' );
 
 $meta_images = Media::get_story_meta_images();

@@ -161,6 +161,8 @@ class Story_Post_Type {
 			0
 		);
 
+		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
+
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_resource_hints', 2 );
@@ -623,6 +625,17 @@ class Story_Post_Type {
 		 * @param string $logo_image_url URL to the publisher's logo.
 		 */
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
+	}
+
+	/**
+	 * Prints the schema.org metadata on the single story template.
+	 */
+	public static function print_schemaorg_metadata() {
+		$metadata = self::get_schemaorg_metadata();
+
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode( $metadata, JSON_UNESCAPED_UNICODE ); ?></script>
+		<?php
 	}
 
 	/**
