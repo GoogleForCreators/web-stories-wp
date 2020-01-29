@@ -115,13 +115,13 @@ const Icon = styled( Dashicon )`
 
 const buttonStyles = css`
 	 background: none;
-	 color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	 padding: 5px;
-	 font-weight: bold;
-	 flex: 1 0 0;
-	 text-align: center;
 	 border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 };
 	 border-radius: 3px;
+	 color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	 font-weight: bold;
+	 flex: 1 0 0;
+	 padding: 5px;
+	 text-align: center;
 `;
 
 const SUPPORTED_IMAGE_TYPES = [
