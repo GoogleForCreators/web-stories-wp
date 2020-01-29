@@ -128,6 +128,11 @@ export const GridView = ( props ) => (
 );
 
 export const ActionButton = styled.button.attrs( { type: 'button' } )`
-	color: ${ ( { theme } ) => theme.colors.mg.v1 };
-	font-size: 11px;
+	background: transparent;
+	border: 1px solid ${ ( { theme } ) => theme.colors.fg.v3 };
+	border-radius: 4px;
+	color: ${ ( { theme } ) => theme.colors.bg.v5 };
+	font-size: 15px;
+	line-height: 30px;
+	padding: 0 15px;
 `;
