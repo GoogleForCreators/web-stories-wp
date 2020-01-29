@@ -26,8 +26,8 @@ export const defaultAttributes = {
 	controls: false,
 	loop: false,
 	autoPlay: true,
-	posterId: 0,
-	poster: '',
+	posterId: null,
+	poster: null,
 	videoId: 0,
 };
 
