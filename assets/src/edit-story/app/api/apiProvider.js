@@ -137,8 +137,9 @@ function APIProvider( { children } ) {
 	);
 
 	/**
+	 * Upload file to via REST API.
+	 *
 	 * @param {File}    file           Media File to Save.
-	 * @param {?Object} additionalData Additional data to include in the request.
 	 *
 	 * @return {Promise} Media Object Promise.
 	 */
@@ -155,6 +156,13 @@ function APIProvider( { children } ) {
 		}, [ media ],
 	);
 
+	/**
+	 * Update Existing media.
+	 *
+	 * @param  {number} mediaId
+	 * @param  {Object} data Object of properties to update on attachment.
+	 * @return {Promise} Media Object Promise.
+	 */
 	const saveMedia = useCallback(
 		( mediaId, data ) => {
 			return apiFetch( {

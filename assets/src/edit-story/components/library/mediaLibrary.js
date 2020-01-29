@@ -209,7 +209,7 @@ function MediaLibrary( { onInsert } ) {
 	 * @return {null|*}          Return onInsert or null.
 	 */
 	const insertMediaElement = ( attachment, width ) => {
-		const { src, mimeType, oWidth, oHeight, id, poster } = attachment;
+		const { src, mimeType, oWidth, oHeight } = attachment;
 
 		const origRatio = oWidth / oHeight;
 		const height = width / origRatio;
@@ -226,7 +226,8 @@ function MediaLibrary( { onInsert } ) {
 				origHeight: oHeight,
 			} );
 		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
-			const posterId = parseInt( attachment.posterId );
+			const { id, poster, posterId } = attachment;
+			const posterIdInt = parseInt( posterId );
 			return onInsert( 'video', {
 				src,
 				width,
@@ -239,7 +240,7 @@ function MediaLibrary( { onInsert } ) {
 				origHeight: oHeight,
 				mimeType,
 				videoId: id,
-				posterId,
+				posterId: posterIdInt,
 				poster,
 			} );
 		}

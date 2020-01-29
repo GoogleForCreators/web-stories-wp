@@ -21,18 +21,18 @@ function useUploadVideoFrame( { videoId, src, id } ) {
 	const processData = async () => {
 		try {
 			const obj = await getFirstFrameOfVideo( src );
-			const { id: featuredMedia, source_url: poster } = await uploadMedia( obj );
-			await saveMedia( featuredMedia, {
+			const { id: posterId, source_url: poster } = await uploadMedia( obj );
+			await saveMedia( posterId, {
 				meta: {
 					web_stories_is_poster: true,
 				},
 				post: storyId,
 			} );
 			await saveMedia( videoId, {
-				featured_media: featuredMedia,
+				featured_media: posterId,
 				post: storyId,
 			} );
-			const newState = { featuredMedia, poster };
+			const newState = { posterId, poster };
 			setProperties( newState );
 		} catch ( err ) {
 			// TODO Display error message to user as video poster upload has as failed.
