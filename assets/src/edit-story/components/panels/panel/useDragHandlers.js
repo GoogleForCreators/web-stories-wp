@@ -28,23 +28,27 @@ function useDragHandlers( handle, handleHeightChange ) {
 	const lastPosition = useRef();
 	const [ isDragging, setIsDragging ] = useState( false );
 
-	// On mouse move, check difference since last record vertical mouse position
+	// On pointer move, check difference since last record vertical pointer position
 	// and invoke callback with this difference.
-	// Then record new vertical mouse position for next iteration.
-	const handleMouseMove = useCallback( ( evt ) => {
+	// Then record new vertical pointer position for next iteration.
+	const handlePointerMove = useCallback( ( evt ) => {
 		const delta = lastPosition.current - evt.pageY;
 		handleHeightChange( delta );
 		lastPosition.current = evt.pageY;
 	}, [ handleHeightChange ] );
 
-	// On mouse up, set dragging as false
+	// On pointer up, set dragging as false
 	// - will cause useLayoutEffect to unregister listeners.
-	const handleMouseUp = useCallback( () => setIsDragging( false ), [] );
+	const handlePointerUp = useCallback( ( evt ) => {
+		evt.target.releasePointerCapture( evt.pointerId );
+		setIsDragging( false );
+	}, [] );
 
-	// On mouse down, set dragging as true
+	// On pointer down, set dragging as true
 	// - will cause useLayoutEffect to register listeners.
-	// Also record the initial vertical mouse position on the page.
-	const handleMouseDown = useCallback( ( evt ) => {
+	// Also record the initial vertical pointer position on the page.
+	const handlePointerDown = useCallback( ( evt ) => {
+		evt.target.setPointerCapture( evt.pointerId );
 		lastPosition.current = evt.pageY;
 		setIsDragging( true );
 	}, [] );
@@ -54,24 +58,22 @@ function useDragHandlers( handle, handleHeightChange ) {
 	// will be correctly unregistered due to the cleanup function.
 	useLayoutEffect( () => {
 		const element = handle.current;
-		const doc = element.ownerDocument;
-		element.addEventListener( 'mousedown', handleMouseDown );
+		element.addEventListener( 'pointerdown', handlePointerDown );
 
-		if ( isDragging && doc ) {
-			doc.addEventListener( 'mousemove', handleMouseMove );
-			doc.addEventListener( 'mouseup', handleMouseUp );
+		if ( isDragging ) {
+			element.addEventListener( 'pointermove', handlePointerMove );
+			element.addEventListener( 'pointerup', handlePointerUp );
 		}
 
 		return () => {
-			if ( element ) {
-				element.removeEventListener( 'mousedown', handleMouseDown );
-				if ( isDragging && doc ) {
-					doc.removeEventListener( 'mousemove', handleMouseMove );
-					doc.removeEventListener( 'mouseup', handleMouseUp );
-				}
+			element.removeEventListener( 'pointerdown', handlePointerDown );
+
+			if ( isDragging ) {
+				element.removeEventListener( 'pointermove', handlePointerMove );
+				element.removeEventListener( 'pointerup', handlePointerUp );
 			}
 		};
-	}, [ isDragging, handleMouseUp, handleMouseMove, handleMouseDown, handle ] );
+	}, [ isDragging, handlePointerUp, handlePointerMove, handlePointerDown, handle ] );
 }
 
 export default useDragHandlers;
