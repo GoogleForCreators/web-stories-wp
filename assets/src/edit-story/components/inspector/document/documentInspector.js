@@ -101,7 +101,7 @@ function DocumentInspector() {
 
 	return (
 		<>
-			<SimplePanel title={ __( 'Status & Visibility', 'web-stories' ) }>
+			<SimplePanel name="status" title={ __( 'Status & Visibility', 'web-stories' ) }>
 				<InputGroup
 					label={ __( 'Published date', 'web-stories' ) }
 					type={ 'datetime-local' }
@@ -136,7 +136,7 @@ function DocumentInspector() {
 				<RemoveButton onClick={ handleRemoveStory } dangerouslySetInnerHTML={ { __html: 'Move to trash' } } />
 
 			</SimplePanel>
-			<SimplePanel title={ __( 'Excerpt', 'web-stories' ) }>
+			<SimplePanel name="excerpt" title={ __( 'Excerpt', 'web-stories' ) }>
 				<InputGroup
 					label={ __( 'Write an excerpt (optional)', 'web-stories' ) }
 					type={ 'text' }
@@ -145,7 +145,7 @@ function DocumentInspector() {
 					onChange={ handleChangeValue( 'excerpt' ) }
 				/>
 			</SimplePanel>
-			<SimplePanel title={ __( 'Permalink', 'web-stories' ) }>
+			<SimplePanel name="permalink" title={ __( 'Permalink', 'web-stories' ) }>
 				<InputGroup
 					label={ __( 'URL Slug', 'web-stories' ) }
 					type={ 'text' }
@@ -154,7 +154,7 @@ function DocumentInspector() {
 					onChange={ handleChangeValue( 'slug' ) }
 				/>
 			</SimplePanel>
-			<SimplePanel title={ __( 'Featured image', 'web-stories' ) }>
+			<SimplePanel name="featureImage" title={ __( 'Featured image', 'web-stories' ) }>
 				{ featuredMediaUrl && <Img src={ featuredMediaUrl } /> }
 				{ featuredMediaUrl && <RemoveButton onClick={ handleRemoveImage } dangerouslySetInnerHTML={ { __html: 'Remove image' } } /> }
 
