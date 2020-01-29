@@ -96,6 +96,8 @@ function Title( { children, isPrimary, isResizable } ) {
 		[ setHeight, maxHeight ],
 	);
 
+	const ariaLabel = isCollapsed ? __( 'Expand panel', 'web-stories' ) : __( 'Collapse panel', 'web-stories' );
+
 	return (
 		<Header isPrimary={ isPrimary } hasResizeHandle={ isResizable && ! isCollapsed }>
 			{ isResizable && ! isCollapsed && (
@@ -108,7 +110,7 @@ function Title( { children, isPrimary, isResizable } ) {
 			) }
 			<HeaderButton
 				onClick={ isCollapsed ? expand : collapse }
-				aria-label={ __( 'Collapse/expand panel', 'web-stories' ) }
+				aria-label={ ariaLabel }
 				aria-expanded={ ! isCollapsed }
 				aria-controls={ panelContentId }
 			>
