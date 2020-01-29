@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-module.exports = {
-	stories: [
-		'./stories/**/*.js',
-		'../assets/src/edit-story/**/stories/*.(js|mdx)',
-	],
-	addons: [
-		'@storybook/addon-a11y/register',
-		'@storybook/addon-docs',
-		'@storybook/addon-knobs/register',
-		'@storybook/addon-storysource/register',
-		'@storybook/addon-viewport/register',
-	],
+/**
+ * External dependencies
+ */
+import { text, boolean } from '@storybook/addon-knobs';
+
+/**
+ * Internal dependencies
+ */
+import Switch from '../';
+
+export default {
+	title: 'Components/Switch',
+	component: Switch,
+};
+
+export const _default = () => {
+	const label = text( 'Label', 'Switch' );
+	const checked = boolean( 'Checked', false );
+
+	return (
+		<Switch
+			label={ label }
+			checked={ checked }
+		/>
+	);
 };

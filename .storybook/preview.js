@@ -28,6 +28,8 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
+import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -60,6 +62,8 @@ addDecorator( withKnobs );
 addDecorator( ( story ) => (
 	<ThemeProvider theme={ theme }>
 		<GlobalStyle />
+		<CropMoveableGlobalStyle />
+		<ModalGlobalStyle />
 		{ story() }
 	</ThemeProvider>
 ) );
