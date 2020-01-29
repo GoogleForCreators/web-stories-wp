@@ -20,15 +20,10 @@
 import styled from 'styled-components';
 
 /**
- * WordPress dependencies
- */
-import { useCallback } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
-import { useStory } from '../../app';
-import { getPanels, LayerPanel, ColorPresetPanel } from '../../panels';
+import { LayerPanel, ColorPresetPanel } from '../../../panels';
+import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -47,33 +42,11 @@ const BottomPanels = styled.div`
 `;
 
 function DesignInspector() {
-	const {
-		state: { selectedElements },
-		actions: { deleteSelectedElements, updateSelectedElements },
-	} = useStory();
-	const panels = getPanels( selectedElements );
-
-	const handleSetProperties = useCallback( ( properties ) => {
-		// Filter out empty properties (empty strings specifically)
-		const updatedKeys = Object.keys( properties )
-			.filter( ( key ) => properties[ key ] !== '' );
-
-		if ( updatedKeys.length === 0 ) {
-			// Of course abort if no keys have a value
-			return;
-		}
-
-		const actualProperties = updatedKeys
-			.reduce( ( obj, key ) => ( { ...obj, [ key ]: properties[ key ] } ), {} );
-		updateSelectedElements( { properties: actualProperties } );
-	}, [ updateSelectedElements ] );
 	return (
 		<Wrapper>
 			<TopPanels>
 				<ColorPresetPanel />
-				{ panels.map( ( { Panel, type } ) => (
-					<Panel key={ type } deleteSelectedElements={ deleteSelectedElements } selectedElements={ selectedElements } onSetProperties={ handleSetProperties } />
-				) ) }
+				<DesignPanels />
 			</TopPanels>
 			<BottomPanels>
 				<LayerPanel />
