@@ -6,5 +6,5 @@ node_modules
 /assets/css
 /assets/js
 /build
-/data
+/bin/local-env/data
 phpunit.xml
