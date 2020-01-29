@@ -24,14 +24,14 @@ import PropTypes from 'prop-types';
  */
 import { getCommonAttributes } from '../shared';
 
-function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, featuredMediaSrc } ) {
+function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
 	const sourceProps = {
 		type: mimeType,
 		src,
 	};
 	const props = {
 		autoPlay,
-		poster: featuredMediaSrc,
+		poster,
 		layout: 'fill',
 	};
 
@@ -50,7 +50,7 @@ function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotation
 }
 
 VideoSave.propTypes = {
-	featuredMediaSrc: PropTypes.string,
+	poster: PropTypes.string,
 	rotationAngle: PropTypes.number.isRequired,
 	controls: PropTypes.bool,
 	autoPlay: PropTypes.bool,

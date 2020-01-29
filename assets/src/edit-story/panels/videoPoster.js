@@ -27,11 +27,11 @@ const Img = styled.img`
 
 function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 	const featuredMedia = getCommonValue( selectedElements, 'featuredMedia' );
-	const featuredMediaSrc = getCommonValue( selectedElements, 'featuredMediaSrc' );
-	const [ state, setState ] = useState( { featuredMedia, featuredMediaSrc } );
+	const poster = getCommonValue( selectedElements, 'poster' );
+	const [ state, setState ] = useState( { featuredMedia, poster } );
 	useEffect( () => {
-		setState( { featuredMedia, featuredMediaSrc } );
-	}, [ featuredMedia, featuredMediaSrc ] );
+		setState( { featuredMedia, poster } );
+	}, [ featuredMedia, poster ] );
 
 	const handleSubmit = ( evt ) => {
 		onSetProperties( state );
@@ -39,7 +39,7 @@ function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const handleChangeImage = ( image ) => {
-		const newState = { featuredMedia: image.id, featuredMediaSrc: ( image.sizes && image.sizes.medium ) ? image.sizes.medium.url : image.url };
+		const newState = { featuredMedia: image.id, poster: ( image.sizes && image.sizes.medium ) ? image.sizes.medium.url : image.url };
 		setState( { ...state, ...newState } );
 		onSetProperties( newState );
 	};
@@ -50,14 +50,14 @@ function VideoPosterPanel( { selectedElements, onSetProperties } ) {
 				{ __( 'Poster image', 'web-stories' ) }
 			</Title>
 			<div>
-				{ state.featuredMediaSrc && <Img src={ state.featuredMediaSrc } /> }
+				{ state.poster && <Img src={ state.poster } /> }
 
 				<UploadButton
 					onSelect={ handleChangeImage }
 					title={ __( 'Select as video poster', 'web-stories' ) }
 					type={ 'image' }
 					buttonInsertText={ __( 'Set as video poster', 'web-stories' ) }
-					buttonText={ state.featuredMediaSrc ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
+					buttonText={ state.poster ? __( 'Replace poster image', 'web-stories' ) : __( 'Set poster image', 'web-stories' ) }
 					buttonCSS={ ButtonCSS }
 				/>
 			</div>
