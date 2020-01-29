@@ -615,7 +615,14 @@ class Story_Post_Type {
 			$logo_image_url = plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-wordpress-publisher-logo.png';
 		}
 
-		return $logo_image_url;
+		/**
+		 * Filters the publisher's logo.
+		 *
+		 * This should point to a square image.
+		 *
+		 * @param string $logo_image_url URL to the publisher's logo.
+		 */
+		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
 	}
 
 	/**
