@@ -226,8 +226,8 @@ function MediaLibrary( { onInsert } ) {
 				origHeight: oHeight,
 			} );
 		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
-			const { id, poster, posterId } = attachment;
-			const posterIdInt = parseInt( posterId );
+			const { id: videoId, poster, posterId: posterIdRaw } = attachment;
+			const posterId = parseInt( posterIdRaw );
 			return onInsert( 'video', {
 				src,
 				width,
@@ -239,8 +239,8 @@ function MediaLibrary( { onInsert } ) {
 				origWidth: oWidth,
 				origHeight: oHeight,
 				mimeType,
-				videoId: id,
-				posterId: posterIdInt,
+				videoId,
+				posterId,
 				poster,
 			} );
 		}
