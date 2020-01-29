@@ -74,7 +74,7 @@ $publisher = isset( $metadata['publisher']['name'] ) ? $metadata['publisher']['n
 
 $meta_images = Media::get_story_meta_images();
 
-$poster_portrait = isset( $meta_images['poster-portrait'] ) ? $meta_images['poster-portrait'] : plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-poster.jpg';
+$poster_portrait = isset( $meta_images['poster-portrait'] ) ? $meta_images['poster-portrait'] : plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
 
 ?>
 <amp-story
