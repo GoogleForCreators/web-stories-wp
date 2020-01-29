@@ -28,8 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ActionButton } from '../components/button';
 import { SimplePanel } from './panel';
-import { ActionButton } from './components';
 import getCommonValue from './utils/getCommonValue';
 
 function FullbleedPanel( { selectedElements, onSetProperties } ) {

@@ -27,8 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { InputGroup } from '../components/form';
 import { SimplePanel } from './panel';
-import { InputGroup } from './components';
 import getCommonValue from './utils/getCommonValue';
 
 function TextPanel( { selectedElements, onSetProperties } ) {

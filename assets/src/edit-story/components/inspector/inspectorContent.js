@@ -25,7 +25,7 @@ import useInspector from './useInspector';
 import DesignInspector from './designInspector';
 import DocumentInspector from './documentInspector';
 import PrepublishInspector from './prepublishInspector';
-import { getTabId } from './shared';
+import { getTabId } from './utils';
 
 const InspectorWrapper = styled.div.attrs( { tabIndex: '0', role: 'tabpanel' } )`
 	height: 100%;

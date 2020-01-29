@@ -32,8 +32,8 @@ import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import UploadButton from '../uploadButton';
+import { SelectMenu, InputGroup } from '../form';
 import useInspector from './useInspector';
-import { SelectMenu, InputGroup } from './shared';
 
 const ButtonCSS = css`
 	color: ${ ( { theme } ) => theme.colors.mg.v1 };

@@ -28,10 +28,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { InputGroup, SelectMenu } from '../components/form';
 import { useFont } from '../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
 import { SimplePanel } from './panel';
-import { InputGroup, SelectMenu } from './components';
 import getCommonValue from './utils/getCommonValue';
 
 function FontPanel( { selectedElements, onSetProperties } ) {

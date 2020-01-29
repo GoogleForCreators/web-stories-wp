@@ -126,3 +126,8 @@ export const GridView = ( props ) => (
 		<GridViewIcon />
 	</StyledButton>
 );
+
+export const ActionButton = styled.button.attrs( { type: 'button' } )`
+	color: ${ ( { theme } ) => theme.colors.mg.v1 };
+	font-size: 11px;
+`;

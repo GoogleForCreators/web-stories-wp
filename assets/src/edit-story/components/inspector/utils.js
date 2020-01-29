@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
-export { default as ActionButton } from './actionButton';
-export { default as InputGroup } from './inputGroup';
-export { default as SelectMenu } from './select';
+/**
+ * Helper to generate tab html ID.
+ *
+ * @param {string}id ID as string
+ * @return {string} Formatted ID.
+ */
+export const getTabId = ( id ) => {
+	return `${ id }-tab`;
+};
