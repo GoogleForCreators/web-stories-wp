@@ -49,9 +49,7 @@ function VideoDisplay( props ) {
 		if ( videoId && ! posterId ) {
 			uploadVideoFrame();
 		}
-	},
-	[ videoId, posterId, uploadVideoFrame ],
-	);
+	}, [ videoId, posterId, uploadVideoFrame ] );
 
 	return (
 		<Element { ...props } >

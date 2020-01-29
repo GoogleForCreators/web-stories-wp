@@ -74,7 +74,6 @@ export function getPanels( elements ) {
 	const sharedPanels = [
 		{ type: ACTIONS, Panel: ActionsPanel },
 	];
-
 	// Find which panels all the selected elements have in common
 	const selectionPanels = elements
 		.map( ( { type } ) => elementTypes.find( ( elType ) => elType.type === type ).panels )
