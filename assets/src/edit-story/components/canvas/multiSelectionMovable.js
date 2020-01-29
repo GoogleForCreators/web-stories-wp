@@ -130,7 +130,8 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 			if ( isRotate ) {
 				properties.rotationAngle = frame.rotate;
 			}
-			if ( isResize && editorWidth !== 0 && editorHeight !== 0 ) {
+			const didResize = editorWidth !== 0 && editorHeight !== 0;
+			if ( isResize && didResize ) {
 				properties.width = editorToDataX( editorWidth );
 				properties.height = editorToDataY( editorHeight );
 				const isText = 'text' === targetList[ i ].type;
