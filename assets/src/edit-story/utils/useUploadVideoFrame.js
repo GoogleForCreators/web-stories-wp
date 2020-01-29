@@ -24,7 +24,7 @@ function useUploadVideoFrame( { videoId, src, id } ) {
 			const { id: featuredMedia, source_url: poster } = await uploadMedia( obj );
 			await saveMedia( featuredMedia, {
 				meta: {
-					_web_stories_is_poster: true,
+					web_stories_is_poster: true,
 				},
 				post: storyId,
 			} );
