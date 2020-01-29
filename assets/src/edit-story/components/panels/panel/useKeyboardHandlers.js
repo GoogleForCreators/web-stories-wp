@@ -43,11 +43,7 @@ function useKeyboardHandlers( handle, handleHeightChange ) {
 		const element = handle.current;
 		element.addEventListener( 'keydown', handleKeyPress );
 
-		return () => {
-			if ( element ) {
-				element.removeEventListener( 'keydown', handleKeyPress );
-			}
-		};
+		return () => element.removeEventListener( 'keydown', handleKeyPress );
 	}, [ handleKeyPress, handle ] );
 }
 
