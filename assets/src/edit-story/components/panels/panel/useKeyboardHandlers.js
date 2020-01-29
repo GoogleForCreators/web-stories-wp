@@ -22,16 +22,18 @@ import {
 	useLayoutEffect,
 } from '@wordpress/element';
 
-const KEY_UP = 38;
-const KEY_DOWN = 40;
+const KEY_UP = [ 'Up', 'ArrowUp' ];
+const KEY_DOWN = [ 'Down', 'ArrowDown' ];
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 
 function useKeyboardHandlers( handle, handleHeightChange ) {
 	// Handle up/down keypresses to move separator.
 	// TODO Should be rewritten to use MouseTrap when added to .
 	const handleKeyPress = useCallback( ( evt ) => {
-		if ( [ KEY_UP, KEY_DOWN ].includes( evt.keyCode ) ) {
-			const direction = evt.keyCode === KEY_UP ? 1 : -1;
+		const isUp = KEY_UP.includes( evt.key );
+		const isDown = KEY_DOWN.includes( evt.key );
+		if ( isUp || isDown ) {
+			const direction = isUp ? 1 : -1;
 			handleHeightChange( direction * DELTA_CHANGE );
 			evt.stopPropagation();
 			evt.preventDefault();
@@ -43,11 +45,7 @@ function useKeyboardHandlers( handle, handleHeightChange ) {
 		const element = handle.current;
 		element.addEventListener( 'keydown', handleKeyPress );
 
-		return () => {
-			if ( element ) {
-				element.removeEventListener( 'keydown', handleKeyPress );
-			}
-		};
+		return () => element.removeEventListener( 'keydown', handleKeyPress );
 	}, [ handleKeyPress, handle ] );
 }
 
