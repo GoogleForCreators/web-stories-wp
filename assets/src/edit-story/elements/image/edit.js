@@ -36,38 +36,38 @@ import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
-	${ElementFillContent}
+  ${ElementFillContent}
 `;
 
 const CropBox = styled.div`
-	width: 100%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
-		pointer-events: none;
-	}
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
+    pointer-events: none;
+  }
 `;
 
 const FadedImg = styled.img`
-	position: absolute;
-	opacity: 0.4;
-	pointer-events: none;
-	${ImageWithScale}
+  position: absolute;
+  opacity: 0.4;
+  pointer-events: none;
+  ${ImageWithScale}
 `;
 
 const CropImg = styled.img`
-	position: absolute;
-	${ImageWithScale}
+  position: absolute;
+  ${ImageWithScale}
 `;
 
 function ImageEdit({ id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, isFullbleed }) {

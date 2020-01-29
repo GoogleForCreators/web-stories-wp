@@ -34,16 +34,16 @@ import { useStory } from '../../../app';
 import { LeftArrow, RightArrow } from '../../button';
 
 const Wrapper = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: ${({ isNext }) => isNext ? 'flex-end' : 'flex-start'};
-	color: ${({ theme }) => theme.colors.fg.v1};
-	width: ${PAGE_NAV_BUTTON_WIDTH}px;
-	height: ${PAGE_NAV_BUTTON_WIDTH}px;
+  display: flex;
+  align-items: center;
+  justify-content: ${({ isNext }) => isNext ? 'flex-end' : 'flex-start'};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  width: ${PAGE_NAV_BUTTON_WIDTH}px;
+  height: ${PAGE_NAV_BUTTON_WIDTH}px;
 
-	& > * {
-		pointer-events: initial;
-	}
+  & > * {
+    pointer-events: initial;
+  }
 `;
 
 function PageNav({ isNext }) {

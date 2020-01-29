@@ -26,47 +26,47 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 
 export const Panel = styled.form`
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Title = styled.h2`
-	color: ${({ theme }) => theme.colors.bg.v2};
-	font-size: 13px;
-	line-height: 19px;
+  color: ${({ theme }) => theme.colors.bg.v2};
+  font-size: 13px;
+  line-height: 19px;
 `;
 
 const Label = styled.span`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	font-size: 11px;
-	line-height: 16px;
-	width: 80px;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  font-size: 11px;
+  line-height: 16px;
+  width: 80px;
 `;
 
 const Input = styled.input`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	border: 1px solid;
-	border-radius: 4px;
-	font-size: 11px;
-	line-height: 16px;
-	width: 100px;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  width: 100px;
 `;
 
 const Group = styled.label`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	display: flex;
-	align-items: center;
-	margin-bottom: 5px;
-	opacity: ${({ disabled }) => disabled ? 0.7 : 1};
+  color: ${({ theme }) => theme.colors.mg.v1};
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  opacity: ${({ disabled }) => disabled ? 0.7 : 1};
 `;
 
 const Select = styled.select`
-	width: 100px;
+  width: 100px;
 `;
 
 export const ActionButton = styled.button`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	font-size: 11px;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  font-size: 11px;
 `;
 
 function InputGroup({ type, label, value, isMultiple, onChange, postfix, disabled, min, max, step }) {

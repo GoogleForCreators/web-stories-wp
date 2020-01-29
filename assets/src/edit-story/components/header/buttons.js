@@ -33,18 +33,18 @@ import { useStory } from '../../app';
 import { Outline, Primary } from '../button';
 
 const ButtonList = styled.nav`
-	display: flex;
-	justify-content: flex-end;
-	padding: 1em;
-	height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  height: 100%;
 `;
 
 const List = styled.div`
-	display: flex;
+  display: flex;
 `;
 
 const Space = styled.div`
-	width: 6px;
+  width: 6px;
 `;
 
 function PreviewButton() {

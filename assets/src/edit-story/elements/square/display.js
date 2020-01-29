@@ -29,8 +29,8 @@ import {
 } from '../shared';
 
 const Element = styled.div`
-	${ElementFillContent}
-	${ElementWithBackgroundColor}
+  ${ElementFillContent}
+  ${ElementWithBackgroundColor}
 `;
 
 function SquareDisplay({ backgroundColor }) {

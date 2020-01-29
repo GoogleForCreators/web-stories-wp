@@ -31,7 +31,7 @@ import { useStory } from '../../app';
 import { getPanels } from '../../panels';
 
 const Wrapper = styled.div`
-	min-height: 100%;
+  min-height: 100%;
 `;
 
 function DesignInspector() {

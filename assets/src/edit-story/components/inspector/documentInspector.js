@@ -35,27 +35,27 @@ import useInspector from './useInspector';
 import { SelectMenu, InputGroup } from './shared';
 
 const ButtonCSS = css`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	font-size: 14px;
-	width: 100%;
-	padding: 15px;
-	background: none;
-	margin: 5px 0;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  font-size: 14px;
+  width: 100%;
+  padding: 15px;
+  background: none;
+  margin: 5px 0;
 `;
 const Img = styled.img`
-	width: 100%;
-	max-height: 300px;
+  width: 100%;
+  max-height: 300px;
 `;
 
 const Group = styled.div`
-	border-color: ${({ theme }) => theme.colors.mg.v1};
-	display: block;
-	align-items: center;
-	margin: 15px 0;
+  border-color: ${({ theme }) => theme.colors.mg.v1};
+  display: block;
+  align-items: center;
+  margin: 15px 0;
 `;
 
 const RemoveButton = styled.button`
-	${ButtonCSS}
+  ${ButtonCSS}
 `;
 
 function DocumentInspector() {

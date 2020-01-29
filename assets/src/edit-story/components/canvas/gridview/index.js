@@ -39,86 +39,86 @@ const PAGE_HEIGHT = 160;
 const GRID_GAP = 20;
 
 const Wrapper = styled.div`
-	position: relative;
-	display: grid;
-	grid-template-columns: ${({ scale }) => `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
-	grid-gap: ${GRID_GAP}px;
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: ${({ scale }) => `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
+  grid-gap: ${GRID_GAP}px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 `;
 
 const RangeInputWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	margin-bottom: 75px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 75px;
 `;
 
 const rangeThumb = css`
-	width: 28px;
-	height: 28px;
-	border-radius: 100%;
-	background: ${({ theme }) => theme.colors.fg.v1};
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  background: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const rangeTrack = css`
-	background: rgba(255, 255, 255, 0.2);
-	border-color: transparent;
-	color: transparent;
-	width: 100%;
-	height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: transparent;
+  color: transparent;
+  width: 100%;
+  height: 4px;
 `;
 
 // Lots of repetition to avoid browsers dropping unknown selectors.
 const RangeInput = styled.input.attrs(() => ({
   type: 'range',
 }))`
-	appearance: none;
-	background: transparent;
-	display: block;
-	width: 360px;
-	margin: 0 20px;
+  appearance: none;
+  background: transparent;
+  display: block;
+  width: 360px;
+  margin: 0 20px;
 
-	&::-webkit-slider-thumb {
-		${rangeThumb}
-		appearance: none;
-		margin-top: -12px;
-	}
+  &::-webkit-slider-thumb {
+    ${rangeThumb}
+    appearance: none;
+    margin-top: -12px;
+  }
 
-	&::-moz-range-thumb {
-		${rangeThumb}
-	}
+  &::-moz-range-thumb {
+    ${rangeThumb}
+  }
 
-	&::-ms-thumb {
-		${rangeThumb}
-	}
+  &::-ms-thumb {
+    ${rangeThumb}
+  }
 
-	&::-webkit-slider-runnable-track {
-		${rangeTrack}
-	}
+  &::-webkit-slider-runnable-track {
+    ${rangeTrack}
+  }
 
-	&::-moz-range-track {
-		${rangeTrack}
-	}
+  &::-moz-range-track {
+    ${rangeTrack}
+  }
 
-	&::-ms-track {
-		${rangeTrack}
-	}
+  &::-ms-track {
+    ${rangeTrack}
+  }
 `;
 
 const Rectangle = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 32px;
-	color: ${({ theme }) => theme.colors.fg.v1};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  color: ${({ theme }) => theme.colors.fg.v1};
 
-	svg {
-		width: ${({ isLarge }) => isLarge ? '20px' : '12px'};
-		height: auto;
-		shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
-	}
+  svg {
+    width: ${({ isLarge }) => isLarge ? '20px' : '12px'};
+    height: auto;
+    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
+  }
 `;
 
 function RangeControl({ value, onChange }) {

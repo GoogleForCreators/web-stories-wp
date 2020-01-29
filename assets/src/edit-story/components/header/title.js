@@ -33,15 +33,15 @@ import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 
 const Input = styled.input`
-	color: ${({ theme }) => `${theme.colors.fg.v1} !important`};
-	margin: 0;
-	font-family: ${({ theme }) => theme.fonts.body1.family};
-	font-size: ${({ theme }) => theme.fonts.body1.size};
-	line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-	letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-	background: none !important;
-	border: none !important;
-	text-align: start;
+  color: ${({ theme }) => `${theme.colors.fg.v1} !important`};
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  background: none !important;
+  border: none !important;
+  text-align: start;
 `;
 
 function Title() {

@@ -28,7 +28,7 @@ import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
 const DisplayPageArea = styled(PageArea).attrs({ className: 'container', overflow: false })`
-	background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 function DisplayLayer() {

@@ -20,10 +20,10 @@
 import { css } from 'styled-components';
 
 export const ImageWithScale = css`
-	width: ${({ width }) => `${width}px`};
-	height: ${({ height }) => `${height}px`};
-	left: ${({ offsetX }) => `${-offsetX}px`};
-	top: ${({ offsetY }) => `${-offsetY}px`};
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
 export function getImageWithScaleCss({ width, height, offsetX, offsetY }) {

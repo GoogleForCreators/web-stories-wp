@@ -33,13 +33,13 @@ import { useTransformHandler } from '../../components/canvas';
 import { ImageWithScale, getImgProps, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-	${ElementFillContent}
-	overflow: hidden;
+  ${ElementFillContent}
+  overflow: hidden;
 `;
 
 const Img = styled.img`
-	position: absolute;
-	${ImageWithScale}
+  position: absolute;
+  ${ImageWithScale}
 `;
 
 function ImageDisplay({ id, src, origRatio, width, height, scale, focalX, focalY }) {

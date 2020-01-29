@@ -31,7 +31,7 @@ import { useCallback, useState } from '@wordpress/element';
 import Context from './context';
 
 const DropZoneWrapper = styled.div`
-	height: 100%;
+  height: 100%;
 `;
 
 function DropZoneProvider({ children }) {

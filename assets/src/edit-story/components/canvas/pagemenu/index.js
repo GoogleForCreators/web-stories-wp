@@ -40,64 +40,64 @@ import Text from './text_helper.svg';
 const HEIGHT = 28;
 
 const Wrapper = styled.div`
-	display: flex;
-	align-items: flex-end;
-	height: ${20 + HEIGHT}px;
+  display: flex;
+  align-items: flex-end;
+  height: ${20 + HEIGHT}px;
 `;
 
 const Box = styled.div`
-	background-color: ${({ theme }) => theme.colors.bg.v1};
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	height: ${HEIGHT}px;
-	width: 100%;
+  background-color: ${({ theme }) => theme.colors.bg.v1};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: ${HEIGHT}px;
+  width: 100%;
 `;
 
 const PageCount = styled.div`
-	color: ${({ theme }) => theme.colors.fg.v1};
-	width: 62px;
-	font-family: ${({ theme }) => theme.fonts.body1.family};
-	font-size: ${({ theme }) => theme.fonts.body1.size};
-	line-height: 24px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  width: 62px;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: 24px;
 `;
 
 const Options = styled.div`
-	display: flex;
-	align-items: center;
-	color: ${({ theme }) => theme.colors.fg.v2};
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-	background-color: ${({ theme }) => theme.colors.fg.v1};
-	opacity: .3;
-	height: ${HEIGHT}px;
-	width: 1px;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+  opacity: .3;
+  height: ${HEIGHT}px;
+  width: 1px;
 `;
 
 const Space = styled.div`
-	width: ${({ isDouble }) => isDouble ? 20 : 10}px;
+  width: ${({ isDouble }) => isDouble ? 20 : 10}px;
 `;
 
 const Icon = styled.button`
-	cursor: pointer;
-	background: transparent;
-	border: 0;
-	padding: 0;
-	display: block;
-	color: ${({ theme }) => theme.colors.fg.v1};
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  display: block;
+  color: ${({ theme }) => theme.colors.fg.v1};
 
-	${({ disabled }) => disabled && `
-	opacity: .3;
-	pointer-events: none;
-	`}
+  ${({ disabled }) => disabled && `
+  opacity: .3;
+  pointer-events: none;
+  `}
 
-	svg {
-		width: 28px;
-		height: 28px;
-		display: block;
-	}
+  svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
 `;
 
 function PageMenu() {

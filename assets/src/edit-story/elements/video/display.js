@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import { ElementFillContent } from '../shared';
 
 const Element = styled.video`
-	${ElementFillContent}
+  ${ElementFillContent}
 `;
 
 function VideoDisplay(props) {

@@ -29,8 +29,8 @@ import { getTabId } from './shared';
 
 const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })``;
 const InspectorForm = styled.form`
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 function Inspector() {

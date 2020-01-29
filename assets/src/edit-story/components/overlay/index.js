@@ -31,13 +31,13 @@ import PointerEventsCss from '../../utils/pointerEventsCss';
 import Context from './context';
 
 const Wrapper = styled.div`
-	${PointerEventsCss}
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 0;
-	z-index: ${({ zIndex }) => `${zIndex}`};
+  ${PointerEventsCss}
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: ${({ zIndex }) => `${zIndex}`};
 `;
 
 function InOverlayWithRef({ zIndex, pointerEvents, render, children }, ref) {

@@ -41,34 +41,34 @@ const PAGE_HEIGHT = 50;
 const PAGE_WIDTH = PAGE_HEIGHT * 9 / 16;
 
 const Wrapper = styled.div`
-	position: relative;
-	display: grid;
-	grid: "left-navigation carousel right-navigation" auto / 53px 1fr 53px;
-	background-color: ${({ theme }) => theme.colors.bg.v1};
-	color: ${({ theme }) => theme.colors.fg.v1};
-	width: 100%;
-	height: 100%;
+  position: relative;
+  display: grid;
+  grid: "left-navigation carousel right-navigation" auto / 53px 1fr 53px;
+  background-color: ${({ theme }) => theme.colors.bg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  width: 100%;
+  height: 100%;
 `;
 
 const Area = styled.div`
-	grid-area: ${({ area }) => area};
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 16px 0 24px;
+  grid-area: ${({ area }) => area};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 16px 0 24px;
 `;
 
 const List = styled(Area)`
-	flex-direction: row;
-	align-items: flex-start;
-	justify-content: ${({ hasHorizontalOverflow }) => hasHorizontalOverflow ? 'flex-start' : 'center'};
-	overflow-x: ${({ hasHorizontalOverflow }) => hasHorizontalOverflow ? 'scroll' : 'hidden'};
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: ${({ hasHorizontalOverflow }) => hasHorizontalOverflow ? 'flex-start' : 'center'};
+  overflow-x: ${({ hasHorizontalOverflow }) => hasHorizontalOverflow ? 'scroll' : 'hidden'};
 `;
 
 const StyledGridViewButton = styled(GridViewButton)`
-	position: absolute;
-	bottom: 24px;
+  position: absolute;
+  bottom: 24px;
 `;
 
 function Carousel() {

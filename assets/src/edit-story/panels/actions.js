@@ -40,12 +40,12 @@ import { Panel, Title } from './shared';
  */
 
 const Delete = styled.a`
-	cursor: pointer;
-	color: ${({ theme }) => theme.colors.action};
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.action};
 
-	&:hover {
-		color: ${({ theme }) => theme.colors.danger};
-	}
+  &:hover {
+    color: ${({ theme }) => theme.colors.danger};
+  }
 `;
 
 function ActionsPanel({ deleteSelectedElements }) {

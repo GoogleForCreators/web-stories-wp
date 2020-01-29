@@ -31,8 +31,8 @@ import { useRef, useState, useLayoutEffect } from '@wordpress/element';
 import useDropZone from './useDropZone';
 
 const DropZoneComponent = styled.div`
-	position: relative;
-	${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) => borderPosition && `
+  position: relative;
+  ${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) => borderPosition && `
 		:after {
 			height: 100%;
 			top: 0;

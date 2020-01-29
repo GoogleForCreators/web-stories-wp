@@ -29,11 +29,11 @@ import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
 
 const Background = styled.div`
-	background-color: ${({ theme }) => theme.colors.bg.v1};
-	width: 100%;
-	height: 100%;
-	position: relative;
-	user-select: none;
+  background-color: ${({ theme }) => theme.colors.bg.v1};
+  width: 100%;
+  height: 100%;
+  position: relative;
+  user-select: none;
 `;
 
 function CanvasLayout() {

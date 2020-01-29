@@ -31,70 +31,70 @@ import GridViewIcon from './icons/grid_view.svg';
 const Base = styled.button.attrs(
   ({ isDisabled }) => ({ disabled: isDisabled }),
 )`
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 2px;
-	background: transparent;
-	display: block;
-	min-width: ${({ isIcon }) => isIcon ? 'initial' : '63px'};
-	line-height: 28px;
-	height: 30px;
-	padding: 0 10px;
-	cursor: pointer;
-	font-size: 14px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  background: transparent;
+  display: block;
+  min-width: ${({ isIcon }) => isIcon ? 'initial' : '63px'};
+  line-height: 28px;
+  height: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: 14px;
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
-	svg {
-		width: 1em;
-	}
+  svg {
+    width: 1em;
+  }
 
-	${({ disabled }) => disabled && `
+  ${({ disabled }) => disabled && `
 		pointer-events: none;
 		opacity: .3;
 	`}
 `;
 
 const StyledButton = styled(Base)`
-	border: none;
-	padding: 0;
-	width: ${({ width }) => width}px;
-	height: ${({ height }) => height}px;
-	min-width: initial;
-	visibility: ${({ isHidden }) => isHidden ? 'hidden' : 'visible'};
-	opacity: .3;
-	color: ${({ theme }) => theme.colors.fg.v1};
+  border: none;
+  padding: 0;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  min-width: initial;
+  visibility: ${({ isHidden }) => isHidden ? 'hidden' : 'visible'};
+  opacity: .3;
+  color: ${({ theme }) => theme.colors.fg.v1};
 
-	&:focus,
-	&:active,
-	&:hover {
-		opacity: 1;
-	}
+  &:focus,
+  &:active,
+  &:hover {
+    opacity: 1;
+  }
 
-	svg {
-		width: ${({ width }) => width}px;
-		height: ${({ height }) => height}px;
-	}
+  svg {
+    width: ${({ width }) => width}px;
+    height: ${({ height }) => height}px;
+  }
 `;
 
 export const Primary = styled(Base)`
-	border-color: ${({ theme }) => theme.colors.action};
-	background-color: ${({ theme }) => theme.colors.action};
-	color: ${({ theme }) => theme.colors.fg.v1};
+  border-color: ${({ theme }) => theme.colors.action};
+  background-color: ${({ theme }) => theme.colors.action};
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 export const Secondary = styled(Base)`
-	border-color: ${({ theme }) => theme.colors.fg.v1};
-	background-color: ${({ theme }) => theme.colors.fg.v3};
-	color: ${({ theme }) => theme.colors.bg.v5};
+  border-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.v3};
+  color: ${({ theme }) => theme.colors.bg.v5};
 `;
 
 export const Outline = styled(Base)`
-	border-color: ${({ theme }) => theme.colors.fg.v4};
-	color: ${({ theme }) => theme.colors.fg.v1};
+  border-color: ${({ theme }) => theme.colors.fg.v4};
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 export const LeftArrow = (props) => (

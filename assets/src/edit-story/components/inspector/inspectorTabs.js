@@ -29,32 +29,32 @@ import { getTabId } from './shared';
 import useInspector from './useInspector';
 
 const Tabs = styled.div`
-	background-color: ${({ theme }) => theme.colors.fg.v1};
-	display: flex;
-	height: 100%;
-	margin: 0;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+  display: flex;
+  height: 100%;
+  margin: 0;
 `;
 
 const Tab = styled.button.attrs({ role: 'tab' })`
-	width: 33.33%;
-	height: 100%;
-	text-align: center;
-	cursor: pointer;
-	border: none;
-	background: none;
-	text-transform: uppercase;
-	color: ${({ theme }) => theme.colors.fg.v0};
-	font-family: ${({ theme }) => theme.fonts.tab.family};
-	font-size: ${({ theme }) => theme.fonts.tab.size};
-	line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
-	word-break: break-word;
+  width: 33.33%;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.fg.v0};
+  font-family: ${({ theme }) => theme.fonts.tab.family};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
+  word-break: break-word;
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
-	${({ isActive }) => ! isActive && `
+  ${({ isActive }) => ! isActive && `
 		opacity: .3;
 		&:hover { opacity: 1; }
 	`}

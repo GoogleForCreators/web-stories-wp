@@ -36,31 +36,31 @@ const getTabId = (id) => {
 };
 
 const Label = styled.span`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	font-size: 11px;
-	line-height: 16px;
-	width: 80px;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  font-size: 11px;
+  line-height: 16px;
+  width: 80px;
 `;
 
 const Group = styled.label`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	display: block;
-	align-items: center;
-	margin-bottom: 10px;
-	opacity: ${({ disabled }) => disabled ? 0.7 : 1};
+  color: ${({ theme }) => theme.colors.mg.v1};
+  display: block;
+  align-items: center;
+  margin-bottom: 10px;
+  opacity: ${({ disabled }) => disabled ? 0.7 : 1};
 `;
 
 const Select = styled.select`
-	width: 100%;
+  width: 100%;
 `;
 
 const Input = styled.input`
-	color: ${({ theme }) => theme.colors.mg.v1};
-	border: 1px solid;
-	border-radius: 4px;
-	font-size: 11px;
-	line-height: 16px;
-	width: 100%;
+  color: ${({ theme }) => theme.colors.mg.v1};
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  width: 100%;
 `;
 
 function SelectMenu({ label, name, options, value, onChange, postfix, disabled }) {

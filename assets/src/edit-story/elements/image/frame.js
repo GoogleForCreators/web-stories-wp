@@ -33,7 +33,7 @@ import useDoubleClick from '../../utils/useDoubleClick';
 import { ElementFillContent } from '../shared';
 
 const Element = styled.div`
-	${ElementFillContent}
+  ${ElementFillContent}
 `;
 
 function ImageFrame({ id }) {

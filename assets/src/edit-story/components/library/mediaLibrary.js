@@ -34,94 +34,94 @@ import UploadButton from '../uploadButton';
 import useLibrary from './useLibrary';
 
 const Container = styled.div`
-	display: grid;
-	grid-gap: 10px;
-	grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr;
 `;
 
 const Column = styled.div``;
 
 export const StyledTiles = css`
-	width: 100%;
-	border-radius: 10px;
-	margin-bottom: 10px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
-	${StyledTiles}
+  ${StyledTiles}
 `;
 
 const Video = styled.video`
-	${StyledTiles}
+  ${StyledTiles}
 `;
 
 const Title = styled.h3`
-	color: ${({ theme }) => theme.colors.fg.v1};
-	margin: 0;
-	font-size: 19px;
-	line-height: 1.4;
-	flex: 3 0 0;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.4;
+  flex: 3 0 0;
 `;
 
 const Header = styled.div`
-	display: flex;
-	margin: 0 0 25px;
+  display: flex;
+  margin: 0 0 25px;
 `;
 
 const Message = styled.div`
-	color: ${({ theme }) => theme.colors.fg.v1};
-	font-size: 19px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-size: 19px;
 `;
 
 const FilterButtons = styled.div`
-	border-bottom: 2px solid ${({ theme }) => theme.colors.mg.v1};
-	padding: 18px 0;
-	margin: 10px 0 15px;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.mg.v1};
+  padding: 18px 0;
+  margin: 10px 0 15px;
 `;
 
 const FilterButton = styled.button`
-	border: 0;
-	background: none;
-	padding: 0;
-	margin: 0 28px 0 0;
-	color: ${({ theme, active }) => (active ? theme.colors.fg.v1 : theme.colors.mg.v1)};
-	font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-	font-size: 13px;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0 28px 0 0;
+  color: ${({ theme, active }) => (active ? theme.colors.fg.v1 : theme.colors.mg.v1)};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
+  font-size: 13px;
 
 `;
 
 const SearchField = styled.div`
-	position: relative;
+  position: relative;
 `;
 
 const Search = styled.input.attrs({ type: 'text' })`
-	width: 100%;
-	background: ${({ theme }) => theme.colors.mg.v1} !important;
-	border-color: ${({ theme }) => theme.colors.mg.v1} !important;
-	color: ${({ theme }) => theme.colors.mg.v2} !important;
-	padding: 2px 10px 2px 33px !important;
+  width: 100%;
+  background: ${({ theme }) => theme.colors.mg.v1} !important;
+  border-color: ${({ theme }) => theme.colors.mg.v1} !important;
+  color: ${({ theme }) => theme.colors.mg.v2} !important;
+  padding: 2px 10px 2px 33px !important;
 
-	&::placeholder {
-		color: ${({ theme }) => theme.colors.mg.v2};
-	}
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.mg.v2};
+  }
 `;
 
 const Icon = styled(Dashicon)`
-	position: absolute;
-	top: 8px;
-	left: 10px;
-	fill: ${({ theme }) => theme.colors.mg.v2};
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  fill: ${({ theme }) => theme.colors.mg.v2};
 `;
 
 const ButtonCSS = css`
-	background: none;
-	color: ${({ theme }) => theme.colors.fg.v1};
-	padding: 5px;
-	font-weight: bold;
-	flex: 1 0 0;
-	text-align: center;
-	border: 1px solid ${({ theme }) => theme.colors.mg.v1};
-	border-radius: 3px;
+  background: none;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  padding: 5px;
+  font-weight: bold;
+  flex: 1 0 0;
+  text-align: center;
+  border: 1px solid ${({ theme }) => theme.colors.mg.v1};
+  border-radius: 3px;
 `;
 
 const SUPPORTED_IMAGE_TYPES = [

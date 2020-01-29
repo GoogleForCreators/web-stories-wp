@@ -33,10 +33,10 @@ import { ElementWithPosition, ElementWithSize, ElementWithRotation, getBox } fro
 import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
-	${ElementWithPosition}
-	${ElementWithSize}
-	${ElementWithRotation}
-	contain: layout paint;
+  ${ElementWithPosition}
+  ${ElementWithSize}
+  ${ElementWithRotation}
+  contain: layout paint;
 `;
 
 function DisplayElement({

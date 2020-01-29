@@ -13,7 +13,7 @@
     "function-parentheses-space-inside": null,
     "function-url-quotes": null,
     "function-whitespace-after": null,
-    "indentation": "tab",
+    "indentation": 2,
     "length-zero-no-unit": true,
     "max-line-length": null,
     "max-empty-lines": null,

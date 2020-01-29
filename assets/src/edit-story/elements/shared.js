@@ -26,50 +26,50 @@ import getPercentageFromPixels from '../utils/getPercentageFromPixels';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 
 export const ElementFillContent = css`
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 export const ElementWithPosition = css`
-	position: absolute;
-	z-index: 1;
-	left: ${({ x }) => `${x}px`};
-	top: ${({ y }) => `${y}px`};
+  position: absolute;
+  z-index: 1;
+  left: ${({ x }) => `${x}px`};
+  top: ${({ y }) => `${y}px`};
 `;
 
 export const ElementWithSize = css`
-	width: ${({ width }) => `${width}px`};
-	height: ${({ height }) => `${height}px`};
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
 `;
 
 export const ElementWithRotation = css`
-	transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
+  transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
 export const ElementWithBackgroundColor = css`
-	background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 export const ElementWithFontColor = css`
-	color: ${({ color }) => color};
+  color: ${({ color }) => color};
 `;
 
 export const ElementWithFont = css`
-	white-space: pre-wrap;
-	font-family: ${({ fontFamily }) => fontFamily};
-	font-style: ${({ fontStyle }) => fontStyle};
-	font-size: ${({ fontSize }) => fontSize}px;
-	font-weight: ${({ fontWeight }) => fontWeight};
+  white-space: pre-wrap;
+  font-family: ${({ fontFamily }) => fontFamily};
+  font-style: ${({ fontStyle }) => fontStyle};
+  font-size: ${({ fontSize }) => fontSize}px;
+  font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
 export const ElementWithStyle = css`
-	padding: ${({ padding }) => padding ? padding : '0'}%;
-	line-height: ${({ lineHeight }) => lineHeight};
-	letter-spacing: ${({ letterSpacing }) => letterSpacing ? letterSpacing + 'em' : null};
-	text-align: ${({ textAlign }) => textAlign};
+  padding: ${({ padding }) => padding ? padding : '0'}%;
+  line-height: ${({ lineHeight }) => lineHeight};
+  letter-spacing: ${({ letterSpacing }) => letterSpacing ? letterSpacing + 'em' : null};
+  text-align: ${({ textAlign }) => textAlign};
 `;
 
 /**
