@@ -50,7 +50,7 @@ const Bar = styled.div`
 	width: 32px;
 	height: 4px;
 	border-radius: 2px;
-	text-indent: -10000px; // hide the text from non-screen-readers
+	text-indent: -10000px; /* hide the text from non-screen-readers */
 `;
 
 function DragHandle( { height, minHeight, maxHeight, handleHeightChange } ) {

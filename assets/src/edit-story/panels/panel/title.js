@@ -36,11 +36,11 @@ import Arrow from './arrow.svg';
 
 const Header = styled.h2`
 	background-color: ${ ( { theme, isPrimary } ) => isPrimary ? theme.colors.fg.v2 : theme.colors.fg.v1 };
-	border: 0px solid ${ ( { theme } ) => theme.colors.fg.v2 };
+	border: 0 solid ${ ( { theme } ) => theme.colors.fg.v2 };
 	border-top-width: ${ ( { isPrimary } ) => isPrimary ? 0 : '1px' };
 	color: ${ ( { theme } ) => theme.colors.bg.v2 };
 	padding: 10px 20px;
-	${ ( { hasResizeHandle } ) => hasResizeHandle && 'padding-top: 0;' };
+	${ ( { hasResizeHandle } ) => hasResizeHandle && 'padding-top: 0;' }
 	margin: 0;
 	position: relative;
 	display: flex;
@@ -72,7 +72,7 @@ const Collapse = styled.span`
 	color: inherit;
 	width: 28px;
 	height: 28px;
-	display: flex; // removes implicit line-height padding from child element
+	display: flex; /* removes implicit line-height padding from child element */
 
 	svg {
 		width: 28px;
