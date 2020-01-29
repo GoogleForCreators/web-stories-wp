@@ -121,11 +121,11 @@ function APIProvider( { children } ) {
 						guid: { rendered: src },
 						media_details: { width: oWidth, height: oHeight },
 						mime_type: mimeType,
-						featured_media: featuredMedia,
+						featured_media: posterId,
 						featured_media_src: poster,
 					} ) => ( {
 						id,
-						featuredMedia,
+						posterId,
 						poster,
 						src,
 						oWidth,
