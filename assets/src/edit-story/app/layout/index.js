@@ -49,9 +49,9 @@ const Editor = styled.div`
 
 // @todo: set `overflow: hidden;` once page size is responsive.
 const Area = styled.div`
-  grid-area: ${ ( { area } ) => area };
-  position: relative;
-  z-index: ${ ( { area } ) => area === 'canv' ? 1 : 2 };
+	grid-area: ${ ( { area } ) => area };
+	position: relative;
+	z-index: ${ ( { area } ) => area === 'canv' ? 1 : 2 };
 `;
 
 function Layout() {

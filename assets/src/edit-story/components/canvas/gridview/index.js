@@ -74,7 +74,7 @@ const rangeTrack = css`
 const RangeInput = styled.input.attrs( () => ( {
 	type: 'range',
 } ) )`
-	-webkit-appearance: none;
+	appearance: none;
 	background: transparent;
 	display: block;
 	width: 360px;
@@ -82,7 +82,7 @@ const RangeInput = styled.input.attrs( () => ( {
 
 	&::-webkit-slider-thumb {
 		${ rangeThumb }
-		-webkit-appearance: none;
+		appearance: none;
 		margin-top: -12px;
 	}
 
@@ -117,7 +117,7 @@ const Rectangle = styled.div`
 	svg {
 		width: ${ ( { isLarge } ) => isLarge ? '20px' : '12px' };
 		height: auto;
-		shape-rendering:crispEdges; /* prevents issues with anti-aliasing */
+		shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
 	}
 `;
 

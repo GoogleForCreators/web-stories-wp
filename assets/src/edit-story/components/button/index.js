@@ -43,7 +43,8 @@ const Base = styled.button.attrs(
 	cursor: pointer;
 	font-size: 14px;
 
-	&:focus, &:active {
+	&:focus,
+	&:active {
 		outline: none;
 	}
 
@@ -66,9 +67,13 @@ const StyledButton = styled( Base )`
 	visibility: ${ ( { isHidden } ) => isHidden ? 'hidden' : 'visible' };
 	opacity: .3;
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	&:focus, &:active, &:hover {
+
+	&:focus,
+	&:active,
+	&:hover {
 		opacity: 1;
 	}
+
 	svg {
 		width: ${ ( { width } ) => width }px;
 		height: ${ ( { height } ) => height }px;

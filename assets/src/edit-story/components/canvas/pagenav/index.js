@@ -37,9 +37,10 @@ const Wrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: ${ ( { isNext } ) => isNext ? 'flex-end' : 'flex-start' };
-	color:  ${ ( { theme } ) => theme.colors.fg.v1 };
+	color: ${ ( { theme } ) => theme.colors.fg.v1 };
 	width: ${ PAGE_NAV_BUTTON_WIDTH }px;
 	height: ${ PAGE_NAV_BUTTON_WIDTH }px;
+
 	& > * {
 		pointer-events: initial;
 	}

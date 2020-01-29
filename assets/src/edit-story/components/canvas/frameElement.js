@@ -34,14 +34,16 @@ import { ElementWithPosition, ElementWithSize, ElementWithRotation, getBox } fro
 import useCanvas from './useCanvas';
 
 const Wrapper = styled.div`
-  ${ ElementWithPosition }
-  ${ ElementWithSize }
-  ${ ElementWithRotation }
-  pointer-events: initial;
+	${ ElementWithPosition }
+	${ ElementWithSize }
+	${ ElementWithRotation }
+	pointer-events: initial;
 
-  &:focus, &:active, &:hover {
-    outline: 1px solid ${ ( { theme } ) => theme.colors.selection };
-  }
+	&:focus,
+	&:active,
+	&:hover {
+		outline: 1px solid ${ ( { theme } ) => theme.colors.selection };
+	}
 `;
 
 function FrameElement( {

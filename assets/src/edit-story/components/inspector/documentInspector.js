@@ -40,18 +40,18 @@ const buttonStyles = css`
 	width: 100%;
 	padding: 15px;
 	background: none;
-	margin: 5px 0px;
+	margin: 5px 0;
 `;
 const Img = styled.img`
 	width: 100%;
-	max-height: 300px
+	max-height: 300px;
 `;
 
 const Group = styled.div`
 	border-color: ${ ( { theme } ) => theme.colors.mg.v1 };
 	display: block;
 	align-items: center;
-	margin: 15px 0px;
+	margin: 15px 0;
 `;
 
 const RemoveButton = styled.button`
