@@ -67,7 +67,7 @@ InputGroup.propTypes = {
 	type: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	value: PropTypes.any.isRequired,
-	isMultiple: PropTypes.bool.isRequired,
+	isMultiple: PropTypes.bool,
 	onChange: PropTypes.func.isRequired,
 	postfix: PropTypes.string,
 	disabled: PropTypes.bool,
@@ -77,6 +77,7 @@ InputGroup.defaultProps = {
 	type: 'number',
 	postfix: '',
 	disabled: false,
+	isMultiple: false,
 };
 
 export default InputGroup;

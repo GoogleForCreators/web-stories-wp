@@ -56,8 +56,8 @@ function FontPanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const fontStyles = [
-		{ name: __( 'Normal', 'web-stories' ), slug: 'normal', thisValue: 'normal' },
-		{ name: __( 'Italic', 'web-stories' ), slug: 'italic', thisValue: 'italic' },
+		{ name: __( 'Normal', 'web-stories' ), value: 'normal' },
+		{ name: __( 'Italic', 'web-stories' ), value: 'italic' },
 	];
 
 	return (

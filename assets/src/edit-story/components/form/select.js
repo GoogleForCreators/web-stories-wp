@@ -47,9 +47,9 @@ function SelectMenu( { label, options, value, isMultiple, onChange, postfix, dis
 				onChange={ ( evt ) => onChange( evt.target.value, evt ) }
 				onBlur={ ( evt ) => evt.target.form.dispatchEvent( new window.Event( 'submit' ) ) }
 			>
-				{ isMultiple ? ( <option dangerouslySetInnerHTML={ { __html: __( '( multiple )', 'web-stories' ) } } /> ) :
-					options && options.map( ( { name, slug, thisValue } ) => (
-						<option key={ slug } value={ thisValue } dangerouslySetInnerHTML={ { __html: name } } />
+				{ isMultiple ? ( <option key="multiple" dangerouslySetInnerHTML={ { __html: __( '( multiple )', 'web-stories' ) } } /> ) :
+					options && options.map( ( { name, value: optValue } ) => (
+						<option key={ optValue } value={ optValue } dangerouslySetInnerHTML={ { __html: name } } />
 					) ) }
 			</Select>
 			{ postfix }

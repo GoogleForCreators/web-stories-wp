@@ -36,7 +36,7 @@ function StylePanel( { selectedElements, onSetProperties } ) {
 	const textAlign = getCommonValue( selectedElements, 'textAlign' );
 	const letterSpacing = getCommonValue( selectedElements, 'letterSpacing' );
 	const lineHeight = getCommonValue( selectedElements, 'lineHeight' );
-	const padding = getCommonValue( selectedElements, 'padding' );
+	const padding = getCommonValue( selectedElements, 'padding' ) || '';
 	const [ state, setState ] = useState( { textAlign, letterSpacing, lineHeight, padding } );
 	useEffect( () => {
 		setState( { textAlign, letterSpacing, lineHeight, padding } );
@@ -47,11 +47,11 @@ function StylePanel( { selectedElements, onSetProperties } ) {
 	};
 
 	const alignmentOptions = [
-		{ name: __( 'Default', 'web-stories' ), slug: '', thisValue: '' },
-		{ name: __( 'Left', 'web-stories' ), slug: 'left', thisValue: 'left' },
-		{ name: __( 'Right', 'web-stories' ), slug: 'right', thisValue: 'right' },
-		{ name: __( 'Center', 'web-stories' ), slug: 'center', thisValue: 'center' },
-		{ name: __( 'Justify', 'web-stories' ), slug: 'justify', thisValue: 'justify' },
+		{ name: __( 'Default', 'web-stories' ), value: '' },
+		{ name: __( 'Left', 'web-stories' ), value: 'left' },
+		{ name: __( 'Right', 'web-stories' ), value: 'right' },
+		{ name: __( 'Center', 'web-stories' ), value: 'center' },
+		{ name: __( 'Justify', 'web-stories' ), value: 'justify' },
 	];
 
 	return (
@@ -82,7 +82,7 @@ function StylePanel( { selectedElements, onSetProperties } ) {
 				label={ __( 'Padding', 'web-stories' ) }
 				value={ state.padding }
 				isMultiple={ '' === padding }
-				onChange={ ( value ) => setState( { ...state, padding: isNaN( value ) ? '' : value } ) }
+				onChange={ ( value ) => setState( { ...state, padding: isNaN( value ) ? '' : parseInt( value ) } ) }
 				postfix={ _x( '%', 'Percentage', 'web-stories' ) }
 			/>
 		</SimplePanel>
