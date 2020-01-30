@@ -32,11 +32,11 @@ import {
 
 function NavLayer() {
 	return (
-		<Layer pointerEvents={ false } onMouseDown={ ( evt ) => evt.stopPropagation() }>
-			<HeadArea pointerEvents={ true }>
+		<Layer pointerEvents="none" onMouseDown={ ( evt ) => evt.stopPropagation() }>
+			<HeadArea pointerEvents="initial">
 				<Header />
 			</HeadArea>
-			<MenuArea pointerEvents={ true }>
+			<MenuArea pointerEvents="initial">
 				<PageMenu />
 			</MenuArea>
 			<NavPrevArea>
@@ -45,7 +45,7 @@ function NavLayer() {
 			<NavNextArea>
 				<PageNav />
 			</NavNextArea>
-			<CarouselArea pointerEvents={ true }>
+			<CarouselArea pointerEvents="initial">
 				<Carousel />
 			</CarouselArea>
 		</Layer>

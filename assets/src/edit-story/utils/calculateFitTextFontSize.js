@@ -15,11 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
-
-/**
  * Calculates font size that fits to the text element based on the element's size.
  * Replicates amp-fit-text's logic in the editor.
  *
@@ -31,10 +26,7 @@ import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../constants';
  *
  * @return {number|boolean} Calculated font size. False if calculation wasn't possible.
  */
-function calculateFitTextFontSize( measurer, expectedHeight, expectedWidth ) {
-	let maxFontSize = MAX_FONT_SIZE;
-	let minFontSize = MIN_FONT_SIZE;
-
+function calculateFitTextFontSize( measurer, expectedHeight, expectedWidth, { minFontSize, maxFontSize } ) {
 	// Return false if calculation is not possible due to width and height missing, e.g. in disabled preview.
 	if ( ! measurer.offsetHeight || ! measurer.offsetWidth ) {
 		return false;
@@ -72,7 +64,7 @@ function calculateFitTextFontSize( measurer, expectedHeight, expectedWidth ) {
 
 	// Binomial search for the best font size.
 	while ( maxFontSize - minFontSize > 1 ) {
-		const mid = Math.floor( ( minFontSize + maxFontSize ) / 2 );
+		const mid = ( minFontSize + maxFontSize ) / 2;
 		measurer.style.fontSize = mid + 'px';
 		const currentHeight = measurer.offsetHeight;
 		const currentWidth = measurer.offsetWidth;
