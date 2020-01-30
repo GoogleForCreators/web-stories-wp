@@ -1,0 +1,6 @@
+*.php
+*.txt
+*.sh
+*.zip
+composer.lock
+package-lock.json
