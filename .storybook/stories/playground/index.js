@@ -25,7 +25,16 @@ export default {
 
 // @todo: Find better way to mock these.
 const config = {
-	allowedVideoMimeTypes: [ 'video/mp4' ],
+	allowedMimeTypes: {
+		image: [
+			'image/png',
+			'image/jpeg',
+			'image/jpg',
+			'image/gif',
+		],
+		audio: [],
+		video: [ 'video/mp4' ],
+	},
 	storyId: 1234,
 	api: {
 		stories: '',
