@@ -24,14 +24,14 @@ import PropTypes from 'prop-types';
  */
 import { getCommonAttributes } from '../shared';
 
-function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle } ) {
+function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
 	const sourceProps = {
 		type: mimeType,
 		src,
 	};
 	const props = {
 		autoPlay,
-		poster: '/wp-content/plugins/amp/assets/images/stories-editor/story-fallback-poster.jpg', // @todo Replace this!
+		poster,
 		layout: 'fill',
 	};
 
@@ -50,6 +50,7 @@ function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotation
 }
 
 VideoSave.propTypes = {
+	poster: PropTypes.string,
 	rotationAngle: PropTypes.number.isRequired,
 	controls: PropTypes.bool,
 	autoPlay: PropTypes.bool,

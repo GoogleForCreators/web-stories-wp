@@ -114,7 +114,7 @@ const Icon = styled( Dashicon )`
 	fill: ${ ( { theme } ) => theme.colors.mg.v2 };
 `;
 
-const ButtonCSS = css`
+const buttonStyles = css`
 	background: none;
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
 	padding: 5px;
@@ -187,8 +187,8 @@ function MediaLibrary( { onInsert } ) {
 	 * @param {Object} attachment Attachment object from backbone media picker.
 	 */
 	const onSelect = ( attachment ) => {
-		const { url: src, mime: mimeType, width: oWidth, height: oHeight } = attachment;
-		const mediaEl = { src, mimeType, oWidth, oHeight };
+		const { url: src, mime: mimeType, width: oWidth, height: oHeight, id, featured_media: posterId, featured_media_src: poster } = attachment;
+		const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
 		insertMediaElement( mediaEl, DEFAULT_WIDTH );
 	};
 
@@ -216,6 +216,8 @@ function MediaLibrary( { onInsert } ) {
 				origHeight: oHeight,
 			} );
 		} else if ( allowedVideoMimeTypes.includes( mimeType ) ) {
+			const { id: videoId, poster, posterId: posterIdRaw } = attachment;
+			const posterId = parseInt( posterIdRaw );
 			return onInsert( 'video', {
 				src,
 				width,
@@ -227,6 +229,9 @@ function MediaLibrary( { onInsert } ) {
 				origWidth: oWidth,
 				origHeight: oHeight,
 				mimeType,
+				videoId,
+				posterId,
+				poster,
 			} );
 		}
 		return null;
@@ -286,7 +291,7 @@ function MediaLibrary( { onInsert } ) {
 				<UploadButton
 					onClose={ onClose }
 					onSelect={ onSelect }
-					buttonCSS={ ButtonCSS }
+					buttonCSS={ buttonStyles }
 				/>
 			</Header>
 

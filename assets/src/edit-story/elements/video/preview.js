@@ -24,10 +24,11 @@ import PropTypes from 'prop-types';
  */
 import { getCommonAttributes } from '../shared';
 
-function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle } ) {
+function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
 	const sourceProps = {
 		type: mimeType,
 		src,
+		poster,
 	};
 
 	const wrapperProps = {
@@ -54,6 +55,7 @@ VideoPreview.propTypes = {
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	id: PropTypes.string.isRequired,
+	poster: PropTypes.string,
 };
 
 export default VideoPreview;

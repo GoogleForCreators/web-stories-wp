@@ -29,6 +29,7 @@ import PositionPanel from './position';
 import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
+import VideoPosterPanel from './videoPoster';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -43,6 +44,7 @@ const POSITION = 'position';
 const FULLBLEED = 'fullbleed';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const VIDEO_POSTER = 'videoPoster';
 
 export const PanelTypes = {
 	ACTIONS,
@@ -56,6 +58,7 @@ export const PanelTypes = {
 	TEXT,
 	ROTATION_ANGLE,
 	FULLBLEED,
+	VIDEO_POSTER,
 };
 
 const ALL = Object.values( PanelTypes );
@@ -89,6 +92,7 @@ export function getPanels( elements ) {
 				case FONT: return { type, Panel: FontPanel };
 				case STYLE: return { type, Panel: StylePanel };
 				case TEXT: return { type, Panel: TextPanel };
+				case VIDEO_POSTER: return { type, Panel: VideoPosterPanel };
 				default: throw new Error( `Unknown panel: ${ type }` );
 			}
 		} );
