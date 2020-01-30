@@ -52,7 +52,6 @@ const Area = styled.div`
 	position: relative;
 	overflow: hidden;
 	z-index: ${ ( { area } ) => area === 'canv' ? 1 : 2 };
-	overflow: hidden;
 `;
 
 function Layout() {
