@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * WordPress dependencies
@@ -39,11 +38,12 @@ import {LeftArrow, RightArrow, GridView as GridViewButton} from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
 import DraggablePage from '../draggablePage';
+import useResizeEffect from '../../../utils/useResizeEffect';
 
 // @todo: Make responsive. Blocked on the header reimplementation and
 // responsive "page" size.
-const PAGE_HEIGHT = 50;
-const PAGE_WIDTH = (PAGE_HEIGHT * 9) / 16;
+const PAGE_THUMB_HEIGHT = 50;
+const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
 
 const Wrapper = styled.div`
   position: relative;
@@ -67,11 +67,9 @@ const Area = styled.div`
 const List = styled(Area)`
   flex-direction: row;
   align-items: flex-start;
-  justify-content:
-    ${({hasHorizontalOverflow}) =>
+  justify-content: ${({hasHorizontalOverflow}) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x:
-    ${({hasHorizontalOverflow}) =>
+  overflow-x: ${({hasHorizontalOverflow}) =>
     hasHorizontalOverflow ? 'scroll' : 'hidden'};
 `;
 
@@ -88,7 +86,7 @@ function Carousel() {
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
-  const listRef = useRef();
+  const listRef = useRef(null);
   const pageRefs = useRef([]);
 
   const openModal = useCallback(() => setIsGridViewOpen(true), [
@@ -98,25 +96,16 @@ function Carousel() {
     setIsGridViewOpen,
   ]);
 
-  useLayoutEffect(() => {
-    const observer = new ResizeObserver(entries => {
-      for (const entry of entries) {
-        const offsetWidth = entry.contentBoxSize
-          ? entry.contentBoxSize.inlineSize
-          : entry.contentRect.width;
-        setHasHorizontalOverflow(
-          Math.ceil(listRef.current.scrollWidth) > Math.ceil(offsetWidth)
-        );
-
-        const max = listRef.current.scrollWidth - offsetWidth;
-        setScrollPercentage(listRef.current.scrollLeft / max);
-      }
-    });
-
-    observer.observe(listRef.current);
-
-    return () => observer.disconnect();
-  }, [pages.length]);
+  useResizeEffect(
+    listRef,
+    () => {
+      const {offsetWidth, scrollWidth, scrollLeft} = listRef.current;
+      const max = scrollWidth - offsetWidth;
+      setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
+      setScrollPercentage(scrollLeft / max);
+    },
+    [pages.length]
+  );
 
   useLayoutEffect(() => {
     if (hasHorizontalOverflow) {
@@ -137,8 +126,9 @@ function Carousel() {
     const listElement = listRef.current;
 
     const handleScroll = () => {
-      const max = listElement.scrollWidth - listElement.offsetWidth;
-      setScrollPercentage(listElement.scrollLeft / max);
+      const {offsetWidth, scrollLeft, scrollWidth} = listElement;
+      const max = scrollWidth - offsetWidth;
+      setScrollPercentage(scrollLeft / max);
     };
 
     listElement.addEventListener('scroll', handleScroll, {passive: true});
@@ -174,7 +164,7 @@ function Carousel() {
         <Area area="left-navigation">
           <LeftArrow
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-(2 * PAGE_WIDTH))}
+            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
             width="24"
             height="24"
             aria-label={__('Scroll Left', 'web-stories')}
@@ -205,8 +195,8 @@ function Carousel() {
                 ref={el => {
                   pageRefs.current[page.id] = el;
                 }}
-                width={PAGE_WIDTH}
-                height={PAGE_HEIGHT}
+                width={PAGE_THUMB_WIDTH}
+                height={PAGE_THUMB_HEIGHT}
               />
             );
           })}
@@ -214,7 +204,7 @@ function Carousel() {
         <Area area="right-navigation">
           <RightArrow
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={() => scrollBy(2 * PAGE_WIDTH)}
+            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
             width="24"
             height="24"
             aria-label={__('Scroll Right', 'web-stories')}

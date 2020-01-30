@@ -89,8 +89,8 @@ const Icon = styled.button`
   color: ${({theme}) => theme.colors.fg.v1};
 
   ${({disabled}) =>
-  disabled &&
-  `
+    disabled &&
+    `
   opacity: .3;
   pointer-events: none;
   `}

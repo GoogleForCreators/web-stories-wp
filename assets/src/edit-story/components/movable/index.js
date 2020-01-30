@@ -35,7 +35,7 @@ function MovableWithRef({...moveableProps}, ref) {
   return (
     <InOverlay
       zIndex={DEFAULT_Z_INDEX}
-      pointerEvents={true}
+      pointerEvents="initial"
       render={({container}) => {
         return <Moveable ref={ref} container={container} {...moveableProps} />;
       }}

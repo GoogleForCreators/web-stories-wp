@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +29,7 @@ import {useRef} from '@wordpress/element';
  */
 import {ElementFillContent} from '../shared';
 import {useTransformHandler} from '../../components/canvas';
+import StoryPropTypes from '../../types';
 import {ImageWithScale, getImgProps, getImageWithScaleCss} from './util';
 
 const Element = styled.div`
@@ -43,14 +43,8 @@ const Img = styled.img`
 `;
 
 function ImageDisplay({
-  id,
-  src,
-  origRatio,
-  width,
-  height,
-  scale,
-  focalX,
-  focalY,
+  element: {id, src, origRatio, scale, focalX, focalY},
+  box: {width, height},
 }) {
   const imageRef = useRef(null);
 
@@ -85,20 +79,8 @@ function ImageDisplay({
 }
 
 ImageDisplay.propTypes = {
-  id: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  origRatio: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  scale: PropTypes.number,
-  focalX: PropTypes.number,
-  focalY: PropTypes.number,
-};
-
-ImageDisplay.defaultProps = {
-  scale: null,
-  focalX: null,
-  focalY: null,
+  element: StoryPropTypes.elements.image.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageDisplay;

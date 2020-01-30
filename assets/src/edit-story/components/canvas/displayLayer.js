@@ -29,7 +29,7 @@ import {Layer, PageArea} from './layout';
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
-  overflow: false,
+  overflowAllowed: false,
 })`
   background-color: ${({theme}) => theme.colors.fg.v1};
 `;
@@ -44,7 +44,7 @@ function DisplayLayer() {
   } = useCanvas();
 
   return (
-    <Layer pointerEvents={false}>
+    <Layer pointerEvents="none">
       <DisplayPageArea ref={setPageContainer}>
         {currentPage &&
           currentPage.elements.map(({id, ...rest}) => {

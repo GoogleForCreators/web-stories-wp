@@ -23,7 +23,6 @@ import {css} from 'styled-components';
  * Internal dependencies
  */
 import getPercentageFromPixels from '../utils/getPercentageFromPixels';
-import {PAGE_HEIGHT, PAGE_WIDTH} from '../constants';
 
 export const ElementFillContent = css`
   position: absolute;
@@ -68,8 +67,7 @@ export const ElementWithFont = css`
 export const ElementWithStyle = css`
   padding: ${({padding}) => (padding ? padding : '0')}%;
   line-height: ${({lineHeight}) => lineHeight};
-  letter-spacing:
-    ${({letterSpacing}) =>
+  letter-spacing: ${({letterSpacing}) =>
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({textAlign}) => textAlign};
 `;
@@ -87,13 +85,3 @@ export const getCommonAttributes = ({width, height, x, y, rotationAngle}) => {
     height: getPercentageFromPixels(height, 'y') + '%',
   };
 };
-
-export function getBox({x, y, width, height, rotationAngle, isFullbleed}) {
-  return {
-    x: isFullbleed ? 0 : x,
-    y: isFullbleed ? 0 : y,
-    width: isFullbleed ? PAGE_WIDTH : width,
-    height: isFullbleed ? PAGE_HEIGHT : height,
-    rotationAngle: isFullbleed ? 0 : rotationAngle,
-  };
-}

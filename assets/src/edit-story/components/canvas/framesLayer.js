@@ -30,7 +30,7 @@ import Selection from './selection';
 
 const FramesPageArea = withOverlay(styled(PageArea).attrs({
   className: 'container',
-  pointerEvents: true,
+  pointerEvents: 'initial',
 })`
   background-color: ${({theme}) => theme.colors.fg.v1};
 `);
@@ -41,7 +41,7 @@ function FramesLayer() {
   } = useStory();
 
   return (
-    <Layer pointerEvents={false}>
+    <Layer pointerEvents="none">
       <FramesPageArea>
         {currentPage &&
           currentPage.elements.map(({id, ...rest}) => {

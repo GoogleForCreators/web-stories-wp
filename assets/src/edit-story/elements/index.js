@@ -18,10 +18,12 @@
  * External dependencies
  */
 import uuid from 'uuid/v4';
+
 /**
  * WordPress dependencies
  */
 import {__} from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */

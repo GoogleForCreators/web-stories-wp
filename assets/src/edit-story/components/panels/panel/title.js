@@ -35,9 +35,7 @@ import DragHandle from './handle';
 import Arrow from './arrow.svg';
 
 const Header = styled.h2`
-  background-color:
-    ${({theme,
-    isPrimary}) =>
+  background-color: ${({theme, isPrimary}) =>
     isPrimary ? theme.colors.fg.v2 : theme.colors.fg.v1};
   border: 0 solid ${({theme}) => theme.colors.fg.v2};
   border-top-width: ${({isPrimary}) => (isPrimary ? 0 : '1px')};

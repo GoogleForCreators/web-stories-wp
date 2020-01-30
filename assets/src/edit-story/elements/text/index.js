@@ -32,7 +32,6 @@ export const defaultAttributes = {
   fontSize: 14,
   fontStyle: 'normal',
   color: '#000000',
-  backgroundColor: '#ffffff',
   letterSpacing: 'normal',
   lineHeight: 1.3,
   textAlign: 'initial',

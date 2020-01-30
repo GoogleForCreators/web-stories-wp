@@ -53,12 +53,11 @@ const Editor = styled.div`
     / minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px) 1fr minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
 `;
 
-// @todo: set `overflow: hidden;` once page size is responsive.
 const Area = styled.div`
   grid-area: ${({area}) => area};
   position: relative;
-  z-index: ${({area}) => (area === 'canv' ? 1 : 2)};
   overflow: hidden;
+  z-index: ${({area}) => (area === 'canv' ? 1 : 2)};
 `;
 
 function Layout() {

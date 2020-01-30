@@ -41,9 +41,9 @@ const MAX_SCALE = 400;
 
 const Container = styled.div`
   position: absolute;
-  left: ${({x, width}) => `${x + (width - Math.max(width, MIN_WIDTH)) / 2}`}px;
-  top: ${({y, height}) => `${y + height + OFFSET_Y}`}px;
-  width: ${({width}) => `${Math.max(width, MIN_WIDTH)}`}px;
+  left: ${({x, width}) => `${x + (width - Math.max(width, MIN_WIDTH)) / 2}px`};
+  top: ${({y, height}) => `${y + height + OFFSET_Y}px`};
+  width: ${({width}) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
 
   background: ${({theme}) => theme.colors.bg.v7};
@@ -82,7 +82,7 @@ const ResetButton = styled.button`
 
 function ScalePanel({setProperties, width, height, x, y, scale}) {
   return (
-    <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents={true}>
+    <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
         <Range
           value={scale}

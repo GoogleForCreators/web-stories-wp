@@ -98,7 +98,13 @@
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
-    "format": "prettier --write **/*",
+    "format": "npm-run-all --parallel format:*",
+    "format:css": "npm run lint:css:fix",
+    "format:js": "npm run lint:js:fix",
+    "format:md": "prettier --write '**/*.md'",
+    "format:php": "npm run lint:php:fix",
+    "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
+    "format:yml": "prettier --write '**/*.yml'",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "wp-scripts lint-style \"assets/src/**/*.(js|css)\"",
     "lint:css:fix": "npm run lint:css -- --fix",
@@ -117,7 +123,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit":"npm run lint; npm run format;",
+      "pre-commit": "npm run lint; npm run format",
       "pre-push": "npm run test:js"
     }
   }

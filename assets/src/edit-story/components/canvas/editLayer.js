@@ -30,9 +30,7 @@ import {Layer, PageArea} from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled(Layer)`
-  background-color:
-    ${({grayout,
-    theme}) =>
+  background-color: ${({grayout, theme}) =>
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
@@ -64,7 +62,7 @@ function EditLayer({}) {
   const {editModeGrayout} = getDefinitionForType(editingElement.type);
 
   return (
-    <LayerWithGrayout grayout={editModeGrayout} pointerEvents={false}>
+    <LayerWithGrayout grayout={editModeGrayout} pointerEvents="none">
       <EditPageArea>
         <EditElement element={editingElement} />
       </EditPageArea>

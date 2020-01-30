@@ -76,7 +76,7 @@ function UploadButton({
 
   const Button = styled.button`
     ${buttonCSS}
-`;
+  `;
 
   return <Button onClick={mediaPicker}>{buttonText}</Button>;
 }

@@ -11,29 +11,19 @@
       }
     },
     {
-      "files": [
-        ".eslintrc",
-        ".prettierrc",
-        ".stylelintrc",
-        "*.json"
-      ],
+      "files": [".eslintrc", ".prettierrc", ".stylelintrc", "*.json"],
       "options": {
         "parser": "json"
       }
     },
     {
-      "files": [
-        "*.yml"
-      ],
+      "files": ["*.yml"],
       "options": {
         "parser": "yaml"
       }
     },
     {
-      "files": [
-        "*.xml",
-        "*.xml.dist"
-      ],
+      "files": ["*.xml", "*.xml.dist"],
       "options": {
         "parser": "xml"
       }

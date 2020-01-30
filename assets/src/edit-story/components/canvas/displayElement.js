@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -33,28 +32,31 @@ import {
   ElementWithPosition,
   ElementWithSize,
   ElementWithRotation,
-  getBox,
 } from '../../elements/shared';
+import StoryPropTypes from '../../types';
+import {useUnits} from '../../units';
 import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
-  ${ElementWithPosition}
-  ${ElementWithSize}
-  ${ElementWithRotation}
-  contain: layout paint;
+	${ElementWithPosition}
+	${ElementWithSize}
+	${ElementWithRotation}
+	contain: layout paint;
 `;
 
-function DisplayElement({
-  element: {id, type, x, y, width, height, rotationAngle, isFullbleed, ...rest},
-}) {
+function DisplayElement({element}) {
+  const {
+    actions: {getBox},
+  } = useUnits();
+
+  const {id, type} = element;
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const {Display} = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
 
-  const box = getBox({x, y, width, height, rotationAngle, isFullbleed});
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
-  const props = {...box, ...rest, id};
+  const box = getBox(element);
 
   useTransformHandler(id, transform => {
     const target = wrapperRef.current;
@@ -72,13 +74,13 @@ function DisplayElement({
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <Display {...props} />
+      <Display element={element} box={box} />
     </Wrapper>
   );
 }
 
 DisplayElement.propTypes = {
-  element: PropTypes.object.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default DisplayElement;

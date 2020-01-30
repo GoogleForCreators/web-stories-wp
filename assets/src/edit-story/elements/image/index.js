@@ -25,7 +25,11 @@ export {default as Preview} from './preview';
 export {default as Save} from './save';
 export {default as TextContent} from './textContent';
 
-export const defaultAttributes = {};
+export const defaultAttributes = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+};
 
 export const hasEditMode = true;
 

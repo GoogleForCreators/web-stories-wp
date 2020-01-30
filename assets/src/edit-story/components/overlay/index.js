@@ -27,11 +27,11 @@ import {forwardRef, useContext, createPortal} from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import PointerEventsCss from '../../utils/pointerEventsCss';
+import pointerEventsCss from '../../utils/pointerEventsCss';
 import Context from './context';
 
 const Wrapper = styled.div`
-  ${PointerEventsCss}
+  ${pointerEventsCss}
   position: absolute;
   top: 0;
   left: 0;

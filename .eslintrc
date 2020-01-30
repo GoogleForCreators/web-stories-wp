@@ -7,12 +7,10 @@
     "plugin:prettier/recommended",
     "prettier/react"
   ],
-  "plugins": [
-    "jsx-a11y"
-  ],
+  "plugins": ["jsx-a11y"],
   "rules": {
     "block-scoped-var": "error",
-    "complexity": ["error", { "max": 20 } ],
+    "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
     "default-case": "error",
     "guard-for-in": "error",
@@ -38,7 +36,7 @@
     "no-unused-vars": [
       "error",
       {
-        "ignoreRestSiblings": true,
+        "ignoreRestSiblings": true
       }
     ],
     "no-useless-call": "error",
@@ -47,49 +45,62 @@
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
     "prefer-spread": "error",
-    "radix": [ "error", "as-needed" ],
+    "radix": ["error", "as-needed"],
     "require-await": "error",
-    "rest-spread-spacing": [ "error", "never" ],
+    "rest-spread-spacing": ["error", "never"],
     "react/prop-types": "error",
-    "react-hooks/exhaustive-deps": [ "error", { "additionalHooks": "useSelect" } ],
+    "react-hooks/exhaustive-deps": ["error", {"additionalHooks": "useSelect"}],
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
     "react/no-unused-prop-types": "error",
     "react/self-closing-comp": "error",
-    "import/no-unresolved": [ "error", {
-      "ignore": [ "jquery", "amp-block-editor-data" ]
-    } ],
-    "import/order": [ "error", { "groups": [ "builtin", [ "external", "unknown" ], "internal", "parent", "sibling", "index" ] } ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["jquery", "amp-block-editor-data"]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          ["external", "unknown"],
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ]
+      }
+    ],
     "jsdoc/check-indentation": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/react-no-unsafe-timeout": "error"
   },
   "overrides": [
     {
-      "files":[
+      "files": [
         "**/__tests__/**/*.js",
         "**/test/*.js",
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
-      "extends": [
-        "plugin:jest/all"
-      ],
+      "extends": ["plugin:jest/all"],
       "rules": {
         "jest/lowercase-name": [
           "error",
           {
-            "ignore": [ "describe" ]
+            "ignore": ["describe"]
           }
         ],
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-inline-snapshots": "off"
       }
     },
     {
-      "files": [ "tests/e2e/**/*.js" ],
+      "files": ["tests/e2e/**/*.js"],
       "extends": [
         "plugin:@wordpress/eslint-plugin/test-e2e",
         "plugin:jest/all"
@@ -98,12 +109,12 @@
         "jest/lowercase-name": [
           "error",
           {
-            "ignore": [ "describe" ]
+            "ignore": ["describe"]
           }
         ],
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
-        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-inline-snapshots": "off"
       }
     }
   ]

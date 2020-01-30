@@ -1,7 +1,5 @@
 {
-  "plugins": [
-    "stylelint-prettier"
-  ],
+  "plugins": ["stylelint-prettier"],
   "extends": [
     "stylelint-config-wordpress",
     "stylelint-config-recommended",
@@ -29,19 +27,14 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignore": [
-          "custom-elements"
-        ]
+        "ignore": ["custom-elements"]
       }
     ],
     "string-quotes": null,
     "unit-no-unknown": [
       true,
       {
-        "ignoreUnits": [
-          "/^`/",
-          "/`$/"
-        ]
+        "ignoreUnits": ["/^`/", "/`$/"]
       }
     ],
     "value-keyword-case": null

@@ -30,8 +30,8 @@ function MediaLibrary({onInsert}) {
         onClick={() =>
           onInsert('square', {
             backgroundColor: '#ff0000',
-            width: 10,
-            height: 5,
+            width: 30,
+            height: 15,
             x: 5,
             y: 5,
             rotationAngle: 0,
@@ -45,8 +45,8 @@ function MediaLibrary({onInsert}) {
         onClick={() =>
           onInsert('square', {
             backgroundColor: '#0000ff',
-            width: 30,
-            height: 15,
+            width: 100,
+            height: 80,
             x: 5,
             y: 35,
             rotationAngle: 0,
