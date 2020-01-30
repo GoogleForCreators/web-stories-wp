@@ -34,21 +34,21 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback } from '@word
 import { useStory, useFont } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import {
-	ElementFillContent,
-	ElementWithFont,
-	ElementWithBackgroundColor,
-	ElementWithFontColor,
-	ElementWithStyle,
+	elementFillContent,
+	elementWithFont,
+	elementWithBackgroundColor,
+	elementWithFontColor,
+	elementWithStyle,
 } from '../shared';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
 const Element = styled.div`
 	margin: 0;
-	${ ElementFillContent }
-	${ ElementWithFont }
-	${ ElementWithStyle }
-	${ ElementWithBackgroundColor }
-	${ ElementWithFontColor }
+	${ elementFillContent }
+	${ elementWithFont }
+	${ elementWithStyle }
+	${ elementWithBackgroundColor }
+	${ elementWithFontColor }
 
 	&::after {
 		content: '';

@@ -30,21 +30,21 @@ import { useEffect } from '@wordpress/element';
  */
 import { useFont } from '../../app';
 import {
-	ElementFillContent,
-	ElementWithFont,
-	ElementWithBackgroundColor,
-	ElementWithFontColor,
-	ElementWithStyle,
+	elementFillContent,
+	elementWithFont,
+	elementWithBackgroundColor,
+	elementWithFontColor,
+	elementWithStyle,
 } from '../shared';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
-	${ ElementFillContent }
-	${ ElementWithFont }
-	${ ElementWithBackgroundColor }
-	${ ElementWithFontColor }
-	${ ElementWithStyle }
+	${ elementFillContent }
+	${ elementWithFont }
+	${ elementWithBackgroundColor }
+	${ elementWithFontColor }
+	${ elementWithStyle }
 `;
 
 function TextDisplay( {

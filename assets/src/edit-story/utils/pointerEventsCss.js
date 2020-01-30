@@ -19,7 +19,7 @@
  */
 import { css } from 'styled-components';
 
-const PointerEventsCss = css`
+const pointerEventsCss = css`
 	${ ( { pointerEvents } ) => {
 		if ( typeof pointerEvents === 'boolean' ) {
 			return `pointer-events: ${ pointerEvents ? 'initial' : 'none' };`;
@@ -31,4 +31,4 @@ const PointerEventsCss = css`
 	} }
 `;
 
-export default PointerEventsCss;
+export default pointerEventsCss;

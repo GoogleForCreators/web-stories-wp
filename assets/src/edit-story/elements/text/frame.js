@@ -32,19 +32,19 @@ import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWi
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import {
-	ElementFillContent,
-	ElementWithFont,
-	ElementWithBackgroundColor,
-	ElementWithFontColor,
+	elementFillContent,
+	elementWithFont,
+	elementWithBackgroundColor,
+	elementWithFontColor,
 } from '../shared';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
-	${ ElementFillContent }
-	${ ElementWithFont }
-	${ ElementWithBackgroundColor }
-	${ ElementWithFontColor }
+	${ elementFillContent }
+	${ elementWithFont }
+	${ elementWithBackgroundColor }
+	${ elementWithFontColor }
 
 	opacity: 0;
 	user-select: ${ ( { canSelect } ) => canSelect ? 'initial' : 'none' };

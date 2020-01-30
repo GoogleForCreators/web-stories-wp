@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { PAGE_NAV_WIDTH, PAGE_WIDTH, PAGE_HEIGHT, HEADER_HEIGHT } from '../../constants';
-import PointerEventsCss from '../../utils/pointerEventsCss';
+import pointerEventsCss from '../../utils/pointerEventsCss';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -33,7 +33,7 @@ import PointerEventsCss from '../../utils/pointerEventsCss';
 // @todo: the menu and carousel heights are not correct until we make a var-size
 // page.
 const Layer = styled.div`
-	${ PointerEventsCss }
+	${ pointerEventsCss }
 
 	position: absolute;
 	top: 0;
@@ -53,7 +53,7 @@ const Layer = styled.div`
 `;
 
 const Area = styled.div`
-	${ PointerEventsCss }
+	${ pointerEventsCss }
 
 	grid-area: ${ ( { area } ) => area };
 	overflow: ${ ( { overflow } ) => overflow ? 'visible' : 'hidden' };

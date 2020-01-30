@@ -24,13 +24,13 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import {
-	ElementFillContent,
-	ElementWithBackgroundColor,
+	elementFillContent,
+	elementWithBackgroundColor,
 } from '../shared';
 
 const Element = styled.div`
-	${ ElementFillContent }
-	${ ElementWithBackgroundColor }
+	${ elementFillContent }
+	${ elementWithBackgroundColor }
 `;
 
 function SquareDisplay( { backgroundColor } ) {

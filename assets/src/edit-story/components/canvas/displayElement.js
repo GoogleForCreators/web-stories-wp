@@ -29,13 +29,13 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { ElementWithPosition, ElementWithSize, ElementWithRotation, getBox } from '../../elements/shared';
+import { elementWithPosition, elementWithSize, elementWithRotation, getBox } from '../../elements/shared';
 import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
-	${ ElementWithPosition }
-	${ ElementWithSize }
-	${ ElementWithRotation }
+	${ elementWithPosition }
+	${ elementWithSize }
+	${ elementWithRotation }
 	contain: layout paint;
 `;
 

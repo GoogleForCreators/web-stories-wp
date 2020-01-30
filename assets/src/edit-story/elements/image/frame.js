@@ -30,10 +30,10 @@ import { useCallback } from '@wordpress/element';
  */
 import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 function ImageFrame( { id } ) {
