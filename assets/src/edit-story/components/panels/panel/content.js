@@ -31,7 +31,7 @@ import { useContext } from '@wordpress/element';
 import panelContext from './context';
 
 const Form = styled.form`
-	margin: 10px 20px;
+	padding: ${ ( { padding } ) => padding || '10px 20px' };
 	overflow: auto;
 
 	${ ( { hidden } ) => hidden && 'display: none' }
@@ -48,9 +48,9 @@ function Content( { children, onSubmit, ...rest } ) {
 		<Form
 			style={ formStyle }
 			onSubmit={ onSubmit }
-			{ ...rest }
 			id={ panelContentId }
 			hidden={ isCollapsed }
+			{ ...rest }
 		>
 			{ children }
 		</Form>

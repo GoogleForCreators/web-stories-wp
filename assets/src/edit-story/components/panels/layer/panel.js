@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -22,18 +27,31 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from './panel';
+import { Panel, PanelTitle, PanelContent } from '../panel';
+import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
+import Layer from './layer';
+import useElements from './useElements';
+
+const LayerList = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+`;
 
 function LayerPanel() {
+	const layers = useElements();
+
 	return (
-		<Panel name="layers" initialHeight={ 240 }>
+		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>
 			<PanelTitle isPrimary isResizable>
-				{ __( 'Layers', 'web-stories' ) }
+				{ __( 'Layers', 'amp' ) }
 			</PanelTitle>
-			<PanelContent>
-				<p>
-					{ __( 'Layer contents', 'web-stories' ) }
-				</p>
+			<PanelContent isScrollable padding={ '0' }>
+				<LayerList>
+					{ layers.map( ( { icon, isSelected, id, element } ) => (
+						<Layer key={ id } icon={ icon } id={ id } isSelected={ isSelected } element={ element } />
+					) ) }
+				</LayerList>
 			</PanelContent>
 		</Panel>
 	);
