@@ -73,13 +73,13 @@ const Layer = styled.div`
 `;
 
 const Area = styled.div`
-	${pointerEventsCss}
+  ${pointerEventsCss}
 
-	grid-area: ${({area}) => area};
-	overflow: ${({overflowAllowed}) => (overflowAllowed ? 'visible' : 'hidden')};
-	position: relative;
-	width: 100%;
-	height: 100%;
+  grid-area: ${({area}) => area};
+  overflow: ${({overflowAllowed}) => (overflowAllowed ? 'visible' : 'hidden')};
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 // Page area is not `overflow:hidden` by default to allow different clipping

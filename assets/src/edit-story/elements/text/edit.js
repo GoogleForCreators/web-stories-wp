@@ -50,24 +50,24 @@ import StoryPropTypes from '../../types';
 import {getFilteredState, getHandleKeyCommand} from './util';
 
 const Element = styled.div`
-	margin: 0;
-	${ElementFillContent}
-	${ElementWithFont}
-	${ElementWithStyle}
-	${ElementWithBackgroundColor}
-	${ElementWithFontColor}
+  margin: 0;
+  ${ElementFillContent}
+  ${ElementWithFont}
+  ${ElementWithStyle}
+  ${ElementWithBackgroundColor}
+  ${ElementWithFontColor}
 
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${({theme}) => theme.colors.mg.v1}70;
-		pointer-events: none;
-	}
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid ${({theme}) => theme.colors.mg.v1}70;
+    pointer-events: none;
+  }
 `;
 
 function TextEdit({

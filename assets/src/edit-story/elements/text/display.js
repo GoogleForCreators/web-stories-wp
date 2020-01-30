@@ -40,12 +40,12 @@ import StoryPropTypes from '../../types';
 import {generateFontFamily} from './util';
 
 const Element = styled.p`
-	margin: 0;
-	${ElementFillContent}
-	${ElementWithFont}
-	${ElementWithBackgroundColor}
-	${ElementWithFontColor}
-	${ElementWithStyle}
+  margin: 0;
+  ${ElementFillContent}
+  ${ElementWithFont}
+  ${ElementWithBackgroundColor}
+  ${ElementWithFontColor}
+  ${ElementWithStyle}
 `;
 
 function TextDisplay({

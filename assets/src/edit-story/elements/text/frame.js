@@ -40,7 +40,7 @@ const Element = styled.p`
   ${ElementFillContent}
   ${ElementWithFont}
 
-	opacity: 0;
+  opacity: 0;
   user-select: ${({canSelect}) => (canSelect ? 'initial' : 'none')};
 
   &:focus {

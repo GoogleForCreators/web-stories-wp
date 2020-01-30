@@ -6,6 +6,8 @@
     "stylelint-config-styled-components"
   ],
   "rules": {
+    "declaration-colon-space-after": null,
+    "declaration-colon-newline-after": null,
     "font-family-name-quotes": null,
     "font-family-no-missing-generic-family-keyword": null,
     "font-weight-notation": null,
@@ -14,12 +16,13 @@
     "function-parentheses-space-inside": null,
     "function-url-quotes": null,
     "function-whitespace-after": null,
-    "indentation": 2,
+    "indentation": null,
     "length-zero-no-unit": true,
     "max-line-length": null,
     "max-empty-lines": null,
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
+    "no-eol-whitespace": null,
     "number-leading-zero": null,
     "prettier/prettier": true,
     "selector-class-pattern": null,
@@ -37,6 +40,7 @@
         "ignoreUnits": ["/^`/", "/`$/"]
       }
     ],
-    "value-keyword-case": null
+    "value-keyword-case": null,
+    "value-list-comma-newline-after": null
   }
 }
