@@ -27,11 +27,12 @@ import { useRef, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { getBox } from '../../elements/shared';
 import { useStory } from '../../app';
 import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
+import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const ALL_HANDLES = [ 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se' ];
@@ -46,6 +47,12 @@ function SingleSelectionMovable( {
 
 	const { actions: { updateSelectedElements } } = useStory();
 	const { actions: { pushTransform } } = useCanvas();
+	const { actions: { getBox, dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const minMaxFontSize = {
+		minFontSize: dataToEditorY( MIN_FONT_SIZE ),
+		maxFontSize: dataToEditorY( MAX_FONT_SIZE ),
+	};
 
 	const latestEvent = useRef();
 
@@ -130,8 +137,12 @@ function SingleSelectionMovable( {
 			} }
 			onDragEnd={ ( { target } ) => {
 				// When dragging finishes, set the new properties based on the original + what moved meanwhile.
-				if ( frame.translate[ 0 ] !== 0 && frame.translate[ 1 ] !== 0 ) {
-					const properties = { x: selectedElement.x + frame.translate[ 0 ], y: selectedElement.y + frame.translate[ 1 ] };
+				const [ deltaX, deltaY ] = frame.translate;
+				if ( deltaX !== 0 && deltaY !== 0 ) {
+					const properties = {
+						x: selectedElement.x + editorToDataX( deltaX ),
+						y: selectedElement.y + editorToDataY( deltaY ),
+					};
 					updateSelectedElements( { properties } );
 				}
 				resetMoveable( target );
@@ -170,20 +181,22 @@ function SingleSelectionMovable( {
 				frame.resize = [ newWidth, newHeight ];
 				frame.translate = drag.beforeTranslate;
 				if ( shouldAdjustFontSize ) {
-					target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width );
+					target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 				}
 				setTransformStyle( target );
 			} }
 			onResizeEnd={ ( { target } ) => {
-				if ( frame.resize[ 0 ] !== 0 && frame.resize[ 1 ] !== 0 ) {
+				const [ editorWidth, editorHeight ] = frame.resize;
+				const [ deltaX, deltaY ] = frame.translate;
+				if ( editorWidth !== 0 && editorHeight !== 0 ) {
 					const properties = {
-						width: frame.resize[ 0 ],
-						height: frame.resize[ 1 ],
-						x: selectedElement.x + frame.translate[ 0 ],
-						y: selectedElement.y + frame.translate[ 1 ],
+						width: editorToDataX( editorWidth ),
+						height: editorToDataY( editorHeight ),
+						x: selectedElement.x + editorToDataX( deltaX ),
+						y: selectedElement.y + editorToDataY( deltaY ),
 					};
 					if ( shouldAdjustFontSize ) {
-						properties.fontSize = calculateFitTextFontSize( target.firstChild, properties.height, properties.width );
+						properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth, minMaxFontSize ) );
 					}
 					updateSelectedElements( { properties } );
 				}
@@ -197,7 +210,7 @@ function SingleSelectionMovable( {
 				setTransformStyle( target );
 			} }
 			onRotateEnd={ ( { target } ) => {
-				const properties = { rotationAngle: frame.rotate };
+				const properties = { rotationAngle: Math.round( frame.rotate ) };
 				updateSelectedElements( { properties } );
 				resetMoveable( target );
 			} }

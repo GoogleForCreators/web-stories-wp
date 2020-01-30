@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -30,13 +29,14 @@ import { useCallback } from '@wordpress/element';
  */
 import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
-import { elementFillContent } from '../shared';
+import { ElementFillContent } from '../shared';
+import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-	${ elementFillContent }
+	${ ElementFillContent }
 `;
 
-function ImageFrame( { id } ) {
+function ImageFrame( { element: { id } } ) {
 	const {
 		actions: { setEditingElement },
 	} = useCanvas();
@@ -49,7 +49,7 @@ function ImageFrame( { id } ) {
 }
 
 ImageFrame.propTypes = {
-	id: PropTypes.string.isRequired,
+	element: StoryPropTypes.elements.image.isRequired,
 };
 
 export default ImageFrame;

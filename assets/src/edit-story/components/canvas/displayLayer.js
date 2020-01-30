@@ -27,7 +27,7 @@ import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
-const DisplayPageArea = styled( PageArea ).attrs( { className: 'container', overflow: false } )`
+const DisplayPageArea = styled( PageArea ).attrs( { className: 'container', overflowAllowed: false } )`
 	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
 `;
 
@@ -41,7 +41,7 @@ function DisplayLayer() {
 	} = useCanvas();
 
 	return (
-		<Layer pointerEvents={ false }>
+		<Layer pointerEvents="none">
 			<DisplayPageArea ref={ setPageContainer }>
 				{ currentPage && currentPage.elements.map( ( { id, ...rest } ) => {
 					if ( editingElement === id ) {

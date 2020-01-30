@@ -30,13 +30,14 @@ import { useLayoutEffect, useRef } from '@wordpress/element';
  */
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
-import { elementWithPosition, elementWithSize, elementWithRotation, getBox } from '../../elements/shared';
+import { ElementWithPosition, ElementWithSize, ElementWithRotation } from '../../elements/shared';
+import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const Wrapper = styled.div`
-	${ elementWithPosition }
-	${ elementWithSize }
-	${ elementWithRotation }
+	${ ElementWithPosition }
+	${ ElementWithSize }
+	${ ElementWithRotation }
 	pointer-events: initial;
 
 	&:focus,
@@ -46,42 +47,27 @@ const Wrapper = styled.div`
 	}
 `;
 
-function FrameElement( {
-	element: {
-		id,
-		type,
-		x,
-		y,
-		width,
-		height,
-		rotationAngle,
-		isFullbleed,
-		...rest
-	},
-} ) {
+function FrameElement( { element } ) {
+	const { id, type } = element;
 	const { Frame } = getDefinitionForType( type );
-	const element = useRef();
+	const elementRef = useRef();
 
-	const {
-		actions: { setNodeForElement, handleSelectElement },
-	} = useCanvas();
-
-	const {
-		state: { selectedElements },
-	} = useStory();
+	const { actions: { setNodeForElement, handleSelectElement } } = useCanvas();
+	const { state: { selectedElements } } = useStory();
+	const { actions: { getBox } } = useUnits();
 
 	useLayoutEffect( () => {
-		setNodeForElement( id, element.current );
+		setNodeForElement( id, elementRef.current );
 	}, [ id, setNodeForElement ] );
 
 	const isSelected = selectedElements.includes( id );
 
-	const box = getBox( { x, y, width, height, rotationAngle, isFullbleed } );
-	const props = { ...box, ...rest, id };
+	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+	const box = getBox( element );
 
 	return (
 		<Wrapper
-			ref={ element }
+			ref={ elementRef }
 			{ ...box }
 			onMouseDown={ ( evt ) => {
 				if ( ! isSelected ) {
@@ -91,7 +77,7 @@ function FrameElement( {
 			} }
 		>
 			{ Frame && (
-				<Frame { ...props } />
+				<Frame element={ element } box={ box } />
 			) }
 		</Wrapper>
 	);

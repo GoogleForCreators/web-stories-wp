@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -31,20 +30,18 @@ import { useRef, useEffect, useCallback, useState } from '@wordpress/element';
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
 import {
-	elementFillContent,
-	elementWithFont,
-	elementWithBackgroundColor,
-	elementWithFontColor,
+	ElementFillContent,
+	ElementWithFont,
 } from '../shared';
+import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
-	${ elementFillContent }
-	${ elementWithFont }
-	${ elementWithBackgroundColor }
-	${ elementWithFontColor }
+	${ ElementFillContent }
+	${ ElementWithFont }
 
 	opacity: 0;
 	user-select: ${ ( { canSelect } ) => canSelect ? 'initial' : 'none' };
@@ -54,17 +51,24 @@ const Element = styled.p`
 	}
 `;
 
-function TextFrame( { id, content, color, backgroundColor, width, height, fontFamily, fontFallback, fontSize, fontWeight, fontStyle } ) {
+function TextFrame( {
+	element: {
+		id,
+		content,
+		fontFamily,
+		fontFallback,
+		fontSize,
+		fontWeight,
+		fontStyle,
+	},
+} ) {
+	const { actions: { dataToEditorY } } = useUnits();
 	const props = {
-		color,
-		backgroundColor,
 		fontFamily: generateFontFamily( fontFamily, fontFallback ),
 		fontFallback,
 		fontStyle,
-		fontSize,
+		fontSize: dataToEditorY( fontSize ),
 		fontWeight,
-		width,
-		height,
 	};
 	const {
 		state: { selectedElementIds },
@@ -151,18 +155,7 @@ function TextFrame( { id, content, color, backgroundColor, width, height, fontFa
 }
 
 TextFrame.propTypes = {
-	id: PropTypes.string.isRequired,
-	content: PropTypes.string,
-	color: PropTypes.string,
-	backgroundColor: PropTypes.string,
-	fontFamily: PropTypes.string,
-	fontFallback: PropTypes.array,
-	fontSize: PropTypes.number,
-	fontWeight: PropTypes.number,
-	fontStyle: PropTypes.string,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	setClickHandler: PropTypes.func,
+	element: StoryPropTypes.elements.text.isRequired,
 };
 
 export default TextFrame;
