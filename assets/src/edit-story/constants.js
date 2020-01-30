@@ -24,8 +24,11 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_WIDTH = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
 
+// @todo: use 1080:1920 for data coords.
 export const PAGE_WIDTH = 412;
 export const PAGE_HEIGHT = 732;
+export const DEFAULT_EDITOR_PAGE_WIDTH = 412;
+export const DEFAULT_EDITOR_PAGE_HEIGHT = 732;
 
 // @todo Confirm real min-max font sizes.
 export const MIN_FONT_SIZE = 12;

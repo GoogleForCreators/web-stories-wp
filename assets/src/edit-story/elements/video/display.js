@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -29,21 +28,22 @@ import { useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import { ElementFillContent } from '../shared';
+import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
 const Element = styled.video`
 	${ ElementFillContent }
 `;
 
-function VideoDisplay( props ) {
-	const {
-		mimeType,
+function VideoDisplay( {
+	element: {
+		id,
 		src,
+		mimeType,
 		videoId,
 		posterId,
-		id,
-	} = props;
-
+	},
+} ) {
 	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
 	useEffect( () => {
 		if ( videoId && ! posterId ) {
@@ -52,21 +52,14 @@ function VideoDisplay( props ) {
 	}, [ videoId, posterId, uploadVideoFrame ] );
 
 	return (
-		<Element { ...props } >
+		<Element>
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);
 }
 
 VideoDisplay.propTypes = {
-	controls: PropTypes.bool,
-	autoPlay: PropTypes.bool,
-	loop: PropTypes.bool,
-	mimeType: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	videoId: PropTypes.number.isRequired,
-	posterId: PropTypes.number,
-	id: PropTypes.string.isRequired,
+	element: StoryPropTypes.elements.video.isRequired,
 };
 
 export default VideoDisplay;

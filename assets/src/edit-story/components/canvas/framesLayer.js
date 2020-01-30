@@ -28,7 +28,7 @@ import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 
-const FramesPageArea = withOverlay( styled( PageArea ).attrs( { className: 'container', pointerEvents: true } )`
+const FramesPageArea = withOverlay( styled( PageArea ).attrs( { className: 'container', pointerEvents: 'initial' } )`
 	background-color: ${ ( { theme } ) => theme.colors.fg.v1 };
 ` );
 
@@ -36,7 +36,7 @@ function FramesLayer() {
 	const { state: { currentPage } } = useStory();
 
 	return (
-		<Layer pointerEvents={ false }>
+		<Layer pointerEvents="none">
 			<FramesPageArea>
 				{ currentPage && currentPage.elements.map( ( { id, ...rest } ) => {
 					return (
