@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <phpunit
-		bootstrap="tests/phpunit/bootstrap.php"
-		backupGlobals="false"
-		colors="true"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
+  bootstrap="tests/phpunit/bootstrap.php"
+  backupGlobals="false"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
 >
 	<php>
 		<ini name="error_reporting" value="32767" />

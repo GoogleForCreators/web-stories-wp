@@ -28,6 +28,15 @@
       "options": {
         "parser": "yaml"
       }
+    },
+    {
+      "files": [
+        "*.xml",
+        "*.xml.dist"
+      ],
+      "options": {
+        "parser": "xml"
+      }
     }
   ]
 }
