@@ -19,7 +19,7 @@
  */
 import { css } from 'styled-components';
 
-const PointerEventsCss = css`
+const pointerEventsCss = css`
 	${ ( { pointerEvents } ) => {
 		if ( pointerEvents && typeof pointerEvents === 'string' ) {
 			return `pointer-events: ${ pointerEvents };`;
@@ -28,4 +28,4 @@ const PointerEventsCss = css`
 	} }
 `;
 
-export default PointerEventsCss;
+export default pointerEventsCss;

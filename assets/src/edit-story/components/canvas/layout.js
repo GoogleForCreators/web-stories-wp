@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT, HEADER_HEIGHT, PAGE_NAV_WIDTH } from '../../constants';
-import PointerEventsCss from '../../utils/pointerEventsCss';
+import pointerEventsCss from '../../utils/pointerEventsCss';
 import useResizeEffect from '../../utils/useResizeEffect';
 import useCanvas from './useCanvas';
 
@@ -43,7 +43,7 @@ const ALLOWED_PAGE_SIZES = [
 // @todo: the menu and carousel heights are not correct until we make a var-size
 // page.
 const Layer = styled.div`
-	${ PointerEventsCss }
+	${ pointerEventsCss }
 
 	position: absolute;
 	top: 0;
@@ -63,7 +63,7 @@ const Layer = styled.div`
 `;
 
 const Area = styled.div`
-	${ PointerEventsCss }
+	${ pointerEventsCss }
 
 	grid-area: ${ ( { area } ) => area };
 	overflow: ${ ( { overflowAllowed } ) => overflowAllowed ? 'visible' : 'hidden' };
