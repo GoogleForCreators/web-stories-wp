@@ -34,11 +34,11 @@ import {
 // Background color is used to make the edited element more prominent and
 // easier to see.
 const Wrapper = styled.div`
-	${ElementWithPosition}
-	${ElementWithSize}
-	${ElementWithRotation}
-	pointer-events: initial;
-	background-color: ${({theme}) => theme.colors.whiteout};
+  ${ElementWithPosition}
+  ${ElementWithSize}
+  ${ElementWithRotation}
+  pointer-events: initial;
+  background-color: ${({theme}) => theme.colors.whiteout};
 `;
 
 function EditElement({

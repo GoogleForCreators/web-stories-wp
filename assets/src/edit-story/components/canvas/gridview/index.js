@@ -41,7 +41,8 @@ const GRID_GAP = 20;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: ${({scale}) =>
+  grid-template-columns:
+    ${({scale}) =>
     `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
   grid-gap: ${GRID_GAP}px;
   justify-content: center;

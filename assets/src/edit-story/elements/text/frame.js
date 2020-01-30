@@ -40,18 +40,18 @@ import {
 import {generateFontFamily} from './util';
 
 const Element = styled.p`
-	margin: 0;
-	${ElementFillContent}
-	${ElementWithFont}
-	${ElementWithBackgroundColor}
-	${ElementWithFontColor}
+  margin: 0;
+  ${ElementFillContent}
+  ${ElementWithFont}
+  ${ElementWithBackgroundColor}
+  ${ElementWithFontColor}
 
-	opacity: 0;
-	user-select: ${({canSelect}) => (canSelect ? 'initial' : 'none')};
+  opacity: 0;
+  user-select: ${({canSelect}) => (canSelect ? 'initial' : 'none')};
 
-	&:focus {
-		outline: none;
-	}
+  &:focus {
+    outline: none;
+  }
 `;
 
 function TextFrame({

@@ -41,9 +41,9 @@ const MAX_SCALE = 400;
 
 const Container = styled.div`
   position: absolute;
-  left: ${({x, width}) => `${x + (width - Math.max(width, MIN_WIDTH)) / 2}px`};
-  top: ${({y, height}) => `${y + height + OFFSET_Y}px`};
-  width: ${({width}) => `${Math.max(width, MIN_WIDTH)}px`};
+  left: ${({x, width}) => `${x + (width - Math.max(width, MIN_WIDTH)) / 2}`}px;
+  top: ${({y, height}) => `${y + height + OFFSET_Y}`}px;
+  width: ${({width}) => `${Math.max(width, MIN_WIDTH)}`}px;
   height: ${HEIGHT}px;
 
   background: ${({theme}) => theme.colors.bg.v7};

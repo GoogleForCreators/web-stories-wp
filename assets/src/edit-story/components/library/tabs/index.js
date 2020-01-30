@@ -42,7 +42,9 @@ const Tab = styled.li`
 
 const Icon = styled.a`
   color: inherit;
-  background: ${({isActive, theme}) =>
+  background:
+    ${({isActive,
+    theme}) =>
     isActive ? theme.colors.bg.v4 : 'transparent'};
   height: 100%;
   display: flex;
@@ -54,11 +56,11 @@ const Icon = styled.a`
   }
 
   ${({isActive}) =>
-    !isActive &&
-    `
-	opacity: .4;
-	&:hover { opacity: 1; }
-	`}
+  !isActive &&
+  `
+  opacity: .4;
+  &:hover { opacity: 1; }
+  `}
 
   svg {
     width: 22px;

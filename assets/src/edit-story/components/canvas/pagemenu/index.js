@@ -89,11 +89,11 @@ const Icon = styled.button`
   color: ${({theme}) => theme.colors.fg.v1};
 
   ${({disabled}) =>
-    disabled &&
-    `
-	opacity: .3;
-	pointer-events: none;
-	`}
+  disabled &&
+  `
+  opacity: .3;
+  pointer-events: none;
+  `}
 
   svg {
     width: 28px;

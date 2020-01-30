@@ -33,9 +33,11 @@ const Page = styled.button`
   padding: 0;
   margin: 0;
   border: none;
-  outline: ${PAGE_THUMB_OUTLINE}px solid
-    ${({isActive, theme}) =>
-      isActive ? theme.colors.selection : theme.colors.bg.v1};
+  outline:
+    ${PAGE_THUMB_OUTLINE}px solid
+    ${({isActive,
+    theme}) =>
+    isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({height}) => height}px;
   width: ${({width}) => width}px;
   background-color: ${({theme}) => theme.colors.mg.v1};
@@ -44,7 +46,8 @@ const Page = styled.button`
 
   &:focus,
   &:hover {
-    outline: ${PAGE_THUMB_OUTLINE}px solid
+    outline:
+      ${PAGE_THUMB_OUTLINE}px solid
       ${({theme}) => theme.colors.selection};
   }
 `;

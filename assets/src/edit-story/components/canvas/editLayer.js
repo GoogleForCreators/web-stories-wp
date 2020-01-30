@@ -30,7 +30,9 @@ import {Layer, PageArea} from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled(Layer)`
-  background-color: ${({grayout, theme}) =>
+  background-color:
+    ${({grayout,
+    theme}) =>
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 

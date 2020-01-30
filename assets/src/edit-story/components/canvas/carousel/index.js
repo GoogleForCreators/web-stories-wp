@@ -67,9 +67,11 @@ const Area = styled.div`
 const List = styled(Area)`
   flex-direction: row;
   align-items: flex-start;
-  justify-content: ${({hasHorizontalOverflow}) =>
+  justify-content:
+    ${({hasHorizontalOverflow}) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: ${({hasHorizontalOverflow}) =>
+  overflow-x:
+    ${({hasHorizontalOverflow}) =>
     hasHorizontalOverflow ? 'scroll' : 'hidden'};
 `;
 
