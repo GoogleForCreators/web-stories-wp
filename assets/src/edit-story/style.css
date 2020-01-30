@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+#screen-meta,
+#screen-meta-links {
+	display: none;
+}
+
+.edit-story #wpcontent,
+.edit-story #wpbody-content {
+	padding: 0;
+}
+
 .edit-story #edit-story {
 	background-color: #191c28;
 }
