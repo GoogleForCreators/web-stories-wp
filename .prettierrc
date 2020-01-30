@@ -1,0 +1,33 @@
+{
+  "bracketSpacing": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "quoteProps": "preserve",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "markdown"
+      }
+    },
+    {
+      "files": [
+        ".eslintrc",
+        ".prettierrc",
+        ".stylelintrc",
+        "*.json"
+      ],
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": [
+        "*.yml"
+      ],
+      "options": {
+        "parser": "yaml"
+      }
+    }
+  ]
+}
