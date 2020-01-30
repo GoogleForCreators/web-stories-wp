@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as InputGroup } from './inputGroup';
-export { default as SelectMenu } from './select';
+export {default as InputGroup} from './inputGroup';
+export {default as SelectMenu} from './select';

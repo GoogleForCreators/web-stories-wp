@@ -22,40 +22,50 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { getCommonAttributes } from '../shared';
+import {getCommonAttributes} from '../shared';
 
-function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
-	const sourceProps = {
-		type: mimeType,
-		src,
-		poster,
-	};
+function VideoPreview({
+  id,
+  mimeType,
+  src,
+  width,
+  height,
+  x,
+  y,
+  rotationAngle,
+  poster,
+}) {
+  const sourceProps = {
+    type: mimeType,
+    src,
+    poster,
+  };
 
-	const wrapperProps = {
-		id: 'el-' + id,
-	};
+  const wrapperProps = {
+    id: 'el-' + id,
+  };
 
-	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
-	return (
-		<div style={ { ...style } } { ...wrapperProps } >
-			<video { ...sourceProps } />
-		</div>
-	);
+  const style = getCommonAttributes({width, height, x, y, rotationAngle});
+  return (
+    <div style={{...style}} {...wrapperProps}>
+      <video {...sourceProps} />
+    </div>
+  );
 }
 
 VideoPreview.propTypes = {
-	rotationAngle: PropTypes.number.isRequired,
-	controls: PropTypes.bool,
-	autoPlay: PropTypes.bool,
-	loop: PropTypes.bool,
-	mimeType: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	id: PropTypes.string.isRequired,
-	poster: PropTypes.string,
+  rotationAngle: PropTypes.number.isRequired,
+  controls: PropTypes.bool,
+  autoPlay: PropTypes.bool,
+  loop: PropTypes.bool,
+  mimeType: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  poster: PropTypes.string,
 };
 
 export default VideoPreview;

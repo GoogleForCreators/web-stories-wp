@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { text, boolean } from '@storybook/addon-knobs';
+import {text, boolean} from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -25,18 +25,13 @@ import { text, boolean } from '@storybook/addon-knobs';
 import Switch from '../';
 
 export default {
-	title: 'Components/Switch',
-	component: Switch,
+  title: 'Components/Switch',
+  component: Switch,
 };
 
 export const _default = () => {
-	const label = text( 'Label', 'Switch' );
-	const checked = boolean( 'Checked', false );
+  const label = text('Label', 'Switch');
+  const checked = boolean('Checked', false);
 
-	return (
-		<Switch
-			label={ label }
-			checked={ checked }
-		/>
-	);
+  return <Switch label={label} checked={checked} />;
 };

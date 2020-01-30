@@ -22,41 +22,43 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import {useEffect, useState} from '@wordpress/element';
+import {__} from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { ActionButton } from '../button';
-import { SimplePanel } from './panel';
+import {ActionButton} from '../button';
+import {SimplePanel} from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function FullbleedPanel( { selectedElements, onSetProperties } ) {
-	// The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
-	// the element to the previous non-fullbleed position/size.
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
-	const [ state, setState ] = useState( { isFullbleed } );
-	useEffect( () => {
-		setState( { isFullbleed } );
-	}, [ isFullbleed ] );
-	const handleClick = ( ) => {
-		const newState = { isFullbleed: ! state.isFullbleed };
-		setState( newState );
-		onSetProperties( newState );
-	};
-	return (
-		<SimplePanel name="fullbleed" title={ __( 'Fullbleed', 'web-stories' ) }>
-			<ActionButton onClick={ handleClick }>
-				{ state.isFullbleed ? __( 'Unset as fullbleed', 'web-stories' ) : __( 'Set as fullbleed', 'web-stories' ) }
-			</ActionButton>
-		</SimplePanel>
-	);
+function FullbleedPanel({selectedElements, onSetProperties}) {
+  // The x/y/w/h/r are kept unchanged so that toggling fullbleed will return
+  // the element to the previous non-fullbleed position/size.
+  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
+  const [state, setState] = useState({isFullbleed});
+  useEffect(() => {
+    setState({isFullbleed});
+  }, [isFullbleed]);
+  const handleClick = () => {
+    const newState = {isFullbleed: !state.isFullbleed};
+    setState(newState);
+    onSetProperties(newState);
+  };
+  return (
+    <SimplePanel name="fullbleed" title={__('Fullbleed', 'web-stories')}>
+      <ActionButton onClick={handleClick}>
+        {state.isFullbleed
+          ? __('Unset as fullbleed', 'web-stories')
+          : __('Set as fullbleed', 'web-stories')}
+      </ActionButton>
+    </SimplePanel>
+  );
 }
 
 FullbleedPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default FullbleedPanel;

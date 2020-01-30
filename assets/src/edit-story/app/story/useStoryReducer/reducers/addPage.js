@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { isInsideRange } from './utils';
+import {isInsideRange} from './utils';
 
 /**
  * Insert page at the given position.
@@ -34,30 +34,33 @@ import { isInsideRange } from './utils';
  * @param {Object} payload.position Position at which to insert the new page. If null, insert after current
  * @return {Object} New state
  */
-function addPage( state, { page, position } ) {
-	const isWithinBounds = position !== null && isInsideRange( position, 0, state.pages.length - 1 );
-	const currentPageIndex = state.pages.findIndex( ( { id } ) => id === state.current );
-	const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
+function addPage(state, {page, position}) {
+  const isWithinBounds =
+    position !== null && isInsideRange(position, 0, state.pages.length - 1);
+  const currentPageIndex = state.pages.findIndex(
+    ({id}) => id === state.current
+  );
+  const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
-	const { id } = page;
+  const {id} = page;
 
-	// Ensure new page has elements array and background id
-	const newPage = {
-		elements: [],
-		backgroundElementId: null,
-		...page,
-	};
+  // Ensure new page has elements array and background id
+  const newPage = {
+    elements: [],
+    backgroundElementId: null,
+    ...page,
+  };
 
-	return {
-		...state,
-		pages: [
-			...state.pages.slice( 0, insertionPoint ),
-			newPage,
-			...state.pages.slice( insertionPoint ),
-		],
-		current: id,
-		selection: [],
-	};
+  return {
+    ...state,
+    pages: [
+      ...state.pages.slice(0, insertionPoint),
+      newPage,
+      ...state.pages.slice(insertionPoint),
+    ],
+    current: id,
+    selection: [],
+  };
 }
 
 export default addPage;

@@ -17,20 +17,20 @@
 /**
  * WordPress dependencies
  */
-import { useReducer, useMemo } from '@wordpress/element';
+import {useReducer, useMemo} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { exposedActions, internalActions } from './actions';
+import {exposedActions, internalActions} from './actions';
 import reducer from './reducer';
 
 const INITIAL_STATE = {
-	pages: [],
-	current: null,
-	selection: [],
-	story: {},
-	capabilities: {},
+  pages: [],
+  current: null,
+  selection: [],
+  story: {},
+  capabilities: {},
 };
 
 /**
@@ -55,29 +55,29 @@ const INITIAL_STATE = {
  * @return {Object} An object with keys `state`, `internal` and `api`.
  */
 function useStoryReducer() {
-	const [ state, dispatch ] = useReducer( reducer, INITIAL_STATE );
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-	const {
-		internal,
-		api,
-	} = useMemo( () => {
-		const wrapWithDispatch = ( actions ) => Object.keys( actions )
-			.reduce(
-				( collection, action ) => ( { ...collection, [ action ]: actions[ action ]( dispatch ) } ),
-				{},
-			);
+  const {internal, api} = useMemo(() => {
+    const wrapWithDispatch = actions =>
+      Object.keys(actions).reduce(
+        (collection, action) => ({
+          ...collection,
+          [action]: actions[action](dispatch),
+        }),
+        {}
+      );
 
-		return {
-			internal: wrapWithDispatch( internalActions, dispatch ),
-			api: wrapWithDispatch( exposedActions, dispatch ),
-		};
-	}, [ dispatch ] );
+    return {
+      internal: wrapWithDispatch(internalActions, dispatch),
+      api: wrapWithDispatch(exposedActions, dispatch),
+    };
+  }, [dispatch]);
 
-	return {
-		state,
-		internal,
-		api,
-	};
+  return {
+    state,
+    internal,
+    api,
+  };
 }
 
 export default useStoryReducer;

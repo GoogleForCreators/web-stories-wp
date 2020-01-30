@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as APIProvider } from './apiProvider';
-export { default as useAPI } from './useAPI';
+export {default as APIProvider} from './apiProvider';
+export {default as useAPI} from './useAPI';

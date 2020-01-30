@@ -17,19 +17,19 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import {__} from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { SimplePanel } from '../../panels/panel';
+import {SimplePanel} from '../../panels/panel';
 
 function PrepublishInspector() {
-	return (
-		<SimplePanel name="prepublish" title={ __( 'Prepublish', 'web-stories' ) }>
-			{ __( 'Prepublish panel to be implemented here', 'web-stories' ) }
-		</SimplePanel>
-	);
+  return (
+    <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
+      {__('Prepublish panel to be implemented here', 'web-stories')}
+    </SimplePanel>
+  );
 }
 
 export default PrepublishInspector;

@@ -17,50 +17,51 @@
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo } from '@wordpress/element';
+import {useCallback, useMemo} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
-import { getPanels } from '../../panels';
+import {useStory} from '../../../app';
+import {getPanels} from '../../panels';
 
 function useDesignPanels() {
-	const {
-		state: { selectedElements },
-		actions: { deleteSelectedElements, updateSelectedElements },
-	} = useStory();
+  const {
+    state: {selectedElements},
+    actions: {deleteSelectedElements, updateSelectedElements},
+  } = useStory();
 
-	const panels = useMemo(
-		() => getPanels( selectedElements ),
-		[ selectedElements ],
-	);
+  const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
 
-	const onSetProperties = useCallback( ( newProperties ) => {
-		// Filter out empty properties (empty strings specifically)
-		const updatedKeys = Object.keys( newProperties )
-			.filter( ( key ) => newProperties[ key ] !== '' );
+  const onSetProperties = useCallback(
+    newProperties => {
+      // Filter out empty properties (empty strings specifically)
+      const updatedKeys = Object.keys(newProperties).filter(
+        key => newProperties[key] !== ''
+      );
 
-		if ( updatedKeys.length === 0 ) {
-			// Of course abort if no keys have a value
-			return;
-		}
+      if (updatedKeys.length === 0) {
+        // Of course abort if no keys have a value
+        return;
+      }
 
-		const properties = Object.fromEntries(
-			updatedKeys.map( ( key ) => [ key, newProperties[ key ] ] ),
-		);
+      const properties = Object.fromEntries(
+        updatedKeys.map(key => [key, newProperties[key]])
+      );
 
-		updateSelectedElements( { properties } );
-	}, [ updateSelectedElements ] );
+      updateSelectedElements({properties});
+    },
+    [updateSelectedElements]
+  );
 
-	return {
-		panels,
-		panelProperties: {
-			onSetProperties,
-			deleteSelectedElements,
-			selectedElements,
-		},
-	};
+  return {
+    panels,
+    panelProperties: {
+      onSetProperties,
+      deleteSelectedElements,
+      selectedElements,
+    },
+  };
 }
 
 export default useDesignPanels;

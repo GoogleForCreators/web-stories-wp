@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-function TextContent( { src } ) {
-	return `image: ${ src }`;
+function TextContent({src}) {
+  return `image: ${src}`;
 }
 
 export default TextContent;

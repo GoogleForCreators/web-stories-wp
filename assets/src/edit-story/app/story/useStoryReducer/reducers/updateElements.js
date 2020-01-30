@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_RESERVED_PROPERTIES } from '../types';
-import { intersect, objectWithout } from './utils';
+import {ELEMENT_RESERVED_PROPERTIES} from '../types';
+import {intersect, objectWithout} from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -40,48 +40,50 @@ import { intersect, objectWithout } from './utils';
  * @param {Object} payload.properties Properties to set on all the given elements.
  * @return {Object} New state
  */
-function updateElements( state, { elementIds, properties } ) {
-	const idsToUpdate = elementIds === null ? state.selection : elementIds;
+function updateElements(state, {elementIds, properties}) {
+  const idsToUpdate = elementIds === null ? state.selection : elementIds;
 
-	if ( idsToUpdate.length === 0 ) {
-		return state;
-	}
+  if (idsToUpdate.length === 0) {
+    return state;
+  }
 
-	const pageIndex = state.pages.findIndex( ( { id } ) => id === state.current );
+  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
 
-	const oldPage = state.pages[ pageIndex ];
-	const pageElementIds = oldPage.elements.map( ( { id } ) => id );
+  const oldPage = state.pages[pageIndex];
+  const pageElementIds = oldPage.elements.map(({id}) => id);
 
-	// Nothing to update?
-	const hasAnythingToUpdate = intersect( pageElementIds, idsToUpdate ).length > 0;
-	if ( ! hasAnythingToUpdate ) {
-		return state;
-	}
+  // Nothing to update?
+  const hasAnythingToUpdate = intersect(pageElementIds, idsToUpdate).length > 0;
+  if (!hasAnythingToUpdate) {
+    return state;
+  }
 
-	const allowedProperties = objectWithout( properties, ELEMENT_RESERVED_PROPERTIES );
+  const allowedProperties = objectWithout(
+    properties,
+    ELEMENT_RESERVED_PROPERTIES
+  );
 
-	const updatedElements = oldPage.elements.map(
-		( element ) => (
-			idsToUpdate.includes( element.id ) ?
-				{ ...element, ...allowedProperties } :
-				element
-		) );
+  const updatedElements = oldPage.elements.map(element =>
+    idsToUpdate.includes(element.id)
+      ? {...element, ...allowedProperties}
+      : element
+  );
 
-	const newPage = {
-		...oldPage,
-		elements: updatedElements,
-	};
+  const newPage = {
+    ...oldPage,
+    elements: updatedElements,
+  };
 
-	const newPages = [
-		...state.pages.slice( 0, pageIndex ),
-		newPage,
-		...state.pages.slice( pageIndex + 1 ),
-	];
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    newPage,
+    ...state.pages.slice(pageIndex + 1),
+  ];
 
-	return {
-		...state,
-		pages: newPages,
-	};
+  return {
+    ...state,
+    pages: newPages,
+  };
 }
 
 export default updateElements;

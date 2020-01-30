@@ -17,21 +17,23 @@
 /**
  * WordPress dependencies
  */
-import { useEffect } from '@wordpress/element';
+import {useEffect} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../';
+import {useAPI} from '../../';
 
-function useLoadFonts( { fonts, setFonts } ) {
-	const { actions: { getAllFonts } } = useAPI();
+function useLoadFonts({fonts, setFonts}) {
+  const {
+    actions: {getAllFonts},
+  } = useAPI();
 
-	useEffect( () => {
-		if ( fonts.length === 0 ) {
-			getAllFonts( {} ).then( setFonts );
-		}
-	}, [ fonts, getAllFonts, setFonts ] );
+  useEffect(() => {
+    if (fonts.length === 0) {
+      getAllFonts({}).then(setFonts);
+    }
+  }, [fonts, getAllFonts, setFonts]);
 }
 
 export default useLoadFonts;

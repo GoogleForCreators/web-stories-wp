@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as FontProvider } from './fontProvider';
-export { default as useFont } from './useFont';
+export {default as FontProvider} from './fontProvider';
+export {default as useFont} from './useFont';

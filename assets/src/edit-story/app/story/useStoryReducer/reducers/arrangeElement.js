@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getAbsolutePosition, moveArrayElement } from './utils';
+import {getAbsolutePosition, moveArrayElement} from './utils';
 
 /**
  * Move element in element order on the current page.
@@ -51,57 +51,61 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {number} payload.position New position of element to move
  * @return {Object} New state
  */
-function arrangeElement( state, { elementId, position } ) {
-	if ( elementId === null && state.selection.length !== 1 ) {
-		return state;
-	}
+function arrangeElement(state, {elementId, position}) {
+  if (elementId === null && state.selection.length !== 1) {
+    return state;
+  }
 
-	const idToArrange = elementId !== null ? elementId : state.selection[ 0 ];
+  const idToArrange = elementId !== null ? elementId : state.selection[0];
 
-	const pageIndex = state.pages.findIndex( ( { id } ) => id === state.current );
+  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
 
-	const page = state.pages[ pageIndex ];
+  const page = state.pages[pageIndex];
 
-	// Abort if there's less than two elements (nothing to rearrange)
-	if ( page.elements.length < 2 ) {
-		return state;
-	}
+  // Abort if there's less than two elements (nothing to rearrange)
+  if (page.elements.length < 2) {
+    return state;
+  }
 
-	const currentPosition = page.elements.findIndex( ( { id } ) => id === idToArrange );
+  const currentPosition = page.elements.findIndex(({id}) => id === idToArrange);
 
-	if ( currentPosition === -1 || page.backgroundElementId === idToArrange ) {
-		return state;
-	}
+  if (currentPosition === -1 || page.backgroundElementId === idToArrange) {
+    return state;
+  }
 
-	const minPosition = page.backgroundElementId !== null ? 1 : 0;
-	const maxPosition = page.elements.length - 1;
-	const newPosition = getAbsolutePosition( {
-		currentPosition,
-		minPosition,
-		maxPosition,
-		desiredPosition: position,
-	} );
+  const minPosition = page.backgroundElementId !== null ? 1 : 0;
+  const maxPosition = page.elements.length - 1;
+  const newPosition = getAbsolutePosition({
+    currentPosition,
+    minPosition,
+    maxPosition,
+    desiredPosition: position,
+  });
 
-	// If it's already there, do nothing.
-	if ( currentPosition === newPosition ) {
-		return state;
-	}
+  // If it's already there, do nothing.
+  if (currentPosition === newPosition) {
+    return state;
+  }
 
-	const newElements = moveArrayElement( page.elements, currentPosition, newPosition );
+  const newElements = moveArrayElement(
+    page.elements,
+    currentPosition,
+    newPosition
+  );
 
-	const newPages = [
-		...state.pages.slice( 0, pageIndex ),
-		{
-			...page,
-			elements: newElements,
-		},
-		...state.pages.slice( pageIndex + 1 ),
-	];
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    {
+      ...page,
+      elements: newElements,
+    },
+    ...state.pages.slice(pageIndex + 1),
+  ];
 
-	return {
-		...state,
-		pages: newPages,
-	};
+  return {
+    ...state,
+    pages: newPages,
+  };
 }
 
 export default arrangeElement;

@@ -31,38 +31,38 @@
  * @param {number} payload.pageId Page id to delete. If null, delete current page
  * @return {Object} New state
  */
-function deletePage( state, { pageId } ) {
-	if ( state.pages.length <= 1 ) {
-		return state;
-	}
+function deletePage(state, {pageId}) {
+  if (state.pages.length <= 1) {
+    return state;
+  }
 
-	const idToDelete = pageId === null ? state.current : pageId;
+  const idToDelete = pageId === null ? state.current : pageId;
 
-	const pageIndex = state.pages.findIndex( ( { id } ) => id === idToDelete );
+  const pageIndex = state.pages.findIndex(({id}) => id === idToDelete);
 
-	if ( pageIndex === -1 ) {
-		return state;
-	}
+  if (pageIndex === -1) {
+    return state;
+  }
 
-	const newPages = [
-		...state.pages.slice( 0, pageIndex ),
-		...state.pages.slice( pageIndex + 1 ),
-	];
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    ...state.pages.slice(pageIndex + 1),
+  ];
 
-	let newCurrent = state.current;
+  let newCurrent = state.current;
 
-	if ( idToDelete === state.current ) {
-		// Current page is at the same index unless it's off the end of the array
-		const newCurrentIndex = Math.min( newPages.length - 1, pageIndex );
-		newCurrent = newPages[ newCurrentIndex ].id;
-	}
+  if (idToDelete === state.current) {
+    // Current page is at the same index unless it's off the end of the array
+    const newCurrentIndex = Math.min(newPages.length - 1, pageIndex);
+    newCurrent = newPages[newCurrentIndex].id;
+  }
 
-	return {
-		...state,
-		pages: newPages,
-		current: newCurrent,
-		selection: [],
-	};
+  return {
+    ...state,
+    pages: newPages,
+    current: newCurrent,
+    selection: [],
+  };
 }
 
 export default deletePage;

@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as ConfigProvider } from './configProvider';
-export { default as useConfig } from './useConfig';
+export {default as ConfigProvider} from './configProvider';
+export {default as useConfig} from './useConfig';

@@ -20,6 +20,6 @@
  * @param {string}id ID as string
  * @return {string} Formatted ID.
  */
-export const getTabId = ( id ) => {
-	return `${ id }-tab`;
+export const getTabId = id => {
+  return `${id}-tab`;
 };

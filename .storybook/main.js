@@ -15,15 +15,15 @@
  */
 
 module.exports = {
-	stories: [
-		'./stories/**/*.js',
-		'../assets/src/edit-story/**/stories/*.(js|mdx)',
-	],
-	addons: [
-		'@storybook/addon-a11y/register',
-		'@storybook/addon-docs',
-		'@storybook/addon-knobs/register',
-		'@storybook/addon-storysource/register',
-		'@storybook/addon-viewport/register',
-	],
+  stories: [
+    './stories/**/*.js',
+    '../assets/src/edit-story/**/stories/*.(js|mdx)',
+  ],
+  addons: [
+    '@storybook/addon-a11y/register',
+    '@storybook/addon-docs',
+    '@storybook/addon-knobs/register',
+    '@storybook/addon-storysource/register',
+    '@storybook/addon-viewport/register',
+  ],
 };

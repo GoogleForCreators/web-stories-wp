@@ -23,50 +23,44 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useEffect } from '@wordpress/element';
+import {useEffect} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import {ElementFillContent} from '../shared';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
 const Element = styled.video`
-	${ ElementFillContent }
+  ${ElementFillContent}
 `;
 
-function VideoDisplay( props ) {
-	const {
-		mimeType,
-		src,
-		videoId,
-		posterId,
-		id,
-	} = props;
+function VideoDisplay(props) {
+  const {mimeType, src, videoId, posterId, id} = props;
 
-	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
-	useEffect( () => {
-		if ( videoId && ! posterId ) {
-			uploadVideoFrame();
-		}
-	}, [ videoId, posterId, uploadVideoFrame ] );
+  const {uploadVideoFrame} = useUploadVideoFrame({videoId, src, id});
+  useEffect(() => {
+    if (videoId && !posterId) {
+      uploadVideoFrame();
+    }
+  }, [videoId, posterId, uploadVideoFrame]);
 
-	return (
-		<Element { ...props } >
-			<source src={ src } type={ mimeType } />
-		</Element>
-	);
+  return (
+    <Element {...props}>
+      <source src={src} type={mimeType} />
+    </Element>
+  );
 }
 
 VideoDisplay.propTypes = {
-	controls: PropTypes.bool,
-	autoPlay: PropTypes.bool,
-	loop: PropTypes.bool,
-	mimeType: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	videoId: PropTypes.number.isRequired,
-	posterId: PropTypes.number,
-	id: PropTypes.string.isRequired,
+  controls: PropTypes.bool,
+  autoPlay: PropTypes.bool,
+  loop: PropTypes.bool,
+  mimeType: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  videoId: PropTypes.number.isRequired,
+  posterId: PropTypes.number,
+  id: PropTypes.string.isRequired,
 };
 
 export default VideoDisplay;

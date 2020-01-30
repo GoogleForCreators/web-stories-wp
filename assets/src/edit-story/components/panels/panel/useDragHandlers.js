@@ -18,62 +18,71 @@
  * WordPress dependencies
  */
 import {
-	useRef,
-	useState,
-	useCallback,
-	useLayoutEffect,
+  useRef,
+  useState,
+  useCallback,
+  useLayoutEffect,
 } from '@wordpress/element';
 
-function useDragHandlers( handle, handleHeightChange ) {
-	const lastPosition = useRef();
-	const [ isDragging, setIsDragging ] = useState( false );
+function useDragHandlers(handle, handleHeightChange) {
+  const lastPosition = useRef();
+  const [isDragging, setIsDragging] = useState(false);
 
-	// On pointer move, check difference since last record vertical pointer position
-	// and invoke callback with this difference.
-	// Then record new vertical pointer position for next iteration.
-	const handlePointerMove = useCallback( ( evt ) => {
-		const delta = lastPosition.current - evt.pageY;
-		handleHeightChange( delta );
-		lastPosition.current = evt.pageY;
-	}, [ handleHeightChange ] );
+  // On pointer move, check difference since last record vertical pointer position
+  // and invoke callback with this difference.
+  // Then record new vertical pointer position for next iteration.
+  const handlePointerMove = useCallback(
+    evt => {
+      const delta = lastPosition.current - evt.pageY;
+      handleHeightChange(delta);
+      lastPosition.current = evt.pageY;
+    },
+    [handleHeightChange]
+  );
 
-	// On pointer up, set dragging as false
-	// - will cause useLayoutEffect to unregister listeners.
-	const handlePointerUp = useCallback( ( evt ) => {
-		evt.target.releasePointerCapture( evt.pointerId );
-		setIsDragging( false );
-	}, [] );
+  // On pointer up, set dragging as false
+  // - will cause useLayoutEffect to unregister listeners.
+  const handlePointerUp = useCallback(evt => {
+    evt.target.releasePointerCapture(evt.pointerId);
+    setIsDragging(false);
+  }, []);
 
-	// On pointer down, set dragging as true
-	// - will cause useLayoutEffect to register listeners.
-	// Also record the initial vertical pointer position on the page.
-	const handlePointerDown = useCallback( ( evt ) => {
-		evt.target.setPointerCapture( evt.pointerId );
-		lastPosition.current = evt.pageY;
-		setIsDragging( true );
-	}, [] );
+  // On pointer down, set dragging as true
+  // - will cause useLayoutEffect to register listeners.
+  // Also record the initial vertical pointer position on the page.
+  const handlePointerDown = useCallback(evt => {
+    evt.target.setPointerCapture(evt.pointerId);
+    lastPosition.current = evt.pageY;
+    setIsDragging(true);
+  }, []);
 
-	// On initial render *and* every time `isDragging` changes value,
-	// register all relevant listeners. Note that all listeners registered
-	// will be correctly unregistered due to the cleanup function.
-	useLayoutEffect( () => {
-		const element = handle.current;
-		element.addEventListener( 'pointerdown', handlePointerDown );
+  // On initial render *and* every time `isDragging` changes value,
+  // register all relevant listeners. Note that all listeners registered
+  // will be correctly unregistered due to the cleanup function.
+  useLayoutEffect(() => {
+    const element = handle.current;
+    element.addEventListener('pointerdown', handlePointerDown);
 
-		if ( isDragging ) {
-			element.addEventListener( 'pointermove', handlePointerMove );
-			element.addEventListener( 'pointerup', handlePointerUp );
-		}
+    if (isDragging) {
+      element.addEventListener('pointermove', handlePointerMove);
+      element.addEventListener('pointerup', handlePointerUp);
+    }
 
-		return () => {
-			element.removeEventListener( 'pointerdown', handlePointerDown );
+    return () => {
+      element.removeEventListener('pointerdown', handlePointerDown);
 
-			if ( isDragging ) {
-				element.removeEventListener( 'pointermove', handlePointerMove );
-				element.removeEventListener( 'pointerup', handlePointerUp );
-			}
-		};
-	}, [ isDragging, handlePointerUp, handlePointerMove, handlePointerDown, handle ] );
+      if (isDragging) {
+        element.removeEventListener('pointermove', handlePointerMove);
+        element.removeEventListener('pointerup', handlePointerUp);
+      }
+    };
+  }, [
+    isDragging,
+    handlePointerUp,
+    handlePointerMove,
+    handlePointerDown,
+    handle,
+  ]);
 }
 
 export default useDragHandlers;

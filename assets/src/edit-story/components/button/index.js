@@ -28,111 +28,111 @@ import LeftArrowIcon from './icons/arrow_left.svg';
 import RightArrowIcon from './icons/arrow_right.svg';
 import GridViewIcon from './icons/grid_view.svg';
 
-const Base = styled.button.attrs(
-	( { isDisabled } ) => ( { disabled: isDisabled } ),
-)`
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 2px;
-	background: transparent;
-	display: block;
-	min-width: ${ ( { isIcon } ) => isIcon ? 'initial' : '63px' };
-	line-height: 28px;
-	height: 30px;
-	padding: 0 10px;
-	cursor: pointer;
-	font-size: 14px;
+const Base = styled.button.attrs(({isDisabled}) => ({disabled: isDisabled}))`
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  background: transparent;
+  display: block;
+  min-width: ${({isIcon}) => (isIcon ? 'initial' : '63px')};
+  line-height: 28px;
+  height: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: 14px;
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
+  &:focus,
+  &:active {
+    outline: none;
+  }
 
-	svg {
-		width: 1em;
-	}
+  svg {
+    width: 1em;
+  }
 
-	${ ( { disabled } ) => disabled && `
+  ${({disabled}) =>
+    disabled &&
+    `
 		pointer-events: none;
 		opacity: .3;
-	` }
+	`}
 `;
 
-const StyledButton = styled( Base )`
-	border: none;
-	padding: 0;
-	width: ${ ( { width } ) => width }px;
-	height: ${ ( { height } ) => height }px;
-	min-width: initial;
-	visibility: ${ ( { isHidden } ) => isHidden ? 'hidden' : 'visible' };
-	opacity: .3;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+const StyledButton = styled(Base)`
+  border: none;
+  padding: 0;
+  width: ${({width}) => width}px;
+  height: ${({height}) => height}px;
+  min-width: initial;
+  visibility: ${({isHidden}) => (isHidden ? 'hidden' : 'visible')};
+  opacity: 0.3;
+  color: ${({theme}) => theme.colors.fg.v1};
 
-	&:focus,
-	&:active,
-	&:hover {
-		opacity: 1;
-	}
+  &:focus,
+  &:active,
+  &:hover {
+    opacity: 1;
+  }
 
-	svg {
-		width: ${ ( { width } ) => width }px;
-		height: ${ ( { height } ) => height }px;
-	}
+  svg {
+    width: ${({width}) => width}px;
+    height: ${({height}) => height}px;
+  }
 `;
 
-export const Primary = styled( Base )`
-	border-color: ${ ( { theme } ) => theme.colors.action };
-	background-color: ${ ( { theme } ) => theme.colors.action };
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+export const Primary = styled(Base)`
+  border-color: ${({theme}) => theme.colors.action};
+  background-color: ${({theme}) => theme.colors.action};
+  color: ${({theme}) => theme.colors.fg.v1};
 `;
 
-export const Secondary = styled( Base )`
-	border-color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	background-color: ${ ( { theme } ) => theme.colors.fg.v3 };
-	color: ${ ( { theme } ) => theme.colors.bg.v5 };
+export const Secondary = styled(Base)`
+  border-color: ${({theme}) => theme.colors.fg.v1};
+  background-color: ${({theme}) => theme.colors.fg.v3};
+  color: ${({theme}) => theme.colors.bg.v5};
 `;
 
-export const Outline = styled( Base )`
-	border-color: ${ ( { theme } ) => theme.colors.fg.v4 };
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+export const Outline = styled(Base)`
+  border-color: ${({theme}) => theme.colors.fg.v4};
+  color: ${({theme}) => theme.colors.fg.v1};
 `;
 
-export const LeftArrow = ( props ) => (
-	<StyledButton { ...props }>
-		<LeftArrowIcon />
-	</StyledButton>
+export const LeftArrow = props => (
+  <StyledButton {...props}>
+    <LeftArrowIcon />
+  </StyledButton>
 );
 
-export const RightArrow = ( props ) => (
-	<StyledButton { ...props }>
-		<RightArrowIcon />
-	</StyledButton>
+export const RightArrow = props => (
+  <StyledButton {...props}>
+    <RightArrowIcon />
+  </StyledButton>
 );
 
-export const Undo = ( props ) => (
-	<Outline isIcon { ...props }>
-		<UndoIcon />
-	</Outline>
+export const Undo = props => (
+  <Outline isIcon {...props}>
+    <UndoIcon />
+  </Outline>
 );
 
-export const Redo = ( props ) => (
-	<Outline isIcon { ...props }>
-		<RedoIcon />
-	</Outline>
+export const Redo = props => (
+  <Outline isIcon {...props}>
+    <RedoIcon />
+  </Outline>
 );
 
-export const GridView = ( props ) => (
-	<StyledButton { ...props }>
-		<GridViewIcon />
-	</StyledButton>
+export const GridView = props => (
+  <StyledButton {...props}>
+    <GridViewIcon />
+  </StyledButton>
 );
 
-export const ActionButton = styled.button.attrs( { type: 'button' } )`
-	background: transparent;
-	border: 1px solid ${ ( { theme } ) => theme.colors.fg.v3 };
-	border-radius: 4px;
-	color: ${ ( { theme } ) => theme.colors.bg.v5 };
-	font-size: 15px;
-	line-height: 30px;
-	padding: 0 15px;
+export const ActionButton = styled.button.attrs({type: 'button'})`
+  background: transparent;
+  border: 1px solid ${({theme}) => theme.colors.fg.v3};
+  border-radius: 4px;
+  color: ${({theme}) => theme.colors.bg.v5};
+  font-size: 15px;
+  line-height: 30px;
+  padding: 0 15px;
 `;

@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as StoryProvider } from './storyProvider';
-export { default as useStory } from './useStory';
+export {default as StoryProvider} from './storyProvider';
+export {default as useStory} from './useStory';
