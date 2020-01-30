@@ -116,7 +116,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:js",
+      "pre-commit":"npm run lint:js:fix; npm run lint:php:fix; npm run lint:css:fix; prettier --write **/*",
       "pre-push": "npm run test:js"
     }
   }
