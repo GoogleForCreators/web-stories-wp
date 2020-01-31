@@ -31,8 +31,6 @@ export const getBackgroundStyle = () => {
 	return {
 		minWidth: '100%',
 		minHeight: '100%',
-		width: 'auto',
-		height: 'auto',
 		maxWidth: 'initial',
 	};
 };
