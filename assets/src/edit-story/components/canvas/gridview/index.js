@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -31,6 +31,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
+import RangeInput from '../../rangeInput';
 import RectangleIcon from './rectangle.svg';
 
 const PAGE_WIDTH = 90;
@@ -51,60 +52,9 @@ const Wrapper = styled.div`
 const RangeInputWrapper = styled.div`
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	width: 100%;
 	margin-bottom: 75px;
-`;
-
-const rangeThumb = css`
-	width: 28px;
-	height: 28px;
-	border-radius: 100%;
-	background: ${ ( { theme } ) => theme.colors.fg.v1 };
-`;
-
-const rangeTrack = css`
-	background: rgba(255, 255, 255, 0.2);
-	border-color: transparent;
-	color: transparent;
-	width: 100%;
-	height: 4px;
-`;
-
-// Lots of repetition to avoid browsers dropping unknown selectors.
-const RangeInput = styled.input.attrs( () => ( {
-	type: 'range',
-} ) )`
-	appearance: none;
-	background: transparent;
-	display: block;
-	width: 360px;
-	margin: 0 20px;
-
-	&::-webkit-slider-thumb {
-		${ rangeThumb }
-		appearance: none;
-		margin-top: -12px;
-	}
-
-	&::-moz-range-thumb {
-		${ rangeThumb }
-	}
-
-	&::-ms-thumb {
-		${ rangeThumb }
-	}
-
-	&::-webkit-slider-runnable-track {
-		${ rangeTrack }
-	}
-
-	&::-moz-range-track {
-		${ rangeTrack }
-	}
-
-	&::-ms-track {
-		${ rangeTrack }
-	}
 `;
 
 const Rectangle = styled.div`
@@ -113,6 +63,7 @@ const Rectangle = styled.div`
 	align-items: center;
 	font-size: 32px;
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	${ ( { isLarge } ) => isLarge ? 'margin-left' : 'margin-right' }: 20px;
 
 	svg {
 		width: ${ ( { isLarge } ) => isLarge ? '20px' : '12px' };
@@ -133,6 +84,8 @@ function RangeControl( { value, onChange } ) {
 				step="1"
 				value={ value }
 				onChange={ ( evt ) => onChange( Number( evt.target.value ) ) }
+				width="360px"
+				thumbSize="24"
 			/>
 			<Rectangle isLarge>
 				<RectangleIcon />

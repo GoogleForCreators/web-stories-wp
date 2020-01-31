@@ -24,6 +24,6 @@ module.exports = {
 		'@storybook/addon-docs',
 		'@storybook/addon-knobs/register',
 		'@storybook/addon-storysource/register',
-		'@storybook/addon-viewport/register',
+		'@storybook/addon-viewport/register', '@storybook/addon-backgrounds/register',
 	],
 };
