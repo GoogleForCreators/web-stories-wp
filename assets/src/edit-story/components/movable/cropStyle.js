@@ -21,10 +21,11 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 	.crop-movable .moveable-control {
-		background: #222 !important;
+		background: #000 !important;
 		border-radius: 0 !important;
 		border: none !important;
 		box-sizing: border-box !important;
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 	}
 
 	.crop-movable .moveable-control.moveable-n,
@@ -39,14 +40,14 @@ export const GlobalStyle = createGlobalStyle`
 		width: 16px !important;
 		height: 4px !important;
 		margin-left: -8px !important;
-		margin-top: -2px !important;
+		margin-top: -1px !important;
 	}
 
 	.crop-movable .moveable-control.moveable-e,
 	.crop-movable .moveable-control.moveable-w {
 		width: 4px !important;
 		height: 16px !important;
-		margin-left: -2px !important;
+		margin-left: -1px !important;
 		margin-top: -8px !important;
 	}
 
@@ -57,17 +58,20 @@ export const GlobalStyle = createGlobalStyle`
 		width: 16px !important;
 		height: 16px !important;
 		background: #fff !important;
+		position: absolute !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw::after,
-	.crop-movable .moveable-control.moveable-ne::after,
-	.crop-movable .moveable-control.moveable-sw::after,
-	.crop-movable .moveable-control.moveable-se::after {
+	.crop-movable .moveable-control.moveable-nw::before,
+	.crop-movable .moveable-control.moveable-ne::before,
+	.crop-movable .moveable-control.moveable-sw::before,
+	.crop-movable .moveable-control.moveable-se::before {
 		content: "" !important;
+		width: 16px !important;
+		height: 16px !important;
 		display: block !important;
 		position: absolute !important;
 		inset: 1px !important;
-		background: #222 !important;
+		background: #000 !important;
 	}
 
 	.crop-movable .moveable-control.moveable-nw,
@@ -95,8 +99,10 @@ export const GlobalStyle = createGlobalStyle`
 		clip-path: polygon(0 0, 16px 0, 16px 4px, 4px 4px, 4px 16px, 0 16px) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw::after {
+	.crop-movable .moveable-control.moveable-nw::before {
 		clip-path: polygon(0 0, 14px 0, 14px 2px, 2px 2px, 2px 14px, 0 14px) !important;
+		top: 1px;
+		left: 1px;
 	}
 
 	.crop-movable .moveable-control.moveable-ne {
@@ -104,8 +110,10 @@ export const GlobalStyle = createGlobalStyle`
 		clip-path: polygon(0 0, 16px 0, 16px 16px, 12px 16px, 12px 4px, 0 4px) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-ne::after {
+	.crop-movable .moveable-control.moveable-ne::before {
 		clip-path: polygon(0 0, 14px 0, 14px 14px, 12px 14px, 12px 2px, 0 2px) !important;
+		top: 1px;
+		right: -1px;
 	}
 
 	.crop-movable .moveable-control.moveable-sw {
@@ -113,8 +121,10 @@ export const GlobalStyle = createGlobalStyle`
 		clip-path: polygon(0 0, 0 16px, 16px 16px, 16px 12px, 4px 12px, 4px 0) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-sw::after {
+	.crop-movable .moveable-control.moveable-sw::before {
 		clip-path: polygon(0 0, 0 14px, 14px 14px, 14px 12px, 2px 12px, 2px 0) !important;
+		bottom: -1px;
+		left: 1px;
 	}
 
 	.crop-movable .moveable-control.moveable-se {
@@ -122,7 +132,15 @@ export const GlobalStyle = createGlobalStyle`
 		clip-path: polygon(16px 0, 16px 16px, 0 16px, 0 12px, 12px 12px, 12px 0) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-se::after {
+	.crop-movable .moveable-control.moveable-se::before {
 		clip-path: polygon(14px 0, 14px 14px, 0 14px, 0 12px, 12px 12px, 12px 0) !important;
+		bottom: -1px;
+		right: -1px;
+	}
+
+	.crop-movable .moveable-direction.moveable-line {
+		background: #47a0f4 !important;
+		width: 2px;
+		height: 2px;
 	}
 `;

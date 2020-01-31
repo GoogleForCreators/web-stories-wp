@@ -46,8 +46,8 @@ const Container = styled.div`
 	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
 	height: ${ HEIGHT }px;
 
-	background: ${ ( { theme } ) => theme.colors.bg.v7 };
-	border-radius: 4px;
+	background: ${ ( { theme } ) => theme.colors.t.bg };
+	border-radius: 100px;
 
 	display: flex;
 	flex-direction: row;
@@ -62,10 +62,33 @@ const Range = styled.input.attrs( {
 	max: MAX_SCALE,
 	step: 10,
 } )`
+	appearance: none;
 	flex: 1 1;
 	margin: 4px;
 	min-width: 100px;
 	cursor: pointer;
+	outline: none;
+	background: ${ ( { theme } ) => theme.colors.t.fg };
+	border-radius: 100px;
+	height: 4px;
+
+	&::-webkit-slider-thumb {
+		appearance: none;
+		width: 16px;
+		height: 16px;
+		background: #fff;
+		cursor: pointer;
+		border-radius: 50px;
+	}
+
+	&::-moz-range-thumb {
+		appearance: none;
+		width: 16px;
+		height: 16px;
+		background: #fff;
+		cursor: pointer;
+		border-radius: 50px;
+	}
 `;
 
 const ResetButton = styled.button`
@@ -73,11 +96,12 @@ const ResetButton = styled.button`
 	margin-left: 4px;
 	height: 20px;
 	text-transform: uppercase;
-	font-size: 10px;
-	color: rgba(255, 255, 255, 0.3);
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 4px;
+	font-size: 9px;
+	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+	background: ${ ( { theme } ) => theme.colors.action };
+	border-radius: 100px;
 	border: none;
+	padding: 1px 8px 0 8px;
 `;
 
 function ScalePanel( { setProperties, width, height, x, y, scale } ) {
