@@ -51,8 +51,8 @@ function Selection() {
 		return (
 			<SingleSelectionMovable
 				selectedElement={ selectedElement }
-				nodesById={ nodesById }
 				targetEl={ target }
+				nodesById={ nodesById }
 				pushEvent={ lastSelectionEvent }
 			/>
 		);

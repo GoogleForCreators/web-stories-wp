@@ -146,6 +146,7 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 
 	return (
 		<Movable
+			className="default-movable"
 			ref={ moveable }
 			zIndex={ 0 }
 			target={ targetList.map( ( { node } ) => node ) }
