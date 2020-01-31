@@ -17,17 +17,15 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, DEFAULT_EDITOR_PAGE_WIDTH } from '../../constants';
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
 import { createNewElement } from '../../elements';
-import { dataPixels } from '../../units';
+import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
 import TextLibrary from './textLibrary';
 import ShapeLibrary from './shapeLibrary';
 import LinkLibrary from './linkLibrary';
-
-const DATA_SCALE = PAGE_WIDTH / DEFAULT_EDITOR_PAGE_WIDTH;
 
 function Library() {
 	const {
@@ -46,10 +44,10 @@ function Library() {
 	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
 			...props,
-			x: dataPixels( 80 * DATA_SCALE * Math.random() ),
-			y: dataPixels( 70 * DATA_SCALE * Math.random() ),
-			width: dataPixels( width * DATA_SCALE ),
-			height: dataPixels( height * DATA_SCALE ),
+			x: editorToDataX( 80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH ),
+			y: editorToDataY( 70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT ),
+			width: editorToDataX( width, DEFAULT_EDITOR_PAGE_WIDTH ),
+			height: editorToDataY( height, DEFAULT_EDITOR_PAGE_HEIGHT ),
 		} );
 		addElement( { element } );
 	};
