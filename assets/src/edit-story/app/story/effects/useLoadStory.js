@@ -90,8 +90,8 @@ function useLoadStory( {
 				};
 
 				// If there are no pages, create empty page.
-				const storyData = migrate( storyDataRaw, storyDataRaw.version || 0 );
-				const pages = storyData.pages.length === 0 ? [ createPage() ] : storyData.pages;
+				const storyData = storyDataRaw && migrate( storyDataRaw, storyDataRaw.version || 0 );
+				const pages = storyData && storyData.pages && storyData.pages.length > 0 ? storyData.pages : [ createPage() ];
 
 				const hasPublishAction = getPerm( post, 'wp:action-publish' );
 				const hasAssignAuthorAction = getPerm( post, 'wp:action-assign-author' );
