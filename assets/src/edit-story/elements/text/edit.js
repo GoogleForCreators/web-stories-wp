@@ -34,22 +34,22 @@ import { useStory, useFont } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import { useUnits } from '../../units';
 import {
-	ElementFillContent,
-	ElementWithFont,
-	ElementWithBackgroundColor,
-	ElementWithFontColor,
-	ElementWithStyle,
+	elementFillContent,
+	elementWithFont,
+	elementWithBackgroundColor,
+	elementWithFontColor,
+	elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
 const Element = styled.div`
 	margin: 0;
-	${ ElementFillContent }
-	${ ElementWithFont }
-	${ ElementWithStyle }
-	${ ElementWithBackgroundColor }
-	${ ElementWithFontColor }
+	${ elementFillContent }
+	${ elementWithFont }
+	${ elementWithStyle }
+	${ elementWithBackgroundColor }
+	${ elementWithFontColor }
 
 	&::after {
 		content: '';
