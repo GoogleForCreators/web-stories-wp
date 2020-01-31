@@ -28,6 +28,7 @@ import { useEffect, useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
+import { useUnits } from '../../units';
 import { getFocalFromOffset } from './util';
 
 function EditCropMovable( {
@@ -35,6 +36,8 @@ function EditCropMovable( {
 	x, y,
 	offsetX, offsetY, imgWidth, imgHeight,
 } ) {
+	const { actions: { editorToDataX, editorToDataY } } = useUnits();
+
 	const moveableRef = useRef();
 	const cropRef = useRef( [ 0, 0, 0, 0 ] );
 
@@ -78,10 +81,10 @@ function EditCropMovable( {
 				const resizeFocalX = getFocalFromOffset( resizeWidth, imgWidth, offsetX + tx );
 				const resizeFocalY = getFocalFromOffset( resizeHeight, imgHeight, offsetY + ty );
 				setProperties( {
-					x: x + tx,
-					y: y + ty,
-					width: resizeWidth,
-					height: resizeHeight,
+					x: editorToDataX( x + tx ),
+					y: editorToDataY( y + ty ),
+					width: editorToDataX( resizeWidth ),
+					height: editorToDataY( resizeHeight ),
 					scale: resizeScale,
 					focalX: resizeFocalX,
 					focalY: resizeFocalY,

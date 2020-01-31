@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Editor, EditorState, SelectionState } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
@@ -33,6 +32,7 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback } from '@word
  */
 import { useStory, useFont } from '../../app';
 import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
 import {
 	ElementFillContent,
 	ElementWithFont,
@@ -40,6 +40,7 @@ import {
 	ElementWithFontColor,
 	ElementWithStyle,
 } from '../shared';
+import StoryPropTypes from '../../types';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
 const Element = styled.div`
@@ -64,29 +65,34 @@ const Element = styled.div`
 `;
 
 function TextEdit( {
-	id,
-	content,
-	color,
-	backgroundColor,
-	width,
-	height,
-	fontFamily,
-	fontFallback,
-	fontSize,
-	fontWeight,
-	fontStyle,
-	letterSpacing,
-	lineHeight,
-	padding,
-	textAlign,
+	element: {
+		id,
+		content,
+		color,
+		backgroundColor,
+		fontFamily,
+		fontFallback,
+		fontSize,
+		fontWeight,
+		fontStyle,
+		letterSpacing,
+		lineHeight,
+		padding,
+		textAlign,
+	},
+	box: {
+		width,
+		height,
+	},
 } ) {
+	const { actions: { dataToEditorY } } = useUnits();
 	const props = {
 		color,
 		backgroundColor,
 		fontFamily,
 		fontFallback,
 		fontStyle,
-		fontSize,
+		fontSize: dataToEditorY( fontSize ),
 		fontWeight,
 		textAlign,
 		letterSpacing,
@@ -181,24 +187,8 @@ function TextEdit( {
 }
 
 TextEdit.propTypes = {
-	id: PropTypes.string.isRequired,
-	content: PropTypes.string,
-	color: PropTypes.string,
-	backgroundColor: PropTypes.string,
-	fontFamily: PropTypes.string,
-	fontFallback: PropTypes.array,
-	fontSize: PropTypes.number,
-	fontWeight: PropTypes.number,
-	fontStyle: PropTypes.string,
-	letterSpacing: PropTypes.oneOfType( [
-		PropTypes.string,
-		PropTypes.number,
-	] ),
-	lineHeight: PropTypes.number,
-	padding: PropTypes.number,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	textAlign: PropTypes.string,
+	element: StoryPropTypes.elements.text.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default TextEdit;

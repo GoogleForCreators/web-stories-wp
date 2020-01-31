@@ -60,7 +60,7 @@ function EditLayer( {} ) {
 	}
 
 	return (
-		<LayerWithGrayout grayout={ editModeGrayout } pointerEvents={ false }>
+		<LayerWithGrayout grayout={ editModeGrayout } pointerEvents="none">
 			<EditPageArea>
 				<EditElement element={ editingElement } />
 			</EditPageArea>

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../panels';
+import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -32,7 +32,6 @@ export const defaultAttributes = {
 	fontSize: 14,
 	fontStyle: 'normal',
 	color: '#000000',
-	backgroundColor: '#ffffff',
 	letterSpacing: 'normal',
 	lineHeight: 1.3,
 	textAlign: 'initial',

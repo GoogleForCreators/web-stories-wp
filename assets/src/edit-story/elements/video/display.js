@@ -17,13 +17,19 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { ElementFillContent } from '../shared';
+import StoryPropTypes from '../../types';
+import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import { getBackgroundStyle, getVideoProps, VideoWithScale } from './util';
 
 const Element = styled.video`
@@ -32,18 +38,30 @@ const Element = styled.video`
 `;
 
 function VideoDisplay( {
-	autoPlay,
-	mimeType,
-	src,
-	isBackground,
-	width,
-	height,
-	scale,
-	focalX,
-	focalY,
-	origRatio,
-	...rest
+	element: {
+		autoPlay,
+		mimeType,
+		src,
+		isBackground,
+		width,
+		height,
+		scale,
+		focalX,
+		focalY,
+		origRatio,
+		videoId,
+		posterId,
+		poster,
+		...rest
+	},
 } ) {
+	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
+	useEffect( () => {
+		if ( videoId && ! posterId ) {
+			uploadVideoFrame();
+		}
+	}, [ videoId, posterId, uploadVideoFrame ] );
+
 	let style = {};
 	if ( isBackground ) {
 		const styleProps = getBackgroundStyle();
@@ -51,32 +69,19 @@ function VideoDisplay( {
 			...style,
 			...styleProps,
 		};
-		autoPlay = true;
 	}
 
 	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
 
 	return (
-		<Element autoPlay={ autoPlay } style={ { ...style } } { ...videoProps } { ...rest } >
+		<Element poster style={ { ...style } } { ...videoProps } { ...rest } >
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);
 }
 
 VideoDisplay.propTypes = {
-	autoPlay: PropTypes.bool,
-	controls: PropTypes.bool,
-	isBackground: PropTypes.bool,
-	loop: PropTypes.bool,
-	mimeType: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	style: PropTypes.object,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	scale: PropTypes.number,
-	focalX: PropTypes.number,
-	focalY: PropTypes.number,
-	origRatio: PropTypes.number.isRequired,
+	element: StoryPropTypes.elements.video.isRequired,
 };
 
 export default VideoDisplay;

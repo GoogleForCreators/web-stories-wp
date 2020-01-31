@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -29,7 +28,9 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { ElementWithPosition, ElementWithSize, ElementWithRotation, getBox } from '../../elements/shared';
+import { ElementWithPosition, ElementWithSize, ElementWithRotation } from '../../elements/shared';
+import StoryPropTypes from '../../types';
+import { useUnits } from '../../units';
 import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
@@ -39,27 +40,17 @@ const Wrapper = styled.div`
 	contain: layout paint;
 `;
 
-function DisplayElement( {
-	element: {
-		id,
-		type,
-		x,
-		y,
-		width,
-		height,
-		rotationAngle,
-		isFill,
-		isBackground,
-		...rest
-	},
-} ) {
+function DisplayElement( { element } ) {
+	const { actions: { getBox } } = useUnits();
+
+	const { id, type } = element;
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Display } = getDefinitionForType( type );
 
 	const wrapperRef = useRef( null );
-	const box = getBox( { x, y, width, height, rotationAngle, isFill, isBackground } );
+
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const props = { ...box, ...rest, id, isBackground };
+	const box = getBox( element );
 
 	useTransformHandler( id, ( transform ) => {
 		const target = wrapperRef.current;
@@ -80,14 +71,13 @@ function DisplayElement( {
 			ref={ wrapperRef }
 			{ ...box }
 		>
-			<Display { ...props } />
+			<Display element={ element } box={ box } />
 		</Wrapper>
 	);
 }
 
 DisplayElement.propTypes = {
-	element: PropTypes.object.isRequired,
-	isBackground: PropTypes.bool,
+	element: StoryPropTypes.element.isRequired,
 };
 
 export default DisplayElement;

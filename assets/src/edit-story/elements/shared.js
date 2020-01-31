@@ -23,7 +23,6 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import getPercentageFromPixels from '../utils/getPercentageFromPixels';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 
 export const ElementFillContent = css`
 	position: absolute;
@@ -85,14 +84,3 @@ export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) 
 		height: getPercentageFromPixels( height, 'y' ) + '%',
 	};
 } );
-
-export function getBox( { x, y, width, height, rotationAngle, isFill, isBackground } ) {
-	const displayFull = isFill || isBackground;
-	return {
-		x: displayFull ? 0 : x,
-		y: displayFull ? 0 : y,
-		width: displayFull ? PAGE_WIDTH : width,
-		height: displayFull ? PAGE_HEIGHT : height,
-		rotationAngle: displayFull ? 0 : rotationAngle,
-	};
-}

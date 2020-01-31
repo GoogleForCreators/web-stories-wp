@@ -26,6 +26,7 @@
 
 the_post();
 
+use \Google\Web_Stories\Story_Post_Type;
 use \Google\Web_Stories\Media;
 
 ?>
@@ -65,7 +66,9 @@ use \Google\Web_Stories\Media;
 </head>
 <body>
 <?php
-$metadata = function_exists( 'amp_get_schemaorg_metadata' ) ? amp_get_schemaorg_metadata() : [];
+
+$metadata = Story_Post_Type::get_schemaorg_metadata();
+
 if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 	$publisher_logo_src = $metadata['publisher']['logo']['url'];
 } elseif ( isset( $metadata['publisher']['logo'] ) && is_string( $metadata['publisher']['logo'] ) ) {
@@ -73,9 +76,12 @@ if ( isset( $metadata['publisher']['logo']['url'] ) ) {
 } else {
 	$publisher_logo_src = admin_url( 'images/wordpress-logo.png' );
 }
+
 $publisher = isset( $metadata['publisher']['name'] ) ? $metadata['publisher']['name'] : get_option( 'blogname' );
 
 $meta_images = Media::get_story_meta_images();
+
+$poster_portrait = isset( $meta_images['poster-portrait'] ) ? $meta_images['poster-portrait'] : plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
 
 ?>
 <amp-story
@@ -83,9 +89,7 @@ $meta_images = Media::get_story_meta_images();
 	publisher-logo-src="<?php echo esc_url( $publisher_logo_src ); ?>"
 	publisher="<?php echo esc_attr( $publisher ); ?>"
 	title="<?php the_title_attribute(); ?>"
-	<?php if ( isset( $meta_images['poster-portrait'] ) ) : ?>
-		poster-portrait-src="<?php echo esc_url( $meta_images['poster-portrait'] ); ?>"
-	<?php endif; ?>
+	poster-portrait-src="<?php echo esc_url( $poster_portrait ); ?>"
 	<?php if ( isset( $meta_images['poster-square'] ) ) : ?>
 		poster-square-src="<?php echo esc_url( $meta_images['poster-square'] ); ?>"
 	<?php endif; ?>

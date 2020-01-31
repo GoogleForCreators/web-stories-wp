@@ -117,10 +117,16 @@ function APIProvider( { children } ) {
 			return apiFetch( { path: apiPath } )
 				.then( ( data ) => data.map(
 					( {
+						id,
 						guid: { rendered: src },
 						media_details: { width: oWidth, height: oHeight },
 						mime_type: mimeType,
+						featured_media: posterId,
+						featured_media_src: poster,
 					} ) => ( {
+						id,
+						posterId,
+						poster,
 						src,
 						oWidth,
 						oHeight,
@@ -130,12 +136,50 @@ function APIProvider( { children } ) {
 		},	[ media ],
 	);
 
+	/**
+	 * Upload file to via REST API.
+	 *
+	 * @param {File}    file           Media File to Save.
+	 *
+	 * @return {Promise} Media Object Promise.
+	 */
+	const uploadMedia = useCallback(
+		( file ) => {
+			// Create upload payload
+			const data = new window.FormData();
+			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) );
+			return apiFetch( {
+				path: media,
+				body: data,
+				method: 'POST',
+			} );
+		}, [ media ],
+	);
+
+	/**
+	 * Update Existing media.
+	 *
+	 * @param  {number} mediaId
+	 * @param  {Object} data Object of properties to update on attachment.
+	 * @return {Promise} Media Object Promise.
+	 */
+	const saveMedia = useCallback(
+		( mediaId, data ) => {
+			return apiFetch( {
+				path: `${ media }/${ mediaId }`,
+				data,
+				method: 'POST',
+			} );
+		},
+		[ media ],
+	);
+
 	const getAllFonts = useCallback(
 		( {} ) => {
 			return apiFetch( { path: fonts } )
 				.then( ( data ) => data.map(
 					( font ) => ( {
-						thisValue: font.name,
+						value: font.name,
 						...font,
 					} ),
 				) );
@@ -164,6 +208,8 @@ function APIProvider( { children } ) {
 			getAllFonts,
 			getAllStatuses,
 			getAllUsers,
+			uploadMedia,
+			saveMedia,
 		},
 	};
 

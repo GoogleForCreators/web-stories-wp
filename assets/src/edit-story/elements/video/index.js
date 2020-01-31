@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../panels';
+import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -28,6 +28,9 @@ export const defaultAttributes = {
 	controls: false,
 	loop: false,
 	autoPlay: true,
+	posterId: null,
+	poster: null,
+	videoId: 0,
 };
 
 export const hasEditMode = false;
@@ -38,4 +41,5 @@ export const panels = [
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,
 	PanelTypes.ROTATION_ANGLE,
+	PanelTypes.VIDEO_POSTER,
 ];
