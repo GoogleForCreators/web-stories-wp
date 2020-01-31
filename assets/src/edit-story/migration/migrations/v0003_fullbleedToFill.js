@@ -14,4 +14,25 @@
  * limitations under the License.
  */
 
-export const DATA_VERSION = 3;
+function fullbleedToFill( { pages, ...rest } ) {
+	return {
+		pages: pages.map( reducePage ),
+		...rest,
+	};
+}
+
+function reducePage( { elements, ...rest } ) {
+	return {
+		elements: elements.map( updateElement ),
+		...rest,
+	};
+}
+
+function updateElement( { isFullbleed, ...rest } ) {
+	return {
+		isFill: isFullbleed,
+		...rest,
+	};
+}
+
+export default fullbleedToFill;
