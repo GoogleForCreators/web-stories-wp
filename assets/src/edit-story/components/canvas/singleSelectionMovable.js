@@ -124,9 +124,9 @@ function SingleSelectionMovable( {
 			zIndex={ 0 }
 			ref={ moveable }
 			target={ targetEl }
-			draggable={ ! selectedElement.isFullbleed }
-			resizable={ ! selectedElement.isFullbleed }
-			rotatable={ ! selectedElement.isFullbleed }
+			draggable={ ! selectedElement.isFill }
+			resizable={ ! selectedElement.isFill }
+			rotatable={ ! selectedElement.isFill }
 			onDrag={ ( { target, beforeTranslate } ) => {
 				frame.translate = beforeTranslate;
 				setTransformStyle( target );
