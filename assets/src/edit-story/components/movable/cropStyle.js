@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
 		border-radius: 0 !important;
 		border: none !important;
 		box-sizing: border-box !important;
-		box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 	}
 
 	.crop-movable .moveable-control.moveable-n,
@@ -139,7 +139,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.crop-movable .moveable-direction.moveable-line {
-		background: #47A0F4 !important;
+		background: #47a0f4 !important;
 		width: 2px;
 		height: 2px;
 	}

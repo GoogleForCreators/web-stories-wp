@@ -20,50 +20,50 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-    .default-movable .moveable-control, 
-    .default-movable .moveable-line.moveable-rotation-line .moveable-control {
-		background: #1A73E8 !important;
-        border: 2px solid #fff !important;
-        margin-left: -6px;
-		box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+	.default-movable .moveable-control,
+	.default-movable .moveable-line.moveable-rotation-line .moveable-control {
+		background: #1a73e8 !important;
+		border: 2px solid #fff !important;
+		margin-left: -6px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
 	.default-movable .moveable-direction.moveable-n {
 		display: none !important;
-    }
-    
+	}
+
 	.default-movable .moveable-control.moveable-s,
 	.default-movable .moveable-control.moveable-e,
 	.default-movable .moveable-control.moveable-w {
-        border-radius: 8px;
-    }
+		border-radius: 8px;
+	}
 
 	.default-movable .moveable-control.moveable-s {
-        height: 8px !important;
-        width: 16px !important;
+		height: 8px !important;
+		width: 16px !important;
 		margin-top: -2px !important;
-    }
+	}
 
-	.default-movable .moveable-control.moveable-e{
-        height: 16px !important;
-        width: 8px !important;
+	.default-movable .moveable-control.moveable-e {
+		height: 16px !important;
+		width: 8px !important;
 		margin-left: -4px !important;
 	}
 
 	.default-movable .moveable-control.moveable-w {
-        height: 16px !important;
-        width: 8px !important;
+		height: 16px !important;
+		width: 8px !important;
 		margin-right: -4px !important;
 	}
 
-    .default-movable.moveable-control-box .moveable-line.moveable-direction {
-		background: #47A0F4 !important;
+	.default-movable.moveable-control-box .moveable-line.moveable-direction {
+		background: #47a0f4 !important;
 		width: 2px;
 		height: 2px;
-    }
+	}
 
-    .default-movable.moveable-control-box .moveable-line.moveable-rotation-line {
-		background: #47A0F4 !important;
+	.default-movable.moveable-control-box .moveable-line.moveable-rotation-line {
+		background: #47a0f4 !important;
 		width: 2px;
-    }
+	}
 `;

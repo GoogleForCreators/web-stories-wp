@@ -62,31 +62,28 @@ const Range = styled.input.attrs( {
 	max: MAX_SCALE,
 	step: 10,
 } )`
-	-webkit-appearance: none;
 	flex: 1 1;
 	margin: 4px;
 	min-width: 100px;
 	cursor: pointer;
-	background: transparent;
 	outline: none;
-	background: #FFFFFFCC;
+	background: #fffc;
 	border-radius: 100px;
 	height: 4px;
 
 	&::-webkit-slider-thumb {
-		-webkit-appearance: none;
 		appearance: none;
 		width: 16px;
 		height: 16px;
-		background: #FFF;
+		background: #fff;
 		cursor: pointer;
 		border-radius: 50px;
 	}
-	  
+
 	&::-moz-range-thumb {
 		width: 16px;
 		height: 16px;
-		background: #FFF;
+		background: #fff;
 		cursor: pointer;
 		border-radius: 50px;
 	}
@@ -102,7 +99,7 @@ const ResetButton = styled.button`
 	background: ${ ( { theme } ) => theme.colors.action };
 	border-radius: 100px;
 	border: none;
-	padding: 1px 8px 0px 8px;
+	padding: 1px 8px 0 8px;
 `;
 
 function ScalePanel( { setProperties, width, height, x, y, scale } ) {
