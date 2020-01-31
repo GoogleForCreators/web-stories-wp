@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useRef, useEffect } from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -43,6 +43,8 @@ function MultiSelectionMovable( { selectedElements } ) {
 	const { actions: { updateElementsById } } = useStory();
 	const { actions: { pushTransform }, state: { pageSize: { width: canvasWidth, height: canvasHeight }, nodesById } } = useCanvas();
 	const { actions: { dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const [ isDragging, setIsDragging ] = useState( false );
 
 	// Update moveable with whatever properties could be updated outside moveable
 	// itself.
@@ -154,8 +156,11 @@ function MultiSelectionMovable( { selectedElements } ) {
 			target={ targetList.map( ( { node } ) => node ) }
 
 			draggable={ true }
-			resizable={ true }
-			rotatable={ true }
+			// Making resizable depend on state caused a bug where the
+			// center of gravity for rotation moves to the top left,
+			// once fixed these should change to !isDragging
+			resizable={ true /** should be !isDragging */ }
+			rotatable={ isDragging }
 
 			onDragGroup={ ( { events } ) => {
 				events.forEach( ( { target, beforeTranslate }, i ) => {
@@ -165,9 +170,11 @@ function MultiSelectionMovable( { selectedElements } ) {
 				} );
 			} }
 			onDragGroupStart={ ( { events } ) => {
+				setIsDragging( true );
 				onGroupEventStart( { events, isDrag: true } );
 			} }
 			onDragGroupEnd={ ( { targets } ) => {
+				setIsDragging( false );
 				onGroupEventEnd( { targets } );
 			} }
 

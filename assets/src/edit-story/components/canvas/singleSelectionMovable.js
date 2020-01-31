@@ -44,6 +44,7 @@ function SingleSelectionMovable( {
 	pushEvent,
 } ) {
 	const moveable = useRef();
+	const [ isDragging, setIsDragging ] = useState( false );
 	const [ isResizingFromCorner, setIsResizingFromCorner ] = useState( true );
 
 	const { actions: { updateSelectedElements } } = useStory();
@@ -128,18 +129,20 @@ function SingleSelectionMovable( {
 			zIndex={ 0 }
 			ref={ moveable }
 			target={ targetEl }
-			draggable={ ! selectedElement.isFullbleed }
-			resizable={ ! selectedElement.isFullbleed }
-			rotatable={ ! selectedElement.isFullbleed }
+			draggable={ ! selectedElement.isFill }
+			resizable={ ! selectedElement.isFill && ! isDragging }
+			rotatable={ ! selectedElement.isFill && ! isDragging }
 			onDrag={ ( { target, beforeTranslate } ) => {
 				frame.translate = beforeTranslate;
 				setTransformStyle( target );
 			} }
 			throttleDrag={ 0 }
 			onDragStart={ ( { set } ) => {
+				setIsDragging( true );
 				set( frame.translate );
 			} }
 			onDragEnd={ ( { target } ) => {
+				setIsDragging( false );
 				// When dragging finishes, set the new properties based on the original + what moved meanwhile.
 				const [ deltaX, deltaY ] = frame.translate;
 				if ( deltaX !== 0 && deltaY !== 0 ) {
