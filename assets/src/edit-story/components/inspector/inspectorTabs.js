@@ -25,7 +25,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getTabId } from './shared';
+import { getTabId } from './utils';
 import useInspector from './useInspector';
 
 const Tabs = styled.div`

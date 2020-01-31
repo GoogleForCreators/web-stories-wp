@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../app/config';
 import UploadButton from '../uploadButton';
 import DragandDrop from '../draganddrop';
 import useLibrary from './useLibrary';
@@ -114,7 +115,7 @@ const Icon = styled( Dashicon )`
 	fill: ${ ( { theme } ) => theme.colors.mg.v2 };
 `;
 
-const ButtonCSS = css`
+const buttonStyles = css`
 	background: none;
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
 	padding: 5px;
@@ -124,17 +125,6 @@ const ButtonCSS = css`
 	border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 };
 	border-radius: 3px;
 `;
-
-const SUPPORTED_IMAGE_TYPES = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-];
-
-const SUPPORTED_VIDEO_TYPES = [
-	'video/mp4',
-];
 
 const FILTERS = [
 	{ filter: '', name: __( 'All', 'web-stories' ) },
@@ -149,6 +139,7 @@ function MediaLibrary( { onInsert } ) {
 		state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
 		actions: { loadMedia, setIsMediaLoading, setIsMediaLoaded, setMediaType, setSearchTerm },
 	} = useLibrary();
+	const { allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
 
 	useEffect( loadMedia );
 
@@ -197,8 +188,8 @@ function MediaLibrary( { onInsert } ) {
 	 * @param {Object} attachment Attachment object from backbone media picker.
 	 */
 	const onSelect = ( attachment ) => {
-		const { url: src, mime: mimeType, width: oWidth, height: oHeight } = attachment;
-		const mediaEl = { src, mimeType, oWidth, oHeight };
+		const { url: src, mime: mimeType, width: oWidth, height: oHeight, id, featured_media: posterId, featured_media_src: poster } = attachment;
+		const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
 		insertMediaElement( mediaEl, DEFAULT_WIDTH );
 	};
 
@@ -213,7 +204,7 @@ function MediaLibrary( { onInsert } ) {
 		const { src, mimeType, oWidth, oHeight } = attachment;
 		const origRatio = oWidth / oHeight;
 		const height = width / origRatio;
-		if ( SUPPORTED_IMAGE_TYPES.includes( mimeType ) ) {
+		if ( allowedImageMimeTypes.includes( mimeType ) ) {
 			return onInsert( 'image', {
 				src,
 				width,
@@ -225,7 +216,9 @@ function MediaLibrary( { onInsert } ) {
 				origWidth: oWidth,
 				origHeight: oHeight,
 			} );
-		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
+		} else if ( allowedVideoMimeTypes.includes( mimeType ) ) {
+			const { id: videoId, poster, posterId: posterIdRaw } = attachment;
+			const posterId = parseInt( posterIdRaw );
 			return onInsert( 'video', {
 				src,
 				width,
@@ -237,6 +230,9 @@ function MediaLibrary( { onInsert } ) {
 				origWidth: oWidth,
 				origHeight: oHeight,
 				mimeType,
+				videoId,
+				posterId,
+				poster,
 			} );
 		}
 		return null;
@@ -253,7 +249,7 @@ function MediaLibrary( { onInsert } ) {
 		const { src, oWidth, oHeight, mimeType } = mediaEl;
 		const origRatio = oWidth / oHeight;
 		const height = width / origRatio;
-		if ( SUPPORTED_IMAGE_TYPES.includes( mimeType ) ) {
+		if ( allowedImageMimeTypes.includes( mimeType ) ) {
 			return ( <Image
 				key={ src }
 				src={ src }
@@ -262,7 +258,7 @@ function MediaLibrary( { onInsert } ) {
 				loading={ 'lazy' }
 				onClick={ () => insertMediaElement( mediaEl, width ) }
 			/> );
-		} else if ( SUPPORTED_VIDEO_TYPES.includes( mimeType ) ) {
+		} else if ( allowedVideoMimeTypes.includes( mimeType ) ) {
 			/* eslint-disable react/jsx-closing-tag-location */
 			return ( <Video
 				key={ src }
@@ -296,7 +292,7 @@ function MediaLibrary( { onInsert } ) {
 				<UploadButton
 					onClose={ onClose }
 					onSelect={ onSelect }
-					buttonCSS={ ButtonCSS }
+					buttonCSS={ buttonStyles }
 				/>
 			</Header>
 

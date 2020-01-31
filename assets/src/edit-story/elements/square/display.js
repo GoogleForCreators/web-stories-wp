@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -27,13 +26,14 @@ import {
 	ElementFillContent,
 	ElementWithBackgroundColor,
 } from '../shared';
+import StoryPropTypes from '../../types';
 
 const Element = styled.div`
 	${ ElementFillContent }
 	${ ElementWithBackgroundColor }
 `;
 
-function SquareDisplay( { backgroundColor } ) {
+function SquareDisplay( { element: { backgroundColor } } ) {
 	const props = {
 		backgroundColor,
 	};
@@ -43,7 +43,7 @@ function SquareDisplay( { backgroundColor } ) {
 }
 
 SquareDisplay.propTypes = {
-	backgroundColor: PropTypes.string,
+	element: StoryPropTypes.elements.square.isRequired,
 };
 
 export default SquareDisplay;
