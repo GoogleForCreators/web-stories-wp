@@ -14,36 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
-import StoryPropTypes from '../../types';
-
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
-
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
+function fullbleedToFill( { pages, ...rest } ) {
+	return {
+		pages: pages.map( reducePage ),
+		...rest,
 	};
-	return (
-		<Element { ...props } />
-	);
 }
 
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
-};
+function reducePage( { elements, ...rest } ) {
+	return {
+		elements: elements.map( updateElement ),
+		...rest,
+	};
+}
 
-export default SquareDisplay;
+function updateElement( { isFullbleed, ...rest } ) {
+	return {
+		isFill: isFullbleed,
+		...rest,
+	};
+}
+
+export default fullbleedToFill;

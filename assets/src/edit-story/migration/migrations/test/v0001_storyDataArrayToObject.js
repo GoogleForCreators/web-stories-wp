@@ -15,35 +15,20 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
-import StoryPropTypes from '../../types';
+import storyDataArrayToObject from '../v0001_storyDataArrayToObject';
 
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
-
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
-}
-
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareDisplay;
+describe( 'storyDataArrayToObject', () => {
+	it( 'should convert an array of pages into a story object', () => {
+		expect( storyDataArrayToObject( [
+			{ _test: 'page1' },
+			{ _test: 'page2' },
+		] ) ).toStrictEqual( {
+			pages: [
+				{ _test: 'page1' },
+				{ _test: 'page2' },
+			],
+		} );
+	} );
+} );

@@ -14,36 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
-import StoryPropTypes from '../../types';
-
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
-
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
+function storyDataArrayToObject( storyData ) {
+	return { pages: storyData };
 }
 
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareDisplay;
+export default storyDataArrayToObject;

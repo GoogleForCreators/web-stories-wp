@@ -28,8 +28,8 @@
     "react-modal": "^3.11.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
@@ -70,6 +70,7 @@
     "eslint-utils": "^2.0.0",
     "husky": "^4.2.1",
     "jest-silent-reporter": "^0.1.2",
+    "lint-staged": "^10.0.7",
     "mini-css-extract-plugin": "^0.9.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -83,7 +84,7 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.9.0",
     "svg-inline-loader": "^0.8.0",
-    "terser-webpack-plugin": "^2.3.3",
+    "terser-webpack-plugin": "^2.3.4",
     "uuid": "^3.4.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
@@ -116,8 +117,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:js",
-      "pre-push": "npm run test:js"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
     }
+  },
+  "lint-staged": {
+    "*.js": "npm run lint:js:fix",
+    "*.(js|css)": "npm run lint:css:fix",
+    "*.php": "npm run lint:php:fix"
   }
 }

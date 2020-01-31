@@ -27,19 +27,19 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
-import { ImageWithScale, getImgProps, getImageWithScaleCss } from './util';
+import { imageWithScale, getImgProps, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 	overflow: hidden;
 `;
 
 const Img = styled.img`
 	position: absolute;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
 function ImageDisplay( {

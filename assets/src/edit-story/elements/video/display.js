@@ -27,12 +27,12 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
 const Element = styled.video`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 function VideoDisplay( {
@@ -42,6 +42,7 @@ function VideoDisplay( {
 		mimeType,
 		videoId,
 		posterId,
+		poster,
 	},
 } ) {
 	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
@@ -52,7 +53,7 @@ function VideoDisplay( {
 	}, [ videoId, posterId, uploadVideoFrame ] );
 
 	return (
-		<Element>
+		<Element poster={ poster }>
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);

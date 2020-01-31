@@ -32,16 +32,16 @@ import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import { useUnits } from '../../units';
 import {
-	ElementFillContent,
-	ElementWithFont,
+	elementFillContent,
+	elementWithFont,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
-	${ ElementFillContent }
-	${ ElementWithFont }
+	${ elementFillContent }
+	${ elementWithFont }
 
 	opacity: 0;
 	user-select: ${ ( { canSelect } ) => canSelect ? 'initial' : 'none' };
