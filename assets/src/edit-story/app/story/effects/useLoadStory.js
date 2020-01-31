@@ -29,6 +29,7 @@ import { useEffect } from '@wordpress/element';
  */
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
+import { migrate } from '../../../migration';
 
 /**
  * Get the permission by checking for fields in the REST API.
@@ -62,7 +63,7 @@ function useLoadStory( {
 					modified,
 					excerpt: { raw: excerpt },
 					link,
-					story_data: storyData,
+					story_data: storyDataRaw,
 					featured_media: featuredMedia,
 					featured_media_url: featuredMediaUrl,
 					password,
@@ -89,7 +90,9 @@ function useLoadStory( {
 				};
 
 				// If there are no pages, create empty page.
-				const pages = storyData.length === 0 ? [ createPage() ] : storyData;
+				const storyDataPreMigration = Array.isArray( storyDataRaw ) ? { version: 1, pages: storyDataRaw } : storyDataRaw;
+				const storyData = migrate( storyDataPreMigration );
+				const pages = storyData.pages.length === 0 ? [ createPage() ] : storyData.pages;
 
 				const hasPublishAction = getPerm( post, 'wp:action-publish' );
 				const hasAssignAuthorAction = getPerm( post, 'wp:action-assign-author' );

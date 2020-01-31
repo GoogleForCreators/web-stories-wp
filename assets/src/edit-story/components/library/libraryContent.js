@@ -17,13 +17,17 @@
 /**
  * Internal dependencies
  */
+import { PAGE_WIDTH, DEFAULT_EDITOR_PAGE_WIDTH } from '../../constants';
 import { createNewElement } from '../../elements';
+import { dataPixels } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
 import TextLibrary from './textLibrary';
 import ShapeLibrary from './shapeLibrary';
 import LinkLibrary from './linkLibrary';
+
+const DATA_SCALE = PAGE_WIDTH / DEFAULT_EDITOR_PAGE_WIDTH;
 
 function Library() {
 	const {
@@ -39,11 +43,13 @@ function Library() {
 		[ SHAPES ]: ShapeLibrary,
 		[ LINKS ]: LinkLibrary,
 	} )[ tab ];
-	const handleInsert = ( type, props ) => {
+	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
 			...props,
-			x: Math.round( 80 * Math.random() ),
-			y: Math.round( 70 * Math.random() ),
+			x: dataPixels( 80 * DATA_SCALE * Math.random() ),
+			y: dataPixels( 70 * DATA_SCALE * Math.random() ),
+			width: dataPixels( width * DATA_SCALE ),
+			height: dataPixels( height * DATA_SCALE ),
 		} );
 		addElement( { element } );
 	};
