@@ -42,6 +42,7 @@ function VideoDisplay( {
 		mimeType,
 		videoId,
 		posterId,
+		poster,
 	},
 } ) {
 	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
@@ -52,7 +53,7 @@ function VideoDisplay( {
 	}, [ videoId, posterId, uploadVideoFrame ] );
 
 	return (
-		<Element>
+		<Element poster={ poster }>
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);
