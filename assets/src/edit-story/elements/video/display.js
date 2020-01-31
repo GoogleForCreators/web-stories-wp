@@ -42,6 +42,7 @@ function VideoDisplay( {
 		autoPlay,
 		mimeType,
 		src,
+		id,
 		isBackground,
 		width,
 		height,

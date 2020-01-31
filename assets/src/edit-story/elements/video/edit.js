@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +29,7 @@ import { useCallback, useState } from '@wordpress/element';
  */
 import { ElementFillContent } from '../shared';
 import { useStory } from '../../app';
+import StoryPropTypes from '../../types';
 import { getVideoProps, VideoWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import ScalePanel from './scalePanel';
@@ -69,7 +69,10 @@ const CropVideo = styled.video`
 	${ VideoWithScale }
 `;
 
-function VideoEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, mimeType } ) {
+function VideoEdit( {
+	element: { id, src, origRatio, scale, focalX, focalY, mimeType },
+	box: { x, y, width, height, rotationAngle },
+} ) {
 	const [ fullVideo, setFullVideo ] = useState( null );
 	const [ croppedVideo, setCroppedVideo ] = useState( null );
 
@@ -118,25 +121,8 @@ function VideoEdit( { id, src, origRatio, width, height, x, y, scale, focalX, fo
 }
 
 VideoEdit.propTypes = {
-	id: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	origRatio: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	mimeType: PropTypes.string.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	rotationAngle: PropTypes.number.isRequired,
-	isBackground: PropTypes.bool,
-	scale: PropTypes.number,
-	focalX: PropTypes.number,
-	focalY: PropTypes.number,
-};
-
-VideoEdit.defaultProps = {
-	scale: null,
-	focalX: null,
-	focalY: null,
+	element: StoryPropTypes.elements.video.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoEdit;

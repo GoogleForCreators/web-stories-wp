@@ -31,12 +31,13 @@ import { useCallback } from '@wordpress/element';
 import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
 import { ElementFillContent } from '../shared';
+import StoryPropTypes from "../../types";
 
 const Element = styled.div`
 	${ ElementFillContent }
 `;
 
-function VideoFrame( { id } ) {
+function VideoFrame( { element: { id } } ) {
 	const {
 		actions: { setEditingElement },
 	} = useCanvas();
@@ -49,7 +50,7 @@ function VideoFrame( { id } ) {
 }
 
 VideoFrame.propTypes = {
-	id: PropTypes.string.isRequired,
+	element: StoryPropTypes.elements.video.isRequired,
 };
 
 export default VideoFrame;
