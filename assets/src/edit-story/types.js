@@ -56,6 +56,7 @@ StoryPropTypes.elements.video = PropTypes.shape( {
 	mimeType: PropTypes.string.isRequired,
 	src: PropTypes.string.isRequired,
 	loop: PropTypes.bool,
+	poster: PropTypes.string,
 	videoId: PropTypes.number.isRequired,
 	posterId: PropTypes.number,
 } );
