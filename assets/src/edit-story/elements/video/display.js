@@ -45,14 +45,13 @@ const Video = styled.video`
 `;
 
 function VideoDisplay( {
+	box: { width, height },
 	element: {
 		autoPlay,
 		mimeType,
 		src,
 		id,
 		isBackground,
-		width,
-		height,
 		scale,
 		focalX,
 		focalY,
@@ -60,7 +59,6 @@ function VideoDisplay( {
 		videoId,
 		posterId,
 		poster,
-		...rest
 	},
 } ) {
 	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
@@ -80,10 +78,9 @@ function VideoDisplay( {
 	}
 
 	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
-
 	return (
 		<Element>
-			<Video poster={ poster } style={ { ...style } } { ...videoProps } { ...rest } >
+			<Video poster={ poster } style={ { ...style } } { ...videoProps } >
 				<source src={ src } type={ mimeType } />
 			</Video>
 		</Element>
@@ -92,6 +89,7 @@ function VideoDisplay( {
 
 VideoDisplay.propTypes = {
 	element: StoryPropTypes.elements.video.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoDisplay;
