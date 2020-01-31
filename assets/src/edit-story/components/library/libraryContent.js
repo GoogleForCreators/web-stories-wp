@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
 import { createNewElement } from '../../elements';
+import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
@@ -39,11 +41,13 @@ function Library() {
 		[ SHAPES ]: ShapeLibrary,
 		[ LINKS ]: LinkLibrary,
 	} )[ tab ];
-	const handleInsert = ( type, props ) => {
+	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
 			...props,
-			x: Math.round( 80 * Math.random() ),
-			y: Math.round( 70 * Math.random() ),
+			x: editorToDataX( 80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH ),
+			y: editorToDataY( 70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT ),
+			width: editorToDataX( width, DEFAULT_EDITOR_PAGE_WIDTH ),
+			height: editorToDataY( height, DEFAULT_EDITOR_PAGE_HEIGHT ),
 		} );
 		addElement( { element } );
 	};

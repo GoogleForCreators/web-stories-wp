@@ -32,12 +32,12 @@ import { getCommonAttributes } from '../shared';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFullbleed } ) {
+function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFill } ) {
 	const props = {
 		layout: 'fill',
 		src,
 		style: {
-			objectFit: isFullbleed ? 'cover' : null,
+			objectFit: isFill ? 'cover' : null,
 			width: '100%',
 			height: '100%',
 		},
@@ -47,7 +47,7 @@ function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFullblee
 	};
 	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
 	// @todo This is missing focal point handling which will be resolved separately.
-	if ( isFullbleed ) {
+	if ( isFill ) {
 		style.top = 0;
 		style.left = 0;
 		style.width = '100%';
@@ -69,7 +69,7 @@ ImagePreview.propTypes = {
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
-	isFullbleed: PropTypes.bool,
+	isFill: PropTypes.bool,
 };
 
 export default ImagePreview;

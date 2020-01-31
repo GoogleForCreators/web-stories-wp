@@ -57,13 +57,13 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.default-movable.moveable-control-box .moveable-line.moveable-direction {
-		background: #47a0f4 !important;
+		background: #4285f4 !important;
 		width: 2px;
 		height: 2px;
 	}
 
 	.default-movable.moveable-control-box .moveable-line.moveable-rotation-line {
-		background: #47a0f4 !important;
+		background: #4285f4 !important;
 		width: 2px;
 	}
 `;

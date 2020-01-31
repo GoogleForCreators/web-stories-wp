@@ -52,7 +52,6 @@ function Selection() {
 			<SingleSelectionMovable
 				selectedElement={ selectedElement }
 				targetEl={ target }
-				nodesById={ nodesById }
 				pushEvent={ lastSelectionEvent }
 			/>
 		);
@@ -62,7 +61,6 @@ function Selection() {
 	return (
 		<MultiSelectionMovable
 			selectedElements={ selectedElements }
-			nodesById={ nodesById }
 		/>
 	);
 }

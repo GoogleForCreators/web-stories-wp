@@ -24,15 +24,15 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { ElementWithPosition, ElementWithSize, ElementWithRotation } from '../../elements/shared';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import { useUnits } from '../../units';
 
 // Background color is used to make the edited element more prominent and
 // easier to see.
 const Wrapper = styled.div`
-	${ ElementWithPosition }
-	${ ElementWithSize }
-	${ ElementWithRotation }
+	${ elementWithPosition }
+	${ elementWithSize }
+	${ elementWithRotation }
 	pointer-events: initial;
 	background-color: ${ ( { theme } ) => theme.colors.whiteout };
 `;

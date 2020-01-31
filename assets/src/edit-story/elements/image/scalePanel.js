@@ -47,7 +47,7 @@ const Container = styled.div`
 	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
 	height: ${ HEIGHT }px;
 
-	background: ${ ( { theme } ) => theme.colors.bg.v0 + 'EE' };
+	background: ${ ( { theme } ) => theme.colors.t.bg };
 	border-radius: 100px;
 
 	display: flex;
