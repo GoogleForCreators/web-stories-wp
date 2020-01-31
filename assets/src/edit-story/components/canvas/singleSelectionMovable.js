@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { omit, values } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -31,6 +30,7 @@ import { useRef, useEffect, useState } from '@wordpress/element';
 import { useStory } from '../../app';
 import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
+import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
@@ -41,14 +41,13 @@ const ALL_HANDLES = [ 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se' ];
 function SingleSelectionMovable( {
 	selectedElement,
 	targetEl,
-	nodesById,
 	pushEvent,
 } ) {
 	const moveable = useRef();
 	const [ isResizingFromCorner, setIsResizingFromCorner ] = useState( true );
 
 	const { actions: { updateSelectedElements } } = useStory();
-	const { actions: { pushTransform } } = useCanvas();
+	const { actions: { pushTransform }, state: { pageSize: { width: canvasWidth, height: canvasHeight }, nodesById } } = useCanvas();
 	const { actions: { getBox, dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
 
 	const minMaxFontSize = {
@@ -56,10 +55,7 @@ function SingleSelectionMovable( {
 		maxFontSize: dataToEditorY( MAX_FONT_SIZE ),
 	};
 
-	const {
-		state: { pageSize: { width: canvasWidth, height: canvasHeight } },
-	} = useCanvas();
-	const otherNodes = values( omit( nodesById, selectedElement.id ) );
+	const otherNodes = Object.values( objectWithout( nodesById, [ selectedElement.id ] ) );
 
 	const latestEvent = useRef();
 
@@ -231,12 +227,9 @@ function SingleSelectionMovable( {
 			snapHorizontal={ true }
 			snapVertical={ true }
 			snapCenter={ true }
-			horizontalGuidelines={ box.rotationAngle === 0 ?
-				[ 0, canvasHeight / 2, canvasHeight ] :
-				[ canvasHeight / 2 ] }
-			verticalGuidelines={ box.rotationAngle === 0 ?
-				[ 0, canvasWidth / 2, canvasWidth ] :
-				[ canvasWidth / 2 ] }
+			horizontalGuidelines={
+				[ 0, canvasHeight / 2, canvasHeight ] }
+			verticalGuidelines={ [ 0, canvasWidth / 2, canvasWidth ] }
 			elementGuidelines={ otherNodes }
 		/>
 	);
@@ -245,7 +238,6 @@ function SingleSelectionMovable( {
 SingleSelectionMovable.propTypes = {
 	selectedElement: PropTypes.object,
 	targetEl: PropTypes.object.isRequired,
-	nodesById: PropTypes.object.isRequired,
 	pushEvent: PropTypes.object,
 };
 

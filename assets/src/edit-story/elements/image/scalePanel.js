@@ -46,7 +46,7 @@ const Container = styled.div`
 	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
 	height: ${ HEIGHT }px;
 
-	background: ${ ( { theme } ) => theme.colors.bg.v0 + 'EE' };
+	background: ${ ( { theme } ) => theme.colors.t.bg };
 	border-radius: 100px;
 
 	display: flex;
@@ -62,12 +62,13 @@ const Range = styled.input.attrs( {
 	max: MAX_SCALE,
 	step: 10,
 } )`
+	appearance: none;
 	flex: 1 1;
 	margin: 4px;
 	min-width: 100px;
 	cursor: pointer;
 	outline: none;
-	background: #fffc;
+	background: ${ ( { theme } ) => theme.colors.t.fg };
 	border-radius: 100px;
 	height: 4px;
 
@@ -81,6 +82,7 @@ const Range = styled.input.attrs( {
 	}
 
 	&::-moz-range-thumb {
+		appearance: none;
 		width: 16px;
 		height: 16px;
 		background: #fff;
