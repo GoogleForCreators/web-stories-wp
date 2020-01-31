@@ -90,8 +90,7 @@ function useLoadStory( {
 				};
 
 				// If there are no pages, create empty page.
-				const storyDataPreMigration = Array.isArray( storyDataRaw ) ? { version: 1, pages: storyDataRaw } : storyDataRaw;
-				const storyData = migrate( storyDataPreMigration );
+				const storyData = migrate( storyDataRaw, storyDataRaw.version || 0 );
 				const pages = storyData.pages.length === 0 ? [ createPage() ] : storyData.pages;
 
 				const hasPublishAction = getPerm( post, 'wp:action-publish' );

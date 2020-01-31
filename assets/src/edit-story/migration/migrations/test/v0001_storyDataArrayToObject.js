@@ -17,27 +17,18 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from './dataVersion';
-import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
-import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
+import storyDataArrayToObject from '../v0001_storyDataArrayToObject';
 
-const MIGRATIONS = {
-	1: [ storyDataArrayToObject ],
-	2: [ dataPixelTo1080 ],
-};
-
-function migrate( storyData, version ) {
-	let result = storyData;
-	for ( let v = version; v < DATA_VERSION; v++ ) {
-		const migrations = MIGRATIONS[ v + 1 ];
-		if ( ! migrations ) {
-			continue;
-		}
-		for ( let i = 0; i < migrations.length; i++ ) {
-			result = migrations[ i ]( result );
-		}
-	}
-	return result;
-}
-
-export default migrate;
+describe( 'storyDataArrayToObject', () => {
+	it( 'should convert an array of pages into a story object', () => {
+		expect( storyDataArrayToObject( [
+			{ _test: 'page1' },
+			{ _test: 'page2' },
+		] ) ).toStrictEqual( {
+			pages: [
+				{ _test: 'page1' },
+				{ _test: 'page2' },
+			],
+		} );
+	} );
+} );
