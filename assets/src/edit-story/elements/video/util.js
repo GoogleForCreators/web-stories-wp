@@ -24,7 +24,7 @@ export const VideoWithScale = css`
 	height: ${ ( { height } ) => `${ height }px` };
 	left: ${ ( { offsetX } ) => `${ -offsetX }px` };
 	top: ${ ( { offsetY } ) => `${ -offsetY }px` };
-	max-width: initial;
+	max-width: ${ ( { isBackground } ) => isBackground ? 'initial' : null };
 `;
 
 export const getBackgroundStyle = () => {
@@ -40,7 +40,7 @@ export function getFocalFromOffset( side, videoSide, offset ) {
 }
 
 export function getVideoProps( width, height, scale, focalX, focalY, videoRatio ) {
-	const ratio = height / width;
+	const ratio = width / height;
 	scale = Math.max( scale || 100, 100 );
 	focalX = typeof focalX === 'number' ? focalX : 50;
 	focalY = typeof focalY === 'number' ? focalY : 50;

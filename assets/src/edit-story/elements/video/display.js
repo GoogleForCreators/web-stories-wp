@@ -32,9 +32,14 @@ import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import { getBackgroundStyle, getVideoProps, VideoWithScale } from './util';
 
-const Element = styled.video`
+const Element = styled.div`
 	${ ElementFillContent }
+	overflow: hidden;
+`;
+
+const Video = styled.video`
 	${ VideoWithScale }
+	max-height: ${ ( { isBackground } ) => isBackground ? 'initial' : '100%' };
 `;
 
 function VideoDisplay( {
@@ -75,8 +80,10 @@ function VideoDisplay( {
 	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
 
 	return (
-		<Element poster style={ { ...style } } { ...videoProps } { ...rest } >
-			<source src={ src } type={ mimeType } />
+		<Element>
+			<Video poster style={ { ...style } } { ...videoProps } { ...rest } >
+				<source src={ src } type={ mimeType } />
+			</Video>
 		</Element>
 	);
 }
