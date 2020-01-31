@@ -158,6 +158,7 @@ function MultiSelectionMovable( { selectedElements } ) {
 			draggable={ true }
 			// Making resizable depend on state caused a bug where the
 			// center of gravity for rotation moves to the top left,
+			// see https://github.com/daybrush/moveable/issues/168
 			// once fixed these should change to !isDragging
 			resizable={ true /** should be !isDragging */ }
 			rotatable={ isDragging }
