@@ -93,14 +93,14 @@ class Fonts extends \WP_UnitTestCase {
 			[
 				'name'      => 'Roboto',
 				'fallbacks' => [ 'sans-serif' ],
-				'weights'   => [ '100', '300', '400', '500', '700', '900', ],
+				'weights'   => [ '100', '300', '400', '500', '700', '900' ],
 				'gfont'     => 'Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
 			],
 			$roboto_font
 		);
 	}
 
-	public static function _data_font_fallback() {
+	public static function data_font_fallback() {
 		return [
 			[ 'sans-serif', 'sans-serif' ],
 			[ 'display', 'cursive' ],
@@ -112,7 +112,7 @@ class Fonts extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @dataProvider _data_font_fallback
+	 * @dataProvider data_font_fallback
 	 */
 	public function test_get_font_fallback( $category, $expected ) {
 		$actual = \Google\Web_Stories\Fonts::get_font_fallback( $category );

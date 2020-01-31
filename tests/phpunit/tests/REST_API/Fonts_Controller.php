@@ -13,7 +13,7 @@ class Fonts_Controller extends \WP_Test_REST_TestCase {
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
-		$wp_rest_server = new Spy_REST_Server;
+		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 	}
 
