@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export const DATA_VERSION = 2;
+export const DATA_VERSION = 3;

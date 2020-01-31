@@ -20,10 +20,12 @@
 import { DATA_VERSION } from './dataVersion';
 import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
 import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
+import fullbleedToFill from './migrations/v0003_fullbleedToFill';
 
 const MIGRATIONS = {
 	1: [ storyDataArrayToObject ],
 	2: [ dataPixelTo1080 ],
+	3: [ fullbleedToFill ],
 };
 
 function migrate( storyData, version ) {

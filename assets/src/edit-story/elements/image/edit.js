@@ -71,7 +71,7 @@ const CropImg = styled.img`
 `;
 
 function ImageEdit( {
-	element: { id, src, origRatio, scale, focalX, focalY, isFullbleed },
+	element: { id, src, origRatio, scale, focalX, focalY, isFill },
 	box: { x, y, width, height, rotationAngle },
 } ) {
 	const [ fullImage, setFullImage ] = useState( null );
@@ -92,7 +92,7 @@ function ImageEdit( {
 				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
 			</CropBox>
 
-			{ ! isFullbleed && cropBox && croppedImage && (
+			{ ! isFill && cropBox && croppedImage && (
 				<EditCropMovable
 					setProperties={ setProperties }
 					cropBox={ cropBox }

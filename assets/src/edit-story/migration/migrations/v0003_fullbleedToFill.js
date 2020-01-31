@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+function fullbleedToFill( { pages, ...rest } ) {
+	return {
+		pages: pages.map( reducePage ),
+		...rest,
+	};
+}
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function reducePage( { elements, ...rest } ) {
+	return {
+		elements: elements.map( updateElement ),
+		...rest,
+	};
+}
 
-export const hasEditMode = false;
+function updateElement( { isFullbleed, ...rest } ) {
+	return {
+		isFill: isFullbleed,
+		...rest,
+	};
+}
 
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
-];
+export default fullbleedToFill;
