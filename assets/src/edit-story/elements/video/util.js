@@ -22,6 +22,9 @@ import { css } from 'styled-components';
 export const VideoWithScale = css`
 	width: ${ ( { width } ) => `${ width }px` };
 	height: ${ ( { height } ) => `${ height }px` };
+	left: ${ ( { offsetX } ) => `${ -offsetX }px` };
+	top: ${ ( { offsetY } ) => `${ -offsetY }px` };
+	max-width: initial;
 `;
 
 export const getBackgroundStyle = () => {

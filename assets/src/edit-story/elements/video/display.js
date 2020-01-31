@@ -24,10 +24,11 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { ElementFillContent } from '../shared';
-import { getBackgroundStyle } from './util';
+import { getBackgroundStyle, getVideoProps, VideoWithScale } from './util';
 
 const Element = styled.video`
 	${ ElementFillContent }
+	${ VideoWithScale }
 `;
 
 function VideoDisplay( {
@@ -35,6 +36,12 @@ function VideoDisplay( {
 	mimeType,
 	src,
 	isBackground,
+	width,
+	height,
+	scale,
+	focalX,
+	focalY,
+	origRatio,
 	...rest
 } ) {
 	let style = {};
@@ -47,8 +54,10 @@ function VideoDisplay( {
 		autoPlay = true;
 	}
 
+	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
+
 	return (
-		<Element autoPlay={ autoPlay } { ...rest } style={ { ...style } } >
+		<Element autoPlay={ autoPlay } style={ { ...style } } { ...videoProps } { ...rest } >
 			<source src={ src } type={ mimeType } />
 		</Element>
 	);
@@ -62,6 +71,12 @@ VideoDisplay.propTypes = {
 	mimeType: PropTypes.string.isRequired,
 	src: PropTypes.string.isRequired,
 	style: PropTypes.object,
+	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
+	scale: PropTypes.number,
+	focalX: PropTypes.number,
+	focalY: PropTypes.number,
+	origRatio: PropTypes.number.isRequired,
 };
 
 export default VideoDisplay;

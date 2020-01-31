@@ -61,17 +61,15 @@ const FadedVideo = styled.video`
 	position: absolute;
 	opacity: 0.4;
 	pointer-events: none;
-	max-width: initial;
 	${ VideoWithScale }
 `;
 
 const CropVideo = styled.video`
 	position: absolute;
-	max-width: initial;
 	${ VideoWithScale }
 `;
 
-function VideoEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, mimeType, isBackground } ) {
+function VideoEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, mimeType } ) {
 	const [ fullVideo, setFullVideo ] = useState( null );
 	const [ croppedVideo, setCroppedVideo ] = useState( null );
 
@@ -125,6 +123,7 @@ VideoEdit.propTypes = {
 	origRatio: PropTypes.number.isRequired,
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
+	mimeType: PropTypes.string.isRequired,
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
