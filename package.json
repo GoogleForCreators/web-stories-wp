@@ -25,6 +25,7 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "prop-types": "^15.7.2",
+    "react-color": "^2.18.0",
     "react-modal": "^3.11.1"
   },
   "devDependencies": {
