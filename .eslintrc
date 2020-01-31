@@ -65,7 +65,8 @@
     "import/order": [ "error", { "groups": [ "builtin", [ "external", "unknown" ], "internal", "parent", "sibling", "index" ] } ],
     "jsdoc/check-indentation": "error",
     "@wordpress/dependency-group": "error",
-    "@wordpress/react-no-unsafe-timeout": "error"
+    "@wordpress/react-no-unsafe-timeout": "error",
+    "eslint-comments/no-unused-disable": "error"
   },
   "overrides": [
     {

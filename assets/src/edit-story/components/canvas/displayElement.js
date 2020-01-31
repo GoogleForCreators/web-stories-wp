@@ -44,12 +44,10 @@ function DisplayElement( { element } ) {
 	const { actions: { getBox } } = useUnits();
 
 	const { id, type } = element;
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Display } = getDefinitionForType( type );
 
 	const wrapperRef = useRef( null );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const box = getBox( element );
 
 	useTransformHandler( id, ( transform ) => {
