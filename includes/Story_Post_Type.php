@@ -356,10 +356,11 @@ class Story_Post_Type {
 	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_fonts( $post ) {
-		$post_story_data = json_decode( $post->post_content_filtered, true );
-		$g_fonts         = [];
-		if ( $post_story_data ) {
-			foreach ( $post_story_data as $page ) {
+		$post_story_data       = json_decode( $post->post_content_filtered, true );
+		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
+		$g_fonts               = [];
+		if ( $post_story_data_pages ) {
+			foreach ( $post_story_data_pages as $page ) {
 				foreach ( $page['elements'] as $element ) {
 					if ( ! isset( $element['fontFamily'] ) ) {
 						continue;
@@ -407,12 +408,13 @@ class Story_Post_Type {
 	 * @param WP_Post $post Post Object.
 	 */
 	public static function load_admin_fonts( $post ) {
-		$post_story_data = json_decode( $post->post_content_filtered, true );
-		$fonts           = [ Fonts::get_font( 'Roboto' ) ];
-		$font_slugs      = [ 'roboto' ];
+		$post_story_data       = json_decode( $post->post_content_filtered, true );
+		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
+		$fonts                 = [ Fonts::get_font( 'Roboto' ) ];
+		$font_slugs            = [ 'roboto' ];
 
-		if ( $post_story_data ) {
-			foreach ( $post_story_data as $page ) {
+		if ( $post_story_data_pages ) {
+			foreach ( $post_story_data_pages as $page ) {
 				foreach ( $page['elements'] as $element ) {
 					if ( ! isset( $element['fontFamily'] ) ) {
 						continue;
