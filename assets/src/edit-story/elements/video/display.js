@@ -81,7 +81,7 @@ function VideoDisplay( {
 
 	return (
 		<Element>
-			<Video poster style={ { ...style } } { ...videoProps } { ...rest } >
+			<Video poster={ poster } style={ { ...style } } { ...videoProps } { ...rest } >
 				<source src={ src } type={ mimeType } />
 			</Video>
 		</Element>

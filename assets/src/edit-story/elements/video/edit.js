@@ -62,11 +62,15 @@ const FadedVideo = styled.video`
 	opacity: 0.4;
 	pointer-events: none;
 	${ VideoWithScale }
+	max-width: initial;
+	max-height: initial;
 `;
 
 const CropVideo = styled.video`
 	position: absolute;
 	${ VideoWithScale }
+	max-width: initial;
+	max-height: initial;
 `;
 
 function VideoEdit( {
