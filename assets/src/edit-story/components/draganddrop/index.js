@@ -8,14 +8,18 @@ import styled from 'styled-components';
  */
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+import { useAPI } from '../../app/api';
+import { useConfig } from '../../app/config';
 
 const DragandDropComponent = styled.div`
 	min-width: 100%;
-    min-height: 100%;
-
+	min-height: 100%;
 `;
 const DragandDropOverContent = styled.div`
-    ${ ( { active } ) => active && `
+	${ ( { active } ) => active && `
 		opacity: .3;
 	` }
 `;
@@ -32,11 +36,15 @@ const DragandDropOverLay = styled.div`
 	top: 50%;
 	text-align: center;
 	width: 90%;
-	color: white;
 `;
 
-function DragandDrop( { children } ) {
+function DragandDrop( { children, onDrop } ) {
 	const [ isDragging, setIsDragging ] = useState( false );
+	const { actions: { uploadMedia } } = useAPI();
+	const { storyId, allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
+
+	const allowedMimeTypes = { ...allowedImageMimeTypes, ...allowedVideoMimeTypes };
+	const allowedMimeTypesArray = Object.values( allowedMimeTypes );
 
 	const onDragLeave = ( evt ) => {
 		setIsDragging( false );
@@ -50,13 +58,28 @@ function DragandDrop( { children } ) {
 		evt.stopPropagation();
 	};
 
+	const uploadFile = ( file ) => {
+		if ( ! allowedMimeTypesArray.includes( file.type ) ) {
+			// TODO error message.
+			return;
+		}
+
+		try {
+			uploadMedia( file, {
+				post: storyId,
+			} ).then( onDrop ).catch( () => {
+				// TODO error message.
+			} );
+		} catch ( e ) {
+			// TODO error message.
+		}
+	};
+
 	const onDropHandler = ( evt ) => {
 		const dt = evt.dataTransfer;
 		let files = dt.files;
 		files = [ ...files ];
-		files.forEach( ( file ) => {
-			console.log( file );
-		} );
+		files.forEach( uploadFile );
 		setIsDragging( false );
 		evt.preventDefault();
 		evt.stopPropagation();
@@ -86,6 +109,7 @@ DragandDrop.propTypes = {
 		PropTypes.arrayOf( PropTypes.node ),
 		PropTypes.node,
 	] ).isRequired,
+	onDrop: PropTypes.func.isRequired,
 };
 
 export default DragandDrop;
