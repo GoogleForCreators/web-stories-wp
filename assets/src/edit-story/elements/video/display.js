@@ -38,8 +38,10 @@ const Element = styled.div`
 `;
 
 const Video = styled.video`
+	position: absolute;
+	max-width: initial;
+	max-height: initial;
 	${ VideoWithScale }
-	max-height: ${ ( { isBackground } ) => isBackground ? 'initial' : '100%' };
 `;
 
 function VideoDisplay( {
