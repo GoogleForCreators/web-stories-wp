@@ -20,7 +20,7 @@
 import cleanForSlug from '../cleanForSlug';
 
 describe( 'cleanForSlug', () => {
-	it( 'should return string prepared for use as url slug', () => {
+	it( 'should return string prepared for use as URL slug', () => {
 		expect( cleanForSlug( ' /Déjà_vu. ' ) ).toBe( 'deja-vu' );
 	} );
 
@@ -45,5 +45,11 @@ describe( 'cleanForSlug', () => {
 	it( 'should remove diacritics', () => {
 		const result = cleanForSlug( '-Hello-World-' );
 		expect( result ).toStrictEqual( 'hello-world' );
+	} );
+
+	// Disable reason: not implemented yet.
+	// eslint-disable-next-line jest/no-disabled-tests
+	it.skip( 'should replace umlauts if locale is de-*', () => {
+		expect( cleanForSlug( 'Übergrössengeschäft' ) ).toBe( 'uebergroessengeschaeft' );
 	} );
 } );
