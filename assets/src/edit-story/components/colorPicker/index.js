@@ -63,8 +63,8 @@ const Body = styled.div`
 	padding: 16px;
 	display: grid;
 	grid:
-		"saturation saturation hue alpha" 140px
-		"eyedropper  current current-alpha current-alpha" 16px
+		"saturation saturation hue           alpha        " 140px
+		"eyedropper current    current-alpha current-alpha" 16px
 		/ 1fr 1fr 12px 12px;
 	grid-gap: 10px;
 `;
@@ -95,7 +95,6 @@ const EyedropperWrapper = styled.div`
 `;
 
 const EyedropperButton = styled( Eyedropper )`
-	/*opacity: 1;*/
 	line-height: 15px;
 `;
 
