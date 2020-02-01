@@ -24,7 +24,7 @@ import { EditableInput } from 'react-color/lib/components/common';
 /**
  * WordPress dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 const Preview = styled.button`
 	padding: 0;
@@ -38,11 +38,9 @@ const Preview = styled.button`
 function EditableHexPreview( { hex, onChange } ) {
 	const [ isEditing, setIsEditing ] = useState( false );
 
-	const toggleEditing = useCallback( () => setIsEditing( ! isEditing ), [ setIsEditing, isEditing ] );
-
 	if ( ! isEditing ) {
 		return (
-			<Preview onClick={ toggleEditing }>
+			<Preview onClick={ () => setIsEditing( true ) }>
 				{ hex }
 			</Preview>
 		);
@@ -52,7 +50,7 @@ function EditableHexPreview( { hex, onChange } ) {
 		<EditableInput
 			value={ hex }
 			onChange={ onChange }
-			onChangeComplete={ toggleEditing }
+			onChangeComplete={ () => setIsEditing( false ) }
 		/>
 	);
 }
