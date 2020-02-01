@@ -25,7 +25,7 @@ import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 /**
  * WordPress dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -51,12 +51,16 @@ const Header = styled.div`
 	padding: 16px;
 	border-bottom: 1px solid rgba(229, 229, 229, 0.2);
 	overflow: hidden;
+	position: relative;
 `;
 
 const CloseButton = styled( Close )`
 	opacity: 1;
-	float: right;
+	font-size: 15px;
 	line-height: 20px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
 `;
 
 const Body = styled.div`
@@ -112,12 +116,6 @@ function ColorPicker( props ) {
 
 	const [ currentMode, setCurrentMode ] = useState( 'solid' );
 
-	const closePicker = useCallback( () => {
-		if ( onClose ) {
-			onClose();
-		}
-	}, [ onClose ] );
-
 	return (
 		<Container>
 			<Header>
@@ -130,7 +128,12 @@ function ColorPicker( props ) {
 					width={ 10 }
 					height={ 10 }
 					aria-label={ __( 'Close', 'web-stories' ) }
-					onClick={ closePicker }
+					onClick={ ( evt ) => {
+						evt.preventDefault();
+						if ( onClose ) {
+							onClose();
+						}
+					} }
 				/>
 			</Header>
 			<Body>

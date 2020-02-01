@@ -30,7 +30,6 @@ const ModesList = styled.ul`
 	margin: 0;
 	display: flex;
 	list-style: none;
-	float: left;
 `;
 
 const ModeListItem = styled.li`
