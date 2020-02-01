@@ -127,8 +127,8 @@ function ColorPicker( props ) {
 					onChange={ setCurrentMode }
 				/>
 				<CloseButton
-					width="10"
-					height="10"
+					width={ 10 }
+					height={ 10 }
 					aria-label={ __( 'Close', 'web-stories' ) }
 					onClick={ closePicker }
 				/>
@@ -144,8 +144,8 @@ function ColorPicker( props ) {
 				<HueWrapper>
 					<Hue
 						direction="vertical"
-						width="12"
-						height="140"
+						width="12px"
+						height="140px"
 						radius="6px"
 						pointer={ PointerWithoutOffset }
 						{ ...props }
@@ -154,8 +154,8 @@ function ColorPicker( props ) {
 				<AlphaWrapper>
 					<Alpha
 						direction="vertical"
-						width="12"
-						height="140"
+						width="12px"
+						height="140px"
 						radius="6px"
 						pointer={ PointerWithoutOffset }
 						{ ...props }
@@ -163,8 +163,8 @@ function ColorPicker( props ) {
 				</AlphaWrapper>
 				<EyedropperWrapper>
 					<EyedropperButton
-						width="15"
-						height="15"
+						width={ 15 }
+						height={ 15 }
 						aria-label={ __( 'Select color', 'web-stories' ) }
 						isDisabled
 					/>
