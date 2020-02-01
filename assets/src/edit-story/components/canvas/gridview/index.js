@@ -53,8 +53,8 @@ const RangeInputWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	margin-bottom: 75px;
+	max-width: 430px;
+	margin: 0 auto 75px auto;
 `;
 
 const Rectangle = styled.div`
@@ -84,8 +84,7 @@ function RangeControl( { value, onChange } ) {
 				step="1"
 				value={ value }
 				onChange={ ( evt ) => onChange( Number( evt.target.value ) ) }
-				width="360px"
-				thumbSize="24"
+				thumbSize={ 24 }
 			/>
 			<Rectangle isLarge>
 				<RectangleIcon />

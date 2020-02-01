@@ -40,7 +40,6 @@ export const _default = () => {
 	const min = number( 'Min value', 0 );
 	const max = number( 'Max value', 100 );
 	const step = number( 'Step', 10 );
-	const width = number( 'Width', 200 );
 
 	return (
 		<RangeInput
@@ -48,7 +47,6 @@ export const _default = () => {
 			min={ min }
 			max={ max }
 			step={ step }
-			width={ `${ width }px` }
 		/>
 	);
 };

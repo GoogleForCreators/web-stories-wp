@@ -29,7 +29,7 @@ const rangeThumb = css`
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 `;
 
-export default styled.input.attrs( ( { min, max, step, value, onChange = () => {} } ) => ( {
+export default styled.input.attrs( ( { min, max, step, value, onChange } ) => ( {
 	type: 'range',
 	min,
 	max,
@@ -45,7 +45,7 @@ export default styled.input.attrs( ( { min, max, step, value, onChange = () => {
 	border-radius: 100px;
 	height: 4px;
 	appearance: none;
-	width: ${ ( { width = '100%' } ) => width };
+	flex: 1;
 
 	&::-webkit-slider-thumb {
 		${ rangeThumb }
