@@ -65,41 +65,19 @@ const RadialGradient = styled( Circle )`
 	background: radial-gradient(50% 50% at 50% 50%, #fff 0%, ${ ( { color } ) => color } 100%);
 `;
 
-function Mode( { type, value, onClick } ) {
-	switch ( type ) {
-		case 'solid':
-			return <SolidColor color={ value } onClick={ onClick } aria-label={ __( 'Solid color', 'web-stories' ) } />;
-
-		case 'linear':
-			return <LinearGradient color={ value || '#808080' } onClick={ onClick } aria-label={ __( 'Linear gradient', 'web-stories' ) } />;
-
-		case 'radial':
-			return <RadialGradient color={ value || '#3A3A3A' } onClick={ onClick } aria-label={ __( 'Radial gradient', 'web-stories' ) } />;
-
-		default:
-			return null;
-	}
-}
-
-Mode.propTypes = {
-	type: PropTypes.string,
-	value: PropTypes.string,
-	onClick: PropTypes.func,
-};
-
 function ModeSwitcher( { hex, currentMode, onChange } ) {
 	const supportedModes = [ 'solid', 'linear', 'radial' ];
 
 	return (
 		<ModesList>
 			{ supportedModes.map( ( mode ) => {
+				const value = mode === currentMode ? hex : null;
+
 				return (
 					<ModeListItem key={ mode } >
-						<Mode
-							type={ mode }
-							value={ mode === currentMode ? hex : null }
-							onClick={ () => onChange( mode ) }
-						/>
+						{ 'solid' === mode && <SolidColor color={ value } onClick={ () => onChange( mode ) } aria-label={ __( 'Solid color', 'web-stories' ) } /> }
+						{ 'linear' === mode && <LinearGradient color={ value || '#808080' } onClick={ () => onChange( mode ) } aria-label={ __( 'Linear gradient', 'web-stories' ) } /> }
+						{ 'radial' === mode && <RadialGradient color={ value || '#3A3A3A' } onClick={ () => onChange( mode ) } aria-label={ __( 'Radial gradient', 'web-stories' ) } /> }
 					</ModeListItem>
 				);
 			} ) }
