@@ -1,8 +1,10 @@
 {
-  "bracketSpacing": false,
+  "printWidth": 80,
   "singleQuote": true,
   "trailingComma": "es5",
-  "quoteProps": "preserve",
+  "bracketSpacing": true,
+  "parenSpacing": true,
+  "arrowParens": "always",
   "overrides": [
     {
       "files": "*.md",
