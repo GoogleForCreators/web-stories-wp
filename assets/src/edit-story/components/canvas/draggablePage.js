@@ -26,9 +26,10 @@ import DropZone from '../dropzone';
 import { useStory } from '../../app/story';
 import PagePreview from './pagepreview';
 
+// Disable reason: forwardRef render functions do not support propTypes
+/* eslint-disable react/prop-types */
+
 function DraggablePageWithRef(
-  // Disable reason: forwardRef render functions do not support propTypes
-  //eslint-disable-next-line react/prop-types
   {
     pageIndex,
     onClick,
@@ -104,3 +105,5 @@ function DraggablePageWithRef(
 const DraggablePage = forwardRef(DraggablePageWithRef);
 
 export default DraggablePage;
+
+/* eslint-enable react/prop-types */
