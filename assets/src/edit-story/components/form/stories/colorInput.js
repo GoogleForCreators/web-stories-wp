@@ -17,27 +17,25 @@
 /**
  * External dependencies
  */
-import { text, boolean } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
-import ColorPicker from '../';
+import ColorInput from '../colorInput';
 
 export default {
-	title: 'Components/Color Picker',
-	component: ColorPicker,
+	title: 'Components/Color Input',
+	component: ColorInput,
 };
 
 export const _default = () => {
 	const initialColor = text( 'Initial Color', '#4891fc' );
-	const gradients = boolean( 'With Gradients', true );
-
-	const [ color, setColor ] = useState( { hex: initialColor } );
+	const [ color, setColor ] = useState( initialColor );
 
 	useEffect( () => {
-		setColor( { hex: initialColor } );
+		setColor( initialColor );
 	}, [ initialColor ] );
 
 	const onChange = useCallback( ( newColor ) => {
@@ -45,10 +43,11 @@ export const _default = () => {
 	}, [ setColor ] );
 
 	return (
-		<ColorPicker
-			color={ color }
+		<ColorInput
+			label={ 'Color' }
+			value={ color }
 			onChange={ onChange }
-			gradients={ gradients }
+			disabled={ false }
 		/>
 	);
 };
