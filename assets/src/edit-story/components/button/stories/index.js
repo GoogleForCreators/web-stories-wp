@@ -22,7 +22,7 @@ import { text, boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { Primary, Secondary, Outline, Undo, Redo, GridView } from '../';
+import { Primary, Secondary, Outline, Undo, Redo, GridView, Close, Eyedropper } from '../';
 
 export default {
 	title: 'Components/Button',
@@ -123,6 +123,42 @@ export const gridView = () => {
 };
 
 gridView.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
+};
+
+export const close = () => {
+	const isDisabled = boolean( 'Disabled', false );
+
+	return (
+		<Close
+			isDisabled={ isDisabled }
+		/>
+	);
+};
+
+close.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
+};
+
+export const eyedropper = () => {
+	const isDisabled = boolean( 'Disabled', false );
+
+	return (
+		<Eyedropper
+			isDisabled={ isDisabled }
+		/>
+	);
+};
+
+eyedropper.story = {
 	parameters: {
 		backgrounds: [
 			{ name: 'dark', value: '#000', default: true },
