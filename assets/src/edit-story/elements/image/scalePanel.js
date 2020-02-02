@@ -29,6 +29,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import InOverlay from '../../components/overlay';
+import RangeInput from '../../components/rangeInput';
 import { Z_INDEX_CANVAS } from '../../constants';
 
 const MIN_WIDTH = 165;
@@ -56,41 +57,6 @@ const Container = styled.div`
 	padding: 0 4px;
 `;
 
-const Range = styled.input.attrs( {
-	type: 'range',
-	min: 100,
-	max: MAX_SCALE,
-	step: 10,
-} )`
-	appearance: none;
-	flex: 1 1;
-	margin: 4px;
-	min-width: 100px;
-	cursor: pointer;
-	outline: none;
-	background: ${ ( { theme } ) => theme.colors.t.fg };
-	border-radius: 100px;
-	height: 4px;
-
-	&::-webkit-slider-thumb {
-		appearance: none;
-		width: 16px;
-		height: 16px;
-		background: #fff;
-		cursor: pointer;
-		border-radius: 50px;
-	}
-
-	&::-moz-range-thumb {
-		appearance: none;
-		width: 16px;
-		height: 16px;
-		background: #fff;
-		cursor: pointer;
-		border-radius: 50px;
-	}
-`;
-
 const ResetButton = styled.button`
 	flex: 0 0;
 	margin-left: 4px;
@@ -108,7 +74,10 @@ function ScalePanel( { setProperties, width, height, x, y, scale } ) {
 	return (
 		<InOverlay zIndex={ Z_INDEX_CANVAS.FLOAT_PANEL } pointerEvents="initial" >
 			<Container x={ x } y={ y } width={ width } height={ height } >
-				<Range
+				<RangeInput
+					min={ 100 }
+					max={ MAX_SCALE }
+					step={ 10 }
 					value={ scale }
 					onChange={ ( evt ) => setProperties( { scale: evt.target.valueAsNumber } ) }
 				/>
