@@ -49,6 +49,7 @@ function ColorPanel( { selectedElements, onSetProperties } ) {
 				value={ state.color }
 				isMultiple={ color === '' }
 				onChange={ ( value ) => setState( { ...state, color: value } ) }
+				withGradients={ false }
 			/>
 		</SimplePanel>
 	);

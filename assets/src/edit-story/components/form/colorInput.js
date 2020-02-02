@@ -24,8 +24,7 @@ import { toState } from 'react-color/lib/helpers';
 /**
  * WordPress dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -80,7 +79,7 @@ const VisuallyHidden = styled.span`
 	}
 `;
 
-function ColorInput( { label, value, disabled, onChange } ) {
+function ColorInput( { label, value, disabled, onChange, withGradients } ) {
 	const [ isOpen, setIsOpen ] = useState( false );
 
 	return (
@@ -99,6 +98,7 @@ function ColorInput( { label, value, disabled, onChange } ) {
 						color={ value }
 						onChange={ onChange }
 						onClose={ () => setIsOpen( false ) }
+						withGradients={ withGradients }
 					/>
 				) }
 			</Wrap>
@@ -111,6 +111,7 @@ ColorInput.propTypes = {
 	value: PropTypes.any.isRequired,
 	onChange: PropTypes.func.isRequired,
 	disabled: PropTypes.bool,
+	withGradients: PropTypes.bool,
 };
 
 ColorInput.defaultProps = {
