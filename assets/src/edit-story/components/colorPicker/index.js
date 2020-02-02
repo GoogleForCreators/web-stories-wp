@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
-import { toState } from 'react-color/lib/helpers';
 
 /**
  * WordPress dependencies
@@ -33,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Close, Eyedropper } from '../button';
-import Pointer, { PointerWithoutOffset } from './pointer';
+import { Pointer, PointerWithOffset } from './pointer';
 import EditableHexPreview from './editableHexPreview';
 
 const Container = styled.div`
@@ -48,6 +47,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
+	height: 53px;
 	padding: 16px;
 	border-bottom: 1px solid rgba(229, 229, 229, 0.2);
 	position: relative;
@@ -158,19 +158,19 @@ const CurrentAlphaWrapper = styled.div`
 	bottom: 15px;
 `;
 
-function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, gradients } ) {
+function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, withGradients } ) {
 	const controlsProps = { rgb, hsl, hsv, hex, onChange };
 	const { a: alpha } = rgb;
 
 	const [ currentMode, setCurrentMode ] = useState( 'solid' );
 
-	const displayHeader = gradients || onClose;
+	const displayHeader = withGradients || onClose;
 
 	return (
 		<Container>
 			{ displayHeader && (
 				<Header>
-					{ gradients && (
+					{ withGradients && (
 						<ModesList>
 							{ [ 'solid', 'linear', 'radial' ].map( ( mode ) => {
 								const value = mode === currentMode ? hex : null;
@@ -199,7 +199,7 @@ function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, gradients } ) {
 				<SaturationWrapper>
 					<Saturation
 						radius="6px"
-						pointer={ Pointer }
+						pointer={ PointerWithOffset }
 						{ ...controlsProps }
 					/>
 				</SaturationWrapper>
@@ -209,7 +209,7 @@ function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, gradients } ) {
 						width="12px"
 						height="140px"
 						radius="6px"
-						pointer={ PointerWithoutOffset }
+						pointer={ Pointer }
 						{ ...controlsProps }
 					/>
 				</HueWrapper>
@@ -219,7 +219,7 @@ function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, gradients } ) {
 						width="12px"
 						height="140px"
 						radius="6px"
-						pointer={ PointerWithoutOffset }
+						pointer={ Pointer }
 						{ ...controlsProps }
 					/>
 				</AlphaWrapper>
@@ -248,13 +248,16 @@ function ColorPicker( { rgb, hsl, hsv, hex, onChange, onClose, gradients } ) {
 
 ColorPicker.propTypes = {
 	onChange: PropTypes.func.isRequired,
-	gradients: PropTypes.bool,
 	onClose: PropTypes.func,
+	withGradients: PropTypes.bool,
 	rgb: PropTypes.object,
+	hex: PropTypes.object,
+	hsl: PropTypes.object,
+	hsv: PropTypes.object,
 };
 
 ColorPicker.defaultProps = {
-	gradients: true,
+	withGradients: true,
 };
 
 export default CustomPicker( ColorPicker );

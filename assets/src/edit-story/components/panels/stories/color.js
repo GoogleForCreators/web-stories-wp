@@ -17,21 +17,25 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { text } from '@storybook/addon-knobs';
 
-const Pointer = styled.div`
-	width: 12px;
-	height: 12px;
-	background: radial-gradient(circle at center 6px, transparent, transparent 4px, #fff 4px);
-	filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
-	border-radius: 100%;
-`;
+/**
+ * Internal dependencies
+ */
+import ColorPanel from '../color';
 
-const PointerWithOffset = styled( Pointer )`
-	transform: translate(-6px, -6px);
-`;
+export default {
+	title: 'Panels/Color',
+	component: ColorPanel,
+};
 
-export {
-	Pointer,
-	PointerWithOffset,
+export const _default = () => {
+	const color = text( 'Initial Color', '#4891fc' );
+
+	return (
+		<ColorPanel
+			onSetProperties={ () => {} }
+			selectedElements={ [ { color } ] }
+		/>
+	);
 };
