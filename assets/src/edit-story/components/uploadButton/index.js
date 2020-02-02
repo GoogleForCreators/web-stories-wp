@@ -17,8 +17,8 @@
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -40,7 +40,7 @@ function UploadButton({
     wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
   });
 
-  const mediaPicker = evt => {
+  const mediaPicker = (evt) => {
     // Create the media frame.
     const fileFrame = wp.media({
       title,

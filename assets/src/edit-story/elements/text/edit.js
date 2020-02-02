@@ -18,9 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import {Editor, EditorState, SelectionState} from 'draft-js';
-import {stateFromHTML} from 'draft-js-import-html';
-import {stateToHTML} from 'draft-js-export-html';
+import { Editor, EditorState, SelectionState } from 'draft-js';
+import { stateFromHTML } from 'draft-js-import-html';
+import { stateToHTML } from 'draft-js-export-html';
 
 /**
  * WordPress dependencies
@@ -36,38 +36,38 @@ import {
 /**
  * Internal dependencies
  */
-import {useStory, useFont} from '../../app';
-import {useCanvas} from '../../components/canvas';
-import {useUnits} from '../../units';
+import { useStory, useFont } from '../../app';
+import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
 import {
-  ElementFillContent,
-  ElementWithFont,
-  ElementWithBackgroundColor,
-  ElementWithFontColor,
-  ElementWithStyle,
+  elementFillContent,
+  elementWithFont,
+  elementWithBackgroundColor,
+  elementWithFontColor,
+  elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
-import {getFilteredState, getHandleKeyCommand} from './util';
+import { getFilteredState, getHandleKeyCommand } from './util';
 
 const Element = styled.div`
-  margin: 0;
-  ${ElementFillContent}
-  ${ElementWithFont}
-  ${ElementWithStyle}
-  ${ElementWithBackgroundColor}
-  ${ElementWithFontColor}
+	margin: 0;
+	${elementFillContent}
+	${elementWithFont}
+	${elementWithStyle}
+	${elementWithBackgroundColor}
+	${elementWithFontColor}
 
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid ${({theme}) => theme.colors.mg.v1}70;
-    pointer-events: none;
-  }
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
+		pointer-events: none;
+	}
 `;
 
 function TextEdit({
@@ -86,10 +86,10 @@ function TextEdit({
     padding,
     textAlign,
   },
-  box: {width, height},
+  box: { width, height },
 }) {
   const {
-    actions: {dataToEditorY},
+    actions: { dataToEditorY },
   } = useUnits();
   const props = {
     color,
@@ -108,15 +108,15 @@ function TextEdit({
   };
   const editorRef = useRef(null);
   const {
-    actions: {maybeEnqueueFontStyle},
+    actions: { maybeEnqueueFontStyle },
   } = useFont();
   const {
-    actions: {updateElementById},
+    actions: { updateElementById },
   } = useStory();
   const {
-    state: {editingElementState},
+    state: { editingElementState },
   } = useCanvas();
-  const {offset, clearContent} = editingElementState || {};
+  const { offset, clearContent } = editingElementState || {};
   // To clear content, we can't just use createEmpty() or even pure white-space.
   // The editor needs some content to insert the first character in,
   // so we use a non-breaking space instead and trim it on save if still present.
@@ -135,7 +135,7 @@ function TextEdit({
   // on paste and updates state accordingly.
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
-    newEditorState => {
+    (newEditorState) => {
       let filteredState = getFilteredState(newEditorState, editorState);
       if (mustAddOffset.current) {
         // For some reason forced selection only sticks the second time around?
@@ -171,14 +171,14 @@ function TextEdit({
             defaultBlockTag: null,
           }).replace(/&nbsp;$/, ''),
         };
-        updateElementById({elementId: id, properties});
+        updateElementById({ elementId: id, properties });
       }
     },
     [id, updateElementById]
   );
 
   // Make sure to allow the user to click in the text box while working on the text.
-  const onClick = evt => {
+  const onClick = (evt) => {
     const editor = editorRef.current;
     // Refocus the editor if the container outside it is clicked.
     if (!editor.editorContainer.contains(evt.target)) {

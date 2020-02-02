@@ -17,24 +17,32 @@
 /**
  * WordPress dependencies
  */
-import {forwardRef, useCallback} from '@wordpress/element';
+import { forwardRef, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import DropZone from '../dropzone';
-import {useStory} from '../../app/story';
+import { useStory } from '../../app/story';
 import PagePreview from './pagepreview';
 
 function DraggablePageWithRef(
   // Disable reason: forwardRef render functions do not support propTypes
   //eslint-disable-next-line react/prop-types
-  {pageIndex, onClick, isActive, ariaLabel, width, height, dragIndicatorOffset},
+  {
+    pageIndex,
+    onClick,
+    isActive,
+    ariaLabel,
+    width,
+    height,
+    dragIndicatorOffset,
+  },
   ref
 ) {
   const {
-    state: {pages},
-    actions: {setCurrentPage, arrangePage},
+    state: { pages },
+    actions: { setCurrentPage, arrangePage },
   } = useStory();
 
   const getArrangeIndex = (sourceIndex, dstIndex, position) => {
@@ -48,7 +56,7 @@ function DraggablePageWithRef(
   };
 
   const onDragStart = useCallback(
-    evt => {
+    (evt) => {
       const pageData = {
         type: 'page',
         index: pageIndex,
@@ -58,7 +66,7 @@ function DraggablePageWithRef(
     [pageIndex]
   );
 
-  const onDrop = (evt, {position}) => {
+  const onDrop = (evt, { position }) => {
     const droppedEl = JSON.parse(evt.dataTransfer.getData('text'));
     if (!droppedEl || 'page' !== droppedEl.type) {
       return;
@@ -67,8 +75,8 @@ function DraggablePageWithRef(
     // Do nothing if the index didn't change.
     if (droppedEl.index !== arrangedIndex) {
       const pageId = pages[droppedEl.index].id;
-      arrangePage({pageId, position: arrangedIndex});
-      setCurrentPage({pageId});
+      arrangePage({ pageId, position: arrangedIndex });
+      setCurrentPage({ pageId });
     }
   };
 

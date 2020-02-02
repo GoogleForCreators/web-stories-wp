@@ -22,23 +22,23 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function BackgroundColorPanel({selectedElements, onSetProperties}) {
+function BackgroundColorPanel({ selectedElements, onSetProperties }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const [state, setState] = useState({backgroundColor});
+  const [state, setState] = useState({ backgroundColor });
   useEffect(() => {
-    setState({backgroundColor});
+    setState({ backgroundColor });
   }, [backgroundColor]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
@@ -53,7 +53,7 @@ function BackgroundColorPanel({selectedElements, onSetProperties}) {
         label={__('Background color', 'web-stories')}
         value={state.backgroundColor}
         isMultiple={backgroundColor === ''}
-        onChange={value => setState({...state, backgroundColor: value})}
+        onChange={(value) => setState({ ...state, backgroundColor: value })}
       />
     </SimplePanel>
   );

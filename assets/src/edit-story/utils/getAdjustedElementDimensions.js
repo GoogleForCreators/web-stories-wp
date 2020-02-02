@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {PAGE_WIDTH} from '../constants';
+import { PAGE_WIDTH } from '../constants';
 
 /**
  * Updates Text element's width and height if it's being resized from edges or there are font changes.
@@ -37,7 +37,7 @@ function getAdjustedElementDimensions({
   fixedMeasure,
 }) {
   if (!element || !content.length) {
-    return {width, height};
+    return { width, height };
   }
   if ('width' === fixedMeasure) {
     if (element.scrollHeight > height) {
@@ -75,7 +75,7 @@ function getAdjustedElementDimensions({
     height = element.scrollHeight;
     width = element.scrollWidth;
   }
-  return {width, height};
+  return { width, height };
 }
 
 export default getAdjustedElementDimensions;

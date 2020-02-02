@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export {default} from './documentInspector';
+export { default } from './documentInspector';

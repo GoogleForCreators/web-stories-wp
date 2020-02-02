@@ -17,18 +17,18 @@
 /**
  * External dependencies
  */
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 
-export const ImageWithScale = css`
-  width: ${({width}) => `${width}px`};
-  height: ${({height}) => `${height}px`};
-  left: ${({offsetX}) => `${-offsetX}px`};
-  top: ${({offsetY}) => `${-offsetY}px`};
+export const imageWithScale = css`
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
-export function getImageWithScaleCss({width, height, offsetX, offsetY}) {
-  // todo@: This is a complete duplication of `ImageWithScale` above. But
-  // no other apparent way to execute interpolate `ImageWithScale` dynamically.
+export function getImageWithScaleCss({ width, height, offsetX, offsetY }) {
+  // todo@: This is a complete duplication of `imageWithScale` above. But
+  // no other apparent way to execute interpolate `imageWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
 

@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {getCommonAttributes} from '../shared';
+import { getCommonAttributes } from '../shared';
 
 function VideoSave({
   autoPlay,
@@ -50,9 +50,9 @@ function VideoSave({
     id: 'el-' + id,
   };
 
-  const style = getCommonAttributes({width, height, x, y, rotationAngle});
+  const style = getCommonAttributes({ width, height, x, y, rotationAngle });
   return (
-    <div style={{...style}} {...wrapperProps}>
+    <div style={{ ...style }} {...wrapperProps}>
       <amp-video {...props}>
         <source {...sourceProps} />
       </amp-video>

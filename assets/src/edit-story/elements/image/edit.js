@@ -22,21 +22,21 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useCallback, useState} from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {ElementFillContent} from '../shared';
-import {useStory} from '../../app';
+import { elementFillContent } from '../shared';
+import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import {getImgProps, ImageWithScale} from './util';
+import { getImgProps, imageWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
-  ${ElementFillContent}
+  ${elementFillContent}
 `;
 
 const CropBox = styled.div`
@@ -53,7 +53,7 @@ const CropBox = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid ${({theme}) => theme.colors.mg.v1}70;
+    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
     pointer-events: none;
   }
 `;
@@ -62,27 +62,27 @@ const FadedImg = styled.img`
   position: absolute;
   opacity: 0.4;
   pointer-events: none;
-  ${ImageWithScale}
+  ${imageWithScale}
 `;
 
 const CropImg = styled.img`
   position: absolute;
-  ${ImageWithScale}
+  ${imageWithScale}
 `;
 
 function ImageEdit({
-  element: {id, src, origRatio, scale, focalX, focalY, isFullbleed},
-  box: {x, y, width, height, rotationAngle},
+  element: { id, src, origRatio, scale, focalX, focalY, isFill },
+  box: { x, y, width, height, rotationAngle },
 }) {
   const [fullImage, setFullImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [cropBox, setCropBox] = useState(null);
 
   const {
-    actions: {updateElementById},
+    actions: { updateElementById },
   } = useStory();
   const setProperties = useCallback(
-    properties => updateElementById({elementId: id, properties}),
+    (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
 
@@ -100,7 +100,7 @@ function ImageEdit({
         />
       </CropBox>
 
-      {!isFullbleed && cropBox && croppedImage && (
+      {!isFill && cropBox && croppedImage && (
         <EditCropMovable
           setProperties={setProperties}
           cropBox={cropBox}

@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import {text, boolean} from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import {Primary, Secondary, Outline, Undo, Redo, GridView} from '../';
+import { Primary, Secondary, Outline, Undo, Redo, GridView } from '../';
 
 export default {
   title: 'Components/Button',
@@ -50,10 +50,22 @@ export const outline = () => {
   return <Outline isDisabled={isDisabled}>{label}</Outline>;
 };
 
+outline.story = {
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
+};
+
 export const undo = () => {
   const isDisabled = boolean('Disabled', false);
 
   return <Undo isDisabled={isDisabled} />;
+};
+
+undo.story = {
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };
 
 export const redo = () => {
@@ -62,8 +74,20 @@ export const redo = () => {
   return <Redo isDisabled={isDisabled} />;
 };
 
+redo.story = {
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
+};
+
 export const gridView = () => {
   const isDisabled = boolean('Disabled', false);
 
   return <GridView isDisabled={isDisabled} />;
+};
+
+gridView.story = {
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };

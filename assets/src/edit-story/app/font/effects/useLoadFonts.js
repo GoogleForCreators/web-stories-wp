@@ -17,16 +17,16 @@
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useAPI} from '../../';
+import { useAPI } from '../../';
 
-function useLoadFonts({fonts, setFonts}) {
+function useLoadFonts({ fonts, setFonts }) {
   const {
-    actions: {getAllFonts},
+    actions: { getAllFonts },
   } = useAPI();
 
   useEffect(() => {

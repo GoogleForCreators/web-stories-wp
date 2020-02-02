@@ -19,12 +19,12 @@
  */
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-import styled, {createGlobalStyle} from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import {ADMIN_TOOLBAR_HEIGHT} from '../../constants';
+import { ADMIN_TOOLBAR_HEIGHT } from '../../constants';
 
 const PADDING_TOP = 70;
 const PADDING_LEFT = 170;
@@ -41,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: ${PADDING_TOP}px ${PADDING_LEFT}px ${PADDING_TOP}px ${PADDING_LEFT}px;
     overflow: auto;
     outline: none;
-    background-color: ${({theme}) => theme.colors.bg.v1};
+    background-color: ${({ theme }) => theme.colors.bg.v1};
   }
 
   .WebStories_ReactModal__Overlay {
@@ -50,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
     left: ${ADMIN_MENU_WIDTH}px;
     right: 0;
     bottom: 0;
-    background-color: ${({theme}) => theme.colors.bg.v1};
+    background-color: ${({ theme }) => theme.colors.bg.v1};
     z-index: 10;
   }
 
@@ -68,11 +68,11 @@ const CloseButton = styled.button`
   border: none;
   padding: 0 10px;
   cursor: pointer;
-  color: ${({theme}) => theme.colors.fg.v1};
-  font-family: ${({theme}) => theme.fonts.body1.family};
-  font-size: ${({theme}) => theme.fonts.body1.size};
-  line-height: ${({theme}) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({theme}) => theme.fonts.body1.letterSpacing};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   height: 32px;
 `;
 
@@ -80,9 +80,9 @@ const ModalContent = styled.div`
   position: relative;
 `;
 
-function StyledModal({children, closeButtonLabel, ...props}) {
+function StyledModal({ children, closeButtonLabel, ...props }) {
   // Also needs to be passed to the Modal itself.
-  const {onRequestClose} = props;
+  const { onRequestClose } = props;
 
   return (
     <Modal

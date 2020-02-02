@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function TextContent({content}) {
+function TextContent({ content }) {
   // @todo: implement a cheaper way to strip markup.
   const buffer = document.createElement('div');
   buffer.innerHTML = content;

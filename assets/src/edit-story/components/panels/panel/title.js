@@ -23,8 +23,8 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useContext, useCallback} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useContext, useCallback } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -35,13 +35,13 @@ import DragHandle from './handle';
 import Arrow from './arrow.svg';
 
 const Header = styled.h2`
-  background-color: ${({theme, isPrimary}) =>
+  background-color: ${({ theme, isPrimary }) =>
     isPrimary ? theme.colors.fg.v2 : theme.colors.fg.v1};
-  border: 0 solid ${({theme}) => theme.colors.fg.v2};
-  border-top-width: ${({isPrimary}) => (isPrimary ? 0 : '1px')};
-  color: ${({theme}) => theme.colors.bg.v2};
+  border: 0 solid ${({ theme }) => theme.colors.fg.v2};
+  border-top-width: ${({ isPrimary }) => (isPrimary ? 0 : '1px')};
+  color: ${({ theme }) => theme.colors.bg.v2};
   padding: 10px 20px;
-  ${({hasResizeHandle}) => hasResizeHandle && 'padding-top: 0;'}
+  ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
   display: flex;
@@ -50,7 +50,7 @@ const Header = styled.h2`
   align-items: stretch;
 `;
 
-const HeaderButton = styled.button.attrs({type: 'button'})`
+const HeaderButton = styled.button.attrs({ type: 'button' })`
   color: inherit;
   border: 0;
   padding: 0;
@@ -78,25 +78,27 @@ const Collapse = styled.span`
   svg {
     width: 28px;
     height: 28px;
-    ${({isCollapsed}) => isCollapsed && `transform: rotate(.5turn);`}
+    ${({ isCollapsed }) => isCollapsed && `transform: rotate(.5turn);`}
   }
 `;
 
-function Title({children, isPrimary, isResizable}) {
+function Title({ children, isPrimary, isResizable }) {
   const {
-    state: {isCollapsed, height, panelContentId},
-    actions: {collapse, expand, setHeight},
+    state: { isCollapsed, height, panelContentId },
+    actions: { collapse, expand, setHeight },
   } = useContext(panelContext);
   const {
-    state: {inspectorContentHeight},
+    state: { inspectorContentHeight },
   } = useInspector();
 
   // Max panel height is set to 70% of full available height.
   const maxHeight = Math.round(inspectorContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
-    deltaHeight =>
-      setHeight(value => Math.max(0, Math.min(maxHeight, value + deltaHeight))),
+    (deltaHeight) =>
+      setHeight((value) =>
+        Math.max(0, Math.min(maxHeight, value + deltaHeight))
+      ),
     [setHeight, maxHeight]
   );
 

@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import {PanelTypes} from '../../components/panels';
-export {default as Display} from './display';
-export {default as Save} from './save';
-export {default as Preview} from './preview';
+import { PanelTypes } from '../../components/panels';
+export { default as Display } from './display';
+export { default as Save } from './save';
+export { default as Preview } from './preview';
 
 export const defaultAttributes = {
   controls: false,
@@ -39,4 +39,5 @@ export const panels = [
   PanelTypes.SCALE,
   PanelTypes.ROTATION_ANGLE,
   PanelTypes.VIDEO_POSTER,
+  PanelTypes.FILL,
 ];

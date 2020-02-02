@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useMemo} from '@wordpress/element';
+import { useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -36,11 +36,11 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useDeleteStory from './actions/useDeleteStory';
 
-function StoryProvider({storyId, children}) {
+function StoryProvider({ storyId, children }) {
   const {
-    state: {pages, current, selection, story, capabilities},
+    state: { pages, current, selection, story, capabilities },
     api,
-    internal: {restore},
+    internal: { restore },
   } = useStoryReducer();
 
   // Generate current page info.
@@ -58,7 +58,7 @@ function StoryProvider({storyId, children}) {
         currentPage: null,
       };
     }
-    const index = pages.findIndex(({id}) => id === current);
+    const index = pages.findIndex(({ id }) => id === current);
     const number = index + 1;
     const page = pages[index];
     return {
@@ -70,7 +70,7 @@ function StoryProvider({storyId, children}) {
   }, [pages, current]);
 
   // Generate selection info
-  const {selectedElementIds, selectedElements, hasSelection} = useMemo(() => {
+  const { selectedElementIds, selectedElements, hasSelection } = useMemo(() => {
     if (!currentPage) {
       return {
         selectedElements: [],
@@ -78,7 +78,7 @@ function StoryProvider({storyId, children}) {
         hasSelection: false,
       };
     }
-    const els = currentPage.elements.filter(({id}) => selection.includes(id));
+    const els = currentPage.elements.filter(({ id }) => selection.includes(id));
     return {
       selectedElementIds: selection,
       selectedElements: els,
@@ -88,23 +88,23 @@ function StoryProvider({storyId, children}) {
 
   // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
-  useLoadStory({restore, shouldLoad, storyId});
+  useLoadStory({ restore, shouldLoad, storyId });
 
   // These effects send updates to and restores state from history.
-  useHistoryEntry({pages, current, selection, story, capabilities});
-  useHistoryReplay({restore});
+  useHistoryEntry({ pages, current, selection, story, capabilities });
+  useHistoryReplay({ restore });
 
   // This action allows the user to save the story
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
-  const {updateStory} = api;
-  const {saveStory, isSaving} = useSaveStory({
+  const { updateStory } = api;
+  const { saveStory, isSaving } = useSaveStory({
     storyId,
     pages,
     story,
     updateStory,
   });
-  const {deleteStory} = useDeleteStory({storyId});
+  const { deleteStory } = useDeleteStory({ storyId });
 
   const state = {
     state: {

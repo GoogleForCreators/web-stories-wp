@@ -26,7 +26,7 @@ import Panel from './panel';
 import PanelTitle from './title';
 import PanelContent from './content';
 
-function SimplePanel({children, name, title, onSubmit}) {
+function SimplePanel({ children, name, title, onSubmit }) {
   return (
     <Panel name={name}>
       <PanelTitle>{title}</PanelTitle>

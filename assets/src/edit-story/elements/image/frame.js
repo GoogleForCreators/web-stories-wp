@@ -22,23 +22,23 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useCanvas} from '../../components/canvas';
+import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
-import {ElementFillContent} from '../shared';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-  ${ElementFillContent}
+  ${elementFillContent}
 `;
 
-function ImageFrame({element: {id}}) {
+function ImageFrame({ element: { id } }) {
   const {
-    actions: {setEditingElement},
+    actions: { setEditingElement },
   } = useCanvas();
   const handleSingleClick = useCallback(() => {}, []);
   const handleDoubleClick = useCallback(() => setEditingElement(id), [

@@ -22,27 +22,39 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__, _x} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup } from '../form';
+import { dataPixels } from '../../units';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function SizePanel({selectedElements, onSetProperties}) {
+function SizePanel({ selectedElements, onSetProperties }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
-  const [state, setState] = useState({width, height});
+  const isFill = getCommonValue(selectedElements, 'isFill');
+  const [state, setState] = useState({ width, height });
   const [lockRatio, setLockRatio] = useState(true);
   useEffect(() => {
-    setState({width, height});
+    setState({ width, height });
   }, [width, height]);
-  const handleSubmit = evt => {
-    onSetProperties(state);
+  const handleSubmit = (evt) => {
+    onSetProperties(({ width: oldWidth, height: oldHeight }) => {
+      let { width: newWidth, height: newHeight } = state;
+      if (lockRatio && (newHeight === '' || newWidth === '')) {
+        const ratio = oldWidth / oldHeight;
+        if (newWidth === '') {
+          newWidth = dataPixels(newHeight * ratio);
+        } else {
+          newHeight = dataPixels(newWidth / ratio);
+        }
+      }
+      return { width: newWidth, height: newHeight };
+    });
     evt.preventDefault();
   };
   return (
@@ -55,7 +67,7 @@ function SizePanel({selectedElements, onSetProperties}) {
         label={__('Width', 'web-stories')}
         value={state.width}
         isMultiple={width === ''}
-        onChange={value => {
+        onChange={(value) => {
           const ratio = width / height;
           const newWidth =
             isNaN(value) || value === '' ? '' : parseFloat(value);
@@ -63,19 +75,19 @@ function SizePanel({selectedElements, onSetProperties}) {
             ...state,
             width: newWidth,
             height:
-              typeof newWidth === 'number' && lockRatio
-                ? newWidth / ratio
+              height !== '' && typeof newWidth === 'number' && lockRatio
+                ? dataPixels(newWidth / ratio)
                 : height,
           });
         }}
         postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
-        disabled={isFullbleed}
+        disabled={isFill}
       />
       <InputGroup
         label={__('Height', 'web-stories')}
         value={state.height}
         isMultiple={height === ''}
-        onChange={value => {
+        onChange={(value) => {
           const ratio = width / height;
           const newHeight =
             isNaN(value) || value === '' ? '' : parseFloat(value);
@@ -83,23 +95,23 @@ function SizePanel({selectedElements, onSetProperties}) {
             ...state,
             height: newHeight,
             width:
-              typeof newHeight === 'number' && lockRatio
-                ? newHeight * ratio
+              width !== '' && typeof newHeight === 'number' && lockRatio
+                ? dataPixels(newHeight * ratio)
                 : width,
           });
         }}
         postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
-        disabled={isFullbleed}
+        disabled={isFill}
       />
       <InputGroup
         type="checkbox"
         label={__('Keep ratio', 'web-stories')}
         value={lockRatio}
         isMultiple={false}
-        onChange={value => {
+        onChange={(value) => {
           setLockRatio(value);
         }}
-        disabled={isFullbleed}
+        disabled={isFill}
       />
     </SimplePanel>
   );

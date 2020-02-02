@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import Label from './label';
 import Group from './group';
 
 const Input = styled.input`
-  color: ${({theme}) => theme.colors.mg.v1};
+  color: ${({ theme }) => theme.colors.mg.v1};
   border: 1px solid;
   border-radius: 4px;
   font-size: 11px;
@@ -58,10 +58,10 @@ function InputGroup({
       <Input
         type={type}
         disabled={disabled}
-        onChange={evt =>
+        onChange={(evt) =>
           onChange(isCheckbox ? evt.target.checked : evt.target.value, evt)
         }
-        onBlur={evt =>
+        onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
         }
         placeholder={placeholder}

@@ -22,21 +22,23 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {ElementFillContent} from '../shared';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
 const Element = styled.video`
-  ${ElementFillContent}
+  ${elementFillContent}
 `;
 
-function VideoDisplay({element: {id, src, mimeType, videoId, posterId}}) {
-  const {uploadVideoFrame} = useUploadVideoFrame({videoId, src, id});
+function VideoDisplay({
+  element: { id, src, mimeType, videoId, posterId, poster },
+}) {
+  const { uploadVideoFrame } = useUploadVideoFrame({ videoId, src, id });
   useEffect(() => {
     if (videoId && !posterId) {
       uploadVideoFrame();
@@ -44,7 +46,7 @@ function VideoDisplay({element: {id, src, mimeType, videoId, posterId}}) {
   }, [videoId, posterId, uploadVideoFrame]);
 
   return (
-    <Element>
+    <Element poster={poster}>
       <source src={src} type={mimeType} />
     </Element>
   );

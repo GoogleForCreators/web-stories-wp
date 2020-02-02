@@ -17,19 +17,19 @@
 /**
  * Internal dependencies
  */
-import {PanelTypes} from '../../components/panels';
-export {default as Display} from './display';
-export {default as Edit} from './edit';
-export {default as Frame} from './frame';
-export {default as Preview} from './preview';
-export {default as Save} from './save';
-export {default as TextContent} from './textContent';
+import { PanelTypes } from '../../components/panels';
+export { default as Display } from './display';
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as Preview } from './preview';
+export { default as Save } from './save';
+export { default as TextContent } from './textContent';
 
 export const defaultAttributes = {
   fontFamily: 'Arial',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,
-  fontSize: 14,
+  fontSize: 36,
   fontStyle: 'normal',
   color: '#000000',
   letterSpacing: 'normal',

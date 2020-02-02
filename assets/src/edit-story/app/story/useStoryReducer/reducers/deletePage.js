@@ -31,14 +31,14 @@
  * @param {number} payload.pageId Page id to delete. If null, delete current page
  * @return {Object} New state
  */
-function deletePage(state, {pageId}) {
+function deletePage(state, { pageId }) {
   if (state.pages.length <= 1) {
     return state;
   }
 
   const idToDelete = pageId === null ? state.current : pageId;
 
-  const pageIndex = state.pages.findIndex(({id}) => id === idToDelete);
+  const pageIndex = state.pages.findIndex(({ id }) => id === idToDelete);
 
   if (pageIndex === -1) {
     return state;

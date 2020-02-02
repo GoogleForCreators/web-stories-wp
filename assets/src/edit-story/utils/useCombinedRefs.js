@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Synchronize multiple refs to a single ref
@@ -29,8 +29,8 @@ import {useCallback} from '@wordpress/element';
  */
 function useCombinedRefs(...refs) {
   const setRef = useCallback(
-    node => {
-      refs.forEach(ref => {
+    (node) => {
+      refs.forEach((ref) => {
         if (!ref) {
           // Ignore non-existing refs
           return;

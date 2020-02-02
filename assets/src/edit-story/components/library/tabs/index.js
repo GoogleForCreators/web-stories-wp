@@ -28,7 +28,7 @@ import ShapesIcon from './shapes.svg';
 import LinksIcon from './links.svg';
 
 const Tabs = styled.ul`
-  background: ${({theme}) => theme.colors.bg.v3};
+  background: ${({ theme }) => theme.colors.bg.v3};
   display: flex;
   height: 100%;
   margin: 0;
@@ -37,12 +37,12 @@ const Tabs = styled.ul`
 const Tab = styled.li`
   width: 64px;
   height: 100%;
-  color: ${({theme}) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const Icon = styled.a`
   color: inherit;
-  background: ${({isActive, theme}) =>
+  background: ${({ isActive, theme }) =>
     isActive ? theme.colors.bg.v4 : 'transparent'};
   height: 100%;
   display: flex;
@@ -53,7 +53,7 @@ const Icon = styled.a`
     color: inherit;
   }
 
-  ${({isActive}) =>
+  ${({ isActive }) =>
     !isActive &&
     `
   opacity: .4;
@@ -106,4 +106,4 @@ function Links(props) {
   );
 }
 
-export {Tabs, Media, Text, Shapes, Links};
+export { Tabs, Media, Text, Shapes, Links };

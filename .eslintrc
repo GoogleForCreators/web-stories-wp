@@ -25,6 +25,13 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "import/no-restricted-paths": [ "error", {
+      "zones": [ {
+        "target": "./assets/src/edit-story/migration/migrations",
+        "from": "./assets/src/edit-story",
+        "except": [ "./migration/migrations" ]
+      } ]
+    } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",

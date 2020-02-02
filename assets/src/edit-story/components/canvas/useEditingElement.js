@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useState, useCallback} from '@wordpress/element';
+import { useState, useCallback } from '@wordpress/element';
 
 function useEditingElement() {
   const [editingElement, setEditingElement] = useState(null);
@@ -26,7 +26,7 @@ function useEditingElement() {
 
   const clearEditing = useCallback(() => setEditingElement(null), []);
 
-  const setEditingElementWithoutState = useCallback(id => {
+  const setEditingElementWithoutState = useCallback((id) => {
     setEditingElement(id);
     setEditingElementState({});
   }, []);
@@ -37,7 +37,7 @@ function useEditingElement() {
   }, []);
 
   const setNodeForElement = useCallback(
-    (id, ref) => setNodesById(oldNodes => ({...oldNodes, [id]: ref})),
+    (id, ref) => setNodesById((oldNodes) => ({ ...oldNodes, [id]: ref })),
     [setNodesById]
   );
 

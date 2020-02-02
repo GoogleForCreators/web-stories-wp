@@ -22,15 +22,15 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {getDefinitionForType} from '../../elements';
-import {useStory} from '../../app';
+import { getDefinitionForType } from '../../elements';
+import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import {Layer, PageArea} from './layout';
+import { Layer, PageArea } from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled(Layer)`
-  background-color: ${({grayout, theme}) =>
+  background-color: ${({ grayout, theme }) =>
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
@@ -44,22 +44,22 @@ const EditPageArea = withOverlay(styled(PageArea).attrs({
 
 function EditLayer({}) {
   const {
-    state: {currentPage},
+    state: { currentPage },
   } = useStory();
   const {
-    state: {editingElement: editingElementId},
+    state: { editingElement: editingElementId },
   } = useCanvas();
 
   const editingElement =
     editingElementId &&
     currentPage &&
-    currentPage.elements.find(element => element.id === editingElementId);
+    currentPage.elements.find((element) => element.id === editingElementId);
 
   if (!editingElement) {
     return null;
   }
 
-  const {editModeGrayout} = getDefinitionForType(editingElement.type);
+  const { editModeGrayout } = getDefinitionForType(editingElement.type);
 
   return (
     <LayerWithGrayout grayout={editModeGrayout} pointerEvents="none">

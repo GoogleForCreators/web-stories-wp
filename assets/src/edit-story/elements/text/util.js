@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import {RichUtils} from 'draft-js';
-import {filterEditorState} from 'draftjs-filters';
+import { RichUtils } from 'draft-js';
+import { filterEditorState } from 'draftjs-filters';
 
 /**
  * Internal dependencies
  */
-import {PAGE_WIDTH} from '../../constants';
+import { PAGE_WIDTH } from '../../constants';
 
 export function getFilteredState(editorState, oldEditorState) {
   const shouldFilterPaste =
@@ -47,7 +47,7 @@ export function getFilteredState(editorState, oldEditorState) {
 }
 
 const ALLOWED_KEY_COMMANDS = ['bold', 'italic', 'underline'];
-export const getHandleKeyCommand = setEditorState => (
+export const getHandleKeyCommand = (setEditorState) => (
   command,
   currentEditorState
 ) => {
@@ -74,6 +74,6 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
   return fontFamilyDisplay;
 };
 
-export const getResponsiveFontSize = originalFontSize => {
+export const getResponsiveFontSize = (originalFontSize) => {
   return ((originalFontSize / PAGE_WIDTH) * 100).toFixed(2) + 'vw';
 };

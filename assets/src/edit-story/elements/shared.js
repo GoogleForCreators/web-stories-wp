@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import getPercentageFromPixels from '../utils/getPercentageFromPixels';
 
-export const ElementFillContent = css`
+export const elementFillContent = css`
   position: absolute;
   top: 0;
   left: 0;
@@ -32,50 +32,50 @@ export const ElementFillContent = css`
   height: 100%;
 `;
 
-export const ElementWithPosition = css`
+export const elementWithPosition = css`
   position: absolute;
   z-index: 1;
-  left: ${({x}) => `${x}px`};
-  top: ${({y}) => `${y}px`};
+  left: ${({ x }) => `${x}px`};
+  top: ${({ y }) => `${y}px`};
 `;
 
-export const ElementWithSize = css`
-  width: ${({width}) => `${width}px`};
-  height: ${({height}) => `${height}px`};
+export const elementWithSize = css`
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
 `;
 
-export const ElementWithRotation = css`
-  transform: ${({rotationAngle}) => `rotate(${rotationAngle}deg)`};
+export const elementWithRotation = css`
+  transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
-export const ElementWithBackgroundColor = css`
-  background-color: ${({backgroundColor}) => backgroundColor};
+export const elementWithBackgroundColor = css`
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
-export const ElementWithFontColor = css`
-  color: ${({color}) => color};
+export const elementWithFontColor = css`
+  color: ${({ color }) => color};
 `;
 
-export const ElementWithFont = css`
+export const elementWithFont = css`
   white-space: pre-wrap;
-  font-family: ${({fontFamily}) => fontFamily};
-  font-style: ${({fontStyle}) => fontStyle};
-  font-size: ${({fontSize}) => fontSize}px;
-  font-weight: ${({fontWeight}) => fontWeight};
+  font-family: ${({ fontFamily }) => fontFamily};
+  font-style: ${({ fontStyle }) => fontStyle};
+  font-size: ${({ fontSize }) => fontSize}px;
+  font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
-export const ElementWithStyle = css`
-  padding: ${({padding}) => (padding ? padding : '0')}%;
-  line-height: ${({lineHeight}) => lineHeight};
-  letter-spacing: ${({letterSpacing}) =>
+export const elementWithStyle = css`
+  padding: ${({ padding }) => (padding ? padding : '0')}%;
+  line-height: ${({ lineHeight }) => lineHeight};
+  letter-spacing: ${({ letterSpacing }) =>
     letterSpacing ? letterSpacing + 'em' : null};
-  text-align: ${({textAlign}) => textAlign};
+  text-align: ${({ textAlign }) => textAlign};
 `;
 
 /**
  * Returns common attributes used for all elements when saving to DB.
  */
-export const getCommonAttributes = ({width, height, x, y, rotationAngle}) => {
+export const getCommonAttributes = ({ width, height, x, y, rotationAngle }) => {
   return {
     position: 'absolute',
     left: getPercentageFromPixels(x, 'x') + '%',

@@ -17,15 +17,15 @@
 /**
  * WordPress dependencies
  */
-import {useReducer, useCallback} from '@wordpress/element';
+import { useReducer, useCallback } from '@wordpress/element';
 
 const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';
 const REPLAY = 'replay';
 
-const EMPTY_STATE = {entries: [], offset: 0, replayState: null};
+const EMPTY_STATE = { entries: [], offset: 0, replayState: null };
 
-const reducer = size => (state, {type, payload}) => {
+const reducer = (size) => (state, { type, payload }) => {
   switch (type) {
     case ADD_ENTRY:
       // First check if everything in payload matches the current `replayState`,
@@ -33,7 +33,7 @@ const reducer = size => (state, {type, payload}) => {
       // and of course leave entries unchanged.
       if (state.replayState) {
         const isReplay = Object.keys(state.replayState).every(
-          key => state.replayState[key] === payload[key]
+          (key) => state.replayState[key] === payload[key]
         );
 
         if (isReplay) {
@@ -84,19 +84,19 @@ function useHistoryReducer(size) {
   // undo/redo to - it will be null except for the very short timespan
   // between the user pressing undo and the app updating to that desired
   // state.
-  const [state, dispatch] = useReducer(reducer(size), {...EMPTY_STATE});
+  const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const {entries, offset, replayState} = state;
+  const { entries, offset, replayState } = state;
   const historyLength = entries.length;
 
   const replay = useCallback(
-    deltaOffset => {
+    (deltaOffset) => {
       const newOffset = offset + deltaOffset;
       if (newOffset < 0 || newOffset >= historyLength - 1) {
         return false;
       }
 
-      dispatch({type: REPLAY, payload: newOffset});
+      dispatch({ type: REPLAY, payload: newOffset });
       return true;
     },
     [dispatch, offset, historyLength]
@@ -117,12 +117,12 @@ function useHistoryReducer(size) {
   );
 
   const clearHistory = useCallback(() => {
-    return dispatch({type: CLEAR_HISTORY});
+    return dispatch({ type: CLEAR_HISTORY });
   }, [dispatch]);
 
   const appendToHistory = useCallback(
-    entry => {
-      dispatch({type: ADD_ENTRY, payload: entry});
+    (entry) => {
+      dispatch({ type: ADD_ENTRY, payload: entry });
     },
     [dispatch]
   );

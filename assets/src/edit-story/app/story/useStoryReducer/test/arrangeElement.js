@@ -17,35 +17,35 @@
 /**
  * Internal dependencies
  */
-import {LAYER_DIRECTIONS} from '../../../../constants';
-import {setupReducer} from './_utils';
+import { LAYER_DIRECTIONS } from '../../../../constants';
+import { setupReducer } from './_utils';
 
 describe('arrangeElement', () => {
   it('should do nothing if there is only one element on page', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     const initialState = restore({
       pages: [
         {
           backgroundElementId: null,
           id: '111',
-          elements: [{id: '123'}],
+          elements: [{ id: '123' }],
         },
       ],
       current: '111',
     });
 
-    const result = arrangeElement({elementId: '123', position: 2});
+    const result = arrangeElement({ elementId: '123', position: 2 });
 
     expect(result).toStrictEqual(initialState);
   });
 
   it('should move element to specified position', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
-    const result = arrangeElement({elementId: '123', position: 2});
+    const result = arrangeElement({ elementId: '123', position: 2 });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
       '234',
@@ -56,7 +56,7 @@ describe('arrangeElement', () => {
   });
 
   it('should move element to front', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
@@ -74,7 +74,7 @@ describe('arrangeElement', () => {
   });
 
   it('should move element to back', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
@@ -92,7 +92,7 @@ describe('arrangeElement', () => {
   });
 
   it('should move element forward', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
@@ -110,7 +110,7 @@ describe('arrangeElement', () => {
   });
 
   it('should move element backward', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
@@ -128,12 +128,12 @@ describe('arrangeElement', () => {
   });
 
   it('should only allow element in positions inside the bounds', () => {
-    const {restore, arrangeElement} = setupReducer();
+    const { restore, arrangeElement } = setupReducer();
 
     restore(getInitialState());
 
     // Try to move element from 2nd position before the start.
-    const firstResult = arrangeElement({elementId: '234', position: -100});
+    const firstResult = arrangeElement({ elementId: '234', position: -100 });
     expect(getElementIdsFromCurrentPage(firstResult)).toStrictEqual([
       '234',
       '123',
@@ -142,7 +142,7 @@ describe('arrangeElement', () => {
     ]);
 
     // Try to move element from 2nd position after the end.
-    const secondResult = arrangeElement({elementId: '234', position: 100});
+    const secondResult = arrangeElement({ elementId: '234', position: 100 });
     expect(getElementIdsFromCurrentPage(secondResult)).toStrictEqual([
       '123',
       '345',
@@ -153,12 +153,12 @@ describe('arrangeElement', () => {
 
   describe('when there is a background element', () => {
     it('should not be able to move background element at all', () => {
-      const {restore, arrangeElement} = setupReducer();
+      const { restore, arrangeElement } = setupReducer();
 
-      restore(getInitialState({backgroundElementId: '123'}));
+      restore(getInitialState({ backgroundElementId: '123' }));
 
       // Try to move bg element anywhere
-      const result = arrangeElement({elementId: '123', position: 2});
+      const result = arrangeElement({ elementId: '123', position: 2 });
 
       expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
         '123',
@@ -169,12 +169,12 @@ describe('arrangeElement', () => {
     });
 
     it('should not be able to move element below background using position', () => {
-      const {restore, arrangeElement} = setupReducer();
+      const { restore, arrangeElement } = setupReducer();
 
-      restore(getInitialState({backgroundElementId: '123'}));
+      restore(getInitialState({ backgroundElementId: '123' }));
 
       // Try to move any non-bg element to position 0
-      const result = arrangeElement({elementId: '345', position: 0});
+      const result = arrangeElement({ elementId: '345', position: 0 });
 
       expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
         '123',
@@ -185,9 +185,9 @@ describe('arrangeElement', () => {
     });
 
     it('should not be able to move element below background using "send backwards"', () => {
-      const {restore, arrangeElement} = setupReducer();
+      const { restore, arrangeElement } = setupReducer();
 
-      restore(getInitialState({backgroundElementId: '123'}));
+      restore(getInitialState({ backgroundElementId: '123' }));
 
       // Try to move the element just above the background further backwards.
       const result = arrangeElement({
@@ -204,9 +204,9 @@ describe('arrangeElement', () => {
     });
 
     it('should not be able to move element below background using "send to back"', () => {
-      const {restore, arrangeElement} = setupReducer();
+      const { restore, arrangeElement } = setupReducer();
 
-      restore(getInitialState({backgroundElementId: '123'}));
+      restore(getInitialState({ backgroundElementId: '123' }));
 
       // Try to move any non-bg element to position BACK
       const result = arrangeElement({
@@ -224,8 +224,8 @@ describe('arrangeElement', () => {
   });
 });
 
-function getElementIdsFromCurrentPage({pages, current}) {
-  return pages.find(({id}) => id === current).elements.map(({id}) => id);
+function getElementIdsFromCurrentPage({ pages, current }) {
+  return pages.find(({ id }) => id === current).elements.map(({ id }) => id);
 }
 
 function getInitialState(extraProps) {
@@ -234,7 +234,7 @@ function getInitialState(extraProps) {
       {
         backgroundElementId: null,
         id: '111',
-        elements: [{id: '123'}, {id: '234'}, {id: '345'}, {id: '456'}],
+        elements: [{ id: '123' }, { id: '234' }, { id: '345' }, { id: '456' }],
         ...extraProps,
       },
     ],

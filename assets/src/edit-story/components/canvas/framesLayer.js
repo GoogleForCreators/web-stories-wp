@@ -22,9 +22,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import {Layer, PageArea} from './layout';
+import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 
@@ -32,20 +32,20 @@ const FramesPageArea = withOverlay(styled(PageArea).attrs({
   className: 'container',
   pointerEvents: 'initial',
 })`
-  background-color: ${({theme}) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
 `);
 
 function FramesLayer() {
   const {
-    state: {currentPage},
+    state: { currentPage },
   } = useStory();
 
   return (
     <Layer pointerEvents="none">
       <FramesPageArea>
         {currentPage &&
-          currentPage.elements.map(({id, ...rest}) => {
-            return <FrameElement key={id} element={{id, ...rest}} />;
+          currentPage.elements.map(({ id, ...rest }) => {
+            return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
         <Selection />
       </FramesPageArea>

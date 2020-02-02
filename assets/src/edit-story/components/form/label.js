@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 
 const Label = styled.span`
-  color: ${({theme}) => theme.colors.mg.v1};
+  color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 11px;
   line-height: 16px;
   flex-basis: 80px;

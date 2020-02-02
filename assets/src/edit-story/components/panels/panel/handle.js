@@ -23,8 +23,8 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useRef} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import {__} from '@wordpress/i18n';
 import useDragHandlers from './useDragHandlers';
 import useKeyboardHandlers from './useKeyboardHandlers';
 
-const Handle = styled.button.attrs({type: 'button', role: 'separator'})`
+const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
   background: transparent;
   border: 0;
   padding: 0;
@@ -46,14 +46,14 @@ const Handle = styled.button.attrs({type: 'button', role: 'separator'})`
 
 const Bar = styled.div`
   margin-top: 4px;
-  background-color: ${({theme}) => theme.colors.bg.v0};
+  background-color: ${({ theme }) => theme.colors.bg.v0};
   width: 32px;
   height: 4px;
   border-radius: 2px;
   text-indent: -10000px; /* hide the text from non-screen-readers */
 `;
 
-function DragHandle({height, minHeight, maxHeight, handleHeightChange}) {
+function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
   const handle = useRef();
   useDragHandlers(handle, handleHeightChange);
   useKeyboardHandlers(handle, handleHeightChange);

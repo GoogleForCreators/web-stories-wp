@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   *,
@@ -55,6 +55,10 @@ const theme = {
     selection: '#44aaff',
     grayout: 'rgba(0, 0, 0, 0.5)',
     whiteout: 'rgba(255, 255, 255, 0.5)',
+    t: {
+      bg: '#000000CC',
+      fg: '#FFFFFFCC',
+    },
   },
   fonts: {
     body1: {

@@ -22,7 +22,7 @@ import Modal from 'react-modal';
 /**
  * WordPress dependencies
  */
-import {render} from '@wordpress/element';
+import { render } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 
 /**
@@ -47,6 +47,6 @@ const initialize = (id, config) => {
 };
 
 domReady(() => {
-  const {id, config} = window.ampStoriesEditSettings;
+  const { id, config } = window.ampStoriesEditSettings;
   initialize(id, config);
 });

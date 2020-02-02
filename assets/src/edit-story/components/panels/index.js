@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
-import {elementTypes} from '../../elements';
+import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
-import FullbleedPanel from './fullbleed';
+import FillPanel from './fill';
 import FontPanel from './font';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
@@ -30,8 +30,8 @@ import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
-export {default as LayerPanel} from './layer';
-export {default as ColorPresetPanel} from './colorPreset';
+export { default as LayerPanel } from './layer';
+export { default as ColorPresetPanel } from './colorPreset';
 
 const ACTIONS = 'actions';
 const COLOR = 'color';
@@ -41,7 +41,7 @@ const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
 const SIZE = 'size';
 const POSITION = 'position';
-const FULLBLEED = 'fullbleed';
+const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const VIDEO_POSTER = 'videoPoster';
@@ -57,14 +57,14 @@ export const PanelTypes = {
   STYLE,
   TEXT,
   ROTATION_ANGLE,
-  FULLBLEED,
+  FILL,
   VIDEO_POSTER,
 };
 
 const ALL = Object.values(PanelTypes);
 
 function intersect(a, b) {
-  return a.filter(v => b.includes(v));
+  return a.filter((v) => b.includes(v));
 }
 
 export function getPanels(elements) {
@@ -73,35 +73,37 @@ export function getPanels(elements) {
   }
 
   // Panels to always display, independent of the selected element.
-  const sharedPanels = [{type: ACTIONS, Panel: ActionsPanel}];
+  const sharedPanels = [{ type: ACTIONS, Panel: ActionsPanel }];
   // Find which panels all the selected elements have in common
   const selectionPanels = elements
-    .map(({type}) => elementTypes.find(elType => elType.type === type).panels)
+    .map(
+      ({ type }) => elementTypes.find((elType) => elType.type === type).panels
+    )
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
-    .map(type => {
+    .map((type) => {
       switch (type) {
         case POSITION:
-          return {type, Panel: PositionPanel};
+          return { type, Panel: PositionPanel };
         case SCALE:
-          return {type, Panel: ScalePanel};
+          return { type, Panel: ScalePanel };
         case ROTATION_ANGLE:
-          return {type, Panel: RotationPanel};
+          return { type, Panel: RotationPanel };
         case SIZE:
-          return {type, Panel: SizePanel};
-        case FULLBLEED:
-          return {type, Panel: FullbleedPanel};
+          return { type, Panel: SizePanel };
+        case FILL:
+          return { type, Panel: FillPanel };
         case BACKGROUND_COLOR:
-          return {type, Panel: BackgroundColorPanel};
+          return { type, Panel: BackgroundColorPanel };
         case COLOR:
-          return {type, Panel: ColorPanel};
+          return { type, Panel: ColorPanel };
         case FONT:
-          return {type, Panel: FontPanel};
+          return { type, Panel: FontPanel };
         case STYLE:
-          return {type, Panel: StylePanel};
+          return { type, Panel: StylePanel };
         case TEXT:
-          return {type, Panel: TextPanel};
+          return { type, Panel: TextPanel };
         case VIDEO_POSTER:
-          return {type, Panel: VideoPosterPanel};
+          return { type, Panel: VideoPosterPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }

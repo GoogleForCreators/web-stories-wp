@@ -22,26 +22,26 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useRef, useEffect, useCallback, useState} from '@wordpress/element';
+import { useRef, useEffect, useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
-import {useStory} from '../../app';
-import {useCanvas} from '../../components/canvas';
-import {useUnits} from '../../units';
-import {ElementFillContent, ElementWithFont} from '../shared';
+import { useStory } from '../../app';
+import { useCanvas } from '../../components/canvas';
+import { useUnits } from '../../units';
+import { elementFillContent, elementWithFont } from '../shared';
 import StoryPropTypes from '../../types';
-import {generateFontFamily} from './util';
+import { generateFontFamily } from './util';
 
 const Element = styled.p`
   margin: 0;
-  ${ElementFillContent}
-  ${ElementWithFont}
+  ${elementFillContent}
+  ${elementWithFont}
 
   opacity: 0;
-  user-select: ${({canSelect}) => (canSelect ? 'initial' : 'none')};
+  user-select: ${({ canSelect }) => (canSelect ? 'initial' : 'none')};
 
   &:focus {
     outline: none;
@@ -60,7 +60,7 @@ function TextFrame({
   },
 }) {
   const {
-    actions: {dataToEditorY},
+    actions: { dataToEditorY },
   } = useUnits();
   const props = {
     fontFamily: generateFontFamily(fontFamily, fontFallback),
@@ -70,11 +70,11 @@ function TextFrame({
     fontWeight,
   };
   const {
-    state: {selectedElementIds},
+    state: { selectedElementIds },
   } = useStory();
 
   const {
-    actions: {setEditingElement, setEditingElementWithState},
+    actions: { setEditingElement, setEditingElementWithState },
   } = useCanvas();
   const isElementSelected = selectedElementIds.includes(id);
   const isElementOnlySelection =
@@ -98,7 +98,7 @@ function TextFrame({
     clickTime.current = window.performance.now();
   }, []);
   const handleMouseUp = useCallback(
-    evt => {
+    (evt) => {
       const timingDifference = window.performance.now() - clickTime.current;
       if (timingDifference > 100) {
         // Only short clicks count
@@ -117,7 +117,7 @@ function TextFrame({
     [id, setEditingElementWithState]
   );
 
-  const handleKeyDown = evt => {
+  const handleKeyDown = (evt) => {
     if (evt.metaKey || evt.altKey || evt.ctrlKey) {
       // Some modifier (except shift) was pressed. Ignore and bubble
       return;
@@ -132,7 +132,7 @@ function TextFrame({
     } else if (/^\w$/.test(evt.key)) {
       // TODO: in above check all printable characters across alphabets, no just a-z0-9 as \w is
       // Enter editing and clear content (first letter will be correctly inserted from keyup)
-      setEditingElementWithState(id, {clearContent: true});
+      setEditingElementWithState(id, { clearContent: true });
       evt.stopPropagation();
     }
 
@@ -157,7 +157,7 @@ function TextFrame({
     <Element
       canSelect={hasFocus}
       ref={element}
-      dangerouslySetInnerHTML={{__html: content}}
+      dangerouslySetInnerHTML={{ __html: content }}
       {...props}
     />
   );

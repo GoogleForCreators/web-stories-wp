@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 
 const pointerEventsCss = css`
-  ${({pointerEvents}) => {
+  ${({ pointerEvents }) => {
     if (pointerEvents && typeof pointerEvents === 'string') {
       return `pointer-events: ${pointerEvents};`;
     }

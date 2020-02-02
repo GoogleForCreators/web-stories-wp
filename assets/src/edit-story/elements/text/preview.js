@@ -22,8 +22,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {getCommonAttributes} from '../shared';
-import {generateFontFamily} from './util';
+import { getCommonAttributes } from '../shared';
+import { generateFontFamily } from './util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -50,7 +50,7 @@ function TextPreview({
   previewSizeMultiplier,
 }) {
   const style = {
-    ...getCommonAttributes({width, height, x, y, rotationAngle}),
+    ...getCommonAttributes({ width, height, x, y, rotationAngle }),
     fontSize: Math.ceil(fontSize * previewSizeMultiplier),
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
@@ -67,8 +67,8 @@ function TextPreview({
   return (
     <p
       id={'el-' + id}
-      style={{...style}}
-      dangerouslySetInnerHTML={{__html: content}}
+      style={{ ...style }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }

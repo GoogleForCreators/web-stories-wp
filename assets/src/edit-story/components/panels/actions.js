@@ -29,12 +29,12 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {SimplePanel} from './panel';
+import { SimplePanel } from './panel';
 
 /**
  * WordPress dependencies
@@ -42,14 +42,14 @@ import {SimplePanel} from './panel';
 
 const Delete = styled.a`
   cursor: pointer;
-  color: ${({theme}) => theme.colors.action};
+  color: ${({ theme }) => theme.colors.action};
 
   &:hover {
-    color: ${({theme}) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.danger};
   }
 `;
 
-function ActionsPanel({deleteSelectedElements}) {
+function ActionsPanel({ deleteSelectedElements }) {
   return (
     <SimplePanel name="actions" title={__('Actions', 'web-stories')}>
       <Delete onClick={deleteSelectedElements}>

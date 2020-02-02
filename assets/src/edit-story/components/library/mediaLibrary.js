@@ -18,19 +18,19 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import {Spinner, Dashicon} from '@wordpress/components';
-import {useEffect} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { Spinner, Dashicon } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {useConfig} from '../../app/config';
+import { useConfig } from '../../app/config';
 import UploadButton from '../uploadButton';
 import useLibrary from './useLibrary';
 
@@ -42,22 +42,22 @@ const Container = styled.div`
 
 const Column = styled.div``;
 
-export const StyledTiles = css`
+export const styledTiles = css`
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
 `;
 
 const Image = styled.img`
-  ${StyledTiles}
+  ${styledTiles}
 `;
 
 const Video = styled.video`
-  ${StyledTiles}
+  ${styledTiles}
 `;
 
 const Title = styled.h3`
-  color: ${({theme}) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
   margin: 0;
   font-size: 19px;
   line-height: 1.4;
@@ -70,12 +70,12 @@ const Header = styled.div`
 `;
 
 const Message = styled.div`
-  color: ${({theme}) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 19px;
 `;
 
 const FilterButtons = styled.div`
-  border-bottom: 2px solid ${({theme}) => theme.colors.mg.v1};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.mg.v1};
   padding: 18px 0;
   margin: 10px 0 15px;
 `;
@@ -85,9 +85,9 @@ const FilterButton = styled.button`
   background: none;
   padding: 0;
   margin: 0 28px 0 0;
-  color: ${({theme, active}) =>
+  color: ${({ theme, active }) =>
     active ? theme.colors.fg.v1 : theme.colors.mg.v1};
-  font-weight: ${({active}) => (active ? 'bold' : 'normal')};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
   font-size: 13px;
 `;
 
@@ -95,15 +95,15 @@ const SearchField = styled.div`
   position: relative;
 `;
 
-const Search = styled.input.attrs({type: 'text'})`
+const Search = styled.input.attrs({ type: 'text' })`
   width: 100%;
-  background: ${({theme}) => theme.colors.mg.v1} !important;
-  border-color: ${({theme}) => theme.colors.mg.v1} !important;
-  color: ${({theme}) => theme.colors.mg.v2} !important;
+  background: ${({ theme }) => theme.colors.mg.v1} !important;
+  border-color: ${({ theme }) => theme.colors.mg.v1} !important;
+  color: ${({ theme }) => theme.colors.mg.v2} !important;
   padding: 2px 10px 2px 33px !important;
 
   &::placeholder {
-    color: ${({theme}) => theme.colors.mg.v2};
+    color: ${({ theme }) => theme.colors.mg.v2};
   }
 `;
 
@@ -111,31 +111,31 @@ const Icon = styled(Dashicon)`
   position: absolute;
   top: 8px;
   left: 10px;
-  fill: ${({theme}) => theme.colors.mg.v2};
+  fill: ${({ theme }) => theme.colors.mg.v2};
 `;
 
 const buttonStyles = css`
   background: none;
-  color: ${({theme}) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
   padding: 5px;
   font-weight: bold;
   flex: 1 0 0;
   text-align: center;
-  border: 1px solid ${({theme}) => theme.colors.mg.v1};
+  border: 1px solid ${({ theme }) => theme.colors.mg.v1};
   border-radius: 3px;
 `;
 
 const FILTERS = [
-  {filter: '', name: __('All', 'web-stories')},
-  {filter: 'image', name: __('Images', 'web-stories')},
-  {filter: 'video', name: __('Video', 'web-stories')},
+  { filter: '', name: __('All', 'web-stories') },
+  { filter: 'image', name: __('Images', 'web-stories') },
+  { filter: 'video', name: __('Video', 'web-stories') },
 ];
 
 const DEFAULT_WIDTH = 150;
 
-function MediaLibrary({onInsert}) {
+function MediaLibrary({ onInsert }) {
   const {
-    state: {media, isMediaLoading, isMediaLoaded, mediaType, searchTerm},
+    state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
     actions: {
       loadMedia,
       setIsMediaLoading,
@@ -159,7 +159,7 @@ function MediaLibrary({onInsert}) {
    * @param {number} n Number
    * @return {boolean} Is even.
    */
-  const isEven = n => {
+  const isEven = (n) => {
     return n % 2 === 0;
   };
 
@@ -168,7 +168,7 @@ function MediaLibrary({onInsert}) {
    *
    * @param {Object} evt Doc Event
    */
-  const onSearch = evt => {
+  const onSearch = (evt) => {
     setSearchTerm(evt.target.value);
     setIsMediaLoading(false);
     setIsMediaLoaded(false);
@@ -179,7 +179,7 @@ function MediaLibrary({onInsert}) {
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = filter => {
+  const onFilter = (filter) => {
     if (filter !== mediaType) {
       setMediaType(filter);
       setIsMediaLoading(false);
@@ -197,7 +197,7 @@ function MediaLibrary({onInsert}) {
    *
    * @param {Object} attachment Attachment object from backbone media picker.
    */
-  const onSelect = attachment => {
+  const onSelect = (attachment) => {
     const {
       url: src,
       mime: mimeType,
@@ -207,7 +207,7 @@ function MediaLibrary({onInsert}) {
       featured_media: posterId,
       featured_media_src: poster,
     } = attachment;
-    const mediaEl = {src, mimeType, oWidth, oHeight, id, posterId, poster};
+    const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
     insertMediaElement(mediaEl, DEFAULT_WIDTH);
   };
 
@@ -219,7 +219,7 @@ function MediaLibrary({onInsert}) {
    * @return {null|*}          Return onInsert or null.
    */
   const insertMediaElement = (attachment, width) => {
-    const {src, mimeType, oWidth, oHeight} = attachment;
+    const { src, mimeType, oWidth, oHeight } = attachment;
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
     if (allowedImageMimeTypes.includes(mimeType)) {
@@ -235,7 +235,7 @@ function MediaLibrary({onInsert}) {
         origHeight: oHeight,
       });
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const {id: videoId, poster, posterId: posterIdRaw} = attachment;
+      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
       const posterId = parseInt(posterIdRaw);
       return onInsert('video', {
         src,
@@ -264,7 +264,7 @@ function MediaLibrary({onInsert}) {
    * @return {null|*}          Element or null if does not map to video/image.
    */
   const getMediaElement = (mediaEl, width) => {
-    const {src, oWidth, oHeight, mimeType} = mediaEl;
+    const { src, oWidth, oHeight, mimeType } = mediaEl;
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
     if (allowedImageMimeTypes.includes(mimeType)) {
@@ -286,10 +286,10 @@ function MediaLibrary({onInsert}) {
           width={width}
           height={height}
           onClick={() => insertMediaElement(mediaEl, width)}
-          onMouseEnter={evt => {
+          onMouseEnter={(evt) => {
             evt.target.play();
           }}
-          onMouseLeave={evt => {
+          onMouseLeave={(evt) => {
             evt.target.pause();
             evt.target.currentTime = 0;
           }}
@@ -326,7 +326,7 @@ function MediaLibrary({onInsert}) {
       </SearchField>
 
       <FilterButtons>
-        {FILTERS.map(({filter, name}, index) => (
+        {FILTERS.map(({ filter, name }, index) => (
           <FilterButton
             key={index}
             active={filter === mediaType}

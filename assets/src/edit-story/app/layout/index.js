@@ -35,11 +35,11 @@ import {
 import DropZoneProvider from '../../components/dropzone/dropZoneProvider';
 
 const Editor = styled.div`
-  font-family: ${({theme}) => theme.fonts.body1.family};
-  font-size: ${({theme}) => theme.fonts.body1.size};
-  line-height: ${({theme}) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({theme}) => theme.fonts.body1.letterSpacing};
-  background-color: ${({theme}) => theme.colors.bg.v1};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  background-color: ${({ theme }) => theme.colors.bg.v1};
   position: absolute;
   left: -20px;
   top: 0;
@@ -54,10 +54,10 @@ const Editor = styled.div`
 `;
 
 const Area = styled.div`
-  grid-area: ${({area}) => area};
+  grid-area: ${({ area }) => area};
   position: relative;
   overflow: hidden;
-  z-index: ${({area}) => (area === 'canv' ? 1 : 2)};
+  z-index: ${({ area }) => (area === 'canv' ? 1 : 2)};
 `;
 
 function Layout() {

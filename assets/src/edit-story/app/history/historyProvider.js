@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
-function HistoryProvider({children, size}) {
+function HistoryProvider({ children, size }) {
   const {
     replayState,
     appendToHistory,

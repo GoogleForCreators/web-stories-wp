@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {PAGE_HEIGHT, PAGE_WIDTH} from '../constants';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 
 /**
  * Converts pixel value to percentage value based on the editor Page measurements.

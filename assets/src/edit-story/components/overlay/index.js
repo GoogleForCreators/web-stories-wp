@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {forwardRef, useContext, createPortal} from '@wordpress/element';
+import { forwardRef, useContext, createPortal } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -37,11 +37,11 @@ const Wrapper = styled.div`
   left: 0;
   width: 0;
   height: 0;
-  z-index: ${({zIndex}) => `${zIndex}`};
+  z-index: ${({ zIndex }) => `${zIndex}`};
 `;
 
-function InOverlayWithRef({zIndex, pointerEvents, render, children}, ref) {
-  const {container, overlay} = useContext(Context);
+function InOverlayWithRef({ zIndex, pointerEvents, render, children }, ref) {
+  const { container, overlay } = useContext(Context);
   if (!container || !overlay) {
     return null;
   }
@@ -50,9 +50,9 @@ function InOverlayWithRef({zIndex, pointerEvents, render, children}, ref) {
       ref={ref}
       zIndex={zIndex || 0}
       pointerEvents={pointerEvents}
-      onMouseDown={evt => evt.stopPropagation()}
+      onMouseDown={(evt) => evt.stopPropagation()}
     >
-      {render ? render({container, overlay}) : children}
+      {render ? render({ container, overlay }) : children}
     </Wrapper>
   );
   return createPortal(slot, overlay);

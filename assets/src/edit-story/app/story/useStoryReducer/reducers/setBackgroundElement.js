@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {moveArrayElement} from './utils';
+import { moveArrayElement } from './utils';
 
 /**
  * Set background element on the current page to the given id.
@@ -32,8 +32,8 @@ import {moveArrayElement} from './utils';
  * @param {number} payload.elementId Element id to set as background on the current page.
  * @return {Object} New state
  */
-function setBackgroundElement(state, {elementId}) {
-  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
+function setBackgroundElement(state, { elementId }) {
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const page = state.pages[pageIndex];
 
@@ -53,7 +53,7 @@ function setBackgroundElement(state, {elementId}) {
     };
   } else {
     // Does the element even exist or is it already background
-    let elementPosition = page.elements.findIndex(({id}) => id === elementId);
+    let elementPosition = page.elements.findIndex(({ id }) => id === elementId);
     if (elementPosition === -1 || page.backgroundElementId === elementId) {
       return state;
     }
@@ -69,7 +69,7 @@ function setBackgroundElement(state, {elementId}) {
       // Also remove old element from selection
       if (state.selection.includes(page.backgroundElementId)) {
         newSelection = state.selection.filter(
-          id => id !== page.backgroundElementId
+          (id) => id !== page.backgroundElementId
         );
       }
     }
@@ -79,7 +79,7 @@ function setBackgroundElement(state, {elementId}) {
 
     //  remove new element from selection if there's more than one element there
     if (state.selection.includes(elementId) && state.selection.length > 1) {
-      newSelection = state.selection.filter(id => id !== elementId);
+      newSelection = state.selection.filter((id) => id !== elementId);
     }
 
     newPage = {

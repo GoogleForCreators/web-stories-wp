@@ -17,14 +17,14 @@
 /**
  * WordPress dependencies
  */
-import {useCallback, renderToString, useState} from '@wordpress/element';
-import {addQueryArgs} from '@wordpress/url';
+import { useCallback, renderToString, useState } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
-import {useAPI} from '../../api';
-import {getDefinitionForType} from '../../../elements';
+import { useAPI } from '../../api';
+import { getDefinitionForType } from '../../../elements';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -32,16 +32,16 @@ import {getDefinitionForType} from '../../../elements';
  * @param {Object} pages Object of pages.
  * @return {Element} Markup of pages.
  */
-const getStoryMarkupFromPages = pages => {
-  const markup = pages.map(page => {
-    const {id} = page;
+const getStoryMarkupFromPages = (pages) => {
+  const markup = pages.map((page) => {
+    const { id } = page;
     return renderToString(
       <amp-story-page id={id}>
         <amp-story-grid-layer template="vertical">
-          {page.elements.map(({type, ...rest}) => {
-            const {id: elId} = rest;
+          {page.elements.map(({ type, ...rest }) => {
+            const { id: elId } = rest;
             // eslint-disable-next-line @wordpress/no-unused-vars-before-return
-            const {Save} = getDefinitionForType(type);
+            const { Save } = getDefinitionForType(type);
             return <Save key={'element-' + elId} {...rest} />;
           })}
         </amp-story-grid-layer>
@@ -60,9 +60,9 @@ const getStoryMarkupFromPages = pages => {
  * @param {Object}    properties.story Story-global properties
  * @return {Function} Function that can be called to save a story.
  */
-function useSaveStory({storyId, pages, story, updateStory}) {
+function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
-    actions: {saveStoryById},
+    actions: { saveStoryById },
   } = useAPI();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -71,12 +71,16 @@ function useSaveStory({storyId, pages, story, updateStory}) {
    *
    * @param {number} postId Current story id.
    */
-  const refreshPostEditURL = useCallback(postId => {
+  const refreshPostEditURL = useCallback((postId) => {
     const getPostEditURL = addQueryArgs('post.php', {
       post: postId,
       action: 'edit',
     });
-    window.history.replaceState({id: postId}, 'Post ' + postId, getPostEditURL);
+    window.history.replaceState(
+      { id: postId },
+      'Post ' + postId,
+      getPostEditURL
+    );
   }, []);
 
   const saveStory = useCallback(() => {
@@ -108,9 +112,9 @@ function useSaveStory({storyId, pages, story, updateStory}) {
       featuredMedia,
       password,
     })
-      .then(post => {
+      .then((post) => {
         setIsSaving(false);
-        const {status: newStatus, slug: newSlug, link} = post;
+        const { status: newStatus, slug: newSlug, link } = post;
         updateStory({
           properties: {
             status: newStatus,
@@ -126,7 +130,7 @@ function useSaveStory({storyId, pages, story, updateStory}) {
       });
   }, [storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL]);
 
-  return {saveStory, isSaving};
+  return { saveStory, isSaving };
 }
 
 export default useSaveStory;

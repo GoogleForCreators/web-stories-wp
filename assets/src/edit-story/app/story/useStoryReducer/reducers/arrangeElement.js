@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {getAbsolutePosition, moveArrayElement} from './utils';
+import { getAbsolutePosition, moveArrayElement } from './utils';
 
 /**
  * Move element in element order on the current page.
@@ -51,14 +51,14 @@ import {getAbsolutePosition, moveArrayElement} from './utils';
  * @param {number} payload.position New position of element to move
  * @return {Object} New state
  */
-function arrangeElement(state, {elementId, position}) {
+function arrangeElement(state, { elementId, position }) {
   if (elementId === null && state.selection.length !== 1) {
     return state;
   }
 
   const idToArrange = elementId !== null ? elementId : state.selection[0];
 
-  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const page = state.pages[pageIndex];
 
@@ -67,7 +67,9 @@ function arrangeElement(state, {elementId, position}) {
     return state;
   }
 
-  const currentPosition = page.elements.findIndex(({id}) => id === idToArrange);
+  const currentPosition = page.elements.findIndex(
+    ({ id }) => id === idToArrange
+  );
 
   if (currentPosition === -1 || page.backgroundElementId === idToArrange) {
     return state;

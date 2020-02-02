@@ -22,30 +22,30 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useFont} from '../../app';
-import {useUnits} from '../../units';
+import { useFont } from '../../app';
+import { useUnits } from '../../units';
 import {
-  ElementFillContent,
-  ElementWithFont,
-  ElementWithBackgroundColor,
-  ElementWithFontColor,
-  ElementWithStyle,
+  elementFillContent,
+  elementWithFont,
+  elementWithBackgroundColor,
+  elementWithFontColor,
+  elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
-import {generateFontFamily} from './util';
+import { generateFontFamily } from './util';
 
 const Element = styled.p`
-  margin: 0;
-  ${ElementFillContent}
-  ${ElementWithFont}
-  ${ElementWithBackgroundColor}
-  ${ElementWithFontColor}
-  ${ElementWithStyle}
+	margin: 0;
+	${elementFillContent}
+	${elementWithFont}
+	${elementWithBackgroundColor}
+	${elementWithFontColor}
+	${elementWithStyle}
 `;
 
 function TextDisplay({
@@ -65,7 +65,7 @@ function TextDisplay({
   },
 }) {
   const {
-    actions: {dataToEditorY},
+    actions: { dataToEditorY },
   } = useUnits();
   const props = {
     color,
@@ -81,14 +81,14 @@ function TextDisplay({
     textAlign,
   };
   const {
-    actions: {maybeEnqueueFontStyle},
+    actions: { maybeEnqueueFontStyle },
   } = useFont();
 
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);
 
-  return <Element dangerouslySetInnerHTML={{__html: content}} {...props} />;
+  return <Element dangerouslySetInnerHTML={{ __html: content }} {...props} />;
 }
 
 TextDisplay.propTypes = {

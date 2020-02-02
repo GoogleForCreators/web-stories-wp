@@ -17,18 +17,19 @@
 /**
  * External dependencies
  */
-import {get} from 'lodash';
+import { get } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useAPI, useHistory} from '../../';
-import {createPage} from '../../../elements';
+import { useAPI, useHistory } from '../../';
+import { createPage } from '../../../elements';
+import { migrate } from '../../../migration';
 
 /**
  * Get the permission by checking for fields in the REST API.
@@ -42,27 +43,27 @@ const getPerm = (post, field) => {
 };
 
 // When ID is set, load story from API.
-function useLoadStory({storyId, shouldLoad, restore}) {
+function useLoadStory({ storyId, shouldLoad, restore }) {
   const {
-    actions: {getStoryById},
+    actions: { getStoryById },
   } = useAPI();
   const {
-    actions: {clearHistory},
+    actions: { clearHistory },
   } = useHistory();
 
   useEffect(() => {
     if (storyId && shouldLoad) {
-      getStoryById(storyId).then(post => {
+      getStoryById(storyId).then((post) => {
         const {
-          title: {raw: title},
+          title: { raw: title },
           status,
           author,
           slug,
           date,
           modified,
-          excerpt: {raw: excerpt},
+          excerpt: { raw: excerpt },
           link,
-          story_data: storyData,
+          story_data: storyDataRaw,
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
           password,
@@ -89,12 +90,17 @@ function useLoadStory({storyId, shouldLoad, restore}) {
         };
 
         // If there are no pages, create empty page.
-        const pages = storyData.length === 0 ? [createPage()] : storyData;
+        const storyData =
+          storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
+        const pages =
+          storyData && storyData.pages && storyData.pages.length > 0
+            ? storyData.pages
+            : [createPage()];
 
         const hasPublishAction = getPerm(post, 'wp:action-publish');
         const hasAssignAuthorAction = getPerm(post, 'wp:action-assign-author');
 
-        const capabilities = {hasPublishAction, hasAssignAuthorAction};
+        const capabilities = { hasPublishAction, hasAssignAuthorAction };
         // TODO read current page and selection from deeplink?
         restore({
           pages,

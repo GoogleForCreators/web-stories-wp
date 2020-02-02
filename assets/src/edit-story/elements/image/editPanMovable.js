@@ -22,13 +22,13 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useRef} from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import {getFocalFromOffset} from './util';
+import { getFocalFromOffset } from './util';
 
 function EditPanMovable({
   setProperties,
@@ -60,12 +60,13 @@ function EditPanMovable({
 
   return (
     <Movable
+      className="default-movable"
       ref={moveableRef}
       targets={croppedImage}
       origin={true}
       draggable={true}
       throttleDrag={0}
-      onDrag={({dist}) => {
+      onDrag={({ dist }) => {
         translateRef.current = dist;
         update();
       }}

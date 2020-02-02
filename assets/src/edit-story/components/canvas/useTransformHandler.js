@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import useCanvas from './useCanvas';
  */
 function useTransformHandler(id, handler, deps = undefined) {
   const {
-    actions: {registerTransformHandler},
+    actions: { registerTransformHandler },
   } = useCanvas();
 
   useEffect(

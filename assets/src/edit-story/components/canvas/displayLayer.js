@@ -22,36 +22,36 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
-import {Layer, PageArea} from './layout';
+import { Layer, PageArea } from './layout';
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
   overflowAllowed: false,
 })`
-  background-color: ${({theme}) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 function DisplayLayer() {
   const {
-    state: {currentPage},
+    state: { currentPage },
   } = useStory();
   const {
-    state: {editingElement},
-    actions: {setPageContainer},
+    state: { editingElement },
+    actions: { setPageContainer },
   } = useCanvas();
 
   return (
     <Layer pointerEvents="none">
       <DisplayPageArea ref={setPageContainer}>
         {currentPage &&
-          currentPage.elements.map(({id, ...rest}) => {
+          currentPage.elements.map(({ id, ...rest }) => {
             if (editingElement === id) {
               return null;
             }
-            return <DisplayElement key={id} element={{id, ...rest}} />;
+            return <DisplayElement key={id} element={{ id, ...rest }} />;
           })}
       </DisplayPageArea>
     </Layer>

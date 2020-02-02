@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {intersect} from './utils';
+import { intersect } from './utils';
 
 /**
  * Set selected elements to the given list of ids.
@@ -36,7 +36,7 @@ import {intersect} from './utils';
  * @param {Array.<string>} payload.elementIds Object with properties of new page
  * @return {Object} New state
  */
-function setSelectedElements(state, {elementIds}) {
+function setSelectedElements(state, { elementIds }) {
   if (!Array.isArray(elementIds)) {
     return state;
   }
@@ -55,8 +55,8 @@ function setSelectedElements(state, {elementIds}) {
   }
 
   // If it's a multi-selection, filter out the background element
-  const currentPage = state.pages.find(({id}) => id === state.current);
-  const isNotBackgroundElement = id => currentPage.backgroundElementId !== id;
+  const currentPage = state.pages.find(({ id }) => id === state.current);
+  const isNotBackgroundElement = (id) => currentPage.backgroundElementId !== id;
   const newSelection =
     uniqueElementIds.length > 1
       ? uniqueElementIds.filter(isNotBackgroundElement)

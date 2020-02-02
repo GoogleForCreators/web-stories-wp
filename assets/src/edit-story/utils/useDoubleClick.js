@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useCallback, useEffect, useState} from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 
 // Disable reason: Should not check indentation in code samples inside
 // markdown, but it does.
@@ -64,7 +64,7 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
   const [target, setTarget] = useState(null);
   const [lastEvent, setLastEvent] = useState(null);
   const getHandler = useCallback(
-    newTarget => evt => {
+    (newTarget) => (evt) => {
       evt.stopPropagation();
 
       if (target !== newTarget) {

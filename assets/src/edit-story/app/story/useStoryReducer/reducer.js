@@ -20,7 +20,7 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
-function reducer(state, {type, payload}) {
+function reducer(state, { type, payload }) {
   switch (type) {
     case types.ADD_PAGE: {
       return reducers.addPage(state, payload);

@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useCallback, useState} from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -34,15 +34,15 @@ const DropZoneWrapper = styled.div`
   height: 100%;
 `;
 
-function DropZoneProvider({children}) {
+function DropZoneProvider({ children }) {
   const [dropZones, setDropZones] = useState([]);
   const [hoveredDropZone, setHoveredDropZone] = useState(null);
 
   const registerDropZone = useCallback(
-    dropZone => {
+    (dropZone) => {
       // If dropZone isn't registered yet.
-      if (dropZone && !dropZones.some(({node}) => node === dropZone.node)) {
-        setDropZones(oldDropZones => [...oldDropZones, dropZone]);
+      if (dropZone && !dropZones.some(({ node }) => node === dropZone.node)) {
+        setDropZones((oldDropZones) => [...oldDropZones, dropZone]);
       }
     },
     [dropZones]
@@ -50,11 +50,11 @@ function DropZoneProvider({children}) {
 
   // Unregisters dropzones which node's don't exist.
   const unregisterDropZone = useCallback(
-    dropZone => {
+    (dropZone) => {
       // If dropZone needs unregistering.
-      if (dropZones.some(dz => dz === dropZone)) {
-        setDropZones(oldDropZones =>
-          oldDropZones.filter(dz => dz !== dropZone)
+      if (dropZones.some((dz) => dz === dropZone)) {
+        setDropZones((oldDropZones) =>
+          oldDropZones.filter((dz) => dz !== dropZone)
         );
       }
     },
@@ -75,10 +75,10 @@ function DropZoneProvider({children}) {
     setHoveredDropZone(null);
   };
 
-  const onDragOver = evt => {
+  const onDragOver = (evt) => {
     evt.preventDefault();
     // Get the hovered dropzone. // @todo Consider dropzone inside dropzone, will we need this?
-    const foundDropZones = dropZones.filter(dropZone => {
+    const foundDropZones = dropZones.filter((dropZone) => {
       return isWithinElementBounds(dropZone.node, evt.clientX, evt.clientY);
     });
 

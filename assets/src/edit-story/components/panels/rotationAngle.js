@@ -22,24 +22,24 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__, _x} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function RotationPanel({selectedElements, onSetProperties}) {
+function RotationPanel({ selectedElements, onSetProperties }) {
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
-  const isFullbleed = getCommonValue(selectedElements, 'isFullbleed');
-  const [state, setState] = useState({rotationAngle});
+  const isFill = getCommonValue(selectedElements, 'isFill');
+  const [state, setState] = useState({ rotationAngle });
   useEffect(() => {
-    setState({rotationAngle});
+    setState({ rotationAngle });
   }, [rotationAngle]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
@@ -53,7 +53,7 @@ function RotationPanel({selectedElements, onSetProperties}) {
         label={__('Rotation angle', 'web-stories')}
         value={state.rotationAngle}
         isMultiple={rotationAngle === ''}
-        onChange={value =>
+        onChange={(value) =>
           setState({
             ...state,
             rotationAngle:
@@ -61,7 +61,7 @@ function RotationPanel({selectedElements, onSetProperties}) {
           })
         }
         postfix={_x('deg', 'Degrees, 0 - 360. ', 'web-stories')}
-        disabled={isFullbleed}
+        disabled={isFill}
       />
     </SimplePanel>
   );

@@ -17,26 +17,26 @@
 /**
  * WordPress dependencies
  */
-import {useCallback, useEffect, useMemo} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useCallback, useEffect, useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../../app/story';
-import {useConfig} from '../../../app/config';
-import {SimplePanel} from '../../panels/panel';
+import { useStory } from '../../../app/story';
+import { useConfig } from '../../../app/config';
+import { SimplePanel } from '../../panels/panel';
 import UploadButton from '../../uploadButton';
-import {SelectMenu, InputGroup} from '../../form';
+import { SelectMenu, InputGroup } from '../../form';
 import useInspector from '../useInspector';
 
 const buttonStyles = css`
-  color: ${({theme}) => theme.colors.mg.v1};
+  color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 14px;
   width: 100%;
   padding: 15px;
@@ -54,20 +54,28 @@ const RemoveButton = styled.button`
 
 function DocumentInspector() {
   const {
-    actions: {loadStatuses, loadUsers},
-    state: {users, statuses},
+    actions: { loadStatuses, loadUsers },
+    state: { users, statuses },
   } = useInspector();
 
   const {
     state: {
-      meta: {isSaving},
-      story: {author, status, slug, date, excerpt, featuredMediaUrl, password},
+      meta: { isSaving },
+      story: {
+        author,
+        status,
+        slug,
+        date,
+        excerpt,
+        featuredMediaUrl,
+        password,
+      },
       capabilities,
     },
-    actions: {updateStory, deleteStory},
+    actions: { updateStory, deleteStory },
   } = useStory();
 
-  const {postThumbnails} = useConfig();
+  const { postThumbnails } = useConfig();
 
   useEffect(() => {
     loadStatuses();
@@ -77,16 +85,16 @@ function DocumentInspector() {
   const allStatuses = useMemo(() => {
     const disabledStatuses =
       status === 'future' ? ['pending'] : ['future', 'pending'];
-    return statuses.filter(({value}) => !disabledStatuses.includes(value));
+    return statuses.filter(({ value }) => !disabledStatuses.includes(value));
   }, [status, statuses]);
 
   const handleChangeValue = useCallback(
-    prop => value => updateStory({properties: {[prop]: value}}),
+    (prop) => (value) => updateStory({ properties: { [prop]: value } }),
     [updateStory]
   );
 
   const handleChangeImage = useCallback(
-    image =>
+    (image) =>
       updateStory({
         properties: {
           featuredMedia: image.id,
@@ -100,15 +108,15 @@ function DocumentInspector() {
   );
 
   const handleRemoveImage = useCallback(
-    evt => {
-      updateStory({properties: {featuredMedia: 0, featuredMediaUrl: ''}});
+    (evt) => {
+      updateStory({ properties: { featuredMedia: 0, featuredMediaUrl: '' } });
       evt.preventDefault();
     },
     [updateStory]
   );
 
   const handleRemoveStory = useCallback(
-    evt => {
+    (evt) => {
       deleteStory();
       evt.preventDefault();
     },
@@ -162,7 +170,7 @@ function DocumentInspector() {
 
         <RemoveButton
           onClick={handleRemoveStory}
-          dangerouslySetInnerHTML={{__html: 'Move to trash'}}
+          dangerouslySetInnerHTML={{ __html: 'Move to trash' }}
         />
       </SimplePanel>
       <SimplePanel name="excerpt" title={__('Excerpt', 'web-stories')}>
@@ -191,7 +199,7 @@ function DocumentInspector() {
         {featuredMediaUrl && (
           <RemoveButton
             onClick={handleRemoveImage}
-            dangerouslySetInnerHTML={{__html: 'Remove image'}}
+            dangerouslySetInnerHTML={{ __html: 'Remove image' }}
           />
         )}
 

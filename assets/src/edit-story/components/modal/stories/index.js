@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import {text} from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * WordPress dependencies
  */
-import {useCallback, useState} from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {Primary} from '../../button';
+import { Primary } from '../../button';
 import Modal from '../';
 
 export default {

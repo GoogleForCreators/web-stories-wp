@@ -22,14 +22,14 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useRef} from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import {useUnits} from '../../units';
-import {getFocalFromOffset} from './util';
+import { useUnits } from '../../units';
+import { getFocalFromOffset } from './util';
 
 function EditCropMovable({
   setProperties,
@@ -43,7 +43,7 @@ function EditCropMovable({
   imgHeight,
 }) {
   const {
-    actions: {editorToDataX, editorToDataY},
+    actions: { editorToDataX, editorToDataY },
   } = useUnits();
 
   const moveableRef = useRef();
@@ -61,7 +61,7 @@ function EditCropMovable({
       targets={cropBox}
       origin={false}
       resizable={true}
-      onResize={({width: resizeWidth, height: resizeHeight, delta, drag}) => {
+      onResize={({ width: resizeWidth, height: resizeHeight, delta, drag }) => {
         const [tx, ty] = [drag.beforeTranslate[0], drag.beforeTranslate[1]];
         cropBox.style.transform = `translate(${tx}px, ${ty}px)`;
         croppedImage.style.transform = `translate(${-tx}px, ${-ty}px)`;

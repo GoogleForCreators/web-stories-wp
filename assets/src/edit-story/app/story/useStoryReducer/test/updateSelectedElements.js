@@ -17,27 +17,29 @@
 /**
  * Internal dependencies
  */
-import {setupReducer} from './_utils';
+import { setupReducer } from './_utils';
 
 describe('updateSelectedElements', () => {
   it('should update the selected elements', () => {
-    const {restore, updateSelectedElements} = setupReducer();
+    const { restore, updateSelectedElements } = setupReducer();
 
     // Set an initial state with a current page and some elements selected.
     const initialState = restore({
-      pages: [{id: '111', elements: [{id: '123'}, {id: '456'}, {id: '789'}]}],
+      pages: [
+        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+      ],
       current: '111',
       selection: ['123', '456'],
     });
 
-    const result = updateSelectedElements({properties: {a: 1}});
+    const result = updateSelectedElements({ properties: { a: 1 } });
 
     expect(result).toStrictEqual({
       ...initialState,
       pages: [
         {
           id: '111',
-          elements: [{id: '123', a: 1}, {id: '456', a: 1}, {id: '789'}],
+          elements: [{ id: '123', a: 1 }, { id: '456', a: 1 }, { id: '789' }],
         },
       ],
       selection: ['123', '456'],
@@ -45,17 +47,58 @@ describe('updateSelectedElements', () => {
   });
 
   it('should do nothing if no elements selected', () => {
-    const {restore, updateSelectedElements} = setupReducer();
+    const { restore, updateSelectedElements } = setupReducer();
 
     // Set an initial state with a current page and some elements, none selected.
     const initialState = restore({
-      pages: [{id: '111', elements: [{id: '123'}, {id: '456'}, {id: '789'}]}],
+      pages: [
+        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+      ],
       current: '111',
       selection: [],
     });
 
-    const result = updateSelectedElements({properties: {a: 1}});
+    const result = updateSelectedElements({ properties: { a: 1 } });
 
     expect(result).toStrictEqual(initialState);
+  });
+
+  it('should update the selected elements with a function', () => {
+    const { restore, updateSelectedElements } = setupReducer();
+
+    // Set an initial state with a current page and some elements selected.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', a: 1 },
+            { id: '456', a: 2 },
+            { id: '789', a: 0 },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['123', '456'],
+    });
+
+    const result = updateSelectedElements({
+      properties: ({ a, ...rest }) => ({ a: a + 1, ...rest }),
+    });
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', a: 2 },
+            { id: '456', a: 3 },
+            { id: '789', a: 0 },
+          ],
+        },
+      ],
+      selection: ['123', '456'],
+    });
   });
 });

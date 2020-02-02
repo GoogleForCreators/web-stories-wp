@@ -75,8 +75,9 @@ const Layer = styled.div`
 const Area = styled.div`
   ${pointerEventsCss}
 
-  grid-area: ${({area}) => area};
-  overflow: ${({overflowAllowed}) => (overflowAllowed ? 'visible' : 'hidden')};
+  grid-area: ${({ area }) => area};
+  overflow: ${({ overflowAllowed }) =>
+    overflowAllowed ? 'visible' : 'hidden'};
   position: relative;
   width: 100%;
   height: 100%;
@@ -84,21 +85,21 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled(Area).attrs({area: 'page', overflowAllowed: true})``;
+const PageArea = styled(Area).attrs({ area: 'page', overflowAllowed: true })``;
 
-const HeadArea = styled(Area).attrs({area: 'head', overflowAllowed: false})``;
+const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
 
-const MenuArea = styled(Area).attrs({area: 'menu', overflowAllowed: false})``;
+const MenuArea = styled(Area).attrs({ area: 'menu', overflowAllowed: false })``;
 
-const NavArea = styled(Area).attrs({overflowAllowed: false})`
+const NavArea = styled(Area).attrs({ overflowAllowed: false })`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const NavPrevArea = styled(NavArea).attrs({area: 'prev'})``;
+const NavPrevArea = styled(NavArea).attrs({ area: 'prev' })``;
 
-const NavNextArea = styled(NavArea).attrs({area: 'next'})``;
+const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'carousel',
@@ -110,10 +111,10 @@ const CarouselArea = styled(Area).attrs({
  */
 function useLayoutParams(containerRef) {
   const {
-    actions: {setPageSize},
+    actions: { setPageSize },
   } = useCanvas();
 
-  useResizeEffect(containerRef, ({width, height}) => {
+  useResizeEffect(containerRef, ({ width, height }) => {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
     const maxWidth = width - PAGE_NAV_WIDTH * 2;
@@ -129,13 +130,13 @@ function useLayoutParams(containerRef) {
         break;
       }
     }
-    setPageSize({width: bestSize[0], height: bestSize[1]});
+    setPageSize({ width: bestSize[0], height: bestSize[1] });
   });
 }
 
 function useLayoutParamsCssVars() {
   const {
-    state: {pageSize},
+    state: { pageSize },
   } = useCanvas();
   return {
     '--page-width-px': `${pageSize.width}px`,

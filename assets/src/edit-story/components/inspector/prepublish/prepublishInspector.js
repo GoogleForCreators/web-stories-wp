@@ -17,12 +17,12 @@
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {SimplePanel} from '../../panels/panel';
+import { SimplePanel } from '../../panels/panel';
 
 function PrepublishInspector() {
   return (

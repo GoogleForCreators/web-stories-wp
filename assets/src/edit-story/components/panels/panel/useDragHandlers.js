@@ -32,7 +32,7 @@ function useDragHandlers(handle, handleHeightChange) {
   // and invoke callback with this difference.
   // Then record new vertical pointer position for next iteration.
   const handlePointerMove = useCallback(
-    evt => {
+    (evt) => {
       const delta = lastPosition.current - evt.pageY;
       handleHeightChange(delta);
       lastPosition.current = evt.pageY;
@@ -42,7 +42,7 @@ function useDragHandlers(handle, handleHeightChange) {
 
   // On pointer up, set dragging as false
   // - will cause useLayoutEffect to unregister listeners.
-  const handlePointerUp = useCallback(evt => {
+  const handlePointerUp = useCallback((evt) => {
     evt.target.releasePointerCapture(evt.pointerId);
     setIsDragging(false);
   }, []);
@@ -50,7 +50,7 @@ function useDragHandlers(handle, handleHeightChange) {
   // On pointer down, set dragging as true
   // - will cause useLayoutEffect to register listeners.
   // Also record the initial vertical pointer position on the page.
-  const handlePointerDown = useCallback(evt => {
+  const handlePointerDown = useCallback((evt) => {
     evt.target.setPointerCapture(evt.pointerId);
     lastPosition.current = evt.pageY;
     setIsDragging(true);

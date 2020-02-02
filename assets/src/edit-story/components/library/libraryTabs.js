@@ -18,14 +18,14 @@
  * Internal dependencies
  */
 import useLibrary from './useLibrary';
-import {Tabs, Media, Text, Shapes, Links} from './tabs';
+import { Tabs, Media, Text, Shapes, Links } from './tabs';
 
 function LibraryTabs() {
   const {
-    state: {tab},
-    actions: {setTab},
+    state: { tab },
+    actions: { setTab },
     data: {
-      tabs: {MEDIA, TEXT, SHAPES, LINKS},
+      tabs: { MEDIA, TEXT, SHAPES, LINKS },
     },
   } = useLibrary();
   const tabs = [

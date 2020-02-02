@@ -28,13 +28,17 @@ import {
   useState,
   useCallback,
 } from '@wordpress/element';
-import {__, sprintf} from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../../app';
-import {LeftArrow, RightArrow, GridView as GridViewButton} from '../../button';
+import { useStory } from '../../../app';
+import {
+  LeftArrow,
+  RightArrow,
+  GridView as GridViewButton,
+} from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
 import DraggablePage from '../draggablePage';
@@ -49,14 +53,14 @@ const Wrapper = styled.div`
   position: relative;
   display: grid;
   grid: 'left-navigation carousel right-navigation' auto / 53px 1fr 53px;
-  background-color: ${({theme}) => theme.colors.bg.v1};
-  color: ${({theme}) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
   height: 100%;
 `;
 
 const Area = styled.div`
-  grid-area: ${({area}) => area};
+  grid-area: ${({ area }) => area};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,9 +71,9 @@ const Area = styled.div`
 const List = styled(Area)`
   flex-direction: row;
   align-items: flex-start;
-  justify-content: ${({hasHorizontalOverflow}) =>
+  justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: ${({hasHorizontalOverflow}) =>
+  overflow-x: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'scroll' : 'hidden'};
 `;
 
@@ -80,8 +84,8 @@ const StyledGridViewButton = styled(GridViewButton)`
 
 function Carousel() {
   const {
-    state: {pages, currentPageIndex, currentPageId},
-    actions: {setCurrentPage},
+    state: { pages, currentPageIndex, currentPageId },
+    actions: { setCurrentPage },
   } = useStory();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -99,7 +103,7 @@ function Carousel() {
   useResizeEffect(
     listRef,
     () => {
-      const {offsetWidth, scrollWidth, scrollLeft} = listRef.current;
+      const { offsetWidth, scrollWidth, scrollLeft } = listRef.current;
       const max = scrollWidth - offsetWidth;
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
@@ -126,22 +130,22 @@ function Carousel() {
     const listElement = listRef.current;
 
     const handleScroll = () => {
-      const {offsetWidth, scrollLeft, scrollWidth} = listElement;
+      const { offsetWidth, scrollLeft, scrollWidth } = listElement;
       const max = scrollWidth - offsetWidth;
       setScrollPercentage(scrollLeft / max);
     };
 
-    listElement.addEventListener('scroll', handleScroll, {passive: true});
+    listElement.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       listElement.removeEventListener('scroll', handleScroll);
     };
   }, [hasHorizontalOverflow]);
 
-  const handleClickPage = page => () => setCurrentPage({pageId: page.id});
+  const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
   const scrollBy = useCallback(
-    offset => {
+    (offset) => {
       if (!listRef.current.scrollBy) {
         listRef.current.scrollLeft += offset;
         return;
@@ -192,7 +196,7 @@ function Carousel() {
                 }
                 isActive={isCurrentPage}
                 pageIndex={index}
-                ref={el => {
+                ref={(el) => {
                   pageRefs.current[page.id] = el;
                 }}
                 width={PAGE_THUMB_WIDTH}

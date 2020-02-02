@@ -26,8 +26,8 @@
  * @param {number} payload.pageId Page id to set as current page
  * @return {Object} New state
  */
-function setCurrentPage(state, {pageId}) {
-  if (!state.pages.some(({id}) => id === pageId)) {
+function setCurrentPage(state, { pageId }) {
+  if (!state.pages.some(({ id }) => id === pageId)) {
     return state;
   }
 

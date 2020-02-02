@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export {default as HistoryProvider} from './historyProvider';
-export {default as useHistory} from './useHistory';
+export { default as HistoryProvider } from './historyProvider';
+export { default as useHistory } from './useHistory';

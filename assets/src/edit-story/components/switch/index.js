@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useState, useEffect} from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 const Group = styled.label`
   display: flex;
@@ -40,7 +40,7 @@ const Label = styled.span`
   text-transform: uppercase;
 `;
 
-const Checkbox = styled.input.attrs({type: 'checkbox'})`
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   /*
 	Hide checkbox visually but remain accessible to screen readers.
 	Source: https://polished.js.org/docs/#hidevisually
@@ -63,7 +63,7 @@ const Slider = styled.span`
   height: 14px;
   position: relative;
   border-radius: 6px;
-  border: 2px solid ${({theme}) => theme.colors.fg.v3};
+  border: 2px solid ${({ theme }) => theme.colors.fg.v3};
   transition: border-color 0.2s ease;
 
   &::after {
@@ -75,16 +75,16 @@ const Slider = styled.span`
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background-color: ${({theme}) => theme.colors.fg.v3};
+    background-color: ${({ theme }) => theme.colors.fg.v3};
     transition: border-color 0.2s ease;
     transition-property: border-color, left, width;
   }
 
   ${Checkbox}:checked + & {
-    border-color: ${({theme}) => theme.colors.action};
+    border-color: ${({ theme }) => theme.colors.action};
 
     &::after {
-      background-color: ${({theme}) => theme.colors.action};
+      background-color: ${({ theme }) => theme.colors.action};
       left: 11px;
     }
   }
@@ -98,9 +98,9 @@ const Slider = styled.span`
   }
 `;
 
-function Switch({label, checked, onChange}) {
+function Switch({ label, checked, onChange }) {
   const [on, setOn] = useState(checked);
-  const handleChange = evt => {
+  const handleChange = (evt) => {
     setOn(evt.target.checked);
     if (onChange) {
       onChange(evt.target.checked);

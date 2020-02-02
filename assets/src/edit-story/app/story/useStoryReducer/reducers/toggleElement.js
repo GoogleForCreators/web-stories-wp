@@ -28,13 +28,13 @@
  * @param {string} payload.elementId Id to either add or remove from selection.
  * @return {Object} New state
  */
-function toggleElement(state, {elementId}) {
+function toggleElement(state, { elementId }) {
   if (!elementId) {
     return state;
   }
 
   const wasSelected = state.selection.includes(elementId);
-  const currentPage = state.pages.find(({id}) => id === state.current);
+  const currentPage = state.pages.find(({ id }) => id === state.current);
   const isBackgroundElement = currentPage.backgroundElementId === elementId;
   const hasExistingSelection = state.selection.length > 0;
 
@@ -44,7 +44,7 @@ function toggleElement(state, {elementId}) {
   }
 
   const newSelection = wasSelected
-    ? state.selection.filter(id => id !== elementId)
+    ? state.selection.filter((id) => id !== elementId)
     : [...state.selection, elementId];
 
   return {

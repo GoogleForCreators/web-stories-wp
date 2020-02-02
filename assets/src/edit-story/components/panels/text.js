@@ -22,22 +22,22 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {InputGroup} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function TextPanel({selectedElements, onSetProperties}) {
+function TextPanel({ selectedElements, onSetProperties }) {
   const content = getCommonValue(selectedElements, 'content');
-  const [state, setState] = useState({content});
+  const [state, setState] = useState({ content });
   useEffect(() => {
-    setState({content});
+    setState({ content });
   }, [content]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
@@ -52,7 +52,7 @@ function TextPanel({selectedElements, onSetProperties}) {
         label={__('Text content', 'web-stories')}
         value={state.content}
         isMultiple={content === ''}
-        onChange={value => setState({...state, content: value})}
+        onChange={(value) => setState({ ...state, content: value })}
       />
     </SimplePanel>
   );

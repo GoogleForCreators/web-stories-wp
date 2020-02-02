@@ -22,7 +22,7 @@ import Moveable from 'react-moveable';
 /**
  * WordPress dependencies
  */
-import {forwardRef} from '@wordpress/element';
+import { forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -31,12 +31,12 @@ import InOverlay from '../overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-function MovableWithRef({...moveableProps}, ref) {
+function MovableWithRef({ ...moveableProps }, ref) {
   return (
     <InOverlay
       zIndex={DEFAULT_Z_INDEX}
       pointerEvents="initial"
-      render={({container}) => {
+      render={({ container }) => {
         return <Moveable ref={ref} container={container} {...moveableProps} />;
       }}
     />

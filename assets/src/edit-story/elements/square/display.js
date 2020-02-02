@@ -22,15 +22,15 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {ElementFillContent, ElementWithBackgroundColor} from '../shared';
+import { elementFillContent, elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-  ${ElementFillContent}
-  ${ElementWithBackgroundColor}
+  ${elementFillContent}
+  ${elementWithBackgroundColor}
 `;
 
-function SquareDisplay({element: {backgroundColor}}) {
+function SquareDisplay({ element: { backgroundColor } }) {
   const props = {
     backgroundColor,
   };

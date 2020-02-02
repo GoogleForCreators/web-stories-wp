@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useState, forwardRef} from '@wordpress/element';
+import { useState, forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,11 +40,11 @@ const Overlay = styled.div`
 `;
 
 function withOverlay(Comp) {
-  return forwardRef(({children, ...rest}, ref) => {
+  return forwardRef(({ children, ...rest }, ref) => {
     const [overlay, setOverlay] = useState(null);
     const [container, setContainer] = useState(null);
     return (
-      <Context.Provider value={{container, overlay}}>
+      <Context.Provider value={{ container, overlay }}>
         <Comp ref={useCombinedRefs(ref, setContainer)} {...rest}>
           {children}
           <Overlay ref={setOverlay} />

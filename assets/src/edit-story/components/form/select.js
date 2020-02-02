@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -50,8 +50,8 @@ function SelectMenu({
       <Select
         disabled={disabled}
         value={value}
-        onChange={evt => onChange(evt.target.value, evt)}
-        onBlur={evt =>
+        onChange={(evt) => onChange(evt.target.value, evt)}
+        onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
         }
       >
@@ -64,11 +64,11 @@ function SelectMenu({
           />
         ) : (
           options &&
-          options.map(({name, value: optValue}) => (
+          options.map(({ name, value: optValue }) => (
             <option
               key={optValue}
               value={optValue}
-              dangerouslySetInnerHTML={{__html: name}}
+              dangerouslySetInnerHTML={{ __html: name }}
             />
           ))
         )}

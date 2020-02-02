@@ -1,32 +1,32 @@
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import {useAPI} from '../app/api';
-import {useStory} from '../app/story';
-import {useConfig} from '../app/config';
+import { useAPI } from '../app/api';
+import { useStory } from '../app/story';
+import { useConfig } from '../app/config';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
-function useUploadVideoFrame({videoId, src, id}) {
+function useUploadVideoFrame({ videoId, src, id }) {
   const {
-    actions: {uploadMedia, saveMedia},
+    actions: { uploadMedia, saveMedia },
   } = useAPI();
-  const {storyId} = useConfig();
+  const { storyId } = useConfig();
   const {
-    actions: {updateElementById},
+    actions: { updateElementById },
   } = useStory();
   const setProperties = useCallback(
-    properties => updateElementById({elementId: id, properties}),
+    (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
 
   const processData = async () => {
     try {
       const obj = await getFirstFrameOfVideo(src);
-      const {id: posterId, source_url: poster} = await uploadMedia(obj);
+      const { id: posterId, source_url: poster } = await uploadMedia(obj);
       await saveMedia(posterId, {
         meta: {
           web_stories_is_poster: true,
@@ -37,7 +37,7 @@ function useUploadVideoFrame({videoId, src, id}) {
         featured_media: posterId,
         post: storyId,
       });
-      const newState = {posterId, poster};
+      const newState = { posterId, poster };
       setProperties(newState);
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.

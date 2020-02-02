@@ -22,39 +22,49 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useRef, useEffect, useState} from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
+import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
-import {useUnits} from '../../units';
-import {MIN_FONT_SIZE, MAX_FONT_SIZE} from '../../constants';
+import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const ALL_HANDLES = ['n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
 
-function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
+function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef();
+  const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const {
-    actions: {updateSelectedElements},
+    actions: { updateSelectedElements },
   } = useStory();
   const {
-    actions: {pushTransform},
+    actions: { pushTransform },
+    state: {
+      pageSize: { width: canvasWidth, height: canvasHeight },
+      nodesById,
+    },
   } = useCanvas();
   const {
-    actions: {getBox, dataToEditorY, editorToDataX, editorToDataY},
+    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
 
   const minMaxFontSize = {
     minFontSize: dataToEditorY(MIN_FONT_SIZE),
     maxFontSize: dataToEditorY(MAX_FONT_SIZE),
   };
+
+  const otherNodes = Object.values(
+    objectWithout(nodesById, [selectedElement.id])
+  );
 
   const latestEvent = useRef();
 
@@ -90,7 +100,7 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
     resize: [0, 0],
   };
 
-  const setTransformStyle = target => {
+  const setTransformStyle = (target) => {
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -106,7 +116,7 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
    *
    * @param {Object} target Target element.
    */
-  const resetMoveable = target => {
+  const resetMoveable = (target) => {
     frame.translate = [0, 0];
     frame.resize = [0, 0];
     pushTransform(selectedElement.id, null);
@@ -127,21 +137,24 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
 
   return (
     <Movable
+      className="default-movable"
       zIndex={0}
       ref={moveable}
       target={targetEl}
-      draggable={!selectedElement.isFullbleed}
-      resizable={!selectedElement.isFullbleed}
-      rotatable={!selectedElement.isFullbleed}
-      onDrag={({target, beforeTranslate}) => {
+      draggable={!selectedElement.isFill}
+      resizable={!selectedElement.isFill && !isDragging}
+      rotatable={!selectedElement.isFill && !isDragging}
+      onDrag={({ target, beforeTranslate }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
       }}
       throttleDrag={0}
-      onDragStart={({set}) => {
+      onDragStart={({ set }) => {
+        setIsDragging(true);
         set(frame.translate);
       }}
-      onDragEnd={({target}) => {
+      onDragEnd={({ target }) => {
+        setIsDragging(false);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 && deltaY !== 0) {
@@ -149,11 +162,11 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),
           };
-          updateSelectedElements({properties});
+          updateSelectedElements({ properties });
         }
         resetMoveable(target);
       }}
-      onResizeStart={({setOrigin, dragStart, direction}) => {
+      onResizeStart={({ setOrigin, dragStart, direction }) => {
         setOrigin(['%', '%']);
         if (dragStart) {
           dragStart.set(frame.translate);
@@ -166,7 +179,7 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
           setIsResizingFromCorner(newResizingMode);
         }
       }}
-      onResize={({target, width, height, drag, direction}) => {
+      onResize={({ target, width, height, drag, direction }) => {
         const isResizingWidth = direction[0] !== 0 && direction[1] === 0;
         const isResizingHeight = direction[0] === 0 && direction[1] !== 0;
         let newHeight = height;
@@ -196,7 +209,7 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
         }
         setTransformStyle(target);
       }}
-      onResizeEnd={({target}) => {
+      onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
         const [deltaX, deltaY] = frame.translate;
         if (editorWidth !== 0 && editorHeight !== 0) {
@@ -216,26 +229,34 @@ function SingleSelectionMovable({selectedElement, targetEl, pushEvent}) {
               )
             );
           }
-          updateSelectedElements({properties});
+          updateSelectedElements({ properties });
         }
         resetMoveable(target);
       }}
-      onRotateStart={({set}) => {
+      onRotateStart={({ set }) => {
         set(frame.rotate);
       }}
-      onRotate={({target, beforeRotate}) => {
+      onRotate={({ target, beforeRotate }) => {
         frame.rotate = beforeRotate;
         setTransformStyle(target);
       }}
-      onRotateEnd={({target}) => {
-        const properties = {rotationAngle: Math.round(frame.rotate)};
-        updateSelectedElements({properties});
+      onRotateEnd={({ target }) => {
+        const properties = { rotationAngle: Math.round(frame.rotate) };
+        updateSelectedElements({ properties });
         resetMoveable(target);
       }}
       origin={false}
       pinchable={true}
       keepRatio={'image' === selectedElement.type && isResizingFromCorner}
       renderDirections={ALL_HANDLES}
+      snappable={true}
+      snapElement={true}
+      snapHorizontal={true}
+      snapVertical={true}
+      snapCenter={true}
+      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
+      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
+      elementGuidelines={otherNodes}
     />
   );
 }

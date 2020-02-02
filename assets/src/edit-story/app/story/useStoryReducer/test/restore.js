@@ -17,17 +17,17 @@
 /**
  * Internal dependencies
  */
-import {setupReducer} from './_utils';
+import { setupReducer } from './_utils';
 
 describe('restore', () => {
   it('should restore pages while defaulting selection and current', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     // Restore only pages variable, leave the other as defaults.
-    const pages = [{id: '123'}];
-    const result = restore({pages});
+    const pages = [{ id: '123' }];
+    const result = restore({ pages });
 
     expect(result).toStrictEqual({
       pages,
@@ -41,10 +41,10 @@ describe('restore', () => {
   it('should restore pages, current and selection', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({
-      pages: [{id: '111'}, {id: '222', elements: [{id: '333'}]}],
+      pages: [{ id: '111' }, { id: '222', elements: [{ id: '333' }] }],
       current: '222',
       selection: ['333'],
     });
@@ -57,10 +57,10 @@ describe('restore', () => {
   it('should restore selection to a unique set', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({
-      pages: [{id: '111', elements: [{id: '222'}]}],
+      pages: [{ id: '111', elements: [{ id: '222' }] }],
       current: '111',
       selection: ['222', '222'],
     });
@@ -71,23 +71,23 @@ describe('restore', () => {
   it('should restore story if set', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({
-      pages: [{id: '111'}],
-      story: {a: 1, b: [2]},
+      pages: [{ id: '111' }],
+      story: { a: 1, b: [2] },
     });
 
-    expect(result.story).toStrictEqual({a: 1, b: [2]});
+    expect(result.story).toStrictEqual({ a: 1, b: [2] });
   });
 
   it('should force current to be a valid page id', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({
-      pages: [{id: '111'}],
+      pages: [{ id: '111' }],
       current: '222',
     });
 
@@ -97,14 +97,14 @@ describe('restore', () => {
   it('should restore to an empty state if no pages', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({
       pages: [],
       current: '111',
       selection: ['222'],
-      story: {a: 1},
-      capabilities: {b: 2},
+      story: { a: 1 },
+      capabilities: { b: 2 },
     });
 
     expect(result).toStrictEqual({
@@ -119,7 +119,7 @@ describe('restore', () => {
   it('should restore to an empty state if empty', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     const result = restore({});
 
@@ -135,15 +135,15 @@ describe('restore', () => {
   it('should override existing content', () => {
     const reducer = setupReducer();
 
-    const {restore} = reducer;
+    const { restore } = reducer;
 
     // First restore to some non-initial state.
     const stateWithContent = restore({
-      pages: [{id: '111'}, {id: '222', elements: [{id: '333'}]}],
+      pages: [{ id: '111' }, { id: '222', elements: [{ id: '333' }] }],
       current: '222',
       selection: ['333'],
-      story: {a: 1},
-      capabilities: {b: 2},
+      story: { a: 1 },
+      capabilities: { b: 2 },
     });
 
     // And validate that it is non-initial.
@@ -154,8 +154,8 @@ describe('restore', () => {
     expect(Object.keys(stateWithContent.capabilities)).not.toHaveLength(0);
 
     // Then override by restoring to a new state.
-    const pages = [{id: '123'}];
-    const result = restore({pages});
+    const pages = [{ id: '123' }];
+    const result = restore({ pages });
 
     expect(result).toStrictEqual({
       pages,

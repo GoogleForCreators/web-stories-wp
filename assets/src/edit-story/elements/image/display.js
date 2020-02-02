@@ -22,41 +22,41 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useRef} from '@wordpress/element';
+import { useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {ElementFillContent} from '../shared';
-import {useTransformHandler} from '../../components/canvas';
+import { elementFillContent } from '../shared';
+import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
-import {ImageWithScale, getImgProps, getImageWithScaleCss} from './util';
+import { imageWithScale, getImgProps, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-  ${ElementFillContent}
+  ${elementFillContent}
   overflow: hidden;
 `;
 
 const Img = styled.img`
   position: absolute;
-  ${ImageWithScale}
+  ${imageWithScale}
 `;
 
 function ImageDisplay({
-  element: {id, src, origRatio, scale, focalX, focalY},
-  box: {width, height},
+  element: { id, src, origRatio, scale, focalX, focalY },
+  box: { width, height },
 }) {
   const imageRef = useRef(null);
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const imgProps = getImgProps(width, height, scale, focalX, focalY, origRatio);
 
-  useTransformHandler(id, transform => {
+  useTransformHandler(id, (transform) => {
     const target = imageRef.current;
     if (transform === null) {
       target.style.transform = '';
     } else {
-      const {resize} = transform;
+      const { resize } = transform;
       if (resize[0] !== 0 && resize[1] !== 0) {
         const newImgProps = getImgProps(
           resize[0],

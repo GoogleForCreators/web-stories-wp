@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useCallback, useLayoutEffect} from '@wordpress/element';
+import { useCallback, useLayoutEffect } from '@wordpress/element';
 
 const KEY_UP = ['Up', 'ArrowUp'];
 const KEY_DOWN = ['Down', 'ArrowDown'];
@@ -27,7 +27,7 @@ function useKeyboardHandlers(handle, handleHeightChange) {
   // Handle up/down keypresses to move separator.
   // TODO Should be rewritten to use MouseTrap when added to .
   const handleKeyPress = useCallback(
-    evt => {
+    (evt) => {
       const isUp = KEY_UP.includes(evt.key);
       const isDown = KEY_DOWN.includes(evt.key);
       if (isUp || isDown) {

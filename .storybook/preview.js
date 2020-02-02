@@ -18,18 +18,18 @@
  * External dependencies
  */
 import React from 'react';
-import {ThemeProvider} from 'styled-components';
-import {addDecorator, addParameters} from '@storybook/react';
-import {withA11y} from '@storybook/addon-a11y';
-import {withKnobs} from '@storybook/addon-knobs';
-import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import { ThemeProvider } from 'styled-components';
+import { addDecorator, addParameters } from '@storybook/react';
+import { withA11y } from '@storybook/addon-a11y';
+import { withKnobs } from '@storybook/addon-knobs';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 /**
  * Internal dependencies
  */
-import theme, {GlobalStyle} from '../assets/src/edit-story/theme';
-import {GlobalStyle as CropMoveableGlobalStyle} from '../assets/src/edit-story/components/movable/cropStyle';
-import {GlobalStyle as ModalGlobalStyle} from '../assets/src/edit-story/components/modal';
+import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
+import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -44,7 +44,7 @@ window.wp.media = {
   },
 };
 
-const {ipad, ipad10p, ipad12p} = INITIAL_VIEWPORTS;
+const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
 addParameters({
   viewport: {
@@ -59,7 +59,7 @@ addParameters({
 addDecorator(withA11y);
 addDecorator(withKnobs);
 
-addDecorator(story => (
+addDecorator((story) => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <CropMoveableGlobalStyle />

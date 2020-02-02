@@ -32,18 +32,20 @@
  * @param {Array.<Object>} payload.elements Elements to insert on the given page.
  * @return {Object} New state
  */
-function addElements(state, {elements}) {
+function addElements(state, { elements }) {
   if (!Array.isArray(elements)) {
     return state;
   }
 
-  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const oldPage = state.pages[pageIndex];
-  const existingIds = oldPage.elements.map(({id}) => id);
-  const filteredElements = elements.filter(({id}) => !existingIds.includes(id));
+  const existingIds = oldPage.elements.map(({ id }) => id);
+  const filteredElements = elements.filter(
+    ({ id }) => !existingIds.includes(id)
+  );
   // Use only last of multiple elements with same id by turning into and object and getting the values.
   const deduplicatedElements = Object.values(
-    Object.fromEntries(filteredElements.map(element => [element.id, element]))
+    Object.fromEntries(filteredElements.map((element) => [element.id, element]))
   );
 
   if (deduplicatedElements.length === 0) {
@@ -61,7 +63,7 @@ function addElements(state, {elements}) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = deduplicatedElements.map(({id}) => id);
+  const newSelection = deduplicatedElements.map(({ id }) => id);
 
   return {
     ...state,

@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 const BLACKLIST_CLIPBOARD_ELEMENTS = ['INPUT', 'TEXTAREA', 'BUTTON'];
 
@@ -32,8 +32,8 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       return undefined;
     }
 
-    const copyCutHandlerWrapper = evt => {
-      const {target, clipboardData} = evt;
+    const copyCutHandlerWrapper = (evt) => {
+      const { target, clipboardData } = evt;
 
       // Elements that either handle their own clipboard or use platform.
       if (!isCopyPasteTarget(target)) {
@@ -54,8 +54,8 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       copyCutHandler(evt);
     };
 
-    const pasteHandlerWrapper = evt => {
-      const {target} = evt;
+    const pasteHandlerWrapper = (evt) => {
+      const { target } = evt;
 
       // Elements that either handle their own clipboard or use platform.
       if (!isCopyPasteTarget(target)) {

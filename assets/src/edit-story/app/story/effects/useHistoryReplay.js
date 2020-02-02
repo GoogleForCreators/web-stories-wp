@@ -17,22 +17,22 @@
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useHistory} from '../../';
+import { useHistory } from '../../';
 
-function useHistoryReplay({restore}) {
+function useHistoryReplay({ restore }) {
   const {
-    state: {replayState},
+    state: { replayState },
   } = useHistory();
   useEffect(() => {
     if (!replayState) {
       return;
     }
-    const {current, pages, selection, story, capabilities} = replayState;
+    const { current, pages, selection, story, capabilities } = replayState;
     restore({
       pages,
       current,

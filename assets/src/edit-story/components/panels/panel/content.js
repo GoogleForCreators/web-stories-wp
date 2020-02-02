@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useContext} from '@wordpress/element';
+import { useContext } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -34,12 +34,12 @@ const Form = styled.form`
   margin: 10px 20px;
   overflow: auto;
 
-  ${({hidden}) => hidden && 'display: none'}
+  ${({ hidden }) => hidden && 'display: none'}
 `;
 
-function Content({children, onSubmit, ...rest}) {
+function Content({ children, onSubmit, ...rest }) {
   const {
-    state: {isCollapsed, height, panelContentId},
+    state: { isCollapsed, height, panelContentId },
   } = useContext(panelContext);
 
   const formStyle = {
@@ -68,7 +68,7 @@ Content.propTypes = {
 };
 
 Content.defaultProps = {
-  onSubmit: evt => evt.preventDefault(),
+  onSubmit: (evt) => evt.preventDefault(),
 };
 
 export default Content;

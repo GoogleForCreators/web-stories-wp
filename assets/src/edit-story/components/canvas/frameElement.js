@@ -23,47 +23,47 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useLayoutEffect, useRef} from '@wordpress/element';
+import { useLayoutEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {getDefinitionForType} from '../../elements';
-import {useStory} from '../../app';
+import { getDefinitionForType } from '../../elements';
+import { useStory } from '../../app';
 import {
-  ElementWithPosition,
-  ElementWithSize,
-  ElementWithRotation,
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
 } from '../../elements/shared';
-import {useUnits} from '../../units';
+import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const Wrapper = styled.div`
-  ${ElementWithPosition}
-  ${ElementWithSize}
-  ${ElementWithRotation}
-  pointer-events: initial;
+	${elementWithPosition}
+	${elementWithSize}
+	${elementWithRotation}
+	pointer-events: initial;
 
   &:focus,
   &:active,
   &:hover {
-    outline: 1px solid ${({theme}) => theme.colors.selection};
+    outline: 1px solid ${({ theme }) => theme.colors.selection};
   }
 `;
 
-function FrameElement({element}) {
-  const {id, type} = element;
-  const {Frame} = getDefinitionForType(type);
+function FrameElement({ element }) {
+  const { id, type } = element;
+  const { Frame } = getDefinitionForType(type);
   const elementRef = useRef();
 
   const {
-    actions: {setNodeForElement, handleSelectElement},
+    actions: { setNodeForElement, handleSelectElement },
   } = useCanvas();
   const {
-    state: {selectedElements},
+    state: { selectedElements },
   } = useStory();
   const {
-    actions: {getBox},
+    actions: { getBox },
   } = useUnits();
 
   useLayoutEffect(() => {
@@ -79,7 +79,7 @@ function FrameElement({element}) {
     <Wrapper
       ref={elementRef}
       {...box}
-      onMouseDown={evt => {
+      onMouseDown={(evt) => {
         if (!isSelected) {
           handleSelectElement(id, evt);
         }

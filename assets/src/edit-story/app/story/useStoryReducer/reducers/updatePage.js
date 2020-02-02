@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import {PAGE_RESERVED_PROPERTIES} from '../types';
-import {objectWithout} from './utils';
+import { PAGE_RESERVED_PROPERTIES } from '../types';
+import { objectWithout } from './utils';
 
 /**
  * Update page by id or current page if no id given.
@@ -33,10 +33,10 @@ import {objectWithout} from './utils';
  * @param {number} payload.properties Object with properties to set for given page.
  * @return {Object} New state
  */
-function updatePage(state, {pageId, properties}) {
+function updatePage(state, { pageId, properties }) {
   const idToUpdate = pageId === null ? state.current : pageId;
 
-  const pageIndex = state.pages.findIndex(({id}) => id === idToUpdate);
+  const pageIndex = state.pages.findIndex(({ id }) => id === idToUpdate);
   if (pageIndex === -1) {
     return state;
   }

@@ -24,7 +24,7 @@ import {
   getAbsolutePosition,
   objectWithout,
 } from '../utils';
-import {LAYER_DIRECTIONS} from '../../../../../constants';
+import { LAYER_DIRECTIONS } from '../../../../../constants';
 
 const ABC = ['A', 'B', 'C'];
 const BCD = ['B', 'C', 'D'];
@@ -52,7 +52,7 @@ describe('intersect', () => {
 
 describe('isInsideRange', () => {
   it('should function as expected', () => {
-    const isSingleDigit = number => isInsideRange(number, 0, 9);
+    const isSingleDigit = (number) => isInsideRange(number, 0, 9);
 
     expect(isSingleDigit(0)).toStrictEqual(true);
     expect(isSingleDigit(3.2)).toStrictEqual(true);
@@ -191,16 +191,16 @@ describe('getAbsolutePosition', () => {
 
 describe('objectWithout', () => {
   it('should return a cloned object without the given key', () => {
-    const input = {a: 1, b: 2};
+    const input = { a: 1, b: 2 };
     const result = objectWithout(input, 'a');
-    expect(input).toStrictEqual({a: 1, b: 2});
-    expect(result).toStrictEqual({b: 2});
+    expect(input).toStrictEqual({ a: 1, b: 2 });
+    expect(result).toStrictEqual({ b: 2 });
   });
 
   it('should do nothing if key not found', () => {
-    const input = {a: 1, b: 2};
+    const input = { a: 1, b: 2 };
     const result = objectWithout(input, 'c');
-    expect(input).toStrictEqual({a: 1, b: 2});
-    expect(result).toStrictEqual({a: 1, b: 2});
+    expect(input).toStrictEqual({ a: 1, b: 2 });
+    expect(result).toStrictEqual({ a: 1, b: 2 });
   });
 });

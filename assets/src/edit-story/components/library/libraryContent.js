@@ -17,8 +17,13 @@
 /**
  * Internal dependencies
  */
-import {createNewElement} from '../../elements';
-import {useStory} from '../../app';
+import {
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../constants';
+import { createNewElement } from '../../elements';
+import { editorToDataX, editorToDataY } from '../../units';
+import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
 import TextLibrary from './textLibrary';
@@ -27,13 +32,13 @@ import LinkLibrary from './linkLibrary';
 
 function Library() {
   const {
-    state: {tab},
+    state: { tab },
     data: {
-      tabs: {MEDIA, TEXT, SHAPES, LINKS},
+      tabs: { MEDIA, TEXT, SHAPES, LINKS },
     },
   } = useLibrary();
   const {
-    actions: {addElement},
+    actions: { addElement },
   } = useStory();
   const ContentLibrary = {
     [MEDIA]: MediaLibrary,
@@ -41,13 +46,15 @@ function Library() {
     [SHAPES]: ShapeLibrary,
     [LINKS]: LinkLibrary,
   }[tab];
-  const handleInsert = (type, props) => {
+  const handleInsert = (type, { width, height, ...props }) => {
     const element = createNewElement(type, {
       ...props,
-      x: Math.round(80 * Math.random()),
-      y: Math.round(70 * Math.random()),
+      x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
+      y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
+      width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
+      height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
     });
-    addElement({element});
+    addElement({ element });
   };
   return <ContentLibrary onInsert={handleInsert} />;
 }

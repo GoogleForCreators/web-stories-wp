@@ -17,6 +17,6 @@
 /**
  * WordPress dependencies
  */
-import {createContext} from '@wordpress/element';
+import { createContext } from '@wordpress/element';
 
-export default createContext({tabs: {}});
+export default createContext({ tabs: {} });

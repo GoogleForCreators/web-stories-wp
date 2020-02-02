@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -29,7 +29,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import InOverlay from '../../components/overlay';
-import {Z_INDEX_CANVAS} from '../../constants';
+import RangeInput from '../../components/rangeInput';
+import { Z_INDEX_CANVAS } from '../../constants';
 
 const MIN_WIDTH = 165;
 const HEIGHT = 28;
@@ -41,13 +42,14 @@ const MAX_SCALE = 400;
 
 const Container = styled.div`
   position: absolute;
-  left: ${({x, width}) => `${x + (width - Math.max(width, MIN_WIDTH)) / 2}px`};
-  top: ${({y, height}) => `${y + height + OFFSET_Y}px`};
-  width: ${({width}) => `${Math.max(width, MIN_WIDTH)}px`};
+  left: ${({ x, width }) =>
+    `${x + (width - Math.max(width, MIN_WIDTH)) / 2}px`};
+  top: ${({ y, height }) => `${y + height + OFFSET_Y}px`};
+  width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
 
-  background: ${({theme}) => theme.colors.bg.v7};
-  border-radius: 4px;
+  background: ${({ theme }) => theme.colors.t.bg};
+  border-radius: 100px;
 
   display: flex;
   flex-direction: row;
@@ -56,39 +58,31 @@ const Container = styled.div`
   padding: 0 4px;
 `;
 
-const Range = styled.input.attrs({
-  type: 'range',
-  min: 100,
-  max: MAX_SCALE,
-  step: 10,
-})`
-  flex: 1 1;
-  margin: 4px;
-  min-width: 100px;
-  cursor: pointer;
-`;
-
 const ResetButton = styled.button`
   flex: 0 0;
   margin-left: 4px;
   height: 20px;
   text-transform: uppercase;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  font-size: 9px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.action};
+  border-radius: 100px;
   border: none;
+  padding: 1px 8px 0 8px;
 `;
 
-function ScalePanel({setProperties, width, height, x, y, scale}) {
+function ScalePanel({ setProperties, width, height, x, y, scale }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
-        <Range
+        <RangeInput
+          min={100}
+          max={MAX_SCALE}
+          step={10}
           value={scale}
-          onChange={evt => setProperties({scale: evt.target.valueAsNumber})}
+          onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
         />
-        <ResetButton onClick={() => setProperties({scale: 100})}>
+        <ResetButton onClick={() => setProperties({ scale: 100 })}>
           {__('Reset', 'web-stories')}
         </ResetButton>
       </Container>

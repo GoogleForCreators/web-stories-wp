@@ -17,13 +17,13 @@
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
-function MediaLibrary({onInsert}) {
+function MediaLibrary({ onInsert }) {
   return (
     <>
       <button
@@ -47,7 +47,7 @@ function MediaLibrary({onInsert}) {
           onInsert('text', {
             content: 'Hello <strong>World</strong>',
             color: 'purple',
-            fontSize: 40,
+            fontSize: 100,
             fontFamily: 'Ubuntu',
             fontWeight: 400,
             width: 50,

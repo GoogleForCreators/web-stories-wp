@@ -23,15 +23,15 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useEffect, useRef} from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
-import {useUnits} from '../../units';
+import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const LassoMode = {
@@ -54,20 +54,20 @@ const Container = withOverlay(styled.div`
 const Lasso = styled.div`
   display: none;
   position: absolute;
-  border: 1px dotted ${({theme}) => theme.colors.selection};
+  border: 1px dotted ${({ theme }) => theme.colors.selection};
   z-index: 1;
 `;
 
-function SelectionCanvas({children}) {
+function SelectionCanvas({ children }) {
   const {
-    actions: {clearSelection},
+    actions: { clearSelection },
   } = useStory();
   const {
-    state: {pageContainer},
-    actions: {clearEditing, selectIntersection},
+    state: { pageContainer },
+    actions: { clearEditing, selectIntersection },
   } = useCanvas();
   const {
-    actions: {editorToDataX, editorToDataY},
+    actions: { editorToDataX, editorToDataY },
   } = useUnits();
 
   const overlayRef = useRef(null);
@@ -101,7 +101,7 @@ function SelectionCanvas({children}) {
     lasso.style.display = lassoMode === LassoMode.ON ? 'block' : 'none';
   };
 
-  const onMouseDown = evt => {
+  const onMouseDown = (evt) => {
     clearSelection();
     clearEditing();
 
@@ -125,7 +125,7 @@ function SelectionCanvas({children}) {
     updateLasso();
   };
 
-  const onMouseMove = evt => {
+  const onMouseMove = (evt) => {
     if (lassoModeRef.current === LassoMode.OFF) {
       return;
     }
@@ -147,7 +147,7 @@ function SelectionCanvas({children}) {
       const height = editorToDataY(lheight);
       clearSelection();
       clearEditing();
-      selectIntersection({x, y, width, height});
+      selectIntersection({ x, y, width, height });
     }
     lassoModeRef.current = LassoMode.OFF;
     updateLasso();

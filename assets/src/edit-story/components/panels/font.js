@@ -22,19 +22,19 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup, SelectMenu} from '../form';
-import {useFont} from '../../app';
-import {MIN_FONT_SIZE, MAX_FONT_SIZE} from '../../constants';
-import {SimplePanel} from './panel';
+import { InputGroup, SelectMenu } from '../form';
+import { useFont } from '../../app';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function FontPanel({selectedElements, onSetProperties}) {
+function FontPanel({ selectedElements, onSetProperties }) {
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
@@ -43,8 +43,8 @@ function FontPanel({selectedElements, onSetProperties}) {
   const fontFallback = getCommonValue(selectedElements, 'fontFallback');
 
   const {
-    state: {fonts},
-    actions: {getFontWeight, getFontFallback},
+    state: { fonts },
+    actions: { getFontWeight, getFontFallback },
   } = useFont();
   const [state, setState] = useState({
     fontFamily,
@@ -67,14 +67,14 @@ function FontPanel({selectedElements, onSetProperties}) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontFamily, fontStyle, fontSize, fontWeight, getFontWeight]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
 
   const fontStyles = [
-    {name: __('Normal', 'web-stories'), value: 'normal'},
-    {name: __('Italic', 'web-stories'), value: 'italic'},
+    { name: __('Normal', 'web-stories'), value: 'normal' },
+    { name: __('Italic', 'web-stories'), value: 'italic' },
   ];
 
   return (
@@ -89,11 +89,11 @@ function FontPanel({selectedElements, onSetProperties}) {
           options={fonts}
           value={state.fontFamily}
           isMultiple={fontFamily === ''}
-          onChange={value => {
+          onChange={(value) => {
             const currentFontWeights = getFontWeight(value);
             const currentFontFallback = getFontFallback(value);
             const fontWeightsArr = currentFontWeights.map(
-              ({thisValue}) => thisValue
+              ({ thisValue }) => thisValue
             );
             const newFontWeight =
               fontWeightsArr && fontWeightsArr.includes(state.fontWeight)
@@ -114,7 +114,7 @@ function FontPanel({selectedElements, onSetProperties}) {
         options={fontStyles}
         isMultiple={fontStyle === ''}
         value={state.fontStyle}
-        onChange={value => setState({...state, fontStyle: value})}
+        onChange={(value) => setState({ ...state, fontStyle: value })}
       />
       {state.fontWeights && (
         <SelectMenu
@@ -122,7 +122,9 @@ function FontPanel({selectedElements, onSetProperties}) {
           options={state.fontWeights}
           value={state.fontWeight}
           isMultiple={fontWeight === ''}
-          onChange={value => setState({...state, fontWeight: parseInt(value)})}
+          onChange={(value) =>
+            setState({ ...state, fontWeight: parseInt(value) })
+          }
         />
       )}
       <InputGroup
@@ -133,7 +135,7 @@ function FontPanel({selectedElements, onSetProperties}) {
         postfix={'px'}
         min={MIN_FONT_SIZE}
         max={MAX_FONT_SIZE}
-        onChange={value => setState({...state, fontSize: parseInt(value)})}
+        onChange={(value) => setState({ ...state, fontSize: parseInt(value) })}
       />
     </SimplePanel>
   );

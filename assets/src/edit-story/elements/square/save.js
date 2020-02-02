@@ -22,17 +22,25 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {getCommonAttributes} from '../shared';
+import { getCommonAttributes } from '../shared';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function SquareSave({id, backgroundColor, width, height, x, y, rotationAngle}) {
+function SquareSave({
+  id,
+  backgroundColor,
+  width,
+  height,
+  x,
+  y,
+  rotationAngle,
+}) {
   const style = {
-    ...getCommonAttributes({width, height, x, y, rotationAngle}),
+    ...getCommonAttributes({ width, height, x, y, rotationAngle }),
     background: backgroundColor,
   };
-  return <div id={'el-' + id} style={{...style}} />;
+  return <div id={'el-' + id} style={{ ...style }} />;
 }
 
 SquareSave.propTypes = {

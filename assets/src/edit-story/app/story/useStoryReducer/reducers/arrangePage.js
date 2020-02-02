@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {isInsideRange, moveArrayElement} from './utils';
+import { isInsideRange, moveArrayElement } from './utils';
 
 /**
  * Move page in page order with the given id to the given position.
@@ -37,13 +37,13 @@ import {isInsideRange, moveArrayElement} from './utils';
  * @param {number} payload.position Index of where page should be moved to.
  * @return {Object} New state
  */
-function arrangePage(state, {pageId, position}) {
+function arrangePage(state, { pageId, position }) {
   // Abort if there's less than two elements (nothing to rearrange)
   if (state.pages.length < 2) {
     return state;
   }
 
-  const pageIndex = state.pages.findIndex(({id}) => id === pageId);
+  const pageIndex = state.pages.findIndex(({ id }) => id === pageId);
   const isTargetWithinBounds = isInsideRange(
     position,
     0,

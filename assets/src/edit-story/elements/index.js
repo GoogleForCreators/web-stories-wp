@@ -22,7 +22,7 @@ import uuid from 'uuid/v4';
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ import * as squareElement from './square';
 import * as videoElement from './video';
 
 export const createNewElement = (type, attributes = {}) => {
-  const element = elementTypes.find(el => el.type === type);
+  const element = elementTypes.find((el) => el.type === type);
   const defaultAttributes = element ? element.defaultAttributes : {};
   return {
     ...defaultAttributes,
@@ -43,19 +43,19 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = attributes => createNewElement('page', attributes);
+export const createPage = (attributes) => createNewElement('page', attributes);
 
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: {elements: []},
+    defaultAttributes: { elements: [] },
     name: __('Page', 'web-stories'),
   },
-  {type: 'text', name: __('Text', 'web-stories'), ...textElement},
-  {type: 'image', name: __('Image', 'web-stories'), ...imageElement},
-  {type: 'square', name: __('Square', 'web-stories'), ...squareElement},
-  {type: 'video', name: __('Video', 'web-stories'), ...videoElement},
+  { type: 'text', name: __('Text', 'web-stories'), ...textElement },
+  { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
+  { type: 'square', name: __('Square', 'web-stories'), ...squareElement },
+  { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
 ];
 
-export const getDefinitionForType = type =>
-  elementTypes.find(el => el.type === type);
+export const getDefinitionForType = (type) =>
+  elementTypes.find((el) => el.type === type);

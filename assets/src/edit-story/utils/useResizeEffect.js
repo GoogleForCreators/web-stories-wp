@@ -6,7 +6,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 /**
  * WordPress dependencies
  */
-import {useEffect} from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * @param {!{current: ?Element}} ref Target node ref.
@@ -22,11 +22,11 @@ function useResizeEffect(ref, handler, deps = undefined) {
         return null;
       }
 
-      const observer = new ResizeObserver(entries => {
+      const observer = new ResizeObserver((entries) => {
         const last = entries.length > 0 ? entries[entries.length - 1] : null;
         if (last) {
-          const {width, height} = last.contentRect;
-          handler({width, height});
+          const { width, height } = last.contentRect;
+          handler({ width, height });
         }
       });
 

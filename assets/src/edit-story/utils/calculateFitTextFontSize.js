@@ -30,21 +30,21 @@ function calculateFitTextFontSize(
   measurer,
   expectedHeight,
   expectedWidth,
-  {minFontSize, maxFontSize}
+  { minFontSize, maxFontSize }
 ) {
   // Return false if calculation is not possible due to width and height missing, e.g. in disabled preview.
   if (!measurer.offsetHeight || !measurer.offsetWidth) {
     return false;
   }
 
-  const setStyle = style => {
+  const setStyle = (style) => {
     const rules = Object.entries(style);
     for (const [k, value] of rules) {
       measurer.style[k] = value;
     }
   };
 
-  const {display, height, width, position} = measurer.style;
+  const { display, height, width, position } = measurer.style;
   const originalStyle = {
     display,
     height,

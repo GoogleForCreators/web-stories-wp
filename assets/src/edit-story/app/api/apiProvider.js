@@ -22,25 +22,26 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import {addQueryArgs} from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
-import {useConfig} from '../';
+import { DATA_VERSION } from '../../migration';
+import { useConfig } from '../';
 import Context from './context';
 
-function APIProvider({children}) {
+function APIProvider({ children }) {
   const {
-    api: {stories, media, fonts, users, statuses},
+    api: { stories, media, fonts, users, statuses },
   } = useConfig();
 
   const getStoryById = useCallback(
-    storyId => {
-      const path = addQueryArgs(`${stories}/${storyId}`, {context: `edit`});
-      return apiFetch({path});
+    (storyId) => {
+      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      return apiFetch({ path });
     },
     [stories]
   );
@@ -90,7 +91,7 @@ function APIProvider({children}) {
           modified,
           content,
           excerpt,
-          story_data: pages,
+          story_data: { version: DATA_VERSION, pages },
           featured_media: featuredMedia,
         },
         method: 'POST',
@@ -106,7 +107,7 @@ function APIProvider({children}) {
      * @param {number}   storyId Story post id.
      * @return {Promise} Return apiFetch promise.
      */
-    storyId => {
+    (storyId) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
         method: 'DELETE',
@@ -116,25 +117,25 @@ function APIProvider({children}) {
   );
 
   const getMedia = useCallback(
-    ({mediaType, searchTerm}) => {
+    ({ mediaType, searchTerm }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, {per_page: perPage});
+      apiPath = addQueryArgs(apiPath, { per_page: perPage });
 
       if (mediaType) {
-        apiPath = addQueryArgs(apiPath, {media_type: mediaType});
+        apiPath = addQueryArgs(apiPath, { media_type: mediaType });
       }
 
       if (searchTerm) {
-        apiPath = addQueryArgs(apiPath, {search: searchTerm});
+        apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({path: apiPath}).then(data =>
+      return apiFetch({ path: apiPath }).then((data) =>
         data.map(
           ({
             id,
-            guid: {rendered: src},
-            media_details: {width: oWidth, height: oHeight},
+            guid: { rendered: src },
+            media_details: { width: oWidth, height: oHeight },
             mime_type: mimeType,
             featured_media: posterId,
             featured_media_src: poster,
@@ -161,7 +162,7 @@ function APIProvider({children}) {
    * @return {Promise} Media Object Promise.
    */
   const uploadMedia = useCallback(
-    file => {
+    (file) => {
       // Create upload payload
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
@@ -194,8 +195,8 @@ function APIProvider({children}) {
 
   const getAllFonts = useCallback(
     ({}) => {
-      return apiFetch({path: fonts}).then(data =>
-        data.map(font => ({
+      return apiFetch({ path: fonts }).then((data) =>
+        data.map((font) => ({
           value: font.name,
           ...font,
         }))
@@ -205,12 +206,12 @@ function APIProvider({children}) {
   );
 
   const getAllStatuses = useCallback(() => {
-    const path = addQueryArgs(statuses, {context: `edit`});
-    return apiFetch({path});
+    const path = addQueryArgs(statuses, { context: `edit` });
+    return apiFetch({ path });
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({path: users});
+    return apiFetch({ path: users });
   }, [users]);
 
   const state = {

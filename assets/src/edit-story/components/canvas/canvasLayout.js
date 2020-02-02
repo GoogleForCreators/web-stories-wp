@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useRef} from '@wordpress/element';
+import { useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -32,10 +32,10 @@ import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
 import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
-import {useLayoutParams, useLayoutParamsCssVars} from './layout';
+import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 
 const Background = styled.div`
-  background-color: ${({theme}) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v1};
   width: 100%;
   height: 100%;
   position: relative;

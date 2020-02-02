@@ -23,21 +23,21 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useCallback } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {PAGE_NAV_BUTTON_WIDTH} from '../../../constants';
-import {useStory} from '../../../app';
-import {LeftArrow, RightArrow} from '../../button';
+import { PAGE_NAV_BUTTON_WIDTH } from '../../../constants';
+import { useStory } from '../../../app';
+import { LeftArrow, RightArrow } from '../../button';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: ${({isNext}) => (isNext ? 'flex-end' : 'flex-start')};
-  color: ${({theme}) => theme.colors.fg.v1};
+  justify-content: ${({ isNext }) => (isNext ? 'flex-end' : 'flex-start')};
+  color: ${({ theme }) => theme.colors.fg.v1};
   width: ${PAGE_NAV_BUTTON_WIDTH}px;
   height: ${PAGE_NAV_BUTTON_WIDTH}px;
 
@@ -46,17 +46,17 @@ const Wrapper = styled.div`
   }
 `;
 
-function PageNav({isNext}) {
+function PageNav({ isNext }) {
   const {
-    state: {pages, currentPageIndex},
-    actions: {setCurrentPage},
+    state: { pages, currentPageIndex },
+    actions: { setCurrentPage },
   } = useStory();
   const handleClick = useCallback(() => {
     const newPage = isNext
       ? pages[currentPageIndex + 1]
       : pages[currentPageIndex - 1];
     if (newPage) {
-      setCurrentPage({pageId: newPage.id});
+      setCurrentPage({ pageId: newPage.id });
     }
   }, [setCurrentPage, currentPageIndex, isNext, pages]);
   const displayNav =

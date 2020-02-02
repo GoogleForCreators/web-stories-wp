@@ -17,9 +17,9 @@
 /**
  * WordPress dependencies
  */
-import {useCallback} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 
-function useLoadFontFiles({getFontByName}) {
+function useLoadFontFiles({ getFontByName }) {
   /**
    * Adds a <link> element to the <head> for a given font in case there is none yet.
    *
@@ -28,7 +28,7 @@ function useLoadFontFiles({getFontByName}) {
    * @param {string} name Font name.
    */
   const maybeEnqueueFontStyle = useCallback(
-    name => {
+    (name) => {
       if (!name) {
         return;
       }
@@ -38,7 +38,7 @@ function useLoadFontFiles({getFontByName}) {
         return;
       }
 
-      const {handle, src} = font;
+      const { handle, src } = font;
       if (!handle || !src) {
         return;
       }

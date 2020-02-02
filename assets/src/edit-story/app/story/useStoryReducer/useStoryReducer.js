@@ -17,12 +17,12 @@
 /**
  * WordPress dependencies
  */
-import {useReducer, useMemo} from '@wordpress/element';
+import { useReducer, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {exposedActions, internalActions} from './actions';
+import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
 const INITIAL_STATE = {
@@ -57,8 +57,8 @@ const INITIAL_STATE = {
 function useStoryReducer() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  const {internal, api} = useMemo(() => {
-    const wrapWithDispatch = actions =>
+  const { internal, api } = useMemo(() => {
+    const wrapWithDispatch = (actions) =>
       Object.keys(actions).reduce(
         (collection, action) => ({
           ...collection,

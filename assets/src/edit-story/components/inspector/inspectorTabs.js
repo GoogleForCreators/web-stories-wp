@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -25,17 +25,17 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {getTabId} from './utils';
+import { getTabId } from './utils';
 import useInspector from './useInspector';
 
 const Tabs = styled.div`
-  background-color: ${({theme}) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
   display: flex;
   height: 100%;
   margin: 0;
 `;
 
-const Tab = styled.button.attrs({role: 'tab'})`
+const Tab = styled.button.attrs({ role: 'tab' })`
   width: 33.33%;
   height: 100%;
   text-align: center;
@@ -43,10 +43,10 @@ const Tab = styled.button.attrs({role: 'tab'})`
   border: none;
   background: none;
   text-transform: uppercase;
-  color: ${({theme}) => theme.colors.fg.v0};
-  font-family: ${({theme}) => theme.fonts.tab.family};
-  font-size: ${({theme}) => theme.fonts.tab.size};
-  line-height: ${({theme}) => theme.fonts.tab.lineHeight};
+  color: ${({ theme }) => theme.colors.fg.v0};
+  font-family: ${({ theme }) => theme.fonts.tab.family};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
   word-break: break-word;
 
   &:focus,
@@ -54,7 +54,7 @@ const Tab = styled.button.attrs({role: 'tab'})`
     outline: none;
   }
 
-  ${({isActive}) =>
+  ${({ isActive }) =>
     !isActive &&
     `
 		opacity: .3;
@@ -64,10 +64,10 @@ const Tab = styled.button.attrs({role: 'tab'})`
 
 function InspectorTabs() {
   const {
-    state: {tab},
-    actions: {setTab},
+    state: { tab },
+    actions: { setTab },
     data: {
-      tabs: {DESIGN, DOCUMENT, PREPUBLISH},
+      tabs: { DESIGN, DOCUMENT, PREPUBLISH },
     },
   } = useInspector();
   const tabs = [

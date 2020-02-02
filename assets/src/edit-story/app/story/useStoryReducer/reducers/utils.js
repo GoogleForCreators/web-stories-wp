@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import {LAYER_DIRECTIONS} from '../../../../constants';
+import { LAYER_DIRECTIONS } from '../../../../constants';
+export { default as objectWithout } from '../../../../utils/objectWithout';
 
 export function intersect(first, ...rest) {
   if (!first || !rest || rest.length === 0) {
@@ -25,7 +26,8 @@ export function intersect(first, ...rest) {
   }
 
   return rest.reduce(
-    (intersection, list) => intersection.filter(value => list.includes(value)),
+    (intersection, list) =>
+      intersection.filter((value) => list.includes(value)),
     first
   );
 }
@@ -76,10 +78,4 @@ export function getAbsolutePosition({
     default:
       return currentPosition;
   }
-}
-
-export function objectWithout(obj, propertiesToRemove) {
-  return Object.keys(obj)
-    .filter(key => !propertiesToRemove.includes(key))
-    .reduce((newObj, key) => ({...newObj, [key]: obj[key]}), {});
 }

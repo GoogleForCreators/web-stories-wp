@@ -17,17 +17,17 @@
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import useCanvas from '../canvas/useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
 import MultiSelectionMovable from './multiSelectionMovable';
 
 function Selection() {
   const {
-    state: {selectedElements},
+    state: { selectedElements },
   } = useStory();
   const {
-    state: {editingElement, lastSelectionEvent, nodesById},
+    state: { editingElement, lastSelectionEvent, nodesById },
   } = useCanvas();
 
   // Do not show selection for in editing mode.
@@ -58,12 +58,7 @@ function Selection() {
   }
 
   // Multi-selection.
-  return (
-    <MultiSelectionMovable
-      selectedElements={selectedElements}
-      nodesById={nodesById}
-    />
-  );
+  return <MultiSelectionMovable selectedElements={selectedElements} />;
 }
 
 export default Selection;

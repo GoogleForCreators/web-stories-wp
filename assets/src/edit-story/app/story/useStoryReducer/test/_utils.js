@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import {renderHook, act} from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -25,13 +25,13 @@ import {renderHook, act} from '@testing-library/react-hooks';
 import useStoryReducer from '../useStoryReducer';
 
 export function setupReducer() {
-  const {result} = renderHook(() => useStoryReducer());
+  const { result } = renderHook(() => useStoryReducer());
 
   // convert each method to be wrapped in act and return the new state
-  const wrapWithAct = methods =>
+  const wrapWithAct = (methods) =>
     Object.keys(methods).reduce((obj, methodName) => {
       const method = methods[methodName];
-      const wrapped = parms => {
+      const wrapped = (parms) => {
         act(() => method(parms));
         return result.current.state;
       };

@@ -22,17 +22,17 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__, _x} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup, SelectMenu} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup, SelectMenu } from '../form';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function StylePanel({selectedElements, onSetProperties}) {
+function StylePanel({ selectedElements, onSetProperties }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
@@ -44,19 +44,19 @@ function StylePanel({selectedElements, onSetProperties}) {
     padding,
   });
   useEffect(() => {
-    setState({textAlign, letterSpacing, lineHeight, padding});
+    setState({ textAlign, letterSpacing, lineHeight, padding });
   }, [textAlign, letterSpacing, lineHeight, padding]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
 
   const alignmentOptions = [
-    {name: __('Default', 'web-stories'), value: ''},
-    {name: __('Left', 'web-stories'), value: 'left'},
-    {name: __('Right', 'web-stories'), value: 'right'},
-    {name: __('Center', 'web-stories'), value: 'center'},
-    {name: __('Justify', 'web-stories'), value: 'justify'},
+    { name: __('Default', 'web-stories'), value: '' },
+    { name: __('Left', 'web-stories'), value: 'left' },
+    { name: __('Right', 'web-stories'), value: 'right' },
+    { name: __('Center', 'web-stories'), value: 'center' },
+    { name: __('Justify', 'web-stories'), value: 'justify' },
   ];
 
   return (
@@ -70,13 +70,13 @@ function StylePanel({selectedElements, onSetProperties}) {
         options={alignmentOptions}
         isMultiple={'' === textAlign}
         value={state.textAlign}
-        onChange={value => setState({...state, textAlign: value})}
+        onChange={(value) => setState({ ...state, textAlign: value })}
       />
       <InputGroup
         label={__('Line height', 'web-stories')}
         value={state.lineHeight}
         isMultiple={'' === lineHeight}
-        onChange={value =>
+        onChange={(value) =>
           setState({
             ...state,
             lineHeight: isNaN(value) ? '' : parseFloat(value),
@@ -88,8 +88,8 @@ function StylePanel({selectedElements, onSetProperties}) {
         label={__('Letter-spacing', 'web-stories')}
         value={state.letterSpacing}
         isMultiple={'' === letterSpacing}
-        onChange={value =>
-          setState({...state, letterSpacing: isNaN(value) ? '' : value})
+        onChange={(value) =>
+          setState({ ...state, letterSpacing: isNaN(value) ? '' : value })
         }
         postfix={_x('em', 'em, the measurement of size', 'web-stories')}
         step="0.1"
@@ -98,8 +98,8 @@ function StylePanel({selectedElements, onSetProperties}) {
         label={__('Padding', 'web-stories')}
         value={state.padding}
         isMultiple={'' === padding}
-        onChange={value =>
-          setState({...state, padding: isNaN(value) ? '' : parseInt(value)})
+        onChange={(value) =>
+          setState({ ...state, padding: isNaN(value) ? '' : parseInt(value) })
         }
         postfix={_x('%', 'Percentage', 'web-stories')}
       />

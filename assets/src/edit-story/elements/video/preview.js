@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {getCommonAttributes} from '../shared';
+import { getCommonAttributes } from '../shared';
 
 function VideoPreview({
   id,
@@ -45,9 +45,9 @@ function VideoPreview({
     id: 'el-' + id,
   };
 
-  const style = getCommonAttributes({width, height, x, y, rotationAngle});
+  const style = getCommonAttributes({ width, height, x, y, rotationAngle });
   return (
-    <div style={{...style}} {...wrapperProps}>
+    <div style={{ ...style }} {...wrapperProps}>
       <video {...sourceProps} />
     </div>
   );

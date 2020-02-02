@@ -22,15 +22,15 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
-import {addQueryArgs} from '@wordpress/url';
-import {Spinner} from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { Spinner } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
-import {Outline, Primary} from '../button';
+import { useStory } from '../../app';
+import { Outline, Primary } from '../button';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -50,8 +50,8 @@ const Space = styled.div`
 function PreviewButton() {
   const {
     state: {
-      meta: {isSaving},
-      story: {link},
+      meta: { isSaving },
+      story: { link },
     },
   } = useStory();
 
@@ -59,7 +59,7 @@ function PreviewButton() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = () => {
-    const previewLink = addQueryArgs(link, {preview: 'true'});
+    const previewLink = addQueryArgs(link, { preview: 'true' });
     window.open(previewLink, '_blank');
   };
   return (
@@ -72,10 +72,10 @@ function PreviewButton() {
 function Publish() {
   const {
     state: {
-      meta: {isSaving},
-      story: {status},
+      meta: { isSaving },
+      story: { status },
     },
-    actions: {saveStory},
+    actions: { saveStory },
   } = useStory();
 
   let text;
@@ -102,7 +102,7 @@ function Publish() {
 
 function Loading() {
   const {
-    state: {isSaving},
+    state: { isSaving },
   } = useStory();
 
   return isSaving ? <Spinner /> : <Space />;

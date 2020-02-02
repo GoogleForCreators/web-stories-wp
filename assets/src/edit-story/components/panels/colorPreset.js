@@ -17,12 +17,12 @@
 /**
  * WordPress dependencies
  */
-import {__} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {Panel, PanelTitle, PanelContent} from './panel';
+import { Panel, PanelTitle, PanelContent } from './panel';
 
 function ColorPresetPanel() {
   return (

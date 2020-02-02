@@ -22,23 +22,23 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useEffect, useState} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {InputGroup} from '../form';
-import {SimplePanel} from './panel';
+import { InputGroup } from '../form';
+import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function ColorPanel({selectedElements, onSetProperties}) {
+function ColorPanel({ selectedElements, onSetProperties }) {
   const color = getCommonValue(selectedElements, 'color');
-  const [state, setState] = useState({color});
+  const [state, setState] = useState({ color });
   useEffect(() => {
-    setState({color});
+    setState({ color });
   }, [color]);
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
@@ -53,7 +53,7 @@ function ColorPanel({selectedElements, onSetProperties}) {
         label={__('Color', 'web-stories')}
         value={state.color}
         isMultiple={color === ''}
-        onChange={value => setState({...state, color: value})}
+        onChange={(value) => setState({ ...state, color: value })}
       />
     </SimplePanel>
   );

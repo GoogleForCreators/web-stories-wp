@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export {default} from './canvas';
-export {default as useCanvas} from './useCanvas';
-export {default as useTransformHandler} from './useTransformHandler';
+export { default } from './canvas';
+export { default as useCanvas } from './useCanvas';
+export { default as useTransformHandler } from './useTransformHandler';

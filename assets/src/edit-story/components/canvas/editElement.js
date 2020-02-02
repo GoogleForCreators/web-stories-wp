@@ -23,38 +23,38 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {getDefinitionForType} from '../../elements';
+import { getDefinitionForType } from '../../elements';
 import {
-  ElementWithPosition,
-  ElementWithSize,
-  ElementWithRotation,
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
 } from '../../elements/shared';
-import {useUnits} from '../../units';
+import { useUnits } from '../../units';
 
 // Background color is used to make the edited element more prominent and
 // easier to see.
 const Wrapper = styled.div`
-  ${ElementWithPosition}
-  ${ElementWithSize}
-  ${ElementWithRotation}
-  pointer-events: initial;
-  background-color: ${({theme}) => theme.colors.whiteout};
+	${elementWithPosition}
+	${elementWithSize}
+	${elementWithRotation}
+	pointer-events: initial;
+	background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
-function EditElement({element}) {
-  const {type} = element;
+function EditElement({ element }) {
+  const { type } = element;
   const {
-    actions: {getBox},
+    actions: { getBox },
   } = useUnits();
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
-  const {Edit} = getDefinitionForType(type);
+  const { Edit } = getDefinitionForType(type);
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const box = getBox(element);
 
   return (
-    <Wrapper {...box} onMouseDown={evt => evt.stopPropagation()}>
+    <Wrapper {...box} onMouseDown={(evt) => evt.stopPropagation()}>
       <Edit element={element} box={box} />
     </Wrapper>
   );

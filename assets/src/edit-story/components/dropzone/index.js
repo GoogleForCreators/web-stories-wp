@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import {useRef, useState, useLayoutEffect} from '@wordpress/element';
+import { useRef, useState, useLayoutEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import useDropZone from './useDropZone';
 
 const DropZoneComponent = styled.div`
   position: relative;
-  ${({borderPosition, theme, highlightWidth, dragIndicatorOffset}) =>
+  ${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) =>
     borderPosition &&
     `
 		:after {
@@ -48,12 +48,12 @@ const DropZoneComponent = styled.div`
 	`}
 `;
 
-function DropZone({children, onDrop, pageIndex, dragIndicatorOffset}) {
+function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
   const dropZoneElement = useRef(null);
   const [dropZone, setDropZone] = useState(null);
   const {
-    actions: {registerDropZone, unregisterDropZone, resetHoverState},
-    state: {hoveredDropZone},
+    actions: { registerDropZone, unregisterDropZone, resetHoverState },
+    state: { hoveredDropZone },
   } = useDropZone();
 
   useLayoutEffect(() => {
@@ -70,7 +70,7 @@ function DropZone({children, onDrop, pageIndex, dragIndicatorOffset}) {
     };
   }, [dropZone, registerDropZone, unregisterDropZone]);
 
-  const getDragType = ({dataTransfer}) => {
+  const getDragType = ({ dataTransfer }) => {
     if (dataTransfer) {
       if (Array.isArray(dataTransfer.types)) {
         if (dataTransfer.types.includes('Files')) {
@@ -92,7 +92,7 @@ function DropZone({children, onDrop, pageIndex, dragIndicatorOffset}) {
     return 'default';
   };
 
-  const onDropHandler = evt => {
+  const onDropHandler = (evt) => {
     resetHoverState();
     if (dropZoneElement.current) {
       const rect = dropZoneElement.current.getBoundingClientRect();
@@ -104,7 +104,7 @@ function DropZone({children, onDrop, pageIndex, dragIndicatorOffset}) {
           evt.clientY - rect.top < rect.bottom - evt.clientY ? 'top' : 'bottom',
       };
       if ('default' === getDragType(evt)) {
-        onDrop(evt, {position: relativePosition, pageIndex});
+        onDrop(evt, { position: relativePosition, pageIndex });
       }
       // @todo Support for files when it becomes necessary.
     }

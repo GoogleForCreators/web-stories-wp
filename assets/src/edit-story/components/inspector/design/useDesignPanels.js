@@ -17,39 +17,28 @@
 /**
  * WordPress dependencies
  */
-import {useCallback, useMemo} from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../../app';
-import {getPanels} from '../../panels';
+import { useStory } from '../../../app';
+import { getPanels } from '../../panels';
 
 function useDesignPanels() {
   const {
-    state: {selectedElements},
-    actions: {deleteSelectedElements, updateSelectedElements},
+    state: { selectedElements },
+    actions: { deleteSelectedElements, updateSelectedElements },
   } = useStory();
 
   const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
 
   const onSetProperties = useCallback(
-    newProperties => {
-      // Filter out empty properties (empty strings specifically)
-      const updatedKeys = Object.keys(newProperties).filter(
-        key => newProperties[key] !== ''
-      );
-
-      if (updatedKeys.length === 0) {
-        // Of course abort if no keys have a value
-        return;
-      }
-
-      const properties = Object.fromEntries(
-        updatedKeys.map(key => [key, newProperties[key]])
-      );
-
-      updateSelectedElements({properties});
+    (newPropertiesOrUpdater) => {
+      updateSelectedElements({
+        properties: (currentProperties) =>
+          calcProperties(currentProperties, newPropertiesOrUpdater),
+      });
     },
     [updateSelectedElements]
   );
@@ -62,6 +51,35 @@ function useDesignPanels() {
       selectedElements,
     },
   };
+}
+
+/**
+ * @param {Object} currentProperties The existing element properties.
+ * @param {Object|function(Object):Object} newPropertiesOrUpdater Either a map
+ * of the updated properties or a function that will return a map of the updated
+ * properties.
+ * @return {Object} The updated properties.
+ */
+function calcProperties(currentProperties, newPropertiesOrUpdater) {
+  const newProperties =
+    typeof newPropertiesOrUpdater === 'function'
+      ? newPropertiesOrUpdater(currentProperties)
+      : newPropertiesOrUpdater;
+
+  // Filter out empty properties (empty strings specifically)
+  const updatedKeys = Object.keys(newProperties).filter(
+    (key) => newProperties[key] !== ''
+  );
+
+  if (updatedKeys.length === 0) {
+    // Of course abort if no keys have a value
+    return {};
+  }
+
+  const properties = Object.fromEntries(
+    updatedKeys.map((key) => [key, newProperties[key]])
+  );
+  return properties;
 }
 
 export default useDesignPanels;

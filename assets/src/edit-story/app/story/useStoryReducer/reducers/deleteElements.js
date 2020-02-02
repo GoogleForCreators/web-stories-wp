@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import {intersect} from './utils';
+import { intersect } from './utils';
 
 /**
  * Delete elements by the given list of ids.
@@ -41,17 +41,17 @@ import {intersect} from './utils';
  * @param {Array.<string>} payload.elementIds List of ids of elements to delete.
  * @return {Object} New state
  */
-function deleteElements(state, {elementIds}) {
+function deleteElements(state, { elementIds }) {
   const idsToDelete = elementIds === null ? state.selection : elementIds;
 
   if (idsToDelete.length === 0) {
     return state;
   }
 
-  const pageIndex = state.pages.findIndex(({id}) => id === state.current);
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const oldPage = state.pages[pageIndex];
-  const pageElementIds = oldPage.elements.map(({id}) => id);
+  const pageElementIds = oldPage.elements.map(({ id }) => id);
 
   // Nothing to delete?
   const hasAnythingToDelete = intersect(pageElementIds, idsToDelete).length > 0;
@@ -60,7 +60,7 @@ function deleteElements(state, {elementIds}) {
   }
 
   const filteredElements = oldPage.elements.filter(
-    element => !idsToDelete.includes(element.id)
+    (element) => !idsToDelete.includes(element.id)
   );
 
   const newPage = {
@@ -85,7 +85,7 @@ function deleteElements(state, {elementIds}) {
   // This check is to make sure not to modify the selection array if no update is necessary.
   const wasAnySelected = intersect(state.selection, idsToDelete).length > 0;
   const newSelection = wasAnySelected
-    ? state.selection.filter(id => !idsToDelete.includes(id))
+    ? state.selection.filter((id) => !idsToDelete.includes(id))
     : state.selection;
 
   return {

@@ -22,22 +22,39 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useRef, useEffect} from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Movable from '../movable';
-import {useStory} from '../../app/story';
+import { useStory } from '../../app/story';
+import objectWithout from '../../utils/objectWithout';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
-import {useUnits} from '../../units';
-import {MIN_FONT_SIZE, MAX_FONT_SIZE} from '../../constants';
+import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function MultiSelectionMovable({selectedElements, nodesById}) {
+function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
+
+  const {
+    actions: { updateElementsById },
+  } = useStory();
+  const {
+    actions: { pushTransform },
+    state: {
+      pageSize: { width: canvasWidth, height: canvasHeight },
+      nodesById,
+    },
+  } = useCanvas();
+  const {
+    actions: { dataToEditorY, editorToDataX, editorToDataY },
+  } = useUnits();
+
+  const [isDragging, setIsDragging] = useState(false);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -47,23 +64,13 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
     }
   }, [selectedElements, moveable, nodesById]);
 
-  const {
-    actions: {updateElementsById},
-  } = useStory();
-  const {
-    actions: {pushTransform},
-  } = useCanvas();
-  const {
-    actions: {dataToEditorY, editorToDataX, editorToDataY},
-  } = useUnits();
-
   const minMaxFontSize = {
     minFontSize: dataToEditorY(MIN_FONT_SIZE),
     maxFontSize: dataToEditorY(MAX_FONT_SIZE),
   };
 
   // Create targets list including nodes and also necessary attributes.
-  const targetList = selectedElements.map(element => ({
+  const targetList = selectedElements.map((element) => ({
     node: nodesById[element.id],
     id: element.id,
     x: element.x,
@@ -73,9 +80,15 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
     content: element.content,
   }));
   // Not all targets have been defined yet.
-  if (targetList.some(({node}) => node === undefined)) {
+  if (targetList.some(({ node }) => node === undefined)) {
     return null;
   }
+  const otherNodes = Object.values(
+    objectWithout(
+      nodesById,
+      selectedElements.map((element) => element.id)
+    )
+  );
 
   /**
    * Set style to the element.
@@ -90,7 +103,7 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
   };
 
   const frames = targetList
-    ? targetList.map(target => ({
+    ? targetList.map((target) => ({
         translate: [0, 0],
         rotate: target.rotationAngle,
         resize: [0, 0],
@@ -101,7 +114,7 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
    * Resets Movable once the action is done, sets the initial values.
    */
   const resetMoveable = () => {
-    targetList.forEach(({id, node}, i) => {
+    targetList.forEach(({ id, node }, i) => {
       frames[i].translate = [0, 0];
       frames[i].resize = [0, 0];
       node.style.transform = '';
@@ -114,7 +127,7 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
     }
   };
 
-  const onGroupEventStart = ({events, isDrag, isRotate}) => {
+  const onGroupEventStart = ({ events, isDrag, isRotate }) => {
     events.forEach((ev, i) => {
       const sFrame = frames[i];
       if (isDrag) {
@@ -126,7 +139,7 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
   };
 
   // Update elements once the event has ended.
-  const onGroupEventEnd = ({targets, isRotate, isResize}) => {
+  const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
@@ -154,47 +167,54 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
           );
         }
       }
-      updateElementsById({elementIds: [targetList[i].id], properties});
+      updateElementsById({ elementIds: [targetList[i].id], properties });
     });
     resetMoveable();
   };
 
   return (
     <Movable
+      className="default-movable"
       ref={moveable}
       zIndex={0}
-      target={targetList.map(({node}) => node)}
+      target={targetList.map(({ node }) => node)}
       draggable={true}
-      resizable={true}
-      rotatable={true}
-      onDragGroup={({events}) => {
-        events.forEach(({target, beforeTranslate}, i) => {
+      // Making resizable depend on state caused a bug where the
+      // center of gravity for rotation moves to the top left,
+      // see https://github.com/daybrush/moveable/issues/168
+      // once fixed these should change to !isDragging
+      resizable={true /** should be !isDragging */}
+      rotatable={isDragging}
+      onDragGroup={({ events }) => {
+        events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
           sFrame.translate = beforeTranslate;
           setTransformStyle(targetList[i].id, target, sFrame);
         });
       }}
-      onDragGroupStart={({events}) => {
-        onGroupEventStart({events, isDrag: true});
+      onDragGroupStart={({ events }) => {
+        setIsDragging(true);
+        onGroupEventStart({ events, isDrag: true });
       }}
-      onDragGroupEnd={({targets}) => {
-        onGroupEventEnd({targets});
+      onDragGroupEnd={({ targets }) => {
+        setIsDragging(false);
+        onGroupEventEnd({ targets });
       }}
-      onRotateGroupStart={({events}) => {
-        onGroupEventStart({events, isRotate: true});
+      onRotateGroupStart={({ events }) => {
+        onGroupEventStart({ events, isRotate: true });
       }}
-      onRotateGroup={({events}) => {
-        events.forEach(({target, beforeRotate, drag}, i) => {
+      onRotateGroup={({ events }) => {
+        events.forEach(({ target, beforeRotate, drag }, i) => {
           const sFrame = frames[i];
           sFrame.rotate = beforeRotate;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(targetList[i].id, target, sFrame);
         });
       }}
-      onRotateGroupEnd={({targets}) => {
-        onGroupEventEnd({targets, isRotate: true});
+      onRotateGroupEnd={({ targets }) => {
+        onGroupEventEnd({ targets, isRotate: true });
       }}
-      onResizeGroupStart={({events}) => {
+      onResizeGroupStart={({ events }) => {
         events.forEach((ev, i) => {
           const frame = frames[i];
           ev.setOrigin(['%', '%']);
@@ -203,8 +223,8 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
           }
         });
       }}
-      onResizeGroup={({events}) => {
-        events.forEach(({target, width, height, drag}, i) => {
+      onResizeGroup={({ events }) => {
+        events.forEach(({ target, width, height, drag }, i) => {
           const sFrame = frames[i];
           const isText = 'text' === targetList[i].type;
           target.style.width = `${width}px`;
@@ -223,17 +243,24 @@ function MultiSelectionMovable({selectedElements, nodesById}) {
           setTransformStyle(targetList[i].id, target, sFrame);
         });
       }}
-      onResizeGroupEnd={({targets}) => {
-        onGroupEventEnd({targets, isResize: true});
+      onResizeGroupEnd={({ targets }) => {
+        onGroupEventEnd({ targets, isResize: true });
       }}
       renderDirections={CORNER_HANDLES}
+      snappable={true}
+      snapElement={true}
+      snapHorizontal={true}
+      snapVertical={true}
+      snapCenter={true}
+      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
+      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
+      elementGuidelines={otherNodes}
     />
   );
 }
 
 MultiSelectionMovable.propTypes = {
   selectedElements: PropTypes.arrayOf(PropTypes.object).isRequired,
-  nodesById: PropTypes.object.isRequired,
 };
 
 export default MultiSelectionMovable;

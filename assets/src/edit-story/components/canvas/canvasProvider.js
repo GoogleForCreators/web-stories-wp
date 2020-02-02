@@ -22,12 +22,12 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {useCallback, useEffect, useRef, useState} from '@wordpress/element';
+import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {useStory} from '../../app';
+import { useStory } from '../../app';
 import {
   DEFAULT_EDITOR_PAGE_WIDTH,
   DEFAULT_EDITOR_PAGE_HEIGHT,
@@ -37,7 +37,7 @@ import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
 import Context from './context';
 
-function CanvasProvider({children}) {
+function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
 
   const [pageSize, setPageSize] = useState({
@@ -57,8 +57,8 @@ function CanvasProvider({children}) {
   } = useEditingElement();
 
   const {
-    state: {currentPage, selectedElementIds},
-    actions: {toggleElementInSelection, setSelectedElementsById},
+    state: { currentPage, selectedElementIds },
+    actions: { toggleElementInSelection, setSelectedElementsById },
   } = useStory();
 
   const handleSelectElement = useCallback(
@@ -68,9 +68,9 @@ function CanvasProvider({children}) {
       }
 
       if (evt.metaKey) {
-        toggleElementInSelection({elementId: elId});
+        toggleElementInSelection({ elementId: elId });
       } else {
-        setSelectedElementsById({elementIds: [elId]});
+        setSelectedElementsById({ elementIds: [elId] });
       }
       evt.stopPropagation();
 
@@ -88,15 +88,15 @@ function CanvasProvider({children}) {
   );
 
   const selectIntersection = useCallback(
-    ({x: lx, y: ly, width: lw, height: lh}) => {
+    ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
-        .filter(({x, y, width, height}) => {
+        .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
           );
         })
-        .map(({id}) => id);
-      setSelectedElementsById({elementIds: newSelectedElementIds});
+        .map(({ id }) => id);
+      setSelectedElementsById({ elementIds: newSelectedElementIds });
     },
     [currentPage, setSelectedElementsById]
   );
@@ -129,7 +129,7 @@ function CanvasProvider({children}) {
     const handlerListMap = transformHandlersRef.current;
     const handlerList = handlerListMap[id];
     if (handlerList) {
-      handlerList.forEach(handler => handler(transform));
+      handlerList.forEach((handler) => handler(transform));
     }
   }, []);
 

@@ -24,7 +24,7 @@ import uuid from 'uuid/v4';
 /**
  * WordPress dependencies
  */
-import {useState, useCallback} from '@wordpress/element';
+import { useState, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -36,7 +36,7 @@ const Wrapper = styled.section`
   flex-direction: column;
 `;
 
-function Panel({initialHeight, name, children}) {
+function Panel({ initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [height, setHeight] = useState(initialHeight);
 
