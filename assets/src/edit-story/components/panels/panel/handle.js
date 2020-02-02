@@ -42,25 +42,15 @@ const Handle = styled.button.attrs( { type: 'button', role: 'separator' } )`
 	justify-content: center;
 	align-items: center;
 	cursor: row-resize;
-
-	&:focus,
-	&:active {
-		outline: none;
-	}
 `;
 
 const Bar = styled.div`
-	background-color: ${ ( { theme } ) => theme.colors.bg.v1 };
+	background-color: ${ ( { theme } ) => theme.colors.bg.v0 };
 	width: 36px;
 	height: 4px;
 	border-radius: 2px;
 	text-indent: -10000px; /* hide the text from non-screen-readers */
 	opacity: 0.1;
-
-	&:focus,
-	&:active {
-		outline: none;
-	}
 `;
 
 function DragHandle( { height, minHeight, maxHeight, handleHeightChange } ) {

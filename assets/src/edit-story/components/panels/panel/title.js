@@ -57,11 +57,6 @@ const HeaderButton = styled.button.attrs( { type: 'button' } )`
 	justify-content: space-between;
 	align-items: center;
 	cursor: pointer;
-
-	&:focus,
-	&:active {
-		outline: none;
-	}
 `;
 
 const Heading = styled.span`

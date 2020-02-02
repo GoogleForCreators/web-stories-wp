@@ -52,15 +52,16 @@ const Tab = styled.button.attrs( { role: 'tab' } )`
 	word-break: break-word;
 	opacity: 0.84;
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
-
 	${ ( { isActive } ) => ! isActive && `
 		opacity: .34;
 		&:hover { opacity: 1; }
 	` }
+
+	&:active,
+	&:hover {
+		outline: none;
+		opacity: 0.84;
+	}
 `;
 
 function InspectorTabs() {
