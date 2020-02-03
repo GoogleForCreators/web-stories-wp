@@ -47,7 +47,6 @@ const Video = styled.video`
 function VideoDisplay( {
 	box: { width, height },
 	element: {
-		autoPlay,
 		mimeType,
 		src,
 		id,
