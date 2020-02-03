@@ -27,10 +27,10 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent, getMediaProps } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { getVideoProps, videoWithScale } from './util';
+import { videoWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import ScalePanel from './scalePanel';
 
@@ -85,7 +85,7 @@ function VideoEdit( {
 		( properties ) => updateElementById( { elementId: id, properties } ),
 		[ id, updateElementById ] );
 
-	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
+	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	return (
 		<Element>

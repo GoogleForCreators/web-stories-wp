@@ -34,27 +34,3 @@ export const getBackgroundStyle = () => {
 		maxWidth: 'initial',
 	};
 };
-
-export function getFocalFromOffset( side, videoSide, offset ) {
-	return ( offset + ( side * 0.5 ) ) / videoSide * 100;
-}
-
-export function getVideoProps( width, height, scale, focalX, focalY, videoRatio ) {
-	const ratio = width / height;
-	scale = Math.max( scale || 100, 100 );
-	focalX = typeof focalX === 'number' ? focalX : 50;
-	focalY = typeof focalY === 'number' ? focalY : 50;
-	const videoWidth = ( videoRatio <= ratio ? width : height * videoRatio ) * scale * 0.01;
-	const videoHeight = ( videoRatio <= ratio ? width / videoRatio : height ) * scale * 0.01;
-	const offsetX = Math.max( 0, Math.min( ( videoWidth * focalX * 0.01 ) - ( width * 0.5 ), videoWidth - width ) );
-	const offsetY = Math.max( 0, Math.min( ( videoHeight * focalY * 0.01 ) - ( height * 0.5 ), videoHeight - height ) );
-	return {
-		width: videoWidth,
-		height: videoHeight,
-		offsetX,
-		offsetY,
-		scale,
-		focalX,
-		focalY,
-	};
-}

@@ -27,10 +27,10 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent, getMediaProps } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
-import { getBackgroundStyle, getVideoProps, videoWithScale } from './util';
+import { getBackgroundStyle, videoWithScale } from './util';
 
 const Element = styled.div`
 	${ elementFillContent }
@@ -76,7 +76,7 @@ function VideoDisplay( {
 		};
 	}
 
-	const videoProps = getVideoProps( width, height, scale, focalX, focalY, origRatio );
+	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 	return (
 		<Element>
 			<Video poster={ poster } style={ { ...style } } { ...videoProps } >

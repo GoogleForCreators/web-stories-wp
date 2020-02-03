@@ -27,10 +27,10 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent, getMediaProps } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { getImgProps, imageWithScale } from './util';
+import { imageWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
@@ -83,7 +83,7 @@ function ImageEdit( {
 		( properties ) => updateElementById( { elementId: id, properties } ),
 		[ id, updateElementById ] );
 
-	const imgProps = getImgProps( width, height, scale, focalX, focalY, origRatio );
+	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	return (
 		<Element>
