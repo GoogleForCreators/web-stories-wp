@@ -35,7 +35,7 @@ import EditPanMovable from './editPanMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 const CropBox = styled.div`

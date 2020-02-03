@@ -29,11 +29,11 @@ import { useCallback } from '@wordpress/element';
  */
 import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 function VideoFrame( { element: { id } } ) {

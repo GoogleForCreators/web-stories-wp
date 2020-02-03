@@ -123,6 +123,7 @@ function SingleSelectionMovable( {
 	const isTextElement = 'text' === selectedElement.type;
 	const shouldAdjustFontSize = isTextElement && selectedElement.content.length && isResizingFromCorner;
 
+	const isMedia = 'image' === selectedElement.type || 'video' === selectedElement.type;
 	const actionsEnabled = ! selectedElement.isFill && selectedElement.id !== currentPage.backgroundElementId;
 	return (
 		<Movable
@@ -224,7 +225,7 @@ function SingleSelectionMovable( {
 			} }
 			origin={ false }
 			pinchable={ true }
-			keepRatio={ 'image' === selectedElement.type && isResizingFromCorner }
+			keepRatio={ isMedia && isResizingFromCorner }
 			renderDirections={ ALL_HANDLES }
 			snappable={ true }
 			snapElement={ true }
