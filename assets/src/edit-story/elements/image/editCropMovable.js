@@ -46,7 +46,6 @@ function EditCropMovable( {
 		moveableRef.current.updateRect();
 	} );
 
-	// const canResize = ! isFill && id !== currentPage.backgroundElementId;
 	return (
 		<Movable
 			ref={ moveableRef }
