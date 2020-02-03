@@ -27,10 +27,10 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { getVideoProps, VideoWithScale } from './util';
+import { getVideoProps, videoWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import ScalePanel from './scalePanel';
 
@@ -61,14 +61,14 @@ const FadedVideo = styled.video`
 	position: absolute;
 	opacity: 0.4;
 	pointer-events: none;
-	${ VideoWithScale }
+	${ videoWithScale }
 	max-width: initial;
 	max-height: initial;
 `;
 
 const CropVideo = styled.video`
 	position: absolute;
-	${ VideoWithScale }
+	${ videoWithScale }
 	max-width: initial;
 	max-height: initial;
 `;

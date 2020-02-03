@@ -19,7 +19,7 @@
  */
 import { css } from 'styled-components';
 
-export const VideoWithScale = css`
+export const videoWithScale = css`
 	width: ${ ( { width } ) => `${ width }px` };
 	height: ${ ( { height } ) => `${ height }px` };
 	left: ${ ( { offsetX } ) => `${ -offsetX }px` };

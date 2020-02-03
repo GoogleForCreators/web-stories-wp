@@ -30,7 +30,7 @@ import { useEffect } from '@wordpress/element';
 import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
-import { getBackgroundStyle, getVideoProps, VideoWithScale } from './util';
+import { getBackgroundStyle, getVideoProps, videoWithScale } from './util';
 
 const Element = styled.div`
 	${ elementFillContent }
@@ -41,7 +41,7 @@ const Video = styled.video`
 	position: absolute;
 	max-width: initial;
 	max-height: initial;
-	${ VideoWithScale }
+	${ videoWithScale }
 `;
 
 function VideoDisplay( {
