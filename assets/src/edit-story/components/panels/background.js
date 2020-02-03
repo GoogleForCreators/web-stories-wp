@@ -38,7 +38,7 @@ function BackgroundPanel( { selectedElements, onSetProperties } ) {
 		onSetProperties( newState );
 	};
 	return (
-		<SimplePanel name="position" title={ __( 'Background', 'amp' ) } onSubmit={ ( event ) => event.preventDefault() }>
+		<SimplePanel name="position" title={ __( 'Background', 'amp' ) }>
 			<ActionButton onClick={ handleClick }>
 				{ state.isBackground ? __( 'Remove as Background', 'amp' ) : __( 'Set as background', 'amp' ) }
 			</ActionButton>
