@@ -34,7 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "@storybook/addon-a11y": "^5.3.9",
+    "@storybook/addon-a11y": "^5.3.10",
     "@storybook/addon-backgrounds": "^5.3.10",
     "@storybook/addon-docs": "^5.3.9",
     "@storybook/addon-knobs": "^5.3.10",
