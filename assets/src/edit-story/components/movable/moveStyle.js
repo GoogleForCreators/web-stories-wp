@@ -64,6 +64,8 @@ export const GlobalStyle = createGlobalStyle`
 
 	.default-movable.moveable-control-box .moveable-line.moveable-rotation-line {
 		background: #4285f4 !important;
-		width: 2px;
+		width: 1px;
+		top: -16px;
+		height: 16px;
 	}
 `;
