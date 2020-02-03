@@ -30,8 +30,8 @@ import { useCallback, useState } from '@wordpress/element';
 import { elementFillContent, getMediaProps } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
+import EditPanMovable from '../shared/editPanMovable';
 import { imageWithScale } from './util';
-import EditPanMovable from './editPanMovable';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
 
@@ -109,8 +109,8 @@ function ImageEdit( {
 			{ fullImage && croppedImage && (
 				<EditPanMovable
 					setProperties={ setProperties }
-					fullImage={ fullImage }
-					croppedImage={ croppedImage }
+					fullMedia={ fullImage }
+					croppedMedia={ croppedImage }
 					x={ x }
 					y={ y }
 					width={ width }
@@ -118,8 +118,8 @@ function ImageEdit( {
 					rotationAngle={ rotationAngle }
 					offsetX={ imgProps.offsetX }
 					offsetY={ imgProps.offsetY }
-					imgWidth={ imgProps.width }
-					imgHeight={ imgProps.height }
+					mediaWidth={ imgProps.width }
+					mediaHeight={ imgProps.height }
 				/>
 			) }
 

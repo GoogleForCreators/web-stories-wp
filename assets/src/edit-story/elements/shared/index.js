@@ -22,7 +22,7 @@ import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import getPercentageFromPixels from '../utils/getPercentageFromPixels';
+import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
 
 export const elementFillContent = css`
 	position: absolute;

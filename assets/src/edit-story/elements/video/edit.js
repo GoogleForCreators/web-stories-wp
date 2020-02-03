@@ -30,8 +30,8 @@ import { useCallback, useState } from '@wordpress/element';
 import { elementFillContent, getMediaProps } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
+import EditPanMovable from '../shared/editPanMovable';
 import { videoWithScale } from './util';
-import EditPanMovable from './editPanMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
@@ -99,8 +99,8 @@ function VideoEdit( {
 			{ fullVideo && croppedVideo && (
 				<EditPanMovable
 					setProperties={ setProperties }
-					fullVideo={ fullVideo }
-					croppedVideo={ croppedVideo }
+					fullMedia={ fullVideo }
+					croppedMedia={ croppedVideo }
 					x={ x }
 					y={ y }
 					width={ width }
@@ -108,8 +108,8 @@ function VideoEdit( {
 					rotationAngle={ rotationAngle }
 					offsetX={ videoProps.offsetX }
 					offsetY={ videoProps.offsetY }
-					videoWidth={ videoProps.width }
-					videoHeight={ videoProps.height }
+					mediaWidth={ videoProps.width }
+					mediaHeight={ videoProps.height }
 				/>
 			) }
 
