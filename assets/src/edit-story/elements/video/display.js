@@ -27,13 +27,13 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import { getBackgroundStyle, getVideoProps, VideoWithScale } from './util';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 	overflow: hidden;
 `;
 

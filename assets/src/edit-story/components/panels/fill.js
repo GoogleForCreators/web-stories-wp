@@ -46,7 +46,7 @@ function FillPanel( { selectedElements, onSetProperties } ) {
 		onSetProperties( newState );
 	};
 	return (
-		<SimplePanel name="position" title={ __( 'Fill', 'web-stories' ) } onSubmit={ ( event ) => event.preventDefault() }>
+		<SimplePanel name="fill" title={ __( 'Fill', 'web-stories' ) }>
 			<ActionButton onClick={ handleClick }>
 				{ state.isFill ? __( 'Unset as fill', 'web-stories' ) : __( 'Set as fill', 'web-stories' ) }
 			</ActionButton>

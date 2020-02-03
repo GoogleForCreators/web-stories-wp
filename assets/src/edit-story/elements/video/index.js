@@ -42,4 +42,5 @@ export const panels = [
 	PanelTypes.SCALE,
 	PanelTypes.ROTATION_ANGLE,
 	PanelTypes.VIDEO_POSTER,
+	PanelTypes.FILL,
 ];

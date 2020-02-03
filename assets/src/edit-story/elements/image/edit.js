@@ -27,16 +27,16 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { getImgProps, ImageWithScale } from './util';
+import { getImgProps, imageWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 const CropBox = styled.div`
@@ -62,12 +62,12 @@ const FadedImg = styled.img`
 	position: absolute;
 	opacity: 0.4;
 	pointer-events: none;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
 const CropImg = styled.img`
 	position: absolute;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
 function ImageEdit( {
@@ -91,6 +91,7 @@ function ImageEdit( {
 			<CropBox ref={ setCropBox }>
 				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
 			</CropBox>
+
 			{ ! isFill && ! isBackground && cropBox && croppedImage && (
 				<EditCropMovable
 					setProperties={ setProperties }

@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
 import { createNewElement } from '../../elements';
+import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
@@ -43,11 +45,13 @@ function Library() {
 	const isMedia = ( type ) => {
 		return 'image' === type || 'video' === type;
 	};
-	const handleInsert = ( type, props ) => {
+	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
 			...props,
-			x: Math.round( 80 * Math.random() ),
-			y: Math.round( 70 * Math.random() ),
+			x: editorToDataX( 80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH ),
+			y: editorToDataY( 70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT ),
+			width: editorToDataX( width, DEFAULT_EDITOR_PAGE_WIDTH ),
+			height: editorToDataY( height, DEFAULT_EDITOR_PAGE_HEIGHT ),
 		} );
 		addElement( { element } );
 		if ( isMedia( type ) && ! currentPage.elements.some( ( { type: elType } ) => isMedia( elType ) ) ) {

@@ -29,6 +29,7 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../';
 import Context from './context';
 
@@ -75,7 +76,7 @@ function APIProvider( { children } ) {
 					modified,
 					content,
 					excerpt,
-					story_data: pages,
+					story_data: { version: DATA_VERSION, pages },
 					featured_media: featuredMedia,
 				},
 				method: 'POST',

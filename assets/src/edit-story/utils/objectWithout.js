@@ -14,36 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
-import StoryPropTypes from '../../types';
-
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
-
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
+export default function objectWithout( obj, propertiesToRemove ) {
+	return Object.keys( obj )
+		.filter( ( key ) => ! propertiesToRemove.includes( key ) )
+		.reduce(
+			( newObj, key ) => ( { ...newObj, [ key ]: obj[ key ] } ),
+			{},
+		);
 }
-
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareDisplay;

@@ -21,18 +21,11 @@ import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
- */
-import {
-	Popover,
-	SlotFillProvider,
-} from '@wordpress/components';
-
-/**
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
+import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
@@ -44,25 +37,23 @@ import Layout from './layout';
 function App( { config } ) {
 	const { storyId } = config;
 	return (
-		<SlotFillProvider>
-			<ThemeProvider theme={ theme }>
-				<ConfigProvider config={ config }>
-					<APIProvider>
-						<HistoryProvider size={ 50 }>
-							<StoryProvider storyId={ storyId }>
-								<FontProvider>
-									<GlobalStyle />
-									<CropMoveableGlobalStyle />
-									<ModalGlobalStyle />
-									<Layout />
-									<Popover.Slot />
-								</FontProvider>
-							</StoryProvider>
-						</HistoryProvider>
-					</APIProvider>
-				</ConfigProvider>
-			</ThemeProvider>
-		</SlotFillProvider>
+		<ThemeProvider theme={ theme }>
+			<ConfigProvider config={ config }>
+				<APIProvider>
+					<HistoryProvider size={ 50 }>
+						<StoryProvider storyId={ storyId }>
+							<FontProvider>
+								<GlobalStyle />
+								<DefaultMoveableGlobalStyle />
+								<CropMoveableGlobalStyle />
+								<ModalGlobalStyle />
+								<Layout />
+							</FontProvider>
+						</StoryProvider>
+					</HistoryProvider>
+				</APIProvider>
+			</ConfigProvider>
+		</ThemeProvider>
 	);
 }
 

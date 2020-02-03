@@ -30,14 +30,14 @@ import { useLayoutEffect, useRef } from '@wordpress/element';
  */
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
-import { ElementWithPosition, ElementWithSize, ElementWithRotation } from '../../elements/shared';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const Wrapper = styled.div`
-	${ ElementWithPosition }
-	${ ElementWithSize }
-	${ ElementWithRotation }
+	${ elementWithPosition }
+	${ elementWithSize }
+	${ elementWithRotation }
 	pointer-events: initial;
 
 	&:focus,

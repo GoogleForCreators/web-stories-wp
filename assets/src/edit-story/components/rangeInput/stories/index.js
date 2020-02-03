@@ -17,33 +17,36 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { number } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
-import StoryPropTypes from '../../types';
+import RangeInput from '../';
 
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
+export default {
+	title: 'Components/RangeInput',
+	component: RangeInput,
+	parameters: {
+		backgrounds: [
+			{ name: 'dark background', value: '#000', default: true },
+		],
+	},
 
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
-}
-
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
 };
 
-export default SquareDisplay;
+export const _default = () => {
+	const thumbSize = number( 'Thumb size', 16 );
+	const min = number( 'Min value', 0 );
+	const max = number( 'Max value', 100 );
+	const step = number( 'Step', 10 );
+
+	return (
+		<RangeInput
+			thumbSize={ thumbSize }
+			min={ min }
+			max={ max }
+			step={ step }
+		/>
+	);
+};
