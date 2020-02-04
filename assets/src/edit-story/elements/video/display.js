@@ -79,7 +79,7 @@ function VideoDisplay( {
 	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 	return (
 		<Element>
-			<Video poster={ poster } style={ { ...style } } { ...videoProps } >
+			<Video poster={ poster } style={ style } { ...videoProps } >
 				<source src={ src } type={ mimeType } />
 			</Video>
 		</Element>

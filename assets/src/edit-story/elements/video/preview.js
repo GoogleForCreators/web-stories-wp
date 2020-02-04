@@ -51,7 +51,7 @@ function VideoPreview( { id, mimeType, src, width, height, x, y, rotationAngle, 
 		maxWidth: 'initial',
 	};
 	return (
-		<div style={ { ...style } } { ...wrapperProps } >
+		<div style={ style } { ...wrapperProps } >
 			<video style={ { ...videoStyle } } { ...sourceProps } />
 		</div>
 	);

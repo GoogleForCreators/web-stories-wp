@@ -56,7 +56,7 @@ function ImagePreview( { id, src, width, height, x, y, rotationAngle, isFill, is
 	}
 
 	return (
-		<div style={ { ...style } } { ...wrapperProps }>
+		<div style={ style } { ...wrapperProps }>
 			<img draggable="false" alt={ __( 'Page preview', 'web-stories' ) } { ...props } />
 		</div>
 	);

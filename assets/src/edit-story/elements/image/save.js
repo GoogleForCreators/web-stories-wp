@@ -47,7 +47,7 @@ function ImageSave( { id, src, width, height, x, y, rotationAngle, isFill, isBac
 	}
 
 	return (
-		<div style={ { ...style } } { ...wrapperProps }>
+		<div style={ style } { ...wrapperProps }>
 			<amp-img className={ displayFull ? 'is-fill' : '' } { ...props } />
 		</div>
 	);

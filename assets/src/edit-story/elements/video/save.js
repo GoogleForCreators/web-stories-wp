@@ -54,7 +54,7 @@ function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotation
 	}
 
 	return (
-		<div className="is-background" style={ { ...style } } { ...wrapperProps } >
+		<div className="is-background" style={ style } { ...wrapperProps } >
 			<amp-video { ...props }>
 				<source { ...sourceProps } />
 			</amp-video>
