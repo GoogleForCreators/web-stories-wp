@@ -35,7 +35,7 @@ import UploadButton from '../../uploadButton';
 import { SelectMenu, InputGroup } from '../../form';
 import useInspector from '../useInspector';
 
-const ButtonCSS = css`
+const buttonStyles = css`
 	color: ${ ( { theme } ) => theme.colors.mg.v1 };
 	font-size: 14px;
 	width: 100%;
@@ -49,7 +49,7 @@ const Img = styled.img`
 `;
 
 const RemoveButton = styled.button`
-	${ ButtonCSS }
+	${ buttonStyles }
 `;
 
 function DocumentInspector() {
@@ -164,7 +164,7 @@ function DocumentInspector() {
 					type={ 'image' }
 					buttonInsertText={ __( 'Set as featured image', 'web-stories' ) }
 					buttonText={ featuredMediaUrl ? __( 'Replace image', 'web-stories' ) : __( 'Set featured image', 'web-stories' ) }
-					buttonCSS={ ButtonCSS }
+					buttonCSS={ buttonStyles }
 				/> }
 			</SimplePanel>
 		</>

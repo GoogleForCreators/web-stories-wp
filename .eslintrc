@@ -25,6 +25,13 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
+    "import/no-restricted-paths": [ "error", {
+      "zones": [ {
+        "target": "./assets/src/edit-story/migration/migrations",
+        "from": "./assets/src/edit-story",
+        "except": [ "./migration/migrations" ]
+      } ]
+    } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -65,7 +72,8 @@
     "import/order": [ "error", { "groups": [ "builtin", [ "external", "unknown" ], "internal", "parent", "sibling", "index" ] } ],
     "jsdoc/check-indentation": "error",
     "@wordpress/dependency-group": "error",
-    "@wordpress/react-no-unsafe-timeout": "error"
+    "@wordpress/react-no-unsafe-timeout": "error",
+    "eslint-comments/no-unused-disable": "error"
   },
   "overrides": [
     {

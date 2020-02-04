@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
+export { default as objectWithout } from '../../../../utils/objectWithout';
 
 export function intersect( first, ...rest ) {
 	if ( ! first || ! rest || rest.length === 0 ) {
@@ -78,13 +79,3 @@ export function getAbsolutePosition( {
 			return currentPosition;
 	}
 }
-
-export function objectWithout( obj, propertiesToRemove ) {
-	return Object.keys( obj )
-		.filter( ( key ) => ! propertiesToRemove.includes( key ) )
-		.reduce(
-			( newObj, key ) => ( { ...newObj, [ key ]: obj[ key ] } ),
-			{},
-		);
-}
-

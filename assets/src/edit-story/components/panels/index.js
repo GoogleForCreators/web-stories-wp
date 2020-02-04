@@ -21,7 +21,7 @@ import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
-import FullbleedPanel from './fullbleed';
+import FillPanel from './fill';
 import FontPanel from './font';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
@@ -29,6 +29,7 @@ import PositionPanel from './position';
 import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
+import VideoPosterPanel from './videoPoster';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -40,9 +41,10 @@ const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
 const SIZE = 'size';
 const POSITION = 'position';
-const FULLBLEED = 'fullbleed';
+const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const VIDEO_POSTER = 'videoPoster';
 
 export const PanelTypes = {
 	ACTIONS,
@@ -55,7 +57,8 @@ export const PanelTypes = {
 	STYLE,
 	TEXT,
 	ROTATION_ANGLE,
-	FULLBLEED,
+	FILL,
+	VIDEO_POSTER,
 };
 
 const ALL = Object.values( PanelTypes );
@@ -83,12 +86,13 @@ export function getPanels( elements ) {
 				case SCALE: return { type, Panel: ScalePanel };
 				case ROTATION_ANGLE: return { type, Panel: RotationPanel };
 				case SIZE: return { type, Panel: SizePanel };
-				case FULLBLEED: return { type, Panel: FullbleedPanel };
+				case FILL: return { type, Panel: FillPanel };
 				case BACKGROUND_COLOR: return { type, Panel: BackgroundColorPanel };
 				case COLOR: return { type, Panel: ColorPanel };
 				case FONT: return { type, Panel: FontPanel };
 				case STYLE: return { type, Panel: StylePanel };
 				case TEXT: return { type, Panel: TextPanel };
+				case VIDEO_POSTER: return { type, Panel: VideoPosterPanel };
 				default: throw new Error( `Unknown panel: ${ type }` );
 			}
 		} );

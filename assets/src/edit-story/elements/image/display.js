@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -28,24 +27,27 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import { useTransformHandler } from '../../components/canvas';
-import { ImageWithScale, getImgProps, getImageWithScaleCss } from './util';
+import StoryPropTypes from '../../types';
+import { imageWithScale, getImgProps, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 	overflow: hidden;
 `;
 
 const Img = styled.img`
 	position: absolute;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
-function ImageDisplay( { id, src, origRatio, width, height, scale, focalX, focalY } ) {
+function ImageDisplay( {
+	element: { id, src, origRatio, scale, focalX, focalY },
+	box: { width, height },
+} ) {
 	const imageRef = useRef( null );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const imgProps = getImgProps( width, height, scale, focalX, focalY, origRatio );
 
 	useTransformHandler( id, ( transform ) => {
@@ -69,20 +71,8 @@ function ImageDisplay( { id, src, origRatio, width, height, scale, focalX, focal
 }
 
 ImageDisplay.propTypes = {
-	id: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	origRatio: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	scale: PropTypes.number,
-	focalX: PropTypes.number,
-	focalY: PropTypes.number,
-};
-
-ImageDisplay.defaultProps = {
-	scale: null,
-	focalX: null,
-	focalY: null,
+	element: StoryPropTypes.elements.image.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageDisplay;

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -28,15 +27,16 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent } from '../shared';
 import { useStory } from '../../app';
-import { getImgProps, ImageWithScale } from './util';
+import StoryPropTypes from '../../types';
+import { getImgProps, imageWithScale } from './util';
 import EditPanMovable from './editPanMovable';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 `;
 
 const CropBox = styled.div`
@@ -62,15 +62,18 @@ const FadedImg = styled.img`
 	position: absolute;
 	opacity: 0.4;
 	pointer-events: none;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
 const CropImg = styled.img`
 	position: absolute;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
-function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, focalY, rotationAngle, isFullbleed } ) {
+function ImageEdit( {
+	element: { id, src, origRatio, scale, focalX, focalY, isFill },
+	box: { x, y, width, height, rotationAngle },
+} ) {
 	const [ fullImage, setFullImage ] = useState( null );
 	const [ croppedImage, setCroppedImage ] = useState( null );
 	const [ cropBox, setCropBox ] = useState( null );
@@ -89,7 +92,7 @@ function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, fo
 				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
 			</CropBox>
 
-			{ ! isFullbleed && cropBox && croppedImage && (
+			{ ! isFill && cropBox && croppedImage && (
 				<EditCropMovable
 					setProperties={ setProperties }
 					cropBox={ cropBox }
@@ -132,24 +135,8 @@ function ImageEdit( { id, src, origRatio, width, height, x, y, scale, focalX, fo
 }
 
 ImageEdit.propTypes = {
-	id: PropTypes.string.isRequired,
-	src: PropTypes.string.isRequired,
-	origRatio: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	rotationAngle: PropTypes.number.isRequired,
-	isFullbleed: PropTypes.bool,
-	scale: PropTypes.number,
-	focalX: PropTypes.number,
-	focalY: PropTypes.number,
-};
-
-ImageEdit.defaultProps = {
-	scale: null,
-	focalX: null,
-	focalY: null,
+	element: StoryPropTypes.elements.image.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageEdit;

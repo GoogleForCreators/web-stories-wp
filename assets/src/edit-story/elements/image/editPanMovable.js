@@ -51,6 +51,7 @@ function EditPanMovable( {
 
 	return (
 		<Movable
+			className="default-movable"
 			ref={ moveableRef }
 			targets={ croppedImage }
 

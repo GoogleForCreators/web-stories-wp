@@ -22,20 +22,29 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useRef, useEffect } from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Movable from '../movable';
 import { useStory } from '../../app/story';
+import objectWithout from '../../utils/objectWithout';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
+import { useUnits } from '../../units';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = [ 'nw', 'ne', 'sw', 'se' ];
 
-function MultiSelectionMovable( { selectedElements, nodesById } ) {
+function MultiSelectionMovable( { selectedElements } ) {
 	const moveable = useRef();
+
+	const { actions: { updateElementsById } } = useStory();
+	const { actions: { pushTransform }, state: { pageSize: { width: canvasWidth, height: canvasHeight }, nodesById } } = useCanvas();
+	const { actions: { dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const [ isDragging, setIsDragging ] = useState( false );
 
 	// Update moveable with whatever properties could be updated outside moveable
 	// itself.
@@ -45,25 +54,26 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 		}
 	}, [ selectedElements, moveable, nodesById ] );
 
-	const { actions: { updateElementsById } } = useStory();
-	const { actions: { pushTransform } } = useCanvas();
+	const minMaxFontSize = {
+		minFontSize: dataToEditorY( MIN_FONT_SIZE ),
+		maxFontSize: dataToEditorY( MAX_FONT_SIZE ),
+	};
 
 	// Create targets list including nodes and also necessary attributes.
-	const targetList = selectedElements.map( ( element ) => {
-		return {
-			node: nodesById[ element.id ],
-			id: element.id,
-			x: element.x,
-			y: element.y,
-			rotationAngle: element.rotationAngle,
-			type: element.type,
-			content: element.content,
-		};
-	} );
+	const targetList = selectedElements.map( ( element ) => ( {
+		node: nodesById[ element.id ],
+		id: element.id,
+		x: element.x,
+		y: element.y,
+		rotationAngle: element.rotationAngle,
+		type: element.type,
+		content: element.content,
+	} ) );
 	// Not all targets have been defined yet.
 	if ( targetList.some( ( { node } ) => node === undefined ) ) {
 		return null;
 	}
+	const otherNodes = Object.values( objectWithout( nodesById, selectedElements.map( ( element ) => element.id ) ) );
 
 	/**
 	 * Set style to the element.
@@ -115,19 +125,22 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 	const onGroupEventEnd = ( { targets, isRotate, isResize } ) => {
 		targets.forEach( ( target, i ) => {
 			// Update position in all cases.
+			const frame = frames[ i ];
+			const [ editorWidth, editorHeight ] = frame.resize;
 			const properties = {
-				x: targetList[ i ].x + frames[ i ].translate[ 0 ],
-				y: targetList[ i ].y + frames[ i ].translate[ 1 ],
+				x: targetList[ i ].x + editorToDataX( frame.translate[ 0 ] ),
+				y: targetList[ i ].y + editorToDataY( frame.translate[ 1 ] ),
 			};
 			if ( isRotate ) {
-				properties.rotationAngle = frames[ i ].rotate;
+				properties.rotationAngle = frame.rotate;
 			}
-			if ( isResize ) {
-				properties.width = frames[ i ].resize.width;
-				properties.height = frames[ i ].resize.height;
+			const didResize = editorWidth !== 0 && editorHeight !== 0;
+			if ( isResize && didResize ) {
+				properties.width = editorToDataX( editorWidth );
+				properties.height = editorToDataY( editorHeight );
 				const isText = 'text' === targetList[ i ].type;
 				if ( isText ) {
-					properties.fontSize = calculateFitTextFontSize( target.firstChild, properties.height, properties.width );
+					properties.fontSize = editorToDataY( calculateFitTextFontSize( target.firstChild, editorHeight, editorWidth, minMaxFontSize ) );
 				}
 			}
 			updateElementsById( { elementIds: [ targetList[ i ].id ], properties } );
@@ -137,13 +150,14 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 
 	return (
 		<Movable
+			className="default-movable"
 			ref={ moveable }
 			zIndex={ 0 }
 			target={ targetList.map( ( { node } ) => node ) }
 
 			draggable={ true }
-			resizable={ true }
-			rotatable={ true }
+			resizable={ ! isDragging }
+			rotatable={ ! isDragging }
 
 			onDragGroup={ ( { events } ) => {
 				events.forEach( ( { target, beforeTranslate }, i ) => {
@@ -153,9 +167,11 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 				} );
 			} }
 			onDragGroupStart={ ( { events } ) => {
+				setIsDragging( true );
 				onGroupEventStart( { events, isDrag: true } );
 			} }
 			onDragGroupEnd={ ( { targets } ) => {
+				setIsDragging( false );
 				onGroupEventEnd( { targets } );
 			} }
 
@@ -191,7 +207,7 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 					target.style.height = `${ height }px`;
 					if ( isText ) {
 						// For text: update font size, too.
-						target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width );
+						target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 					}
 					sFrame.translate = drag.beforeTranslate;
 					sFrame.resize = [ width, height ];
@@ -203,13 +219,21 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 			} }
 
 			renderDirections={ CORNER_HANDLES }
+			snappable={ true }
+			snapElement={ true }
+			snapHorizontal={ true }
+			snapVertical={ true }
+			snapCenter={ true }
+			horizontalGuidelines={
+				[ 0, canvasHeight / 2, canvasHeight ] }
+			verticalGuidelines={ [ 0, canvasWidth / 2, canvasWidth ] }
+			elementGuidelines={ otherNodes }
 		/>
 	);
 }
 
 MultiSelectionMovable.propTypes = {
 	selectedElements: PropTypes.arrayOf( PropTypes.object ).isRequired,
-	nodesById: PropTypes.object.isRequired,
 };
 
 export default MultiSelectionMovable;
