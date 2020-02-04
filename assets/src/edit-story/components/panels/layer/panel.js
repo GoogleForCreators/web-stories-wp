@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
 import Layer from './layer';
-import useElements from './useElements';
+import useLayers from './useLayers';
 
 const LayerList = styled.div`
 	display: flex;
@@ -39,7 +39,7 @@ const LayerList = styled.div`
 `;
 
 function LayerPanel() {
-	const layers = useElements();
+	const layers = useLayers();
 
 	return (
 		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>

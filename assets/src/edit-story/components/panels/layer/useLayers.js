@@ -39,7 +39,7 @@ function getIconForElementType( type ) {
 	}
 }
 
-function useElements() {
+function useLayers() {
 	const {
 		state: { currentPage, selectedElementIds },
 	} = useStory();
@@ -82,4 +82,4 @@ function useElements() {
 	return layers;
 }
 
-export default useElements;
+export default useLayers;
