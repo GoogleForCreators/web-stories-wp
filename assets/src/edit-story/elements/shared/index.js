@@ -27,6 +27,7 @@ import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
 export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
+export { default as ScalePanel } from './scalePanel';
 
 export const elementFillContent = css`
 	position: absolute;

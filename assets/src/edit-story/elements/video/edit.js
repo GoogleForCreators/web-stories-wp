@@ -27,11 +27,10 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps, EditPanMovable } from '../shared';
+import { elementFillContent, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { videoWithScale } from './util';
-import ScalePanel from './scalePanel';
 
 const Element = styled.div`
 	${ elementFillContent }
