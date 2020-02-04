@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -28,6 +28,25 @@ export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
 export { default as ScalePanel } from './scalePanel';
+
+export const CropBox = styled.div`
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 }70;
+		pointer-events: none;
+	}
+`;
 
 export const elementFillContent = css`
 	position: absolute;

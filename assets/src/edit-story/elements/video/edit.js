@@ -27,32 +27,13 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
+import { elementFillContent, CropBox, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { videoWithScale } from './util';
 
 const Element = styled.div`
 	${ elementFillContent }
-`;
-
-const CropBox = styled.div`
-	width: 100%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
-
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 }70;
-		pointer-events: none;
-	}
 `;
 
 const FadedVideo = styled.video`
