@@ -23,7 +23,7 @@ import { editorPixels } from '../../units';
 import { getImgProps } from '../image/util';
 
 function VideoOutput( {
-	element: { autoPlay, mimeType, src, poster, scale, focalX, focalY, origRatio },
+	element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
 	box: { width: vw, height: vh },
 } ) {
 	// Width and height I taken from the basis of 100% taking into account the
@@ -45,7 +45,7 @@ function VideoOutput( {
 		src,
 	};
 	const props = {
-		autoPlay,
+		autoPlay: true,  // QQQ: autoPlay or autoplay?
 		poster,
 		layout: 'fill',
 	};

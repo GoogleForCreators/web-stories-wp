@@ -23,6 +23,7 @@ import OutputElement from './element';
 
 function OutputPage( { page } ) {
 	const { id } = page;
+	// QQQQQ: background layer vs non-background layer.
 	// Aspect-ratio constraints.
 	const aspectRatioStyles = {
 		width: `calc(100 * var(--story-page-vw))`, // 100vw

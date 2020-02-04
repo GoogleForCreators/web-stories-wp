@@ -19,8 +19,7 @@
  */
 import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+export { default as Output } from './output';
 
 export const defaultAttributes = {
 	backgroundColor: '#ffffff',
