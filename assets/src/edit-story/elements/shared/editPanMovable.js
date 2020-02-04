@@ -28,7 +28,7 @@ import { useEffect, useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import { getFocalFromOffset } from './';
+import getFocalFromOffset from './getFocalFromOffset';
 
 function EditPanMovable( {
 	setProperties, fullMedia, croppedMedia,

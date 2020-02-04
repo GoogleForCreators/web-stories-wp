@@ -24,6 +24,10 @@ import { css } from 'styled-components';
  */
 import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
 
+export { default as getMediaProps } from './getMediaProps';
+export { default as getFocalFromOffset } from './getFocalFromOffset';
+export { default as EditPanMovable } from './editPanMovable';
+
 export const elementFillContent = css`
 	position: absolute;
 	top: 0;
@@ -84,27 +88,3 @@ export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) 
 		height: getPercentageFromPixels( height, 'y' ) + '%',
 	};
 } );
-
-export function getFocalFromOffset( side, mediaElementSide, offset ) {
-	return ( offset + ( side * 0.5 ) ) / mediaElementSide * 100;
-}
-
-export function getMediaProps( width, height, scale, focalX, focalY, mediaRatio ) {
-	const ratio = width / height;
-	scale = Math.max( scale || 100, 100 );
-	focalX = typeof focalX === 'number' ? focalX : 50;
-	focalY = typeof focalY === 'number' ? focalY : 50;
-	const videoWidth = ( mediaRatio <= ratio ? width : height * mediaRatio ) * scale * 0.01;
-	const videoHeight = ( mediaRatio <= ratio ? width / mediaRatio : height ) * scale * 0.01;
-	const offsetX = Math.max( 0, Math.min( ( videoWidth * focalX * 0.01 ) - ( width * 0.5 ), videoWidth - width ) );
-	const offsetY = Math.max( 0, Math.min( ( videoHeight * focalY * 0.01 ) - ( height * 0.5 ), videoHeight - height ) );
-	return {
-		width: videoWidth,
-		height: videoHeight,
-		offsetX,
-		offsetY,
-		scale,
-		focalX,
-		focalY,
-	};
-}

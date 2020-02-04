@@ -27,10 +27,9 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, getMediaProps, EditPanMovable } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import EditPanMovable from '../shared/editPanMovable';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
 import ScalePanel from './scalePanel';

@@ -86,6 +86,9 @@ export function getPanels( elements, currentPage ) {
 	// Only display background panel in case of background element.
 	if ( isBackground ) {
 		selectionPanels = [ { type: BACKGROUND, Panel: BackgroundPanel } ];
+		if ( 'video' === elements[ 0 ].type ) {
+			selectionPanels.push( { type: VIDEO_POSTER, Panel: VideoPosterPanel } );
+		}
 	} else {
 		// Find which panels all the selected elements have in common
 		selectionPanels = elements
