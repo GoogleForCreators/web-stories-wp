@@ -19,6 +19,7 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
+import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
 
 /**
  * Internal dependencies
@@ -49,7 +50,9 @@ function App( { config } ) {
 									<DefaultMoveableGlobalStyle />
 									<CropMoveableGlobalStyle />
 									<ModalGlobalStyle />
-									<Layout />
+									<KeyboardOnlyOutlines>
+										<Layout />
+									</KeyboardOnlyOutlines>
 								</MediaProvider>
 							</FontProvider>
 						</StoryProvider>
