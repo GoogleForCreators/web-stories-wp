@@ -129,6 +129,10 @@ function PageMenu() {
 		[ redo ],
 	);
 
+	if ( ! currentPage ) {
+		return null;
+	}
+
 	return (
 		<Wrapper>
 			<Box>
