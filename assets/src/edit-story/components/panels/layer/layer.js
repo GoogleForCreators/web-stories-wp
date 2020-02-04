@@ -30,6 +30,7 @@ import { useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import StoryPropTypes from '../../../types';
 import { LAYER_HEIGHT } from './constants';
 import LayerContent from './layerContent';
 
@@ -109,7 +110,7 @@ Layer.propTypes = {
 	icon: PropTypes.object.isRequired,
 	id: PropTypes.string,
 	isSelected: PropTypes.bool.isRequired,
-	element: PropTypes.object.isRequired,
+	element: StoryPropTypes.element.isRequired,
 };
 
 export default Layer;
