@@ -20,12 +20,6 @@
 import { RichUtils } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
-/**
- * Internal dependencies
- */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { dataToEditorY } from '../../units';
-
 export function getFilteredState( editorState, oldEditorState ) {
 	const shouldFilterPaste =
 		oldEditorState.getCurrentContent() !== editorState.getCurrentContent() &&

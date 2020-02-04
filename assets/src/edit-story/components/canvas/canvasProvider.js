@@ -22,14 +22,15 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app';
 import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
-import UnitsProvider from '../../units/unitsProvider';
+import { TransformProvider } from '../transform';
+import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
 import Context from './context';
@@ -99,25 +100,6 @@ function CanvasProvider( { children } ) {
 
 	useCanvasSelectionCopyPaste( pageContainer );
 
-	const transformHandlersRef = useRef( {} );
-
-	const registerTransformHandler = useCallback( ( id, handler ) => {
-		const handlerListMap = transformHandlersRef.current;
-		const handlerList = ( handlerListMap[ id ] || ( handlerListMap[ id ] = [] ) );
-		handlerList.push( handler );
-		return () => {
-			handlerList.splice( handlerList.indexOf( handler ), 1 );
-		};
-	}, [ ] );
-
-	const pushTransform = useCallback( ( id, transform ) => {
-		const handlerListMap = transformHandlersRef.current;
-		const handlerList = handlerListMap[ id ];
-		if ( handlerList ) {
-			handlerList.forEach( ( handler ) => handler( transform ) );
-		}
-	}, [ ] );
-
 	const state = {
 		state: {
 			pageContainer,
@@ -136,8 +118,6 @@ function CanvasProvider( { children } ) {
 			clearEditing,
 			handleSelectElement,
 			selectIntersection,
-			registerTransformHandler,
-			pushTransform,
 			setPageSize,
 		},
 	};
@@ -145,7 +125,9 @@ function CanvasProvider( { children } ) {
 	return (
 		<Context.Provider value={ state }>
 			<UnitsProvider pageSize={ pageSize }>
-				{ children }
+				<TransformProvider>
+					{ children }
+				</TransformProvider>
 			</UnitsProvider>
 		</Context.Provider>
 	);

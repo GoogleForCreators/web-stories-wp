@@ -17,6 +17,15 @@
 /**
  * WordPress dependencies
  */
-import { createContext } from '@wordpress/element';
+import { useContext } from '@wordpress/element';
 
-export default createContext( { actions: {}, state: {} } );
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useTransform() {
+	return useContext( Context );
+}
+
+export default useTransform;

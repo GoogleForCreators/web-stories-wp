@@ -22,8 +22,6 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
-
 export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';

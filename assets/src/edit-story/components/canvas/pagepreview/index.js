@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
+import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
@@ -58,16 +59,18 @@ function PagePreview( { index, forwardedRef, ...props } ) {
 	const { width, height } = props;
 	return (
 		<UnitsProvider pageSize={ { width, height } }>
-			<Page { ...props } ref={ forwardedRef } >
-				<PreviewWrapper>
-					{ page.elements.map( ( { id, ...rest } ) => (
-						<DisplayElement
-							key={ id }
-							element={ { id, ...rest } }
-						/>
-					) ) }
-				</PreviewWrapper>
-			</Page>
+			<TransformProvider>
+				<Page { ...props } ref={ forwardedRef } >
+					<PreviewWrapper>
+						{ page.elements.map( ( { id, ...rest } ) => (
+							<DisplayElement
+								key={ id }
+								element={ { id, ...rest } }
+							/>
+						) ) }
+					</PreviewWrapper>
+				</Page>
+			</TransformProvider>
 		</UnitsProvider>
 	);
 }
