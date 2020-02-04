@@ -43,7 +43,7 @@
     "@storybook/react": "^5.3.10",
     "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/api-fetch": "^3.9.0",
-    "@wordpress/babel-preset-default": "^4.9.0",
+    "@wordpress/babel-preset-default": "^4.10.0",
     "@wordpress/components": "^9.0.0",
     "@wordpress/dom-ready": "^2.6.0",
     "@wordpress/editor": "^9.10.0",
