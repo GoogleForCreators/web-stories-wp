@@ -47,11 +47,10 @@ function DisplayLayer() {
 					if ( editingElement === id ) {
 						return null;
 					}
-					const isBackground = currentPage.backgroundElementId === id;
 					return (
 						<DisplayElement
 							key={ id }
-							element={ { id, ...rest, isBackground } }
+							element={ { id, ...rest } }
 						/>
 					);
 				} ) }

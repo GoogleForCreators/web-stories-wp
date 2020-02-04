@@ -47,8 +47,20 @@ function setBackgroundElement( state, { elementId } ) {
 			return state;
 		}
 
+		// Unset isBackground for the element, too.
+		const updatedElements = page.elements.map(
+			( element ) => {
+				if ( element.isBackground ) {
+					return {
+						...element,
+						isBackground: false,
+					};
+				}
+				return element;
+			} );
 		newPage = {
 			...page,
+			elements: updatedElements,
 			backgroundElementId: null,
 		};
 	} else {
@@ -77,7 +89,16 @@ function setBackgroundElement( state, { elementId } ) {
 			pageElements,
 			elementPosition,
 			0,
-		);
+		).map( ( element ) => {
+			// Set isBackground for the element.
+			if ( element.id === elementId ) {
+				return {
+					...element,
+					isBackground: true,
+				};
+			}
+			return element;
+		} );
 
 		//  remove new element from selection if there's more than one element there
 		if ( state.selection.includes( elementId ) && state.selection.length > 1 ) {

@@ -38,11 +38,10 @@ function FramesLayer() {
 		<Layer pointerEvents="none">
 			<FramesPageArea>
 				{ currentPage && currentPage.elements.map( ( { id, ...rest } ) => {
-					const isBackground = currentPage.backgroundElementId === id;
 					return (
 						<FrameElement
 							key={ id }
-							element={ { id, ...rest, isBackground } }
+							element={ { id, ...rest } }
 						/>
 					);
 				} ) }

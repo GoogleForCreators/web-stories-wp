@@ -70,12 +70,12 @@ function intersect( a, b ) {
 	return a.filter( ( v ) => b.includes( v ) );
 }
 
-export function getPanels( elements, currentPage ) {
+export function getPanels( elements ) {
 	if ( elements.length === 0 ) {
 		return [];
 	}
 
-	const isBackground = ( elements.length === 1 && elements[ 0 ].id === currentPage.backgroundElementId );
+	const isBackground = ( elements.length === 1 && elements[ 0 ].isBackground );
 
 	// Panels to always display, independent of the selected element.
 	const sharedPanels = [

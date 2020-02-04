@@ -18,9 +18,8 @@ import { SimplePanel } from './panel';
 
 function BackgroundPanel( { selectedElements, onSetProperties } ) {
 	// Remove background: check if is background.
-	const { state: { currentPage }, actions: { setBackgroundElement } } = useStory();
-	const { id, overlay, opacity } = selectedElements[ 0 ];
-	const isBackground = currentPage.backgroundElementId === id;
+	const { actions: { setBackgroundElement } } = useStory();
+	const { overlay, opacity, isBackground } = selectedElements[ 0 ];
 
 	// To add: Remove as background; Opacity; Overlay
 

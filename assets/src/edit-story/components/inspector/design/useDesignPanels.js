@@ -27,13 +27,13 @@ import { getPanels } from '../../panels';
 
 function useDesignPanels() {
 	const {
-		state: { selectedElements, currentPage },
+		state: { selectedElements },
 		actions: { deleteSelectedElements, updateSelectedElements },
 	} = useStory();
 
 	const panels = useMemo(
-		() => getPanels( selectedElements, currentPage ),
-		[ selectedElements, currentPage ],
+		() => getPanels( selectedElements ),
+		[ selectedElements ],
 	);
 
 	const onSetProperties = useCallback( ( newPropertiesOrUpdater ) => {
