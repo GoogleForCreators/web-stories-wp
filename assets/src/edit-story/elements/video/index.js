@@ -33,7 +33,9 @@ export const defaultAttributes = {
 	videoId: 0,
 };
 
-export const hasEditMode = false;
+export const hasEditMode = true;
+
+export const isMedia = true;
 
 export const panels = [
 	PanelTypes.BACKGROUND,

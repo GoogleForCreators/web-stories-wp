@@ -34,6 +34,7 @@ import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
 const ALL_HANDLES = [ 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se' ];
@@ -123,7 +124,7 @@ function SingleSelectionMovable( {
 	const isTextElement = 'text' === selectedElement.type;
 	const shouldAdjustFontSize = isTextElement && selectedElement.content.length && isResizingFromCorner;
 
-	const isMedia = 'image' === selectedElement.type || 'video' === selectedElement.type;
+	const { isMedia } = getDefinitionForType( selectedElement.type );
 	const actionsEnabled = ! selectedElement.isFill && selectedElement.id !== currentPage.backgroundElementId;
 	return (
 		<Movable

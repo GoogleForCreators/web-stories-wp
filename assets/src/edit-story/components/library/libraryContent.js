@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
-import { createNewElement } from '../../elements';
+import { createNewElement, getDefinitionForType } from '../../elements';
 import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
@@ -42,8 +42,9 @@ function Library() {
 		[ SHAPES ]: ShapeLibrary,
 		[ LINKS ]: LinkLibrary,
 	} )[ tab ];
-	const isMedia = ( type ) => {
-		return 'image' === type || 'video' === type;
+	const isMediaEl = ( type ) => {
+		const { isMedia } = getDefinitionForType( type );
+		return isMedia;
 	};
 	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
@@ -54,7 +55,7 @@ function Library() {
 			height: editorToDataY( height, DEFAULT_EDITOR_PAGE_HEIGHT ),
 		} );
 		addElement( { element } );
-		if ( isMedia( type ) && ! currentPage.elements.some( ( { type: elType } ) => isMedia( elType ) ) ) {
+		if ( isMediaEl( type ) && ! currentPage.elements.some( ( { type: elType } ) => isMediaEl( elType ) ) ) {
 			setBackgroundElement( { elementId: element.id } );
 		}
 	};
