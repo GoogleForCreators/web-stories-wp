@@ -93,7 +93,13 @@ export function getPanels( elements, currentPage ) {
 			.reduce( ( commonPanels, panels ) => intersect( commonPanels, panels ), ALL )
 			.map( ( type ) => {
 				switch ( type ) {
-					case BACKGROUND: return { type, Panel: BackgroundPanel };
+					case BACKGROUND:
+						// @todo Would be good to have a general logic for panels supporting multi-selection instead.
+						// Only display when one element selected.
+						if ( 1 === elements.length ) {
+							return { type, Panel: BackgroundPanel };
+						}
+						return null;
 					case POSITION: return { type, Panel: PositionPanel };
 					case SCALE: return { type, Panel: ScalePanel };
 					case ROTATION_ANGLE: return { type, Panel: RotationPanel };
@@ -107,7 +113,7 @@ export function getPanels( elements, currentPage ) {
 					case VIDEO_POSTER: return { type, Panel: VideoPosterPanel };
 					default: throw new Error( `Unknown panel: ${ type }` );
 				}
-			} );
+			} ).filter( ( panel ) => panel );
 	}
 
 	return [
