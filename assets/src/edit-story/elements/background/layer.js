@@ -31,7 +31,7 @@ const LayerBackground = styled.span`
 function BackgroundLayerContent() {
 	return (
 		<LayerBackground>
-			{ __( 'Background (locked)', 'amp' ) }
+			{ __( 'Background (locked)', 'web-stories' ) }
 		</LayerBackground>
 	);
 }

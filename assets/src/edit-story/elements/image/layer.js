@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 
 function ImageLayerContent( { element } ) {
-	const alt = __( 'Image layer', 'amp' );
+	const alt = __( 'Image layer', 'web-stories' );
 	return <img src={ element.src } alt={ alt } height="20" />;
 }
 

@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 
 function VideoLayerContent( { element } ) {
-	const alt = __( 'Video layer', 'amp' );
+	const alt = __( 'Video layer', 'web-stories' );
 	return <img src={ element.poster } alt={ alt } height="20" />;
 }
 

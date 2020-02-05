@@ -44,7 +44,7 @@ function LayerPanel() {
 	return (
 		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>
 			<PanelTitle isPrimary isResizable>
-				{ __( 'Layers', 'amp' ) }
+				{ __( 'Layers', 'web-stories' ) }
 			</PanelTitle>
 
 			<PanelContent isScrollable padding={ '0' }>
