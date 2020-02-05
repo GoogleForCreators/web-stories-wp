@@ -29,7 +29,7 @@ function ImageOutput( {
 	element: { src, origRatio, scale, focalX, focalY },
 	box: { width: vw, height: vh },
 } ) {
-	// Width and height I taken from the basis of 100% taking into account the
+	// Width and height are taken from the basis of 100% taking into account the
 	// aspect ratio.
 	const width = vw;
 	const height = vh * PAGE_HEIGHT / PAGE_WIDTH;
