@@ -83,12 +83,13 @@ export function editorToDataY( y, pageHeight ) {
  * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
  * "box" in the editor space.
  */
-export function getBox( { x, y, width, height, rotationAngle, isFill }, pageWidth, pageHeight ) {
+export function getBox( { x, y, width, height, rotationAngle, isFill, isBackground }, pageWidth, pageHeight ) {
+	const displayFull = isFill || isBackground;
 	return {
-		x: dataToEditorX( isFill ? 0 : x, pageWidth ),
-		y: dataToEditorY( isFill ? 0 : y, pageHeight ),
-		width: dataToEditorX( isFill ? PAGE_WIDTH : width, pageWidth ),
-		height: dataToEditorY( isFill ? PAGE_HEIGHT : height, pageHeight ),
-		rotationAngle: isFill ? 0 : rotationAngle,
+		x: dataToEditorX( displayFull ? 0 : x, pageWidth ),
+		y: dataToEditorY( displayFull ? 0 : y, pageHeight ),
+		width: dataToEditorX( displayFull ? PAGE_WIDTH : width, pageWidth ),
+		height: dataToEditorY( displayFull ? PAGE_HEIGHT : height, pageHeight ),
+		rotationAngle: displayFull ? 0 : rotationAngle,
 	};
 }

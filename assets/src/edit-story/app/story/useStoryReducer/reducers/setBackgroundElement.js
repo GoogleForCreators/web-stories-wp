@@ -47,8 +47,20 @@ function setBackgroundElement( state, { elementId } ) {
 			return state;
 		}
 
+		// Unset isBackground for the element, too.
+		const updatedElements = page.elements.map(
+			( element ) => {
+				if ( element.isBackground ) {
+					return {
+						...element,
+						isBackground: false,
+					};
+				}
+				return element;
+			} );
 		newPage = {
 			...page,
+			elements: updatedElements,
 			backgroundElementId: null,
 		};
 	} else {
@@ -60,7 +72,7 @@ function setBackgroundElement( state, { elementId } ) {
 		let pageElements = page.elements;
 
 		// Check if we already had a background id.
-		const hadBackground = page.backgroundElementId !== null;
+		const hadBackground = Boolean( page.backgroundElementId );
 		if ( hadBackground ) {
 			// If so, slice first element out and update position
 			pageElements = pageElements.slice( 1 );
@@ -77,7 +89,16 @@ function setBackgroundElement( state, { elementId } ) {
 			pageElements,
 			elementPosition,
 			0,
-		);
+		).map( ( element ) => {
+			// Set isBackground for the element.
+			if ( element.id === elementId ) {
+				return {
+					...element,
+					isBackground: true,
+				};
+			}
+			return element;
+		} );
 
 		//  remove new element from selection if there's more than one element there
 		if ( state.selection.includes( elementId ) && state.selection.length > 1 ) {

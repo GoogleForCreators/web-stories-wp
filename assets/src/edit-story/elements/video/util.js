@@ -15,25 +15,22 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+import { css } from 'styled-components';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
+export const videoWithScale = css`
+	width: ${ ( { width } ) => `${ width }px` };
+	height: ${ ( { height } ) => `${ height }px` };
+	left: ${ ( { offsetX } ) => `${ -offsetX }px` };
+	top: ${ ( { offsetY } ) => `${ -offsetY }px` };
+	max-width: ${ ( { isBackground } ) => isBackground ? 'initial' : null };
+`;
+
+export const getBackgroundStyle = () => {
+	return {
+		minWidth: '100%',
+		minHeight: '100%',
+		maxWidth: 'initial',
+	};
 };
-
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
-];

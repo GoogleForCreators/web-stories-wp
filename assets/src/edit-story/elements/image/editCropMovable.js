@@ -29,7 +29,7 @@ import { useEffect, useRef } from '@wordpress/element';
  */
 import Movable from '../../components/movable';
 import { useUnits } from '../../units';
-import { getFocalFromOffset } from './util';
+import { getFocalFromOffset } from './../shared';
 
 function EditCropMovable( {
 	setProperties, cropBox, croppedImage,

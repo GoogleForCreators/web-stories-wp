@@ -64,7 +64,7 @@ function TextSave( {
 	};
 
 	return (
-		<p id={ 'el-' + id } style={ { ...style } } dangerouslySetInnerHTML={ { __html: content } } />
+		<p id={ 'el-' + id } style={ style } dangerouslySetInnerHTML={ { __html: content } } />
 	);
 }
 
