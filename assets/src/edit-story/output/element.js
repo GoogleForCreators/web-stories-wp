@@ -27,6 +27,7 @@ function OutputElement( { element } ) {
 	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Output } = getDefinitionForType( type );
 
+	// Box is calculated based on the 100%:100% basis for width and height.
 	const box = getBox( element, 100, 100 );
 	const { x, y, width, height, rotationAngle } = box;
 
