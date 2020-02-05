@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from './dataVersion';
 import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
 import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
 import fullbleedToFill from './migrations/v0003_fullbleedToFill';
@@ -28,7 +27,9 @@ const MIGRATIONS = {
 	3: [ fullbleedToFill ],
 };
 
-function migrate( storyData, version ) {
+export const DATA_VERSION = Math.max.apply( null, Object.keys( MIGRATIONS ).map( Number ) );
+
+export function migrate( storyData, version ) {
 	let result = storyData;
 	for ( let v = version; v < DATA_VERSION; v++ ) {
 		const migrations = MIGRATIONS[ v + 1 ];
