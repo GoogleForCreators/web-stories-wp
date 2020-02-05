@@ -43,7 +43,7 @@ use \Google\Web_Stories\Media;
 	<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 	<?php /* todo: include custom CSS via PHP */ ?>
 	<style amp-custom>
-		.page-safe-area {
+		.page-background-area, .page-safe-area {
 			position: absolute;
 			overflow: hidden;
 			margin: auto;
@@ -51,6 +51,10 @@ use \Google\Web_Stories\Media;
 			bottom: 0;
 			left: 0;
 			right: 0;
+		}
+
+		.page-background-area img, .page-background-area video {
+			object-fit: cover;
 		}
 
 		.wrapper {

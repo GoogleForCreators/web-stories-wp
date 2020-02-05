@@ -20,7 +20,7 @@
 import StoryPropTypes from '../../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { editorPixels } from '../../units';
-import { getImgProps } from '../image/util';
+import { getMediaProps } from '../shared';
 
 function VideoOutput( {
 	element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
@@ -30,7 +30,7 @@ function VideoOutput( {
 	// aspect ratio.
 	const width = vw;
 	const height = vh * PAGE_HEIGHT / PAGE_WIDTH;
-	const imgProps = getImgProps( width, height, scale, focalX, focalY, origRatio );
+	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	const wrapperStyle = {
 		position: 'absolute',
@@ -45,7 +45,7 @@ function VideoOutput( {
 		src,
 	};
 	const props = {
-		autoPlay: true,  // QQQ: autoPlay or autoplay?
+		autoPlay: true,
 		poster,
 		layout: 'fill',
 	};
