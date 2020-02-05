@@ -50,7 +50,7 @@
     "@wordpress/element": "^2.11.0",
     "@wordpress/eslint-plugin": "^3.4.1",
     "@wordpress/i18n": "^3.9.0",
-    "@wordpress/scripts": "^6.2.0",
+    "@wordpress/scripts": "^7.0.1",
     "@wordpress/url": "^2.10.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
