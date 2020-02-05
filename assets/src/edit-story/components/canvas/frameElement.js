@@ -44,11 +44,11 @@ const Wrapper = styled.div`
 	${elementWithRotation}
 	pointer-events: initial;
 
-  &:focus,
-  &:active,
-  &:hover {
-    outline: 1px solid ${({ theme }) => theme.colors.selection};
-  }
+	&:focus,
+	&:active,
+	&:hover {
+		outline: 1px solid ${({ theme }) => theme.colors.selection};
+	}
 `;
 
 function FrameElement({ element }) {
@@ -72,7 +72,6 @@ function FrameElement({ element }) {
 
   const isSelected = selectedElements.includes(id);
 
-  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const box = getBox(element);
 
   return (

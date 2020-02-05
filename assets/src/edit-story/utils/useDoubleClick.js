@@ -19,11 +19,6 @@
  */
 import { useCallback, useEffect, useState } from '@wordpress/element';
 
-// Disable reason: Should not check indentation in code samples inside
-// markdown, but it does.
-
-/* eslint-disable jsdoc/check-indentation */
-
 /**
  * This hook creates a handler to use for double click listening
  * on a node, where single clicks are also relevant. Default timeout
@@ -97,8 +92,6 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
 
   return getHandler;
 };
-
-/* eslint-enable jsdoc/check-indentation */
 
 export default useDoubleClick;
 

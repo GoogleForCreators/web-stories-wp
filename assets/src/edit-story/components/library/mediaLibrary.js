@@ -279,7 +279,6 @@ function MediaLibrary({ onInsert }) {
         />
       );
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      /* eslint-disable react/jsx-closing-tag-location */
       return (
         <Video
           key={src}
@@ -297,7 +296,6 @@ function MediaLibrary({ onInsert }) {
           <source src={src} type={mimeType} />
         </Video>
       );
-      /* eslint-enable react/jsx-closing-tag-location */
     }
     return null;
   };

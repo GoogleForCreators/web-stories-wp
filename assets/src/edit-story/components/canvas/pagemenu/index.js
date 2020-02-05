@@ -91,9 +91,9 @@ const Icon = styled.button`
   ${({ disabled }) =>
     disabled &&
     `
-  opacity: .3;
-  pointer-events: none;
-  `}
+	opacity: .3;
+	pointer-events: none;
+	`}
 
   svg {
     width: 28px;
@@ -128,6 +128,10 @@ function PageMenu() {
   const handleUndo = useCallback(() => undo(), [undo]);
 
   const handleRedo = useCallback(() => redo(), [redo]);
+
+  if (!currentPage) {
+    return null;
+  }
 
   return (
     <Wrapper>

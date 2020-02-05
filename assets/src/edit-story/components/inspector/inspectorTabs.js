@@ -31,12 +31,13 @@ import useInspector from './useInspector';
 const Tabs = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.v1};
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   height: 100%;
   margin: 0;
 `;
 
 const Tab = styled.button.attrs({ role: 'tab' })`
-  width: 33.33%;
   height: 100%;
   text-align: center;
   cursor: pointer;
@@ -47,19 +48,22 @@ const Tab = styled.button.attrs({ role: 'tab' })`
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.tab.weight};
   word-break: break-word;
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
+  opacity: 0.84;
 
   ${({ isActive }) =>
     !isActive &&
     `
-		opacity: .3;
+		opacity: .34;
 		&:hover { opacity: 1; }
 	`}
+
+  &:active,
+	&:hover {
+    outline: none;
+    opacity: 0.84;
+  }
 `;
 
 function InspectorTabs() {

@@ -83,7 +83,8 @@
     ],
     "jsdoc/check-indentation": "error",
     "@wordpress/dependency-group": "error",
-    "@wordpress/react-no-unsafe-timeout": "error"
+    "@wordpress/react-no-unsafe-timeout": "error",
+    "eslint-comments/no-unused-disable": "error"
   },
   "overrides": [
     {

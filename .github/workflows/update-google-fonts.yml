@@ -11,7 +11,8 @@ jobs:
         with:
           node-version: '10.x'
       - name: Update list of Google Fonts
-        id: vars
+        env:
+          GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
         run: |
           npm install
           npm run download-fonts

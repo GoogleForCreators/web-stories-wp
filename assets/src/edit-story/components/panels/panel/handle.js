@@ -33,24 +33,24 @@ import useDragHandlers from './useDragHandlers';
 import useKeyboardHandlers from './useKeyboardHandlers';
 
 const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
-  background: transparent;
+  background-color: ${({ theme }) => theme.colors.fg.v5};
   border: 0;
   padding: 0;
-  height: 10px;
+  height: 6px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   cursor: row-resize;
 `;
 
 const Bar = styled.div`
-  margin-top: 4px;
   background-color: ${({ theme }) => theme.colors.bg.v0};
-  width: 32px;
+  width: 36px;
   height: 4px;
   border-radius: 2px;
   text-indent: -10000px; /* hide the text from non-screen-readers */
+  opacity: 0.1;
 `;
 
 function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {

@@ -40,12 +40,8 @@ const Element = styled.p`
   ${elementFillContent}
   ${elementWithFont}
 
-  opacity: 0;
+	opacity: 0;
   user-select: ${({ canSelect }) => (canSelect ? 'initial' : 'none')};
-
-  &:focus {
-    outline: none;
-  }
 `;
 
 function TextFrame({

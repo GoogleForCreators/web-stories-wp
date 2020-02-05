@@ -36,11 +36,10 @@ import Arrow from './arrow.svg';
 
 const Header = styled.h2`
   background-color: ${({ theme, isPrimary }) =>
-    isPrimary ? theme.colors.fg.v2 : theme.colors.fg.v1};
-  border: 0 solid ${({ theme }) => theme.colors.fg.v2};
+    isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1};
+  border: 0 solid ${({ theme }) => theme.colors.fg.v6};
   border-top-width: ${({ isPrimary }) => (isPrimary ? 0 : '1px')};
   color: ${({ theme }) => theme.colors.bg.v2};
-  padding: 10px 20px;
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -53,7 +52,7 @@ const Header = styled.h2`
 const HeaderButton = styled.button.attrs({ type: 'button' })`
   color: inherit;
   border: 0;
-  padding: 0;
+  padding: 10px 20px;
   background: transparent;
   display: flex;
   justify-content: space-between;
@@ -74,6 +73,7 @@ const Collapse = styled.span`
   width: 28px;
   height: 28px;
   display: flex; /* removes implicit line-height padding from child element */
+  opacity: 0.54;
 
   svg {
     width: 28px;
