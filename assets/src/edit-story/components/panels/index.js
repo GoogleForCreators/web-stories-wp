@@ -86,6 +86,7 @@ export function getPanels( elements ) {
 	// Only display background panel in case of background element.
 	if ( isBackground ) {
 		selectionPanels = [ { type: BACKGROUND, Panel: BackgroundPanel } ];
+		// If the selected element's type is video, display poster panel, too.
 		if ( 'video' === elements[ 0 ].type ) {
 			selectionPanels.push( { type: VIDEO_POSTER, Panel: VideoPosterPanel } );
 		}
