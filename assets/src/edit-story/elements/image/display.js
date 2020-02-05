@@ -48,7 +48,6 @@ function ImageDisplay( {
 } ) {
 	const imageRef = useRef( null );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	useTransformHandler( id, ( transform ) => {

@@ -62,7 +62,6 @@ function FrameElement( { element } ) {
 
 	const isSelected = selectedElements.includes( id );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const box = getBox( element );
 
 	return (

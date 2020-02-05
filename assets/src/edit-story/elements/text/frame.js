@@ -45,10 +45,6 @@ const Element = styled.p`
 
 	opacity: 0;
 	user-select: ${ ( { canSelect } ) => canSelect ? 'initial' : 'none' };
-
-	&:focus {
-		outline: none;
-	}
 `;
 
 function TextFrame( {

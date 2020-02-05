@@ -159,7 +159,6 @@ class Fonts_Controller extends WP_REST_Controller {
 		return apply_filters( 'rest_prepare_font', $response, $font, $request );
 	}
 
-
 	/**
 	 * Checks if a given request has access to get fonts.
 	 *
@@ -204,14 +203,14 @@ class Fonts_Controller extends WP_REST_Controller {
 					'readonly'    => true,
 				],
 				'fallbacks' => [
-					'description' => __( 'Array of fallback fonts', 'web-stories' ),
+					'description' => __( 'List of fallback fonts', 'web-stories' ),
 					'type'        => 'array',
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
 					'default'     => [],
 				],
 				'weights'   => [
-					'description' => __( 'Array of fallback fonts', 'web-stories' ),
+					'description' => __( 'List of font weights', 'web-stories' ),
 					'type'        => 'array',
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,

@@ -43,7 +43,6 @@ const Base = styled.button.attrs(
 	cursor: pointer;
 	font-size: 14px;
 
-	&:focus,
 	&:active {
 		outline: none;
 	}
