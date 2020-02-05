@@ -12,7 +12,7 @@ import { useConfig } from '../config';
 function useUploader() {
 	const { actions: { uploadMedia } } = useAPI();
 	const { storyId, maxUpload, allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
-	const allowedMimeTypes = Object.values( { ...allowedImageMimeTypes, ...allowedVideoMimeTypes } );
+	const allowedMimeTypes = [ ...allowedImageMimeTypes, ...allowedVideoMimeTypes ];
 
 	const isValidType = useCallback( ( { type } ) => {
 		return allowedMimeTypes.includes( type );
@@ -24,7 +24,6 @@ function useUploader() {
 
 	const uploadFile = ( file ) => {
 		// TODO Add permission check here, see Gutenberg's userCan function.
-
 		if ( ! fileSizeCheck( file ) ) {
 			throw new Error( `File size error` );
 		}
