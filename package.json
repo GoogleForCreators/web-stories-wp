@@ -139,6 +139,9 @@
   "lint-staged": {
     "*.js": "npm run lint:js:fix",
     "*.(js|css)": "npm run lint:css:fix",
-    "*.php": "npm run lint:php:fix"
+    "*.md": "npm run format:md",
+    "*.php": "npm run lint:php:fix",
+    "*.(xml|xml.dist)": "npm run format:xml",
+    "*.yml": "npm run format:yml"
   }
 }
