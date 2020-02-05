@@ -22,39 +22,24 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../api';
+import useLoadMedia from './actions/useLoadMedia';
+import useReloadMedia from './actions/useReloadMedia';
 import Context from './context';
 
 function MediaProvider( { children } ) {
-	const { actions: { getMedia } } = useAPI();
 	const [ media, setMedia ] = useState( [] );
 	const [ mediaType, setMediaType ] = useState( '' );
 	const [ searchTerm, setSearchTerm ] = useState( '' );
 	const [ isMediaLoaded, setIsMediaLoaded ] = useState( false );
 	const [ isMediaLoading, setIsMediaLoading ] = useState( false );
 
-	const loadMedia = useCallback( () => {
-		if ( ! isMediaLoaded && ! isMediaLoading ) {
-			setIsMediaLoading( true );
-			getMedia( { mediaType, searchTerm } ).then( ( loadedMedia ) => {
-				setIsMediaLoading( false );
-				setIsMediaLoaded( true );
-				setMedia( loadedMedia );
-			} );
-		}
-	}, [ isMediaLoaded, isMediaLoading, getMedia, mediaType, searchTerm ] );
-
-	const reloadMedia = useCallback( () => {
-		setSearchTerm( '' );
-		setMediaType( '' );
-		setIsMediaLoading( false );
-		setIsMediaLoaded( false );
-	}, [ setSearchTerm, setMediaType, setIsMediaLoading, setIsMediaLoaded ] );
+	const loadMedia = useLoadMedia( { setMedia, setIsMediaLoading, setIsMediaLoaded, isMediaLoaded, isMediaLoading, mediaType, searchTerm } );
+	const reloadMedia = useReloadMedia( { setIsMediaLoading, setIsMediaLoaded } );
 
 	const state = {
 		state: {
@@ -65,11 +50,9 @@ function MediaProvider( { children } ) {
 			searchTerm,
 		},
 		actions: {
-			setIsMediaLoading,
-			setIsMediaLoaded,
 			setMediaType,
-			loadMedia,
 			setSearchTerm,
+			loadMedia,
 			reloadMedia,
 		},
 	};

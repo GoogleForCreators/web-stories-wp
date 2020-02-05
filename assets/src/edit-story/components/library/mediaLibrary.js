@@ -136,7 +136,7 @@ const DEFAULT_WIDTH = 150;
 function MediaLibrary( { onInsert } ) {
 	const {
 		state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-		actions: { loadMedia, setIsMediaLoading, setIsMediaLoaded, setMediaType, setSearchTerm },
+		actions: { loadMedia, reloadMedia, setMediaType, setSearchTerm },
 	} = useMedia();
 	const { allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
 
@@ -159,8 +159,7 @@ function MediaLibrary( { onInsert } ) {
 	 */
 	const onSearch = ( evt ) => {
 		setSearchTerm( evt.target.value );
-		setIsMediaLoading( false );
-		setIsMediaLoaded( false );
+		reloadMedia();
 	};
 
 	/**
@@ -171,14 +170,12 @@ function MediaLibrary( { onInsert } ) {
 	const onFilter = ( filter ) => {
 		if ( filter !== mediaType ) {
 			setMediaType( filter );
-			setIsMediaLoading( false );
-			setIsMediaLoaded( false );
+			reloadMedia();
 		}
 	};
 
 	const onClose = () => {
-		setIsMediaLoading( false );
-		setIsMediaLoaded( false );
+		reloadMedia();
 	};
 
 	/**
