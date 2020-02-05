@@ -15,25 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * Gets point from offset.
+ *
+ * @param {number} side
+ * @param {number} mediaElementSide
+ * @param {number} offset
+ * @return {number} Focal
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
+function getFocalFromOffset(side, mediaElementSide, offset) {
+  return ((offset + side * 0.5) / mediaElementSide) * 100;
+}
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
-};
-
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
-];
+export default getFocalFromOffset;

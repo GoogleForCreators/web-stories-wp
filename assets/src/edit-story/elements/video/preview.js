@@ -33,6 +33,7 @@ function VideoPreview({
   x,
   y,
   rotationAngle,
+  isBackground,
   poster,
 }) {
   const sourceProps = {
@@ -45,10 +46,24 @@ function VideoPreview({
     id: 'el-' + id,
   };
 
-  const style = getCommonAttributes({ width, height, x, y, rotationAngle });
+  const style = isBackground
+    ? {
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        rotationAngle: 0,
+      }
+    : getCommonAttributes({ width, height, x, y, rotationAngle });
+
+  const videoStyle = {
+    height: '100%',
+    width: 'auto',
+    maxWidth: 'initial',
+  };
   return (
-    <div style={{ ...style }} {...wrapperProps}>
-      <video {...sourceProps} />
+    <div style={style} {...wrapperProps}>
+      <video style={{ ...videoStyle }} {...sourceProps} />
     </div>
   );
 }
@@ -57,6 +72,7 @@ VideoPreview.propTypes = {
   rotationAngle: PropTypes.number.isRequired,
   controls: PropTypes.bool,
   autoPlay: PropTypes.bool,
+  isBackground: PropTypes.bool,
   loop: PropTypes.bool,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,

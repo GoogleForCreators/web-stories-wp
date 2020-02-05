@@ -66,7 +66,7 @@ function TextSave({
   return (
     <p
       id={'el-' + id}
-      style={{ ...style }}
+      style={style}
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

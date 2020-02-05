@@ -40,7 +40,7 @@ function SquareSave({
     ...getCommonAttributes({ width, height, x, y, rotationAngle }),
     background: backgroundColor,
   };
-  return <div id={'el-' + id} style={{ ...style }} />;
+  return <div id={'el-' + id} style={style} />;
 }
 
 SquareSave.propTypes = {

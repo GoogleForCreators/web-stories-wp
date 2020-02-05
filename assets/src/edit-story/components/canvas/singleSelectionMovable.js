@@ -34,6 +34,7 @@ import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
 const ALL_HANDLES = ['n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
@@ -45,6 +46,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   const {
     actions: { updateSelectedElements },
+    state: { currentPage },
   } = useStory();
   const {
     actions: { pushTransform },
@@ -135,15 +137,19 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const shouldAdjustFontSize =
     isTextElement && selectedElement.content.length && isResizingFromCorner;
 
+  const { isMedia } = getDefinitionForType(selectedElement.type);
+  const actionsEnabled =
+    !selectedElement.isFill &&
+    selectedElement.id !== currentPage.backgroundElementId;
   return (
     <Movable
       className="default-movable"
       zIndex={0}
       ref={moveable}
       target={targetEl}
-      draggable={!selectedElement.isFill}
-      resizable={!selectedElement.isFill && !isDragging}
-      rotatable={!selectedElement.isFill && !isDragging}
+      draggable={actionsEnabled}
+      resizable={actionsEnabled && !isDragging}
+      rotatable={actionsEnabled && !isDragging}
       onDrag={({ target, beforeTranslate }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
@@ -247,7 +253,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }}
       origin={false}
       pinchable={true}
-      keepRatio={'image' === selectedElement.type && isResizingFromCorner}
+      keepRatio={isMedia && isResizingFromCorner}
       renderDirections={ALL_HANDLES}
       snappable={true}
       snapElement={true}

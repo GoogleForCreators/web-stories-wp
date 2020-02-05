@@ -36,32 +36,34 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { imageWithScale } from './util';
-import EditCropMovable from './editCropMovable';
+import { videoWithScale } from './util';
 
 const Element = styled.div`
   ${elementFillContent}
 `;
 
-const FadedImg = styled.img`
+const FadedVideo = styled.video`
   position: absolute;
   opacity: 0.4;
   pointer-events: none;
-  ${imageWithScale}
+  ${videoWithScale}
+  max-width: initial;
+  max-height: initial;
 `;
 
-const CropImg = styled.img`
+const CropVideo = styled.video`
   position: absolute;
-  ${imageWithScale}
+  ${videoWithScale}
+  max-width: initial;
+  max-height: initial;
 `;
 
-function ImageEdit({
-  element: { id, src, origRatio, scale, focalX, focalY, isFill, isBackground },
+function VideoEdit({
+  element: { id, src, origRatio, scale, focalX, focalY, mimeType },
   box: { x, y, width, height, rotationAngle },
 }) {
-  const [fullImage, setFullImage] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
-  const [cropBox, setCropBox] = useState(null);
+  const [fullVideo, setFullVideo] = useState(null);
+  const [croppedVideo, setCroppedVideo] = useState(null);
 
   const {
     actions: { updateElementById },
@@ -71,7 +73,7 @@ function ImageEdit({
     [id, updateElementById]
   );
 
-  const imgProps = getMediaProps(
+  const videoProps = getMediaProps(
     width,
     height,
     scale,
@@ -82,44 +84,32 @@ function ImageEdit({
 
   return (
     <Element>
-      <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
-      <CropBox ref={setCropBox}>
-        <CropImg
-          ref={setCroppedImage}
+      <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>
+        <source src={src} type={mimeType} />
+      </FadedVideo>
+      <CropBox>
+        <CropVideo
+          ref={setCroppedVideo}
           draggable={false}
           src={src}
-          {...imgProps}
+          {...videoProps}
         />
       </CropBox>
 
-      {!isFill && !isBackground && cropBox && croppedImage && (
-        <EditCropMovable
-          setProperties={setProperties}
-          cropBox={cropBox}
-          croppedImage={croppedImage}
-          x={x}
-          y={y}
-          offsetX={imgProps.offsetX}
-          offsetY={imgProps.offsetY}
-          imgWidth={imgProps.width}
-          imgHeight={imgProps.height}
-        />
-      )}
-
-      {fullImage && croppedImage && (
+      {fullVideo && croppedVideo && (
         <EditPanMovable
           setProperties={setProperties}
-          fullMedia={fullImage}
-          croppedMedia={croppedImage}
+          fullMedia={fullVideo}
+          croppedMedia={croppedVideo}
           x={x}
           y={y}
           width={width}
           height={height}
           rotationAngle={rotationAngle}
-          offsetX={imgProps.offsetX}
-          offsetY={imgProps.offsetY}
-          mediaWidth={imgProps.width}
-          mediaHeight={imgProps.height}
+          offsetX={videoProps.offsetX}
+          offsetY={videoProps.offsetY}
+          mediaWidth={videoProps.width}
+          mediaHeight={videoProps.height}
         />
       )}
 
@@ -135,9 +125,9 @@ function ImageEdit({
   );
 }
 
-ImageEdit.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+VideoEdit.propTypes = {
+  element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
 };
 
-export default ImageEdit;
+export default VideoEdit;

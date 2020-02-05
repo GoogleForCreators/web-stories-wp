@@ -39,7 +39,6 @@ function FramesLayer() {
   const {
     state: { currentPage },
   } = useStory();
-
   return (
     <Layer pointerEvents="none">
       <FramesPageArea>

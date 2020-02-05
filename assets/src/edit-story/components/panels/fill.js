@@ -29,8 +29,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ActionButton } from '../button';
-import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import { SimplePanel } from './panel';
 
 function FillPanel({ selectedElements, onSetProperties }) {
   // The x/y/w/h/r are kept unchanged so that toggling fill will return
