@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as squareElement from './square';
@@ -47,6 +48,7 @@ export const createPage = ( attributes ) => createNewElement( 'page', attributes
 
 export const elementTypes = [
 	{ type: 'page', defaultAttributes: { elements: [] }, name: __( 'Page', 'web-stories' ) },
+	{ type: 'background', name: __( 'Background', 'web-stories' ), ...backgroundElement },
 	{ type: 'text', name: __( 'Text', 'web-stories' ), ...textElement },
 	{ type: 'image', name: __( 'Image', 'web-stories' ), ...imageElement },
 	{ type: 'square', name: __( 'Square', 'web-stories' ), ...squareElement },

@@ -17,22 +17,16 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { useCallback } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
 import StoryPropTypes from '../../../types';
+import { getDefinitionForType } from '../../../elements';
+import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
-import LayerContent from './layerContent';
 
 const LayerButton = styled.button.attrs( { type: 'button' } )`
 	display: flex;
@@ -53,7 +47,7 @@ const LayerButton = styled.button.attrs( { type: 'button' } )`
 	}
 `;
 
-const LayerIcon = styled.div`
+const LayerIconWrapper = styled.div`
 	width: 52px;
 	flex-shrink: 0;
 	display: flex;
@@ -76,29 +70,22 @@ const LayerDescription = styled.div`
 	margin-left: 0;
 `;
 
-function Layer( { icon, id, isSelected, element } ) {
-	const {
-		actions: { setSelectedElementsById, clearSelection },
-	} = useStory();
+function Layer( { element } ) {
+	const { LayerIcon, LayerContent } = getDefinitionForType( element.type );
 
-	const handleClick = useCallback( ( evt ) => {
-		evt.preventDefault();
-		evt.stopPropagation();
-		if ( id ) {
-			setSelectedElementsById( { elementIds: [ id ] } );
-		} else {
-			clearSelection();
-		}
-	}, [ setSelectedElementsById, clearSelection, id ] );
+	const {
+		isSelected,
+		handleClick,
+	} = useLayerSelection( element );
 
 	return (
 		<LayerButton
 			isSelected={ isSelected }
 			onClick={ handleClick }
 		>
-			<LayerIcon>
-				{ icon }
-			</LayerIcon>
+			<LayerIconWrapper>
+				<LayerIcon />
+			</LayerIconWrapper>
 			<LayerDescription>
 				<LayerContent element={ element } />
 			</LayerDescription>
@@ -107,10 +94,7 @@ function Layer( { icon, id, isSelected, element } ) {
 }
 
 Layer.propTypes = {
-	icon: PropTypes.object.isRequired,
-	id: PropTypes.string,
-	isSelected: PropTypes.bool.isRequired,
-	element: StoryPropTypes.element.isRequired,
+	element: StoryPropTypes.layer.isRequired,
 };
 
 export default Layer;

@@ -15,25 +15,12 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../icon_media.svg';
+import { __ } from '@wordpress/i18n';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+function SquareLayerContent() {
+	return __( 'Square', 'amp' );
+}
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
-];
+export default SquareLayerContent;

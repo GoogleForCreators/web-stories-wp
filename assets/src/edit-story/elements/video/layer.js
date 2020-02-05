@@ -15,31 +15,22 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon.svg';
+import StoryPropTypes from '../../types';
 
-export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
+function VideoLayerContent( { element } ) {
+	const alt = __( 'Video layer', 'amp' );
+	return <img src={ element.poster } alt={ alt } height="20" />;
+}
+
+VideoLayerContent.propTypes = {
+	element: StoryPropTypes.element.isRequired,
 };
 
-export const hasEditMode = false;
-
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-	PanelTypes.FILL,
-];
+export default VideoLayerContent;

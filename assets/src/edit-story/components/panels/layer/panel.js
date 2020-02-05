@@ -46,10 +46,11 @@ function LayerPanel() {
 			<PanelTitle isPrimary isResizable>
 				{ __( 'Layers', 'amp' ) }
 			</PanelTitle>
+
 			<PanelContent isScrollable padding={ '0' }>
 				<LayerList>
-					{ layers.map( ( { icon, isSelected, id, element } ) => (
-						<Layer key={ id } icon={ icon } id={ id } isSelected={ isSelected } element={ element } />
+					{ layers.map( ( element ) => (
+						<Layer key={ element.id } element={ element } />
 					) ) }
 				</LayerList>
 			</PanelContent>

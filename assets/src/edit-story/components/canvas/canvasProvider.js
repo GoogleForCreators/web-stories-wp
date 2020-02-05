@@ -80,6 +80,7 @@ function CanvasProvider( { children } ) {
 			evt.target.ownerDocument.addEventListener(
 				'mouseup',
 				() => window.setTimeout( setLastSelectionEvent, 0, null ),
+				{ once: true, capture: true },
 			);
 		}
 	}, [ editingElement, clearEditing, toggleElementInSelection, setSelectedElementsById ] );

@@ -15,25 +15,25 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Preview } from './preview';
-export { default as Save } from './save';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../icon_media.svg';
+import styled from 'styled-components';
 
-export const defaultAttributes = {
-	backgroundColor: '#ffffff',
-};
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
-export const hasEditMode = false;
+const LayerBackground = styled.span`
+	opacity: .5;
+`;
 
-export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
-];
+function BackgroundLayerContent() {
+	return (
+		<LayerBackground>
+			{ __( 'Background (locked)', 'amp' ) }
+		</LayerBackground>
+	);
+}
+
+export default BackgroundLayerContent;

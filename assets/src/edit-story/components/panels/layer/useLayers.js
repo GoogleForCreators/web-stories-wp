@@ -18,67 +18,37 @@
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import { createNewElement } from '../../../elements';
 
-import IconBackground from './layer_bg.svg';
-import IconMedia from './layer_media.svg';
-import IconVideo from './layer_video.svg';
-import IconText from './layer_text.svg';
+function getElementsWithBackground( page ) {
+	const hasBackground = Boolean( page.backgroundElementId );
 
-function getIconForElementType( type ) {
-	switch ( type ) {
-		case 'video':
-			return <IconVideo />;
-		case 'text':
-			return <IconText />;
-		case 'image':
-		case 'shape':
-		case 'square': // this is only while square is a "shape"
-			return <IconMedia />;
-		default:
-			return <IconBackground />;
+	// if no background element, create empty background element as first element.
+	if ( ! hasBackground ) {
+		return [
+			createNewElement( 'background' ),
+			...page.elements,
+		];
 	}
+
+	// Otherwise wrap first element as inner of new background element.
+	return [
+		createNewElement( 'background', { inner: page.elements[ 0 ] } ),
+		...page.elements.slice( 1 ),
+	];
 }
 
 function useLayers() {
 	const {
-		state: { currentPage, selectedElementIds },
+		state: { currentPage },
 	} = useStory();
 
 	if ( ! currentPage ) {
 		return [];
 	}
 
-	let backgroundElement, otherElements;
-	const hasBackground = Boolean( currentPage.backgroundElementId );
-
-	if ( hasBackground ) {
-		[ backgroundElement, otherElements ] = currentPage.elements;
-	} else {
-		otherElements = currentPage.elements;
-		backgroundElement = { id: '' };
-	}
-
-	const layers = [
-		{
-			icon: getIconForElementType(),
-			isSelected: hasBackground ? selectedElementIds.includes( backgroundElement.id ) : selectedElementIds.length === 0,
-			id: backgroundElement.id,
-			element: backgroundElement,
-		},
-		...otherElements.map( ( element ) => {
-			const { type, id } = element;
-			return {
-				icon: getIconForElementType( type ),
-				isSelected: selectedElementIds.includes( id ),
-				id,
-				element,
-			};
-		} ),
-	];
-
-	// Flip it and...
+	const layers = getElementsWithBackground( currentPage );
 	layers.reverse();
-
 	return layers;
 }
 
