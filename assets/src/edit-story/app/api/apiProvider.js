@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forEach } from 'lodash';
 /**
  * WordPress dependencies
  */
@@ -150,7 +149,7 @@ function APIProvider( { children } ) {
 			// Create upload payload
 			const data = new window.FormData();
 			data.append( 'file', file, file.name || file.type.replace( '/', '.' ) );
-			forEach( additionalData, ( value, key ) => data.append( key, value ) );
+			Object.entries( additionalData ).forEach( ( [ key, value ] ) => data.append( key, value ) );
 			return apiFetch( {
 				path: media,
 				body: data,
