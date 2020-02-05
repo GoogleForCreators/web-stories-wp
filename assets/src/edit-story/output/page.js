@@ -33,8 +33,8 @@ function OutputPage( { page } ) {
 		// supported.
 		fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${ PAGE_HEIGHT / PAGE_WIDTH }))`,
 	};
-	const backgroundElements = page.elements.filter( (element) => element.id === page.backgroundElementId );
-	const nonBackgroundElements = page.elements.filter( (element) => element.id !== page.backgroundElementId );
+	const backgroundElements = page.elements.filter( ( element ) => element.id === page.backgroundElementId );
+	const nonBackgroundElements = page.elements.filter( ( element ) => element.id !== page.backgroundElementId );
 	return (
 		<amp-story-page id={ id }>
 			<amp-story-grid-layer template="vertical">
