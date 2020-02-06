@@ -165,7 +165,7 @@ function APIProvider( { children } ) {
 	 * @param  {Object} data Object of properties to update on attachment.
 	 * @return {Promise} Media Object Promise.
 	 */
-	const saveMedia = useCallback(
+	const updateMedia = useCallback(
 		( mediaId, data ) => {
 			return apiFetch( {
 				path: `${ media }/${ mediaId }`,
@@ -211,7 +211,7 @@ function APIProvider( { children } ) {
 			getAllStatuses,
 			getAllUsers,
 			uploadMedia,
-			saveMedia,
+			updateMedia,
 		},
 	};
 

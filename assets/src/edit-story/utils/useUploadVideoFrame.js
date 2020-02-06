@@ -12,7 +12,7 @@ import { useUploader } from '../app/uploader';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 function useUploadVideoFrame( { videoId, src, id } ) {
-	const { actions: { saveMedia } } = useAPI();
+	const { actions: { updateMedia } } = useAPI();
 	const { uploadFile } = useUploader();
 	const { storyId } = useConfig();
 	const { actions: { updateElementById } } = useStory();
@@ -24,12 +24,12 @@ function useUploadVideoFrame( { videoId, src, id } ) {
 		try {
 			const obj = await getFirstFrameOfVideo( src );
 			const { id: posterId, source_url: poster } = await uploadFile( obj );
-			await saveMedia( posterId, {
+			await updateMedia( posterId, {
 				meta: {
 					web_stories_is_poster: true,
 				},
 			} );
-			await saveMedia( videoId, {
+			await updateMedia( videoId, {
 				featured_media: posterId,
 				post: storyId,
 			} );
@@ -44,7 +44,7 @@ function useUploadVideoFrame( { videoId, src, id } ) {
 	 * Uploads the video's first frame as an attachment.
 	 *
 	 */
-	const uploadVideoFrame = useCallback( processData, [ getFirstFrameOfVideo, src, uploadFile, saveMedia, videoId, setProperties ] );
+	const uploadVideoFrame = useCallback( processData, [ getFirstFrameOfVideo, src, uploadFile, updateMedia, videoId, setProperties ] );
 
 	return {
 		uploadVideoFrame,
