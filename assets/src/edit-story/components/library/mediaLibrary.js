@@ -136,7 +136,7 @@ const DEFAULT_WIDTH = 150;
 function MediaLibrary( { onInsert } ) {
 	const {
 		state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-		actions: { loadMedia, reloadMedia, setMediaType, setSearchTerm },
+		actions: { loadMedia, reloadMedia, resetMedia, setMediaType, setSearchTerm },
 	} = useMedia();
 	const { allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
 
@@ -175,7 +175,7 @@ function MediaLibrary( { onInsert } ) {
 	};
 
 	const onClose = () => {
-		reloadMedia();
+		resetMedia();
 	};
 
 	/**

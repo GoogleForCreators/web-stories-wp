@@ -29,6 +29,7 @@ import { useState } from '@wordpress/element';
  */
 import useLoadMedia from './actions/useLoadMedia';
 import useReloadMedia from './actions/useReloadMedia';
+import useResetMedia from './actions/useResetMedia';
 import Context from './context';
 
 function MediaProvider( { children } ) {
@@ -40,6 +41,7 @@ function MediaProvider( { children } ) {
 
 	const loadMedia = useLoadMedia( { setMedia, setIsMediaLoading, setIsMediaLoaded, isMediaLoaded, isMediaLoading, mediaType, searchTerm } );
 	const reloadMedia = useReloadMedia( { setIsMediaLoading, setIsMediaLoaded } );
+	const resetMedia = useResetMedia( { setMediaType, setSearchTerm, reloadMedia } );
 
 	const state = {
 		state: {
@@ -54,6 +56,7 @@ function MediaProvider( { children } ) {
 			setSearchTerm,
 			loadMedia,
 			reloadMedia,
+			resetMedia,
 		},
 	};
 
