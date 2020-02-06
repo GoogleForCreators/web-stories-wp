@@ -32,6 +32,7 @@ const TextLayer = styled.span`
 	overflow: hidden;
 	max-width: 100%;
 `;
+
 function TextLayerContent( { element: { content } } ) {
 	// Remove all tags
 	const rawContent = content.replace( /<[^>]*>/g, '' );
