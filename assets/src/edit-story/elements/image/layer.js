@@ -23,10 +23,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import VisibleImage from '../utils/visibleImage';
 
 function ImageLayerContent( { element } ) {
 	const alt = __( 'Image layer', 'web-stories' );
-	return <img src={ element.src } alt={ alt } height="20" />;
+	return <VisibleImage src={ element.src } alt={ alt } height="20" />;
 }
 
 ImageLayerContent.propTypes = {

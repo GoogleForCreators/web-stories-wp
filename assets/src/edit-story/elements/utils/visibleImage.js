@@ -15,23 +15,32 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../utils/visibleImage';
+import useBrightnessChecker from './useBrightnessChecker';
 
-function VideoLayerContent( { element } ) {
-	const alt = __( 'Video layer', 'web-stories' );
-	return <VisibleImage src={ element.poster } alt={ alt } height="20" />;
+const Image = styled.img`
+	${ ( { isTooBright } ) => isTooBright && `
+		/* Using filter rather than box-shadow to correctly follow
+		 * outlines in semi-transparent images like gif and png.
+		 */
+		filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
+	` }
+`;
+
+const TOO_BRIGHT = 10;
+
+function VisibleImage( { ...attrs } ) {
+	const { ref, isTooBright } = useBrightnessChecker( TOO_BRIGHT );
+
+	return (
+		<Image ref={ ref } { ...attrs } isTooBright={ isTooBright } />
+	);
 }
 
-VideoLayerContent.propTypes = {
-	element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export default VisibleImage;
