@@ -35,10 +35,13 @@ export const hasEditMode = true;
 
 export const editModeGrayout = true;
 
+export const isMedia = true;
+
 export const panels = [
+	PanelTypes.BACKGROUND,
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,
 	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FULLBLEED,
+	PanelTypes.FILL,
 ];

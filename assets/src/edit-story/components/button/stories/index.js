@@ -68,6 +68,14 @@ export const outline = () => {
 	);
 };
 
+outline.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
+};
+
 export const undo = () => {
 	const isDisabled = boolean( 'Disabled', false );
 
@@ -76,6 +84,14 @@ export const undo = () => {
 			isDisabled={ isDisabled }
 		/>
 	);
+};
+
+undo.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
 };
 
 export const redo = () => {
@@ -88,6 +104,14 @@ export const redo = () => {
 	);
 };
 
+redo.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
+};
+
 export const gridView = () => {
 	const isDisabled = boolean( 'Disabled', false );
 
@@ -96,4 +120,12 @@ export const gridView = () => {
 			isDisabled={ isDisabled }
 		/>
 	);
+};
+
+gridView.story = {
+	parameters: {
+		backgrounds: [
+			{ name: 'dark', value: '#000', default: true },
+		],
+	},
 };

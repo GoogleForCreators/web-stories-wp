@@ -27,19 +27,19 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { ElementFillContent } from '../shared';
+import { elementFillContent, getMediaProps } from '../shared';
 import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
-import { ImageWithScale, getImgProps, getImageWithScaleCss } from './util';
+import { imageWithScale, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-	${ ElementFillContent }
+	${ elementFillContent }
 	overflow: hidden;
 `;
 
 const Img = styled.img`
 	position: absolute;
-	${ ImageWithScale }
+	${ imageWithScale }
 `;
 
 function ImageDisplay( {
@@ -48,8 +48,7 @@ function ImageDisplay( {
 } ) {
 	const imageRef = useRef( null );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const imgProps = getImgProps( width, height, scale, focalX, focalY, origRatio );
+	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	useTransformHandler( id, ( transform ) => {
 		const target = imageRef.current;
@@ -58,7 +57,7 @@ function ImageDisplay( {
 		} else {
 			const { resize } = transform;
 			if ( resize[ 0 ] !== 0 && resize[ 1 ] !== 0 ) {
-				const newImgProps = getImgProps( resize[ 0 ], resize[ 1 ], scale, focalX, focalY, origRatio );
+				const newImgProps = getMediaProps( resize[ 0 ], resize[ 1 ], scale, focalX, focalY, origRatio );
 				target.style.cssText = getImageWithScaleCss( newImgProps );
 			}
 		}

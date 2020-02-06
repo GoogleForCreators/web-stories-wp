@@ -27,7 +27,8 @@ import { getCommonAttributes } from '../shared';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function ImageSave( { id, src, width, height, x, y, rotationAngle, isFullbleed } ) {
+function ImageSave( { id, src, width, height, x, y, rotationAngle, isFill, isBackground } ) {
+	const displayFull = isFill || isBackground;
 	const props = {
 		layout: 'fill',
 		src,
@@ -37,16 +38,17 @@ function ImageSave( { id, src, width, height, x, y, rotationAngle, isFullbleed }
 	};
 	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
 	// @todo This is missing focal point handling which will be resolved separately.
-	if ( isFullbleed ) {
+	if ( displayFull ) {
 		style.top = 0;
 		style.left = 0;
 		style.width = '100%';
 		style.height = '100%';
+		style.rotationAngle = 0;
 	}
 
 	return (
-		<div style={ { ...style } } { ...wrapperProps }>
-			<amp-img className={ isFullbleed ? 'full-bleed' : '' } { ...props } />
+		<div style={ style } { ...wrapperProps }>
+			<amp-img className={ displayFull ? 'is-fill' : '' } { ...props } />
 		</div>
 	);
 }
@@ -59,7 +61,8 @@ ImageSave.propTypes = {
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
-	isFullbleed: PropTypes.bool,
+	isFill: PropTypes.bool,
+	isBackground: PropTypes.bool,
 };
 
 export default ImageSave;

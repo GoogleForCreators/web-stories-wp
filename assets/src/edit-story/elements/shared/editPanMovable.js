@@ -28,20 +28,20 @@ import { useEffect, useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import { getFocalFromOffset } from './util';
+import getFocalFromOffset from './getFocalFromOffset';
 
 function EditPanMovable( {
-	setProperties, fullImage, croppedImage,
+	setProperties, fullMedia, croppedMedia,
 	x, y, width, height, rotationAngle,
-	offsetX, offsetY, imgWidth, imgHeight,
+	offsetX, offsetY, mediaWidth, mediaHeight,
 } ) {
 	const moveableRef = useRef();
 	const translateRef = useRef( [ 0, 0 ] );
 
 	const update = () => {
 		const [ tx, ty ] = translateRef.current;
-		fullImage.style.transform = `translate(${ tx }px, ${ ty }px)`;
-		croppedImage.style.transform = `translate(${ tx }px, ${ ty }px)`;
+		fullMedia.style.transform = `translate(${ tx }px, ${ ty }px)`;
+		croppedMedia.style.transform = `translate(${ tx }px, ${ ty }px)`;
 	};
 
 	// Refresh moveables to ensure that the selection rect is always correct.
@@ -52,7 +52,7 @@ function EditPanMovable( {
 	return (
 		<Movable
 			ref={ moveableRef }
-			targets={ croppedImage }
+			targets={ croppedMedia }
 
 			origin={ true }
 			draggable={ true }
@@ -65,8 +65,8 @@ function EditPanMovable( {
 				const [ tx, ty ] = translateRef.current;
 				translateRef.current = [ 0, 0 ];
 				setProperties( {
-					focalX: getFocalFromOffset( width, imgWidth, offsetX - tx ),
-					focalY: getFocalFromOffset( height, imgHeight, offsetY - ty ),
+					focalX: getFocalFromOffset( width, mediaWidth, offsetX - tx ),
+					focalY: getFocalFromOffset( height, mediaHeight, offsetY - ty ),
 				} );
 				update();
 			} }
@@ -79,10 +79,10 @@ function EditPanMovable( {
 			// cropping/panning. It's possible to define a larger bounds using
 			// the expansion radius, but the UX is very poor for a rotated shape.
 			bounds={ rotationAngle === 0 ? {
-				left: x + width - imgWidth,
-				top: y + height - imgHeight,
-				right: x + imgWidth,
-				bottom: y + imgHeight,
+				left: x + width - mediaWidth,
+				top: y + height - mediaHeight,
+				right: x + mediaWidth,
+				bottom: y + mediaHeight,
 			} : {} }
 			verticalGuidelines={ rotationAngle === 0 ? [
 				x,
@@ -100,8 +100,8 @@ function EditPanMovable( {
 
 EditPanMovable.propTypes = {
 	setProperties: PropTypes.func.isRequired,
-	fullImage: PropTypes.object.isRequired,
-	croppedImage: PropTypes.object.isRequired,
+	fullMedia: PropTypes.object.isRequired,
+	croppedMedia: PropTypes.object.isRequired,
 	x: PropTypes.number.isRequired,
 	y: PropTypes.number.isRequired,
 	width: PropTypes.number.isRequired,
@@ -109,8 +109,8 @@ EditPanMovable.propTypes = {
 	rotationAngle: PropTypes.number.isRequired,
 	offsetX: PropTypes.number.isRequired,
 	offsetY: PropTypes.number.isRequired,
-	imgWidth: PropTypes.number.isRequired,
-	imgHeight: PropTypes.number.isRequired,
+	mediaWidth: PropTypes.number.isRequired,
+	mediaHeight: PropTypes.number.isRequired,
 };
 
 export default EditPanMovable;

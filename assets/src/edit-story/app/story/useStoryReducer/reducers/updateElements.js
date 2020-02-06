@@ -37,10 +37,11 @@ import { intersect, objectWithout } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {Array.<string>} payload.elementIds List of elements to update
- * @param {Object} payload.properties Properties to set on all the given elements.
+ * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
+ * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateElements( state, { elementIds, properties } ) {
+function updateElements( state, { elementIds, properties: propertiesOrUpdater } ) {
 	const idsToUpdate = elementIds === null ? state.selection : elementIds;
 
 	if ( idsToUpdate.length === 0 ) {
@@ -58,14 +59,21 @@ function updateElements( state, { elementIds, properties } ) {
 		return state;
 	}
 
-	const allowedProperties = objectWithout( properties, ELEMENT_RESERVED_PROPERTIES );
-
 	const updatedElements = oldPage.elements.map(
-		( element ) => (
-			idsToUpdate.includes( element.id ) ?
-				{ ...element, ...allowedProperties } :
-				element
-		) );
+		( element ) => {
+			if ( ! idsToUpdate.includes( element.id ) ) {
+				return element;
+			}
+			const properties =
+				typeof propertiesOrUpdater === 'function' ?
+					propertiesOrUpdater( element ) :
+					propertiesOrUpdater;
+			const allowedProperties = objectWithout( properties, ELEMENT_RESERVED_PROPERTIES );
+			if ( Object.keys( allowedProperties ).length === 0 ) {
+				return element;
+			}
+			return { ...element, ...allowedProperties };
+		} );
 
 	const newPage = {
 		...oldPage,

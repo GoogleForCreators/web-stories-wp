@@ -42,18 +42,18 @@ const Container = styled.div`
 
 const Column = styled.div``;
 
-export const StyledTiles = css`
+export const styledTiles = css`
 	width: 100%;
 	border-radius: 10px;
 	margin-bottom: 10px;
 `;
 
 const Image = styled.img`
-	${ StyledTiles }
+	${ styledTiles }
 `;
 
 const Video = styled.video`
-	${ StyledTiles }
+	${ styledTiles }
 `;
 
 const Title = styled.h3`

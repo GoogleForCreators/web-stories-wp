@@ -76,19 +76,20 @@ export function editorToDataY( y, pageHeight ) {
  * Converts the element's position, width, and rotation) to the "box" in the
  * "editor" coordinate space.
  *
- * @param {{x:number, y:number, width:number, height:number, rotationAngle:number, isFullbleed:boolean}} element The
+ * @param {{x:number, y:number, width:number, height:number, rotationAngle:number, isFill:boolean}} element The
  * element's position, width, and rotation. See `StoryPropTypes.element`.
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
  * @return {{x:number, y:number, width:number, height:number, rotationAngle:number}} The
  * "box" in the editor space.
  */
-export function getBox( { x, y, width, height, rotationAngle, isFullbleed }, pageWidth, pageHeight ) {
+export function getBox( { x, y, width, height, rotationAngle, isFill, isBackground }, pageWidth, pageHeight ) {
+	const displayFull = isFill || isBackground;
 	return {
-		x: dataToEditorX( isFullbleed ? 0 : x, pageWidth ),
-		y: dataToEditorY( isFullbleed ? 0 : y, pageHeight ),
-		width: dataToEditorX( isFullbleed ? PAGE_WIDTH : width, pageWidth ),
-		height: dataToEditorY( isFullbleed ? PAGE_HEIGHT : height, pageHeight ),
-		rotationAngle: isFullbleed ? 0 : rotationAngle,
+		x: dataToEditorX( displayFull ? 0 : x, pageWidth ),
+		y: dataToEditorY( displayFull ? 0 : y, pageHeight ),
+		width: dataToEditorX( displayFull ? PAGE_WIDTH : width, pageWidth ),
+		height: dataToEditorY( displayFull ? PAGE_HEIGHT : height, pageHeight ),
+		rotationAngle: displayFull ? 0 : rotationAngle,
 	};
 }

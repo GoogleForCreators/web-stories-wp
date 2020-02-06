@@ -17,14 +17,38 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import getPercentageFromPixels from '../utils/getPercentageFromPixels';
+import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
 
-export const ElementFillContent = css`
+export { default as getMediaProps } from './getMediaProps';
+export { default as getFocalFromOffset } from './getFocalFromOffset';
+export { default as EditPanMovable } from './editPanMovable';
+export { default as ScalePanel } from './scalePanel';
+
+export const CropBox = styled.div`
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 }70;
+		pointer-events: none;
+	}
+`;
+
+export const elementFillContent = css`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -32,31 +56,31 @@ export const ElementFillContent = css`
 	height: 100%;
 `;
 
-export const ElementWithPosition = css`
+export const elementWithPosition = css`
 	position: absolute;
 	z-index: 1;
 	left: ${ ( { x } ) => `${ x }px` };
 	top: ${ ( { y } ) => `${ y }px` };
 `;
 
-export const ElementWithSize = css`
+export const elementWithSize = css`
 	width: ${ ( { width } ) => `${ width }px` };
 	height: ${ ( { height } ) => `${ height }px` };
 `;
 
-export const ElementWithRotation = css`
+export const elementWithRotation = css`
 	transform: ${ ( { rotationAngle } ) => `rotate(${ rotationAngle }deg)` };
 `;
 
-export const ElementWithBackgroundColor = css`
+export const elementWithBackgroundColor = css`
 	background-color: ${ ( { backgroundColor } ) => backgroundColor };
 `;
 
-export const ElementWithFontColor = css`
+export const elementWithFontColor = css`
 	color: ${ ( { color } ) => color };
 `;
 
-export const ElementWithFont = css`
+export const elementWithFont = css`
 	white-space: pre-wrap;
 	font-family: ${ ( { fontFamily } ) => fontFamily };
 	font-style: ${ ( { fontStyle } ) => fontStyle };
@@ -64,7 +88,7 @@ export const ElementWithFont = css`
 	font-weight: ${ ( { fontWeight } ) => fontWeight };
 `;
 
-export const ElementWithStyle = css`
+export const elementWithStyle = css`
 	padding: ${ ( { padding } ) => padding ? padding : '0' }%;
 	line-height: ${ ( { lineHeight } ) => lineHeight };
 	letter-spacing: ${ ( { letterSpacing } ) => letterSpacing ? letterSpacing + 'em' : null };

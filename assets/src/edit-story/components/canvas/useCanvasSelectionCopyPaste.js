@@ -39,7 +39,7 @@ const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 function useCanvasSelectionCopyPaste( container ) {
 	const {
 		state: { currentPage, selectedElements },
-		actions: { appendElementToCurrentPage, deleteSelectedElements },
+		actions: { addElement, deleteSelectedElements },
 	} = useStory();
 
 	const copyCutHandler = useCallback(
@@ -113,8 +113,8 @@ function useCanvasSelectionCopyPaste( container ) {
 						payload.items.forEach( ( { x, y, basedOn, ...rest } ) => {
 							currentPage.elements.forEach( ( element ) => {
 								if ( element.id === basedOn || element.basedOn === basedOn ) {
-									x = Math.max( x, element.x + 20 );
-									y = Math.max( y, element.y + 20 );
+									x = Math.max( x, element.x + 60 );
+									y = Math.max( y, element.y + 60 );
 								}
 							} );
 							const element = {
@@ -124,7 +124,7 @@ function useCanvasSelectionCopyPaste( container ) {
 								x,
 								y,
 							};
-							appendElementToCurrentPage( element );
+							addElement( { element } );
 						} );
 						evt.preventDefault();
 					}
@@ -133,7 +133,7 @@ function useCanvasSelectionCopyPaste( container ) {
 				// Ignore.
 			}
 		},
-		[ appendElementToCurrentPage, currentPage ],
+		[ addElement, currentPage ],
 	);
 
 	useClipboardHandlers( container, copyCutHandler, pasteHandler );

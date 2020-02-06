@@ -42,7 +42,7 @@ describe( 'setBackgroundElement', () => {
 		expect( result.pages[ 0 ] ).toStrictEqual( {
 			id: '111',
 			backgroundElementId: '456',
-			elements: [ { id: '456' }, { id: '123' }, { id: '789' } ],
+			elements: [ { id: '456', isBackground: true }, { id: '123' }, { id: '789' } ],
 		} );
 	} );
 
@@ -76,7 +76,7 @@ describe( 'setBackgroundElement', () => {
 			pages: [
 				{
 					id: '111',
-					elements: [ { id: '123' }, { id: '456' }, { id: '789' } ],
+					elements: [ { id: '123', isBackground: true }, { id: '456' }, { id: '789' } ],
 					backgroundElementId: '123',
 				},
 			],
@@ -98,7 +98,7 @@ describe( 'setBackgroundElement', () => {
 			pages: [
 				{
 					id: '111',
-					elements: [ { id: '123' }, { id: '456' }, { id: '789' } ],
+					elements: [ { id: '123', isBackground: true }, { id: '456' }, { id: '789' } ],
 					backgroundElementId: '123',
 				},
 			],
@@ -121,7 +121,7 @@ describe( 'setBackgroundElement', () => {
 				pages: [
 					{
 						id: '111',
-						elements: [ { id: '123' }, { id: '456' }, { id: '789' } ],
+						elements: [ { id: '123', isBackground: true }, { id: '456' }, { id: '789' } ],
 						backgroundElementId: '123',
 					},
 				],
@@ -135,7 +135,7 @@ describe( 'setBackgroundElement', () => {
 			expect( result.pages[ 0 ] ).toStrictEqual( {
 				id: '111',
 				backgroundElementId: '789',
-				elements: [ { id: '789' }, { id: '456' } ],
+				elements: [ { id: '789', isBackground: true }, { id: '456' } ],
 			} );
 		} );
 
@@ -147,7 +147,7 @@ describe( 'setBackgroundElement', () => {
 				pages: [
 					{
 						id: '111',
-						elements: [ { id: '123' }, { id: '456' }, { id: '789' } ],
+						elements: [ { id: '123', isBackground: true }, { id: '456' }, { id: '789' } ],
 						backgroundElementId: '123',
 					},
 				],
@@ -161,7 +161,7 @@ describe( 'setBackgroundElement', () => {
 			expect( result.pages[ 0 ] ).toStrictEqual( {
 				id: '111',
 				backgroundElementId: '789',
-				elements: [ { id: '789' }, { id: '456' } ],
+				elements: [ { id: '789', isBackground: true }, { id: '456' } ],
 			} );
 			expect( result.selection ).toStrictEqual( [] );
 		} );

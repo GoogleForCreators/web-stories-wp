@@ -21,12 +21,14 @@
 
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="false">
-			<directory suffix=".php">../</directory>
+			<directory suffix=".php">./</directory>
 			<exclude>
-				<directory suffix=".php">../build</directory>
-				<directory suffix=".php">../node_modules</directory>
-				<directory suffix=".php">../tests</directory>
-				<directory suffix=".php">../vendor</directory>
+				<directory suffix=".php">assets</directory>
+				<directory suffix=".php">bin</directory>
+				<directory suffix=".php">build</directory>
+				<directory suffix=".php">node_modules</directory>
+				<directory suffix=".php">tests</directory>
+				<directory suffix=".php">vendor</directory>
 			</exclude>
 		</whitelist>
 	</filter>
