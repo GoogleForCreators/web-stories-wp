@@ -75,8 +75,7 @@ function CanvasProvider( { children } ) {
 			setLastSelectionEvent( evt );
 
 			// Clear this selection event as soon as mouse is released
-			// `setTimeout` is currently required to not break functionality
-			// XXX: Is there a more elegant way to do this?
+			// `setTimeout` is currently required to not break functionality.
 			evt.target.ownerDocument.addEventListener(
 				'mouseup',
 				() => window.setTimeout( setLastSelectionEvent, 0, null ),
