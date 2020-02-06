@@ -23,8 +23,10 @@ import { useCallback } from '@wordpress/element';
  */
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
+import { useMedia } from '../media';
 
-function useUploader() {
+function useUploader( { refreshLibrary = true } ) {
+	const {	actions: { resetMedia } } = useMedia();
 	const { actions: { uploadMedia } } = useAPI();
 	const { storyId, maxUpload, allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
 	const allowedMimeTypes = [ ...allowedImageMimeTypes, ...allowedVideoMimeTypes ];
@@ -51,11 +53,16 @@ function useUploader() {
 			post: storyId,
 		};
 
-		return uploadMedia( file, additionalData );
+		return uploadMedia( file, additionalData ).finally( () => {
+			if ( refreshLibrary ) {
+				resetMedia();
+			}
+		});
 	};
 
 	return {
 		uploadFile,
+		isValidType,
 	};
 }
 

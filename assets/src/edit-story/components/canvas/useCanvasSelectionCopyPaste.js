@@ -43,7 +43,7 @@ function useCanvasSelectionCopyPaste( container ) {
 		actions: { addElement, deleteSelectedElements },
 	} = useStory();
 
-	const { uploadFile, isValidType } = useUploader();
+	const { uploadFile, isValidType } = useUploader( {} );
 
 	const copyCutHandler = useCallback(
 		( evt ) => {
@@ -132,7 +132,11 @@ function useCanvasSelectionCopyPaste( container ) {
 						evt.preventDefault();
 					}
 				}
-				const { items } = clipboardData;
+				// Can't use deconstructor here.
+				const items = clipboardData.items;
+				/**
+				 * Loop through all items in clipboard to check if correct type. Ignore text here.
+				 */
 				for ( let i = 0; i < items.length; i++ ) {
 					const item = items[ i ];
 					if ( isValidType( item ) ) {

@@ -13,7 +13,7 @@ import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 function useUploadVideoFrame( { videoId, src, id } ) {
 	const { actions: { updateMedia } } = useAPI();
-	const { uploadFile } = useUploader();
+	const { uploadFile } = useUploader( { refreshLibrary: false } );
 	const { storyId } = useConfig();
 	const { actions: { updateElementById } } = useStory();
 	const setProperties = useCallback(
