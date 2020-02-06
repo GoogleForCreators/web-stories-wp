@@ -24,7 +24,7 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import { useAPI } from '../../api';
-import { getDefinitionForType } from '../../../elements';
+import { OutputPage } from '../../../output';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -34,18 +34,8 @@ import { getDefinitionForType } from '../../../elements';
  */
 const getStoryMarkupFromPages = ( pages ) => {
 	const markup = pages.map( ( page ) => {
-		const { id } = page;
 		return renderToString(
-			<amp-story-page id={ id }>
-				<amp-story-grid-layer template="vertical">
-					{ page.elements.map( ( { type, ...rest } ) => {
-						const { id: elId } = rest;
-						// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-						const { Save } = getDefinitionForType( type );
-						return <Save key={ 'element-' + elId } { ...rest } />;
-					} ) }
-				</amp-story-grid-layer>
-			</amp-story-page>,
+			<OutputPage page={ page } />,
 		);
 	} );
 	return markup.join( '' );
@@ -89,7 +79,6 @@ function useSaveStory( {
 
 		const content = getStoryMarkupFromPages( pages );
 		saveStoryById( { storyId, title, status, pages, author, slug, date, modified, content, excerpt, featuredMedia, password } ).then( ( post ) => {
-			setIsSaving( false );
 			const { status: newStatus, slug: newSlug, link } = post;
 			updateStory( {
 				properties: {
@@ -100,8 +89,9 @@ function useSaveStory( {
 			} );
 			refreshPostEditURL( storyId );
 		} ).catch( () => {
-			setIsSaving( false );
 			// TODO Display error message to user as save as failed.
+		} ).finally( () => {
+			setIsSaving( false );
 		} );
 	}, [ storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL ] );
 

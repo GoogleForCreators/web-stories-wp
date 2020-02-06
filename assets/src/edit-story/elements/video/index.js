@@ -19,8 +19,9 @@
  */
 import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
-export { default as Save } from './save';
-export { default as Preview } from './preview';
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon.svg';
 
@@ -33,9 +34,12 @@ export const defaultAttributes = {
 	videoId: 0,
 };
 
-export const hasEditMode = false;
+export const hasEditMode = true;
+
+export const isMedia = true;
 
 export const panels = [
+	PanelTypes.BACKGROUND,
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
 	PanelTypes.SCALE,

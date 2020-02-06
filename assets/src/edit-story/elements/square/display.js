@@ -25,7 +25,7 @@ import styled from 'styled-components';
 import {
 	elementFillContent,
 	elementWithBackgroundColor,
-} from '../utils/css';
+} from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`

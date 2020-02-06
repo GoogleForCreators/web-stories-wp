@@ -30,7 +30,7 @@ import { useLayoutEffect, useRef } from '@wordpress/element';
  */
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/utils/css';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 

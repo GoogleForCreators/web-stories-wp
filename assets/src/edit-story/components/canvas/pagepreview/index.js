@@ -24,8 +24,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
-import { getDefinitionForType } from '../../../elements';
-import { PAGE_WIDTH } from '../../../constants';
+import { TransformProvider } from '../../transform';
+import { UnitsProvider } from '../../../units';
+import DisplayElement from '../displayElement';
 
 const PAGE_THUMB_OUTLINE = 2;
 
@@ -55,20 +56,22 @@ const PreviewWrapper = styled.div`
 function PagePreview( { index, forwardedRef, ...props } ) {
 	const { state: { pages } } = useStory();
 	const page = pages[ index ];
-	const { width } = props;
-	// This is used for font size only, the rest is responsive.
-	const sizeMultiplier = ( width - PAGE_THUMB_OUTLINE ) / PAGE_WIDTH;
+	const { width, height } = props;
 	return (
-		<Page { ...props } ref={ forwardedRef } >
-			<PreviewWrapper>
-				{ page.elements.map( ( { type, ...rest } ) => {
-					const { id: elId } = rest;
-					// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-					const { Preview } = getDefinitionForType( type );
-					return <Preview previewSizeMultiplier={ sizeMultiplier } key={ 'element-' + elId } { ...rest } />;
-				} ) }
-			</PreviewWrapper>
-		</Page>
+		<UnitsProvider pageSize={ { width, height } }>
+			<TransformProvider>
+				<Page { ...props } ref={ forwardedRef } >
+					<PreviewWrapper>
+						{ page.elements.map( ( { id, ...rest } ) => (
+							<DisplayElement
+								key={ id }
+								element={ { id, ...rest } }
+							/>
+						) ) }
+					</PreviewWrapper>
+				</Page>
+			</TransformProvider>
+		</UnitsProvider>
 	);
 }
 
@@ -76,6 +79,7 @@ PagePreview.propTypes = {
 	index: PropTypes.number.isRequired,
 	forwardedRef: PropTypes.func,
 	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
 };
 
 export default PagePreview;

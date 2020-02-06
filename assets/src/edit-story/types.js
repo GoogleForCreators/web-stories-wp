@@ -5,6 +5,17 @@ import PropTypes from 'prop-types';
 
 const StoryPropTypes = {};
 
+export const StoryElementPropsTypes = {
+	id: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired,
+	x: PropTypes.number.isRequired,
+	y: PropTypes.number.isRequired,
+	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
+	rotationAngle: PropTypes.number.isRequired,
+	isFill: PropTypes.bool,
+};
+
 StoryPropTypes.size = PropTypes.exact( {
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
@@ -30,17 +41,6 @@ StoryPropTypes.page = PropTypes.shape( {
 export const StoryLayerPropsTypes = {
 	id: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
-};
-
-export const StoryElementPropsTypes = {
-	id: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	rotationAngle: PropTypes.number.isRequired,
-	isFill: PropTypes.bool,
 };
 
 StoryPropTypes.element = PropTypes.shape( StoryElementPropsTypes );

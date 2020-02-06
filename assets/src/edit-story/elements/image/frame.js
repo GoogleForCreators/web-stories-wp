@@ -29,7 +29,7 @@ import { useCallback } from '@wordpress/element';
  */
 import { useCanvas } from '../../components/canvas';
 import useDoubleClick from '../../utils/useDoubleClick';
-import { elementFillContent } from '../utils/css';
+import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`

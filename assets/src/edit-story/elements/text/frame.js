@@ -34,7 +34,7 @@ import { useUnits } from '../../units';
 import {
 	elementFillContent,
 	elementWithFont,
-} from '../utils/css';
+} from '../shared';
 import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 

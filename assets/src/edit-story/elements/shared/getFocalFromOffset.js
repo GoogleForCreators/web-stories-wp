@@ -15,20 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * Gets point from offset.
+ *
+ * @param {number} side
+ * @param {number} mediaElementSide
+ * @param {number} offset
+ * @return {number} Focal
  */
-import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
+function getFocalFromOffset( side, mediaElementSide, offset ) {
+	return ( offset + ( side * 0.5 ) ) / mediaElementSide * 100;
+}
 
-/**
- * Returns common attributes used for all elements when saving to DB.
- */
-export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) => {
-	return {
-		position: 'absolute',
-		left: getPercentageFromPixels( x, 'x' ) + '%',
-		top: getPercentageFromPixels( y, 'y' ) + '%',
-		transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
-		width: getPercentageFromPixels( width, 'x' ) + '%',
-		height: getPercentageFromPixels( height, 'y' ) + '%',
-	};
-} );
+export default getFocalFromOffset;

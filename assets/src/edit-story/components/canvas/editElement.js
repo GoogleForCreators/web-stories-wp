@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/utils/css';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import { useUnits } from '../../units';
 
 // Background color is used to make the edited element more prominent and

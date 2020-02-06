@@ -28,10 +28,10 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/utils/css';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
-import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
 	${ elementWithPosition }

@@ -14,4 +14,9 @@
  * limitations under the License.
  */
 
-export const DATA_VERSION = 3;
+/**
+ * WordPress dependencies
+ */
+import { createContext } from '@wordpress/element';
+
+export default createContext( { actions: {}, state: {} } );

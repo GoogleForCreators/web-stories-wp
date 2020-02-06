@@ -22,7 +22,7 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import useCanvas from './useCanvas';
+import useTransform from './useTransform';
 
 /**
  * @param {string} id Target element's id.
@@ -31,9 +31,7 @@ import useCanvas from './useCanvas';
  * @param {!Array=} deps The effect's dependencies.
  */
 function useTransformHandler( id, handler, deps = undefined ) {
-	const {
-		actions: { registerTransformHandler },
-	} = useCanvas();
+	const { actions: { registerTransformHandler } } = useTransform();
 
 	useEffect(
 		() => registerTransformHandler( id, handler ),

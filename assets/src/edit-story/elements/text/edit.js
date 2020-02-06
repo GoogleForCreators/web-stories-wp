@@ -39,7 +39,7 @@ import {
 	elementWithBackgroundColor,
 	elementWithFontColor,
 	elementWithStyle,
-} from '../utils/css';
+} from '../shared';
 import StoryPropTypes from '../../types';
 import { getFilteredState, getHandleKeyCommand } from './util';
 

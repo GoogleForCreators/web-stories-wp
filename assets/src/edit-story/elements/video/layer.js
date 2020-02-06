@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import VisibleImage from '../utils/visibleImage';
+import VisibleImage from '../shared/visibleImage';
 
 function VideoLayerContent( { element } ) {
 	const alt = __( 'Video layer', 'web-stories' );
