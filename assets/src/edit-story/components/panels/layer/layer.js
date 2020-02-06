@@ -35,6 +35,7 @@ const LayerButton = styled.button.attrs( { type: 'button' } )`
 	background: transparent;
 	height: ${ LAYER_HEIGHT }px;
 	width: 100%;
+	overflow: hidden;
 	align-items: center;
 
 	${ ( { isSelected, theme } ) => isSelected && `
@@ -64,10 +65,11 @@ const LayerIconWrapper = styled.div`
 `;
 
 const LayerDescription = styled.div`
-	flex-grow: 1;
+	width: calc(100% - 60px);
 	display: flex;
 	align-items: center;
 	margin-left: 0;
+	text-align: left;
 `;
 
 function Layer( { element } ) {
