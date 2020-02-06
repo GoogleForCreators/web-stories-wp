@@ -27,7 +27,7 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent } from '../utils/css';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 

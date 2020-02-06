@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { getCommonAttributes } from '../shared';
+import { getCommonAttributes } from '../utils/getCommonAttributes';
 
 function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
 	const sourceProps = {

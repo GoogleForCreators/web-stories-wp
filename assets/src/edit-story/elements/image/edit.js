@@ -27,7 +27,7 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent } from '../utils/css';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { getImgProps, imageWithScale } from './util';

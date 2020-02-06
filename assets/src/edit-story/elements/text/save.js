@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { getCommonAttributes } from '../shared';
+import { getCommonAttributes } from '../utils/getCommonAttributes';
 import { generateFontFamily, getResponsiveFontSize } from './util';
 
 /**
@@ -56,8 +56,8 @@ function TextSave( {
 		fontWeight: fontWeight ? fontWeight : null,
 		background: backgroundColor,
 		margin: 0,
-		color,
-		lineHeight,
+		color:color,
+		lineHeight:lineHeight,
 		letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
 		padding: padding ? padding + '%' : null,
 		textAlign: textAlign ? textAlign : null,

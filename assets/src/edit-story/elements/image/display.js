@@ -27,7 +27,7 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent } from '../utils/css';
 import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
 import { imageWithScale, getImgProps, getImageWithScaleCss } from './util';

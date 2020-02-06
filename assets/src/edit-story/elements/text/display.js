@@ -35,7 +35,7 @@ import {
 	elementWithBackgroundColor,
 	elementWithFontColor,
 	elementWithStyle,
-} from '../shared';
+} from '../utils/css';
 import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 

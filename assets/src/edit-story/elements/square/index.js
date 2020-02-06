@@ -22,7 +22,7 @@ export { default as Display } from './display';
 export { default as Preview } from './preview';
 export { default as Save } from './save';
 export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../icon_media.svg';
+export { default as LayerIcon } from '../utils/icon_media.svg';
 
 export const defaultAttributes = {
 	backgroundColor: '#ffffff',

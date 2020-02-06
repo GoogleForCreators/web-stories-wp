@@ -15,35 +15,20 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../utils/css';
-import StoryPropTypes from '../../types';
+import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
 
-const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
-`;
-
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
+/**
+ * Returns common attributes used for all elements when saving to DB.
+ */
+export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) => {
+	return {
+		position: 'absolute',
+		left: getPercentageFromPixels( x, 'x' ) + '%',
+		top: getPercentageFromPixels( y, 'y' ) + '%',
+		transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
+		width: getPercentageFromPixels( width, 'x' ) + '%',
+		height: getPercentageFromPixels( height, 'y' ) + '%',
 	};
-	return (
-		<Element { ...props } />
-	);
-}
-
-SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareDisplay;
+} );

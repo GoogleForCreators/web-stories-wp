@@ -28,7 +28,7 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/utils/css';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import useTransformHandler from './useTransformHandler';

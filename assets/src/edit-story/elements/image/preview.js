@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { getCommonAttributes } from '../shared';
+import { getCommonAttributes } from '../utils/getCommonAttributes';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
