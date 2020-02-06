@@ -56,6 +56,7 @@ function useUploader() {
 
 	return {
 		uploadFile,
+		isValidType,
 	};
 }
 
