@@ -63,6 +63,7 @@ function InspectorProvider( { children } ) {
 					name,
 				} ) );
 				setStatuses( saveData );
+			} ).finally( () => {
 				setIsStatusesLoading( false );
 			} );
 		}
@@ -81,6 +82,7 @@ function InspectorProvider( { children } ) {
 				} ) );
 
 				setUsers( saveData );
+			} ).finally( () => {
 				setIsUsersLoading( false );
 			} );
 		}

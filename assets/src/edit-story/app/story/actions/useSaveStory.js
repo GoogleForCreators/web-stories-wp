@@ -89,7 +89,6 @@ function useSaveStory( {
 
 		const content = getStoryMarkupFromPages( pages );
 		saveStoryById( { storyId, title, status, pages, author, slug, date, modified, content, excerpt, featuredMedia, password } ).then( ( post ) => {
-			setIsSaving( false );
 			const { status: newStatus, slug: newSlug, link } = post;
 			updateStory( {
 				properties: {
@@ -100,8 +99,9 @@ function useSaveStory( {
 			} );
 			refreshPostEditURL( storyId );
 		} ).catch( () => {
-			setIsSaving( false );
 			// TODO Display error message to user as save as failed.
+		} ).finally( () => {
+			setIsSaving( false );
 		} );
 	}, [ storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL ] );
 
