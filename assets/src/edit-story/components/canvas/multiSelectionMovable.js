@@ -91,6 +91,7 @@ function MultiSelectionMovable( { selectedElements } ) {
 		translate: [ 0, 0 ],
 		rotate: target.rotationAngle,
 		resize: [ 0, 0 ],
+		fontSize: null,
 	} ) ) : [];
 
 	/**
@@ -100,6 +101,7 @@ function MultiSelectionMovable( { selectedElements } ) {
 		targetList.forEach( ( { id, node }, i ) => {
 			frames[ i ].translate = [ 0, 0 ];
 			frames[ i ].resize = [ 0, 0 ];
+			frames[ i ].fontSize = null;
 			node.style.transform = '';
 			node.style.width = '';
 			node.style.height = '';
@@ -207,7 +209,7 @@ function MultiSelectionMovable( { selectedElements } ) {
 					target.style.height = `${ height }px`;
 					if ( isText ) {
 						// For text: update font size, too.
-						target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
+						sFrame.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 					}
 					sFrame.translate = drag.beforeTranslate;
 					sFrame.resize = [ width, height ];

@@ -55,11 +55,14 @@ function DisplayElement( { element } ) {
 		if ( transform === null ) {
 			target.style.transform = '';
 		} else {
-			const { translate, rotate, resize } = transform;
+			const { translate, rotate, resize, fontSize } = transform;
 			target.style.transform = `translate(${ translate[ 0 ] }px, ${ translate[ 1 ] }px) rotate(${ rotate }deg)`;
 			if ( resize[ 0 ] !== 0 && resize[ 1 ] !== 0 ) {
 				target.style.width = `${ resize[ 0 ] }px`;
 				target.style.height = `${ resize[ 1 ] }px`;
+			}
+			if ( fontSize && target.firstChild ) {
+				target.firstChild.style.fontSize = fontSize + 'px';
 			}
 		}
 	} );

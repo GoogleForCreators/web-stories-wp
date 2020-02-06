@@ -88,6 +88,7 @@ function SingleSelectionMovable( {
 		translate: [ 0, 0 ],
 		rotate: box.rotationAngle,
 		resize: [ 0, 0 ],
+		fontSize: null,
 	};
 
 	const setTransformStyle = ( target ) => {
@@ -109,6 +110,7 @@ function SingleSelectionMovable( {
 	const resetMoveable = ( target ) => {
 		frame.translate = [ 0, 0 ];
 		frame.resize = [ 0, 0 ];
+		frame.fontSize = null;
 		pushTransform( selectedElement.id, null );
 		// Inline start resetting has to be done very carefully here to avoid
 		// conflicts with stylesheets. See #3951.
@@ -191,7 +193,7 @@ function SingleSelectionMovable( {
 				frame.resize = [ newWidth, newHeight ];
 				frame.translate = drag.beforeTranslate;
 				if ( shouldAdjustFontSize ) {
-					target.style.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
+					frame.fontSize = calculateFitTextFontSize( target.firstChild, height, width, minMaxFontSize );
 				}
 				setTransformStyle( target );
 			} }
