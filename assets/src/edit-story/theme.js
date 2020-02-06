@@ -26,6 +26,7 @@ export const GlobalStyle = createGlobalStyle`
 		box-sizing: border-box;
 	}
 
+	/* WP admin menu arrow color */
 	ul#adminmenu a.wp-has-current-submenu::after {
 		border-right-color: ${ ( { theme } ) => theme.colors.bg.v4 };
 	}
