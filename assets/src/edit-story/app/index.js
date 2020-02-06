@@ -19,12 +19,14 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
+import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
 
 /**
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
+import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
@@ -43,9 +45,12 @@ function App( { config } ) {
 						<StoryProvider storyId={ storyId }>
 							<FontProvider>
 								<GlobalStyle />
+								<DefaultMoveableGlobalStyle />
 								<CropMoveableGlobalStyle />
 								<ModalGlobalStyle />
-								<Layout />
+								<KeyboardOnlyOutlines>
+									<Layout />
+								</KeyboardOnlyOutlines>
 							</FontProvider>
 						</StoryProvider>
 					</HistoryProvider>

@@ -27,19 +27,34 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent, getMediaProps } from '../shared';
 import StoryPropTypes from '../../types';
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
+import { getBackgroundStyle, videoWithScale } from './util';
 
-const Element = styled.video`
+const Element = styled.div`
 	${ elementFillContent }
+	overflow: hidden;
+`;
+
+const Video = styled.video`
+	position: absolute;
+	max-width: initial;
+	max-height: initial;
+	${ videoWithScale }
 `;
 
 function VideoDisplay( {
+	box: { width, height },
 	element: {
-		id,
-		src,
 		mimeType,
+		src,
+		id,
+		isBackground,
+		scale,
+		focalX,
+		focalY,
+		origRatio,
 		videoId,
 		posterId,
 		poster,
@@ -52,15 +67,28 @@ function VideoDisplay( {
 		}
 	}, [ videoId, posterId, uploadVideoFrame ] );
 
+	let style = {};
+	if ( isBackground ) {
+		const styleProps = getBackgroundStyle();
+		style = {
+			...style,
+			...styleProps,
+		};
+	}
+
+	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 	return (
-		<Element poster={ poster }>
-			<source src={ src } type={ mimeType } />
+		<Element>
+			<Video poster={ poster } style={ style } { ...videoProps } >
+				<source src={ src } type={ mimeType } />
+			</Video>
 		</Element>
 	);
 }
 
 VideoDisplay.propTypes = {
 	element: StoryPropTypes.elements.video.isRequired,
+	box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoDisplay;

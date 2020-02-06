@@ -39,6 +39,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = true;
 
+export const isMedia = false;
+
 export const panels = [
 	PanelTypes.TEXT,
 	PanelTypes.SIZE,

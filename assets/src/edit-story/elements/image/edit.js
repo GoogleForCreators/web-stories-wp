@@ -27,35 +27,14 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { elementFillContent, CropBox, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { getImgProps, imageWithScale } from './util';
-import EditPanMovable from './editPanMovable';
+import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
-import ScalePanel from './scalePanel';
 
 const Element = styled.div`
 	${ elementFillContent }
-`;
-
-const CropBox = styled.div`
-	width: 100%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
-
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 }70;
-		pointer-events: none;
-	}
 `;
 
 const FadedImg = styled.img`
@@ -71,7 +50,7 @@ const CropImg = styled.img`
 `;
 
 function ImageEdit( {
-	element: { id, src, origRatio, scale, focalX, focalY, isFill },
+	element: { id, src, origRatio, scale, focalX, focalY, isFill, isBackground },
 	box: { x, y, width, height, rotationAngle },
 } ) {
 	const [ fullImage, setFullImage ] = useState( null );
@@ -83,7 +62,7 @@ function ImageEdit( {
 		( properties ) => updateElementById( { elementId: id, properties } ),
 		[ id, updateElementById ] );
 
-	const imgProps = getImgProps( width, height, scale, focalX, focalY, origRatio );
+	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
 
 	return (
 		<Element>
@@ -92,7 +71,7 @@ function ImageEdit( {
 				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
 			</CropBox>
 
-			{ ! isFill && cropBox && croppedImage && (
+			{ ! isFill && ! isBackground && cropBox && croppedImage && (
 				<EditCropMovable
 					setProperties={ setProperties }
 					cropBox={ cropBox }
@@ -109,8 +88,8 @@ function ImageEdit( {
 			{ fullImage && croppedImage && (
 				<EditPanMovable
 					setProperties={ setProperties }
-					fullImage={ fullImage }
-					croppedImage={ croppedImage }
+					fullMedia={ fullImage }
+					croppedMedia={ croppedImage }
 					x={ x }
 					y={ y }
 					width={ width }
@@ -118,8 +97,8 @@ function ImageEdit( {
 					rotationAngle={ rotationAngle }
 					offsetX={ imgProps.offsetX }
 					offsetY={ imgProps.offsetY }
-					imgWidth={ imgProps.width }
-					imgHeight={ imgProps.height }
+					mediaWidth={ imgProps.width }
+					mediaHeight={ imgProps.height }
 				/>
 			) }
 

@@ -61,7 +61,6 @@ function Selection() {
 	return (
 		<MultiSelectionMovable
 			selectedElements={ selectedElements }
-			nodesById={ nodesById }
 		/>
 	);
 }

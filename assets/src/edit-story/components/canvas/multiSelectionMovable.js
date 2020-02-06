@@ -22,13 +22,14 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useRef, useEffect } from '@wordpress/element';
+import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import Movable from '../movable';
 import { useStory } from '../../app/story';
+import objectWithout from '../../utils/objectWithout';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
@@ -36,8 +37,14 @@ import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = [ 'nw', 'ne', 'sw', 'se' ];
 
-function MultiSelectionMovable( { selectedElements, nodesById } ) {
+function MultiSelectionMovable( { selectedElements } ) {
 	const moveable = useRef();
+
+	const { actions: { updateElementsById } } = useStory();
+	const { actions: { pushTransform }, state: { pageSize: { width: canvasWidth, height: canvasHeight }, nodesById } } = useCanvas();
+	const { actions: { dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
+
+	const [ isDragging, setIsDragging ] = useState( false );
 
 	// Update moveable with whatever properties could be updated outside moveable
 	// itself.
@@ -46,10 +53,6 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 			moveable.current.updateRect();
 		}
 	}, [ selectedElements, moveable, nodesById ] );
-
-	const { actions: { updateElementsById } } = useStory();
-	const { actions: { pushTransform } } = useCanvas();
-	const { actions: { dataToEditorY, editorToDataX, editorToDataY } } = useUnits();
 
 	const minMaxFontSize = {
 		minFontSize: dataToEditorY( MIN_FONT_SIZE ),
@@ -70,6 +73,7 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 	if ( targetList.some( ( { node } ) => node === undefined ) ) {
 		return null;
 	}
+	const otherNodes = Object.values( objectWithout( nodesById, selectedElements.map( ( element ) => element.id ) ) );
 
 	/**
 	 * Set style to the element.
@@ -146,13 +150,14 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 
 	return (
 		<Movable
+			className="default-movable"
 			ref={ moveable }
 			zIndex={ 0 }
 			target={ targetList.map( ( { node } ) => node ) }
 
 			draggable={ true }
-			resizable={ true }
-			rotatable={ true }
+			resizable={ ! isDragging }
+			rotatable={ ! isDragging }
 
 			onDragGroup={ ( { events } ) => {
 				events.forEach( ( { target, beforeTranslate }, i ) => {
@@ -162,9 +167,11 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 				} );
 			} }
 			onDragGroupStart={ ( { events } ) => {
+				setIsDragging( true );
 				onGroupEventStart( { events, isDrag: true } );
 			} }
 			onDragGroupEnd={ ( { targets } ) => {
+				setIsDragging( false );
 				onGroupEventEnd( { targets } );
 			} }
 
@@ -212,13 +219,21 @@ function MultiSelectionMovable( { selectedElements, nodesById } ) {
 			} }
 
 			renderDirections={ CORNER_HANDLES }
+			snappable={ true }
+			snapElement={ true }
+			snapHorizontal={ true }
+			snapVertical={ true }
+			snapCenter={ true }
+			horizontalGuidelines={
+				[ 0, canvasHeight / 2, canvasHeight ] }
+			verticalGuidelines={ [ 0, canvasWidth / 2, canvasWidth ] }
+			elementGuidelines={ otherNodes }
 		/>
 	);
 }
 
 MultiSelectionMovable.propTypes = {
 	selectedElements: PropTypes.arrayOf( PropTypes.object ).isRequired,
-	nodesById: PropTypes.object.isRequired,
 };
 
 export default MultiSelectionMovable;

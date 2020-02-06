@@ -28,6 +28,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = false;
 
+export const isMedia = false;
+
 export const panels = [
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
