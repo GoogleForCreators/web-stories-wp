@@ -33,7 +33,7 @@ function SquarePreview( { id, backgroundColor, width, height, x, y, rotationAngl
 		background: backgroundColor,
 	};
 	return (
-		<div id={ 'el-' + id } style={ { ...style } } />
+		<div id={ 'el-' + id } style={ style } />
 	);
 }
 

@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-export const DATA_VERSION = 3;
+/**
+ * Gets point from offset.
+ *
+ * @param {number} side
+ * @param {number} mediaElementSide
+ * @param {number} offset
+ * @return {number} Focal
+ */
+function getFocalFromOffset( side, mediaElementSide, offset ) {
+	return ( offset + ( side * 0.5 ) ) / mediaElementSide * 100;
+}
+
+export default getFocalFromOffset;

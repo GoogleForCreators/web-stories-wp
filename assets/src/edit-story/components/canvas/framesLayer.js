@@ -34,7 +34,6 @@ const FramesPageArea = withOverlay( styled( PageArea ).attrs( { className: 'cont
 
 function FramesLayer() {
 	const { state: { currentPage } } = useStory();
-
 	return (
 		<Layer pointerEvents="none">
 			<FramesPageArea>

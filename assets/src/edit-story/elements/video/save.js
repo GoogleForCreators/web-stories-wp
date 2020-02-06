@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { getCommonAttributes } from '../shared';
 
-function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, poster } ) {
+function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotationAngle, poster, isBackground } ) {
 	const sourceProps = {
 		type: mimeType,
 		src,
@@ -39,9 +39,22 @@ function VideoSave( { autoPlay, id, mimeType, src, width, height, x, y, rotation
 		id: 'el-' + id,
 	};
 
-	const style = getCommonAttributes( { width, height, x, y, rotationAngle } );
+	const style = isBackground ?
+		{
+			width: '100%',
+			height: '100%',
+			top: 0,
+			left: 0,
+			rotationAngle: 0,
+		} :
+		getCommonAttributes( { width, height, x, y, rotationAngle } );
+
+	if ( isBackground ) {
+		props.autoPlay = true;
+	}
+
 	return (
-		<div style={ { ...style } } { ...wrapperProps } >
+		<div className="is-background" style={ style } { ...wrapperProps } >
 			<amp-video { ...props }>
 				<source { ...sourceProps } />
 			</amp-video>
@@ -54,6 +67,7 @@ VideoSave.propTypes = {
 	rotationAngle: PropTypes.number.isRequired,
 	controls: PropTypes.bool,
 	autoPlay: PropTypes.bool,
+	isBackground: PropTypes.bool,
 	loop: PropTypes.bool,
 	mimeType: PropTypes.string.isRequired,
 	src: PropTypes.string.isRequired,
