@@ -34,7 +34,7 @@ function useUploader() {
 	}, [ allowedMimeTypes ] );
 
 	const fileSizeCheck = useCallback( ( { size } ) => {
-		return size < maxUpload;
+		return size <= maxUpload;
 	}, [ maxUpload ] );
 
 	const uploadFile = ( file ) => {
