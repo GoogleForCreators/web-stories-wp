@@ -22,8 +22,6 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import getPercentageFromPixels from '../../utils/getPercentageFromPixels';
-
 export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
@@ -94,17 +92,3 @@ export const elementWithStyle = css`
 	letter-spacing: ${ ( { letterSpacing } ) => letterSpacing ? letterSpacing + 'em' : null };
 	text-align: ${ ( { textAlign } ) => textAlign };
 `;
-
-/**
- * Returns common attributes used for all elements when saving to DB.
- */
-export const getCommonAttributes = ( ( { width, height, x, y, rotationAngle } ) => {
-	return {
-		position: 'absolute',
-		left: getPercentageFromPixels( x, 'x' ) + '%',
-		top: getPercentageFromPixels( y, 'y' ) + '%',
-		transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
-		width: getPercentageFromPixels( width, 'x' ) + '%',
-		height: getPercentageFromPixels( height, 'y' ) + '%',
-	};
-} );

@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { createContext } from '@wordpress/element';
-
-export default createContext( { actions: {}, state: {} } );
+export { default as TransformProvider } from './transformProvider';
+export { default as useTransform } from './useTransform';
+export { default as useTransformHandler } from './useTransformHandler';

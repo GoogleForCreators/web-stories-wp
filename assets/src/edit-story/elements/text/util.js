@@ -20,11 +20,6 @@
 import { RichUtils } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
-/**
- * Internal dependencies
- */
-import { PAGE_WIDTH } from '../../constants';
-
 export function getFilteredState( editorState, oldEditorState ) {
 	const shouldFilterPaste =
 		oldEditorState.getCurrentContent() !== editorState.getCurrentContent() &&
@@ -73,8 +68,4 @@ export const generateFontFamily = ( fontFamily, fontFallback ) => {
 		fontFamilyDisplay += `${ fontFallback.join( `,` ) }`;
 	}
 	return fontFamilyDisplay;
-};
-
-export const getResponsiveFontSize = ( originalFontSize ) => {
-	return ( ( originalFontSize / PAGE_WIDTH ) * 100 ).toFixed( 2 ) + 'vw';
 };

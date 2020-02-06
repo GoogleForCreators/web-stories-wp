@@ -14,9 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { createContext } from '@wordpress/element';
-
-export default createContext( { actions: {}, state: {} } );
+export { default as OutputPage } from './page';
