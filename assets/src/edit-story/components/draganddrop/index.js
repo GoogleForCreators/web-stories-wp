@@ -11,8 +11,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app/api';
-import { useConfig } from '../../app/config';
+import { useUploader } from '../../app/uploader';
 
 const DragandDropComponent = styled.div`
 	min-width: 100%;
@@ -38,41 +37,23 @@ const DragandDropOverLay = styled.div`
 	width: 90%;
 `;
 
-function DragandDrop( { children, onDrop } ) {
+function DragandDrop( { children } ) {
 	const [ isDragging, setIsDragging ] = useState( false );
-	const { actions: { uploadMedia } } = useAPI();
-	const { storyId, allowedMimeTypes: { image: allowedImageMimeTypes, video: allowedVideoMimeTypes } } = useConfig();
+	const { uploadFile } = useUploader();
 
-	const allowedMimeTypes = { ...allowedImageMimeTypes, ...allowedVideoMimeTypes };
-	const allowedMimeTypesArray = Object.values( allowedMimeTypes );
+	const disableDefaults = ( evt ) => {
+		evt.preventDefault();
+		evt.stopPropagation();
+	}
 
 	const onDragLeave = ( evt ) => {
 		setIsDragging( false );
-		evt.preventDefault();
-		evt.stopPropagation();
+		disableDefaults( evt );
 	};
 
 	const onDragEnter = ( evt ) => {
 		setIsDragging( true );
-		evt.preventDefault();
-		evt.stopPropagation();
-	};
-
-	const uploadFile = ( file ) => {
-		if ( ! allowedMimeTypesArray.includes( file.type ) ) {
-			// TODO error message.
-			return;
-		}
-
-		try {
-			uploadMedia( file, {
-				post: storyId,
-			} ).then( onDrop ).catch( () => {
-				// TODO error message.
-			} );
-		} catch ( e ) {
-			// TODO error message.
-		}
+		disableDefaults( evt );
 	};
 
 	const onDropHandler = ( evt ) => {
@@ -81,8 +62,7 @@ function DragandDrop( { children, onDrop } ) {
 		files = [ ...files ];
 		files.forEach( uploadFile );
 		setIsDragging( false );
-		evt.preventDefault();
-		evt.stopPropagation();
+		disableDefaults( evt );
 	};
 
 	return (
@@ -109,7 +89,6 @@ DragandDrop.propTypes = {
 		PropTypes.arrayOf( PropTypes.node ),
 		PropTypes.node,
 	] ).isRequired,
-	onDrop: PropTypes.func.isRequired,
 };
 
 export default DragandDrop;

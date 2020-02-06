@@ -182,13 +182,6 @@ function MediaLibrary( { onInsert } ) {
 		setIsMediaLoaded( false );
 	};
 
-	const onDrop = () => {
-		setSearchTerm( '' );
-		setMediaType( '' );
-		setIsMediaLoading( false );
-		setIsMediaLoaded( false );
-	};
-
 	/**
 	 * Callback of select in media picker to insert media element.
 	 *
@@ -288,7 +281,7 @@ function MediaLibrary( { onInsert } ) {
 	};
 
 	return (
-		<DragandDrop onDrop={ onDrop }>
+		<DragandDrop>
 			<Header>
 				<Title>
 					{ __( 'Media', 'web-stories' ) }
