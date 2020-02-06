@@ -28,6 +28,7 @@ import { useCallback, renderToString } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import { useUploader } from '../../app/uploader';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import { getDefinitionForType } from '../../elements';
 
@@ -41,6 +42,8 @@ function useCanvasSelectionCopyPaste(container) {
     state: { currentPage, selectedElements },
     actions: { addElement, deleteSelectedElements },
   } = useStory();
+
+  const { uploadFile, isValidType } = useUploader();
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -137,11 +140,18 @@ function useCanvasSelectionCopyPaste(container) {
             evt.preventDefault();
           }
         }
+        const { items } = clipboardData;
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          if (isValidType(item)) {
+            uploadFile(item.getAsFile());
+          }
+        }
       } catch (e) {
         // Ignore.
       }
     },
-    [addElement, currentPage]
+    [addElement, currentPage, isValidType, uploadFile]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);

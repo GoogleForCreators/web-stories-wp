@@ -8,12 +8,14 @@ import { useCallback } from '@wordpress/element';
 import { useAPI } from '../app/api';
 import { useStory } from '../app/story';
 import { useConfig } from '../app/config';
+import { useUploader } from '../app/uploader';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 function useUploadVideoFrame({ videoId, src, id }) {
   const {
-    actions: { uploadMedia, saveMedia },
+    actions: { updateMedia },
   } = useAPI();
+  const { uploadFile } = useUploader();
   const { storyId } = useConfig();
   const {
     actions: { updateElementById },
@@ -26,14 +28,13 @@ function useUploadVideoFrame({ videoId, src, id }) {
   const processData = async () => {
     try {
       const obj = await getFirstFrameOfVideo(src);
-      const { id: posterId, source_url: poster } = await uploadMedia(obj);
-      await saveMedia(posterId, {
+      const { id: posterId, source_url: poster } = await uploadFile(obj);
+      await updateMedia(posterId, {
         meta: {
           web_stories_is_poster: true,
         },
-        post: storyId,
       });
-      await saveMedia(videoId, {
+      await updateMedia(videoId, {
         featured_media: posterId,
         post: storyId,
       });
@@ -51,8 +52,8 @@ function useUploadVideoFrame({ videoId, src, id }) {
   const uploadVideoFrame = useCallback(processData, [
     getFirstFrameOfVideo,
     src,
-    uploadMedia,
-    saveMedia,
+    uploadFile,
+    updateMedia,
     videoId,
     setProperties,
   ]);

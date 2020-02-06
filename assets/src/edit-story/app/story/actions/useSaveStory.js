@@ -113,7 +113,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     })
       .then((post) => {
-        setIsSaving(false);
         const { status: newStatus, slug: newSlug, link } = post;
         updateStory({
           properties: {
@@ -125,8 +124,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         refreshPostEditURL(storyId);
       })
       .catch(() => {
-        setIsSaving(false);
         // TODO Display error message to user as save as failed.
+      })
+      .finally(() => {
+        setIsSaving(false);
       });
   }, [storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL]);
 

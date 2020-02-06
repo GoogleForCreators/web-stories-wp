@@ -23,7 +23,6 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { useCallback } from '@wordpress/element';
-import { cleanForSlug } from '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -31,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
+import cleanForSlug from '../../utils/cleanForSlug';
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.v1} !important`};

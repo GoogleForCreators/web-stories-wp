@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
 /**
  * WordPress dependencies
  */
@@ -158,14 +157,18 @@ function APIProvider({ children }) {
    * Upload file to via REST API.
    *
    * @param {File}    file           Media File to Save.
+   * @param {?Object} additionalData Additional data to include in the request.
    *
    * @return {Promise} Media Object Promise.
    */
   const uploadMedia = useCallback(
-    (file) => {
+    (file, additionalData) => {
       // Create upload payload
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
+      Object.entries(additionalData).forEach(([key, value]) =>
+        data.append(key, value)
+      );
       return apiFetch({
         path: media,
         body: data,
@@ -182,7 +185,7 @@ function APIProvider({ children }) {
    * @param  {Object} data Object of properties to update on attachment.
    * @return {Promise} Media Object Promise.
    */
-  const saveMedia = useCallback(
+  const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
         path: `${media}/${mediaId}`,
@@ -224,7 +227,7 @@ function APIProvider({ children }) {
       getAllStatuses,
       getAllUsers,
       uploadMedia,
-      saveMedia,
+      updateMedia,
     },
   };
 

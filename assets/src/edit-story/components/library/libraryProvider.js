@@ -49,11 +49,12 @@ function LibraryProvider({ children }) {
   const loadMedia = useCallback(() => {
     if (!isMediaLoaded && !isMediaLoading) {
       setIsMediaLoading(true);
-      getMedia({ mediaType, searchTerm }).then((loadedMedia) => {
-        setIsMediaLoading(false);
-        setIsMediaLoaded(true);
-        setMedia(loadedMedia);
-      });
+      getMedia({ mediaType, searchTerm })
+        .then(setMedia)
+        .finally(() => {
+          setIsMediaLoading(false);
+          setIsMediaLoaded(true);
+        });
     }
   }, [isMediaLoaded, isMediaLoading, getMedia, mediaType, searchTerm]);
 

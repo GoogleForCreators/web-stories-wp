@@ -26,7 +26,8 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "prop-types": "^15.7.2",
-    "react-modal": "^3.11.1"
+    "react-modal": "^3.11.1",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -47,7 +48,6 @@
     "@wordpress/babel-preset-default": "^4.10.0",
     "@wordpress/components": "^9.1.0",
     "@wordpress/dom-ready": "^2.7.0",
-    "@wordpress/editor": "^9.11.0",
     "@wordpress/element": "^2.11.0",
     "@wordpress/eslint-plugin": "^3.4.1",
     "@wordpress/i18n": "^3.9.0",
@@ -61,10 +61,8 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.8.6",
     "core-js": "^3.6.4",
-    "cross-env": "^6.0.3",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-eslint-comments": "^3.1.2",
@@ -75,7 +73,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-utils": "^2.0.0",
     "husky": "^4.2.1",
-    "jest-silent-reporter": "^0.1.2",
+    "jest-silent-reporter": "^0.2.1",
     "lint-staged": "^10.0.7",
     "mini-css-extract-plugin": "^0.9.0",
     "npm-run-all": "^4.1.5",
@@ -93,7 +91,6 @@
     "stylelint-processor-styled-components": "^1.9.0",
     "svg-inline-loader": "^0.8.0",
     "terser-webpack-plugin": "^2.3.4",
-    "uuid": "^3.4.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpackbar": "^4.0.0"
@@ -132,8 +129,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {

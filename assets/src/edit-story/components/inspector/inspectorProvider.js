@@ -54,31 +54,37 @@ function InspectorProvider({ children }) {
   const loadStatuses = useCallback(() => {
     if (!isStatusesLoading && statuses.length === 0) {
       setIsStatusesLoading(true);
-      getAllStatuses().then((data) => {
-        data = Object.values(data);
-        data = data.filter(({ show_in_list: isShown }) => isShown);
-        const saveData = data.map(({ slug, name }) => ({
-          value: slug,
-          name,
-        }));
-        setStatuses(saveData);
-        setIsStatusesLoading(false);
-      });
+      getAllStatuses()
+        .then((data) => {
+          data = Object.values(data);
+          data = data.filter(({ show_in_list: isShown }) => isShown);
+          const saveData = data.map(({ slug, name }) => ({
+            value: slug,
+            name,
+          }));
+          setStatuses(saveData);
+        })
+        .finally(() => {
+          setIsStatusesLoading(false);
+        });
     }
   }, [isStatusesLoading, statuses.length, getAllStatuses]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
       setIsUsersLoading(true);
-      getAllUsers().then((data) => {
-        const saveData = data.map(({ id, name }) => ({
-          value: id,
-          name,
-        }));
+      getAllUsers()
+        .then((data) => {
+          const saveData = data.map(({ id, name }) => ({
+            value: id,
+            name,
+          }));
 
-        setUsers(saveData);
-        setIsUsersLoading(false);
-      });
+          setUsers(saveData);
+        })
+        .finally(() => {
+          setIsUsersLoading(false);
+        });
     }
   }, [isUsersLoading, users.length, getAllUsers]);
 
