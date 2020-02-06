@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
 import useInspector from '../../inspector/useInspector';
 import panelContext from './context';
 import DragHandle from './handle';
-import Arrow from './arrow.svg';
+import { ReactComponent as Arrow } from './arrow.svg'
 
 const Header = styled.h2`
 	background-color: ${ ( { theme, isPrimary } ) => isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1 };
