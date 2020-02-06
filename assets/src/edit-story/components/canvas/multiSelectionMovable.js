@@ -31,6 +31,7 @@ import Movable from '../movable';
 import { useStory } from '../../app/story';
 import objectWithout from '../../utils/objectWithout';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
+import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import useCanvas from './useCanvas';
@@ -44,7 +45,6 @@ function MultiSelectionMovable({ selectedElements }) {
     actions: { updateElementsById },
   } = useStory();
   const {
-    actions: { pushTransform },
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
@@ -53,6 +53,9 @@ function MultiSelectionMovable({ selectedElements }) {
   const {
     actions: { dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
+  const {
+    actions: { pushTransform },
+  } = useTransform();
 
   const [isDragging, setIsDragging] = useState(false);
 

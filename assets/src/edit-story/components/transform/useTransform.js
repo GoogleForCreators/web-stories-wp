@@ -14,5 +14,18 @@
  * limitations under the License.
  */
 
-export { default } from './canvas';
-export { default as useCanvas } from './useCanvas';
+/**
+ * WordPress dependencies
+ */
+import { useContext } from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useTransform() {
+  return useContext(Context);
+}
+
+export default useTransform;

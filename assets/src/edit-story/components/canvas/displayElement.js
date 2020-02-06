@@ -34,8 +34,8 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
-import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
 	${elementWithPosition}

@@ -15,42 +15,22 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
-import { getCommonAttributes } from '../shared';
+import StoryPropTypes from '../../types';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function SquareSave({
-  id,
-  backgroundColor,
-  width,
-  height,
-  x,
-  y,
-  rotationAngle,
-}) {
+function SquareOutput({ element: { backgroundColor } }) {
   const style = {
-    ...getCommonAttributes({ width, height, x, y, rotationAngle }),
     background: backgroundColor,
   };
-  return <div id={'el-' + id} style={style} />;
+  return <div className="fill" style={style} />;
 }
 
-SquareSave.propTypes = {
-  rotationAngle: PropTypes.number.isRequired,
-  backgroundColor: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
+SquareOutput.propTypes = {
+  element: StoryPropTypes.elements.square.isRequired,
 };
 
-export default SquareSave;
+export default SquareOutput;

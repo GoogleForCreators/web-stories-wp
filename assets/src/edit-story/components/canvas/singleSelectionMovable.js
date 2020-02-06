@@ -32,6 +32,7 @@ import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
+import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import { getDefinitionForType } from '../../elements';
@@ -49,7 +50,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     state: { currentPage },
   } = useStory();
   const {
-    actions: { pushTransform },
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
@@ -58,6 +58,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const {
     actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
+  const {
+    actions: { pushTransform },
+  } = useTransform();
 
   const minMaxFontSize = {
     minFontSize: dataToEditorY(MIN_FONT_SIZE),

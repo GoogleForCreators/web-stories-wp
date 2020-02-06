@@ -27,9 +27,9 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
-import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
+import { elementFillContent, getMediaProps } from '../shared';
+import { useTransformHandler } from '../../components/transform';
 import { imageWithScale, getImageWithScaleCss } from './util';
 
 const Element = styled.div`

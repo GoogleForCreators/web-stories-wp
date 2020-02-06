@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export { default } from './canvas';
-export { default as useCanvas } from './useCanvas';
+export { default as OutputPage } from './page';
