@@ -14,6 +14,24 @@
  * limitations under the License.
  */
 
+/**
+ * In the style of the `sanitize_title()` and `remove_accents()` PHP functions in
+ * WordPress, this performs some basic cleanup of a string for use as a URL slug.
+ *
+ * It is not an exact replication, but more of an approximation.
+ *
+ * Converts whitespace, periods, forward slashes and underscores to hyphens.
+ * Converts Latin-1 Supplement and Latin Extended-A letters to basic Latin
+ * letters. Removes combining diacritical marks. Converts remaining string
+ * to lowercase. It does not touch octets, HTML entities, or other encoded
+ * characters.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/164d5830a9acd895dfd661b5fde1ca8b80b270ac/packages/url/src/clean-for-slug.js
+ *
+ * @param {string} string Title or slug to be processed.
+ *
+ * @return {string} Processed string.
+ */
 export default function cleanForSlug( string ) {
 	if ( ! string ) {
 		return '';
