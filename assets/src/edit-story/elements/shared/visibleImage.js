@@ -22,12 +22,12 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useRef, useState } from '@wordpress/element';
+import { useRef, useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import useBrightnessChecker from './useBrightnessChecker';
+import useAverageColor from './useAverageColor';
 
 const Image = styled.img`
 	${ ( { isTooBright } ) => isTooBright && `
@@ -38,12 +38,18 @@ const Image = styled.img`
 	` }
 `;
 
-const TOO_BRIGHT = 10;
+const TOO_BRIGHT = 230;
 
 function VisibleImage( { ...attrs } ) {
 	const ref = useRef();
 	const [ isTooBright, setIsTooBright ] = useState( false );
-	useBrightnessChecker( ref, TOO_BRIGHT, setIsTooBright );
+
+	const handleBrightness = useCallback( ( averageColor ) => {
+		const darkestDimension = Math.max.apply( null, averageColor );
+		setIsTooBright( darkestDimension >= TOO_BRIGHT );
+	}, [] );
+
+	useAverageColor( ref, handleBrightness );
 
 	return (
 		<Image ref={ ref } { ...attrs } isTooBright={ isTooBright } />

@@ -24,35 +24,32 @@ import ColorThief from 'colorthief';
  */
 import { useRef, useCallback, useLayoutEffect } from '@wordpress/element';
 
-function useBrightnessChecker( ref, limit, handler ) {
+function useAverageColor( ref, onAverageColor ) {
 	const thief = useRef( new ColorThief() );
 
-	const checkIfTooBright = useCallback( ( ) => {
+	const checkAverageColor = useCallback( ( ) => {
 		try {
-			const averageColor = thief.current.getColor( ref.current );
-			const darkestDimension = Math.max.apply( null, averageColor );
-			handler( darkestDimension <= limit );
+			onAverageColor( thief.current.getColor( ref.current ) );
 		} catch ( e ) {
 			// ColorThief fails for all-white images
-			// - which is actually what we want to find here
 			//
 			// It's a "feature":
 			// https://github.com/lokesh/color-thief/pull/49
-			handler( true );
+			onAverageColor( [ 255, 255, 255 ] );
 		}
-	}, [ ref, limit, handler ] );
+	}, [ ref, onAverageColor ] );
 
 	useLayoutEffect( () => {
 		const element = ref.current;
 		if ( element.complete ) {
-			checkIfTooBright();
+			checkAverageColor();
 
 			return undefined;
 		}
 
-		element.addEventListener( 'load', checkIfTooBright );
-		return () => element.removeEventListener( 'load', checkIfTooBright );
-	}, [ ref, checkIfTooBright ]	);
+		element.addEventListener( 'load', checkAverageColor );
+		return () => element.removeEventListener( 'load', checkAverageColor );
+	}, [ ref, checkAverageColor ]	);
 }
 
-export default useBrightnessChecker;
+export default useAverageColor;
