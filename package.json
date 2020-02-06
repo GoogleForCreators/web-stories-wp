@@ -26,7 +26,8 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "prop-types": "^15.7.2",
-    "react-modal": "^3.11.1"
+    "react-modal": "^3.11.1",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -60,10 +61,8 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.8.6",
     "core-js": "^3.6.4",
-    "cross-env": "^6.0.3",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-import": "^2.20.1",
@@ -88,7 +87,6 @@
     "stylelint-processor-styled-components": "^1.9.0",
     "svg-inline-loader": "^0.8.0",
     "terser-webpack-plugin": "^2.3.4",
-    "uuid": "^3.4.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpackbar": "^4.0.0"
