@@ -25,11 +25,11 @@ function useUploader() {
 	const uploadFile = ( file ) => {
 		// TODO Add permission check here, see Gutenberg's userCan function.
 		if ( ! fileSizeCheck( file ) ) {
-			throw new Error( `File size error` );
+			throw new Error( 'File size error' );
 		}
 
 		if ( ! isValidType( file ) ) {
-			throw new Error( `File type error` );
+			throw new Error( 'File type error' );
 		}
 
 		const additionalData = {
