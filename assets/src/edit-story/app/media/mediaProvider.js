@@ -28,6 +28,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies
  */
 import useLoadMedia from './actions/useLoadMedia';
+import useCompleteMedia from './actions/useCompleteMedia';
 import useReloadMedia from './actions/useReloadMedia';
 import useResetMedia from './actions/useResetMedia';
 import Context from './context';
@@ -39,7 +40,8 @@ function MediaProvider( { children } ) {
 	const [ isMediaLoaded, setIsMediaLoaded ] = useState( false );
 	const [ isMediaLoading, setIsMediaLoading ] = useState( false );
 
-	const loadMedia = useLoadMedia( { setMedia, setIsMediaLoading, setIsMediaLoaded, isMediaLoaded, isMediaLoading, mediaType, searchTerm } );
+	const completeMedia = useCompleteMedia( { setIsMediaLoading, setIsMediaLoaded } );
+	const loadMedia = useLoadMedia( { setMedia, completeMedia, setIsMediaLoading, isMediaLoaded, isMediaLoading, mediaType, searchTerm } );
 	const reloadMedia = useReloadMedia( { setIsMediaLoading, setIsMediaLoaded } );
 	const resetMedia = useResetMedia( { setMediaType, setSearchTerm, reloadMedia } );
 

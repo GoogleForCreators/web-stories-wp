@@ -18,22 +18,14 @@
  * WordPress dependencies
  */
 import { useCallback } from '@wordpress/element';
-/**
- * Internal dependencies
- */
-import { useAPI } from '../../api';
 
-function useLoadMedia( { setMedia, completeMedia, setIsMediaLoading, isMediaLoaded, isMediaLoading, mediaType, searchTerm } ) {
-	const { actions: { getMedia } } = useAPI();
+function useCompleteMedia( { setIsMediaLoading, setIsMediaLoaded } ) {
+	const completeMedia = useCallback( () => {
+		setIsMediaLoading( false );
+		setIsMediaLoaded( true );
+	}, [ setIsMediaLoading, setIsMediaLoaded ] );
 
-	const loadMedia = useCallback( () => {
-		if ( ! isMediaLoaded && ! isMediaLoading ) {
-			setIsMediaLoading( true );
-			getMedia( { mediaType, searchTerm } ).then( setMedia ).finally( completeMedia );
-		}
-	}, [ isMediaLoaded, isMediaLoading, setIsMediaLoading, getMedia, mediaType, searchTerm, setMedia, completeMedia ] );
-
-	return loadMedia;
+	return completeMedia;
 }
 
-export default useLoadMedia;
+export default useCompleteMedia;
