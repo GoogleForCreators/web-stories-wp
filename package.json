@@ -40,7 +40,7 @@
     "@storybook/addon-knobs": "^5.3.12",
     "@storybook/addon-storysource": "^5.3.12",
     "@storybook/addon-viewport": "^5.3.12",
-    "@storybook/react": "^5.3.10",
+    "@storybook/react": "^5.3.12",
     "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/api-fetch": "^3.10.0",
     "@wordpress/babel-preset-default": "^4.10.0",
