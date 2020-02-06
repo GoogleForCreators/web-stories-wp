@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { useRef, useState } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
 import useBrightnessChecker from './useBrightnessChecker';
@@ -36,7 +41,9 @@ const Image = styled.img`
 const TOO_BRIGHT = 10;
 
 function VisibleImage( { ...attrs } ) {
-	const { ref, isTooBright } = useBrightnessChecker( TOO_BRIGHT );
+	const ref = useRef();
+	const [ isTooBright, setIsTooBright ] = useState( false );
+	useBrightnessChecker( ref, TOO_BRIGHT, setIsTooBright );
 
 	return (
 		<Image ref={ ref } { ...attrs } isTooBright={ isTooBright } />

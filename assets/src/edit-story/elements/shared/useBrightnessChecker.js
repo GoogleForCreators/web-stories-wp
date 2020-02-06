@@ -22,28 +22,25 @@ import ColorThief from 'colorthief';
 /**
  * WordPress dependencies
  */
-import { useRef, useState, useCallback, useLayoutEffect } from '@wordpress/element';
+import { useRef, useCallback, useLayoutEffect } from '@wordpress/element';
 
-function useBrightnessChecker( limit ) {
-	const ref = useRef();
+function useBrightnessChecker( ref, limit, handler ) {
 	const thief = useRef( new ColorThief() );
-
-	const [ isTooBright, setIsTooBright ] = useState( false );
 
 	const checkIfTooBright = useCallback( ( ) => {
 		try {
 			const averageColor = thief.current.getColor( ref.current );
 			const darkestDimension = Math.max.apply( null, averageColor );
-			setIsTooBright( darkestDimension <= limit );
+			handler( darkestDimension <= limit );
 		} catch ( e ) {
 			// ColorThief fails for all-white images
 			// - which is actually what we want to find here
 			//
 			// It's a "feature":
 			// https://github.com/lokesh/color-thief/pull/49
-			setIsTooBright( true );
+			handler( true );
 		}
-	}, [ limit ] );
+	}, [ ref, limit, handler ] );
 
 	useLayoutEffect( () => {
 		const element = ref.current;
@@ -55,12 +52,7 @@ function useBrightnessChecker( limit ) {
 
 		element.addEventListener( 'load', checkIfTooBright );
 		return () => element.removeEventListener( 'load', checkIfTooBright );
-	}, [ checkIfTooBright ]	);
-
-	return {
-		ref,
-		isTooBright,
-	};
+	}, [ ref, checkIfTooBright ]	);
 }
 
 export default useBrightnessChecker;
