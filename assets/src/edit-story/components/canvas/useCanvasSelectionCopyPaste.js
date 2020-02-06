@@ -28,6 +28,7 @@ import { useCallback, renderToString } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import { useUploader } from '../../app/uploader';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import { getDefinitionForType } from '../../elements';
 
@@ -39,8 +40,10 @@ const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 function useCanvasSelectionCopyPaste( container ) {
 	const {
 		state: { currentPage, selectedElements },
-		actions: { appendElementToCurrentPage, deleteSelectedElements },
+		actions: { addElement, deleteSelectedElements },
 	} = useStory();
+
+	const { uploadFile, isValidType } = useUploader();
 
 	const copyCutHandler = useCallback(
 		( evt ) => {
@@ -113,8 +116,8 @@ function useCanvasSelectionCopyPaste( container ) {
 						payload.items.forEach( ( { x, y, basedOn, ...rest } ) => {
 							currentPage.elements.forEach( ( element ) => {
 								if ( element.id === basedOn || element.basedOn === basedOn ) {
-									x = Math.max( x, element.x + 20 );
-									y = Math.max( y, element.y + 20 );
+									x = Math.max( x, element.x + 60 );
+									y = Math.max( y, element.y + 60 );
 								}
 							} );
 							const element = {
@@ -124,16 +127,23 @@ function useCanvasSelectionCopyPaste( container ) {
 								x,
 								y,
 							};
-							appendElementToCurrentPage( element );
+							addElement( { element } );
 						} );
 						evt.preventDefault();
+					}
+				}
+				const { items } = clipboardData;
+				for ( let i = 0; i < items.length; i++ ) {
+					const item = items[ i ];
+					if ( isValidType( item ) ) {
+						uploadFile( item.getAsFile() );
 					}
 				}
 			} catch ( e ) {
 				// Ignore.
 			}
 		},
-		[ appendElementToCurrentPage, currentPage ],
+		[ addElement, currentPage, isValidType, uploadFile ],
 	);
 
 	useClipboardHandlers( container, copyCutHandler, pasteHandler );

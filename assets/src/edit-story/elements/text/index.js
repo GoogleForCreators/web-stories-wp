@@ -29,7 +29,7 @@ export const defaultAttributes = {
 	fontFamily: 'Arial',
 	fontFallback: [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 	fontWeight: 400,
-	fontSize: 14,
+	fontSize: 36,
 	fontStyle: 'normal',
 	color: '#000000',
 	letterSpacing: 'normal',
@@ -38,6 +38,8 @@ export const defaultAttributes = {
 };
 
 export const hasEditMode = true;
+
+export const isMedia = false;
 
 export const panels = [
 	PanelTypes.TEXT,

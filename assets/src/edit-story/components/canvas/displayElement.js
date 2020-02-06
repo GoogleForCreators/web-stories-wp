@@ -28,15 +28,15 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { ElementWithPosition, ElementWithSize, ElementWithRotation } from '../../elements/shared';
+import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import useTransformHandler from './useTransformHandler';
 
 const Wrapper = styled.div`
-	${ ElementWithPosition }
-	${ ElementWithSize }
-	${ ElementWithRotation }
+	${ elementWithPosition }
+	${ elementWithSize }
+	${ elementWithRotation }
 	contain: layout paint;
 `;
 
@@ -44,12 +44,10 @@ function DisplayElement( { element } ) {
 	const { actions: { getBox } } = useUnits();
 
 	const { id, type } = element;
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const { Display } = getDefinitionForType( type );
 
 	const wrapperRef = useRef( null );
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
 	const box = getBox( element );
 
 	useTransformHandler( id, ( transform ) => {

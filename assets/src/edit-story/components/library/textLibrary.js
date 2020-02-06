@@ -33,7 +33,7 @@ function MediaLibrary( { onInsert } ) {
 			</button>
 			<br />
 			<button
-				onClick={ () => onInsert( 'text', { content: 'Hello <strong>World</strong>', color: 'purple', fontSize: 40, fontFamily: 'Ubuntu', fontWeight: 400, width: 50, height: 20, x: 5, y: 5, rotationAngle: 0 } ) }
+				onClick={ () => onInsert( 'text', { content: 'Hello <strong>World</strong>', color: 'purple', fontSize: 100, fontFamily: 'Ubuntu', fontWeight: 400, width: 50, height: 20, x: 5, y: 5, rotationAngle: 0 } ) }
 			>
 				{ __( 'Insert big purple ubuntu', 'web-stories' ) }
 			</button>

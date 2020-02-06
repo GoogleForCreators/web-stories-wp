@@ -13,7 +13,7 @@ export const StoryElementPropsTypes = {
 	width: PropTypes.number.isRequired,
 	height: PropTypes.number.isRequired,
 	rotationAngle: PropTypes.number.isRequired,
-	isFullbleed: PropTypes.bool.isRequired,
+	isFill: PropTypes.bool,
 };
 
 StoryPropTypes.size = PropTypes.exact( {

@@ -28,9 +28,12 @@ export const defaultAttributes = {
 
 export const hasEditMode = false;
 
+export const isMedia = false;
+
 export const panels = [
 	PanelTypes.SIZE,
 	PanelTypes.POSITION,
 	PanelTypes.BACKGROUND_COLOR,
 	PanelTypes.ROTATION_ANGLE,
+	PanelTypes.FILL,
 ];

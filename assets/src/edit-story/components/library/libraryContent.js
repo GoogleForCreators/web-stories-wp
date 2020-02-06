@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
-import { createNewElement } from '../../elements';
+import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
+import { createNewElement, getDefinitionForType } from '../../elements';
+import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import useLibrary from './useLibrary';
 import MediaLibrary from './mediaLibrary';
@@ -31,7 +33,8 @@ function Library() {
 		data: { tabs: { MEDIA, TEXT, SHAPES, LINKS } },
 	} = useLibrary();
 	const {
-		actions: { addElement },
+		actions: { addElement, setBackgroundElement },
+		state: { currentPage },
 	} = useStory();
 	const ContentLibrary = ( {
 		[ MEDIA ]: MediaLibrary,
@@ -39,13 +42,22 @@ function Library() {
 		[ SHAPES ]: ShapeLibrary,
 		[ LINKS ]: LinkLibrary,
 	} )[ tab ];
-	const handleInsert = ( type, props ) => {
+	const isMediaEl = ( type ) => {
+		const { isMedia } = getDefinitionForType( type );
+		return isMedia;
+	};
+	const handleInsert = ( type, { width, height, ...props } ) => {
 		const element = createNewElement( type, {
 			...props,
-			x: Math.round( 80 * Math.random() ),
-			y: Math.round( 70 * Math.random() ),
+			x: editorToDataX( 80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH ),
+			y: editorToDataY( 70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT ),
+			width: editorToDataX( width, DEFAULT_EDITOR_PAGE_WIDTH ),
+			height: editorToDataY( height, DEFAULT_EDITOR_PAGE_HEIGHT ),
 		} );
 		addElement( { element } );
+		if ( isMediaEl( type ) && ! currentPage.elements.some( ( { type: elType } ) => isMediaEl( elType ) ) ) {
+			setBackgroundElement( { elementId: element.id } );
+		}
 	};
 	return <ContentLibrary onInsert={ handleInsert } />;
 }

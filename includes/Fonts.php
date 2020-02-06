@@ -259,8 +259,7 @@ class Fonts {
 
 			$weights = [];
 			foreach ( $font['variants'] as $variant ) {
-				$variant   = str_replace( 'italic', '', $variant );
-				$variant   = str_replace( 'regular', '400', $variant );
+				$variant   = str_replace( [ 'italic', 'regular' ], [ '', '400' ], $variant );
 				$weights[] = $variant;
 			}
 

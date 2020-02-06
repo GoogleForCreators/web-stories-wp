@@ -29,20 +29,32 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { InputGroup } from '../form';
+import { dataPixels } from '../../units';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
 function SizePanel( { selectedElements, onSetProperties } ) {
 	const width = getCommonValue( selectedElements, 'width' );
 	const height = getCommonValue( selectedElements, 'height' );
-	const isFullbleed = getCommonValue( selectedElements, 'isFullbleed' );
+	const isFill = getCommonValue( selectedElements, 'isFill' );
 	const [ state, setState ] = useState( { width, height } );
 	const [ lockRatio, setLockRatio ] = useState( true );
 	useEffect( () => {
 		setState( { width, height } );
 	}, [ width, height ] );
 	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
+		onSetProperties( ( { width: oldWidth, height: oldHeight } ) => {
+			let { width: newWidth, height: newHeight } = state;
+			if ( lockRatio && ( newHeight === '' || newWidth === '' ) ) {
+				const ratio = oldWidth / oldHeight;
+				if ( newWidth === '' ) {
+					newWidth = dataPixels( newHeight * ratio );
+				} else {
+					newHeight = dataPixels( newWidth / ratio );
+				}
+			}
+			return { width: newWidth, height: newHeight };
+		} );
 		evt.preventDefault();
 	};
 	return (
@@ -57,11 +69,11 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 					setState( {
 						...state,
 						width: newWidth,
-						height: typeof newWidth === 'number' && lockRatio ? newWidth / ratio : height,
+						height: height !== '' && typeof newWidth === 'number' && lockRatio ? dataPixels( newWidth / ratio ) : height,
 					} );
 				} }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 			<InputGroup
 				label={ __( 'Height', 'web-stories' ) }
@@ -73,11 +85,11 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 					setState( {
 						...state,
 						height: newHeight,
-						width: typeof newHeight === 'number' && lockRatio ? newHeight * ratio : width,
+						width: width !== '' && typeof newHeight === 'number' && lockRatio ? dataPixels( newHeight * ratio ) : width,
 					} );
 				} }
 				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 			<InputGroup
 				type="checkbox"
@@ -87,7 +99,7 @@ function SizePanel( { selectedElements, onSetProperties } ) {
 				onChange={ ( value ) => {
 					setLockRatio( value );
 				} }
-				disabled={ isFullbleed }
+				disabled={ isFill }
 			/>
 		</SimplePanel>
 	);
