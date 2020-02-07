@@ -25,10 +25,11 @@ import { rgba } from 'polished';
  */
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
+import { ReorderableItem } from '../../reorderable';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs( { type: 'button' } )`
+const LayerButton = styled( ReorderableItem )`
 	display: flex;
 	border: 0;
 	padding: 0;

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -27,28 +28,37 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ReorderableList } from '../../reorderable';
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import useLayers from './useLayers';
 
-const LayerList = styled.div`
+const LayerList = styled( ReorderableList )`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	min-height: 100%;
+
+	&:focus {
+		background: ${ ( { theme } ) => rgba( theme.colors.action, 0.05 ) };
+	}
 `;
 
 function LayerPanel() {
 	const layers = useLayers();
-
+	const layerLabel = __( 'Layers', 'web-stories' );
 	return (
 		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>
 			<PanelTitle isPrimary isResizable>
-				{ __( 'Layers', 'web-stories' ) }
+				{ layerLabel }
 			</PanelTitle>
 
 			<PanelContent isScrollable padding={ '0' }>
-				<LayerList>
+				<LayerList
+					aria-label={ layerLabel }
+					aria-multiselectable="true"
+				>
 					{ layers.map( ( element ) => (
 						<Layer key={ element.id } element={ element } />
 					) ) }
