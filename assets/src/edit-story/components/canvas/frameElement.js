@@ -79,22 +79,22 @@ function FrameElement({ element }) {
 
   const box = getBox(element);
 
-	return (
-		<Wrapper
-			ref={elementRef}
-			{...box}
-			onMouseDown={(evt) => {
-				if (!isSelected) {
-					handleSelectElement(id, evt);
-				}
-				evt.stopPropagation();
-			} }
-		>
-			<WithElementMask element={ element } fill={ true } >
+  return (
+    <Wrapper
+      ref={elementRef}
+      {...box}
+      onMouseDown={(evt) => {
+        if (!isSelected) {
+          handleSelectElement(id, evt);
+        }
+        evt.stopPropagation();
+      }}
+    >
+      <WithElementMask element={element} fill={true}>
         {Frame && <Frame element={element} box={box} />}
-			</WithElementMask>
-		</Wrapper>
-	);
+      </WithElementMask>
+    </Wrapper>
+  );
 }
 
 FrameElement.propTypes = {

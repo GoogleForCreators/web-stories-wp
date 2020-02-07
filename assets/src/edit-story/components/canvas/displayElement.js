@@ -71,13 +71,13 @@ function DisplayElement({ element }) {
     }
   });
 
-	return (
-		<Wrapper ref={wrapperRef} {...box}>
-			<WithElementMask element={ element } fill={ true } >
-				<Display element={element} box={box} />
-			</WithElementMask>
-		</Wrapper>
-	);
+  return (
+    <Wrapper ref={wrapperRef} {...box}>
+      <WithElementMask element={element} fill={true}>
+        <Display element={element} box={box} />
+      </WithElementMask>
+    </Wrapper>
+  );
 }
 
 DisplayElement.propTypes = {

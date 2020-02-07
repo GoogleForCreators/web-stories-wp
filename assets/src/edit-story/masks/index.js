@@ -39,23 +39,24 @@ const MaskIds = {
 
 const CLIP_PATHS = {
   // @todo: This is a very bad heart.
-  [ MaskIds.HEART ]: 'M 0.5,1 C 0.5,1,0,0.7,0,0.3 A 0.25,0.25,1,1,1,0.5,0.3 A 0.25,0.25,1,1,1,1,0.3 C 1,0.7,0.5,1,0.5,1 Z',
+  [MaskIds.HEART]:
+    'M 0.5,1 C 0.5,1,0,0.7,0,0.3 A 0.25,0.25,1,1,1,0.5,0.3 A 0.25,0.25,1,1,1,1,0.3 C 1,0.7,0.5,1,0.5,1 Z',
   // @todo: This is a horrible star.
-  [ MaskIds.STAR ]: 'M .5,0 L .8,1 L 0,.4 L 1,.4 L .2,1 Z',
-   // viewbox = [0 0 163 155]
-   // M 81.5 0 L 100.696 59.079 H 162.815 L 112.56 95.5919 L 131.756 154.671 L 81.5 118.158 L 31.2444 154.671 L 50.4403 95.5919 L 0.184669 59.079H62.3041L81.5 0 Z
+  [MaskIds.STAR]: 'M .5,0 L .8,1 L 0,.4 L 1,.4 L .2,1 Z',
+  // viewbox = [0 0 163 155]
+  // M 81.5 0 L 100.696 59.079 H 162.815 L 112.56 95.5919 L 131.756 154.671 L 81.5 118.158 L 31.2444 154.671 L 50.4403 95.5919 L 0.184669 59.079H62.3041L81.5 0 Z
 };
 
 export const MASKS = [
   {
     type: MaskIds.HEART,
-    name: __( 'Heart', 'web-stories' ),
-    path: CLIP_PATHS[ MaskIds.HEART ],
+    name: __('Heart', 'web-stories'),
+    path: CLIP_PATHS[MaskIds.HEART],
   },
   {
     type: MaskIds.STAR,
-    name: __( 'Star', 'web-stories' ),
-    path: CLIP_PATHS[ MaskIds.STAR ],
+    name: __('Star', 'web-stories'),
+    path: CLIP_PATHS[MaskIds.STAR],
   },
 ];
 
@@ -67,12 +68,18 @@ const FILL_STYLE = {
   bottom: 0,
 };
 
-export function WithElementMask( { element, fill, style, children, ...rest } ) {
-  const mask = getElementMaskProperties( element );
+export function WithElementMask({ element, fill, style, children, ...rest }) {
+  const mask = getElementMaskProperties(element);
   return (
-	<WithtMask fill={ fill } style={ style } mask={ mask } elementId={ element.id } { ...rest }>
-		{ children }
-	</WithtMask>
+    <WithtMask
+      fill={fill}
+      style={style}
+      mask={mask}
+      elementId={element.id}
+      {...rest}
+    >
+      {children}
+    </WithtMask>
   );
 }
 
@@ -83,40 +90,40 @@ WithElementMask.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-function WithtMask( { elementId, mask, fill, style, children, ...rest } ) {
-  const maskType = mask && mask.type || null;
+function WithtMask({ elementId, mask, fill, style, children, ...rest }) {
+  const maskType = (mask && mask.type) || null;
 
   const fillStyle = fill ? FILL_STYLE : null;
 
   const allStyles = {
-		...fillStyle,
-		...style,
-	};
+    ...fillStyle,
+    ...style,
+  };
 
-  if ( maskType ) {
+  if (maskType) {
     // @todo: Chrome cannot do inline clip-path using data: URLs.
     // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
     const maskId = `mask-${maskType}-${elementId}`;
-    allStyles.clipPath = `url(#${ maskId })`;
+    allStyles.clipPath = `url(#${maskId})`;
 
     return (
-	<div style={ allStyles } { ...rest } >
-		<svg width={ 0 } height={ 0 }>
-			<defs>
-				<clipPath id={ maskId } clipPathUnits="objectBoundingBox">
-					<path d={ CLIP_PATHS[ maskType ] } />
-				</clipPath>
-			</defs>
-		</svg>
-		{ children }
-	</div>
+      <div style={allStyles} {...rest}>
+        <svg width={0} height={0}>
+          <defs>
+            <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+              <path d={CLIP_PATHS[maskType]} />
+            </clipPath>
+          </defs>
+        </svg>
+        {children}
+      </div>
     );
   }
   return (
-	<div style={ allStyles } { ...rest }>
-		{ children }
-	</div>
+    <div style={allStyles} {...rest}>
+      {children}
+    </div>
   );
 }
 
@@ -128,14 +135,14 @@ WithtMask.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-function getElementMaskProperties( { type, mask, ...rest } ) {
-  if ( mask ) {
+function getElementMaskProperties({ type, mask, ...rest }) {
+  if (mask) {
     return mask;
   }
-  return getDefaultElementMaskProperties( { type, ...rest } );
+  return getDefaultElementMaskProperties({ type, ...rest });
 }
 
-function getDefaultElementMaskProperties( { } ) {
+function getDefaultElementMaskProperties({}) {
   // @todo: mask-based shapes (square, circle, etc) automatically assume masks.
   return null;
 }

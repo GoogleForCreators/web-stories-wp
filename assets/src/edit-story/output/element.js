@@ -32,21 +32,22 @@ function OutputElement({ element }) {
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
-	return (
-		<WithElementMask
-			element={ element }
-			id={ 'el-' + id }
-			className="wrapper"
-			style={ {
-				left: `${ x }%`,
-				top: `${ y }%`,
-				width: `${ width }%`,
-				height: `${ height }%`,
-				transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
-			} }>
-			<Output element={ element } box={ box } />
-		</WithElementMask>
-	);
+  return (
+    <WithElementMask
+      element={element}
+      id={'el-' + id}
+      className="wrapper"
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+        width: `${width}%`,
+        height: `${height}%`,
+        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
+      }}
+    >
+      <Output element={element} box={box} />
+    </WithElementMask>
+  );
 }
 
 OutputElement.propTypes = {

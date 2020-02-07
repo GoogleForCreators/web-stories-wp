@@ -56,13 +56,22 @@ const CropImg = styled.img`
   ${imageWithScale}
 `;
 
-function ImageEdit( { element, box } ) {
-	const { id, src, origRatio, scale, focalX, focalY, isFill, isBackground } = element;
-	const { x, y, width, height, rotationAngle } = box;
+function ImageEdit({ element, box }) {
+  const {
+    id,
+    src,
+    origRatio,
+    scale,
+    focalX,
+    focalY,
+    isFill,
+    isBackground,
+  } = element;
+  const { x, y, width, height, rotationAngle } = box;
 
-	const [ fullImage, setFullImage ] = useState( null );
-	const [ croppedImage, setCroppedImage ] = useState( null );
-	const [ cropBox, setCropBox ] = useState( null );
+  const [fullImage, setFullImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [cropBox, setCropBox] = useState(null);
 
   const {
     actions: { updateElementById },
@@ -81,14 +90,19 @@ function ImageEdit( { element, box } ) {
     origRatio
   );
 
-	return (
-		<Element>
-			<FadedImg ref={ setFullImage } draggable={ false } src={ src } { ...imgProps } />
-			<CropBox ref={ setCropBox }>
-				<WithElementMask element={ element } fill={ true } >
-					<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
-				</WithElementMask>
-			</CropBox>
+  return (
+    <Element>
+      <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
+      <CropBox ref={setCropBox}>
+        <WithElementMask element={element} fill={true}>
+          <CropImg
+            ref={setCroppedImage}
+            draggable={false}
+            src={src}
+            {...imgProps}
+          />
+        </WithElementMask>
+      </CropBox>
 
       {!isFill && !isBackground && cropBox && croppedImage && (
         <EditCropMovable
