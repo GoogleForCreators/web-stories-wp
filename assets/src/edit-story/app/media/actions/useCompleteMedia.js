@@ -19,13 +19,13 @@
  */
 import { useCallback } from '@wordpress/element';
 
-function useCompleteMedia( { setIsMediaLoading, setIsMediaLoaded } ) {
-	const completeMedia = useCallback( () => {
-		setIsMediaLoading( false );
-		setIsMediaLoaded( true );
-	}, [ setIsMediaLoading, setIsMediaLoaded ] );
+function useCompleteMedia({ setIsMediaLoading, setIsMediaLoaded }) {
+  const completeMedia = useCallback(() => {
+    setIsMediaLoading(false);
+    setIsMediaLoaded(true);
+  }, [setIsMediaLoading, setIsMediaLoaded]);
 
-	return completeMedia;
+  return completeMedia;
 }
 
 export default useCompleteMedia;

@@ -25,7 +25,7 @@ import { useContext } from '@wordpress/element';
 import Context from './context';
 
 function useMedia() {
-	return useContext( Context );
+  return useContext(Context);
 }
 
 export default useMedia;

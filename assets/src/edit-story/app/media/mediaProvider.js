@@ -33,47 +33,58 @@ import useReloadMedia from './actions/useReloadMedia';
 import useResetMedia from './actions/useResetMedia';
 import Context from './context';
 
-function MediaProvider( { children } ) {
-	const [ media, setMedia ] = useState( [] );
-	const [ mediaType, setMediaType ] = useState( '' );
-	const [ searchTerm, setSearchTerm ] = useState( '' );
-	const [ isMediaLoaded, setIsMediaLoaded ] = useState( false );
-	const [ isMediaLoading, setIsMediaLoading ] = useState( false );
+function MediaProvider({ children }) {
+  const [media, setMedia] = useState([]);
+  const [mediaType, setMediaType] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isMediaLoaded, setIsMediaLoaded] = useState(false);
+  const [isMediaLoading, setIsMediaLoading] = useState(false);
 
-	const completeMedia = useCompleteMedia( { setIsMediaLoading, setIsMediaLoaded } );
-	const loadMedia = useLoadMedia( { setMedia, completeMedia, setIsMediaLoading, isMediaLoaded, isMediaLoading, mediaType, searchTerm } );
-	const reloadMedia = useReloadMedia( { setIsMediaLoading, setIsMediaLoaded } );
-	const resetMedia = useResetMedia( { setMediaType, setSearchTerm, reloadMedia } );
+  const completeMedia = useCompleteMedia({
+    setIsMediaLoading,
+    setIsMediaLoaded,
+  });
+  const loadMedia = useLoadMedia({
+    setMedia,
+    completeMedia,
+    setIsMediaLoading,
+    isMediaLoaded,
+    isMediaLoading,
+    mediaType,
+    searchTerm,
+  });
+  const reloadMedia = useReloadMedia({ setIsMediaLoading, setIsMediaLoaded });
+  const resetMedia = useResetMedia({
+    setMediaType,
+    setSearchTerm,
+    reloadMedia,
+  });
 
-	const state = {
-		state: {
-			media,
-			isMediaLoading,
-			isMediaLoaded,
-			mediaType,
-			searchTerm,
-		},
-		actions: {
-			setMediaType,
-			setSearchTerm,
-			loadMedia,
-			reloadMedia,
-			resetMedia,
-		},
-	};
+  const state = {
+    state: {
+      media,
+      isMediaLoading,
+      isMediaLoaded,
+      mediaType,
+      searchTerm,
+    },
+    actions: {
+      setMediaType,
+      setSearchTerm,
+      loadMedia,
+      reloadMedia,
+      resetMedia,
+    },
+  };
 
-	return (
-		<Context.Provider value={ state }>
-			{ children }
-		</Context.Provider>
-	);
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 MediaProvider.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default MediaProvider;

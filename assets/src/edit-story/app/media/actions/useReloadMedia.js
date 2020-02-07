@@ -19,13 +19,13 @@
  */
 import { useCallback } from '@wordpress/element';
 
-function useReloadMedia( { setIsMediaLoading, setIsMediaLoaded } ) {
-	const reloadMedia = useCallback( () => {
-		setIsMediaLoading( false );
-		setIsMediaLoaded( false );
-	}, [ setIsMediaLoading, setIsMediaLoaded ] );
+function useReloadMedia({ setIsMediaLoading, setIsMediaLoaded }) {
+  const reloadMedia = useCallback(() => {
+    setIsMediaLoading(false);
+    setIsMediaLoaded(false);
+  }, [setIsMediaLoading, setIsMediaLoaded]);
 
-	return reloadMedia;
+  return reloadMedia;
 }
 
 export default useReloadMedia;

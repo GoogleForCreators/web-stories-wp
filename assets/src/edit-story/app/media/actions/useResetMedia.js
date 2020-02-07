@@ -19,14 +19,14 @@
  */
 import { useCallback } from '@wordpress/element';
 
-function useResetMedia( { setMediaType, setSearchTerm, reloadMedia } ) {
-	const resetMedia = useCallback( () => {
-		setMediaType( '' );
-		setSearchTerm( '' );
-		reloadMedia();
-	}, [ setMediaType, setSearchTerm, reloadMedia ] );
+function useResetMedia({ setMediaType, setSearchTerm, reloadMedia }) {
+  const resetMedia = useCallback(() => {
+    setMediaType('');
+    setSearchTerm('');
+    reloadMedia();
+  }, [setMediaType, setSearchTerm, reloadMedia]);
 
-	return resetMedia;
+  return resetMedia;
 }
 
 export default useResetMedia;

@@ -23,17 +23,38 @@ import { useCallback } from '@wordpress/element';
  */
 import { useAPI } from '../../api';
 
-function useLoadMedia( { setMedia, completeMedia, setIsMediaLoading, isMediaLoaded, isMediaLoading, mediaType, searchTerm } ) {
-	const { actions: { getMedia } } = useAPI();
+function useLoadMedia({
+  setMedia,
+  completeMedia,
+  setIsMediaLoading,
+  isMediaLoaded,
+  isMediaLoading,
+  mediaType,
+  searchTerm,
+}) {
+  const {
+    actions: { getMedia },
+  } = useAPI();
 
-	const loadMedia = useCallback( () => {
-		if ( ! isMediaLoaded && ! isMediaLoading ) {
-			setIsMediaLoading( true );
-			getMedia( { mediaType, searchTerm } ).then( setMedia ).finally( completeMedia );
-		}
-	}, [ isMediaLoaded, isMediaLoading, setIsMediaLoading, getMedia, mediaType, searchTerm, setMedia, completeMedia ] );
+  const loadMedia = useCallback(() => {
+    if (!isMediaLoaded && !isMediaLoading) {
+      setIsMediaLoading(true);
+      getMedia({ mediaType, searchTerm })
+        .then(setMedia)
+        .finally(completeMedia);
+    }
+  }, [
+    isMediaLoaded,
+    isMediaLoading,
+    setIsMediaLoading,
+    getMedia,
+    mediaType,
+    searchTerm,
+    setMedia,
+    completeMedia,
+  ]);
 
-	return loadMedia;
+  return loadMedia;
 }
 
 export default useLoadMedia;
