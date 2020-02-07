@@ -140,8 +140,7 @@ function useCanvasSelectionCopyPaste(container) {
             evt.preventDefault();
           }
         }
-        // Can't use deconstructor here.
-        const items = clipboardData.items;
+        const { items } = clipboardData;
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
