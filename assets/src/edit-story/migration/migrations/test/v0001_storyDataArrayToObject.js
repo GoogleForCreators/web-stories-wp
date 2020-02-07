@@ -19,16 +19,12 @@
  */
 import storyDataArrayToObject from '../v0001_storyDataArrayToObject';
 
-describe( 'storyDataArrayToObject', () => {
-	it( 'should convert an array of pages into a story object', () => {
-		expect( storyDataArrayToObject( [
-			{ _test: 'page1' },
-			{ _test: 'page2' },
-		] ) ).toStrictEqual( {
-			pages: [
-				{ _test: 'page1' },
-				{ _test: 'page2' },
-			],
-		} );
-	} );
-} );
+describe('storyDataArrayToObject', () => {
+  it('should convert an array of pages into a story object', () => {
+    expect(
+      storyDataArrayToObject([{ _test: 'page1' }, { _test: 'page2' }])
+    ).toStrictEqual({
+      pages: [{ _test: 'page1' }, { _test: 'page2' }],
+    });
+  });
+});

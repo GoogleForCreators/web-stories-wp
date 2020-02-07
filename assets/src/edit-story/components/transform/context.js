@@ -19,4 +19,4 @@
  */
 import { createContext } from '@wordpress/element';
 
-export default createContext( { actions: {}, state: {} } );
+export default createContext({ actions: {}, state: {} });

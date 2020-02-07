@@ -30,60 +30,68 @@ import { useLayoutEffect, useRef } from '@wordpress/element';
  */
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
+import {
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
+} from '../../elements/shared';
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
 const Wrapper = styled.div`
-	${ elementWithPosition }
-	${ elementWithSize }
-	${ elementWithRotation }
+	${elementWithPosition}
+	${elementWithSize}
+	${elementWithRotation}
 	pointer-events: initial;
 
 	&:focus,
 	&:active,
 	&:hover {
-		outline: 1px solid ${ ( { theme } ) => theme.colors.selection };
+		outline: 1px solid ${({ theme }) => theme.colors.selection};
 	}
 `;
 
-function FrameElement( { element } ) {
-	const { id, type } = element;
-	const { Frame } = getDefinitionForType( type );
-	const elementRef = useRef();
+function FrameElement({ element }) {
+  const { id, type } = element;
+  const { Frame } = getDefinitionForType(type);
+  const elementRef = useRef();
 
-	const { actions: { setNodeForElement, handleSelectElement } } = useCanvas();
-	const { state: { selectedElements } } = useStory();
-	const { actions: { getBox } } = useUnits();
+  const {
+    actions: { setNodeForElement, handleSelectElement },
+  } = useCanvas();
+  const {
+    state: { selectedElements },
+  } = useStory();
+  const {
+    actions: { getBox },
+  } = useUnits();
 
-	useLayoutEffect( () => {
-		setNodeForElement( id, elementRef.current );
-	}, [ id, setNodeForElement ] );
+  useLayoutEffect(() => {
+    setNodeForElement(id, elementRef.current);
+  }, [id, setNodeForElement]);
 
-	const isSelected = selectedElements.includes( id );
+  const isSelected = selectedElements.includes(id);
 
-	const box = getBox( element );
+  const box = getBox(element);
 
-	return (
-		<Wrapper
-			ref={ elementRef }
-			{ ...box }
-			onMouseDown={ ( evt ) => {
-				if ( ! isSelected ) {
-					handleSelectElement( id, evt );
-				}
-				evt.stopPropagation();
-			} }
-		>
-			{ Frame && (
-				<Frame element={ element } box={ box } />
-			) }
-		</Wrapper>
-	);
+  return (
+    <Wrapper
+      ref={elementRef}
+      {...box}
+      onMouseDown={(evt) => {
+        if (!isSelected) {
+          handleSelectElement(id, evt);
+        }
+        evt.stopPropagation();
+      }}
+    >
+      {Frame && <Frame element={element} box={box} />}
+    </Wrapper>
+  );
 }
 
 FrameElement.propTypes = {
-	element: PropTypes.object.isRequired,
+  element: PropTypes.object.isRequired,
 };
 
 export default FrameElement;

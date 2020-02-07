@@ -32,14 +32,15 @@
  *
  * @return {string} Processed string.
  */
-export default function cleanForSlug( string ) {
-	if ( ! string ) {
-		return '';
-	}
+export default function cleanForSlug(string) {
+  if (!string) {
+    return '';
+  }
 
-	return string
-		.replace( /[\s./_]+/g, '-' )
-		.replace( /^-+|-+$/g, '' )
-		.normalize( 'NFD' ).replace( /[\u0300-\u036f]/g, '' )
-		.toLowerCase();
+  return string
+    .replace(/[\s./_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }

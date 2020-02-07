@@ -28,75 +28,71 @@ import { getDefinitionForType } from '../../../elements';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs( { type: 'button' } )`
-	display: flex;
-	border: 0;
-	padding: 0;
-	background: transparent;
-	height: ${ LAYER_HEIGHT }px;
-	width: 100%;
-	overflow: hidden;
-	align-items: center;
+const LayerButton = styled.button.attrs({ type: 'button' })`
+  display: flex;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  height: ${LAYER_HEIGHT}px;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
 
-	${ ( { isSelected, theme } ) => isSelected && `
-		background: ${ rgba( theme.colors.action, 0.14 ) };
-	` }
+  ${({ isSelected, theme }) =>
+    isSelected &&
+    `
+    background: ${rgba(theme.colors.action, 0.14)};
+  `}
 
-	&:focus,
-	&:active {
-		outline: none;
-	}
+  &:focus,
+  &:active {
+    outline: none;
+  }
 `;
 
 const LayerIconWrapper = styled.div`
-	width: 52px;
-	flex-shrink: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-left: 8px;
+  width: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
 
-	svg {
-		height: 28px;
-		width: 28px;
-		opacity: .5;
-		color: ${ ( { theme } ) => theme.colors.bg.v0 };
-	}
+  svg {
+    height: 28px;
+    width: 28px;
+    opacity: 0.5;
+    color: ${({ theme }) => theme.colors.bg.v0};
+  }
 `;
 
 const LayerDescription = styled.div`
-	width: calc(100% - 60px);
-	display: flex;
-	align-items: center;
-	margin-left: 0;
-	text-align: left;
+  width: calc(100% - 60px);
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  text-align: left;
 `;
 
-function Layer( { element } ) {
-	const { LayerIcon, LayerContent } = getDefinitionForType( element.type );
+function Layer({ element }) {
+  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
 
-	const {
-		isSelected,
-		handleClick,
-	} = useLayerSelection( element );
+  const { isSelected, handleClick } = useLayerSelection(element);
 
-	return (
-		<LayerButton
-			isSelected={ isSelected }
-			onClick={ handleClick }
-		>
-			<LayerIconWrapper>
-				<LayerIcon />
-			</LayerIconWrapper>
-			<LayerDescription>
-				<LayerContent element={ element } />
-			</LayerDescription>
-		</LayerButton>
-	);
+  return (
+    <LayerButton isSelected={isSelected} onClick={handleClick}>
+      <LayerIconWrapper>
+        <LayerIcon />
+      </LayerIconWrapper>
+      <LayerDescription>
+        <LayerContent element={element} />
+      </LayerDescription>
+    </LayerButton>
+  );
 }
 
 Layer.propTypes = {
-	element: StoryPropTypes.layer.isRequired,
+  element: StoryPropTypes.layer.isRequired,
 };
 
 export default Layer;

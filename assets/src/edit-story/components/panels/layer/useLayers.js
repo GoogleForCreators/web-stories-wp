@@ -20,36 +20,33 @@
 import { useStory } from '../../../app';
 import { createNewElement } from '../../../elements';
 
-function getElementsWithBackground( page ) {
-	const hasBackground = Boolean( page.backgroundElementId );
+function getElementsWithBackground(page) {
+  const hasBackground = Boolean(page.backgroundElementId);
 
-	// if no background element, create empty background element as first element.
-	if ( ! hasBackground ) {
-		return [
-			createNewElement( 'background' ),
-			...page.elements,
-		];
-	}
+  // if no background element, create empty background element as first element.
+  if (!hasBackground) {
+    return [createNewElement('background'), ...page.elements];
+  }
 
-	// Otherwise wrap first element as inner of new background element.
-	return [
-		createNewElement( 'background', { inner: page.elements[ 0 ] } ),
-		...page.elements.slice( 1 ),
-	];
+  // Otherwise wrap first element as inner of new background element.
+  return [
+    createNewElement('background', { inner: page.elements[0] }),
+    ...page.elements.slice(1),
+  ];
 }
 
 function useLayers() {
-	const {
-		state: { currentPage },
-	} = useStory();
+  const {
+    state: { currentPage },
+  } = useStory();
 
-	if ( ! currentPage ) {
-		return [];
-	}
+  if (!currentPage) {
+    return [];
+  }
 
-	const layers = getElementsWithBackground( currentPage );
-	layers.reverse();
-	return layers;
+  const layers = getElementsWithBackground(currentPage);
+  layers.reverse();
+  return layers;
 }
 
 export default useLayers;

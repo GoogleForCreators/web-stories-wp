@@ -33,29 +33,29 @@ import Layer from './layer';
 import useLayers from './useLayers';
 
 const LayerList = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 function LayerPanel() {
-	const layers = useLayers();
+  const layers = useLayers();
 
-	return (
-		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>
-			<PanelTitle isPrimary isResizable>
-				{ __( 'Layers', 'web-stories' ) }
-			</PanelTitle>
+  return (
+    <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
+      <PanelTitle isPrimary isResizable>
+        {__('Layers', 'web-stories')}
+      </PanelTitle>
 
-			<PanelContent isScrollable padding={ '0' }>
-				<LayerList>
-					{ layers.map( ( element ) => (
-						<Layer key={ element.id } element={ element } />
-					) ) }
-				</LayerList>
-			</PanelContent>
-		</Panel>
-	);
+      <PanelContent isScrollable padding={'0'}>
+        <LayerList>
+          {layers.map((element) => (
+            <Layer key={element.id} element={element} />
+          ))}
+        </LayerList>
+      </PanelContent>
+    </Panel>
+  );
 }
 
 export default LayerPanel;

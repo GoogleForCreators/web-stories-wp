@@ -21,34 +21,35 @@ import StoryPropTypes from '../types';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 
-function OutputElement( { element } ) {
-	const { id, type } = element;
+function OutputElement({ element }) {
+  const { id, type } = element;
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const { Output } = getDefinitionForType( type );
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+  const { Output } = getDefinitionForType(type);
 
-	// Box is calculated based on the 100%:100% basis for width and height.
-	const box = getBox( element, 100, 100 );
-	const { x, y, width, height, rotationAngle } = box;
+  // Box is calculated based on the 100%:100% basis for width and height.
+  const box = getBox(element, 100, 100);
+  const { x, y, width, height, rotationAngle } = box;
 
-	return (
-		<div
-			id={ 'el-' + id }
-			className="wrapper"
-			style={ {
-				left: `${ x }%`,
-				top: `${ y }%`,
-				width: `${ width }%`,
-				height: `${ height }%`,
-				transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
-			} }>
-			<Output element={ element } box={ box } />
-		</div>
-	);
+  return (
+    <div
+      id={'el-' + id}
+      className="wrapper"
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+        width: `${width}%`,
+        height: `${height}%`,
+        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
+      }}
+    >
+      <Output element={element} box={box} />
+    </div>
+  );
 }
 
 OutputElement.propTypes = {
-	element: StoryPropTypes.element.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default OutputElement;

@@ -19,37 +19,37 @@
  */
 import cleanForSlug from '../cleanForSlug';
 
-describe( 'cleanForSlug', () => {
-	it( 'should return string prepared for use as URL slug', () => {
-		expect( cleanForSlug( ' /Déjà_vu. ' ) ).toBe( 'deja-vu' );
-	} );
+describe('cleanForSlug', () => {
+  it('should return string prepared for use as URL slug', () => {
+    expect(cleanForSlug(' /Déjà_vu. ')).toBe('deja-vu');
+  });
 
-	it( 'should return an empty string for missing argument', () => {
-		expect( cleanForSlug() ).toBe( '' );
-	} );
+  it('should return an empty string for missing argument', () => {
+    expect(cleanForSlug()).toBe('');
+  });
 
-	it( 'should return an empty string for falsy argument', () => {
-		expect( cleanForSlug( null ) ).toBe( '' );
-	} );
+  it('should return an empty string for falsy argument', () => {
+    expect(cleanForSlug(null)).toBe('');
+  });
 
-	it( 'should trim leading whitespace', () => {
-		const result = cleanForSlug( ' Hello World ' );
-		expect( result ).toStrictEqual( 'hello-world' );
-	} );
+  it('should trim leading whitespace', () => {
+    const result = cleanForSlug(' Hello World ');
+    expect(result).toStrictEqual('hello-world');
+  });
 
-	it( 'should trim leading and ending dashes', () => {
-		const result = cleanForSlug( '-Hello-World-' );
-		expect( result ).toStrictEqual( 'hello-world' );
-	} );
+  it('should trim leading and ending dashes', () => {
+    const result = cleanForSlug('-Hello-World-');
+    expect(result).toStrictEqual('hello-world');
+  });
 
-	it( 'should remove diacritics', () => {
-		const result = cleanForSlug( '-Hello-World-' );
-		expect( result ).toStrictEqual( 'hello-world' );
-	} );
+  it('should remove diacritics', () => {
+    const result = cleanForSlug('-Hello-World-');
+    expect(result).toStrictEqual('hello-world');
+  });
 
-	// Disable reason: not implemented yet.
-	// eslint-disable-next-line jest/no-disabled-tests
-	it.skip( 'should replace umlauts if locale is de-*', () => {
-		expect( cleanForSlug( 'Übergrössengeschäft' ) ).toBe( 'uebergroessengeschaeft' );
-	} );
-} );
+  // Disable reason: not implemented yet.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should replace umlauts if locale is de-*', () => {
+    expect(cleanForSlug('Übergrössengeschäft')).toBe('uebergroessengeschaeft');
+  });
+});

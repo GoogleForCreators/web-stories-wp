@@ -25,39 +25,46 @@ import { getMediaProps } from '../shared';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function ImageOutput( {
-	element: { src, origRatio, scale, focalX, focalY },
-	box: { width: vw, height: vh },
-} ) {
-	// Width and height are taken from the basis of 100% taking into account the
-	// aspect ratio.
-	const width = vw;
-	const height = vh * PAGE_HEIGHT / PAGE_WIDTH;
-	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
+function ImageOutput({
+  element: { src, origRatio, scale, focalX, focalY },
+  box: { width: vw, height: vh },
+}) {
+  // Width and height are taken from the basis of 100% taking into account the
+  // aspect ratio.
+  const width = vw;
+  const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
+  const imgProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
 
-	const wrapperStyle = {
-		position: 'absolute',
-		width: `${ editorPixels( imgProps.width / width * 100 ) }%`,
-		height: `${ editorPixels( imgProps.height / height * 100 ) }%`,
-		left: `${ -editorPixels( imgProps.offsetX / width * 100 ) }%`,
-		top: `${ -editorPixels( imgProps.offsetY / height * 100 ) }%`,
-	};
+  const wrapperStyle = {
+    position: 'absolute',
+    width: `${editorPixels((imgProps.width / width) * 100)}%`,
+    height: `${editorPixels((imgProps.height / height) * 100)}%`,
+    left: `${-editorPixels((imgProps.offsetX / width) * 100)}%`,
+    top: `${-editorPixels((imgProps.offsetY / height) * 100)}%`,
+  };
 
-	const props = {
-		layout: 'fill',
-		src,
-	};
+  const props = {
+    layout: 'fill',
+    src,
+  };
 
-	return (
-		<div style={ wrapperStyle } >
-			<amp-img { ...props } />
-		</div>
-	);
+  return (
+    <div style={wrapperStyle}>
+      <amp-img {...props} />
+    </div>
+  );
 }
 
 ImageOutput.propTypes = {
-	element: StoryPropTypes.elements.image.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.image.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageOutput;

@@ -24,23 +24,23 @@
  * @param {string} payload.elementId Element id to add to the current selection.
  * @return {Object} New state
  */
-function selectElement( state, { elementId } ) {
-	if ( ! elementId || state.selection.includes( elementId ) ) {
-		return state;
-	}
+function selectElement(state, { elementId }) {
+  if (!elementId || state.selection.includes(elementId)) {
+    return state;
+  }
 
-	const currentPage = state.pages.find( ( { id } ) => id === state.current );
-	const isBackgroundElement = currentPage.backgroundElementId === elementId;
-	const hasExistingSelection = state.selection.length > 0;
-	// The bg element can't be added to non-empty selection
-	if ( isBackgroundElement && hasExistingSelection ) {
-		return state;
-	}
+  const currentPage = state.pages.find(({ id }) => id === state.current);
+  const isBackgroundElement = currentPage.backgroundElementId === elementId;
+  const hasExistingSelection = state.selection.length > 0;
+  // The bg element can't be added to non-empty selection
+  if (isBackgroundElement && hasExistingSelection) {
+    return state;
+  }
 
-	return {
-		...state,
-		selection: [ ...state.selection, elementId ],
-	};
+  return {
+    ...state,
+    selection: [...state.selection, elementId],
+  };
 }
 
 export default selectElement;

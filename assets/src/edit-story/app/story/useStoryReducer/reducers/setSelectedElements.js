@@ -36,35 +36,36 @@ import { intersect } from './utils';
  * @param {Array.<string>} payload.elementIds Object with properties of new page
  * @return {Object} New state
  */
-function setSelectedElements( state, { elementIds } ) {
-	if ( ! Array.isArray( elementIds ) ) {
-		return state;
-	}
+function setSelectedElements(state, { elementIds }) {
+  if (!Array.isArray(elementIds)) {
+    return state;
+  }
 
-	const uniqueElementIds = [ ...new Set( elementIds ) ];
+  const uniqueElementIds = [...new Set(elementIds)];
 
-	// They can only be similar if they have the same length
-	if ( state.selection.length === uniqueElementIds.length ) {
-		// If intersection of the two lists has the same length as the old list,
-		// nothing will change.
-		// NB: this assumes selection is always without duplicates.
-		const commonElements = intersect( state.selection, uniqueElementIds );
-		if ( commonElements.length === state.selection.length ) {
-			return state;
-		}
-	}
+  // They can only be similar if they have the same length
+  if (state.selection.length === uniqueElementIds.length) {
+    // If intersection of the two lists has the same length as the old list,
+    // nothing will change.
+    // NB: this assumes selection is always without duplicates.
+    const commonElements = intersect(state.selection, uniqueElementIds);
+    if (commonElements.length === state.selection.length) {
+      return state;
+    }
+  }
 
-	// If it's a multi-selection, filter out the background element
-	const currentPage = state.pages.find( ( { id } ) => id === state.current );
-	const isNotBackgroundElement = ( id ) => currentPage.backgroundElementId !== id;
-	const newSelection = uniqueElementIds.length > 1 ?
-		uniqueElementIds.filter( isNotBackgroundElement ) :
-		uniqueElementIds;
+  // If it's a multi-selection, filter out the background element
+  const currentPage = state.pages.find(({ id }) => id === state.current);
+  const isNotBackgroundElement = (id) => currentPage.backgroundElementId !== id;
+  const newSelection =
+    uniqueElementIds.length > 1
+      ? uniqueElementIds.filter(isNotBackgroundElement)
+      : uniqueElementIds;
 
-	return {
-		...state,
-		selection: newSelection,
-	};
+  return {
+    ...state,
+    selection: newSelection,
+  };
 }
 
 export default setSelectedElements;

@@ -30,30 +30,30 @@ import { useRef, useCallback, useState } from '@wordpress/element';
 import useAverageColor from './useAverageColor';
 
 const Image = styled.img`
-	${ ( { isTooBright } ) => isTooBright && `
-		/* Using filter rather than box-shadow to correctly follow
-		 * outlines in semi-transparent images like gif and png.
-		 */
-		filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
-	` }
+  ${({ isTooBright }) =>
+    isTooBright &&
+    `
+    /* Using filter rather than box-shadow to correctly follow
+     * outlines in semi-transparent images like gif and png.
+     */
+    filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
+  `}
 `;
 
 const TOO_BRIGHT = 230;
 
-function VisibleImage( { ...attrs } ) {
-	const ref = useRef();
-	const [ isTooBright, setIsTooBright ] = useState( false );
+function VisibleImage({ ...attrs }) {
+  const ref = useRef();
+  const [isTooBright, setIsTooBright] = useState(false);
 
-	const handleBrightness = useCallback( ( averageColor ) => {
-		const darkestDimension = Math.max.apply( null, averageColor );
-		setIsTooBright( darkestDimension >= TOO_BRIGHT );
-	}, [] );
+  const handleBrightness = useCallback((averageColor) => {
+    const darkestDimension = Math.max.apply(null, averageColor);
+    setIsTooBright(darkestDimension >= TOO_BRIGHT);
+  }, []);
 
-	useAverageColor( ref, handleBrightness );
+  useAverageColor(ref, handleBrightness);
 
-	return (
-		<Image ref={ ref } { ...attrs } isTooBright={ isTooBright } />
-	);
+  return <Image ref={ref} {...attrs} isTooBright={isTooBright} />;
 }
 
 export default VisibleImage;

@@ -37,21 +37,16 @@ import './style.css'; // This way the general editor styles are loaded before al
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
  */
-const initialize = ( id, config ) => {
-	const appElement = document.getElementById( id );
+const initialize = (id, config) => {
+  const appElement = document.getElementById(id);
 
-	// see http://reactcommunity.org/react-modal/accessibility/
-	Modal.setAppElement( appElement );
+  // see http://reactcommunity.org/react-modal/accessibility/
+  Modal.setAppElement(appElement);
 
-	render(
-		<App
-			config={ config }
-		/>,
-		appElement,
-	);
+  render(<App config={config} />, appElement);
 };
 
-domReady( () => {
-	const { id, config } = window.ampStoriesEditSettings;
-	initialize( id, config );
-} );
+domReady(() => {
+  const { id, config } = window.ampStoriesEditSettings;
+  initialize(id, config);
+});

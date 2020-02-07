@@ -27,85 +27,107 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, CropBox, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
+import {
+  elementFillContent,
+  CropBox,
+  getMediaProps,
+  EditPanMovable,
+  ScalePanel,
+} from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { videoWithScale } from './util';
 
 const Element = styled.div`
-	${ elementFillContent }
+  ${elementFillContent}
 `;
 
 const FadedVideo = styled.video`
-	position: absolute;
-	opacity: 0.4;
-	pointer-events: none;
-	${ videoWithScale }
-	max-width: initial;
-	max-height: initial;
+  position: absolute;
+  opacity: 0.4;
+  pointer-events: none;
+  ${videoWithScale}
+  max-width: initial;
+  max-height: initial;
 `;
 
 const CropVideo = styled.video`
-	position: absolute;
-	${ videoWithScale }
-	max-width: initial;
-	max-height: initial;
+  position: absolute;
+  ${videoWithScale}
+  max-width: initial;
+  max-height: initial;
 `;
 
-function VideoEdit( {
-	element: { id, src, origRatio, scale, focalX, focalY, mimeType },
-	box: { x, y, width, height, rotationAngle },
-} ) {
-	const [ fullVideo, setFullVideo ] = useState( null );
-	const [ croppedVideo, setCroppedVideo ] = useState( null );
+function VideoEdit({
+  element: { id, src, origRatio, scale, focalX, focalY, mimeType },
+  box: { x, y, width, height, rotationAngle },
+}) {
+  const [fullVideo, setFullVideo] = useState(null);
+  const [croppedVideo, setCroppedVideo] = useState(null);
 
-	const { actions: { updateElementById } } = useStory();
-	const setProperties = useCallback(
-		( properties ) => updateElementById( { elementId: id, properties } ),
-		[ id, updateElementById ] );
+  const {
+    actions: { updateElementById },
+  } = useStory();
+  const setProperties = useCallback(
+    (properties) => updateElementById({ elementId: id, properties }),
+    [id, updateElementById]
+  );
 
-	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
+  const videoProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
 
-	return (
-		<Element>
-			<FadedVideo ref={ setFullVideo } draggable={ false } { ...videoProps }>
-				<source src={ src } type={ mimeType } />
-			</FadedVideo>
-			<CropBox>
-				<CropVideo ref={ setCroppedVideo } draggable={ false } src={ src } { ...videoProps } />
-			</CropBox>
+  return (
+    <Element>
+      <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>
+        <source src={src} type={mimeType} />
+      </FadedVideo>
+      <CropBox>
+        <CropVideo
+          ref={setCroppedVideo}
+          draggable={false}
+          src={src}
+          {...videoProps}
+        />
+      </CropBox>
 
-			{ fullVideo && croppedVideo && (
-				<EditPanMovable
-					setProperties={ setProperties }
-					fullMedia={ fullVideo }
-					croppedMedia={ croppedVideo }
-					x={ x }
-					y={ y }
-					width={ width }
-					height={ height }
-					rotationAngle={ rotationAngle }
-					offsetX={ videoProps.offsetX }
-					offsetY={ videoProps.offsetY }
-					mediaWidth={ videoProps.width }
-					mediaHeight={ videoProps.height }
-				/>
-			) }
+      {fullVideo && croppedVideo && (
+        <EditPanMovable
+          setProperties={setProperties}
+          fullMedia={fullVideo}
+          croppedMedia={croppedVideo}
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
+          offsetX={videoProps.offsetX}
+          offsetY={videoProps.offsetY}
+          mediaWidth={videoProps.width}
+          mediaHeight={videoProps.height}
+        />
+      )}
 
-			<ScalePanel
-				setProperties={ setProperties }
-				x={ x }
-				y={ y }
-				width={ width }
-				height={ height }
-				scale={ scale || 100 } />
-		</Element>
-	);
+      <ScalePanel
+        setProperties={setProperties}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        scale={scale || 100}
+      />
+    </Element>
+  );
 }
 
 VideoEdit.propTypes = {
-	element: StoryPropTypes.elements.video.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.video.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoEdit;
