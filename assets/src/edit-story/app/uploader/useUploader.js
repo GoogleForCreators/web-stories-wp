@@ -71,7 +71,7 @@ function useUploader({ refreshLibrary = true }) {
     };
 
     const promise = uploadMedia(file, additionalData);
-    if (!refreshLibrary) {
+    if (refreshLibrary) {
       promise.finally(resetMedia);
     }
     return promise;
