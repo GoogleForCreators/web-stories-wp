@@ -43,5 +43,5 @@ export const panels = [
 	PanelTypes.SCALE,
 	PanelTypes.ROTATION_ANGLE,
 	PanelTypes.FILL,
-  PanelTypes.MASK,
+	PanelTypes.MASK,
 ];
