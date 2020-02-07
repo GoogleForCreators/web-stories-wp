@@ -39,9 +39,9 @@ const Text = styled.p`
 
 const DragandDropOverLay = styled.div`
   position: absolute;
-  top: 50%;
+  top: 45%;
   text-align: center;
-  width: 90%;
+  width: 100%;
 `;
 
 function DragandDrop({ children }) {
