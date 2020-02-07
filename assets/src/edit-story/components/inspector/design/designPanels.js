@@ -20,13 +20,10 @@
 import useDesignPanels from './useDesignPanels';
 
 function DesignPanels() {
-	const {
-		panels,
-		panelProperties,
-	} = useDesignPanels();
-	return panels.map( ( { Panel, type } ) => (
-		<Panel key={ type } { ...panelProperties } />
-	) );
+  const { panels, panelProperties } = useDesignPanels();
+  return panels.map(({ Panel, type }) => (
+    <Panel key={type} {...panelProperties} />
+  ));
 }
 
 export default DesignPanels;

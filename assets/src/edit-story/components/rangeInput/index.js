@@ -20,42 +20,42 @@
 import styled, { css } from 'styled-components';
 
 const rangeThumb = css`
-	appearance: none;
-	width: ${ ( { thumbSize = 16 } ) => thumbSize }px;
-	height: ${ ( { thumbSize = 16 } ) => thumbSize }px;
-	background: #fff;
-	cursor: pointer;
-	border-radius: 50px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  appearance: none;
+  width: ${({ thumbSize = 16 }) => thumbSize}px;
+  height: ${({ thumbSize = 16 }) => thumbSize}px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 50px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 `;
 
-export default styled.input.attrs( ( { min, max, step, value, onChange } ) => ( {
-	type: 'range',
-	min,
-	max,
-	step,
-	value,
-	onChange,
-} ) )`
-	margin: 4px;
-	min-width: 100px;
-	cursor: pointer;
-	outline: none;
-	background: #fff4;
-	border-radius: 100px;
-	height: 4px;
-	appearance: none;
-	flex: 1;
+export default styled.input.attrs(({ min, max, step, value, onChange }) => ({
+  type: 'range',
+  min,
+  max,
+  step,
+  value,
+  onChange,
+}))`
+  margin: 4px;
+  min-width: 100px;
+  cursor: pointer;
+  outline: none;
+  background: #fff4;
+  border-radius: 100px;
+  height: 4px;
+  appearance: none;
+  flex: 1;
 
-	&::-webkit-slider-thumb {
-		${ rangeThumb }
-	}
+  &::-webkit-slider-thumb {
+    ${rangeThumb}
+  }
 
-	&::-moz-range-thumb {
-		${ rangeThumb }
-	}
+  &::-moz-range-thumb {
+    ${rangeThumb}
+  }
 
-	&::-ms-thumb {
-		${ rangeThumb }
-	}
+  &::-ms-thumb {
+    ${rangeThumb}
+  }
 `;

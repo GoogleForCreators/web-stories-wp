@@ -32,34 +32,44 @@ import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function RotationPanel( { selectedElements, onSetProperties } ) {
-	const rotationAngle = getCommonValue( selectedElements, 'rotationAngle' );
-	const isFill = getCommonValue( selectedElements, 'isFill' );
-	const [ state, setState ] = useState( { rotationAngle } );
-	useEffect( () => {
-		setState( { rotationAngle } );
-	}, [ rotationAngle ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<SimplePanel name="rotation" title={ __( 'Rotation', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<InputGroup
-				label={ __( 'Rotation angle', 'web-stories' ) }
-				value={ state.rotationAngle }
-				isMultiple={ rotationAngle === '' }
-				onChange={ ( value ) => setState( { ...state, rotationAngle: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'deg', 'Degrees, 0 - 360. ', 'web-stories' ) }
-				disabled={ isFill }
-			/>
-		</SimplePanel>
-	);
+function RotationPanel({ selectedElements, onSetProperties }) {
+  const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
+  const isFill = getCommonValue(selectedElements, 'isFill');
+  const [state, setState] = useState({ rotationAngle });
+  useEffect(() => {
+    setState({ rotationAngle });
+  }, [rotationAngle]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <SimplePanel
+      name="rotation"
+      title={__('Rotation', 'web-stories')}
+      onSubmit={handleSubmit}
+    >
+      <InputGroup
+        label={__('Rotation angle', 'web-stories')}
+        value={state.rotationAngle}
+        isMultiple={rotationAngle === ''}
+        onChange={(value) =>
+          setState({
+            ...state,
+            rotationAngle:
+              isNaN(value) || value === '' ? '' : parseFloat(value),
+          })
+        }
+        postfix={_x('deg', 'Degrees, 0 - 360. ', 'web-stories')}
+        disabled={isFill}
+      />
+    </SimplePanel>
+  );
 }
 
 RotationPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default RotationPanel;

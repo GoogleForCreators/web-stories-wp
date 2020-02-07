@@ -31,32 +31,36 @@ import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function TextPanel( { selectedElements, onSetProperties } ) {
-	const content = getCommonValue( selectedElements, 'content' );
-	const [ state, setState ] = useState( { content } );
-	useEffect( () => {
-		setState( { content } );
-	}, [ content ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<SimplePanel name="text" title={ __( 'Text', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<InputGroup
-				type="text"
-				label={ __( 'Text content', 'web-stories' ) }
-				value={ state.content }
-				isMultiple={ content === '' }
-				onChange={ ( value ) => setState( { ...state, content: value } ) }
-			/>
-		</SimplePanel>
-	);
+function TextPanel({ selectedElements, onSetProperties }) {
+  const content = getCommonValue(selectedElements, 'content');
+  const [state, setState] = useState({ content });
+  useEffect(() => {
+    setState({ content });
+  }, [content]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <SimplePanel
+      name="text"
+      title={__('Text', 'web-stories')}
+      onSubmit={handleSubmit}
+    >
+      <InputGroup
+        type="text"
+        label={__('Text content', 'web-stories')}
+        value={state.content}
+        isMultiple={content === ''}
+        onChange={(value) => setState({ ...state, content: value })}
+      />
+    </SimplePanel>
+  );
 }
 
 TextPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default TextPanel;

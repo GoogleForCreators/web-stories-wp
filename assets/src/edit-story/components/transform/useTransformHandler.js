@@ -22,7 +22,7 @@ import { useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import useCanvas from './useCanvas';
+import useTransform from './useTransform';
 
 /**
  * @param {string} id Target element's id.
@@ -30,16 +30,16 @@ import useCanvas from './useCanvas';
  * the frame object. The `null` value resets the transform.
  * @param {!Array=} deps The effect's dependencies.
  */
-function useTransformHandler( id, handler, deps = undefined ) {
-	const {
-		actions: { registerTransformHandler },
-	} = useCanvas();
+function useTransformHandler(id, handler, deps = undefined) {
+  const {
+    actions: { registerTransformHandler },
+  } = useTransform();
 
-	useEffect(
-		() => registerTransformHandler( id, handler ),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		deps,
-	);
+  useEffect(
+    () => registerTransformHandler(id, handler),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    deps
+  );
 }
 
 export default useTransformHandler;

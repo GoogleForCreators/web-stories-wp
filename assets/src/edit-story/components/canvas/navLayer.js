@@ -22,34 +22,34 @@ import PageMenu from './pagemenu';
 import PageNav from './pagenav';
 import Carousel from './carousel';
 import {
-	Layer,
-	HeadArea,
-	MenuArea,
-	NavPrevArea,
-	NavNextArea,
-	CarouselArea,
+  Layer,
+  HeadArea,
+  MenuArea,
+  NavPrevArea,
+  NavNextArea,
+  CarouselArea,
 } from './layout';
 
 function NavLayer() {
-	return (
-		<Layer pointerEvents="none" onMouseDown={ ( evt ) => evt.stopPropagation() }>
-			<HeadArea pointerEvents="initial">
-				<Header />
-			</HeadArea>
-			<MenuArea pointerEvents="initial">
-				<PageMenu />
-			</MenuArea>
-			<NavPrevArea>
-				<PageNav isNext={ false } />
-			</NavPrevArea>
-			<NavNextArea>
-				<PageNav />
-			</NavNextArea>
-			<CarouselArea pointerEvents="initial">
-				<Carousel />
-			</CarouselArea>
-		</Layer>
-	);
+  return (
+    <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
+      <HeadArea pointerEvents="initial">
+        <Header />
+      </HeadArea>
+      <MenuArea pointerEvents="initial">
+        <PageMenu />
+      </MenuArea>
+      <NavPrevArea>
+        <PageNav isNext={false} />
+      </NavPrevArea>
+      <NavNextArea>
+        <PageNav />
+      </NavNextArea>
+      <CarouselArea pointerEvents="initial">
+        <Carousel />
+      </CarouselArea>
+    </Layer>
+  );
 }
 
 export default NavLayer;

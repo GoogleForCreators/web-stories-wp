@@ -4,11 +4,11 @@
 
 To contribute to this plugin, you need the following tools installed on your computer:
 
-* [PHP](https://www.php.net/) - version 7.2 or higher, preferably installed via [Homebrew](https://brew.sh/)
-* [Composer](https://getcomposer.org/) (PHP package manager) - to install PHP dependencies.
-* [Node.js](https://nodejs.org/en/) (current LTS) - to install JavaScript dependencies.
-* [WordPress](https://wordpress.org/download/) - to run the actual plugin.
-* [Docker Desktop](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/) - for using the local environment
+- [PHP](https://www.php.net/) - version 7.2 or higher, preferably installed via [Homebrew](https://brew.sh/)
+- [Composer](https://getcomposer.org/) (PHP package manager) - to install PHP dependencies.
+- [Node.js](https://nodejs.org/en/) (current LTS) - to install JavaScript dependencies.
+- [WordPress](https://wordpress.org/download/) - to run the actual plugin.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/) - for using the local environment
 
 You should be running a Node version matching the [current active LTS release](https://github.com/nodejs/Release#release-schedule) or newer for this plugin to work correctly. You can check your Node.js version by typing node -v in the Terminal prompt.
 
@@ -21,7 +21,6 @@ nvm install
 ## Local Environment
 
 Since you need a WordPress environment to run the plugin in, the quickest way to get up and running is to use the provided Docker setup.
-
 
 The following command will automatically verify whether Docker, Composer and Node.js are configured properly and start the local WordPress instance. You may need to run this script multiple times if prompted.
 

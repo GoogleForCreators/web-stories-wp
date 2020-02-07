@@ -27,95 +27,117 @@ import { useCallback, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, CropBox, getMediaProps, EditPanMovable, ScalePanel } from '../shared';
+import {
+  elementFillContent,
+  CropBox,
+  getMediaProps,
+  EditPanMovable,
+  ScalePanel,
+} from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
 
 const Element = styled.div`
-	${ elementFillContent }
+  ${elementFillContent}
 `;
 
 const FadedImg = styled.img`
-	position: absolute;
-	opacity: 0.4;
-	pointer-events: none;
-	${ imageWithScale }
+  position: absolute;
+  opacity: 0.4;
+  pointer-events: none;
+  ${imageWithScale}
 `;
 
 const CropImg = styled.img`
-	position: absolute;
-	${ imageWithScale }
+  position: absolute;
+  ${imageWithScale}
 `;
 
-function ImageEdit( {
-	element: { id, src, origRatio, scale, focalX, focalY, isFill, isBackground },
-	box: { x, y, width, height, rotationAngle },
-} ) {
-	const [ fullImage, setFullImage ] = useState( null );
-	const [ croppedImage, setCroppedImage ] = useState( null );
-	const [ cropBox, setCropBox ] = useState( null );
+function ImageEdit({
+  element: { id, src, origRatio, scale, focalX, focalY, isFill, isBackground },
+  box: { x, y, width, height, rotationAngle },
+}) {
+  const [fullImage, setFullImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [cropBox, setCropBox] = useState(null);
 
-	const { actions: { updateElementById } } = useStory();
-	const setProperties = useCallback(
-		( properties ) => updateElementById( { elementId: id, properties } ),
-		[ id, updateElementById ] );
+  const {
+    actions: { updateElementById },
+  } = useStory();
+  const setProperties = useCallback(
+    (properties) => updateElementById({ elementId: id, properties }),
+    [id, updateElementById]
+  );
 
-	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
+  const imgProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
 
-	return (
-		<Element>
-			<FadedImg ref={ setFullImage } draggable={ false } src={ src } { ...imgProps } />
-			<CropBox ref={ setCropBox }>
-				<CropImg ref={ setCroppedImage } draggable={ false } src={ src } { ...imgProps } />
-			</CropBox>
+  return (
+    <Element>
+      <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
+      <CropBox ref={setCropBox}>
+        <CropImg
+          ref={setCroppedImage}
+          draggable={false}
+          src={src}
+          {...imgProps}
+        />
+      </CropBox>
 
-			{ ! isFill && ! isBackground && cropBox && croppedImage && (
-				<EditCropMovable
-					setProperties={ setProperties }
-					cropBox={ cropBox }
-					croppedImage={ croppedImage }
-					x={ x }
-					y={ y }
-					offsetX={ imgProps.offsetX }
-					offsetY={ imgProps.offsetY }
-					imgWidth={ imgProps.width }
-					imgHeight={ imgProps.height }
-				/>
-			) }
+      {!isFill && !isBackground && cropBox && croppedImage && (
+        <EditCropMovable
+          setProperties={setProperties}
+          cropBox={cropBox}
+          croppedImage={croppedImage}
+          x={x}
+          y={y}
+          offsetX={imgProps.offsetX}
+          offsetY={imgProps.offsetY}
+          imgWidth={imgProps.width}
+          imgHeight={imgProps.height}
+        />
+      )}
 
-			{ fullImage && croppedImage && (
-				<EditPanMovable
-					setProperties={ setProperties }
-					fullMedia={ fullImage }
-					croppedMedia={ croppedImage }
-					x={ x }
-					y={ y }
-					width={ width }
-					height={ height }
-					rotationAngle={ rotationAngle }
-					offsetX={ imgProps.offsetX }
-					offsetY={ imgProps.offsetY }
-					mediaWidth={ imgProps.width }
-					mediaHeight={ imgProps.height }
-				/>
-			) }
+      {fullImage && croppedImage && (
+        <EditPanMovable
+          setProperties={setProperties}
+          fullMedia={fullImage}
+          croppedMedia={croppedImage}
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
+          offsetX={imgProps.offsetX}
+          offsetY={imgProps.offsetY}
+          mediaWidth={imgProps.width}
+          mediaHeight={imgProps.height}
+        />
+      )}
 
-			<ScalePanel
-				setProperties={ setProperties }
-				x={ x }
-				y={ y }
-				width={ width }
-				height={ height }
-				scale={ scale || 100 } />
-		</Element>
-	);
+      <ScalePanel
+        setProperties={setProperties}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        scale={scale || 100}
+      />
+    </Element>
+  );
 }
 
 ImageEdit.propTypes = {
-	element: StoryPropTypes.elements.image.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.image.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageEdit;
