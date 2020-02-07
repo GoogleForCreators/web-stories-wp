@@ -37,11 +37,12 @@ export const hasEditMode = true;
 export const isMedia = true;
 
 export const panels = [
-  PanelTypes.BACKGROUND,
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.SCALE,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.VIDEO_POSTER,
-  PanelTypes.FILL,
+	PanelTypes.BACKGROUND,
+	PanelTypes.SIZE,
+	PanelTypes.POSITION,
+	PanelTypes.SCALE,
+	PanelTypes.ROTATION_ANGLE,
+	PanelTypes.VIDEO_POSTER,
+	PanelTypes.FILL,
+  PanelTypes.MASK,
 ];

@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
+import { WithElementMask } from '../masks';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 
@@ -31,21 +32,21 @@ function OutputElement({ element }) {
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
-  return (
-    <div
-      id={'el-' + id}
-      className="wrapper"
-      style={{
-        left: `${x}%`,
-        top: `${y}%`,
-        width: `${width}%`,
-        height: `${height}%`,
-        transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
-      }}
-    >
-      <Output element={element} box={box} />
-    </div>
-  );
+	return (
+		<WithElementMask
+			element={ element }
+			id={ 'el-' + id }
+			className="wrapper"
+			style={ {
+				left: `${ x }%`,
+				top: `${ y }%`,
+				width: `${ width }%`,
+				height: `${ height }%`,
+				transform: rotationAngle ? `rotate(${ rotationAngle }deg)` : null,
+			} }>
+			<Output element={ element } box={ box } />
+		</WithElementMask>
+	);
 }
 
 OutputElement.propTypes = {

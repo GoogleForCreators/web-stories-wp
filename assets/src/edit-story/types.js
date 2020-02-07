@@ -21,15 +21,20 @@ import PropTypes from 'prop-types';
 
 const StoryPropTypes = {};
 
+StoryPropTypes.mask = PropTypes.shape( {
+	type: PropTypes.string.isRequired,
+} );
+
 export const StoryElementPropsTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  rotationAngle: PropTypes.number.isRequired,
-  isFill: PropTypes.bool,
+	id: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired,
+	x: PropTypes.number.isRequired,
+	y: PropTypes.number.isRequired,
+	width: PropTypes.number.isRequired,
+	height: PropTypes.number.isRequired,
+	rotationAngle: PropTypes.number.isRequired,
+	isFill: PropTypes.bool,
+	mask: StoryPropTypes.mask,
 };
 
 StoryPropTypes.size = PropTypes.exact({
