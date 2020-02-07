@@ -25,7 +25,7 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import { useMedia } from '../media';
 
-function useUploader({ refreshLibrary = true }) {
+function useUploader(refreshLibrary = true) {
   const {
     actions: { resetMedia },
   } = useMedia();

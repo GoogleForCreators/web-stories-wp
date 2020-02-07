@@ -15,7 +15,7 @@ function useUploadVideoFrame({ videoId, src, id }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { uploadFile } = useUploader({ refreshLibrary: false });
+  const { uploadFile } = useUploader(false);
   const { storyId } = useConfig();
   const {
     actions: { updateElementById },

@@ -43,7 +43,7 @@ function useCanvasSelectionCopyPaste(container) {
     actions: { addElement, deleteSelectedElements },
   } = useStory();
 
-  const { uploadFile, isValidType } = useUploader({});
+  const { uploadFile, isValidType } = useUploader();
 
   const copyCutHandler = useCallback(
     (evt) => {
