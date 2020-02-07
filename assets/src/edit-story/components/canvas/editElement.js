@@ -24,39 +24,42 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
+import {
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
+} from '../../elements/shared';
 import { useUnits } from '../../units';
 
 // Background color is used to make the edited element more prominent and
 // easier to see.
 const Wrapper = styled.div`
-	${ elementWithPosition }
-	${ elementWithSize }
-	${ elementWithRotation }
+	${elementWithPosition}
+	${elementWithSize}
+	${elementWithRotation}
 	pointer-events: initial;
-	background-color: ${ ( { theme } ) => theme.colors.whiteout };
+	background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
-function EditElement( { element } ) {
-	const { type } = element;
-	const { actions: { getBox } } = useUnits();
+function EditElement({ element }) {
+  const { type } = element;
+  const {
+    actions: { getBox },
+  } = useUnits();
 
-	const { Edit } = getDefinitionForType( type );
+  const { Edit } = getDefinitionForType(type);
 
-	const box = getBox( element );
+  const box = getBox(element);
 
-	return (
-		<Wrapper
-			{ ...box }
-			onMouseDown={ ( evt ) => evt.stopPropagation() }
-		>
-			<Edit element={ element } box={ box } />
-		</Wrapper>
-	);
+  return (
+    <Wrapper {...box} onMouseDown={(evt) => evt.stopPropagation()}>
+      <Edit element={element} box={box} />
+    </Wrapper>
+  );
 }
 
 EditElement.propTypes = {
-	element: PropTypes.object.isRequired,
+  element: PropTypes.object.isRequired,
 };
 
 export default EditElement;

@@ -32,43 +32,57 @@ import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function PositionPanel( { selectedElements, onSetProperties } ) {
-	const x = getCommonValue( selectedElements, 'x' );
-	const y = getCommonValue( selectedElements, 'y' );
-	const isFill = getCommonValue( selectedElements, 'isFill' );
-	const [ state, setState ] = useState( { x, y } );
-	useEffect( () => {
-		setState( { x, y } );
-	}, [ x, y ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<SimplePanel name="position" title={ __( 'Position', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<InputGroup
-				label={ _x( 'X', 'The X axis', 'web-stories' ) }
-				value={ state.x }
-				isMultiple={ x === '' }
-				onChange={ ( value ) => setState( { ...state, x: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFill }
-			/>
-			<InputGroup
-				label={ _x( 'Y', 'The Y axis', 'web-stories' ) }
-				value={ state.y }
-				isMultiple={ y === '' }
-				onChange={ ( value ) => setState( { ...state, y: isNaN( value ) || value === '' ? '' : parseFloat( value ) } ) }
-				postfix={ _x( 'px', 'pixels, the measurement of size', 'web-stories' ) }
-				disabled={ isFill }
-			/>
-		</SimplePanel>
-	);
+function PositionPanel({ selectedElements, onSetProperties }) {
+  const x = getCommonValue(selectedElements, 'x');
+  const y = getCommonValue(selectedElements, 'y');
+  const isFill = getCommonValue(selectedElements, 'isFill');
+  const [state, setState] = useState({ x, y });
+  useEffect(() => {
+    setState({ x, y });
+  }, [x, y]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <SimplePanel
+      name="position"
+      title={__('Position', 'web-stories')}
+      onSubmit={handleSubmit}
+    >
+      <InputGroup
+        label={_x('X', 'The X axis', 'web-stories')}
+        value={state.x}
+        isMultiple={x === ''}
+        onChange={(value) =>
+          setState({
+            ...state,
+            x: isNaN(value) || value === '' ? '' : parseFloat(value),
+          })
+        }
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFill}
+      />
+      <InputGroup
+        label={_x('Y', 'The Y axis', 'web-stories')}
+        value={state.y}
+        isMultiple={y === ''}
+        onChange={(value) =>
+          setState({
+            ...state,
+            y: isNaN(value) || value === '' ? '' : parseFloat(value),
+          })
+        }
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
+        disabled={isFill}
+      />
+    </SimplePanel>
+  );
 }
 
 PositionPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default PositionPanel;

@@ -17,36 +17,36 @@
 /**
  * WordPress dependencies
  */
-import {
-	useCallback,
-	useLayoutEffect,
-} from '@wordpress/element';
+import { useCallback, useLayoutEffect } from '@wordpress/element';
 
-const KEY_UP = [ 'Up', 'ArrowUp' ];
-const KEY_DOWN = [ 'Down', 'ArrowDown' ];
+const KEY_UP = ['Up', 'ArrowUp'];
+const KEY_DOWN = ['Down', 'ArrowDown'];
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 
-function useKeyboardHandlers( handle, handleHeightChange ) {
-	// Handle up/down keypresses to move separator.
-	// TODO Should be rewritten to use MouseTrap when added to .
-	const handleKeyPress = useCallback( ( evt ) => {
-		const isUp = KEY_UP.includes( evt.key );
-		const isDown = KEY_DOWN.includes( evt.key );
-		if ( isUp || isDown ) {
-			const direction = isUp ? 1 : -1;
-			handleHeightChange( direction * DELTA_CHANGE );
-			evt.stopPropagation();
-			evt.preventDefault();
-		}
-	}, [ handleHeightChange ] );
+function useKeyboardHandlers(handle, handleHeightChange) {
+  // Handle up/down keypresses to move separator.
+  // TODO Should be rewritten to use MouseTrap when added to .
+  const handleKeyPress = useCallback(
+    (evt) => {
+      const isUp = KEY_UP.includes(evt.key);
+      const isDown = KEY_DOWN.includes(evt.key);
+      if (isUp || isDown) {
+        const direction = isUp ? 1 : -1;
+        handleHeightChange(direction * DELTA_CHANGE);
+        evt.stopPropagation();
+        evt.preventDefault();
+      }
+    },
+    [handleHeightChange]
+  );
 
-	// On initial render assign keyboard listener to handle up/down arrow presses.
-	useLayoutEffect( () => {
-		const element = handle.current;
-		element.addEventListener( 'keydown', handleKeyPress );
+  // On initial render assign keyboard listener to handle up/down arrow presses.
+  useLayoutEffect(() => {
+    const element = handle.current;
+    element.addEventListener('keydown', handleKeyPress);
 
-		return () => element.removeEventListener( 'keydown', handleKeyPress );
-	}, [ handleKeyPress, handle ] );
+    return () => element.removeEventListener('keydown', handleKeyPress);
+  }, [handleKeyPress, handle]);
 }
 
 export default useKeyboardHandlers;

@@ -34,13 +34,13 @@ export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
 
 export const LAYER_DIRECTIONS = {
-	FRONT: 'FRONT',
-	BACK: 'BACK',
-	FORWARD: 'FORWARD',
-	BACKWARD: 'BACKWARD',
+  FRONT: 'FRONT',
+  BACK: 'BACK',
+  FORWARD: 'FORWARD',
+  BACKWARD: 'BACKWARD',
 };
 
 export const Z_INDEX_CANVAS = {
-	MOVABLE: 10,
-	FLOAT_PANEL: 11,
+  MOVABLE: 10,
+  FLOAT_PANEL: 11,
 };

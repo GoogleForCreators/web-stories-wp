@@ -22,28 +22,23 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-	elementFillContent,
-	elementWithBackgroundColor,
-} from '../shared';
+import { elementFillContent, elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-	${ elementFillContent }
-	${ elementWithBackgroundColor }
+  ${elementFillContent}
+  ${elementWithBackgroundColor}
 `;
 
-function SquareDisplay( { element: { backgroundColor } } ) {
-	const props = {
-		backgroundColor,
-	};
-	return (
-		<Element { ...props } />
-	);
+function SquareDisplay({ element: { backgroundColor } }) {
+  const props = {
+    backgroundColor,
+  };
+  return <Element {...props} />;
 }
 
 SquareDisplay.propTypes = {
-	element: StoryPropTypes.elements.square.isRequired,
+  element: StoryPropTypes.elements.square.isRequired,
 };
 
 export default SquareDisplay;

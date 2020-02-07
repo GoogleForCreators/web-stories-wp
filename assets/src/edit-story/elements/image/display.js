@@ -27,52 +27,66 @@ import { useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
-import { useTransformHandler } from '../../components/canvas';
 import StoryPropTypes from '../../types';
+import { elementFillContent, getMediaProps } from '../shared';
+import { useTransformHandler } from '../../components/transform';
 import { imageWithScale, getImageWithScaleCss } from './util';
 
 const Element = styled.div`
-	${ elementFillContent }
-	overflow: hidden;
+  ${elementFillContent}
+  overflow: hidden;
 `;
 
 const Img = styled.img`
-	position: absolute;
-	${ imageWithScale }
+  position: absolute;
+  ${imageWithScale}
 `;
 
-function ImageDisplay( {
-	element: { id, src, origRatio, scale, focalX, focalY },
-	box: { width, height },
-} ) {
-	const imageRef = useRef( null );
+function ImageDisplay({
+  element: { id, src, origRatio, scale, focalX, focalY },
+  box: { width, height },
+}) {
+  const imageRef = useRef(null);
 
-	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
+  const imgProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
 
-	useTransformHandler( id, ( transform ) => {
-		const target = imageRef.current;
-		if ( transform === null ) {
-			target.style.transform = '';
-		} else {
-			const { resize } = transform;
-			if ( resize[ 0 ] !== 0 && resize[ 1 ] !== 0 ) {
-				const newImgProps = getMediaProps( resize[ 0 ], resize[ 1 ], scale, focalX, focalY, origRatio );
-				target.style.cssText = getImageWithScaleCss( newImgProps );
-			}
-		}
-	} );
+  useTransformHandler(id, (transform) => {
+    const target = imageRef.current;
+    if (transform === null) {
+      target.style.transform = '';
+    } else {
+      const { resize } = transform;
+      if (resize[0] !== 0 && resize[1] !== 0) {
+        const newImgProps = getMediaProps(
+          resize[0],
+          resize[1],
+          scale,
+          focalX,
+          focalY,
+          origRatio
+        );
+        target.style.cssText = getImageWithScaleCss(newImgProps);
+      }
+    }
+  });
 
-	return (
-		<Element>
-			<Img ref={ imageRef } draggable={ false } src={ src } { ...imgProps } />
-		</Element>
-	);
+  return (
+    <Element>
+      <Img ref={imageRef} draggable={false} src={src} {...imgProps} />
+    </Element>
+  );
 }
 
 ImageDisplay.propTypes = {
-	element: StoryPropTypes.elements.image.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.image.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageDisplay;
