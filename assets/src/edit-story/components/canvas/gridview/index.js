@@ -40,96 +40,100 @@ const PAGE_HEIGHT = 160;
 const GRID_GAP = 20;
 
 const Wrapper = styled.div`
-	position: relative;
-	display: grid;
-	grid-template-columns: ${ ( { scale } ) => `repeat(auto-fit, minmax(${ scale * PAGE_WIDTH }px, max-content))` };
-	grid-gap: ${ GRID_GAP }px;
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: ${({ scale }) =>
+    `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
+  grid-gap: ${GRID_GAP}px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 `;
 
 const RangeInputWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	max-width: 430px;
-	margin: 0 auto 75px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 430px;
+  margin: 0 auto 75px auto;
 `;
 
 const Rectangle = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 32px;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	${ ( { isLarge } ) => isLarge ? 'margin-left' : 'margin-right' }: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
 
-	svg {
-		width: ${ ( { isLarge } ) => isLarge ? '20px' : '12px' };
-		height: auto;
-		shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
-	}
+  svg {
+    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
+    height: auto;
+    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
+  }
 `;
 
-function RangeControl( { value, onChange } ) {
-	return (
-		<RangeInputWrapper>
-			<Rectangle>
-				<RectangleIcon />
-			</Rectangle>
-			<RangeInput
-				min="1"
-				max="3"
-				step="1"
-				value={ value }
-				onChange={ ( evt ) => onChange( Number( evt.target.value ) ) }
-				thumbSize={ 24 }
-			/>
-			<Rectangle isLarge>
-				<RectangleIcon />
-			</Rectangle>
-		</RangeInputWrapper>
-	);
+function RangeControl({ value, onChange }) {
+  return (
+    <RangeInputWrapper>
+      <Rectangle>
+        <RectangleIcon />
+      </Rectangle>
+      <RangeInput
+        min="1"
+        max="3"
+        step="1"
+        value={value}
+        onChange={(evt) => onChange(Number(evt.target.value))}
+        thumbSize={24}
+      />
+      <Rectangle isLarge>
+        <RectangleIcon />
+      </Rectangle>
+    </RangeInputWrapper>
+  );
 }
 
 RangeControl.propTypes = {
-	value: PropTypes.number.isRequired,
-	onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 function GridView() {
-	const { state: { pages, currentPageIndex } } = useStory();
-	const [ zoomLevel, setZoomLevel ] = useState( 2 );
+  const {
+    state: { pages, currentPageIndex },
+  } = useStory();
+  const [zoomLevel, setZoomLevel] = useState(2);
 
-	return (
-		<>
-			<RangeControl
-				value={ zoomLevel }
-				onChange={ setZoomLevel }
-			/>
-			<Wrapper scale={ zoomLevel }>
-				{ pages.map( ( page, index ) => {
-					const isCurrentPage = index === currentPageIndex;
+  return (
+    <>
+      <RangeControl value={zoomLevel} onChange={setZoomLevel} />
+      <Wrapper scale={zoomLevel}>
+        {pages.map((page, index) => {
+          const isCurrentPage = index === currentPageIndex;
 
-					return (
-						<DraggablePage
-							key={ index }
-							ariaLabel={ isCurrentPage ?
-								sprintf( __( 'Page %s (current page)', 'web-stories' ), index + 1 ) :
-								sprintf( __( 'Page %s', 'web-stories' ), index + 1 )
-							}
-							isActive={ isCurrentPage }
-							pageIndex={ index }
-							width={ zoomLevel * PAGE_WIDTH }
-							height={ zoomLevel * PAGE_HEIGHT }
-							dragIndicatorOffset={ GRID_GAP / 2 }
-						/>
-					);
-				} ) }
-			</Wrapper>
-		</>
-	);
+          return (
+            <DraggablePage
+              key={index}
+              ariaLabel={
+                isCurrentPage
+                  ? sprintf(
+                      __('Page %s (current page)', 'web-stories'),
+                      index + 1
+                    )
+                  : sprintf(__('Page %s', 'web-stories'), index + 1)
+              }
+              isActive={isCurrentPage}
+              pageIndex={index}
+              width={zoomLevel * PAGE_WIDTH}
+              height={zoomLevel * PAGE_HEIGHT}
+              dragIndicatorOffset={GRID_GAP / 2}
+            />
+          );
+        })}
+      </Wrapper>
+    </>
+  );
 }
 
 export default GridView;

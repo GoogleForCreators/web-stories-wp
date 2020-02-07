@@ -25,24 +25,32 @@
  * @param {number} mediaRatio Media file ratio.
  * @return {Object} Media properties.
  */
-function getMediaProps( width, height, scale, focalX, focalY, mediaRatio ) {
-	const ratio = width / height;
-	scale = Math.max( scale || 100, 100 );
-	focalX = typeof focalX === 'number' ? focalX : 50;
-	focalY = typeof focalY === 'number' ? focalY : 50;
-	const mediaWidth = ( mediaRatio <= ratio ? width : height * mediaRatio ) * scale * 0.01;
-	const mediaHeight = ( mediaRatio <= ratio ? width / mediaRatio : height ) * scale * 0.01;
-	const offsetX = Math.max( 0, Math.min( ( mediaWidth * focalX * 0.01 ) - ( width * 0.5 ), mediaWidth - width ) );
-	const offsetY = Math.max( 0, Math.min( ( mediaHeight * focalY * 0.01 ) - ( height * 0.5 ), mediaHeight - height ) );
-	return {
-		width: mediaWidth,
-		height: mediaHeight,
-		offsetX,
-		offsetY,
-		scale,
-		focalX,
-		focalY,
-	};
+function getMediaProps(width, height, scale, focalX, focalY, mediaRatio) {
+  const ratio = width / height;
+  scale = Math.max(scale || 100, 100);
+  focalX = typeof focalX === 'number' ? focalX : 50;
+  focalY = typeof focalY === 'number' ? focalY : 50;
+  const mediaWidth =
+    (mediaRatio <= ratio ? width : height * mediaRatio) * scale * 0.01;
+  const mediaHeight =
+    (mediaRatio <= ratio ? width / mediaRatio : height) * scale * 0.01;
+  const offsetX = Math.max(
+    0,
+    Math.min(mediaWidth * focalX * 0.01 - width * 0.5, mediaWidth - width)
+  );
+  const offsetY = Math.max(
+    0,
+    Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
+  );
+  return {
+    width: mediaWidth,
+    height: mediaHeight,
+    offsetX,
+    offsetY,
+    scale,
+    focalX,
+    focalY,
+  };
 }
 
 export default getMediaProps;

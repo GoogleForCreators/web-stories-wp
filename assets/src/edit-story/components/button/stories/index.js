@@ -25,107 +25,69 @@ import { text, boolean } from '@storybook/addon-knobs';
 import { Primary, Secondary, Outline, Undo, Redo, GridView } from '../';
 
 export default {
-	title: 'Components/Button',
-	component: Primary,
+  title: 'Components/Button',
+  component: Primary,
 };
 
 export const _default = () => {
-	const label = text( 'Label', 'Primary Button' );
-	const isDisabled = boolean( 'Disabled', false );
+  const label = text('Label', 'Primary Button');
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<Primary
-			isDisabled={ isDisabled }
-		>
-			{ label }
-		</Primary>
-	);
+  return <Primary isDisabled={isDisabled}>{label}</Primary>;
 };
 
 export const secondary = () => {
-	const label = text( 'Label', 'Secondary Button' );
-	const isDisabled = boolean( 'Disabled', false );
+  const label = text('Label', 'Secondary Button');
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<Secondary
-			isDisabled={ isDisabled }
-		>
-			{ label }
-		</Secondary>
-	);
+  return <Secondary isDisabled={isDisabled}>{label}</Secondary>;
 };
 
 export const outline = () => {
-	const label = text( 'Label', 'Outline Button' );
-	const isDisabled = boolean( 'Disabled', false );
+  const label = text('Label', 'Outline Button');
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<Outline
-			isDisabled={ isDisabled }
-		>
-			{ label }
-		</Outline>
-	);
+  return <Outline isDisabled={isDisabled}>{label}</Outline>;
 };
 
 outline.story = {
-	parameters: {
-		backgrounds: [
-			{ name: 'dark', value: '#000', default: true },
-		],
-	},
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };
 
 export const undo = () => {
-	const isDisabled = boolean( 'Disabled', false );
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<Undo
-			isDisabled={ isDisabled }
-		/>
-	);
+  return <Undo isDisabled={isDisabled} />;
 };
 
 undo.story = {
-	parameters: {
-		backgrounds: [
-			{ name: 'dark', value: '#000', default: true },
-		],
-	},
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };
 
 export const redo = () => {
-	const isDisabled = boolean( 'Disabled', false );
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<Redo
-			isDisabled={ isDisabled }
-		/>
-	);
+  return <Redo isDisabled={isDisabled} />;
 };
 
 redo.story = {
-	parameters: {
-		backgrounds: [
-			{ name: 'dark', value: '#000', default: true },
-		],
-	},
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };
 
 export const gridView = () => {
-	const isDisabled = boolean( 'Disabled', false );
+  const isDisabled = boolean('Disabled', false);
 
-	return (
-		<GridView
-			isDisabled={ isDisabled }
-		/>
-	);
+  return <GridView isDisabled={isDisabled} />;
 };
 
 gridView.story = {
-	parameters: {
-		backgrounds: [
-			{ name: 'dark', value: '#000', default: true },
-		],
-	},
+  parameters: {
+    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+  },
 };

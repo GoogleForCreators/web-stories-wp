@@ -25,7 +25,7 @@ import { useContext } from '@wordpress/element';
 import Context from './context';
 
 function useConfig() {
-	return useContext( Context );
+  return useContext(Context);
 }
 
 export default useConfig;

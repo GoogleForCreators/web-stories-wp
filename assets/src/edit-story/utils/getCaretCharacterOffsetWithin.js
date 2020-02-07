@@ -36,41 +36,41 @@
  * @param {number} clientY  Optional y coordinate of click.
  * @return {number} Current selection start offset as seen in `element` or 0 if not found.
  */
-function getCaretCharacterOffsetWithin( element, clientX, clientY ) {
-	const doc = element.ownerDocument || element.document;
-	const win = doc.defaultView || doc.parentWindow;
-	let sel;
-	if ( typeof win.getSelection !== 'undefined' ) {
-		sel = win.getSelection();
-		if ( sel.rangeCount > 0 ) {
-			let range = win.getSelection().getRangeAt( 0 );
-			if ( clientX && clientY ) {
-				if ( doc.caretPositionFromPoint ) {
-					range = document.caretPositionFromPoint( clientX, clientY );
-				} else if ( doc.caretRangeFromPoint ) {
-					range = document.caretRangeFromPoint( clientX, clientY );
-				}
-			}
-			const preCaretRange = range.cloneRange();
-			preCaretRange.selectNodeContents( element );
-			preCaretRange.setEnd( range.endContainer, range.endOffset );
-			return preCaretRange.toString().length;
-		}
-	}
+function getCaretCharacterOffsetWithin(element, clientX, clientY) {
+  const doc = element.ownerDocument || element.document;
+  const win = doc.defaultView || doc.parentWindow;
+  let sel;
+  if (typeof win.getSelection !== 'undefined') {
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      let range = win.getSelection().getRangeAt(0);
+      if (clientX && clientY) {
+        if (doc.caretPositionFromPoint) {
+          range = document.caretPositionFromPoint(clientX, clientY);
+        } else if (doc.caretRangeFromPoint) {
+          range = document.caretRangeFromPoint(clientX, clientY);
+        }
+      }
+      const preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      return preCaretRange.toString().length;
+    }
+  }
 
-	sel = doc.selection;
-	if ( sel && sel.type !== 'Control' ) {
-		const textRange = sel.createRange();
-		if ( clientX && clientY ) {
-			textRange.moveToPoint( clientX, clientY );
-		}
-		const preCaretTextRange = doc.body.createTextRange();
-		preCaretTextRange.moveToElementText( element );
-		preCaretTextRange.setEndPoint( 'EndToEnd', textRange );
-		return preCaretTextRange.text.length;
-	}
+  sel = doc.selection;
+  if (sel && sel.type !== 'Control') {
+    const textRange = sel.createRange();
+    if (clientX && clientY) {
+      textRange.moveToPoint(clientX, clientY);
+    }
+    const preCaretTextRange = doc.body.createTextRange();
+    preCaretTextRange.moveToElementText(element);
+    preCaretTextRange.setEndPoint('EndToEnd', textRange);
+    return preCaretTextRange.text.length;
+  }
 
-	return 0;
+  return 0;
 }
 
 export default getCaretCharacterOffsetWithin;
