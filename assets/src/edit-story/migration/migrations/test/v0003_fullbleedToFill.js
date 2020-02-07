@@ -19,50 +19,52 @@
  */
 import fullbleedToFill from '../v0003_fullbleedToFill';
 
-describe( 'fullbleedToFill', () => {
-	it( 'should fullbleed to fill', () => {
-		expect( fullbleedToFill( {
-			_test: 'story',
-			pages: [
-				{
-					_test: 'page1',
-					elements: [
-						{
-							_test: 'element1',
-							isFullbleed: true,
-						},
-						{
-							_test: 'element2',
-							isFullbleed: false,
-						},
-					],
-				},
-				{
-					_test: 'page2',
-					elements: [],
-				},
-			],
-		} ) ).toStrictEqual( {
-			_test: 'story',
-			pages: [
-				{
-					_test: 'page1',
-					elements: [
-						{
-							_test: 'element1',
-							isFill: true,
-						},
-						{
-							_test: 'element2',
-							isFill: false,
-						},
-					],
-				},
-				{
-					_test: 'page2',
-					elements: [],
-				},
-			],
-		} );
-	} );
-} );
+describe('fullbleedToFill', () => {
+  it('should fullbleed to fill', () => {
+    expect(
+      fullbleedToFill({
+        _test: 'story',
+        pages: [
+          {
+            _test: 'page1',
+            elements: [
+              {
+                _test: 'element1',
+                isFullbleed: true,
+              },
+              {
+                _test: 'element2',
+                isFullbleed: false,
+              },
+            ],
+          },
+          {
+            _test: 'page2',
+            elements: [],
+          },
+        ],
+      })
+    ).toStrictEqual({
+      _test: 'story',
+      pages: [
+        {
+          _test: 'page1',
+          elements: [
+            {
+              _test: 'element1',
+              isFill: true,
+            },
+            {
+              _test: 'element2',
+              isFill: false,
+            },
+          ],
+        },
+        {
+          _test: 'page2',
+          elements: [],
+        },
+      ],
+    });
+  });
+});

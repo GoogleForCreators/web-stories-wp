@@ -28,116 +28,129 @@ import { useCallback, useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import { DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
+import {
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../constants';
 import { TransformProvider } from '../transform';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
 import Context from './context';
 
-function CanvasProvider( { children } ) {
-	const [ lastSelectionEvent, setLastSelectionEvent ] = useState( null );
+function CanvasProvider({ children }) {
+  const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
 
-	const [ pageSize, setPageSize ] = useState( {
-		width: DEFAULT_EDITOR_PAGE_WIDTH,
-		height: DEFAULT_EDITOR_PAGE_HEIGHT,
-	} );
-	const [ pageContainer, setPageContainer ] = useState( null );
+  const [pageSize, setPageSize] = useState({
+    width: DEFAULT_EDITOR_PAGE_WIDTH,
+    height: DEFAULT_EDITOR_PAGE_HEIGHT,
+  });
+  const [pageContainer, setPageContainer] = useState(null);
 
-	const {
-		nodesById,
-		editingElement,
-		editingElementState,
-		setEditingElementWithState,
-		setEditingElementWithoutState,
-		clearEditing,
-		setNodeForElement,
-	} = useEditingElement();
+  const {
+    nodesById,
+    editingElement,
+    editingElementState,
+    setEditingElementWithState,
+    setEditingElementWithoutState,
+    clearEditing,
+    setNodeForElement,
+  } = useEditingElement();
 
-	const {
-		state: { currentPage, selectedElementIds },
-		actions: { toggleElementInSelection, setSelectedElementsById },
-	} = useStory();
+  const {
+    state: { currentPage, selectedElementIds },
+    actions: { toggleElementInSelection, setSelectedElementsById },
+  } = useStory();
 
-	const handleSelectElement = useCallback( ( elId, evt ) => {
-		if ( editingElement && editingElement !== elId ) {
-			clearEditing();
-		}
+  const handleSelectElement = useCallback(
+    (elId, evt) => {
+      if (editingElement && editingElement !== elId) {
+        clearEditing();
+      }
 
-		if ( evt.metaKey ) {
-			toggleElementInSelection( { elementId: elId } );
-		} else {
-			setSelectedElementsById( { elementIds: [ elId ] } );
-		}
-		evt.stopPropagation();
+      if (evt.metaKey) {
+        toggleElementInSelection({ elementId: elId });
+      } else {
+        setSelectedElementsById({ elementIds: [elId] });
+      }
+      evt.stopPropagation();
 
-		if ( 'mousedown' === evt.type ) {
-			evt.persist();
-			setLastSelectionEvent( evt );
-		}
-	}, [ editingElement, clearEditing, toggleElementInSelection, setSelectedElementsById ] );
+      if ('mousedown' === evt.type) {
+        evt.persist();
+        setLastSelectionEvent(evt);
+      }
+    },
+    [
+      editingElement,
+      clearEditing,
+      toggleElementInSelection,
+      setSelectedElementsById,
+    ]
+  );
 
-	const selectIntersection = useCallback( ( { x: lx, y: ly, width: lw, height: lh } ) => {
-		const newSelectedElementIds =
-			currentPage.elements.filter( ( { x, y, width, height } ) => {
-				return (
-					x <= lx + lw &&
-					lx <= x + width &&
-					y <= ly + lh &&
-					ly <= y + height
-				);
-			} ).map( ( { id } ) => id );
-		setSelectedElementsById( { elementIds: newSelectedElementIds } );
-	}, [ currentPage, setSelectedElementsById ] );
+  const selectIntersection = useCallback(
+    ({ x: lx, y: ly, width: lw, height: lh }) => {
+      const newSelectedElementIds = currentPage.elements
+        .filter(({ x, y, width, height }) => {
+          return (
+            x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
+          );
+        })
+        .map(({ id }) => id);
+      setSelectedElementsById({ elementIds: newSelectedElementIds });
+    },
+    [currentPage, setSelectedElementsById]
+  );
 
-	// Reset editing mode when selection changes.
-	useEffect( () => {
-		if ( editingElement &&
-        ( selectedElementIds.length !== 1 || selectedElementIds[ 0 ] !== editingElement ) ) {
-			clearEditing();
-		}
-	}, [ editingElement, selectedElementIds, clearEditing ] );
+  // Reset editing mode when selection changes.
+  useEffect(() => {
+    if (
+      editingElement &&
+      (selectedElementIds.length !== 1 ||
+        selectedElementIds[0] !== editingElement)
+    ) {
+      clearEditing();
+    }
+  }, [editingElement, selectedElementIds, clearEditing]);
 
-	useCanvasSelectionCopyPaste( pageContainer );
+  useCanvasSelectionCopyPaste(pageContainer);
 
-	const state = {
-		state: {
-			pageContainer,
-			nodesById,
-			editingElement,
-			editingElementState,
-			isEditing: Boolean( editingElement ),
-			lastSelectionEvent,
-			pageSize,
-		},
-		actions: {
-			setPageContainer,
-			setNodeForElement,
-			setEditingElement: setEditingElementWithoutState,
-			setEditingElementWithState,
-			clearEditing,
-			handleSelectElement,
-			selectIntersection,
-			setPageSize,
-		},
-	};
+  const state = {
+    state: {
+      pageContainer,
+      nodesById,
+      editingElement,
+      editingElementState,
+      isEditing: Boolean(editingElement),
+      lastSelectionEvent,
+      pageSize,
+    },
+    actions: {
+      setPageContainer,
+      setNodeForElement,
+      setEditingElement: setEditingElementWithoutState,
+      setEditingElementWithState,
+      clearEditing,
+      handleSelectElement,
+      selectIntersection,
+      setPageSize,
+    },
+  };
 
-	return (
-		<Context.Provider value={ state }>
-			<UnitsProvider pageSize={ pageSize }>
-				<TransformProvider>
-					{ children }
-				</TransformProvider>
-			</UnitsProvider>
-		</Context.Provider>
-	);
+  return (
+    <Context.Provider value={state}>
+      <UnitsProvider pageSize={pageSize}>
+        <TransformProvider>{children}</TransformProvider>
+      </UnitsProvider>
+    </Context.Provider>
+  );
 }
 
 CanvasProvider.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default CanvasProvider;

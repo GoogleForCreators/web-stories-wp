@@ -30,72 +30,69 @@ import { useEffect } from '@wordpress/element';
 import { useFont } from '../../app';
 import { useUnits } from '../../units';
 import {
-	elementFillContent,
-	elementWithFont,
-	elementWithBackgroundColor,
-	elementWithFontColor,
-	elementWithStyle,
+  elementFillContent,
+  elementWithFont,
+  elementWithBackgroundColor,
+  elementWithFontColor,
+  elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
-	${ elementFillContent }
-	${ elementWithFont }
-	${ elementWithBackgroundColor }
-	${ elementWithFontColor }
-	${ elementWithStyle }
+	${elementFillContent}
+	${elementWithFont}
+	${elementWithBackgroundColor}
+	${elementWithFontColor}
+	${elementWithStyle}
 `;
 
-function TextDisplay( {
-	element: {
-		content,
-		color,
-		backgroundColor,
-		fontFamily,
-		fontFallback,
-		fontSize,
-		fontWeight,
-		fontStyle,
-		letterSpacing,
-		lineHeight,
-		padding,
-		textAlign,
-	},
-} ) {
-	const { actions: { dataToEditorY } } = useUnits();
-	const props = {
-		color,
-		backgroundColor,
-		fontFamily: generateFontFamily( fontFamily, fontFallback ),
-		fontFallback,
-		fontStyle,
-		fontSize: dataToEditorY( fontSize ),
-		fontWeight,
-		letterSpacing,
-		lineHeight,
-		padding,
-		textAlign,
-	};
-	const {
-		actions: { maybeEnqueueFontStyle },
-	} = useFont();
+function TextDisplay({
+  element: {
+    content,
+    color,
+    backgroundColor,
+    fontFamily,
+    fontFallback,
+    fontSize,
+    fontWeight,
+    fontStyle,
+    letterSpacing,
+    lineHeight,
+    padding,
+    textAlign,
+  },
+}) {
+  const {
+    actions: { dataToEditorY },
+  } = useUnits();
+  const props = {
+    color,
+    backgroundColor,
+    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    fontFallback,
+    fontStyle,
+    fontSize: dataToEditorY(fontSize),
+    fontWeight,
+    letterSpacing,
+    lineHeight,
+    padding,
+    textAlign,
+  };
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
 
-	useEffect( () => {
-		maybeEnqueueFontStyle( fontFamily );
-	}, [ fontFamily, maybeEnqueueFontStyle ] );
+  useEffect(() => {
+    maybeEnqueueFontStyle(fontFamily);
+  }, [fontFamily, maybeEnqueueFontStyle]);
 
-	return (
-		<Element
-			dangerouslySetInnerHTML={ { __html: content } }
-			{ ...props }
-		/>
-	);
+  return <Element dangerouslySetInnerHTML={{ __html: content }} {...props} />;
 }
 
 TextDisplay.propTypes = {
-	element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.elements.text.isRequired,
 };
 
 export default TextDisplay;

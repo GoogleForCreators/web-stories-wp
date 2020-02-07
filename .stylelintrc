@@ -1,29 +1,46 @@
 {
+  "plugins": ["stylelint-prettier"],
   "extends": [
     "stylelint-config-wordpress",
     "stylelint-config-recommended",
     "stylelint-config-styled-components"
   ],
   "rules": {
+    "declaration-colon-space-after": null,
+    "declaration-colon-newline-after": null,
     "font-family-name-quotes": null,
-	"font-family-no-missing-generic-family-keyword": null,
+    "font-family-no-missing-generic-family-keyword": null,
     "font-weight-notation": null,
-	"function-calc-no-invalid": null,
-	"function-name-case": null,
+    "function-calc-no-invalid": null,
+    "function-name-case": null,
     "function-parentheses-space-inside": null,
     "function-url-quotes": null,
     "function-whitespace-after": null,
-    "indentation": "tab",
+    "indentation": null,
     "length-zero-no-unit": true,
     "max-line-length": null,
     "max-empty-lines": null,
     "no-descending-specificity": null,
     "no-duplicate-selectors": null,
+    "no-eol-whitespace": null,
     "number-leading-zero": null,
-	"selector-class-pattern": null,
+    "prettier/prettier": true,
+    "selector-class-pattern": null,
     "selector-max-empty-lines": null,
-    "selector-type-no-unknown": [ true, { "ignore": ["custom-elements"] } ],
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignore": ["custom-elements"]
+      }
+    ],
     "string-quotes": null,
-    "value-keyword-case": null
+    "unit-no-unknown": [
+      true,
+      {
+        "ignoreUnits": ["/^`/", "/`$/"]
+      }
+    ],
+    "value-keyword-case": null,
+    "value-list-comma-newline-after": null
   }
 }
