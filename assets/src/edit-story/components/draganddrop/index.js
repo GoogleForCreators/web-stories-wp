@@ -12,15 +12,22 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useUploader } from '../../app/uploader';
+import UploadIcon from './icons/upload.svg';
 
 const DragandDropComponent = styled.div`
 	min-width: 100%;
 	min-height: 100%;
 `;
-const DragandDropOverContent = styled.div`
-	${ ( { active } ) => active && `
-		opacity: .3;
-	` }
+const DragandDropOverContent = styled.div``;
+
+const DragandDropOverLayWrapper = styled.div`
+	width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 999;
 `;
 const Heading = styled.h4`
 	color: ${ ( { theme } ) => theme.colors.fg.v1 };
@@ -46,38 +53,37 @@ function DragandDrop( { children } ) {
 		evt.stopPropagation();
 	}
 
-	const onDragLeave = ( evt ) => {
-		setIsDragging( false );
-		disableDefaults( evt );
-	};
-
 	const onDragEnter = ( evt ) => {
-		setIsDragging( true );
 		disableDefaults( evt );
+		setIsDragging( true );
 	};
 
 	const onDropHandler = ( evt ) => {
+		disableDefaults( evt );
 		const dt = evt.dataTransfer;
 		let files = dt.files;
 		files = [ ...files ];
 		files.forEach( uploadFile );
 		setIsDragging( false );
-		disableDefaults( evt );
+
 	};
 
 	return (
-		<DragandDropComponent onDragOver={ onDragEnter } onDragLeave={ onDragLeave } onDragEnter={ onDragEnter } onDrop={ onDropHandler }>
+		<DragandDropComponent onDragStart={ disableDefaults } onDragOver={ disableDefaults } onDragLeave={ disableDefaults } onDragEnter={ onDragEnter } onDrop={ onDropHandler }>
 			{ isDragging && (
-				<DragandDropOverLay>
-					<Heading>
-						{ __( 'Upload to media library', 'web-stories' ) }
-					</Heading>
-					<Text>
-						{ __( 'You can upload jpg, jpeg, png, svg, gif and webp.', 'web-stories' ) }
-					</Text>
-				</DragandDropOverLay>
+				<DragandDropOverLayWrapper>
+					<DragandDropOverLay>
+						<UploadIcon />
+						<Heading>
+							{ __( 'Upload to media library', 'web-stories' ) }
+						</Heading>
+						<Text>
+							{ __( 'You can upload jpg, jpeg, png, svg, gif and webp.', 'web-stories' ) }
+						</Text>
+					</DragandDropOverLay>
+				</DragandDropOverLayWrapper>
 			) }
-			<DragandDropOverContent active={ isDragging }>
+			<DragandDropOverContent>
 				{ children }
 			</DragandDropOverContent>
 		</DragandDropComponent>
