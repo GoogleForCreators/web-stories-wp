@@ -24,7 +24,7 @@ import styled, { css } from 'styled-components';
  * WordPress dependencies
  */
 import { Spinner, Dashicon } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { useCallback, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -168,26 +168,30 @@ function MediaLibrary({ onInsert }) {
    *
    * @param {Object} evt Doc Event
    */
-  const onSearch = (evt) => {
-    setSearchTerm(evt.target.value);
-    reloadMedia();
-  };
+  const onSearch = useCallback(
+    (evt) => {
+      setSearchTerm(evt.target.value);
+      reloadMedia();
+    },
+    [reloadMedia, setSearchTerm]
+  );
 
   /**
    * Filter REST API calls and re-request API.
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = (filter) => {
-    if (filter !== mediaType) {
-      setMediaType(filter);
-      reloadMedia();
-    }
-  };
+  const onFilter = useCallback(
+    (filter) => {
+      if (filter !== mediaType) {
+        setMediaType(filter);
+        reloadMedia();
+      }
+    },
+    [mediaType, reloadMedia, setMediaType]
+  );
 
-  const onClose = () => {
-    resetMedia();
-  };
+  const onClose = useCallback(resetMedia, [resetMedia]);
 
   /**
    * Callback of select in media picker to insert media element.
@@ -276,7 +280,6 @@ function MediaLibrary({ onInsert }) {
         />
       );
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      /* eslint-disable react/jsx-closing-tag-location */
       return (
         <Video
           key={src}
@@ -294,7 +297,6 @@ function MediaLibrary({ onInsert }) {
           <source src={src} type={mimeType} />
         </Video>
       );
-      /* eslint-enable react/jsx-closing-tag-location */
     }
     return null;
   };
