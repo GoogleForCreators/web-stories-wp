@@ -20,14 +20,10 @@
 import UploadButton from '../';
 
 export default {
-	title: 'Components/UploadButton',
-	component: UploadButton,
+  title: 'Components/UploadButton',
+  component: UploadButton,
 };
 
 export const _default = () => {
-	return (
-		<UploadButton
-			onSelect={ null }
-		/>
-	);
+  return <UploadButton onSelect={null} />;
 };

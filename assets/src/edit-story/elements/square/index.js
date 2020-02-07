@@ -22,7 +22,7 @@ export { default as Display } from './display';
 export { default as Output } from './output';
 
 export const defaultAttributes = {
-	backgroundColor: '#ffffff',
+  backgroundColor: '#ffffff',
 };
 
 export const hasEditMode = false;
@@ -30,9 +30,9 @@ export const hasEditMode = false;
 export const isMedia = false;
 
 export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
+  PanelTypes.BACKGROUND_COLOR,
+  PanelTypes.ROTATION_ANGLE,
+  PanelTypes.FILL,
 ];

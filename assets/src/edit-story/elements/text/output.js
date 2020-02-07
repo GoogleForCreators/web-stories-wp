@@ -24,42 +24,46 @@ import { generateFontFamily } from './util';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function TextOutput( {
-	element: {
-		content,
-		color,
-		backgroundColor,
-		fontFamily,
-		fontFallback,
-		fontSize,
-		fontWeight,
-		fontStyle,
-		letterSpacing,
-		lineHeight,
-		padding,
-		textAlign,
-	},
-} ) {
-	const style = {
-		fontSize: `${ dataToEditorY( fontSize, 100 ) }%`,
-		fontStyle: fontStyle ? fontStyle : null,
-		fontFamily: generateFontFamily( fontFamily, fontFallback ),
-		fontWeight: fontWeight ? fontWeight : null,
-		background: backgroundColor,
-		color,
-		lineHeight,
-		letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
-		padding: padding ? padding + '%' : null,
-		textAlign: textAlign ? textAlign : null,
-	};
+function TextOutput({
+  element: {
+    content,
+    color,
+    backgroundColor,
+    fontFamily,
+    fontFallback,
+    fontSize,
+    fontWeight,
+    fontStyle,
+    letterSpacing,
+    lineHeight,
+    padding,
+    textAlign,
+  },
+}) {
+  const style = {
+    fontSize: `${dataToEditorY(fontSize, 100)}%`,
+    fontStyle: fontStyle ? fontStyle : null,
+    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    fontWeight: fontWeight ? fontWeight : null,
+    background: backgroundColor,
+    color,
+    lineHeight,
+    letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
+    padding: padding ? padding + '%' : null,
+    textAlign: textAlign ? textAlign : null,
+  };
 
-	return (
-		<p className="fill" style={ style } dangerouslySetInnerHTML={ { __html: content } } />
-	);
+  return (
+    <p
+      className="fill"
+      style={style}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  );
 }
 
 TextOutput.propTypes = {
-	element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.elements.text.isRequired,
 };
 
 export default TextOutput;

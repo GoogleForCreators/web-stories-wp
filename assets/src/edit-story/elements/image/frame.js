@@ -33,23 +33,24 @@ import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
-	${ elementFillContent }
+  ${elementFillContent}
 `;
 
-function ImageFrame( { element: { id } } ) {
-	const {
-		actions: { setEditingElement },
-	} = useCanvas();
-	const handleSingleClick = useCallback( () => {}, [] );
-	const handleDoubleClick = useCallback( () => setEditingElement( id ), [ id, setEditingElement ] );
-	const getHandleClick = useDoubleClick( handleSingleClick, handleDoubleClick );
-	return (
-		<Element onClick={ getHandleClick( id ) } />
-	);
+function ImageFrame({ element: { id } }) {
+  const {
+    actions: { setEditingElement },
+  } = useCanvas();
+  const handleSingleClick = useCallback(() => {}, []);
+  const handleDoubleClick = useCallback(() => setEditingElement(id), [
+    id,
+    setEditingElement,
+  ]);
+  const getHandleClick = useDoubleClick(handleSingleClick, handleDoubleClick);
+  return <Element onClick={getHandleClick(id)} />;
 }
 
 ImageFrame.propTypes = {
-	element: StoryPropTypes.elements.image.isRequired,
+  element: StoryPropTypes.elements.image.isRequired,
 };
 
 export default ImageFrame;

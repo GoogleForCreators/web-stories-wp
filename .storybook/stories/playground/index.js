@@ -20,24 +20,20 @@
 import App from '../../../assets/src/edit-story/app';
 
 export default {
-	title: 'Playground|Stories Editor',
+  title: 'Playground|Stories Editor',
 };
 
 // @todo: Find better way to mock these.
 const config = {
-	allowedVideoMimeTypes: [ 'video/mp4' ],
-	storyId: 1234,
-	api: {
-		stories: '',
-		media: '',
-		fonts: '',
-	},
+  allowedVideoMimeTypes: ['video/mp4'],
+  storyId: 1234,
+  api: {
+    stories: '',
+    media: '',
+    fonts: '',
+  },
 };
 
 export const _default = () => {
-	return (
-		<App
-			config={ config }
-		/>
-	);
+  return <App config={config} />;
 };
