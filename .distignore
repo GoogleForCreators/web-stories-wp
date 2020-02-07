@@ -16,6 +16,8 @@ tests
 .gitignore
 .npmrc
 .nvmrc
+.prettierignore
+.prettierrc
 .stylelintignore
 .stylelintrc
 .travis.yml

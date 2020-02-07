@@ -31,42 +31,44 @@ import { useContext } from '@wordpress/element';
 import panelContext from './context';
 
 const Form = styled.form`
-	margin: 10px 20px;
-	overflow: auto;
+  margin: 10px 20px;
+  overflow: auto;
 
-	${ ( { hidden } ) => hidden && 'display: none' }
+  ${({ hidden }) => hidden && 'display: none'}
 `;
 
-function Content( { children, onSubmit, ...rest } ) {
-	const { state: { isCollapsed, height, panelContentId } } = useContext( panelContext );
+function Content({ children, onSubmit, ...rest }) {
+  const {
+    state: { isCollapsed, height, panelContentId },
+  } = useContext(panelContext);
 
-	const formStyle = {
-		height: height === null ? 'auto' : `${ height }px`,
-	};
+  const formStyle = {
+    height: height === null ? 'auto' : `${height}px`,
+  };
 
-	return (
-		<Form
-			style={ formStyle }
-			onSubmit={ onSubmit }
-			{ ...rest }
-			id={ panelContentId }
-			hidden={ isCollapsed }
-		>
-			{ children }
-		</Form>
-	);
+  return (
+    <Form
+      style={formStyle}
+      onSubmit={onSubmit}
+      {...rest}
+      id={panelContentId}
+      hidden={isCollapsed}
+    >
+      {children}
+    </Form>
+  );
 }
 
 Content.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
-	onSubmit: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onSubmit: PropTypes.func,
 };
 
 Content.defaultProps = {
-	onSubmit: ( evt ) => evt.preventDefault(),
+  onSubmit: (evt) => evt.preventDefault(),
 };
 
 export default Content;

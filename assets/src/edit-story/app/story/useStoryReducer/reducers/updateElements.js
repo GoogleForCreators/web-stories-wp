@@ -41,55 +41,60 @@ import { intersect, objectWithout } from './utils';
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateElements( state, { elementIds, properties: propertiesOrUpdater } ) {
-	const idsToUpdate = elementIds === null ? state.selection : elementIds;
+function updateElements(
+  state,
+  { elementIds, properties: propertiesOrUpdater }
+) {
+  const idsToUpdate = elementIds === null ? state.selection : elementIds;
 
-	if ( idsToUpdate.length === 0 ) {
-		return state;
-	}
+  if (idsToUpdate.length === 0) {
+    return state;
+  }
 
-	const pageIndex = state.pages.findIndex( ( { id } ) => id === state.current );
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
-	const oldPage = state.pages[ pageIndex ];
-	const pageElementIds = oldPage.elements.map( ( { id } ) => id );
+  const oldPage = state.pages[pageIndex];
+  const pageElementIds = oldPage.elements.map(({ id }) => id);
 
-	// Nothing to update?
-	const hasAnythingToUpdate = intersect( pageElementIds, idsToUpdate ).length > 0;
-	if ( ! hasAnythingToUpdate ) {
-		return state;
-	}
+  // Nothing to update?
+  const hasAnythingToUpdate = intersect(pageElementIds, idsToUpdate).length > 0;
+  if (!hasAnythingToUpdate) {
+    return state;
+  }
 
-	const updatedElements = oldPage.elements.map(
-		( element ) => {
-			if ( ! idsToUpdate.includes( element.id ) ) {
-				return element;
-			}
-			const properties =
-				typeof propertiesOrUpdater === 'function' ?
-					propertiesOrUpdater( element ) :
-					propertiesOrUpdater;
-			const allowedProperties = objectWithout( properties, ELEMENT_RESERVED_PROPERTIES );
-			if ( Object.keys( allowedProperties ).length === 0 ) {
-				return element;
-			}
-			return { ...element, ...allowedProperties };
-		} );
+  const updatedElements = oldPage.elements.map((element) => {
+    if (!idsToUpdate.includes(element.id)) {
+      return element;
+    }
+    const properties =
+      typeof propertiesOrUpdater === 'function'
+        ? propertiesOrUpdater(element)
+        : propertiesOrUpdater;
+    const allowedProperties = objectWithout(
+      properties,
+      ELEMENT_RESERVED_PROPERTIES
+    );
+    if (Object.keys(allowedProperties).length === 0) {
+      return element;
+    }
+    return { ...element, ...allowedProperties };
+  });
 
-	const newPage = {
-		...oldPage,
-		elements: updatedElements,
-	};
+  const newPage = {
+    ...oldPage,
+    elements: updatedElements,
+  };
 
-	const newPages = [
-		...state.pages.slice( 0, pageIndex ),
-		newPage,
-		...state.pages.slice( pageIndex + 1 ),
-	];
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    newPage,
+    ...state.pages.slice(pageIndex + 1),
+  ];
 
-	return {
-		...state,
-		pages: newPages,
-	};
+  return {
+    ...state,
+    pages: newPages,
+  };
 }
 
 export default updateElements;
