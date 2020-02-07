@@ -36,8 +36,13 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
+import { WithElementMask } from '../../masks';
 import useCanvas from './useCanvas';
 
+// @todo: should the frame borders follow clip lines?
+
+// Pointer events are disabled in the display mode to ensure that selection
+// can be limited to the mask.
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
@@ -85,7 +90,9 @@ function FrameElement({ element }) {
         evt.stopPropagation();
       }}
     >
-      {Frame && <Frame element={element} box={box} />}
+      <WithElementMask element={element} fill={true}>
+        {Frame && <Frame element={element} box={box} />}
+      </WithElementMask>
     </Wrapper>
   );
 }

@@ -35,4 +35,5 @@ export const panels = [
   PanelTypes.BACKGROUND_COLOR,
   PanelTypes.ROTATION_ANGLE,
   PanelTypes.FILL,
+  PanelTypes.MASK,
 ];
