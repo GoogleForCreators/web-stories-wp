@@ -32,9 +32,9 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import UploadButton from '../uploadButton';
+import { useMediaPicker } from '../mediaPicker';
 import useLibrary from './useLibrary';
-import { Title, SearchInput, Header } from './common';
+import { MainButton, Title, SearchInput, Header } from './common';
 
 const Container = styled.div`
   display: grid;
@@ -81,17 +81,6 @@ const FilterButton = styled.button`
   text-transform: uppercase;
 `;
 
-const buttonStyles = css`
-  background: none;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  padding: 5px;
-  font-weight: bold;
-  flex: 1 0 0;
-  text-align: center;
-  border: 1px solid ${({ theme }) => theme.colors.mg.v1};
-  border-radius: 3px;
-`;
-
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
@@ -119,6 +108,13 @@ function MediaLibrary({ onInsert }) {
   } = useConfig();
 
   useEffect(loadMedia);
+
+  const openMediaPicker = useMediaPicker(
+    undefined /** title */,
+    undefined /** buttonInsertText */,
+    onSelect /** onSelect */,
+    onClose /** onClose */
+  );
 
   /**
    * Check if number is odd or even.
@@ -274,11 +270,9 @@ function MediaLibrary({ onInsert }) {
           {__('Media', 'web-stories')}
           {(!isMediaLoaded || isMediaLoading) && <Spinner />}
         </Title>
-        <UploadButton
-          onClose={onClose}
-          onSelect={onSelect}
-          buttonCSS={buttonStyles}
-        />
+        <MainButton onClick={openMediaPicker}>
+          {__('Upload', 'web-stories')}
+        </MainButton>
       </Header>
 
       <SearchInput

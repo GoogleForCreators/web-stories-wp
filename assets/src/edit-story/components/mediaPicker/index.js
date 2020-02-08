@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import UploadButton from '../';
-
-export default {
-  title: 'Components/UploadButton',
-  component: UploadButton,
-};
-
-export const _default = () => {
-  return <UploadButton onSelect={null} />;
-};
+export { default as useMediaPicker } from './useMediaPicker';
