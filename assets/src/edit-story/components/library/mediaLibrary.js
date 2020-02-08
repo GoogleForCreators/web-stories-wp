@@ -23,7 +23,7 @@ import styled, { css } from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { Spinner, Dashicon } from '@wordpress/components';
+import { Spinner } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -32,7 +32,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { useConfig } from '../../app/config';
 import UploadButton from '../uploadButton';
+import { alpha } from '../../theme';
 import useLibrary from './useLibrary';
+import { Title, SearchInput, Header } from './common';
 
 const Container = styled.div`
   display: grid;
@@ -56,26 +58,13 @@ const Video = styled.video`
   ${styledTiles}
 `;
 
-const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  margin: 0;
-  font-size: 19px;
-  line-height: 1.4;
-  flex: 3 0 0;
-`;
-
-const Header = styled.div`
-  display: flex;
-  margin: 0 0 25px;
-`;
-
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 19px;
+  font-size: 16px;
 `;
 
 const FilterButtons = styled.div`
-  border-bottom: 2px solid ${({ theme }) => theme.colors.mg.v1};
+  border-bottom: 1px solid ${({ theme }) => alpha(theme.colors.fg.v1, 0.1)};
   padding: 18px 0;
   margin: 10px 0 15px;
 `;
@@ -84,34 +73,12 @@ const FilterButton = styled.button`
   border: 0;
   background: none;
   padding: 0;
-  margin: 0 28px 0 0;
+  margin: 0 18px 0 0;
   color: ${({ theme, active }) =>
     active ? theme.colors.fg.v1 : theme.colors.mg.v1};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
   font-size: 13px;
-`;
-
-const SearchField = styled.div`
-  position: relative;
-`;
-
-const Search = styled.input.attrs({ type: 'text' })`
-  width: 100%;
-  background: ${({ theme }) => theme.colors.mg.v1} !important;
-  border-color: ${({ theme }) => theme.colors.mg.v1} !important;
-  color: ${({ theme }) => theme.colors.mg.v2} !important;
-  padding: 2px 10px 2px 33px !important;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.mg.v2};
-  }
-`;
-
-const Icon = styled(Dashicon)`
-  position: absolute;
-  top: 8px;
-  left: 10px;
-  fill: ${({ theme }) => theme.colors.mg.v2};
+  text-transform: uppercase;
 `;
 
 const buttonStyles = css`
@@ -314,14 +281,11 @@ function MediaLibrary({ onInsert }) {
         />
       </Header>
 
-      <SearchField>
-        <Icon icon="search" />
-        <Search
-          value={searchTerm}
-          placeholder={__('Search Media', 'web-stories')}
-          onChange={onSearch}
-        />
-      </SearchField>
+      <SearchInput
+        value={searchTerm}
+        placeholder={__('Search media...', 'web-stories')}
+        onChange={onSearch}
+      />
 
       <FilterButtons>
         {FILTERS.map(({ filter, name }, index) => (

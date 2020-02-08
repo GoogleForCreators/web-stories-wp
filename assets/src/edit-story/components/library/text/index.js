@@ -14,20 +14,4 @@
  * limitations under the License.
  */
 
-.edit-story #edit-story {
-  background-color: #191c28;
-}
-
-.edit-story .loading-message {
-  color: #fff;
-  text-align: center;
-}
-
-.edit-story #wpfooter {
-  display: none;
-}
-
-.edit-story #edit-story .components-spinner {
-  float: none;
-  margin: 0 11px;
-}
+export { default as FontPreview } from './fontPreview';

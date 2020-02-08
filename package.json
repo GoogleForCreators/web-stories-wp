@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@moxy/react-keyboard-only-outlines": "^1.0.1",
+    "color": "^3.1.2",
     "draft-js": "^0.11.4",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",

@@ -15,51 +15,92 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { Section, MainButton, Title, SearchInput, Header } from './common';
+import { FontPreview } from './text';
+
+const PRESETS = [
+  {
+    id: 'heading',
+    title: 'Heading',
+    fontSize: 28,
+    fontWeight: 800,
+    fontFamily: 'Ubuntu',
+  },
+  {
+    id: 'subheading',
+    title: 'Subheading',
+    fontSize: 18,
+    fontWeight: 500,
+    fontFamily: 'Ubuntu',
+  },
+  {
+    id: 'body-text',
+    title: 'Body Text',
+    fontSize: 12,
+    fontWeight: 'normal',
+    fontFamily: 'Ubuntu',
+  },
+];
+
 function MediaLibrary({ onInsert }) {
   return (
     <>
-      <button
-        onClick={() =>
-          onInsert('text', {
-            content: 'Hello',
-            color: 'black',
-            width: 50,
-            height: 20,
-            x: 5,
-            y: 5,
-            rotationAngle: 0,
-          })
-        }
-      >
-        {__('Insert default', 'web-stories')}
-      </button>
-      <br />
-      <button
-        onClick={() =>
-          onInsert('text', {
-            content: 'Hello <strong>World</strong>',
-            color: 'purple',
-            fontSize: 100,
-            fontFamily: 'Ubuntu',
-            fontWeight: 400,
-            width: 50,
-            height: 20,
-            x: 5,
-            y: 5,
-            rotationAngle: 0,
-          })
-        }
-      >
-        {__('Insert big purple ubuntu', 'web-stories')}
-      </button>
+      <Header>
+        <Title>{__('Text', 'web-stories')}</Title>
+        <MainButton
+          onClick={() =>
+            onInsert('text', {
+              content: 'Text',
+              color: 'black',
+              width: 50,
+              height: 20,
+              x: 5,
+              y: 5,
+              rotationAngle: 0,
+            })
+          }
+        >
+          {__('Add Text', 'web-stories')}
+        </MainButton>
+      </Header>
+      <SearchInput
+        value={''}
+        placeholder={__('Search text...', 'web-stories')}
+        onChange={() => {}}
+      />
+      <Section title={__('Presets', 'web-stories')}>
+        {PRESETS.map((preset) => (
+          <FontPreview
+            key={`preset-${preset.id}`}
+            {...preset}
+            onClick={() =>
+              onInsert('text', {
+                content: 'Text',
+                color: 'black',
+                width: 50,
+                height: 20,
+                x: 5,
+                y: 5,
+                rotationAngle: 0,
+                ...preset,
+              })
+            }
+          />
+        ))}
+      </Section>
+      <Section title={__('Text sets', 'web-stories')} />
     </>
   );
 }

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
+import Color from 'color';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -26,6 +27,12 @@ export const GlobalStyle = createGlobalStyle`
 		box-sizing: border-box;
 	}
 `;
+
+export const alpha = (color, a = 1) =>
+  Color(color)
+    .alpha(a)
+    .rgb()
+    .string();
 
 const theme = {
   colors: {
