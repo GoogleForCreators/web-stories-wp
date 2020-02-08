@@ -19,38 +19,31 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
 import { Dashicon } from '@wordpress/components';
 
-/**
- * Internal dependencies
- */
-import { alpha } from '../../../theme';
-
-/**
- * Search Input
- */
-
 const Icon = styled(Dashicon)`
   position: absolute;
-  top: 8px;
-  left: 10px;
   fill: ${({ theme }) => theme.colors.mg.v2};
+  left: 10px;
 `;
 
 const SearchField = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const Search = styled.input.attrs({ type: 'text' })`
   width: 100%;
-  background: ${({ theme }) => alpha(theme.colors.fg.v1, 0.1)} !important;
-  border-color: ${({ theme }) => theme.colors.mg.v1} !important;
+  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)} !important;
+  border: none !important;
   color: ${({ theme }) => theme.colors.mg.v2} !important;
-  padding: 2px 10px 2px 33px !important;
+  padding: 4px 12px 4px 36px !important;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.mg.v2};

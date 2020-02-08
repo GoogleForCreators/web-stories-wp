@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -32,7 +33,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { useConfig } from '../../app/config';
 import UploadButton from '../uploadButton';
-import { alpha } from '../../theme';
 import useLibrary from './useLibrary';
 import { Title, SearchInput, Header } from './common';
 
@@ -64,7 +64,7 @@ const Message = styled.div`
 `;
 
 const FilterButtons = styled.div`
-  border-bottom: 1px solid ${({ theme }) => alpha(theme.colors.fg.v1, 0.1)};
+  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   padding: 18px 0;
   margin: 10px 0 15px;
 `;

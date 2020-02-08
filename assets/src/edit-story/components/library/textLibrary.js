@@ -33,28 +33,28 @@ import { FontPreview } from './text';
 const PRESETS = [
   {
     id: 'heading',
-    title: 'Heading',
-    fontSize: 28,
+    title: __('Heading', 'web-stories'),
+    fontSize: 48,
     fontWeight: 800,
     fontFamily: 'Ubuntu',
   },
   {
     id: 'subheading',
-    title: 'Subheading',
-    fontSize: 18,
+    title: __('Subheading', 'web-stories'),
+    fontSize: 32,
     fontWeight: 500,
     fontFamily: 'Ubuntu',
   },
   {
     id: 'body-text',
-    title: 'Body Text',
-    fontSize: 12,
+    title: __('Body text', 'web-stories'),
+    fontSize: 16,
     fontWeight: 'normal',
     fontFamily: 'Ubuntu',
   },
 ];
 
-function MediaLibrary({ onInsert }) {
+function TextLibrary({ onInsert }) {
   return (
     <>
       <Header>
@@ -87,7 +87,7 @@ function MediaLibrary({ onInsert }) {
             {...preset}
             onClick={() =>
               onInsert('text', {
-                content: 'Text',
+                content: __('Text', 'web-stories'),
                 color: 'black',
                 width: 50,
                 height: 20,
@@ -100,13 +100,13 @@ function MediaLibrary({ onInsert }) {
           />
         ))}
       </Section>
-      <Section title={__('Text sets', 'web-stories')} />
+      <Section title={__('Text Sets', 'web-stories')} />
     </>
   );
 }
 
-MediaLibrary.propTypes = {
+TextLibrary.propTypes = {
   onInsert: PropTypes.func.isRequired,
 };
 
-export default MediaLibrary;
+export default TextLibrary;

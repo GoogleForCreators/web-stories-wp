@@ -19,15 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { alpha } from '../../../theme';
+import { useFont } from '../../../app';
 
 const Preview = styled.div`
   position: relative;
-  background: ${({ theme }) => alpha(theme.colors.fg.v1, 0.1)};
+  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   padding: 12px;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -45,7 +52,7 @@ const Text = styled.span`
 `;
 
 const RemoveButton = styled.span`
-  background: ${({ theme }) => alpha(theme.colors.fg.v1, 0.3)};
+  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
   color: ${({ theme }) => theme.colors.bg.v4};
   position: absolute;
   top: 0;
@@ -59,17 +66,28 @@ const RemoveButton = styled.span`
   font-family: monospace;
 `;
 
-function FontPreview({ title, ...props }) {
+function FontPreview({ title, fontFamily, ...fontProps }) {
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
+
+  useEffect(() => {
+    maybeEnqueueFontStyle(fontFamily);
+  }, [fontFamily, maybeEnqueueFontStyle]);
+
   return (
     <Preview>
-      <RemoveButton>{'-'}</RemoveButton>
-      <Text {...props}>{title}</Text>
+      <RemoveButton aria-label={__('Remove preset', 'web-stories')}>
+        {'-'}
+      </RemoveButton>
+      <Text {...fontProps}>{title}</Text>
     </Preview>
   );
 }
 
 FontPreview.propTypes = {
   title: PropTypes.string,
+  fontFamily: PropTypes.string,
 };
 
 export default FontPreview;

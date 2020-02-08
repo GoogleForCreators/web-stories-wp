@@ -19,17 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { alpha } from '../../../theme';
+import { rgba } from 'polished';
 
 const SectionContainer = styled.div`
   position: relative;
   padding-top: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid ${({ theme }) => alpha(theme.colors.fg.v1, 0.2)};
+  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
 `;
 const SectionTitle = styled.h2`
   color: ${({ theme }) => theme.colors.fg.v1};
