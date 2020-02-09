@@ -77,7 +77,6 @@ const LayerDescription = styled.div`
 
 function Layer({ item }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(item.type);
-
   const { isSelected, isBackground, handleClick } = useLayerSelection(item);
 
   return (
