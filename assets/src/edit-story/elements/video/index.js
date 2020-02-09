@@ -26,12 +26,12 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon.svg';
 
 export const defaultAttributes = {
-	controls: false,
-	loop: false,
-	autoPlay: true,
-	posterId: null,
-	poster: null,
-	videoId: 0,
+  controls: false,
+  loop: false,
+  autoPlay: true,
+  posterId: null,
+  poster: null,
+  videoId: 0,
 };
 
 export const hasEditMode = true;
@@ -39,11 +39,11 @@ export const hasEditMode = true;
 export const isMedia = true;
 
 export const panels = [
-	PanelTypes.BACKGROUND,
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.VIDEO_POSTER,
-	PanelTypes.FILL,
+  PanelTypes.BACKGROUND,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
+  PanelTypes.SCALE,
+  PanelTypes.ROTATION_ANGLE,
+  PanelTypes.VIDEO_POSTER,
+  PanelTypes.FILL,
 ];

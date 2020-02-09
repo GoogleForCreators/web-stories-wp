@@ -21,11 +21,11 @@ import CanvasLayout from './canvasLayout';
 import CanvasProvider from './canvasProvider';
 
 function Canvas() {
-	return (
-		<CanvasProvider>
-			<CanvasLayout />
-		</CanvasProvider>
-	);
+  return (
+    <CanvasProvider>
+      <CanvasLayout />
+    </CanvasProvider>
+  );
 }
 
 export default Canvas;

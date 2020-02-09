@@ -19,29 +19,55 @@
  */
 import PropTypes from 'prop-types';
 
-function ReorderableList( { className, children, ...rest } ) {
-	return (
-		<div
-			tabIndex="0"
-			role="listbox"
-			className={ className }
-			{ ...rest }
-		>
-			{ children }
-		</div>
-	);
+/**
+ * Internal dependencies
+ */
+import ReorderableProvider from './provider';
+
+function ReorderableList({
+  className,
+  items,
+  onSelection,
+  onReorderItem,
+  itemRenderer: Item,
+  canSelectMultiple,
+  isReversed,
+  ...rest
+}) {
+  const clonedItems = items.concat();
+  if (isReversed) {
+    clonedItems.reverse();
+  }
+
+  return (
+    <div tabIndex="0" role="listbox" className={className} {...rest}>
+      <ReorderableProvider>
+        {clonedItems.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </ReorderableProvider>
+    </div>
+  );
 }
 
 ReorderableList.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
-	className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  items: PropTypes.array.isRequired,
+  onSelection: PropTypes.func.isRequired,
+  onReorderItem: PropTypes.func.isRequired,
+  itemRenderer: PropTypes.func.isRequired,
+  canSelectMultiple: PropTypes.bool,
+  isReversed: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 ReorderableList.defaultProps = {
-	className: '',
+  canSelectMultiple: false,
+  isReversed: false,
+  className: '',
 };
 
 export default ReorderableList;

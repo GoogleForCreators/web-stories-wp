@@ -26,28 +26,31 @@ import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
 
 function useDesignPanels() {
-	const {
-		state: { selectedElements },
-		actions: { deleteSelectedElements, updateSelectedElements },
-	} = useStory();
+  const {
+    state: { selectedElements },
+    actions: { deleteSelectedElements, updateSelectedElements },
+  } = useStory();
 
-	const panels = useMemo(
-		() => getPanels( selectedElements ),
-		[ selectedElements ],
-	);
+  const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
 
-	const onSetProperties = useCallback( ( newPropertiesOrUpdater ) => {
-		updateSelectedElements( { properties: ( currentProperties ) => calcProperties( currentProperties, newPropertiesOrUpdater ) } );
-	}, [ updateSelectedElements ] );
+  const onSetProperties = useCallback(
+    (newPropertiesOrUpdater) => {
+      updateSelectedElements({
+        properties: (currentProperties) =>
+          calcProperties(currentProperties, newPropertiesOrUpdater),
+      });
+    },
+    [updateSelectedElements]
+  );
 
-	return {
-		panels,
-		panelProperties: {
-			onSetProperties,
-			deleteSelectedElements,
-			selectedElements,
-		},
-	};
+  return {
+    panels,
+    panelProperties: {
+      onSetProperties,
+      deleteSelectedElements,
+      selectedElements,
+    },
+  };
 }
 
 /**
@@ -57,25 +60,26 @@ function useDesignPanels() {
  * properties.
  * @return {Object} The updated properties.
  */
-function calcProperties( currentProperties, newPropertiesOrUpdater ) {
-	const newProperties =
-			typeof newPropertiesOrUpdater === 'function' ?
-				newPropertiesOrUpdater( currentProperties ) :
-				newPropertiesOrUpdater;
+function calcProperties(currentProperties, newPropertiesOrUpdater) {
+  const newProperties =
+    typeof newPropertiesOrUpdater === 'function'
+      ? newPropertiesOrUpdater(currentProperties)
+      : newPropertiesOrUpdater;
 
-	// Filter out empty properties (empty strings specifically)
-	const updatedKeys = Object.keys( newProperties )
-		.filter( ( key ) => newProperties[ key ] !== '' );
+  // Filter out empty properties (empty strings specifically)
+  const updatedKeys = Object.keys(newProperties).filter(
+    (key) => newProperties[key] !== ''
+  );
 
-	if ( updatedKeys.length === 0 ) {
-		// Of course abort if no keys have a value
-		return {};
-	}
+  if (updatedKeys.length === 0) {
+    // Of course abort if no keys have a value
+    return {};
+  }
 
-	const properties = Object.fromEntries(
-		updatedKeys.map( ( key ) => [ key, newProperties[ key ] ] ),
-	);
-	return properties;
+  const properties = Object.fromEntries(
+    updatedKeys.map((key) => [key, newProperties[key]])
+  );
+  return properties;
 }
 
 export default useDesignPanels;

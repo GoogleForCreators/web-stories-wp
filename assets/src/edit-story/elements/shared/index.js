@@ -28,67 +28,68 @@ export { default as EditPanMovable } from './editPanMovable';
 export { default as ScalePanel } from './scalePanel';
 
 export const CropBox = styled.div`
-	width: 100%;
-	height: 100%;
-	position: relative;
-	overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${ ( { theme } ) => theme.colors.mg.v1 }70;
-		pointer-events: none;
-	}
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
+    pointer-events: none;
+  }
 `;
 
 export const elementFillContent = css`
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 export const elementWithPosition = css`
-	position: absolute;
-	z-index: 1;
-	left: ${ ( { x } ) => `${ x }px` };
-	top: ${ ( { y } ) => `${ y }px` };
+  position: absolute;
+  z-index: 1;
+  left: ${({ x }) => `${x}px`};
+  top: ${({ y }) => `${y}px`};
 `;
 
 export const elementWithSize = css`
-	width: ${ ( { width } ) => `${ width }px` };
-	height: ${ ( { height } ) => `${ height }px` };
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
 `;
 
 export const elementWithRotation = css`
-	transform: ${ ( { rotationAngle } ) => `rotate(${ rotationAngle }deg)` };
+  transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
 export const elementWithBackgroundColor = css`
-	background-color: ${ ( { backgroundColor } ) => backgroundColor };
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 export const elementWithFontColor = css`
-	color: ${ ( { color } ) => color };
+  color: ${({ color }) => color};
 `;
 
 export const elementWithFont = css`
-	white-space: pre-wrap;
-	font-family: ${ ( { fontFamily } ) => fontFamily };
-	font-style: ${ ( { fontStyle } ) => fontStyle };
-	font-size: ${ ( { fontSize } ) => fontSize }px;
-	font-weight: ${ ( { fontWeight } ) => fontWeight };
+  white-space: pre-wrap;
+  font-family: ${({ fontFamily }) => fontFamily};
+  font-style: ${({ fontStyle }) => fontStyle};
+  font-size: ${({ fontSize }) => fontSize}px;
+  font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
 export const elementWithStyle = css`
-	padding: ${ ( { padding } ) => padding ? padding : '0' }%;
-	line-height: ${ ( { lineHeight } ) => lineHeight };
-	letter-spacing: ${ ( { letterSpacing } ) => letterSpacing ? letterSpacing + 'em' : null };
-	text-align: ${ ( { textAlign } ) => textAlign };
+  padding: ${({ padding }) => (padding ? padding : '0')}%;
+  line-height: ${({ lineHeight }) => lineHeight};
+  letter-spacing: ${({ letterSpacing }) =>
+    letterSpacing ? letterSpacing + 'em' : null};
+  text-align: ${({ textAlign }) => textAlign};
 `;

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-function storyDataArrayToObject( storyData ) {
-	return { pages: storyData };
+function storyDataArrayToObject(storyData) {
+  return { pages: storyData };
 }
 
 export default storyDataArrayToObject;

@@ -19,33 +19,33 @@
  */
 import PropTypes from 'prop-types';
 
-function ReorderableItem( { className, children, isSelected, ...rest } ) {
-	return (
-		<button
-			tabIndex="-1"
-			type="button"
-			role="option"
-			aria-selected={ isSelected }
-			className={ className }
-			{ ...rest }
-		>
-			{ children }
-		</button>
-	);
+function ReorderableItem({ className, children, isSelected, ...rest }) {
+  return (
+    <button
+      tabIndex="-1"
+      type="button"
+      role="option"
+      aria-selected={isSelected}
+      className={className}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
 }
 
 ReorderableItem.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
-	className: PropTypes.string,
-	isSelected: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  className: PropTypes.string,
+  isSelected: PropTypes.bool,
 };
 
 ReorderableItem.defaultProps = {
-	className: '',
-	isSelected: false,
+  className: '',
+  isSelected: false,
 };
 
 export default ReorderableItem;

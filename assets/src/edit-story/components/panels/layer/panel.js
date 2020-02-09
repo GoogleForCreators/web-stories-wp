@@ -34,38 +34,47 @@ import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import useLayers from './useLayers';
 
-const LayerList = styled( ReorderableList )`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	min-height: 100%;
+const LayerList = styled(ReorderableList)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
 
-	&:focus {
-		background: ${ ( { theme } ) => rgba( theme.colors.action, 0.05 ) };
-	}
+  &:focus {
+    background: ${({ theme }) => rgba(theme.colors.action, 0.05)};
+  }
 `;
 
 function LayerPanel() {
-	const layers = useLayers();
-	const layerLabel = __( 'Layers', 'web-stories' );
-	return (
-		<Panel name="layers" initialHeight={ DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT }>
-			<PanelTitle isPrimary isResizable>
-				{ layerLabel }
-			</PanelTitle>
+  const {
+    layers,
+    selectedLayers,
+    handleSelectLayers,
+    handleReorderLayer,
+  } = useLayers();
+  const layerLabel = __('Layers', 'web-stories');
 
-			<PanelContent isScrollable padding={ '0' }>
-				<LayerList
-					aria-label={ layerLabel }
-					aria-multiselectable="true"
-				>
-					{ layers.map( ( element ) => (
-						<Layer key={ element.id } element={ element } />
-					) ) }
-				</LayerList>
-			</PanelContent>
-		</Panel>
-	);
+  return (
+    <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
+      <PanelTitle isPrimary isResizable>
+        {layerLabel}
+      </PanelTitle>
+
+      <PanelContent isScrollable padding={'0'}>
+        <LayerList
+          aria-label={layerLabel}
+          aria-multiselectable="true"
+          items={layers}
+          selection={selectedLayers}
+          onSelection={handleSelectLayers}
+          onReorderItem={handleReorderLayer}
+          itemRenderer={Layer}
+          canSelectMultiple
+          isReversed
+        />
+      </PanelContent>
+    </Panel>
+  );
 }
 
 export default LayerPanel;

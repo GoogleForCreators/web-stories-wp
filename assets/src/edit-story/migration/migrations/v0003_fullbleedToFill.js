@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-function fullbleedToFill( { pages, ...rest } ) {
-	return {
-		pages: pages.map( reducePage ),
-		...rest,
-	};
+function fullbleedToFill({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-function reducePage( { elements, ...rest } ) {
-	return {
-		elements: elements.map( updateElement ),
-		...rest,
-	};
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
 }
 
-function updateElement( { isFullbleed, ...rest } ) {
-	return {
-		isFill: isFullbleed,
-		...rest,
-	};
+function updateElement({ isFullbleed, ...rest }) {
+  return {
+    isFill: isFullbleed,
+    ...rest,
+  };
 }
 
 export default fullbleedToFill;

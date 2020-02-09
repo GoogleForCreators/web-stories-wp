@@ -20,36 +20,58 @@
 import { useStory } from '../../../app';
 import { createNewElement } from '../../../elements';
 
-function getElementsWithBackground( page ) {
-	const hasBackground = Boolean( page.backgroundElementId );
+function getElementsWithBackground(elements, hasBackgroundElement) {
+  // if no background element, create empty background element as first element.
+  if (!hasBackgroundElement) {
+    return [createNewElement('background'), ...elements];
+  }
 
-	// if no background element, create empty background element as first element.
-	if ( ! hasBackground ) {
-		return [
-			createNewElement( 'background' ),
-			...page.elements,
-		];
-	}
-
-	// Otherwise wrap first element as inner of new background element.
-	return [
-		createNewElement( 'background', { inner: page.elements[ 0 ] } ),
-		...page.elements.slice( 1 ),
-	];
+  // Otherwise wrap first element as inner of new background element.
+  return [
+    createNewElement('background', { inner: elements[0] }),
+    ...elements.slice(1),
+  ];
 }
 
 function useLayers() {
-	const {
-		state: { currentPage },
-	} = useStory();
+  const {
+    state: { currentPage, selectedElementIds },
+  } = useStory();
 
-	if ( ! currentPage ) {
-		return [];
-	}
+  let layers = [],
+    hasBackgroundElement = false,
+    selectedLayers = [];
 
-	const layers = getElementsWithBackground( currentPage );
-	layers.reverse();
-	return layers;
+  if (currentPage) {
+    hasBackgroundElement = Boolean(currentPage.backgroundElementId);
+    layers = getElementsWithBackground(
+      currentPage.elements,
+      hasBackgroundElement
+    );
+  }
+
+  const backgroundElement = layers[0];
+  const hasNoSelectionOrBackground =
+    !hasBackgroundElement && selectedElementIds.length === 0;
+  const hasBackgroundElementSelection =
+    hasBackgroundElement &&
+    selectedElementIds.contains(backgroundElement.inner.id);
+
+  if (hasNoSelectionOrBackground || hasBackgroundElementSelection) {
+    selectedLayers = [backgroundElement];
+  } else {
+    selectedLayers = [];
+  }
+
+  const handleSelectLayers = [];
+  const handleReorderLayer = [];
+
+  return {
+    layers,
+    selectedLayers,
+    handleSelectLayers,
+    handleReorderLayer,
+  };
 }
 
 export default useLayers;

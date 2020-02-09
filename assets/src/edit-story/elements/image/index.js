@@ -27,9 +27,9 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from '../shared/icon_media.svg';
 
 export const defaultAttributes = {
-	scale: 100,
-	focalX: 50,
-	focalY: 50,
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
 };
 
 export const hasEditMode = true;
@@ -39,10 +39,10 @@ export const editModeGrayout = true;
 export const isMedia = true;
 
 export const panels = [
-	PanelTypes.BACKGROUND,
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.SCALE,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
+  PanelTypes.BACKGROUND,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
+  PanelTypes.SCALE,
+  PanelTypes.ROTATION_ANGLE,
+  PanelTypes.FILL,
 ];

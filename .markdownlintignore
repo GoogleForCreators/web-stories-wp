@@ -1,0 +1,6 @@
+.github
+bin
+build
+node_modules
+tests
+vendor

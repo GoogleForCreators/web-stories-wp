@@ -20,17 +20,17 @@
 import { css } from 'styled-components';
 
 export const videoWithScale = css`
-	width: ${ ( { width } ) => `${ width }px` };
-	height: ${ ( { height } ) => `${ height }px` };
-	left: ${ ( { offsetX } ) => `${ -offsetX }px` };
-	top: ${ ( { offsetY } ) => `${ -offsetY }px` };
-	max-width: ${ ( { isBackground } ) => isBackground ? 'initial' : null };
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
 export const getBackgroundStyle = () => {
-	return {
-		minWidth: '100%',
-		minHeight: '100%',
-		maxWidth: 'initial',
-	};
+  return {
+    minWidth: '100%',
+    minHeight: '100%',
+    maxWidth: 'initial',
+  };
 };

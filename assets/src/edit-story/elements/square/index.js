@@ -24,7 +24,7 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from '../shared/icon_media.svg';
 
 export const defaultAttributes = {
-	backgroundColor: '#ffffff',
+  backgroundColor: '#ffffff',
 };
 
 export const hasEditMode = false;
@@ -32,9 +32,9 @@ export const hasEditMode = false;
 export const isMedia = false;
 
 export const panels = [
-	PanelTypes.SIZE,
-	PanelTypes.POSITION,
-	PanelTypes.BACKGROUND_COLOR,
-	PanelTypes.ROTATION_ANGLE,
-	PanelTypes.FILL,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
+  PanelTypes.BACKGROUND_COLOR,
+  PanelTypes.ROTATION_ANGLE,
+  PanelTypes.FILL,
 ];
