@@ -26,35 +26,35 @@ import { useRef, useEffect, useLayoutEffect } from '@wordpress/element';
 
 const thief = new ColorThief();
 
-function useAverageColor( ref, onAverageColor ) {
-	const callback = useRef( onAverageColor );
-	useEffect( () => {
-		callback.current = onAverageColor;
-	}, [ onAverageColor ] );
+function useAverageColor(ref, onAverageColor) {
+  const callback = useRef(onAverageColor);
+  useEffect(() => {
+    callback.current = onAverageColor;
+  }, [onAverageColor]);
 
-	useLayoutEffect( () => {
-		function checkAverageColor() {
-			try {
-				callback.current( thief.getColor( ref.current ) );
-			} catch ( e ) {
-				// ColorThief fails for all-white images
-				//
-				// It's a "feature":
-				// https://github.com/lokesh/color-thief/pull/49
-				callback.current( [ 255, 255, 255 ] );
-			}
-		}
+  useLayoutEffect(() => {
+    function checkAverageColor() {
+      try {
+        callback.current(thief.getColor(ref.current));
+      } catch (e) {
+        // ColorThief fails for all-white images
+        //
+        // It's a "feature":
+        // https://github.com/lokesh/color-thief/pull/49
+        callback.current([255, 255, 255]);
+      }
+    }
 
-		const element = ref.current;
-		if ( element.complete ) {
-			checkAverageColor();
+    const element = ref.current;
+    if (element.complete) {
+      checkAverageColor();
 
-			return undefined;
-		}
+      return undefined;
+    }
 
-		element.addEventListener( 'load', checkAverageColor );
-		return () => element.removeEventListener( 'load', checkAverageColor );
-	}, [ ref ]	);
+    element.addEventListener('load', checkAverageColor);
+    return () => element.removeEventListener('load', checkAverageColor);
+  }, [ref]);
 }
 
 export default useAverageColor;

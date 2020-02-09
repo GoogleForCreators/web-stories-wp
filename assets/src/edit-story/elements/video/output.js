@@ -22,46 +22,53 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { editorPixels } from '../../units';
 import { getMediaProps } from '../shared';
 
-function VideoOutput( {
-	element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
-	box: { width: vw, height: vh },
-} ) {
-	// Width and height are taken from the basis of 100% taking into account the
-	// aspect ratio.
-	const width = vw;
-	const height = vh * PAGE_HEIGHT / PAGE_WIDTH;
-	const imgProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
+function VideoOutput({
+  element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
+  box: { width: vw, height: vh },
+}) {
+  // Width and height are taken from the basis of 100% taking into account the
+  // aspect ratio.
+  const width = vw;
+  const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
+  const imgProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
 
-	const wrapperStyle = {
-		position: 'absolute',
-		width: `${ editorPixels( imgProps.width / width * 100 ) }%`,
-		height: `${ editorPixels( imgProps.height / height * 100 ) }%`,
-		left: `${ -editorPixels( imgProps.offsetX / width * 100 ) }%`,
-		top: `${ -editorPixels( imgProps.offsetY / height * 100 ) }%`,
-	};
+  const wrapperStyle = {
+    position: 'absolute',
+    width: `${editorPixels((imgProps.width / width) * 100)}%`,
+    height: `${editorPixels((imgProps.height / height) * 100)}%`,
+    left: `${-editorPixels((imgProps.offsetX / width) * 100)}%`,
+    top: `${-editorPixels((imgProps.offsetY / height) * 100)}%`,
+  };
 
-	const sourceProps = {
-		type: mimeType,
-		src,
-	};
-	const props = {
-		autoPlay: true,
-		poster,
-		layout: 'fill',
-	};
+  const sourceProps = {
+    type: mimeType,
+    src,
+  };
+  const props = {
+    autoPlay: true,
+    poster,
+    layout: 'fill',
+  };
 
-	return (
-		<div style={ wrapperStyle } >
-			<amp-video { ...props }>
-				<source { ...sourceProps } />
-			</amp-video>
-		</div>
-	);
+  return (
+    <div style={wrapperStyle}>
+      <amp-video {...props}>
+        <source {...sourceProps} />
+      </amp-video>
+    </div>
+  );
 }
 
 VideoOutput.propTypes = {
-	element: StoryPropTypes.elements.video.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.video.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoOutput;

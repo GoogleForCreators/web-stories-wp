@@ -25,13 +25,13 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
-function ImageLayerContent( { element } ) {
-	const alt = __( 'Image layer', 'web-stories' );
-	return <VisibleImage src={ element.src } alt={ alt } height="20" />;
+function ImageLayerContent({ element }) {
+  const alt = __('Image layer', 'web-stories');
+  return <VisibleImage src={element.src} alt={alt} height="20" />;
 }
 
 ImageLayerContent.propTypes = {
-	element: StoryPropTypes.element.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default ImageLayerContent;

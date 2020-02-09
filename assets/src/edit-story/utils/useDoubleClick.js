@@ -55,39 +55,42 @@ import { useCallback, useEffect, useState } from '@wordpress/element';
  * @param {number}   ms             Timeout in ms to wait - defaults to 200.
  * @return {Function} Handler retrieval function to get an onClick listener (invoke with unique value).
  */
-const useDoubleClick = ( onSingleClick, onDoubleClick, ms = null ) => {
-	const [ target, setTarget ] = useState( null );
-	const [ lastEvent, setLastEvent ] = useState( null );
-	const getHandler = useCallback( ( newTarget ) => ( evt ) => {
-		evt.stopPropagation();
+const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
+  const [target, setTarget] = useState(null);
+  const [lastEvent, setLastEvent] = useState(null);
+  const getHandler = useCallback(
+    (newTarget) => (evt) => {
+      evt.stopPropagation();
 
-		if ( target !== newTarget ) {
-			if ( target ) {
-				onSingleClick( evt, target );
-			}
-			setTarget( newTarget );
-			evt.persist();
-			setLastEvent( evt );
-			return;
-		}
+      if (target !== newTarget) {
+        if (target) {
+          onSingleClick(evt, target);
+        }
+        setTarget(newTarget);
+        evt.persist();
+        setLastEvent(evt);
+        return;
+      }
 
-		onDoubleClick( evt, target );
-		setTarget( null );
-	}, [ onSingleClick, onDoubleClick, target ] );
-	useEffect( () => {
-		if ( ! target ) {
-			return undefined;
-		}
-		const int = setTimeout( () => {
-			setTarget( null );
-			onSingleClick( lastEvent, target );
-		}, ms || DEFAULT_MS );
-		return () => {
-			clearTimeout( int );
-		};
-	}, [ target, lastEvent, onSingleClick, ms ] );
+      onDoubleClick(evt, target);
+      setTarget(null);
+    },
+    [onSingleClick, onDoubleClick, target]
+  );
+  useEffect(() => {
+    if (!target) {
+      return undefined;
+    }
+    const int = setTimeout(() => {
+      setTarget(null);
+      onSingleClick(lastEvent, target);
+    }, ms || DEFAULT_MS);
+    return () => {
+      clearTimeout(int);
+    };
+  }, [target, lastEvent, onSingleClick, ms]);
 
-	return getHandler;
+  return getHandler;
 };
 
 export default useDoubleClick;

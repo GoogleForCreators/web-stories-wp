@@ -25,13 +25,13 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
-function VideoLayerContent( { element } ) {
-	const alt = __( 'Video layer', 'web-stories' );
-	return <VisibleImage src={ element.poster } alt={ alt } height="20" />;
+function VideoLayerContent({ element }) {
+  const alt = __('Video layer', 'web-stories');
+  return <VisibleImage src={element.poster} alt={alt} height="20" />;
 }
 
 VideoLayerContent.propTypes = {
-	element: StoryPropTypes.element.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default VideoLayerContent;

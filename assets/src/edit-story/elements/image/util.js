@@ -20,14 +20,14 @@
 import { css } from 'styled-components';
 
 export const imageWithScale = css`
-	width: ${ ( { width } ) => `${ width }px` };
-	height: ${ ( { height } ) => `${ height }px` };
-	left: ${ ( { offsetX } ) => `${ -offsetX }px` };
-	top: ${ ( { offsetY } ) => `${ -offsetY }px` };
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
-export function getImageWithScaleCss( { width, height, offsetX, offsetY } ) {
-	// todo@: This is a complete duplication of `imageWithScale` above. But
-	// no other apparent way to execute interpolate `imageWithScale` dynamically.
-	return `width:${ width }px; height:${ height }px; left:${ -offsetX }px; top:${ -offsetY }px;`;
+export function getImageWithScaleCss({ width, height, offsetX, offsetY }) {
+  // todo@: This is a complete duplication of `imageWithScale` above. But
+  // no other apparent way to execute interpolate `imageWithScale` dynamically.
+  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }

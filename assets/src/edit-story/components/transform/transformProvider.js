@@ -29,47 +29,42 @@ import { useCallback, useRef } from '@wordpress/element';
  */
 import Context from './context';
 
-function TransformProvider( { children } ) {
-	const transformHandlersRef = useRef( {} );
+function TransformProvider({ children }) {
+  const transformHandlersRef = useRef({});
 
-	const registerTransformHandler = useCallback( ( id, handler ) => {
-		const handlerListMap = transformHandlersRef.current;
-		const handlerList = ( handlerListMap[ id ] || ( handlerListMap[ id ] = [] ) );
-		handlerList.push( handler );
-		return () => {
-			handlerList.splice( handlerList.indexOf( handler ), 1 );
-		};
-	}, [ ] );
+  const registerTransformHandler = useCallback((id, handler) => {
+    const handlerListMap = transformHandlersRef.current;
+    const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
+    handlerList.push(handler);
+    return () => {
+      handlerList.splice(handlerList.indexOf(handler), 1);
+    };
+  }, []);
 
-	const pushTransform = useCallback( ( id, transform ) => {
-		const handlerListMap = transformHandlersRef.current;
-		const handlerList = handlerListMap[ id ];
-		if ( handlerList ) {
-			handlerList.forEach( ( handler ) => handler( transform ) );
-		}
-	}, [ ] );
+  const pushTransform = useCallback((id, transform) => {
+    const handlerListMap = transformHandlersRef.current;
+    const handlerList = handlerListMap[id];
+    if (handlerList) {
+      handlerList.forEach((handler) => handler(transform));
+    }
+  }, []);
 
-	const state = {
-		state: {
-		},
-		actions: {
-			registerTransformHandler,
-			pushTransform,
-		},
-	};
+  const state = {
+    state: {},
+    actions: {
+      registerTransformHandler,
+      pushTransform,
+    },
+  };
 
-	return (
-		<Context.Provider value={ state }>
-			{ children }
-		</Context.Provider>
-	);
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 TransformProvider.propTypes = {
-	children: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.node ),
-		PropTypes.node,
-	] ).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default TransformProvider;

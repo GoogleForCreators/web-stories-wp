@@ -24,14 +24,14 @@
  * @param {number} payload.properties Object with story properties to set.
  * @return {Object} New state
  */
-function updateStory( state, { properties } ) {
-	return {
-		...state,
-		story: {
-			...state.story,
-			...properties,
-		},
-	};
+function updateStory(state, { properties }) {
+  return {
+    ...state,
+    story: {
+      ...state.story,
+      ...properties,
+    },
+  };
 }
 
 export default updateStory;

@@ -20,7 +20,7 @@
 import { __ } from '@wordpress/i18n';
 
 function SquareLayerContent() {
-	return __( 'Square', 'web-stories' );
+  return __('Square', 'web-stories');
 }
 
 export default SquareLayerContent;

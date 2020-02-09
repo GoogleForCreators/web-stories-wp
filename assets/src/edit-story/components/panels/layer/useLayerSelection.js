@@ -24,78 +24,82 @@ import { useCallback } from '@wordpress/element';
  */
 import { useStory } from '../../../app';
 
-function useLayerSelection( element ) {
-	const { type } = element;
+function useLayerSelection(element) {
+  const { type } = element;
 
-	const isBackground = type === 'background';
-	const backgroundHasElement = Boolean( element.inner );
+  const isBackground = type === 'background';
+  const backgroundHasElement = Boolean(element.inner);
 
-	const {
-		state: {
-			currentPage,
-			selectedElementIds,
-		},
-		actions: {
-			setSelectedElementsById,
-			toggleElementInSelection,
-			clearSelection,
-		},
-	} = useStory();
+  const {
+    state: { currentPage, selectedElementIds },
+    actions: {
+      setSelectedElementsById,
+      toggleElementInSelection,
+      clearSelection,
+    },
+  } = useStory();
 
-	let isSelected;
-	if ( isBackground ) {
-		isSelected = backgroundHasElement ? selectedElementIds.includes( element.inner.id ) : selectedElementIds.length === 0;
-	} else {
-		isSelected = selectedElementIds.includes( element.id );
-	}
+  let isSelected;
+  if (isBackground) {
+    isSelected = backgroundHasElement
+      ? selectedElementIds.includes(element.inner.id)
+      : selectedElementIds.length === 0;
+  } else {
+    isSelected = selectedElementIds.includes(element.id);
+  }
 
-	const pageElementIds = currentPage.elements.map( ( { id } ) => id );
+  const pageElementIds = currentPage.elements.map(({ id }) => id);
 
-	const handleClick = useCallback( ( evt ) => {
-		const hasSelection = selectedElementIds.length > 0;
+  const handleClick = useCallback(
+    (evt) => {
+      const hasSelection = selectedElementIds.length > 0;
 
-		evt.preventDefault();
-		evt.stopPropagation();
-		if ( isBackground ) {
-			// If background layer is clicked either select nothing or select only background element
-			if ( backgroundHasElement ) {
-				setSelectedElementsById( { elementIds: [ element.inner.id ] } );
-			} else {
-				clearSelection();
-			}
-		} else if ( evt.shiftKey && hasSelection ) {
-			// Shift key pressed with any element selected:
-			// select everything between this layer and the first selected layer
-			const firstId = selectedElementIds[ 0 ];
-			const firstIndex = pageElementIds.findIndex( ( id ) => id === firstId );
-			const clickedIndex = pageElementIds.findIndex( ( id ) => id === element.id );
-			const lowerIndex = Math.min( firstIndex, clickedIndex );
-			const higherIndex = Math.max( firstIndex, clickedIndex );
-			const elementIds = pageElementIds.slice( lowerIndex, higherIndex + 1 );
-			// reverse selection if firstId isn't first anymore
-			if ( firstId !== elementIds[ 0 ] ) {
-				elementIds.reverse();
-			}
-			setSelectedElementsById( { elementIds } );
-		} else if ( evt.metaKey ) {
-			// Meta pressed. Toggle this layer in the selection.
-			toggleElementInSelection( { elementId: element.id } );
-		} else {
-			// No special key pressed - just selected this layer and nothing else.
-			setSelectedElementsById( { elementIds: [ element.id ] } );
-		}
-	}, [
-		pageElementIds,
-		selectedElementIds,
-		setSelectedElementsById,
-		toggleElementInSelection,
-		clearSelection,
-		element,
-		isBackground,
-		backgroundHasElement,
-	] );
+      evt.preventDefault();
+      evt.stopPropagation();
+      if (isBackground) {
+        // If background layer is clicked either select nothing or select only background element
+        if (backgroundHasElement) {
+          setSelectedElementsById({ elementIds: [element.inner.id] });
+        } else {
+          clearSelection();
+        }
+      } else if (evt.shiftKey && hasSelection) {
+        // Shift key pressed with any element selected:
+        // select everything between this layer and the first selected layer
+        const firstId = selectedElementIds[0];
+        const firstIndex = pageElementIds.findIndex((id) => id === firstId);
+        const clickedIndex = pageElementIds.findIndex(
+          (id) => id === element.id
+        );
+        const lowerIndex = Math.min(firstIndex, clickedIndex);
+        const higherIndex = Math.max(firstIndex, clickedIndex);
+        const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
+        // reverse selection if firstId isn't first anymore
+        if (firstId !== elementIds[0]) {
+          elementIds.reverse();
+        }
+        setSelectedElementsById({ elementIds });
+      } else if (evt.metaKey) {
+        // Meta pressed. Toggle this layer in the selection.
+        toggleElementInSelection({ elementId: element.id });
+      } else {
+        // No special key pressed - just selected this layer and nothing else.
+        setSelectedElementsById({ elementIds: [element.id] });
+      }
+    },
+    [
+      pageElementIds,
+      selectedElementIds,
+      setSelectedElementsById,
+      toggleElementInSelection,
+      clearSelection,
+      element,
+      isBackground,
+      backgroundHasElement,
+    ]
+  );
 
-	return { isSelected, handleClick };
+  return { isSelected, isBackground, handleClick };
 }
 
 export default useLayerSelection;
