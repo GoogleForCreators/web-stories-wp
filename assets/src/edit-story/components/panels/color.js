@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import ColorInput from '../form/colorInput';
+import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -48,7 +48,8 @@ function ColorPanel({ selectedElements, onSetProperties }) {
       title={__('Color', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <ColorInput
+      <InputGroup
+        type="color"
         label={__('Color', 'web-stories')}
         value={state.color}
         isMultiple={color === ''}
