@@ -79,7 +79,7 @@ const VisuallyHidden = styled.span`
   }
 `;
 
-function ColorInput({ label, value, disabled, onChange, withGradients }) {
+function ColorInput({ label, value, disabled, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -96,7 +96,6 @@ function ColorInput({ label, value, disabled, onChange, withGradients }) {
             color={value}
             onChange={onChange}
             onClose={() => setIsOpen(false)}
-            withGradients={withGradients}
           />
         )}
       </Wrap>
@@ -109,7 +108,6 @@ ColorInput.propTypes = {
   value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  withGradients: PropTypes.bool,
 };
 
 ColorInput.defaultProps = {

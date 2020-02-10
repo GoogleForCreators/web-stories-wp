@@ -25,7 +25,6 @@ import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -60,53 +59,6 @@ const CloseButton = styled(Close)`
   position: absolute;
   right: 16px;
   top: 16px;
-`;
-
-const ModesList = styled.ul.attrs({ role: 'tablist' })`
-  padding: 0;
-  margin: 0;
-  display: flex;
-  list-style: none;
-`;
-
-const ModeListItem = styled.li.attrs({ role: 'tab' })`
-  width: 20px;
-  height: 20px;
-
-  & + li {
-    margin-left: 22px;
-  }
-`;
-
-const Circle = styled.button`
-  background: none;
-  border: none;
-  padding: 0;
-  border-radius: 100%;
-  width: 100%;
-  height: 100%;
-`;
-
-const SolidColor = styled(Circle)`
-  background: ${({ color }) => (color ? color : '#808080')};
-`;
-
-const LinearGradient = styled(Circle)`
-  border: 1px solid #808080;
-  background: linear-gradient(
-    180deg,
-    #fff 10.94%,
-    ${({ color }) => color} 100%
-  );
-`;
-
-const RadialGradient = styled(Circle)`
-  border: 1px solid #808080;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    #fff 0%,
-    ${({ color }) => color} 100%
-  );
 `;
 
 const Body = styled.div`
@@ -166,61 +118,20 @@ const CurrentAlphaWrapper = styled.div`
   bottom: 15px;
 `;
 
-function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose, withGradients }) {
+function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
   const controlsProps = { rgb, hsl, hsv, hex, onChange };
   const { a: alpha } = rgb;
 
-  const [currentMode, setCurrentMode] = useState('solid');
-
-  const displayHeader = withGradients || onClose;
-
   return (
     <Container>
-      {displayHeader && (
-        <Header>
-          {withGradients && (
-            <ModesList>
-              {['solid', 'linear', 'radial'].map((mode) => {
-                const value = mode === currentMode ? hex : null;
-
-                return (
-                  <ModeListItem key={mode}>
-                    {'solid' === mode && (
-                      <SolidColor
-                        color={value}
-                        onClick={() => setCurrentMode(mode)}
-                        aria-label={__('Solid color', 'web-stories')}
-                      />
-                    )}
-                    {'linear' === mode && (
-                      <LinearGradient
-                        color={value || '#808080'}
-                        onClick={() => setCurrentMode(mode)}
-                        aria-label={__('Linear gradient', 'web-stories')}
-                      />
-                    )}
-                    {'radial' === mode && (
-                      <RadialGradient
-                        color={value || '#3A3A3A'}
-                        onClick={() => setCurrentMode(mode)}
-                        aria-label={__('Radial gradient', 'web-stories')}
-                      />
-                    )}
-                  </ModeListItem>
-                );
-              })}
-            </ModesList>
-          )}
-          {onClose && (
-            <CloseButton
-              width={10}
-              height={10}
-              aria-label={__('Close', 'web-stories')}
-              onClick={onClose}
-            />
-          )}
-        </Header>
-      )}
+      <Header>
+        <CloseButton
+          width={10}
+          height={10}
+          aria-label={__('Close', 'web-stories')}
+          onClick={onClose}
+        />
+      </Header>
       <Body>
         <SaturationWrapper>
           <Saturation
@@ -271,15 +182,10 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose, withGradients }) {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  withGradients: PropTypes.bool,
   rgb: PropTypes.object,
   hex: PropTypes.object,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
-};
-
-ColorPicker.defaultProps = {
-  withGradients: true,
 };
 
 export default CustomPicker(ColorPicker);

@@ -53,7 +53,6 @@ function BackgroundColorPanel({ selectedElements, onSetProperties }) {
         value={state.backgroundColor}
         isMultiple={backgroundColor === ''}
         onChange={(value) => setState({ ...state, backgroundColor: value })}
-        withGradients={true}
       />
     </SimplePanel>
   );
