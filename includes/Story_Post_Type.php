@@ -275,6 +275,12 @@ class Story_Post_Type {
 
 		self::load_admin_fonts( $post );
 
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'ampStoriesEditSettings',
@@ -286,6 +292,7 @@ class Story_Post_Type {
 					'postThumbnails'   => $post_thumbnails,
 					'storyId'          => $story_id,
 					'previewLink'      => get_preview_post_link( $story_id ),
+					'maxUpload'        => $max_upload_size,
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',

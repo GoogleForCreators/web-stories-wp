@@ -22,32 +22,32 @@ const OLD_PAGE_HEIGHT = 732;
 const SCALE_X = NEW_PAGE_WIDTH / OLD_PAGE_WIDTH;
 const SCALE_Y = NEW_PAGE_HEIGHT / OLD_PAGE_HEIGHT;
 
-function dataPixelTo1080( { pages, ...rest } ) {
-	return {
-		pages: pages.map( reducePage ),
-		...rest,
-	};
+function dataPixelTo1080({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-function reducePage( { elements, ...rest } ) {
-	return {
-		elements: elements.map( updateElement ),
-		...rest,
-	};
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
 }
 
-function updateElement( { x, y, width, height, fontSize, ...rest } ) {
-	const element = {
-		x: dataPixels( x * SCALE_X ),
-		y: dataPixels( y * SCALE_Y ),
-		width: dataPixels( width * SCALE_X ),
-		height: dataPixels( height * SCALE_Y ),
-		...rest,
-	};
-	if ( typeof fontSize === 'number' ) {
-		element.fontSize = dataPixels( fontSize * SCALE_Y );
-	}
-	return element;
+function updateElement({ x, y, width, height, fontSize, ...rest }) {
+  const element = {
+    x: dataPixels(x * SCALE_X),
+    y: dataPixels(y * SCALE_Y),
+    width: dataPixels(width * SCALE_X),
+    height: dataPixels(height * SCALE_Y),
+    ...rest,
+  };
+  if (typeof fontSize === 'number') {
+    element.fontSize = dataPixels(fontSize * SCALE_Y);
+  }
+  return element;
 }
 
 /**
@@ -56,8 +56,8 @@ function updateElement( { x, y, width, height, fontSize, ...rest } ) {
  * @param {number} v The value to be rounded.
  * @return {number} The value rounded to the "data" space precision.
  */
-function dataPixels( v ) {
-	return Number( v.toFixed( 0 ) );
+function dataPixels(v) {
+  return Number(v.toFixed(0));
 }
 
 export default dataPixelTo1080;

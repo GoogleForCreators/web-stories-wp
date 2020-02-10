@@ -32,32 +32,36 @@ import ColorInput from '../form/colorInput';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function BackgroundColorPanel( { selectedElements, onSetProperties } ) {
-	const backgroundColor = getCommonValue( selectedElements, 'backgroundColor' );
-	const [ state, setState ] = useState( { backgroundColor } );
-	useEffect( () => {
-		setState( { backgroundColor } );
-	}, [ backgroundColor ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<SimplePanel name="bgcolor" title={ __( 'Background color', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<ColorInput
-				label={ __( 'Background Color', 'web-stories' ) }
-				value={ state.backgroundColor }
-				isMultiple={ backgroundColor === '' }
-				onChange={ ( value ) => setState( { ...state, backgroundColor: value } ) }
-				withGradients={ true }
-			/>
-		</SimplePanel>
-	);
+function BackgroundColorPanel({ selectedElements, onSetProperties }) {
+  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
+  const [state, setState] = useState({ backgroundColor });
+  useEffect(() => {
+    setState({ backgroundColor });
+  }, [backgroundColor]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <SimplePanel
+      name="bgcolor"
+      title={__('Background color', 'web-stories')}
+      onSubmit={handleSubmit}
+    >
+      <ColorInput
+        label={__('Background color', 'web-stories')}
+        value={state.backgroundColor}
+        isMultiple={backgroundColor === ''}
+        onChange={(value) => setState({ ...state, backgroundColor: value })}
+        withGradients={true}
+      />
+    </SimplePanel>
+  );
 }
 
 BackgroundColorPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default BackgroundColorPanel;

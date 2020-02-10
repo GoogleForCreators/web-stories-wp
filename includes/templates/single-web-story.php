@@ -43,8 +43,32 @@ use \Google\Web_Stories\Media;
 	<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 	<?php /* todo: include custom CSS via PHP */ ?>
 	<style amp-custom>
-		.full-bleed > :first-child {
+		.page-background-area, .page-safe-area {
+			position: absolute;
+			overflow: hidden;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		.page-background-area img, .page-background-area video {
 			object-fit: cover;
+		}
+
+		.wrapper {
+			position: absolute;
+			overflow: hidden;
+		}
+
+		.fill {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: 0;
 		}
 	</style>
 

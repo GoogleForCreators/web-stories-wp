@@ -32,32 +32,36 @@ import ColorInput from '../form/colorInput';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function ColorPanel( { selectedElements, onSetProperties } ) {
-	const color = getCommonValue( selectedElements, 'color' );
-	const [ state, setState ] = useState( { color } );
-	useEffect( () => {
-		setState( { color } );
-	}, [ color ] );
-	const handleSubmit = ( evt ) => {
-		onSetProperties( state );
-		evt.preventDefault();
-	};
-	return (
-		<SimplePanel name="color" title={ __( 'Color', 'web-stories' ) } onSubmit={ handleSubmit }>
-			<ColorInput
-				label={ __( 'Color', 'web-stories' ) }
-				value={ state.color }
-				isMultiple={ color === '' }
-				onChange={ ( value ) => setState( { ...state, color: value } ) }
-				withGradients={ false }
-			/>
-		</SimplePanel>
-	);
+function ColorPanel({ selectedElements, onSetProperties }) {
+  const color = getCommonValue(selectedElements, 'color');
+  const [state, setState] = useState({ color });
+  useEffect(() => {
+    setState({ color });
+  }, [color]);
+  const handleSubmit = (evt) => {
+    onSetProperties(state);
+    evt.preventDefault();
+  };
+  return (
+    <SimplePanel
+      name="color"
+      title={__('Color', 'web-stories')}
+      onSubmit={handleSubmit}
+    >
+      <ColorInput
+        label={__('Color', 'web-stories')}
+        value={state.color}
+        isMultiple={color === ''}
+        onChange={(value) => setState({ ...state, color: value })}
+        withGradients={false}
+      />
+    </SimplePanel>
+  );
 }
 
 ColorPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default ColorPanel;

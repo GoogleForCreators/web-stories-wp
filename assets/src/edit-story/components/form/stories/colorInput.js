@@ -26,28 +26,31 @@ import { useState, useCallback, useEffect } from 'react';
 import ColorInput from '../colorInput';
 
 export default {
-	title: 'Components/Color Input',
-	component: ColorInput,
+  title: 'Components/Color Input',
+  component: ColorInput,
 };
 
 export const _default = () => {
-	const initialColor = text( 'Initial Color', '#4891fc' );
-	const [ color, setColor ] = useState( initialColor );
+  const initialColor = text('Initial Color', '#4891fc');
+  const [color, setColor] = useState(initialColor);
 
-	useEffect( () => {
-		setColor( initialColor );
-	}, [ initialColor ] );
+  useEffect(() => {
+    setColor(initialColor);
+  }, [initialColor]);
 
-	const onChange = useCallback( ( newColor ) => {
-		setColor( newColor );
-	}, [ setColor ] );
+  const onChange = useCallback(
+    (newColor) => {
+      setColor(newColor);
+    },
+    [setColor]
+  );
 
-	return (
-		<ColorInput
-			label={ 'Color' }
-			value={ color }
-			onChange={ onChange }
-			disabled={ false }
-		/>
-	);
+  return (
+    <ColorInput
+      label={'Color'}
+      value={color}
+      onChange={onChange}
+      disabled={false}
+    />
+  );
 };

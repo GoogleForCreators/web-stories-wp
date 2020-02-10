@@ -28,56 +28,60 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
-import { elementWithPosition, elementWithSize, elementWithRotation } from '../../elements/shared';
+import {
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
+} from '../../elements/shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
-import useTransformHandler from './useTransformHandler';
+import { WithElementMask } from '../../masks';
 
 const Wrapper = styled.div`
-	${ elementWithPosition }
-	${ elementWithSize }
-	${ elementWithRotation }
+	${elementWithPosition}
+	${elementWithSize}
+	${elementWithRotation}
 	contain: layout paint;
 `;
 
-function DisplayElement( { element } ) {
-	const { actions: { getBox } } = useUnits();
+function DisplayElement({ element }) {
+  const {
+    actions: { getBox },
+  } = useUnits();
 
-	const { id, type } = element;
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const { Display } = getDefinitionForType( type );
+  const { id, type } = element;
+  const { Display } = getDefinitionForType(type);
 
-	const wrapperRef = useRef( null );
+  const wrapperRef = useRef(null);
 
-	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
-	const box = getBox( element );
+  const box = getBox(element);
 
-	useTransformHandler( id, ( transform ) => {
-		const target = wrapperRef.current;
-		if ( transform === null ) {
-			target.style.transform = '';
-		} else {
-			const { translate, rotate, resize } = transform;
-			target.style.transform = `translate(${ translate[ 0 ] }px, ${ translate[ 1 ] }px) rotate(${ rotate }deg)`;
-			if ( resize[ 0 ] !== 0 && resize[ 1 ] !== 0 ) {
-				target.style.width = `${ resize[ 0 ] }px`;
-				target.style.height = `${ resize[ 1 ] }px`;
-			}
-		}
-	} );
+  useTransformHandler(id, (transform) => {
+    const target = wrapperRef.current;
+    if (transform === null) {
+      target.style.transform = '';
+    } else {
+      const { translate, rotate, resize } = transform;
+      target.style.transform = `translate(${translate[0]}px, ${translate[1]}px) rotate(${rotate}deg)`;
+      if (resize[0] !== 0 && resize[1] !== 0) {
+        target.style.width = `${resize[0]}px`;
+        target.style.height = `${resize[1]}px`;
+      }
+    }
+  });
 
-	return (
-		<Wrapper
-			ref={ wrapperRef }
-			{ ...box }
-		>
-			<Display element={ element } box={ box } />
-		</Wrapper>
-	);
+  return (
+    <Wrapper ref={wrapperRef} {...box}>
+      <WithElementMask element={element} fill={true}>
+        <Display element={element} box={box} />
+      </WithElementMask>
+    </Wrapper>
+  );
 }
 
 DisplayElement.propTypes = {
-	element: StoryPropTypes.element.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default DisplayElement;

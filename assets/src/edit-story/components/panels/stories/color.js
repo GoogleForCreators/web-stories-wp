@@ -25,17 +25,14 @@ import { text } from '@storybook/addon-knobs';
 import ColorPanel from '../color';
 
 export default {
-	title: 'Panels/Color',
-	component: ColorPanel,
+  title: 'Panels/Color',
+  component: ColorPanel,
 };
 
 export const _default = () => {
-	const color = text( 'Initial Color', '#4891fc' );
+  const color = text('Initial Color', '#4891fc');
 
-	return (
-		<ColorPanel
-			onSetProperties={ () => {} }
-			selectedElements={ [ { color } ] }
-		/>
-	);
+  return (
+    <ColorPanel onSetProperties={() => {}} selectedElements={[{ color }]} />
+  );
 };

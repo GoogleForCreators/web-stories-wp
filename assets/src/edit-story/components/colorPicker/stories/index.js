@@ -26,29 +26,28 @@ import { useState, useCallback, useEffect } from 'react';
 import ColorPicker from '../';
 
 export default {
-	title: 'Components/Color Picker',
-	component: ColorPicker,
+  title: 'Components/Color Picker',
+  component: ColorPicker,
 };
 
 export const _default = () => {
-	const initialColor = text( 'Initial Color', '#4891fc' );
-	const gradients = boolean( 'With Gradients', true );
+  const initialColor = text('Initial Color', '#4891fc');
+  const gradients = boolean('With Gradients', true);
 
-	const [ color, setColor ] = useState( { hex: initialColor } );
+  const [color, setColor] = useState({ hex: initialColor });
 
-	useEffect( () => {
-		setColor( { hex: initialColor } );
-	}, [ initialColor ] );
+  useEffect(() => {
+    setColor({ hex: initialColor });
+  }, [initialColor]);
 
-	const onChange = useCallback( ( newColor ) => {
-		setColor( newColor );
-	}, [ setColor ] );
+  const onChange = useCallback(
+    (newColor) => {
+      setColor(newColor);
+    },
+    [setColor]
+  );
 
-	return (
-		<ColorPicker
-			color={ color }
-			onChange={ onChange }
-			gradients={ gradients }
-		/>
-	);
+  return (
+    <ColorPicker color={color} onChange={onChange} gradients={gradients} />
+  );
 };

@@ -17,29 +17,33 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from './dataVersion';
 import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
 import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
 import fullbleedToFill from './migrations/v0003_fullbleedToFill';
 
 const MIGRATIONS = {
-	1: [ storyDataArrayToObject ],
-	2: [ dataPixelTo1080 ],
-	3: [ fullbleedToFill ],
+  1: [storyDataArrayToObject],
+  2: [dataPixelTo1080],
+  3: [fullbleedToFill],
 };
 
-function migrate( storyData, version ) {
-	let result = storyData;
-	for ( let v = version; v < DATA_VERSION; v++ ) {
-		const migrations = MIGRATIONS[ v + 1 ];
-		if ( ! migrations ) {
-			continue;
-		}
-		for ( let i = 0; i < migrations.length; i++ ) {
-			result = migrations[ i ]( result );
-		}
-	}
-	return result;
+export const DATA_VERSION = Math.max.apply(
+  null,
+  Object.keys(MIGRATIONS).map(Number)
+);
+
+export function migrate(storyData, version) {
+  let result = storyData;
+  for (let v = version; v < DATA_VERSION; v++) {
+    const migrations = MIGRATIONS[v + 1];
+    if (!migrations) {
+      continue;
+    }
+    for (let i = 0; i < migrations.length; i++) {
+      result = migrations[i](result);
+    }
+  }
+  return result;
 }
 
 export default migrate;

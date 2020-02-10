@@ -41,26 +41,26 @@ import { SimplePanel } from './panel';
  */
 
 const Delete = styled.a`
-	cursor: pointer;
-	color: ${ ( { theme } ) => theme.colors.action };
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.action};
 
-	&:hover {
-		color: ${ ( { theme } ) => theme.colors.danger };
-	}
+  &:hover {
+    color: ${({ theme }) => theme.colors.danger};
+  }
 `;
 
-function ActionsPanel( { deleteSelectedElements } ) {
-	return (
-		<SimplePanel name="actions" title={ __( 'Actions', 'web-stories' ) }>
-			<Delete onClick={ deleteSelectedElements } >
-				{ __( 'Remove element', 'web-stories' ) }
-			</Delete>
-		</SimplePanel>
-	);
+function ActionsPanel({ deleteSelectedElements }) {
+  return (
+    <SimplePanel name="actions" title={__('Actions', 'web-stories')}>
+      <Delete onClick={deleteSelectedElements}>
+        {__('Remove element', 'web-stories')}
+      </Delete>
+    </SimplePanel>
+  );
 }
 
 ActionsPanel.propTypes = {
-	deleteSelectedElements: PropTypes.func.isRequired,
+  deleteSelectedElements: PropTypes.func.isRequired,
 };
 
 export default ActionsPanel;

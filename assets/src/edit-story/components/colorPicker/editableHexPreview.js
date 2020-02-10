@@ -27,37 +27,33 @@ import { EditableInput } from 'react-color/lib/components/common';
 import { useState } from '@wordpress/element';
 
 const Preview = styled.button`
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: transparent;
-	background: ${ ( { theme } ) => theme.colors.bg.v7 };
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  background: ${({ theme }) => theme.colors.bg.v7};
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function EditableHexPreview( { hex, onChange } ) {
-	const [ isEditing, setIsEditing ] = useState( false );
+function EditableHexPreview({ hex, onChange }) {
+  const [isEditing, setIsEditing] = useState(false);
 
-	if ( ! isEditing ) {
-		return (
-			<Preview onClick={ () => setIsEditing( true ) }>
-				{ hex }
-			</Preview>
-		);
-	}
+  if (!isEditing) {
+    return <Preview onClick={() => setIsEditing(true)}>{hex}</Preview>;
+  }
 
-	return (
-		<EditableInput
-			value={ hex }
-			onChange={ onChange }
-			onChangeComplete={ () => setIsEditing( false ) }
-		/>
-	);
+  return (
+    <EditableInput
+      value={hex}
+      onChange={onChange}
+      onChangeComplete={() => setIsEditing(false)}
+    />
+  );
 }
 
 EditableHexPreview.propTypes = {
-	hex: PropTypes.string,
-	onChange: PropTypes.func.isRequired,
+  hex: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default EditableHexPreview;

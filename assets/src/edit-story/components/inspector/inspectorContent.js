@@ -27,27 +27,29 @@ import DocumentInspector from './document';
 import PrepublishInspector from './prepublish';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs( { tabIndex: '0', role: 'tabpanel' } )`
-	height: 100%;
+const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })`
+  height: 100%;
 `;
 
 function Inspector() {
-	const {
-		state: { tab },
-		data: { tabs: { DESIGN, DOCUMENT, PREPUBLISH } },
-	} = useInspector();
+  const {
+    state: { tab },
+    data: {
+      tabs: { DESIGN, DOCUMENT, PREPUBLISH },
+    },
+  } = useInspector();
 
-	const ContentInspector = ( {
-		[ DESIGN ]: DesignInspector,
-		[ DOCUMENT ]: DocumentInspector,
-		[ PREPUBLISH ]: PrepublishInspector,
-	} )[ tab ];
+  const ContentInspector = {
+    [DESIGN]: DesignInspector,
+    [DOCUMENT]: DocumentInspector,
+    [PREPUBLISH]: PrepublishInspector,
+  }[tab];
 
-	return (
-		<InspectorWrapper aria-labelledby={ tab } id={ getTabId( tab ) }>
-			<ContentInspector />
-		</InspectorWrapper>
-	);
+  return (
+    <InspectorWrapper aria-labelledby={tab} id={getTabId(tab)}>
+      <ContentInspector />
+    </InspectorWrapper>
+  );
 }
 
 export default Inspector;

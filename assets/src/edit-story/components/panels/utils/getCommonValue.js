@@ -30,10 +30,10 @@
  * @param {string} property Property to check on all objects
  * @return {any} Returns common value or empty string if not similar
  */
-function getCommonValue( list, property ) {
-	const first = list[ 0 ][ property ];
-	const allMatch = list.every( ( el ) => el[ property ] === first );
-	return allMatch ? first : '';
+function getCommonValue(list, property) {
+  const first = list[0][property];
+  const allMatch = list.every((el) => el[property] === first);
+  return allMatch ? first : '';
 }
 
 export default getCommonValue;

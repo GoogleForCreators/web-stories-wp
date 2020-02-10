@@ -31,34 +31,29 @@ import { Primary } from '../../button';
 import Modal from '../';
 
 export default {
-	title: 'Components/Modal',
-	component: Primary,
+  title: 'Components/Modal',
+  component: Primary,
 };
 
 export const _default = () => {
-	const contentLabel = text( 'Content Label', 'Modal Content' );
-	const closeButtonLabel = text( 'Close Button Label', 'Back' );
+  const contentLabel = text('Content Label', 'Modal Content');
+  const closeButtonLabel = text('Close Button Label', 'Back');
 
-	const [ isOpen, setIsOpen ] = useState( false );
-	const openModal = useCallback( () => setIsOpen( true ), [ setIsOpen ] );
-	const closeModal = useCallback( () => setIsOpen( false ), [ setIsOpen ] );
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = useCallback(() => setIsOpen(true), [setIsOpen]);
+  const closeModal = useCallback(() => setIsOpen(false), [setIsOpen]);
 
-	return (
-		<>
-			<Primary
-				onClick={ openModal }
-			>
-				{ 'Open Modal' }
-			</Primary>
-			<Modal
-				isOpen={ isOpen }
-				onRequestClose={ closeModal }
-				contentLabel={ contentLabel }
-				closeButtonLabel={ closeButtonLabel }
-			>
-				{ 'Content goes here' }
-			</Modal>
-		</>
-	);
+  return (
+    <>
+      <Primary onClick={openModal}>{'Open Modal'}</Primary>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel={contentLabel}
+        closeButtonLabel={closeButtonLabel}
+      >
+        {'Content goes here'}
+      </Modal>
+    </>
+  );
 };
-

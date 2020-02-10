@@ -29,34 +29,36 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ActionButton } from '../button';
-import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import { SimplePanel } from './panel';
 
-function FillPanel( { selectedElements, onSetProperties } ) {
-	// The x/y/w/h/r are kept unchanged so that toggling fill will return
-	// the element to the previous non-fill position/size.
-	const isFill = getCommonValue( selectedElements, 'isFill' );
-	const [ state, setState ] = useState( { isFill } );
-	useEffect( () => {
-		setState( { isFill } );
-	}, [ isFill ] );
-	const handleClick = ( ) => {
-		const newState = { isFill: ! state.isFill };
-		setState( newState );
-		onSetProperties( newState );
-	};
-	return (
-		<SimplePanel name="fill" title={ __( 'Fill', 'web-stories' ) }>
-			<ActionButton onClick={ handleClick }>
-				{ state.isFill ? __( 'Unset as fill', 'web-stories' ) : __( 'Set as fill', 'web-stories' ) }
-			</ActionButton>
-		</SimplePanel>
-	);
+function FillPanel({ selectedElements, onSetProperties }) {
+  // The x/y/w/h/r are kept unchanged so that toggling fill will return
+  // the element to the previous non-fill position/size.
+  const isFill = getCommonValue(selectedElements, 'isFill');
+  const [state, setState] = useState({ isFill });
+  useEffect(() => {
+    setState({ isFill });
+  }, [isFill]);
+  const handleClick = () => {
+    const newState = { isFill: !state.isFill };
+    setState(newState);
+    onSetProperties(newState);
+  };
+  return (
+    <SimplePanel name="fill" title={__('Fill', 'web-stories')}>
+      <ActionButton onClick={handleClick}>
+        {state.isFill
+          ? __('Unset as fill', 'web-stories')
+          : __('Set as fill', 'web-stories')}
+      </ActionButton>
+    </SimplePanel>
+  );
 }
 
 FillPanel.propTypes = {
-	selectedElements: PropTypes.array.isRequired,
-	onSetProperties: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default FillPanel;

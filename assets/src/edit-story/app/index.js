@@ -19,6 +19,7 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
+import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
 
 /**
  * Internal dependencies
@@ -31,42 +32,41 @@ import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
+import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import Layout from './layout';
 
-function App( { config } ) {
-	const { storyId } = config;
-	return (
-		<ThemeProvider theme={ theme }>
-			<ConfigProvider config={ config }>
-				<APIProvider>
-					<HistoryProvider size={ 50 }>
-						<StoryProvider storyId={ storyId }>
-							<FontProvider>
-								<GlobalStyle />
-								<DefaultMoveableGlobalStyle />
-								<CropMoveableGlobalStyle />
-								<ModalGlobalStyle />
-								<Layout />
-							</FontProvider>
-						</StoryProvider>
-					</HistoryProvider>
-				</APIProvider>
-			</ConfigProvider>
-		</ThemeProvider>
-	);
+function App({ config }) {
+  const { storyId } = config;
+  return (
+    <ThemeProvider theme={theme}>
+      <ConfigProvider config={config}>
+        <APIProvider>
+          <HistoryProvider size={50}>
+            <StoryProvider storyId={storyId}>
+              <FontProvider>
+                <MediaProvider>
+                  <GlobalStyle />
+                  <DefaultMoveableGlobalStyle />
+                  <CropMoveableGlobalStyle />
+                  <ModalGlobalStyle />
+                  <KeyboardOnlyOutlines>
+                    <Layout />
+                  </KeyboardOnlyOutlines>
+                </MediaProvider>
+              </FontProvider>
+            </StoryProvider>
+          </HistoryProvider>
+        </APIProvider>
+      </ConfigProvider>
+    </ThemeProvider>
+  );
 }
 
 App.propTypes = {
-	config: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 export default App;
 
-export {
-	useHistory,
-	useAPI,
-	useStory,
-	useConfig,
-	useFont,
-};
+export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
