@@ -21,7 +21,7 @@ import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
   backgroundColor: '#ffffff',

@@ -80,20 +80,14 @@ const LayerDescription = styled.div`
 
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
-  const id = `layer-${element.id}`;
-
   const { isSelected, handleClick } = useLayerSelection(element);
 
   return (
-    <LayerButton
-      isSelected={isSelected}
-      onClick={handleClick}
-      aria-labelledby={id}
-    >
+    <LayerButton isSelected={isSelected} onClick={handleClick}>
       <LayerIconWrapper>
         <LayerIcon />
       </LayerIconWrapper>
-      <LayerDescription id={id}>
+      <LayerDescription>
         <LayerContent element={element} />
       </LayerDescription>
     </LayerButton>

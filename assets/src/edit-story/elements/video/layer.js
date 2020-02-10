@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import getFileName from '../../utils/getFileName';
@@ -27,8 +22,7 @@ import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
 function VideoLayerContent({ element: { poster } }) {
-  const filename = getFileName(poster);
-  const alt = sprintf(__('Video layer (%s)', 'web-stories'), filename);
+  const alt = getFileName(poster);
   return <VisibleImage src={poster} alt={alt} height="20" />;
 }
 

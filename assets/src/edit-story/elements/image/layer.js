@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import getFileName from '../../utils/getFileName';
@@ -27,8 +22,7 @@ import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
 function ImageLayerContent({ element: { src } }) {
-  const filename = getFileName(src);
-  const alt = sprintf(__('Image layer (%s)', 'web-stories'), filename);
+  const alt = getFileName(src);
   return <VisibleImage src={src} alt={alt} height="20" />;
 }
 

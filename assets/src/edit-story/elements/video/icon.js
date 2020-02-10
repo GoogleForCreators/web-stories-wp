@@ -15,32 +15,18 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
+import Icon from './icon.svg';
 
-const TextLayer = styled.span`
-  color: ${({ theme }) => theme.colors.bg.v1};
-  white-space: nowrap;
-  font-size: 13px;
-  text-overflow: ' ';
-  overflow: hidden;
-  max-width: 100%;
-`;
-
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = content.replace(/<[^>]*>/g, '');
-  return <TextLayer>{rawContent}</TextLayer>;
+function VideoIcon() {
+  const alt = __('Video element', 'web-stories');
+  return <Icon aria-label={alt} />;
 }
 
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default TextLayerContent;
+export default VideoIcon;
