@@ -23,8 +23,12 @@ import { useCallback } from '@wordpress/element';
  */
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
+import { useMedia } from '../media';
 
-function useUploader() {
+function useUploader(refreshLibrary = true) {
+  const {
+    actions: { resetMedia },
+  } = useMedia();
   const {
     actions: { uploadMedia },
   } = useAPI();
@@ -66,11 +70,16 @@ function useUploader() {
       post: storyId,
     };
 
-    return uploadMedia(file, additionalData);
+    const promise = uploadMedia(file, additionalData);
+    if (refreshLibrary) {
+      promise.finally(resetMedia);
+    }
+    return promise;
   };
 
   return {
     uploadFile,
+    isValidType,
   };
 }
 
