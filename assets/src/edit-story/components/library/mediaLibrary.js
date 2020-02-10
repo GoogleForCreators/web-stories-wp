@@ -24,7 +24,7 @@ import styled, { css } from 'styled-components';
  * WordPress dependencies
  */
 import { Spinner, Dashicon } from '@wordpress/components';
-import { useCallback, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -168,30 +168,24 @@ function MediaLibrary({ onInsert }) {
    *
    * @param {Object} evt Doc Event
    */
-  const onSearch = useCallback(
-    (evt) => {
-      setSearchTerm(evt.target.value);
-      reloadMedia();
-    },
-    [reloadMedia, setSearchTerm]
-  );
+  const onSearch = (evt) => {
+    setSearchTerm(evt.target.value);
+    reloadMedia();
+  };
 
   /**
    * Filter REST API calls and re-request API.
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = useCallback(
-    (filter) => {
-      if (filter !== mediaType) {
-        setMediaType(filter);
-        reloadMedia();
-      }
-    },
-    [mediaType, reloadMedia, setMediaType]
-  );
+  const onFilter = (filter) => {
+    if (filter !== mediaType) {
+      setMediaType(filter);
+      reloadMedia();
+    }
+  };
 
-  const onClose = useCallback(resetMedia, [resetMedia]);
+  const onClose = resetMedia;
 
   /**
    * Callback of select in media picker to insert media element.
