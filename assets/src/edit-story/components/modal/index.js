@@ -47,7 +47,7 @@ export const GlobalStyle = createGlobalStyle`
   .WebStories_ReactModal__Overlay {
     position: fixed;
     top: 0;
-		left: 0;
+    left: 0;
     right: 0;
     bottom: 0;
     background-color: ${({ theme }) => theme.colors.bg.v1};
