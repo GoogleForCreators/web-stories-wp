@@ -1,9 +1,29 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
 const StoryPropTypes = {};
+
+StoryPropTypes.mask = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+});
 
 export const StoryElementPropsTypes = {
   id: PropTypes.string.isRequired,
@@ -14,6 +34,7 @@ export const StoryElementPropsTypes = {
   height: PropTypes.number.isRequired,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
+  mask: StoryPropTypes.mask,
 };
 
 StoryPropTypes.size = PropTypes.exact({
@@ -38,7 +59,14 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
+export const StoryLayerPropsTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
+
+StoryPropTypes.layer = PropTypes.shape(StoryLayerPropsTypes);
 
 StoryPropTypes.elements = {};
 
@@ -80,6 +108,11 @@ StoryPropTypes.elements.text = PropTypes.shape({
 StoryPropTypes.elements.square = PropTypes.shape({
   ...StoryElementPropsTypes,
   backgroundColor: PropTypes.string,
+});
+
+StoryPropTypes.elements.background = PropTypes.shape({
+  ...StoryLayerPropsTypes,
+  inner: StoryPropTypes.element,
 });
 
 export default StoryPropTypes;

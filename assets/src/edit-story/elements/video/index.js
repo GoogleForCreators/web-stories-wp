@@ -22,6 +22,8 @@ export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
+export { default as LayerContent } from './layer';
+export { default as LayerIcon } from './icon.svg';
 
 export const defaultAttributes = {
   controls: false,
@@ -44,4 +46,5 @@ export const panels = [
   PanelTypes.ROTATION_ANGLE,
   PanelTypes.VIDEO_POSTER,
   PanelTypes.FILL,
+  PanelTypes.MASK,
 ];
