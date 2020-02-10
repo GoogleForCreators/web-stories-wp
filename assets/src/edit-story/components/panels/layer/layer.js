@@ -28,7 +28,11 @@ import { getDefinitionForType } from '../../../elements';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs({ type: 'button' })`
+const LayerButton = styled.button.attrs({
+  type: 'button',
+  tabIndex: '0',
+  role: 'option',
+})`
   display: flex;
   border: 0;
   padding: 0;
@@ -76,15 +80,20 @@ const LayerDescription = styled.div`
 
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
+  const id = `layer-${element.id}`;
 
   const { isSelected, handleClick } = useLayerSelection(element);
 
   return (
-    <LayerButton isSelected={isSelected} onClick={handleClick}>
+    <LayerButton
+      isSelected={isSelected}
+      onClick={handleClick}
+      aria-labelledby={id}
+    >
       <LayerIconWrapper>
         <LayerIcon />
       </LayerIconWrapper>
-      <LayerDescription>
+      <LayerDescription id={id}>
         <LayerContent element={element} />
       </LayerDescription>
     </LayerButton>

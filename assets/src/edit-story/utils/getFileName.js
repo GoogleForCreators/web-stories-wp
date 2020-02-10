@@ -14,26 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import getFileName from '../../utils/getFileName';
-import StoryPropTypes from '../../types';
-import VisibleImage from '../shared/visibleImage';
-
-function ImageLayerContent({ element: { src } }) {
-  const filename = getFileName(src);
-  const alt = sprintf(__('Image layer (%s)', 'web-stories'), filename);
-  return <VisibleImage src={src} alt={alt} height="20" />;
+function getFileName(path) {
+  return /(?:\/([^/]+))?$/.exec(path)[1];
 }
 
-ImageLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ImageLayerContent;
+export default getFileName;

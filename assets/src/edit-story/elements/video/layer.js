@@ -17,17 +17,19 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
-function VideoLayerContent({ element }) {
-  const alt = __('Video layer', 'web-stories');
-  return <VisibleImage src={element.poster} alt={alt} height="20" />;
+function VideoLayerContent({ element: { poster } }) {
+  const filename = getFileName(poster);
+  const alt = sprintf(__('Video layer (%s)', 'web-stories'), filename);
+  return <VisibleImage src={poster} alt={alt} height="20" />;
 }
 
 VideoLayerContent.propTypes = {

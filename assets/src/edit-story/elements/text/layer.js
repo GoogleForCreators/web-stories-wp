@@ -36,7 +36,8 @@ const TextLayer = styled.span`
 function TextLayerContent({ element: { content } }) {
   // Remove all tags
   const rawContent = content.replace(/<[^>]*>/g, '');
-  return <TextLayer>{rawContent}</TextLayer>;
+  const ariaLabel = `Text element ("${rawContent}")`;
+  return <TextLayer aria-label={ariaLabel}>{rawContent}</TextLayer>;
 }
 
 TextLayerContent.propTypes = {
