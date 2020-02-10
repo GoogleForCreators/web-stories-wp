@@ -15,27 +15,18 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+import { useCallback } from '@wordpress/element';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
-};
+function useResetMedia({ setMediaType, setSearchTerm, reloadMedia }) {
+  const resetMedia = useCallback(() => {
+    setMediaType('');
+    setSearchTerm('');
+    reloadMedia();
+  }, [setMediaType, setSearchTerm, reloadMedia]);
 
-export const hasEditMode = false;
+  return resetMedia;
+}
 
-export const isMedia = false;
-
-export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default useResetMedia;
