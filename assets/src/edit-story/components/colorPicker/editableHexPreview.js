@@ -24,7 +24,7 @@ import { EditableInput } from 'react-color/lib/components/common';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useCallback, useLayoutEffect, useState } from '@wordpress/element';
 
 const Preview = styled.button`
   padding: 0;
@@ -35,8 +35,34 @@ const Preview = styled.button`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
+const inputStyles = {
+  /* stylelint-disable-next-line rule-empty-line-before */
+  input: {
+    fontFamily: 'monospace',
+    width: '60px',
+  },
+};
+
 function EditableHexPreview({ hex, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
+
+  // Handle ESC keypress to toggle input field.
+  const handleKeyPress = useCallback(
+    (evt) => {
+      if ('Escape' === evt.key && isEditing) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        setIsEditing(false);
+      }
+    },
+    [isEditing]
+  );
+
+  useLayoutEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [handleKeyPress]);
 
   if (!isEditing) {
     return <Preview onClick={() => setIsEditing(true)}>{hex}</Preview>;
@@ -47,6 +73,7 @@ function EditableHexPreview({ hex, onChange }) {
       value={hex}
       onChange={onChange}
       onChangeComplete={() => setIsEditing(false)}
+      style={inputStyles}
     />
   );
 }
