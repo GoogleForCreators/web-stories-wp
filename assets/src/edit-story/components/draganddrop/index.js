@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useUploader } from '../../app/uploader';
-import UploadIcon from './icons/upload.svg';
+import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const DragandDropComponent = styled.div`
   min-width: 100%;
@@ -38,9 +38,9 @@ const DragandDropOverContent = styled.div``;
 const DragandDropOverLayWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 0;
+  top: 56px;
   left: 0;
   z-index: 999;
 `;
