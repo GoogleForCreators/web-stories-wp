@@ -41,62 +41,62 @@ const OFFSET_Y = 8;
 const MAX_SCALE = 400;
 
 const Container = styled.div`
-	position: absolute;
-	left: ${ ( { x, width } ) => `${ x + ( ( width - Math.max( width, MIN_WIDTH ) ) / 2 ) }px` };
-	top: ${ ( { y, height } ) => `${ y + height + OFFSET_Y }px` };
-	width: ${ ( { width } ) => `${ Math.max( width, MIN_WIDTH ) }px` };
-	height: ${ HEIGHT }px;
+  position: absolute;
+  left: ${({ x, width }) =>
+    `${x + (width - Math.max(width, MIN_WIDTH)) / 2}px`};
+  top: ${({ y, height }) => `${y + height + OFFSET_Y}px`};
+  width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
+  height: ${HEIGHT}px;
 
-	background: ${ ( { theme } ) => theme.colors.t.bg };
-	border-radius: 100px;
+  background: ${({ theme }) => theme.colors.t.bg};
+  border-radius: 100px;
 
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	align-items: center;
-	padding: 0 4px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 0 4px;
 `;
 
 const ResetButton = styled.button`
-	flex: 0 0;
-	margin-left: 4px;
-	height: 20px;
-	text-transform: uppercase;
-	font-size: 9px;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
-	background: ${ ( { theme } ) => theme.colors.action };
-	border-radius: 100px;
-	border: none;
-	padding: 1px 8px 0 8px;
+  flex: 0 0;
+  margin-left: 4px;
+  height: 20px;
+  text-transform: uppercase;
+  font-size: 9px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.action};
+  border-radius: 100px;
+  border: none;
+  padding: 1px 8px 0 8px;
 `;
 
-function ScalePanel( { setProperties, width, height, x, y, scale } ) {
-	return (
-		<InOverlay zIndex={ Z_INDEX_CANVAS.FLOAT_PANEL } pointerEvents="initial" >
-			<Container x={ x } y={ y } width={ width } height={ height } >
-				<RangeInput
-					min={ 100 }
-					max={ MAX_SCALE }
-					step={ 10 }
-					value={ scale }
-					onChange={ ( evt ) => setProperties( { scale: evt.target.valueAsNumber } ) }
-				/>
-				<ResetButton
-					onClick={ () => setProperties( { scale: 100 } ) }>
-					{ __( 'Reset', 'web-stories' ) }
-				</ResetButton>
-			</Container>
-		</InOverlay>
-	);
+function ScalePanel({ setProperties, width, height, x, y, scale }) {
+  return (
+    <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
+      <Container x={x} y={y} width={width} height={height}>
+        <RangeInput
+          min={100}
+          max={MAX_SCALE}
+          step={10}
+          value={scale}
+          onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
+        />
+        <ResetButton onClick={() => setProperties({ scale: 100 })}>
+          {__('Reset', 'web-stories')}
+        </ResetButton>
+      </Container>
+    </InOverlay>
+  );
 }
 
 ScalePanel.propTypes = {
-	setProperties: PropTypes.func.isRequired,
-	width: PropTypes.number.isRequired,
-	height: PropTypes.number.isRequired,
-	x: PropTypes.number.isRequired,
-	y: PropTypes.number.isRequired,
-	scale: PropTypes.number.isRequired,
+  setProperties: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  scale: PropTypes.number.isRequired,
 };
 
 export default ScalePanel;

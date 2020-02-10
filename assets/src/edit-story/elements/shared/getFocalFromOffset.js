@@ -22,8 +22,8 @@
  * @param {number} offset
  * @return {number} Focal
  */
-function getFocalFromOffset( side, mediaElementSide, offset ) {
-	return ( offset + ( side * 0.5 ) ) / mediaElementSide * 100;
+function getFocalFromOffset(side, mediaElementSide, offset) {
+  return ((offset + side * 0.5) / mediaElementSide) * 100;
 }
 
 export default getFocalFromOffset;

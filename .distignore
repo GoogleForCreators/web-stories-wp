@@ -14,8 +14,11 @@ tests
 .eslintignore
 .eslintrc
 .gitignore
+.markdownlintignore
 .npmrc
 .nvmrc
+.prettierignore
+.prettierrc
 .stylelintignore
 .stylelintrc
 .travis.yml

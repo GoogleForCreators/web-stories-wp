@@ -98,7 +98,7 @@ jobs:
   fast_finish: true
   include:
     - stage: lint
-      name: Lint (PHP, JavaScript, CSS, and configuration files)
+      name: Lint (PHP, JavaScript, CSS, Markdown, and configuration files)
       php: 7.4
       env: LINT=1
     - stage: test

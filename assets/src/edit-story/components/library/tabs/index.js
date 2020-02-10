@@ -28,87 +28,84 @@ import ShapesIcon from './shapes.svg';
 import LinksIcon from './links.svg';
 
 const Tabs = styled.ul`
-	background: ${ ( { theme } ) => theme.colors.bg.v3 };
-	display: flex;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  background: ${({ theme }) => theme.colors.bg.v3};
+  display: flex;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 `;
 
 const Tab = styled.li`
-	width: 64px;
-	height: 100%;
-	color: ${ ( { theme } ) => theme.colors.fg.v1 };
+  width: 64px;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const Icon = styled.a`
-	color: inherit;
-	background: ${ ( { isActive, theme } ) => isActive ? theme.colors.bg.v4 : 'transparent' };
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  color: inherit;
+  background: ${({ isActive, theme }) =>
+    isActive ? theme.colors.bg.v4 : 'transparent'};
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-	&:hover {
-		color: inherit;
-	}
+  &:hover {
+    color: inherit;
+  }
 
-	${ ( { isActive } ) => ! isActive && `
-	opacity: .4;
-	&:hover { opacity: 1; }
-	` }
+  ${({ isActive }) =>
+    !isActive &&
+    `
+  opacity: .4;
+  &:hover { opacity: 1; }
+  `}
 
-	svg {
-		width: 22px;
-		height: 22px;
-	}
+  svg {
+    width: 22px;
+    height: 22px;
+  }
 `;
 
-function Media( props ) {
-	return (
-		<Tab>
-			<Icon { ...props }>
-				<MediaIcon />
-			</Icon>
-		</Tab>
-	);
+function Media(props) {
+  return (
+    <Tab>
+      <Icon {...props}>
+        <MediaIcon />
+      </Icon>
+    </Tab>
+  );
 }
 
-function Text( props ) {
-	return (
-		<Tab>
-			<Icon { ...props }>
-				<TextIcon />
-			</Icon>
-		</Tab>
-	);
+function Text(props) {
+  return (
+    <Tab>
+      <Icon {...props}>
+        <TextIcon />
+      </Icon>
+    </Tab>
+  );
 }
 
-function Shapes( props ) {
-	return (
-		<Tab>
-			<Icon { ...props }>
-				<ShapesIcon />
-			</Icon>
-		</Tab>
-	);
+function Shapes(props) {
+  return (
+    <Tab>
+      <Icon {...props}>
+        <ShapesIcon />
+      </Icon>
+    </Tab>
+  );
 }
 
-function Links( props ) {
-	return (
-		<Tab>
-			<Icon { ...props }>
-				<LinksIcon />
-			</Icon>
-		</Tab>
-	);
+function Links(props) {
+  return (
+    <Tab>
+      <Icon {...props}>
+        <LinksIcon />
+      </Icon>
+    </Tab>
+  );
 }
 
-export {
-	Tabs,
-	Media,
-	Text,
-	Shapes,
-	Links,
-};
+export { Tabs, Media, Text, Shapes, Links };

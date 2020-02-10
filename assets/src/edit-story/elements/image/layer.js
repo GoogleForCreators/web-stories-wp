@@ -22,21 +22,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from './panel';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../shared/visibleImage';
 
-function LayerPanel() {
-	return (
-		<Panel name="layers" initialHeight={ 240 }>
-			<PanelTitle isPrimary isResizable>
-				{ __( 'Layers', 'web-stories' ) }
-			</PanelTitle>
-			<PanelContent>
-				<p>
-					{ __( 'Layer contents', 'web-stories' ) }
-				</p>
-			</PanelContent>
-		</Panel>
-	);
+function ImageLayerContent({ element }) {
+  const alt = __('Image layer', 'web-stories');
+  return <VisibleImage src={element.src} alt={alt} height="20" />;
 }
 
-export default LayerPanel;
+ImageLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default ImageLayerContent;

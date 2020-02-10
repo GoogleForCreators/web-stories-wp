@@ -33,62 +33,69 @@ import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Element = styled.div`
-	${ elementFillContent }
-	overflow: hidden;
+  ${elementFillContent}
+  overflow: hidden;
 `;
 
 const Video = styled.video`
-	position: absolute;
-	max-width: initial;
-	max-height: initial;
-	${ videoWithScale }
+  position: absolute;
+  max-width: initial;
+  max-height: initial;
+  ${videoWithScale}
 `;
 
-function VideoDisplay( {
-	box: { width, height },
-	element: {
-		mimeType,
-		src,
-		id,
-		isBackground,
-		scale,
-		focalX,
-		focalY,
-		origRatio,
-		videoId,
-		posterId,
-		poster,
-	},
-} ) {
-	const { uploadVideoFrame } = useUploadVideoFrame( { videoId, src, id } );
-	useEffect( () => {
-		if ( videoId && ! posterId ) {
-			uploadVideoFrame();
-		}
-	}, [ videoId, posterId, uploadVideoFrame ] );
+function VideoDisplay({
+  box: { width, height },
+  element: {
+    mimeType,
+    src,
+    id,
+    isBackground,
+    scale,
+    focalX,
+    focalY,
+    origRatio,
+    videoId,
+    posterId,
+    poster,
+  },
+}) {
+  const { uploadVideoFrame } = useUploadVideoFrame({ videoId, src, id });
+  useEffect(() => {
+    if (videoId && !posterId) {
+      uploadVideoFrame();
+    }
+  }, [videoId, posterId, uploadVideoFrame]);
 
-	let style = {};
-	if ( isBackground ) {
-		const styleProps = getBackgroundStyle();
-		style = {
-			...style,
-			...styleProps,
-		};
-	}
+  let style = {};
+  if (isBackground) {
+    const styleProps = getBackgroundStyle();
+    style = {
+      ...style,
+      ...styleProps,
+    };
+  }
 
-	const videoProps = getMediaProps( width, height, scale, focalX, focalY, origRatio );
-	return (
-		<Element>
-			<Video poster={ poster } style={ style } { ...videoProps } >
-				<source src={ src } type={ mimeType } />
-			</Video>
-		</Element>
-	);
+  const videoProps = getMediaProps(
+    width,
+    height,
+    scale,
+    focalX,
+    focalY,
+    origRatio
+  );
+  return (
+    <Element>
+      <Video poster={poster} style={style} {...videoProps}>
+        <source src={src} type={mimeType} />
+      </Video>
+    </Element>
+  );
 }
 
 VideoDisplay.propTypes = {
-	element: StoryPropTypes.elements.video.isRequired,
-	box: StoryPropTypes.box.isRequired,
+  element: StoryPropTypes.elements.video.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoDisplay;
