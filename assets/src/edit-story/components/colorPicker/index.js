@@ -91,6 +91,8 @@ const AlphaWrapper = styled.div`
 
 const Footer = styled.div`
   padding: 16px;
+  height: 19px;
+  line-height: 19px;
   position: relative;
 `;
 
@@ -162,6 +164,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         </AlphaWrapper>
       </Body>
       <Footer>
+        {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
         <EyedropperWrapper>
           <EyedropperButton
             width={15}

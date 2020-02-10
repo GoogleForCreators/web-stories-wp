@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 
 const Pointer = styled.div`
+  /* stylelint-disable function-comma-space-after */
   width: 12px;
   height: 12px;
   background: radial-gradient(
@@ -30,6 +31,7 @@ const Pointer = styled.div`
   );
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
   border-radius: 100%;
+  /* stylelint-enable function-comma-space-after */
 `;
 
 const PointerWithOffset = styled(Pointer)`
