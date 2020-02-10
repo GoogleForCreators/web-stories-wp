@@ -18,18 +18,42 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { Panel, PanelTitle, PanelContent } from './panel';
 
+const Color = styled.div`
+  display: inline-block;
+  background: ${({ color }) => color};
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  margin-right: 12px;
+`;
+
+const Colors = styled.div`
+  display: block;
+  overflow: auto;
+`;
+
 function ColorPresetPanel() {
   return (
     <Panel name="colorpreset">
       <PanelTitle isPrimary>{__('Color presets', 'web-stories')}</PanelTitle>
-      <PanelContent>
-        <p>{__('Color presets go here', 'web-stories')}</p>
+      <PanelContent isPrimary>
+        <Colors>
+          <Color color="#B4D3D8" />
+          <Color color="#6F8F9F" />
+          <Color color="#324F66" />
+          <Color color="#312834" />
+          <Color color="#B578B0" />
+        </Colors>
       </PanelContent>
     </Panel>
   );

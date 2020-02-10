@@ -29,10 +29,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useInspector from '../../inspector/useInspector';
-import panelContext from './context';
+import useInspector from '../../../inspector/useInspector';
+import panelContext from '../context';
+import Arrow from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
-import Arrow from './arrow.svg';
 
 const Header = styled.h2`
   background-color: ${({ theme, isPrimary }) =>
@@ -64,7 +64,7 @@ const Heading = styled.span`
   color: inherit;
   margin: 0;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
 `;
 

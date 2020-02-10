@@ -29,8 +29,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useDragHandlers from './useDragHandlers';
-import useKeyboardHandlers from './useKeyboardHandlers';
+import useDragHandlers from '../useDragHandlers';
+import useKeyboardHandlers from '../useKeyboardHandlers';
 
 const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
   background-color: ${({ theme }) => theme.colors.fg.v5};

@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-export { default as Button } from './button';
-export { default as Color } from './color';
-export { default as Group } from './group';
-export { default as Input } from './input';
-export { default as InputGroup } from './inputGroup';
-export { default as Label } from './label';
-export { default as Numeric } from './numeric';
-export { default as Row } from './row';
-export { default as SelectMenu } from './select';
-export { default as Spacer } from './row';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+const Spacer = styled.div`
+  display: flex;
+  height: 100%;
+
+  ${({ theme, dotted = false }) =>
+    dotted && `border-left: 1px dashed ${theme.colors.bg.v2};`}
+  ${({ expand = true }) => expand && `flex: 1;`}
+`;
+
+export default Spacer;

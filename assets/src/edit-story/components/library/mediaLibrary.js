@@ -148,6 +148,9 @@ function MediaLibrary({ onInsert }) {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
+    } = {
+      image: [],
+      video: [],
     },
   } = useConfig();
 

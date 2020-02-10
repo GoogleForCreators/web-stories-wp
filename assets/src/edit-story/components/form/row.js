@@ -14,13 +14,34 @@
  * limitations under the License.
  */
 
-export { default as Button } from './button';
-export { default as Color } from './color';
-export { default as Group } from './group';
-export { default as Input } from './input';
-export { default as InputGroup } from './inputGroup';
-export { default as Label } from './label';
-export { default as Numeric } from './numeric';
-export { default as Row } from './row';
-export { default as SelectMenu } from './select';
-export { default as Spacer } from './row';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+
+  ${({ spaceBetween = true }) =>
+    spaceBetween && `justify-content: space-between;`}
+  ${({ expand = true }) => expand && `flex: 1;`}
+
+  & > * {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  & > *:first-child {
+    margin-left: 0 !important;
+  }
+
+  & > *:last-child {
+    margin-right: 0 !important;
+  }
+`;
+
+export default Row;

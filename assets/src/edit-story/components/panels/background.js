@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
-import { ActionButton } from '../button';
+import { Button } from '../form';
 import { SimplePanel } from './panel';
 
 function BackgroundPanel({ selectedElements, onSetProperties }) {
@@ -59,11 +59,11 @@ function BackgroundPanel({ selectedElements, onSetProperties }) {
   };
   return (
     <SimplePanel name="position" title={__('Background', 'amp')}>
-      <ActionButton onClick={handleClick}>
+      <Button onClick={handleClick}>
         {state.isBackground
           ? __('Remove as Background', 'amp')
           : __('Set as background', 'amp')}
-      </ActionButton>
+      </Button>
     </SimplePanel>
   );
 }

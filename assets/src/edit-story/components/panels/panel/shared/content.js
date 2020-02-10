@@ -28,11 +28,15 @@ import { useContext } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import panelContext from './context';
+import panelContext from '../context';
 
 const Form = styled.form`
-  margin: 10px 20px;
+  padding: 10px 20px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: ${({ theme, isPrimary }) =>
+    isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1};
 
   ${({ hidden }) => hidden && 'display: none'}
 `;
@@ -65,6 +69,7 @@ Content.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onSubmit: PropTypes.func,
+  isPrimary: PropTypes.bool,
 };
 
 Content.defaultProps = {

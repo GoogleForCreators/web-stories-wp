@@ -22,11 +22,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import UndoIcon from './icons/undo.svg';
-import RedoIcon from './icons/redo.svg';
-import LeftArrowIcon from './icons/arrow_left.svg';
-import RightArrowIcon from './icons/arrow_right.svg';
-import GridViewIcon from './icons/grid_view.svg';
+import UndoIcon from '../../icons/undo.svg';
+import RedoIcon from '../../icons/redo.svg';
+import LeftArrowIcon from '../../icons/arrow_left.svg';
+import RightArrowIcon from '../../icons/arrow_right.svg';
+import GridViewIcon from '../../icons/grid_view.svg';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -127,13 +127,3 @@ export const GridView = (props) => (
     <GridViewIcon />
   </StyledButton>
 );
-
-export const ActionButton = styled.button.attrs({ type: 'button' })`
-  background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.bg.v5};
-  font-size: 15px;
-  line-height: 30px;
-  padding: 0 15px;
-`;

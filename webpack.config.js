@@ -39,7 +39,7 @@ const sharedConfig = {
       new TerserPlugin({
         parallel: true,
         sourceMap: false,
-        cache: true,
+        cache: false,
         terserOptions: {
           output: {
             comments: /translators:/i,

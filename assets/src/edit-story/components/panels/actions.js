@@ -24,7 +24,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -34,27 +33,19 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Button } from '../form';
 import { SimplePanel } from './panel';
 
 /**
  * WordPress dependencies
  */
 
-const Delete = styled.a`
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.action};
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.danger};
-  }
-`;
-
 function ActionsPanel({ deleteSelectedElements }) {
   return (
     <SimplePanel name="actions" title={__('Actions', 'web-stories')}>
-      <Delete onClick={deleteSelectedElements}>
+      <Button onClick={deleteSelectedElements}>
         {__('Remove element', 'web-stories')}
-      </Delete>
+      </Button>
     </SimplePanel>
   );
 }

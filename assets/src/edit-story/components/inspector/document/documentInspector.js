@@ -46,6 +46,7 @@ const buttonStyles = css`
 const Img = styled.img`
   width: 100%;
   max-height: 300px;
+  object-fit: contain;
 `;
 
 const RemoveButton = styled.button`

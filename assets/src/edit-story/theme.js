@@ -42,6 +42,8 @@ const theme = {
     mg: {
       v1: '#616877',
       v2: '#DADADA',
+      v3: '#3C4043',
+      v4: '#80868B',
     },
     fg: {
       v0: '#000000',
@@ -72,7 +74,7 @@ const theme = {
     body2: {
       family: 'Roboto',
       size: '14px',
-      lineHeight: '20px',
+      lineHeight: '16px',
       letterSpacing: '0.0142em',
     },
     tab: {
