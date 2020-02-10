@@ -92,6 +92,7 @@ const AlphaWrapper = styled.div`
 const Footer = styled.div`
   padding: 16px;
   height: 19px;
+  font-size: 12px;
   line-height: 19px;
   position: relative;
 `;
