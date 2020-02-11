@@ -56,7 +56,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body.edit-story .WebStories_ReactModal__Overlay {
     top: ${ADMIN_TOOLBAR_HEIGHT}px;
-		left: ${ADMIN_MENU_WIDTH}px;
+    left: ${ADMIN_MENU_WIDTH}px;
   }
 
   body.edit-story.folded .WebStories_ReactModal__Overlay {
