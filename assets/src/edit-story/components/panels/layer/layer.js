@@ -49,7 +49,6 @@ const LayerButton = styled.button.attrs({
     background: ${rgba(theme.colors.action, 0.14)};
   `}
 
-  &:focus,
   &:active {
     outline: none;
   }
