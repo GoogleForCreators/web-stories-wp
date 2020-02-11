@@ -39,7 +39,7 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  background-color: ${({ theme }) => theme.colors.bg.v8};
+  background-color: ${({ theme }) => theme.colors.mg.v1};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 
