@@ -47,7 +47,7 @@ const Wrapper = styled.div`
 
 const Line = styled.div`
   height: 4px;
-  margin: 0 0 -6px;
+  margin: 0 0 -4px;
   background: ${({ theme }) => theme.colors.action};
   width: 100%;
 `;
@@ -56,10 +56,9 @@ function LayerSeparator({ position }) {
   const {
     actions: { setCurrentSeparator },
   } = useContext(LayerContext);
-  const handlePointerEnter = useCallback(() => setCurrentSeparator(position), [
-    setCurrentSeparator,
-    position,
-  ]);
+  const handlePointerEnter = useCallback(() => {
+    setCurrentSeparator(position);
+  }, [setCurrentSeparator, position]);
   return (
     <Wrapper onPointerEnter={handlePointerEnter}>
       <Line />

@@ -17,38 +17,24 @@
 /**
  * WordPress dependencies
  */
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  useRef,
-} from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import LayerContext from './context';
 
 function useLayerSelection(element) {
-  const { type, id: elementId, position: currentPosition } = element;
+  const { type, id: elementId } = element;
 
   const isBackground = type === 'background';
   const backgroundHasElement = Boolean(element.inner);
   const elementInnerId =
     isBackground && backgroundHasElement ? element.inner.id : null;
 
-  const [dragTarget, setDragTarget] = useState(null);
-  const {
-    state: { currentSeparator },
-    actions: { setIsReordering, setCurrentSeparator },
-  } = useContext(LayerContext);
-
   const {
     state: { currentPage, selectedElementIds },
     actions: {
-      arrangeElement,
       setSelectedElementsById,
       toggleElementInSelection,
       clearSelection,
@@ -99,10 +85,6 @@ function useLayerSelection(element) {
       } else {
         // No special key pressed - just selected this layer and nothing else.
         setSelectedElementsById({ elementIds: [elementId] });
-
-        if (!evt.shiftKey) {
-          setDragTarget(evt.target);
-        }
       }
     },
     [
@@ -117,57 +99,6 @@ function useLayerSelection(element) {
       backgroundHasElement,
     ]
   );
-
-  const separator = useRef(null);
-  useEffect(() => {
-    separator.current = currentSeparator;
-  }, [currentSeparator]);
-
-  useEffect(() => {
-    if (!dragTarget) {
-      return undefined;
-    }
-
-    const onRelease = (evt) => {
-      evt.preventDefault();
-      if (separator.current !== null) {
-        const newPosition = separator.current;
-        const position =
-          newPosition > currentPosition ? newPosition - 1 : newPosition;
-        arrangeElement({ elementId, position });
-      }
-      setDragTarget(null);
-    };
-
-    // only mark as reordering when starting to drag
-    const onMove = () => setIsReordering(true);
-
-    // abort on esc
-    const onAbort = (evt) => {
-      if (evt.key === 'Escape') {
-        setDragTarget(null);
-      }
-    };
-
-    dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
-    dragTarget.ownerDocument.addEventListener('keydown', onAbort);
-    dragTarget.addEventListener('pointermove', onMove);
-
-    return () => {
-      setCurrentSeparator(null);
-      setIsReordering(false);
-      dragTarget.removeEventListener('pointermove', onMove);
-      dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
-      dragTarget.ownerDocument.removeEventListener('keydown', onAbort);
-    };
-  }, [
-    dragTarget,
-    currentPosition,
-    elementId,
-    setCurrentSeparator,
-    setIsReordering,
-    arrangeElement,
-  ]);
 
   return { isSelected, handleClick };
 }

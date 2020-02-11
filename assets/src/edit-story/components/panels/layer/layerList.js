@@ -22,7 +22,8 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { Fragment, useContext } from '@wordpress/element';
+import { Fragment, useContext, useEffect } from '@wordpress/element';
+import { speak } from '@wordpress/a11y';
 
 /**
  * Internal dependencies
@@ -39,10 +40,22 @@ const LayerList = styled.div.attrs({ role: 'listbox' })`
 
 function LayerPanel() {
   const {
-    state: { layers, isReordering },
+    state: { layers, isReordering, currentSeparator },
   } = useContext(LayerContext);
 
-  if (!layers || !layers.length) {
+  const numLayers = layers && layers.length;
+
+  useEffect(() => {
+    if (isReordering && currentSeparator) {
+      speak(
+        `Reordering layers.. Press Escape to abort.. Release mouse to drop in position ${numLayers -
+          currentSeparator}`,
+        'assertive'
+      );
+    }
+  }, [isReordering, currentSeparator, numLayers]);
+
+  if (!numLayers) {
     return null;
   }
 

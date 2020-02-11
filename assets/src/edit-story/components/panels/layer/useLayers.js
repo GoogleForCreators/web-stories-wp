@@ -44,6 +44,8 @@ function useLayers() {
 
   const hasBackground = Boolean(currentPage.backgroundElementId);
   const elements = getElementsWithBackground(currentPage, hasBackground);
+
+  // We need an index going in the "correct" order for data manipulation
   const offset = hasBackground ? 0 : -1;
   const layers = elements.map((layer, index) => ({
     ...layer,

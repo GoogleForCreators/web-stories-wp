@@ -26,6 +26,7 @@ import { rgba } from 'polished';
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import useLayerSelection from './useLayerSelection';
+import useLayerReordering from './useLayerReordering';
 import { LAYER_HEIGHT } from './constants';
 
 const LayerButton = styled.button.attrs({
@@ -81,9 +82,14 @@ const LayerDescription = styled.div`
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
+  const { handleReordering } = useLayerReordering(element);
 
   return (
-    <LayerButton isSelected={isSelected} onPointerDown={handleClick}>
+    <LayerButton
+      isSelected={isSelected}
+      onClick={handleClick}
+      onPointerDown={handleReordering}
+    >
       <LayerIconWrapper>
         <LayerIcon />
       </LayerIconWrapper>
