@@ -82,13 +82,13 @@ const LayerDescription = styled.div`
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const { handleReordering } = useLayerReordering(element);
+  const { handleStartReordering } = useLayerReordering(element);
 
   return (
     <LayerButton
       isSelected={isSelected}
       onClick={handleClick}
-      onPointerDown={handleReordering}
+      onPointerDown={handleStartReordering}
     >
       <LayerIconWrapper>
         <LayerIcon />

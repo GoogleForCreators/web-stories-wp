@@ -46,7 +46,7 @@ function useLayerReordering(element) {
     actions: { arrangeElement, setSelectedElementsById },
   } = useStory();
 
-  const handleReordering = useCallback(
+  const handleStartReordering = useCallback(
     (evt) => {
       if (!isBackground && !evt.shiftKey && !evt.metaKey) {
         setSelectedElementsById({ elementIds: [elementId] });
@@ -87,15 +87,15 @@ function useLayerReordering(element) {
       }
     };
 
-    dragTarget.ownerDocument.addEventListener('mouseup', onRelease);
+    dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
     dragTarget.ownerDocument.addEventListener('keydown', onAbort);
-    dragTarget.addEventListener('mousemove', onMove);
+    dragTarget.addEventListener('pointermove', onMove);
 
     return () => {
       setCurrentSeparator(null);
       setIsReordering(false);
-      dragTarget.removeEventListener('mousemove', onMove);
-      dragTarget.ownerDocument.removeEventListener('mouseup', onRelease);
+      dragTarget.removeEventListener('pointermove', onMove);
+      dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
       dragTarget.ownerDocument.removeEventListener('keydown', onAbort);
     };
   }, [
@@ -107,7 +107,7 @@ function useLayerReordering(element) {
     arrangeElement,
   ]);
 
-  return { handleReordering };
+  return { handleStartReordering };
 }
 
 export default useLayerReordering;
