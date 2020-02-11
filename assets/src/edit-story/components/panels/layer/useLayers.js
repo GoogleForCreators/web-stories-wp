@@ -20,16 +20,16 @@
 import { useStory } from '../../../app';
 import { createNewElement } from '../../../elements';
 
-function getElementsWithBackground(page, hasBackground) {
+function getLayersFromElements(elements, hasBackground) {
   // if no background element, create empty background element as first element.
   if (!hasBackground) {
-    return [createNewElement('background'), ...page.elements];
+    return [createNewElement('background'), ...elements];
   }
 
   // Otherwise wrap first element as inner of new background element.
   return [
-    createNewElement('background', { inner: page.elements[0] }),
-    ...page.elements.slice(1),
+    createNewElement('background', { inner: elements[0] }),
+    ...elements.slice(1),
   ];
 }
 
@@ -43,11 +43,11 @@ function useLayers() {
   }
 
   const hasBackground = Boolean(currentPage.backgroundElementId);
-  const elements = getElementsWithBackground(currentPage, hasBackground);
+  const rawLayers = getLayersFromElements(currentPage.elements, hasBackground);
 
   // We need an index going in the "correct" order for data manipulation
   const offset = hasBackground ? 0 : -1;
-  const layers = elements.map((layer, index) => ({
+  const layers = rawLayers.map((layer, index) => ({
     ...layer,
     position: index + offset,
   }));

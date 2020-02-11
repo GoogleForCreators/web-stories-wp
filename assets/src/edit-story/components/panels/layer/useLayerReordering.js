@@ -31,8 +31,8 @@ import {
 import { useStory } from '../../../app';
 import LayerContext from './context';
 
-function useLayerReordering(element) {
-  const { type, id: elementId, position: currentPosition } = element;
+function useLayerReordering(layer) {
+  const { type, id: elementId, position: currentPosition } = layer;
 
   const isBackground = type === 'background';
 

@@ -66,10 +66,10 @@ function LayerPanel() {
 
   return (
     <LayerList>
-      {layers.map((element) => (
-        <Fragment key={element.id}>
-          {isReordering && <LayerSeparator position={element.position + 1} />}
-          <Layer element={element} />
+      {layers.map((layer) => (
+        <Fragment key={layer.id}>
+          {isReordering && <LayerSeparator position={layer.position + 1} />}
+          <Layer layer={layer} />
         </Fragment>
       ))}
     </LayerList>

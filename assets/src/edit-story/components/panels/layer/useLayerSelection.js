@@ -24,13 +24,13 @@ import { useCallback } from '@wordpress/element';
  */
 import { useStory } from '../../../app';
 
-function useLayerSelection(element) {
-  const { type, id: elementId } = element;
+function useLayerSelection(layer) {
+  const { type, id: elementId } = layer;
 
   const isBackground = type === 'background';
-  const backgroundHasElement = Boolean(element.inner);
+  const backgroundHasElement = Boolean(layer.inner);
   const elementInnerId =
-    isBackground && backgroundHasElement ? element.inner.id : null;
+    isBackground && backgroundHasElement ? layer.inner.id : null;
 
   const {
     state: { currentPage, selectedElementIds },
@@ -44,10 +44,10 @@ function useLayerSelection(element) {
   let isSelected;
   if (isBackground) {
     isSelected = backgroundHasElement
-      ? selectedElementIds.includes(element.inner.id)
+      ? selectedElementIds.includes(layer.inner.id)
       : selectedElementIds.length === 0;
   } else {
-    isSelected = selectedElementIds.includes(element.id);
+    isSelected = selectedElementIds.includes(elementId);
   }
 
   const pageElementIds = currentPage.elements.map(({ id }) => id);

@@ -79,10 +79,10 @@ const LayerDescription = styled.div`
   text-align: left;
 `;
 
-function Layer({ element }) {
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
-  const { isSelected, handleClick } = useLayerSelection(element);
-  const { handleStartReordering } = useLayerReordering(element);
+function Layer({ layer }) {
+  const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
+  const { isSelected, handleClick } = useLayerSelection(layer);
+  const { handleStartReordering } = useLayerReordering(layer);
 
   return (
     <LayerButton
@@ -94,14 +94,14 @@ function Layer({ element }) {
         <LayerIcon />
       </LayerIconWrapper>
       <LayerDescription>
-        <LayerContent element={element} />
+        <LayerContent layer={layer} />
       </LayerDescription>
     </LayerButton>
   );
 }
 
 Layer.propTypes = {
-  element: StoryPropTypes.layer.isRequired,
+  layer: StoryPropTypes.layer.isRequired,
 };
 
 export default Layer;
