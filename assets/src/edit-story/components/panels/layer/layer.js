@@ -83,7 +83,7 @@ function Layer({ element }) {
   const { isSelected, handleClick } = useLayerSelection(element);
 
   return (
-    <LayerButton isSelected={isSelected} onClick={handleClick}>
+    <LayerButton isSelected={isSelected} onPointerDown={handleClick}>
       <LayerIconWrapper>
         <LayerIcon />
       </LayerIconWrapper>

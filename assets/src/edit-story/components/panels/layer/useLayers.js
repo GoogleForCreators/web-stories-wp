@@ -20,9 +20,7 @@
 import { useStory } from '../../../app';
 import { createNewElement } from '../../../elements';
 
-function getElementsWithBackground(page) {
-  const hasBackground = Boolean(page.backgroundElementId);
-
+function getElementsWithBackground(page, hasBackground) {
   // if no background element, create empty background element as first element.
   if (!hasBackground) {
     return [createNewElement('background'), ...page.elements];
@@ -44,7 +42,13 @@ function useLayers() {
     return [];
   }
 
-  const layers = getElementsWithBackground(currentPage);
+  const hasBackground = Boolean(currentPage.backgroundElementId);
+  const elements = getElementsWithBackground(currentPage, hasBackground);
+  const offset = hasBackground ? 0 : -1;
+  const layers = elements.map((layer, index) => ({
+    ...layer,
+    position: index + offset,
+  }));
   layers.reverse();
   return layers;
 }

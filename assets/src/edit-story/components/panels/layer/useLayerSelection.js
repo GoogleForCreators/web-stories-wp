@@ -17,22 +17,38 @@
 /**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  useRef,
+} from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import LayerContext from './context';
 
 function useLayerSelection(element) {
-  const { type } = element;
+  const { type, id: elementId, position: currentPosition } = element;
 
   const isBackground = type === 'background';
   const backgroundHasElement = Boolean(element.inner);
+  const elementInnerId =
+    isBackground && backgroundHasElement ? element.inner.id : null;
+
+  const [dragTarget, setDragTarget] = useState(null);
+  const {
+    state: { currentSeparator },
+    actions: { setIsReordering, setCurrentSeparator },
+  } = useContext(LayerContext);
 
   const {
     state: { currentPage, selectedElementIds },
     actions: {
+      arrangeElement,
       setSelectedElementsById,
       toggleElementInSelection,
       clearSelection,
@@ -59,7 +75,7 @@ function useLayerSelection(element) {
       if (isBackground) {
         // If background layer is clicked either select nothing or select only background element
         if (backgroundHasElement) {
-          setSelectedElementsById({ elementIds: [element.inner.id] });
+          setSelectedElementsById({ elementIds: [elementInnerId] });
         } else {
           clearSelection();
         }
@@ -68,9 +84,7 @@ function useLayerSelection(element) {
         // select everything between this layer and the first selected layer
         const firstId = selectedElementIds[0];
         const firstIndex = pageElementIds.findIndex((id) => id === firstId);
-        const clickedIndex = pageElementIds.findIndex(
-          (id) => id === element.id
-        );
+        const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
         const lowerIndex = Math.min(firstIndex, clickedIndex);
         const higherIndex = Math.max(firstIndex, clickedIndex);
         const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
@@ -81,10 +95,14 @@ function useLayerSelection(element) {
         setSelectedElementsById({ elementIds });
       } else if (evt.metaKey) {
         // Meta pressed. Toggle this layer in the selection.
-        toggleElementInSelection({ elementId: element.id });
+        toggleElementInSelection({ elementId });
       } else {
         // No special key pressed - just selected this layer and nothing else.
-        setSelectedElementsById({ elementIds: [element.id] });
+        setSelectedElementsById({ elementIds: [elementId] });
+
+        if (!evt.shiftKey) {
+          setDragTarget(evt.target);
+        }
       }
     },
     [
@@ -93,11 +111,63 @@ function useLayerSelection(element) {
       setSelectedElementsById,
       toggleElementInSelection,
       clearSelection,
-      element,
+      elementId,
+      elementInnerId,
       isBackground,
       backgroundHasElement,
     ]
   );
+
+  const separator = useRef(null);
+  useEffect(() => {
+    separator.current = currentSeparator;
+  }, [currentSeparator]);
+
+  useEffect(() => {
+    if (!dragTarget) {
+      return undefined;
+    }
+
+    const onRelease = (evt) => {
+      evt.preventDefault();
+      if (separator.current !== null) {
+        const newPosition = separator.current;
+        const position =
+          newPosition > currentPosition ? newPosition - 1 : newPosition;
+        arrangeElement({ elementId, position });
+      }
+      setDragTarget(null);
+    };
+
+    // only mark as reordering when starting to drag
+    const onMove = () => setIsReordering(true);
+
+    // abort on esc
+    const onAbort = (evt) => {
+      if (evt.key === 'Escape') {
+        setDragTarget(null);
+      }
+    };
+
+    dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
+    dragTarget.ownerDocument.addEventListener('keydown', onAbort);
+    dragTarget.addEventListener('pointermove', onMove);
+
+    return () => {
+      setCurrentSeparator(null);
+      setIsReordering(false);
+      dragTarget.removeEventListener('pointermove', onMove);
+      dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
+      dragTarget.ownerDocument.removeEventListener('keydown', onAbort);
+    };
+  }, [
+    dragTarget,
+    currentPosition,
+    elementId,
+    setCurrentSeparator,
+    setIsReordering,
+    arrangeElement,
+  ]);
 
   return { isSelected, handleClick };
 }
