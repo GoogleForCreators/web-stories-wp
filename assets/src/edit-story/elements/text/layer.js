@@ -15,27 +15,32 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+import StoryPropTypes from '../../types';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+const TextLayer = styled.span`
+  color: ${({ theme }) => theme.colors.bg.v1};
+  white-space: nowrap;
+  font-size: 13px;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
+`;
+
+function TextLayerContent({ element: { content } }) {
+  // Remove all tags
+  const rawContent = content.replace(/<[^>]*>/g, '');
+  return <TextLayer>{rawContent}</TextLayer>;
+}
+
+TextLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
 };
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default TextLayerContent;

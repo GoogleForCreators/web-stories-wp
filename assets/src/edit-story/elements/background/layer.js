@@ -15,27 +15,25 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+import styled from 'styled-components';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
-};
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
-export const hasEditMode = false;
+const LayerBackground = styled.span`
+  opacity: 0.5;
+`;
 
-export const isMedia = false;
+function BackgroundLayerContent() {
+  return (
+    <LayerBackground>
+      {__('Background (locked)', 'web-stories')}
+    </LayerBackground>
+  );
+}
 
-export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default BackgroundLayerContent;

@@ -15,27 +15,23 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../shared/visibleImage';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+function ImageLayerContent({ element }) {
+  const alt = __('Image layer', 'web-stories');
+  return <VisibleImage src={element.src} alt={alt} height="20" />;
+}
+
+ImageLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
 };
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default ImageLayerContent;
