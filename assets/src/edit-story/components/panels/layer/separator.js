@@ -35,7 +35,6 @@ const Wrapper = styled.div`
   height: ${LAYER_HEIGHT}px;
   margin: -${LAYER_HEIGHT / 2}px 0;
   padding: ${LAYER_HEIGHT / 2}px 0;
-  width: 100%;
   opacity: 0;
   position: relative;
   z-index: 1;

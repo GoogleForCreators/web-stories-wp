@@ -36,6 +36,7 @@ const LayerList = styled.div.attrs({ role: 'listbox' })`
   display: flex;
   flex-direction: column;
   width: 100%;
+  align-items: stretch;
 `;
 
 function LayerPanel() {
