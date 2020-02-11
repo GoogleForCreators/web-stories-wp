@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { get } from 'lodash';
-
-/**
  * WordPress dependencies
  */
 import { useEffect } from '@wordpress/element';
@@ -35,11 +30,12 @@ import { migrate } from '../../../migration';
  * Get the permission by checking for fields in the REST API.
  *
  * @param {Object} post Current post object.
+ * @param {Object} post._links Embed links
  * @param {string} field Requested field.
  * @return {boolean} If user has capability, defaults to false.
  */
 const getPerm = (post, field) => {
-  return Boolean(get(post, ['_links', field], false));
+  return Boolean(post?._links?.[field]);
 };
 
 // When ID is set, load story from API.
