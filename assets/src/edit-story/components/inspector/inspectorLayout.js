@@ -20,8 +20,14 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { useRef } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
+import { useEscapeToBlurEffect } from '../keyboard';
 import useInspector from './useInspector';
 import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
@@ -49,11 +55,13 @@ const InspectorBackground = styled.div`
 `;
 
 function InspectorLayout() {
+  const ref = useRef(null);
   const {
     actions: { setInspectorContentNode },
   } = useInspector();
+  useEscapeToBlurEffect(ref);
   return (
-    <Layout>
+    <Layout ref={ref}>
       <TabsArea>
         <InspectorTabs />
       </TabsArea>
