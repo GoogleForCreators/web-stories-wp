@@ -22,14 +22,16 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { Dashicon } from '@wordpress/components';
+import Magnify from './magnify.svg';
 
-const Icon = styled(Dashicon)`
+const Icon = styled(Magnify)`
   position: absolute;
   fill: ${({ theme }) => theme.colors.mg.v2};
   left: 10px;
+  width: 20px;
+  height: 20px;
 `;
 
 const SearchField = styled.div`
@@ -44,6 +46,9 @@ const Search = styled.input.attrs({ type: 'text' })`
   border: none !important;
   color: ${({ theme }) => theme.colors.mg.v2} !important;
   padding: 4px 12px 4px 36px !important;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.mg.v2};

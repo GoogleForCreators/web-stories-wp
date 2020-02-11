@@ -33,9 +33,13 @@ import { Section, Title, SearchInput, Header } from './common';
 
 const PREVIEW_SIZE = 36;
 
+const SectionContent = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const ShapePreview = styled.div`
   position: relative;
-  display: inline-block;
   margin-left: 24px;
   margin-right: 24px;
 `;
@@ -62,27 +66,10 @@ function MediaLibrary({ onInsert }) {
         onChange={() => {}}
       />
       <Section title={__('Basic shapes', 'web-stories')}>
-        {/** Square shape */}
-        <ShapePreview
-          key={'square'}
-          onClick={() => {
-            onInsert('square', {
-              backgroundColor: '#333',
-              width: 200,
-              height: 200,
-              x: 5,
-              y: 5,
-              rotationAngle: 0,
-            });
-          }}
-          alt={__('Square', 'web-stories')}
-        >
-          <Square />
-        </ShapePreview>
-        {/** Basic masks */}
-        {MASKS.map((mask) => (
+        <SectionContent>
+          {/** Square shape */}
           <ShapePreview
-            key={mask.type}
+            key={'square'}
             onClick={() => {
               onInsert('square', {
                 backgroundColor: '#333',
@@ -91,18 +78,41 @@ function MediaLibrary({ onInsert }) {
                 x: 5,
                 y: 5,
                 rotationAngle: 0,
-                mask: {
-                  type: mask.type,
-                },
               });
             }}
-            alt={mask.name}
+            alt={__('Square', 'web-stories')}
           >
-            <svg viewBox={'0 0 1 1'} width={PREVIEW_SIZE} height={PREVIEW_SIZE}>
-              <Path d={mask.path} />
-            </svg>
+            <Square />
           </ShapePreview>
-        ))}
+          {/** Basic masks */}
+          {MASKS.map((mask) => (
+            <ShapePreview
+              key={mask.type}
+              onClick={() => {
+                onInsert('square', {
+                  backgroundColor: '#333',
+                  width: 200,
+                  height: 200,
+                  x: 5,
+                  y: 5,
+                  rotationAngle: 0,
+                  mask: {
+                    type: mask.type,
+                  },
+                });
+              }}
+              alt={mask.name}
+            >
+              <svg
+                viewBox={'0 0 1 1'}
+                width={PREVIEW_SIZE}
+                height={PREVIEW_SIZE}
+              >
+                <Path d={mask.path} />
+              </svg>
+            </ShapePreview>
+          ))}
+        </SectionContent>
       </Section>
     </>
   );

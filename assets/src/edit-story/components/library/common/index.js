@@ -43,7 +43,7 @@ export const Header = styled.div`
 
 export const MainButton = styled.button`
   cursor: pointer;
-  background: none;
+  background: transparent;
   color: ${({ theme }) => theme.colors.fg.v1};
   padding: 5px;
   font-weight: bold;

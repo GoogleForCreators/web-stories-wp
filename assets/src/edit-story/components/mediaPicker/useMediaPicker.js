@@ -20,14 +20,14 @@
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export default function useMediaPicker(
+export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect = () => {},
   onClose = () => {},
   type = '',
-  multiple = false
-) {
+  multiple = false,
+}) {
   useEffect(() => {
     // Work around that forces default tab as upload tab.
     wp.media.controller.Library.prototype.defaults.contentUserSetting = false;

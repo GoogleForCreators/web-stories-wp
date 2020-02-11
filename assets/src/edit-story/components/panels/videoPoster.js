@@ -65,13 +65,12 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
     onSetProperties(newState);
   };
 
-  const openMediaPicker = useMediaPicker(
-    __('Select as video poster', 'web-stories') /** title */,
-    __('Set as video poster', 'web-stories') /** buttonInsertText */,
-    handleChangeImage /** onSelect */,
-    undefined /** onClose */,
-    'image' /** type */
-  );
+  const openMediaPicker = useMediaPicker({
+    title: __('Select as video poster', 'web-stories'),
+    buttonInsertText: __('Set as video poster', 'web-stories'),
+    onSelect: handleChangeImage,
+    type: 'image',
+  });
 
   return (
     <SimplePanel

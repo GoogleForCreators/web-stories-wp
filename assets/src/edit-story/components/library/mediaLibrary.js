@@ -109,12 +109,10 @@ function MediaLibrary({ onInsert }) {
 
   useEffect(loadMedia);
 
-  const openMediaPicker = useMediaPicker(
-    undefined /** title */,
-    undefined /** buttonInsertText */,
-    onSelect /** onSelect */,
-    onClose /** onClose */
-  );
+  const openMediaPicker = useMediaPicker({
+    onSelect,
+    onClose,
+  });
 
   /**
    * Check if number is odd or even.

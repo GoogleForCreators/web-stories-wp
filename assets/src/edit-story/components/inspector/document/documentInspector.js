@@ -35,7 +35,7 @@ import { useMediaPicker } from '../../mediaPicker';
 import { SelectMenu, InputGroup } from '../../form';
 import useInspector from '../useInspector';
 
-const Button = styled.div`
+const Button = styled.button`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 14px;
   width: 100%;
@@ -119,13 +119,12 @@ function DocumentInspector() {
     [deleteStory]
   );
 
-  const openMediaPicker = useMediaPicker(
-    __('Select as featured image', 'web-stories') /** title */,
-    __('Set as featured image', 'web-stories') /** buttonInsertText */,
-    handleChangeImage /** onSelect */,
-    undefined /** onClose */,
-    'image' /** type */
-  );
+  const openMediaPicker = useMediaPicker({
+    title: __('Select as featured image', 'web-stories'),
+    buttonInsertText: __('Set as featured image', 'web-stories'),
+    onSelect: handleChangeImage,
+    type: 'image',
+  });
 
   return (
     <>
