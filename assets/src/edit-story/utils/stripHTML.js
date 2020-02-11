@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
+const buffer = document.createElement('div');
 export default function stripHTML(string) {
   // @todo: implement a cheaper way to strip markup.
-  const buffer = document.createElement('div');
   buffer.innerHTML = string;
   return buffer.textContent;
 }
