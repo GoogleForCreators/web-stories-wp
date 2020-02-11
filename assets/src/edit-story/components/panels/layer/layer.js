@@ -31,7 +31,7 @@ import { LAYER_HEIGHT } from './constants';
 
 const LayerButton = styled.button.attrs({
   type: 'button',
-  tabIndex: '0',
+  tabIndex: -1,
   role: 'option',
 })`
   display: flex;
