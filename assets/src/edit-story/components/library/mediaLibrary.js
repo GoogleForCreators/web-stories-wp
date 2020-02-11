@@ -31,8 +31,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
+import { useMedia } from '../../app/media';
 import UploadButton from '../uploadButton';
-import useLibrary from './useLibrary';
 
 const Container = styled.div`
   display: grid;
@@ -138,12 +138,12 @@ function MediaLibrary({ onInsert }) {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
     actions: {
       loadMedia,
-      setIsMediaLoading,
-      setIsMediaLoaded,
+      reloadMedia,
+      resetMedia,
       setMediaType,
       setSearchTerm,
     },
-  } = useLibrary();
+  } = useMedia();
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -170,8 +170,7 @@ function MediaLibrary({ onInsert }) {
    */
   const onSearch = (evt) => {
     setSearchTerm(evt.target.value);
-    setIsMediaLoading(false);
-    setIsMediaLoaded(false);
+    reloadMedia();
   };
 
   /**
@@ -182,15 +181,11 @@ function MediaLibrary({ onInsert }) {
   const onFilter = (filter) => {
     if (filter !== mediaType) {
       setMediaType(filter);
-      setIsMediaLoading(false);
-      setIsMediaLoaded(false);
+      reloadMedia();
     }
   };
 
-  const onClose = () => {
-    setIsMediaLoading(false);
-    setIsMediaLoaded(false);
-  };
+  const onClose = resetMedia;
 
   /**
    * Callback of select in media picker to insert media element.

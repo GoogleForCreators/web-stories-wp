@@ -24,6 +24,7 @@ import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import FontPanel from './font';
+import MaskPanel from './mask';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
 import PositionPanel from './position';
@@ -47,6 +48,7 @@ const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const VIDEO_POSTER = 'videoPoster';
+const MASK = 'mask';
 
 export const PanelTypes = {
   ACTIONS,
@@ -62,6 +64,7 @@ export const PanelTypes = {
   ROTATION_ANGLE,
   FILL,
   VIDEO_POSTER,
+  MASK,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -126,6 +129,8 @@ export function getPanels(elements) {
             return { type, Panel: TextPanel };
           case VIDEO_POSTER:
             return { type, Panel: VideoPosterPanel };
+          case MASK:
+            return { type, Panel: MaskPanel };
           default:
             throw new Error(`Unknown panel: ${type}`);
         }

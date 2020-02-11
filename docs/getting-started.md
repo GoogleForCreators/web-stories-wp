@@ -1,6 +1,6 @@
 # Getting Started
 
-### Requirements
+## Requirements
 
 To contribute to this plugin, you need the following tools installed on your computer:
 
@@ -123,7 +123,7 @@ See `npm run test:js:help` to get a list of additional options that can be passe
 
 #### Storybook
 
-The latest version of the project's [storybook](https://storybook.js.org/) can be found at https://google.github.io/web-stories-wp/.
+The latest version of the project's [storybook](https://storybook.js.org/) can be found at [https://google.github.io/web-stories-wp/](https://google.github.io/web-stories-wp/).
 
 To run it locally, use the following command:
 
@@ -133,7 +133,7 @@ npm run storybook
 
 #### Testing Environment
 
-The latest version of the plugin is up and running on https://stories-new-wordpress-amp.pantheonsite.io/ and ready for maintainers to test.
+The latest version of the plugin is up and running on [https://stories-new-wordpress-amp.pantheonsite.io/](https://stories-new-wordpress-amp.pantheonsite.io/) and ready for maintainers to test.
 
 ## Maintenance
 
