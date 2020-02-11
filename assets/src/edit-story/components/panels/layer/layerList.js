@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { Fragment, useContext, useEffect } from '@wordpress/element';
 import { speak } from '@wordpress/a11y';
+import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -31,6 +32,11 @@ import { speak } from '@wordpress/a11y';
 import Layer from './layer';
 import LayerContext from './context';
 import LayerSeparator from './separator';
+
+const REORDER_MESSAGE = __(
+  'Reordering layers.. Press Escape to abort.. Release mouse to drop in position %d.',
+  'web-stories'
+);
 
 const LayerList = styled.div.attrs({ role: 'listbox' })`
   display: flex;
@@ -48,11 +54,9 @@ function LayerPanel() {
 
   useEffect(() => {
     if (isReordering && currentSeparator) {
-      speak(
-        `Reordering layers.. Press Escape to abort.. Release mouse to drop in position ${numLayers -
-          currentSeparator}`,
-        'assertive'
-      );
+      const position = numLayers - currentSeparator;
+      const message = sprintf(REORDER_MESSAGE, position);
+      speak(message, 'assertive');
     }
   }, [isReordering, currentSeparator, numLayers]);
 
