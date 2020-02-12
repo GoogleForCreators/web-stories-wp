@@ -40,7 +40,7 @@ const OverlayWrapper = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 56px;
+  top: 0;
   left: 0;
   z-index: 999;
 `;
