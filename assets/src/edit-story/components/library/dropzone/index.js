@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * WordPress dependencies
@@ -27,6 +26,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useUploader } from '../../../app/uploader';
+import StoryPropTypes from '../../../types';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const DropzoneComponent = styled.div`
@@ -113,10 +113,7 @@ function Dropzone({ children }) {
 }
 
 Dropzone.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: StoryPropTypes.children.isRequired,
 };
 
 export default Dropzone;
