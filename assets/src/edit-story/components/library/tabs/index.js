@@ -22,10 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import MediaIcon from './media.svg';
-import TextIcon from './text.svg';
-import ShapesIcon from './shapes.svg';
-import LinksIcon from './links.svg';
+import { ReactComponent as MediaIcon } from './media.svg';
+import { ReactComponent as TextIcon } from './text.svg';
+import { ReactComponent as ShapesIcon } from './shapes.svg';
+import { ReactComponent as LinksIcon } from './links.svg';
 
 const Tabs = styled.ul`
   background: ${({ theme }) => theme.colors.bg.v3};

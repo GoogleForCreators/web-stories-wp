@@ -24,7 +24,7 @@ export { default as Frame } from './frame';
 export { default as Output } from './output';
 export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon.svg';
+export { ReactComponent as LayerIcon } from './icon.svg';
 
 export const defaultAttributes = {
   fontFamily: 'Arial',
