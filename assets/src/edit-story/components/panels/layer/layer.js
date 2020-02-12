@@ -93,7 +93,7 @@ function Layer({ layer }) {
         <LayerIcon />
       </LayerIconWrapper>
       <LayerDescription>
-        <LayerContent layer={layer} />
+        <LayerContent element={layer} />
       </LayerDescription>
     </LayerButton>
   );
