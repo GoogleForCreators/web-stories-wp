@@ -32,6 +32,8 @@ const Tabs = styled.ul`
   display: flex;
   height: 100%;
   margin: 0;
+  padding: 0;
+  list-style: none;
 `;
 
 const Tab = styled.li`
