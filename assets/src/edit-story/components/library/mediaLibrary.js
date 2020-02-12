@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../app/config';
 import { useMedia } from '../../app/media';
 import UploadButton from '../uploadButton';
-import DragandDrop from '../draganddrop';
+import Dropzone from './dropzone';
 
 const Container = styled.div`
   display: grid;
@@ -297,7 +297,7 @@ function MediaLibrary({ onInsert }) {
   };
 
   return (
-    <DragandDrop>
+    <Dropzone>
       <Header>
         <Title>
           {__('Media', 'web-stories')}
@@ -351,7 +351,7 @@ function MediaLibrary({ onInsert }) {
           </Column>
         </Container>
       )}
-    </DragandDrop>
+    </Dropzone>
   );
 }
 

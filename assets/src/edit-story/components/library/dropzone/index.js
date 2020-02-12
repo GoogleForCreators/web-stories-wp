@@ -26,16 +26,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../app/uploader';
+import { useUploader } from '../../../app/uploader';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
-const DragandDropComponent = styled.div`
+const DropzoneComponent = styled.div`
   min-width: 100%;
   min-height: 100%;
 `;
-const DragandDropOverContent = styled.div``;
+const OverContent = styled.div``;
 
-const DragandDropOverLayWrapper = styled.div`
+const OverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
@@ -52,14 +52,14 @@ const Text = styled.p`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-const DragandDropOverLay = styled.div`
+const Overlay = styled.div`
   position: absolute;
   top: 45%;
   text-align: center;
   width: 100%;
 `;
 
-function DragandDrop({ children }) {
+function Dropzone({ children }) {
   const [isDragging, setIsDragging] = useState(false);
   const { uploadFile } = useUploader();
 
@@ -83,7 +83,7 @@ function DragandDrop({ children }) {
   };
 
   return (
-    <DragandDropComponent
+    <DropzoneComponent
       onDragStart={disableDefaults}
       onDragOver={disableDefaults}
       onDragLeave={disableDefaults}
@@ -91,8 +91,8 @@ function DragandDrop({ children }) {
       onDrop={onDropHandler}
     >
       {isDragging && (
-        <DragandDropOverLayWrapper>
-          <DragandDropOverLay>
+        <OverlayWrapper>
+          <Overlay>
             <UploadIcon />
             <Heading>{__('Upload to media library', 'web-stories')}</Heading>
             <Text>
@@ -101,19 +101,19 @@ function DragandDrop({ children }) {
                 'web-stories'
               )}
             </Text>
-          </DragandDropOverLay>
-        </DragandDropOverLayWrapper>
+          </Overlay>
+        </OverlayWrapper>
       )}
-      <DragandDropOverContent>{children}</DragandDropOverContent>
-    </DragandDropComponent>
+      <OverContent>{children}</OverContent>
+    </DropzoneComponent>
   );
 }
 
-DragandDrop.propTypes = {
+Dropzone.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
 };
 
-export default DragandDrop;
+export default Dropzone;
