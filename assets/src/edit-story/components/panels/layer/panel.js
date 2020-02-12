@@ -32,7 +32,7 @@ import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 import useLayers from './useLayers';
 
-const LayerList = styled.div`
+const LayerList = styled.div.attrs({ role: 'listbox' })`
   display: flex;
   flex-direction: column;
   width: 100%;

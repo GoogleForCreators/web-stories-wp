@@ -22,6 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import stripHTML from '../../utils/stripHTML';
 import StoryPropTypes from '../../types';
 
 const TextLayer = styled.span`
@@ -35,7 +36,7 @@ const TextLayer = styled.span`
 
 function TextLayerContent({ element: { content } }) {
   // Remove all tags
-  const rawContent = content.replace(/<[^>]*>/g, '');
+  const rawContent = stripHTML(content);
   return <TextLayer>{rawContent}</TextLayer>;
 }
 

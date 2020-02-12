@@ -28,7 +28,11 @@ import { getDefinitionForType } from '../../../elements';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs({ type: 'button' })`
+const LayerButton = styled.button.attrs({
+  type: 'button',
+  tabIndex: -1,
+  role: 'option',
+})`
   display: flex;
   border: 0;
   padding: 0;
@@ -44,7 +48,6 @@ const LayerButton = styled.button.attrs({ type: 'button' })`
     background: ${rgba(theme.colors.action, 0.14)};
   `}
 
-  &:focus,
   &:active {
     outline: none;
   }
@@ -76,7 +79,6 @@ const LayerDescription = styled.div`
 
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
-
   const { isSelected, handleClick } = useLayerSelection(element);
 
   return (

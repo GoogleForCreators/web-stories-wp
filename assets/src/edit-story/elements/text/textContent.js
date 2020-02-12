@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import stripHTML from '../../utils/stripHTML';
+
 function TextContent({ content }) {
-  // @todo: implement a cheaper way to strip markup.
-  const buffer = document.createElement('div');
-  buffer.innerHTML = content;
-  return buffer.textContent;
+  return stripHTML(content);
 }
 
 export default TextContent;

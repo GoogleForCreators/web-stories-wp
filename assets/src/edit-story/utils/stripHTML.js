@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
-export { default as LayerIcon } from './icon';
-export { default as LayerContent } from './layer';
+const buffer = document.createElement('div');
+export default function stripHTML(string) {
+  // @todo: implement a cheaper way to strip markup.
+  buffer.innerHTML = string;
+  return buffer.textContent;
+}

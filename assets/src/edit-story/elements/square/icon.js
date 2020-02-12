@@ -14,5 +14,19 @@
  * limitations under the License.
  */
 
-export { default as LayerIcon } from './icon';
-export { default as LayerContent } from './layer';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as Icon } from '../shared/icon_media.svg';
+
+function ShapeIcon() {
+  const alt = __('Shape element', 'web-stories');
+  return <Icon aria-label={alt} />;
+}
+
+export default ShapeIcon;
