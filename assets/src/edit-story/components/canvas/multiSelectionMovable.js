@@ -51,7 +51,7 @@ function MultiSelectionMovable({ selectedElements }) {
     },
   } = useCanvas();
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { fontSizeFromEditor, editorToDataX, editorToDataY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -68,8 +68,8 @@ function MultiSelectionMovable({ selectedElements }) {
   }, [selectedElements, moveable, nodesById]);
 
   const minMaxFontSize = {
-    minFontSize: dataToEditorY(MIN_FONT_SIZE),
-    maxFontSize: dataToEditorY(MAX_FONT_SIZE),
+    minFontSize: fontSizeFromEditor(MIN_FONT_SIZE),
+    maxFontSize: fontSizeFromEditor(MAX_FONT_SIZE),
   };
 
   // Create targets list including nodes and also necessary attributes.

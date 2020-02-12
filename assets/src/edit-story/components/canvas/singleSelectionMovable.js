@@ -56,15 +56,15 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
+    actions: { getBox, fontSizeFromEditor, editorToDataX, editorToDataY },
   } = useUnits();
   const {
     actions: { pushTransform },
   } = useTransform();
 
   const minMaxFontSize = {
-    minFontSize: dataToEditorY(MIN_FONT_SIZE),
-    maxFontSize: dataToEditorY(MAX_FONT_SIZE),
+    minFontSize: fontSizeFromEditor(MIN_FONT_SIZE),
+    maxFontSize: fontSizeFromEditor(MAX_FONT_SIZE),
   };
 
   const otherNodes = Object.values(

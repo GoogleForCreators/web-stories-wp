@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../constants';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -85,6 +89,26 @@ export function editorToDataX(x, pageWidth) {
  */
 export function editorToDataY(y, pageHeight) {
   return dataPixels((y * PAGE_HEIGHT) / pageHeight);
+}
+
+/**
+ * Converts a "data" font size value to the value in the "editor" space
+ *
+ * @param {number} size The value to be converted.
+ * @return {number} The value in the "editor" space.
+ */
+export function fontSizeFromData(size) {
+  return editorPixels((size * PAGE_HEIGHT) / DEFAULT_EDITOR_PAGE_HEIGHT);
+}
+
+/**
+ * Converts a "editor" font size value to the value in the "data" space
+ *
+ * @param {number} size The value to be converted.
+ * @return {number} The value in the "editor" space.
+ */
+export function fontSizeFromEditor(size) {
+  return editorPixels((size * DEFAULT_EDITOR_PAGE_HEIGHT) / PAGE_HEIGHT);
 }
 
 /**
