@@ -42,7 +42,7 @@ function setBackgroundElement(state, { elementId }) {
 
   // If new id is null, clear background attribute and proceed
   if (elementId === null) {
-    if (page.backgroundElementId === null) {
+    if (!Boolean(page.backgroundElementId)) {
       // Nothing to do here, there isn't any background to clear
       return state;
     }

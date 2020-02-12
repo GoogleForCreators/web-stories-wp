@@ -166,7 +166,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setIsDragging(false);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
-        if (deltaX !== 0 && deltaY !== 0) {
+        if (deltaX !== 0 || deltaY !== 0) {
           const properties = {
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),

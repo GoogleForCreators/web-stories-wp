@@ -70,7 +70,7 @@ function deleteElements(state, { elementIds }) {
 
   // Clear background if it has been deleted.
   if (
-    oldPage.backgroundElementId !== null &&
+    Boolean(oldPage.backgroundElementId) &&
     idsToDelete.includes(oldPage.backgroundElementId)
   ) {
     newPage.backgroundElementId = null;
