@@ -40,11 +40,7 @@ const Editor = styled.div`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   background-color: ${({ theme }) => theme.colors.bg.v1};
-  position: absolute;
-  left: -20px;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   height: calc(100vh - ${ADMIN_TOOLBAR_HEIGHT}px);
 
   display: grid;

@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import Icon from './icon.svg';
+import { ReactComponent as Icon } from './icon.svg';
 
 function BackgroundIcon() {
   const alt = __('Background element', 'web-stories');
