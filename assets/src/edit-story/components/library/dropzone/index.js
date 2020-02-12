@@ -79,9 +79,7 @@ function Dropzone({ children }) {
 
   const onDropHandler = (evt) => {
     disableDefaults(evt);
-    const dt = evt.dataTransfer;
-    let files = dt.files;
-    files = [...files];
+    const files = [...evt.dataTransfer.files];
     files.forEach(uploadFile);
     setIsDragging(false);
   };
