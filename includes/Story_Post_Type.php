@@ -200,7 +200,7 @@ class Story_Post_Type {
 	 * Highjack editor with custom editor.
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
+	 * @param WP_Post $post Current post object.
 	 *
 	 * @return bool
 	 */
@@ -288,7 +288,7 @@ class Story_Post_Type {
 				'id'     => 'edit-story',
 				'config' => [
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
-					'allowedFileTypes' => self::get_allow_file_types(),
+					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
 					'postThumbnails'   => $post_thumbnails,
 					'storyId'          => $story_id,
@@ -320,21 +320,25 @@ class Story_Post_Type {
 	 *
 	 * @return array List of allowed file types.
 	 */
-	protected static function get_allow_file_types() {
-		$mine_types       = self::get_allowed_mime_types();
-		$allow_mine_types = [];
-		foreach ( $mine_types as $key => $value ) {
-			$allow_mine_types = array_merge( $allow_mine_types, $value );
-		}
-		$core_allow_mine_types = wp_get_mime_types();
-		$file_ext              = [];
-		foreach ( $core_allow_mine_types as $key => $value ) {
-			if ( in_array( $value, $allow_mine_types, true ) ) {
-				$file_ext = array_merge( explode( '|', $key ), $file_ext );
-			}
+	protected static function get_allowed_file_types() {
+		$allowed_mime_types = self::get_allowed_mime_types();
+		$mime_types         = [];
+
+		foreach ( $allowed_mime_types as $type => $mimes ) {
+			array_push( $mime_types, ...$mimes );
 		}
 
-		return $file_ext;
+		$allowed_file_types = [];
+		$all_mime_types     = wp_get_mime_types();
+
+		foreach ( $all_mime_types as $ext => $mime ) {
+			if ( in_array( $mime, $mime_types, true ) ) {
+				array_push( $allowed_file_types, ...explode( '|', $ext ) );
+			}
+		}
+		sort( $allowed_file_types );
+
+		return $allowed_file_types;
 	}
 
 	/**
@@ -362,9 +366,9 @@ class Story_Post_Type {
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
 		 *
-		 * @since 1.3
-		 *
 		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 *
+		 * @since 1.3
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
