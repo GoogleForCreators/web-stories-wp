@@ -51,7 +51,11 @@ const Heading = styled.h4`
 const Text = styled.p`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
-
+const Icon = styled(UploadIcon)`
+  height: 54px;
+  width: 54px;
+  fill: ${({ theme }) => theme.colors.fg.v1};
+`;
 const Overlay = styled.div`
   position: absolute;
   top: 45%;
@@ -93,7 +97,7 @@ function Dropzone({ children }) {
       {isDragging && (
         <OverlayWrapper>
           <Overlay>
-            <UploadIcon />
+            <Icon />
             <Heading>{__('Upload to media library', 'web-stories')}</Heading>
             <Text>
               {__(
