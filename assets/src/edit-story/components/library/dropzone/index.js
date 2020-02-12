@@ -17,6 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 /**
  * WordPress dependencies
  */
@@ -39,7 +40,7 @@ const OverContent = styled.div``;
 const OverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
   position: absolute;
   top: 0;
   left: 0;
