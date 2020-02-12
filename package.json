@@ -27,6 +27,7 @@
     "draftjs-filters": "^2.3.0",
     "prop-types": "^15.7.2",
     "react-modal": "^3.11.1",
+    "resize-observer-polyfill": "^1.5.1",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
@@ -49,9 +50,9 @@
     "@wordpress/components": "^9.2.0",
     "@wordpress/dom-ready": "^2.7.0",
     "@wordpress/element": "^2.11.0",
-    "@wordpress/eslint-plugin": "^3.4.1",
+    "@wordpress/eslint-plugin": "^4.0.0",
     "@wordpress/i18n": "^3.9.0",
-    "@wordpress/scripts": "^7.0.1",
+    "@wordpress/scripts": "^7.1.0",
     "@wordpress/url": "^2.11.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
@@ -87,13 +88,14 @@
     "react-moveable": "^0.17.0",
     "styled-components": "^5.0.1",
     "stylelint": "^13.1.0",
+    "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-prettier": "^1.1.2",
     "stylelint-processor-styled-components": "^1.9.0",
     "terser-webpack-plugin": "^2.3.4",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.11",
     "webpackbar": "^4.0.0"
   },
   "scripts": {
