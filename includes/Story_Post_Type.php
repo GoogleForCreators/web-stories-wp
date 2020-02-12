@@ -288,6 +288,7 @@ class Story_Post_Type {
 				'id'     => 'edit-story',
 				'config' => [
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
+					'allowedFileTypes' => self::get_allow_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
 					'postThumbnails'   => $post_thumbnails,
 					'storyId'          => $story_id,
@@ -312,6 +313,28 @@ class Story_Post_Type {
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
+	}
+
+	/**
+	 * Returns a list of allowed file types.
+	 *
+	 * @return array List of allowed file types.
+	 */
+	protected static function get_allow_file_types() {
+		$mine_types       = self::get_allowed_mime_types();
+		$allow_mine_types = [];
+		foreach ( $mine_types as $key => $value ) {
+			$allow_mine_types = array_merge( $allow_mine_types, $value );
+		}
+		$core_allow_mine_types = wp_get_mime_types();
+		$file_ext              = [];
+		foreach ( $core_allow_mine_types as $key => $value ) {
+			if ( in_array( $value, $allow_mine_types, true ) ) {
+				$file_ext = array_merge( explode( '|', $key ), $file_ext );
+			}
+		}
+
+		return $file_ext;
 	}
 
 	/**

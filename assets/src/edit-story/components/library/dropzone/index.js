@@ -21,18 +21,18 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../../app/uploader';
 import StoryPropTypes from '../../../types';
+import { useConfig } from '../../../app/config';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const DropzoneComponent = styled.div`
   min-width: 100%;
   min-height: 100%;
-  position: relative;
 `;
 const OverContent = styled.div``;
 
@@ -67,6 +67,7 @@ const Overlay = styled.div`
 function Dropzone({ children }) {
   const [isDragging, setIsDragging] = useState(false);
   const { uploadFile } = useUploader();
+  const { allowedFileTypes } = useConfig();
 
   const disableDefaults = (evt) => {
     evt.preventDefault();
@@ -99,9 +100,9 @@ function Dropzone({ children }) {
             <Icon />
             <Heading>{__('Upload to media library', 'web-stories')}</Heading>
             <Text>
-              {__(
-                'You can upload jpg, jpeg, png, svg, gif and webp.',
-                'web-stories'
+              {sprintf(
+                __('You can upload %s.', 'web-stories'),
+                allowedFileTypes.join(', ')
               )}
             </Text>
           </Overlay>
