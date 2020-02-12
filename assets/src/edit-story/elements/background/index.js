@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as LayerIcon } from './icon.svg';
+export { ReactComponent as LayerIcon } from './icon.svg';
 export { default as LayerContent } from './layer';

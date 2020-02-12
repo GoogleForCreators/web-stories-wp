@@ -24,7 +24,7 @@ export { default as Frame } from './frame';
 export { default as Output } from './output';
 export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
-export { default as LayerIcon } from '../shared/icon_media.svg';
+export { ReactComponent as LayerIcon } from '../shared/icon_media.svg';
 
 export const defaultAttributes = {
   scale: 100,

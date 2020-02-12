@@ -14,19 +14,35 @@
  * limitations under the License.
  */
 
-.edit-story #edit-story {
+/*
+ * WordPress admin page integration
+ *
+ * Hides all controls that interfere with the editor UI.
+ */
+
+#screen-meta,
+#screen-meta-links {
+  display: none;
+}
+
+body.edit-story #wpcontent,
+body.edit-story #wpbody-content {
+  padding: 0;
+}
+
+body.edit-story #edit-story {
   background-color: #191c28;
 }
 
-.edit-story .loading-message {
+body.edit-story .loading-message {
   color: #fff;
   text-align: center;
 }
 
-.edit-story #wpfooter {
+body.edit-story #wpfooter {
   display: none;
 }
 
-.edit-story #edit-story .components-spinner {
+body.edit-story #edit-story .components-spinner {
   float: none;
 }

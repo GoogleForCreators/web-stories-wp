@@ -32,7 +32,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
-import RectangleIcon from './rectangle.svg';
+import { ReactComponent as RectangleIcon } from './rectangle.svg';
 
 const PAGE_WIDTH = 90;
 const PAGE_HEIGHT = 160;
