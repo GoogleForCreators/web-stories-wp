@@ -20,17 +20,20 @@
 import styled from 'styled-components';
 
 const Pointer = styled.div`
-  width: 12px;
-  height: 12px;
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   background: radial-gradient(
-    circle at center 6px,
+    circle at center ${({ size }) => `${size / 2}px`},
     transparent,
     transparent 4px,
     #fff 4px
   );
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
   border-radius: 100%;
-  transform: translate(${({ offset }) => `${offset}px`}, -6px);
+  transform: translate(
+    ${({ offset }) => `${offset}px`},
+    ${({ size }) => `-${size / 2}px`}
+  );
 `;
 
 export default Pointer;
