@@ -30,7 +30,6 @@ const Preview = styled.button`
   padding: 0;
   margin: 0;
   border: none;
-  background: transparent;
   background: ${({ theme }) => theme.colors.bg.v7};
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
