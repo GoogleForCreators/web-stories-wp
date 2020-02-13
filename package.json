@@ -59,7 +59,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist": "^4.8.6",
+    "browserslist": "^4.8.7",
     "colorthief": "^2.3.0",
     "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
