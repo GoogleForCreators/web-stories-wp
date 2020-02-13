@@ -15,19 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
+import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../shared/visibleImage';
 
-function ImageLayerContent({ element }) {
-  const alt = __('Image layer', 'web-stories');
-  return <VisibleImage src={element.src} alt={alt} height="20" />;
+function ImageLayerContent({ element: { src } }) {
+  const alt = getFileName(src);
+  return <VisibleImage src={src} alt={alt} height="20" />;
 }
 
 ImageLayerContent.propTypes = {

@@ -22,13 +22,13 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import UndoIcon from './icons/undo.svg';
-import RedoIcon from './icons/redo.svg';
-import LeftArrowIcon from './icons/arrow_left.svg';
-import RightArrowIcon from './icons/arrow_right.svg';
-import GridViewIcon from './icons/grid_view.svg';
-import CloseIcon from './icons/close.svg';
-import EyedropperIcon from './icons/eyedropper.svg';
+import { ReactComponent as UndoIcon } from './icons/undo.svg';
+import { ReactComponent as RedoIcon } from './icons/redo.svg';
+import { ReactComponent as LeftArrowIcon } from './icons/arrow_left.svg';
+import { ReactComponent as RightArrowIcon } from './icons/arrow_right.svg';
+import { ReactComponent as GridViewIcon } from './icons/grid_view.svg';
+import { ReactComponent as CloseIcon } from './icons/close.svg';
+import { ReactComponent as EyedropperIcon} from './icons/eyedropper.svg';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,

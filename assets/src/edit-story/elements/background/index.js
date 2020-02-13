@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as LayerIcon } from './icon.svg';
+export { default as LayerIcon } from './icon';
 export { default as LayerContent } from './layer';

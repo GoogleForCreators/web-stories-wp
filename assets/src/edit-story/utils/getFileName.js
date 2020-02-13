@@ -14,30 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import App from '../../../assets/src/edit-story/app';
+function getFileName(path) {
+  return /(?:\/([^/]+))?$/.exec(path)[1];
+}
 
-export default {
-  title: 'Playground|Stories Editor',
-};
-
-// @todo: Find better way to mock these.
-const config = {
-  allowedMimeTypes: {
-    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    audio: [],
-    video: ['video/mp4'],
-  },
-  storyId: 1234,
-  api: {
-    stories: '',
-    media: '',
-    fonts: '',
-  },
-};
-
-export const _default = () => {
-  return <App config={config} />;
-};
+export default getFileName;

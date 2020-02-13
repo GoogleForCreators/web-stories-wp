@@ -68,7 +68,7 @@ const storiesEditor = {
       ...defaultConfig.module.rules,
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader',
+        use: ['@svgr/webpack', 'url-loader'],
       },
       {
         test: /\.css$/,
