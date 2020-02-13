@@ -27,4 +27,25 @@ module.exports = {
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
   ],
+  //eslint-disable-next-line require-await
+  webpackFinal: async (config) => {
+    // Modifies storybook's webpack config to use svgr instead of file-loader.
+    // see https://github.com/storybookjs/storybook/issues/5613
+
+    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
+    const assetLoader = {
+      loader: assetRule.loader,
+      options: assetRule.options || assetRule.query,
+    };
+
+    config.module.rules.unshift({
+      test: /\.svg$/,
+      use: ['@svgr/webpack', 'url-loader', assetLoader],
+    });
+
+    // only the first matching rule is used when there is a match.
+    config.module.rules = [{ oneOf: config.module.rules }];
+
+    return config;
+  },
 };
