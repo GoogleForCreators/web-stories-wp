@@ -38,6 +38,8 @@ import EditableHexPreview from './editableHexPreview';
 const CONTAINER_PADDING = 15;
 const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 50;
+const BODY_HEIGHT = 140;
+const CONTROLS_WIDTH = 12;
 
 const Container = styled.div`
   border-radius: 4px;
@@ -70,28 +72,28 @@ const Body = styled.div`
   padding: ${CONTAINER_PADDING}px;
   padding-bottom: 0;
   display: grid;
-  grid: 'saturation hue alpha' 140px / 1fr 12px 12px;
+  grid: 'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px;
   grid-gap: 10px;
 `;
 
 const SaturationWrapper = styled.div`
   position: relative;
   width: 167px;
-  height: 140px;
+  height: ${BODY_HEIGHT}px;
   grid-area: saturation;
 `;
 
 const HueWrapper = styled.div`
   position: relative;
-  height: 140px;
-  width: 12px;
+  height: ${BODY_HEIGHT}px;
+  width: ${CONTROLS_WIDTH}px;
   grid-area: hue;
 `;
 
 const AlphaWrapper = styled.div`
   position: relative;
-  height: 140px;
-  width: 12px;
+  height: ${BODY_HEIGHT}px;
+  width: ${CONTROLS_WIDTH}px;
   background: #fff;
   border-radius: 6px;
   grid-area: alpha;
@@ -100,7 +102,7 @@ const AlphaWrapper = styled.div`
 const Footer = styled.div`
   padding: ${CONTAINER_PADDING}px;
   height: ${HEADER_FOOTER_HEIGHT}px;
-  font-size: 12px;
+  font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
 `;
@@ -154,8 +156,8 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         <HueWrapper>
           <Hue
             direction="vertical"
-            width="12px"
-            height="140px"
+            width={`${CONTROLS_WIDTH}px`}
+            height={`${BODY_HEIGHT}px`}
             radius="6px"
             pointer={() => <Pointer offset={0} />}
             {...controlsProps}
@@ -164,8 +166,8 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         <AlphaWrapper>
           <Alpha
             direction="vertical"
-            width="12px"
-            height="140px"
+            width={`${CONTROLS_WIDTH}px`}
+            height={`${BODY_HEIGHT}px`}
             radius="6px"
             pointer={() => <Pointer offset={-3} />}
             {...controlsProps}
