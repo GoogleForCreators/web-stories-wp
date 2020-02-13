@@ -24,7 +24,10 @@ const Pointer = styled.div`
   width: 12px;
   height: 12px;
   background: radial-gradient(
-    circle at center 6px, transparent, transparent 4px, #fff 4px
+    circle at center 6px,
+    transparent,
+    transparent 4px,
+    #fff 4px
   );
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
   border-radius: 100%;

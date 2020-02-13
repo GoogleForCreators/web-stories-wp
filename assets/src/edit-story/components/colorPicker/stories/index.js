@@ -39,7 +39,5 @@ export const _default = () => {
 
   const onChange = useCallback(({ rgb }) => setColor(rgb), [setColor]);
 
-  return (
-    <ColorPicker color={color} onChange={onChange} />
-  );
+  return <ColorPicker color={color} onChange={onChange} />;
 };
