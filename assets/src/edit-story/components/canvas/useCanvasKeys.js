@@ -64,22 +64,10 @@ function useCanvasKeys(ref) {
     };
   }, [ref]);
 
-  useKeyDownEffect(
-    ref,
-    'delete',
-    () => {
-      deleteSelectedElements();
-    },
-    [deleteSelectedElements]
-  );
-  useKeyDownEffect(
-    ref,
-    'escape',
-    () => {
-      clearSelection();
-    },
-    [clearSelection]
-  );
+  useKeyDownEffect(ref, 'delete', () => deleteSelectedElements(), [
+    deleteSelectedElements,
+  ]);
+  useKeyDownEffect(ref, 'escape', () => clearSelection(), [clearSelection]);
 
   // Position (x/y) key handler.
   useKeyDownEffect(
@@ -103,17 +91,15 @@ function useCanvasKeys(ref) {
   useKeyDownEffect(
     ref,
     { name: 'layer/up', repeat: '*' },
-    () => {
-      arrangeSelection({ position: (currentPosition) => currentPosition + 1 });
-    },
+    () =>
+      arrangeSelection({ position: (currentPosition) => currentPosition + 1 }),
     [arrangeSelection]
   );
   useKeyDownEffect(
     ref,
     { name: 'layer/down', repeat: '*' },
-    () => {
-      arrangeSelection({ position: (currentPosition) => currentPosition - 1 });
-    },
+    () =>
+      arrangeSelection({ position: (currentPosition) => currentPosition - 1 }),
     [arrangeSelection]
   );
 }
