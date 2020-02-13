@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { text, boolean } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import { useState, useCallback, useEffect } from 'react';
 
 /**
@@ -32,7 +32,6 @@ export default {
 
 export const _default = () => {
   const initialColor = text('Initial Color', '#4891fcff');
-  const gradients = boolean('With Gradients', true);
 
   const [color, setColor] = useState(initialColor);
 
@@ -41,6 +40,6 @@ export const _default = () => {
   const onChange = useCallback(({ rgb }) => setColor(rgb), [setColor]);
 
   return (
-    <ColorPicker color={color} onChange={onChange} gradients={gradients} />
+    <ColorPicker color={color} onChange={onChange} />
   );
 };
