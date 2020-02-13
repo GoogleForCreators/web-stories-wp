@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Close, Eyedropper } from '../button';
-import { Pointer, PointerWithOffset } from './pointer';
+import Pointer from './pointer';
 import EditableHexPreview from './editableHexPreview';
 
 const CONTAINER_PADDING = 15;
@@ -92,6 +92,8 @@ const AlphaWrapper = styled.div`
   position: relative;
   height: 140px;
   width: 12px;
+  background: #fff;
+  border-radius: 6px;
   grid-area: alpha;
 `;
 
@@ -129,7 +131,7 @@ const CurrentAlphaWrapper = styled.div`
 
 function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
   const controlsProps = { rgb, hsl, hsv, hex, onChange };
-  const { a: alpha } = rgb;
+  const alphaPercentage = Math.round(rgb.a * 100);
 
   return (
     <Container>
@@ -145,7 +147,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         <SaturationWrapper>
           <Saturation
             radius="6px"
-            pointer={PointerWithOffset}
+            pointer={() => <Pointer offset={-6} />}
             {...controlsProps}
           />
         </SaturationWrapper>
@@ -155,7 +157,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             width="12px"
             height="140px"
             radius="6px"
-            pointer={Pointer}
+            pointer={() => <Pointer offset={0} />}
             {...controlsProps}
           />
         </HueWrapper>
@@ -165,7 +167,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             width="12px"
             height="140px"
             radius="6px"
-            pointer={Pointer}
+            pointer={() => <Pointer offset={-3} />}
             {...controlsProps}
           />
         </AlphaWrapper>
@@ -183,7 +185,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         <CurrentWrapper>
           <EditableHexPreview {...controlsProps} />
         </CurrentWrapper>
-        <CurrentAlphaWrapper>{alpha * 100 + '%'}</CurrentAlphaWrapper>
+        <CurrentAlphaWrapper>{alphaPercentage + '%'}</CurrentAlphaWrapper>
       </Footer>
     </Container>
   );
@@ -193,7 +195,7 @@ ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   rgb: PropTypes.object,
-  hex: PropTypes.object,
+  hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
 };

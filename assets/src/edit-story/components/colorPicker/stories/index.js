@@ -31,21 +31,14 @@ export default {
 };
 
 export const _default = () => {
-  const initialColor = text('Initial Color', '#4891fc');
+  const initialColor = text('Initial Color', '#4891fcff');
   const gradients = boolean('With Gradients', true);
 
-  const [color, setColor] = useState({ hex: initialColor });
+  const [color, setColor] = useState(initialColor);
 
-  useEffect(() => {
-    setColor({ hex: initialColor });
-  }, [initialColor]);
+  useEffect(() => setColor(initialColor), [initialColor]);
 
-  const onChange = useCallback(
-    (newColor) => {
-      setColor(newColor);
-    },
-    [setColor]
-  );
+  const onChange = useCallback(({ rgb }) => setColor(rgb), [setColor]);
 
   return (
     <ColorPicker color={color} onChange={onChange} gradients={gradients} />
