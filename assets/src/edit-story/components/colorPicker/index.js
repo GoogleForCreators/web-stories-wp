@@ -40,6 +40,7 @@ const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 50;
 const BODY_HEIGHT = 140;
 const CONTROLS_WIDTH = 12;
+const CONTROLS_BORDER_RADIUS = 6;
 
 const Container = styled.div`
   border-radius: 4px;
@@ -95,7 +96,7 @@ const AlphaWrapper = styled.div`
   height: ${BODY_HEIGHT}px;
   width: ${CONTROLS_WIDTH}px;
   background: #fff;
-  border-radius: 6px;
+  border-radius: ${CONTROLS_BORDER_RADIUS}px;
   grid-area: alpha;
 `;
 
@@ -148,7 +149,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
       <Body>
         <SaturationWrapper>
           <Saturation
-            radius="6px"
+            radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => <Pointer offset={-6} />}
             {...controlsProps}
           />
@@ -158,7 +159,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             direction="vertical"
             width={`${CONTROLS_WIDTH}px`}
             height={`${BODY_HEIGHT}px`}
-            radius="6px"
+            radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => <Pointer offset={0} />}
             {...controlsProps}
           />
@@ -168,7 +169,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             direction="vertical"
             width={`${CONTROLS_WIDTH}px`}
             height={`${BODY_HEIGHT}px`}
-            radius="6px"
+            radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => <Pointer offset={-3} />}
             {...controlsProps}
           />
