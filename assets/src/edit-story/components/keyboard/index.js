@@ -24,7 +24,7 @@ import { useContext, useEffect, createRef } from '@wordpress/element';
  */
 import Context from './context';
 
-const BLACKLIST_ELEMENTS = ['INPUT', 'TEXTAREA'];
+const INPUT_ELEMENTS = ['INPUT', 'TEXTAREA'];
 
 const globalRef = createRef();
 
@@ -125,7 +125,7 @@ function createKeyMatcher(keyOrPrefixOrArray) {
 function isValidTarget(target) {
   return (
     target &&
-    !BLACKLIST_ELEMENTS.includes(target.tagName) &&
+    !INPUT_ELEMENTS.includes(target.tagName) &&
     !target.closest('[contenteditable="true"]')
   );
 }
