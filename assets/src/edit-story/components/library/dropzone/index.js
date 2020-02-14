@@ -97,6 +97,7 @@ function Dropzone({ children }) {
 
   return (
     <DropzoneComponent
+      onDragOver={disableDefaults}
       onDragLeave={onDragLeave}
       onDragEnter={onDragEnter}
       onDrop={onDropHandler}
