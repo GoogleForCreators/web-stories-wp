@@ -23,11 +23,11 @@ import PropTypes from 'prop-types';
  */
 import { useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../';
 import Context from './context';

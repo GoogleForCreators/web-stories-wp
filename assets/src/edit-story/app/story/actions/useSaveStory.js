@@ -18,11 +18,11 @@
  * WordPress dependencies
  */
 import { useCallback, renderToString, useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { OutputPage } from '../../../output';
 
