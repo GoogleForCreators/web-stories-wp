@@ -34,6 +34,9 @@ import { ReactComponent as UploadIcon } from './icons/upload.svg';
 const DropzoneComponent = styled.div`
   min-width: 100%;
   min-height: 100%;
+  > * {
+    pointer-events: none;
+  }
 `;
 const OverContent = styled.div``;
 
@@ -80,6 +83,11 @@ function Dropzone({ children }) {
     setIsDragging(true);
   };
 
+  const onDragLeave = (evt) => {
+    disableDefaults(evt);
+    setIsDragging(false);
+  };
+
   const onDropHandler = (evt) => {
     disableDefaults(evt);
     const files = [...evt.dataTransfer.files];
@@ -89,8 +97,7 @@ function Dropzone({ children }) {
 
   return (
     <DropzoneComponent
-      onDragOver={disableDefaults}
-      onDragLeave={disableDefaults}
+      onDragLeave={onDragLeave}
       onDragEnter={onDragEnter}
       onDrop={onDropHandler}
     >
