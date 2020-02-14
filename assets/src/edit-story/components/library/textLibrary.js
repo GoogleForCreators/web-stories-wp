@@ -27,7 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { fontSizeFromData } from '../../units/dimensions';
+import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
+import { editorToDataY } from '../../units/dimensions';
 import { Section, MainButton, Title, SearchInput, Header } from './common';
 import { FontPreview } from './text';
 
@@ -96,7 +97,10 @@ function TextLibrary({ onInsert }) {
                 y: 5,
                 rotationAngle: 0,
                 ...preset,
-                fontSize: fontSizeFromData(preset.fontSize),
+                fontSize: editorToDataY(
+                  preset.fontSize,
+                  DEFAULT_EDITOR_PAGE_HEIGHT
+                ),
               })
             }
           />

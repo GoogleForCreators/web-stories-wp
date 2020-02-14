@@ -29,8 +29,6 @@ import {
   dataToEditorY,
   editorToDataX,
   editorToDataY,
-  fontSizeFromData,
-  fontSizeFromEditor,
   getBox,
 } from './dimensions';
 
@@ -46,8 +44,6 @@ function UnitsProvider({ pageSize, children }) {
         dataToEditorY: (y) => dataToEditorY(y, pageHeight),
         editorToDataX: (x) => editorToDataX(x, pageWidth),
         editorToDataY: (y) => editorToDataY(y, pageHeight),
-        fontSizeFromData: (size) => fontSizeFromData(size),
-        fontSizeFromEditor: (size) => fontSizeFromEditor(size),
         getBox: (element) => getBox(element, pageWidth, pageHeight),
       },
     }),

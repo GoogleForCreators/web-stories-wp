@@ -32,8 +32,12 @@ import { useStory } from '../../app/story';
 import objectWithout from '../../utils/objectWithout';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import { useTransform } from '../transform';
-import { useUnits } from '../../units';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { useUnits, dataToEditorY } from '../../units';
+import {
+  MIN_FONT_SIZE,
+  MAX_FONT_SIZE,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../constants';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -51,7 +55,7 @@ function MultiSelectionMovable({ selectedElements }) {
     },
   } = useCanvas();
   const {
-    actions: { fontSizeFromEditor, editorToDataX, editorToDataY },
+    actions: { editorToDataX, editorToDataY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -68,8 +72,8 @@ function MultiSelectionMovable({ selectedElements }) {
   }, [selectedElements, moveable, nodesById]);
 
   const minMaxFontSize = {
-    minFontSize: fontSizeFromEditor(MIN_FONT_SIZE),
-    maxFontSize: fontSizeFromEditor(MAX_FONT_SIZE),
+    minFontSize: dataToEditorY(MIN_FONT_SIZE, DEFAULT_EDITOR_PAGE_HEIGHT),
+    maxFontSize: dataToEditorY(MAX_FONT_SIZE, DEFAULT_EDITOR_PAGE_HEIGHT),
   };
 
   // Create targets list including nodes and also necessary attributes.

@@ -27,6 +27,11 @@ import { useRef, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import {
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+  MIN_FONT_SIZE,
+  MAX_FONT_SIZE,
+} from '../../constants';
 import { useStory } from '../../app';
 import Movable from '../movable';
 import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
@@ -34,7 +39,7 @@ import objectWithout from '../../utils/objectWithout';
 import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+
 import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
@@ -56,15 +61,15 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, fontSizeFromEditor, editorToDataX, editorToDataY },
+    actions: { getBox, editorToDataX, editorToDataY },
   } = useUnits();
   const {
     actions: { pushTransform },
   } = useTransform();
 
   const minMaxFontSize = {
-    minFontSize: fontSizeFromEditor(MIN_FONT_SIZE),
-    maxFontSize: fontSizeFromEditor(MAX_FONT_SIZE),
+    minFontSize: editorToDataY(MIN_FONT_SIZE, DEFAULT_EDITOR_PAGE_HEIGHT),
+    maxFontSize: editorToDataY(MAX_FONT_SIZE, DEFAULT_EDITOR_PAGE_HEIGHT),
   };
 
   const otherNodes = Object.values(
