@@ -80,6 +80,7 @@ function Dropzone({ children }) {
 
   const onDragEnter = (evt) => {
     disableDefaults(evt);
+    evt.dataTransfer.effectAllowed = 'copy';
     setIsDragging(true);
   };
 
