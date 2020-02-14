@@ -46,15 +46,20 @@ export const GlobalStyle = createGlobalStyle`
 
   .WebStories_ReactModal__Overlay {
     position: fixed;
-    top: ${ADMIN_TOOLBAR_HEIGHT}px;
-    left: ${ADMIN_MENU_WIDTH}px;
+    top: 0;
+    left: 0;
     right: 0;
     bottom: 0;
     background-color: ${({ theme }) => theme.colors.bg.v1};
     z-index: 10;
   }
 
-  body.folded .WebStories_ReactModal__Overlay {
+  body.edit-story .WebStories_ReactModal__Overlay {
+    top: ${ADMIN_TOOLBAR_HEIGHT}px;
+    left: ${ADMIN_MENU_WIDTH}px;
+  }
+
+  body.edit-story.folded .WebStories_ReactModal__Overlay {
     left: ${ADMIN_MENU_FOLDED_WIDTH}px;
   }
 `;
