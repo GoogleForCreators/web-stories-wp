@@ -2,4 +2,4 @@ plugins:
   - removeViewBox: false
   - removeDimensions: true
   - convertColors:
-      currentColor: true
+      currentColor: /\b(?!url|none)/i
