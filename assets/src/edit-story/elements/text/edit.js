@@ -47,27 +47,41 @@ import {
   elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
-const Element = styled.div`
-	margin: 0;
-	${elementFillContent}
+// Wrapper bounds the text editor within the element bounds. The resize
+// logic updates the height of this element to show the new height based
+// on the content and properties.
+const Wrapper = styled.div`
+  ${elementFillContent}
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
+    pointer-events: none;
+  }
+`;
+
+// TextBox defines all text display properties and is used for measuring
+// of text height. This element has an unbounded height (bottom) so that
+// it can be used for height measurement.
+const TextBox = styled.div`
 	${elementWithFont}
 	${elementWithStyle}
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
 
-	&::after {
-		content: '';
-		display: block;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
-		pointer-events: none;
-	}
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 function TextEdit({
@@ -86,12 +100,12 @@ function TextEdit({
     padding,
     textAlign,
   },
-  box: { width, height },
+  box: { x, y, height, rotationAngle },
 }) {
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
-  const props = {
+  const textProps = {
     color,
     backgroundColor,
     fontFamily,
@@ -103,9 +117,9 @@ function TextEdit({
     letterSpacing,
     lineHeight,
     padding,
-    width,
-    height,
   };
+  const wrapperRef = useRef(null);
+  const textBoxRef = useRef(null);
   const editorRef = useRef(null);
   const {
     actions: { maybeEnqueueFontStyle },
@@ -116,6 +130,11 @@ function TextEdit({
   const {
     state: { editingElementState },
   } = useCanvas();
+  const setProperties = useCallback(
+    (properties) => updateElementById({ elementId: id, properties }),
+    [id, updateElementById]
+  );
+
   const { offset, clearContent } = editingElementState || {};
   // To clear content, we can't just use createEmpty() or even pure white-space.
   // The editor needs some content to insert the first character in,
@@ -130,6 +149,7 @@ function TextEdit({
     : EditorState.createWithContent(stateFromHTML(contentWithBreaks));
   const [editorState, setEditorState] = useState(initialState);
   const mustAddOffset = useRef(offset ? 2 : 0);
+  const editorHeightRef = useRef(0);
 
   // This is to allow the finalizing useEffect to *not* depend on editorState,
   // as would otherwise be a lint error.
@@ -140,6 +160,8 @@ function TextEdit({
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
     (newEditorState) => {
+      const wrapper = wrapperRef.current;
+      const textBox = textBoxRef.current;
       let filteredState = getFilteredState(newEditorState, editorState);
       if (mustAddOffset.current) {
         // For some reason forced selection only sticks the second time around?
@@ -160,7 +182,9 @@ function TextEdit({
         );
       }
       lastKnownState.current = filteredState.getCurrentContent();
+      editorHeightRef.current = textBox.offsetHeight;
       setEditorState(filteredState);
+      wrapper.style.height = `${editorHeightRef.current}px`;
     },
     [editorState, offset]
   );
@@ -181,17 +205,33 @@ function TextEdit({
   // Finally update content for element on unmount.
   useEffect(
     () => () => {
-      if (lastKnownState.current) {
+      const newState = lastKnownState.current;
+      const newHeight = editorHeightRef.current;
+      wrapperRef.current.style.height = '';
+      if (newState) {
         // Remember to trim any trailing non-breaking space.
         const properties = {
           content: stateToHTML(lastKnownState.current, {
             defaultBlockTag: null,
           }).replace(/&nbsp;$/, ''),
         };
-        updateElementById({ elementId: id, properties });
+        // Recalculate the new height and offset.
+        if (newHeight) {
+          const [dx, dy] = calcRotatedResizeOffset(
+            rotationAngle,
+            0,
+            0,
+            0,
+            newHeight - height
+          );
+          properties.height = editorToDataY(newHeight);
+          properties.x = editorToDataX(x + dx);
+          properties.y = editorToDataY(y + dy);
+        }
+        setProperties(properties);
       }
     },
-    [id, updateElementById]
+    [setProperties, x, y, height, rotationAngle, editorToDataY, editorToDataX]
   );
 
   // Set focus when initially rendered
@@ -204,14 +244,16 @@ function TextEdit({
   }, [fontFamily, maybeEnqueueFontStyle]);
 
   return (
-    <Element {...props} onClick={onClick}>
-      <Editor
-        ref={editorRef}
-        onChange={updateEditorState}
-        editorState={editorState}
-        handleKeyCommand={handleKeyCommand}
-      />
-    </Element>
+    <Wrapper ref={wrapperRef} onClick={onClick}>
+      <TextBox ref={textBoxRef} {...textProps}>
+        <Editor
+          ref={editorRef}
+          onChange={updateEditorState}
+          editorState={editorState}
+          handleKeyCommand={handleKeyCommand}
+        />
+      </TextBox>
+    </Wrapper>
   );
 }
 

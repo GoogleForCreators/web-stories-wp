@@ -38,6 +38,12 @@ export const editModeGrayout = true;
 
 export const isMedia = true;
 
+export const resizeRules = {
+  vertical: true,
+  horizontal: true,
+  diagonal: true,
+};
+
 export const panels = [
   PanelTypes.BACKGROUND,
   PanelTypes.SIZE,
