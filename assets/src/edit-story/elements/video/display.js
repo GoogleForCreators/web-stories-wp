@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useEffect } from '@wordpress/element';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies

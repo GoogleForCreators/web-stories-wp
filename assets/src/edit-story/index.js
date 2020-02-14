@@ -18,11 +18,7 @@
  * External dependencies
  */
 import Modal from 'react-modal';
-
-/**
- * WordPress dependencies
- */
-import { render } from '@wordpress/element';
+import { render } from 'react-dom';
 
 /**
  * Internal dependencies

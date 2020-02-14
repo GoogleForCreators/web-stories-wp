@@ -19,12 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { useEffect } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { Spinner, Dashicon } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**

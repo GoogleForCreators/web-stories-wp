@@ -18,10 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+
 /**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
 /**

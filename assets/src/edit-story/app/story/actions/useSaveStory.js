@@ -15,9 +15,10 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useCallback, renderToString, useState } from '@wordpress/element';
+import { useCallback, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
@@ -34,7 +35,7 @@ import { OutputPage } from '../../../output';
  */
 const getStoryMarkupFromPages = (pages) => {
   const markup = pages.map((page) => {
-    return renderToString(<OutputPage page={page} />);
+    return renderToStaticMarkup(<OutputPage page={page} />);
   });
   return markup.join('');
 };

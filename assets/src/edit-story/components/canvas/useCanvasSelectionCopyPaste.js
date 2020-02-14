@@ -18,11 +18,8 @@
  * External dependencies
  */
 import uuid from 'uuid/v4';
-
-/**
- * WordPress dependencies
- */
-import { useCallback, renderToString } from '@wordpress/element';
+import { useCallback } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
@@ -83,7 +80,7 @@ function useCanvasSelectionCopyPaste(container) {
         .map(({ type, ...rest }) => {
           // eslint-disable-next-line @wordpress/no-unused-vars-before-return
           const { Output } = getDefinitionForType(type);
-          return renderToString(
+          return renderToStaticMarkup(
             <Output element={rest} box={{ width: 100, height: 100 }} />
           );
         })

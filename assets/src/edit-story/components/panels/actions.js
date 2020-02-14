@@ -36,10 +36,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { SimplePanel } from './panel';
 
-/**
- * WordPress dependencies
- */
-
 const Delete = styled.a`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.action};

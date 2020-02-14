@@ -17,12 +17,8 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import Moveable from 'react-moveable';
-
-/**
- * WordPress dependencies
- */
-import { forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies

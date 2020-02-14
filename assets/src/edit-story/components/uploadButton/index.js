@@ -15,15 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { useEffect } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 function UploadButton({
   title,

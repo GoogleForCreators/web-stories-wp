@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import uuid from 'uuid/v4';
-
-/**
- * WordPress dependencies
- */
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
