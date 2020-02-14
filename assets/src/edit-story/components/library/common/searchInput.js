@@ -24,7 +24,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import Magnify from './magnify.svg';
+import { ReactComponent as Magnify } from './magnify.svg';
 
 const Icon = styled(Magnify)`
   position: absolute;
