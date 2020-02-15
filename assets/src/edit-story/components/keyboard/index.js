@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import Mousetrap from 'mousetrap';
+
+/**
  * WordPress dependencies
  */
 import { useContext, useEffect, createRef } from '@wordpress/element';
@@ -24,11 +29,25 @@ import { useContext, useEffect, createRef } from '@wordpress/element';
  */
 import Context from './context';
 
+const PROP = '__WEB_STORIES_MT__';
 const INPUT_ELEMENTS = ['INPUT', 'TEXTAREA'];
 
 const globalRef = createRef();
 
-export function useKeyDownEffect(ref, keyNameOrSpec, callback, opts) {
+/**
+ * See https://craig.is/killing/mice#keys for the supported key codes.
+ *
+ * @param {{current: Node}} ref
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} opts
+ */
+export function useKeyDownEffect(
+  ref,
+  keyNameOrSpec,
+  callback,
+  opts = undefined
+) {
   const { keys } = useContext(Context);
   useEffect(
     () => {
@@ -36,28 +55,45 @@ export function useKeyDownEffect(ref, keyNameOrSpec, callback, opts) {
       if (!node) {
         return undefined;
       }
-      const handler = createKeyHandler(keys, keyNameOrSpec, callback);
-      node.addEventListener('keydown', handler);
+      const mousetrap = getOrCreateMousetrap(node);
+      const keySpec = resolveKeySpec(keys, keyNameOrSpec);
+      const handler = createKeyHandler(keySpec, callback);
+      mousetrap.bind(keySpec.key, handler);
       return () => {
-        node.removeEventListener('keydown', handler);
+        mousetrap.unbind(keySpec.key);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ref.current].concat(opts || [])
+    opts || []
   );
 }
 
-export function useGlobalKeyDownEffect(keySpec, callback, opts) {
+/**
+ * See https://craig.is/killing/mice#keys for the supported key codes.
+ *
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} opts
+ */
+export function useGlobalKeyDownEffect(
+  keyNameOrSpec,
+  callback,
+  opts = undefined
+) {
   if (!globalRef.current) {
-    globalRef.current = document.documentElement;
+    globalRef.current = document;
   }
-  useKeyDownEffect(globalRef, keySpec, callback, opts);
+  useKeyDownEffect(globalRef, keyNameOrSpec, callback, opts);
 }
 
-export function useEscapeToBlurEffect(ref, opts) {
+/**
+ * @param {{current: Node}} ref
+ * @param {Array|undefined} opts
+ */
+export function useEscapeToBlurEffect(ref, opts = undefined) {
   useKeyDownEffect(
     ref,
-    { name: 'escape', input: true },
+    { key: 'esc', input: true },
     () => {
       const { current } = ref;
       const { activeElement } = document;
@@ -69,57 +105,52 @@ export function useEscapeToBlurEffect(ref, opts) {
   );
 }
 
-function createKeyHandler(keys, keyNameOrSpec, callback) {
+/**
+ * @param {Node} node The DOM node.
+ * @return {Mousetrap} The Mousetrap object that will be used to intercept
+ * the keyboard events on the specified node.
+ */
+function getOrCreateMousetrap(node) {
+  return node[PROP] || (node[PROP] = new Mousetrap(node));
+}
+
+/**
+ * @param {Object} keyDict
+ * @param {string|Object} keyNameOrSpec
+ */
+function resolveKeySpec(keyDict, keyNameOrSpec) {
+  const props =
+    typeof keyNameOrSpec === 'string' || Array.isArray(keyNameOrSpec)
+      ? { key: keyNameOrSpec }
+      : keyNameOrSpec;
   const {
-    key: keyOrPrefixOrArray,
-    altKey = false,
-    ctrlKey = false,
-    metaKey = false,
-    shiftKey = false,
-    repeat = false,
+    key: keyOrArray,
+    shift = false,
+    repeat = true,
     input = false,
-  } = resolveKeySpec(keys, keyNameOrSpec);
-  const matchKey = createKeyMatcher(keyOrPrefixOrArray);
+  } = props;
+  const mappedKeys = []
+    .concat(keyOrArray)
+    .reduce((keys, key) => keys.concat(keyDict[key] || key), []);
+  const allKeys = addMods(mappedKeys, shift);
+  return { key: allKeys, shift, repeat, input };
+}
+
+function addMods(keys, shift) {
+  if (!shift) {
+    return keys;
+  }
+  return keys.concat(keys.map((key) => `shift+${key}`));
+}
+
+function createKeyHandler({ repeat, input }, callback) {
   return (evt) => {
-    if (
-      (input || isValidTarget(evt.target)) &&
-      (altKey === '*' || evt.altKey === altKey) &&
-      (ctrlKey === '*' || evt.ctrlKey === ctrlKey) &&
-      (metaKey === '*' || evt.metaKey === metaKey) &&
-      (shiftKey === '*' || evt.shiftKey === shiftKey) &&
-      (repeat === '*' || evt.repeat === repeat) &&
-      matchKey(evt.key)
-    ) {
+    if ((input || isValidTarget(evt.target)) && (repeat || !evt.repeat)) {
       callback(evt);
-      evt.stopPropagation();
-      evt.stopImmediatePropagation();
+      return false;
     }
+    return undefined;
   };
-}
-
-function resolveKeySpec(keys, keyNameOrSpec) {
-  if (typeof keyNameOrSpec === 'string') {
-    return keys[keyNameOrSpec];
-  }
-  if (typeof keyNameOrSpec === 'object' && Boolean(keyNameOrSpec.name)) {
-    return {
-      ...keyNameOrSpec,
-      ...keys[keyNameOrSpec.name],
-    };
-  }
-  return keyNameOrSpec;
-}
-
-function createKeyMatcher(keyOrPrefixOrArray) {
-  const keyOrPrefixArray = [].concat(keyOrPrefixOrArray);
-  return (aKey) =>
-    keyOrPrefixArray.some((keyOrPrefix) => {
-      const isKeyPrefix = keyOrPrefix[keyOrPrefix.length - 1] === '*';
-      const key = isKeyPrefix
-        ? keyOrPrefix.substring(0, keyOrPrefix.length - 1)
-        : keyOrPrefix;
-      return aKey === key || (isKeyPrefix && aKey.startsWith(key));
-    });
 }
 
 function isValidTarget(target) {

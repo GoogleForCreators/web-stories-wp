@@ -67,12 +67,12 @@ function useCanvasKeys(ref) {
   useKeyDownEffect(ref, 'delete', () => deleteSelectedElements(), [
     deleteSelectedElements,
   ]);
-  useKeyDownEffect(ref, 'escape', () => clearSelection(), [clearSelection]);
+  useKeyDownEffect(ref, 'esc', () => clearSelection(), [clearSelection]);
 
   // Position (x/y) key handler.
   useKeyDownEffect(
     ref,
-    { key: 'Arrow*', shiftKey: '*', repeat: '*' },
+    { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
       const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
       const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
@@ -90,14 +90,14 @@ function useCanvasKeys(ref) {
   // Layer up/down.
   useKeyDownEffect(
     ref,
-    { name: 'layer/up', repeat: '*' },
+    'mod+up',
     () =>
       arrangeSelection({ position: (currentPosition) => currentPosition + 1 }),
     [arrangeSelection]
   );
   useKeyDownEffect(
     ref,
-    { name: 'layer/down', repeat: '*' },
+    'mod+down',
     () =>
       arrangeSelection({ position: (currentPosition) => currentPosition - 1 }),
     [arrangeSelection]
