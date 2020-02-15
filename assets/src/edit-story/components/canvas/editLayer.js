@@ -58,7 +58,7 @@ function EditLayer({}) {
     actions: { clearEditing },
   } = useCanvas();
 
-  useKeyDownEffect(ref, { name: 'escape', input: true }, () => {
+  useKeyDownEffect(ref, { key: 'esc', input: true }, () => {
     clearEditing();
   });
 

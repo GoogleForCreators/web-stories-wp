@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-// @todo: additional format for metaOrCntrlKey for MacOS/other or make it
-// automatic.
+/**
+ * See https://craig.is/killing/mice#keys for the supported key codes.
+ */
 const keys = {
-  delete: { key: ['Delete', 'Backspace'] },
-  escape: { key: 'Escape' },
-  undo: { key: 'z', metaKey: true },
-  redo: { key: 'z', metaKey: true, shiftKey: true },
-  'layer/up': { key: 'ArrowUp', metaKey: true },
-  'layer/down': { key: 'ArrowDown', metaKey: true },
+  undo: 'mod+z',
+  redo: 'shift+mod+z',
+  delete: ['del', 'backspace'],
 };
 
 export default keys;
