@@ -21,7 +21,7 @@ import { rgba } from 'polished';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useState, useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
@@ -34,9 +34,6 @@ import { ReactComponent as UploadIcon } from './icons/upload.svg';
 const DropzoneComponent = styled.div`
   min-width: 100%;
   min-height: 100%;
-  > * {
-    pointer-events: none;
-  }
 `;
 const OverContent = styled.div``;
 
@@ -73,6 +70,8 @@ function Dropzone({ children }) {
   const { uploadFile } = useUploader();
   const { allowedFileTypes } = useConfig();
 
+  const ref = useRef(null);
+
   const disableDefaults = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
@@ -86,7 +85,17 @@ function Dropzone({ children }) {
 
   const onDragLeave = (evt) => {
     disableDefaults(evt);
-    setIsDragging(false);
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      if (
+        evt.clientY < rect.top ||
+        evt.clientY >= rect.bottom ||
+        evt.clientX < rect.left ||
+        evt.clientX >= rect.right
+      ) {
+        setIsDragging(false);
+      }
+    }
   };
 
   const onDropHandler = (evt) => {
@@ -102,6 +111,7 @@ function Dropzone({ children }) {
       onDragLeave={onDragLeave}
       onDragEnter={onDragEnter}
       onDrop={onDropHandler}
+      ref={ref}
     >
       {isDragging && (
         <OverlayWrapper>
@@ -110,6 +120,7 @@ function Dropzone({ children }) {
             <Heading>{__('Upload to media library', 'web-stories')}</Heading>
             <Text>
               {sprintf(
+                /* translators: %s is a list of allowed file extensions. */
                 __('You can upload %s.', 'web-stories'),
                 allowedFileTypes.join(', ')
               )}
