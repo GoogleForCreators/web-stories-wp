@@ -147,6 +147,8 @@ function createKeyHandler({ repeat, input }, callback) {
   return (evt) => {
     if ((input || isValidTarget(evt.target)) && (repeat || !evt.repeat)) {
       callback(evt);
+      // The `false` value instructs Mousetrap to cancel event propagation
+      // and default behavior.
       return false;
     }
     return undefined;
