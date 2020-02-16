@@ -24,7 +24,7 @@ import styled from 'styled-components';
  */
 import { Fragment, useContext, useEffect } from '@wordpress/element';
 import { speak } from '@wordpress/a11y';
-import { sprintf, __ } from '@wordpress/i18n';
+import { sprintf, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -33,8 +33,9 @@ import Layer from './layer';
 import LayerContext from './context';
 import LayerSeparator from './separator';
 
-const REORDER_MESSAGE = __(
+const REORDER_MESSAGE = _x(
   'Reordering layers.. Press Escape to abort.. Release mouse to drop in position %d.',
+  'Position to be inserted is the integer number of the new layer position.',
   'web-stories'
 );
 
