@@ -83,6 +83,7 @@ function useLayerReordering(layer) {
     const onMove = () => setIsReordering(true);
 
     // abort on esc
+    // TODO: rewrite to useKeyDown() once either is merged.
     const onAbort = (evt) => {
       if (evt.key === 'Escape') {
         setDragTarget(null);
