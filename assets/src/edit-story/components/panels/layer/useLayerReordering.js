@@ -48,6 +48,8 @@ function useLayerReordering(layer) {
 
   const handleStartReordering = useCallback(
     (evt) => {
+      // Only allow reordering with non-modified click on non-background element.
+      // Modified (shift+ or meta+) clicks are for selection and handled in `useLayerSelection`.
       if (!isBackground && !evt.shiftKey && !evt.metaKey) {
         setSelectedElementsById({ elementIds: [elementId] });
         setDragTarget(evt.target);
