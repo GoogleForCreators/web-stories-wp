@@ -26,6 +26,7 @@ import { rgba } from 'polished';
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import useLayerSelection from './useLayerSelection';
+import useLayerReordering from './useLayerReordering';
 import { LAYER_HEIGHT } from './constants';
 
 const LayerButton = styled.button.attrs({
@@ -77,24 +78,29 @@ const LayerDescription = styled.div`
   text-align: left;
 `;
 
-function Layer({ element }) {
-  const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
-  const { isSelected, handleClick } = useLayerSelection(element);
+function Layer({ layer }) {
+  const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
+  const { isSelected, handleClick } = useLayerSelection(layer);
+  const { handleStartReordering } = useLayerReordering(layer);
 
   return (
-    <LayerButton isSelected={isSelected} onClick={handleClick}>
+    <LayerButton
+      isSelected={isSelected}
+      onClick={handleClick}
+      onPointerDown={handleStartReordering}
+    >
       <LayerIconWrapper>
         <LayerIcon />
       </LayerIconWrapper>
       <LayerDescription>
-        <LayerContent element={element} />
+        <LayerContent element={layer} />
       </LayerDescription>
     </LayerButton>
   );
 }
 
 Layer.propTypes = {
-  element: StoryPropTypes.layer.isRequired,
+  layer: StoryPropTypes.layer.isRequired,
 };
 
 export default Layer;

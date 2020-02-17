@@ -46,6 +46,7 @@
     "@storybook/addon-viewport": "^5.3.13",
     "@storybook/react": "^5.3.13",
     "@testing-library/react-hooks": "^3.2.1",
+    "@wordpress/a11y": "^2.7.0",
     "@wordpress/api-fetch": "^3.11.0",
     "@wordpress/babel-preset-default": "^4.10.0",
     "@wordpress/components": "^9.2.0",
