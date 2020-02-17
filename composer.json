@@ -36,6 +36,6 @@
   },
   "prefer-stable": true,
   "scripts": {
-    "phpstan": "phpstan analyze  --memory-limit=128M"
+    "phpstan": "phpstan analyze  --memory-limit=256M"
   }
 }
