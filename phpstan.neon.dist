@@ -5,8 +5,6 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: true
   paths:
     - includes/
-  autoload_directories:
-    - includes/
   autoload_files:
     - tests/phpstan/bootstrap.php
   ignoreErrors:
