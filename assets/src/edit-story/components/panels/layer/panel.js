@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -29,18 +24,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
-import Layer from './layer';
-import useLayers from './useLayers';
-
-const LayerList = styled.div.attrs({ role: 'listbox' })`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
+import LayerList from './layerList';
+import LayerProvider from './provider';
 
 function LayerPanel() {
-  const layers = useLayers();
-
   return (
     <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
       <PanelTitle isPrimary isResizable>
@@ -48,11 +35,9 @@ function LayerPanel() {
       </PanelTitle>
 
       <PanelContent isScrollable padding={'0'}>
-        <LayerList>
-          {layers.map((element) => (
-            <Layer key={element.id} element={element} />
-          ))}
-        </LayerList>
+        <LayerProvider>
+          <LayerList />
+        </LayerProvider>
       </PanelContent>
     </Panel>
   );

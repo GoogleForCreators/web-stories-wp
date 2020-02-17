@@ -24,11 +24,13 @@ import { useCallback } from '@wordpress/element';
  */
 import { useStory } from '../../../app';
 
-function useLayerSelection(element) {
-  const { type } = element;
+function useLayerSelection(layer) {
+  const { type, id: elementId } = layer;
 
   const isBackground = type === 'background';
-  const backgroundHasElement = Boolean(element.inner);
+  const backgroundHasElement = Boolean(layer.inner);
+  const elementInnerId =
+    isBackground && backgroundHasElement ? layer.inner.id : null;
 
   const {
     state: { currentPage, selectedElementIds },
@@ -42,10 +44,10 @@ function useLayerSelection(element) {
   let isSelected;
   if (isBackground) {
     isSelected = backgroundHasElement
-      ? selectedElementIds.includes(element.inner.id)
+      ? selectedElementIds.includes(layer.inner.id)
       : selectedElementIds.length === 0;
   } else {
-    isSelected = selectedElementIds.includes(element.id);
+    isSelected = selectedElementIds.includes(elementId);
   }
 
   const pageElementIds = currentPage.elements.map(({ id }) => id);
@@ -59,7 +61,7 @@ function useLayerSelection(element) {
       if (isBackground) {
         // If background layer is clicked either select nothing or select only background element
         if (backgroundHasElement) {
-          setSelectedElementsById({ elementIds: [element.inner.id] });
+          setSelectedElementsById({ elementIds: [elementInnerId] });
         } else {
           clearSelection();
         }
@@ -68,9 +70,7 @@ function useLayerSelection(element) {
         // select everything between this layer and the first selected layer
         const firstId = selectedElementIds[0];
         const firstIndex = pageElementIds.findIndex((id) => id === firstId);
-        const clickedIndex = pageElementIds.findIndex(
-          (id) => id === element.id
-        );
+        const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
         const lowerIndex = Math.min(firstIndex, clickedIndex);
         const higherIndex = Math.max(firstIndex, clickedIndex);
         const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
@@ -81,10 +81,10 @@ function useLayerSelection(element) {
         setSelectedElementsById({ elementIds });
       } else if (evt.metaKey) {
         // Meta pressed. Toggle this layer in the selection.
-        toggleElementInSelection({ elementId: element.id });
+        toggleElementInSelection({ elementId });
       } else {
         // No special key pressed - just selected this layer and nothing else.
-        setSelectedElementsById({ elementIds: [element.id] });
+        setSelectedElementsById({ elementIds: [elementId] });
       }
     },
     [
@@ -93,7 +93,8 @@ function useLayerSelection(element) {
       setSelectedElementsById,
       toggleElementInSelection,
       clearSelection,
-      element,
+      elementId,
+      elementInnerId,
       isBackground,
       backgroundHasElement,
     ]
