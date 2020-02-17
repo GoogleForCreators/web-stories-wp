@@ -44,3 +44,8 @@ export const Z_INDEX_CANVAS = {
   MOVABLE: 10,
   FLOAT_PANEL: 11,
 };
+
+export const BACKGROUND_FILL_TYPES = {
+  FIT_TO_DEVICE: 'fit-to-device',
+  DO_NOT_FORMAT: 'do-not-format',
+};

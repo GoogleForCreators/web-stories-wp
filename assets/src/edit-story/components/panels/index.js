@@ -32,11 +32,13 @@ import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
+import BackgroundFillPanel from './backgroundFill';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
 const ACTIONS = 'actions';
 const BACKGROUND = 'background';
+const BACKGROUND_FILL = 'backgroundFill';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
@@ -53,6 +55,7 @@ const MASK = 'mask';
 export const PanelTypes = {
   ACTIONS,
   BACKGROUND,
+  BACKGROUND_FILL,
   POSITION,
   SIZE,
   SCALE,
@@ -86,7 +89,10 @@ export function getPanels(elements) {
   let selectionPanels = [];
   // Only display background panel in case of background element.
   if (isBackground) {
-    selectionPanels = [{ type: BACKGROUND, Panel: BackgroundPanel }];
+    selectionPanels = [
+      { type: BACKGROUND, Panel: BackgroundPanel },
+      { type: BACKGROUND_FILL, Panel: BackgroundFillPanel },
+    ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
       selectionPanels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
@@ -106,6 +112,9 @@ export function getPanels(elements) {
             if (1 === elements.length) {
               return { type, Panel: BackgroundPanel };
             }
+            return null;
+          case BACKGROUND_FILL:
+            // Only display when isBackground.
             return null;
           case POSITION:
             return { type, Panel: PositionPanel };

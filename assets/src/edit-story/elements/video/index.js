@@ -40,6 +40,7 @@ export const isMedia = true;
 
 export const panels = [
   PanelTypes.BACKGROUND,
+  PanelTypes.BACKGROUND_FILL,
   PanelTypes.SIZE,
   PanelTypes.POSITION,
   PanelTypes.SCALE,
