@@ -40,12 +40,12 @@ env:
 
 install:
   - |
-    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install
     fi
   - |
@@ -93,6 +93,13 @@ script:
         npm run test:php
       fi
     fi
+  - |
+    if [ "$E2E" = "1" ]; then
+      npm run build:js
+      npm run env:start
+      npm run env:e2e:ci
+      npm run env:stop
+    fi
 
 jobs:
   fast_finish: true
@@ -124,6 +131,9 @@ jobs:
       if: branch = master AND type = push
       php: 7.4
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
+    - name: E2E tests
+      php: 7.4
+      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       php: 7.3
