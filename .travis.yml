@@ -28,7 +28,7 @@ cache:
     - $HOME/.jest-cache
     - $HOME/.npm
     - $HOME/.nvm/.cache
-    - $HOME/.wp-cli/.cache
+    - $HOME/.wp-cli/.cachec
 
 branches:
   only:
@@ -46,7 +46,7 @@ install:
     fi
   - |
     if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      composer install
+      composer install --ignore-platform-reqs
     fi
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
