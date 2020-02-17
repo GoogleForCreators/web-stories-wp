@@ -34,5 +34,8 @@
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "phpstan": "phpstan analyze  --memory-limit=128M"
+  }
 }
