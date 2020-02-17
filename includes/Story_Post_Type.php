@@ -200,7 +200,7 @@ class Story_Post_Type {
 	 * Highjack editor with custom editor.
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post Current post object.
+	 * @param WP_Post $post    Current post object.
 	 *
 	 * @return bool
 	 */
@@ -366,9 +366,9 @@ class Story_Post_Type {
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
 		 *
-		 * @param array Associative array of allowed mime types per media type (image, audio, video).
-		 *
 		 * @since 1.3
+		 *
+		 * @param array Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
