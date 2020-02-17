@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {
-
-};
+window.ampStoriesEditSettings = {};
