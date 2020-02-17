@@ -341,7 +341,7 @@ class Story_Post_Type {
 		 *
 		 * @since 1.3
 		 *
-		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
@@ -582,7 +582,7 @@ class Story_Post_Type {
 			],
 		];
 
-		array_merge( $allowed_tags, $story_components );
+		array_push( $allowed_tags, ...$story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
