@@ -63,17 +63,25 @@ function EditableHexPreview({ hex, onChange }) {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
+  const handleOnBlur = (evt) => {
+    if (!evt.currentTarget.contains(document.activeElement)) {
+      setIsEditing(false);
+    }
+  };
+
   if (!isEditing) {
     return <Preview onClick={() => setIsEditing(true)}>{hex}</Preview>;
   }
 
   return (
-    <EditableInput
-      value={hex}
-      onChange={onChange}
-      onChangeComplete={() => setIsEditing(false)}
-      style={inputStyles}
-    />
+    <div tabIndex={-1} onBlur={handleOnBlur}>
+      <EditableInput
+        value={hex}
+        onChange={onChange}
+        onChangeComplete={() => setIsEditing(false)}
+        style={inputStyles}
+      />
+    </div>
   );
 }
 
