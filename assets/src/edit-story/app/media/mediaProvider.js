@@ -31,6 +31,7 @@ import useLoadMedia from './actions/useLoadMedia';
 import useCompleteMedia from './actions/useCompleteMedia';
 import useReloadMedia from './actions/useReloadMedia';
 import useResetMedia from './actions/useResetMedia';
+import useUploadVideoFrame from './actions/useUploadVideoFrame';
 import Context from './context';
 
 function MediaProvider({ children }) {
@@ -60,6 +61,8 @@ function MediaProvider({ children }) {
     reloadMedia,
   });
 
+  const { uploadVideoFrame } = useUploadVideoFrame();
+
   const state = {
     state: {
       media,
@@ -74,6 +77,7 @@ function MediaProvider({ children }) {
       loadMedia,
       reloadMedia,
       resetMedia,
+      uploadVideoFrame,
     },
   };
 
