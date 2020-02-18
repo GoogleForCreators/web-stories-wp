@@ -15,4 +15,5 @@
  */
 
 export { default as InputGroup } from './inputGroup';
+export { default as CheckBox } from './checkbox';
 export { default as SelectMenu } from './select';

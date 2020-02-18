@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { TextField, InputAdornment, FormControl } from '@material-ui/core';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -28,16 +29,29 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import Label from './label';
 import Group from './group';
 
-const Input = styled.input`
-  color: ${({ theme }) => theme.colors.mg.v1};
-  border: 1px solid;
-  border-radius: 4px;
-  font-size: 11px;
-  line-height: 16px;
-  width: 100px;
+const FormControlStyled = styled(FormControl)`
+  width: 100%;
+  margin: 10px 0px !important;
+`;
+const StyledInput = styled(TextField)`
+  input {
+    border: 0;
+    box-shadow: 0 0 0 transparent;
+    background: none;
+    min-height: auto;
+    color: currentColor;
+    padding: 6px 0 7px;
+    &:focus,
+    &:active,
+    &:hover {
+      box-shadow: 0 0 0 transparent;
+    }
+  }
+  .MuiOutlinedInput-input {
+    padding: 18.5px 14px;
+  }
 `;
 
 function InputGroup({
@@ -52,24 +66,38 @@ function InputGroup({
 }) {
   const placeholder = isMultiple ? __('( multiple )', 'web-stories') : '';
   const isCheckbox = type === 'checkbox';
+
+  let InputProps = {};
+  if (postfix) {
+    InputProps = {
+      endAdornment: <InputAdornment position="end">{postfix}</InputAdornment>,
+    };
+  }
+
   return (
     <Group disabled={disabled}>
-      <Label>{label}</Label>
-      <Input
-        type={type}
-        disabled={disabled}
-        onChange={(evt) =>
-          onChange(isCheckbox ? evt.target.checked : evt.target.value, evt)
-        }
-        onBlur={(evt) =>
-          evt.target.form.dispatchEvent(new window.Event('submit'))
-        }
-        placeholder={placeholder}
-        value={isCheckbox ? 'on' : value}
-        checked={isCheckbox ? value : null}
-        {...rest}
-      />
-      {postfix}
+      <FormControlStyled>
+        <StyledInput
+          label={label}
+          InputProps={InputProps}
+          variant="outlined"
+          type={type}
+          disabled={disabled}
+          endAdornment={
+            <InputAdornment position="end">{postfix}</InputAdornment>
+          }
+          onChange={(evt) =>
+            onChange(isCheckbox ? evt.target.checked : evt.target.value, evt)
+          }
+          onBlur={(evt) =>
+            evt.target.form.dispatchEvent(new window.Event('submit'))
+          }
+          placeholder={placeholder}
+          value={isCheckbox ? 'on' : value}
+          checked={isCheckbox ? value : null}
+          {...rest}
+        />
+      </FormControlStyled>
     </Group>
   );
 }

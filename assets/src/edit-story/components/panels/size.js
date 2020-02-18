@@ -28,7 +28,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../form';
+import { InputGroup, CheckBox } from '../form';
 import { dataPixels } from '../../units';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
@@ -103,7 +103,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
         postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
         disabled={isFill}
       />
-      <InputGroup
+      <CheckBox
         type="checkbox"
         label={__('Keep ratio', 'web-stories')}
         value={lockRatio}
