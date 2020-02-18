@@ -15,7 +15,6 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "szepeviktor/phpstan-wordpress": "^0.6.0",
     "wp-coding-standards/wpcs": "^2.2"
   },
   "config": {
@@ -34,8 +33,5 @@
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
     }
   },
-  "prefer-stable": true,
-  "scripts": {
-    "phpstan": "phpstan analyze --memory-limit=256M"
-  }
+  "prefer-stable": true
 }
