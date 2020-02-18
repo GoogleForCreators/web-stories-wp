@@ -37,11 +37,11 @@ function useUploadVideoFrame() {
     actions: { updateElementById },
   } = useStory();
   const setProperties = useCallback(
-    (id, properties) => updateElementById({ elementId: id, properties }),
+    (elementId, properties) => updateElementById({ elementId, properties }),
     [updateElementById]
   );
 
-  const processData = async (videoId, src, id) => {
+  const processData = async (videoId, src, elementId) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
       const { id: posterId, source_url: poster } = await uploadFile(obj);
@@ -55,7 +55,7 @@ function useUploadVideoFrame() {
         post: storyId,
       });
       const newState = { posterId, poster };
-      setProperties(id, newState);
+      setProperties(elementId, newState);
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
     }
