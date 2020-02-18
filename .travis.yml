@@ -46,7 +46,13 @@ install:
     fi
   - |
     if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      composer install --ignore-platform-reqs
+      composer install -n --ignore-platform-reqs
+    fi
+  - |
+    if [ $(phpenv version-name) = "5.6" ] || [ $(phpenv version-name) = "7.0" ]; then
+      # phpstan only supports PHP 7.1+. Ignore version conflicts on lower versions.
+      composer remove -n --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
+      composer update -n --optimize-autoloader
     fi
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
@@ -60,7 +66,7 @@ install:
 before_script:
   - |
     if [ "$LINT" = "1" ]; then
-      composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
+      composer require -n --dev ergebnis/composer-normalize --ignore-platform-reqs
     fi
   - |
     if [ "$COVERAGE" != "1" ]; then
@@ -70,8 +76,8 @@ before_script:
 script:
   - |
     if [ "$LINT" = "1" ]; then
-      composer validate --no-check-all
-      composer normalize --dry-run
+      composer -n validate --no-check-all
+      composer -n normalize --dry-run
       npm run lint
     fi
   - |
