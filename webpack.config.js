@@ -34,6 +34,26 @@ const sharedConfig = {
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
+  module: {
+    ...defaultConfig.module,
+    rules: [
+      ...defaultConfig.module.rules,
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'url-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+    ],
+  },
+  plugins: [
+    ...defaultConfig.plugins,
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+  ],
   optimization: {
     minimizer: [
       new TerserPlugin({
@@ -58,29 +78,8 @@ const storiesEditor = {
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
   },
-  output: {
-    path: path.resolve(process.cwd(), 'assets', 'js'),
-    filename: '[name].js',
-  },
-  module: {
-    ...defaultConfig.module,
-    rules: [
-      ...defaultConfig.module.rules,
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-      },
-    ],
-  },
   plugins: [
-    ...defaultConfig.plugins,
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
+    ...sharedConfig.plugins,
     new WebpackBar({
       name: 'Stories Editor',
       color: '#fddb33',
@@ -101,4 +100,32 @@ const storiesEditor = {
   },
 };
 
-module.exports = [storiesEditor];
+const dashboard = {
+  ...defaultConfig,
+  ...sharedConfig,
+  entry: {
+    'stories-dashboard': './assets/src/dashboard/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'Dashboard',
+      color: '#ade2cd',
+    }),
+  ],
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        stories: {
+          name: 'stories-dashboard',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
+module.exports = [storiesEditor, dashboard];
