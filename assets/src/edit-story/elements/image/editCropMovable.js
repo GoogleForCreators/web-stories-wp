@@ -25,6 +25,7 @@ import { useEffect, useRef } from 'react';
  */
 import Movable from '../../components/movable';
 import { useUnits } from '../../units';
+import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { getFocalFromOffset } from './../shared';
 
 function EditCropMovable({
@@ -33,6 +34,9 @@ function EditCropMovable({
   croppedImage,
   x,
   y,
+  width,
+  height,
+  rotationAngle,
   offsetX,
   offsetY,
   imgWidth,
@@ -43,7 +47,7 @@ function EditCropMovable({
   } = useUnits();
 
   const moveableRef = useRef();
-  const cropRef = useRef([0, 0, 0, 0]);
+  const cropRef = useRef([0, 0, 0, 0, 0, 0]);
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
@@ -57,43 +61,68 @@ function EditCropMovable({
       targets={cropBox}
       origin={false}
       resizable={true}
-      onResize={({ width: resizeWidth, height: resizeHeight, delta, drag }) => {
-        const [tx, ty] = [drag.beforeTranslate[0], drag.beforeTranslate[1]];
-        cropBox.style.transform = `translate(${tx}px, ${ty}px)`;
-        croppedImage.style.transform = `translate(${-tx}px, ${-ty}px)`;
+      onResize={({
+        width: resizeWidth,
+        height: resizeHeight,
+        direction,
+        delta,
+        drag,
+      }) => {
+        // Focal point offset.
+        const [fx, fy] = [drag.beforeTranslate[0], drag.beforeTranslate[1]];
+        // Direction of resize: left/right/top/bottom and resize deltas for
+        // each side.
+        const [dirX, dirY] = direction;
+        const dw = resizeWidth - width;
+        const dh = resizeHeight - height;
+        const left = dirX < 0 ? dw : 0;
+        const right = dirX > 0 ? dw : 0;
+        const top = dirY < 0 ? dh : 0;
+        const bottom = dirY > 0 ? dh : 0;
+        cropRef.current = [fx, fy, left, right, top, bottom];
+        cropBox.style.transform = `translate(${fx}px, ${fy}px)`;
+        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px)`;
         if (delta[0]) {
           cropBox.style.width = `${resizeWidth}px`;
         }
         if (delta[1]) {
           cropBox.style.height = `${resizeHeight}px`;
         }
-        cropRef.current = [tx, ty, resizeWidth, resizeHeight];
       }}
       onResizeEnd={() => {
+        const [fx, fy, left, right, top, bottom] = cropRef.current;
+        cropRef.current = [0, 0, 0, 0, 0, 0];
         cropBox.style.transform = '';
         croppedImage.style.transform = '';
         cropBox.style.width = '';
         cropBox.style.height = '';
-        const [tx, ty, resizeWidth, resizeHeight] = cropRef.current;
-        cropRef.current = [0, 0, 0, 0];
-        if (resizeWidth === 0 || resizeHeight === 0) {
+        if (left === 0 && right === 0 && top === 0 && bottom === 0) {
           return;
         }
+        const resizeWidth = width + left + right;
+        const resizeHeight = height + top + bottom;
+        const [dx, dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          left,
+          right,
+          top,
+          bottom
+        );
         const resizeScale =
           Math.min(imgWidth / resizeWidth, imgHeight / resizeHeight) * 100;
         const resizeFocalX = getFocalFromOffset(
           resizeWidth,
           imgWidth,
-          offsetX + tx
+          offsetX + fx
         );
         const resizeFocalY = getFocalFromOffset(
           resizeHeight,
           imgHeight,
-          offsetY + ty
+          offsetY + fy
         );
         setProperties({
-          x: editorToDataX(x + tx),
-          y: editorToDataY(y + ty),
+          x: editorToDataX(x + dx),
+          y: editorToDataY(y + dy),
           width: editorToDataX(resizeWidth),
           height: editorToDataY(resizeHeight),
           scale: resizeScale,
@@ -115,6 +144,9 @@ EditCropMovable.propTypes = {
   croppedImage: PropTypes.object.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  rotationAngle: PropTypes.number.isRequired,
   offsetX: PropTypes.number.isRequired,
   offsetY: PropTypes.number.isRequired,
   imgWidth: PropTypes.number.isRequired,

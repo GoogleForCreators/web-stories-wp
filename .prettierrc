@@ -12,13 +12,13 @@
       }
     },
     {
-      "files": [".eslintrc", ".prettierrc", ".stylelintrc", "*.json"],
+      "files": [".eslintrc", ".imgbotconfig", ".prettierrc", ".stylelintrc", "*.json"],
       "options": {
         "parser": "json"
       }
     },
     {
-      "files": ["*.yml"],
+      "files": ["*.yml", "*.neon.dist"],
       "options": {
         "parser": "yaml"
       }
