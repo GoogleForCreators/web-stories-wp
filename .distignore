@@ -36,6 +36,5 @@ package-lock.json
 phpcs.xml
 phpstan.neon.dist
 phpunit.xml.dist
-postcss.config.js
 README.md
 webpack.config.js

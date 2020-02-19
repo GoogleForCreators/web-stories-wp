@@ -20,6 +20,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 
@@ -72,7 +73,7 @@ const storiesEditor = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
@@ -80,6 +81,9 @@ const storiesEditor = {
     ...defaultConfig.plugins,
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
+    }),
+    new RtlCssPlugin({
+      filename: '../css/[name]-rtl.css',
     }),
     new WebpackBar({
       name: 'Stories Editor',
