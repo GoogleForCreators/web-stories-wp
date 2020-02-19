@@ -33,7 +33,6 @@ import {
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
 import DropZoneProvider from '../../components/dropzone/dropZoneProvider';
-import useGlobalKeys from './useGlobalKeys';
 
 const Editor = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -58,7 +57,6 @@ const Area = styled.div`
 `;
 
 function Layout() {
-  useGlobalKeys();
   return (
     <Editor>
       <Area area="lib">

@@ -48,10 +48,10 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id of element to move
- * @param {number|function(number):number} payload.position New position of element to move
+ * @param {number|string} payload.position New position of element to move
  * @return {Object} New state
  */
-function arrangeElement(state, { elementId, position: positionOrUpdater }) {
+function arrangeElement(state, { elementId, position }) {
   if (elementId === null && state.selection.length !== 1) {
     return state;
   }
@@ -75,17 +75,13 @@ function arrangeElement(state, { elementId, position: positionOrUpdater }) {
     return state;
   }
 
-  const desiredPosition =
-    typeof positionOrUpdater === 'function'
-      ? positionOrUpdater(currentPosition)
-      : positionOrUpdater;
   const minPosition = Boolean(page.backgroundElementId) ? 1 : 0;
   const maxPosition = page.elements.length - 1;
   const newPosition = getAbsolutePosition({
     currentPosition,
     minPosition,
     maxPosition,
-    desiredPosition,
+    desiredPosition: position,
   });
 
   // If it's already there, do nothing.

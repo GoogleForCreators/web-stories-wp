@@ -24,6 +24,7 @@ import { useEffect } from '@wordpress/element';
  */
 import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
+import { LAYER_DIRECTIONS } from '../../constants';
 
 /**
  * @param {{current: Node}} ref
@@ -90,16 +91,9 @@ function useCanvasKeys(ref) {
   // Layer up/down.
   useKeyDownEffect(
     ref,
-    'mod+up',
-    () =>
-      arrangeSelection({ position: (currentPosition) => currentPosition + 1 }),
-    [arrangeSelection]
-  );
-  useKeyDownEffect(
-    ref,
-    'mod+down',
-    () =>
-      arrangeSelection({ position: (currentPosition) => currentPosition - 1 }),
+    { key: ['mod+up', 'mod+down'], shift: true },
+    ({ key, shiftKey }) =>
+      arrangeSelection({ position: getLayerDirection(key, shiftKey) }),
     [arrangeSelection]
   );
 }
@@ -112,6 +106,16 @@ function getArrowDir(key, pos, neg) {
     return -1;
   }
   return 0;
+}
+
+function getLayerDirection(key, shift) {
+  if (key === 'ArrowUp') {
+    return shift ? LAYER_DIRECTIONS.FRONT : LAYER_DIRECTIONS.FORWARD;
+  }
+  if (key === 'ArrowDown') {
+    return shift ? LAYER_DIRECTIONS.BACK : LAYER_DIRECTIONS.BACKWARD;
+  }
+  return null;
 }
 
 export default useCanvasKeys;
