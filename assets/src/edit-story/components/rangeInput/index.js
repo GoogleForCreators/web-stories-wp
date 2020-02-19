@@ -46,6 +46,7 @@ export default styled.input.attrs(({ min, max, step, value, onChange }) => ({
   height: 4px;
   appearance: none;
   flex: 1;
+  flex-grow: ${({ flexGrow }) => flexGrow || 0};
 
   &::-webkit-slider-thumb {
     ${rangeThumb}
