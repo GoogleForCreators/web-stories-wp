@@ -25,18 +25,37 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import { useAPI } from '../../api';
 import { OutputPage } from '../../../output';
+import { useConfig } from '../../config';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
  *
- * @param {Object} pages Object of pages.
+ * @param {Object} story Story object.
+ * @param {string} story.featuredMediaUrl Featured media URL.
+ * @param {Array<Object>} pages List of pages.
+ * @param {Object} metadata Metadata.
+ * @param {string} metadata.publisher Publisher name.
+ * @param {string} metadata.publisherLogo Publisher logo.
  * @return {Element} Markup of pages.
  */
-const getStoryMarkupFromPages = (pages) => {
-  const markup = pages.map((page) => {
-    return renderToString(<OutputPage page={page} />);
-  });
-  return markup.join('');
+const getStoryMarkup = (story, pages, metadata) => {
+  // TODO: get different image sizes for featured media.
+
+  return renderToString(
+    <amp-story
+      standalone="standalone"
+      publisher={metadata.publisher}
+      publisher-logo-src={metadata.publisherLogo}
+      title={story.title}
+      poster-portrait-src={story.featuredMediaUrl}
+      poster-square-src={story.featuredMediaUrl}
+      poster-landscape-src={story.featuredMediaUrl}
+    >
+      {pages.map((page) => (
+        <OutputPage key={page.id} page={page} />
+      ))}
+    </amp-story>
+  );
 };
 
 /**
@@ -52,6 +71,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
+  const { metadata } = useConfig();
   const [isSaving, setIsSaving] = useState(false);
 
   /**
@@ -85,7 +105,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     } = story;
 
-    const content = getStoryMarkupFromPages(pages);
+    const content = getStoryMarkup(story, pages, metadata);
     saveStoryById({
       storyId,
       title,
@@ -117,7 +137,15 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       .finally(() => {
         setIsSaving(false);
       });
-  }, [storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL]);
+  }, [
+    story,
+    pages,
+    metadata,
+    saveStoryById,
+    storyId,
+    updateStory,
+    refreshPostEditURL,
+  ]);
 
   return { saveStory, isSaving };
 }

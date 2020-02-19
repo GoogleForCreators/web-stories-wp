@@ -281,6 +281,10 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
+		// @todo Make filterable like in Story_Post_Type::get_schemaorg_metadata()
+		$publisher      = get_option( 'blogname' );
+		$publisher_logo = self::get_publisher_logo();
+
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'ampStoriesEditSettings',
@@ -300,6 +304,10 @@ class Story_Post_Type {
 						'users'    => '/wp/v2/users',
 						'statuses' => '/wp/v2/statuses',
 						'fonts'    => '/amp/v1/fonts',
+					],
+					'metadata'         => [
+						'publisher'     => $publisher,
+						'publisherLogo' => $publisher_logo,
 					],
 				],
 			]

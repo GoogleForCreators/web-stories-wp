@@ -83,40 +83,8 @@ use \Google\Web_Stories\Media;
 </head>
 <body>
 <?php
-
-$metadata = Story_Post_Type::get_schemaorg_metadata();
-
-if ( isset( $metadata['publisher']['logo']['url'] ) ) {
-	$publisher_logo_src = $metadata['publisher']['logo']['url'];
-} elseif ( isset( $metadata['publisher']['logo'] ) && is_string( $metadata['publisher']['logo'] ) ) {
-	$publisher_logo_src = $metadata['publisher']['logo'];
-} else {
-	$publisher_logo_src = admin_url( 'images/wordpress-logo.png' );
-}
-
-$publisher = isset( $metadata['publisher']['name'] ) ? $metadata['publisher']['name'] : get_option( 'blogname' );
-
-$meta_images = Media::get_story_meta_images();
-
-$poster_portrait = isset( $meta_images['poster-portrait'] ) ? $meta_images['poster-portrait'] : plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
-
+// @todo Filter content in PHP to ensure AMP validity and to allow changing publisher logo etc.
+the_content();
 ?>
-<amp-story
-	standalone
-	publisher-logo-src="<?php echo esc_url( $publisher_logo_src ); ?>"
-	publisher="<?php echo esc_attr( $publisher ); ?>"
-	title="<?php the_title_attribute(); ?>"
-	poster-portrait-src="<?php echo esc_url( $poster_portrait ); ?>"
-	<?php if ( isset( $meta_images['poster-square'] ) ) : ?>
-		poster-square-src="<?php echo esc_url( $meta_images['poster-square'] ); ?>"
-	<?php endif; ?>
-	<?php if ( isset( $meta_images['poster-landscape'] ) ) : ?>
-		poster-landscape-src="<?php echo esc_url( $meta_images['poster-landscape'] ); ?>"
-	<?php endif; ?>
->
-	<?php
-	the_content();
-	?>
-</amp-story>
 </body>
 </html>
