@@ -47,7 +47,7 @@ function BackgroundFillPanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="backgroundFill"
-      title={__('Background Fill  Behavior', 'amp')}
+      title={__('Background Fill Behavior', 'amp')}
     >
       <select
         value={backgroundFill}
