@@ -30,7 +30,7 @@ import { useContext, useEffect, createRef } from '@wordpress/element';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
-const INPUT_ELEMENTS = ['INPUT', 'TEXTAREA'];
+const NON_EDITABLE_INPUT_TYPES = ['submit', 'button', 'checkbox', 'radio'];
 
 const globalRef = createRef();
 
@@ -40,13 +40,13 @@ const globalRef = createRef();
  * @param {{current: Node}} ref
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} opts
+ * @param {Array|undefined} deps
  */
 export function useKeyDownEffect(
   ref,
   keyNameOrSpec,
   callback,
-  opts = undefined
+  deps = undefined
 ) {
   const { keys } = useContext(Context);
   useEffect(
@@ -54,6 +54,12 @@ export function useKeyDownEffect(
       const node = ref.current;
       if (!node) {
         return undefined;
+      }
+      if (
+        node.nodeType !== /* ELEMENT */ 1 &&
+        node.nodeType !== /* DOCUMENT */ 9
+      ) {
+        throw new Error('only an element or a document node can be used');
       }
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
@@ -64,7 +70,7 @@ export function useKeyDownEffect(
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    opts || []
+    deps || []
   );
 }
 
@@ -73,27 +79,27 @@ export function useKeyDownEffect(
  *
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} opts
+ * @param {Array|undefined} deps
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
   callback,
-  opts = undefined
+  deps = undefined
 ) {
   if (!globalRef.current) {
     globalRef.current = document;
   }
-  useKeyDownEffect(globalRef, keyNameOrSpec, callback, opts);
+  useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
 /**
  * @param {{current: Node}} ref
- * @param {Array|undefined} opts
+ * @param {Array|undefined} deps
  */
-export function useEscapeToBlurEffect(ref, opts = undefined) {
+export function useEscapeToBlurEffect(ref, deps = undefined) {
   useKeyDownEffect(
     ref,
-    { key: 'esc', input: true },
+    { key: 'esc', editable: true },
     () => {
       const { current } = ref;
       const { activeElement } = document;
@@ -101,7 +107,7 @@ export function useEscapeToBlurEffect(ref, opts = undefined) {
         activeElement.blur();
       }
     },
-    opts
+    deps
   );
 }
 
@@ -119,7 +125,7 @@ function getOrCreateMousetrap(node) {
  * @param {string|Object} keyNameOrSpec
  */
 function resolveKeySpec(keyDict, keyNameOrSpec) {
-  const props =
+  const keySpec =
     typeof keyNameOrSpec === 'string' || Array.isArray(keyNameOrSpec)
       ? { key: keyNameOrSpec }
       : keyNameOrSpec;
@@ -127,13 +133,13 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     key: keyOrArray,
     shift = false,
     repeat = true,
-    input = false,
-  } = props;
+    editable = false,
+  } = keySpec;
   const mappedKeys = []
     .concat(keyOrArray)
     .reduce((keys, key) => keys.concat(keyDict[key] || key), []);
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, repeat, input };
+  return { key: allKeys, shift, repeat, editable };
 }
 
 function addMods(keys, shift) {
@@ -143,22 +149,34 @@ function addMods(keys, shift) {
   return keys.concat(keys.map((key) => `shift+${key}`));
 }
 
-function createKeyHandler({ repeat, input }, callback) {
+function createKeyHandler(
+  { repeat: repeatAllowed, editable: editableAllowed },
+  callback
+) {
   return (evt) => {
-    if ((input || isValidTarget(evt.target)) && (repeat || !evt.repeat)) {
-      callback(evt);
-      // The `false` value instructs Mousetrap to cancel event propagation
-      // and default behavior.
-      return false;
+    const { repeat, target } = evt;
+    if (!repeatAllowed && repeat) {
+      return undefined;
     }
-    return undefined;
+    if (!editableAllowed && isEditableTarget(target)) {
+      return undefined;
+    }
+    callback(evt);
+    // The `false` value instructs Mousetrap to cancel event propagation
+    // and default behavior.
+    return false;
   };
 }
 
-function isValidTarget(target) {
-  return (
-    target &&
-    !INPUT_ELEMENTS.includes(target.tagName) &&
-    !target.closest('[contenteditable="true"]')
-  );
+function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
+  if (readOnly === true) {
+    return false;
+  }
+  if (isContentEditable || tagName === 'TEXTAREA') {
+    return true;
+  }
+  if (tagName === 'INPUT') {
+    return !NON_EDITABLE_INPUT_TYPES.contains(type);
+  }
+  return false;
 }

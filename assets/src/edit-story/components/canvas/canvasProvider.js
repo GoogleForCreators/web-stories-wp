@@ -81,9 +81,7 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      if (document.activeElement !== evt.currentTarget) {
-        evt.currentTarget.focus();
-      }
+      evt.currentTarget.focus();
       evt.stopPropagation();
 
       if ('mousedown' === evt.type) {
