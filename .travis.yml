@@ -98,7 +98,8 @@ script:
         npm run test:php
       fi
     fi
-  - |     if [ "$ANALYSIS" = "1" ]; then
+  - |
+    if [ "$ANALYSIS" = "1" ]; then
       vendor/bin/phpstan analyze --memory-limit=256M
     fi
   - |
