@@ -32,6 +32,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
+import { Rectangle } from '../../button';
 import { ReactComponent as RectangleIcon } from './rectangle.svg';
 
 const PAGE_WIDTH = 90;
@@ -58,36 +59,37 @@ const RangeInputWrapper = styled.div`
   margin: 0 auto 75px auto;
 `;
 
-const Rectangle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
+function RangeControl({ value, onChange, min = 1, max = 3, step = 1 }) {
+  const updateRangeValue = (addition) => {
+    let newValue = value;
+    newValue += addition;
+    if (newValue < min) newValue = min;
+    if (newValue > max) newValue = max;
+    onChange(newValue);
+  };
 
-  svg {
-    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
-    height: auto;
-    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
-  }
-`;
-
-function RangeControl({ value, onChange }) {
   return (
     <RangeInputWrapper>
-      <Rectangle>
+      <Rectangle
+        onClick={() => updateRangeValue(-step)}
+        isDisabled={value === min}
+      >
         <RectangleIcon />
       </Rectangle>
       <RangeInput
-        min="1"
-        max="3"
-        step="1"
+        min={min}
+        max={max}
+        step={step}
         value={value}
         onChange={(evt) => onChange(Number(evt.target.value))}
         thumbSize={24}
+        flexGrow={1}
       />
-      <Rectangle isLarge>
+      <Rectangle
+        isLarge
+        onClick={() => updateRangeValue(step)}
+        isDisabled={value === max}
+      >
         <RectangleIcon />
       </Rectangle>
     </RangeInputWrapper>
@@ -97,6 +99,9 @@ function RangeControl({ value, onChange }) {
 RangeControl.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
 };
 
 function GridView() {

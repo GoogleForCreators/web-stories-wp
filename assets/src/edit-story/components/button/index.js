@@ -128,6 +128,25 @@ export const GridView = (props) => (
   </StyledButton>
 );
 
+export const Rectangle = styled(Base)`
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
+
+  svg {
+    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
+    height: auto;
+    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
+  }
+`;
+
 export const ActionButton = styled.button.attrs({ type: 'button' })`
   background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.fg.v3};
