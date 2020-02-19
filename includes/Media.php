@@ -121,7 +121,7 @@ class Media {
 	public static function get_story_meta_images( $post = null ) {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
-		if ( ! (bool) $thumbnail_id ) {
+		if ( 0 === $thumbnail_id ) {
 			return [];
 		}
 
@@ -207,7 +207,7 @@ class Media {
 	 * @param array    $response   Array of prepared attachment data.
 	 * @param \WP_Post $attachment Attachment object.
 	 *
-	 * @return array<string> $response;
+	 * @return array $response;
 	 */
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
 
