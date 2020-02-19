@@ -46,7 +46,7 @@ install:
     fi
   - |
     if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      composer install
+      composer install --no-interaction
     fi
   - |
     if [ "$DEPLOY_PLUGIN" = "1" ]; then
@@ -60,7 +60,12 @@ install:
 before_script:
   - |
     if [ "$LINT" = "1" ]; then
-      composer require --dev ergebnis/composer-normalize --ignore-platform-reqs
+      composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
+    fi
+  - |
+    if [ "$ANALYSIS" = "1" ]; then
+      # phpstan only supports PHP 7.1+. Ignore version conflicts.
+      composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
     fi
   - |
     if [ "$COVERAGE" != "1" ]; then
@@ -70,8 +75,8 @@ before_script:
 script:
   - |
     if [ "$LINT" = "1" ]; then
-      composer validate --no-check-all
-      composer normalize --dry-run
+      composer --no-interaction validate --no-check-all
+      composer --no-interaction normalize --dry-run
       npm run lint
     fi
   - |
@@ -93,6 +98,10 @@ script:
         npm run test:php
       fi
     fi
+  - |
+    if [ "$ANALYSIS" = "1" ]; then
+      vendor/bin/phpstan analyze --memory-limit=256M
+    fi
 
 jobs:
   fast_finish: true
@@ -101,6 +110,9 @@ jobs:
       name: Lint (PHP, JavaScript, CSS, Markdown, and configuration files)
       php: 7.4
       env: LINT=1
+    - name: Static Analysis (PHPStan)
+      php: 7.4
+      env: ANALYSIS=1
     - stage: test
       name: JavaScript unit tests
       php: 7.4
