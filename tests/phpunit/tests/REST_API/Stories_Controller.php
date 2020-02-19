@@ -48,9 +48,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	public function test_get_item_schema() {
-		$request    = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
-		$response   = rest_get_server()->dispatch( $request );
-		$data       = $response->get_data();
+		$request  = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
 
 		$this->assertNotEmpty( $data );
 

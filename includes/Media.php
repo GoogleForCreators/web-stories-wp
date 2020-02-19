@@ -74,6 +74,8 @@ class Media {
 
 	/**
 	 * Init.
+	 *
+	 * @todo refactor
 	 */
 	public static function init() {
 		register_meta(
