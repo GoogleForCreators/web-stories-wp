@@ -74,6 +74,8 @@ class Media {
 
 	/**
 	 * Init.
+	 *
+	 * @return void
 	 */
 	public static function init() {
 		register_meta(
@@ -117,13 +119,18 @@ class Media {
 	 * @return string[] Images.
 	 */
 	public static function get_story_meta_images( $post = null ) {
-		$thumbnail_id = get_post_thumbnail_id( $post );
+		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+
+		if ( ! (bool) $thumbnail_id ) {
+			return [];
+		}
 
 		$images = [
 			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_CARD_IMAGE_SIZE ),
 			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
 			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
+
 		return array_filter( $images );
 	}
 
@@ -133,6 +140,7 @@ class Media {
 	 * Reduces unnecessary noise in the media library.
 	 *
 	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 * @return void
 	 */
 	public static function filter_poster_attachments( &$query ) {
 		$post_type = (array) $query->get( 'post_type' );
@@ -153,6 +161,8 @@ class Media {
 
 	/**
 	 * Registers additional REST API fields upon API initialization.
+	 *
+	 * @return void
 	 */
 	public static function rest_api_init() {
 		register_rest_field(
@@ -197,14 +207,14 @@ class Media {
 	 * @param array    $response   Array of prepared attachment data.
 	 * @param \WP_Post $attachment Attachment object.
 	 *
-	 * @return array $response;
+	 * @return array<string> $response;
 	 */
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
 
 		if ( 'video' === $response['type'] ) {
-			$id    = get_post_thumbnail_id( $attachment );
+			$id    = (int) get_post_thumbnail_id( $attachment );
 			$image = '';
-			if ( $id ) {
+			if ( has_post_thumbnail( $attachment ) ) {
 				$image = wp_get_attachment_image_url( $id, 'medium' );
 			}
 			$response['featured_media']     = $id;
