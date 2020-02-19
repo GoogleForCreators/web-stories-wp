@@ -137,7 +137,8 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
   } = keySpec;
   const mappedKeys = []
     .concat(keyOrArray)
-    .reduce((keys, key) => keys.concat(keyDict[key] || key), []);
+    .map((key) => keyDict[key] || key)
+    .flat();
   const allKeys = addMods(mappedKeys, shift);
   return { key: allKeys, shift, repeat, editable };
 }
