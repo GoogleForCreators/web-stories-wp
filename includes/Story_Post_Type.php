@@ -229,7 +229,7 @@ class Story_Post_Type {
 
 		$post = get_post();
 
-		if (! $post ) {
+		if ( ! $post ) {
 			return;
 		}
 
@@ -739,7 +739,11 @@ class Story_Post_Type {
 			$metadata['publisher']['logo'] = $publisher_logo;
 		}
 
-		/** @var \WP_Post $post */
+		/**
+		 * We're expecting a post object.
+		 *
+		 * @var \WP_Post $post
+		 */
 		$post = get_queried_object();
 
 		$metadata = array_merge(
