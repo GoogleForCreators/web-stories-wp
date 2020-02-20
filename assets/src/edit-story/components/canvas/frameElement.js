@@ -96,6 +96,7 @@ function FrameElement({ element }) {
         }
       }}
       tabIndex="0"
+      aria-labelledby={`layer-${id}`}
     >
       <WithElementMask element={element} fill={true}>
         {Frame && <Frame element={element} box={box} />}

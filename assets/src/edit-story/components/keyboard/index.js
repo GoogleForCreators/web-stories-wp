@@ -30,7 +30,17 @@ import { useContext, useEffect, createRef } from '@wordpress/element';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
-const NON_EDITABLE_INPUT_TYPES = ['submit', 'button', 'checkbox', 'radio'];
+const NON_EDITABLE_INPUT_TYPES = [
+  'submit',
+  'button',
+  'checkbox',
+  'radio',
+  'image',
+  'file',
+  'range',
+  'reset',
+  'hidden',
+];
 
 const globalRef = createRef();
 
