@@ -20,16 +20,10 @@
 import styled from 'styled-components';
 
 /**
- * WordPress dependencies
- */
-import { useEffect } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
 import { elementFillContent, getMediaProps } from '../shared';
 import StoryPropTypes from '../../types';
-import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Element = styled.div`
@@ -49,24 +43,14 @@ function VideoDisplay({
   element: {
     mimeType,
     src,
-    id,
     isBackground,
     scale,
     focalX,
     focalY,
     origRatio,
-    videoId,
-    posterId,
     poster,
   },
 }) {
-  const { uploadVideoFrame } = useUploadVideoFrame({ videoId, src, id });
-  useEffect(() => {
-    if (videoId && !posterId) {
-      uploadVideoFrame();
-    }
-  }, [videoId, posterId, uploadVideoFrame]);
-
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();

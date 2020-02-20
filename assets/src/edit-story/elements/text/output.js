@@ -51,6 +51,7 @@ function TextOutput({
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
     padding: padding ? padding + '%' : null,
     textAlign: textAlign ? textAlign : null,
+    whiteSpace: 'pre-wrap',
   };
 
   return (

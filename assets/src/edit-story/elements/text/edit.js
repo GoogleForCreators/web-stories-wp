@@ -120,10 +120,14 @@ function TextEdit({
   // To clear content, we can't just use createEmpty() or even pure white-space.
   // The editor needs some content to insert the first character in,
   // so we use a non-breaking space instead and trim it on save if still present.
+  const contentWithBreaks = (content || '')
+    .split('\n')
+    .map((s) => `<p>${s}</p>`)
+    .join('');
   const EMPTY_VALUE = '\u00A0';
   const initialState = clearContent
     ? EditorState.createWithContent(stateFromHTML(EMPTY_VALUE))
-    : EditorState.createWithContent(stateFromHTML(content));
+    : EditorState.createWithContent(stateFromHTML(contentWithBreaks));
   const [editorState, setEditorState] = useState(initialState);
   const mustAddOffset = useRef(offset ? 2 : 0);
 
@@ -161,6 +165,19 @@ function TextEdit({
     [editorState, offset]
   );
 
+  // Handle basic key commands such as bold, italic and underscore.
+  const handleKeyCommand = getHandleKeyCommand(updateEditorState);
+
+  // Make sure to allow the user to click in the text box while working on the text.
+  const onClick = (evt) => {
+    const editor = editorRef.current;
+    // Refocus the editor if the container outside it is clicked.
+    if (!editor.editorContainer.contains(evt.target)) {
+      editor.focus();
+    }
+    evt.stopPropagation();
+  };
+
   // Finally update content for element on unmount.
   useEffect(
     () => () => {
@@ -176,19 +193,6 @@ function TextEdit({
     },
     [id, updateElementById]
   );
-
-  // Make sure to allow the user to click in the text box while working on the text.
-  const onClick = (evt) => {
-    const editor = editorRef.current;
-    // Refocus the editor if the container outside it is clicked.
-    if (!editor.editorContainer.contains(evt.target)) {
-      editor.focus();
-    }
-    evt.stopPropagation();
-  };
-
-  // Handle basic key commands such as bold, italic and underscore.
-  const handleKeyCommand = getHandleKeyCommand(setEditorState);
 
   // Set focus when initially rendered
   useLayoutEffect(() => {

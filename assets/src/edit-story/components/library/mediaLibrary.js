@@ -35,6 +35,7 @@ import { useConfig } from '../../app/config';
 import { useMedia } from '../../app/media';
 import { useMediaPicker } from '../mediaPicker';
 import { MainButton, Title, SearchInput, Header } from './common';
+import Dropzone from './dropzone';
 
 const Container = styled.div`
   display: grid;
@@ -98,6 +99,7 @@ function MediaLibrary({ onInsert }) {
       resetMedia,
       setMediaType,
       setSearchTerm,
+      uploadVideoFrame,
     },
   } = useMedia();
   const {
@@ -193,7 +195,7 @@ function MediaLibrary({ onInsert }) {
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
       const { id: videoId, poster, posterId: posterIdRaw } = attachment;
       const posterId = parseInt(posterIdRaw);
-      return onInsert('video', {
+      const videoEl = onInsert('video', {
         src,
         width,
         height,
@@ -208,6 +210,13 @@ function MediaLibrary({ onInsert }) {
         posterId,
         poster,
       });
+
+      // Generate video poster if one not set.
+      if (videoId && !posterId) {
+        uploadVideoFrame(videoId, src, videoEl.id);
+      }
+
+      return videoEl;
     }
     return null;
   };
@@ -257,7 +266,7 @@ function MediaLibrary({ onInsert }) {
   };
 
   return (
-    <>
+    <Dropzone>
       <Header>
         <Title>
           {__('Media', 'web-stories')}
@@ -306,7 +315,7 @@ function MediaLibrary({ onInsert }) {
           </Column>
         </Container>
       )}
-    </>
+    </Dropzone>
   );
 }
 
