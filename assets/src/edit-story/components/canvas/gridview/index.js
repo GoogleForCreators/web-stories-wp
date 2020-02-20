@@ -32,7 +32,6 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
-import { Rectangle } from '../../button';
 import { ReactComponent as RectangleIcon } from './rectangle.svg';
 
 const PAGE_WIDTH = 90;
@@ -59,13 +58,43 @@ const RangeInputWrapper = styled.div`
   margin: 0 auto 75px auto;
 `;
 
-function RangeControl({ value, onChange, min = 1, max = 3, step = 1 }) {
+const Rectangle = styled.button.attrs(({ isDisabled }) => ({
+  disabled: isDisabled,
+}))`
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  background: transparent;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
+
+  &:active {
+    outline: none;
+  }
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+		pointer-events: none;
+		opacity: .3;
+	`}
+
+  svg {
+    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
+    height: auto;
+    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
+  }
+`;
+
+function RangeControl({ value, onChange, min, max, step }) {
   const updateRangeValue = (addition) => {
-    let newValue = value;
-    newValue += addition;
-    if (newValue < min) newValue = min;
-    if (newValue > max) newValue = max;
-    onChange(newValue);
+    onChange(Math.min(max, Math.max(min, value + addition)));
   };
 
   return (
@@ -102,6 +131,12 @@ RangeControl.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   step: PropTypes.number,
+};
+
+RangeControl.defaultProps = {
+  min: 1,
+  max: 3,
+  step: 1,
 };
 
 function GridView() {
