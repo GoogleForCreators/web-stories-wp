@@ -35,6 +35,7 @@ const Input = styled.input`
   outline: none;
   padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
+  background: ${({ theme }) => theme.colors.fg.v1};
   color: ${({ theme }) => theme.colors.mg.v3};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};

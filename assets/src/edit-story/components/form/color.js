@@ -38,6 +38,7 @@ const Input = styled.input`
   padding: 0;
   margin-right: ${({ suffix }) => (Boolean(suffix) ? 12 : 0)}px;
   margin-left: ${({ label }) => (label ? 12 : 0)}px;
+  background: ${({ theme }) => theme.colors.fg.v1};
   color: ${({ theme }) => theme.colors.mg.v3};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
@@ -75,7 +76,7 @@ const Container = styled.div`
   }
 `;
 
-function Numeric({
+function ColorInput({
   expand,
   onBlur,
   onChange,
@@ -117,7 +118,7 @@ function Numeric({
   );
 }
 
-Numeric.propTypes = {
+ColorInput.propTypes = {
   expand: PropTypes.bool,
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
@@ -128,9 +129,9 @@ Numeric.propTypes = {
   disabled: PropTypes.bool,
 };
 
-Numeric.defaultProps = {
+ColorInput.defaultProps = {
   disabled: false,
   isMultiple: false,
 };
 
-export default Numeric;
+export default ColorInput;

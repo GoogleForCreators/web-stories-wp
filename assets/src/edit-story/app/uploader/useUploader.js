@@ -34,9 +34,6 @@ function useUploader() {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
-    } = {
-      image: [],
-      video: [],
     },
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];

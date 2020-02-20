@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
+  background: ${({ theme }) => theme.colors.fg.v1};
   color: ${({ theme }) => theme.colors.mg.v3};
   border: 1px solid ${({ theme }) => theme.colors.fg.v3};
   border-radius: 4px;
