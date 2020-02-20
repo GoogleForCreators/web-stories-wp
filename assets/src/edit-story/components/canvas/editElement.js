@@ -21,6 +21,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { useEffect, useRef } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
@@ -42,6 +47,7 @@ const Wrapper = styled.div`
 `;
 
 function EditElement({ element }) {
+  const ref = useRef(null);
   const { type } = element;
   const {
     actions: { getBox },
@@ -51,8 +57,17 @@ function EditElement({ element }) {
 
   const box = getBox(element);
 
+  useEffect(() => {
+    ref.current.focus();
+  }, []);
+
   return (
-    <Wrapper {...box} onMouseDown={(evt) => evt.stopPropagation()}>
+    <Wrapper
+      ref={ref}
+      tabIndex="0"
+      {...box}
+      onMouseDown={(evt) => evt.stopPropagation()}
+    >
       <Edit element={element} box={box} />
     </Wrapper>
   );
