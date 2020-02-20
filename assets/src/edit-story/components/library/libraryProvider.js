@@ -27,15 +27,49 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import {
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../constants';
+import { createNewElement, getDefinitionForType } from '../../elements';
+import { editorToDataX, editorToDataY } from '../../units';
+import { useStory } from '../../app';
 import Context from './context';
 
 const MEDIA = 'media';
 const TEXT = 'text';
 const SHAPES = 'shapes';
-const LINKS = 'links';
+const ELEMENTS = 'elements';
+const ANIMATION = 'animation';
 
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
+
+  const isMediaEl = (type) => {
+    const { isMedia } = getDefinitionForType(type);
+    return isMedia;
+  };
+  const {
+    actions: { addElement, setBackgroundElement },
+    state: { currentPage },
+  } = useStory();
+  const insertElement = (type, { width, height, ...props }) => {
+    const element = createNewElement(type, {
+      ...props,
+      x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
+      y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
+      width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
+      height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
+    });
+    addElement({ element });
+    if (
+      isMediaEl(type) &&
+      !currentPage.elements.some(({ type: elType }) => isMediaEl(elType))
+    ) {
+      setBackgroundElement({ elementId: element.id });
+    }
+    return element;
+  };
 
   const state = {
     state: {
@@ -43,13 +77,15 @@ function LibraryProvider({ children }) {
     },
     actions: {
       setTab,
+      insertElement,
     },
     data: {
       tabs: {
         MEDIA,
         TEXT,
         SHAPES,
-        LINKS,
+        ELEMENTS,
+        ANIMATION,
       },
     },
   };

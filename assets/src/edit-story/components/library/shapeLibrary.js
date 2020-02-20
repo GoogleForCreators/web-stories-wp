@@ -18,17 +18,21 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
 
-function MediaLibrary({ onInsert }) {
+/**
+ * Internal dependencies
+ */
+import useLibrary from './useLibrary';
+
+function MediaLibrary() {
+  const {
+    actions: { insertElement },
+  } = useLibrary();
   return (
     <>
       <button
         onClick={() =>
-          onInsert('square', {
+          insertElement('square', {
             backgroundColor: '#ff0000',
             width: 30,
             height: 15,
@@ -43,7 +47,7 @@ function MediaLibrary({ onInsert }) {
       <br />
       <button
         onClick={() =>
-          onInsert('square', {
+          insertElement('square', {
             backgroundColor: '#0000ff',
             width: 100,
             height: 80,
@@ -58,9 +62,5 @@ function MediaLibrary({ onInsert }) {
     </>
   );
 }
-
-MediaLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
 
 export default MediaLibrary;

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 /**
@@ -34,6 +33,7 @@ import { useConfig } from '../../app/config';
 import { useMedia } from '../../app/media';
 import UploadButton from '../uploadButton';
 import Dropzone from './dropzone';
+import useLibrary from './useLibrary';
 
 const Container = styled.div`
   display: grid;
@@ -134,7 +134,7 @@ const FILTERS = [
 
 const DEFAULT_WIDTH = 150;
 
-function MediaLibrary({ onInsert }) {
+function MediaLibrary() {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
     actions: {
@@ -152,6 +152,9 @@ function MediaLibrary({ onInsert }) {
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+  const {
+    actions: { insertElement },
+  } = useLibrary();
 
   useEffect(loadMedia);
 
@@ -220,7 +223,7 @@ function MediaLibrary({ onInsert }) {
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
     if (allowedImageMimeTypes.includes(mimeType)) {
-      return onInsert('image', {
+      return insertElement('image', {
         src,
         width,
         height,
@@ -234,7 +237,7 @@ function MediaLibrary({ onInsert }) {
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
       const { id: videoId, poster, posterId: posterIdRaw } = attachment;
       const posterId = parseInt(posterIdRaw);
-      const videoEl = onInsert('video', {
+      const videoEl = insertElement('video', {
         src,
         width,
         height,
@@ -362,9 +365,5 @@ function MediaLibrary({ onInsert }) {
     </Dropzone>
   );
 }
-
-MediaLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
 
 export default MediaLibrary;

@@ -19,8 +19,8 @@
  */
 import { __ } from '@wordpress/i18n';
 
-function LinkLibrary({}) {
+function AnimationLibrary() {
   return <p>{__('Still empty', 'web-stories')}</p>;
 }
 
-export default LinkLibrary;
+export default AnimationLibrary;
