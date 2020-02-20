@@ -58,8 +58,12 @@ const RangeInputWrapper = styled.div`
   margin: 0 auto 75px auto;
 `;
 
-const Rectangle = styled.button.attrs(({ isDisabled }) => ({
-  disabled: isDisabled,
+const FlexGrowRangeInput = styled(RangeInput)`
+  flex-grow: 1;
+`;
+
+const Rectangle = styled.button.attrs(({ disabled }) => ({
+  disabled,
 }))`
   border: 0;
   padding: 0;
@@ -72,7 +76,6 @@ const Rectangle = styled.button.attrs(({ isDisabled }) => ({
   align-items: center;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
 
   &:active {
     outline: none;
@@ -92,6 +95,11 @@ const Rectangle = styled.button.attrs(({ isDisabled }) => ({
   }
 `;
 
+// I think we can move this component to shared one in the future if we need this kind of spacer span.
+const SpacerSpan = styled.span`
+  margin-left: ${({ space }) => space || 8}px;
+`;
+
 function RangeControl({ value, onChange, min, max, step }) {
   const updateRangeValue = (addition) => {
     onChange(Math.min(max, Math.max(min, value + addition)));
@@ -101,23 +109,28 @@ function RangeControl({ value, onChange, min, max, step }) {
     <RangeInputWrapper>
       <Rectangle
         onClick={() => updateRangeValue(-step)}
-        isDisabled={value === min}
+        disabled={value === min}
+        aria-label={__('Decrease thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
       </Rectangle>
-      <RangeInput
+      <SpacerSpan space={20} />
+      <FlexGrowRangeInput
         min={min}
         max={max}
         step={step}
         value={value}
         onChange={(evt) => onChange(Number(evt.target.value))}
         thumbSize={24}
-        flexGrow={1}
+        aria-label={__('Thumbnail size', 'web-stories')}
+        aria-valuetext={__('Large', 'web-stories')}
       />
+      <SpacerSpan space={20} />
       <Rectangle
         isLarge
         onClick={() => updateRangeValue(step)}
-        isDisabled={value === max}
+        disabled={value === max}
+        aria-label={__('Increase thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
       </Rectangle>
