@@ -33,7 +33,7 @@ import { useMediaPicker } from '../mediaPicker';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-const Button = styled.div`
+const Button = styled.button`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 11px;
 `;

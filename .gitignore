@@ -8,3 +8,4 @@ node_modules
 /build
 /bin/local-env/data
 phpunit.xml
+yarn.lock

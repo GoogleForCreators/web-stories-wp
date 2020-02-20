@@ -56,6 +56,14 @@ const PRESETS = [
   },
 ];
 
+const DEFAULT_TEXT_TRANSFORM = {
+  width: 50,
+  height: 20,
+  x: 5,
+  y: 5,
+  rotationAngle: 0,
+};
+
 function TextLibrary({ onInsert }) {
   return (
     <>
@@ -64,13 +72,9 @@ function TextLibrary({ onInsert }) {
         <MainButton
           onClick={() =>
             onInsert('text', {
-              content: 'Text',
+              content: __('Text', 'web-stories'),
               color: 'black',
-              width: 50,
-              height: 20,
-              x: 5,
-              y: 5,
-              rotationAngle: 0,
+              ...DEFAULT_TEXT_TRANSFORM,
             })
           }
         >
@@ -91,11 +95,7 @@ function TextLibrary({ onInsert }) {
               onInsert('text', {
                 content: __('Text', 'web-stories'),
                 color: 'black',
-                width: 50,
-                height: 20,
-                x: 5,
-                y: 5,
-                rotationAngle: 0,
+                ...DEFAULT_TEXT_TRANSFORM,
                 ...preset,
                 fontSize: editorToDataY(
                   preset.fontSize,
