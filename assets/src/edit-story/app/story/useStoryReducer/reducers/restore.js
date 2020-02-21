@@ -21,7 +21,7 @@
  *
  * - `pages` must be an array (if not, nothing happens).
  * - `current` must point to a legal page, if at least one page exists.
- * - `selection` is a unique array.
+ * - `selection` is an array.
  * - `story` is an object.
  *
  * @param {Object} state Current state
@@ -38,7 +38,7 @@ function restore(state, { pages, current, selection, story, capabilities }) {
   const newCurrent = pages.some(({ id }) => id === current)
     ? current
     : pages[0].id;
-  const newSelection = Array.isArray(selection) ? [...new Set(selection)] : [];
+  const newSelection = Array.isArray(selection) ? selection : [];
 
   return {
     pages,
