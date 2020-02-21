@@ -612,7 +612,7 @@ class Story_Post_Type {
 			],
 		];
 
-		array_push( $allowed_tags, ...$story_components );
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
