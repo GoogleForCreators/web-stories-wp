@@ -62,6 +62,7 @@ function TextTab(props) {
     evt.stopPropagation();
     evt.preventDefault();
 
+    // @todo: Needs product definition
     insertElement('text', {
       content: __('Double-click to edit...', 'web-stories'),
       color: '#000000',
