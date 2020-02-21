@@ -69,7 +69,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function register() {
+	public static function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
