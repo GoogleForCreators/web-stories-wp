@@ -15,10 +15,20 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { useRef, useCallback } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
 import { Tabs, getPanes } from './panes';
+
+function getTabId(tab) {
+  return `#library-tab-${tab}`;
+}
 
 function LibraryTabs() {
   const {
@@ -27,10 +37,32 @@ function LibraryTabs() {
     data: { tabs },
   } = useLibrary();
   const panes = getPanes(tabs);
+  const ref = useRef();
+  const handleNavigation = useCallback(
+    (isPrevious) => () => {
+      const currentPane = panes.find(({ id }) => id === tab);
+      const nextTab = isPrevious ? currentPane.previous : currentPane.next;
+      if (!nextTab) {
+        return;
+      }
+
+      setTab(nextTab);
+      ref.current.querySelector(getTabId(nextTab)).focus();
+    },
+    [tab, setTab, panes]
+  );
+  // todo: support RTL
+  useKeyDownEffect(ref, 'left', handleNavigation(true), [tab, setTab, panes]);
+  useKeyDownEffect(ref, 'right', handleNavigation(false), [tab, setTab, panes]);
   return (
-    <Tabs>
+    <Tabs ref={ref}>
       {panes.map(({ id, Tab }) => (
-        <Tab key={id} isActive={tab === id} onClick={() => setTab(id)} />
+        <Tab
+          key={id}
+          id={getTabId(id)}
+          isActive={tab === id}
+          onClick={() => setTab(id)}
+        />
       ))}
     </Tabs>
   );
