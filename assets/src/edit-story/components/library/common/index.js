@@ -45,7 +45,7 @@ export const MainButton = styled.button`
   cursor: pointer;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.v1};
-  padding: 5px;
+  padding: 4px;
   font-weight: bold;
   flex: 1 0 0;
   text-align: center;
