@@ -141,9 +141,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     isTextElement && selectedElement.content.length && isResizingFromCorner;
 
   const { isMedia } = getDefinitionForType(selectedElement.type);
-  const actionsEnabled =
-    !selectedElement.isFill &&
-    selectedElement.id !== currentPage.backgroundElementId;
+  const isBackgroundElement =
+    selectedElement.id === currentPage.backgroundElementId;
+  const actionsEnabled = !selectedElement.isFill && !isBackgroundElement;
   return (
     <Movable
       className="default-movable"
@@ -263,8 +263,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       snapHorizontal={true}
       snapVertical={true}
       snapCenter={true}
-      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
-      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
+      horizontalGuidelines={
+        !isBackgroundElement && [0, canvasHeight / 2, canvasHeight]
+      }
+      verticalGuidelines={
+        !isBackgroundElement && [0, canvasWidth / 2, canvasWidth]
+      }
       elementGuidelines={otherNodes}
     />
   );
