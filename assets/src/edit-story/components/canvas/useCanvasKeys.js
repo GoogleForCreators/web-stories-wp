@@ -26,6 +26,8 @@ import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 
+const MOVE_COARSE_STEP = 10;
+
 /**
  * @param {{current: Node}} ref
  */
@@ -77,7 +79,7 @@ function useCanvasKeys(ref) {
     ({ key, shiftKey }) => {
       const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
       const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
-      const delta = shiftKey ? 1 : 10;
+      const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
       updateSelectedElements({
         properties: ({ x, y }) => ({
           x: x + delta * dirX,
