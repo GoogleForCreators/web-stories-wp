@@ -1,4 +1,4 @@
-name-template: '$NEXT_PATCH_VERSION 🌈'
+name-template: '$NEXT_PATCH_VERSION'
 tag-template: '$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Features'
@@ -10,7 +10,7 @@ categories:
   - title: '🧰 Maintenance'
     labels:
       - 'dependencies'
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-template: '- $TITLE (#$NUMBER)'
 template: |
   ## Changes
 
