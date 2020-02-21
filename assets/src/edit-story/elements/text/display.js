@@ -94,8 +94,7 @@ function TextDisplay({
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;
-    const updatedFontSize =
-      transform && transform.updates && transform.updates.fontSize;
+    const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
