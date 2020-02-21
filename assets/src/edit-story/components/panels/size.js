@@ -50,6 +50,15 @@ const BoxedNumeric = styled(ExpandedNumeric)`
   border-radius: 4px;
 `;
 
+const FlipButton = styled(Button)`
+  border: none;
+  padding: 0;
+`;
+
+const FlipButtonIcon = styled.svg`
+  opacity: 0.54;
+`;
+
 function SizePanel({ selectedElements, onSetProperties }) {
   const x = getCommonValue(selectedElements, 'x');
   const y = getCommonValue(selectedElements, 'y');
@@ -77,11 +86,10 @@ function SizePanel({ selectedElements, onSetProperties }) {
       onSetProperties(({ width: oldWidth, height: oldHeight }) => {
         const { height: newHeight, width: newWidth, ...rest } = state;
         const update = { width: newWidth, height: newHeight, ...rest };
-        if (
-          lockRatio &&
-          (newHeight === '' || newWidth === '') &&
-          !(newHeight === '' && newWidth === '')
-        ) {
+        const hasHeightButNotWidth = newHeight === '' || newWidth === '';
+        const hasWidthButNotHeight = newHeight === '' && newWidth === '';
+
+        if (lockRatio && hasHeightButNotWidth && !hasWidthButNotHeight) {
           const ratio = oldWidth / oldHeight;
           if (newWidth === '') {
             update.width = dataPixels(newHeight * ratio);
@@ -134,7 +142,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
-          prefix={__('W', 'web-stories')}
+          prefix={_x('W', 'The Width dimension', 'web-stories')}
           value={state.width}
           isMultiple={width === ''}
           onChange={(value) => {
@@ -163,7 +171,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
           disabled={isFill}
         />
         <BoxedNumeric
-          prefix={__('H', 'web-stories')}
+          prefix={_x('H', 'The Height dimension', 'web-stories')}
           value={state.height}
           isMultiple={height === ''}
           onChange={(value) => {
@@ -214,18 +222,12 @@ function SizePanel({ selectedElements, onSetProperties }) {
           }}
           disabled={isFill}
         />
-        <Toggle
-          icon={<FlipHorizontal />}
-          value={/** TODO */ false}
-          isMultiple={false}
-          onChange={() => {}}
-        />
-        <Toggle
-          icon={<FlipVertical />}
-          value={/** TODO */ false}
-          isMultiple={false}
-          onChange={() => {}}
-        />
+        <FlipButton>
+          <FlipButtonIcon as={FlipHorizontal} />
+        </FlipButton>
+        <FlipButton>
+          <FlipButtonIcon as={FlipVertical} />
+        </FlipButton>
         <Spacer />
       </Row>
     </SimplePanel>
