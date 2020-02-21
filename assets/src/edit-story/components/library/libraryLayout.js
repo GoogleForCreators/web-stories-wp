@@ -35,7 +35,7 @@ const Layout = styled.div`
     / 1fr;
 `;
 
-const TabsArea = styled.div`
+const TabsArea = styled.nav.attrs({ 'aria-label': 'Library tabs' })`
   grid-area: tabs;
 `;
 
