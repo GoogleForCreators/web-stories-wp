@@ -105,6 +105,19 @@ function RangeControl({ value, onChange, min, max, step }) {
     onChange(Math.min(max, Math.max(min, value + addition)));
   };
 
+  let valueText;
+  switch (value) {
+    case max:
+      valueText = __('Large', 'web-stories');
+      break;
+    case min:
+      valueText = __('Small', 'web-stories');
+      break;
+    default:
+      valueText = __('Medium', 'web-stories');
+      break;
+  }
+
   return (
     <RangeInputWrapper>
       <Rectangle
@@ -123,7 +136,7 @@ function RangeControl({ value, onChange, min, max, step }) {
         onChange={(evt) => onChange(Number(evt.target.value))}
         thumbSize={24}
         aria-label={__('Thumbnail size', 'web-stories')}
-        aria-valuetext={__('Large', 'web-stories')}
+        aria-valuetext={valueText}
       />
       <SpacerSpan space={20} />
       <Rectangle
