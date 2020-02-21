@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 function EditElement({ element }) {
   const ref = useRef(null);
-  const { type } = element;
+  const { id, type } = element;
   const {
     actions: { getBox },
   } = useUnits();
@@ -65,6 +65,7 @@ function EditElement({ element }) {
     <Wrapper
       ref={ref}
       tabIndex="0"
+      aria-labelledby={`layer-${id}`}
       {...box}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
