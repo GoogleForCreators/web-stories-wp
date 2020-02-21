@@ -24,3 +24,4 @@ export { default as Numeric } from './numeric';
 export { default as Row } from './row';
 export { default as SelectMenu } from './select';
 export { default as Spacer } from './row';
+export { default as Switch } from './switch';
