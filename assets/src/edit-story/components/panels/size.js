@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -38,6 +39,16 @@ import FlipHorizontal from '../../icons/flip_horizontal.svg';
 import Toggle from '../form/toggle';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+
+const ExpandedNumeric = styled(Numeric)`
+  flex: 1;
+`;
+
+const BoxedNumeric = styled(ExpandedNumeric)`
+  padding: 6px 6px;
+  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  border-radius: 4px;
+`;
 
 function SizePanel({ selectedElements, onSetProperties }) {
   const x = getCommonValue(selectedElements, 'x');
@@ -95,7 +106,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
     >
       {/** Position */}
       <Row expand>
-        <Numeric
+        <BoxedNumeric
           prefix={_x('X', 'The X axis', 'web-stories')}
           value={state.x}
           isMultiple={x === ''}
@@ -106,10 +117,8 @@ function SizePanel({ selectedElements, onSetProperties }) {
             })
           }
           disabled={isFill}
-          expand
-          boxed
         />
-        <Numeric
+        <BoxedNumeric
           prefix={_x('Y', 'The Y axis', 'web-stories')}
           value={state.y}
           isMultiple={y === ''}
@@ -120,13 +129,11 @@ function SizePanel({ selectedElements, onSetProperties }) {
             })
           }
           disabled={isFill}
-          expand
-          boxed
         />
       </Row>
       {/** Width/height & lock ratio */}
       <Row expand>
-        <Numeric
+        <BoxedNumeric
           prefix={__('W', 'web-stories')}
           value={state.width}
           isMultiple={width === ''}
@@ -144,8 +151,6 @@ function SizePanel({ selectedElements, onSetProperties }) {
             });
           }}
           disabled={isFill}
-          expand
-          boxed
         />
         <Toggle
           icon={<Locked />}
@@ -157,7 +162,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
           }}
           disabled={isFill}
         />
-        <Numeric
+        <BoxedNumeric
           prefix={__('H', 'web-stories')}
           value={state.height}
           isMultiple={height === ''}
@@ -175,8 +180,6 @@ function SizePanel({ selectedElements, onSetProperties }) {
             });
           }}
           disabled={isFill}
-          expand
-          boxed
         />
       </Row>
       {/** Fill & Reset size */}
@@ -193,13 +196,11 @@ function SizePanel({ selectedElements, onSetProperties }) {
           }}
         />
         {/** TODO: Implement size resetting */}
-        <Button onClick={() => {}} expand={false}>
-          {__('Reset size', 'web-stories')}
-        </Button>
+        <Button onClick={() => {}}>{__('Reset size', 'web-stories')}</Button>
       </Row>
       {/** Rotation and Flipping */}
       <Row expand={false} spaceBetween={false}>
-        <Numeric
+        <ExpandedNumeric
           label={__('Rotate', 'web-stories')}
           suffix={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={state.rotationAngle}
@@ -212,8 +213,6 @@ function SizePanel({ selectedElements, onSetProperties }) {
             });
           }}
           disabled={isFill}
-          expand={true}
-          boxed={false}
         />
         <Toggle
           icon={<FlipHorizontal />}

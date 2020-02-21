@@ -33,8 +33,6 @@ const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  ${({ expand = true }) => expand && `flex: 1;`}
 `;
 
 export default Button;

@@ -18,74 +18,18 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 const Input = styled.input`
-  color: ${({ theme }) => theme.colors.mg.v1};
-  border: 1px solid;
-  border-radius: 4px;
-  font-size: 11px;
-  line-height: 16px;
-  width: 100px;
+  display: block;
+  appearance: none;
+  box-shadow: none !important;
+  outline: none;
+  background: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.mg.v3};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  border-radius: 0 !important;
 `;
 
-function InputGroup({
-  type,
-  label,
-  value,
-  isMultiple,
-  onChange,
-  onBlur,
-  postfix,
-  disabled,
-  ...rest
-}) {
-  const placeholder = isMultiple ? __('( multiple )', 'web-stories') : '';
-  const isCheckbox = type === 'checkbox';
-  return (
-    <Input
-      type={type}
-      disabled={disabled}
-      onChange={(evt) =>
-        onChange(isCheckbox ? evt.target.checked : evt.target.value, evt)
-      }
-      onBlur={(evt) => {
-        if (evt.target.form) {
-          evt.target.form.dispatchEvent(new window.Event('submit'));
-        }
-        if (onBlur) {
-          onBlur();
-        }
-      }}
-      placeholder={placeholder}
-      value={isCheckbox ? 'on' : value}
-      checked={isCheckbox ? value : null}
-      {...rest}
-    />
-  );
-}
-
-InputGroup.propTypes = {
-  type: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
-  isMultiple: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  postfix: PropTypes.string,
-  disabled: PropTypes.bool,
-};
-
-InputGroup.defaultProps = {
-  type: 'number',
-  postfix: '',
-  disabled: false,
-  isMultiple: false,
-};
-
-export default InputGroup;
+export default Input;

@@ -26,20 +26,16 @@ import { rgba } from 'polished';
  */
 import { __ } from '@wordpress/i18n';
 
-const Input = styled.input`
-  display: block;
-  appearance: none;
+/**
+ * Internal dependencies
+ */
+import { Input } from '../form';
+
+const StyledInput = styled(Input)`
   width: 100%;
   border: none;
-  box-shadow: none;
-  outline: none;
   padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
-  background: ${({ theme }) => theme.colors.fg.v1};
-  color: ${({ theme }) => theme.colors.mg.v3};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
 `;
 
@@ -55,20 +51,10 @@ const Container = styled.div`
   align-items: center;
   margin-left: 5px;
   margin-right: 5px;
-
-  ${({ boxed, theme }) =>
-    boxed &&
-    `
-      padding: 6px 6px;
-      border:1px solid ${theme.colors.fg.v3};
-      border-radius: 4px;
-    `}
-  ${({ expand }) => expand && `flex: 1;`}
 `;
 
 function Numeric({
-  boxed,
-  expand,
+  className,
   onBlur,
   onChange,
   prefix,
@@ -80,10 +66,10 @@ function Numeric({
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
 
   return (
-    <Container boxed={boxed} expand={expand}>
+    <Container className={`${className}`}>
       {label}
       {prefix}
-      <Input
+      <StyledInput
         placeholder={placeholder}
         prefix={prefix}
         suffix={suffix}
@@ -105,8 +91,7 @@ function Numeric({
 }
 
 Numeric.propTypes = {
-  boxed: PropTypes.bool,
-  expand: PropTypes.bool,
+  className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
   isMultiple: PropTypes.bool,
@@ -118,6 +103,7 @@ Numeric.propTypes = {
 };
 
 Numeric.defaultProps = {
+  className: null,
   disabled: false,
   isMultiple: false,
 };
