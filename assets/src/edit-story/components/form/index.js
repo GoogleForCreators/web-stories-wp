@@ -21,7 +21,7 @@ export { default as InputGroup } from './inputGroup';
 export { default as Label } from './label';
 export { default as Row } from './row';
 export { default as SelectMenu } from './select';
-export { default as Spacer } from './row';
+export { default as Spacer } from './spacer';
 export { default as Color } from './color';
 export { default as Numeric } from './numeric';
 export { default as Switch } from './switch';
