@@ -36,6 +36,8 @@ use Google\Web_Stories\REST_API\Fonts_Controller;
 class Plugin {
 	/**
 	 * Initialize plugin functionality.
+	 *
+	 * @todo Just move to namespace.php?
 	 */
 	public function register() {
 		add_action( 'init', [ Media::class, 'init' ] );
