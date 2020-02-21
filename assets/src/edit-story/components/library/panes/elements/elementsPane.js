@@ -19,8 +19,17 @@
  */
 import { __ } from '@wordpress/i18n';
 
-function AnimationLibrary() {
-  return <p>{__('Still empty', 'web-stories')}</p>;
+/**
+ * Internal dependencies
+ */
+import { Pane } from '../shared';
+
+function ElementsPane(props) {
+  return (
+    <Pane id="library-elements-pane" {...props}>
+      {__('Still empty', 'web-stories')}
+    </Pane>
+  );
 }
 
-export default AnimationLibrary;
+export default ElementsPane;

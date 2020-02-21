@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { HEADER_HEIGHT } from '../../constants';
-import LibraryContent from './libraryContent';
+import LibraryPanes from './libraryPanes';
 import LibraryTabs from './libraryTabs';
 
 const Layout = styled.div`
@@ -42,7 +42,6 @@ const TabsArea = styled.div`
 const LibraryBackground = styled.div`
   grid-area: library;
   background-color: ${({ theme }) => theme.colors.bg.v4};
-  padding: 1em;
   color: ${({ theme }) => theme.colors.fg.v1};
   overflow: auto;
 `;
@@ -54,7 +53,7 @@ function LibraryLayout() {
         <LibraryTabs />
       </TabsArea>
       <LibraryBackground>
-        <LibraryContent />
+        <LibraryPanes />
       </LibraryBackground>
     </Layout>
   );

@@ -22,14 +22,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
+import useLibrary from '../../useLibrary';
+import { Pane } from '../shared';
 
-function MediaLibrary() {
+function TextPane(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
   return (
-    <>
+    <Pane id="library-text-pane" {...props}>
       <button
         onClick={() =>
           insertElement('text', {
@@ -64,8 +65,8 @@ function MediaLibrary() {
       >
         {__('Insert big purple ubuntu', 'web-stories')}
       </button>
-    </>
+    </Pane>
   );
 }
 
-export default MediaLibrary;
+export default TextPane;

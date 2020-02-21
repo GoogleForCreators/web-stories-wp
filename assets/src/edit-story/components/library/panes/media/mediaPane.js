@@ -29,11 +29,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
-import { useMedia } from '../../app/media';
-import UploadButton from '../uploadButton';
-import Dropzone from './dropzone';
-import useLibrary from './useLibrary';
+import { useConfig } from '../../../../app/config';
+import { useMedia } from '../../../../app/media';
+import UploadButton from '../../../uploadButton';
+import Dropzone from '../../dropzone';
+import useLibrary from '../../useLibrary';
+import { Pane } from '../shared';
 
 const Container = styled.div`
   display: grid;
@@ -134,7 +135,7 @@ const FILTERS = [
 
 const DEFAULT_WIDTH = 150;
 
-function MediaLibrary() {
+function MediaPane(props) {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
     actions: {
@@ -308,62 +309,64 @@ function MediaLibrary() {
   };
 
   return (
-    <Dropzone>
-      <Header>
-        <Title>
-          {__('Media', 'web-stories')}
-          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-        </Title>
-        <UploadButton
-          onClose={onClose}
-          onSelect={onSelect}
-          buttonCSS={buttonStyles}
-        />
-      </Header>
+    <Pane id="library-media-pane" {...props}>
+      <Dropzone>
+        <Header>
+          <Title>
+            {__('Media', 'web-stories')}
+            {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+          </Title>
+          <UploadButton
+            onClose={onClose}
+            onSelect={onSelect}
+            buttonCSS={buttonStyles}
+          />
+        </Header>
 
-      <SearchField>
-        <Icon icon="search" />
-        <Search
-          value={searchTerm}
-          placeholder={__('Search Media', 'web-stories')}
-          onChange={onSearch}
-        />
-      </SearchField>
+        <SearchField>
+          <Icon icon="search" />
+          <Search
+            value={searchTerm}
+            placeholder={__('Search Media', 'web-stories')}
+            onChange={onSearch}
+          />
+        </SearchField>
 
-      <FilterButtons>
-        {FILTERS.map(({ filter, name }, index) => (
-          <FilterButton
-            key={index}
-            active={filter === mediaType}
-            onClick={() => onFilter(filter)}
-          >
-            {name}
-          </FilterButton>
-        ))}
-      </FilterButtons>
+        <FilterButtons>
+          {FILTERS.map(({ filter, name }, index) => (
+            <FilterButton
+              key={index}
+              active={filter === mediaType}
+              onClick={() => onFilter(filter)}
+            >
+              {name}
+            </FilterButton>
+          ))}
+        </FilterButtons>
 
-      {isMediaLoaded && !media.length ? (
-        <Message>{__('No media found', 'web-stories')}</Message>
-      ) : (
-        <Container>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return !isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-        </Container>
-      )}
-    </Dropzone>
+        {isMediaLoaded && !media.length ? (
+          <Message>{__('No media found', 'web-stories')}</Message>
+        ) : (
+          <Container>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return !isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+          </Container>
+        )}
+      </Dropzone>
+    </Pane>
   );
 }
 
-export default MediaLibrary;
+export default MediaPane;

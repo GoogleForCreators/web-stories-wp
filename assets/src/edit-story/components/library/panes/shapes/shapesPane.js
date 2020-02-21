@@ -22,14 +22,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
+import useLibrary from '../../useLibrary';
+import { Pane } from '../shared';
 
-function MediaLibrary() {
+function ShapesPane(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
   return (
-    <>
+    <Pane id="library-shapes-pane" {...props}>
       <button
         onClick={() =>
           insertElement('square', {
@@ -59,8 +60,8 @@ function MediaLibrary() {
       >
         {__('Insert big blue square', 'web-stories')}
       </button>
-    </>
+    </Pane>
   );
 }
 
-export default MediaLibrary;
+export default ShapesPane;

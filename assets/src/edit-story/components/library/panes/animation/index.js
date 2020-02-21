@@ -15,12 +15,7 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { __ } from '@wordpress/i18n';
-
-function ElementsLibrary() {
-  return <p>{__('Still empty', 'web-stories')}</p>;
-}
-
-export default ElementsLibrary;
+export { default as AnimationPane } from './animationPane';
+export { default as AnimationTab } from './animationTab';

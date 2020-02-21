@@ -17,23 +17,5 @@
 /**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { Tabs, getPanes } from './panes';
-
-function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
-  const panes = getPanes(tabs);
-  return (
-    <Tabs>
-      {panes.map(({ id, Tab }) => (
-        <Tab key={id} isActive={tab === id} onClick={() => setTab(id)} />
-      ))}
-    </Tabs>
-  );
-}
-
-export default LibraryTabs;
+export { default as MediaPane } from './mediaPane';
+export { default as MediaTab } from './mediaTab';

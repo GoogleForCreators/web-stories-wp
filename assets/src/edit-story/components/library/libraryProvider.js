@@ -40,6 +40,14 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
   const insertElement = useInsertElement();
 
+  const tabs = {
+    MEDIA,
+    TEXT,
+    SHAPES,
+    ELEMENTS,
+    ANIMATION,
+  };
+
   const state = {
     state: {
       tab,
@@ -49,13 +57,7 @@ function LibraryProvider({ children }) {
       insertElement,
     },
     data: {
-      tabs: {
-        MEDIA,
-        TEXT,
-        SHAPES,
-        ELEMENTS,
-        ANIMATION,
-      },
+      tabs,
     },
   };
 

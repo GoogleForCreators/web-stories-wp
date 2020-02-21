@@ -18,27 +18,15 @@
  * Internal dependencies
  */
 import useLibrary from './useLibrary';
-import MediaLibrary from './mediaLibrary';
-import TextLibrary from './textLibrary';
-import ShapeLibrary from './shapeLibrary';
-import ElementsLibrary from './elementsLibrary';
-import AnimationLibrary from './animationLibrary';
+import { getPanes } from './panes';
 
-function Library() {
+function LibraryPanes() {
   const {
     state: { tab },
-    data: {
-      tabs: { MEDIA, TEXT, SHAPES, ELEMENTS, ANIMATION },
-    },
+    data: { tabs },
   } = useLibrary();
-  const ContentLibrary = {
-    [MEDIA]: MediaLibrary,
-    [TEXT]: TextLibrary,
-    [SHAPES]: ShapeLibrary,
-    [ELEMENTS]: ElementsLibrary,
-    [ANIMATION]: AnimationLibrary,
-  }[tab];
-  return <ContentLibrary />;
+  const panes = getPanes(tabs);
+  return panes.map(({ id, Pane }) => <Pane key={id} isActive={id === tab} />);
 }
 
-export default Library;
+export default LibraryPanes;

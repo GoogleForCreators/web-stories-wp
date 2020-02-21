@@ -15,25 +15,23 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { Tabs, getPanes } from './panes';
+import { Tab, Icon } from '../shared';
+import { ReactComponent as ElementsIcon } from './elements.svg';
 
-function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
-  const panes = getPanes(tabs);
+function ElementsTab(props) {
   return (
-    <Tabs>
-      {panes.map(({ id, Tab }) => (
-        <Tab key={id} isActive={tab === id} onClick={() => setTab(id)} />
-      ))}
-    </Tabs>
+    <Tab aria-controls="library-elements-pane" {...props}>
+      <Icon>
+        <ElementsIcon aria-label={__('Elements library', 'web-stories')} />
+      </Icon>
+    </Tab>
   );
 }
 
-export default LibraryTabs;
+export default ElementsTab;

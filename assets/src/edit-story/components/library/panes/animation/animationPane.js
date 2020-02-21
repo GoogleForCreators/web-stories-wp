@@ -15,25 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { Tabs, getPanes } from './panes';
+import { Pane } from '../shared';
 
-function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
-  const panes = getPanes(tabs);
+function AnimationPane(props) {
   return (
-    <Tabs>
-      {panes.map(({ id, Tab }) => (
-        <Tab key={id} isActive={tab === id} onClick={() => setTab(id)} />
-      ))}
-    </Tabs>
+    <Pane id="library-animation-pane" {...props}>
+      {__('Still empty', 'web-stories')}
+    </Pane>
   );
 }
 
-export default LibraryTabs;
+export default AnimationPane;
