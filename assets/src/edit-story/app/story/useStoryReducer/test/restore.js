@@ -54,20 +54,6 @@ describe('restore', () => {
     expect(result.selection).toHaveLength(1);
   });
 
-  it('should restore selection to a unique set', () => {
-    const reducer = setupReducer();
-
-    const { restore } = reducer;
-
-    const result = restore({
-      pages: [{ id: '111', elements: [{ id: '222' }] }],
-      current: '111',
-      selection: ['222', '222'],
-    });
-
-    expect(result.selection).toHaveLength(1);
-  });
-
   it('should restore story if set', () => {
     const reducer = setupReducer();
 
