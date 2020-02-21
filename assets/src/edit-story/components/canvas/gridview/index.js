@@ -62,9 +62,7 @@ const FlexGrowRangeInput = styled(RangeInput)`
   flex-grow: 1;
 `;
 
-const Rectangle = styled.button.attrs(({ disabled }) => ({
-  disabled,
-}))`
+const Rectangle = styled.button`
   border: 0;
   padding: 0;
   margin: 0;
@@ -81,12 +79,10 @@ const Rectangle = styled.button.attrs(({ disabled }) => ({
     outline: none;
   }
 
-  ${({ disabled }) =>
-    disabled &&
-    `
-		pointer-events: none;
-		opacity: .3;
-	`}
+  :disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
 
   svg {
     width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
