@@ -137,6 +137,7 @@ function Text(props) {
     evt.stopPropagation();
     evt.preventDefault();
 
+    // @todo: Needs product definition
     insertElement('text', {
       content: 'Double-click to edit...',
       color: '#000000',
