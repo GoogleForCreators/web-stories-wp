@@ -264,12 +264,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       snapVertical={true}
       snapCenter={true}
       horizontalGuidelines={
-        !isBackgroundElement && [0, canvasHeight / 2, canvasHeight]
+        actionsEnabled && [0, canvasHeight / 2, canvasHeight]
       }
-      verticalGuidelines={
-        !isBackgroundElement && [0, canvasWidth / 2, canvasWidth]
-      }
-      elementGuidelines={otherNodes}
+      verticalGuidelines={actionsEnabled && [0, canvasWidth / 2, canvasWidth]}
+      elementGuidelines={actionsEnabled && otherNodes}
     />
   );
 }
