@@ -325,7 +325,10 @@ class Story_Post_Type {
 		$mime_types         = [];
 
 		foreach ( $allowed_mime_types as $type => $mimes ) {
-			array_push( $mime_types, ...$mimes );
+			// Otherwise this throws a warning on PHP < 7.3.
+			if ( ! empty( $mimes ) ) {
+				array_push( $mime_types, ...$mimes );
+			}
 		}
 
 		$allowed_file_types = [];
