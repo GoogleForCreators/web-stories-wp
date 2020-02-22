@@ -133,7 +133,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     }
   };
 
-  const { resizeRules = {}, completeResize } = getDefinitionForType(
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
   );
 
@@ -188,8 +188,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         const newWidth = width;
         let newHeight = height;
         let updates = null;
-        if (completeResize) {
-          updates = completeResize(
+        if (updateForResizeEvent) {
+          updates = updateForResizeEvent(
             selectedElement,
             editorToDataX(newWidth),
             editorToDataY(newHeight)
@@ -217,10 +217,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),
           };
-          if (completeResize) {
+          if (updateForResizeEvent) {
             Object.assign(
               properties,
-              completeResize(selectedElement, newWidth, newHeight)
+              updateForResizeEvent(selectedElement, newWidth, newHeight)
             );
           }
           updateSelectedElements({ properties });

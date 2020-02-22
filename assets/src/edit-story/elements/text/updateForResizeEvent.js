@@ -24,7 +24,7 @@ import {
 } from '../../utils/textMeasurements';
 import { dataPixels } from '../../units/dimensions';
 
-function completeResize(element, newWidth, newHeight) {
+function updateForResizeEvent(element, newWidth, newHeight) {
   const { width, height } = element;
   const isResizingWidth = Math.abs(newWidth - width) >= 1;
   const isResizingHeight = Math.abs(newHeight - height) >= 1;
@@ -52,4 +52,4 @@ function completeResize(element, newWidth, newHeight) {
   return null;
 }
 
-export default completeResize;
+export default updateForResizeEvent;

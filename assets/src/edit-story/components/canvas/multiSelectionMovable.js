@@ -70,7 +70,8 @@ function MultiSelectionMovable({ selectedElements }) {
   const targetList = selectedElements.map((element) => ({
     element,
     node: nodesById[element.id],
-    completeResize: getDefinitionForType(element.type).completeResize,
+    updateForResizeEvent: getDefinitionForType(element.type)
+      .updateForResizeEvent,
   }));
   // Not all targets have been defined yet.
   if (targetList.some(({ node }) => node === undefined)) {
@@ -138,7 +139,7 @@ function MultiSelectionMovable({ selectedElements }) {
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
-      const { element, completeResize } = targetList[i];
+      const { element, updateForResizeEvent } = targetList[i];
       const properties = {
         x: element.x + editorToDataX(frame.translate[0]),
         y: element.y + editorToDataY(frame.translate[1]),
@@ -153,10 +154,10 @@ function MultiSelectionMovable({ selectedElements }) {
         const newHeight = editorToDataY(editorHeight);
         properties.width = newWidth;
         properties.height = newHeight;
-        if (completeResize) {
+        if (updateForResizeEvent) {
           Object.assign(
             properties,
-            completeResize(element, newWidth, newHeight)
+            updateForResizeEvent(element, newWidth, newHeight)
           );
         }
       }
@@ -217,12 +218,12 @@ function MultiSelectionMovable({ selectedElements }) {
       onResizeGroup={({ events }) => {
         events.forEach(({ target, width, height, drag }, i) => {
           const sFrame = frames[i];
-          const { element, completeResize } = targetList[i];
+          const { element, updateForResizeEvent } = targetList[i];
           let newHeight = height;
           const newWidth = width;
           let updates = null;
-          if (completeResize) {
-            updates = completeResize(
+          if (updateForResizeEvent) {
+            updates = updateForResizeEvent(
               element,
               editorToDataX(newWidth),
               editorToDataY(newHeight)

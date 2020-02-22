@@ -25,7 +25,7 @@ export { default as Output } from './output';
 export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
-export { default as completeResize } from './completeResize';
+export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
   fontFamily: 'Arial',
