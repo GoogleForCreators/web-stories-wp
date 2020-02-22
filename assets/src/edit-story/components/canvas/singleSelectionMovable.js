@@ -29,16 +29,16 @@ import { useRef, useEffect, useState } from '@wordpress/element';
  */
 import { useStory } from '../../app';
 import Movable from '../movable';
-import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import objectWithout from '../../utils/objectWithout';
-import getAdjustedElementDimensions from '../../utils/getAdjustedElementDimensions';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
-const ALL_HANDLES = ['n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
+const EMPTY_HANDLES = [];
+const VERTICAL_HANDLES = ['n', 's'];
+const HORIZONTAL_HANDLES = ['e', 'w'];
+const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef();
@@ -61,11 +61,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-
-  const minMaxFontSize = {
-    minFontSize: dataToEditorY(MIN_FONT_SIZE),
-    maxFontSize: dataToEditorY(MAX_FONT_SIZE),
-  };
 
   const otherNodes = Object.values(
     objectWithout(nodesById, [selectedElement.id])
@@ -103,6 +98,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     translate: [0, 0],
     rotate: box.rotationAngle,
     resize: [0, 0],
+    updates: null,
   };
 
   const setTransformStyle = (target) => {
@@ -124,6 +120,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const resetMoveable = (target) => {
     frame.translate = [0, 0];
     frame.resize = [0, 0];
+    frame.updates = null;
     pushTransform(selectedElement.id, null);
     // Inline start resetting has to be done very carefully here to avoid
     // conflicts with stylesheets. See #3951.
@@ -136,11 +133,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     }
   };
 
-  const isTextElement = 'text' === selectedElement.type;
-  const shouldAdjustFontSize =
-    isTextElement && selectedElement.content.length && isResizingFromCorner;
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
+    selectedElement.type
+  );
 
-  const { isMedia } = getDefinitionForType(selectedElement.type);
   const actionsEnabled =
     !selectedElement.isFill &&
     selectedElement.id !== currentPage.backgroundElementId;
@@ -188,54 +184,43 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           setIsResizingFromCorner(newResizingMode);
         }
       }}
-      onResize={({ target, width, height, drag, direction }) => {
-        const isResizingWidth = direction[0] !== 0 && direction[1] === 0;
-        const isResizingHeight = direction[0] === 0 && direction[1] !== 0;
+      onResize={({ target, width, height, drag }) => {
+        const newWidth = width;
         let newHeight = height;
-        let newWidth = width;
-        if (isTextElement && (isResizingWidth || isResizingHeight)) {
-          const adjustedDimensions = getAdjustedElementDimensions({
-            element: target,
-            content: selectedElement.content,
-            width,
-            height,
-            fixedMeasure: isResizingWidth ? 'width' : 'height',
-          });
-          newWidth = adjustedDimensions.width;
-          newHeight = adjustedDimensions.height;
+        let updates = null;
+        if (updateForResizeEvent) {
+          updates = updateForResizeEvent(
+            selectedElement,
+            editorToDataX(newWidth),
+            editorToDataY(newHeight)
+          );
+        }
+        if (updates && updates.height) {
+          newHeight = dataToEditorY(updates.height);
         }
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
         frame.resize = [newWidth, newHeight];
         frame.translate = drag.beforeTranslate;
-        if (shouldAdjustFontSize) {
-          target.style.fontSize = calculateFitTextFontSize(
-            target.firstChild,
-            height,
-            width,
-            minMaxFontSize
-          );
-        }
+        frame.updates = updates;
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
-        const [deltaX, deltaY] = frame.translate;
         if (editorWidth !== 0 && editorHeight !== 0) {
+          const [deltaX, deltaY] = frame.translate;
+          const newWidth = editorToDataX(editorWidth);
+          const newHeight = editorToDataY(editorHeight);
           const properties = {
-            width: editorToDataX(editorWidth),
-            height: editorToDataY(editorHeight),
+            width: newWidth,
+            height: newHeight,
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),
           };
-          if (shouldAdjustFontSize) {
-            properties.fontSize = editorToDataY(
-              calculateFitTextFontSize(
-                target.firstChild,
-                editorHeight,
-                editorWidth,
-                minMaxFontSize
-              )
+          if (updateForResizeEvent) {
+            Object.assign(
+              properties,
+              updateForResizeEvent(selectedElement, newWidth, newHeight)
             );
           }
           updateSelectedElements({ properties });
@@ -256,8 +241,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }}
       origin={false}
       pinchable={true}
-      keepRatio={isMedia && isResizingFromCorner}
-      renderDirections={ALL_HANDLES}
+      keepRatio={isResizingFromCorner}
+      renderDirections={getRenderDirections(resizeRules)}
       snappable={true}
       snapElement={true}
       snapHorizontal={true}
@@ -268,6 +253,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       elementGuidelines={otherNodes}
     />
   );
+}
+
+function getRenderDirections({ vertical, horizontal, diagonal }) {
+  return [
+    ...(vertical ? VERTICAL_HANDLES : EMPTY_HANDLES),
+    ...(horizontal ? HORIZONTAL_HANDLES : EMPTY_HANDLES),
+    ...(diagonal ? DIAGONAL_HANDLES : EMPTY_HANDLES),
+  ];
 }
 
 SingleSelectionMovable.propTypes = {
