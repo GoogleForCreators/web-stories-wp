@@ -141,9 +141,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     isTextElement && selectedElement.content.length && isResizingFromCorner;
 
   const { isMedia } = getDefinitionForType(selectedElement.type);
-  const isBackgroundElement =
-    selectedElement.id === currentPage.backgroundElementId;
-  const actionsEnabled = !selectedElement.isFill && !isBackgroundElement;
+  const actionsEnabled =
+    !selectedElement.isFill && !selectedElement.isBackground;
   return (
     <Movable
       className="default-movable"
