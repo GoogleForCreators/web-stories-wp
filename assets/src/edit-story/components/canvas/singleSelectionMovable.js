@@ -47,7 +47,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   const {
     actions: { updateSelectedElements },
-    state: { currentPage },
   } = useStory();
   const {
     state: {
