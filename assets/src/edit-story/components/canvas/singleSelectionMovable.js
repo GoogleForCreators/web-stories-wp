@@ -140,7 +140,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
-
   return (
     <Movable
       className="default-movable"
