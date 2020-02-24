@@ -22,6 +22,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -78,6 +79,7 @@ const storiesEditor = {
   },
   plugins: [
     ...defaultConfig.plugins,
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
