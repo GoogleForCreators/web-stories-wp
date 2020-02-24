@@ -1,0 +1,6 @@
+# See https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+*.php          @swissspidy @spacedmonkey
+
+# WordPress.org plugin directory readme file.
+readme.txt     @swissspidy @pbakaus
