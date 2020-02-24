@@ -39,7 +39,7 @@ const Note = styled.p`
 
 function NoSelectionPanel() {
   return (
-    <Panel name="colorpreset">
+    <Panel name="noselection">
       <PanelContent hasBorder>
         <Note>{__('Nothing selected', 'web-stories')}</Note>
       </PanelContent>

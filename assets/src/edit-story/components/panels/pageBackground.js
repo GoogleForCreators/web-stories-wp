@@ -44,7 +44,7 @@ function PageBackgroundPanel() {
     [updateCurrentPageProperties]
   );
   return (
-    <SimplePanel name="color" title={__('Page', 'web-stories')}>
+    <SimplePanel name="pagebackground" title={__('Page', 'web-stories')}>
       {/* TODO: Replace with custom color picker component once implemented */}
       <InputGroup
         type="color"
