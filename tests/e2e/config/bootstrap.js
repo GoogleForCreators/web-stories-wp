@@ -59,6 +59,14 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
+async function setupBrowser() {
+  // 15inch screen.
+  await setBrowserViewport({
+    width: 1680,
+    height: 948,
+  });
+}
+
 /**
  * Adds an event listener to the page to handle additions of page event
  * handlers, to assure that they are removed at test teardown.
@@ -160,11 +168,7 @@ beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();
   observeConsoleLogging();
-  // 15inch screen.
-  await setBrowserViewport({
-    width: 1680,
-    height: 948,
-  });
+  await setupBrowser();
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
 });
@@ -172,11 +176,7 @@ beforeAll(async () => {
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await runAxeTestsForStoriesEditor();
-  // 15inch screen.
-  await setBrowserViewport({
-    width: 1680,
-    height: 948,
-  });
+  await setupBrowser();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
