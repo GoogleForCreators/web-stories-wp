@@ -26,7 +26,10 @@ import { useEffect, useCallback } from 'react';
 import { useAPI } from '../api';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
+import useInsertMediaElement from './actions/useInsertMediaElement';
 import Context from './context';
+
+const DEFAULT_WIDTH = 150;
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
@@ -44,6 +47,13 @@ function MediaProvider({ children }) {
   const {
     actions: { getMedia },
   } = useAPI();
+
+  const insertMediaElement = useInsertMediaElement({
+    uploadVideoFrame,
+    // QQQQQQ?????
+    // allowedImageMimeTypes,
+    // allowedVideoMimeTypes,
+  });
 
   const fetchMedia = useCallback(() => {
     fetchMediaStart();
@@ -65,12 +75,14 @@ function MediaProvider({ children }) {
 
   const context = {
     state,
+      // QQQQQ: state: {..., DEFAULT_WIDTH}
     actions: {
       setMediaType,
       setSearchTerm,
       fetchMedia,
       resetFilters,
       uploadVideoFrame,
+      insertMediaElement,
     },
   };
 

@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
+import { createNewElement, getDefinitionForType } from '..';
 import {
   DEFAULT_EDITOR_PAGE_WIDTH,
   DEFAULT_EDITOR_PAGE_HEIGHT,
 } from '../../constants';
-import { createNewElement, getDefinitionForType } from '../../elements';
 import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
@@ -56,11 +56,13 @@ function useInsertElement() {
     return element;
   };
 
-  const insertElement = (type, props) => {
+  // QQQQ: why isBackground here?
+  const insertElement = (type, props, isBackground) => {
     const element = createElement(type, props);
     addElement({ element });
     if (
       isMedia(element.type) &&
+      isBackground &&
       !currentPage.elements.some(({ type: elType }) => isMedia(elType))
     ) {
       setBackgroundElement({ elementId: element.id });
