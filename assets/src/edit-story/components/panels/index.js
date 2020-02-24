@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import ActionsPanel from './actions';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
 import PageBackgroundPanel from './pageBackground';
@@ -37,7 +36,6 @@ import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
-const ACTIONS = 'actions';
 const BACKGROUND = 'background';
 const COLOR = 'color';
 const SCALE = 'scale';
@@ -55,7 +53,6 @@ const PAGE = 'page';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
-  ACTIONS,
   BACKGROUND,
   POSITION,
   SIZE,
@@ -87,9 +84,6 @@ export function getPanels(elements) {
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
 
-  // Panels to always display, independent of the selected element.
-  const sharedPanels = [{ type: ACTIONS, Panel: ActionsPanel }];
-
   let selectionPanels = [];
   // Only display background panel in case of background element.
   if (isBackground) {
@@ -110,13 +104,6 @@ export function getPanels(elements) {
       .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
       .map((type) => {
         switch (type) {
-          case BACKGROUND:
-            // @todo Would be good to have a general logic for panels supporting multi-selection instead.
-            // Only display when one element selected.
-            if (1 === elements.length) {
-              return { type, Panel: BackgroundPanel };
-            }
-            return null;
           case POSITION:
             return { type, Panel: PositionPanel };
           case SCALE:
@@ -148,5 +135,5 @@ export function getPanels(elements) {
       .filter((panel) => panel);
   }
 
-  return [...sharedPanels, ...selectionPanels];
+  return selectionPanels;
 }
