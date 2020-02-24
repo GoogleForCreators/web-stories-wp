@@ -79,7 +79,7 @@ const Rectangle = styled.button`
     outline: none;
   }
 
-  :disabled {
+  &:disabled {
     pointer-events: none;
     opacity: 0.3;
   }
@@ -92,11 +92,15 @@ const Rectangle = styled.button`
 `;
 
 // I think we can move this component to shared one in the future if we need this kind of spacer span.
-const SpacerSpan = styled.span`
-  margin-left: ${({ space }) => space || 8}px;
+const Space = styled.div`
+  flex: 0 0 20px;
 `;
 
-function RangeControl({ value, onChange, min, max, step }) {
+function Reflect({ value, onChange }) {
+  const max = 3;
+  const min = 1;
+  const step = 1;
+
   const updateRangeValue = (addition) => {
     onChange(Math.min(max, Math.max(min, value + addition)));
   };
@@ -123,7 +127,7 @@ function RangeControl({ value, onChange, min, max, step }) {
       >
         <RectangleIcon />
       </Rectangle>
-      <SpacerSpan space={20} />
+      <Space />
       <FlexGrowRangeInput
         min={min}
         max={max}
@@ -134,7 +138,7 @@ function RangeControl({ value, onChange, min, max, step }) {
         aria-label={__('Thumbnail size', 'web-stories')}
         aria-valuetext={valueText}
       />
-      <SpacerSpan space={20} />
+      <Space />
       <Rectangle
         isLarge
         onClick={() => updateRangeValue(step)}
@@ -147,18 +151,9 @@ function RangeControl({ value, onChange, min, max, step }) {
   );
 }
 
-RangeControl.propTypes = {
+Reflect.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-};
-
-RangeControl.defaultProps = {
-  min: 1,
-  max: 3,
-  step: 1,
 };
 
 function GridView() {
@@ -169,7 +164,7 @@ function GridView() {
 
   return (
     <>
-      <RangeControl value={zoomLevel} onChange={setZoomLevel} />
+      <Reflect value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper scale={zoomLevel}>
         {pages.map((page, index) => {
           const isCurrentPage = index === currentPageIndex;
