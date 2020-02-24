@@ -24,10 +24,7 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../app/uploader';
-import { useMedia } from '../../app/media';
 import Context from './context';
-import getDragType from './utils/getDragType';
 
 const DropZoneWrapper = styled.div`
   height: 100%;
@@ -36,11 +33,6 @@ const DropZoneWrapper = styled.div`
 function DropZoneProvider({ children }) {
   const [dropZones, setDropZones] = useState([]);
   const [hoveredDropZone, setHoveredDropZone] = useState(null);
-  const { uploadFile } = useUploader();
-  const {
-    state: { DEFAULT_WIDTH },
-    actions: { insertMediaElement },
-  } = useMedia();
 
   const registerDropZone = useCallback(
     (dropZone) => {
@@ -80,7 +72,7 @@ function DropZoneProvider({ children }) {
   };
 
   const onDragOver = (evt) => {
-    disableDefaults(evt);
+    evt.preventDefault();
     // Get the hovered dropzone. // @todo Consider dropzone inside dropzone, will we need this?
     const foundDropZones = dropZones.filter((dropZone) => {
       return isWithinElementBounds(dropZone.node, evt.clientX, evt.clientY);
@@ -118,41 +110,6 @@ function DropZoneProvider({ children }) {
     }
   };
 
-  const disableDefaults = (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-  };
-
-  const onDrop = (evt) => {
-    disableDefaults(evt);
-    if ('file' === getDragType(evt)) {
-      const files = [...evt.dataTransfer.files];
-      files.forEach((file) => {
-        uploadFile(file).then(
-          ({
-            id,
-            guid: { rendered: src },
-            media_details: { width: oWidth, height: oHeight },
-            mime_type: mimeType,
-            featured_media: posterId,
-            featured_media_src: poster,
-          }) => {
-            const mediaEl = {
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
-              mimeType,
-            };
-            insertMediaElement(mediaEl, DEFAULT_WIDTH, false);
-          }
-        );
-      });
-    }
-  };
-
   const state = {
     state: {
       hoveredDropZone,
@@ -165,12 +122,7 @@ function DropZoneProvider({ children }) {
     },
   };
   return (
-    <DropZoneWrapper
-      onDragOver={onDragOver}
-      onDragLeave={disableDefaults}
-      onDragEnter={disableDefaults}
-      onDrop={onDrop}
-    >
+    <DropZoneWrapper onDragOver={onDragOver}>
       <Context.Provider value={state}>{children}</Context.Provider>
     </DropZoneWrapper>
   );
