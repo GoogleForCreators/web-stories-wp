@@ -66,6 +66,7 @@ function Library() {
     ) {
       setBackgroundElement({ elementId: element.id });
     }
+    return element;
   };
   return <ContentLibrary onInsert={handleInsert} />;
 }

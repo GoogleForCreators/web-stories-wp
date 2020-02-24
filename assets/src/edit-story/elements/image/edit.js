@@ -111,6 +111,9 @@ function ImageEdit({ element, box }) {
           croppedImage={croppedImage}
           x={x}
           y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
           offsetX={imgProps.offsetX}
           offsetY={imgProps.offsetY}
           imgWidth={imgProps.width}

@@ -29,13 +29,13 @@ import { useCallback } from '@wordpress/element';
  */
 import { useStory, useHistory } from '../../../app';
 import { createPage } from '../../../elements';
-import Delete from '../../../icons/delete_icon.svg';
-import Duplicate from '../../../icons/duplicate_icon.svg';
-import Undo from '../../../icons/undo_icon.svg';
-import Redo from '../../../icons/redo_icon.svg';
-import Add from '../../../icons/add_page.svg';
-import Layout from '../../../icons/layout_helper.svg';
-import Text from '../../../icons/text_helper.svg';
+import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
+import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
+import { ReactComponent as Undo } from '../../../icons/undo_icon.svg';
+import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
+import { ReactComponent as Add } from '../../../icons/add_page.svg';
+import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
+import { ReactComponent as Text } from '../../../icons/text_helper.svg';
 
 const HEIGHT = 28;
 

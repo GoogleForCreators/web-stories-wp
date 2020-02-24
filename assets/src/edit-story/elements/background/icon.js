@@ -22,19 +22,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from './panel';
+import { ReactComponent as Icon } from './icon.svg';
 
-function LayerPanel() {
-  return (
-    <Panel name="layers" initialHeight={240}>
-      <PanelTitle isPrimary isResizable>
-        {__('Layers', 'web-stories')}
-      </PanelTitle>
-      <PanelContent>
-        <p>{__('Layer contents', 'web-stories')}</p>
-      </PanelContent>
-    </Panel>
-  );
+function BackgroundIcon() {
+  const alt = __('Background element', 'web-stories');
+  return <Icon aria-label={alt} />;
 }
 
-export default LayerPanel;
+export default BackgroundIcon;

@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
-import Arrow from '../../../../icons/arrow.svg';
+import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
 
 const Header = styled.h2`

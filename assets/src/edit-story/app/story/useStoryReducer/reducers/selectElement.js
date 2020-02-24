@@ -37,6 +37,14 @@ function selectElement(state, { elementId }) {
     return state;
   }
 
+  // If bg element was already the (only) selection, set selection to new element only
+  if (state.selection.includes(currentPage.backgroundElementId)) {
+    return {
+      ...state,
+      selection: [elementId],
+    };
+  }
+
   return {
     ...state,
     selection: [...state.selection, elementId],

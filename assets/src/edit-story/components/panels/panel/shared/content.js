@@ -31,7 +31,7 @@ import { useContext } from '@wordpress/element';
 import panelContext from '../context';
 
 const Form = styled.form`
-  padding: 10px 20px;
+  padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
   display: flex;
   flex-direction: column;

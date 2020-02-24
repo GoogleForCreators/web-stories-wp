@@ -23,6 +23,8 @@ export { default as Edit } from './edit';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
 export { default as TextContent } from './textContent';
+export { default as LayerContent } from './layer';
+export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
   scale: 100,
@@ -35,6 +37,12 @@ export const hasEditMode = true;
 export const editModeGrayout = true;
 
 export const isMedia = true;
+
+export const resizeRules = {
+  vertical: true,
+  horizontal: true,
+  diagonal: true,
+};
 
 export const panels = [
   PanelTypes.BACKGROUND,

@@ -31,11 +31,11 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { Spacer, Button, Row, Numeric } from '../form';
 import { dataPixels } from '../../units';
-import Locked from '../../icons/lock.svg';
-import Unlocked from '../../icons/unlock.svg';
-import Fullbleed from '../../icons/fullbleed.svg';
-import FlipVertical from '../../icons/flip_vertical.svg';
-import FlipHorizontal from '../../icons/flip_horizontal.svg';
+import { ReactComponent as Locked } from '../../icons/lock.svg';
+import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
+import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
+import { ReactComponent as FlipVertical } from '../../icons/flip_vertical.svg';
+import { ReactComponent as FlipHorizontal } from '../../icons/flip_horizontal.svg';
 import Toggle from '../form/toggle';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';

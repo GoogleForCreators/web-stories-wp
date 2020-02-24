@@ -32,7 +32,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
-import RectangleIcon from '../../../icons/rectangle.svg';
+import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
 
 const PAGE_WIDTH = 90;
 const PAGE_HEIGHT = 160;
@@ -58,13 +58,31 @@ const RangeInputWrapper = styled.div`
   margin: 0 auto 75px auto;
 `;
 
-const Rectangle = styled.div`
+const FlexGrowRangeInput = styled(RangeInput)`
+  flex-grow: 1;
+`;
+
+const Rectangle = styled.button`
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: unset;
+  background: transparent;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-  ${({ isLarge }) => (isLarge ? 'margin-left' : 'margin-right')}: 20px;
+
+  &:active {
+    outline: none;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
 
   svg {
     width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
@@ -73,28 +91,66 @@ const Rectangle = styled.div`
   }
 `;
 
-function RangeControl({ value, onChange }) {
+const Space = styled.div`
+  flex: 0 0 20px;
+`;
+
+function ThumbnailSizeControl({ value, onChange }) {
+  const max = 3;
+  const min = 1;
+  const step = 1;
+
+  const updateRangeValue = (addition) => {
+    onChange(Math.min(max, Math.max(min, value + addition)));
+  };
+
+  let valueText;
+  switch (value) {
+    case max:
+      valueText = __('Large', 'web-stories');
+      break;
+    case min:
+      valueText = __('Small', 'web-stories');
+      break;
+    default:
+      valueText = __('Medium', 'web-stories');
+      break;
+  }
+
   return (
     <RangeInputWrapper>
-      <Rectangle>
+      <Rectangle
+        onClick={() => updateRangeValue(-step)}
+        disabled={value === min}
+        aria-label={__('Decrease thumbnail size', 'web-stories')}
+      >
         <RectangleIcon />
       </Rectangle>
-      <RangeInput
-        min="1"
-        max="3"
-        step="1"
+      <Space />
+      <FlexGrowRangeInput
+        min={min}
+        max={max}
+        step={step}
         value={value}
         onChange={(evt) => onChange(Number(evt.target.value))}
         thumbSize={24}
+        aria-label={__('Thumbnail size', 'web-stories')}
+        aria-valuetext={valueText}
       />
-      <Rectangle isLarge>
+      <Space />
+      <Rectangle
+        isLarge
+        onClick={() => updateRangeValue(step)}
+        disabled={value === max}
+        aria-label={__('Increase thumbnail size', 'web-stories')}
+      >
         <RectangleIcon />
       </Rectangle>
     </RangeInputWrapper>
   );
 }
 
-RangeControl.propTypes = {
+ThumbnailSizeControl.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
@@ -107,7 +163,7 @@ function GridView() {
 
   return (
     <>
-      <RangeControl value={zoomLevel} onChange={setZoomLevel} />
+      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper scale={zoomLevel}>
         {pages.map((page, index) => {
           const isCurrentPage = index === currentPageIndex;

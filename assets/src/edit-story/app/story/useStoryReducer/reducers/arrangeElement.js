@@ -48,7 +48,7 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id of element to move
- * @param {number} payload.position New position of element to move
+ * @param {number|string} payload.position New position of element to move
  * @return {Object} New state
  */
 function arrangeElement(state, { elementId, position }) {
@@ -75,7 +75,7 @@ function arrangeElement(state, { elementId, position }) {
     return state;
   }
 
-  const minPosition = page.backgroundElementId !== null ? 1 : 0;
+  const minPosition = Boolean(page.backgroundElementId) ? 1 : 0;
   const maxPosition = page.elements.length - 1;
   const newPosition = getAbsolutePosition({
     currentPosition,

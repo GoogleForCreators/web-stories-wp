@@ -20,6 +20,8 @@
 import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
 export { default as Output } from './output';
+export { default as LayerContent } from './layer';
+export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
   backgroundColor: '#ffffff',
@@ -28,6 +30,12 @@ export const defaultAttributes = {
 export const hasEditMode = false;
 
 export const isMedia = false;
+
+export const resizeRules = {
+  vertical: true,
+  horizontal: true,
+  diagonal: true,
+};
 
 export const panels = [
   PanelTypes.SIZE,

@@ -59,7 +59,14 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
+export const StoryLayerPropsTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
+
+StoryPropTypes.layer = PropTypes.shape(StoryLayerPropsTypes);
 
 StoryPropTypes.elements = {};
 
@@ -101,6 +108,11 @@ StoryPropTypes.elements.text = PropTypes.shape({
 StoryPropTypes.elements.square = PropTypes.shape({
   ...StoryElementPropsTypes,
   backgroundColor: PropTypes.string,
+});
+
+StoryPropTypes.elements.background = PropTypes.shape({
+  ...StoryLayerPropsTypes,
+  inner: StoryPropTypes.element,
 });
 
 export default StoryPropTypes;
