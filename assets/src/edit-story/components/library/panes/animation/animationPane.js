@@ -23,10 +23,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Pane } from '../shared';
+import paneId from './paneId';
 
 function AnimationPane(props) {
   return (
-    <Pane id="library-animation-pane" {...props}>
+    <Pane id={paneId} {...props}>
       {__('Still empty', 'web-stories')}
     </Pane>
   );

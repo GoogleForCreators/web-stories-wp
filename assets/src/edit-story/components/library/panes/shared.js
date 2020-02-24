@@ -42,6 +42,7 @@ const Icon = styled.div`
 const Tab = styled.li.attrs(({ isActive }) => ({
   tabIndex: isActive ? 0 : -1,
   role: 'tab',
+  'aria-selected': isActive,
 }))`
   width: 72px;
   height: 100%;
@@ -85,4 +86,12 @@ const Pane = styled.section.attrs(({ isActive }) => ({
   padding: 1em;
 `;
 
-export { Tabs, Tab, Icon, Pane };
+function getPaneId(tab) {
+  return `library-pane-${tab}`;
+}
+
+function getTabId(tab) {
+  return `library-tab-${tab}`;
+}
+
+export { Tabs, Tab, Icon, Pane, getPaneId, getTabId };

@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import useLibrary from '../../useLibrary';
 import { Tab, Icon } from '../shared';
+import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 
@@ -77,11 +78,7 @@ function TextTab(props) {
   };
   const { isActive } = props;
   return (
-    <Tab
-      aria-labelledby="text-tab-icon"
-      aria-controls="library-text-pane"
-      {...props}
-    >
+    <Tab aria-labelledby="text-tab-icon" aria-controls={paneId} {...props}>
       <Icon>
         <TextIcon
           id="text-tab-icon"

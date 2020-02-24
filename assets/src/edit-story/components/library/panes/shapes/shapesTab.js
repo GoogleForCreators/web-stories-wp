@@ -23,11 +23,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Tab, Icon } from '../shared';
+import paneId from './paneId';
 import { ReactComponent as ShapesIcon } from './shapes.svg';
 
 function ShapesTab(props) {
   return (
-    <Tab aria-controls="library-shapes-pane" {...props}>
+    <Tab aria-controls={paneId} {...props}>
       <Icon>
         <ShapesIcon aria-label={__('Animation library', 'web-stories')} />
       </Icon>

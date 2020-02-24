@@ -15,25 +15,8 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Tab, Icon } from '../shared';
-import paneId from './paneId';
-import { ReactComponent as MediaIcon } from './media.svg';
+import { getPaneId } from '../shared';
 
-function MediaTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Icon>
-        <MediaIcon aria-label={__('Animation library', 'web-stories')} />
-      </Icon>
-    </Tab>
-  );
-}
-
-export default MediaTab;
+export default getPaneId('media');

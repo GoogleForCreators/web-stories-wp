@@ -25,6 +25,7 @@ import { TextTab, TextPane } from './text';
 import { Tabs } from './shared';
 
 function getPanes({ ANIMATION, ELEMENTS, MEDIA, SHAPES, TEXT }) {
+  // Order here is important, as it denotes the actual visual order of elements.
   return [
     { Tab: MediaTab, Pane: MediaPane, id: MEDIA },
     { Tab: TextTab, Pane: TextPane, id: TEXT },

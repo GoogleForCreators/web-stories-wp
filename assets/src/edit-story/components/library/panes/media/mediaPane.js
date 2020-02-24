@@ -35,6 +35,7 @@ import UploadButton from '../../../uploadButton';
 import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import paneId from './paneId';
 
 const Container = styled.div`
   display: grid;
@@ -309,7 +310,7 @@ function MediaPane(props) {
   };
 
   return (
-    <Pane id="library-media-pane" {...props}>
+    <Pane id={paneId} {...props}>
       <Dropzone>
         <Header>
           <Title>

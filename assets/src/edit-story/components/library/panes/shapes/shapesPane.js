@@ -24,13 +24,14 @@ import { __ } from '@wordpress/i18n';
  */
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import paneId from './paneId';
 
 function ShapesPane(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
   return (
-    <Pane id="library-shapes-pane" {...props}>
+    <Pane id={paneId} {...props}>
       <button
         onClick={() =>
           insertElement('square', {

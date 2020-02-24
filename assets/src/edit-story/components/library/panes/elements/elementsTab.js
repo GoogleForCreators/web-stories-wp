@@ -22,11 +22,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Tab, Icon } from '../shared';
+import paneId from './paneId';
 import { ReactComponent as ElementsIcon } from './elements.svg';
 
 function ElementsTab(props) {
   return (
-    <Tab aria-controls="library-elements-pane" {...props}>
+    <Tab aria-controls={paneId} {...props}>
       <Icon>
         <ElementsIcon aria-label={__('Elements library', 'web-stories')} />
       </Icon>

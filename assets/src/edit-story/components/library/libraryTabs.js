@@ -25,10 +25,7 @@ import { useRef, useCallback } from '@wordpress/element';
 import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
 import { Tabs, getPanes } from './panes';
-
-function getTabId(tab) {
-  return `library-tab-${tab}`;
-}
+import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
   const {

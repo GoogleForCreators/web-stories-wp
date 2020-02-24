@@ -23,10 +23,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Pane } from '../shared';
+import paneId from './paneId';
 
 function ElementsPane(props) {
   return (
-    <Pane id="library-elements-pane" {...props}>
+    <Pane id={paneId} {...props}>
       {__('Still empty', 'web-stories')}
     </Pane>
   );
