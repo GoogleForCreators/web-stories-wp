@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 /**
@@ -30,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
+
 import { useMedia } from '../../app/media';
 import UploadButton from '../uploadButton';
 import Dropzone from './dropzone';
@@ -42,20 +41,6 @@ const Container = styled.div`
 `;
 
 const Column = styled.div``;
-
-export const styledTiles = css`
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-`;
-
-const Image = styled.img`
-  ${styledTiles}
-`;
-
-const Video = styled.video`
-  ${styledTiles}
-`;
 
 const Title = styled.h3`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -132,26 +117,26 @@ const FILTERS = [
   { filter: 'video', name: __('Video', 'web-stories') },
 ];
 
-const DEFAULT_WIDTH = 150;
-
-function MediaLibrary({ onInsert }) {
+function MediaLibrary() {
   const {
-    state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
+    state: {
+      media,
+      isMediaLoading,
+      isMediaLoaded,
+      mediaType,
+      searchTerm,
+      DEFAULT_WIDTH,
+    },
     actions: {
       loadMedia,
       reloadMedia,
       resetMedia,
       setMediaType,
       setSearchTerm,
-      uploadVideoFrame,
+      insertMediaElement,
+      getMediaElement,
     },
   } = useMedia();
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-  } = useConfig();
 
   useEffect(loadMedia);
 
@@ -206,102 +191,6 @@ function MediaLibrary({ onInsert }) {
     } = attachment;
     const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
     insertMediaElement(mediaEl, DEFAULT_WIDTH);
-  };
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} attachment Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Return onInsert or null.
-   */
-  const insertMediaElement = (attachment, width) => {
-    const { src, mimeType, oWidth, oHeight } = attachment;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return onInsert('image', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-      });
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
-      const posterId = parseInt(posterIdRaw);
-      const videoEl = onInsert('video', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        mimeType,
-        videoId,
-        posterId,
-        poster,
-      });
-
-      // Generate video poster if one not set.
-      if (videoId && !posterId) {
-        uploadVideoFrame(videoId, src, videoEl.id);
-      }
-
-      return videoEl;
-    }
-    return null;
-  };
-
-  /**
-   * Get a formatted element for different media types.
-   *
-   * @param {Object} mediaEl Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Element or null if does not map to video/image.
-   */
-  const getMediaElement = (mediaEl, width) => {
-    const { src, oWidth, oHeight, mimeType } = mediaEl;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return (
-        <Image
-          key={src}
-          src={src}
-          width={width}
-          height={height}
-          loading={'lazy'}
-          onClick={() => insertMediaElement(mediaEl, width)}
-        />
-      );
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      return (
-        <Video
-          key={src}
-          width={width}
-          height={height}
-          onClick={() => insertMediaElement(mediaEl, width)}
-          onMouseEnter={(evt) => {
-            evt.target.play();
-          }}
-          onMouseLeave={(evt) => {
-            evt.target.pause();
-            evt.target.currentTime = 0;
-          }}
-        >
-          <source src={src} type={mimeType} />
-        </Video>
-      );
-    }
-    return null;
   };
 
   return (
@@ -362,9 +251,5 @@ function MediaLibrary({ onInsert }) {
     </Dropzone>
   );
 }
-
-MediaLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
 
 export default MediaLibrary;

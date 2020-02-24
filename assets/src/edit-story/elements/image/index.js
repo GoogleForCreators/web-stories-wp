@@ -30,6 +30,7 @@ export const defaultAttributes = {
   scale: 100,
   focalX: 50,
   focalY: 50,
+  isBackground: true,
 };
 
 export const hasEditMode = true;

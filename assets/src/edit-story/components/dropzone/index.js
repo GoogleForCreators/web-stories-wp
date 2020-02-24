@@ -29,6 +29,7 @@ import { useRef, useState, useLayoutEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import useDropZone from './useDropZone';
+import getDragType from './utils/getDragType';
 
 const DropZoneComponent = styled.div`
   position: relative;
@@ -70,28 +71,6 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
     };
   }, [dropZone, registerDropZone, unregisterDropZone]);
 
-  const getDragType = ({ dataTransfer }) => {
-    if (dataTransfer) {
-      if (Array.isArray(dataTransfer.types)) {
-        if (dataTransfer.types.includes('Files')) {
-          return 'file';
-        }
-        if (dataTransfer.types.includes('text/html')) {
-          return 'html';
-        }
-      } else {
-        // For Edge, types is DomStringList and not array.
-        if (dataTransfer.types.contains('Files')) {
-          return 'file';
-        }
-        if (dataTransfer.types.contains('text/html')) {
-          return 'html';
-        }
-      }
-    }
-    return 'default';
-  };
-
   const onDropHandler = (evt) => {
     resetHoverState();
     if (dropZoneElement.current) {
@@ -109,6 +88,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
       // @todo Support for files when it becomes necessary.
     }
     evt.preventDefault();
+    evt.stopPropagation();
   };
 
   const isDropZoneActive =

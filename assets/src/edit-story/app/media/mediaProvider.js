@@ -27,11 +27,14 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../config';
 import useLoadMedia from './actions/useLoadMedia';
 import useCompleteMedia from './actions/useCompleteMedia';
 import useReloadMedia from './actions/useReloadMedia';
 import useResetMedia from './actions/useResetMedia';
 import useUploadVideoFrame from './actions/useUploadVideoFrame';
+import useInsertMediaElement from './actions/useInsertMediaElement';
+import useGetMediaElement from './actions/useGetMediaElement';
 import Context from './context';
 
 function MediaProvider({ children }) {
@@ -40,6 +43,15 @@ function MediaProvider({ children }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isMediaLoaded, setIsMediaLoaded] = useState(false);
   const [isMediaLoading, setIsMediaLoading] = useState(false);
+
+  const DEFAULT_WIDTH = 150;
+
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
 
   const completeMedia = useCompleteMedia({
     setIsMediaLoading,
@@ -62,6 +74,17 @@ function MediaProvider({ children }) {
   });
 
   const { uploadVideoFrame } = useUploadVideoFrame();
+  const insertMediaElement = useInsertMediaElement({
+    uploadVideoFrame,
+    allowedImageMimeTypes,
+    allowedVideoMimeTypes,
+  });
+
+  const getMediaElement = useGetMediaElement({
+    insertMediaElement,
+    allowedImageMimeTypes,
+    allowedVideoMimeTypes,
+  });
 
   const state = {
     state: {
@@ -70,6 +93,7 @@ function MediaProvider({ children }) {
       isMediaLoaded,
       mediaType,
       searchTerm,
+      DEFAULT_WIDTH,
     },
     actions: {
       setMediaType,
@@ -77,7 +101,8 @@ function MediaProvider({ children }) {
       loadMedia,
       reloadMedia,
       resetMedia,
-      uploadVideoFrame,
+      insertMediaElement,
+      getMediaElement,
     },
   };
 
