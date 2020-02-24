@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
+import { useCallback, useRef, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,7 +40,11 @@ const DropZoneWrapper = styled.div`
 function DropZoneProvider({ children }) {
   const [dropZones, setDropZones] = useState([]);
   const [hoveredDropZone, setHoveredDropZone] = useState(null);
+
+  const [isDragging, setIsDragging] = useState(false);
   const { uploadFile } = useUploader();
+  const ref = useRef(null);
+
   const {
     state: { DEFAULT_WIDTH },
     actions: { insertMediaElement },
@@ -154,6 +158,28 @@ function DropZoneProvider({ children }) {
           }
         );
       });
+      setIsDragging(false);
+    }
+  };
+
+  const onDragEnter = (evt) => {
+    disableDefaults(evt);
+    evt.dataTransfer.effectAllowed = 'copy';
+    setIsDragging(true);
+  };
+
+  const onDragLeave = (evt) => {
+    disableDefaults(evt);
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      if (
+        evt.clientY < rect.top ||
+        evt.clientY >= rect.bottom ||
+        evt.clientX < rect.left ||
+        evt.clientX >= rect.right
+      ) {
+        setIsDragging(false);
+      }
     }
   };
 
@@ -161,6 +187,7 @@ function DropZoneProvider({ children }) {
     state: {
       hoveredDropZone,
       dropZones,
+      isDragging,
     },
     actions: {
       registerDropZone,
@@ -171,9 +198,10 @@ function DropZoneProvider({ children }) {
   return (
     <DropZoneWrapper
       onDragOver={onDragOver}
-      onDragLeave={disableDefaults}
-      onDragEnter={disableDefaults}
+      onDragLeave={onDragLeave}
+      onDragEnter={onDragEnter}
       onDrop={onDrop}
+      ref={ref}
     >
       <Context.Provider value={state}>{children}</Context.Provider>
     </DropZoneWrapper>
