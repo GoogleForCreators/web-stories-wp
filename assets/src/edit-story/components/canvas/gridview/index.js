@@ -91,12 +91,11 @@ const Rectangle = styled.button`
   }
 `;
 
-// I think we can move this component to shared one in the future if we need this kind of spacer span.
 const Space = styled.div`
   flex: 0 0 20px;
 `;
 
-function Reflect({ value, onChange }) {
+function ThumbnailSizeControl({ value, onChange }) {
   const max = 3;
   const min = 1;
   const step = 1;
@@ -151,7 +150,7 @@ function Reflect({ value, onChange }) {
   );
 }
 
-Reflect.propTypes = {
+ThumbnailSizeControl.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
@@ -164,7 +163,7 @@ function GridView() {
 
   return (
     <>
-      <Reflect value={zoomLevel} onChange={setZoomLevel} />
+      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper scale={zoomLevel}>
         {pages.map((page, index) => {
           const isCurrentPage = index === currentPageIndex;
