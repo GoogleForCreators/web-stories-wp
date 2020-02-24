@@ -84,56 +84,61 @@ export function getPanels(elements) {
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
 
-  let selectionPanels = [];
   // Only display background panel in case of background element.
   if (isBackground) {
-    selectionPanels = [
+    const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND, Panel: BackgroundPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
-      selectionPanels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
+      panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
     }
-  } else {
-    // Find which panels all the selected elements have in common
-    selectionPanels = elements
-      .map(
-        ({ type }) => elementTypes.find((elType) => elType.type === type).panels
-      )
-      .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
-      .map((type) => {
-        switch (type) {
-          case POSITION:
-            return { type, Panel: PositionPanel };
-          case SCALE:
-            return { type, Panel: ScalePanel };
-          case ROTATION_ANGLE:
-            return { type, Panel: RotationPanel };
-          case SIZE:
-            return { type, Panel: SizePanel };
-          case FILL:
-            return { type, Panel: FillPanel };
-          case BACKGROUND_COLOR:
-            return { type, Panel: BackgroundColorPanel };
-          case COLOR:
-            return { type, Panel: ColorPanel };
-          case FONT:
-            return { type, Panel: FontPanel };
-          case STYLE:
-            return { type, Panel: StylePanel };
-          case TEXT:
-            return { type, Panel: TextPanel };
-          case VIDEO_POSTER:
-            return { type, Panel: VideoPosterPanel };
-          case MASK:
-            return { type, Panel: MaskPanel };
-          default:
-            throw new Error(`Unknown panel: ${type}`);
-        }
-      })
-      .filter((panel) => panel);
+    return panels;
   }
 
-  return selectionPanels;
+  // Find which panels all the selected elements have in common
+  return elements
+    .map(
+      ({ type }) => elementTypes.find((elType) => elType.type === type).panels
+    )
+    .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
+    .map((type) => {
+      switch (type) {
+        case BACKGROUND:
+          // @todo Would be good to have a general logic for panels supporting multi-selection instead.
+          // Only display when one element selected.
+          if (1 === elements.length) {
+            return { type, Panel: BackgroundPanel };
+          }
+          return null;
+        case POSITION:
+          return { type, Panel: PositionPanel };
+        case SCALE:
+          return { type, Panel: ScalePanel };
+        case ROTATION_ANGLE:
+          return { type, Panel: RotationPanel };
+        case SIZE:
+          return { type, Panel: SizePanel };
+        case FILL:
+          return { type, Panel: FillPanel };
+        case BACKGROUND_COLOR:
+          return { type, Panel: BackgroundColorPanel };
+        case COLOR:
+          return { type, Panel: ColorPanel };
+        case FONT:
+          return { type, Panel: FontPanel };
+        case STYLE:
+          return { type, Panel: StylePanel };
+        case TEXT:
+          return { type, Panel: TextPanel };
+        case VIDEO_POSTER:
+          return { type, Panel: VideoPosterPanel };
+        case MASK:
+          return { type, Panel: MaskPanel };
+        default:
+          throw new Error(`Unknown panel: ${type}`);
+      }
+    })
+    .filter((panel) => panel);
 }
