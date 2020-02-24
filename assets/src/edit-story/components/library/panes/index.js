@@ -25,19 +25,13 @@ import { TextTab, TextPane } from './text';
 import { Tabs } from './shared';
 
 function getPanes({ ANIMATION, ELEMENTS, MEDIA, SHAPES, TEXT }) {
-  const panes = [
+  return [
     { Tab: MediaTab, Pane: MediaPane, id: MEDIA },
     { Tab: TextTab, Pane: TextPane, id: TEXT },
     { Tab: ElementsTab, Pane: ElementsPane, id: ELEMENTS },
     { Tab: ShapesTab, Pane: ShapesPane, id: SHAPES },
     { Tab: AnimationTab, Pane: AnimationPane, id: ANIMATION },
   ];
-  const doublyLinkedPanes = panes.map((pane, index) => ({
-    ...pane,
-    previous: index === 0 ? null : panes[index - 1].id,
-    next: index === panes.length - 1 ? null : panes[index + 1].id,
-  }));
-  return doublyLinkedPanes;
 }
 
 export { Tabs, getPanes };

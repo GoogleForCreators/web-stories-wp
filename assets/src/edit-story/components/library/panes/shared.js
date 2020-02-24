@@ -21,6 +21,7 @@ import styled from 'styled-components';
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
+  'aria-orientation': 'horizontal',
 })`
   background: ${({ theme }) => theme.colors.bg.v3};
   display: flex;
@@ -82,8 +83,6 @@ const Pane = styled.section.attrs(({ isActive }) => ({
   hidden: !isActive,
 }))`
   padding: 1em;
-
-  ${({ hidden }) => hidden && `display: none;`}
 `;
 
 export { Tabs, Tab, Icon, Pane };

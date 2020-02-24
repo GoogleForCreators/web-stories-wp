@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { HEADER_HEIGHT } from '../../constants';
@@ -35,7 +40,9 @@ const Layout = styled.div`
     / 1fr;
 `;
 
-const TabsArea = styled.nav.attrs({ 'aria-label': 'Library tabs' })`
+const TabsArea = styled.nav.attrs({
+  'aria-label': __('Library tabs', 'web-stories'),
+})`
   grid-area: tabs;
 `;
 

@@ -27,7 +27,7 @@ import useLibrary from './useLibrary';
 import { Tabs, getPanes } from './panes';
 
 function getTabId(tab) {
-  return `#library-tab-${tab}`;
+  return `library-tab-${tab}`;
 }
 
 function LibraryTabs() {
@@ -39,21 +39,22 @@ function LibraryTabs() {
   const panes = getPanes(tabs);
   const ref = useRef();
   const handleNavigation = useCallback(
-    (isPrevious) => () => {
-      const currentPane = panes.find(({ id }) => id === tab);
-      const nextTab = isPrevious ? currentPane.previous : currentPane.next;
-      if (!nextTab) {
+    (direction) => () => {
+      const currentIndex = panes.findIndex(({ id }) => id === tab);
+      const nextPane = panes[currentIndex + direction];
+      if (!nextPane) {
         return;
       }
 
-      setTab(nextTab);
-      ref.current.querySelector(getTabId(nextTab)).focus();
+      setTab(nextPane.id);
+      const tabId = getTabId(nextPane.id);
+      ref.current.querySelector(`#${tabId}`).focus();
     },
     [tab, setTab, panes]
   );
   // todo: support RTL
-  useKeyDownEffect(ref, 'left', handleNavigation(true), [tab, setTab, panes]);
-  useKeyDownEffect(ref, 'right', handleNavigation(false), [tab, setTab, panes]);
+  useKeyDownEffect(ref, 'left', handleNavigation(-1), [tab, setTab, panes]);
+  useKeyDownEffect(ref, 'right', handleNavigation(1), [tab, setTab, panes]);
   return (
     <Tabs ref={ref}>
       {panes.map(({ id, Tab }) => (
