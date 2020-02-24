@@ -38,7 +38,8 @@ const FramesPageArea = withOverlay(styled(PageArea).attrs({
   className: 'container',
   pointerEvents: 'initial',
 })`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.colors.fg.v1};
 `);
 
 function FramesLayer() {
@@ -58,7 +59,7 @@ function FramesLayer() {
       // otherwise.
       tabIndex="-1"
     >
-      <FramesPageArea>
+      <FramesPageArea backgroundColor={currentPage?.backgroundColor}>
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;

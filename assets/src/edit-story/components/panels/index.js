@@ -21,6 +21,7 @@ import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
+import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import FontPanel from './font';
@@ -32,6 +33,7 @@ import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
+import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -49,6 +51,8 @@ const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
+const PAGE = 'page';
+const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
   ACTIONS,
@@ -75,7 +79,10 @@ function intersect(a, b) {
 
 export function getPanels(elements) {
   if (elements.length === 0) {
-    return [];
+    return [
+      { type: PAGE, Panel: PageBackgroundPanel },
+      { type: NO_SELECTION, Panel: NoSelectionPanel },
+    ];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
@@ -86,7 +93,10 @@ export function getPanels(elements) {
   let selectionPanels = [];
   // Only display background panel in case of background element.
   if (isBackground) {
-    selectionPanels = [{ type: BACKGROUND, Panel: BackgroundPanel }];
+    selectionPanels = [
+      { type: PAGE, Panel: PageBackgroundPanel },
+      { type: BACKGROUND, Panel: BackgroundPanel },
+    ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
       selectionPanels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
