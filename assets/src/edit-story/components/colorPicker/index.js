@@ -51,6 +51,7 @@ const Container = styled.div`
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
+  user-select: none;
 `;
 
 const Header = styled.div`
