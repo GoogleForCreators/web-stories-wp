@@ -19,30 +19,34 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useState, useLayoutEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { useRef, useState, useLayoutEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import useDropZone from './useDropZone';
+import { getDragType, disableDefaults } from './utils';
 
 const DropZoneComponent = styled.div`
   position: relative;
-  margin: 0;
   ${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) =>
     borderPosition &&
     `
-    :after {
-      height: 100%;
-      top: 0;
-      display: block;
-      position: absolute;
-      width: ${highlightWidth}px;
-      background: ${theme.colors.action};
-      content: '';
-      ${borderPosition}: -${highlightWidth / 2 + dragIndicatorOffset}px;
-    }
-  `}
+		:after {
+			height: 100%;
+			top: 0;
+			display: block;
+			position: absolute;
+			width: ${highlightWidth}px;
+			background: ${theme.colors.action};
+			content: '';
+			${borderPosition}: -${highlightWidth / 2 + dragIndicatorOffset}px;
+		}
+	`}
 `;
 
 function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
@@ -67,28 +71,6 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
     };
   }, [dropZone, registerDropZone, unregisterDropZone]);
 
-  const getDragType = ({ dataTransfer }) => {
-    if (dataTransfer) {
-      if (Array.isArray(dataTransfer.types)) {
-        if (dataTransfer.types.includes('Files')) {
-          return 'file';
-        }
-        if (dataTransfer.types.includes('text/html')) {
-          return 'html';
-        }
-      } else {
-        // For Edge, types is DomStringList and not array.
-        if (dataTransfer.types.contains('Files')) {
-          return 'file';
-        }
-        if (dataTransfer.types.contains('text/html')) {
-          return 'html';
-        }
-      }
-    }
-    return 'default';
-  };
-
   const onDropHandler = (evt) => {
     resetHoverState();
     if (dropZoneElement.current) {
@@ -105,7 +87,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
       }
       // @todo Support for files when it becomes necessary.
     }
-    evt.preventDefault();
+    disableDefaults(evt);
   };
 
   const isDropZoneActive =
@@ -113,7 +95,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
     hoveredDropZone &&
     hoveredDropZone.node === dropZoneElement.current;
   // @todo Currently static, can be adjusted for other use cases.
-  const highlightWidth = 4;
+  const highlightWidth = 5;
   return (
     <DropZoneComponent
       highlightWidth={highlightWidth}
