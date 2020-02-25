@@ -150,7 +150,9 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         <SaturationWrapper>
           <Saturation
             radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer size={CONTROLS_WIDTH} offset={-6} currentColor={ rgb } />}
+            pointer={() => (
+              <Pointer size={CONTROLS_WIDTH} offset={-6} currentColor={rgb} />
+            )}
             {...controlsProps}
           />
         </SaturationWrapper>
@@ -160,7 +162,9 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             width={`${CONTROLS_WIDTH}px`}
             height={`${BODY_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer size={CONTROLS_WIDTH} offset={0} currentColor={ rgb } />}
+            pointer={() => (
+              <Pointer size={CONTROLS_WIDTH} offset={0} currentColor={rgb} />
+            )}
             {...controlsProps}
           />
         </HueWrapper>
@@ -170,7 +174,9 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             width={`${CONTROLS_WIDTH}px`}
             height={`${BODY_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer size={CONTROLS_WIDTH} offset={-3} currentColor={ rgb } />}
+            pointer={() => (
+              <Pointer size={CONTROLS_WIDTH} offset={-3} currentColor={rgb} />
+            )}
             {...controlsProps}
           />
         </AlphaWrapper>
