@@ -31,7 +31,7 @@ export default {
 };
 
 export const _default = () => {
-  const initialColor = text('Initial Color', '#4891fcff');
+  const initialColor = text('Initial Color', '#44aaffff');
 
   const [color, setColor] = useState(initialColor);
 
