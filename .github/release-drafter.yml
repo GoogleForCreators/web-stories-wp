@@ -3,13 +3,15 @@ tag-template: '$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Features'
     labels:
-      - 'enhancement'
+      - 'Type: Enhancement'
   - title: '🐛 Bug Fixes'
     labels:
-      - 'bug'
+      - 'Type: Bug'
   - title: '🧰 Maintenance'
     labels:
-      - 'dependencies'
+      - 'Dependencies'
+      - 'Type: Documentation'
+      - 'Type: Infrastructure'
 change-template: '- $TITLE (#$NUMBER)'
 template: |
   ## Changes
