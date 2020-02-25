@@ -33,5 +33,5 @@ module.exports = {
     '<rootDir>/build',
     '<rootDir>/tests/e2e/specs/edit-story',
   ],
-  reporters: [['jest-silent-reporter', { useDots: true }]],
+  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
