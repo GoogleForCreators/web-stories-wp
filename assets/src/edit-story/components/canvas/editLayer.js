@@ -20,9 +20,15 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { useRef } from '@wordpress/element';
+
+/**
  * Internal dependencies
  */
 import { getDefinitionForType } from '../../elements';
+import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
@@ -43,12 +49,16 @@ const EditPageArea = withOverlay(styled(PageArea).attrs({
 `);
 
 function EditLayer({}) {
+  const ref = useRef(null);
   const {
     state: { currentPage },
   } = useStory();
   const {
     state: { editingElement: editingElementId },
+    actions: { clearEditing },
   } = useCanvas();
+
+  useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing());
 
   const editingElement =
     editingElementId &&
@@ -62,7 +72,7 @@ function EditLayer({}) {
   const { editModeGrayout } = getDefinitionForType(editingElement.type);
 
   return (
-    <LayerWithGrayout grayout={editModeGrayout} pointerEvents="none">
+    <LayerWithGrayout ref={ref} grayout={editModeGrayout} pointerEvents="none">
       <EditPageArea>
         <EditElement element={editingElement} />
       </EditPageArea>

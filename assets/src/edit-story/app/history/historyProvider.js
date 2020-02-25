@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useGlobalKeyDownEffect } from '../../components/keyboard';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
@@ -49,6 +50,9 @@ function HistoryProvider({ children, size }) {
       redo,
     },
   };
+
+  useGlobalKeyDownEffect('undo', () => undo(), [undo]);
+  useGlobalKeyDownEffect('redo', () => redo(), [redo]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

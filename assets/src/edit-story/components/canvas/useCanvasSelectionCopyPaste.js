@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -133,7 +133,7 @@ function useCanvasSelectionCopyPaste(container) {
               const element = {
                 ...rest,
                 basedOn,
-                id: uuid(),
+                id: uuidv4(),
                 x,
                 y,
               };

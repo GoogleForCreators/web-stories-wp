@@ -31,6 +31,12 @@ export const hasEditMode = false;
 
 export const isMedia = false;
 
+export const resizeRules = {
+  vertical: true,
+  horizontal: true,
+  diagonal: true,
+};
+
 export const panels = [
   PanelTypes.SIZE,
   PanelTypes.POSITION,
