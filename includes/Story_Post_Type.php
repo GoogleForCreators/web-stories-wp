@@ -342,7 +342,10 @@ class Story_Post_Type {
 		$mime_types         = [];
 
 		foreach ( $allowed_mime_types as $type => $mimes ) {
-			array_push( $mime_types, ...$mimes );
+			// Otherwise this throws a warning on PHP < 7.3.
+			if ( ! empty( $mimes ) ) {
+				array_push( $mime_types, ...$mimes );
+			}
 		}
 
 		$allowed_file_types = [];
@@ -524,11 +527,15 @@ class Story_Post_Type {
 	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
 	 *
-	 * @param array $allowed_tags Allowed tags.
+	 * @param array|string $allowed_tags Allowed tags.
 	 *
-	 * @return array Allowed tags.
+	 * @return array|string Allowed tags.
 	 */
 	public static function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
 		$story_components = [
 			'amp-story'                 => [
 				'background-audio'     => true,
@@ -630,7 +637,7 @@ class Story_Post_Type {
 			],
 		];
 
-		array_push( $allowed_tags, ...$story_components );
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;

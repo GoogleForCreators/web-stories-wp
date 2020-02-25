@@ -121,6 +121,45 @@ npm run test:js:watch
 
 See `npm run test:js:help` to get a list of additional options that can be passed to the test runner.
 
+#### End-to-End Tests
+
+This project leverages the local Docker-based environment to facilitate end-to-end (e2e) testing using Puppeteer.
+
+To run the full test suite, you can use the following command:
+
+```bash
+npm run test:e2e
+```
+
+You can also watch for any file changes and only run tests that failed or have been modified:
+
+```bash
+npm run test:e2e:watch
+```
+
+Not using the built-in local environment? You can also pass any other URL to run the tests against. Example:
+
+```bash
+npm run test:e2e -- --wordpress-base-url=https://my-amp-dev-site.local
+```
+
+For debugging purposes, you can also run the E2E tests in non-headless mode:
+
+```bash
+npm run test:e2e:interactive
+```
+
+Note that this will also slow down all interactions during tests by 80ms. You can control these values individually too:
+
+```bash
+PUPPETEER_HEADLESS=false npm run test:e2e # Interactive mode, normal speed.
+PUPPETEER_SLOWMO=200 npm run test:e2e # Headless mode, slowed down by 200ms.
+```
+
+Sometimes one might want to test additional scenarios that aren't possible in a WordPress installation out of the box. That's why the test setup allows for for adding some utility plugins that can be activated during E2E tests.
+
+These plugins can be added to `tests/e2e/plugins` and then activated via the WordPress admin.
+
 #### Storybook
 
 The latest version of the project's [storybook](https://storybook.js.org/) can be found at [https://google.github.io/web-stories-wp/](https://google.github.io/web-stories-wp/).

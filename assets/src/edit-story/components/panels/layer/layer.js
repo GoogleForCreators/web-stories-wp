@@ -85,6 +85,7 @@ function Layer({ layer }) {
 
   return (
     <LayerButton
+      id={`layer-${layer.id}`}
       isSelected={isSelected}
       onClick={handleClick}
       onPointerDown={handleStartReordering}
