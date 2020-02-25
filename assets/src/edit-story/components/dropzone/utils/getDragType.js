@@ -17,8 +17,8 @@
 /**
  * Get Drag Type from event.
  *
- * @param {Array} dataTransfer Array / List of type drag event.
- * @return {string} Simple string of type.
+ * @param {Object} event Drag and drop event.
+ * @param {DataTransfer} event.dataTransfer The event's data transfer object.
  */
 export default function getDragType({ dataTransfer }) {
   if (dataTransfer) {
