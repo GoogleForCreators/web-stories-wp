@@ -80,4 +80,26 @@ describe('toggleElementInSelection', () => {
     const failedAttempt = toggleElementInSelection({ elementId: 'e1' });
     expect(failedAttempt).toStrictEqual(initialState);
   });
+
+  it('should remove background element from selection if adding a new one', () => {
+    const { restore, toggleElementInSelection } = setupReducer();
+
+    // Set an initial state with bg element selected
+    restore({
+      pages: [
+        {
+          id: '111',
+          backgroundElementId: 'e1',
+          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+        },
+      ],
+      current: '111',
+      selection: ['e1'],
+    });
+
+    // Add a new element to selection - should expunge bg element from selection
+    const { selection } = toggleElementInSelection({ elementId: 'e2' });
+    expect(selection).not.toContain('e1');
+    expect(selection).toContain('e2');
+  });
 });
