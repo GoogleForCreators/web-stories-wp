@@ -34,8 +34,20 @@ const Pointer = styled.div`
     display: block;
     width: ${({ size }) => `${size}px`};
     height: ${({ size }) => `${size}px`};
-    background: ${({ currentColor, currentColor: { r, g, b, a } }) =>
-      currentColor ? `rgba(${r},${g},${b},${a})` : 'transparent'};
+    background: ${({ withAlpha, currentColor }) => {
+      if ( !currentColor) {
+        return 'transparent';
+      }
+      const { r, g, b, a } = currentColor;
+      if (withAlpha) {
+        const ra = (1 - a) * 255 + a * r;
+        const ga = (1 - a) * 255 + a * g;
+        const ba = (1 - a) * 255 + a * b;
+        return `rgb(${ra},${ga},${ba})`;
+      }
+
+      return `rgba(${r},${g},${b})`;
+    }};
     border: 2px solid #fff;
     border-radius: 100%;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));

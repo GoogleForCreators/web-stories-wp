@@ -176,7 +176,12 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             height={`${BODY_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => (
-              <Pointer size={CONTROLS_WIDTH} offset={-3} currentColor={rgb} />
+              <Pointer
+                size={CONTROLS_WIDTH}
+                offset={-3}
+                currentColor={rgb}
+                withAlpha
+              />
             )}
             {...controlsProps}
           />
