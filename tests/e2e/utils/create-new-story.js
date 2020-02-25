@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+/**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
+
+/**
+ * Creates a new story.
+ */
+export async function createNewStory() {
+  await visitAdminPage('post-new.php', 'post_type=web-story');
+}

@@ -15,25 +15,23 @@
  */
 
 module.exports = {
-  rootDir: '../../',
-  ...require('@wordpress/scripts/config/jest-unit.config'),
+  ...require('@wordpress/scripts/config/jest-e2e.config'),
   transform: {
     '^.+\\.[jt]sx?$':
-      '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
+      '<rootDir>/../../node_modules/@wordpress/scripts/config/babel-transform',
   },
-  setupFiles: ['<rootDir>/tests/js/setup-globals'],
+  transformIgnorePatterns: ['node_modules'],
+  setupFilesAfterEnv: [
+    '<rootDir>/config/bootstrap.js',
+    '@wordpress/jest-puppeteer-axe',
+    '@wordpress/jest-console',
+    'expect-puppeteer',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',
     '<rootDir>/build',
-    '_utils',
-  ],
-  coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/build/'],
-  coverageReporters: ['lcov'],
-  coverageDirectory: '<rootDir>/build/logs',
-  collectCoverageFrom: [
-    '<rootDir>/assets/src/edit-story/**/*.js',
-    '!**/test/**',
+    '<rootDir>/tests/e2e/specs/edit-story',
   ],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
