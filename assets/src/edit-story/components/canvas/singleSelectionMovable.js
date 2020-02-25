@@ -47,7 +47,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   const {
     actions: { updateSelectedElements },
-    state: { currentPage },
   } = useStory();
   const {
     state: {
@@ -66,6 +65,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     objectWithout(nodesById, [selectedElement.id])
   );
 
+  const actionsEnabled =
+    !selectedElement.isFill && !selectedElement.isBackground;
+
   const latestEvent = useRef();
 
   useEffect(() => {
@@ -77,13 +79,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       // If we have persistent event then let's use that, ensuring the targets match.
       if (
         latestEvent.current &&
-        targetEl.contains(latestEvent.current.target)
+        targetEl.contains(latestEvent.current.target) &&
+        actionsEnabled
       ) {
         moveable.current.moveable.dragStart(latestEvent.current);
       }
       moveable.current.updateRect();
     }
-  }, [targetEl, moveable]);
+  }, [targetEl, moveable, actionsEnabled]);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -137,9 +140,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
-  const actionsEnabled =
-    !selectedElement.isFill &&
-    selectedElement.id !== currentPage.backgroundElementId;
   return (
     <Movable
       className="default-movable"
@@ -248,9 +248,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       snapHorizontal={true}
       snapVertical={true}
       snapCenter={true}
-      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
-      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
-      elementGuidelines={otherNodes}
+      horizontalGuidelines={
+        actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
+      }
+      verticalGuidelines={
+        actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
+      }
+      elementGuidelines={actionsEnabled ? otherNodes : []}
     />
   );
 }
