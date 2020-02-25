@@ -24,4 +24,3 @@ export { default as SelectMenu } from './select';
 export { default as Spacer } from './spacer';
 export { default as Color } from './color';
 export { default as Numeric } from './numeric';
-export { default as Switch } from './switch';
