@@ -152,7 +152,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
           <Saturation
             radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => (
-              <Pointer size={CONTROLS_WIDTH} offset={-6} currentColor={rgb} />
+              <Pointer size={CONTROLS_WIDTH} offset={-6} currentRGB={rgb} />
             )}
             {...controlsProps}
           />
@@ -164,7 +164,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             height={`${BODY_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => (
-              <Pointer size={CONTROLS_WIDTH} offset={0} currentColor={rgb} />
+              <Pointer size={CONTROLS_WIDTH} offset={0} currentRGB={rgb} />
             )}
             {...controlsProps}
           />
@@ -176,12 +176,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             height={`${BODY_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
             pointer={() => (
-              <Pointer
-                size={CONTROLS_WIDTH}
-                offset={-3}
-                currentColor={rgb}
-                withAlpha
-              />
+              <Pointer size={CONTROLS_WIDTH} offset={-3} currentRGBA={rgb} />
             )}
             {...controlsProps}
           />

@@ -19,6 +19,15 @@
  */
 import styled from 'styled-components';
 
+const rgb = ({ r, g, b }) => {
+  return `rgb(${r},${g},${b})`;
+};
+
+const rgba = ({ r, g, b, a }) => {
+  const al = (color) => (1 - a) * 255 + a * color;
+  return `rgb(${al(r)}, ${al(g)}, ${al(b)})`;
+};
+
 const Pointer = styled.div`
   width: ${({ size }) => `${2 * size}px`};
   height: ${({ size }) => `${2 * size}px`};
@@ -34,20 +43,11 @@ const Pointer = styled.div`
     display: block;
     width: ${({ size }) => `${size}px`};
     height: ${({ size }) => `${size}px`};
-    background: ${({ withAlpha, currentColor }) => {
-      if (!currentColor) {
-        return 'transparent';
-      }
-      const { r, g, b, a } = currentColor;
-      if (withAlpha) {
-        const ra = (1 - a) * 255 + a * r;
-        const ga = (1 - a) * 255 + a * g;
-        const ba = (1 - a) * 255 + a * b;
-        return `rgb(${ra},${ga},${ba})`;
-      }
-
-      return `rgb(${r},${g},${b})`;
-    }};
+    background: transparent;
+    ${({ currentRGB }) => currentRGB && `background: ${rgb(currentRGB)};`}
+    ${({ currentRGBA }) =>
+      currentRGBA &&
+      `background: ${rgba(currentRGBA)};`}
     border: 2px solid #fff;
     border-radius: 100%;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
@@ -57,5 +57,10 @@ const Pointer = styled.div`
     );
   }
 `;
+
+Pointer.defaultProps = {
+  currentRGB: {},
+  currentRGBA: {},
+};
 
 export default Pointer;
