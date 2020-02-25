@@ -14,6 +14,14 @@ categories:
       - 'Type: Infrastructure'
 change-template: '- $TITLE (#$NUMBER)'
 template: |
+  [View changes since last release](https://github.com/google/web-stories-wp/compare/$PREVIOUS_TAG...HEAD ).
+
   ## Changes
 
   $CHANGES
+
+  ## Contributors
+
+  Code contributors to this release:
+
+  $CONTRIBUTORS
