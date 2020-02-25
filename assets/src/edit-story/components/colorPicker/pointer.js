@@ -20,20 +20,30 @@
 import styled from 'styled-components';
 
 const Pointer = styled.div`
-  width: ${({ size }) => `${size}px`};
-  height: ${({ size }) => `${size}px`};
-  background: radial-gradient(
-    circle at center ${({ size }) => `${size / 2}px`},
-    transparent,
-    transparent 4px,
-    #fff 4px
-  );
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
-  border-radius: 100%;
+  width: ${({ size }) => `${2 * size}px`};
+  height: ${({ size }) => `${2 * size}px`};
+
+  transform: translateX(${({ offset }) => `${offset}px`});
   transform: translate(
-    ${({ offset }) => `${offset}px`},
-    ${({ size }) => `-${size / 2}px`}
+    ${({ offset, size }) => `${offset - size / 2}px`},
+    ${({ size }) => `-${size}px`}
   );
+
+  &:before {
+    content: '';
+    display: block;
+    width: ${({ size }) => `${size}px`};
+    height: ${({ size }) => `${size}px`};
+    background: ${({ currentColor, currentColor: { r, g, b, a } }) =>
+      currentColor ? `rgba(${r},${g},${b},${a})` : 'transparent'};
+    border: 2px solid #fff;
+    border-radius: 100%;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
+    transform: translate(
+      ${({ size }) => `${size / 2}px`},
+      ${({ size }) => `${size / 2}px`}
+    );
+  }
 `;
 
 export default Pointer;
