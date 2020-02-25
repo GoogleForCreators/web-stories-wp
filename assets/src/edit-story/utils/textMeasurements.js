@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { PAGE_HEIGHT } from '../constants';
+
 let measurerNode = null;
 
 export function calculateTextHeight(element, width) {
@@ -22,17 +27,13 @@ export function calculateTextHeight(element, width) {
   return measurer.offsetHeight;
 }
 
-export function calculateFitTextFontSize(
-  element,
-  width,
-  height,
-  minFontSize,
-  maxFontSize
-) {
+export function calculateFitTextFontSize(element, width, height) {
   const measurer = getOrCreateMeasurer(element);
   setStyles(measurer, { width: `${width}px`, height: null, fontSize: null });
 
   // Binomial search for the best font size.
+  let minFontSize = 1;
+  let maxFontSize = PAGE_HEIGHT;
   while (maxFontSize - minFontSize > 1) {
     const mid = (minFontSize + maxFontSize) / 2;
     setStyles(measurer, { fontSize: `${mid}px` });
@@ -64,6 +65,7 @@ function getOrCreateMeasurer({
     setStyles(measurerNode, {
       visibility: 'hidden',
       position: 'fixed',
+      contain: 'layout paint',
       top: '-9999px',
       left: '-9999px',
       zIndex: -1,
