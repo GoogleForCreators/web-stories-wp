@@ -23,9 +23,18 @@
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
  * @param {number} mediaRatio Media file ratio.
+ * @param {number} opacity    Opacity in %.
  * @return {Object} Media properties.
  */
-function getMediaProps(width, height, scale, focalX, focalY, mediaRatio) {
+function getMediaProps(
+  width,
+  height,
+  scale,
+  focalX,
+  focalY,
+  mediaRatio,
+  opacity
+) {
   const ratio = width / height;
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;
@@ -42,11 +51,13 @@ function getMediaProps(width, height, scale, focalX, focalY, mediaRatio) {
     0,
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
+
   return {
     width: mediaWidth,
     height: mediaHeight,
     offsetX,
     offsetY,
+    opacity: opacity ? opacity / 100 : null,
     scale,
     focalX,
     focalY,

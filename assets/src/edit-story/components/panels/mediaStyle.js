@@ -56,6 +56,8 @@ function MediaStylePanel({ selectedElements, onSetProperties }) {
         isMultiple={'' === opacity}
         onChange={(value) => setState({ ...state, opacity: value })}
         postfix="%"
+        min="1"
+        max="100"
       />
     </SimplePanel>
   );

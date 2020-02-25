@@ -35,6 +35,7 @@ const Video = styled.video`
   position: absolute;
   max-width: initial;
   max-height: initial;
+  opacity: ${({ opacity }) => opacity};
   ${videoWithScale}
 `;
 
@@ -44,6 +45,7 @@ function VideoDisplay({
     mimeType,
     src,
     isBackground,
+    opacity,
     scale,
     focalX,
     focalY,
@@ -66,7 +68,8 @@ function VideoDisplay({
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    opacity
   );
   return (
     <Element>

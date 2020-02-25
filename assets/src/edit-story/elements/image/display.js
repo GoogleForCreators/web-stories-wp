@@ -39,11 +39,12 @@ const Element = styled.div`
 
 const Img = styled.img`
   position: absolute;
+  opacity: ${({ opacity }) => opacity};
   ${imageWithScale}
 `;
 
 function ImageDisplay({
-  element: { id, src, origRatio, scale, focalX, focalY },
+  element: { id, src, opacity, origRatio, scale, focalX, focalY },
   box: { width, height },
 }) {
   const imageRef = useRef(null);
@@ -54,7 +55,8 @@ function ImageDisplay({
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    opacity
   );
 
   useTransformHandler(id, (transform) => {
@@ -70,13 +72,13 @@ function ImageDisplay({
           scale,
           focalX,
           focalY,
-          origRatio
+          origRatio,
+          opacity
         );
         target.style.cssText = getImageWithScaleCss(newImgProps);
       }
     }
   });
-
   return (
     <Element>
       <Img ref={imageRef} draggable={false} src={src} {...imgProps} />
