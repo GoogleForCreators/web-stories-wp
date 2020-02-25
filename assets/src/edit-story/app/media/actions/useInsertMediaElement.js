@@ -30,7 +30,7 @@ function useInsertMediaElement({
    *
    * @param {Object} attachment Attachment object
    * @param {number} width      Width that element is inserted into editor.
-   * @param {boolean} isBackground      Width that element is inserted into editor.
+   * @param {boolean} isBackground Whether the element should be set as the background element.
    * @return {null|*}          Return onInsert or null.
    */
   const insertMediaElement = (attachment, width, isBackground = true) => {
