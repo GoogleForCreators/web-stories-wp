@@ -36,19 +36,43 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const padding = getCommonValue(selectedElements, 'padding') || '';
+  const padding = getCommonValue(selectedElements, 'padding') ?? '';
   const [state, setState] = useState({
     textAlign,
     letterSpacing,
     lineHeight,
     padding,
   });
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
   useEffect(() => {
     setState({ textAlign, letterSpacing, lineHeight, padding });
   }, [textAlign, letterSpacing, lineHeight, padding]);
   const handleSubmit = (evt) => {
     onSetProperties(state);
+    onSetProperties(({ padding: oldPadding }) => {
+      const { padding: newPadding } = state;
+      const ratio = getPaddingRatio(oldPadding.horizontal, oldPadding.vertical);
+      if (
+        lockPaddingRatio &&
+        (newPadding.horizontal === '' || newPadding.vertical === '') &&
+        ratio
+      ) {
+        if (newPadding.horizontal === '') {
+          newPadding.horizontal = Math.round(newPadding.vertical * ratio);
+        } else {
+          newPadding.horizontal = Math.round(newPadding.horizontal / ratio);
+        }
+      }
+      return { padding: newPadding };
+    });
     evt.preventDefault();
+  };
+
+  const getPaddingRatio = (horizontal, vertical) => {
+    if (!vertical || !horizontal) {
+      return false;
+    }
+    return horizontal / vertical;
   };
 
   const alignmentOptions = [
@@ -95,13 +119,50 @@ function StylePanel({ selectedElements, onSetProperties }) {
         step="0.1"
       />
       <InputGroup
-        label={__('Padding', 'web-stories')}
-        value={state.padding}
+        label={__('Padding Horizontal', 'web-stories')}
+        value={state.padding.horizontal}
         isMultiple={'' === padding}
-        onChange={(value) =>
-          setState({ ...state, padding: isNaN(value) ? '' : parseInt(value) })
-        }
+        onChange={(value) => {
+          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
+          const newPadding = {
+            horizontal: isNaN(value) || '' === value ? '' : parseInt(value),
+          };
+          newPadding.vertical =
+            typeof padding.horizontal === 'number' && lockPaddingRatio && ratio
+              ? Math.round(parseInt(newPadding.horizontal) / ratio)
+              : padding.vertical;
+          setState({ ...state, padding: newPadding });
+        }}
         postfix={_x('%', 'Percentage', 'web-stories')}
+      />
+      <InputGroup
+        label={__('Padding Vertical', 'web-stories')}
+        value={state.padding.vertical}
+        isMultiple={'' === padding}
+        onChange={(value) => {
+          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
+          const newPadding = {
+            vertical: isNaN(value) || '' === value ? '' : parseInt(value),
+          };
+          newPadding.horizontal =
+            padding.horizontal !== '' &&
+            typeof padding.vertical === 'number' &&
+            lockPaddingRatio &&
+            ratio
+              ? Math.round(parseInt(newPadding.vertical) / ratio)
+              : padding.horizontal;
+          setState({ ...state, padding: newPadding });
+        }}
+        postfix={_x('%', 'Percentage', 'web-stories')}
+      />
+      <InputGroup
+        type="checkbox"
+        label={__('Keep padding ratio', 'web-stories')}
+        value={lockPaddingRatio}
+        isMultiple={false}
+        onChange={(value) => {
+          setLockPaddingRatio(value);
+        }}
       />
     </SimplePanel>
   );

@@ -101,7 +101,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   fontStyle: PropTypes.string,
   letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   lineHeight: PropTypes.number,
-  padding: PropTypes.number,
+  padding: PropTypes.object,
   textAlign: PropTypes.string,
 });
 
