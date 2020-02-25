@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -33,6 +33,7 @@ import {
   elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../../components/transform';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
@@ -46,6 +47,7 @@ const Element = styled.p`
 
 function TextDisplay({
   element: {
+    id,
     content,
     color,
     backgroundColor,
@@ -60,6 +62,8 @@ function TextDisplay({
     textAlign,
   },
 }) {
+  const ref = useRef(null);
+
   const {
     actions: { dataToEditorY },
   } = useUnits();
@@ -84,7 +88,21 @@ function TextDisplay({
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);
 
-  return <Element dangerouslySetInnerHTML={{ __html: content }} {...props} />;
+  useTransformHandler(id, (transform) => {
+    const target = ref.current;
+    const updatedFontSize = transform?.updates?.fontSize;
+    target.style.fontSize = updatedFontSize
+      ? `${dataToEditorY(updatedFontSize)}px`
+      : '';
+  });
+
+  return (
+    <Element
+      ref={ref}
+      dangerouslySetInnerHTML={{ __html: content }}
+      {...props}
+    />
+  );
 }
 
 TextDisplay.propTypes = {

@@ -31,8 +31,12 @@ import { __ } from '@wordpress/i18n';
 import { InputGroup, SelectMenu } from '../form';
 import { useFont } from '../../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { calculateTextHeight } from '../../utils/textMeasurements';
+import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import { dataPixels } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import removeUnsetValues from './utils/removeUnsetValues';
 
 function FontPanel({ selectedElements, onSetProperties }) {
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
@@ -68,7 +72,26 @@ function FontPanel({ selectedElements, onSetProperties }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontFamily, fontStyle, fontSize, fontWeight, getFontWeight]);
   const handleSubmit = (evt) => {
-    onSetProperties(state);
+    onSetProperties((properties) => {
+      const { width, height: oldHeight, rotationAngle, x, y } = properties;
+      const updatedState = removeUnsetValues(state);
+      const newProperties = { ...properties, ...updatedState };
+      const newHeight = dataPixels(calculateTextHeight(newProperties, width));
+      const [dx, dy] = calcRotatedResizeOffset(
+        rotationAngle,
+        0,
+        0,
+        0,
+        newHeight - oldHeight
+      );
+      return {
+        ...updatedState,
+        height: newHeight,
+        x: dataPixels(x + dx),
+        y: dataPixels(y + dy),
+      };
+    });
+
     evt.preventDefault();
   };
 

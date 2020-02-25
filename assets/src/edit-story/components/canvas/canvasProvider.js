@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -36,6 +36,7 @@ import Context from './context';
 
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
+  const lastSelectedElementId = useRef(null);
 
   const [pageSize, setPageSize] = useState({
     width: DEFAULT_EDITOR_PAGE_WIDTH,
@@ -64,11 +65,19 @@ function CanvasProvider({ children }) {
         clearEditing();
       }
 
-      if (evt.metaKey) {
+      // Skip the focus that immediately follows mouse event.
+      // Use the reference to the latest element because the events come in the
+      // sequence in the same event loop.
+      if (lastSelectedElementId.current === elId && evt.type === 'focus') {
+        return;
+      }
+      lastSelectedElementId.current = elId;
+      if (evt.shiftKey) {
         toggleElementInSelection({ elementId: elId });
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
+      evt.currentTarget.focus();
       evt.stopPropagation();
 
       if ('mousedown' === evt.type) {

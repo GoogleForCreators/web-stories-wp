@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+function removeUnsetValues(map) {
+  const result = {};
+  for (const k in map) {
+    if (map[k] !== '') {
+      result[k] = map[k];
+    }
+  }
+  return result;
+}
+
+export default removeUnsetValues;

@@ -1,4 +1,13 @@
-/*
+<?php
+/**
+ * Plugin Name: E2E Tests Demo Plugin
+ * Plugin URI:  https://github.com/google/web-stories-wp
+ * Description: Demo Plugin that can be installed during E2E tests.
+ * Author:      Google
+ * Author URI:  https://opensource.google.com/
+ */
+
+/**
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +23,4 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+// Silence is golden.

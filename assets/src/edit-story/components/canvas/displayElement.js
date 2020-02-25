@@ -57,6 +57,8 @@ function DisplayElement({ element }) {
     const target = wrapperRef.current;
     if (transform === null) {
       target.style.transform = '';
+      target.style.width = '';
+      target.style.height = '';
     } else {
       const { translate, rotate, resize } = transform;
       target.style.transform = `translate(${translate[0]}px, ${translate[1]}px) rotate(${rotate}deg)`;

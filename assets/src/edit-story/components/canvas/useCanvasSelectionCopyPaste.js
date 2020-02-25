@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
@@ -130,7 +130,7 @@ function useCanvasSelectionCopyPaste(container) {
               const element = {
                 ...rest,
                 basedOn,
-                id: uuid(),
+                id: uuidv4(),
                 x,
                 y,
               };

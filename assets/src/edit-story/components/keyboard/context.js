@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+/**
+ * External dependencies
+ */
+import { createContext } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import keys from './keys';
+
+export default createContext({ keys });

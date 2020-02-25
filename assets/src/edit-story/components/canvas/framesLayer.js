@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +28,7 @@ import withOverlay from '../overlay/withOverlay';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
+import useCanvasKeys from './useCanvasKeys';
 
 const FramesPageArea = withOverlay(styled(PageArea).attrs({
   className: 'container',
@@ -39,8 +41,19 @@ function FramesLayer() {
   const {
     state: { currentPage },
   } = useStory();
+
+  const ref = useRef(null);
+  useCanvasKeys(ref);
+
   return (
-    <Layer pointerEvents="none">
+    <Layer
+      ref={ref}
+      pointerEvents="none"
+      // Use `-1` to ensure that there's a default target to focus if
+      // there's no selection, but it's not reacheable by keyboard
+      // otherwise.
+      tabIndex="-1"
+    >
       <FramesPageArea>
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {

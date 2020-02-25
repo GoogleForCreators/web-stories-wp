@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+/**
+ * See https://craig.is/killing/mice#keys for the supported key codes.
+ */
+const keys = {
+  undo: 'mod+z',
+  redo: 'shift+mod+z',
+  delete: ['del', 'backspace'],
+};
+
+export default keys;
