@@ -139,7 +139,6 @@ function TextFrame({
     props.onKeyDown = handleKeyDown;
     props.onMouseDown = handleMouseDown;
     props.onMouseUp = handleMouseUp;
-    props.tabIndex = 0;
   }
 
   const element = useRef();

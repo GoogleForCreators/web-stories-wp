@@ -48,7 +48,7 @@ import { getAbsolutePosition, moveArrayElement } from './utils';
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.elementId Id of element to move
- * @param {number} payload.position New position of element to move
+ * @param {number|string} payload.position New position of element to move
  * @return {Object} New state
  */
 function arrangeElement(state, { elementId, position }) {
