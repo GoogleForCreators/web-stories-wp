@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import { useTheme } from '../../theme';
 import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 
@@ -32,10 +33,14 @@ function PageBackgroundPanel() {
     state: { currentPage },
     actions: { updateCurrentPageProperties },
   } = useStory();
-  const [color, setColor] = useState(currentPage?.backgroundColor || '#ffffff');
+  const theme = useTheme();
+  const defaultColor = theme.colors.fg.v1;
+  const [color, setColor] = useState(
+    currentPage?.backgroundColor || defaultColor
+  );
   useEffect(() => {
-    setColor(currentPage?.backgroundColor || '#ffffff');
-  }, [currentPage]);
+    setColor(currentPage?.backgroundColor || defaultColor);
+  }, [currentPage, defaultColor]);
   const handleChange = useCallback(
     (value) => {
       setColor(value);
