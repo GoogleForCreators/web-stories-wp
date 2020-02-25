@@ -25,6 +25,7 @@ import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import FontPanel from './font';
 import MaskPanel from './mask';
+import MediaStylePanel from './mediaStyle';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
 import PositionPanel from './position';
@@ -47,6 +48,7 @@ const POSITION = 'position';
 const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const MEDIA_STYLE = 'mediaStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 
@@ -60,6 +62,7 @@ export const PanelTypes = {
   COLOR,
   FONT,
   STYLE,
+  MEDIA_STYLE,
   TEXT,
   ROTATION_ANGLE,
   FILL,
@@ -115,6 +118,8 @@ export function getPanels(elements) {
             return { type, Panel: RotationPanel };
           case SIZE:
             return { type, Panel: SizePanel };
+          case MEDIA_STYLE:
+            return { type, Panel: MediaStylePanel };
           case FILL:
             return { type, Panel: FillPanel };
           case BACKGROUND_COLOR:
