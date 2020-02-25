@@ -13,8 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default } from './dropZone';
-export { default as MediaDropZone } from './mediaDropZone';
-export { default as CanvasDropZone } from './canvasDropZone';
-export { default as useDropZone } from './useDropZone';
-export { default as DropZoneProvider } from './dropZoneProvider';
+export { default as disableDefaults } from './disableDefaults';
+export { default as getDragType } from './getDragType';

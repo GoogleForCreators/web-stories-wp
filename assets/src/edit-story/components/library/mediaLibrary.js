@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
 
 import { useMedia } from '../../app/media';
 import UploadButton from '../uploadButton';
-import Dropzone from './dropzone';
+import { DropZoneProvider, MediaDropZone } from '../dropzone';
 
 const Container = styled.div`
   display: grid;
@@ -194,61 +194,63 @@ function MediaLibrary() {
   };
 
   return (
-    <Dropzone>
-      <Header>
-        <Title>
-          {__('Media', 'web-stories')}
-          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-        </Title>
-        <UploadButton
-          onClose={onClose}
-          onSelect={onSelect}
-          buttonCSS={buttonStyles}
-        />
-      </Header>
+    <DropZoneProvider>
+      <MediaDropZone>
+        <Header>
+          <Title>
+            {__('Media', 'web-stories')}
+            {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+          </Title>
+          <UploadButton
+            onClose={onClose}
+            onSelect={onSelect}
+            buttonCSS={buttonStyles}
+          />
+        </Header>
 
-      <SearchField>
-        <Icon icon="search" />
-        <Search
-          value={searchTerm}
-          placeholder={__('Search Media', 'web-stories')}
-          onChange={onSearch}
-        />
-      </SearchField>
+        <SearchField>
+          <Icon icon="search" />
+          <Search
+            value={searchTerm}
+            placeholder={__('Search Media', 'web-stories')}
+            onChange={onSearch}
+          />
+        </SearchField>
 
-      <FilterButtons>
-        {FILTERS.map(({ filter, name }, index) => (
-          <FilterButton
-            key={index}
-            active={filter === mediaType}
-            onClick={() => onFilter(filter)}
-          >
-            {name}
-          </FilterButton>
-        ))}
-      </FilterButtons>
+        <FilterButtons>
+          {FILTERS.map(({ filter, name }, index) => (
+            <FilterButton
+              key={index}
+              active={filter === mediaType}
+              onClick={() => onFilter(filter)}
+            >
+              {name}
+            </FilterButton>
+          ))}
+        </FilterButtons>
 
-      {isMediaLoaded && !media.length ? (
-        <Message>{__('No media found', 'web-stories')}</Message>
-      ) : (
-        <Container>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return !isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-        </Container>
-      )}
-    </Dropzone>
+        {isMediaLoaded && !media.length ? (
+          <Message>{__('No media found', 'web-stories')}</Message>
+        ) : (
+          <Container>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return !isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+          </Container>
+        )}
+      </MediaDropZone>
+    </DropZoneProvider>
   );
 }
 

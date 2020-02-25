@@ -32,7 +32,7 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
-import DropZoneProvider from '../../components/dropzone/dropZoneProvider';
+import { DropZoneProvider, CanvasDropZone } from '../../components/dropzone';
 
 const Editor = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -44,9 +44,22 @@ const Editor = styled.div`
   height: calc(100vh - ${ADMIN_TOOLBAR_HEIGHT}px);
 
   display: grid;
-  grid:
-    'lib  canv  insp' 1fr
-    / minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px) 1fr minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
+  grid-template-areas: 'lib main';
+  grid-template-columns:
+    minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
+    1fr;
+`;
+
+const Main = styled.div`
+  position: relative;
+  height: calc(100vh - ${ADMIN_TOOLBAR_HEIGHT}px);
+
+  display: grid;
+  grid-template-areas: 'canv insp';
+  grid-template-columns: 1fr minmax(
+      ${INSPECTOR_MIN_WIDTH}px,
+      ${INSPECTOR_MAX_WIDTH}px
+    );
 `;
 
 const Area = styled.div`
@@ -62,13 +75,19 @@ function Layout() {
       <Area area="lib">
         <Library />
       </Area>
-      <Area area="canv">
+      <Area area="main">
         <DropZoneProvider>
-          <Canvas />
+          <CanvasDropZone>
+            <Main>
+              <Area area="canv">
+                <Canvas />
+              </Area>
+              <Area area="insp">
+                <Inspector />
+              </Area>
+            </Main>
+          </CanvasDropZone>
         </DropZoneProvider>
-      </Area>
-      <Area area="insp">
-        <Inspector />
       </Area>
     </Editor>
   );

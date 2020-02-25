@@ -28,10 +28,8 @@ import { useCallback, useRef, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../app/uploader';
-import { useMedia } from '../../app/media';
 import Context from './context';
-import getDragType from './utils/getDragType';
+import { disableDefaults } from './utils';
 
 const DropZoneWrapper = styled.div`
   height: 100%;
@@ -42,13 +40,7 @@ function DropZoneProvider({ children }) {
   const [hoveredDropZone, setHoveredDropZone] = useState(null);
 
   const [isDragging, setIsDragging] = useState(false);
-  const { uploadFile } = useUploader();
   const ref = useRef(null);
-
-  const {
-    state: { DEFAULT_WIDTH },
-    actions: { insertMediaElement },
-  } = useMedia();
 
   const registerDropZone = useCallback(
     (dropZone) => {
@@ -126,42 +118,6 @@ function DropZoneProvider({ children }) {
     }
   };
 
-  const disableDefaults = (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-  };
-
-  const onDrop = (evt) => {
-    disableDefaults(evt);
-    if ('file' === getDragType(evt)) {
-      const files = [...evt.dataTransfer.files];
-      files.forEach((file) => {
-        uploadFile(file).then(
-          ({
-            id,
-            guid: { rendered: src },
-            media_details: { width: oWidth, height: oHeight },
-            mime_type: mimeType,
-            featured_media: posterId,
-            featured_media_src: poster,
-          }) => {
-            const mediaEl = {
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
-              mimeType,
-            };
-            insertMediaElement(mediaEl, DEFAULT_WIDTH, false);
-          }
-        );
-      });
-      setIsDragging(false);
-    }
-  };
-
   const onDragEnter = (evt) => {
     disableDefaults(evt);
     evt.dataTransfer.effectAllowed = 'copy';
@@ -190,6 +146,7 @@ function DropZoneProvider({ children }) {
       isDragging,
     },
     actions: {
+      setIsDragging,
       registerDropZone,
       unregisterDropZone,
       resetHoverState,
@@ -200,7 +157,6 @@ function DropZoneProvider({ children }) {
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDragEnter={onDragEnter}
-      onDrop={onDrop}
       ref={ref}
     >
       <Context.Provider value={state}>{children}</Context.Provider>
