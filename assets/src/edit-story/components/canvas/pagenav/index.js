@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PAGE_NAV_BUTTON_WIDTH } from '../../../constants';
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import { LeftArrow, RightArrow } from '../../button';
 
 const Wrapper = styled.div`
@@ -51,6 +51,7 @@ function PageNav({ isNext }) {
     state: { pages, currentPageIndex },
     actions: { setCurrentPage },
   } = useStory();
+  const { isRTL } = useConfig();
   const handleClick = useCallback(() => {
     const newPage = isNext
       ? pages[currentPageIndex + 1]
@@ -72,6 +73,19 @@ function PageNav({ isNext }) {
     width: PAGE_NAV_BUTTON_WIDTH,
     height: PAGE_NAV_BUTTON_WIDTH,
   };
+
+  if (isRTL) {
+    return (
+      <Wrapper isNext={isNext}>
+        {isNext ? (
+          <LeftArrow {...buttonProps} />
+        ) : (
+          <RightArrow {...buttonProps} />
+        )}
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper isNext={isNext}>
       {isNext ? (
