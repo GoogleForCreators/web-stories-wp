@@ -16,5 +16,6 @@
 export { default } from './dropZone';
 export { default as MediaDropZone } from './mediaDropZone';
 export { default as CanvasDropZone } from './canvasDropZone';
+export { default as CanvasOverlay } from './canvasOverlay';
 export { default as useDropZone } from './useDropZone';
 export { default as DropZoneProvider } from './dropZoneProvider';
