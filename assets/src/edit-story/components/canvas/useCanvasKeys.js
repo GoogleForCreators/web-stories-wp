@@ -23,7 +23,7 @@ import { useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../keyboard';
-import { useStory } from '../../app';
+import { useConfig, useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 
 const MOVE_COARSE_STEP = 10;
@@ -40,6 +40,8 @@ function useCanvasKeys(ref) {
       updateSelectedElements,
     },
   } = useStory();
+
+  const { isRTL } = useConfig();
 
   // Return focus back to the canvas when another section loses the focus.
   useEffect(() => {
@@ -80,9 +82,10 @@ function useCanvasKeys(ref) {
       const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
       const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
       const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
+      const multiplier = isRTL ? -1 : 1;
       updateSelectedElements({
         properties: ({ x, y }) => ({
-          x: x + delta * dirX,
+          x: x + delta * dirX * multiplier,
           y: y + delta * dirY,
         }),
       });
