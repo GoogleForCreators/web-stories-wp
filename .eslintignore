@@ -2,5 +2,4 @@
 **/vendor/**
 **/assets/js/*.js
 build/*
-tests/*
 !.storybook

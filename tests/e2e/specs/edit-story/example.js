@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+/**
+ * Internal dependencies
+ */
+import { createNewStory } from '../../utils';
+
+describe('Example Spec', () => {
+  it('should be able to create a blank story', async () => {
+    await createNewStory();
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+  });
+});

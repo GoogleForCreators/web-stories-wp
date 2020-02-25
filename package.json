@@ -58,7 +58,9 @@
     "@storybook/react": "^5.3.13",
     "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/babel-preset-default": "^4.10.0",
+    "@wordpress/e2e-test-utils": "^4.3.0",
     "@wordpress/eslint-plugin": "^4.0.0",
+    "@wordpress/jest-puppeteer-axe": "^1.6.0",
     "@wordpress/scripts": "^7.1.2",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
@@ -132,7 +134,12 @@
     "test:js:help": "wp-scripts test-unit-js --help",
     "test:js:watch": "npm run test:js -- --watch",
     "test:php": "vendor/bin/phpunit",
-    "test:php:help": "npm run test:php -- --help"
+    "test:php:help": "npm run test:php -- --help",
+    "test:e2e": "WP_BASE_URL=http://localhost:8899 wp-scripts test-e2e --config=tests/e2e/jest.config.js",
+    "test:e2e:help": "npm run test:e2e -- --help",
+    "test:e2e:watch": "npm run test:e2e -- --watch",
+    "test:e2e:interactive": "npm run test:e2e -- --puppeteer-interactive",
+    "test:e2e:ci": "npm run test:e2e -- --runInBand"
   },
   "husky": {
     "hooks": {
