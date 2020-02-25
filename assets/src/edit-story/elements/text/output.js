@@ -49,7 +49,7 @@ function TextOutput({
     color,
     lineHeight,
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
-    padding: padding ? padding + '%' : null,
+    padding: padding ? `${padding.vertical}% ${padding.horizontal}%` : null,
     textAlign: textAlign ? textAlign : null,
     whiteSpace: 'pre-wrap',
   };
