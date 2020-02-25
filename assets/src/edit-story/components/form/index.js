@@ -16,3 +16,4 @@
 
 export { default as InputGroup } from './inputGroup';
 export { default as SelectMenu } from './select';
+export { default as Switch } from './switch';
