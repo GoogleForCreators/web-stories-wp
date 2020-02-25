@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -40,7 +40,7 @@ export const createNewElement = (type, attributes = {}) => {
     ...defaultAttributes,
     ...attributes,
     type,
-    id: uuid(),
+    id: uuidv4(),
   };
 };
 
