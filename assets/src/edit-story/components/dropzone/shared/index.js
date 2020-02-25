@@ -36,7 +36,7 @@ export const OverlayWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 99;
 `;
 export const Heading = styled.h4`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -55,4 +55,5 @@ export const Overlay = styled.div`
   top: 45%;
   text-align: center;
   width: 100%;
+  z-index: 999;
 `;

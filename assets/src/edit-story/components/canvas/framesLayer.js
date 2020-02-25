@@ -25,6 +25,7 @@ import { useRef } from 'react';
  */
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
+import { CanvasOverlay } from '../dropzone';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
@@ -55,6 +56,7 @@ function FramesLayer() {
       tabIndex="-1"
     >
       <FramesPageArea>
+        <CanvasOverlay />
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
