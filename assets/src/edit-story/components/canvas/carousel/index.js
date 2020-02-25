@@ -33,7 +33,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import {
   LeftArrow,
   RightArrow,
@@ -87,6 +87,7 @@ function Carousel() {
     state: { pages, currentPageIndex, currentPageId },
     actions: { setCurrentPage },
   } = useStory();
+  const { isRTL } = useConfig();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -166,13 +167,23 @@ function Carousel() {
     <>
       <Wrapper>
         <Area area="left-navigation">
-          <LeftArrow
-            isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
-            width="24"
-            height="24"
-            aria-label={__('Scroll Left', 'web-stories')}
-          />
+          {isRTL ? (
+            <RightArrow
+              isHidden={!hasHorizontalOverflow || isAtEndOfList}
+              onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+              width="24"
+              height="24"
+              aria-label={__('Scroll Right', 'web-stories')}
+            />
+          ) : (
+            <LeftArrow
+              isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
+              onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+              width="24"
+              height="24"
+              aria-label={__('Scroll Left', 'web-stories')}
+            />
+          )}
         </Area>
         <List
           area="carousel"
@@ -206,13 +217,23 @@ function Carousel() {
           })}
         </List>
         <Area area="right-navigation">
-          <RightArrow
-            isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
-            width="24"
-            height="24"
-            aria-label={__('Scroll Right', 'web-stories')}
-          />
+          {isRTL ? (
+            <LeftArrow
+              isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
+              onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+              width="24"
+              height="24"
+              aria-label={__('Scroll Left', 'web-stories')}
+            />
+          ) : (
+            <RightArrow
+              isHidden={!hasHorizontalOverflow || isAtEndOfList}
+              onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+              width="24"
+              height="24"
+              aria-label={__('Scroll Right', 'web-stories')}
+            />
+          )}
           <StyledGridViewButton
             width="24"
             height="24"
