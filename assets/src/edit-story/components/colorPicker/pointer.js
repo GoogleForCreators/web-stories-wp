@@ -35,7 +35,7 @@ const Pointer = styled.div`
     width: ${({ size }) => `${size}px`};
     height: ${({ size }) => `${size}px`};
     background: ${({ withAlpha, currentColor }) => {
-      if ( !currentColor) {
+      if (!currentColor) {
         return 'transparent';
       }
       const { r, g, b, a } = currentColor;
@@ -46,7 +46,7 @@ const Pointer = styled.div`
         return `rgb(${ra},${ga},${ba})`;
       }
 
-      return `rgba(${r},${g},${b})`;
+      return `rgb(${r},${g},${b})`;
     }};
     border: 2px solid #fff;
     border-radius: 100%;
