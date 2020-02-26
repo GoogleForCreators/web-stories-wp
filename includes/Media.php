@@ -212,12 +212,12 @@ class Media {
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
 
 		if ( 'video' === $response['type'] ) {
-			$id    = (int) get_post_thumbnail_id( $attachment );
-			$image = '';
-			if ( has_post_thumbnail( $attachment ) ) {
-				$image = wp_get_attachment_image_url( $id, 'medium' );
+			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
+			$image        = '';
+			if ( 0 === $thumbnail_id ) {
+				$image = wp_get_attachment_image_url( $thumbnail_id, 'medium' );
 			}
-			$response['featured_media']     = $id;
+			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
 
