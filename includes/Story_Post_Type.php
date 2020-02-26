@@ -299,7 +299,7 @@ class Story_Post_Type {
 		}
 
 		// @todo Make filterable like in Story_Post_Type::get_schemaorg_metadata()
-		$publisher      = get_option( 'blogname' );
+		$publisher      = get_bloginfo( 'name' );
 		$publisher_logo = self::get_publisher_logo();
 
 		wp_localize_script(
