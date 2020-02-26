@@ -42,7 +42,7 @@ class Dashboard {
 	/**
 	 * Admin page hook suffix.
 	 *
-	 * @var string
+	 * @var string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	private $hook_suffix;
 
