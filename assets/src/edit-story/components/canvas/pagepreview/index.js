@@ -41,12 +41,6 @@ const Page = styled.button`
   background-color: ${({ theme }) => theme.colors.mg.v1};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
-
-  &:focus,
-  &:hover {
-    outline: ${PAGE_THUMB_OUTLINE}px solid
-      ${({ theme }) => theme.colors.selection};
-  }
 `;
 
 const PreviewWrapper = styled.div`
