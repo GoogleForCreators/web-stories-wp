@@ -52,9 +52,10 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * Registers routes for amp fonts.
 	 *
 	 * @see register_rest_route()
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
-
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -107,7 +108,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	/**
 	 * Prepares a single font output for response.
 	 *
-	 * @param Object          $font Font object.
+	 * @param array           $font Font object.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
