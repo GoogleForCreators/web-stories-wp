@@ -24,8 +24,8 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import { useAPI } from '../../api';
-import { OutputPage } from '../../../output';
 import { useConfig } from '../../config';
+import OutputStory from '../../../output/story';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -33,27 +33,11 @@ import { useConfig } from '../../config';
  * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
- * @param {string} metadata.publisher Publisher name.
- * @param {string} metadata.publisherLogo Publisher logo.
- * @return {Element} Markup of pages.
+ * @return {Element} Story markup.
  */
 const getStoryMarkup = (story, pages, metadata) => {
-  // TODO: get different image sizes for featured media.
-
   return renderToString(
-    <amp-story
-      standalone="standalone"
-      publisher={metadata.publisher}
-      publisher-logo-src={metadata.publisherLogo}
-      title={story.title}
-      poster-portrait-src={story.featuredMediaUrl}
-      poster-square-src={story.featuredMediaUrl}
-      poster-landscape-src={story.featuredMediaUrl}
-    >
-      {pages.map((page) => (
-        <OutputPage key={page.id} page={page} />
-      ))}
-    </amp-story>
+    <OutputStory story={story} pages={pages} metadata={metadata} />
   );
 };
 
