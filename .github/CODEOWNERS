@@ -1,6 +1,24 @@
 # See https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
 
-*.php          @swissspidy @spacedmonkey
+# Global owners, default owners for everything in the repo
+*                                               @swissspidy
+
+# All server-side logic.
+*.php                                           @swissspidy @spacedmonkey @miina
+composer.json                                   @swissspidy @spacedmonkey @miina
+phpcs.xml                                       @swissspidy @spacedmonkey @miina
+phpstan.neon.dist                               @swissspidy @spacedmonkey @miina
+phpunit.xml.dist                                @swissspidy @spacedmonkey @miina
+
+# Infrastructure
+.github/                                        @swissspidy
+.storybook/                                     @swissspidy
+bin/                                            @swissspidy
 
 # WordPress.org plugin directory readme file.
-readme.txt     @swissspidy @pbakaus
+readme.txt                                      @swissspidy @pbakaus
+
+# Media-related functionality
+assets/src/edit-story/app/media/                @spacedmonkey
+assets/src/edit-story/app/uploader/             @spacedmonkey
+assets/src/edit-story/components/uploadButton/  @spacedmonkey
