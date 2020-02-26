@@ -30,8 +30,7 @@ import { useConfig } from '../../config';
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
  *
- * @param {Object} story Story object.
- * @param {string} story.featuredMediaUrl Featured media URL.
+ * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
  * @param {string} metadata.publisher Publisher name.
