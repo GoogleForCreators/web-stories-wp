@@ -23,13 +23,12 @@ import BackgroundPanel from './background';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
-import FontPanel from './font';
 import MaskPanel from './mask';
 import RotationPanel from './rotationAngle';
 import SizePanel from './size';
 import PositionPanel from './position';
 import ScalePanel from './scale';
-import StylePanel from './style';
+import StylePanel from './style/index';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 export { default as LayerPanel } from './layer';
@@ -39,7 +38,6 @@ const ACTIONS = 'actions';
 const BACKGROUND = 'background';
 const COLOR = 'color';
 const SCALE = 'scale';
-const FONT = 'font';
 const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
 const SIZE = 'size';
@@ -58,7 +56,6 @@ export const PanelTypes = {
   SCALE,
   BACKGROUND_COLOR,
   COLOR,
-  FONT,
   STYLE,
   TEXT,
   ROTATION_ANGLE,
@@ -121,8 +118,6 @@ export function getPanels(elements) {
             return { type, Panel: BackgroundColorPanel };
           case COLOR:
             return { type, Panel: ColorPanel };
-          case FONT:
-            return { type, Panel: FontPanel };
           case STYLE:
             return { type, Panel: StylePanel };
           case TEXT:

@@ -57,7 +57,6 @@ export const panels = [
   PanelTypes.TEXT,
   PanelTypes.SIZE,
   PanelTypes.POSITION,
-  PanelTypes.FONT,
   PanelTypes.STYLE,
   PanelTypes.COLOR,
   PanelTypes.BACKGROUND_COLOR,
