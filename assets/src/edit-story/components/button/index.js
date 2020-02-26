@@ -27,6 +27,8 @@ import { ReactComponent as RedoIcon } from '../../icons/redo.svg';
 import { ReactComponent as LeftArrowIcon } from '../../icons/arrow_left.svg';
 import { ReactComponent as RightArrowIcon } from '../../icons/arrow_right.svg';
 import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -125,5 +127,17 @@ export const Redo = (props) => (
 export const GridView = (props) => (
   <StyledButton {...props}>
     <GridViewIcon />
+  </StyledButton>
+);
+
+export const Close = (props) => (
+  <StyledButton {...props}>
+    <CloseIcon />
+  </StyledButton>
+);
+
+export const Eyedropper = (props) => (
+  <StyledButton {...props}>
+    <EyedropperIcon />
   </StyledButton>
 );
