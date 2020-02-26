@@ -28,33 +28,35 @@ const rgba = ({ r, g, b, a }) => {
   return `rgb(${al(r)}, ${al(g)}, ${al(b)})`;
 };
 
-const Pointer = styled.div`
-  width: ${({ size }) => `${2 * size}px`};
-  height: ${({ size }) => `${2 * size}px`};
+const POINTER_SIZE = 12;
+const BORDER_WIDTH = 2;
 
-  transform: translateX(${({ offset }) => `${offset}px`});
+// The attrs method is more performant for frequently changed styles.
+const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => ({
+  style: {
+    background: withAlpha ? rgba(currentColor) : rgb(currentColor),
+  },
+}))`
+  width: ${POINTER_SIZE}px;
+  height: ${POINTER_SIZE}px;
   transform: translate(
-    ${({ offset, size }) => `${offset - size / 2}px`},
-    ${({ size }) => `-${size}px`}
+    ${({ offset }) => `${offset}px`},
+    -${POINTER_SIZE / 2}px
   );
+  background: transparent;
+  border: ${BORDER_WIDTH}px solid #fff;
+  border-radius: 100%;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
+  position: relative;
 
   &:before {
     content: '';
     display: block;
-    width: ${({ size }) => `${size}px`};
-    height: ${({ size }) => `${size}px`};
-    background: transparent;
-    ${({ currentRGB }) => currentRGB && `background: ${rgb(currentRGB)};`}
-    ${({ currentRGBA }) =>
-      currentRGBA &&
-      `background: ${rgba(currentRGBA)};`}
-    border: 2px solid #fff;
-    border-radius: 100%;
-    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
-    transform: translate(
-      ${({ size }) => `${size / 2}px`},
-      ${({ size }) => `${size / 2}px`}
-    );
+    width: ${2 * POINTER_SIZE}px;
+    height: ${2 * POINTER_SIZE}px;
+    position: absolute;
+    top: -${POINTER_SIZE / 2 + BORDER_WIDTH}px;
+    left: -${POINTER_SIZE / 2 + BORDER_WIDTH}px;
   }
 `;
 
