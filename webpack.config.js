@@ -51,7 +51,10 @@ const sharedConfig = {
   },
   plugins: [
     ...defaultConfig.plugins,
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      dry: false,
+      dangerouslyAllowCleanPatternsOutsideProject: true,
+    }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
