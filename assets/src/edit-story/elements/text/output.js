@@ -40,6 +40,7 @@ function TextOutput({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   },
 }) {
   const style = {
@@ -55,6 +56,7 @@ function TextOutput({
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
     padding: padding ? `${padding.vertical}% ${padding.horizontal}%` : null,
     textAlign: textAlign ? textAlign : null,
+    textDecoration,
     whiteSpace: 'pre-wrap',
   };
 

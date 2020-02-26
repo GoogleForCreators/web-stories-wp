@@ -94,6 +94,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   content: PropTypes.string,
   color: PropTypes.string,
   backgroundColor: PropTypes.string,
+  backgroundOpacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
@@ -103,6 +104,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   lineHeight: PropTypes.number,
   padding: PropTypes.object,
   textAlign: PropTypes.string,
+  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.square = PropTypes.shape({

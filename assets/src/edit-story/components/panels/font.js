@@ -45,6 +45,7 @@ function FontPanel({ selectedElements, onSetProperties }) {
   const fontWeights = getCommonValue(selectedElements, 'fontWeights');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const fontFallback = getCommonValue(selectedElements, 'fontFallback');
+  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
 
   const {
     state: { fonts },
@@ -57,6 +58,7 @@ function FontPanel({ selectedElements, onSetProperties }) {
     fontWeight,
     fontFallback,
     fontWeights,
+    textDecoration,
   });
   useEffect(() => {
     const currentFontWeights = getFontWeight(fontFamily);
@@ -68,9 +70,17 @@ function FontPanel({ selectedElements, onSetProperties }) {
       fontWeight,
       fontWeights: currentFontWeights,
       fontFallback: currentFontFallback,
+      textDecoration,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fontFamily, fontStyle, fontSize, fontWeight, getFontWeight]);
+  }, [
+    fontFamily,
+    fontStyle,
+    fontSize,
+    fontWeight,
+    textDecoration,
+    getFontWeight,
+  ]);
   const handleSubmit = (evt) => {
     onSetProperties((properties) => {
       const { width, height: oldHeight, rotationAngle, x, y } = properties;
@@ -98,6 +108,11 @@ function FontPanel({ selectedElements, onSetProperties }) {
   const fontStyles = [
     { name: __('Normal', 'web-stories'), value: 'normal' },
     { name: __('Italic', 'web-stories'), value: 'italic' },
+  ];
+
+  const textDecorations = [
+    { name: __('None', 'web-stories'), value: 'none' },
+    { name: __('Underline', 'web-stories'), value: 'underline' },
   ];
 
   return (
@@ -138,6 +153,13 @@ function FontPanel({ selectedElements, onSetProperties }) {
         isMultiple={fontStyle === ''}
         value={state.fontStyle}
         onChange={(value) => setState({ ...state, fontStyle: value })}
+      />
+      <SelectMenu
+        label={__('Text decoration', 'web-stories')}
+        options={textDecorations}
+        isMultiple={textDecoration === ''}
+        value={state.textDecoration}
+        onChange={(value) => setState({ ...state, textDecoration: value })}
       />
       {state.fontWeights && (
         <SelectMenu

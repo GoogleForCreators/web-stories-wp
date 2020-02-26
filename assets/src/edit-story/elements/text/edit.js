@@ -101,6 +101,7 @@ function TextEdit({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   },
   box: { x, y, height, rotationAngle },
 }) {
@@ -121,6 +122,7 @@ function TextEdit({
     letterSpacing,
     lineHeight,
     padding,
+    textDecoration,
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);

@@ -93,4 +93,5 @@ export const elementWithStyle = css`
   letter-spacing: ${({ letterSpacing }) =>
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
+  text-decoration: ${({ textDecoration }) => textDecoration};
 `;

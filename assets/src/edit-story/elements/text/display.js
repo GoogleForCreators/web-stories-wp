@@ -66,6 +66,7 @@ function TextDisplay({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   },
 }) {
   const ref = useRef(null);
@@ -87,6 +88,7 @@ function TextDisplay({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   };
   const {
     actions: { maybeEnqueueFontStyle },
