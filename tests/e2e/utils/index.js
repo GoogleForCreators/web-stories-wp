@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+export { createNewStory } from './create-new-story';
