@@ -38,6 +38,7 @@ function DraggablePageWithRef(
     width,
     height,
     dragIndicatorOffset,
+    as,
   },
   ref
 ) {
@@ -83,6 +84,7 @@ function DraggablePageWithRef(
 
   return (
     <DropZone
+      as={as}
       onDrop={onDrop}
       pageIndex={pageIndex}
       dragIndicatorOffset={dragIndicatorOffset}

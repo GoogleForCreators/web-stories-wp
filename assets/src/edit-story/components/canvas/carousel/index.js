@@ -67,7 +67,7 @@ const Area = styled.div`
   flex-direction: column;
 `;
 
-const List = styled(Area)`
+const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
   flex-direction: row;
   align-items: flex-start;
   justify-content: ${({ hasHorizontalOverflow }) =>
@@ -184,6 +184,7 @@ function Carousel() {
             return (
               <DraggablePage
                 key={index}
+                as="li"
                 onClick={handleClickPage(page)}
                 ariaLabel={
                   isCurrentPage
