@@ -48,6 +48,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import hexToRGBA from '../../utils/hexToRGBA';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -90,6 +91,7 @@ function TextEdit({
     content,
     color,
     backgroundColor,
+    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -107,7 +109,9 @@ function TextEdit({
   } = useUnits();
   const textProps = {
     color,
-    backgroundColor,
+    backgroundColor: backgroundOpacity
+      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      : backgroundColor,
     fontFamily,
     fontFallback,
     fontStyle,

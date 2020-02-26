@@ -38,6 +38,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
+import hexToRGBA from '../../utils/hexToRGBA';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
@@ -55,6 +56,7 @@ function TextDisplay({
     content,
     color,
     backgroundColor,
+    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -73,7 +75,9 @@ function TextDisplay({
   } = useUnits();
   const props = {
     color,
-    backgroundColor,
+    backgroundColor: backgroundOpacity
+      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      : backgroundColor,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontFallback,
     fontStyle,

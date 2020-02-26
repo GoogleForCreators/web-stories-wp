@@ -19,6 +19,7 @@
  */
 import StoryPropTypes from '../../types';
 import { dataToEditorY } from '../../units';
+import hexToRGBA from '../../utils/hexToRGBA';
 import { generateFontFamily } from './util';
 
 /**
@@ -29,6 +30,7 @@ function TextOutput({
     content,
     color,
     backgroundColor,
+    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -45,7 +47,9 @@ function TextOutput({
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontWeight: fontWeight ? fontWeight : null,
-    background: backgroundColor,
+    background: backgroundOpacity
+      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      : backgroundColor,
     color,
     lineHeight,
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
