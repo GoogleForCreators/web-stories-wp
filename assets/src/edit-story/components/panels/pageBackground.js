@@ -35,12 +35,9 @@ function PageBackgroundPanel() {
   } = useStory();
   const theme = useTheme();
   const defaultColor = theme.colors.fg.v1;
-  const [color, setColor] = useState(
-    currentPage?.backgroundColor || defaultColor
-  );
-  useEffect(() => {
-    setColor(currentPage?.backgroundColor || defaultColor);
-  }, [currentPage, defaultColor]);
+  const currentBackground = currentPage?.backgroundColor || defaultColor;
+  const [color, setColor] = useState(currentBackground);
+  useEffect(() => setColor(currentBackground), [currentBackground]);
   const handleChange = useCallback(
     (value) => {
       setColor(value);
