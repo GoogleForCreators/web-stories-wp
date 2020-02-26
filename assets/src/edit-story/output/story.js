@@ -27,19 +27,31 @@ import { OutputPage } from './index';
 
 function OutputStory({ story, pages, metadata }) {
   return (
-    <amp-story
-      standalone="standalone"
-      publisher={metadata.publisher}
-      publisher-logo-src={metadata.publisherLogo}
-      title={story.title}
-      poster-portrait-src={story.featuredMediaUrl}
-      poster-square-src={story.featuredMediaUrl}
-      poster-landscape-src={story.featuredMediaUrl}
-    >
-      {pages.map((page) => (
-        <OutputPage key={page.id} page={page} />
-      ))}
-    </amp-story>
+    <html amp lang="en">
+      <head>
+        <script async="" src="https://cdn.ampproject.org/v0.js" />
+        <script
+          async=""
+          src="https://cdn.ampproject.org/v0/amp-story-1.0.js"
+          custom-element="amp-story"
+        />
+      </head>
+      <body>
+        <amp-story
+          standalone="standalone"
+          publisher={metadata.publisher}
+          publisher-logo-src={metadata.publisherLogo}
+          title={story.title}
+          poster-portrait-src={story.featuredMediaUrl}
+          poster-square-src={story.featuredMediaUrl}
+          poster-landscape-src={story.featuredMediaUrl}
+        >
+          {pages.map((page) => (
+            <OutputPage key={page.id} page={page} />
+          ))}
+        </amp-story>
+      </body>
+    </html>
   );
 }
 
