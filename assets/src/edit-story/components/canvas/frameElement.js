@@ -82,6 +82,7 @@ function FrameElement({ element }) {
   return (
     <Wrapper
       ref={elementRef}
+      data-element-id={id}
       {...box}
       onMouseDown={(evt) => {
         if (!isSelected) {
@@ -89,6 +90,13 @@ function FrameElement({ element }) {
         }
         evt.stopPropagation();
       }}
+      onFocus={(evt) => {
+        if (!isSelected) {
+          handleSelectElement(id, evt);
+        }
+      }}
+      tabIndex="0"
+      aria-labelledby={`layer-${id}`}
     >
       <WithElementMask element={element} fill={true}>
         {Frame && <Frame element={element} box={box} />}

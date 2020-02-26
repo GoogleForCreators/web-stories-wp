@@ -1,0 +1,12 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+  level: 4
+  inferPrivatePropertyTypeFromConstructor: true
+  paths:
+    - includes/
+  autoload_files:
+    - tests/phpstan/bootstrap.php
+  ignoreErrors:
+    # Uses func_get_args()
+    - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'

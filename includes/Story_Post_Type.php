@@ -288,6 +288,7 @@ class Story_Post_Type {
 				'id'     => 'edit-story',
 				'config' => [
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
+					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
 					'postThumbnails'   => $post_thumbnails,
 					'storyId'          => $story_id,
@@ -312,6 +313,35 @@ class Story_Post_Type {
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
+	}
+
+	/**
+	 * Returns a list of allowed file types.
+	 *
+	 * @return array List of allowed file types.
+	 */
+	protected static function get_allowed_file_types() {
+		$allowed_mime_types = self::get_allowed_mime_types();
+		$mime_types         = [];
+
+		foreach ( $allowed_mime_types as $type => $mimes ) {
+			// Otherwise this throws a warning on PHP < 7.3.
+			if ( ! empty( $mimes ) ) {
+				array_push( $mime_types, ...$mimes );
+			}
+		}
+
+		$allowed_file_types = [];
+		$all_mime_types     = wp_get_mime_types();
+
+		foreach ( $all_mime_types as $ext => $mime ) {
+			if ( in_array( $mime, $mime_types, true ) ) {
+				array_push( $allowed_file_types, ...explode( '|', $ext ) );
+			}
+		}
+		sort( $allowed_file_types );
+
+		return $allowed_file_types;
 	}
 
 	/**
@@ -341,7 +371,7 @@ class Story_Post_Type {
 		 *
 		 * @since 1.3
 		 *
-		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
@@ -476,11 +506,15 @@ class Story_Post_Type {
 	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
 	 *
-	 * @param array $allowed_tags Allowed tags.
+	 * @param array|string $allowed_tags Allowed tags.
 	 *
-	 * @return array Allowed tags.
+	 * @return array|string Allowed tags.
 	 */
 	public static function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
 		$story_components = [
 			'amp-story'                 => [
 				'background-audio'     => true,
@@ -582,7 +616,7 @@ class Story_Post_Type {
 			],
 		];
 
-		array_merge( $allowed_tags, $story_components );
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
