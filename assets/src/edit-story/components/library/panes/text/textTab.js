@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import { Tab, Icon } from '../shared';
+import { Tab } from '../shared';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
@@ -39,18 +39,22 @@ const QuickAction = styled.button`
   border: 0;
   padding: 0;
   line-height: 1;
-  position: relative;
+  overflow: hidden;
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
 
-  &:hover::before {
-    content: '';
-    display: block;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.3);
-    left: 5px;
-    right: 5px;
-    top: 5px;
-    bottom: 5px;
+  svg {
+    width: 28px;
+    height: 28px;
+    transform-origin: center center;
+    transition: transform 0.1s ease;
+  }
+
+  &:hover,
+  &:focus {
+    svg {
+      transform: scale(1.71); /* scales 28px to 48px */
+    }
   }
 `;
 
@@ -79,19 +83,17 @@ function TextTab(props) {
   const { isActive } = props;
   return (
     <Tab aria-labelledby="text-tab-icon" aria-controls={paneId} {...props}>
-      <Icon>
-        <TextIcon
-          id="text-tab-icon"
-          aria-label={__('Text library', 'web-stories')}
-        />
-        <QuickAction
-          aria-label={__('Add new text element', 'web-stories')}
-          onClick={handleAddText}
-          tabIndex={isActive ? 0 : -1}
-        >
-          <TextAddIcon />
-        </QuickAction>
-      </Icon>
+      <TextIcon
+        id="text-tab-icon"
+        aria-label={__('Text library', 'web-stories')}
+      />
+      <QuickAction
+        aria-label={__('Add new text element', 'web-stories')}
+        onClick={handleAddText}
+        tabIndex={isActive ? 0 : -1}
+      >
+        <TextAddIcon />
+      </QuickAction>
     </Tab>
   );
 }

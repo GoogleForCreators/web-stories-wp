@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -29,14 +30,6 @@ const Tabs = styled.ul.attrs({
   margin: 0;
   padding: 0;
   list-style: none;
-`;
-
-const Icon = styled.div`
-  width: 60%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -56,20 +49,12 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   justify-content: center;
   align-items: center;
 
-  &:focus {
+  &:focus,
+  &:hover {
     outline: none;
-    & ${Icon} {
-      /* todo: how to show default outline on inner element cross-browser? */
-      outline: -webkit-focus-ring-color auto 5px;
-    }
+    background: ${({ isActive, theme }) =>
+      isActive ? theme.colors.bg.v5 : `${rgba(theme.colors.bg.v0, 0.2)}`};
   }
-
-  ${({ isActive }) =>
-    !isActive &&
-    `
-  opacity: .5;
-  &:hover { opacity: 1; }
-  `}
 
   svg {
     display: block;
@@ -94,4 +79,4 @@ function getTabId(tab) {
   return `library-tab-${tab}`;
 }
 
-export { Tabs, Tab, Icon, Pane, getPaneId, getTabId };
+export { Tabs, Tab, Pane, getPaneId, getTabId };
