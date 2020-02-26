@@ -1,29 +1,36 @@
 # See https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
 
 # Global owners, default owners for everything in the repo
-*                                               @swissspidy
+*                                                                 @swissspidy
 
 # All server-side logic.
-*.php                                           @swissspidy @spacedmonkey @miina
-composer.json                                   @swissspidy @spacedmonkey @miina
-phpcs.xml                                       @swissspidy @spacedmonkey @miina
-phpstan.neon.dist                               @swissspidy @spacedmonkey @miina
-phpunit.xml.dist                                @swissspidy @spacedmonkey @miina
+*.php                                                             @swissspidy @spacedmonkey @miina
+composer.json                                                     @swissspidy @spacedmonkey @miina
+phpcs.xml                                                         @swissspidy @spacedmonkey @miina
+phpstan.neon.dist                                                 @swissspidy @spacedmonkey @miina
+phpunit.xml.dist                                                  @swissspidy @spacedmonkey @miina
 
 # Infrastructure
-.github/                                        @swissspidy
-.storybook/                                     @swissspidy
-bin/                                            @swissspidy
-.travis.yml                                     @swissspidy @spacedmonkey
+.github/                                                          @swissspidy
+.storybook/                                                       @swissspidy
+bin/                                                              @swissspidy
+.travis.yml                                                       @swissspidy @spacedmonkey
 
 # WordPress.org plugin directory readme file.
-readme.txt                                      @swissspidy @pbakaus
-
-# Media-related functionality
-assets/src/edit-story/app/api/                  @spacedmonkey
-assets/src/edit-story/app/media/                @spacedmonkey
-assets/src/edit-story/app/uploader/             @spacedmonkey
-assets/src/edit-story/components/uploadButton/  @spacedmonkey
+readme.txt                                                        @swissspidy @pbakaus
 
 # Stories Editor
-assets/src/edit-story/                          @swissspidy @dvoytenko @barklund
+assets/src/edit-story/                                            @swissspidy @dvoytenko @barklund
+
+# Media-related functionality
+assets/src/edit-story/app/api/                                    @spacedmonkey
+assets/src/edit-story/app/media/                                  @spacedmonkey
+assets/src/edit-story/app/uploader/                               @spacedmonkey
+assets/src/edit-story/components/uploadButton/                    @spacedmonkey
+
+# Movable
+assets/src/edit-story/components/movable/                         @miina
+assets/src/edit-story/elements/image/editCropMovable.js           @miina
+assets/src/edit-story/elements/shared/editPanMovable.js           @miina
+assets/src/edit-story/components/canvas/singleSelectionMovable.js @miina
+assets/src/edit-story/components/canvas/multiSelectionMovable.js  @miina
