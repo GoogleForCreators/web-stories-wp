@@ -229,7 +229,7 @@ class Story_Post_Type {
 
 		$post = get_post();
 
-		if ( ! $post ) {
+		if ( ! $post instanceof WP_Post) {
 			return;
 		}
 
