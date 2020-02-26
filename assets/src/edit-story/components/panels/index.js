@@ -20,7 +20,6 @@
 import { elementTypes } from '../../elements';
 import ActionsPanel from './actions';
 import BackgroundPanel from './background';
-import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import MaskPanel from './mask';
@@ -36,7 +35,6 @@ export { default as ColorPresetPanel } from './colorPreset';
 
 const ACTIONS = 'actions';
 const BACKGROUND = 'background';
-const COLOR = 'color';
 const SCALE = 'scale';
 const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
@@ -55,7 +53,6 @@ export const PanelTypes = {
   SIZE,
   SCALE,
   BACKGROUND_COLOR,
-  COLOR,
   STYLE,
   TEXT,
   ROTATION_ANGLE,
@@ -116,8 +113,6 @@ export function getPanels(elements) {
             return { type, Panel: FillPanel };
           case BACKGROUND_COLOR:
             return { type, Panel: BackgroundColorPanel };
-          case COLOR:
-            return { type, Panel: ColorPanel };
           case STYLE:
             return { type, Panel: StylePanel };
           case TEXT:

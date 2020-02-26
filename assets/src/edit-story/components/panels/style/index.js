@@ -38,20 +38,27 @@ import removeUnsetValues from '../utils/removeUnsetValues';
 import getCommonValue from '../utils/getCommonValue';
 import { SimplePanel } from '../panel';
 import TextStyleControls from './textStyle';
+import ColorControls from './color';
 
 function StylePanel({ selectedElements, onSetProperties }) {
+  // TextStyle settings
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
+  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
+  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
+
   const padding = getCommonValue(selectedElements, 'padding') ?? '';
 
+  // Font settings.
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
   const fontWeights = getCommonValue(selectedElements, 'fontWeights');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const fontFallback = getCommonValue(selectedElements, 'fontFallback');
-  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
+
+  // Color settings.
+  const color = getCommonValue(selectedElements, 'color');
 
   const {
     state: { fonts },
@@ -59,6 +66,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
   } = useFont();
 
   const [state, setState] = useState({
+    color,
     fontFamily,
     fontStyle,
     fontSize,
@@ -76,6 +84,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     const currentFontWeights = getFontWeight(fontFamily);
     const currentFontFallback = getFontFallback(fontFamily);
     setState({
+      color,
       textAlign,
       letterSpacing,
       lineHeight,
@@ -89,6 +98,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
       textDecoration,
     });
   }, [
+    color,
     textAlign,
     letterSpacing,
     lineHeight,
@@ -215,6 +225,13 @@ function StylePanel({ selectedElements, onSetProperties }) {
           fontStyle,
           textAlign,
           textDecoration,
+        }}
+      />
+      <ColorControls
+        state={state}
+        setState={setState}
+        properties={{
+          color,
         }}
       />
       <InputGroup

@@ -14,6 +14,40 @@
  * limitations under the License.
  */
 
-function colorControls() {
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { InputGroup } from '../../form';
+
+function ColorControls({ properties, state, setState }) {
+  const { color } = properties;
+  return (
+    <>
+      <InputGroup
+        type="color"
+        label={__('Color', 'web-stories')}
+        value={state.color}
+        isMultiple={color === ''}
+        onChange={(value) => setState({ ...state, color: value })}
+      />
+    </>
+  );
 }
+
+ColorControls.propTypes = {
+  properties: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired,
+  setState: PropTypes.func.isRequired,
+};
+
+export default ColorControls;
