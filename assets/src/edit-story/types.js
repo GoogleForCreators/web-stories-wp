@@ -105,6 +105,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   padding: PropTypes.object,
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
+  textOpacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 });
 
 StoryPropTypes.elements.square = PropTypes.shape({

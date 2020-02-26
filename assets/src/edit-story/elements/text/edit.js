@@ -102,6 +102,7 @@ function TextEdit({
     padding,
     textAlign,
     textDecoration,
+    textOpacity,
   },
   box: { x, y, height, rotationAngle },
 }) {
@@ -109,7 +110,7 @@ function TextEdit({
     actions: { dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
-    color,
+    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
     backgroundColor: backgroundOpacity
       ? hexToRGBA(backgroundColor, backgroundOpacity)
       : backgroundColor,

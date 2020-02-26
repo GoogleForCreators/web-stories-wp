@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -31,7 +31,7 @@ import { InputGroup } from '../../form';
 import BackgroundColorControls from '../shared/backgroundColorControls';
 
 function ColorControls({ properties, state, setState }) {
-  const { color, backgroundColor, backgroundOpacity } = properties;
+  const { color, backgroundColor, backgroundOpacity, textOpacity } = properties;
   return (
     <>
       <InputGroup
@@ -40,6 +40,16 @@ function ColorControls({ properties, state, setState }) {
         value={state.color}
         isMultiple={color === ''}
         onChange={(value) => setState({ ...state, color: value })}
+      />
+      <InputGroup
+        type="number"
+        label={__('Text Opacity', 'web-stories')}
+        value={state.textOpacity}
+        isMultiple={'' === textOpacity}
+        onChange={(value) => setState({ ...state, textOpacity: value })}
+        postfix={_x('%', 'Percentage', 'web-stories')}
+        min="1"
+        max="100"
       />
       <BackgroundColorControls
         state={state}

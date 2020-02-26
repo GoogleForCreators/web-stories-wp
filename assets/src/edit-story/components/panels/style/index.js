@@ -64,6 +64,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     selectedElements,
     'backgroundOpacity'
   );
+  const textOpacity = getCommonValue(selectedElements, 'textOpacity');
 
   const {
     state: { fonts },
@@ -82,6 +83,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     fontWeights,
     textDecoration,
     textAlign,
+    textOpacity,
     letterSpacing,
     lineHeight,
     padding,
@@ -94,6 +96,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
       backgroundColor,
       backgroundOpacity,
       color,
+      textOpacity,
       textAlign,
       letterSpacing,
       lineHeight,
@@ -108,6 +111,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     });
   }, [
     color,
+    textOpacity,
     textAlign,
     letterSpacing,
     lineHeight,
@@ -245,6 +249,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           backgroundColor,
           backgroundOpacity,
           color,
+          textOpacity,
         }}
       />
       <InputGroup

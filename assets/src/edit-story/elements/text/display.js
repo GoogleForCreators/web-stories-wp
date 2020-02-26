@@ -67,6 +67,7 @@ function TextDisplay({
     padding,
     textAlign,
     textDecoration,
+    textOpacity,
   },
 }) {
   const ref = useRef(null);
@@ -75,7 +76,7 @@ function TextDisplay({
     actions: { dataToEditorY },
   } = useUnits();
   const props = {
-    color,
+    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
     backgroundColor: backgroundOpacity
       ? hexToRGBA(backgroundColor, backgroundOpacity)
       : backgroundColor,

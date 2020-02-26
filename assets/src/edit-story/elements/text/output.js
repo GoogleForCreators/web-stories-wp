@@ -41,6 +41,7 @@ function TextOutput({
     padding,
     textAlign,
     textDecoration,
+    textOpacity,
   },
 }) {
   const style = {
@@ -51,9 +52,9 @@ function TextOutput({
     background: backgroundOpacity
       ? hexToRGBA(backgroundColor, backgroundOpacity)
       : backgroundColor,
-    color,
+    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
     lineHeight,
-    letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
+    letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
     padding: padding ? `${padding.vertical}% ${padding.horizontal}%` : null,
     textAlign: textAlign ? textAlign : null,
     textDecoration,
