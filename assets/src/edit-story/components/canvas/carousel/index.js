@@ -74,6 +74,20 @@ const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   overflow-x: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'scroll' : 'hidden'};
+  margin: 0 0 8px 0;
+  scrollbar-color: rgba(255, 255, 255, 0.54) transparent;
+  scrollbar-width: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.54);
+    border-radius: 6px;
+  }
 `;
 
 const StyledGridViewButton = styled(GridViewButton)`

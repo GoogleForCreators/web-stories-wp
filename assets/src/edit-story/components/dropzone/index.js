@@ -32,6 +32,7 @@ import useDropZone from './useDropZone';
 
 const DropZoneComponent = styled.div`
   position: relative;
+  margin: 0;
   ${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) =>
     borderPosition &&
     `
