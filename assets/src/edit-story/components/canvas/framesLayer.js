@@ -34,13 +34,12 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
 
-const FramesPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container',
-  pointerEvents: 'initial',
-})`
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
-`);
+const FramesPageArea = withOverlay(
+  styled(PageArea).attrs({
+    className: 'container',
+    pointerEvents: 'initial',
+  })``
+);
 
 function FramesLayer() {
   const {
@@ -59,7 +58,7 @@ function FramesLayer() {
       // otherwise.
       tabIndex="-1"
     >
-      <FramesPageArea backgroundColor={currentPage?.backgroundColor}>
+      <FramesPageArea>
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
