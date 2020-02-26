@@ -27,20 +27,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { BACKGROUND_FILL_TYPES } from '../../constants';
 import { SimplePanel } from './panel';
 
 function BackgroundFillPanel({ selectedElements, onSetProperties }) {
   const { backgroundFill } = selectedElements[0];
 
   const handleChange = (evt) => {
-    const newValue =
-      evt.target.value === BACKGROUND_FILL_TYPES.DO_NOT_FORMAT
-        ? BACKGROUND_FILL_TYPES.DO_NOT_FORMAT
-        : BACKGROUND_FILL_TYPES.FIT_TO_DEVICE;
-
     onSetProperties({
-      backgroundFill: newValue,
+      isFullbleedBackground: evt.target.value === 'yes',
     });
   };
 
@@ -56,12 +50,8 @@ function BackgroundFillPanel({ selectedElements, onSetProperties }) {
           evt.target.form.dispatchEvent(new window.Event('submit'))
         }
       >
-        <option value={BACKGROUND_FILL_TYPES.FIT_TO_DEVICE}>
-          {__('Fit to device', 'web-stories')}
-        </option>
-        <option value={BACKGROUND_FILL_TYPES.DO_NOT_FORMAT}>
-          {__('Do not format', 'web-stories')}
-        </option>
+        <option value="yes">{__('Fit to device', 'web-stories')}</option>
+        <option value="no">{__('Do not format', 'web-stories')}</option>
       </select>
     </SimplePanel>
   );
