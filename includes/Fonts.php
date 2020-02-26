@@ -185,7 +185,7 @@ class Fonts {
 	/**
 	 * Get subsets of fonts based on language settings.
 	 *
-	 * @return array
+	 * @return array<string> List of font subsets.
 	 */
 	public static function get_subsets() {
 		$subsets = [ 'latin', 'latin-ext' ];
@@ -228,6 +228,11 @@ class Fonts {
 			return [];
 		}
 		$file_content = file_get_contents( $file );  // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+
+		if ( ! $file_content ) {
+			return [];
+		}
+
 		$google_fonts = json_decode( $file_content, true );
 
 		if ( empty( $google_fonts ) ) {
