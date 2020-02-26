@@ -14,11 +14,16 @@ phpunit.xml.dist                                @swissspidy @spacedmonkey @miina
 .github/                                        @swissspidy
 .storybook/                                     @swissspidy
 bin/                                            @swissspidy
+.travis.yml                                     @swissspidy @spacedmonkey
 
 # WordPress.org plugin directory readme file.
 readme.txt                                      @swissspidy @pbakaus
 
 # Media-related functionality
+assets/src/edit-story/app/api/                  @spacedmonkey
 assets/src/edit-story/app/media/                @spacedmonkey
 assets/src/edit-story/app/uploader/             @spacedmonkey
 assets/src/edit-story/components/uploadButton/  @spacedmonkey
+
+# Stories Editor
+assets/src/edit-story/                          @swissspidy @dvoytenko barklund
