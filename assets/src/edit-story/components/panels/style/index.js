@@ -59,6 +59,11 @@ function StylePanel({ selectedElements, onSetProperties }) {
 
   // Color settings.
   const color = getCommonValue(selectedElements, 'color');
+  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
+  const backgroundOpacity = getCommonValue(
+    selectedElements,
+    'backgroundOpacity'
+  );
 
   const {
     state: { fonts },
@@ -66,6 +71,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
   } = useFont();
 
   const [state, setState] = useState({
+    backgroundColor,
+    backgroundOpacity,
     color,
     fontFamily,
     fontStyle,
@@ -84,6 +91,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
     const currentFontWeights = getFontWeight(fontFamily);
     const currentFontFallback = getFontFallback(fontFamily);
     setState({
+      backgroundColor,
+      backgroundOpacity,
       color,
       textAlign,
       letterSpacing,
@@ -110,6 +119,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
     fontSize,
     fontWeight,
     textDecoration,
+    backgroundColor,
+    backgroundOpacity,
   ]);
   const handleSubmit = (evt) => {
     onSetProperties(state);
@@ -231,6 +242,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
         state={state}
         setState={setState}
         properties={{
+          backgroundColor,
+          backgroundOpacity,
           color,
         }}
       />

@@ -23,14 +23,14 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { useEffect, useState } from '@wordpress/element';
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import BackgroundColorControls from './shared/backgroundColorControls';
 
 function BackgroundColorPanel({ selectedElements, onSetProperties }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -53,22 +53,10 @@ function BackgroundColorPanel({ selectedElements, onSetProperties }) {
       title={__('Background color', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <InputGroup
-        type="color"
-        label={__('Background color', 'web-stories')}
-        value={state.backgroundColor}
-        isMultiple={backgroundColor === ''}
-        onChange={(value) => setState({ ...state, backgroundColor: value })}
-      />
-      <InputGroup
-        type="number"
-        label={__('Background Opacity', 'web-stories')}
-        value={state.backgroundOpacity}
-        isMultiple={'' === backgroundOpacity}
-        onChange={(value) => setState({ ...state, backgroundOpacity: value })}
-        postfix={_x('%', 'Percentage', 'web-stories')}
-        min="1"
-        max="100"
+      <BackgroundColorControls
+        state={state}
+        setState={setState}
+        properties={{ backgroundColor, backgroundOpacity }}
       />
     </SimplePanel>
   );

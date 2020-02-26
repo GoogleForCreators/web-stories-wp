@@ -22,38 +22,42 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { InputGroup } from '../../form';
-import BackgroundColorControls from '../shared/backgroundColorControls';
 
-function ColorControls({ properties, state, setState }) {
-  const { color, backgroundColor, backgroundOpacity } = properties;
+function BackgroundColorControls({ properties, state, setState }) {
+  const { backgroundColor, backgroundOpacity } = properties;
   return (
     <>
       <InputGroup
         type="color"
-        label={__('Color', 'web-stories')}
-        value={state.color}
-        isMultiple={color === ''}
-        onChange={(value) => setState({ ...state, color: value })}
+        label={__('Background color', 'web-stories')}
+        value={state.backgroundColor}
+        isMultiple={backgroundColor === ''}
+        onChange={(value) => setState({ ...state, backgroundColor: value })}
       />
-      <BackgroundColorControls
-        state={state}
-        setState={setState}
-        properties={{ backgroundColor, backgroundOpacity }}
+      <InputGroup
+        type="number"
+        label={__('Background Opacity', 'web-stories')}
+        value={state.backgroundOpacity}
+        isMultiple={'' === backgroundOpacity}
+        onChange={(value) => setState({ ...state, backgroundOpacity: value })}
+        postfix={_x('%', 'Percentage', 'web-stories')}
+        min="1"
+        max="100"
       />
     </>
   );
 }
 
-ColorControls.propTypes = {
+BackgroundColorControls.propTypes = {
   properties: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   setState: PropTypes.func.isRequired,
 };
 
-export default ColorControls;
+export default BackgroundColorControls;
