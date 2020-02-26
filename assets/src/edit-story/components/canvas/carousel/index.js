@@ -86,7 +86,7 @@ const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
   }
   &::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.54);
-    border-radius: 6px;
+    border-radius: 16px;
   }
 `;
 
