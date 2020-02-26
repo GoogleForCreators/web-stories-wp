@@ -58,11 +58,11 @@ function BackgroundPanel({ selectedElements, onSetProperties }) {
     onSetProperties(newState);
   };
   return (
-    <SimplePanel name="position" title={__('Background', 'amp')}>
+    <SimplePanel name="position" title={__('Background', 'web-stories')}>
       <ActionButton onClick={handleClick}>
         {state.isBackground
-          ? __('Remove as Background', 'amp')
-          : __('Set as background', 'amp')}
+          ? __('Remove as Background', 'web-stories')
+          : __('Set as background', 'web-stories')}
       </ActionButton>
     </SimplePanel>
   );

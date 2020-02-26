@@ -52,9 +52,10 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * Registers routes for amp fonts.
 	 *
 	 * @see register_rest_route()
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
-
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -107,7 +108,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	/**
 	 * Prepares a single font output for response.
 	 *
-	 * @param Object          $font Font object.
+	 * @param array           $font Font object.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
@@ -164,7 +165,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		return current_user_can( 'edit_posts' );

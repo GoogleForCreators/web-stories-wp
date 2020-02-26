@@ -219,12 +219,21 @@ class Story_Post_Type {
 
 	/**
 	 * Enqueue Google fonts.
+	 *
+	 * @return void
 	 */
 	public static function wp_enqueue_scripts() {
-		if ( is_singular( self::POST_TYPE_SLUG ) ) {
-			$post = get_post();
-			self::load_fonts( $post );
+		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
+			return;
 		}
+
+		$post = get_post();
+
+		if ( ! $post instanceof WP_Post) {
+			return;
+		}
+
+		self::load_fonts( $post );
 	}
 
 	/**
@@ -232,6 +241,8 @@ class Story_Post_Type {
 	 * Enqueue scripts for the element editor.
 	 *
 	 * @param string $hook The current admin page.
+	 *
+	 * @return void
 	 */
 	public static function admin_enqueue_scripts( $hook ) {
 		$screen = get_current_screen();
@@ -269,11 +280,17 @@ class Story_Post_Type {
 
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-		$rest_base        = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 		$post_thumbnails  = get_theme_support( 'post-thumbnails' );
+		$rest_base        = self::POST_TYPE_SLUG;
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
 
-		self::load_admin_fonts( $post );
+		if ( $post_type_object instanceof \WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+		}
+
+		if ( $post ) {
+			self::load_admin_fonts( $post );
+		}
 
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
@@ -333,7 +350,10 @@ class Story_Post_Type {
 		$mime_types         = [];
 
 		foreach ( $allowed_mime_types as $type => $mimes ) {
-			array_push( $mime_types, ...$mimes );
+			// Otherwise this throws a warning on PHP < 7.3.
+			if ( ! empty( $mimes ) ) {
+				array_push( $mime_types, ...$mimes );
+			}
 		}
 
 		$allowed_file_types = [];
@@ -376,7 +396,7 @@ class Story_Post_Type {
 		 *
 		 * @since 1.3
 		 *
-		 * @param array Associative array of allowed mime types per media type (image, audio, video).
+		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
@@ -396,6 +416,8 @@ class Story_Post_Type {
 	 * Load font from story data.
 	 *
 	 * @param WP_Post $post Post Object.
+	 *
+	 * @return void
 	 */
 	public static function load_fonts( $post ) {
 		$post_story_data       = json_decode( $post->post_content_filtered, true );
@@ -448,6 +470,8 @@ class Story_Post_Type {
 	 * Load font in admin from story data.
 	 *
 	 * @param WP_Post $post Post Object.
+	 *
+	 * @return void
 	 */
 	public static function load_admin_fonts( $post ) {
 		$post_story_data       = json_decode( $post->post_content_filtered, true );
@@ -511,11 +535,15 @@ class Story_Post_Type {
 	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
 	 *
-	 * @param array $allowed_tags Allowed tags.
+	 * @param array|string $allowed_tags Allowed tags.
 	 *
-	 * @return array Allowed tags.
+	 * @return array|string Allowed tags.
 	 */
 	public static function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
 		$story_components = [
 			'amp-story'                 => [
 				'background-audio'     => true,
@@ -617,7 +645,7 @@ class Story_Post_Type {
 			],
 		];
 
-		array_merge( $allowed_tags, $story_components );
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
 
 		foreach ( $allowed_tags as &$allowed_tag ) {
 			$allowed_tag['animate-in']          = true;
@@ -695,6 +723,8 @@ class Story_Post_Type {
 
 	/**
 	 * Prints the schema.org metadata on the single story template.
+	 *
+	 * @return void
 	 */
 	public static function print_schemaorg_metadata() {
 		$metadata = self::get_schemaorg_metadata();
@@ -724,6 +754,11 @@ class Story_Post_Type {
 			$metadata['publisher']['logo'] = $publisher_logo;
 		}
 
+		/**
+		 * We're expecting a post object.
+		 *
+		 * @var \WP_Post $post
+		 */
 		$post = get_queried_object();
 
 		$metadata = array_merge(
@@ -737,7 +772,7 @@ class Story_Post_Type {
 			]
 		);
 
-		$post_author = get_userdata( $post->post_author );
+		$post_author = get_userdata( (int) $post->post_author );
 
 		if ( $post_author ) {
 			$metadata['author'] = [
@@ -747,7 +782,7 @@ class Story_Post_Type {
 		}
 
 		if ( has_post_thumbnail( $post->ID ) ) {
-			$metadata['image'] = wp_get_attachment_image_url( get_post_thumbnail_id( $post->ID ), 'full' );
+			$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
 		}
 
 		/**
