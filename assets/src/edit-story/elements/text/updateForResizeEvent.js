@@ -17,29 +17,21 @@
 /**
  * Internal dependencies
  */
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import {
   calculateFitTextFontSize,
   calculateTextHeight,
 } from '../../utils/textMeasurements';
 import { dataPixels } from '../../units/dimensions';
 
-function updateForResizeEvent(element, newWidth, newHeight) {
-  const { width, height } = element;
-  const isResizingWidth = Math.abs(newWidth - width) >= 1;
-  const isResizingHeight = Math.abs(newHeight - height) >= 1;
+function updateForResizeEvent(element, direction, newWidth, newHeight) {
+  const isResizingWidth = direction[0] !== 0;
+  const isResizingHeight = direction[1] !== 0;
 
   // Diagonal resizing w/keep ratio.
   if (isResizingWidth && isResizingHeight) {
     return {
       fontSize: dataPixels(
-        calculateFitTextFontSize(
-          element,
-          newWidth,
-          newHeight,
-          MIN_FONT_SIZE,
-          MAX_FONT_SIZE
-        )
+        calculateFitTextFontSize(element, newWidth, newHeight)
       ),
     };
   }
