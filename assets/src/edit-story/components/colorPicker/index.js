@@ -134,7 +134,6 @@ const CurrentAlphaWrapper = styled.div`
 `;
 
 function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
-  const controlsProps = { rgb, hsl, hsv, hex, onChange };
   const alphaPercentage = Math.round(rgb.a * 100);
 
   return (
@@ -154,7 +153,9 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             pointer={() => (
               <Pointer size={CONTROLS_WIDTH} offset={-6} currentRGB={rgb} />
             )}
-            {...controlsProps}
+            hsl={hsl}
+            hsv={hsv}
+            onChange={onChange}
           />
         </SaturationWrapper>
         <HueWrapper>
@@ -166,7 +167,8 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             pointer={() => (
               <Pointer size={CONTROLS_WIDTH} offset={0} currentRGB={rgb} />
             )}
-            {...controlsProps}
+            hsl={hsl}
+            onChange={onChange}
           />
         </HueWrapper>
         <AlphaWrapper>
@@ -178,7 +180,9 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
             pointer={() => (
               <Pointer size={CONTROLS_WIDTH} offset={-3} currentRGBA={rgb} />
             )}
-            {...controlsProps}
+            rgb={rgb}
+            hsl={hsl}
+            onChange={onChange}
           />
         </AlphaWrapper>
       </Body>
@@ -193,7 +197,7 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
           />
         </EyedropperWrapper>
         <CurrentWrapper>
-          <EditableHexPreview {...controlsProps} />
+          <EditableHexPreview hex={hex} onChange={onChange} />
         </CurrentWrapper>
         <CurrentAlphaWrapper>{alphaPercentage + '%'}</CurrentAlphaWrapper>
       </Footer>
