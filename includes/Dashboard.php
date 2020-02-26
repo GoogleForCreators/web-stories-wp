@@ -48,6 +48,8 @@ class Dashboard {
 
 	/**
 	 * Initializes the dashboard logic.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -56,6 +58,8 @@ class Dashboard {
 
 	/**
 	 * Registers the dashboard admin menu page.
+	 *
+	 * @return void
 	 */
 	public function add_menu_page() {
 		$this->hook_suffix = add_submenu_page(
@@ -71,6 +75,8 @@ class Dashboard {
 
 	/**
 	 * Renders the dashboard page.
+	 *
+	 * @return void
 	 */
 	public function render() {
 		?>
@@ -84,6 +90,8 @@ class Dashboard {
 	 * Enqueues dashboard scripts and styles.
 	 *
 	 * @param string $hook_suffix The current admin page.
+	 *
+	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
 		if ( $this->hook_suffix !== $hook_suffix ) {

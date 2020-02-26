@@ -37,7 +37,7 @@ class Plugin {
 	/**
 	 * Initialize plugin functionality.
 	 *
-	 * @todo Just move to namespace.php?
+	 * @return void
 	 */
 	public function register() {
 		add_action( 'init', [ Media::class, 'init' ] );

@@ -34,6 +34,8 @@ namespace Google\Web_Stories;
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to activate network-wide.
+ *
+ * @return void
  */
 function activate( $network_wide ) {
 	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
@@ -53,6 +55,8 @@ function activate( $network_wide ) {
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to deactivate network-wide.
+ *
+ * @return void
  */
 function deactivate( $network_wide ) {
 	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
