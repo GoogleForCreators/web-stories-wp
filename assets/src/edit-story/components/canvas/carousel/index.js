@@ -65,7 +65,6 @@ const Area = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 16px 0 24px;
 `;
 
 const List = styled(Area)`
