@@ -20,9 +20,9 @@
  * @param {string} hex 6-digit hex value.
  * @param {number} opacity Opacity in %.
  */
-function hexToRGBA(hex, opacity) {
+function hexToRGBA(hex, opacity = 100) {
   // @todo is 3 digit hex needed?
-  if (7 !== hex.length) {
+  if (7 !== hex.length || '#' !== hex[0]) {
     return null;
   }
   const r = '0x' + hex[1] + hex[2];
