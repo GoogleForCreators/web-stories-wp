@@ -32,7 +32,7 @@ const PAGE_THUMB_OUTLINE = 2;
 
 const Page = styled.button`
   padding: 0;
-  margin: 0;
+  margin: 0 3px;
   border: ${PAGE_THUMB_OUTLINE}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
