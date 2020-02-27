@@ -40,6 +40,7 @@ const Layout = styled.div`
     / 1fr;
 `;
 
+// @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
 })`
