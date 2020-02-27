@@ -29,7 +29,7 @@ import { ReactComponent as MediaIcon } from './media.svg';
 function MediaTab(props) {
   return (
     <Tab aria-controls={paneId} {...props}>
-      <MediaIcon aria-label={__('Animation library', 'web-stories')} />
+      <MediaIcon aria-label={__('Media library', 'web-stories')} />
     </Tab>
   );
 }

@@ -29,7 +29,7 @@ import { ReactComponent as ShapesIcon } from './shapes.svg';
 function ShapesTab(props) {
   return (
     <Tab aria-controls={paneId} {...props}>
-      <ShapesIcon aria-label={__('Animation library', 'web-stories')} />
+      <ShapesIcon aria-label={__('Shapes library', 'web-stories')} />
     </Tab>
   );
 }
