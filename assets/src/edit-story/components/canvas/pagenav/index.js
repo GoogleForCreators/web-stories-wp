@@ -36,7 +36,6 @@ import { LeftArrow, RightArrow } from '../../button';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: ${({ isNext }) => (isNext ? 'flex-end' : 'flex-start')};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: ${PAGE_NAV_BUTTON_WIDTH}px;
   height: ${PAGE_NAV_BUTTON_WIDTH}px;
@@ -74,25 +73,20 @@ function PageNav({ isNext }) {
     height: PAGE_NAV_BUTTON_WIDTH,
   };
 
-  if (isRTL) {
+  const PrevButton = isRTL ? RightArrow : LeftArrow;
+  const NextButton = isRTL ? LeftArrow : RightArrow;
+
+  if (isNext) {
     return (
-      <Wrapper isNext={isNext}>
-        {isNext ? (
-          <LeftArrow {...buttonProps} />
-        ) : (
-          <RightArrow {...buttonProps} />
-        )}
+      <Wrapper>
+        <NextButton {...buttonProps} />
       </Wrapper>
     );
   }
 
   return (
-    <Wrapper isNext={isNext}>
-      {isNext ? (
-        <RightArrow {...buttonProps} />
-      ) : (
-        <LeftArrow {...buttonProps} />
-      )}
+    <Wrapper>
+      <PrevButton {...buttonProps} />
     </Wrapper>
   );
 }
