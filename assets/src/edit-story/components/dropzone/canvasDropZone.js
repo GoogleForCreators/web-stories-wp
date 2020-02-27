@@ -13,19 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
 /**
  * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+/**
+ * Internal dependencies
  */
 import { useRef } from '@wordpress/element';
 import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
+import { useConfig } from '../../app/config';
 import { disableDefaults } from './utils';
-import { OverContent, OverlayWrapper } from './shared';
+import {
+  Heading,
+  Icon,
+  OverContent,
+  Overlay,
+  OverlayWrapper,
+  Text,
+} from './shared';
 import DropZone, { useDropZone } from './';
 
 function CanvasDropzone({ children }) {
@@ -38,6 +46,7 @@ function CanvasDropzone({ children }) {
     state: { DEFAULT_WIDTH },
     actions: { insertMediaElement },
   } = useMedia();
+  const { allowedFileTypes } = useConfig();
 
   const onDropHandler = (evt) => {
     disableDefaults(evt);
@@ -69,7 +78,21 @@ function CanvasDropzone({ children }) {
 
   return (
     <DropZone onDropHandler={onDropHandler} dropZoneElement={dropZoneElement}>
-      {isDragging(dropZoneElement) && <OverlayWrapper />}
+      {isDragging(dropZoneElement) && (
+        <OverlayWrapper>
+          <Overlay>
+            <Icon />
+            <Heading>{__('Upload to media library', 'web-stories')}</Heading>
+            <Text>
+              {sprintf(
+                /* translators: %s is a list of allowed file extensions. */
+                __('You can upload %s.', 'web-stories'),
+                allowedFileTypes.join(', ')
+              )}
+            </Text>
+          </Overlay>
+        </OverlayWrapper>
+      )}
       <OverContent>{children}</OverContent>
     </DropZone>
   );
