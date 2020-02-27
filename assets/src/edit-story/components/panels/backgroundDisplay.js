@@ -29,8 +29,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { SimplePanel } from './panel';
 
-function BackgroundFillPanel({ selectedElements, onSetProperties }) {
-  const { backgroundFill } = selectedElements[0];
+function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
+  const { isFullbleedBackground } = selectedElements[0];
 
   const handleChange = (evt) => {
     onSetProperties({
@@ -40,11 +40,19 @@ function BackgroundFillPanel({ selectedElements, onSetProperties }) {
 
   return (
     <SimplePanel
-      name="backgroundFill"
-      title={__('Background Fill Behavior', 'amp')}
+      name="backgroundDisplay"
+      title={__('Background Display Options', 'amp')}
     >
+      <p>
+        {/* todo: re-consider wording; add help dialog */
+        __(
+          'How I want my story displayed on devices with a different aspect ratio?',
+          'web-stories'
+        )}
+      </p>
+      {/* todo: use properly styled switch component */}
       <select
-        value={backgroundFill}
+        value={isFullbleedBackground ? 'yes' : 'no'}
         onChange={handleChange}
         onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
@@ -57,9 +65,9 @@ function BackgroundFillPanel({ selectedElements, onSetProperties }) {
   );
 }
 
-BackgroundFillPanel.propTypes = {
+BackgroundDisplayPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default BackgroundFillPanel;
+export default BackgroundDisplayPanel;

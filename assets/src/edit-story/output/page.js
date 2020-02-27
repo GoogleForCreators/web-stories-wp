@@ -33,7 +33,7 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
-  const backgroundElements = page.elements.filter(
+  const backgroundNonFullbleedElements = page.elements.filter(
     (element) =>
       element.id === page.backgroundElementId &&
       element.isFullbleedBackground === false
@@ -43,7 +43,7 @@ function OutputPage({ page }) {
       element.id === page.backgroundElementId &&
       element.isFullbleedBackground !== false
   );
-  const nonBackgroundFullbleedElements = page.elements.filter(
+  const regularElements = page.elements.filter(
     (element) => element.id !== page.backgroundElementId
   );
   return (
@@ -55,12 +55,12 @@ function OutputPage({ page }) {
           ))}
         </div>
         <div className="page-safe-area" style={aspectRatioStyles}>
-          {backgroundElements.map((element) => (
+          {backgroundNonFullbleedElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
         <div className="page-safe-area" style={aspectRatioStyles}>
-          {nonBackgroundFullbleedElements.map((element) => (
+          {regularElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
