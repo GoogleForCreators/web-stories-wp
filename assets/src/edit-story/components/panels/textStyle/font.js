@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -37,6 +38,12 @@ function FontControls({ properties, state, setState }) {
     state: { fonts },
     actions: { getFontWeight, getFontFallback },
   } = useFont();
+
+  const handleNumberChange = useCallback(
+    (property) => (value) =>
+      setState({ ...state, [property]: parseInt(value) }),
+    [setState, state]
+  );
   return (
     <>
       {fonts && (
@@ -71,9 +78,7 @@ function FontControls({ properties, state, setState }) {
           options={state.fontWeights}
           value={state.fontWeight}
           isMultiple={fontWeight === ''}
-          onChange={(value) =>
-            setState({ ...state, fontWeight: parseInt(value) })
-          }
+          onChange={handleNumberChange('fontWeight')}
         />
       )}
       <InputGroup
@@ -84,7 +89,7 @@ function FontControls({ properties, state, setState }) {
         postfix={'px'}
         min={MIN_FONT_SIZE}
         max={MAX_FONT_SIZE}
-        onChange={(value) => setState({ ...state, fontSize: parseInt(value) })}
+        onChange={handleNumberChange('fontSize')}
       />
     </>
   );

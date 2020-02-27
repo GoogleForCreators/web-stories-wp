@@ -107,10 +107,7 @@ function SizePanel({ selectedElements, onSetProperties }) {
         type="checkbox"
         label={__('Keep ratio', 'web-stories')}
         value={lockRatio}
-        isMultiple={false}
-        onChange={(value) => {
-          setLockRatio(value);
-        }}
+        onChange={setLockRatio}
         disabled={isFill}
       />
     </SimplePanel>

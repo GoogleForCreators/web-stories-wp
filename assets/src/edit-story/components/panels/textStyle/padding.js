@@ -81,7 +81,6 @@ function PaddingControls({
         type="checkbox"
         label={__('Keep padding ratio', 'web-stories')}
         value={lockPaddingRatio}
-        isMultiple={false}
         onChange={setLockPaddingRatio}
       />
     </>

@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useCallback } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
@@ -48,6 +48,16 @@ function ScalePanel({ selectedElements, onSetProperties }) {
     });
     evt.preventDefault();
   };
+
+  const handleFloatChange = useCallback(
+    (property) => (value) =>
+      setState({
+        ...state,
+        [property]: isNaN(value) || value === '' ? '(auto)' : parseFloat(value),
+      }),
+    [setState, state]
+  );
+
   return (
     <SimplePanel
       name="scale"
@@ -58,36 +68,21 @@ function ScalePanel({ selectedElements, onSetProperties }) {
         label={__('Scale', 'web-stories')}
         value={typeof state.scale === 'number' ? state.scale : '(auto)'}
         isMultiple={scale === ''}
-        onChange={(value) =>
-          setState({
-            ...state,
-            scale: isNaN(value) || value === '' ? '(auto)' : parseFloat(value),
-          })
-        }
+        onChange={handleFloatChange('scale')}
         postfix={_x('%', 'Percentage', 'web-stories')}
       />
       <InputGroup
         label={__('Focal X', 'web-stories')}
         value={typeof state.focalX === 'number' ? state.focalX : '(auto)'}
         isMultiple={focalX === ''}
-        onChange={(value) =>
-          setState({
-            ...state,
-            focalX: isNaN(value) || value === '' ? '(auto)' : parseFloat(value),
-          })
-        }
+        onChange={handleFloatChange('focalX')}
         postfix={_x('%', 'Percentage', 'web-stories')}
       />
       <InputGroup
         label={__('Focal Y', 'web-stories')}
         value={typeof state.focalY === 'number' ? state.focalY : '(auto)'}
         isMultiple={focalY === ''}
-        onChange={(value) =>
-          setState({
-            ...state,
-            focalY: isNaN(value) || value === '' ? '(auto)' : parseFloat(value),
-          })
-        }
+        onChange={handleFloatChange('focalY')}
         postfix={_x('%', 'Percentage', 'web-stories')}
       />
     </SimplePanel>
