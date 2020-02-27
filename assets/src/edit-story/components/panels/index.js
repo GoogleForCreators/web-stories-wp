@@ -92,11 +92,7 @@ export function getPanels(elements) {
       .map((type) => {
         switch (type) {
           case BACKGROUND:
-            // @todo Would be good to have a general logic for panels supporting multi-selection instead.
-            // Only display when one element selected.
-            if (1 === elements.length) {
-              return { type, Panel: BackgroundPanel };
-            }
+            // Only display for background element.
             return null;
           case SIZE_AND_POSITION:
             return { type, Panel: SizeAndPositionPanel };
