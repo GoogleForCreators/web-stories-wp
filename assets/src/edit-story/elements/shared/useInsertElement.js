@@ -35,11 +35,13 @@ function useInsertElement() {
     const { isMedia } = getDefinitionForType(type);
     return isMedia;
   };
-  const insertElement = (type, { width, height, isBackground, ...props }) => {
+  const insertElement = (
+    type,
+    { width, height, isBackground = true, ...props }
+  ) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
-      isBackground,
       y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
       width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
       height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),

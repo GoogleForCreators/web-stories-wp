@@ -32,7 +32,6 @@ export const defaultAttributes = {
   posterId: null,
   poster: null,
   videoId: 0,
-  isBackground: true,
 };
 
 export const hasEditMode = true;
