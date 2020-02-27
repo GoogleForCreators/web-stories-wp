@@ -62,7 +62,7 @@ const FlipButton = styled(Button)`
   }
 `;
 
-function SizePanel({ selectedElements, onSetProperties }) {
+function SizePositionPanel({ selectedElements, onSetProperties }) {
   const x = getCommonValue(selectedElements, 'x');
   const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
@@ -221,9 +221,11 @@ function SizePanel({ selectedElements, onSetProperties }) {
           onChange={handleNumberChange('rotationAngle')}
           disabled={isFill}
         />
+        {/** TODO: Implement flip horizontal mode */}
         <FlipButton>
           <FlipHorizontal />
         </FlipButton>
+        {/** TODO: Implement flip vertical mode */}
         <FlipButton>
           <FlipVertical />
         </FlipButton>
@@ -232,9 +234,9 @@ function SizePanel({ selectedElements, onSetProperties }) {
   );
 }
 
-SizePanel.propTypes = {
+SizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default SizePanel;
+export default SizePositionPanel;

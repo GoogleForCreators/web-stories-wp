@@ -25,7 +25,7 @@ import PageBackgroundPanel from './pageBackground';
 import FillPanel from './fill';
 import FontPanel from './font';
 import MaskPanel from './mask';
-import SizePanel from './size';
+import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
 import TextPanel from './text';
@@ -39,7 +39,7 @@ const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
 const TEXT = 'text';
-const SIZE = 'size';
+const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
@@ -50,7 +50,7 @@ const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
   BACKGROUND,
-  SIZE,
+  SIZE_POSITION,
   SCALE,
   COLOR,
   FONT,
@@ -108,8 +108,8 @@ export function getPanels(elements) {
           return null;
         case SCALE:
           return { type, Panel: ScalePanel };
-        case SIZE:
-          return { type, Panel: SizePanel };
+        case SIZE_POSITION:
+          return { type, Panel: SizePositionPanel };
         case FILL:
           return { type, Panel: FillPanel };
         case COLOR:
