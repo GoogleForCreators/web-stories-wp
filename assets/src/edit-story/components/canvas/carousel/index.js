@@ -52,7 +52,10 @@ const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: 'left-navigation carousel right-navigation' auto / 53px 1fr 53px;
+  grid: ${({ isRTL }) =>
+    isRTL
+      ? "'next-navigation carousel prev-navigation' auto / 53px 1fr 53px"
+      : "'prev-navigation carousel next-navigation' auto / 53px 1fr 53px"};
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -165,25 +168,15 @@ function Carousel() {
 
   return (
     <>
-      <Wrapper>
-        <Area area="left-navigation">
-          {isRTL ? (
-            <RightArrow
-              isHidden={!hasHorizontalOverflow || isAtEndOfList}
-              onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
-              width="24"
-              height="24"
-              aria-label={__('Scroll Right', 'web-stories')}
-            />
-          ) : (
-            <LeftArrow
-              isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-              onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
-              width="24"
-              height="24"
-              aria-label={__('Scroll Left', 'web-stories')}
-            />
-          )}
+      <Wrapper isRTL={isRTL}>
+        <Area area="prev-navigation">
+          <LeftArrow
+            isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
+            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+            width="24"
+            height="24"
+            aria-label={__('Scroll Left', 'web-stories')}
+          />
         </Area>
         <List
           area="carousel"
@@ -216,24 +209,14 @@ function Carousel() {
             );
           })}
         </List>
-        <Area area="right-navigation">
-          {isRTL ? (
-            <LeftArrow
-              isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-              onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
-              width="24"
-              height="24"
-              aria-label={__('Scroll Left', 'web-stories')}
-            />
-          ) : (
-            <RightArrow
-              isHidden={!hasHorizontalOverflow || isAtEndOfList}
-              onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
-              width="24"
-              height="24"
-              aria-label={__('Scroll Right', 'web-stories')}
-            />
-          )}
+        <Area area="next-navigation">
+          <RightArrow
+            isHidden={!hasHorizontalOverflow || isAtEndOfList}
+            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+            width="24"
+            height="24"
+            aria-label={__('Scroll Right', 'web-stories')}
+          />
           <StyledGridViewButton
             width="24"
             height="24"
