@@ -50,7 +50,7 @@ function MultiSelectionMovable({ selectedElements }) {
     },
   } = useCanvas();
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },

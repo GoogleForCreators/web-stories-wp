@@ -55,7 +55,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
+    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },
