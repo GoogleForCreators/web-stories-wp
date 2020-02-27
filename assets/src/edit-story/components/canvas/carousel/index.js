@@ -52,10 +52,7 @@ const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: ${({ isRTL }) =>
-    isRTL
-      ? "'next-navigation carousel prev-navigation' auto / 53px 1fr 53px"
-      : "'prev-navigation carousel next-navigation' auto / 53px 1fr 53px"};
+  grid: 'prev-navigation carousel next-navigation' auto / 53px 1fr 53px;
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -163,19 +160,28 @@ function Carousel() {
     [listRef]
   );
 
-  const isAtBeginningOfList = 0 === scrollPercentage;
-  const isAtEndOfList = 1 === scrollPercentage;
+  const isAtBeginningOfList = isRTL
+    ? 1 === scrollPercentage
+    : 0 === scrollPercentage;
+  const isAtEndOfList = isRTL ? 0 === scrollPercentage : 1 === scrollPercentage;
+
+  const distance = 2 * PAGE_THUMB_WIDTH;
+  const scrollLeft = () => scrollBy(-distance);
+  const scrollRight = () => scrollBy(distance);
+
+  const PrevButton = isRTL ? RightArrow : LeftArrow;
+  const NextButton = isRTL ? LeftArrow : RightArrow;
 
   return (
     <>
-      <Wrapper isRTL={isRTL}>
+      <Wrapper>
         <Area area="prev-navigation">
-          <LeftArrow
+          <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+            onClick={isRTL ? scrollRight : scrollLeft}
             width="24"
             height="24"
-            aria-label={__('Scroll Left', 'web-stories')}
+            aria-label={__('Scroll Backward', 'web-stories')}
           />
         </Area>
         <List
@@ -210,12 +216,12 @@ function Carousel() {
           })}
         </List>
         <Area area="next-navigation">
-          <RightArrow
+          <NextButton
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+            onClick={isRTL ? scrollLeft : scrollRight}
             width="24"
             height="24"
-            aria-label={__('Scroll Right', 'web-stories')}
+            aria-label={__('Scroll Forward', 'web-stories')}
           />
           <StyledGridViewButton
             width="24"
