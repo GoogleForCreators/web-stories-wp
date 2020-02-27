@@ -21,6 +21,20 @@ import PropTypes from 'prop-types';
 
 const StoryPropTypes = {};
 
+StoryPropTypes.story = PropTypes.shape({
+  storyId: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  author: PropTypes.number.isRequired,
+  slug: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  modified: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  featuredMedia: PropTypes.number.isRequired,
+  password: PropTypes.string.isRequired,
+});
+
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
