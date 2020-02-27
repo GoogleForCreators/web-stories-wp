@@ -15,15 +15,29 @@
  */
 
 /**
+ * External dependencies
+ */
+import { text } from '@storybook/addon-knobs';
+import { useState, useCallback, useEffect } from 'react';
+
+/**
  * Internal dependencies
  */
-import UploadButton from '../';
+import ColorPicker from '../';
 
 export default {
-  title: 'Components/UploadButton',
-  component: UploadButton,
+  title: 'Components/Color Picker',
+  component: ColorPicker,
 };
 
 export const _default = () => {
-  return <UploadButton onSelect={null} />;
+  const initialColor = text('Initial Color', '#44aaffff');
+
+  const [color, setColor] = useState(initialColor);
+
+  useEffect(() => setColor(initialColor), [initialColor]);
+
+  const onChange = useCallback(({ rgb }) => setColor(rgb), [setColor]);
+
+  return <ColorPicker color={color} onChange={onChange} />;
 };

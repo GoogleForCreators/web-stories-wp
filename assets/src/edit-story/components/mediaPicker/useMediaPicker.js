@@ -19,28 +19,21 @@
  */
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-function UploadButton({
-  title,
-  buttonText,
-  buttonCSS,
-  buttonInsertText,
-  multiple,
-  onSelect,
-  onClose,
-  type,
+export default function useMediaPicker({
+  title = __('Upload to Story', 'web-stories'),
+  buttonInsertText = __('Insert into page', 'web-stories'),
+  onSelect = () => {},
+  onClose = () => {},
+  type = '',
+  multiple = false,
 }) {
   useEffect(() => {
     // Work around that forces default tab as upload tab.
     wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
   });
 
-  const mediaPicker = (evt) => {
+  const openMediaPicker = (evt) => {
     // Create the media frame.
     const fileFrame = wp.media({
       title,
@@ -74,30 +67,5 @@ function UploadButton({
     evt.preventDefault();
   };
 
-  const Button = styled.button`
-    ${buttonCSS}
-  `;
-
-  return <Button onClick={mediaPicker}>{buttonText}</Button>;
+  return openMediaPicker;
 }
-
-UploadButton.propTypes = {
-  title: PropTypes.string,
-  buttonInsertText: PropTypes.string,
-  multiple: PropTypes.bool,
-  onSelect: PropTypes.func.isRequired,
-  onClose: PropTypes.func,
-  type: PropTypes.string,
-  buttonCSS: PropTypes.array,
-  buttonText: PropTypes.string.isRequired,
-};
-
-UploadButton.defaultProps = {
-  title: __('Upload to Story', 'web-stories'),
-  buttonText: __('Upload', 'web-stories'),
-  buttonInsertText: __('Insert into page', 'web-stories'),
-  multiple: false,
-  type: '',
-};
-
-export default UploadButton;
