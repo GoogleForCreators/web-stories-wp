@@ -20,20 +20,27 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const ToggleContainer = styled.div`
-  appearance: none;
-  position: relative;
-  color: ${({ theme }) => theme.colors.mg.v3};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: 3px;
+const CheckBoxInput = styled.input.attrs( { type: 'checkbox' } )`
+	position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  margin: 0;
+`;
+
+const MarkSpan = styled.span`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
-  border: none;
+`;
+
+const ContainerLabel = styled.label`
+	display: flex;
+	position: relative;
+	padding: 3;
+	cursor: pointer;
+	user-select: none;
+  opacity: 0.54;
+
   ${({ boxed }) =>
     boxed &&
     `
@@ -42,29 +49,16 @@ const ToggleContainer = styled.div`
     `}
   ${({ expand = false }) => expand && `flex: 1;`}
 
-  & > svg {
+	${({ disabled }) => disabled && `
+		pointer-events: none;
+		opacity: .2;
+	`}
+  
+  svg {
     fill: ${({ theme }) => theme.colors.bg.v0};
-    opacity: ${({ disabled }) => (disabled ? 0.2 : 0.54)};
     width: 16px;
     height: 16px;
   }
-`;
-
-const Checkbox = styled.input.attrs({ type: 'checkbox' })`
-  /*
-	Hide checkbox visually but remain accessible to screen readers.
-	Source: https://polished.js.org/docs/#hidevisually
-	*/
-  border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
 `;
 
 function Toggle({
@@ -77,20 +71,12 @@ function Toggle({
   expand,
 }) {
   return (
-    <ToggleContainer
-      boxed={boxed}
-      expand={expand}
-      disabled={disabled}
-      onClick={(evt) => {
-        if (!disabled) {
-          onChange(!value);
-        }
-        evt.stopPropagation();
-      }}
-    >
-      <Checkbox value={'on'} checked={value} disabled={disabled} />
-      {value ? icon : uncheckedIcon || icon}
-    </ToggleContainer>
+    <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
+		  <CheckBoxInput checked={value} onChange={() => onChange(!value)} disabled={disabled} />
+		  <MarkSpan>
+			  {value ? icon : uncheckedIcon || icon}
+      </MarkSpan>
+	  </ContainerLabel>
   );
 }
 
@@ -102,6 +88,14 @@ Toggle.propTypes = {
   disabled: PropTypes.bool,
   boxed: PropTypes.bool,
   expand: PropTypes.bool,
+};
+
+Toggle.defaultProps = {
+  icon: null,
+  uncheckedIcon: null,
+  disabled: false,
+  boxed: false,
+  expand: false,
 };
 
 export default Toggle;

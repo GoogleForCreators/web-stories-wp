@@ -41,8 +41,8 @@ const FONT = 'font';
 const TEXT = 'text';
 const SIZE = 'size';
 const FILL = 'fill';
-const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 
@@ -51,11 +51,11 @@ export const PanelTypes = {
   BACKGROUND,
   SIZE,
   SCALE,
-  BACKGROUND_COLOR,
   COLOR,
   FONT,
   STYLE,
   TEXT,
+  TEXT_STYLE,
   FILL,
   VIDEO_POSTER,
   MASK,
@@ -107,13 +107,13 @@ export function getPanels(elements) {
             return { type, Panel: SizePanel };
           case FILL:
             return { type, Panel: FillPanel };
-          case BACKGROUND_COLOR:
+          case STYLE:
             return { type, Panel: StylePanel };
           case COLOR:
             return { type, Panel: ColorPanel };
           case FONT:
             return { type, Panel: FontPanel };
-          case STYLE:
+          case TEXT_STYLE:
             return { type, Panel: TextStylePanel };
           case TEXT:
             return { type, Panel: TextPanel };

@@ -29,7 +29,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Spacer, Button, Row, Numeric } from '../form';
+import { Button, Row, Numeric } from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
@@ -52,11 +52,14 @@ const BoxedNumeric = styled(ExpandedNumeric)`
 
 const FlipButton = styled(Button)`
   border: none;
-  padding: 0;
-`;
+  padding: 8px;
+  margin: 0;
 
-const FlipButtonIcon = styled.svg`
-  opacity: 0.54;
+  svg {
+    opacity: 0.54;
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 function SizePanel({ selectedElements, onSetProperties }) {
@@ -75,25 +78,27 @@ function SizePanel({ selectedElements, onSetProperties }) {
     rotationAngle,
   });
   const [lockRatio, setLockRatio] = useState(true);
+
   useEffect(() => {
     setState({ x, y, width, height, isFill, rotationAngle });
   }, [x, y, width, height, isFill, rotationAngle]);
+
   useEffect(() => {
     updateProperties();
   }, [state.isFill, updateProperties]);
+
   const updateProperties = useCallback(
     (evt) => {
       onSetProperties(({ width: oldWidth, height: oldHeight }) => {
-        const { height: newHeight, width: newWidth, ...rest } = state;
-        const update = { width: newWidth, height: newHeight, ...rest };
-        const hasHeightButNotWidth = newHeight === '' || newWidth === '';
-        const hasWidthButNotHeight = newHeight === '' && newWidth === '';
+        const { height: newHeight, width: newWidth } = state;
+        const update = { ...state };
+        const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
-        if (lockRatio && hasHeightButNotWidth && !hasWidthButNotHeight) {
+        if (lockRatio && hasHeightOrWidth) {
           const ratio = oldWidth / oldHeight;
           if (newWidth === '') {
             update.width = dataPixels(newHeight * ratio);
-          } else if (newHeight === '') {
+          } else {
             update.height = dataPixels(newWidth / ratio);
           }
         }
@@ -106,6 +111,12 @@ function SizePanel({ selectedElements, onSetProperties }) {
     },
     [lockRatio, onSetProperties, state]
   );
+
+  const handleNumberChange = useCallback((property) => (value) => setState((originalState) => ({
+    ...originalState,
+    [property]: isNaN(value) || value === '' ? '' : parseFloat(value),
+  })));
+
   return (
     <SimplePanel
       name="size"
@@ -118,24 +129,14 @@ function SizePanel({ selectedElements, onSetProperties }) {
           prefix={_x('X', 'The X axis', 'web-stories')}
           value={state.x}
           isMultiple={x === ''}
-          onChange={(value) =>
-            setState({
-              ...state,
-              x: isNaN(value) || value === '' ? '' : parseFloat(value),
-            })
-          }
+          onChange={handleNumberChange('x')}
           disabled={isFill}
         />
         <BoxedNumeric
           prefix={_x('Y', 'The Y axis', 'web-stories')}
           value={state.y}
           isMultiple={y === ''}
-          onChange={(value) =>
-            setState({
-              ...state,
-              y: isNaN(value) || value === '' ? '' : parseFloat(value),
-            })
-          }
+          onChange={handleNumberChange('y')}
           disabled={isFill}
         />
       </Row>
@@ -207,28 +208,21 @@ function SizePanel({ selectedElements, onSetProperties }) {
         <Button onClick={() => {}}>{__('Reset size', 'web-stories')}</Button>
       </Row>
       {/** Rotation and Flipping */}
-      <Row expand={false} spaceBetween={false}>
+      <Row expand={false} spaceBetween={true}>
         <ExpandedNumeric
           label={__('Rotate', 'web-stories')}
           suffix={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={state.rotationAngle}
           isMultiple={rotationAngle === ''}
-          onChange={(value) => {
-            setState({
-              ...state,
-              rotationAngle:
-                isNaN(value) || value === '' ? '' : parseFloat(value),
-            });
-          }}
+          onChange={handleNumberChange('rotationAngle')}
           disabled={isFill}
         />
         <FlipButton>
-          <FlipButtonIcon as={FlipHorizontal} />
+          <FlipHorizontal />
         </FlipButton>
         <FlipButton>
-          <FlipButtonIcon as={FlipVertical} />
+          <FlipVertical />
         </FlipButton>
-        <Spacer />
       </Row>
     </SimplePanel>
   );
