@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useCallback } from 'react';
+import { forwardRef, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -44,6 +44,9 @@ function DraggablePageWithRef(
     state: { pages },
     actions: { setCurrentPage, arrangePage },
   } = useStory();
+
+  // QQQQ: is this a thing?
+  const dropZoneElement = useRef(null);
 
   const getArrangeIndex = (sourceIndex, dstIndex, position) => {
     // If the dropped element is before the dropzone index then we have to deduct
@@ -85,6 +88,7 @@ function DraggablePageWithRef(
       onDrop={onDrop}
       pageIndex={pageIndex}
       dragIndicatorOffset={dragIndicatorOffset}
+      dropZoneElement={dropZoneElement}
     >
       <PagePreview
         index={pageIndex}
