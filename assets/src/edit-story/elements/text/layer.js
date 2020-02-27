@@ -26,7 +26,7 @@ import stripHTML from '../../utils/stripHTML';
 import StoryPropTypes from '../../types';
 
 const TextLayer = styled.span`
-  color: ${({ theme }) => theme.colors.bg.v1};
+  color: inherit;
   white-space: nowrap;
   font-size: 13px;
   text-overflow: ' ';
