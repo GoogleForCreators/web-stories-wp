@@ -34,14 +34,20 @@ import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 
-const AnimatedTextIcon = styled(TextIcon).attrs(({ isSecondary }) => ({
+const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
+  // Necessary because of https://github.com/styled-components/styled-components/pull/2093
+  <TextIcon {...rest} />
+)).attrs(({ isSecondary }) => ({
   style: {
     // scales 28px to 20px
     transform: isSecondary ? 'scale(0.71)' : 'none',
   },
 }))``;
 
-const AnimatedTextAddIcon = styled(TextAddIcon).attrs(({ isPrimary }) => ({
+const AnimatedTextAddIcon = styled(({ isPrimary, ...rest }) => (
+  // Necessary because of https://github.com/styled-components/styled-components/pull/2093
+  <TextAddIcon {...rest} />
+)).attrs(({ isPrimary }) => ({
   style: {
     // scales 28px to 48px
     transform: isPrimary ? 'scale(1.71)' : 'none',
@@ -69,7 +75,6 @@ function TextTab(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    evt.preventDefault();
 
     // @todo: Needs product definition
     insertElement('text', {
