@@ -25,15 +25,103 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../types';
 import { OutputPage } from './index';
 
+// todo: improve / move elsehwere.
+const getUsedAmpExtensions = (pages) => {
+  const extensions = [
+    // runtime.
+    { src: 'https://cdn.ampproject.org/v0.js' },
+    {
+      name: 'amp-story',
+      src: 'https://cdn.ampproject.org/v0/amp-story-1.0.js',
+    },
+  ];
+
+  for (const { elements } of pages) {
+    for (const { type } of elements) {
+      switch (type) {
+        case 'text':
+          extensions.push({
+            name: 'amp-fit-text',
+            src: 'https://cdn.ampproject.org/v0/amp-fit-text-0.1.js',
+          });
+          break;
+        case 'video':
+          extensions.push({
+            name: 'amp-video',
+            src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
+          });
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  return [...new Set(extensions)];
+};
+
 function OutputStory({ story, pages, metadata }) {
+  const ampExtensions = getUsedAmpExtensions(pages);
   return (
-    <html amp lang="en">
+    <html amp="" lang="en">
       <head>
-        <script async="" src="https://cdn.ampproject.org/v0.js" />
-        <script
-          async=""
-          src="https://cdn.ampproject.org/v0/amp-story-1.0.js"
-          custom-element="amp-story"
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width,minimum-scale=1,initial-scale=1"
+        />
+        {ampExtensions.map(({ name, src }) => (
+          <script key={src} async="" src={src} custom-element={name} />
+        ))}
+        <style
+          amp-boilerplate=""
+          dangerouslySetInnerHTML={{
+            __html:
+              'body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}',
+          }}
+        />
+        <noscript>
+          <style
+            amp-boilerplate=""
+            dangerouslySetInnerHTML={{
+              __html:
+                'body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}',
+            }}
+          />
+        </noscript>
+        <style
+          amp-custom=""
+          dangerouslySetInnerHTML={{
+            __html: `
+              .page-background-area, .page-safe-area {
+                position: absolute;
+                overflow: hidden;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+              }
+
+              .page-background-area img, .page-background-area video {
+                object-fit: cover;
+              }
+
+              .wrapper {
+                position: absolute;
+                overflow: hidden;
+              }
+
+              .fill {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+              }
+              `,
+          }}
         />
       </head>
       <body>
