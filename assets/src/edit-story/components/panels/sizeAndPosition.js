@@ -31,6 +31,7 @@ import { __, _x } from '@wordpress/i18n';
 import { InputGroup } from '../form';
 import { dataPixels } from '../../units';
 import { ActionButton } from '../button';
+import useStory from '../../app/story/useStory';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -45,6 +46,11 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
 
   const [state, setState] = useState({ width, height, isFill });
   const [lockRatio, setLockRatio] = useState(true);
+
+  const {
+    actions: { setBackgroundElement },
+  } = useStory();
+
   useEffect(() => {
     setState({ width, height, isFill, rotationAngle });
   }, [width, height, isFill, rotationAngle]);
@@ -69,12 +75,27 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
     setState(newState);
     onSetProperties(newState);
   };
+  const handleSetBackground = () => {
+    const newState = {
+      isBackground: true,
+      opacity: 100,
+      overlay: null,
+    };
+    setState(newState);
+    const backgroundId = selectedElements[0].id;
+    setBackgroundElement({ elementId: backgroundId });
+    onSetProperties(newState);
+  };
+
   return (
     <SimplePanel
       name="size"
       title={__('Size', 'web-stories')}
       onSubmit={handleSubmit}
     >
+      <ActionButton onClick={handleSetBackground}>
+        {__('Set as background', 'web-stories')}
+      </ActionButton>
       <InputGroup
         label={__('Width', 'web-stories')}
         value={state.width}

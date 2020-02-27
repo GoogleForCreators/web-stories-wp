@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -32,44 +31,32 @@ import useStory from '../../app/story/useStory';
 import { ActionButton } from '../button';
 import { SimplePanel } from './panel';
 
-function BackgroundPanel({ selectedElements, onSetProperties }) {
+function BackgroundPanel({ onSetProperties }) {
   // Remove background: check if is background.
   const {
     actions: { setBackgroundElement },
   } = useStory();
-  const { overlay, opacity, isBackground } = selectedElements[0];
 
-  // To add: Remove as background; Opacity; Overlay
-
-  const [state, setState] = useState({ isBackground, opacity, overlay });
-  useEffect(() => {
-    setState({ isBackground });
-  }, [isBackground]);
+  // To add: Opacity; Overlay
   const handleClick = () => {
-    const newIsBackground = !state.isBackground;
     const newState = {
-      isBackground: newIsBackground,
+      isBackground: false,
       opacity: 100,
       overlay: null,
     };
-    setState(newState);
-    const backgroundId = newIsBackground ? selectedElements[0].id : null;
-    setBackgroundElement({ elementId: backgroundId });
+    setBackgroundElement({ elementId: null });
     onSetProperties(newState);
   };
   return (
     <SimplePanel name="position" title={__('Background', 'web-stories')}>
       <ActionButton onClick={handleClick}>
-        {state.isBackground
-          ? __('Remove as Background', 'web-stories')
-          : __('Set as background', 'web-stories')}
+        {__('Remove as Background', 'web-stories')}
       </ActionButton>
     </SimplePanel>
   );
 }
 
 BackgroundPanel.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
