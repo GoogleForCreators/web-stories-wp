@@ -37,6 +37,7 @@ import {
 } from '../../elements/shared';
 import { useUnits } from '../../units';
 import { WithElementMask } from '../../masks';
+import WithLink from '../link/frame';
 import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
@@ -47,7 +48,10 @@ const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
-	pointer-events: initial;
+  pointer-events: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 	&:focus,
 	&:active,
@@ -74,8 +78,9 @@ function FrameElement({ element }) {
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-
-  const isSelected = selectedElements.includes(id);
+  const isSelected = Boolean(
+    selectedElements.filter((selected) => selected.id === id).length
+  );
 
   const box = getBox(element);
 
@@ -98,9 +103,14 @@ function FrameElement({ element }) {
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
     >
-      <WithElementMask element={element} fill={true}>
-        {Frame && <Frame element={element} box={box} />}
-      </WithElementMask>
+      <WithLink
+        element={element}
+        isSelected={selectedElements.length === 1 && isSelected}
+      >
+        <WithElementMask element={element} fill={true}>
+          {Frame && <Frame element={element} box={box} />}
+        </WithElementMask>
+      </WithLink>
     </Wrapper>
   );
 }

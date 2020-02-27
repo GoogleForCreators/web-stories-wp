@@ -50,6 +50,7 @@ export const panels = [
   PanelTypes.SIZE,
   PanelTypes.POSITION,
   PanelTypes.SCALE,
+  PanelTypes.LINK,
   PanelTypes.FILL,
   PanelTypes.MASK,
 ];

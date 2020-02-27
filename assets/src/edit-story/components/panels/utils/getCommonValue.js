@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import equal from 'deep-equal';
+
+/**
  * Get the common value `property` for all objects in `list`, if they
  * in fact are all the same. If they are not all equal, return an empty string.
  *
@@ -32,7 +37,7 @@
  */
 function getCommonValue(list, property) {
   const first = list[0][property];
-  const allMatch = list.every((el) => el[property] === first);
+  const allMatch = list.every((el) => equal(el[property], first));
   return allMatch ? first : '';
 }
 

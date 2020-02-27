@@ -29,6 +29,7 @@
     "@wordpress/i18n": "^3.9.0",
     "@wordpress/url": "^2.11.0",
     "colorthief": "^2.3.0",
+    "deep-equal": "^2.0.1",
     "draft-js": "^0.11.4",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
@@ -43,6 +44,7 @@
     "react-moveable": "^0.17.0",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.0.1",
+    "throttle-debounce": "^2.1.0",
     "uuid": "^7.0.0"
   },
   "devDependencies": {

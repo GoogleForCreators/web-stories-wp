@@ -1,0 +1,148 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { rgba } from 'polished';
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import StoryPropTypes from '../../types';
+import { ReactComponent as Link } from '../../icons/link.svg';
+import { ReactComponent as External } from '../../icons/external.svg';
+import { getLinkFromElement, LinkType } from './index';
+
+const Hint = styled.div`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.bg.v0};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 14px;
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  margin-top: -68px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  max-width: 200px;
+`;
+
+const Tooltip = styled.div`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.mg.v3};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 14px;
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  padding: 6px;
+  border-radius: 6px;
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  margin-top: -68px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  max-width: 200px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    border-top: 6px solid ${({ theme }) => theme.colors.fg.v1};
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  }
+`;
+
+const BrandIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  background-color: ${({ theme }) => theme.colors.fg.v3};
+  border: none;
+  border-radius: 50%;
+  margin-right: 8px;
+`;
+
+const LinkOutIcon = styled(External)`
+  width: 16px;
+  opacity: 0.59;
+  margin-left: 8px;
+`;
+
+const LinkIcon = styled(Link)`
+  position: absolute;
+  left: -24px;
+  top: 12px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(
+    0px 3px 4px ${({ theme }) => rgba(theme.colors.bg.v0, 0.6)}
+  );
+`;
+
+const LinkDesc = styled.span`
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
+function WithLink({ element, isSelected, children, ...rest }) {
+  const link = getLinkFromElement(element);
+
+  if (!link.url) {
+    return children;
+  }
+
+  if (!isSelected) {
+    return (
+      <div {...rest}>
+        <LinkIcon />
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <div {...rest}>
+      {link.type === LinkType.ONE_TAP ? (
+        <Hint>{link.url}</Hint>
+      ) : (
+        <Tooltip>
+          <BrandIcon />
+          <LinkDesc>{link.desc || link.url}</LinkDesc>
+          <LinkOutIcon />
+        </Tooltip>
+      )}
+      {children}
+    </div>
+  );
+}
+
+WithLink.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  children: StoryPropTypes.children.isRequired,
+};
+
+export default WithLink;
