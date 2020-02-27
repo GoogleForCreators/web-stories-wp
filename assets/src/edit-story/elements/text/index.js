@@ -39,7 +39,6 @@ export const defaultAttributes = {
   letterSpacing: 'normal',
   lineHeight: 1.3,
   textAlign: 'initial',
-  isBackground: false,
 };
 
 export const hasEditMode = true;

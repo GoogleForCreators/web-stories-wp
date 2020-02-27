@@ -56,7 +56,6 @@ function useInsertElement() {
     return element;
   };
 
-  // QQQQ: why isBackground here?
   const insertElement = (type, props, isBackground) => {
     const element = createElement(type, props);
     addElement({ element });
