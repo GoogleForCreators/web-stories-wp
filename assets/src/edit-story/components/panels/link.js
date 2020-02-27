@@ -37,8 +37,6 @@ import { createLink } from '../link';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-const DEFAULT_LINK = createLink();
-
 const Note = styled.span`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 11px;
@@ -57,6 +55,8 @@ const Input = styled(BaseInput)`
 /** TODO(@wassgha): Replace with text input component once done */
 const InputContainer = styled.div`
   width: 100%;
+  background: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.v3 : theme.colors.fg.v1};
   color: ${({ theme }) => rgba(theme.colors.mg.v4, 0.55)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
@@ -75,21 +75,17 @@ const BrandIcon = styled.img`
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
-  const link = getCommonValue(selectedElements, 'link') || DEFAULT_LINK;
+  const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
-  const [state, setState] = useState({ link });
+  const [state, setState] = useState({ link: createLink() });
   useEffect(() => {
     setState({ link });
-    // TODO(wassgha) Implement page parsing
-    if (link.url) {
-      populateMetadata(link.url);
-    }
-  }, [link, populateMetadata]);
+  }, [link]);
   const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
-  const canLink = !isFill;
+  const canLink = selectedElements.length === 1 && !isFill;
   const populateMetadata = useCallback(
     debounce(300, async (/** url */) => {
       // TODO(wassgha): Implement getting the page metadata
@@ -108,31 +104,36 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       </Row>
 
       <Row>
-        <InputContainer>
+        <InputContainer disabled={!canLink}>
           <Input
             type="text"
             disabled={!canLink}
-            onChange={(evt) =>
+            onChange={(evt) => {
+              const { value: url } = evt.target;
               setState({
                 ...state,
-                link: { ...state.link, url: evt.target.value },
-              })
-            }
+                link: { ...state.link, url },
+              });
+              if (url) {
+                // TODO(wassgha): Implement parsing page metadata
+                populateMetadata(url);
+              }
+            }}
             onBlur={(evt) =>
               evt.target.form.dispatchEvent(new window.Event('submit'))
             }
             placeholder={__('Web address', 'web-stories')}
-            value={state.link && state.link.url}
-            isMultiple={link === ''}
+            value={state.link ? state.link.url : ''}
             expand
           />
         </InputContainer>
       </Row>
 
       <Row>
-        <InputContainer>
+        <InputContainer disabled={!canLink}>
           <Input
             type="text"
+            disabled={!canLink}
             onChange={(evt) =>
               setState({
                 ...state,
@@ -143,7 +144,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
               evt.target.form.dispatchEvent(new window.Event('submit'))
             }
             placeholder={__('Optional description', 'web-stories')}
-            value={state.link && state.link.desc}
+            value={state.link ? state.link.desc : ''}
             isMultiple={link === ''}
             expand
           />
@@ -151,7 +152,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       </Row>
       {/** TODO(@wassgha): Replace with image upload component */}
       <Row>
-        <BrandIcon src={state.link && state.link.image} />
+        <BrandIcon src={state.link && state.link.icon} />
         <span>{__('Optional brand icon', 'web-stories')}</span>
       </Row>
     </SimplePanel>

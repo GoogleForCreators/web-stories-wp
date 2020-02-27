@@ -22,14 +22,14 @@ import { getLinkFromElement } from './index';
 
 function WithLink({ element, children, ...rest }) {
   const link = getLinkFromElement(element);
-  if (!link.url) {
+  if (!link) {
     return children;
   }
   return (
     <a
       href={link.url}
       alt={link.desc}
-      data-tooltip-icon={link.image}
+      data-tooltip-icon={link.icon}
       data-tooltip-text={link.desc}
       {...rest}
     >

@@ -20,8 +20,7 @@ export const LinkType = {
 };
 
 export function getLinkFromElement(element) {
-  const { link = createLink() } = element;
-  return link;
+  return element.link || null;
 }
 
 export function createLink(url = '', type = LinkType.TWO_TAP, desc, image) {

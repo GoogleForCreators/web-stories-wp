@@ -113,14 +113,14 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-function WithLink({ element, isSelected, children, ...rest }) {
+function WithLink({ element, showTooltip, children, ...rest }) {
   const link = getLinkFromElement(element);
 
-  if (!link.url) {
+  if (!link) {
     return children;
   }
 
-  if (!isSelected) {
+  if (!showTooltip) {
     return (
       <div {...rest}>
         <LinkIcon />
@@ -135,7 +135,7 @@ function WithLink({ element, isSelected, children, ...rest }) {
         <Hint>{link.url}</Hint>
       ) : (
         <Tooltip>
-          <BrandIcon />
+          <BrandIcon src={link.icon} />
           <LinkDesc>{link.desc || link.url}</LinkDesc>
           <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
             <LinkOutIcon />
@@ -149,7 +149,7 @@ function WithLink({ element, isSelected, children, ...rest }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  isSelected: PropTypes.bool.isRequired,
+  showTooltip: PropTypes.bool.isRequired,
   children: StoryPropTypes.children.isRequired,
 };
 

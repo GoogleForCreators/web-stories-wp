@@ -69,7 +69,7 @@ function FrameElement({ element }) {
     actions: { setNodeForElement, handleSelectElement },
   } = useCanvas();
   const {
-    state: { selectedElements },
+    state: { selectedElementIds },
   } = useStory();
   const {
     actions: { getBox },
@@ -78,10 +78,7 @@ function FrameElement({ element }) {
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const isSelected = Boolean(
-    selectedElements.filter((selected) => selected.id === id).length
-  );
-
+  const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
 
   return (
@@ -105,7 +102,7 @@ function FrameElement({ element }) {
     >
       <WithLink
         element={element}
-        isSelected={selectedElements.length === 1 && isSelected}
+        showTooltip={selectedElementIds.length === 1 && isSelected}
       >
         <WithElementMask element={element} fill={true}>
           {Frame && <Frame element={element} box={box} />}

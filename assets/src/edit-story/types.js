@@ -29,7 +29,7 @@ StoryPropTypes.link = PropTypes.shape({
   type: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
-  image: PropTypes.string,
+  icon: PropTypes.string,
 });
 
 export const StoryElementPropsTypes = {
