@@ -23,22 +23,22 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { useEffect, useState } from '@wordpress/element';
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup, SelectMenu } from '../../form';
 import { useFont } from '../../../app/font';
 import { dataPixels } from '../../../units';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
-import { MAX_FONT_SIZE, MIN_FONT_SIZE } from '../../../constants';
 import removeUnsetValues from '../utils/removeUnsetValues';
 import getCommonValue from '../utils/getCommonValue';
 import { SimplePanel } from '../panel';
 import TextStyleControls from './textStyle';
 import ColorControls from './color';
+import PaddingControls from './padding';
+import FontControls from './font';
 
 function StylePanel({ selectedElements, onSetProperties }) {
   // TextStyle settings
@@ -67,7 +67,6 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const textOpacity = getCommonValue(selectedElements, 'textOpacity');
 
   const {
-    state: { fonts },
     actions: { getFontWeight, getFontFallback },
   } = useFont();
 
@@ -184,52 +183,10 @@ function StylePanel({ selectedElements, onSetProperties }) {
       title={__('Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      {fonts && (
-        <SelectMenu
-          label={__('Font family', 'web-stories')}
-          options={fonts}
-          value={state.fontFamily}
-          isMultiple={fontFamily === ''}
-          onChange={(value) => {
-            const currentFontWeights = getFontWeight(value);
-            const currentFontFallback = getFontFallback(value);
-            const fontWeightsArr = currentFontWeights.map(
-              ({ thisValue }) => thisValue
-            );
-            const newFontWeight =
-              fontWeightsArr && fontWeightsArr.includes(state.fontWeight)
-                ? state.fontWeight
-                : 400;
-            setState({
-              ...state,
-              fontFamily: value,
-              fontWeight: parseInt(newFontWeight),
-              fontWeights: currentFontWeights,
-              fontFallback: currentFontFallback,
-            });
-          }}
-        />
-      )}
-      {state.fontWeights && (
-        <SelectMenu
-          label={__('Font weight', 'web-stories')}
-          options={state.fontWeights}
-          value={state.fontWeight}
-          isMultiple={fontWeight === ''}
-          onChange={(value) =>
-            setState({ ...state, fontWeight: parseInt(value) })
-          }
-        />
-      )}
-      <InputGroup
-        type="number"
-        label={__('Font size', 'web-stories')}
-        value={state.fontSize}
-        isMultiple={fontSize === ''}
-        postfix={'px'}
-        min={MIN_FONT_SIZE}
-        max={MAX_FONT_SIZE}
-        onChange={(value) => setState({ ...state, fontSize: parseInt(value) })}
+      <FontControls
+        properties={{ fontFamily, fontWeight, fontSize }}
+        setState={setState}
+        state={state}
       />
       <TextStyleControls
         state={state}
@@ -252,51 +209,13 @@ function StylePanel({ selectedElements, onSetProperties }) {
           textOpacity,
         }}
       />
-      <InputGroup
-        label={__('Padding Horizontal', 'web-stories')}
-        value={state.padding.horizontal}
-        isMultiple={'' === padding}
-        onChange={(value) => {
-          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
-          const newPadding = {
-            horizontal: isNaN(value) || '' === value ? '' : parseInt(value),
-          };
-          newPadding.vertical =
-            typeof padding.horizontal === 'number' && lockPaddingRatio && ratio
-              ? Math.round(parseInt(newPadding.horizontal) / ratio)
-              : padding.vertical;
-          setState({ ...state, padding: newPadding });
-        }}
-        postfix={_x('%', 'Percentage', 'web-stories')}
-      />
-      <InputGroup
-        label={__('Padding Vertical', 'web-stories')}
-        value={state.padding.vertical}
-        isMultiple={'' === padding}
-        onChange={(value) => {
-          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
-          const newPadding = {
-            vertical: isNaN(value) || '' === value ? '' : parseInt(value),
-          };
-          newPadding.horizontal =
-            padding.horizontal !== '' &&
-            typeof padding.vertical === 'number' &&
-            lockPaddingRatio &&
-            ratio
-              ? Math.round(parseInt(newPadding.vertical) / ratio)
-              : padding.horizontal;
-          setState({ ...state, padding: newPadding });
-        }}
-        postfix={_x('%', 'Percentage', 'web-stories')}
-      />
-      <InputGroup
-        type="checkbox"
-        label={__('Keep padding ratio', 'web-stories')}
-        value={lockPaddingRatio}
-        isMultiple={false}
-        onChange={(value) => {
-          setLockPaddingRatio(value);
-        }}
+      <PaddingControls
+        getPaddingRatio={getPaddingRatio}
+        properties={{ padding }}
+        state={state}
+        lockPaddingRatio={lockPaddingRatio}
+        setLockPaddingRatio={setLockPaddingRatio}
+        setState={setState}
       />
     </SimplePanel>
   );
