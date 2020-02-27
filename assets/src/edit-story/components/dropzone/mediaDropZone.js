@@ -20,11 +20,11 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useRef } from '@wordpress/element';
 import { useConfig } from '../../app/config';
 import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';
 import { disableDefaults } from './utils';
-import useDropZone from './useDropZone';
 import {
   DropzoneComponent,
   OverlayWrapper,
@@ -34,40 +34,42 @@ import {
   Text,
   OverContent,
 } from './shared';
+import DropZone, { useDropZone } from './';
 
 function MediaDropzone({ children }) {
   const {
-    actions: { setIsDragging },
-    state: { isDragging },
+    actions: { isDragging },
   } = useDropZone();
   const { uploadFile } = useUploader();
   const { allowedFileTypes } = useConfig();
+  const dropZoneElement = useRef(null);
 
   const onDropHandler = (evt) => {
     disableDefaults(evt);
     const files = [...evt.dataTransfer.files];
     files.forEach(uploadFile);
-    setIsDragging(false);
   };
 
   return (
-    <DropzoneComponent onDrop={onDropHandler}>
-      {isDragging && (
-        <OverlayWrapper>
-          <Overlay>
-            <Icon />
-            <Heading>{__('Upload to media library', 'web-stories')}</Heading>
-            <Text>
-              {sprintf(
-                /* translators: %s is a list of allowed file extensions. */
-                __('You can upload %s.', 'web-stories'),
-                allowedFileTypes.join(', ')
-              )}
-            </Text>
-          </Overlay>
-        </OverlayWrapper>
-      )}
-      <OverContent>{children}</OverContent>
+    <DropzoneComponent>
+      <DropZone onDropHandler={onDropHandler} dropZoneElement={dropZoneElement}>
+        {isDragging(dropZoneElement) && (
+          <OverlayWrapper>
+            <Overlay>
+              <Icon />
+              <Heading>{__('Upload to media library', 'web-stories')}</Heading>
+              <Text>
+                {sprintf(
+                  /* translators: %s is a list of allowed file extensions. */
+                  __('You can upload %s.', 'web-stories'),
+                  allowedFileTypes.join(', ')
+                )}
+              </Text>
+            </Overlay>
+          </OverlayWrapper>
+        )}
+        <OverContent>{children}</OverContent>
+      </DropZone>
     </DropzoneComponent>
   );
 }

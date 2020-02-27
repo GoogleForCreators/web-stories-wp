@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { forwardRef, useCallback } from '@wordpress/element';
+import { forwardRef, useCallback, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -45,6 +45,8 @@ function DraggablePageWithRef(
     state: { pages },
     actions: { setCurrentPage, arrangePage },
   } = useStory();
+
+  const dropZoneElement = useRef(null);
 
   const getArrangeIndex = (sourceIndex, dstIndex, position) => {
     // If the dropped element is before the dropzone index then we have to deduct
@@ -86,6 +88,7 @@ function DraggablePageWithRef(
       onDrop={onDrop}
       pageIndex={pageIndex}
       dragIndicatorOffset={dragIndicatorOffset}
+      dropZoneElement={dropZoneElement}
     >
       <PagePreview
         index={pageIndex}

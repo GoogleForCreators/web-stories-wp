@@ -20,17 +20,18 @@
 /**
  * WordPress dependencies
  */
+import { useRef } from '@wordpress/element';
 import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
 import { disableDefaults } from './utils';
-import useDropZone from './useDropZone';
-import { DropzoneComponent, OverContent, OverlayWrapper } from './shared';
+import { OverContent, OverlayWrapper } from './shared';
+import DropZone, { useDropZone } from './';
 
 function CanvasDropzone({ children }) {
+  const dropZoneElement = useRef(null);
   const {
-    actions: { setIsDragging },
-    state: { isDragging },
+    actions: { isDragging },
   } = useDropZone();
   const { uploadFile } = useUploader();
   const {
@@ -64,14 +65,13 @@ function CanvasDropzone({ children }) {
         }
       );
     });
-    setIsDragging(false);
   };
 
   return (
-    <DropzoneComponent onDrop={onDropHandler}>
-      {isDragging && <OverlayWrapper />}
+    <DropZone onDropHandler={onDropHandler} dropZoneElement={dropZoneElement}>
+      {isDragging(dropZoneElement) && <OverlayWrapper />}
       <OverContent>{children}</OverContent>
-    </DropzoneComponent>
+    </DropZone>
   );
 }
 
