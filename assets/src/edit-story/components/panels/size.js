@@ -112,10 +112,14 @@ function SizePanel({ selectedElements, onSetProperties }) {
     [lockRatio, onSetProperties, state]
   );
 
-  const handleNumberChange = useCallback((property) => (value) => setState((originalState) => ({
-    ...originalState,
-    [property]: isNaN(value) || value === '' ? '' : parseFloat(value),
-  })));
+  const handleNumberChange = useCallback(
+    (property) => (value) =>
+      setState((originalState) => ({
+        ...originalState,
+        [property]: isNaN(value) || value === '' ? '' : parseFloat(value),
+      })),
+    [setState]
+  );
 
   return (
     <SimplePanel
