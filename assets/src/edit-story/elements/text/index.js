@@ -51,11 +51,9 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.TEXT,
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
+  PanelTypes.SIZE_AND_POSITION,
   PanelTypes.FONT,
   PanelTypes.STYLE,
   PanelTypes.COLOR,
   PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
 ];

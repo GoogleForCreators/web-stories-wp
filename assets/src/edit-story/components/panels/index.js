@@ -22,16 +22,13 @@ import ActionsPanel from './actions';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
-import FillPanel from './fill';
 import FontPanel from './font';
 import MaskPanel from './mask';
-import RotationPanel from './rotationAngle';
-import SizePanel from './size';
-import PositionPanel from './position';
 import ScalePanel from './scale';
 import StylePanel from './style';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
+import SizeAndPositionPanel from './sizeAndPosition';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -40,11 +37,8 @@ const BACKGROUND = 'background';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
-const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
-const SIZE = 'size';
-const POSITION = 'position';
-const FILL = 'fill';
+const SIZE_AND_POSITION = 'sizeAndPosition';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const VIDEO_POSTER = 'videoPoster';
@@ -53,16 +47,13 @@ const MASK = 'mask';
 export const PanelTypes = {
   ACTIONS,
   BACKGROUND,
-  POSITION,
-  SIZE,
   SCALE,
   BACKGROUND_COLOR,
   COLOR,
   FONT,
+  SIZE_AND_POSITION,
   STYLE,
   TEXT,
-  ROTATION_ANGLE,
-  FILL,
   VIDEO_POSTER,
   MASK,
 };
@@ -107,16 +98,10 @@ export function getPanels(elements) {
               return { type, Panel: BackgroundPanel };
             }
             return null;
-          case POSITION:
-            return { type, Panel: PositionPanel };
+          case SIZE_AND_POSITION:
+            return { type, Panel: SizeAndPositionPanel };
           case SCALE:
             return { type, Panel: ScalePanel };
-          case ROTATION_ANGLE:
-            return { type, Panel: RotationPanel };
-          case SIZE:
-            return { type, Panel: SizePanel };
-          case FILL:
-            return { type, Panel: FillPanel };
           case BACKGROUND_COLOR:
             return { type, Panel: BackgroundColorPanel };
           case COLOR:

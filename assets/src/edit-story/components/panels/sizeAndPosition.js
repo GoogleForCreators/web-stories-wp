@@ -30,18 +30,24 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { InputGroup } from '../form';
 import { dataPixels } from '../../units';
+import { ActionButton } from '../button';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function SizePanel({ selectedElements, onSetProperties }) {
+function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
+  const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
+  // Size
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
+  // The x/y/w/h/r are kept unchanged so that toggling fill will return
+  // the element to the previous non-fill position/size.
   const isFill = getCommonValue(selectedElements, 'isFill');
-  const [state, setState] = useState({ width, height });
+
+  const [state, setState] = useState({ width, height, isFill });
   const [lockRatio, setLockRatio] = useState(true);
   useEffect(() => {
-    setState({ width, height });
-  }, [width, height]);
+    setState({ width, height, isFill, rotationAngle });
+  }, [width, height, isFill, rotationAngle]);
   const handleSubmit = (evt) => {
     onSetProperties(({ width: oldWidth, height: oldHeight }) => {
       let { width: newWidth, height: newHeight } = state;
@@ -53,9 +59,15 @@ function SizePanel({ selectedElements, onSetProperties }) {
           newHeight = dataPixels(newWidth / ratio);
         }
       }
-      return { width: newWidth, height: newHeight };
+      return { ...state, width: newWidth, height: newHeight };
     });
     evt.preventDefault();
+  };
+
+  const handleClick = () => {
+    const newState = { isFill: !state.isFill };
+    setState(newState);
+    onSetProperties(newState);
   };
   return (
     <SimplePanel
@@ -107,19 +119,35 @@ function SizePanel({ selectedElements, onSetProperties }) {
         type="checkbox"
         label={__('Keep ratio', 'web-stories')}
         value={lockRatio}
-        isMultiple={false}
-        onChange={(value) => {
-          setLockRatio(value);
-        }}
+        onChange={setLockRatio}
+        disabled={isFill}
+      />
+      <ActionButton onClick={handleClick}>
+        {state.isFill
+          ? __('Unset as fill', 'web-stories')
+          : __('Set as fill', 'web-stories')}
+      </ActionButton>
+      <InputGroup
+        label={__('Rotation angle', 'web-stories')}
+        value={state.rotationAngle}
+        isMultiple={rotationAngle === ''}
+        onChange={(value) =>
+          setState({
+            ...state,
+            rotationAngle:
+              isNaN(value) || value === '' ? '' : parseFloat(value),
+          })
+        }
+        postfix={_x('deg', 'Degrees, 0 - 360. ', 'web-stories')}
         disabled={isFill}
       />
     </SimplePanel>
   );
 }
 
-SizePanel.propTypes = {
+SizeAndPositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default SizePanel;
+export default SizeAndPositionPanel;

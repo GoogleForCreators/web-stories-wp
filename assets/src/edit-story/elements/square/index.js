@@ -38,10 +38,7 @@ export const resizeRules = {
 };
 
 export const panels = [
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
+  PanelTypes.SIZE_AND_POSITION,
   PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-  PanelTypes.FILL,
   PanelTypes.MASK,
 ];
