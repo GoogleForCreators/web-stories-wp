@@ -49,17 +49,22 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   justify-content: center;
   align-items: center;
 
-  &:focus,
   &:hover {
-    outline: none;
     background: ${({ isActive, theme }) =>
-      isActive ? theme.colors.bg.v5 : `${rgba(theme.colors.bg.v0, 0.2)}`};
+      isActive ? theme.colors.bg.v4 : rgba(theme.colors.bg.v0, 0.2)};
+  }
+
+  &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.action};
   }
 
   svg {
     display: block;
     width: 28px;
     height: 28px;
+    transform-origin: center center;
+    transition: transform 0.3s ease;
   }
 `;
 

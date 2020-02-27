@@ -23,6 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
@@ -33,6 +34,14 @@ import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 
+const AnimatedTextIcon = styled(TextIcon)`
+  ${({ isSecondary }) =>
+    isSecondary &&
+    `
+    transform: scale(0.71); /* scales 28px down to 20px */
+  `} );
+`;
+
 const QuickAction = styled.button`
   margin: 0 0 0 -10px;
   background: transparent;
@@ -42,13 +51,6 @@ const QuickAction = styled.button`
   overflow: hidden;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-
-  svg {
-    width: 28px;
-    height: 28px;
-    transform-origin: center center;
-    transition: transform 0.1s ease;
-  }
 
   &:hover,
   &:focus {
@@ -62,6 +64,9 @@ function TextTab(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
+
+  const [isHoveringQuick, setIsHoveringQuick] = useState(false);
+  const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
@@ -83,14 +88,19 @@ function TextTab(props) {
   const { isActive } = props;
   return (
     <Tab aria-labelledby="text-tab-icon" aria-controls={paneId} {...props}>
-      <TextIcon
+      <AnimatedTextIcon
         id="text-tab-icon"
+        isSecondary={isHoveringQuick || isFocusingQuick}
         aria-label={__('Text library', 'web-stories')}
       />
       <QuickAction
         aria-label={__('Add new text element', 'web-stories')}
         onClick={handleAddText}
         tabIndex={isActive ? 0 : -1}
+        onFocus={() => setIsFocusingQuick(true)}
+        onBlur={() => setIsFocusingQuick(false)}
+        onPointerOver={() => setIsHoveringQuick(true)}
+        onPointerOut={() => setIsHoveringQuick(false)}
       >
         <TextAddIcon />
       </QuickAction>
