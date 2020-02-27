@@ -32,6 +32,7 @@ import { InputGroup } from '../form';
 import { dataPixels } from '../../units';
 import { ActionButton } from '../button';
 import useStory from '../../app/story/useStory';
+import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -46,6 +47,11 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
 
   const [state, setState] = useState({ width, height, isFill });
   const [lockRatio, setLockRatio] = useState(true);
+
+  let { isMedia } = getDefinitionForType(selectedElements[0].type);
+  if (selectedElements.length > 1) {
+    isMedia = false;
+  }
 
   const {
     actions: { setBackgroundElement },
@@ -90,12 +96,14 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="size"
-      title={__('Size', 'web-stories')}
+      title={__('Size and Position', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <ActionButton onClick={handleSetBackground}>
-        {__('Set as background', 'web-stories')}
-      </ActionButton>
+      {isMedia && (
+        <ActionButton onClick={handleSetBackground}>
+          {__('Set as background', 'web-stories')}
+        </ActionButton>
+      )}
       <InputGroup
         label={__('Width', 'web-stories')}
         value={state.width}
@@ -143,11 +151,13 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         onChange={setLockRatio}
         disabled={isFill}
       />
-      <ActionButton onClick={handleClick}>
-        {state.isFill
-          ? __('Unset as fill', 'web-stories')
-          : __('Set as fill', 'web-stories')}
-      </ActionButton>
+      {isMedia && (
+        <ActionButton onClick={handleClick}>
+          {state.isFill
+            ? __('Unset as fill', 'web-stories')
+            : __('Set as fill', 'web-stories')}
+        </ActionButton>
+      )}
       <InputGroup
         label={__('Rotation angle', 'web-stories')}
         value={state.rotationAngle}
