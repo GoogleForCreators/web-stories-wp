@@ -28,7 +28,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../form';
+import { InputGroup, SelectMenu } from '../form';
 import { dataPixels } from '../../units';
 import { ActionButton } from '../button';
 import useStory from '../../app/story/useStory';
@@ -45,7 +45,16 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
   // the element to the previous non-fill position/size.
   const isFill = getCommonValue(selectedElements, 'isFill');
 
-  const [state, setState] = useState({ width, height, isFill });
+  // Flipping.
+  const flip = getCommonValue(selectedElements, 'flip');
+
+  const [state, setState] = useState({
+    width,
+    height,
+    isFill,
+    flip,
+    rotationAngle,
+  });
   const [lockRatio, setLockRatio] = useState(true);
 
   let { isMedia } = getDefinitionForType(selectedElements[0].type);
@@ -58,8 +67,8 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
   } = useStory();
 
   useEffect(() => {
-    setState({ width, height, isFill, rotationAngle });
-  }, [width, height, isFill, rotationAngle]);
+    setState({ width, height, isFill, rotationAngle, flip });
+  }, [width, height, isFill, rotationAngle, flip]);
   const handleSubmit = (evt) => {
     onSetProperties(({ width: oldWidth, height: oldHeight }) => {
       let { width: newWidth, height: newHeight } = state;
@@ -77,12 +86,13 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
   };
 
   const handleClick = () => {
-    const newState = { isFill: !state.isFill };
+    const newState = { ...state, isFill: !state.isFill };
     setState(newState);
     onSetProperties(newState);
   };
   const handleSetBackground = () => {
     const newState = {
+      ...state,
       isBackground: true,
       opacity: 100,
       overlay: null,
@@ -92,6 +102,13 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
     setBackgroundElement({ elementId: backgroundId });
     onSetProperties(newState);
   };
+
+  const flipOptions = [
+    { name: __('None', 'web-stories'), value: null },
+    { name: __('Vertical', 'web-stories'), value: 'vertical' },
+    { name: __('Horizontal', 'web-stories'), value: 'horizontal' },
+    { name: __('Horizontal & Vertical', 'web-stories'), value: 'both' },
+  ];
 
   return (
     <SimplePanel
@@ -171,6 +188,13 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         }
         postfix={_x('deg', 'Degrees, 0 - 360. ', 'web-stories')}
         disabled={isFill}
+      />
+      <SelectMenu
+        label={__('Flip options', 'web-stories')}
+        options={flipOptions}
+        isMultiple={flip === ''}
+        value={state.flip}
+        onChange={(value) => setState({ ...state, flip: value })}
       />
     </SimplePanel>
   );

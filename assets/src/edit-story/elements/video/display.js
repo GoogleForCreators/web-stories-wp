@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, elementWithFlip, getMediaProps } from '../shared';
 import StoryPropTypes from '../../types';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -36,6 +36,7 @@ const Video = styled.video`
   max-width: initial;
   max-height: initial;
   ${videoWithScale}
+  ${elementWithFlip}
 `;
 
 function VideoDisplay({
@@ -49,6 +50,7 @@ function VideoDisplay({
     focalY,
     origRatio,
     poster,
+    flip,
   },
 }) {
   let style = {};
@@ -66,7 +68,8 @@ function VideoDisplay({
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    flip
   );
   return (
     <Element>

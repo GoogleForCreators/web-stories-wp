@@ -93,3 +93,7 @@ export const elementWithStyle = css`
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
 `;
+
+export const elementWithFlip = css`
+  transform: ${({ transformFlip }) => transformFlip};
+`;

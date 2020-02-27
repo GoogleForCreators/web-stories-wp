@@ -35,14 +35,16 @@ import {
   elementWithBackgroundColor,
   elementWithFontColor,
   elementWithStyle,
+  elementWithFlip,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { generateFontFamily } from './util';
+import { generateFontFamily, getTransformFlip } from './util';
 
 const Element = styled.p`
 	margin: 0;
 	${elementFillContent}
+	${elementWithFlip}
 	${elementWithFont}
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
@@ -55,6 +57,7 @@ function TextDisplay({
     content,
     color,
     backgroundColor,
+    flip,
     fontFamily,
     fontFallback,
     fontSize,
@@ -71,6 +74,7 @@ function TextDisplay({
   const {
     actions: { dataToEditorY },
   } = useUnits();
+
   const props = {
     color,
     backgroundColor,
@@ -79,6 +83,7 @@ function TextDisplay({
     fontStyle,
     fontSize: dataToEditorY(fontSize),
     fontWeight,
+    transformFlip: getTransformFlip(flip),
     letterSpacing,
     lineHeight,
     padding,

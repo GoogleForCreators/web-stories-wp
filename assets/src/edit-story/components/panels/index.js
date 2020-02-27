@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import ActionsPanel from './actions';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
 import BackgroundColorPanel from './backgroundColor';
@@ -32,7 +31,6 @@ import SizeAndPositionPanel from './sizeAndPosition';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
-const ACTIONS = 'actions';
 const BACKGROUND = 'background';
 const COLOR = 'color';
 const SCALE = 'scale';
@@ -45,7 +43,6 @@ const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 
 export const PanelTypes = {
-  ACTIONS,
   BACKGROUND,
   SCALE,
   BACKGROUND_COLOR,
@@ -70,9 +67,6 @@ export function getPanels(elements) {
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
-
-  // Panels to always display, independent of the selected element.
-  const sharedPanels = [{ type: ACTIONS, Panel: ActionsPanel }];
 
   let selectionPanels = [];
   // Only display background panel in case of background element.
@@ -119,5 +113,5 @@ export function getPanels(elements) {
       .filter((panel) => panel);
   }
 
-  return [...sharedPanels, ...selectionPanels];
+  return selectionPanels;
 }

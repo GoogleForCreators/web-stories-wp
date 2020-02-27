@@ -28,7 +28,7 @@ import { useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, elementWithFlip, getMediaProps } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { imageWithScale, getImageWithScaleCss } from './util';
 
@@ -40,10 +40,11 @@ const Element = styled.div`
 const Img = styled.img`
   position: absolute;
   ${imageWithScale}
+  ${elementWithFlip}
 `;
 
 function ImageDisplay({
-  element: { id, src, origRatio, scale, focalX, focalY },
+  element: { id, src, origRatio, scale, focalX, focalY, flip },
   box: { width, height },
 }) {
   const imageRef = useRef(null);
@@ -54,7 +55,8 @@ function ImageDisplay({
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    flip
   );
 
   useTransformHandler(id, (transform) => {
@@ -70,7 +72,8 @@ function ImageDisplay({
           scale,
           focalX,
           focalY,
-          origRatio
+          origRatio,
+          flip
         );
         target.style.cssText = getImageWithScaleCss(newImgProps);
       }

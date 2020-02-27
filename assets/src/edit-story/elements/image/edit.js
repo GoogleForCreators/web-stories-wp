@@ -29,6 +29,7 @@ import { useCallback, useState } from '@wordpress/element';
  */
 import {
   elementFillContent,
+  elementWithFlip,
   CropBox,
   getMediaProps,
   EditPanMovable,
@@ -49,11 +50,13 @@ const FadedImg = styled.img`
   opacity: 0.4;
   pointer-events: none;
   ${imageWithScale}
+  ${elementWithFlip}
 `;
 
 const CropImg = styled.img`
   position: absolute;
   ${imageWithScale}
+  ${elementWithFlip}
 `;
 
 function ImageEdit({ element, box }) {
@@ -62,6 +65,7 @@ function ImageEdit({ element, box }) {
     src,
     origRatio,
     scale,
+    flip,
     focalX,
     focalY,
     isFill,
@@ -87,7 +91,8 @@ function ImageEdit({ element, box }) {
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    flip
   );
 
   return (

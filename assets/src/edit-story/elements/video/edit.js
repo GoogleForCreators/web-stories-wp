@@ -33,6 +33,7 @@ import {
   getMediaProps,
   EditPanMovable,
   ScalePanel,
+  elementWithFlip,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -47,6 +48,7 @@ const FadedVideo = styled.video`
   opacity: 0.4;
   pointer-events: none;
   ${videoWithScale}
+  ${elementWithFlip}
   max-width: initial;
   max-height: initial;
 `;
@@ -54,12 +56,13 @@ const FadedVideo = styled.video`
 const CropVideo = styled.video`
   position: absolute;
   ${videoWithScale}
+  ${elementWithFlip}
   max-width: initial;
   max-height: initial;
 `;
 
 function VideoEdit({
-  element: { id, src, origRatio, scale, focalX, focalY, mimeType },
+  element: { id, src, origRatio, scale, flip, focalX, focalY, mimeType },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -79,7 +82,8 @@ function VideoEdit({
     scale,
     focalX,
     focalY,
-    origRatio
+    origRatio,
+    flip
   );
 
   return (

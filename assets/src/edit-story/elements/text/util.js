@@ -68,3 +68,15 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
   }
   return fontFamilyDisplay;
 };
+
+export const getTransformFlip = (flip) => {
+  let transformFlip = null;
+  if (flip === 'vertical') {
+    transformFlip = 'scaleY(-1)';
+  } else if (flip === 'horizontal') {
+    transformFlip = 'scaleX(-1)';
+  } else if (flip === 'both') {
+    transformFlip = 'scale(-1, -1)';
+  }
+  return transformFlip;
+};
