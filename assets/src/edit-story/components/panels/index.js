@@ -27,7 +27,7 @@ import RotationPanel from './rotationAngle';
 import SizePanel from './size';
 import PositionPanel from './position';
 import ScalePanel from './scale';
-import StylePanel from './stylePanel';
+import StylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 export { default as LayerPanel } from './layer';
