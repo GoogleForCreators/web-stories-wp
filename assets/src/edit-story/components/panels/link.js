@@ -34,6 +34,7 @@ import { __ } from '@wordpress/i18n';
 import { useCallback } from 'react';
 import { Input as BaseInput, Row } from '../form';
 import { createLink } from '../link';
+import { ReactComponent as Close } from '../../icons/close_icon.svg';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -54,6 +55,7 @@ const Input = styled(BaseInput)`
 
 /** TODO(@wassgha): Replace with text input component once done */
 const InputContainer = styled.div`
+  position: relative;
   width: 100%;
   background: ${({ theme, disabled }) =>
     disabled ? theme.colors.fg.v3 : theme.colors.fg.v1};
@@ -63,6 +65,8 @@ const InputContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.fg.v3} !important;
   border-radius: 4px !important;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 `;
 
 const BrandIcon = styled.img`
@@ -72,6 +76,26 @@ const BrandIcon = styled.img`
   background-color: ${({ theme }) => theme.colors.fg.v3};
   border: none;
   margin-right: 8px;
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  right: 8px;
+  appearance: none;
+  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.54)};
+  width: 16px;
+  height: 16px;
+  border: none;
+  padding: 0px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CloseIcon = styled(Close)`
+  width: 12px;
+  height: 12px;
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
@@ -126,35 +150,49 @@ function LinkPanel({ selectedElements, onSetProperties }) {
             value={state.link ? state.link.url : ''}
             expand
           />
+          {Boolean(state.link) && (
+            <DeleteButton
+              onClick={() => {
+                setState({ link: null });
+                onSetProperties({ link: null });
+              }}
+            >
+              <CloseIcon />
+            </DeleteButton>
+          )}
         </InputContainer>
       </Row>
 
-      <Row>
-        <InputContainer disabled={!canLink}>
-          <Input
-            type="text"
-            disabled={!canLink}
-            onChange={(evt) =>
-              setState({
-                ...state,
-                link: { ...state.link, desc: evt.target.value },
-              })
-            }
-            onBlur={(evt) =>
-              evt.target.form.dispatchEvent(new window.Event('submit'))
-            }
-            placeholder={__('Optional description', 'web-stories')}
-            value={state.link ? state.link.desc : ''}
-            isMultiple={link === ''}
-            expand
-          />
-        </InputContainer>
-      </Row>
+      {Boolean(state.link) && (
+        <Row>
+          <InputContainer disabled={!canLink}>
+            <Input
+              type="text"
+              disabled={!canLink}
+              onChange={(evt) =>
+                setState({
+                  ...state,
+                  link: { ...state.link, desc: evt.target.value },
+                })
+              }
+              onBlur={(evt) =>
+                evt.target.form.dispatchEvent(new window.Event('submit'))
+              }
+              placeholder={__('Optional description', 'web-stories')}
+              value={state.link ? state.link.desc : ''}
+              isMultiple={link === ''}
+              expand
+            />
+          </InputContainer>
+        </Row>
+      )}
       {/** TODO(@wassgha): Replace with image upload component */}
-      <Row>
-        <BrandIcon src={state.link && state.link.icon} />
-        <span>{__('Optional brand icon', 'web-stories')}</span>
-      </Row>
+      {Boolean(state.link) && (
+        <Row>
+          <BrandIcon src={state.link && state.link.icon} />
+          <span>{__('Optional brand icon', 'web-stories')}</span>
+        </Row>
+      )}
     </SimplePanel>
   );
 }

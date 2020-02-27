@@ -49,9 +49,6 @@ const Wrapper = styled.div`
 	${elementWithSize}
 	${elementWithRotation}
   pointer-events: initial;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
 	&:focus,
 	&:active,

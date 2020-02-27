@@ -113,6 +113,12 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 function WithLink({ element, showTooltip, children, ...rest }) {
   const link = getLinkFromElement(element);
 
@@ -130,7 +136,7 @@ function WithLink({ element, showTooltip, children, ...rest }) {
   }
 
   return (
-    <div {...rest}>
+    <Wrapper {...rest}>
       {link.type === LinkType.ONE_TAP ? (
         <Hint>{link.url}</Hint>
       ) : (
@@ -143,7 +149,7 @@ function WithLink({ element, showTooltip, children, ...rest }) {
         </Tooltip>
       )}
       {children}
-    </div>
+    </Wrapper>
   );
 }
 
