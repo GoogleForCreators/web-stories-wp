@@ -17,13 +17,6 @@
 /**
  * Internal dependencies
  */
-import UploadButton from '../';
+import { getPaneId } from '../shared';
 
-export default {
-  title: 'Components/UploadButton',
-  component: UploadButton,
-};
-
-export const _default = () => {
-  return <UploadButton onSelect={null} />;
-};
+export default getPaneId('elements');

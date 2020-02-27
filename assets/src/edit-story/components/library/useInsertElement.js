@@ -24,34 +24,17 @@ import {
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
-import useLibrary from './useLibrary';
-import MediaLibrary from './mediaLibrary';
-import TextLibrary from './textLibrary';
-import ShapeLibrary from './shapeLibrary';
-import LinkLibrary from './linkLibrary';
 
-function Library() {
-  const {
-    state: { tab },
-    data: {
-      tabs: { MEDIA, TEXT, SHAPES, LINKS },
-    },
-  } = useLibrary();
-  const {
-    actions: { addElement, setBackgroundElement },
-    state: { currentPage },
-  } = useStory();
-  const ContentLibrary = {
-    [MEDIA]: MediaLibrary,
-    [TEXT]: TextLibrary,
-    [SHAPES]: ShapeLibrary,
-    [LINKS]: LinkLibrary,
-  }[tab];
+function useInsertElement() {
   const isMediaEl = (type) => {
     const { isMedia } = getDefinitionForType(type);
     return isMedia;
   };
-  const handleInsert = (type, { width, height, ...props }) => {
+  const {
+    actions: { addElement, setBackgroundElement },
+    state: { currentPage },
+  } = useStory();
+  const insertElement = (type, { width, height, ...props }) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
@@ -68,7 +51,8 @@ function Library() {
     }
     return element;
   };
-  return <ContentLibrary onInsert={handleInsert} />;
+
+  return insertElement;
 }
 
-export default Library;
+export default useInsertElement;

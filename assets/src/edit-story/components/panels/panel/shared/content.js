@@ -33,12 +33,8 @@ import panelContext from '../context';
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme, isPrimary }) =>
-    isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1};
-
-  ${({ hidden }) => hidden && 'display: none'}
+  ${({ hasBorder, theme }) =>
+    hasBorder && `border-top: 1px solid ${theme.colors.fg.v6};`}
 `;
 
 function Content({ children, onSubmit, ...rest }) {

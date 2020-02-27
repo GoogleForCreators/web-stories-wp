@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -31,11 +31,11 @@ import styled, { css } from 'styled-components';
 import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
-import UploadButton from '../../uploadButton';
+import { useMediaPicker } from '../../mediaPicker';
 import { SelectMenu, InputGroup } from '../../form';
 import useInspector from '../useInspector';
 
-const buttonStyles = css`
+const Button = styled.button`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 14px;
   width: 100%;
@@ -47,10 +47,6 @@ const Img = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
-`;
-
-const RemoveButton = styled.button`
-  ${buttonStyles}
 `;
 
 function DocumentInspector() {
@@ -124,6 +120,13 @@ function DocumentInspector() {
     [deleteStory]
   );
 
+  const openMediaPicker = useMediaPicker({
+    title: __('Select as featured image', 'web-stories'),
+    buttonInsertText: __('Set as featured image', 'web-stories'),
+    onSelect: handleChangeImage,
+    type: 'image',
+  });
+
   return (
     <>
       <SimplePanel
@@ -169,7 +172,7 @@ function DocumentInspector() {
             />
           )}
 
-        <RemoveButton
+        <Button
           onClick={handleRemoveStory}
           dangerouslySetInnerHTML={{ __html: 'Move to trash' }}
         />
@@ -198,25 +201,18 @@ function DocumentInspector() {
       >
         {featuredMediaUrl && <Img src={featuredMediaUrl} />}
         {featuredMediaUrl && (
-          <RemoveButton
+          <Button
             onClick={handleRemoveImage}
             dangerouslySetInnerHTML={{ __html: 'Remove image' }}
           />
         )}
 
         {postThumbnails && (
-          <UploadButton
-            onSelect={handleChangeImage}
-            title={__('Select as featured image', 'web-stories')}
-            type={'image'}
-            buttonInsertText={__('Set as featured image', 'web-stories')}
-            buttonText={
-              featuredMediaUrl
-                ? __('Replace image', 'web-stories')
-                : __('Set featured image', 'web-stories')
-            }
-            buttonCSS={buttonStyles}
-          />
+          <Button onClick={openMediaPicker}>
+            {featuredMediaUrl
+              ? __('Replace image', 'web-stories')
+              : __('Set featured image', 'web-stories')}
+          </Button>
         )}
       </SimplePanel>
     </>

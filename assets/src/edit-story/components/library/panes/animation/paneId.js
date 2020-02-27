@@ -15,12 +15,8 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { getPaneId } from '../shared';
 
-function LinkLibrary({}) {
-  return <p>{__('Still empty', 'web-stories')}</p>;
-}
-
-export default LinkLibrary;
+export default getPaneId('elements');
