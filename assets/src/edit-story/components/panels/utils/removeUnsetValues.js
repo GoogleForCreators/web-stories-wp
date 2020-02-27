@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import UploadButton from '../';
+function removeUnsetValues(map) {
+  const result = {};
+  for (const k in map) {
+    if (map[k] !== '') {
+      result[k] = map[k];
+    }
+  }
+  return result;
+}
 
-export default {
-  title: 'Components/UploadButton',
-  component: UploadButton,
-};
-
-export const _default = () => {
-  return <UploadButton onSelect={null} />;
-};
+export default removeUnsetValues;

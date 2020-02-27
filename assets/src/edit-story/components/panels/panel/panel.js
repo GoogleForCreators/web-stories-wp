@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -43,7 +43,7 @@ function Panel({ initialHeight, name, children }) {
   const collapse = useCallback(() => setIsCollapsed(true), []);
   const expand = useCallback(() => setIsCollapsed(false), []);
 
-  const panelContentId = `panel-${name}-${uuid()}`;
+  const panelContentId = `panel-${name}-${uuidv4()}`;
 
   const contextValue = {
     state: {

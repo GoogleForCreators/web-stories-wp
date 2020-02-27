@@ -30,10 +30,9 @@ import { useRef, useEffect, useState } from '@wordpress/element';
 import Movable from '../movable';
 import { useStory } from '../../app/story';
 import objectWithout from '../../utils/objectWithout';
-import calculateFitTextFontSize from '../../utils/calculateFitTextFontSize';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
+import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -51,7 +50,7 @@ function MultiSelectionMovable({ selectedElements }) {
     },
   } = useCanvas();
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -67,20 +66,12 @@ function MultiSelectionMovable({ selectedElements }) {
     }
   }, [selectedElements, moveable, nodesById]);
 
-  const minMaxFontSize = {
-    minFontSize: dataToEditorY(MIN_FONT_SIZE),
-    maxFontSize: dataToEditorY(MAX_FONT_SIZE),
-  };
-
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
+    element,
     node: nodesById[element.id],
-    id: element.id,
-    x: element.x,
-    y: element.y,
-    rotationAngle: element.rotationAngle,
-    type: element.type,
-    content: element.content,
+    updateForResizeEvent: getDefinitionForType(element.type)
+      .updateForResizeEvent,
   }));
   // Not all targets have been defined yet.
   if (targetList.some(({ node }) => node === undefined)) {
@@ -106,10 +97,12 @@ function MultiSelectionMovable({ selectedElements }) {
   };
 
   const frames = targetList
-    ? targetList.map((target) => ({
+    ? targetList.map(({ element }) => ({
         translate: [0, 0],
-        rotate: target.rotationAngle,
+        rotate: element.rotationAngle,
+        direction: [0, 0],
         resize: [0, 0],
+        updates: null,
       }))
     : [];
 
@@ -117,13 +110,15 @@ function MultiSelectionMovable({ selectedElements }) {
    * Resets Movable once the action is done, sets the initial values.
    */
   const resetMoveable = () => {
-    targetList.forEach(({ id, node }, i) => {
+    targetList.forEach(({ element, node }, i) => {
+      frames[i].direction = [0, 0];
       frames[i].translate = [0, 0];
       frames[i].resize = [0, 0];
+      frames[i].updates = null;
       node.style.transform = '';
       node.style.width = '';
       node.style.height = '';
-      pushTransform(id, null);
+      pushTransform(element.id, null);
     });
     if (moveable.current) {
       moveable.current.updateRect();
@@ -146,31 +141,30 @@ function MultiSelectionMovable({ selectedElements }) {
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
-      const [editorWidth, editorHeight] = frame.resize;
+      const { direction } = frame;
+      const { element, updateForResizeEvent } = targetList[i];
       const properties = {
-        x: targetList[i].x + editorToDataX(frame.translate[0]),
-        y: targetList[i].y + editorToDataY(frame.translate[1]),
+        x: element.x + editorToDataX(frame.translate[0]),
+        y: element.y + editorToDataY(frame.translate[1]),
       };
       if (isRotate) {
         properties.rotationAngle = frame.rotate;
       }
+      const [editorWidth, editorHeight] = frame.resize;
       const didResize = editorWidth !== 0 && editorHeight !== 0;
       if (isResize && didResize) {
-        properties.width = editorToDataX(editorWidth);
-        properties.height = editorToDataY(editorHeight);
-        const isText = 'text' === targetList[i].type;
-        if (isText) {
-          properties.fontSize = editorToDataY(
-            calculateFitTextFontSize(
-              target.firstChild,
-              editorHeight,
-              editorWidth,
-              minMaxFontSize
-            )
+        const newWidth = editorToDataX(editorWidth);
+        const newHeight = editorToDataY(editorHeight);
+        properties.width = newWidth;
+        properties.height = newHeight;
+        if (updateForResizeEvent) {
+          Object.assign(
+            properties,
+            updateForResizeEvent(element, direction, newWidth, newHeight)
           );
         }
       }
-      updateElementsById({ elementIds: [targetList[i].id], properties });
+      updateElementsById({ elementIds: [element.id], properties });
     });
     resetMoveable();
   };
@@ -187,8 +181,9 @@ function MultiSelectionMovable({ selectedElements }) {
       onDragGroup={({ events }) => {
         events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
+          const { element } = targetList[i];
           sFrame.translate = beforeTranslate;
-          setTransformStyle(targetList[i].id, target, sFrame);
+          setTransformStyle(element.id, target, sFrame);
         });
       }}
       onDragGroupStart={({ events }) => {
@@ -205,9 +200,10 @@ function MultiSelectionMovable({ selectedElements }) {
       onRotateGroup={({ events }) => {
         events.forEach(({ target, beforeRotate, drag }, i) => {
           const sFrame = frames[i];
+          const { element } = targetList[i];
           sFrame.rotate = beforeRotate;
           sFrame.translate = drag.beforeTranslate;
-          setTransformStyle(targetList[i].id, target, sFrame);
+          setTransformStyle(element.id, target, sFrame);
         });
       }}
       onRotateGroupEnd={({ targets }) => {
@@ -223,23 +219,30 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onResizeGroup={({ events }) => {
-        events.forEach(({ target, width, height, drag }, i) => {
+        events.forEach(({ target, direction, width, height, drag }, i) => {
           const sFrame = frames[i];
-          const isText = 'text' === targetList[i].type;
-          target.style.width = `${width}px`;
-          target.style.height = `${height}px`;
-          if (isText) {
-            // For text: update font size, too.
-            target.style.fontSize = calculateFitTextFontSize(
-              target.firstChild,
-              height,
-              width,
-              minMaxFontSize
+          const { element, updateForResizeEvent } = targetList[i];
+          let newHeight = height;
+          const newWidth = width;
+          let updates = null;
+          if (updateForResizeEvent) {
+            updates = updateForResizeEvent(
+              element,
+              direction,
+              editorToDataX(newWidth),
+              editorToDataY(newHeight)
             );
           }
+          if (updates && updates.height) {
+            newHeight = dataToEditorY(updates.height);
+          }
+          target.style.width = `${newWidth}px`;
+          target.style.height = `${newHeight}px`;
+          sFrame.direction = direction;
+          sFrame.resize = [newWidth, newHeight];
           sFrame.translate = drag.beforeTranslate;
-          sFrame.resize = [width, height];
-          setTransformStyle(targetList[i].id, target, sFrame);
+          sFrame.updates = updates;
+          setTransformStyle(element.id, target, sFrame);
         });
       }}
       onResizeGroupEnd={({ targets }) => {
