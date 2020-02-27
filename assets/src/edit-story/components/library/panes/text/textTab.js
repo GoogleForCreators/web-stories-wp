@@ -34,13 +34,19 @@ import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 
-const AnimatedTextIcon = styled(TextIcon)`
-  ${({ isSecondary }) =>
-    isSecondary &&
-    `
-    transform: scale(0.71); /* scales 28px down to 20px */
-  `} );
-`;
+const AnimatedTextIcon = styled(TextIcon).attrs(({ isSecondary }) => ({
+  style: {
+    // scales 28px to 20px
+    transform: isSecondary ? 'scale(0.71)' : 'none',
+  },
+}))``;
+
+const AnimatedTextAddIcon = styled(TextAddIcon).attrs(({ isPrimary }) => ({
+  style: {
+    // scales 28px to 48px
+    transform: isPrimary ? 'scale(1.71)' : 'none',
+  },
+}))``;
 
 const QuickAction = styled.button`
   margin: 0 0 0 -10px;
@@ -51,13 +57,6 @@ const QuickAction = styled.button`
   overflow: hidden;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-
-  &:hover,
-  &:focus {
-    svg {
-      transform: scale(1.71); /* scales 28px to 48px */
-    }
-  }
 `;
 
 function TextTab(props) {
@@ -102,7 +101,7 @@ function TextTab(props) {
         onPointerOver={() => setIsHoveringQuick(true)}
         onPointerOut={() => setIsHoveringQuick(false)}
       >
-        <TextAddIcon />
+        <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>
     </Tab>
   );
