@@ -49,6 +49,7 @@ export const Icon = styled(UploadIcon)`
   height: 54px;
   width: 54px;
   fill: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 export const Overlay = styled.div`
   position: absolute;
