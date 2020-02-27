@@ -15,21 +15,23 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import { MASKS } from '../../masks';
-import { Section, Title, SearchInput, Header } from './common';
+import { MASKS } from '../../../../masks';
+import useLibrary from '../../useLibrary';
+import { Section, Title, SearchInput, Header } from '../../common';
+import { Pane } from '../shared';
+import paneId from './paneId';
 
 const PREVIEW_SIZE = 36;
 
@@ -54,9 +56,12 @@ const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function MediaLibrary({ onInsert }) {
+function ShapesPane(props) {
+  const {
+    actions: { insertElement },
+  } = useLibrary();
   return (
-    <>
+    <Pane id={paneId} {...props}>
       <Header>
         <Title>{__('Shapes', 'web-stories')}</Title>
       </Header>
@@ -71,7 +76,7 @@ function MediaLibrary({ onInsert }) {
           <ShapePreview
             key={'square'}
             onClick={() => {
-              onInsert('square', {
+              insertElement('square', {
                 backgroundColor: '#333',
                 width: 200,
                 height: 200,
@@ -89,7 +94,7 @@ function MediaLibrary({ onInsert }) {
             <ShapePreview
               key={mask.type}
               onClick={() => {
-                onInsert('square', {
+                insertElement('square', {
                   backgroundColor: '#333',
                   width: 200,
                   height: 200,
@@ -114,12 +119,8 @@ function MediaLibrary({ onInsert }) {
           ))}
         </SectionContent>
       </Section>
-    </>
+    </Pane>
   );
 }
 
-MediaLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
-
-export default MediaLibrary;
+export default ShapesPane;

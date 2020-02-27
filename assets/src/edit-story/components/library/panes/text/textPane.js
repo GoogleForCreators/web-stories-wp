@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -27,10 +22,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../constants';
-import { editorToDataY } from '../../units/dimensions';
-import { Section, MainButton, Title, SearchInput, Header } from './common';
-import { FontPreview } from './text';
+import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../../../constants';
+import { editorToDataY } from '../../../../units/dimensions';
+import { Section, MainButton, Title, SearchInput, Header } from '../../common';
+import { FontPreview } from '../../text';
+import useLibrary from '../../useLibrary';
+import { Pane } from '../shared';
+import paneId from './paneId';
 
 const PRESETS = [
   {
@@ -64,14 +62,17 @@ const DEFAULT_TEXT_TRANSFORM = {
   rotationAngle: 0,
 };
 
-function TextLibrary({ onInsert }) {
+function TextPane(props) {
+  const {
+    actions: { insertElement },
+  } = useLibrary();
   return (
-    <>
+    <Pane id={paneId} {...props}>
       <Header>
         <Title>{__('Text', 'web-stories')}</Title>
         <MainButton
           onClick={() =>
-            onInsert('text', {
+            insertElement('text', {
               content: __('Text', 'web-stories'),
               color: 'black',
               ...DEFAULT_TEXT_TRANSFORM,
@@ -92,7 +93,7 @@ function TextLibrary({ onInsert }) {
             key={`preset-${preset.id}`}
             {...preset}
             onClick={() =>
-              onInsert('text', {
+              insertElement('text', {
                 content: __('Text', 'web-stories'),
                 color: 'black',
                 ...DEFAULT_TEXT_TRANSFORM,
@@ -107,12 +108,8 @@ function TextLibrary({ onInsert }) {
         ))}
       </Section>
       <Section title={__('Text Sets', 'web-stories')} />
-    </>
+    </Pane>
   );
 }
 
-TextLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
-
-export default TextLibrary;
+export default TextPane;

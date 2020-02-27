@@ -20,10 +20,15 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { HEADER_HEIGHT } from '../../constants';
-import LibraryContent from './libraryContent';
+import LibraryPanes from './libraryPanes';
 import LibraryTabs from './libraryTabs';
 
 const Layout = styled.div`
@@ -35,14 +40,16 @@ const Layout = styled.div`
     / 1fr;
 `;
 
-const TabsArea = styled.div`
+// @todo Verify that L10N works with the translation happening here.
+const TabsArea = styled.nav.attrs({
+  'aria-label': __('Library tabs', 'web-stories'),
+})`
   grid-area: tabs;
 `;
 
 const LibraryBackground = styled.div`
   grid-area: library;
   background-color: ${({ theme }) => theme.colors.bg.v4};
-  padding: 1em;
   color: ${({ theme }) => theme.colors.fg.v1};
   overflow: auto;
 `;
@@ -54,7 +61,7 @@ function LibraryLayout() {
         <LibraryTabs />
       </TabsArea>
       <LibraryBackground>
-        <LibraryContent />
+        <LibraryPanes />
       </LibraryBackground>
     </Layout>
   );
