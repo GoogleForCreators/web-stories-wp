@@ -18,43 +18,102 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { MASKS } from '../../masks';
+import { Section, Title, SearchInput, Header } from './common';
+
+const PREVIEW_SIZE = 36;
+
+const SectionContent = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const ShapePreview = styled.div`
+  position: relative;
+  margin-left: 24px;
+  margin-right: 24px;
+`;
+
+const Square = styled.div`
+  width: ${PREVIEW_SIZE}px;
+  height: ${PREVIEW_SIZE}px;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+const Path = styled.path`
+  fill: ${({ theme }) => theme.colors.fg.v1};
+`;
 
 function MediaLibrary({ onInsert }) {
   return (
     <>
-      <button
-        onClick={() =>
-          onInsert('square', {
-            backgroundColor: '#ff0000',
-            width: 30,
-            height: 15,
-            x: 5,
-            y: 5,
-            rotationAngle: 0,
-          })
-        }
-      >
-        {__('Insert small red square', 'web-stories')}
-      </button>
-      <br />
-      <button
-        onClick={() =>
-          onInsert('square', {
-            backgroundColor: '#0000ff',
-            width: 100,
-            height: 80,
-            x: 5,
-            y: 35,
-            rotationAngle: 0,
-          })
-        }
-      >
-        {__('Insert big blue square', 'web-stories')}
-      </button>
+      <Header>
+        <Title>{__('Shapes', 'web-stories')}</Title>
+      </Header>
+      <SearchInput
+        value={''}
+        placeholder={__('Search shapes...', 'web-stories')}
+        onChange={() => {}}
+      />
+      <Section title={__('Basic shapes', 'web-stories')}>
+        <SectionContent>
+          {/** Square shape */}
+          <ShapePreview
+            key={'square'}
+            onClick={() => {
+              onInsert('square', {
+                backgroundColor: '#333',
+                width: 200,
+                height: 200,
+                x: 5,
+                y: 5,
+                rotationAngle: 0,
+              });
+            }}
+            alt={__('Square', 'web-stories')}
+          >
+            <Square />
+          </ShapePreview>
+          {/** Basic masks */}
+          {MASKS.map((mask) => (
+            <ShapePreview
+              key={mask.type}
+              onClick={() => {
+                onInsert('square', {
+                  backgroundColor: '#333',
+                  width: 200,
+                  height: 200,
+                  x: 5,
+                  y: 5,
+                  rotationAngle: 0,
+                  mask: {
+                    type: mask.type,
+                  },
+                });
+              }}
+              alt={mask.name}
+            >
+              <svg
+                viewBox={'0 0 1 1'}
+                width={PREVIEW_SIZE}
+                height={PREVIEW_SIZE}
+              >
+                <Path d={mask.path} />
+              </svg>
+            </ShapePreview>
+          ))}
+        </SectionContent>
+      </Section>
     </>
   );
 }
