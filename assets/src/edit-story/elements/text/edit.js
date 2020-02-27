@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { Editor, EditorState, SelectionState } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
@@ -48,7 +49,6 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import hexToRGBA from '../../utils/hexToRGBA';
 import { getFilteredState, getHandleKeyCommand } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -110,9 +110,9 @@ function TextEdit({
     actions: { dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
-    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
+    color: textOpacity ? rgba(color, textOpacity / 100) : color,
     backgroundColor: backgroundOpacity
-      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      ? rgba(backgroundColor, backgroundOpacity / 100)
       : backgroundColor,
     fontFamily,
     fontFallback,

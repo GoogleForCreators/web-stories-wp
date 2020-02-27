@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -38,7 +39,6 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import hexToRGBA from '../../utils/hexToRGBA';
 import { generateFontFamily } from './util';
 
 const Element = styled.p`
@@ -76,9 +76,9 @@ function TextDisplay({
     actions: { dataToEditorY },
   } = useUnits();
   const props = {
-    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
+    color: textOpacity ? rgba(color, textOpacity / 100) : color,
     backgroundColor: backgroundOpacity
-      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      ? rgba(backgroundColor, backgroundOpacity / 100)
       : backgroundColor,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontFallback,

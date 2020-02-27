@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { rgba } from 'polished';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { dataToEditorY } from '../../units';
-import hexToRGBA from '../../utils/hexToRGBA';
 import { generateFontFamily } from './util';
 
 /**
@@ -50,9 +54,9 @@ function TextOutput({
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontWeight: fontWeight ? fontWeight : null,
     background: backgroundOpacity
-      ? hexToRGBA(backgroundColor, backgroundOpacity)
+      ? rgba(backgroundColor, backgroundOpacity / 100)
       : backgroundColor,
-    color: textOpacity ? hexToRGBA(color, textOpacity) : color,
+    color: textOpacity ? rgba(color, textOpacity / 100) : color,
     lineHeight,
     letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
     padding: padding ? `${padding.vertical}% ${padding.horizontal}%` : null,
