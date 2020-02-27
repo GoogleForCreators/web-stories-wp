@@ -89,6 +89,7 @@ function OutputStory({ story, pages, metadata }) {
             }}
           />
         </noscript>
+        <meta name="web-stories-replace-head-start" />
         <style
           amp-custom=""
           dangerouslySetInnerHTML={{
@@ -123,6 +124,7 @@ function OutputStory({ story, pages, metadata }) {
               `,
           }}
         />
+        <meta name="web-stories-replace-head-end" />
       </head>
       <body>
         <amp-story

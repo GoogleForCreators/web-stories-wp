@@ -153,7 +153,10 @@ class Story_Post_Type {
 			'the_content',
 			static function ( $content ) {
 				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_filter( 'the_content', 'wpautop' );
+					remove_all_filters( 'the_content' );
+
+					$renderer = new Story_Renderer( get_post() );
+					return $renderer->render();
 				}
 
 				return $content;
@@ -229,7 +232,7 @@ class Story_Post_Type {
 
 		$post = get_post();
 
-		if ( ! $post instanceof WP_Post) {
+		if ( ! $post instanceof WP_Post ) {
 			return;
 		}
 

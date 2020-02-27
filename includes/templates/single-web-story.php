@@ -29,5 +29,4 @@ the_post();
 ?>
 <!DOCTYPE html>
 <?php
-// @todo Filter content in PHP to ensure AMP validity and to allow changing publisher logo etc.
 the_content();
