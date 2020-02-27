@@ -40,7 +40,7 @@ const Page = styled.button`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.mg.v1};
+    backgroundColor || theme.colors.fg.v1};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 
