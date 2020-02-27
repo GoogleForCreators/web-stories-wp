@@ -43,14 +43,17 @@ function EditPanMovable({
   offsetY,
   mediaWidth,
   mediaHeight,
+  transformFlip,
 }) {
   const moveableRef = useRef();
   const translateRef = useRef([0, 0]);
 
   const update = () => {
     const [tx, ty] = translateRef.current;
-    fullMedia.style.transform = `translate(${tx}px, ${ty}px)`;
-    croppedMedia.style.transform = `translate(${tx}px, ${ty}px)`;
+    fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
+      ''}`;
+    croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
+      ''}`;
   };
 
   // Refresh moveables to ensure that the selection rect is always correct.
@@ -118,6 +121,7 @@ EditPanMovable.propTypes = {
   offsetY: PropTypes.number.isRequired,
   mediaWidth: PropTypes.number.isRequired,
   mediaHeight: PropTypes.number.isRequired,
+  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
 };
 
 export default EditPanMovable;

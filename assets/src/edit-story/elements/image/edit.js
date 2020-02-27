@@ -123,6 +123,7 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           imgWidth={imgProps.width}
           imgHeight={imgProps.height}
+          transformFlip={imgProps.transformFlip}
         />
       )}
 
@@ -140,6 +141,7 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           mediaWidth={imgProps.width}
           mediaHeight={imgProps.height}
+          transformFlip={imgProps.transformFlip}
         />
       )}
 

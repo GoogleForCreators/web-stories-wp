@@ -114,6 +114,7 @@ function VideoEdit({
           offsetY={videoProps.offsetY}
           mediaWidth={videoProps.width}
           mediaHeight={videoProps.height}
+          transformFlip={videoProps.transformFlip}
         />
       )}
 

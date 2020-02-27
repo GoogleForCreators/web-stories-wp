@@ -45,6 +45,7 @@ function EditCropMovable({
   offsetY,
   imgWidth,
   imgHeight,
+  transformFlip,
 }) {
   const {
     actions: { editorToDataX, editorToDataY },
@@ -85,7 +86,9 @@ function EditCropMovable({
         const bottom = dirY > 0 ? dh : 0;
         cropRef.current = [fx, fy, left, right, top, bottom];
         cropBox.style.transform = `translate(${fx}px, ${fy}px)`;
-        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px)`;
+        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px) ${transformFlip ??
+          ''}`;
+
         if (delta[0]) {
           cropBox.style.width = `${resizeWidth}px`;
         }
@@ -155,6 +158,7 @@ EditCropMovable.propTypes = {
   offsetY: PropTypes.number.isRequired,
   imgWidth: PropTypes.number.isRequired,
   imgHeight: PropTypes.number.isRequired,
+  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
 };
 
 export default EditCropMovable;
