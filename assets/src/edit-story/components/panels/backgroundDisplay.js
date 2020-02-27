@@ -52,7 +52,7 @@ function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
       </p>
       {/* todo: use properly styled switch component */}
       <select
-        value={isFullbleedBackground ? 'yes' : 'no'}
+        value={isFullbleedBackground === false ? 'no' : 'yes'}
         onChange={handleChange}
         onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
