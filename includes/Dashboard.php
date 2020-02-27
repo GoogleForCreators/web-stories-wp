@@ -57,6 +57,15 @@ class Dashboard {
 	}
 
 	/**
+	 * Returns the admin page's hook suffix.
+	 *
+	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 */
+	public function get_hook_suffix() {
+		return $this->hook_suffix;
+	}
+
+	/**
 	 * Registers the dashboard admin menu page.
 	 *
 	 * @return void
@@ -67,7 +76,7 @@ class Dashboard {
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
 			'edit_posts',
-			'dashboard',
+			'stories-dashboard',
 			[ $this, 'render' ],
 			0
 		);
