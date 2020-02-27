@@ -33,8 +33,8 @@ import panelContext from './context';
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
-
-  ${({ hidden }) => hidden && 'display: none'}
+  ${({ hasBorder, theme }) =>
+    hasBorder && `border-top: 1px solid ${theme.colors.fg.v6};`}
 `;
 
 function Content({ children, onSubmit, ...rest }) {
