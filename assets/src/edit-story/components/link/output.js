@@ -26,7 +26,13 @@ function WithLink({ element, children, ...rest }) {
     return children;
   }
   return (
-    <a href={link.url} alt={link.desc} {...rest}>
+    <a
+      href={link.url}
+      alt={link.desc}
+      data-tooltip-icon={link.image}
+      data-tooltip-text={link.desc}
+      {...rest}
+    >
       {children}
     </a>
   );

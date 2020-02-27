@@ -37,6 +37,8 @@ import { createLink } from '../link';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
+const DEFAULT_LINK = createLink();
+
 const Note = styled.span`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 11px;
@@ -73,11 +75,12 @@ const BrandIcon = styled.img`
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
-  const link = getCommonValue(selectedElements, 'link') || createLink('');
+  const link = getCommonValue(selectedElements, 'link') || DEFAULT_LINK;
   const isFill = getCommonValue(selectedElements, 'isFill');
   const [state, setState] = useState({ link });
   useEffect(() => {
     setState({ link });
+    // TODO(wassgha) Implement page parsing
     if (link.url) {
       populateMetadata(link.url);
     }
@@ -92,7 +95,6 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       // TODO(wassgha): Implement getting the page metadata
     })
   );
-
   return (
     <SimplePanel
       name="link"
@@ -131,8 +133,6 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         <InputContainer>
           <Input
             type="text"
-            // TODO(@wassgha): Enable changing the description
-            disabled={true}
             onChange={(evt) =>
               setState({
                 ...state,
@@ -151,7 +151,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       </Row>
       {/** TODO(@wassgha): Replace with image upload component */}
       <Row>
-        <BrandIcon />
+        <BrandIcon src={state.link && state.link.image} />
         <span>{__('Optional brand icon', 'web-stories')}</span>
       </Row>
     </SimplePanel>

@@ -81,10 +81,15 @@ const BrandIcon = styled.img`
   margin-right: 8px;
 `;
 
+const LinkOut = styled.a`
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const LinkOutIcon = styled(External)`
   width: 16px;
   opacity: 0.59;
-  margin-left: 8px;
 `;
 
 const LinkIcon = styled(Link)`
@@ -104,6 +109,7 @@ const LinkIcon = styled(Link)`
 const LinkDesc = styled.span`
   flex: 1;
   text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
 `;
 
@@ -131,7 +137,9 @@ function WithLink({ element, isSelected, children, ...rest }) {
         <Tooltip>
           <BrandIcon />
           <LinkDesc>{link.desc || link.url}</LinkDesc>
-          <LinkOutIcon />
+          <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
+            <LinkOutIcon />
+          </LinkOut>
         </Tooltip>
       )}
       {children}
