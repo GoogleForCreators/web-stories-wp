@@ -31,10 +31,13 @@ import { Panel, PanelContent } from './panel';
 
 const Note = styled.p`
   font-style: italic;
-  color: ${({ theme }) => theme.colors.bg.v5};
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 18px;
+  /* TODO: update to fg.v1 once color scheme change is implemented */
+  color: ${({ theme }) => theme.colors.bg.v0};
+  opacity: 0.86;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-weight: ${({ theme }) => theme.fonts.label.size};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   margin: 0;
 `;
 

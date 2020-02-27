@@ -96,6 +96,12 @@ const theme = {
       lineHeight: '1.2',
       weight: '500',
     },
+    label: {
+      family: 'Roboto',
+      size: '15px',
+      lineHeight: '18px',
+      weight: '400',
+    },
   },
 };
 
