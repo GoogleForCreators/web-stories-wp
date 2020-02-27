@@ -147,6 +147,10 @@ function Carousel() {
 
   const scrollBy = useCallback(
     (offset) => {
+      if (isRTL) {
+        offset *= -1;
+      }
+
       if (!listRef.current.scrollBy) {
         listRef.current.scrollLeft += offset;
         return;
@@ -157,17 +161,13 @@ function Carousel() {
         behavior: 'smooth',
       });
     },
-    [listRef]
+    [listRef, isRTL]
   );
 
   const isAtBeginningOfList = isRTL
     ? 1 === scrollPercentage
     : 0 === scrollPercentage;
   const isAtEndOfList = isRTL ? 0 === scrollPercentage : 1 === scrollPercentage;
-
-  const distance = 2 * PAGE_THUMB_WIDTH;
-  const scrollLeft = () => scrollBy(-distance);
-  const scrollRight = () => scrollBy(distance);
 
   const PrevButton = isRTL ? RightArrow : LeftArrow;
   const NextButton = isRTL ? LeftArrow : RightArrow;
@@ -178,7 +178,7 @@ function Carousel() {
         <Area area="prev-navigation">
           <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={isRTL ? scrollRight : scrollLeft}
+            onClick={() => scrollBy(-2 * PAGE_THUMB_WIDTH)}
             width="24"
             height="24"
             aria-label={__('Scroll Backward', 'web-stories')}
@@ -218,7 +218,7 @@ function Carousel() {
         <Area area="next-navigation">
           <NextButton
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={isRTL ? scrollLeft : scrollRight}
+            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
             width="24"
             height="24"
             aria-label={__('Scroll Forward', 'web-stories')}
