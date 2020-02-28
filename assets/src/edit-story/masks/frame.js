@@ -23,13 +23,14 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useRef, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import { useStory } from '../app/story';
+import { useDropTargets } from '../app';
 import { getElementMask } from './';
 
 const FILL_STYLE = {
@@ -56,10 +57,16 @@ const DropTargetPath = styled.path`
 `;
 
 function WithDropTarget({ element, children }) {
+  const pathRef = useRef(null);
+
   const {
     actions: { setActiveDropTarget },
     state: { activeDropTarget },
   } = useStory();
+  const {
+    actions: { registerDropTarget },
+  } = useDropTargets();
+
   const [active, setActive] = useState();
   const { mask, id } = element;
 
@@ -70,6 +77,10 @@ function WithDropTarget({ element, children }) {
       setActiveDropTarget({ elementId: null });
     }
   }, [active, activeDropTarget, id, setActiveDropTarget]);
+
+  useEffect(() => {
+    registerDropTarget(id, pathRef.current);
+  }, [id, pathRef, registerDropTarget]);
 
   if (!mask) {
     return children;
@@ -85,6 +96,7 @@ function WithDropTarget({ element, children }) {
         preserveAspectRatio="none"
       >
         <DropTargetPath
+          ref={pathRef}
           vectorEffect="non-scaling-stroke"
           strokeWidth="32"
           fill="none"

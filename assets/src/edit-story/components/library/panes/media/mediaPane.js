@@ -19,13 +19,12 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
  */
 import { Spinner } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -34,11 +33,11 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
+import { useDropTargets } from '../../../../app';
 import { MainButton, Title, SearchInput, Header } from '../../common';
 import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
-import useDropTargets from '../../../../masks/useDropTargets';
 import paneId from './paneId';
 
 const Container = styled.div`
@@ -235,7 +234,7 @@ function MediaPane(props) {
    * @param {number} width      Width that element is inserted into editor.
    * @return {null|*}          Return onInsert or null.
    */
-  const getMediaElement = (attachment, width) => {
+  const createMediaElement = (attachment, width) => {
     const { src, mimeType, oWidth, oHeight } = attachment;
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
@@ -288,20 +287,16 @@ function MediaPane(props) {
    * @return {null|*}          Element or null if does not map to video/image.
    */
   const MediaElement = ({ mediaEl, width }) => {
-    const element = getMediaElement(mediaEl, width);
-
-    // Drop targets
-    const [isDragging, setIsDragging] = useState(false);
-    const { previewDropTarget, combineElements } = useDropTargets(element);
-    useEffect(() => {
-      if (isDragging) {
-        previewDropTarget();
-      }
-    }, [isDragging, previewDropTarget]);
+    const element = createMediaElement(mediaEl, width);
 
     const { src, oWidth, oHeight, mimeType } = mediaEl;
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
+
+    const {
+      actions: { handleDrag, handleDrop },
+    } = useDropTargets();
+
     if (allowedImageMimeTypes.includes(mimeType)) {
       return (
         <Image
@@ -311,20 +306,8 @@ function MediaPane(props) {
           height={height}
           loading={'lazy'}
           onClick={() => insertMediaElement(mediaEl, width)}
-          onDragStart={(e) => {
-            setIsDragging(true);
-            const ghost = e.target.cloneNode(true);
-            ghost.style.position = 'absolute';
-            ghost.style.top = '0';
-            ghost.style.left = '0';
-            ghost.style.width = '30';
-            ghost.style.left = '30';
-            ghost.style.zIndex = '-1';
-            ghost.style.pointerEvents = 'none';
-            e.dataTransfer.setDragImage(ghost, 0, 0);
-          }}
-          onDragEnd={() => setIsDragging(false)}
-          onDrop={() => combineElements()}
+          onDrag={(e) => handleDrag(e.clientX, e.clientY, element)}
+          onDrop={(e) => handleDrop(e.clientX, e.clientY, element)}
         />
       );
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
@@ -341,20 +324,14 @@ function MediaPane(props) {
             evt.target.pause();
             evt.target.currentTime = 0;
           }}
-          onDragStart={() => setIsDragging(true)}
-          onDragEnd={() => setIsDragging(false)}
-          onDrop={() => combineElements()}
+          onDrag={(e) => handleDrag(e.clientX, e.clientY, element)}
+          onDrop={(e) => handleDrop(e.clientX, e.clientY, element)}
         >
           <source src={src} type={mimeType} />
         </Video>
       );
     }
     return null;
-  };
-
-  MediaElement.propTypes = {
-    mediaEl: PropTypes.object,
-    width: PropTypes.number,
   };
 
   return (

@@ -28,6 +28,7 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
@@ -46,13 +47,15 @@ function App({ config }) {
             <StoryProvider storyId={storyId}>
               <FontProvider>
                 <MediaProvider>
-                  <GlobalStyle />
-                  <DefaultMoveableGlobalStyle />
-                  <CropMoveableGlobalStyle />
-                  <ModalGlobalStyle />
-                  <KeyboardOnlyOutlines>
-                    <Layout />
-                  </KeyboardOnlyOutlines>
+                  <DropTargetsProvider>
+                    <GlobalStyle />
+                    <DefaultMoveableGlobalStyle />
+                    <CropMoveableGlobalStyle />
+                    <ModalGlobalStyle />
+                    <KeyboardOnlyOutlines>
+                      <Layout />
+                    </KeyboardOnlyOutlines>
+                  </DropTargetsProvider>
                 </MediaProvider>
               </FontProvider>
             </StoryProvider>
@@ -69,4 +72,12 @@ App.propTypes = {
 
 export default App;
 
-export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
+export {
+  useHistory,
+  useAPI,
+  useDropTargets,
+  useStory,
+  useConfig,
+  useFont,
+  useMedia,
+};

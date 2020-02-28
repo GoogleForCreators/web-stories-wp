@@ -27,13 +27,12 @@ import { useRef, useEffect, useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import Movable from '../movable';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
-import useDropTargets from '../../masks/useDropTargets';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -145,14 +144,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   );
 
   // Drop targets
-  const { previewDropTarget, combineElements } = useDropTargets(
-    selectedElement
-  );
-  useEffect(() => {
-    if (isDragging) {
-      previewDropTarget();
-    }
-  }, [isDragging, previewDropTarget]);
+  const {
+    actions: { handleDrag, handleDrop },
+  } = useDropTargets();
 
   return (
     <Movable
@@ -163,16 +157,17 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       draggable={actionsEnabled}
       resizable={actionsEnabled && !isDragging}
       rotatable={actionsEnabled && !isDragging}
-      onDrag={({ target, beforeTranslate }) => {
+      onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
+        handleDrag(clientX, clientY, selectedElement);
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
         setIsDragging(true);
         set(frame.translate);
       }}
-      onDragEnd={({ target }) => {
+      onDragEnd={({ target, clientX, clientY }) => {
         setIsDragging(false);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
@@ -182,7 +177,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
-          combineElements(selectedElement);
+          handleDrop(clientX, clientY, selectedElement);
         }
         resetMoveable(target);
       }}
