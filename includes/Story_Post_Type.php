@@ -769,32 +769,34 @@ class Story_Post_Type {
 		/**
 		 * We're expecting a post object.
 		 *
-		 * @var \WP_Post $post
+		 * @var WP_Post $post
 		 */
 		$post = get_queried_object();
 
-		$metadata = array_merge(
-			$metadata,
-			[
-				'@type'            => 'BlogPosting',
-				'mainEntityOfPage' => get_permalink(),
-				'headline'         => get_the_title(),
-				'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
-				'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
-			]
-		);
+		if ( $post instanceof WP_Post ) {
+			$metadata = array_merge(
+				$metadata,
+				[
+					'@type'            => 'BlogPosting',
+					'mainEntityOfPage' => get_permalink(),
+					'headline'         => get_the_title(),
+					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
+					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
+				]
+			);
 
-		$post_author = get_userdata( (int) $post->post_author );
+			$post_author = get_userdata( (int) $post->post_author );
 
-		if ( $post_author ) {
-			$metadata['author'] = [
-				'@type' => 'Person',
-				'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
-			];
-		}
+			if ( $post_author ) {
+				$metadata['author'] = [
+					'@type' => 'Person',
+					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
+				];
+			}
 
-		if ( has_post_thumbnail( $post->ID ) ) {
-			$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			if ( has_post_thumbnail( $post->ID ) ) {
+				$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			}
 		}
 
 		/**
