@@ -78,10 +78,6 @@ function reducer(state, { type, payload }) {
       return reducers.toggleElement(state, payload);
     }
 
-    case types.SET_ACTIVE_DROP_TARGET: {
-      return reducers.setActiveDropTarget(state, payload);
-    }
-
     case types.UPDATE_STORY: {
       return reducers.updateStory(state, payload);
     }

@@ -29,7 +29,6 @@ import { useState, useRef, useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import { useStory } from '../app/story';
 import { useDropTargets } from '../app';
 import { getElementMask } from './';
 
@@ -60,23 +59,11 @@ function WithDropTarget({ element, children }) {
   const pathRef = useRef(null);
 
   const {
-    actions: { setActiveDropTarget },
-    state: { activeDropTarget },
-  } = useStory();
-  const {
     actions: { registerDropTarget },
   } = useDropTargets();
 
   const [active, setActive] = useState();
   const { mask, id } = element;
-
-  useEffect(() => {
-    if (active) {
-      setActiveDropTarget({ elementId: id });
-    } else if (activeDropTarget === id) {
-      setActiveDropTarget({ elementId: null });
-    }
-  }, [active, activeDropTarget, id, setActiveDropTarget]);
 
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
