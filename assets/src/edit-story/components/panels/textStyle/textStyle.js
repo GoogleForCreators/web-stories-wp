@@ -31,6 +31,7 @@ import { InputGroup, SelectMenu } from '../../form';
 
 function TextStyleControls({ properties, state, setState }) {
   const {
+    bold,
     textAlign,
     letterSpacing,
     lineHeight,
@@ -51,6 +52,13 @@ function TextStyleControls({ properties, state, setState }) {
     { name: __('Italic', 'web-stories'), value: 'italic' },
   ];
 
+  // Different from font weight, this would wrap the text (or part of it) with `strong` tag.
+  // @todo Use toggle instead.
+  const boldOptions = [
+    { name: __('Bold Off', 'web-stories'), value: false },
+    { name: __('Bold On', 'web-stories'), value: true },
+  ];
+
   const textDecorations = [
     { name: __('None', 'web-stories'), value: 'none' },
     { name: __('Underline', 'web-stories'), value: 'underline' },
@@ -64,6 +72,13 @@ function TextStyleControls({ properties, state, setState }) {
         isMultiple={fontStyle === ''}
         value={state.fontStyle}
         onChange={(value) => setState({ ...state, fontStyle: value })}
+      />
+      <SelectMenu
+        label={__('Bold', 'web-stories')}
+        options={boldOptions}
+        isMultiple={bold === ''}
+        value={state.bold}
+        onChange={(value) => setState({ ...state, bold: Boolean(value) })}
       />
       <SelectMenu
         label={__('Text decoration', 'web-stories')}

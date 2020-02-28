@@ -53,6 +53,7 @@ const Element = styled.p`
 function TextDisplay({
   element: {
     id,
+    bold,
     content,
     color,
     backgroundColor,
@@ -106,6 +107,11 @@ function TextDisplay({
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
   });
+
+  // @todo This logic is temporary and will change with selecting part + marking bold.
+  if (bold) {
+    content = `<strong>${content}</strong>`;
+  }
 
   return (
     <Element

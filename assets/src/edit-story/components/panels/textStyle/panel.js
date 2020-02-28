@@ -47,6 +47,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
+  const bold = getCommonValue(selectedElements, 'bold');
 
   const padding = getCommonValue(selectedElements, 'padding') ?? '';
 
@@ -73,6 +74,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const [state, setState] = useState({
     backgroundColor,
     backgroundOpacity,
+    bold,
     color,
     fontFamily,
     fontStyle,
@@ -94,6 +96,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     setState({
       backgroundColor,
       backgroundOpacity,
+      bold,
       color,
       textOpacity,
       textAlign,
@@ -109,6 +112,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
       textDecoration,
     });
   }, [
+    bold,
     color,
     textOpacity,
     textAlign,

@@ -31,6 +31,7 @@ import { generateFontFamily } from './util';
  */
 function TextOutput({
   element: {
+    bold,
     content,
     color,
     backgroundColor,
@@ -64,6 +65,11 @@ function TextOutput({
     textDecoration,
     whiteSpace: 'pre-wrap',
   };
+
+  // @todo This logic is temporary and will change with selecting part + marking bold.
+  if (bold) {
+    content = `<strong>${content}</strong>`;
+  }
 
   return (
     <p

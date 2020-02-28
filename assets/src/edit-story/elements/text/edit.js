@@ -88,6 +88,7 @@ const TextBox = styled.div`
 function TextEdit({
   element: {
     id,
+    bold,
     content,
     color,
     backgroundColor,
@@ -148,7 +149,13 @@ function TextEdit({
   // so we use a non-breaking space instead and trim it on save if still present.
   const contentWithBreaks = (content || '')
     .split('\n')
-    .map((s) => `<p>${s}</p>`)
+    .map((s) => {
+      // @todo This logic is temporary and will change with selecting part + marking bold.
+      if (bold) {
+        return `<p><strong>${s}</strong></p>`;
+      }
+      return `<p>${s}</p>`;
+    })
     .join('');
   const EMPTY_VALUE = '\u00A0';
   const initialState = clearContent
