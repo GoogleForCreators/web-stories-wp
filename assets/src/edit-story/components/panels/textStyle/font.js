@@ -56,10 +56,11 @@ function FontControls({ properties, state, setState }) {
             const currentFontWeights = getFontWeight(value);
             const currentFontFallback = getFontFallback(value);
             const fontWeightsArr = currentFontWeights.map(
-              ({ thisValue }) => thisValue
+              ({ value: weight }) => weight
             );
             const newFontWeight =
-              fontWeightsArr && fontWeightsArr.includes(state.fontWeight)
+              fontWeightsArr &&
+              fontWeightsArr.includes(state.fontWeight.toString())
                 ? state.fontWeight
                 : 400;
             setState({

@@ -37,6 +37,7 @@ export const defaultAttributes = {
   letterSpacing: 'normal',
   lineHeight: 1.3,
   textAlign: 'initial',
+  textDecoration: 'none',
   padding: {
     vertical: 0,
     horizontal: 0,
