@@ -105,6 +105,7 @@ class Story_Renderer {
 				margin: 0;
 			}
 		</style>
+		<meta name="generator" content="<?php printf( 'Web Stories %s', esc_attr( WEBSTORIES_VERSION ) ); ?>" />
 		<?php
 
 		/**
