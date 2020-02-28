@@ -31,7 +31,7 @@ import { getTabId } from './utils';
 import useInspector from './useInspector';
 
 const Tabs = styled.div`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v4};
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -46,7 +46,7 @@ const Tab = styled.button.attrs({ role: 'tab' })`
   border: none;
   background: none;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.fg.v0};
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   line-height: ${({ theme }) => theme.fonts.tab.lineHeight};

@@ -51,7 +51,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
+    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -117,6 +117,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
    * @param {Object} target Target element.
    */
   const resetMoveable = (target) => {
+    frame.direction = [0, 0];
     frame.translate = [0, 0];
     frame.resize = [0, 0];
     frame.updates = null;
@@ -180,13 +181,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           setIsResizingFromCorner(newResizingMode);
         }
       }}
-      onResize={({ target, width, height, drag }) => {
+      onResize={({ target, direction, width, height, drag }) => {
         const newWidth = width;
         let newHeight = height;
         let updates = null;
         if (updateForResizeEvent) {
           updates = updateForResizeEvent(
             selectedElement,
+            direction,
             editorToDataX(newWidth),
             editorToDataY(newHeight)
           );
@@ -196,6 +198,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
+        frame.direction = direction;
         frame.resize = [newWidth, newHeight];
         frame.translate = drag.beforeTranslate;
         frame.updates = updates;
@@ -204,6 +207,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
         if (editorWidth !== 0 && editorHeight !== 0) {
+          const { direction } = frame;
           const [deltaX, deltaY] = frame.translate;
           const newWidth = editorToDataX(editorWidth);
           const newHeight = editorToDataY(editorHeight);
@@ -216,7 +220,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           if (updateForResizeEvent) {
             Object.assign(
               properties,
-              updateForResizeEvent(selectedElement, newWidth, newHeight)
+              updateForResizeEvent(
+                selectedElement,
+                direction,
+                newWidth,
+                newHeight
+              )
             );
           }
           updateSelectedElements({ properties });

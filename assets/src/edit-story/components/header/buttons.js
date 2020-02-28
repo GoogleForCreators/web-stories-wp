@@ -60,7 +60,7 @@ function PreviewButton() {
    */
   const openPreviewLink = () => {
     const previewLink = addQueryArgs(link, { preview: 'true' });
-    window.open(previewLink, '_blank');
+    window.open(previewLink, 'story-preview');
   };
   return (
     <Outline onClick={openPreviewLink} isDisabled={isSaving}>
