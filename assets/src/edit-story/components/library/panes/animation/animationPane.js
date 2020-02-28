@@ -15,33 +15,22 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import stripHTML from '../../utils/stripHTML';
-import StoryPropTypes from '../../types';
+import { Pane } from '../shared';
+import paneId from './paneId';
 
-const TextLayer = styled.span`
-  color: inherit;
-  white-space: nowrap;
-  font-size: 13px;
-  text-overflow: ' ';
-  overflow: hidden;
-  max-width: 100%;
-`;
-
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = stripHTML(content);
-  return <TextLayer>{rawContent}</TextLayer>;
+function AnimationPane(props) {
+  return (
+    <Pane id={paneId} {...props}>
+      {__('Still empty', 'web-stories')}
+    </Pane>
+  );
 }
 
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default TextLayerContent;
+export default AnimationPane;

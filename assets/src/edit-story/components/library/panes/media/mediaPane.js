@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
@@ -31,11 +30,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
-import { useMedia } from '../../app/media';
-import { useMediaPicker } from '../mediaPicker';
-import { MainButton, Title, SearchInput, Header } from './common';
-import Dropzone from './dropzone';
+import { useConfig } from '../../../../app/config';
+import { useMedia } from '../../../../app/media';
+import { useMediaPicker } from '../../../mediaPicker';
+import { MainButton, Title, SearchInput, Header } from '../../common';
+import Dropzone from '../../dropzone';
+import useLibrary from '../../useLibrary';
+import { Pane } from '../shared';
+import paneId from './paneId';
 
 const Container = styled.div`
   display: grid;
@@ -90,7 +92,7 @@ const FILTERS = [
 
 const DEFAULT_WIDTH = 150;
 
-function MediaLibrary({ onInsert }) {
+function MediaPane(props) {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
     actions: {
@@ -108,8 +110,32 @@ function MediaLibrary({ onInsert }) {
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+  const {
+    actions: { insertElement },
+  } = useLibrary();
 
   useEffect(loadMedia);
+
+  const onClose = resetMedia;
+
+  /**
+   * Callback of select in media picker to insert media element.
+   *
+   * @param {Object} attachment Attachment object from backbone media picker.
+   */
+  const onSelect = (attachment) => {
+    const {
+      url: src,
+      mime: mimeType,
+      width: oWidth,
+      height: oHeight,
+      id,
+      featured_media: posterId,
+      featured_media_src: poster,
+    } = attachment;
+    const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
+    insertMediaElement(mediaEl, DEFAULT_WIDTH);
+  };
 
   const openMediaPicker = useMediaPicker({
     onSelect,
@@ -148,27 +174,6 @@ function MediaLibrary({ onInsert }) {
     }
   };
 
-  const onClose = resetMedia;
-
-  /**
-   * Callback of select in media picker to insert media element.
-   *
-   * @param {Object} attachment Attachment object from backbone media picker.
-   */
-  const onSelect = (attachment) => {
-    const {
-      url: src,
-      mime: mimeType,
-      width: oWidth,
-      height: oHeight,
-      id,
-      featured_media: posterId,
-      featured_media_src: poster,
-    } = attachment;
-    const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
-    insertMediaElement(mediaEl, DEFAULT_WIDTH);
-  };
-
   /**
    * Insert element such image, video and audio into the editor.
    *
@@ -181,7 +186,7 @@ function MediaLibrary({ onInsert }) {
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
     if (allowedImageMimeTypes.includes(mimeType)) {
-      return onInsert('image', {
+      return insertElement('image', {
         src,
         width,
         height,
@@ -195,7 +200,7 @@ function MediaLibrary({ onInsert }) {
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
       const { id: videoId, poster, posterId: posterIdRaw } = attachment;
       const posterId = parseInt(posterIdRaw);
-      const videoEl = onInsert('video', {
+      const videoEl = insertElement('video', {
         src,
         width,
         height,
@@ -266,61 +271,59 @@ function MediaLibrary({ onInsert }) {
   };
 
   return (
-    <Dropzone>
-      <Header>
-        <Title>
-          {__('Media', 'web-stories')}
-          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-        </Title>
-        <MainButton onClick={openMediaPicker}>
-          {__('Upload', 'web-stories')}
-        </MainButton>
-      </Header>
+    <Pane id={paneId} {...props}>
+      <Dropzone>
+        <Header>
+          <Title>
+            {__('Media', 'web-stories')}
+            {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+          </Title>
+          <MainButton onClick={openMediaPicker}>
+            {__('Upload', 'web-stories')}
+          </MainButton>
+        </Header>
 
-      <SearchInput
-        value={searchTerm}
-        placeholder={__('Search media...', 'web-stories')}
-        onChange={onSearch}
-      />
+        <SearchInput
+          value={searchTerm}
+          placeholder={__('Search media...', 'web-stories')}
+          onChange={onSearch}
+        />
 
-      <FilterButtons>
-        {FILTERS.map(({ filter, name }, index) => (
-          <FilterButton
-            key={index}
-            active={filter === mediaType}
-            onClick={() => onFilter(filter)}
-          >
-            {name}
-          </FilterButton>
-        ))}
-      </FilterButtons>
+        <FilterButtons>
+          {FILTERS.map(({ filter, name }, index) => (
+            <FilterButton
+              key={index}
+              active={filter === mediaType}
+              onClick={() => onFilter(filter)}
+            >
+              {name}
+            </FilterButton>
+          ))}
+        </FilterButtons>
 
-      {isMediaLoaded && !media.length ? (
-        <Message>{__('No media found', 'web-stories')}</Message>
-      ) : (
-        <Container>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-          <Column>
-            {media.map((mediaEl, index) => {
-              return !isEven(index)
-                ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                : null;
-            })}
-          </Column>
-        </Container>
-      )}
-    </Dropzone>
+        {isMediaLoaded && !media.length ? (
+          <Message>{__('No media found', 'web-stories')}</Message>
+        ) : (
+          <Container>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+            <Column>
+              {media.map((mediaEl, index) => {
+                return !isEven(index)
+                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
+                  : null;
+              })}
+            </Column>
+          </Container>
+        )}
+      </Dropzone>
+    </Pane>
   );
 }
 
-MediaLibrary.propTypes = {
-  onInsert: PropTypes.func.isRequired,
-};
-
-export default MediaLibrary;
+export default MediaPane;

@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -22,25 +27,27 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from '../panel';
-import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
-import LayerList from './layerList';
-import LayerProvider from './provider';
+import { Panel, PanelContent } from './panel';
 
-function LayerPanel() {
+const Note = styled.p`
+  font-style: italic;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  opacity: 0.86;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-weight: ${({ theme }) => theme.fonts.label.size};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  margin: 0;
+`;
+
+function NoSelectionPanel() {
   return (
-    <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
-      <PanelTitle isSecondary isResizable>
-        {__('Layers', 'web-stories')}
-      </PanelTitle>
-
-      <PanelContent isSecondary isScrollable padding={'0'}>
-        <LayerProvider>
-          <LayerList />
-        </LayerProvider>
+    <Panel name="noselection">
+      <PanelContent hasBorder>
+        <Note>{__('Nothing selected', 'web-stories')}</Note>
       </PanelContent>
     </Panel>
   );
 }
 
-export default LayerPanel;
+export default NoSelectionPanel;

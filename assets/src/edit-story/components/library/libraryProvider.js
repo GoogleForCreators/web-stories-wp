@@ -28,14 +28,25 @@ import { useState } from '@wordpress/element';
  * Internal dependencies
  */
 import Context from './context';
+import useInsertElement from './useInsertElement';
 
 const MEDIA = 'media';
 const TEXT = 'text';
 const SHAPES = 'shapes';
-const LINKS = 'links';
+const ELEMENTS = 'elements';
+const ANIMATION = 'animation';
 
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
+  const insertElement = useInsertElement();
+
+  const tabs = {
+    MEDIA,
+    TEXT,
+    SHAPES,
+    ELEMENTS,
+    ANIMATION,
+  };
 
   const state = {
     state: {
@@ -43,14 +54,10 @@ function LibraryProvider({ children }) {
     },
     actions: {
       setTab,
+      insertElement,
     },
     data: {
-      tabs: {
-        MEDIA,
-        TEXT,
-        SHAPES,
-        LINKS,
-      },
+      tabs,
     },
   };
 

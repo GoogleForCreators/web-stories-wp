@@ -22,7 +22,7 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
-  const { id } = page;
+  const { id, backgroundColor } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
     width: `calc(100 * var(--story-page-vw))`, // 100vw
@@ -33,6 +33,7 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
+  const backgroundStyles = backgroundColor ? { backgroundColor } : null;
   const backgroundNonFullbleedElements = page.elements.filter(
     (element) =>
       element.id === page.backgroundElementId &&
@@ -49,12 +50,15 @@ function OutputPage({ page }) {
   return (
     <amp-story-page id={id}>
       <amp-story-grid-layer template="vertical">
-        <div className="page-background-area">
+        <div className="page-background-area" style={backgroundStyles}>
           {backgroundFullbleedElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
-        <div className="page-safe-area" style={aspectRatioStyles}>
+        <div
+          className="page-safe-area"
+          style={{ ...aspectRatioStyles, ...backgroundStyles }}
+        >
           {backgroundNonFullbleedElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}

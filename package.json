@@ -5,7 +5,12 @@
   "description": "Visual storytelling for WordPress.",
   "author": "Google",
   "license": "Apache-2.0",
-  "keywords": ["amp", "stories", "storytelling", "wordpress"],
+  "keywords": [
+    "amp",
+    "stories",
+    "storytelling",
+    "wordpress"
+  ],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -52,6 +57,7 @@
     "@storybook/addon-storysource": "^5.3.13",
     "@storybook/addon-viewport": "^5.3.13",
     "@storybook/react": "^5.3.13",
+    "@testing-library/react": "^9.4.1",
     "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/babel-preset-default": "^4.10.0",
     "@wordpress/e2e-test-utils": "^4.3.0",
@@ -77,6 +83,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-testing-library": "^2.2.3",
     "eslint-utils": "^2.0.0",
     "husky": "^4.2.3",
     "jest-silent-reporter": "^0.2.1",

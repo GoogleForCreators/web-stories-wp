@@ -31,7 +31,8 @@ const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
   overflowAllowed: false,
 })`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.colors.fg.v1};
 `;
 
 function DisplayLayer() {
@@ -45,7 +46,10 @@ function DisplayLayer() {
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea ref={setPageContainer}>
+      <DisplayPageArea
+        backgroundColor={currentPage?.backgroundColor}
+        ref={setPageContainer}
+      >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             if (editingElement === id) {

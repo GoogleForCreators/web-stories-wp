@@ -15,33 +15,23 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import stripHTML from '../../utils/stripHTML';
-import StoryPropTypes from '../../types';
+import { Tab } from '../shared';
+import paneId from './paneId';
+import { ReactComponent as ShapesIcon } from './shapes.svg';
 
-const TextLayer = styled.span`
-  color: inherit;
-  white-space: nowrap;
-  font-size: 13px;
-  text-overflow: ' ';
-  overflow: hidden;
-  max-width: 100%;
-`;
-
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = stripHTML(content);
-  return <TextLayer>{rawContent}</TextLayer>;
+function ShapesTab(props) {
+  return (
+    <Tab aria-controls={paneId} {...props}>
+      <ShapesIcon aria-label={__('Shapes library', 'web-stories')} />
+    </Tab>
+  );
 }
 
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default TextLayerContent;
+export default ShapesTab;
