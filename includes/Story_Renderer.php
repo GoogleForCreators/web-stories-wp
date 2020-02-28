@@ -61,7 +61,7 @@ class Story_Renderer {
 	 */
 	protected function replace_html_start_tag( $content ) {
 		if ( preg_match( self::HTML_STRUCTURE_HTML_START_TAG, $content, $matches ) ) {
-			$replacement = sprintf( '<html amp %s >', get_language_attributes( 'html' ) );
+			$replacement = sprintf( '<html amp %s>', get_language_attributes( 'html' ) );
 			$result      = preg_replace( self::HTML_STRUCTURE_HTML_START_TAG, $replacement, $content, 1 );
 
 			if ( null !== $result ) {
