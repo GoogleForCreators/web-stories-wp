@@ -23,16 +23,15 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useRef, useState, useLayoutEffect } from '@wordpress/element';
+import { useState, useLayoutEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import useDropZone from './useDropZone';
-import { getDragType, disableDefaults } from './utils';
+import { disableDefaults } from './utils';
 
 const DropZoneComponent = styled.div`
-  position: relative;
   ${({ borderPosition, theme, highlightWidth, dragIndicatorOffset }) =>
     borderPosition &&
     `
@@ -49,8 +48,13 @@ const DropZoneComponent = styled.div`
 	`}
 `;
 
-function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
-  const dropZoneElement = useRef(null);
+function DropZone({
+  dropZoneElement,
+  children,
+  onDropHandler,
+  pageIndex,
+  dragIndicatorOffset,
+}) {
   const [dropZone, setDropZone] = useState(null);
   const {
     actions: { registerDropZone, unregisterDropZone, resetHoverState },
@@ -71,7 +75,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
     };
   }, [dropZone, registerDropZone, unregisterDropZone]);
 
-  const onDropHandler = (evt) => {
+  const onDrop = (evt) => {
     resetHoverState();
     if (dropZoneElement.current) {
       const rect = dropZoneElement.current.getBoundingClientRect();
@@ -82,10 +86,8 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
         y:
           evt.clientY - rect.top < rect.bottom - evt.clientY ? 'top' : 'bottom',
       };
-      if ('default' === getDragType(evt)) {
-        onDrop(evt, { position: relativePosition, pageIndex });
-      }
-      // @todo Support for files when it becomes necessary.
+
+      onDropHandler(evt, { position: relativePosition, pageIndex });
     }
     disableDefaults(evt);
   };
@@ -102,7 +104,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
       borderPosition={isDropZoneActive ? hoveredDropZone.position.x : null}
       ref={dropZoneElement}
       dragIndicatorOffset={dragIndicatorOffset || 0}
-      onDrop={onDropHandler}
+      onDrop={onDrop}
     >
       {children}
     </DropZoneComponent>
@@ -114,7 +116,11 @@ DropZone.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  onDrop: PropTypes.func,
+  dropZoneElement: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onDropHandler: PropTypes.func,
   pageIndex: PropTypes.number,
   dragIndicatorOffset: PropTypes.number,
 };

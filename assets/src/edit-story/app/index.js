@@ -28,6 +28,7 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { useDropZone, DropZoneProvider } from '../components/dropzone';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
@@ -50,9 +51,11 @@ function App({ config }) {
                   <DefaultMoveableGlobalStyle />
                   <CropMoveableGlobalStyle />
                   <ModalGlobalStyle />
-                  <KeyboardOnlyOutlines>
-                    <Layout />
-                  </KeyboardOnlyOutlines>
+                  <DropZoneProvider>
+                    <KeyboardOnlyOutlines>
+                      <Layout />
+                    </KeyboardOnlyOutlines>
+                  </DropZoneProvider>
                 </MediaProvider>
               </FontProvider>
             </StoryProvider>
@@ -69,4 +72,12 @@ App.propTypes = {
 
 export default App;
 
-export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
+export {
+  useHistory,
+  useAPI,
+  useStory,
+  useConfig,
+  useFont,
+  useMedia,
+  useDropZone,
+};

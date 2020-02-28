@@ -39,7 +39,6 @@ function DropZoneProvider({ children }) {
   const [dropZones, setDropZones] = useState([]);
   const [hoveredDropZone, setHoveredDropZone] = useState(null);
 
-  const [isDragging, setIsDragging] = useState(false);
   const ref = useRef(null);
 
   const registerDropZone = useCallback(
@@ -78,6 +77,18 @@ function DropZoneProvider({ children }) {
   const resetHoverState = () => {
     setHoveredDropZone(null);
   };
+
+  const isDragging = useCallback(
+    (dropZoneElement) => {
+      return (
+        dropZoneElement &&
+        dropZoneElement.current &&
+        hoveredDropZone &&
+        hoveredDropZone.node === dropZoneElement.current
+      );
+    },
+    [hoveredDropZone]
+  );
 
   const onDragOver = (evt) => {
     disableDefaults(evt);
@@ -121,41 +132,23 @@ function DropZoneProvider({ children }) {
   const onDragEnter = (evt) => {
     disableDefaults(evt);
     evt.dataTransfer.effectAllowed = 'copy';
-    setIsDragging(true);
-  };
-
-  const onDragLeave = (evt) => {
-    disableDefaults(evt);
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      if (
-        evt.clientY < rect.top ||
-        evt.clientY >= rect.bottom ||
-        evt.clientX < rect.left ||
-        evt.clientX >= rect.right
-      ) {
-        setIsDragging(false);
-      }
-    }
   };
 
   const state = {
     state: {
       hoveredDropZone,
       dropZones,
-      isDragging,
     },
     actions: {
-      setIsDragging,
       registerDropZone,
       unregisterDropZone,
       resetHoverState,
+      isDragging,
     },
   };
   return (
     <DropZoneWrapper
       onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
       onDragEnter={onDragEnter}
       ref={ref}
     >

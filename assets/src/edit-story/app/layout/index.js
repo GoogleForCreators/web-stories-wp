@@ -32,7 +32,7 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
-import { DropZoneProvider, CanvasDropZone } from '../../components/dropzone';
+import { CanvasDropZone } from '../../components/dropzone';
 
 const Editor = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -76,18 +76,16 @@ function Layout() {
         <Library />
       </Area>
       <Area area="main">
-        <DropZoneProvider>
-          <CanvasDropZone>
-            <Main>
-              <Area area="canv">
-                <Canvas />
-              </Area>
-              <Area area="insp">
-                <Inspector />
-              </Area>
-            </Main>
-          </CanvasDropZone>
-        </DropZoneProvider>
+        <CanvasDropZone>
+          <Main>
+            <Area area="canv">
+              <Canvas />
+            </Area>
+            <Area area="insp">
+              <Inspector />
+            </Area>
+          </Main>
+        </CanvasDropZone>
       </Area>
     </Editor>
   );
