@@ -36,6 +36,10 @@ const config = {
     media: '',
     fonts: '',
   },
+  publisher: {
+    name: '',
+    logo: '',
+  }
 };
 
 export const _default = () => {
