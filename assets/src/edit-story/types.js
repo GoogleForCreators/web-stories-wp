@@ -29,7 +29,6 @@ StoryPropTypes.story = PropTypes.shape({
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
