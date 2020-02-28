@@ -128,8 +128,6 @@ function OutputStory({ story, pages, metadata }) {
           publisher-logo-src={metadata.publisherLogo}
           title={story.title}
           poster-portrait-src={story.featuredMediaUrl}
-          poster-square-src={story.featuredMediaUrl}
-          poster-landscape-src={story.featuredMediaUrl}
         >
           {pages.map((page) => (
             <OutputPage key={page.id} page={page} />

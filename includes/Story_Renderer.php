@@ -155,8 +155,6 @@ class Story_Renderer {
 	 */
 	protected function add_fallback_poster_image( $content ) {
 		$content = str_replace( 'poster-portrait-src=""', sprintf( 'poster-portrait-src="%s"', plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ) ), $content );
-		$content = str_replace( 'poster-square-src=""', '', $content );
-		$content = str_replace( 'poster-landscape-src=""', '', $content );
 
 		return $content;
 	}
