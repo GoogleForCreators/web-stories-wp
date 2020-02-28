@@ -155,8 +155,12 @@ class Story_Post_Type {
 				if ( is_singular( self::POST_TYPE_SLUG ) ) {
 					remove_all_filters( 'the_content' );
 
-					$renderer = new Story_Renderer( get_post() );
-					return $renderer->render();
+					$post = get_post();
+
+					if ( $post instanceof WP_Post ) {
+						$renderer = new Story_Renderer( $post );
+						return $renderer->render();
+					}
 				}
 
 				return $content;
