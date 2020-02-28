@@ -79,10 +79,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     setState({ x, y, width, height, isFill, rotationAngle });
   }, [x, y, width, height, isFill, rotationAngle]);
 
-  useEffect(() => {
-    updateProperties();
-  }, [state.isFill, updateProperties]);
-
   const updateProperties = useCallback(
     (evt) => {
       onSetProperties(({ width: oldWidth, height: oldHeight }) => {
@@ -107,6 +103,10 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     },
     [lockRatio, onSetProperties, state]
   );
+
+  useEffect(() => {
+    updateProperties();
+  }, [state.isFill, updateProperties]);
 
   const handleNumberChange = useCallback(
     (property) => (value) =>

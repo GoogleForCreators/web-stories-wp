@@ -96,7 +96,7 @@ Numeric.propTypes = {
   value: PropTypes.any.isRequired,
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   disabled: PropTypes.bool,

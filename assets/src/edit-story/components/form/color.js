@@ -113,8 +113,8 @@ ColorInput.propTypes = {
   value: PropTypes.any.isRequired,
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  opacity: PropTypes.bool,
+  onBlur: PropTypes.func,
+  opacity: PropTypes.number,
   disabled: PropTypes.bool,
 };
 

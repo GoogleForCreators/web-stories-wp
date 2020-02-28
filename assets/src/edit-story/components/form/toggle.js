@@ -44,7 +44,7 @@ const ContainerLabel = styled.label`
     boxed &&
     `
         border: 1px solid ${({ theme }) => theme.colors.fg.v3};
-        border-radius: 4px;  
+        border-radius: 4px;
     `}
   ${({ expand = false }) => expand && `flex: 1;`}
 
@@ -54,7 +54,7 @@ const ContainerLabel = styled.label`
 		pointer-events: none;
 		opacity: .2;
 	`}
-  
+
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};
     width: 16px;
@@ -70,6 +70,7 @@ function Toggle({
   onChange,
   boxed,
   expand,
+  ...rest
 }) {
   return (
     <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
@@ -77,6 +78,7 @@ function Toggle({
         checked={value}
         onChange={() => onChange(!value)}
         disabled={disabled}
+        {...rest}
       />
       <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
     </ContainerLabel>
@@ -84,7 +86,7 @@ function Toggle({
 }
 
 Toggle.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   icon: PropTypes.node,
   uncheckedIcon: PropTypes.node,
