@@ -77,6 +77,7 @@ StoryPropTypes.elements.image = PropTypes.shape({
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
+  mask: StoryPropTypes.mask.isRequired,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
@@ -87,6 +88,7 @@ StoryPropTypes.elements.video = PropTypes.shape({
   poster: PropTypes.string,
   videoId: PropTypes.number.isRequired,
   posterId: PropTypes.number,
+  mask: StoryPropTypes.mask.isRequired,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
@@ -105,8 +107,9 @@ StoryPropTypes.elements.text = PropTypes.shape({
   textAlign: PropTypes.string,
 });
 
-StoryPropTypes.elements.square = PropTypes.shape({
+StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropsTypes,
+  mask: StoryPropTypes.mask.isRequired,
   backgroundColor: PropTypes.string,
 });
 

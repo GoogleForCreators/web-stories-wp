@@ -19,8 +19,8 @@
  */
 import { __ } from '@wordpress/i18n';
 
-function SquareLayerContent() {
-  return __('Square', 'web-stories');
+function ShapeLayerContent() {
+  return __('Shape', 'web-stories');
 }
 
-export default SquareLayerContent;
+export default ShapeLayerContent;

@@ -24,6 +24,7 @@ import {
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
+import { DEFAULT_MASK } from '../../masks';
 
 function useInsertElement() {
   const isMediaEl = (type) => {
@@ -41,6 +42,11 @@ function useInsertElement() {
       y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
       width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
       height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
+      ...(isMediaEl(type)
+        ? {
+            mask: DEFAULT_MASK,
+          }
+        : {}),
     });
     addElement({ element });
     if (
