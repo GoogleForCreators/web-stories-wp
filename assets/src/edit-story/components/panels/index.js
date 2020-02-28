@@ -116,7 +116,7 @@ export function getPanels(elements) {
             return { type, Panel: BackgroundPanel };
           }
           return null;
-  	    case BACKGROUND_DISPLAY:
+        case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
         case POSITION:
