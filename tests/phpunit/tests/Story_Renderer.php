@@ -31,9 +31,11 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 	public function test_replace_html_start_tag() {
 		$expected = '<html amp lang="en-US"><head></head><body></body></html>';
-		$post     = self::factory()->post->create_and_get( [
-			'post_content' => '<html><head></head><body></body></html>',
-		] );
+		$post     = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body></body></html>',
+			] 
+		);
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
 		$actual   = $renderer->render();
@@ -45,9 +47,11 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
-		$post = self::factory()->post->create_and_get( [
-			'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body></body></html>",
-		] );
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body></body></html>",
+			] 
+		);
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
 		$actual   = $renderer->render();
