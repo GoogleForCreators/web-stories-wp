@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -35,11 +36,15 @@ import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
 
 const Header = styled.h2`
-  background-color: ${({ theme, isPrimary }) =>
-    isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1};
+  ${({ theme, isPrimary }) =>
+    isPrimary &&
+    `
+      background-color: ${rgba(theme.colors.bg.v0, 0.07)};
+  `}
   border: 0 solid ${({ theme }) => theme.colors.fg.v6};
   border-top-width: ${({ isPrimary }) => (isPrimary ? 0 : '1px')};
-  color: ${({ theme }) => theme.colors.bg.v2};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  opacity: .84;
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -73,7 +78,6 @@ const Collapse = styled.span`
   width: 28px;
   height: 28px;
   display: flex; /* removes implicit line-height padding from child element */
-  opacity: 0.54;
 
   svg {
     width: 28px;

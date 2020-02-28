@@ -29,19 +29,6 @@ const Row = styled.div`
   ${({ spaceBetween = true }) =>
     spaceBetween && `justify-content: space-between;`}
   ${({ expand = true }) => expand && `flex: 1;`}
-
-  & > * {
-    margin-left: 5px !important;
-    margin-right: 5px !important;
-  }
-
-  & > *:first-child {
-    margin-left: 0 !important;
-  }
-
-  & > *:last-child {
-    margin-right: 0 !important;
-  }
 `;
 
 export default Row;

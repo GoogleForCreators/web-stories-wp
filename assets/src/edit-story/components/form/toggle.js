@@ -20,8 +20,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const CheckBoxInput = styled.input.attrs( { type: 'checkbox' } )`
-	position: absolute;
+const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
+  position: absolute;
   opacity: 0;
   height: 0;
   width: 0;
@@ -39,7 +39,6 @@ const ContainerLabel = styled.label`
 	padding: 3;
 	cursor: pointer;
 	user-select: none;
-  opacity: 0.54;
 
   ${({ boxed }) =>
     boxed &&
@@ -49,13 +48,15 @@ const ContainerLabel = styled.label`
     `}
   ${({ expand = false }) => expand && `flex: 1;`}
 
-	${({ disabled }) => disabled && `
+	${({ disabled }) =>
+    disabled &&
+    `
 		pointer-events: none;
 		opacity: .2;
 	`}
   
   svg {
-    fill: ${({ theme }) => theme.colors.bg.v0};
+    color: ${({ theme }) => theme.colors.mg.v2};
     width: 16px;
     height: 16px;
   }
@@ -72,11 +73,13 @@ function Toggle({
 }) {
   return (
     <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
-		  <CheckBoxInput checked={value} onChange={() => onChange(!value)} disabled={disabled} />
-		  <MarkSpan>
-			  {value ? icon : uncheckedIcon || icon}
-      </MarkSpan>
-	  </ContainerLabel>
+      <CheckBoxInput
+        checked={value}
+        onChange={() => onChange(!value)}
+        disabled={disabled}
+      />
+      <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
+    </ContainerLabel>
   );
 }
 

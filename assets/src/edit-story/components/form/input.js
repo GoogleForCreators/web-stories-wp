@@ -24,8 +24,9 @@ const Input = styled.input`
   appearance: none;
   box-shadow: none !important;
   outline: none;
-  background: ${({ theme }) => theme.colors.fg.v1};
-  color: ${({ theme }) => theme.colors.mg.v3};
+  background: transparent;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  opacity: 0.86;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};

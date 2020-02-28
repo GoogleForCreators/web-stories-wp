@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { rgba } from 'polished';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -35,11 +40,18 @@ const Color = styled.div`
   height: 30px;
   border-radius: 15px;
   margin-right: 12px;
+  border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
 `;
 
 const Colors = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   overflow: auto;
+
+  ${Color}:nth-child(6n) {
+    margin-right: 0;
+  }
 `;
 
 function ColorPresetPanel() {
@@ -53,6 +65,7 @@ function ColorPresetPanel() {
           <Color color="#324F66" />
           <Color color="#312834" />
           <Color color="#B578B0" />
+          <Color color="#AF54A8" />
         </Colors>
       </PanelContent>
     </Panel>

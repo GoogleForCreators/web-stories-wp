@@ -40,23 +40,19 @@ import Toggle from '../form/toggle';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-const ExpandedNumeric = styled(Numeric)`
-  flex: 1;
-`;
-
-const BoxedNumeric = styled(ExpandedNumeric)`
+const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
   border-radius: 4px;
 `;
 
 const FlipButton = styled(Button)`
+  background: transparent;
   border: none;
   padding: 8px;
   margin: 0;
 
   svg {
-    opacity: 0.54;
+    color: ${({ theme }) => theme.colors.fg.v1};
     width: 16px;
     height: 16px;
   }
@@ -130,14 +126,14 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       {/** Position */}
       <Row expand>
         <BoxedNumeric
-          prefix={_x('X', 'The X axis', 'web-stories')}
+          suffix={_x('X', 'The X axis', 'web-stories')}
           value={state.x}
           isMultiple={x === ''}
           onChange={handleNumberChange('x')}
           disabled={isFill}
         />
         <BoxedNumeric
-          prefix={_x('Y', 'The Y axis', 'web-stories')}
+          suffix={_x('Y', 'The Y axis', 'web-stories')}
           value={state.y}
           isMultiple={y === ''}
           onChange={handleNumberChange('y')}
@@ -147,7 +143,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
-          prefix={_x('W', 'The Width dimension', 'web-stories')}
+          suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={state.width}
           isMultiple={width === ''}
           onChange={(value) => {
@@ -176,7 +172,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           disabled={isFill}
         />
         <BoxedNumeric
-          prefix={_x('H', 'The Height dimension', 'web-stories')}
+          suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={state.height}
           isMultiple={height === ''}
           onChange={(value) => {
@@ -195,25 +191,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           disabled={isFill}
         />
       </Row>
-      {/** Fill & Reset size */}
-      <Row expand={false} spaceBetween={false}>
-        <Toggle
-          icon={<Fullbleed />}
-          value={state.isFill}
-          isMultiple={false}
-          onChange={(value) => {
-            setState({
-              ...state,
-              isFill: value,
-            });
-          }}
-        />
-        {/** TODO: Implement size resetting */}
-        <Button onClick={() => {}}>{__('Reset size', 'web-stories')}</Button>
-      </Row>
       {/** Rotation and Flipping */}
       <Row expand={false} spaceBetween={true}>
-        <ExpandedNumeric
+        <BoxedNumeric
           label={__('Rotate', 'web-stories')}
           suffix={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={state.rotationAngle}
@@ -229,6 +209,17 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         <FlipButton>
           <FlipVertical />
         </FlipButton>
+        <Toggle
+          icon={<Fullbleed />}
+          value={state.isFill}
+          isMultiple={false}
+          onChange={(value) => {
+            setState({
+              ...state,
+              isFill: value,
+            });
+          }}
+        />
       </Row>
     </SimplePanel>
   );
