@@ -39,12 +39,7 @@ const getUsedAmpExtensions = (pages) => {
   for (const { elements } of pages) {
     for (const { type } of elements) {
       switch (type) {
-        case 'text':
-          extensions.push({
-            name: 'amp-fit-text',
-            src: 'https://cdn.ampproject.org/v0/amp-fit-text-0.1.js',
-          });
-          break;
+        // Todo: eventually check for amp-fit-text if ever added.
         case 'video':
           extensions.push({
             name: 'amp-video',
