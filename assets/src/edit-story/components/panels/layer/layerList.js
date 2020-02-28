@@ -23,12 +23,12 @@ import { Fragment, useContext, useEffect } from 'react';
 /**
  * WordPress dependencies
  */
-import { speak } from '@wordpress/a11y';
 import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import useLiveRegion from '../../../utils/useLiveRegion';
 import Layer from './layer';
 import LayerContext from './context';
 import LayerSeparator from './separator';
@@ -51,6 +51,8 @@ function LayerPanel() {
     state: { layers, isReordering, currentSeparator },
   } = useContext(LayerContext);
 
+  const speak = useLiveRegion('assertive');
+
   const numLayers = layers && layers.length;
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function LayerPanel() {
       const message = sprintf(REORDER_MESSAGE, position);
       speak(message, 'assertive');
     }
-  }, [isReordering, currentSeparator, numLayers]);
+  }, [isReordering, currentSeparator, numLayers, speak]);
 
   if (!numLayers) {
     return null;
