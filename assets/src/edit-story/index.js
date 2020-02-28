@@ -27,7 +27,7 @@ import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 /**
- * Initializes the block editor in the widgets screen.
+ * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
