@@ -1,8 +1,9 @@
 includes:
   - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
-  level: 4
+  level: 8
   inferPrivatePropertyTypeFromConstructor: true
+  checkMissingIterableValueType: false
   paths:
     - includes/
   autoload_files:

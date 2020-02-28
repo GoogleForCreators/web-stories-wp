@@ -18,8 +18,8 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import ActionsPanel from './actions';
 import BackgroundPanel from './background';
+import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import MaskPanel from './mask';
@@ -30,10 +30,10 @@ import ScalePanel from './scale';
 import StylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
+import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
-const ACTIONS = 'actions';
 const BACKGROUND = 'background';
 const SCALE = 'scale';
 const ROTATION_ANGLE = 'rotationAngle';
@@ -45,9 +45,10 @@ const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
+const PAGE = 'page';
+const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
-  ACTIONS,
   BACKGROUND,
   POSITION,
   SIZE,
@@ -69,64 +70,65 @@ function intersect(a, b) {
 
 export function getPanels(elements) {
   if (elements.length === 0) {
-    return [];
+    return [
+      { type: PAGE, Panel: PageBackgroundPanel },
+      { type: NO_SELECTION, Panel: NoSelectionPanel },
+    ];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
 
-  // Panels to always display, independent of the selected element.
-  const sharedPanels = [{ type: ACTIONS, Panel: ActionsPanel }];
-
-  let selectionPanels = [];
   // Only display background panel in case of background element.
   if (isBackground) {
-    selectionPanels = [{ type: BACKGROUND, Panel: BackgroundPanel }];
+    const panels = [
+      { type: PAGE, Panel: PageBackgroundPanel },
+      { type: BACKGROUND, Panel: BackgroundPanel },
+    ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
-      selectionPanels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
+      panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
     }
-  } else {
-    // Find which panels all the selected elements have in common
-    selectionPanels = elements
-      .map(
-        ({ type }) => elementTypes.find((elType) => elType.type === type).panels
-      )
-      .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
-      .map((type) => {
-        switch (type) {
-          case BACKGROUND:
-            // @todo Would be good to have a general logic for panels supporting multi-selection instead.
-            // Only display when one element selected.
-            if (1 === elements.length) {
-              return { type, Panel: BackgroundPanel };
-            }
-            return null;
-          case POSITION:
-            return { type, Panel: PositionPanel };
-          case SCALE:
-            return { type, Panel: ScalePanel };
-          case ROTATION_ANGLE:
-            return { type, Panel: RotationPanel };
-          case SIZE:
-            return { type, Panel: SizePanel };
-          case FILL:
-            return { type, Panel: FillPanel };
-          case BACKGROUND_COLOR:
-            return { type, Panel: BackgroundColorPanel };
-          case STYLE:
-            return { type, Panel: StylePanel };
-          case TEXT:
-            return { type, Panel: TextPanel };
-          case VIDEO_POSTER:
-            return { type, Panel: VideoPosterPanel };
-          case MASK:
-            return { type, Panel: MaskPanel };
-          default:
-            throw new Error(`Unknown panel: ${type}`);
-        }
-      })
-      .filter((panel) => panel);
+    return panels;
   }
 
-  return [...sharedPanels, ...selectionPanels];
+  // Find which panels all the selected elements have in common
+  return elements
+    .map(
+      ({ type }) => elementTypes.find((elType) => elType.type === type).panels
+    )
+    .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
+    .map((type) => {
+      switch (type) {
+        case BACKGROUND:
+          // @todo Would be good to have a general logic for panels supporting multi-selection instead.
+          // Only display when one element selected.
+          if (1 === elements.length) {
+            return { type, Panel: BackgroundPanel };
+          }
+          return null;
+        case POSITION:
+          return { type, Panel: PositionPanel };
+        case SCALE:
+          return { type, Panel: ScalePanel };
+        case ROTATION_ANGLE:
+          return { type, Panel: RotationPanel };
+        case SIZE:
+          return { type, Panel: SizePanel };
+        case FILL:
+          return { type, Panel: FillPanel };
+        case BACKGROUND_COLOR:
+          return { type, Panel: BackgroundColorPanel };
+        case STYLE:
+          return { type, Panel: StylePanel };
+        case TEXT:
+          return { type, Panel: TextPanel };
+        case VIDEO_POSTER:
+          return { type, Panel: VideoPosterPanel };
+        case MASK:
+          return { type, Panel: MaskPanel };
+        default:
+          throw new Error(`Unknown panel: ${type}`);
+      }
+    })
+    .filter((panel) => panel);
 }
