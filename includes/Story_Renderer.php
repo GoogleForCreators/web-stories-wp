@@ -119,7 +119,7 @@ class Story_Renderer {
 		 */
 		do_action( 'web_stories_story_head' );
 
-		return ob_get_clean();
+		return (string) ob_get_clean();
 	}
 
 	/**
