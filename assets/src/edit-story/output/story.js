@@ -55,40 +55,43 @@ const getUsedAmpExtensions = (pages) => {
   return [...new Set(extensions)];
 };
 
-function OutputStory({ story, pages, metadata }) {
-  const ampExtensions = getUsedAmpExtensions(pages);
+/**
+ * Renders AMP boilerplate
+ *
+ * @see https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/
+ * @see https://amp.dev/documentation/components/amp-story/#boilerplate
+ *
+ * @return {Element} AMP boilerplate.
+ */
+function Boilerplate() {
   return (
-    <html amp="" lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width,minimum-scale=1,initial-scale=1"
-        />
-        {ampExtensions.map(({ name, src }) => (
-          <script key={src} async="" src={src} custom-element={name} />
-        ))}
+    <>
+      <style
+        amp-boilerplate=""
+        dangerouslySetInnerHTML={{
+          __html:
+            'body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}',
+        }}
+      />
+      <noscript>
         <style
           amp-boilerplate=""
           dangerouslySetInnerHTML={{
             __html:
-              'body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}',
+              'body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}',
           }}
         />
-        <noscript>
-          <style
-            amp-boilerplate=""
-            dangerouslySetInnerHTML={{
-              __html:
-                'body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}',
-            }}
-          />
-        </noscript>
-        <meta name="web-stories-replace-head-start" />
-        <style
-          amp-custom=""
-          dangerouslySetInnerHTML={{
-            __html: `
+      </noscript>
+    </>
+  );
+}
+
+function CustomCSS() {
+  return (
+    <style
+      amp-custom=""
+      dangerouslySetInnerHTML={{
+        __html: `
               .page-background-area, .page-safe-area {
                 position: absolute;
                 overflow: hidden;
@@ -117,15 +120,36 @@ function OutputStory({ story, pages, metadata }) {
                 margin: 0;
               }
               `,
-          }}
+      }}
+    />
+  );
+}
+
+function OutputStory({ story, pages, metadata: { publisher } }) {
+  const ampExtensions = getUsedAmpExtensions(pages);
+  return (
+    <html amp="" lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width,minimum-scale=1,initial-scale=1"
         />
+        {ampExtensions.map(({ name, src }) => (
+          <script key={src} async="" src={src} custom-element={name} />
+        ))}
+        <Boilerplate />
+        {/* Everything between these markers can be replaced server-side. */}
+        <meta name="web-stories-replace-head-start" />
+        <link rel="canonical" href={story.link} />
+        <CustomCSS />
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
         <amp-story
           standalone="standalone"
-          publisher={metadata.publisher}
-          publisher-logo-src={metadata.publisherLogo}
+          publisher={publisher.name}
+          publisher-logo-src={publisher.logo}
           title={story.title}
           poster-portrait-src={story.featuredMediaUrl}
         >
@@ -142,8 +166,10 @@ OutputStory.propTypes = {
   story: StoryPropTypes.story.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page).isRequired,
   metadata: PropTypes.shape({
-    publisher: PropTypes.string.isRequired,
-    publisherLogo: PropTypes.string.isRequired,
+    publisher: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      logo: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 

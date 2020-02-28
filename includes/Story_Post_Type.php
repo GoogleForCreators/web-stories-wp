@@ -305,10 +305,6 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
-		// @todo Make filterable like in Story_Post_Type::get_schemaorg_metadata()
-		$publisher      = get_bloginfo( 'name' );
-		$publisher_logo = self::get_publisher_logo();
-
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'ampStoriesEditSettings',
@@ -329,10 +325,7 @@ class Story_Post_Type {
 						'statuses' => '/wp/v2/statuses',
 						'fonts'    => '/amp/v1/fonts',
 					],
-					'metadata'         => [
-						'publisher'     => $publisher,
-						'publisherLogo' => $publisher_logo,
-					],
+					'publisher'        => self::get_publisher_data(),
 				],
 			]
 		);
@@ -729,6 +722,21 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Returns the publisher data.
+	 *
+	 * @return array Publisher name and logo.
+	 */
+	private static function get_publisher_data() {
+		$publisher      = get_bloginfo( 'name' );
+		$publisher_logo = self::get_publisher_logo();
+
+		return [
+			'name' => $publisher,
+			'logo' => $publisher_logo,
+		];
+	}
+
+	/**
 	 * Prints the schema.org metadata on the single story template.
 	 *
 	 * @return void
@@ -747,19 +755,16 @@ class Story_Post_Type {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	public static function get_schemaorg_metadata() {
+		$publisher = self::get_publisher_data();
+
 		$metadata = [
 			'@context'  => 'http://schema.org',
 			'publisher' => [
 				'@type' => 'Organization',
-				'name'  => get_bloginfo( 'name' ),
+				'name'  => $publisher['name'],
+				'logo'  => $publisher['logo'],
 			],
 		];
-
-		$publisher_logo = self::get_publisher_logo();
-
-		if ( $publisher_logo ) {
-			$metadata['publisher']['logo'] = $publisher_logo;
-		}
 
 		/**
 		 * We're expecting a post object.

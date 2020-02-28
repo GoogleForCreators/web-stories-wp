@@ -145,16 +145,23 @@ class Story_Renderer {
 	}
 
 	/**
-	 * Adds a fallback portrait poster image in case one is missing.
+	 * Adds portrait, square, and landscape poster images to the <amp-story>.
 	 *
-	 * Ensures AMP validity.
+	 * Adds a fallback portrait poster image in case one is missing to ensure AMP validity.
 	 *
 	 * @param string $content Story markup.
 	 *
 	 * @return string Filtered content.
 	 */
-	protected function add_fallback_poster_image( $content ) {
+	protected function add_poster_images( $content ) {
 		$content = str_replace( 'poster-portrait-src=""', sprintf( 'poster-portrait-src="%s"', plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ) ), $content );
+
+		$poster_images = Media::get_story_meta_images( $this->post );
+		unset( $poster_images['poster-portrait'] );
+		foreach ( $poster_images as $attr => $url ) {
+			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
+			$content     = str_replace( 'poster-portrait-src=', $attr_markup . ' poster-portrait-src=', $content );
+		}
 
 		return $content;
 	}
@@ -168,7 +175,7 @@ class Story_Renderer {
 		$markup = $this->post->post_content;
 		$markup = $this->replace_html_start_tag( $markup );
 		$markup = $this->replace_html_head( $markup );
-		$markup = $this->add_fallback_poster_image( $markup );
+		$markup = $this->add_poster_images( $markup );
 
 		return $markup;
 	}

@@ -54,7 +54,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
-  const { metadata } = useConfig();
+  const { publisher } = useConfig();
   const [isSaving, setIsSaving] = useState(false);
 
   /**
@@ -88,7 +88,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     } = story;
 
-    const content = getStoryMarkup(story, pages, metadata);
+    const content = getStoryMarkup(story, pages, { publisher });
     saveStoryById({
       storyId,
       title,
@@ -123,7 +123,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   }, [
     story,
     pages,
-    metadata,
+    publisher,
     saveStoryById,
     storyId,
     updateStory,
