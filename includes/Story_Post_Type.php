@@ -325,7 +325,10 @@ class Story_Post_Type {
 						'statuses' => '/wp/v2/statuses',
 						'fonts'    => '/amp/v1/fonts',
 					],
-					'publisher'        => self::get_publisher_data(),
+					'metadata'         => [
+						'publisher' => self::get_publisher_data(),
+						'poster'    => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+					],
 				],
 			]
 		);
