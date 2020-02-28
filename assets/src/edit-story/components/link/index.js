@@ -23,11 +23,14 @@ export function getLinkFromElement(element) {
   return element.link || null;
 }
 
-export function createLink(url = '', type = LinkType.TWO_TAP, desc, image) {
+export function createLink({
+  url = '',
+  type = LinkType.TWO_TAP,
+  ...rest
+} = {}) {
   return {
-    url,
     type,
-    desc,
-    image,
+    url,
+    ...rest,
   };
 }

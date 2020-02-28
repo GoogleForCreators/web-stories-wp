@@ -147,7 +147,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
               evt.target.form.dispatchEvent(new window.Event('submit'))
             }
             placeholder={__('Web address', 'web-stories')}
-            value={state.link ? state.link.url : ''}
+            value={state.link?.url}
             expand
           />
           {Boolean(state.link) && (
@@ -179,7 +179,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
                 evt.target.form.dispatchEvent(new window.Event('submit'))
               }
               placeholder={__('Optional description', 'web-stories')}
-              value={state.link ? state.link.desc : ''}
+              value={state.link?.desc}
               isMultiple={link === ''}
               expand
             />
@@ -189,7 +189,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       {/** TODO(@wassgha): Replace with image upload component */}
       {Boolean(state.link) && (
         <Row>
-          <BrandIcon src={state.link && state.link.icon} />
+          <BrandIcon src={state.link?.icon} />
           <span>{__('Optional brand icon', 'web-stories')}</span>
         </Row>
       )}
