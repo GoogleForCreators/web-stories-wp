@@ -28,6 +28,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { InputGroup } from '../../form';
+import { dataPixels } from '../../../units';
 
 function PaddingControls({
   properties,
@@ -47,15 +48,16 @@ function PaddingControls({
         onChange={(value) => {
           const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
           const newPadding = {
-            horizontal: isNaN(value) || '' === value ? '' : parseInt(value),
+            horizontal:
+              isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
           };
           newPadding.vertical =
             typeof padding.horizontal === 'number' && lockPaddingRatio && ratio
-              ? Math.round(parseInt(newPadding.horizontal) / ratio)
+              ? Math.round(dataPixels(parseInt(newPadding.horizontal)) / ratio)
               : padding.vertical;
           setState({ ...state, padding: newPadding });
         }}
-        postfix={_x('%', 'Percentage', 'web-stories')}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
       />
       <InputGroup
         label={__('Padding Vertical', 'web-stories')}
@@ -64,18 +66,19 @@ function PaddingControls({
         onChange={(value) => {
           const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
           const newPadding = {
-            vertical: isNaN(value) || '' === value ? '' : parseInt(value),
+            vertical:
+              isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
           };
           newPadding.horizontal =
             padding.horizontal !== '' &&
             typeof padding.vertical === 'number' &&
             lockPaddingRatio &&
             ratio
-              ? Math.round(parseInt(newPadding.vertical) / ratio)
+              ? Math.round(dataPixels(parseInt(newPadding.vertical)) / ratio)
               : padding.horizontal;
           setState({ ...state, padding: newPadding });
         }}
-        postfix={_x('%', 'Percentage', 'web-stories')}
+        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
       />
       <InputGroup
         type="checkbox"

@@ -158,9 +158,13 @@ function StylePanel({ selectedElements, onSetProperties }) {
         ratio
       ) {
         if (newPadding.horizontal === '') {
-          newPadding.horizontal = Math.round(newPadding.vertical * ratio);
+          newPadding.horizontal = Math.round(
+            dataPixels(newPadding.vertical * ratio)
+          );
         } else {
-          newPadding.horizontal = Math.round(newPadding.horizontal / ratio);
+          newPadding.horizontal = Math.round(
+            dataPixels(newPadding.horizontal / ratio)
+          );
         }
       }
       return {

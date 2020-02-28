@@ -88,7 +88,7 @@ export const elementWithFont = css`
 
 export const elementWithStyle = css`
   padding: ${({ padding }) =>
-    padding ? `${padding.vertical}% ${padding.horizontal}%` : '0'};
+    padding ? `${padding.vertical}px ${padding.horizontal}px` : '0'};
   line-height: ${({ lineHeight }) => lineHeight};
   letter-spacing: ${({ letterSpacing }) =>
     letterSpacing ? letterSpacing + 'em' : null};

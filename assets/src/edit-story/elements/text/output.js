@@ -23,7 +23,8 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { dataToEditorY } from '../../units';
+import { dataToEditorX, dataToEditorY } from '../../units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import { generateFontFamily } from './util';
 
 /**
@@ -60,7 +61,12 @@ function TextOutput({
     color: textOpacity ? rgba(color, textOpacity / 100) : color,
     lineHeight,
     letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
-    padding: padding ? `${padding.vertical}% ${padding.horizontal}%` : null,
+    padding: padding
+      ? `${dataToEditorX(PAGE_WIDTH, padding.horizontal)}% ${dataToEditorY(
+          PAGE_HEIGHT,
+          padding.vertical
+        )}%`
+      : null,
     textAlign: textAlign ? textAlign : null,
     textDecoration,
     whiteSpace: 'pre-wrap',
