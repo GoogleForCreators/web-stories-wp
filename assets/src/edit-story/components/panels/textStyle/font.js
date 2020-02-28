@@ -29,7 +29,7 @@ import { useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import { InputGroup, SelectMenu } from '../../form';
-import { MAX_FONT_SIZE, MIN_FONT_SIZE } from '../../../constants';
+import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 
 function FontControls({ properties, state, setState }) {
@@ -87,8 +87,7 @@ function FontControls({ properties, state, setState }) {
         value={state.fontSize}
         isMultiple={fontSize === ''}
         postfix={'px'}
-        min={MIN_FONT_SIZE}
-        max={MAX_FONT_SIZE}
+        max={PAGE_HEIGHT}
         onChange={handleNumberChange('fontSize')}
       />
     </>
