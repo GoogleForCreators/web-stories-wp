@@ -36,6 +36,9 @@ export { default as selectElement } from './selectElement';
 export { default as unselectElement } from './unselectElement';
 export { default as toggleElement } from './toggleElement';
 
+// Manipulate active drop target.
+export { default as setActiveDropTarget } from './setActiveDropTarget';
+
 // Manipulate entire internal state.
 export { default as restore } from './restore';
 

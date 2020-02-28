@@ -33,6 +33,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
+import useDropTargets from '../../masks/useDropTargets';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -105,6 +106,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   };
 
   const setTransformStyle = (target) => {
+    target.style.pointerEvents = 'none';
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -131,6 +133,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     target.style.transform = '';
     target.style.width = '';
     target.style.height = '';
+    target.style.pointerEvents = '';
     setIsResizingFromCorner(true);
     if (moveable.current) {
       moveable.current.updateRect();
@@ -140,6 +143,16 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
   );
+
+  // Drop targets
+  const { previewDropTarget, combineElements } = useDropTargets(
+    selectedElement
+  );
+  useEffect(() => {
+    if (isDragging) {
+      previewDropTarget();
+    }
+  }, [isDragging, previewDropTarget]);
 
   return (
     <Movable
@@ -169,6 +182,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
+          combineElements(selectedElement);
         }
         resetMoveable(target);
       }}

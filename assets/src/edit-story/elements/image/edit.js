@@ -36,7 +36,7 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/display';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
 
@@ -94,14 +94,14 @@ function ImageEdit({ element, box }) {
     <Element>
       <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
       <CropBox ref={setCropBox}>
-        <WithElementMask element={element} fill={true}>
+        <WithMask element={element} fill={true}>
           <CropImg
             ref={setCroppedImage}
             draggable={false}
             src={src}
             {...imgProps}
           />
-        </WithElementMask>
+        </WithMask>
       </CropBox>
 
       {!isFill && !isBackground && cropBox && croppedImage && (

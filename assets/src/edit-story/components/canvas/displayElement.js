@@ -36,7 +36,7 @@ import {
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/display';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -75,9 +75,9 @@ function DisplayElement({ element }) {
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithElementMask element={element} fill={true}>
+      <WithMask element={element} fill={true}>
         <Display element={element} box={box} />
-      </WithElementMask>
+      </WithMask>
     </Wrapper>
   );
 }

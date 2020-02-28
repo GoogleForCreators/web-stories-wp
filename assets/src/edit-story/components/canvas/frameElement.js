@@ -36,7 +36,7 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/frame';
 import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
@@ -98,9 +98,9 @@ function FrameElement({ element }) {
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
     >
-      <WithElementMask element={element} fill={true}>
+      <WithMask element={element} fill={true}>
         {Frame && <Frame element={element} box={box} />}
-      </WithElementMask>
+      </WithMask>
     </Wrapper>
   );
 }

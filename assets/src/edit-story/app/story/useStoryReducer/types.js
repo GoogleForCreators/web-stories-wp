@@ -36,6 +36,9 @@ export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UNSELECT_ELEMENT = 'UNSELECT_ELEMENT';
 export const TOGGLE_ELEMENT_IN_SELECTION = 'TOGGLE_ELEMENT_IN_SELECTION';
 
+// Manipulate active drop target
+export const SET_ACTIVE_DROP_TARGET = 'SET_ACTIVE_DROP_TARGET';
+
 // Manipulate story-global state.
 export const UPDATE_STORY = 'UPDATE_STORY';
 

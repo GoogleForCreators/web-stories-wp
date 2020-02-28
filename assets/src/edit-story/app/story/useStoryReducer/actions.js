@@ -113,6 +113,9 @@ const removeElementFromSelection = (dispatch) => ({ elementId }) =>
 const toggleElementInSelection = (dispatch) => ({ elementId }) =>
   dispatch({ type: types.TOGGLE_ELEMENT_IN_SELECTION, payload: { elementId } });
 
+const setActiveDropTarget = (dispatch) => ({ elementId }) =>
+  dispatch({ type: types.SET_ACTIVE_DROP_TARGET, payload: { elementId } });
+
 const updateStory = (dispatch) => ({ properties }) =>
   dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
@@ -142,6 +145,7 @@ export const exposedActions = {
   addElementToSelection,
   removeElementFromSelection,
   toggleElementInSelection,
+  setActiveDropTarget,
   updateStory,
 };
 

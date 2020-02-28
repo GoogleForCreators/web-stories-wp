@@ -38,7 +38,7 @@ import useDeleteStory from './actions/useDeleteStory';
 
 function StoryProvider({ storyId, children }) {
   const {
-    state: { pages, current, selection, story, capabilities },
+    state: { pages, current, selection, story, activeDropTarget, capabilities },
     api,
     internal: { restore },
   } = useStoryReducer();
@@ -118,6 +118,7 @@ function StoryProvider({ storyId, children }) {
       hasSelection,
       story,
       capabilities,
+      activeDropTarget,
       meta: {
         isSaving,
       },

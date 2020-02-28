@@ -38,7 +38,7 @@ const ANIMATION = 'animation';
 
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
-  const insertElement = useInsertElement();
+  const { insertElement, createElementDef } = useInsertElement();
 
   const tabs = {
     MEDIA,
@@ -55,6 +55,7 @@ function LibraryProvider({ children }) {
     actions: {
       setTab,
       insertElement,
+      createElementDef,
     },
     data: {
       tabs,

@@ -19,12 +19,13 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
  */
 import { Spinner } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -37,6 +38,7 @@ import { MainButton, Title, SearchInput, Header } from '../../common';
 import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import useDropTargets from '../../../../masks/useDropTargets';
 import paneId from './paneId';
 
 const Container = styled.div`
@@ -111,7 +113,7 @@ function MediaPane(props) {
     },
   } = useConfig();
   const {
-    actions: { insertElement },
+    actions: { insertElement, createElementDef },
   } = useLibrary();
 
   useEffect(loadMedia);
@@ -227,13 +229,76 @@ function MediaPane(props) {
   };
 
   /**
+   * Insert element such image, video and audio into the editor.
+   *
+   * @param {Object} attachment Attachment object
+   * @param {number} width      Width that element is inserted into editor.
+   * @return {null|*}          Return onInsert or null.
+   */
+  const getMediaElement = (attachment, width) => {
+    const { src, mimeType, oWidth, oHeight } = attachment;
+    const origRatio = oWidth / oHeight;
+    const height = width / origRatio;
+    if (allowedImageMimeTypes.includes(mimeType)) {
+      return createElementDef('image', {
+        src,
+        width,
+        height,
+        x: 5,
+        y: 5,
+        rotationAngle: 0,
+        origRatio,
+        origWidth: oWidth,
+        origHeight: oHeight,
+      });
+    } else if (allowedVideoMimeTypes.includes(mimeType)) {
+      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
+      const posterId = parseInt(posterIdRaw);
+      const videoEl = createElementDef('video', {
+        src,
+        width,
+        height,
+        x: 5,
+        y: 5,
+        rotationAngle: 0,
+        origRatio,
+        origWidth: oWidth,
+        origHeight: oHeight,
+        mimeType,
+        videoId,
+        posterId,
+        poster,
+      });
+
+      // Generate video poster if one not set.
+      if (videoId && !posterId) {
+        uploadVideoFrame(videoId, src, videoEl.id);
+      }
+
+      return videoEl;
+    }
+    return null;
+  };
+
+  /**
    * Get a formatted element for different media types.
    *
    * @param {Object} mediaEl Attachment object
    * @param {number} width      Width that element is inserted into editor.
    * @return {null|*}          Element or null if does not map to video/image.
    */
-  const getMediaElement = (mediaEl, width) => {
+  const MediaElement = ({ mediaEl, width }) => {
+    const element = getMediaElement(mediaEl, width);
+
+    // Drop targets
+    const [isDragging, setIsDragging] = useState(false);
+    const { previewDropTarget, combineElements } = useDropTargets(element);
+    useEffect(() => {
+      if (isDragging) {
+        previewDropTarget();
+      }
+    }, [isDragging, previewDropTarget]);
+
     const { src, oWidth, oHeight, mimeType } = mediaEl;
     const origRatio = oWidth / oHeight;
     const height = width / origRatio;
@@ -246,6 +311,20 @@ function MediaPane(props) {
           height={height}
           loading={'lazy'}
           onClick={() => insertMediaElement(mediaEl, width)}
+          onDragStart={(e) => {
+            setIsDragging(true);
+            const ghost = e.target.cloneNode(true);
+            ghost.style.position = 'absolute';
+            ghost.style.top = '0';
+            ghost.style.left = '0';
+            ghost.style.width = '30';
+            ghost.style.left = '30';
+            ghost.style.zIndex = '-1';
+            ghost.style.pointerEvents = 'none';
+            e.dataTransfer.setDragImage(ghost, 0, 0);
+          }}
+          onDragEnd={() => setIsDragging(false)}
+          onDrop={() => combineElements()}
         />
       );
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
@@ -262,12 +341,20 @@ function MediaPane(props) {
             evt.target.pause();
             evt.target.currentTime = 0;
           }}
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={() => setIsDragging(false)}
+          onDrop={() => combineElements()}
         >
           <source src={src} type={mimeType} />
         </Video>
       );
     }
     return null;
+  };
+
+  MediaElement.propTypes = {
+    mediaEl: PropTypes.object,
+    width: PropTypes.number,
   };
 
   return (
@@ -307,16 +394,16 @@ function MediaPane(props) {
           <Container>
             <Column>
               {media.map((mediaEl, index) => {
-                return isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
+                return isEven(index) ? (
+                  <MediaElement mediaEl={mediaEl} width={DEFAULT_WIDTH} />
+                ) : null;
               })}
             </Column>
             <Column>
               {media.map((mediaEl, index) => {
-                return !isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
+                return !isEven(index) ? (
+                  <MediaElement mediaEl={mediaEl} width={DEFAULT_WIDTH} />
+                ) : null;
               })}
             </Column>
           </Container>

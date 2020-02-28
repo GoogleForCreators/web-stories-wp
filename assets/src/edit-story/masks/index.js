@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -27,10 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
-
-// Important! This file cannot use `styled-components` or any stateful/context
-// React features to stay compatible with the "output" templates.
+import { getDefinitionForType } from '../elements';
 
 export const MaskTypes = {
   HEART: 'heart',
@@ -42,7 +34,7 @@ export const MaskTypes = {
   POLYGON: 'polygon',
 };
 
-const CLIP_PATHS = {
+export const CLIP_PATHS = {
   [MaskTypes.HEART]:
     'M 0.5,1 C 0.5,1,0,0.7,0,0.3 A 0.25,0.25,1,1,1,0.5,0.3 A 0.25,0.25,1,1,1,1,0.3 C 1,0.7,0.5,1,0.5,1 Z',
   [MaskTypes.STAR]:
@@ -92,89 +84,14 @@ export const DEFAULT_MASK = MASKS.find(
   (mask) => mask.type === MaskTypes.RECTANGLE
 );
 
-const FILL_STYLE = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-};
-
-export function WithElementMask({ element, fill, style, children, ...rest }) {
-  const mask = getElementMaskProperties(element);
-  return (
-    <WithtMask
-      fill={fill}
-      style={style}
-      mask={mask}
-      elementId={element.id}
-      {...rest}
-    >
-      {children}
-    </WithtMask>
-  );
-}
-
-WithElementMask.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
-};
-
-function WithtMask({ elementId, mask, fill, style, children, ...rest }) {
-  const maskType = (mask && mask.type) || null;
-
-  const fillStyle = fill ? FILL_STYLE : null;
-
-  const allStyles = {
-    ...fillStyle,
-    ...style,
-  };
-
-  if (maskType) {
-    // @todo: Chrome cannot do inline clip-path using data: URLs.
-    // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-    const maskId = `mask-${maskType}-${elementId}`;
-    allStyles.clipPath = `url(#${maskId})`;
-
-    return (
-      <div style={allStyles} {...rest}>
-        <svg width={0} height={0}>
-          <defs>
-            <clipPath id={maskId} clipPathUnits="objectBoundingBox">
-              <path d={CLIP_PATHS[maskType]} />
-            </clipPath>
-          </defs>
-        </svg>
-        {children}
-      </div>
-    );
-  }
-  return (
-    <div style={allStyles} {...rest}>
-      {children}
-    </div>
-  );
-}
-
-WithtMask.propTypes = {
-  elementId: PropTypes.string.isRequired,
-  mask: StoryPropTypes.mask,
-  style: PropTypes.object,
-  fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
-};
-
-function getElementMaskProperties({ type, mask, ...rest }) {
+export function getElementMask({ type, mask }) {
   if (mask) {
     return mask;
   }
-  return getDefaultElementMaskProperties({ type, ...rest });
+  return getDefaultElementMask(type);
 }
 
-function getDefaultElementMaskProperties({}) {
-  // @todo: mask-based shapes (square, circle, etc) automatically assume masks.
-  return null;
+function getDefaultElementMask(type) {
+  const { isMedia } = getDefinitionForType(type);
+  return isMedia ? DEFAULT_MASK : null;
 }

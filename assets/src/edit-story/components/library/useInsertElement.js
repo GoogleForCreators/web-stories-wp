@@ -28,14 +28,14 @@ import { DEFAULT_MASK } from '../../masks';
 
 function useInsertElement() {
   const isMediaEl = (type) => {
-    const { isMedia } = getDefinitionForType(type);
-    return isMedia;
+    const def = getDefinitionForType(type);
+    return def?.isMedia;
   };
   const {
     actions: { addElement, setBackgroundElement },
     state: { currentPage },
   } = useStory();
-  const insertElement = (type, { width, height, ...props }) => {
+  const createElementDef = (type, { width, height, ...props }) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
@@ -48,6 +48,10 @@ function useInsertElement() {
           }
         : {}),
     });
+    return element;
+  };
+  const insertElement = (type, props) => {
+    const element = createElementDef(type, props);
     addElement({ element });
     if (
       isMediaEl(type) &&
@@ -58,7 +62,7 @@ function useInsertElement() {
     return element;
   };
 
-  return insertElement;
+  return { createElementDef, insertElement };
 }
 
 export default useInsertElement;

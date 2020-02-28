@@ -27,6 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { StoryElementPropsTypes } from '../types';
+import pick from '../utils/objectPick';
 import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
@@ -45,6 +47,18 @@ export const createNewElement = (type, attributes = {}) => {
 };
 
 export const createPage = (attributes) => createNewElement('page', attributes);
+
+export const mergeElements = (
+  from,
+  into,
+  keep = Object.keys(StoryElementPropsTypes)
+) => {
+  return {
+    ...from,
+    ...pick(into, keep),
+    type: from.type,
+  };
+};
 
 export const elementTypes = [
   {
