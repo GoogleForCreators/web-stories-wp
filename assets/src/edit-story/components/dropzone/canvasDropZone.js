@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
@@ -25,16 +29,19 @@ import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
 import { useConfig } from '../../app/config';
+import { INSPECTOR_MAX_WIDTH } from '../../constants';
 import { disableDefaults } from './utils';
-import {
-  Heading,
-  Icon,
-  OverContent,
-  Overlay,
-  OverlayWrapper,
-  Text,
-} from './shared';
+import { Heading, Icon, OverContent, OverlayWrapper, Text } from './shared';
 import DropZone, { useDropZone } from './';
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  width: 100%;
+  z-index: 999;
+  padding-right: ${INSPECTOR_MAX_WIDTH}px;
+`;
 
 function CanvasDropzone({ children }) {
   const dropZoneElement = useRef(null);
@@ -82,7 +89,12 @@ function CanvasDropzone({ children }) {
         <OverlayWrapper>
           <Overlay>
             <Icon />
-            <Heading>{__('Upload to media library', 'web-stories')}</Heading>
+            <Heading>
+              {__(
+                'Upload to media library and add to the page.',
+                'web-stories'
+              )}
+            </Heading>
             <Text>
               {sprintf(
                 /* translators: %s is a list of allowed file extensions. */
