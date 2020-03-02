@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useState, useRef, useEffect } from '@wordpress/element';
+import { useRef, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -59,10 +59,10 @@ function WithDropTarget({ element, children }) {
   const pathRef = useRef(null);
 
   const {
+    state: { activeDropTarget },
     actions: { registerDropTarget },
   } = useDropTargets();
 
-  const [active, setActive] = useState();
   const { mask, id } = element;
 
   useEffect(() => {
@@ -91,21 +91,9 @@ function WithDropTarget({ element, children }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          active={active}
+          active={activeDropTarget === id}
           onFocus={() => {}}
           onBlur={() => {}}
-          onTouchStart={() => {
-            setActive(true);
-          }}
-          onMouseOver={() => {
-            setActive(true);
-          }}
-          onTouchEnd={() => {
-            setActive(false);
-          }}
-          onMouseOut={() => {
-            setActive(false);
-          }}
         />
       </DropTargetSVG>
     </>

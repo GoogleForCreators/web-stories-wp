@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -281,10 +282,6 @@ function MediaPane(props) {
 
   /**
    * Get a formatted element for different media types.
-   *
-   * @param {Object} mediaEl Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Element or null if does not map to video/image.
    */
   const MediaElement = ({ mediaEl, width }) => {
     const element = createMediaElement(mediaEl, width);
@@ -332,6 +329,11 @@ function MediaPane(props) {
       );
     }
     return null;
+  };
+
+  MediaElement.propTypes = {
+    mediaEl: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
   };
 
   return (
