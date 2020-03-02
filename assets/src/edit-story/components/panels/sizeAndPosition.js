@@ -116,9 +116,11 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
     [setState, state]
   );
 
+  const FLIP_OFF = 'off';
+  const FLIP_ON = 'on';
   const flipOptions = [
-    { name: __('Off', 'web-stories'), value: 'off' },
-    { name: __('On', 'web-stories'), value: 'on' },
+    { name: __('Off', 'web-stories'), value: FLIP_OFF },
+    { name: __('On', 'web-stories'), value: FLIP_ON },
   ];
 
   return (
@@ -206,14 +208,14 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
             label={__('Flip: vertical', 'web-stories')}
             options={flipOptions}
             isMultiple={flip === ''}
-            value={state.flip}
+            value={state.flip?.vertical ? FLIP_ON : FLIP_OFF}
             onChange={handleFlipChange('vertical')}
           />
           <SelectMenu
             label={__('Flip: horizontal', 'web-stories')}
             options={flipOptions}
             isMultiple={flip === ''}
-            value={state.flip}
+            value={state.flip?.horizontal ? FLIP_ON : FLIP_OFF}
             onChange={handleFlipChange('horizontal')}
           />
         </>

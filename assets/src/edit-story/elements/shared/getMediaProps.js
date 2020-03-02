@@ -28,10 +28,18 @@ import getTransformFlip from './getTransformFlip';
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
  * @param {number} mediaRatio Media file ratio.
- * @param {string} flip       Flip the element, either vertical or horizontal flip.
+ * @param {Object} flip       Flip the element, either vertical or horizontal flip.
  * @return {Object} Media properties.
  */
-function getMediaProps(width, height, scale, focalX, focalY, mediaRatio, flip) {
+function getMediaProps(
+  width,
+  height,
+  scale,
+  focalX,
+  focalY,
+  mediaRatio,
+  flip = null
+) {
   const ratio = width / height;
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;
