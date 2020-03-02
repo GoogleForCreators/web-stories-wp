@@ -18,10 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 const Button = styled.button`
   background: ${({ theme }) => theme.colors.fg.v1};
-  color: ${({ theme }) => theme.colors.mg.v3};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   border: 1px solid ${({ theme }) => theme.colors.fg.v3};
   border-radius: 4px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
