@@ -19,12 +19,19 @@
  */
 import { useEffect, useRef } from 'react';
 
-function useLiveRegion(ariaLive = 'polite') {
+/**
+ * Add messages to an ARIA live region.
+ *
+ * @param {?string} politeness Optional. Politeness. Either 'polite', or 'assertive'. Default 'polite'.
+ *
+ * @return {Function} Function to speak a message.
+ */
+function useLiveRegion(politeness = 'polite') {
   const elementRef = useRef();
 
   useEffect(() => {
     const container = document.createElement('div');
-    container.id = 'web-stories-aria-live-region-' + ariaLive;
+    container.id = 'web-stories-aria-live-region-' + politeness;
     container.className = 'web-stories-aria-live-region';
 
     container.setAttribute(
@@ -41,7 +48,7 @@ function useLiveRegion(ariaLive = 'polite') {
         'border: 0;' +
         'word-wrap: normal !important;'
     );
-    container.setAttribute('aria-live', ariaLive);
+    container.setAttribute('aria-live', politeness);
     container.setAttribute('aria-relevant', 'additions text');
     container.setAttribute('aria-atomic', 'true');
 
@@ -52,7 +59,7 @@ function useLiveRegion(ariaLive = 'polite') {
       document.body.removeChild(container);
       elementRef.current = null;
     };
-  }, [ariaLive]);
+  }, [politeness]);
 
   const speak = (message) => {
     // Clear any existing messages.
@@ -64,7 +71,7 @@ function useLiveRegion(ariaLive = 'polite') {
     elementRef.current.textContent = message;
   };
 
-  return speak;
+  return { speak };
 }
 
 export default useLiveRegion;
