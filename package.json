@@ -101,7 +101,8 @@
     "terser-webpack-plugin": "^2.3.5",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
-    "webpackbar": "^4.0.0"
+    "webpackbar": "^4.0.0",
+    "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
     "build": "npm-run-all build:*",

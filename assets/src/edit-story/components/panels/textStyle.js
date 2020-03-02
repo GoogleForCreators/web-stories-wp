@@ -67,13 +67,15 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const padding = getCommonValue(selectedElements, 'padding') || '';
+  const padding = getCommonValue(selectedElements, 'padding');
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
   const fontWeights = getCommonValue(selectedElements, 'fontWeights');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
+  const fontStyle = getCommonValue(selectedElements, 'fontStyle') || 'normal';
   const fontFallback = getCommonValue(selectedElements, 'fontFallback');
+  const backgroundColor =
+    getCommonValue(selectedElements, 'backgroundColor') || '#000000';
 
   const {
     state: { fonts },
@@ -90,6 +92,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
     letterSpacing,
     lineHeight,
     padding,
+    backgroundColor,
   });
   const [lockRatio, setLockRatio] = useState(true);
   useEffect(() => {
@@ -229,14 +232,14 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           label={__('Alignment', 'web-stories')}
           options={alignmentOptions}
           isMultiple={'' === textAlign}
-          value={state.textAlign}
+          value={state.textAlign || 'normal'}
           onChange={(value) => setState({ ...state, textAlign: value })}
         />
       </Row>
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
-          value={state.backgroundColor}
+          value={state.backgroundColor || '#000000'}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
           opacity={1}
         />
@@ -246,7 +249,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Label>{__('Padding', 'web-stories')}</Label>
         <BoxedNumeric
           suffix={_x('H', 'The Horizontal padding', 'web-stories')}
-          value={state.padding}
+          value={state.padding || 0}
           onChange={() => {}}
         />
         <Space />
@@ -262,7 +265,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Space />
         <BoxedNumeric
           suffix={_x('V', 'The Vertical padding', 'web-stories')}
-          value={state.padding}
+          value={state.padding || 0}
           onChange={() => {}}
         />
       </Row>

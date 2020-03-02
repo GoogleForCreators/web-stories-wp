@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import 'whatwg-fetch';
+
 window.ampStoriesEditSettings = {};
 
 global.wp = {

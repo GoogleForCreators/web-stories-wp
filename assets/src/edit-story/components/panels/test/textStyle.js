@@ -32,7 +32,14 @@ function arrange(children = null) {
   return render(
     <ThemeProvider theme={theme}>
       <APIProvider>
-        <FontProvider>{children}</FontProvider>
+        <FontProvider
+          value={{
+            state: { fonts: [{ name: 'Font A', value: 'font-a' }] },
+            actions: { getFontWeight: jest.fn(), getFontFallback: jest.fn() },
+          }}
+        >
+          {children}
+        </FontProvider>
       </APIProvider>
     </ThemeProvider>
   );
@@ -43,7 +50,12 @@ describe('Panels/TextStyle', () => {
     const { getByText } = arrange(
       <TextStyle
         selectedElements={[
-          { textAlign: '', letterSpacing: '', lineHeight: '', padding: '' },
+          {
+            textAlign: 'normal',
+            fontSize: 0,
+            padding: 0,
+            fontFamily: 'Font A',
+          },
         ]}
         onSetProperties={() => null}
       />
@@ -60,7 +72,12 @@ describe('Panels/TextStyle', () => {
     const { getByText } = arrange(
       <TextStyle
         selectedElements={[
-          { textAlign: '', letterSpacing: '', lineHeight: '', padding: '' },
+          {
+            textAlign: 'normal',
+            fontSize: 0,
+            padding: 0,
+            fontFamily: 'Font A',
+          },
         ]}
         onSetProperties={onClickOnSetPropertiesMock}
       />
