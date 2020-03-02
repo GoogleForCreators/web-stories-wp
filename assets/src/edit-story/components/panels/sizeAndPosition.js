@@ -189,13 +189,15 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         postfix={_x('deg', 'Degrees, 0 - 360. ', 'web-stories')}
         disabled={isFill}
       />
-      <SelectMenu
-        label={__('Flip options', 'web-stories')}
-        options={flipOptions}
-        isMultiple={flip === ''}
-        value={state.flip}
-        onChange={(value) => setState({ ...state, flip: value })}
-      />
+      {isMedia && (
+        <SelectMenu
+          label={__('Flip options', 'web-stories')}
+          options={flipOptions}
+          isMultiple={flip === ''}
+          value={state.flip}
+          onChange={(value) => setState({ ...state, flip: value })}
+        />
+      )}
     </SimplePanel>
   );
 }

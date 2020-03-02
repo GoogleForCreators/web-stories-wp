@@ -45,15 +45,10 @@ import {
   elementWithBackgroundColor,
   elementWithFontColor,
   elementWithStyle,
-  elementWithFlip,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import {
-  getFilteredState,
-  getHandleKeyCommand,
-  getTransformFlip,
-} from './util';
+import { getFilteredState, getHandleKeyCommand } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
@@ -78,7 +73,6 @@ const Wrapper = styled.div`
 // of text height. This element has an unbounded height (bottom) so that
 // it can be used for height measurement.
 const TextBox = styled.div`
-  ${elementWithFlip}
 	${elementWithFont}
 	${elementWithStyle}
 	${elementWithBackgroundColor}
@@ -96,7 +90,6 @@ function TextEdit({
     content,
     color,
     backgroundColor,
-    flip,
     fontFamily,
     fontFallback,
     fontSize,
@@ -124,7 +117,6 @@ function TextEdit({
     letterSpacing,
     lineHeight,
     padding,
-    transformFlip: getTransformFlip(flip),
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);

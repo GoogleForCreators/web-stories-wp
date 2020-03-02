@@ -19,7 +19,7 @@
  */
 import StoryPropTypes from '../../types';
 import { dataToEditorY } from '../../units';
-import { generateFontFamily, getTransformFlip } from './util';
+import { generateFontFamily } from './util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -29,7 +29,6 @@ function TextOutput({
     content,
     color,
     backgroundColor,
-    flip,
     fontFamily,
     fontFallback,
     fontSize,
@@ -51,7 +50,6 @@ function TextOutput({
     lineHeight,
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
     padding: padding ? padding + '%' : null,
-    transform: getTransformFlip(flip),
     textAlign: textAlign ? textAlign : null,
     whiteSpace: 'pre-wrap',
   };

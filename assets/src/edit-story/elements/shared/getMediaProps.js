@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getTransformFlip } from '../text/util';
+import getTransformFlip from './getTransformFlip';
 
 /**
  * Get props for media using scale and focal point.
