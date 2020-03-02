@@ -37,6 +37,7 @@ const StyledInput = styled(Input)`
   padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  ${({ textCenter }) => textCenter && `text-align: center`};
 `;
 
 const Container = styled.div`
@@ -50,7 +51,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
-  flex-basis: 100px;
+  flex-basis: ${({ flexBasis }) => flexBasis}px;
 `;
 
 function Numeric({
@@ -61,12 +62,15 @@ function Numeric({
   suffix,
   isMultiple,
   label,
+  symbol,
+  value,
+  flexBasis,
   ...rest
 }) {
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
 
   return (
-    <Container className={`${className}`}>
+    <Container className={`${className}`} flexBasis={flexBasis}>
       {label}
       {prefix}
       <StyledInput
@@ -74,6 +78,7 @@ function Numeric({
         prefix={prefix}
         suffix={suffix}
         label={label}
+        value={`${value}${symbol}`}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
         onBlur={(evt) => {
@@ -100,12 +105,18 @@ Numeric.propTypes = {
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   disabled: PropTypes.bool,
+  symbol: PropTypes.string,
+  flexBasis: PropTypes.number,
+  textCenter: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
   className: null,
   disabled: false,
   isMultiple: false,
+  symbol: '',
+  flexBasis: 100,
+  textCenter: false,
 };
 
 export default Numeric;

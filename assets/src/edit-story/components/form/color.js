@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -49,7 +48,7 @@ const StyledInput = styled(Input)`
 `;
 
 const Container = styled.div`
-  color: ${({ theme }) => rgba(theme.colors.mg.v4, 0.55)};
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -63,7 +62,6 @@ const Container = styled.div`
 
   & > span {
     margin-left: 12px;
-    color: ${({ theme }) => rgba(theme.colors.mg.v3, 0.86)};
   }
 `;
 

@@ -15,33 +15,27 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { render } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import stripHTML from '../../utils/stripHTML';
-import StoryPropTypes from '../../types';
+import App from './app';
+import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
-const TextLayer = styled.span`
-  color: inherit;
-  white-space: nowrap;
-  font-size: 13px;
-  text-overflow: ' ';
-  overflow: hidden;
-  max-width: 100%;
-`;
+/**
+ * Initializes the dashboard screen.
+ */
+const initialize = () => {
+  const appElement = document.getElementById('web-stories-dashboard');
 
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = stripHTML(content);
-  return <TextLayer>{rawContent}</TextLayer>;
-}
-
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+  render(<App />, appElement);
 };
 
-export default TextLayerContent;
+if ('loading' === document.readyState) {
+  document.addEventListener('DOMContentLoaded', initialize);
+} else {
+  initialize();
+}

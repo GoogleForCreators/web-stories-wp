@@ -19,28 +19,13 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import { Panel, PanelTitle, PanelContent } from '../panel';
-import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
-import LayerList from './layerList';
-import LayerProvider from './provider';
-
-function LayerPanel() {
+function App() {
   return (
-    <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
-      <PanelTitle isSecondary isResizable>
-        {__('Layers', 'web-stories')}
-      </PanelTitle>
-
-      <PanelContent isSecondary isScrollable padding={'0'}>
-        <LayerProvider>
-          <LayerList />
-        </LayerProvider>
-      </PanelContent>
-    </Panel>
+    <div>
+      <h1>{__('Dashboard', 'web-stories')}</h1>
+      <p>{__('Coming soon', 'web-stories')}</p>
+    </div>
   );
 }
 
-export default LayerPanel;
+export default App;

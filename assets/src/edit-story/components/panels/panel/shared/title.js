@@ -35,16 +35,23 @@ import panelContext from '../context';
 import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
 
+function getBackgroundColor(isPrimary, isSecondary, theme) {
+  if (isPrimary) {
+    return rgba(theme.colors.bg.v0, 0.07);
+  }
+  if (isSecondary) {
+    return rgba(theme.colors.fg.v1, 0.07);
+  }
+  return 'transparent';
+}
+
 const Header = styled.h2`
-  ${({ theme, isPrimary }) =>
-    isPrimary &&
-    `
-      background-color: ${rgba(theme.colors.bg.v0, 0.07)};
-  `}
-  border: 0 solid ${({ theme }) => theme.colors.fg.v6};
-  border-top-width: ${({ isPrimary }) => (isPrimary ? 0 : '1px')};
-  color: ${({ theme }) => theme.colors.fg.v1};
-  opacity: .84;
+  background-color: ${({ isPrimary, isSecondary, theme }) =>
+    getBackgroundColor(isPrimary, isSecondary, theme)};
+  border: 0 solid ${({ theme }) => theme.colors.bg.v9};
+  border-top-width: ${({ isPrimary, isSecondary }) =>
+    isPrimary || isSecondary ? 0 : '1px'};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -86,7 +93,7 @@ const Collapse = styled.span`
   }
 `;
 
-function Title({ children, isPrimary, isResizable }) {
+function Title({ children, isPrimary, isSecondary, isResizable }) {
   const {
     state: { isCollapsed, height, panelContentId },
     actions: { collapse, expand, setHeight },
@@ -111,7 +118,11 @@ function Title({ children, isPrimary, isResizable }) {
     : __('Collapse panel', 'web-stories');
 
   return (
-    <Header isPrimary={isPrimary} hasResizeHandle={isResizable && !isCollapsed}>
+    <Header
+      isPrimary={isPrimary}
+      isSecondary={isSecondary}
+      hasResizeHandle={isResizable && !isCollapsed}
+    >
       {isResizable && !isCollapsed && (
         <DragHandle
           height={height}
@@ -141,11 +152,13 @@ Title.propTypes = {
     PropTypes.node,
   ]).isRequired,
   isPrimary: PropTypes.bool,
+  isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
 };
 
 Title.defaultProps = {
   isPrimary: false,
+  isSecondary: false,
   isResizable: false,
 };
 

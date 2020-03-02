@@ -43,31 +43,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WEBSTORIES_VERSION', '1.0.0-alpha' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
-
-if ( PHP_VERSION_ID < 50600 ) {
-	return;
-}
+define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
+define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
+define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6.0' );
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';
 }
 
-/**
- * Initializes the plugin.
- */
-function _web_stories_init() {
-	\Google\Web_Stories\Story_Post_Type::register();
-}
-
-add_action( 'init', '_web_stories_init' );
-
-/**
- * Register AMP REST API endpoints.
- */
-function _web_stories_rest_api() {
-	// Fonts.
-	$controller = new \Google\Web_Stories\REST_API\Fonts_Controller();
-	$controller->register_routes();
-}
-
-add_action( 'rest_api_init', '_web_stories_rest_api', 10 );
+// Main plugin initialization happens there so that this file is still parsable in PHP < 5.6.
+require __DIR__ . '/includes/namespace.php';

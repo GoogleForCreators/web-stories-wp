@@ -194,8 +194,8 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       {/** Rotation and Flipping */}
       <Row expand={false} spaceBetween={true}>
         <BoxedNumeric
-          label={__('Rotate', 'web-stories')}
-          suffix={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
+          suffix={__('Rotate', 'web-stories')}
+          symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={state.rotationAngle}
           isMultiple={rotationAngle === ''}
           onChange={handleNumberChange('rotationAngle')}

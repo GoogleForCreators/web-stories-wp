@@ -46,7 +46,9 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.BACKGROUND,
-  PanelTypes.SIZE_POSITION,
+  PanelTypes.BACKGROUND_DISPLAY,
+  PanelTypes.SIZE,
+  PanelTypes.POSITION,
   PanelTypes.SCALE,
   PanelTypes.FILL,
   PanelTypes.MASK,
