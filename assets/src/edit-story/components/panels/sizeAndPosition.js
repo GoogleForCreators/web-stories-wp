@@ -207,14 +207,14 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
             options={flipOptions}
             isMultiple={flip === ''}
             value={state.flip}
-            onChange={handleFlipChange}
+            onChange={handleFlipChange('vertical')}
           />
           <SelectMenu
             label={__('Flip: horizontal', 'web-stories')}
             options={flipOptions}
             isMultiple={flip === ''}
             value={state.flip}
-            onChange={handleFlipChange}
+            onChange={handleFlipChange('horizontal')}
           />
         </>
       )}

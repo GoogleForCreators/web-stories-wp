@@ -21,6 +21,9 @@
  */
 function getTransformFlip(flip) {
   let transformFlip = null;
+  if (!flip) {
+    return transformFlip;
+  }
   if (flip.vertical && flip.horizontal) {
     transformFlip = 'scale(-1, -1)';
   } else if (flip.horizontal) {
