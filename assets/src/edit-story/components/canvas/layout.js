@@ -38,7 +38,23 @@ import useCanvas from './useCanvas';
  */
 
 const MENU_HEIGHT = 48;
-const MIN_CAROUSEL_HEIGHT = 80;
+
+export const CAROUSEL_VERTICAL_PADDING = 24;
+export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
+
+export const COMPACT_THUMB_SIZE = [48, 4];
+const MAX_CAROUSEL_THUMB_SIZE = [72, 128];
+// @todo: UX needed for min thumb size
+export const MIN_CAROUSEL_THUMB_SIZE = [72 / 3, 128 / 3];
+
+// Below this available height switch to Compact mode.
+export const COMPACT_CAROUSEL_BREAKPOINT =
+  MIN_CAROUSEL_THUMB_SIZE[1] + CAROUSEL_VERTICAL_PADDING * 2;
+
+const MIN_CAROUSEL_HEIGHT =
+  COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_SIZE[1];
+const MAX_CAROUSEL_HEIGHT =
+  MAX_CAROUSEL_THUMB_SIZE[1] + CAROUSEL_VERTICAL_PADDING * 2;
 
 const MEDIUM_EDITOR_PAGE_WIDTH = 268;
 const MEDIUM_EDITOR_PAGE_HEIGHT = 476;
@@ -50,8 +66,7 @@ const ALLOWED_PAGE_SIZES = [
   [SMALL_EDITOR_PAGE_WIDTH, SMALL_EDITOR_PAGE_HEIGHT],
 ];
 
-// @todo: the menu and carousel heights are not correct until we make a var-size
-// page.
+// @todo: the menu height is not responsive
 const Layer = styled.div`
   ${pointerEventsCss}
 
@@ -68,7 +83,10 @@ const Layer = styled.div`
     '.         prev      page      next      .       ' var(--page-height-px)
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' ${MIN_CAROUSEL_HEIGHT}px
+    'carousel  carousel  carousel  carousel  carousel' minmax(
+      ${MIN_CAROUSEL_HEIGHT}px,
+      ${MAX_CAROUSEL_HEIGHT}px
+    )
     / 1fr ${PAGE_NAV_WIDTH}px var(--page-width-px) ${PAGE_NAV_WIDTH}px 1fr;
 `;
 

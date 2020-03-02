@@ -43,11 +43,19 @@ import Modal from '../../modal';
 import GridView from '../gridview';
 import DraggablePage from '../draggablePage';
 import useResizeEffect from '../../../utils/useResizeEffect';
+import {
+  COMPACT_CAROUSEL_BREAKPOINT,
+  CAROUSEL_VERTICAL_PADDING,
+} from '../layout';
+import { PAGE_THUMB_OUTLINE } from '../pagepreview';
+import CompactIndicator from './compactIndicator';
 
-// @todo: Make responsive. Blocked on the header reimplementation and
-// responsive "page" size.
-const PAGE_THUMB_HEIGHT = 50;
-const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
+const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
+const CAROUSEL_THUMB_RIGHT_MARGIN = PAGE_THUMB_OUTLINE + 1;
+const CAROUSEL_COMPACT_RIGHT_MARGIN = 8;
+
+const SCROLLBAR_HEIGHT = 8;
+const ARROWS_BOTTOM_MARGIN = SCROLLBAR_HEIGHT + CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
 const Wrapper = styled.div`
   position: relative;
@@ -65,28 +73,29 @@ const Area = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px;`}
 `;
 
 const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: ${({ hasHorizontalOverflow }) =>
-    hasHorizontalOverflow ? 'scroll' : 'hidden'};
-  margin: 0 0 8px 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
   scrollbar-color: rgba(255, 255, 255, 0.54) transparent;
   scrollbar-width: auto;
   &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: ${SCROLLBAR_HEIGHT}px;
+    height: ${SCROLLBAR_HEIGHT}px;
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
   }
   &::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.54);
-    border-radius: 16px;
+    border-radius: ${SCROLLBAR_HEIGHT * 2}px;
   }
 `;
 
@@ -94,6 +103,17 @@ const StyledGridViewButton = styled(GridViewButton)`
   position: absolute;
   bottom: 24px;
 `;
+
+function calculatePageThumbSize(carouselSize) {
+  const aspectRatio = 9 / 16;
+  const availableHeight =
+    carouselSize.height -
+    CAROUSEL_VERTICAL_PADDING * 2 -
+    CAROUSEL_BOTTOM_SCROLL_MARGIN;
+  const height = availableHeight;
+  const width = availableHeight * aspectRatio;
+  return [width, height];
+}
 
 function Carousel() {
   const {
@@ -105,6 +125,10 @@ function Carousel() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
+  const ref = useRef(null);
+
+  const [carouselSize, setCarouselSize] = useState({});
+  const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
 
   const openModal = useCallback(() => setIsGridViewOpen(true), [
     setIsGridViewOpen,
@@ -115,11 +139,12 @@ function Carousel() {
 
   useResizeEffect(
     listRef,
-    () => {
+    (carousel) => {
       const { offsetWidth, scrollWidth, scrollLeft } = listRef.current;
       const max = scrollWidth - offsetWidth;
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
+      setCarouselSize(carousel);
     },
     [pages.length]
   );
@@ -174,14 +199,23 @@ function Carousel() {
 
   const isAtBeginningOfList = 0 === scrollPercentage;
   const isAtEndOfList = 1 === scrollPercentage;
+  const scrollByPx = carouselSize.width;
+
+  const Item = isCompact ? CompactIndicator : DraggablePage;
+  const itemMarginRight = isCompact
+    ? CAROUSEL_COMPACT_RIGHT_MARGIN
+    : CAROUSEL_THUMB_RIGHT_MARGIN;
+  const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
+    carouselSize
+  );
 
   return (
     <>
-      <Wrapper>
-        <Area area="left-navigation">
+      <Wrapper ref={ref}>
+        <Area area="left-navigation" marginBottom={ARROWS_BOTTOM_MARGIN}>
           <LeftArrow
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+            onClick={() => scrollBy(-scrollByPx)}
             width="24"
             height="24"
             aria-label={__('Scroll Left', 'web-stories')}
@@ -196,33 +230,33 @@ function Carousel() {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <DraggablePage
-                key={index}
-                as="li"
-                onClick={handleClickPage(page)}
-                ariaLabel={
-                  isCurrentPage
-                    ? sprintf(
-                        __('Page %s (current page)', 'web-stories'),
-                        index + 1
-                      )
-                    : sprintf(__('Go to page %s', 'web-stories'), index + 1)
-                }
-                isActive={isCurrentPage}
-                pageIndex={index}
-                ref={(el) => {
-                  pageRefs.current[page.id] = el;
-                }}
-                width={PAGE_THUMB_WIDTH}
-                height={PAGE_THUMB_HEIGHT}
-              />
+              <Li key={index} marginRight={itemMarginRight}>
+                <Item
+                  onClick={handleClickPage(page)}
+                  ariaLabel={
+                    isCurrentPage
+                      ? sprintf(
+                          __('Page %s (current page)', 'web-stories'),
+                          index + 1
+                        )
+                      : sprintf(__('Go to page %s', 'web-stories'), index + 1)
+                  }
+                  isActive={isCurrentPage}
+                  pageIndex={index}
+                  ref={(el) => {
+                    pageRefs.current[page.id] = el;
+                  }}
+                  width={pageThumbWidth}
+                  height={pageThumbHeight}
+                />
+              </Li>
             );
           })}
         </List>
-        <Area area="right-navigation">
+        <Area area="right-navigation" marginBottom={ARROWS_BOTTOM_MARGIN}>
           <RightArrow
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+            onClick={() => scrollBy(scrollByPx)}
             width="24"
             height="24"
             aria-label={__('Scroll Right', 'web-stories')}
@@ -246,5 +280,12 @@ function Carousel() {
     </>
   );
 }
+
+const Li = styled.li`
+  margin: 0 ${({ marginRight }) => marginRight}px 0 0;
+  &:last-of-type {
+    margin: 0;
+  }
+`;
 
 export default Carousel;

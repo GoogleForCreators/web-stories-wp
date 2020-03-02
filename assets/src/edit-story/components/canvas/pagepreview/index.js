@@ -28,11 +28,11 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-const PAGE_THUMB_OUTLINE = 2;
+export const PAGE_THUMB_OUTLINE = 3;
 
 const Page = styled.button`
+  display: block;
   padding: 0;
-  margin: 0 3px;
   border: ${PAGE_THUMB_OUTLINE}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
