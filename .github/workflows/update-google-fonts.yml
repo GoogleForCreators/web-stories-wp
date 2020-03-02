@@ -24,3 +24,4 @@ jobs:
           title: Update list of Google Fonts
           body: Fetched the currently available fonts on Google Fonts to update them in the project.
           branch: update/google-fonts
+          labels: Dependencies
