@@ -33,6 +33,7 @@ import {
   getMediaProps,
   EditPanMovable,
   ScalePanel,
+  MEDIA_MASK_OPACITY,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -46,20 +47,24 @@ const Element = styled.div`
 
 const FadedImg = styled.img`
   position: absolute;
-  opacity: 0.4;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${imageWithScale}
 `;
 
 const CropImg = styled.img`
   position: absolute;
-  ${imageWithScale}
+  opacity: ${({ opacity }) =>
+    opacity ? opacity - opacity * MEDIA_MASK_OPACITY : null};
+  ${imageWithScale};
 `;
 
 function ImageEdit({ element, box }) {
   const {
     id,
     src,
+    opacity,
     origRatio,
     scale,
     focalX,
@@ -92,7 +97,13 @@ function ImageEdit({ element, box }) {
 
   return (
     <Element>
-      <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
+      <FadedImg
+        ref={setFullImage}
+        draggable={false}
+        src={src}
+        {...imgProps}
+        opacity={opacity / 100}
+      />
       <CropBox ref={setCropBox}>
         <WithElementMask element={element} fill={true}>
           <CropImg
@@ -100,6 +111,7 @@ function ImageEdit({ element, box }) {
             draggable={false}
             src={src}
             {...imgProps}
+            opacity={opacity / 100}
           />
         </WithElementMask>
       </CropBox>

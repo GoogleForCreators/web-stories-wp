@@ -33,6 +33,7 @@ import {
   getMediaProps,
   EditPanMovable,
   ScalePanel,
+  MEDIA_MASK_OPACITY,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -44,7 +45,8 @@ const Element = styled.div`
 
 const FadedVideo = styled.video`
   position: absolute;
-  opacity: 0.4;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${videoWithScale}
   max-width: initial;
@@ -56,10 +58,12 @@ const CropVideo = styled.video`
   ${videoWithScale}
   max-width: initial;
   max-height: initial;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity - opacity * MEDIA_MASK_OPACITY : null};
 `;
 
 function VideoEdit({
-  element: { id, src, origRatio, scale, focalX, focalY, mimeType },
+  element: { id, src, origRatio, scale, focalX, focalY, mimeType, opacity },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -84,7 +88,12 @@ function VideoEdit({
 
   return (
     <Element>
-      <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>
+      <FadedVideo
+        ref={setFullVideo}
+        draggable={false}
+        {...videoProps}
+        opacity={opacity / 100}
+      >
         <source src={src} type={mimeType} />
       </FadedVideo>
       <CropBox>
@@ -93,6 +102,7 @@ function VideoEdit({
           draggable={false}
           src={src}
           {...videoProps}
+          opacity={opacity / 100}
         />
       </CropBox>
 

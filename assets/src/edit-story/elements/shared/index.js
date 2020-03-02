@@ -93,3 +93,5 @@ export const elementWithStyle = css`
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
 `;
+
+export const MEDIA_MASK_OPACITY = 0.4;
