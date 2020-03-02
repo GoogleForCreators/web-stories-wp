@@ -32,31 +32,31 @@ import StoryPropTypes from '../types';
 // Important! This file cannot use `styled-components` or any stateful/context
 // React features to stay compatible with the "output" templates.
 
-const MaskIds = {
+export const MaskTypes = {
   HEART: 'heart',
   STAR: 'star',
 };
 
 const CLIP_PATHS = {
   // @todo: This is a very bad heart.
-  [MaskIds.HEART]:
+  [MaskTypes.HEART]:
     'M 0.5,1 C 0.5,1,0,0.7,0,0.3 A 0.25,0.25,1,1,1,0.5,0.3 A 0.25,0.25,1,1,1,1,0.3 C 1,0.7,0.5,1,0.5,1 Z',
   // @todo: This is a horrible star.
-  [MaskIds.STAR]: 'M .5,0 L .8,1 L 0,.4 L 1,.4 L .2,1 Z',
+  [MaskTypes.STAR]: 'M .5,0 L .8,1 L 0,.4 L 1,.4 L .2,1 Z',
   // viewbox = [0 0 163 155]
   // M 81.5 0 L 100.696 59.079 H 162.815 L 112.56 95.5919 L 131.756 154.671 L 81.5 118.158 L 31.2444 154.671 L 50.4403 95.5919 L 0.184669 59.079H62.3041L81.5 0 Z
 };
 
 export const MASKS = [
   {
-    type: MaskIds.HEART,
+    type: MaskTypes.HEART,
     name: __('Heart', 'web-stories'),
-    path: CLIP_PATHS[MaskIds.HEART],
+    path: CLIP_PATHS[MaskTypes.HEART],
   },
   {
-    type: MaskIds.STAR,
+    type: MaskTypes.STAR,
     name: __('Star', 'web-stories'),
-    path: CLIP_PATHS[MaskIds.STAR],
+    path: CLIP_PATHS[MaskTypes.STAR],
   },
 ];
 

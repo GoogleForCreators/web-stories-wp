@@ -30,11 +30,11 @@ import LayerProvider from './provider';
 function LayerPanel() {
   return (
     <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
-      <PanelTitle isPrimary isResizable>
+      <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
       </PanelTitle>
 
-      <PanelContent isScrollable padding={'0'}>
+      <PanelContent isSecondary isScrollable padding={'0'}>
         <LayerProvider>
           <LayerList />
         </LayerProvider>

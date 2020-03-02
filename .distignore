@@ -2,6 +2,7 @@
 .github
 .idea
 .storybook
+__mocks__
 assets/src
 bin
 build

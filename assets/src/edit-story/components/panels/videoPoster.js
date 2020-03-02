@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -29,11 +29,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import UploadButton from '../uploadButton';
+import { useMediaPicker } from '../mediaPicker';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-const buttonStyles = css`
+const Button = styled.button`
   color: ${({ theme }) => theme.colors.mg.v1};
   font-size: 11px;
 `;
@@ -65,6 +65,13 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
     onSetProperties(newState);
   };
 
+  const openMediaPicker = useMediaPicker({
+    title: __('Select as video poster', 'web-stories'),
+    buttonInsertText: __('Set as video poster', 'web-stories'),
+    onSelect: handleChangeImage,
+    type: 'image',
+  });
+
   return (
     <SimplePanel
       name="videoPoster"
@@ -72,19 +79,11 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
       onSubmit={handleSubmit}
     >
       {state.poster && <Img src={state.poster} />}
-
-      <UploadButton
-        onSelect={handleChangeImage}
-        title={__('Select as video poster', 'web-stories')}
-        type={'image'}
-        buttonInsertText={__('Set as video poster', 'web-stories')}
-        buttonText={
-          state.poster
-            ? __('Replace poster image', 'web-stories')
-            : __('Set poster image', 'web-stories')
-        }
-        buttonCSS={buttonStyles}
-      />
+      <Button onClick={openMediaPicker}>
+        {state.poster
+          ? __('Replace poster image', 'web-stories')
+          : __('Set poster image', 'web-stories')}
+      </Button>
     </SimplePanel>
   );
 }

@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeContext } from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { useContext } from '@wordpress/element';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -32,6 +37,10 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export function useTheme() {
+  return useContext(ThemeContext);
+}
+
 const theme = {
   colors: {
     bg: {
@@ -43,6 +52,8 @@ const theme = {
       v5: '#575D65',
       v6: '#1D222F',
       v7: '#07080C',
+      v8: '#2A3140',
+      v9: '#232636',
     },
     mg: {
       v1: '#616877',
@@ -85,6 +96,12 @@ const theme = {
       size: '12px',
       lineHeight: '1.2',
       weight: '500',
+    },
+    label: {
+      family: 'Roboto',
+      size: '15px',
+      lineHeight: '18px',
+      weight: '400',
     },
   },
 };
