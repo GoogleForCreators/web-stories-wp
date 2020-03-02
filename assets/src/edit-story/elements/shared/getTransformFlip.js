@@ -17,16 +17,16 @@
 /**
  * Returns transform scale value based on the flip setting.
  *
- * @param {string} flip Flip value.
+ * @param {Object} flip Flip value.
  */
 function getTransformFlip(flip) {
   let transformFlip = null;
-  if (flip === 'vertical') {
-    transformFlip = 'scaleY(-1)';
-  } else if (flip === 'horizontal') {
-    transformFlip = 'scaleX(-1)';
-  } else if (flip === 'both') {
+  if (flip.vertical && flip.horizontal) {
     transformFlip = 'scale(-1, -1)';
+  } else if (flip.horizontal) {
+    transformFlip = 'scaleX(-1)';
+  } else if (flip.vertical) {
+    transformFlip = 'scaleY(-1)';
   }
   return transformFlip;
 }

@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
@@ -103,11 +103,22 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
     onSetProperties(newState);
   };
 
+  const handleFlipChange = useCallback(
+    (property) => (value) => {
+      setState({
+        ...state,
+        flip: {
+          ...state.flip,
+          [property]: 'on' === value,
+        },
+      });
+    },
+    [setState, state]
+  );
+
   const flipOptions = [
-    { name: __('None', 'web-stories'), value: null },
-    { name: __('Vertical', 'web-stories'), value: 'vertical' },
-    { name: __('Horizontal', 'web-stories'), value: 'horizontal' },
-    { name: __('Horizontal & Vertical', 'web-stories'), value: 'both' },
+    { name: __('Off', 'web-stories'), value: 'off' },
+    { name: __('On', 'web-stories'), value: 'on' },
   ];
 
   return (
@@ -190,13 +201,22 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         disabled={isFill}
       />
       {isMedia && (
-        <SelectMenu
-          label={__('Flip options', 'web-stories')}
-          options={flipOptions}
-          isMultiple={flip === ''}
-          value={state.flip}
-          onChange={(value) => setState({ ...state, flip: value })}
-        />
+        <>
+          <SelectMenu
+            label={__('Flip: vertical', 'web-stories')}
+            options={flipOptions}
+            isMultiple={flip === ''}
+            value={state.flip}
+            onChange={handleFlipChange}
+          />
+          <SelectMenu
+            label={__('Flip: horizontal', 'web-stories')}
+            options={flipOptions}
+            isMultiple={flip === ''}
+            value={state.flip}
+            onChange={handleFlipChange}
+          />
+        </>
       )}
     </SimplePanel>
   );
