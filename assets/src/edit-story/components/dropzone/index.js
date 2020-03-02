@@ -49,7 +49,7 @@ const DropZoneComponent = styled.div`
 	`}
 `;
 
-function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset, as }) {
+function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
   const dropZoneElement = useRef(null);
   const [dropZone, setDropZone] = useState(null);
   const {
@@ -120,8 +120,6 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset, as }) {
   const highlightWidth = 5;
   return (
     <DropZoneComponent
-      as={as}
-      role={as === 'li' ? 'option' : null}
       highlightWidth={highlightWidth}
       borderPosition={isDropZoneActive ? hoveredDropZone.position.x : null}
       ref={dropZoneElement}
@@ -141,7 +139,6 @@ DropZone.propTypes = {
   onDrop: PropTypes.func,
   pageIndex: PropTypes.number,
   dragIndicatorOffset: PropTypes.number,
-  as: PropTypes.string,
 };
 
 export default DropZone;

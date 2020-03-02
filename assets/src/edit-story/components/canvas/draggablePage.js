@@ -22,12 +22,13 @@ import { forwardRef, useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 import DropZone from '../dropzone';
 import { useStory } from '../../app/story';
 import PagePreview from './pagepreview';
-
-// Disable reason: forwardRef render functions do not support propTypes
-/* eslint-disable react/prop-types */
 
 function DraggablePageWithRef(
   {
@@ -38,7 +39,6 @@ function DraggablePageWithRef(
     width,
     height,
     dragIndicatorOffset,
-    as,
   },
   ref
 ) {
@@ -84,7 +84,6 @@ function DraggablePageWithRef(
 
   return (
     <DropZone
-      as={as}
       onDrop={onDrop}
       pageIndex={pageIndex}
       dragIndicatorOffset={dragIndicatorOffset}
@@ -106,6 +105,16 @@ function DraggablePageWithRef(
 
 const DraggablePage = forwardRef(DraggablePageWithRef);
 
-export default DraggablePage;
+DraggablePage.propTypes = {
+  pageIndex: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool,
+  ariaLabel: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  dragIndicatorOffset: PropTypes.number,
+};
 
-/* eslint-enable react/prop-types */
+DraggablePageWithRef.propTypes = DraggablePage.propTypes;
+
+export default DraggablePage;
