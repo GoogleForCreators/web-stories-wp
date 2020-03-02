@@ -239,6 +239,7 @@ function Carousel() {
               <Li key={index} marginRight={itemMarginRight} role="option">
                 <Item
                   onClick={handleClickPage(page)}
+                  dragIndicatorOffset={2}
                   ariaLabel={
                     isCurrentPage
                       ? sprintf(

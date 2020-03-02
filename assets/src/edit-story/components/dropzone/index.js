@@ -117,7 +117,7 @@ function DropZone({ children, onDrop, pageIndex, dragIndicatorOffset }) {
     hoveredDropZone &&
     hoveredDropZone.node === dropZoneElement.current;
   // @todo Currently static, can be adjusted for other use cases.
-  const highlightWidth = 5;
+  const highlightWidth = 4;
   return (
     <DropZoneComponent
       highlightWidth={highlightWidth}
