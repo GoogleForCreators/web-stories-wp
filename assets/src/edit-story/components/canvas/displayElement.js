@@ -65,8 +65,10 @@ function DisplayElement({ element }) {
       target.style.height = '';
     } else {
       const { translate, rotate, resize } = transform;
-      target.style.transform = `translate(${translate[0]}px, ${translate[1]}px) rotate(${rotate}deg)`;
-      if (resize[0] !== 0 && resize[1] !== 0) {
+      if (translate || rotate) {
+        target.style.transform = `translate(${translate[0]}px, ${translate[1]}px) rotate(${rotate}deg)`;
+      }
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
@@ -75,7 +77,7 @@ function DisplayElement({ element }) {
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithMask element={element} fill={true}>
+      <WithMask element={element} fill={true} box={box}>
         <Display element={element} box={box} />
       </WithMask>
     </Wrapper>

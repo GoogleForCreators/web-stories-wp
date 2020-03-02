@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
+// Important! This file cannot use `styled-components` or any stateful/context
+// React features to stay compatible with the "output" templates.
+
+/* eslint no-restricted-imports: ["error", { "paths": ["styled-components", "@wordpress/element"] }] */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
- */
-import { useState } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
 
 import StoryPropTypes from '../types';
-import { useTransformHandler } from '../components/transform';
-import { getDefinitionForType } from '../elements';
-import { getElementMask } from './';
+import { getElementMask } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -49,18 +47,7 @@ export default function WithMask({
   box,
   ...rest
 }) {
-  const [replacement, setReplacement] = useState(null);
   const mask = getElementMask(element);
-  useTransformHandler(element.id, (transform) => {
-    const replacementElement = transform?.updates?.replaceElement;
-    if (replacementElement) {
-      const { type } = replacementElement;
-      const { Display } = getDefinitionForType(type);
-      setReplacement(<Display element={replacementElement} box={box} />);
-    } else {
-      setReplacement(null);
-    }
-  });
 
   if (!mask?.type) {
     return children;
@@ -87,7 +74,7 @@ export default function WithMask({
           </clipPath>
         </defs>
       </svg>
-      {replacement || children}
+      {children}
     </div>
   );
 }

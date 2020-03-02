@@ -15,6 +15,14 @@
  */
 
 /**
+ * Implementation from https://stackoverflow.com/questions/55187563/
+ *
+ *
+ * Use as follows:
+ * useEffectDebugger(() => {}, [a, b, c, d], 'Effect Name was triggered by...')
+ */
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -63,7 +71,8 @@ function WithDropTarget({ element, children }) {
     actions: { registerDropTarget },
   } = useDropTargets();
 
-  const { mask, id } = element;
+  const { id } = element;
+  const mask = getElementMask(element);
 
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
@@ -101,7 +110,6 @@ function WithDropTarget({ element, children }) {
 }
 
 WithDropTarget.propTypes = {
-  mask: StoryPropTypes.mask,
   element: StoryPropTypes.element,
   children: StoryPropTypes.children.isRequired,
 };

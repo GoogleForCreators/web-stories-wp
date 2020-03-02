@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import WithMask from '../masks/display';
+import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 

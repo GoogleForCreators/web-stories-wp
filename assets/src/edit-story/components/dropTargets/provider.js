@@ -23,23 +23,38 @@ import { throttle } from 'throttle-debounce';
 /**
  * WordPress dependencies
  */
-import { useState, useRef, useCallback } from '@wordpress/element';
+import { useState, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import elementsFromPoint from '../../utils/elementsFromPoint';
 import { mergeElements } from '../../elements';
+import { useTransform } from '../transform';
 import { useStory } from '../../app';
 import Context from './context';
 
 function DropTargetsProvider({ children }) {
   const [dropTargets, setDropTargets] = useState([]);
-  const [savedElement, setSavedElement] = useState(null);
+  const [activeDropTarget, setActiveDropTarget] = useState(null);
+  const {
+    actions: { pushTransform },
+  } = useTransform();
   const {
     actions: { updateElementById },
     state: { currentPage },
   } = useStory();
+
+  const getDropTargetFromCursor = useCallback(
+    (x, y, element) => {
+      const underCursor = document.elementsFromPoint(x, y);
+      return (
+        Object.keys(dropTargets).find(
+          (id) => underCursor.includes(dropTargets[id]) && id !== element.id
+        ) || null
+      );
+    },
+    [dropTargets]
+  );
 
   /**
    * Registering drop targets
@@ -47,50 +62,28 @@ function DropTargetsProvider({ children }) {
 
   const registerDropTarget = useCallback(
     (id, ref) => {
+      if (id in dropTargets) {
+        return;
+      }
       setDropTargets({ ...dropTargets, [id]: ref });
     },
     [dropTargets]
   );
 
   /**
-   * Dragging and previewing elements
+   * Dragging elements
    */
-  const previewElement = useCallback(
-    (dropTargetId, selectedElement) => {
-      const dropTarget = currentPage?.elements.find(
-        (element) => element.id === dropTargetId
-      );
-      setSavedElement({ ...dropTarget });
-      updateElementById({
-        elementId: dropTargetId,
-        properties: mergeElements(selectedElement, dropTarget),
-      });
-    },
-    [currentPage, updateElementById]
-  );
-
-  const restoreElementPreview = useCallback(() => {
-    updateElementById({
-      elementId: savedElement.id,
-      properties: savedElement,
-    });
-    setSavedElement(null);
-  }, [savedElement, updateElementById]);
-
   const handleDrag = useCallback(
     (x, y, element) => {
-      const underCursor = elementsFromPoint(x, y);
-      const dropTargetId =
-        Object.keys(dropTargets).find((id) =>
-          underCursor.includes(dropTargets[id])
-        ) || null;
+      const dropTargetId = getDropTargetFromCursor(x, y, element);
       if (dropTargetId && dropTargetId !== element.id) {
-        previewElement(dropTargetId, element);
-      } else if (savedElement) {
-        restoreElementPreview();
+        pushTransform(dropTargetId, { updates: { replaceElement: element } });
+      } else {
+        pushTransform(activeDropTarget, { updates: { replaceElement: null } });
       }
+      setActiveDropTarget(dropTargetId);
     },
-    [dropTargets, previewElement, restoreElementPreview, savedElement]
+    [activeDropTarget, getDropTargetFromCursor, pushTransform]
   );
 
   const throttledHandleDrag = useCallback(
@@ -101,23 +94,33 @@ function DropTargetsProvider({ children }) {
   /**
    * Dropping and merging elements
    */
+  const combineElements = useCallback(
+    (dropTargetId, selectedElement) => {
+      const dropTarget = currentPage?.elements.find(
+        (element) => element.id === dropTargetId
+      );
+      updateElementById({
+        elementId: dropTargetId,
+        properties: mergeElements(selectedElement, dropTarget),
+      });
+    },
+    [currentPage, updateElementById]
+  );
+
   const handleDrop = useCallback(
     (x, y, element) => {
-      const underCursor = elementsFromPoint(x, y);
-      const dropTargetId =
-        Object.keys(dropTargets).find((id) =>
-          underCursor.includes(dropTargets[id])
-        ) || null;
+      const dropTargetId = getDropTargetFromCursor(x, y, element);
       if (dropTargetId && dropTargetId !== element.id) {
-        previewElement(dropTargetId, element);
+        combineElements(dropTargetId, element);
       }
     },
-    [dropTargets, previewElement]
+    [combineElements, getDropTargetFromCursor]
   );
 
   const state = {
     state: {
       dropTargets,
+      activeDropTarget,
     },
     actions: {
       registerDropTarget,

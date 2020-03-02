@@ -63,7 +63,7 @@ function ImageDisplay({
       target.style.transform = '';
     } else {
       const { resize } = transform;
-      if (resize[0] !== 0 && resize[1] !== 0) {
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
         const newImgProps = getMediaProps(
           resize[0],
           resize[1],
