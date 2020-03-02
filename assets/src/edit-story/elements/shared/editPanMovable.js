@@ -33,6 +33,7 @@ import getFocalFromOffset from './getFocalFromOffset';
 function EditPanMovable({
   setProperties,
   fullMedia,
+  flip,
   croppedMedia,
   x,
   y,
@@ -69,7 +70,14 @@ function EditPanMovable({
       draggable={true}
       throttleDrag={0}
       onDrag={({ dist }) => {
-        translateRef.current = dist;
+        let [tx, ty] = dist;
+        if (flip.vertical) {
+          ty = -ty;
+        }
+        if (flip.horizontal) {
+          tx = -tx;
+        }
+        translateRef.current = [tx, ty];
         update();
       }}
       onDragEnd={() => {
@@ -110,6 +118,10 @@ function EditPanMovable({
 
 EditPanMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
+  flip: PropTypes.shape({
+    vertical: PropTypes.bool,
+    horizontal: PropTypes.bool,
+  }),
   fullMedia: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
   x: PropTypes.number.isRequired,

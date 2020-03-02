@@ -103,6 +103,7 @@ function VideoEdit({
       {fullVideo && croppedVideo && (
         <EditPanMovable
           setProperties={setProperties}
+          flip={flip}
           fullMedia={fullVideo}
           croppedMedia={croppedVideo}
           x={x}

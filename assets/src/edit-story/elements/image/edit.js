@@ -130,6 +130,7 @@ function ImageEdit({ element, box }) {
       {fullImage && croppedImage && (
         <EditPanMovable
           setProperties={setProperties}
+          flip={flip}
           fullMedia={fullImage}
           croppedMedia={croppedImage}
           x={x}
