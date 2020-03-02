@@ -25,9 +25,14 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../../../theme';
 import TextStyle from '../textStyle';
+import { FontProvider } from '../../../app/font';
 
 function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+  return render(
+    <ThemeProvider theme={theme}>
+      <FontProvider>{children}</FontProvider>
+    </ThemeProvider>
+  );
 }
 
 describe('Panels/TextStyle', () => {

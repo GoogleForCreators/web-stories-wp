@@ -241,10 +241,11 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           opacity={1}
         />
       </Row>
+      {/* TODO: Update padding logic */}
       <Row>
         <Label>{__('Padding', 'web-stories')}</Label>
         <BoxedNumeric
-          suffix={_x('H', 'The Horizonatal padding', 'web-stories')}
+          suffix={_x('H', 'The Horizontal padding', 'web-stories')}
           value={state.padding}
           onChange={() => {}}
         />
@@ -265,16 +266,6 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           onChange={() => {}}
         />
       </Row>
-      {/* TODO: Update padding logic */}
-      {/* <InputGroup
-        label={__('Padding', 'web-stories')}
-        value={state.padding}
-        isMultiple={'' === padding}
-        onChange={(value) =>
-          setState({ ...state, padding: isNaN(value) ? '' : parseInt(value) })
-        }
-        postfix={_x('%', 'Percentage', 'web-stories')}
-      /> */}
     </SimplePanel>
   );
 }

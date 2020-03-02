@@ -72,6 +72,7 @@ function SelectMenu({
   disabled,
   flexGrow,
   flexBasis,
+  ariaLabel,
 }) {
   return (
     <Container disabled={disabled} flexBasis={flexBasis} flexGrow={flexGrow}>
@@ -83,6 +84,7 @@ function SelectMenu({
         onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
         }
+        aria-label={ariaLabel}
       >
         {isMultiple ? (
           <Option
@@ -108,7 +110,7 @@ function SelectMenu({
 }
 
 SelectMenu.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   value: PropTypes.any.isRequired,
   isMultiple: PropTypes.bool,
   options: PropTypes.array.isRequired,
@@ -117,6 +119,7 @@ SelectMenu.propTypes = {
   disabled: PropTypes.bool,
   flexGrow: PropTypes.bool,
   flexBasis: PropTypes.number,
+  ariaLabel: PropTypes.string,
 };
 
 SelectMenu.defaultProps = {
@@ -125,6 +128,7 @@ SelectMenu.defaultProps = {
   isMultiple: false,
   flexGrow: true,
   flexBasis: 100,
+  ariaLabel: __('Standard select', 'web-stories'),
 };
 
 export default SelectMenu;

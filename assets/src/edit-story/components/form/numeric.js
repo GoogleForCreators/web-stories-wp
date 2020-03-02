@@ -65,6 +65,7 @@ function Numeric({
   symbol,
   value,
   flexBasis,
+  ariaLabel,
   ...rest
 }) {
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
@@ -79,6 +80,7 @@ function Numeric({
         suffix={suffix}
         label={label}
         value={`${value}${symbol}`}
+        aria-label={ariaLabel}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
         onBlur={(evt) => {
@@ -108,6 +110,7 @@ Numeric.propTypes = {
   symbol: PropTypes.string,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };
 
 Numeric.defaultProps = {
@@ -117,6 +120,7 @@ Numeric.defaultProps = {
   symbol: '',
   flexBasis: 100,
   textCenter: false,
+  ariaLabel: __('Standard input', 'web-stories'),
 };
 
 export default Numeric;
