@@ -66,7 +66,7 @@ const LayerIconWrapper = styled.div`
     height: 28px;
     width: 28px;
     opacity: 0.5;
-    color: ${({ theme }) => theme.colors.bg.v0};
+    color: ${({ theme }) => theme.colors.fg.v1};
   }
 `;
 
@@ -76,6 +76,7 @@ const LayerDescription = styled.div`
   align-items: center;
   margin-left: 0;
   text-align: left;
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 function Layer({ layer }) {
