@@ -25,12 +25,15 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../../../theme';
 import TextStyle from '../textStyle';
+import { APIProvider } from '../../../app/api';
 import { FontProvider } from '../../../app/font';
 
 function arrange(children = null) {
   return render(
     <ThemeProvider theme={theme}>
-      <FontProvider>{children}</FontProvider>
+      <APIProvider>
+        <FontProvider>{children}</FontProvider>
+      </APIProvider>
     </ThemeProvider>
   );
 }
