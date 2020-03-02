@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -28,14 +29,14 @@ import { __, sprintf } from '@wordpress/i18n';
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
-  background: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.3)};
   border-radius: 100px;
-  color: ${({ theme }) => theme.colors.mg.v3};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: 8px 3px;
+  padding: 6px 3px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -52,8 +53,8 @@ const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
 }))`
   overflow: hidden;
   min-width: unset !important;
-  width: 1px !important;
-  height: 1px !important;
+  width: 0 !important;
+  height: 0 !important;
   border: 0 !important;
   padding: 0 !important;
   margin: -1px !important;
@@ -78,8 +79,6 @@ const Label = styled.label`
 	`}
 `;
 
-const OffLabel = styled(Label)``;
-
 const SwitchSpan = styled.span`
   position: absolute;
   z-index: 0;
@@ -89,10 +88,10 @@ const SwitchSpan = styled.span`
   width: calc(50% - 3px);
   height: 26px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.fg.v2};
+  background-color: ${({ theme }) => theme.colors.bg.v8};
   transition: left 0.15s ease-out;
 
-  ${RadioButton}:checked + ${OffLabel} ~ & {
+  ${RadioButton}[value=on]:checked + ${Label} ~ & {
     left: 50%;
   }
 `;
@@ -101,28 +100,27 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
   return (
     <SwitchContainer>
       <RadioButton
+        disabled={disabled}
         onClick={() => onChange(false)}
         checked={!value}
         value="off"
         id={`${onLabel}-${offLabel}-switch-off`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
       />
-      <Label disabled={disabled} htmlFor={`${onLabel}-${offLabel}-switch-off`}>
+      <Label htmlFor={`${onLabel}-${offLabel}-switch-off`}>
         {offLabel}
       </Label>
       <RadioButton
+        disabled={disabled}
         onClick={() => onChange(true)}
         checked={value}
         value="on"
         id={`$${onLabel}-${offLabel}-switch-on`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
       />
-      <OffLabel
-        disabled={disabled}
-        htmlFor={`$${onLabel}-${offLabel}-switch-on`}
-      >
+      <Label htmlFor={`$${onLabel}-${offLabel}-switch-on`}>
         {onLabel}
-      </OffLabel>
+      </Label>
       <SwitchSpan />
     </SwitchContainer>
   );
@@ -137,7 +135,7 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-  disabled: false,
+  disabled: true,
   onLabel: __('On', 'web-stories'),
   offLabel: __('Off', 'web-stories'),
 };

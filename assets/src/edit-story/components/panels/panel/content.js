@@ -33,7 +33,7 @@ import panelContext from './context';
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
-
+  background-color: #2f3449;
   ${({ hidden }) => hidden && 'display: none'}
 `;
 
