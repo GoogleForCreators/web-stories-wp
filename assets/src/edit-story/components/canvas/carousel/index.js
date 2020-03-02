@@ -104,6 +104,13 @@ const StyledGridViewButton = styled(GridViewButton)`
   bottom: 24px;
 `;
 
+const Li = styled.li`
+  margin: 0 ${({ marginRight = 0 }) => marginRight}px 0 0;
+  &:last-of-type {
+    margin: 0;
+  }
+`;
+
 function calculatePageThumbSize(carouselSize) {
   const aspectRatio = 9 / 16;
   const availableHeight =
@@ -125,7 +132,6 @@ function Carousel() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
-  const ref = useRef(null);
 
   const [carouselSize, setCarouselSize] = useState({});
   const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
@@ -139,12 +145,12 @@ function Carousel() {
 
   useResizeEffect(
     listRef,
-    (carousel) => {
+    (currentCarouselSize) => {
       const { offsetWidth, scrollWidth, scrollLeft } = listRef.current;
       const max = scrollWidth - offsetWidth;
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
-      setCarouselSize(carousel);
+      setCarouselSize(currentCarouselSize);
     },
     [pages.length]
   );
@@ -211,7 +217,7 @@ function Carousel() {
 
   return (
     <>
-      <Wrapper ref={ref}>
+      <Wrapper>
         <Area area="left-navigation" marginBottom={ARROWS_BOTTOM_MARGIN}>
           <LeftArrow
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
@@ -280,12 +286,5 @@ function Carousel() {
     </>
   );
 }
-
-const Li = styled.li`
-  margin: 0 ${({ marginRight }) => marginRight}px 0 0;
-  &:last-of-type {
-    margin: 0;
-  }
-`;
 
 export default Carousel;

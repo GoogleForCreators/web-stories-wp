@@ -25,6 +25,11 @@ import { forwardRef } from '@wordpress/element';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
+
 function CompactIndicatorWithRef({ onClick, isActive, ariaLabel }, ref) {
   return (
     <Indicator
@@ -39,12 +44,8 @@ function CompactIndicatorWithRef({ onClick, isActive, ariaLabel }, ref) {
 
 const Indicator = styled.button`
   display: block;
-  width: 48px;
-  height: 4px;
-  margin: 0 8px 0 0;
-  &:last-of-type {
-    margin: 0;
-  }
+  width: ${COMPACT_THUMB_WIDTH}px;
+  height: ${COMPACT_THUMB_HEIGHT}px;
   border: 0;
   background: #ffffff;
   opacity: ${({ isActive }) => (isActive ? 1 : 0.28)};
