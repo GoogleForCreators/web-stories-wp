@@ -5,7 +5,12 @@
   "description": "Visual storytelling for WordPress.",
   "author": "Google",
   "license": "Apache-2.0",
-  "keywords": ["amp", "stories", "storytelling", "wordpress"],
+  "keywords": [
+    "amp",
+    "stories",
+    "storytelling",
+    "wordpress"
+  ],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -65,7 +70,6 @@
     "babel-plugin-styled-components": "^1.10.7",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.8.7",
-    "clean-webpack-plugin": "^3.0.0",
     "core-js": "^3.6.4",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
@@ -101,9 +105,11 @@
   },
   "scripts": {
     "build": "npm-run-all build:*",
+    "prebuild:js": "rm -rf assets/css/* assets/js/*",
     "build:js": "wp-scripts build",
     "build:plugin": "wp dist-archive . $(pwd)/build/web-stories --create-target-dir",
     "download-fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",
+    "predev": "rm -rf assets/css/* assets/js/*",
     "dev": "wp-scripts start",
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
