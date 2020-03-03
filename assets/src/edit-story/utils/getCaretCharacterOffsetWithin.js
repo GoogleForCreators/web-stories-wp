@@ -39,18 +39,22 @@
 function getCaretCharacterOffsetWithin(element, clientX, clientY) {
   const doc = element.ownerDocument || element.document;
   const win = doc.defaultView || doc.parentWindow;
-  let sel;
   if (typeof win.getSelection !== 'undefined') {
-    sel = win.getSelection();
-    if (sel.rangeCount > 0) {
-      let range = win.getSelection().getRangeAt(0);
-      if (clientX && clientY) {
-        if (doc.caretPositionFromPoint) {
-          range = document.caretPositionFromPoint(clientX, clientY);
-        } else if (doc.caretRangeFromPoint) {
-          range = document.caretRangeFromPoint(clientX, clientY);
-        }
+    let range;
+    if (clientX && clientY) {
+      if (doc.caretPositionFromPoint) {
+        range = document.caretPositionFromPoint(clientX, clientY);
+      } else if (doc.caretRangeFromPoint) {
+        range = document.caretRangeFromPoint(clientX, clientY);
       }
+    }
+    if (!range) {
+      const sel = win.getSelection();
+      if (sel.rangeCount > 0) {
+        range = win.getSelection().getRangeAt(0);
+      }
+    }
+    if (range) {
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(element);
       preCaretRange.setEnd(range.endContainer, range.endOffset);
@@ -58,7 +62,7 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
     }
   }
 
-  sel = doc.selection;
+  const sel = doc.selection;
   if (sel && sel.type !== 'Control') {
     const textRange = sel.createRange();
     if (clientX && clientY) {
