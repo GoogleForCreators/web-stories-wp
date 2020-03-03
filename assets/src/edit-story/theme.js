@@ -53,6 +53,7 @@ const theme = {
       v6: '#1D222F',
       v7: '#07080C',
       v8: '#2A3140',
+      v9: '#232636',
     },
     mg: {
       v1: '#616877',
@@ -65,7 +66,7 @@ const theme = {
       v3: '#D4D3D4',
       v4: '#B3B3B3',
       v5: '#DDDDDD',
-      v6: '#EDEDED',
+      v6: '#232636',
     },
     action: '#47A0F4',
     danger: '#FF0000',
@@ -87,7 +88,7 @@ const theme = {
     body2: {
       family: 'Roboto',
       size: '14px',
-      lineHeight: '20px',
+      lineHeight: '16px',
       letterSpacing: '0.0142em',
     },
     tab: {

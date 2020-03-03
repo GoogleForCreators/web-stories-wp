@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,17 +30,28 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useInspector from '../../inspector/useInspector';
-import panelContext from './context';
+import useInspector from '../../../inspector/useInspector';
+import panelContext from '../context';
+import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
-import { ReactComponent as Arrow } from './arrow.svg';
+
+function getBackgroundColor(isPrimary, isSecondary, theme) {
+  if (isPrimary) {
+    return rgba(theme.colors.bg.v0, 0.07);
+  }
+  if (isSecondary) {
+    return rgba(theme.colors.fg.v1, 0.07);
+  }
+  return 'transparent';
+}
 
 const Header = styled.h2`
-  background-color: ${({ theme, isPrimary }) =>
-    isPrimary ? theme.colors.fg.v6 : theme.colors.fg.v1};
-  border: 0 solid ${({ theme }) => theme.colors.fg.v6};
-  border-top-width: ${({ isPrimary }) => (isPrimary ? 0 : '1px')};
-  color: ${({ theme }) => theme.colors.bg.v2};
+  background-color: ${({ isPrimary, isSecondary, theme }) =>
+    getBackgroundColor(isPrimary, isSecondary, theme)};
+  border: 0 solid ${({ theme }) => theme.colors.bg.v9};
+  border-top-width: ${({ isPrimary, isSecondary }) =>
+    isPrimary || isSecondary ? 0 : '1px'};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -64,8 +76,13 @@ const Heading = styled.span`
   color: inherit;
   margin: 0;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
+`;
+
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Collapse = styled.span`
@@ -73,7 +90,6 @@ const Collapse = styled.span`
   width: 28px;
   height: 28px;
   display: flex; /* removes implicit line-height padding from child element */
-  opacity: 0.54;
 
   svg {
     width: 28px;
@@ -82,7 +98,13 @@ const Collapse = styled.span`
   }
 `;
 
-function Title({ children, isPrimary, isResizable }) {
+function Title({
+  children,
+  isPrimary,
+  isSecondary,
+  secondaryAction,
+  isResizable,
+}) {
   const {
     state: { isCollapsed, height, panelContentId },
     actions: { collapse, expand, setHeight },
@@ -107,7 +129,11 @@ function Title({ children, isPrimary, isResizable }) {
     : __('Collapse panel', 'web-stories');
 
   return (
-    <Header isPrimary={isPrimary} hasResizeHandle={isResizable && !isCollapsed}>
+    <Header
+      isPrimary={isPrimary}
+      isSecondary={isSecondary}
+      hasResizeHandle={isResizable && !isCollapsed}
+    >
       {isResizable && !isCollapsed && (
         <DragHandle
           height={height}
@@ -123,9 +149,12 @@ function Title({ children, isPrimary, isResizable }) {
         aria-controls={panelContentId}
       >
         <Heading>{children}</Heading>
-        <Collapse isCollapsed={isCollapsed}>
-          <Arrow />
-        </Collapse>
+        <HeaderActions>
+          {secondaryAction}
+          <Collapse isCollapsed={isCollapsed}>
+            <Arrow />
+          </Collapse>
+        </HeaderActions>
       </HeaderButton>
     </Header>
   );
@@ -137,11 +166,17 @@ Title.propTypes = {
     PropTypes.node,
   ]).isRequired,
   isPrimary: PropTypes.bool,
+  isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  secondaryAction: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 Title.defaultProps = {
   isPrimary: false,
+  isSecondary: false,
   isResizable: false,
 };
 

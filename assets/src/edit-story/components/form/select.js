@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -31,8 +32,34 @@ import { __ } from '@wordpress/i18n';
 import Label from './label';
 import Group from './group';
 
+const Container = styled(Group)`
+  flex-basis: ${({ flexBasis }) => flexBasis};
+  ${({ flexGrow }) =>
+    flexGrow &&
+    `flex-grow: 1;
+  `};
+  margin-bottom: 0;
+`;
+
 const Select = styled.select`
-  width: 100px;
+  width: 100%;
+  margin: 0;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)} !important;
+  border: 0;
+  border-radius: 4px !important;
+  color: ${({ theme }) => theme.colors.fg.v1} !important;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.label.weight};
+
+  &:focus {
+    box-shadow: none !important;
+  }
+`;
+
+const Option = styled.option`
+  height: 48px;
 `;
 
 function SelectMenu({
@@ -43,10 +70,13 @@ function SelectMenu({
   onChange,
   postfix,
   disabled,
+  flexGrow,
+  flexBasis,
+  ariaLabel,
 }) {
   return (
-    <Group disabled={disabled}>
-      <Label>{label}</Label>
+    <Container disabled={disabled} flexBasis={flexBasis} flexGrow={flexGrow}>
+      {label && <Label>{label}</Label>}
       <Select
         disabled={disabled}
         value={value}
@@ -54,9 +84,10 @@ function SelectMenu({
         onBlur={(evt) =>
           evt.target.form.dispatchEvent(new window.Event('submit'))
         }
+        aria-label={ariaLabel}
       >
         {isMultiple ? (
-          <option
+          <Option
             key="multiple"
             dangerouslySetInnerHTML={{
               __html: __('( multiple )', 'web-stories'),
@@ -65,7 +96,7 @@ function SelectMenu({
         ) : (
           options &&
           options.map(({ name, value: optValue }) => (
-            <option
+            <Option
               key={optValue}
               value={optValue}
               dangerouslySetInnerHTML={{ __html: name }}
@@ -74,24 +105,30 @@ function SelectMenu({
         )}
       </Select>
       {postfix}
-    </Group>
+    </Container>
   );
 }
 
 SelectMenu.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   value: PropTypes.any.isRequired,
   isMultiple: PropTypes.bool,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   postfix: PropTypes.string,
   disabled: PropTypes.bool,
+  flexGrow: PropTypes.bool,
+  flexBasis: PropTypes.number,
+  ariaLabel: PropTypes.string,
 };
 
 SelectMenu.defaultProps = {
   postfix: '',
   disabled: false,
   isMultiple: false,
+  flexGrow: true,
+  flexBasis: 100,
+  ariaLabel: __('Standard select', 'web-stories'),
 };
 
 export default SelectMenu;

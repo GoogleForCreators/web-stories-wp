@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,11 +30,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useDragHandlers from './useDragHandlers';
-import useKeyboardHandlers from './useKeyboardHandlers';
+import useDragHandlers from '../useDragHandlers';
+import useKeyboardHandlers from '../useKeyboardHandlers';
 
 const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
-  background-color: ${({ theme }) => theme.colors.fg.v5};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.07)};
   border: 0;
   padding: 0;
   height: 6px;
@@ -45,7 +46,7 @@ const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
 `;
 
 const Bar = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v0};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
   width: 36px;
   height: 4px;
   border-radius: 2px;
