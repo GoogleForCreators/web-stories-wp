@@ -236,10 +236,11 @@ function Carousel() {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <Li key={index} marginRight={itemMarginRight} role="option">
+              <Li key={index} marginRight={itemMarginRight}>
                 <Item
                   onClick={handleClickPage(page)}
                   dragIndicatorOffset={2}
+                  role="option"
                   ariaLabel={
                     isCurrentPage
                       ? sprintf(

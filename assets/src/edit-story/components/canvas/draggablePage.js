@@ -40,6 +40,7 @@ function DraggablePageWithRef(
     width,
     height,
     dragIndicatorOffset,
+    role,
   },
   ref
 ) {
@@ -96,6 +97,7 @@ function DraggablePageWithRef(
         onDragStart={onDragStart}
         isActive={isActive}
         aria-label={ariaLabel}
+        role={role}
         width={width}
         height={height}
         forwardedRef={ref}
@@ -114,6 +116,7 @@ DraggablePage.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   dragIndicatorOffset: PropTypes.number,
+  role: PropTypes.string,
 };
 
 DraggablePageWithRef.propTypes = DraggablePage.propTypes;

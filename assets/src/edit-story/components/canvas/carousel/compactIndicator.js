@@ -30,13 +30,13 @@ import { forwardRef } from '@wordpress/element';
  */
 import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
 
-function CompactIndicatorWithRef({ onClick, isActive, ariaLabel }, ref) {
+function CompactIndicatorWithRef({ onClick, isActive, ariaLabel, role }, ref) {
   return (
     <Indicator
       onClick={onClick}
       isActive={isActive}
       aria-label={ariaLabel}
-      role="option"
+      role={role}
       ref={ref}
     />
   );
@@ -58,6 +58,7 @@ CompactIndicator.propTypes = {
   onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
   ariaLabel: PropTypes.string.isRequired,
+  role: PropTypes.string,
 };
 
 CompactIndicatorWithRef.propTypes = CompactIndicator.propTypes;
