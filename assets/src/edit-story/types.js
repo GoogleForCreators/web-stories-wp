@@ -133,7 +133,7 @@ export const Pattern = PropTypes.shape({
   type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
   color: Hex,
   stops: PropTypes.arrayOf(ColorStop),
-  angle: PropTypes.number.isRequired,
+  rotation: PropTypes.number.isRequired,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
