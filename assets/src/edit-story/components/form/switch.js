@@ -25,7 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 const SwitchContainer = styled.div`
   appearance: none;
@@ -103,6 +103,10 @@ const SwitchSpan = styled.span`
 
 function Switch({ value, disabled, onChange, onLabel, offLabel }) {
   const [flag, setFlag] = useState(value);
+
+  useEffect(() => {
+    setFlag(value);
+  }, [value, setFlag]);
 
   const handleChange = (checked) => {
     setFlag(checked);
