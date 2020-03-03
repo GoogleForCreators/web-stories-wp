@@ -116,3 +116,30 @@ StoryPropTypes.elements.background = PropTypes.shape({
 });
 
 export default StoryPropTypes;
+
+export const Hex = PropTypes.shape({
+  r: PropTypes.number.isRequired,
+  g: PropTypes.number.isRequired,
+  b: PropTypes.number.isRequired,
+  a: PropTypes.number,
+});
+
+export const ColorStop = PropTypes.shape({
+  stop: Hex.isRequired,
+  position: PropTypes.number.isRequired,
+});
+
+export const Pattern = PropTypes.shape({
+  type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
+  color: Hex,
+  stops: PropTypes.arrayOf(ColorStop),
+  angle: PropTypes.number.isRequired,
+  center: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+  size: PropTypes.shape({
+    w: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+});

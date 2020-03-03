@@ -40,11 +40,43 @@ const initialState = {
 };
 
 const reducer = {
-  load: (state, { payload }) => ({
-    ...state,
-    /* TODO: Parse from any color string including gradients */
-    currentColor: payload,
-  }),
+  load: (state, { payload }) => {
+    const { type, color, stops, angle, center, size } = payload;
+    switch (type) {
+      case TYPE_LINEAR:
+        return {
+          ...state,
+          color: stops[0].color,
+          stops,
+          angle,
+        };
+
+      case TYPE_RADIAL:
+        return {
+          ...state,
+          color: stops[0].color,
+          stops,
+          center,
+          size,
+        };
+
+      case TYPE_CONIC:
+        return {
+          ...state,
+          color: stops[0].color,
+          stops,
+          angle,
+          center,
+        };
+
+      case TYPE_SOLID:
+      default:
+        return {
+          ...state,
+          currentColor: color,
+        };
+    }
+  },
   setToSolid: (state) => ({
     ...state,
     type: TYPE_SOLID,
@@ -89,8 +121,7 @@ const reducer = {
   }),
   selectStop: (state, { payload }) => ({
     ...state,
-    foo: payload,
-    regenerate: true,
+    currentStopIndex: payload,
   }),
   deleteStop: (state, { payload: indexToDelete }) => ({
     ...state,
@@ -107,10 +138,8 @@ const reducer = {
 function useColor() {
   const [state, actions] = useReduction(initialState, reducer);
 
-  const { currentColor } = state;
-
-  // TODO: Generate color for gradients too
-  const generatedColor = currentColor;
+  // TODO: Generate compact output for color
+  const generatedColor = {};
 
   return {
     state: {
