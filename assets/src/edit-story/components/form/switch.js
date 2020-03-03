@@ -113,27 +113,27 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
 
   return (
     <SwitchContainer>
-      <RadioButton
-        disabled={disabled}
-        onChange={() => handleChange(false)}
-        checked={!flag}
-        value="off"
-        id={`${onLabel}-${offLabel}-switch-off`}
-        aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
-      />
       <Label disabled={disabled} htmlFor={`${onLabel}-${offLabel}-switch-off`}>
         {offLabel}
+        <RadioButton
+          disabled={disabled}
+          onChange={() => handleChange(false)}
+          checked={!flag}
+          value="off"
+          id={`${onLabel}-${offLabel}-switch-off`}
+          aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
+        />
       </Label>
-      <RadioButton
-        disabled={disabled}
-        onChange={() => handleChange(true)}
-        checked={flag}
-        value="on"
-        id={`$${onLabel}-${offLabel}-switch-on`}
-        aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
-      />
       <Label disabled={disabled} htmlFor={`$${onLabel}-${offLabel}-switch-on`}>
         {onLabel}
+        <RadioButton
+          disabled={disabled}
+          onChange={() => handleChange(true)}
+          checked={flag}
+          value="on"
+          id={`$${onLabel}-${offLabel}-switch-on`}
+          aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
+        />
       </Label>
       <SwitchSpan />
     </SwitchContainer>
