@@ -71,7 +71,7 @@ function useLiveRegion(politeness = 'polite') {
     elementRef.current.textContent = message;
   };
 
-  return { speak };
+  return speak;
 }
 
 export default useLiveRegion;

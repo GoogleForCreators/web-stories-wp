@@ -39,7 +39,7 @@ describe('useLiveRegion', () => {
     ).toBeEmpty();
 
     act(() => {
-      result.current.speak('Hello World');
+      result.current('Hello World');
     });
 
     expect(
@@ -60,7 +60,7 @@ describe('useLiveRegion', () => {
       )
     ).toBeEmpty();
 
-    act(() => result.current.speak('Hello World'));
+    act(() => result.current('Hello World'));
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
@@ -95,8 +95,8 @@ describe('useLiveRegion', () => {
     ).toBeEmpty();
 
     act(() => {
-      result.current.speak('Foo');
-      result.current.speak('Bar');
+      result.current('Foo');
+      result.current('Bar');
     });
 
     expect(

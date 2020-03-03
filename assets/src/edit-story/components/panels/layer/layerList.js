@@ -50,8 +50,7 @@ function LayerPanel() {
   const {
     state: { layers, isReordering, currentSeparator },
   } = useContext(LayerContext);
-
-  const { speak } = useLiveRegion('assertive');
+  const speak = useLiveRegion('assertive');
 
   const numLayers = layers && layers.length;
 
