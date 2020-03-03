@@ -15,15 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { forwardRef } from '@wordpress/element';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { forwardRef } from '@wordpress/element';
 
 /**
  * Internal dependencies

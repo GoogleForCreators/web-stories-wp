@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * WordPress dependencies
  */
 import { forwardRef, useCallback } from '@wordpress/element';
@@ -22,10 +27,6 @@ import { forwardRef, useCallback } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
 import DropZone from '../dropzone';
 import { useStory } from '../../app/story';
 import PagePreview from './pagepreview';
