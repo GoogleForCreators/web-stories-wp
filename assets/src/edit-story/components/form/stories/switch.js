@@ -15,28 +15,24 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { text, boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import Switch from '../form/switch';
-import { Panel, PanelTitle, PanelContent } from './panel';
+import Switch from '../switch';
 
-function ColorPresetPanel() {
-  const [value, setValue] = useState(false);
-  return (
-    <Panel name="colorpreset">
-      <PanelTitle isPrimary>{__('Color presets', 'web-stories')}</PanelTitle>
-      <PanelContent>
-        <Switch value={value} onChange={setValue} />
-        <p>{__('Color presets go here', 'web-stories')}</p>
-      </PanelContent>
-    </Panel>
-  );
-}
+export default {
+  title: 'Components/Form/Switch',
+  component: Switch,
+};
 
-export default ColorPresetPanel;
+export const _default = () => {
+  const onLabel = text('OnLabel', 'Do not format');
+  const offLabel = text('OffLabel', 'Fit to Device');
+  const value = boolean('Value', false);
+
+  return <Switch value={value} onLabel={onLabel} offLabel={offLabel} />;
+};

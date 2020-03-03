@@ -25,6 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 const SwitchContainer = styled.div`
   appearance: none;
@@ -44,7 +45,7 @@ const SwitchContainer = styled.div`
   border: none;
 
   &:focus {
-    box-shawdow: 0 0 0 1px ${({ theme }) => theme.colors.bg.v4};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.bg.v4};
   }
 `;
 
@@ -78,6 +79,7 @@ const Label = styled.label`
   ${({ disabled }) =>
     disabled &&
     `
+    cursor: default;
     opacity: 0.3;
 	`}
 `;
@@ -100,12 +102,21 @@ const SwitchSpan = styled.span`
 `;
 
 function Switch({ value, disabled, onChange, onLabel, offLabel }) {
+  const [flag, setFlag] = useState(value);
+
+  const handleChange = (checked) => {
+    setFlag(checked);
+    if (onChange) {
+      onChange(checked);
+    }
+  };
+
   return (
     <SwitchContainer>
       <RadioButton
         disabled={disabled}
-        onClick={() => onChange(false)}
-        checked={!value}
+        onChange={() => handleChange(false)}
+        checked={!flag}
         value="off"
         id={`${onLabel}-${offLabel}-switch-off`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
@@ -115,8 +126,8 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
       </Label>
       <RadioButton
         disabled={disabled}
-        onClick={() => onChange(true)}
-        checked={value}
+        onChange={() => handleChange(true)}
+        checked={flag}
         value="on"
         id={`$${onLabel}-${offLabel}-switch-on`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
@@ -130,14 +141,15 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
 }
 
 Switch.propTypes = {
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.bool,
+  onChange: PropTypes.func,
   disabled: PropTypes.bool,
   onLabel: PropTypes.string,
   offLabel: PropTypes.string,
 };
 
 Switch.defaultProps = {
+  value: false,
   disabled: false,
   onLabel: __('On', 'web-stories'),
   offLabel: __('Off', 'web-stories'),
