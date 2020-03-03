@@ -24,6 +24,10 @@ module.exports = {
   moduleNameMapper: {
     '\\.svg': '<rootDir>/__mocks__/svgrMock.js',
   },
+  setupFiles: [
+    '<rootDir>/tests/js/setup-globals',
+    '<rootDir>/tests/js/setup-mocks',
+  ],
   setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
