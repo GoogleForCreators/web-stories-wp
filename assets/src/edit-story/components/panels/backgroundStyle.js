@@ -45,7 +45,7 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="backgroundStyle"
-      title={__('Background Style', 'amp')}
+      title={__('Background Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
       <FlipControls properties={{ flip }} setState={setState} state={state} />
