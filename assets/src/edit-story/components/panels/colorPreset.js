@@ -17,16 +17,13 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-/**
- * External dependencies
- */
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
