@@ -58,14 +58,14 @@ function arrange(children = null) {
 
 describe('Panels/TextStyle', () => {
   beforeEach(() => {
-    fetch.resetMocks();
+    global.fetch.resetMocks();
   });
 
   it('should render <TextStyle /> panel', async () => {
     let container;
 
     await act(async () => {
-      await fetch
+      await global.fetch
         .doMockIf(/^\/amp\/v1\/fonts/)
         .mockResponse(JSON.stringify([{ name: 'ABeeZee', value: 'ABeeZee' }]), {
           status: 200,
@@ -98,7 +98,7 @@ describe('Panels/TextStyle', () => {
     let container;
 
     await act(async () => {
-      await fetch
+      await global.fetch
         .doMockIf(/^\/amp\/v1\/fonts/)
         .mockResponse(JSON.stringify([{ name: 'ABeeZee', value: 'ABeeZee' }]), {
           status: 200,
