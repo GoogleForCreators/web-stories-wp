@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useReducer, useMemo } from '@wordpress/element';
+import { useReducer, useMemo } from 'react';
 
 /**
  * Internal dependencies

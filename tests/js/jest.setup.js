@@ -17,15 +17,6 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
-
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useAPI() {
-  return useContext(Context);
-}
-
-export default useAPI;
+// Extend Jest matchers.
+// See https://github.com/testing-library/jest-dom.
+import '@testing-library/jest-dom';
