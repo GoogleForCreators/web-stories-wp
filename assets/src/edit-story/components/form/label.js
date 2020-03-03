@@ -18,9 +18,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 const Label = styled.span`
-  color: ${({ theme }) => theme.colors.mg.v1};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.55)};
   font-size: 11px;
   line-height: 16px;
   flex-basis: 80px;

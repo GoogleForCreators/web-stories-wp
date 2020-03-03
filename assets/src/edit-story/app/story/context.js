@@ -15,8 +15,8 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { createContext } from '@wordpress/element';
+import { createContext } from 'react';
 
 export default createContext({ state: {}, actions: {} });

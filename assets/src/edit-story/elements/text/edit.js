@@ -21,17 +21,13 @@ import styled from 'styled-components';
 import { Editor, EditorState, SelectionState } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
-
-/**
- * WordPress dependencies
- */
 import {
   useState,
   useEffect,
   useLayoutEffect,
   useRef,
   useCallback,
-} from '@wordpress/element';
+} from 'react';
 
 /**
  * Internal dependencies

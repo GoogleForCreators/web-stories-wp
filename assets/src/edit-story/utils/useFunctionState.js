@@ -15,9 +15,10 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useCallback } from 'react';
+
 /**
  * It's a bit weird to directly set a state to be a function (as setFoo calls
  * any function given to unwrap the inner value, which can then be a function),
