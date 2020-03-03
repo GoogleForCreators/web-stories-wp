@@ -30,7 +30,15 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Color, SelectMenu, Numeric, Row, Label, Toggle } from '../form';
+import {
+  Color,
+  SelectMenu,
+  Numeric,
+  Row,
+  Label,
+  Toggle,
+  ToggleButton,
+} from '../form';
 import { useFont } from '../../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import { calculateTextHeight } from '../../utils/textMeasurements';
@@ -39,6 +47,13 @@ import { ReactComponent as VerticalOffset } from '../../icons/offset_vertical.sv
 import { ReactComponent as HorizontalOffset } from '../../icons/offset_horizontal.svg';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
+import { ReactComponent as LeftAlign } from '../../icons/left_align.svg';
+import { ReactComponent as RightAlign } from '../../icons/right_align.svg';
+import { ReactComponent as CenterAlign } from '../../icons/center_align.svg';
+import { ReactComponent as MiddleAlign } from '../../icons/middle_align.svg';
+import { ReactComponent as BoldIcon } from '../../icons/bold_icon.svg';
+import { ReactComponent as ItalicIcon } from '../../icons/italic_icon.svg';
+import { ReactComponent as UnderlineIcon } from '../../icons/underline_icon.svg';
 import { dataPixels } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
@@ -132,14 +147,6 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
     evt.preventDefault();
   };
 
-  const alignmentOptions = [
-    { name: __('Default', 'web-stories'), value: '' },
-    { name: __('Left', 'web-stories'), value: 'left' },
-    { name: __('Right', 'web-stories'), value: 'right' },
-    { name: __('Center', 'web-stories'), value: 'center' },
-    { name: __('Justify', 'web-stories'), value: 'justify' },
-  ];
-
   const fontStyles = [
     { name: __('Normal', 'web-stories'), value: 'normal' },
     { name: __('Italic', 'web-stories'), value: 'italic' },
@@ -205,32 +212,88 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         {/* TODO: Add vertical offset logic */}
         <ExpandedNumeric
           ariaLabel={__('Vertical offset', 'web-stories')}
-          value={state.fontSize}
+          value={state.lineHeight || 0}
           suffix={<VerticalOffset />}
-          isMultiple={fontSize === ''}
+          isMultiple={lineHeight === ''}
           onChange={(value) =>
-            setState({ ...state, fontSize: parseInt(value) })
+            setState({ ...state, lineHeight: parseInt(value) })
           }
         />
         <Space />
         {/* TODO: Add horizontal offset logic */}
         <ExpandedNumeric
           ariaLabel={__('Horizontal offset', 'web-stories')}
-          value={state.fontSize}
+          value={state.letterSpacing || 0}
           suffix={<HorizontalOffset />}
-          isMultiple={fontSize === ''}
+          symbol="%"
+          isMultiple={letterSpacing === ''}
           onChange={(value) =>
-            setState({ ...state, fontSize: parseInt(value) })
+            setState({ ...state, letterSpacing: parseInt(value) })
           }
         />
       </Row>
       <Row>
-        <SelectMenu
-          label={__('Alignment', 'web-stories')}
-          options={alignmentOptions}
-          isMultiple={'' === textAlign}
-          value={state.textAlign}
-          onChange={(value) => setState({ ...state, textAlign: value })}
+        <ToggleButton
+          icon={<LeftAlign />}
+          value={state.textAlign === 'left'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'left' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<CenterAlign />}
+          value={state.textAlign === 'center'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'center' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<RightAlign />}
+          value={state.textAlign === 'right'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'right' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<MiddleAlign />}
+          value={state.textAlign === 'justify'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'justify' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<BoldIcon />}
+          value={state.fontStyles === 'bold'}
+          isMultiple={false}
+          IconWidth={9}
+          IconHeight={10}
+          onChange={(value) =>
+            setState({ ...state, fontStyles: value ? 'bold' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<ItalicIcon />}
+          value={state.fontStyles === 'italic'}
+          isMultiple={false}
+          IconWidth={10}
+          IconHeight={10}
+          onChange={(value) =>
+            setState({ ...state, fontStyles: value ? 'italic' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<UnderlineIcon />}
+          value={state.fontStyles === 'underline'}
+          isMultiple={false}
+          IconWidth={8}
+          IconHeight={21}
+          onChange={(value) =>
+            setState({ ...state, fontStyles: value ? 'underline' : '' })
+          }
         />
       </Row>
       <Row>
@@ -246,7 +309,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Label>{__('Padding', 'web-stories')}</Label>
         <BoxedNumeric
           suffix={_x('H', 'The Horizontal padding', 'web-stories')}
-          value={state.padding}
+          value={state.padding || 0}
           onChange={() => {}}
         />
         <Space />
@@ -262,7 +325,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Space />
         <BoxedNumeric
           suffix={_x('V', 'The Vertical padding', 'web-stories')}
-          value={state.padding}
+          value={state.padding || 0}
           onChange={() => {}}
         />
       </Row>

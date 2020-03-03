@@ -25,6 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -69,6 +70,7 @@ function Numeric({
   ...rest
 }) {
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+  const [onEdit, setOnEdit] = useState(false);
 
   return (
     <Container className={`${className}`} flexBasis={flexBasis}>
@@ -79,7 +81,7 @@ function Numeric({
         prefix={prefix}
         suffix={suffix}
         label={label}
-        value={`${value}${symbol}`}
+        value={`${value}${!onEdit ? symbol : ''}`}
         aria-label={ariaLabel}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
@@ -90,7 +92,9 @@ function Numeric({
           if (onBlur) {
             onBlur();
           }
+          setOnEdit(false);
         }}
+        onFocus={() => setOnEdit(true)}
       />
       {suffix}
     </Container>
