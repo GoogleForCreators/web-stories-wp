@@ -40,7 +40,7 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { updateElementById },
+    actions: { deleteSelectedElements, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -103,8 +103,10 @@ function DropTargetsProvider({ children }) {
         elementId: dropTargetId,
         properties: mergeElements(selectedElement, dropTarget),
       });
+      deleteSelectedElements();
+      setActiveDropTarget(null);
     },
-    [currentPage, updateElementById]
+    [currentPage, deleteSelectedElements, updateElementById]
   );
 
   const handleDrop = useCallback(

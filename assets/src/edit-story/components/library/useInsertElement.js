@@ -50,11 +50,14 @@ function useInsertElement() {
     });
     return element;
   };
-  const insertElement = (type, props) => {
-    const element = createElementDef(type, props);
+  const insertElement = (typeOrDef, props) => {
+    const element =
+      typeof typeOrDef === 'string'
+        ? createElementDef(typeOrDef, props)
+        : typeOrDef;
     addElement({ element });
     if (
-      isMediaEl(type) &&
+      isMediaEl(element.type) &&
       !currentPage.elements.some(({ type: elType }) => isMediaEl(elType))
     ) {
       setBackgroundElement({ elementId: element.id });

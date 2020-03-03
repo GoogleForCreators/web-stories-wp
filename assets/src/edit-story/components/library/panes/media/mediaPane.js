@@ -136,7 +136,7 @@ function MediaPane(props) {
       featured_media_src: poster,
     } = attachment;
     const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
-    insertMediaElement(mediaEl, DEFAULT_WIDTH);
+    insertElement(createElementDef(mediaEl, DEFAULT_WIDTH));
   };
 
   const openMediaPicker = useMediaPicker({
@@ -174,58 +174,6 @@ function MediaPane(props) {
       setMediaType(filter);
       reloadMedia();
     }
-  };
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} attachment Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Return onInsert or null.
-   */
-  const insertMediaElement = (attachment, width) => {
-    const { src, mimeType, oWidth, oHeight } = attachment;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return insertElement('image', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-      });
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
-      const posterId = parseInt(posterIdRaw);
-      const videoEl = insertElement('video', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        mimeType,
-        videoId,
-        posterId,
-        poster,
-      });
-
-      // Generate video poster if one not set.
-      if (videoId && !posterId) {
-        uploadVideoFrame(videoId, src, videoEl.id);
-      }
-
-      return videoEl;
-    }
-    return null;
   };
 
   /**
@@ -294,6 +242,25 @@ function MediaPane(props) {
       actions: { handleDrag, handleDrop },
     } = useDropTargets();
 
+    const dropTargetsBindings = {
+      draggable: 'true',
+      onDrag: (e) => {
+        handleDrag(e.clientX, e.clientY, element);
+      },
+      onDrop: (e) => {
+        e.preventDefault();
+        handleDrop(e.clientX, e.clientY, element);
+      },
+      onDragOver: (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      onDragLeave: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      },
+    };
+
     if (allowedImageMimeTypes.includes(mimeType)) {
       return (
         <Image
@@ -302,9 +269,8 @@ function MediaPane(props) {
           width={width}
           height={height}
           loading={'lazy'}
-          onClick={() => insertMediaElement(mediaEl, width)}
-          onDrag={(e) => handleDrag(e.clientX, e.clientY, element)}
-          onDrop={(e) => handleDrop(e.clientX, e.clientY, element)}
+          onClick={() => insertElement(element)}
+          {...dropTargetsBindings}
         />
       );
     } else if (allowedVideoMimeTypes.includes(mimeType)) {
@@ -313,7 +279,7 @@ function MediaPane(props) {
           key={src}
           width={width}
           height={height}
-          onClick={() => insertMediaElement(mediaEl, width)}
+          onClick={() => insertElement(element)}
           onMouseEnter={(evt) => {
             evt.target.play();
           }}
@@ -321,8 +287,7 @@ function MediaPane(props) {
             evt.target.pause();
             evt.target.currentTime = 0;
           }}
-          onDrag={(e) => handleDrag(e.clientX, e.clientY, element)}
-          onDrop={(e) => handleDrop(e.clientX, e.clientY, element)}
+          {...dropTargetsBindings}
         >
           <source src={src} type={mimeType} />
         </Video>
