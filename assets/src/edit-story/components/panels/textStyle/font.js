@@ -58,19 +58,20 @@ function FontControls({ properties, state, setState }) {
             const fontWeightsArr = currentFontWeights.map(
               ({ value: weight }) => weight
             );
-            let newFontWeight =
+            let defaultWeight = 400;
+            // If the font doesn't have 400 as an option, let's take the first available option.
+            if (
+              fontWeightsArr?.length &&
+              !fontWeightsArr.includes(defaultWeight.toString())
+            ) {
+              defaultWeight = fontWeightsArr[0];
+            }
+            const newFontWeight =
               fontWeightsArr &&
               fontWeightsArr.includes(state.fontWeight.toString())
                 ? state.fontWeight
-                : 400;
+                : defaultWeight;
 
-            // If the font doesn't have 400 as an option, let's take the first available option.
-            if (
-              fontWeightsArr.length &&
-              !fontWeightsArr.includes(newFontWeight.toString())
-            ) {
-              newFontWeight = fontWeightsArr[0];
-            }
             setState({
               ...state,
               fontFamily: value,
