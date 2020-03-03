@@ -26,7 +26,7 @@ import { getMediaProps } from '../shared';
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function ImageOutput({
-  element: { src, origRatio, scale, focalX, focalY },
+  element: { src, origRatio, scale, focalX, focalY, opacity },
   box: { width: vw, height: vh },
 }) {
   // Width and height are taken from the basis of 100% taking into account the
@@ -48,6 +48,7 @@ function ImageOutput({
     height: `${editorPixels((imgProps.height / height) * 100)}%`,
     left: `${-editorPixels((imgProps.offsetX / width) * 100)}%`,
     top: `${-editorPixels((imgProps.offsetY / height) * 100)}%`,
+    opacity: opacity / 100,
   };
 
   const props = {

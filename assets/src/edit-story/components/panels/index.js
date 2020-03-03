@@ -22,6 +22,7 @@ import BackgroundPanel from './background';
 import ColorPanel from './color';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
+import BackgroundStylePanel from './backgroundStyle';
 import FillPanel from './fill';
 import FontPanel from './font';
 import MaskPanel from './mask';
@@ -40,6 +41,7 @@ export { default as ColorPresetPanel } from './colorPreset';
 
 const BACKGROUND = 'background';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
+const BACKGROUND_STYLE = 'backgroundStyle';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
@@ -59,6 +61,7 @@ const NO_SELECTION = 'noselection';
 export const PanelTypes = {
   BACKGROUND,
   BACKGROUND_DISPLAY,
+  BACKGROUND_STYLE,
   POSITION,
   SIZE,
   SCALE,
@@ -95,6 +98,7 @@ export function getPanels(elements) {
     const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND, Panel: BackgroundPanel },
+      { type: BACKGROUND_STYLE, Panel: BackgroundStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
@@ -119,6 +123,7 @@ export function getPanels(elements) {
             return { type, Panel: BackgroundPanel };
           }
           return null;
+        case BACKGROUND_STYLE:
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;

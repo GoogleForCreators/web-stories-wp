@@ -23,7 +23,7 @@ import { editorPixels } from '../../units';
 import { getMediaProps } from '../shared';
 
 function VideoOutput({
-  element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
+  element: { mimeType, src, poster, scale, focalX, focalY, opacity, origRatio },
   box: { width: vw, height: vh },
 }) {
   // Width and height are taken from the basis of 100% taking into account the
@@ -45,6 +45,7 @@ function VideoOutput({
     height: `${editorPixels((imgProps.height / height) * 100)}%`,
     left: `${-editorPixels((imgProps.offsetX / width) * 100)}%`,
     top: `${-editorPixels((imgProps.offsetY / height) * 100)}%`,
+    opacity: opacity / 100,
   };
 
   const sourceProps = {
