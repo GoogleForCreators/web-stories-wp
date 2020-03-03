@@ -22,7 +22,7 @@
   "dependencies": {
     "@moxy/react-keyboard-only-outlines": "^1.0.1",
     "@wordpress/api-fetch": "^3.11.0",
-    "@wordpress/components": "^9.2.2",
+    "@wordpress/components": "^9.2.3",
     "@wordpress/i18n": "^3.9.0",
     "colorthief": "^2.3.0",
     "draft-js": "^0.11.4",
@@ -76,7 +76,7 @@
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^23.8.0",
+    "eslint-plugin-jest": "^23.8.1",
     "eslint-plugin-jest-dom": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
@@ -98,7 +98,7 @@
     "stylelint-prettier": "^1.1.2",
     "stylelint-processor-styled-components": "^1.10.0",
     "terser-webpack-plugin": "^2.3.5",
-    "webpack": "^4.41.6",
+    "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
     "webpackbar": "^4.0.0"
   },
