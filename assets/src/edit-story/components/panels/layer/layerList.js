@@ -59,7 +59,7 @@ function LayerPanel() {
     if (isReordering && currentSeparator) {
       const position = numLayers - currentSeparator;
       const message = sprintf(REORDER_MESSAGE, position);
-      speak(message, 'assertive');
+      speak(message);
     }
   }, [isReordering, currentSeparator, numLayers, speak]);
 
