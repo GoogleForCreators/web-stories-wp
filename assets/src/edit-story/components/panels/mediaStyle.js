@@ -46,7 +46,7 @@ function MediaStylePanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="mediaStyle"
-      title={__('Style', 'amp')}
+      title={__('Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
       <InputGroup

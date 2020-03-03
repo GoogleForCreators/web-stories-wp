@@ -45,8 +45,8 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   };
   return (
     <SimplePanel
-      name="mediaStyle"
-      title={__('Style', 'amp')}
+      name="backgroundStyle"
+      title={__('Background Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
       <OpacityControl
