@@ -29,7 +29,7 @@ import { useContext } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import panelContext from './context';
+import panelContext from '../context';
 
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
@@ -68,6 +68,7 @@ Content.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onSubmit: PropTypes.func,
+  isPrimary: PropTypes.bool,
 };
 
 Content.defaultProps = {
