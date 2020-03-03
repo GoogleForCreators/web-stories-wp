@@ -65,7 +65,10 @@ function FontControls({ properties, state, setState }) {
                 : 400;
 
             // If the font doesn't have 400 as an option, let's take the first available option.
-            if (!newFontWeight && fontWeightsArr.length) {
+            if (
+              fontWeightsArr.length &&
+              !fontWeightsArr.includes(newFontWeight.toString())
+            ) {
               newFontWeight = fontWeightsArr[0];
             }
             setState({
