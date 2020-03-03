@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
-import { ActionButton } from '../button';
+import { Button } from '../form';
 import { SimplePanel } from './panel';
 
 function BackgroundPanel({ selectedElements, onSetProperties }) {
@@ -59,11 +59,11 @@ function BackgroundPanel({ selectedElements, onSetProperties }) {
   };
   return (
     <SimplePanel name="position" title={__('Background', 'web-stories')}>
-      <ActionButton onClick={handleClick}>
+      <Button onClick={handleClick}>
         {state.isBackground
           ? __('Remove as Background', 'web-stories')
           : __('Set as background', 'web-stories')}
-      </ActionButton>
+      </Button>
     </SimplePanel>
   );
 }
