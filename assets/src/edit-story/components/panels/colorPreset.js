@@ -28,7 +28,23 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ReactComponent as Add } from '../../icons/add_page.svg';
 import { Panel, PanelTitle, PanelContent } from './panel';
+
+const AddColorPresetButton = styled.div`
+  background: transparent;
+  width: 28px;
+  height: 26px;
+  border: 0;
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  margin-right: 9px;
+  cursor: pointer;
+
+  svg {
+    width: 26px;
+    height: 28px;
+  }
+`;
 
 const Color = styled.div`
   display: inline-block;
@@ -51,10 +67,23 @@ const Colors = styled.div`
   }
 `;
 
+{
+  /* TODO: <Panel /> should be refactored for a better accessibility, "secondaryAction" should be a <button /> */
+}
 function ColorPresetPanel() {
   return (
     <Panel name="colorpreset">
-      <PanelTitle isPrimary>{__('Color presets', 'web-stories')}</PanelTitle>
+      {/* TODO: Add "Add color preset action" */}
+      <PanelTitle
+        isPrimary
+        secondaryAction={
+          <AddColorPresetButton onClick={() => null}>
+            <Add />
+          </AddColorPresetButton>
+        }
+      >
+        {__('Color presets', 'web-stories')}
+      </PanelTitle>
       <PanelContent isPrimary>
         <Colors>
           <Color color="#B4D3D8" />

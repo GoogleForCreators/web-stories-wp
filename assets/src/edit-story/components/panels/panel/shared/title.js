@@ -80,6 +80,11 @@ const Heading = styled.span`
   line-height: 19px;
 `;
 
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Collapse = styled.span`
   color: inherit;
   width: 28px;
@@ -93,7 +98,13 @@ const Collapse = styled.span`
   }
 `;
 
-function Title({ children, isPrimary, isSecondary, isResizable }) {
+function Title({
+  children,
+  isPrimary,
+  isSecondary,
+  secondaryAction,
+  isResizable,
+}) {
   const {
     state: { isCollapsed, height, panelContentId },
     actions: { collapse, expand, setHeight },
@@ -138,9 +149,12 @@ function Title({ children, isPrimary, isSecondary, isResizable }) {
         aria-controls={panelContentId}
       >
         <Heading>{children}</Heading>
-        <Collapse isCollapsed={isCollapsed}>
-          <Arrow />
-        </Collapse>
+        <HeaderActions>
+          {secondaryAction}
+          <Collapse isCollapsed={isCollapsed}>
+            <Arrow />
+          </Collapse>
+        </HeaderActions>
       </HeaderButton>
     </Header>
   );
@@ -154,6 +168,10 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  secondaryAction: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 Title.defaultProps = {
