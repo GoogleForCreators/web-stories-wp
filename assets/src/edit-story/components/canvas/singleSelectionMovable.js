@@ -105,7 +105,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   };
 
   const setTransformStyle = (target) => {
-    target.style.pointerEvents = 'none';
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -132,7 +131,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     target.style.transform = '';
     target.style.width = '';
     target.style.height = '';
-    target.style.pointerEvents = '';
     setIsResizingFromCorner(true);
     if (moveable.current) {
       moveable.current.updateRect();

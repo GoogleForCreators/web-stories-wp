@@ -31,7 +31,7 @@ export const MaskTypes = {
   RECTANGLE: 'rectangle',
   TRIANGLE: 'triangle',
   ROUNDED: 'rounded-rectangle',
-  POLYGON: 'polygon',
+  PENTAGON: 'pentagon',
 };
 
 export const CLIP_PATHS = {
@@ -43,7 +43,7 @@ export const CLIP_PATHS = {
   [MaskTypes.TRIANGLE]: 'M 0.5 0 L 1 1 L 0 1 Z M 0.5 0',
   [MaskTypes.CIRCLE]:
     'M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z M 0.5 0 ',
-  [MaskTypes.POLYGON]:
+  [MaskTypes.PENTAGON]:
     'M 0.5 0 L 0.976562 0.34375 L 0.792969 0.90625 L 0.207031 0.90625 L 0.0234375 0.34375 Z M 0.5 0',
 };
 
@@ -74,9 +74,9 @@ export const MASKS = [
     path: CLIP_PATHS[MaskTypes.CIRCLE],
   },
   {
-    type: MaskTypes.POLYGON,
-    name: __('Polygon', 'web-stories'),
-    path: CLIP_PATHS[MaskTypes.POLYGON],
+    type: MaskTypes.PENTAGON,
+    name: __('Pentagon', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.PENTAGON],
   },
 ];
 

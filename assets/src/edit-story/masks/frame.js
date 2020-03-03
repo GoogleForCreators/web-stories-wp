@@ -15,14 +15,6 @@
  */
 
 /**
- * Implementation from https://stackoverflow.com/questions/55187563/
- *
- *
- * Use as follows:
- * useEffectDebugger(() => {}, [a, b, c, d], 'Effect Name was triggered by...')
- */
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
