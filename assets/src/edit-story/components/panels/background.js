@@ -39,7 +39,6 @@ function BackgroundPanel({ selectedElements, onSetProperties }) {
   } = useStory();
   const { overlay, opacity, isBackground } = selectedElements[0];
 
-  // @todo Add Overlay functionality.
   const [state, setState] = useState({ isBackground, opacity, overlay });
   useEffect(() => {
     setState({ isBackground });

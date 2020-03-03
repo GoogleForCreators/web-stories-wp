@@ -28,9 +28,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import OpacityControl from './shared/opacityControl';
 
 function MediaStylePanel({ selectedElements, onSetProperties }) {
   const opacity = getCommonValue(selectedElements, 'opacity');
@@ -49,15 +49,12 @@ function MediaStylePanel({ selectedElements, onSetProperties }) {
       title={__('Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <InputGroup
-        type="number"
-        label={__('Opacity', 'web-stories')}
-        value={state.opacity}
-        isMultiple={'' === opacity}
-        onChange={(value) => setState({ ...state, opacity: value })}
-        postfix="%"
-        min="1"
-        max="100"
+      <OpacityControl
+        properties={{
+          opacity,
+        }}
+        setState={setState}
+        state={state}
       />
     </SimplePanel>
   );

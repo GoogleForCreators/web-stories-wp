@@ -43,6 +43,7 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
     onSetProperties(state);
     evt.preventDefault();
   };
+  // TODO: removing as background, flipping, layover will also be displayed here at some point.
   return (
     <SimplePanel
       name="backgroundStyle"
