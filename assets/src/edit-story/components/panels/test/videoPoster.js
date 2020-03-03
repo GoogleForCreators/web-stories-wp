@@ -24,68 +24,43 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
-import TextStyle from '../textStyle';
-import { APIProvider } from '../../../app/api';
-import { FontProvider } from '../../../app/font';
+import VideoPoster from '../videoPoster';
 
 function arrange(children = null) {
-  return render(
-    <ThemeProvider theme={theme}>
-      <APIProvider>
-        <FontProvider
-          value={{
-            state: { fonts: [{ name: 'Font A', value: 'font-a' }] },
-            actions: { getFontWeight: jest.fn(), getFontFallback: jest.fn() },
-          }}
-        >
-          {children}
-        </FontProvider>
-      </APIProvider>
-    </ThemeProvider>
-  );
+  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 }
 
-describe('Panels/TextStyle', () => {
-  it('should render <TextStyle /> panel', () => {
+jest.mock('../../mediaPicker', () => ({
+  useMediaPicker: () => {},
+}));
+
+describe('Panels/VideoPoster', () => {
+  it('should render <VideoPoster /> panel', () => {
     const { getByText } = arrange(
-      <TextStyle
-        selectedElements={[
-          {
-            textAlign: 'normal',
-            fontSize: 0,
-            padding: 0,
-            fontFamily: 'Font A',
-          },
-        ]}
+      <VideoPoster
+        selectedElements={[{ featuredMedia: null, poster: null }]}
         onSetProperties={() => null}
       />
     );
 
-    const element = getByText('Style');
+    const element = getByText('Set poster image');
 
     expect(element).toBeDefined();
   });
 
-  it('should simulate a submit on <TextStyle /> panel', () => {
+  it('should simulate a click on <VideoPoster />', () => {
     const onClickOnSetPropertiesMock = jest.fn();
 
     const { getByText } = arrange(
-      <TextStyle
-        selectedElements={[
-          {
-            textAlign: 'normal',
-            fontSize: 0,
-            padding: 0,
-            fontFamily: 'Font A',
-          },
-        ]}
+      <VideoPoster
+        selectedElements={[{ featuredMedia: null, poster: null }]}
         onSetProperties={onClickOnSetPropertiesMock}
       />
     );
 
-    const element = getByText('Style');
+    const element = getByText('Set poster image');
 
-    fireEvent.submit(element.parentNode.parentNode.nextSibling);
+    fireEvent.click(element);
 
     expect(onClickOnSetPropertiesMock).toHaveBeenCalledTimes(1);
   });
