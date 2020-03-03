@@ -57,7 +57,7 @@ const CropImg = styled.img`
   position: absolute;
   opacity: ${({ opacity }) =>
     opacity ? opacity - opacity * MEDIA_MASK_OPACITY : null};
-  ${imageWithScale};
+  ${imageWithScale}
 `;
 
 function ImageEdit({ element, box }) {
