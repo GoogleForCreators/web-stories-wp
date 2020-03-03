@@ -18,13 +18,13 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
 import { Spinner } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**

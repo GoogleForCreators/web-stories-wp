@@ -49,13 +49,4 @@ export const resizeRules = {
   diagonal: true,
 };
 
-export const panels = [
-  PanelTypes.TEXT,
-  PanelTypes.SIZE,
-  PanelTypes.POSITION,
-  PanelTypes.FONT,
-  PanelTypes.STYLE,
-  PanelTypes.COLOR,
-  PanelTypes.BACKGROUND_COLOR,
-  PanelTypes.ROTATION_ANGLE,
-];
+export const panels = [PanelTypes.SIZE_POSITION, PanelTypes.TEXT_STYLE];

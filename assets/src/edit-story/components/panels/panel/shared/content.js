@@ -19,17 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { useContext } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import panelContext from './context';
+import panelContext from '../context';
 
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
@@ -68,6 +64,7 @@ Content.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onSubmit: PropTypes.func,
+  isPrimary: PropTypes.bool,
 };
 
 Content.defaultProps = {

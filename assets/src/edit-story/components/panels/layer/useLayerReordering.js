@@ -15,15 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  useRef,
-} from '@wordpress/element';
+import { useState, useCallback, useEffect, useContext, useRef } from 'react';
 
 /**
  * Internal dependencies

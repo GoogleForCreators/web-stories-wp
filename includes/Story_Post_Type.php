@@ -65,9 +65,11 @@ class Story_Post_Type {
 	/**
 	 * Registers the post type to store URLs with validation errors.
 	 *
+	 * @todo refactor
+	 *
 	 * @return void
 	 */
-	public static function register() {
+	public static function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -184,8 +186,6 @@ class Story_Post_Type {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
-
-		Media::init();
 	}
 
 	/**
@@ -217,7 +217,7 @@ class Story_Post_Type {
 			// In lieu of an action being available to actually load the replacement editor, include it here
 			// after the current_screen action has occurred because the replace_editor filter fires twice.
 			if ( did_action( 'current_screen' ) ) {
-				require_once plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'includes/edit-story.php';
+				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/edit-story.php';
 			}
 		}
 
@@ -270,14 +270,14 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$asset_file   = plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
+		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
 		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
 		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		$version      = isset( $asset['version'] ) ? $asset['version'] : [];
 
 		wp_enqueue_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
-			plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
 			$dependencies,
 			$version,
 			false
@@ -335,9 +335,9 @@ class Story_Post_Type {
 
 		wp_enqueue_style(
 			self::WEB_STORIES_STYLE_HANDLE,
-			plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'wp-components' ],
-			'1.0.0'
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
+			[],
+			$version
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
@@ -670,7 +670,7 @@ class Story_Post_Type {
 	 */
 	public static function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
-			$template = plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'includes/templates/single-web-story.php';
+			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
 		}
 
 		return $template;
@@ -711,7 +711,7 @@ class Story_Post_Type {
 
 		// Fallback to serving the WordPress logo.
 		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-wordpress-publisher-logo.png';
+			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 		}
 
 		/**

@@ -54,7 +54,7 @@ function InputGroup({
   const isCheckbox = type === 'checkbox';
   return (
     <Group disabled={disabled}>
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       <Input
         type={type}
         disabled={disabled}

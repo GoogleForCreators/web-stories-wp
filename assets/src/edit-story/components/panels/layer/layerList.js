@@ -18,17 +18,17 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Fragment, useContext, useEffect } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useContext, useEffect } from '@wordpress/element';
-import { speak } from '@wordpress/a11y';
 import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import useLiveRegion from '../../../utils/useLiveRegion';
 import Layer from './layer';
 import LayerContext from './context';
 import LayerSeparator from './separator';
@@ -50,6 +50,7 @@ function LayerPanel() {
   const {
     state: { layers, isReordering, currentSeparator },
   } = useContext(LayerContext);
+  const speak = useLiveRegion('assertive');
 
   const numLayers = layers && layers.length;
 
@@ -57,9 +58,9 @@ function LayerPanel() {
     if (isReordering && currentSeparator) {
       const position = numLayers - currentSeparator;
       const message = sprintf(REORDER_MESSAGE, position);
-      speak(message, 'assertive');
+      speak(message);
     }
-  }, [isReordering, currentSeparator, numLayers]);
+  }, [isReordering, currentSeparator, numLayers, speak]);
 
   if (!numLayers) {
     return null;

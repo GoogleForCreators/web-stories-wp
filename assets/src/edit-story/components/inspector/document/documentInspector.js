@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback, useEffect, useMemo } from 'react';
+
+/**
  * WordPress dependencies
  */
-import { useCallback, useEffect, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -46,6 +50,7 @@ const Button = styled.button`
 const Img = styled.img`
   width: 100%;
   max-height: 300px;
+  object-fit: contain;
 `;
 
 function DocumentInspector() {

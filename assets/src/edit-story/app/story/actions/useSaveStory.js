@@ -15,14 +15,15 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useCallback, renderToString, useState } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
+import { useCallback, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
@@ -36,7 +37,7 @@ import OutputStory from '../../../output/story';
  * @return {Element} Story markup.
  */
 const getStoryMarkup = (story, pages, metadata) => {
-  return renderToString(
+  return renderToStaticMarkup(
     <OutputStory story={story} pages={pages} metadata={metadata} />
   );
 };
