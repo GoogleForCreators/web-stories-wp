@@ -42,6 +42,10 @@ const SwitchContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: none;
+
+  &:focus {
+    box-shawdow: 0 0 0 1px ${({ theme }) => theme.colors.bg.v4};
+  }
 `;
 
 const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
@@ -74,7 +78,6 @@ const Label = styled.label`
   ${({ disabled }) =>
     disabled &&
     `
-    pointer-events: none;
     opacity: 0.3;
 	`}
 `;
@@ -107,7 +110,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
         id={`${onLabel}-${offLabel}-switch-off`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
       />
-      <Label htmlFor={`${onLabel}-${offLabel}-switch-off`}>
+      <Label disabled={disabled} htmlFor={`${onLabel}-${offLabel}-switch-off`}>
         {offLabel}
       </Label>
       <RadioButton
@@ -118,7 +121,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
         id={`$${onLabel}-${offLabel}-switch-on`}
         aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
       />
-      <Label htmlFor={`$${onLabel}-${offLabel}-switch-on`}>
+      <Label disabled={disabled} htmlFor={`$${onLabel}-${offLabel}-switch-on`}>
         {onLabel}
       </Label>
       <SwitchSpan />
@@ -135,7 +138,7 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-  disabled: true,
+  disabled: false,
   onLabel: __('On', 'web-stories'),
   offLabel: __('Off', 'web-stories'),
 };

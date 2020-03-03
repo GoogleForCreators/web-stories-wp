@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -32,9 +33,11 @@ import panelContext from './context';
 
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
+  background-color: ${({ isSecondary, theme }) =>
+    isSecondary ? rgba(theme.colors.fg.v1, 0.07) : 'transparent'};
   overflow: auto;
-  background-color: #2f3449;
-  ${({ hidden }) => hidden && 'display: none'}
+  ${({ hasBorder, theme }) =>
+    hasBorder && `border-top: 1px solid ${theme.colors.bg.v9};`}
 `;
 
 function Content({ children, onSubmit, ...rest }) {

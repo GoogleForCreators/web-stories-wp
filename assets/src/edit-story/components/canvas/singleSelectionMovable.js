@@ -47,7 +47,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   const {
     actions: { updateSelectedElements },
-    state: { currentPage },
   } = useStory();
   const {
     state: {
@@ -56,7 +55,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
+    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -65,6 +64,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const otherNodes = Object.values(
     objectWithout(nodesById, [selectedElement.id])
   );
+
+  const actionsEnabled =
+    !selectedElement.isFill && !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
@@ -77,13 +79,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       // If we have persistent event then let's use that, ensuring the targets match.
       if (
         latestEvent.current &&
-        targetEl.contains(latestEvent.current.target)
+        targetEl.contains(latestEvent.current.target) &&
+        actionsEnabled
       ) {
         moveable.current.moveable.dragStart(latestEvent.current);
       }
       moveable.current.updateRect();
     }
-  }, [targetEl, moveable]);
+  }, [targetEl, moveable, actionsEnabled]);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -118,6 +121,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
    * @param {Object} target Target element.
    */
   const resetMoveable = (target) => {
+    frame.direction = [0, 0];
     frame.translate = [0, 0];
     frame.resize = [0, 0];
     frame.updates = null;
@@ -137,9 +141,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
-  const actionsEnabled =
-    !selectedElement.isFill &&
-    selectedElement.id !== currentPage.backgroundElementId;
   return (
     <Movable
       className="default-movable"
@@ -184,13 +185,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           setIsResizingFromCorner(newResizingMode);
         }
       }}
-      onResize={({ target, width, height, drag }) => {
+      onResize={({ target, direction, width, height, drag }) => {
         const newWidth = width;
         let newHeight = height;
         let updates = null;
         if (updateForResizeEvent) {
           updates = updateForResizeEvent(
             selectedElement,
+            direction,
             editorToDataX(newWidth),
             editorToDataY(newHeight)
           );
@@ -200,6 +202,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
+        frame.direction = direction;
         frame.resize = [newWidth, newHeight];
         frame.translate = drag.beforeTranslate;
         frame.updates = updates;
@@ -208,6 +211,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
         if (editorWidth !== 0 && editorHeight !== 0) {
+          const { direction } = frame;
           const [deltaX, deltaY] = frame.translate;
           const newWidth = editorToDataX(editorWidth);
           const newHeight = editorToDataY(editorHeight);
@@ -220,7 +224,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           if (updateForResizeEvent) {
             Object.assign(
               properties,
-              updateForResizeEvent(selectedElement, newWidth, newHeight)
+              updateForResizeEvent(
+                selectedElement,
+                direction,
+                newWidth,
+                newHeight
+              )
             );
           }
           updateSelectedElements({ properties });
@@ -248,9 +257,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       snapHorizontal={true}
       snapVertical={true}
       snapCenter={true}
-      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
-      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
-      elementGuidelines={otherNodes}
+      horizontalGuidelines={
+        actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
+      }
+      verticalGuidelines={
+        actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
+      }
+      elementGuidelines={actionsEnabled ? otherNodes : []}
     />
   );
 }

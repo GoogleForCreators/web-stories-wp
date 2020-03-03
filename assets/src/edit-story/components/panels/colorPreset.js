@@ -23,7 +23,8 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import Switch from '../form/switch';
+// import Switch from '../form/switch';
+import Switch from '../switch';
 import { Panel, PanelTitle, PanelContent } from './panel';
 
 function ColorPresetPanel() {
@@ -32,7 +33,7 @@ function ColorPresetPanel() {
     <Panel name="colorpreset">
       <PanelTitle isPrimary>{__('Color presets', 'web-stories')}</PanelTitle>
       <PanelContent>
-        <Switch value={value} onChange={setValue} />
+        <Switch checked={value} onChange={setValue} label="" />
         <p>{__('Color presets go here', 'web-stories')}</p>
       </PanelContent>
     </Panel>

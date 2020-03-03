@@ -45,4 +45,5 @@ body.edit-story #wpfooter {
 
 body.edit-story #edit-story .components-spinner {
   float: none;
+  margin: 0 11px;
 }
