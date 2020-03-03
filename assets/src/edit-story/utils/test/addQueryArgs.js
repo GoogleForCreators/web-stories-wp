@@ -20,11 +20,25 @@
 import addQueryArgs from '../addQueryArgs';
 
 describe('addQueryArgs', () => {
+  it('should leave URL unaffected if no args passed', () => {
+    const url = 'https://google.com/';
+    const args = {};
+
+    expect(addQueryArgs(url, args)).toBe(url);
+  });
+
   it('should append args', () => {
     const url = 'https://google.com/';
     const args = { q: 'test' };
 
     expect(addQueryArgs(url, args)).toBe('https://google.com/?q=test');
+  });
+
+  it('should append args to existing ones', () => {
+    const url = 'https://google.com/?foo=bar';
+    const args = { q: 'test' };
+
+    expect(addQueryArgs(url, args)).toBe('https://google.com/?foo=bar&q=test');
   });
 
   it('should replace existing args', () => {
@@ -39,5 +53,12 @@ describe('addQueryArgs', () => {
     const args = { q: 'test' };
 
     expect(addQueryArgs(url, args)).toBe('/foo/bar?q=test');
+  });
+
+  it('should disregard keys with undefined or null values', () => {
+    const url = 'https://google.com/';
+    const args = { foo: 'true', bar: undefined, baz: null };
+
+    expect(addQueryArgs(url, args)).toBe('https://google.com/?foo=true');
   });
 });

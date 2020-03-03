@@ -39,8 +39,14 @@ export default function addQueryArgs(url, args) {
   }
 
   for (const key in args) {
-    if (args.hasOwnProperty(key)) {
-      parsedURL.searchParams.set(key, args[key]);
+    if (!args.hasOwnProperty(key)) {
+      continue;
+    }
+
+    const value = args[key];
+
+    if (typeof value !== 'undefined' && value !== null) {
+      parsedURL.searchParams.set(key, value);
     }
   }
 
