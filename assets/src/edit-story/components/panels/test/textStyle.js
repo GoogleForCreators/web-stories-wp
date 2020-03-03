@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -26,62 +26,100 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import TextStyle from '../textStyle';
 import { APIProvider } from '../../../app/api';
+import { ConfigProvider } from '../../../app/config';
 import { FontProvider } from '../../../app/font';
 
 function arrange(children = null) {
   return render(
     <ThemeProvider theme={theme}>
-      <APIProvider>
-        <FontProvider
+      <ConfigProvider
+        config={{
+          api: { fonts: '/amp/v1/fonts' },
+        }}
+      >
+        <APIProvider
           value={{
-            state: { fonts: [{ name: 'Font A', value: 'font-a' }] },
-            actions: { getFontWeight: jest.fn(), getFontFallback: jest.fn() },
+            actions: { getAllFonts: jest.fn() },
           }}
         >
-          {children}
-        </FontProvider>
-      </APIProvider>
+          <FontProvider
+            value={{
+              state: { fonts: [{ name: 'ABeeZee', value: 'ABeeZee' }] },
+              actions: { getFontWeight: jest.fn(), getFontFallback: jest.fn() },
+            }}
+          >
+            {children}
+          </FontProvider>
+        </APIProvider>
+      </ConfigProvider>
     </ThemeProvider>
   );
 }
 
 describe('Panels/TextStyle', () => {
-  it('should render <TextStyle /> panel', () => {
-    const { getByText } = arrange(
-      <TextStyle
-        selectedElements={[
-          {
-            textAlign: 'normal',
-            fontSize: 0,
-            padding: 0,
-            fontFamily: 'Font A',
-          },
-        ]}
-        onSetProperties={() => null}
-      />
-    );
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
+
+  it('should render <TextStyle /> panel', async () => {
+    let container;
+
+    await act(async () => {
+      await fetch
+        .doMockIf(/^\/amp\/v1\/fonts/)
+        .mockResponse(JSON.stringify([{ name: 'ABeeZee', value: 'ABeeZee' }]), {
+          status: 200,
+        });
+
+      container = arrange(
+        <TextStyle
+          selectedElements={[
+            {
+              textAlign: 'normal',
+              fontSize: 0,
+              padding: 0,
+              fontFamily: 'ABeeZee',
+            },
+          ]}
+          onSetProperties={() => null}
+        />
+      );
+    });
+
+    const { getByText } = container;
 
     const element = getByText('Style');
 
     expect(element).toBeDefined();
   });
 
-  it('should simulate a submit on <TextStyle /> panel', () => {
+  it('should simulate a submit on <TextStyle /> panel', async () => {
     const onClickOnSetPropertiesMock = jest.fn();
+    let container;
 
-    const { getByText } = arrange(
-      <TextStyle
-        selectedElements={[
-          {
-            textAlign: 'normal',
-            fontSize: 0,
-            padding: 0,
-            fontFamily: 'Font A',
-          },
-        ]}
-        onSetProperties={onClickOnSetPropertiesMock}
-      />
-    );
+    await act(async () => {
+      await fetch
+        .doMockIf(/^\/amp\/v1\/fonts/)
+        .mockResponse(JSON.stringify([{ name: 'ABeeZee', value: 'ABeeZee' }]), {
+          status: 200,
+        });
+
+      container = arrange(
+        <TextStyle
+          selectedElements={[
+            {
+              textAlign: 'normal',
+              fontSize: 0,
+              padding: 0,
+              fontFamily: 'ABeeZee',
+            },
+          ]}
+          onSetProperties={onClickOnSetPropertiesMock}
+        />
+      );
+    });
+
+    const { getByText } = container;
 
     const element = getByText('Style');
 
