@@ -22,19 +22,20 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useEffect, useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup, SelectMenu } from '../form';
+import { InputGroup } from '../form';
 import { dataPixels } from '../../units';
 import { ActionButton } from '../button';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import FlipControls from './shared/flipControls';
 
 function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
@@ -102,26 +103,6 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
     setBackgroundElement({ elementId: backgroundId });
     onSetProperties(newState);
   };
-
-  const handleFlipChange = useCallback(
-    (property) => (value) => {
-      setState({
-        ...state,
-        flip: {
-          ...state.flip,
-          [property]: 'on' === value,
-        },
-      });
-    },
-    [setState, state]
-  );
-
-  const FLIP_OFF = 'off';
-  const FLIP_ON = 'on';
-  const flipOptions = [
-    { name: __('Off', 'web-stories'), value: FLIP_OFF },
-    { name: __('On', 'web-stories'), value: FLIP_ON },
-  ];
 
   return (
     <SimplePanel
@@ -203,22 +184,7 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         disabled={isFill}
       />
       {isMedia && (
-        <>
-          <SelectMenu
-            label={__('Flip: vertical', 'web-stories')}
-            options={flipOptions}
-            isMultiple={flip === ''}
-            value={state.flip?.vertical ? FLIP_ON : FLIP_OFF}
-            onChange={handleFlipChange('vertical')}
-          />
-          <SelectMenu
-            label={__('Flip: horizontal', 'web-stories')}
-            options={flipOptions}
-            isMultiple={flip === ''}
-            value={state.flip?.horizontal ? FLIP_ON : FLIP_OFF}
-            onChange={handleFlipChange('horizontal')}
-          />
-        </>
+        <FlipControls properties={{ flip }} setState={setState} state={state} />
       )}
     </SimplePanel>
   );
