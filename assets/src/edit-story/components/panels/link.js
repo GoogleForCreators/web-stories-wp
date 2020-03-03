@@ -59,7 +59,7 @@ const InputContainer = styled.div`
   width: 100%;
   background: ${({ theme, disabled }) =>
     disabled ? theme.colors.fg.v3 : theme.colors.fg.v1};
-  color: ${({ theme }) => rgba(theme.colors.mg.v4, 0.55)};
+  color: ${({ theme }) => theme.colors.mg.v1};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   border: 1px solid ${({ theme }) => theme.colors.fg.v3} !important;
