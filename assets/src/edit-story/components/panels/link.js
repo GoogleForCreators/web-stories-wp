@@ -115,6 +115,13 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       // TODO(wassgha): Implement getting the page metadata
     })
   );
+
+  useEffect(() => {
+    if (state.link?.url) {
+      populateMetadata(state.link?.url);
+    }
+  }, [populateMetadata, state]);
+
   return (
     <SimplePanel
       name="link"
@@ -138,10 +145,6 @@ function LinkPanel({ selectedElements, onSetProperties }) {
                 ...state,
                 link: { ...state.link, url },
               });
-              if (url) {
-                // TODO(wassgha): Implement parsing page metadata
-                populateMetadata(url);
-              }
             }}
             onBlur={(evt) =>
               evt.target.form.dispatchEvent(new window.Event('submit'))
