@@ -31,6 +31,11 @@ const Input = styled.input`
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   border-radius: 0 !important;
+
+  &:disabled {
+    background: transparent;
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 export default Input;
