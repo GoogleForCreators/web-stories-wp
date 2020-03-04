@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { forwardRef } from '@wordpress/element';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
