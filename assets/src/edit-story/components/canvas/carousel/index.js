@@ -68,7 +68,10 @@ const Area = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  ${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px;`}
+`;
+
+const NavArea = styled(Area)`
+  margin-bottom: ${ARROWS_BOTTOM_MARGIN}px;
 `;
 
 const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
@@ -213,7 +216,7 @@ function Carousel() {
   return (
     <>
       <Wrapper>
-        <Area area="left-navigation" marginBottom={ARROWS_BOTTOM_MARGIN}>
+        <NavArea area="left-navigation">
           <LeftArrow
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
             onClick={() => scrollBy(-scrollByPx)}
@@ -221,7 +224,7 @@ function Carousel() {
             height="24"
             aria-label={__('Scroll Left', 'web-stories')}
           />
-        </Area>
+        </NavArea>
         <List
           area="carousel"
           ref={listRef}
@@ -256,7 +259,7 @@ function Carousel() {
             );
           })}
         </List>
-        <Area area="right-navigation" marginBottom={ARROWS_BOTTOM_MARGIN}>
+        <NavArea area="right-navigation">
           <RightArrow
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
             onClick={() => scrollBy(scrollByPx)}
@@ -270,7 +273,7 @@ function Carousel() {
             onClick={openModal}
             aria-label={__('Grid View', 'web-stories')}
           />
-        </Area>
+        </NavArea>
       </Wrapper>
       <Modal
         isOpen={isGridViewOpen}
