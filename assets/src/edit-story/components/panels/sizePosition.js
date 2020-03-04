@@ -59,15 +59,11 @@ const FlipButton = styled(Button)`
 `;
 
 function SizePositionPanel({ selectedElements, onSetProperties }) {
-  const x = getCommonValue(selectedElements, 'x');
-  const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const isFill = getCommonValue(selectedElements, 'isFill');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const [state, setState] = useState({
-    x,
-    y,
     width,
     height,
     isFill,
@@ -76,8 +72,8 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const [lockRatio, setLockRatio] = useState(true);
 
   useEffect(() => {
-    setState({ x, y, width, height, isFill, rotationAngle });
-  }, [x, y, width, height, isFill, rotationAngle]);
+    setState({ width, height, isFill, rotationAngle });
+  }, [width, height, isFill, rotationAngle]);
 
   const updateProperties = useCallback(
     (evt) => {
@@ -123,23 +119,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       title={__('Size & position', 'web-stories')}
       onSubmit={updateProperties}
     >
-      {/** Position */}
-      <Row expand>
-        <BoxedNumeric
-          suffix={_x('X', 'The X axis', 'web-stories')}
-          value={state.x}
-          isMultiple={x === ''}
-          onChange={handleNumberChange('x')}
-          disabled={isFill}
-        />
-        <BoxedNumeric
-          suffix={_x('Y', 'The Y axis', 'web-stories')}
-          value={state.y}
-          isMultiple={y === ''}
-          onChange={handleNumberChange('y')}
-          disabled={isFill}
-        />
-      </Row>
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
