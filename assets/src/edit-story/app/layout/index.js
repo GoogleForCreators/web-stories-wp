@@ -52,7 +52,6 @@ const Editor = styled.div`
 const Area = styled.div`
   grid-area: ${({ area }) => area};
   position: relative;
-  overflow: hidden;
   z-index: ${({ area }) => (area === 'canv' ? 1 : 2)};
 `;
 

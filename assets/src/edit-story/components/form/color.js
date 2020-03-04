@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useRef, useCallback } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
@@ -32,18 +32,11 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { PatternPropType } from '../../types';
 import generatePatternCSS from '../../utils/generatePatternCSS';
-import ColorPicker from '../colorPicker';
+import useColorPicker from '../inspector/colorPickerProvider/useColorPicker';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  position: relative;
-`;
-
-const ColorPickerWrapper = styled.div`
-  position: absolute;
-  right: -20px;
-  top: 0;
 `;
 
 const Label = styled.div`
@@ -161,26 +154,22 @@ function ColorInput({ onChange, isMultiple, opacity, label, value }) {
   const previewText = getPreviewText(value);
   const opacityPreview = getPreviewOpacity(value, opacity);
 
-  const [isEditingColor, setIsEditingColor] = useState(false);
+  const {
+    actions: { showColorPickerAt, hideColorPicker },
+  } = useColorPicker();
+
+  const ref = useRef();
 
   const handleOpenEditing = useCallback(() => {
-    setIsEditingColor(true);
-  }, []);
-  const handleCloseEditing = useCallback(() => {
-    setIsEditingColor(false);
-  }, []);
+    showColorPickerAt(ref.current, {
+      color: value,
+      onChange: () => onChange.bind(),
+      onClose: hideColorPicker,
+    });
+  }, [showColorPickerAt, hideColorPicker, value, onChange]);
 
   return (
-    <Container>
-      {isEditingColor && (
-        <ColorPickerWrapper>
-          <ColorPicker
-            color={value}
-            onChange={onChange}
-            onClose={handleCloseEditing}
-          />
-        </ColorPickerWrapper>
-      )}
+    <Container ref={ref}>
       {label && <Label>{label}</Label>}
       <Preview onClick={handleOpenEditing}>
         <VisualPreview style={previewStyle} />
@@ -188,7 +177,7 @@ function ColorInput({ onChange, isMultiple, opacity, label, value }) {
           {isMultiple
             ? __('Multiple', 'web-stories')
             : previewText ||
-              _x('None', '"None" as in no color selected', 'web-stories')}
+              _x('None', 'No color or gradient selected', 'web-stories')}
         </TextualPreview>
       </Preview>
       {previewText && (
