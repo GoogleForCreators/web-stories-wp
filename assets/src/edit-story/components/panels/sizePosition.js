@@ -127,7 +127,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     setState(newState);
     const backgroundId = selectedElements[0].id;
     setBackgroundElement({ elementId: backgroundId });
-    onSetProperties(newState);
   };
 
   return (

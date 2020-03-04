@@ -36,8 +36,11 @@ describe('Panels/SizePosition', () => {
       <SizePosition
         selectedElements={[
           {
-            x: 0,
-            y: 0,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            isBackground: false,
             width: 100,
             height: 100,
             isFill: false,
