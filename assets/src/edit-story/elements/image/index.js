@@ -48,7 +48,7 @@ export const panels = [
   PanelTypes.BACKGROUND,
   PanelTypes.BACKGROUND_STYLE,
   PanelTypes.BACKGROUND_DISPLAY,
-  PanelTypes.SIZE_AND_POSITION,
+  PanelTypes.SIZE_POSITION,
   PanelTypes.SCALE,
   PanelTypes.MASK,
 ];

@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -28,7 +29,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SelectMenu } from '../../form';
+import { Button, SelectMenu } from '../../form';
+import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
+import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
+
+const FlipButton = styled(Button)`
+  background: transparent;
+  border: none;
+  padding: 8px;
+  margin: 0;
+
+  svg {
+    color: ${({ theme }) => theme.colors.fg.v1};
+    width: 16px;
+    height: 16px;
+  }
+`;
 
 function FlipControls({ properties, state, setState }) {
   const { flip } = properties;
@@ -54,6 +70,14 @@ function FlipControls({ properties, state, setState }) {
   );
   return (
     <>
+      {/** TODO: Implement flip horizontal mode */}
+      <FlipButton>
+        <FlipHorizontal />
+      </FlipButton>
+      {/** TODO: Implement flip vertical mode */}
+      <FlipButton>
+        <FlipVertical />
+      </FlipButton>
       <SelectMenu
         label={__('Flip: vertical', 'web-stories')}
         options={flipOptions}

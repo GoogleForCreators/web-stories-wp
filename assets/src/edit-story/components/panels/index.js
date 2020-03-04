@@ -30,7 +30,6 @@ import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
-import SizeAndPositionPanel from './sizeAndPosition';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
@@ -43,7 +42,6 @@ const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
 const TEXT = 'text';
-const SIZE_AND_POSITION = 'sizeAndPosition';
 const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
 const STYLE = 'style';
@@ -61,7 +59,6 @@ export const PanelTypes = {
   SCALE,
   COLOR,
   FONT,
-  SIZE_AND_POSITION,
   STYLE,
   TEXT,
   TEXT_STYLE,
@@ -114,8 +111,6 @@ export function getPanels(elements) {
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
-        case SIZE_AND_POSITION:
-          return { type, Panel: SizeAndPositionPanel };
         case SCALE:
           return { type, Panel: ScalePanel };
         case SIZE_POSITION:

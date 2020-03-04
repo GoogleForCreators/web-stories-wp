@@ -34,28 +34,16 @@ import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
-import { ReactComponent as FlipVertical } from '../../icons/flip_vertical.svg';
-import { ReactComponent as FlipHorizontal } from '../../icons/flip_horizontal.svg';
 import Toggle from '../form/toggle';
+import useStory from '../../app/story/useStory';
+import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import FlipControls from './shared/flipControls';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
-`;
-
-const FlipButton = styled(Button)`
-  background: transparent;
-  border: none;
-  padding: 8px;
-  margin: 0;
-
-  svg {
-    color: ${({ theme }) => theme.colors.fg.v1};
-    width: 16px;
-    height: 16px;
-  }
 `;
 
 function SizePositionPanel({ selectedElements, onSetProperties }) {
@@ -63,17 +51,23 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const height = getCommonValue(selectedElements, 'height');
   const isFill = getCommonValue(selectedElements, 'isFill');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
+  const flip = getCommonValue(selectedElements, 'flip');
   const [state, setState] = useState({
     width,
     height,
+    flip,
     isFill,
     rotationAngle,
   });
   const [lockRatio, setLockRatio] = useState(true);
 
+  const {
+    actions: { setBackgroundElement },
+  } = useStory();
+
   useEffect(() => {
-    setState({ width, height, isFill, rotationAngle });
-  }, [width, height, isFill, rotationAngle]);
+    setState({ width, height, flip, isFill, rotationAngle });
+  }, [width, height, isFill, rotationAngle, flip]);
 
   const updateProperties = useCallback(
     (evt) => {
@@ -104,6 +98,11 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     updateProperties();
   }, [state.isFill, updateProperties]);
 
+  let { isMedia } = getDefinitionForType(selectedElements[0].type);
+  if (selectedElements.length > 1) {
+    isMedia = false;
+  }
+
   const handleNumberChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
@@ -113,12 +112,32 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     [setState]
   );
 
+  const handleSetBackground = () => {
+    const newState = {
+      ...state,
+      isBackground: true,
+      opacity: 100,
+      overlay: null,
+    };
+    setState(newState);
+    const backgroundId = selectedElements[0].id;
+    setBackgroundElement({ elementId: backgroundId });
+    onSetProperties(newState);
+  };
+
   return (
     <SimplePanel
       name="size"
       title={__('Size & position', 'web-stories')}
       onSubmit={updateProperties}
     >
+      {isMedia && (
+        <Row expand>
+          <Button onClick={handleSetBackground}>
+            {__('Set as background', 'web-stories')}
+          </Button>
+        </Row>
+      )}
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
@@ -180,25 +199,26 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           onChange={handleNumberChange('rotationAngle')}
           disabled={isFill}
         />
-        {/** TODO: Implement flip horizontal mode */}
-        <FlipButton>
-          <FlipHorizontal />
-        </FlipButton>
-        {/** TODO: Implement flip vertical mode */}
-        <FlipButton>
-          <FlipVertical />
-        </FlipButton>
-        <Toggle
-          icon={<Fullbleed />}
-          value={state.isFill}
-          isMultiple={false}
-          onChange={(value) => {
-            setState({
-              ...state,
-              isFill: value,
-            });
-          }}
-        />
+        {isMedia && (
+          <>
+            <FlipControls
+              properties={{ flip }}
+              setState={setState}
+              state={state}
+            />
+            <Toggle
+              icon={<Fullbleed />}
+              value={state.isFill}
+              isMultiple={false}
+              onChange={(value) => {
+                setState({
+                  ...state,
+                  isFill: value,
+                });
+              }}
+            />
+          </>
+        )}
       </Row>
     </SimplePanel>
   );
