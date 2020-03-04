@@ -27,14 +27,19 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row } from '../form';
+import { Button, Row } from '../form';
+import useStory from '../../app/story/useStory';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
 
-function BackgroundStylePanel({ selectedElements, onSetProperties }) {
+function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
   const flip = getCommonValue(selectedElements, 'flip');
   const [state, setState] = useState({ flip });
+
+  const {
+    actions: { setBackgroundElement },
+  } = useStory();
 
   useEffect(() => {
     setState({ flip });
@@ -43,11 +48,26 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   useEffect(() => {
     onSetProperties(state);
   }, [onSetProperties, state, state.flip]);
+
+  const handleClick = () => {
+    const newState = {
+      isBackground: false,
+      opacity: 100,
+      overlay: null,
+    };
+    setBackgroundElement({ elementId: null });
+    onSetProperties(newState);
+  };
   return (
     <SimplePanel
-      name="backgroundStyle"
-      title={__('Background Style', 'web-stories')}
+      name="backgroundSizePosition"
+      title={__('Size & Position', 'web-stories')}
     >
+      <Row expand={false}>
+        <Button onClick={handleClick}>
+          {__('Remove as Background', 'web-stories')}
+        </Button>
+      </Row>
       <Row expand={false}>
         <FlipControls setState={setState} state={state} />
       </Row>
@@ -55,9 +75,9 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   );
 }
 
-BackgroundStylePanel.propTypes = {
+BackgroundSizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default BackgroundStylePanel;
+export default BackgroundSizePositionPanel;
