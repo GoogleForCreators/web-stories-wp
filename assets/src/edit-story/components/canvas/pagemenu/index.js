@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { useCallback } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory, useHistory } from '../../../app';
@@ -136,19 +141,19 @@ function PageMenu() {
         <Options>
           <PageCount>{`Page ${currentPageNumber}`}</PageCount>
           <Space />
-          <Tooltip title="Delete page" shortcut="del">
+          <Tooltip title={__('Delete page', 'web-stories')} shortcut="del">
             <Icon onClick={handleDeletePage}>
               <Delete />
             </Icon>
           </Tooltip>
           <Space />
-          <Tooltip title="Duplicate page">
+          <Tooltip title={__('Duplicate page', 'web-stories')}>
             <Icon onClick={handleDuplicatePage}>
               <Duplicate />
             </Icon>
           </Tooltip>
           <Space />
-          <Tooltip title="New page">
+          <Tooltip title={__('New page', 'web-stories')}>
             <Icon onClick={handleAddPage}>
               <Add />
             </Icon>
@@ -156,13 +161,13 @@ function PageMenu() {
           <Space />
           <Divider />
           <Space />
-          <Tooltip title="Undo" shortcut="cmd+z">
+          <Tooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
             <Icon disabled={!canUndo} onClick={handleUndo}>
               <Undo />
             </Icon>
           </Tooltip>
           <Space />
-          <Tooltip title="Redo" shortcut="shift+cmd+z">
+          <Tooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
             <Icon disabled={!canRedo} onClick={handleRedo}>
               <Redo />
             </Icon>

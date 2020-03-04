@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Tooltip as MUITooltip } from '@material-ui/core';
+import MUITooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
