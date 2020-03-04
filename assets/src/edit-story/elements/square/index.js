@@ -25,6 +25,11 @@ export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
   backgroundColor: '#ffffff',
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+  isFill: false,
 };
 
 export const hasEditMode = false;

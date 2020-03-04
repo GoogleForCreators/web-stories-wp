@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
+import getTransformFlip from '../elements/shared/getTransformFlip';
 
 // Important! This file cannot use `styled-components` or any stateful/context
 // React features to stay compatible with the "output" templates.
@@ -71,15 +72,16 @@ const FILL_STYLE = {
 export function WithElementMask({ element, fill, style, children, ...rest }) {
   const mask = getElementMaskProperties(element);
   return (
-    <WithtMask
+    <WithMask
       fill={fill}
+      flip={element.flip}
       style={style}
       mask={mask}
       elementId={element.id}
       {...rest}
     >
       {children}
-    </WithtMask>
+    </WithMask>
   );
 }
 
@@ -90,7 +92,7 @@ WithElementMask.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-function WithtMask({ elementId, mask, fill, style, children, ...rest }) {
+function WithMask({ elementId, mask, fill, flip, style, children, ...rest }) {
   const maskType = (mask && mask.type) || null;
 
   const fillStyle = fill ? FILL_STYLE : null;
@@ -106,6 +108,7 @@ function WithtMask({ elementId, mask, fill, style, children, ...rest }) {
 
     const maskId = `mask-${maskType}-${elementId}`;
     allStyles.clipPath = `url(#${maskId})`;
+    allStyles.transform = getTransformFlip(flip);
 
     return (
       <div style={allStyles} {...rest}>
@@ -127,10 +130,14 @@ function WithtMask({ elementId, mask, fill, style, children, ...rest }) {
   );
 }
 
-WithtMask.propTypes = {
+WithMask.propTypes = {
   elementId: PropTypes.string.isRequired,
   mask: StoryPropTypes.mask,
   style: PropTypes.object,
+  flip: PropTypes.shape({
+    vertical: PropTypes.bool,
+    horizontal: PropTypes.bool,
+  }),
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,
 };

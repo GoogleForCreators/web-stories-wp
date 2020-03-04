@@ -77,10 +77,11 @@ function DisplayElement({ element }) {
     }
   });
 
+  const { isMedia } = getDefinitionForType(type);
   return (
     <Wrapper ref={wrapperRef} {...box}>
       <WithElementMask element={element} fill={true}>
-        <WithFlip transformFlip={getTransformFlip(flip)}>
+        <WithFlip transformFlip={isMedia && getTransformFlip(flip)}>
           <Display element={element} box={box} />
         </WithFlip>
       </WithElementMask>

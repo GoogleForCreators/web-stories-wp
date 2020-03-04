@@ -103,6 +103,11 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     isMedia = false;
   }
 
+  let canFlip = isMedia || 'shape' === selectedElements[0].type;
+  if (selectedElements.length > 1) {
+    canFlip = false;
+  }
+
   const handleNumberChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
@@ -199,7 +204,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           onChange={handleNumberChange('rotationAngle')}
           disabled={isFill}
         />
-        {isMedia && (
+        {canFlip && (
           <>
             <FlipControls setState={setState} state={state} />
             <Toggle
