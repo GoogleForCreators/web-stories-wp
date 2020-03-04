@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useCallback, useState } from '@wordpress/element';
+import { useRef, useCallback, useState } from 'react';
 
 /**
  * Internal dependencies

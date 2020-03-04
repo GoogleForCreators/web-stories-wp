@@ -18,19 +18,18 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../form';
+import { Button, InputGroup } from '../form';
 import { dataPixels } from '../../units';
-import { ActionButton } from '../button';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
@@ -111,9 +110,9 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
       onSubmit={handleSubmit}
     >
       {isMedia && (
-        <ActionButton onClick={handleSetBackground}>
+        <Button onClick={handleSetBackground}>
           {__('Set as background', 'web-stories')}
-        </ActionButton>
+        </Button>
       )}
       <InputGroup
         label={__('Width', 'web-stories')}
@@ -163,11 +162,11 @@ function SizeAndPositionPanel({ selectedElements, onSetProperties }) {
         disabled={isFill}
       />
       {isMedia && (
-        <ActionButton onClick={handleClick}>
+        <Button onClick={handleClick}>
           {state.isFill
             ? __('Unset as fill', 'web-stories')
             : __('Set as fill', 'web-stories')}
-        </ActionButton>
+        </Button>
       )}
       <InputGroup
         label={__('Rotation angle', 'web-stories')}

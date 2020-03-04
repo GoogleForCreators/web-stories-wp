@@ -20,13 +20,14 @@
 import { elementTypes } from '../../elements';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
+import StylePanel from './style';
 import PageBackgroundPanel from './pageBackground';
-import BackgroundColorPanel from './backgroundColor';
 import BackgroundStylePanel from './backgroundStyle';
 import FontPanel from './font';
 import MaskPanel from './mask';
+import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
-import StylePanel from './style';
+import TextStylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import SizeAndPositionPanel from './sizeAndPosition';
@@ -43,8 +44,10 @@ const SCALE = 'scale';
 const FONT = 'font';
 const TEXT = 'text';
 const SIZE_AND_POSITION = 'sizeAndPosition';
-const BACKGROUND_COLOR = 'backgroundColor';
+const SIZE_POSITION = 'sizePosition';
+const FILL = 'fill';
 const STYLE = 'style';
+const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 const PAGE = 'page';
@@ -54,13 +57,15 @@ export const PanelTypes = {
   BACKGROUND,
   BACKGROUND_STYLE,
   BACKGROUND_DISPLAY,
+  SIZE_POSITION,
   SCALE,
-  BACKGROUND_COLOR,
   COLOR,
   FONT,
   SIZE_AND_POSITION,
   STYLE,
   TEXT,
+  TEXT_STYLE,
+  FILL,
   VIDEO_POSTER,
   MASK,
 };
@@ -113,8 +118,8 @@ export function getPanels(elements) {
           return { type, Panel: SizeAndPositionPanel };
         case SCALE:
           return { type, Panel: ScalePanel };
-        case BACKGROUND_COLOR:
-          return { type, Panel: BackgroundColorPanel };
+        case SIZE_POSITION:
+          return { type, Panel: SizePositionPanel };
         case COLOR:
           return { type, Panel: ColorPanel };
         case FONT:
@@ -123,6 +128,8 @@ export function getPanels(elements) {
           return { type, Panel: StylePanel };
         case TEXT:
           return { type, Panel: TextPanel };
+        case TEXT_STYLE:
+          return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
           return { type, Panel: VideoPosterPanel };
         case MASK:

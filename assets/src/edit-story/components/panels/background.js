@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
-import { ActionButton } from '../button';
+import { Button } from '../form';
 import { SimplePanel } from './panel';
 
 function BackgroundPanel({ onSetProperties }) {
@@ -49,9 +49,9 @@ function BackgroundPanel({ onSetProperties }) {
   };
   return (
     <SimplePanel name="position" title={__('Background', 'web-stories')}>
-      <ActionButton onClick={handleClick}>
+      <Button onClick={handleClick}>
         {__('Remove as Background', 'web-stories')}
-      </ActionButton>
+      </Button>
     </SimplePanel>
   );
 }

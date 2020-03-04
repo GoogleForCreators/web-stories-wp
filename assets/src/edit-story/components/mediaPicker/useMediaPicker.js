@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+/**
  * WordPress dependencies
  */
-import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default function useMediaPicker({

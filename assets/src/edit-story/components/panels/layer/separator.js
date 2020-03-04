@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useContext, useCallback } from '@wordpress/element';
+import { useContext, useCallback } from 'react';
 
 /**
  * Internal dependencies

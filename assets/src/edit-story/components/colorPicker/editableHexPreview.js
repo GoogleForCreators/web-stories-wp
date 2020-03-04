@@ -20,11 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { EditableInput } from 'react-color/lib/components/common';
-
-/**
- * WordPress dependencies
- */
-import { useCallback, useLayoutEffect, useState } from '@wordpress/element';
+import { useCallback, useLayoutEffect, useState } from 'react';
 
 const Preview = styled.button`
   padding: 0;
