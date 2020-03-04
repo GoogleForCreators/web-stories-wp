@@ -130,7 +130,7 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'wp_enqueue_scripts' ] );
+		add_action( 'web_stories_story_head', [ __CLASS__, 'enqueue_frontend_styles' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
@@ -147,9 +147,6 @@ class Story_Post_Type {
 			},
 			1
 		);
-
-		// todo: remove in order to not print any external scripts and styles.
-		add_action( 'web_stories_story_head', 'wp_enqueue_scripts', 1 );
 
 		add_filter(
 			'the_content',
@@ -225,11 +222,11 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Enqueue Google fonts.
+	 * Enqueue Google Fonts on the frontend.
 	 *
 	 * @return void
 	 */
-	public static function wp_enqueue_scripts() {
+	public static function enqueue_frontend_styles() {
 		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
 			return;
 		}
@@ -465,6 +462,7 @@ class Story_Post_Type {
 					[],
 					WEBSTORIES_VERSION
 				);
+				wp_styles()->do_item(self::WEB_STORIES_STYLE_HANDLE . '_fonts');
 			}
 		}
 	}
