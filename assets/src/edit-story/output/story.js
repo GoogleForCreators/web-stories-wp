@@ -23,37 +23,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
+import getUsedAmpExtensions from './getUsedAmpExtensions';
 import { OutputPage } from './index';
-
-// todo: improve / move elsehwere.
-const getUsedAmpExtensions = (pages) => {
-  const extensions = [
-    // runtime.
-    { src: 'https://cdn.ampproject.org/v0.js' },
-    {
-      name: 'amp-story',
-      src: 'https://cdn.ampproject.org/v0/amp-story-1.0.js',
-    },
-  ];
-
-  for (const { elements } of pages) {
-    for (const { type } of elements) {
-      switch (type) {
-        // Todo: eventually check for amp-fit-text if ever added.
-        case 'video':
-          extensions.push({
-            name: 'amp-video',
-            src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
-          });
-          break;
-        default:
-          break;
-      }
-    }
-  }
-
-  return [...new Set(extensions)];
-};
 
 /**
  * Renders AMP boilerplate
