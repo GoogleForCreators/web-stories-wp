@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -34,26 +34,19 @@ import getCommonValue from './utils/getCommonValue';
 
 function StylePanel({ selectedElements, onSetProperties }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const [state, setState] = useState({ backgroundColor });
-  useEffect(() => {
-    setState({ backgroundColor });
-  }, [backgroundColor]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
+  const handleChange = useCallback(
+    (newColor) => {
+      onSetProperties({ backgroundColor: newColor });
+    },
+    [onSetProperties]
+  );
   return (
-    <SimplePanel
-      name="bgcolor"
-      title={__('Background color', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
-      <Row expand={true}>
+    <SimplePanel name="bgcolor" title={__('Background color', 'web-stories')}>
+      <Row>
         <Color
-          value={state.backgroundColor}
+          value={backgroundColor}
           isMultiple={backgroundColor === ''}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
-          opacity={1}
+          onChange={handleChange}
         />
       </Row>
     </SimplePanel>

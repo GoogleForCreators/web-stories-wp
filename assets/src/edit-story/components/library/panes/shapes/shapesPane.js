@@ -77,7 +77,7 @@ function ShapesPane(props) {
             key={'square'}
             onClick={() => {
               insertElement('square', {
-                backgroundColor: '#333',
+                backgroundColor: { color: { r: 51, g: 51, b: 51 } },
                 width: 200,
                 height: 200,
                 x: 5,
@@ -95,7 +95,7 @@ function ShapesPane(props) {
               key={mask.type}
               onClick={() => {
                 insertElement('square', {
-                  backgroundColor: '#333',
+                  backgroundColor: { color: { r: 51, g: 51, b: 51 } },
                   width: 200,
                   height: 200,
                   x: 5,
