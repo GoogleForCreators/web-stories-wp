@@ -32,6 +32,7 @@ import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import Tooltip from '../../tooltip';
 
 const HEIGHT = 28;
 
@@ -135,27 +136,37 @@ function PageMenu() {
         <Options>
           <PageCount>{`Page ${currentPageNumber}`}</PageCount>
           <Space />
-          <Icon onClick={handleDeletePage}>
-            <Delete />
-          </Icon>
+          <Tooltip title="Delete page" shortcut="del">
+            <Icon onClick={handleDeletePage}>
+              <Delete />
+            </Icon>
+          </Tooltip>
           <Space />
-          <Icon onClick={handleDuplicatePage}>
-            <Duplicate />
-          </Icon>
+          <Tooltip title="Duplicate page">
+            <Icon onClick={handleDuplicatePage}>
+              <Duplicate />
+            </Icon>
+          </Tooltip>
           <Space />
-          <Icon onClick={handleAddPage}>
-            <Add />
-          </Icon>
+          <Tooltip title="New page">
+            <Icon onClick={handleAddPage}>
+              <Add />
+            </Icon>
+          </Tooltip>
           <Space />
           <Divider />
           <Space />
-          <Icon disabled={!canUndo} onClick={handleUndo}>
-            <Undo />
-          </Icon>
+          <Tooltip title="Undo" shortcut="cmd+z">
+            <Icon disabled={!canUndo} onClick={handleUndo}>
+              <Undo />
+            </Icon>
+          </Tooltip>
           <Space />
-          <Icon disabled={!canRedo} onClick={handleRedo}>
-            <Redo />
-          </Icon>
+          <Tooltip title="Redo" shortcut="shift+cmd+z">
+            <Icon disabled={!canRedo} onClick={handleRedo}>
+              <Redo />
+            </Icon>
+          </Tooltip>
         </Options>
         <Options>
           <Icon disabled>
