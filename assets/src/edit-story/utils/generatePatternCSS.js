@@ -66,16 +66,24 @@ function getStopList(stops, isAngular = false) {
  * Generate CSS from a Pattern.
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
- * @param {string} property Type of CSS to generate. Defaults to 'background',
+ * @param {Object} options Optional settings
+ * @param {string} options.property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
+ * @param {boolean} options.asString If true (default) generates a string, if false a style object,
  *
- * @return {string} CSS declaration, e.g. 'fill: transparent' or
- * 'background-image: radial-gradient(red, blue)'.
+ * @return {string | Object} CSS declaration as string or object, e.g. 'fill: transparent' or
+ * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
-function generatePatternCSS(pattern, property = 'background') {
+function generatePatternCSS(
+  pattern,
+  { property = 'background', asString = true } = {}
+) {
   const isBackground = property === 'background';
   if (pattern === null) {
-    return `${property}: transparent`;
+    if (asString) {
+      return `${property}: transparent`;
+    }
+    return { [property]: 'transparent' };
   }
 
   const { type = 'solid' } = pattern;
@@ -93,8 +101,12 @@ function generatePatternCSS(pattern, property = 'background') {
     const {
       color: { r, g, b, a = 1 },
     } = pattern;
-    const propertyPostfix = isBackground ? '-color' : '';
-    return `${property}${propertyPostfix}: ${rgba(r, g, b, a)}`;
+    if (asString) {
+      const stringPropertyPostfix = isBackground ? '-color' : '';
+      return `${property}${stringPropertyPostfix}: ${rgba(r, g, b, a)}`;
+    }
+    const objectPropertyPostfix = isBackground ? 'Color' : '';
+    return { [`${property}${objectPropertyPostfix}`]: rgba(r, g, b, a) };
   }
 
   const { stops } = pattern;
@@ -102,8 +114,11 @@ function generatePatternCSS(pattern, property = 'background') {
   const description = getGradientDescription(pattern);
   const stopList = getStopList(stops, type === 'conic');
   const parms = description ? [description, ...stopList] : stopList;
-
-  return `background-image: ${func}(${parms.join(', ')})`;
+  const value = `${func}(${parms.join(', ')})`;
+  if (asString) {
+    return `background-image: ${value}`;
+  }
+  return { backgroundImage: value };
 }
 
 export default generatePatternCSS;

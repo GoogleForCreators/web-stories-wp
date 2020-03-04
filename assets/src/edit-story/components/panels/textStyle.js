@@ -302,7 +302,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
-          value={state.backgroundColor || '#000000'}
+          value={state.backgroundColor}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
           opacity={1}
         />

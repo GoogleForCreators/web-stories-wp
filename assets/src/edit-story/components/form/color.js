@@ -18,89 +18,184 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { useState, useCallback } from '@wordpress/element';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Input } from '../form';
-
-const StyledInput = styled(Input)`
-  width: 32px;
-  height: 32px;
-  border: 1px solid ${({ theme }) => theme.colors.fg.v2} !important;
-  padding: 0;
-  margin-left: ${({ label }) => (label ? 12 : 0)}px;
-
-  &::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-
-  &::-webkit-color-swatch {
-    border: none;
-    border-radius: 0;
-  }
-`;
+import { PatternPropType } from '../../types';
+import generatePatternCSS from '../../utils/generatePatternCSS';
+import ColorPicker from '../colorPicker';
 
 const Container = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  margin-left: 5px;
-  margin-right: 5px;
-
-  & > span {
-    margin-left: 12px;
-  }
+  position: relative;
 `;
 
-function ColorInput({
-  onBlur,
-  onChange,
-  isMultiple,
-  opacity,
-  label,
-  value,
-  ...rest
-}) {
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+const ColorPickerWrapper = styled.div`
+  position: absolute;
+  right: -20px;
+  top: 0;
+`;
+
+const Label = styled.div`
+  width: 60px;
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.55)};
+`;
+
+const Box = styled.div`
+  height: 32px;
+  width: 122px;
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  border-radius: 4px;
+  overflow: hidden;
+  align-items: center;
+`;
+
+const Preview = styled(Box)`
+  display: flex;
+  width: 122px;
+  cursor: pointer;
+`;
+
+const VisualPreview = styled.div`
+  width: 32px;
+  height: 32px;
+`;
+
+const TextualPreview = styled.div`
+  padding-left: 10px;
+  text-align: center;
+`;
+
+const OpacityPreview = styled(Box)`
+  margin-left: 6px;
+  width: 54px;
+  line-height: 32px;
+  text-align: center;
+  cursor: ew-resize;
+`;
+
+const transparentStyle = {
+  backgroundImage:
+    'conic-gradient(#fff 0.25turn, #d3d4d4 0turn 0.5turn, #fff 0turn .75turn, #d3d4d4 0turn 1turn)',
+  backgroundSize: '66.67% 66.67%',
+};
+
+function printRGB(r, g, b) {
+  const hex = (v) => v.toString(16).padStart(2, '0');
+  return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
+}
+
+function getPreviewStyle(pattern, defaultColor) {
+  if (!pattern) {
+    if (!defaultColor) {
+      return transparentStyle;
+    }
+    return { backgroundColor: `#${defaultColor}` };
+  }
+  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
+  if (!isSolidPattern) {
+    return generatePatternCSS(pattern, { asString: false });
+  }
+  const {
+    color: { r, g, b, a },
+  } = pattern;
+  // If opacity is 0, create as transparent:
+  if (a === 0) {
+    return transparentStyle;
+  }
+
+  // Otherwisecreate color, but with full opacity
+  return generatePatternCSS({ color: { r, g, b } }, { asString: false });
+}
+
+function getPreviewOpacity(pattern, specifiedOpacity = 1) {
+  if (!pattern) {
+    return specifiedOpacity * 100;
+  }
+  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
+  if (!isSolidPattern) {
+    return specifiedOpacity * 100;
+  }
+  const {
+    color: { a = 1 },
+  } = pattern;
+  return a * 100;
+}
+
+function getPreviewText(pattern) {
+  if (!pattern) {
+    return null;
+  }
+  switch (pattern.type) {
+    case 'radial':
+      return __('Radial', 'web-stories');
+    case 'conic':
+      return __('Conic', 'web-stories');
+    case 'linear':
+      return __('Linear', 'web-stories');
+    case 'solid':
+    default:
+      const {
+        color: { r, g, b, a },
+      } = pattern;
+      if (a === 0) {
+        return null;
+      }
+      return printRGB(r, g, b);
+  }
+}
+
+function ColorInput({ onChange, isMultiple, opacity, label, value }) {
+  const previewStyle = getPreviewStyle(isMultiple ? null : value);
+  const previewText = getPreviewText(value);
+  const opacityPreview = getPreviewOpacity(value, opacity);
+
+  const [isEditingColor, setIsEditingColor] = useState(false);
+
+  const handleOpenEditing = useCallback(() => {
+    setIsEditingColor(true);
+  }, []);
+  const handleCloseEditing = useCallback(() => {
+    setIsEditingColor(false);
+  }, []);
 
   return (
     <Container>
-      {label}
-      <StyledInput
-        type="color"
-        placeholder={placeholder}
-        label={label}
-        value={value}
-        {...rest}
-        onChange={(evt) => onChange(evt.target.value, evt)}
-        onBlur={(evt) => {
-          if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
-          }
-          if (onBlur) {
-            onBlur();
-          }
-        }}
-      />
-      {value && <span>{value}</span>}
-      {opacity && (
-        <span>
-          {opacity * 100}
-          {'%'}
-        </span>
+      {isEditingColor && (
+        <ColorPickerWrapper>
+          <ColorPicker
+            color={value}
+            onChange={onChange}
+            onClose={handleCloseEditing}
+          />
+        </ColorPickerWrapper>
+      )}
+      {label && <Label>{label}</Label>}
+      <Preview onClick={handleOpenEditing}>
+        <VisualPreview style={previewStyle} />
+        <TextualPreview>
+          {isMultiple
+            ? __('Multiple', 'web-stories')
+            : previewText ||
+              _x('None', '"None" as in no color selected', 'web-stories')}
+        </TextualPreview>
+      </Preview>
+      {previewText && (
+        <OpacityPreview>
+          {opacityPreview}
+          {_x('%', 'Percentage', 'web-stories')}
+        </OpacityPreview>
       )}
     </Container>
   );
@@ -108,17 +203,16 @@ function ColorInput({
 
 ColorInput.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.any.isRequired,
+  value: PatternPropType,
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func,
   opacity: PropTypes.number,
-  disabled: PropTypes.bool,
 };
 
 ColorInput.defaultProps = {
-  disabled: false,
+  defaultColor: null,
   isMultiple: false,
+  opacity: null,
 };
 
 export default ColorInput;

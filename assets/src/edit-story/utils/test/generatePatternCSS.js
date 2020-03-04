@@ -55,8 +55,29 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render non-background properties', () => {
       expect(
-        generatePatternCSS({ color: { r: 255, g: 0, b: 0 } }, 'fill')
+        generatePatternCSS(
+          { color: { r: 255, g: 0, b: 0 } },
+          { property: 'fill' }
+        )
       ).toBe('fill: #f00');
+    });
+
+    it('should be able to render a style object', () => {
+      expect(
+        generatePatternCSS(
+          { color: { r: 255, g: 0, b: 0 } },
+          { asString: false }
+        )
+      ).toStrictEqual({ backgroundColor: '#f00' });
+    });
+
+    it('should be able to render a non-background style object', () => {
+      expect(
+        generatePatternCSS(
+          { color: { r: 255, g: 0, b: 0 } },
+          { property: 'fill', asString: false }
+        )
+      ).toStrictEqual({ fill: '#f00' });
     });
   });
 
@@ -67,13 +88,30 @@ describe('generatePatternCSS', () => {
           {
             type: 'linear',
             stops: [
-              { color: { r: 255, g: 0, b: 0 }, position: 0.3 },
-              { color: { r: 0, g: 0, b: 255 }, position: 0.7 },
+              { color: { r: 255, g: 0, b: 0 }, position: 0 },
+              { color: { r: 0, g: 0, b: 255 }, position: 1 },
             ],
           },
-          'fill'
+          { property: 'fill' }
         )
       ).toThrow(/only generate solid/i);
+    });
+
+    it('should be able to render a style object', () => {
+      expect(
+        generatePatternCSS(
+          {
+            type: 'linear',
+            stops: [
+              { color: { r: 255, g: 0, b: 0 }, position: 0 },
+              { color: { r: 0, g: 0, b: 255 }, position: 1 },
+            ],
+          },
+          { asString: false }
+        )
+      ).toStrictEqual({
+        backgroundImage: 'linear-gradient(#f00 0%, #00f 100%)',
+      });
     });
   });
 

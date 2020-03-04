@@ -92,8 +92,8 @@ StoryPropTypes.elements.video = PropTypes.shape({
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropsTypes,
   content: PropTypes.string,
-  color: PropTypes.string,
-  backgroundColor: PropTypes.string,
+  color: PatternPropType,
+  backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
@@ -107,7 +107,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
 
 StoryPropTypes.elements.square = PropTypes.shape({
   ...StoryElementPropsTypes,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({
@@ -133,7 +133,7 @@ export const PatternPropType = PropTypes.shape({
   type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
-  rotation: PropTypes.number.isRequired,
+  rotation: PropTypes.number,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
