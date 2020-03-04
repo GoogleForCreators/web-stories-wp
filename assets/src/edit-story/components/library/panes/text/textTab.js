@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
@@ -79,9 +79,9 @@ function TextTab(props) {
     // @todo: Needs product definition
     insertElement('text', {
       content: __('Double-click to edit...', 'web-stories'),
-      color: '#000000',
+      color: { color: { r: 0, g: 0, b: 0 } },
       fontSize: 100,
-      backgroundColor: '#ffffff',
+      backgroundColor: { color: { r: 255, g: 255, b: 255 } },
       width: 300,
       height: 100,
       x: 50,

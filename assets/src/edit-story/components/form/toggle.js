@@ -23,9 +23,10 @@ import PropTypes from 'prop-types';
 const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
   position: absolute;
   opacity: 0;
-  height: 0;
-  width: 0;
-  margin: 0;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
 `;
 
 const MarkSpan = styled.span`

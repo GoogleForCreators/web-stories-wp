@@ -74,7 +74,7 @@ function TextPane(props) {
           onClick={() =>
             insertElement('text', {
               content: __('Text', 'web-stories'),
-              color: 'black',
+              color: { color: { r: 0, g: 0, b: 0 } },
               ...DEFAULT_TEXT_TRANSFORM,
             })
           }
@@ -95,7 +95,7 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 content: __('Text', 'web-stories'),
-                color: 'black',
+                color: { color: { r: 0, g: 0, b: 0 } },
                 ...DEFAULT_TEXT_TRANSFORM,
                 ...preset,
                 fontSize: editorToDataY(

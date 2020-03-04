@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useState } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -53,6 +53,8 @@ const Container = styled.div`
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
   flex-basis: ${({ flexBasis }) => flexBasis}px;
+
+  ${({ disabled }) => disabled && `opacity: 0.3`};
 `;
 
 function Numeric({
@@ -67,13 +69,18 @@ function Numeric({
   value,
   flexBasis,
   ariaLabel,
+  disabled,
   ...rest
 }) {
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [onEdit, setOnEdit] = useState(false);
 
   return (
-    <Container className={`${className}`} flexBasis={flexBasis}>
+    <Container
+      className={`${className}`}
+      flexBasis={flexBasis}
+      disabled={disabled}
+    >
       {label}
       {prefix}
       <StyledInput
@@ -83,6 +90,7 @@ function Numeric({
         label={label}
         value={`${value}${!onEdit ? symbol : ''}`}
         aria-label={ariaLabel}
+        disabled={disabled}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
         onBlur={(evt) => {

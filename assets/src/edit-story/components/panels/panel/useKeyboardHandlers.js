@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useCallback, useLayoutEffect } from '@wordpress/element';
+import { useCallback, useLayoutEffect } from 'react';
 
 const KEY_UP = ['Up', 'ArrowUp'];
 const KEY_DOWN = ['Down', 'ArrowDown'];

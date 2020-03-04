@@ -19,9 +19,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useReducer, useMemo } from '@wordpress/element';
+import { useReducer, useMemo } from 'react';
 
 export default function useReduction(initialState, reducerMap) {
   const [state, dispatch] = useReducer(makeReducer(reducerMap), initialState);

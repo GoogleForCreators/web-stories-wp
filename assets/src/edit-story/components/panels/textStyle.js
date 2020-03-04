@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**

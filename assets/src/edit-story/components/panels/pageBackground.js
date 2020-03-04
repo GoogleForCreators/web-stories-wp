@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect, useState, useCallback } from 'react';
+
+/**
  * WordPress dependencies
  */
-import { useEffect, useState, useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
