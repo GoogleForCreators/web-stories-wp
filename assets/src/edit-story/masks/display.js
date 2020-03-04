@@ -52,11 +52,11 @@ export default function WithMask({
   const [replacement, setReplacement] = useState(null);
   const mask = getElementMask(element);
   useTransformHandler(element.id, (transform) => {
-    const replacementElement = transform?.updates?.replaceElement;
-    if (replacementElement) {
-      const { type } = replacementElement;
+    const elementReplacement = transform?.updates?.elementReplacement;
+    if (elementReplacement) {
+      const { type } = elementReplacement;
       const { Display } = getDefinitionForType(type);
-      setReplacement(<Display element={replacementElement} box={box} />);
+      setReplacement(<Display element={elementReplacement} box={box} />);
     } else {
       setReplacement(null);
     }

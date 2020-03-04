@@ -161,7 +161,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
         if (isMaskable) {
-          handleDrag(clientX, clientY, selectedElement);
+          handleDrag(selectedElement, clientX, clientY);
         }
       }}
       throttleDrag={0}
@@ -169,7 +169,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setIsDragging(true);
         set(frame.translate);
       }}
-      onDragEnd={({ target, clientX, clientY }) => {
+      onDragEnd={({ target }) => {
         setIsDragging(false);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
@@ -179,7 +179,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
-          handleDrop(clientX, clientY, selectedElement);
+          handleDrop(selectedElement);
         }
         resetMoveable(target);
       }}

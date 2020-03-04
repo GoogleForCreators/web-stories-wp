@@ -244,21 +244,8 @@ function MediaPane(props) {
 
     const dropTargetsBindings = {
       draggable: 'true',
-      onDrag: (e) => {
-        handleDrag(e.clientX, e.clientY, element);
-      },
-      onDrop: (e) => {
-        e.preventDefault();
-        handleDrop(e.clientX, e.clientY, element);
-      },
-      onDragOver: (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      },
-      onDragLeave: (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      },
+      onDrag: (e) => handleDrag(element, e.clientX, e.clientY),
+      onDragEnd: () => handleDrop(element),
     };
 
     if (allowedImageMimeTypes.includes(mimeType)) {

@@ -111,12 +111,8 @@
     "build:js": "wp-scripts build",
     "build:plugin": "wp dist-archive . $(pwd)/build/web-stories --create-target-dir",
     "download-fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",
-<<<<<<< HEAD
-    "dev": "NODE_ENV=development wp-scripts start",
-=======
     "predev": "rm -rf assets/css/* assets/js/*",
     "dev": "wp-scripts start",
->>>>>>> master
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",

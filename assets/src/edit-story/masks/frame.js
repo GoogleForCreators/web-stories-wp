@@ -30,6 +30,7 @@ import { useRef, useEffect } from '@wordpress/element';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
+import { useTransformHandler } from '../components/transform';
 import { getElementMask } from './';
 
 const FILL_STYLE = {
@@ -52,14 +53,13 @@ const DropTargetSVG = styled.svg`
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: ${({ active }) => (active ? 0.3 : 0)};
+  opacity: 0;
 `;
 
 function WithDropTarget({ element, children }) {
   const pathRef = useRef(null);
 
   const {
-    state: { activeDropTarget },
     actions: { registerDropTarget },
   } = useDropTargets();
 
@@ -69,6 +69,11 @@ function WithDropTarget({ element, children }) {
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
   }, [id, pathRef, registerDropTarget]);
+
+  useTransformHandler(element.id, (transform) => {
+    const target = pathRef.current;
+    target.style.opacity = transform?.updates?.dropTargetActive ? 0.3 : 0;
+  });
 
   if (!mask) {
     return children;
@@ -92,7 +97,6 @@ function WithDropTarget({ element, children }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          active={activeDropTarget === id}
           onFocus={() => {}}
           onBlur={() => {}}
         />
