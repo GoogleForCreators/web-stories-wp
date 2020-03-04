@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import createSolid from '../../../../utils/createSolid';
 import useLibrary from '../../useLibrary';
 import { Tab } from '../shared';
 import paneId from './paneId';
@@ -79,9 +80,9 @@ function TextTab(props) {
     // @todo: Needs product definition
     insertElement('text', {
       content: __('Double-click to edit...', 'web-stories'),
-      color: { color: { r: 0, g: 0, b: 0 } },
+      color: createSolid(0, 0, 0),
       fontSize: 100,
-      backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+      backgroundColor: createSolid(255, 255, 255),
       width: 300,
       height: 100,
       x: 50,

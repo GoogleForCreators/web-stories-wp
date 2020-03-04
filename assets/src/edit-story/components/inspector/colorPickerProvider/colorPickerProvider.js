@@ -25,6 +25,7 @@ import { useState, useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import ColorPicker from '../../colorPicker';
+import createSolid from '../../../utils/createSolid';
 import Context from './context';
 
 const Outer = styled.div`
@@ -72,7 +73,7 @@ function ColorPickerProvider({ children }) {
         {hasColorPicker && (
           <ColorPickerWrapper top={colorPickerOffset}>
             <ColorPicker
-              color={{ color: { r: 255, g: 255, b: 255 } }}
+              color={createSolid(255, 255, 255)}
               onChange={() => {}}
               {...colorPickerProps}
             />

@@ -24,6 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import createSolid from '../../../utils/createSolid';
 import theme from '../../../theme';
 import PageBackgroundPanel from '../pageBackground.js';
 
@@ -55,7 +56,7 @@ describe('PageBackgroundPanel', () => {
   });
 
   it('should display a color picker with current color', () => {
-    const { element } = setupPanel({ color: { r: 255, g: 0, b: 0 } });
+    const { element } = setupPanel(createSolid(255, 0, 0));
     expect(element.innerHTML).toStrictEqual('FF0000');
   });
 });

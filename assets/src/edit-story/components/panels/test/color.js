@@ -24,6 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
+import createSolid from '../../../utils/createSolid';
 import Color from '../color';
 
 function arrange(children = null) {
@@ -34,7 +35,7 @@ describe('Panels/Color', () => {
   it('should render <Color /> panel', () => {
     const { getByLabelText } = arrange(
       <Color
-        selectedElements={[{ color: { color: { r: 255, g: 0, b: 255 } } }]}
+        selectedElements={[{ color: createSolid(255, 0, 255) }]}
         onSetProperties={() => null}
       />
     );

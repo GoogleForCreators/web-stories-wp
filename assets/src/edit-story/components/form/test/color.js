@@ -24,6 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
+import createSolid from '../../../utils/createSolid';
 import { Color } from '../';
 
 function arrange(children = null) {
@@ -37,7 +38,7 @@ describe('Form/Color', () => {
 
     const { getByLabelText } = arrange(
       <Color
-        value={{ color: { r: 0, g: 255, b: 0 } }}
+        value={createSolid(0, 255, 0)}
         isMultiple={false}
         onChange={onChangeMock}
         onBlur={onBlurMock}

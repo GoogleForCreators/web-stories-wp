@@ -25,11 +25,12 @@ import styled from 'styled-components';
 import { useStory } from '../../app';
 import generatePatternCSS from '../../utils/generatePatternCSS';
 import convertToCSS from '../../utils/convertToCSS';
+import createSolid from '../../utils/createSolid';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
-const DEFAULT_COLOR = { color: { r: 255, g: 255, b: 255 } };
+const DEFAULT_COLOR = createSolid(255, 255, 255);
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',

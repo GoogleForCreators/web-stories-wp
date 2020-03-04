@@ -26,13 +26,14 @@ import PropTypes from 'prop-types';
 import useStory from '../../../app/story/useStory';
 import generatePatternCSS from '../../../utils/generatePatternCSS';
 import convertToCSS from '../../../utils/convertToCSS';
+import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
 const PAGE_THUMB_OUTLINE = 2;
 
-const DEFAULT_COLOR = { color: { r: 255, g: 255, b: 255 } };
+const DEFAULT_COLOR = createSolid(255, 255, 255);
 
 const Page = styled.button`
   padding: 0;

@@ -28,10 +28,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import createSolid from '../../utils/createSolid';
 import { Color } from '../form';
 import { SimplePanel } from './panel';
 
-const DEFAULT_COLOR = { color: { r: 255, g: 255, b: 255 } };
+const DEFAULT_COLOR = createSolid(255, 255, 255);
 function PageBackgroundPanel() {
   const {
     state: { currentPage },

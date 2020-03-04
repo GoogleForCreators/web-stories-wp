@@ -32,6 +32,7 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { PatternPropType } from '../../types';
 import generatePatternCSS from '../../utils/generatePatternCSS';
+import createSolid from '../../utils/createSolid';
 import useColorPicker from '../inspector/colorPickerProvider/useColorPicker';
 
 const Container = styled.div`
@@ -105,7 +106,7 @@ function getPreviewStyle(pattern, defaultColor) {
   }
 
   // Otherwise create color, but with full opacity
-  return generatePatternCSS({ color: { r, g, b } });
+  return generatePatternCSS(createSolid(r, g, b));
 }
 
 function getPreviewOpacity(pattern, specifiedOpacity = 1) {
