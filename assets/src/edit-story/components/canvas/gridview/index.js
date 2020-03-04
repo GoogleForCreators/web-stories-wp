@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
@@ -32,7 +32,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
-import { ReactComponent as RectangleIcon } from './rectangle.svg';
+import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
 
 const PAGE_WIDTH = 90;
 const PAGE_HEIGHT = 160;

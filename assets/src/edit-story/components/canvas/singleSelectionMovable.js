@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -55,7 +51,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, dataToEditorY, editorToDataX, editorToDataY },
+    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },

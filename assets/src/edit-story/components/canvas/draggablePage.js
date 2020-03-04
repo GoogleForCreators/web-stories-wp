@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { forwardRef, useCallback } from '@wordpress/element';
+import { forwardRef, useCallback } from 'react';
 
 /**
  * Internal dependencies

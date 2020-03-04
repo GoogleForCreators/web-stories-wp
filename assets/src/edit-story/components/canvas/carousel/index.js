@@ -18,16 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useLayoutEffect, useRef, useState, useCallback } from 'react';
 
 /**
  * WordPress dependencies
  */
-import {
-  useLayoutEffect,
-  useRef,
-  useState,
-  useCallback,
-} from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 /**

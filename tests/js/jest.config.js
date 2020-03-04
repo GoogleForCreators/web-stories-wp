@@ -21,7 +21,14 @@ module.exports = {
     '^.+\\.[jt]sx?$':
       '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
   },
-  setupFiles: ['<rootDir>/tests/js/setup-globals'],
+  moduleNameMapper: {
+    '\\.svg': '<rootDir>/__mocks__/svgrMock.js',
+  },
+  setupFiles: [
+    '<rootDir>/tests/js/setup-globals',
+    '<rootDir>/tests/js/setup-mocks',
+  ],
+  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',

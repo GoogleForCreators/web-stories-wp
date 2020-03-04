@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useLayoutEffect, useRef } from '@wordpress/element';
+import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies

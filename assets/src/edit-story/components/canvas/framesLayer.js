@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef } from '@wordpress/element';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -34,12 +30,12 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
 
-const FramesPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container',
-  pointerEvents: 'initial',
-})`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-`);
+const FramesPageArea = withOverlay(
+  styled(PageArea).attrs({
+    className: 'container',
+    pointerEvents: 'initial',
+  })``
+);
 
 function FramesLayer() {
   const {

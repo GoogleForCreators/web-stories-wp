@@ -33,9 +33,12 @@ class Fonts_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	public function test_get_item_schema() {
-		$request    = new WP_REST_Request( 'OPTIONS', '/amp/v1/fonts' );
-		$response   = rest_get_server()->dispatch( $request );
-		$data       = $response->get_data();
+		$request  = new WP_REST_Request( 'OPTIONS', '/amp/v1/fonts' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertNotEmpty( $data );
+
 		$properties = $data['schema']['properties'];
 		$this->assertCount( 6, $properties );
 		$this->assertArrayHasKey( 'name', $properties );

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef } from '@wordpress/element';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -47,10 +43,10 @@ const TabsArea = styled.div`
 
 const InspectorBackground = styled.div`
   grid-area: inspector;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v4};
   height: 100%;
   padding: 0;
-  color: ${({ theme }) => theme.colors.bg.v4};
+  color: ${({ theme }) => theme.colors.fg.v1};
   overflow: auto;
 `;
 

@@ -23,8 +23,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Panel from './panel';
-import PanelTitle from './title';
-import PanelContent from './content';
+import PanelTitle from './shared/title';
+import PanelContent from './shared/content';
 
 function SimplePanel({ children, name, title, onSubmit }) {
   return (

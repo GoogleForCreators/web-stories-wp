@@ -18,11 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { forwardRef, useContext, createPortal } from '@wordpress/element';
+import { forwardRef, useContext } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * Internal dependencies

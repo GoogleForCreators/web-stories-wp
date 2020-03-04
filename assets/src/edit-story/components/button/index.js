@@ -22,11 +22,13 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as UndoIcon } from './icons/undo.svg';
-import { ReactComponent as RedoIcon } from './icons/redo.svg';
-import { ReactComponent as LeftArrowIcon } from './icons/arrow_left.svg';
-import { ReactComponent as RightArrowIcon } from './icons/arrow_right.svg';
-import { ReactComponent as GridViewIcon } from './icons/grid_view.svg';
+import { ReactComponent as UndoIcon } from '../../icons/undo.svg';
+import { ReactComponent as RedoIcon } from '../../icons/redo.svg';
+import { ReactComponent as LeftArrowIcon } from '../../icons/arrow_left.svg';
+import { ReactComponent as RightArrowIcon } from '../../icons/arrow_right.svg';
+import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -128,12 +130,14 @@ export const GridView = (props) => (
   </StyledButton>
 );
 
-export const ActionButton = styled.button.attrs({ type: 'button' })`
-  background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
-  border-radius: 4px;
-  color: ${({ theme }) => theme.colors.bg.v5};
-  font-size: 15px;
-  line-height: 30px;
-  padding: 0 15px;
-`;
+export const Close = (props) => (
+  <StyledButton {...props}>
+    <CloseIcon />
+  </StyledButton>
+);
+
+export const Eyedropper = (props) => (
+  <StyledButton {...props}>
+    <EyedropperIcon />
+  </StyledButton>
+);

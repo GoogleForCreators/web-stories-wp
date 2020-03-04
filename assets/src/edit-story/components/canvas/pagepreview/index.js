@@ -38,7 +38,8 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  background-color: ${({ theme }) => theme.colors.mg.v1};
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.colors.fg.v1};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 `;
@@ -58,7 +59,11 @@ function PagePreview({ index, forwardedRef, ...props }) {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props} ref={forwardedRef}>
+        <Page
+          {...props}
+          backgroundColor={page.backgroundColor}
+          ref={forwardedRef}
+        >
           <PreviewWrapper>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement key={id} element={{ id, ...rest }} />
