@@ -1,5 +1,5 @@
 {
   "rules": {
-    "no-restricted-imports": ["error", { "paths": ["styled-components", "@wordpress/element"] }]
+    "no-restricted-imports": ["error", { "paths": ["styled-components", "react", "react-dom"] }]
   }
 }

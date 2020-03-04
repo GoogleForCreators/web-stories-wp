@@ -15,14 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import {
-  useRef,
-  useState,
-  useCallback,
-  useLayoutEffect,
-} from '@wordpress/element';
+import { useRef, useState, useCallback, useLayoutEffect } from 'react';
 
 function useDragHandlers(handle, handleHeightChange) {
   const lastPosition = useRef();

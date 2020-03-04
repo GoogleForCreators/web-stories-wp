@@ -18,11 +18,13 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useState, useRef } from 'react';
+
 /**
  * WordPress dependencies
  */
-import { useState, useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */

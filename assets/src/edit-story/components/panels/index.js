@@ -20,18 +20,16 @@
 import { elementTypes } from '../../elements';
 import BackgroundPanel from './background';
 import ColorPanel from './color';
+import StylePanel from './style';
 import PageBackgroundPanel from './pageBackground';
-import BackgroundColorPanel from './backgroundColor';
 import BackgroundStylePanel from './backgroundStyle';
 import FillPanel from './fill';
 import FontPanel from './font';
 import MaskPanel from './mask';
 import MediaStylePanel from './mediaStyle';
-import RotationPanel from './rotationAngle';
-import SizePanel from './size';
-import PositionPanel from './position';
+import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
-import StylePanel from './style';
+import TextStylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
@@ -45,13 +43,11 @@ const BACKGROUND_STYLE = 'backgroundStyle';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
-const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
-const SIZE = 'size';
-const POSITION = 'position';
+const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
-const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const TEXT_STYLE = 'textStyle';
 const MEDIA_STYLE = 'mediaStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
@@ -62,16 +58,14 @@ export const PanelTypes = {
   BACKGROUND,
   BACKGROUND_DISPLAY,
   BACKGROUND_STYLE,
-  POSITION,
-  SIZE,
+  SIZE_POSITION,
   SCALE,
-  BACKGROUND_COLOR,
   COLOR,
   FONT,
   STYLE,
   MEDIA_STYLE,
   TEXT,
-  ROTATION_ANGLE,
+  TEXT_STYLE,
   FILL,
   VIDEO_POSTER,
   MASK,
@@ -127,20 +121,14 @@ export function getPanels(elements) {
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
-        case POSITION:
-          return { type, Panel: PositionPanel };
         case SCALE:
           return { type, Panel: ScalePanel };
-        case ROTATION_ANGLE:
-          return { type, Panel: RotationPanel };
-        case SIZE:
-          return { type, Panel: SizePanel };
+        case SIZE_POSITION:
+          return { type, Panel: SizePositionPanel };
         case MEDIA_STYLE:
           return { type, Panel: MediaStylePanel };
         case FILL:
           return { type, Panel: FillPanel };
-        case BACKGROUND_COLOR:
-          return { type, Panel: BackgroundColorPanel };
         case COLOR:
           return { type, Panel: ColorPanel };
         case FONT:
@@ -149,6 +137,8 @@ export function getPanels(elements) {
           return { type, Panel: StylePanel };
         case TEXT:
           return { type, Panel: TextPanel };
+        case TEXT_STYLE:
+          return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
           return { type, Panel: VideoPosterPanel };
         case MASK:

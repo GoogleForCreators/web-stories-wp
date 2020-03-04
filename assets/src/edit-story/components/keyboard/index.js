@@ -18,11 +18,7 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-
-/**
- * WordPress dependencies
- */
-import { useContext, useEffect, createRef } from '@wordpress/element';
+import { useContext, useEffect, createRef } from 'react';
 
 /**
  * Internal dependencies
