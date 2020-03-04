@@ -19,6 +19,33 @@
  */
 import PropTypes from 'prop-types';
 
+export const HexPropType = PropTypes.shape({
+  r: PropTypes.number.isRequired,
+  g: PropTypes.number.isRequired,
+  b: PropTypes.number.isRequired,
+  a: PropTypes.number,
+});
+
+export const ColorStopPropType = PropTypes.shape({
+  stop: HexPropType.isRequired,
+  position: PropTypes.number.isRequired,
+});
+
+export const PatternPropType = PropTypes.shape({
+  type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
+  color: HexPropType,
+  stops: PropTypes.arrayOf(ColorStopPropType),
+  rotation: PropTypes.number,
+  center: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+  size: PropTypes.shape({
+    w: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -116,30 +143,3 @@ StoryPropTypes.elements.background = PropTypes.shape({
 });
 
 export default StoryPropTypes;
-
-export const HexPropType = PropTypes.shape({
-  r: PropTypes.number.isRequired,
-  g: PropTypes.number.isRequired,
-  b: PropTypes.number.isRequired,
-  a: PropTypes.number,
-});
-
-export const ColorStopPropType = PropTypes.shape({
-  stop: HexPropType.isRequired,
-  position: PropTypes.number.isRequired,
-});
-
-export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
-  color: HexPropType,
-  stops: PropTypes.arrayOf(ColorStopPropType),
-  rotation: PropTypes.number,
-  center: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  size: PropTypes.shape({
-    w: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-});

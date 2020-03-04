@@ -47,6 +47,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           value={backgroundColor}
           isMultiple={backgroundColor === ''}
           onChange={handleChange}
+          label={__('Background color', 'web-stories')}
         />
       </Row>
     </SimplePanel>

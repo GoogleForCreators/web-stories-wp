@@ -49,7 +49,11 @@ function PageBackgroundPanel() {
   );
   return (
     <SimplePanel name="pagebackground" title={__('Page', 'web-stories')}>
-      <Color value={color} onChange={handleChange} />
+      <Color
+        value={color}
+        onChange={handleChange}
+        label={__('Current page color', 'web-stories')}
+      />
     </SimplePanel>
   );
 }

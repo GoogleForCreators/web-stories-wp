@@ -34,14 +34,14 @@ describe('Panels/Color', () => {
   it('should render <Color /> panel', () => {
     const { getByLabelText } = arrange(
       <Color
-        selectedElements={[{ color: '#ffffff' }]}
+        selectedElements={[{ color: { color: { r: 255, g: 0, b: 255 } } }]}
         onSetProperties={() => null}
       />
     );
 
     const element = getByLabelText('Color');
 
-    expect(element).toBeDefined();
+    expect(element.innerHTML).toStrictEqual('FF00FF');
   });
   // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/378
 });

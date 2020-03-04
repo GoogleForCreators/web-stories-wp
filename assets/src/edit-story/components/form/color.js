@@ -145,7 +145,7 @@ function getPreviewText(pattern) {
   }
 }
 
-function ColorInput({ onChange, isMultiple, opacity, value }) {
+function ColorInput({ onChange, isMultiple, opacity, value, label }) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
   const previewOpacity = getPreviewOpacity(value, opacity);
@@ -168,7 +168,7 @@ function ColorInput({ onChange, isMultiple, opacity, value }) {
     <Container ref={ref}>
       <Preview onClick={handleOpenEditing}>
         <VisualPreview style={previewStyle} />
-        <TextualPreview>
+        <TextualPreview aria-label={label}>
           {isMultiple
             ? __('Multiple', 'web-stories')
             : previewText ||
@@ -188,12 +188,14 @@ ColorInput.propTypes = {
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   opacity: PropTypes.number,
+  label: PropTypes.string,
 };
 
 ColorInput.defaultProps = {
   defaultColor: null,
   isMultiple: false,
   opacity: null,
+  labelledBy: null,
 };
 
 export default ColorInput;

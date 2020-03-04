@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -41,7 +41,7 @@ function setupPanel(backgroundColor = null) {
       </StoryContext.Provider>
     </ThemeProvider>
   );
-  const element = getByLabelText('Background color');
+  const element = getByLabelText('Current page color');
   return {
     element,
     updateCurrentPageProperties,
@@ -51,21 +51,11 @@ function setupPanel(backgroundColor = null) {
 describe('PageBackgroundPanel', () => {
   it('should display a color picker with default color if none set', () => {
     const { element } = setupPanel();
-    expect(element.value).toStrictEqual('#ffffff');
+    expect(element.innerHTML).toStrictEqual('FFFFFF');
   });
 
   it('should display a color picker with current color', () => {
-    const { element } = setupPanel('#ff0000');
-    expect(element.value).toStrictEqual('#ff0000');
-  });
-
-  it('should invoke callback with new color when changed', () => {
-    const { element, updateCurrentPageProperties } = setupPanel('#ff0000');
-
-    fireEvent.change(element, { target: { value: '#0000ff' } });
-
-    expect(updateCurrentPageProperties).toHaveBeenCalledWith({
-      properties: { backgroundColor: '#0000ff' },
-    });
+    const { element } = setupPanel({ color: { r: 255, g: 0, b: 0 } });
+    expect(element.innerHTML).toStrictEqual('FF0000');
   });
 });

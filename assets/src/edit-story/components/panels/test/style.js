@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -32,32 +32,17 @@ function arrange(children = null) {
 
 describe('Panels/Style', () => {
   it('should render <Style /> panel', () => {
-    const { getByText } = arrange(
+    const { getByLabelText } = arrange(
       <Style
-        selectedElements={[{ backgroundColor: '#ffffff' }]}
+        selectedElements={[
+          { backgroundColor: { color: { r: 255, g: 255, b: 255 } } },
+        ]}
         onSetProperties={() => null}
       />
     );
 
-    const element = getByText('Background color');
+    const element = getByLabelText('Background color');
 
-    expect(element).toBeDefined();
-  });
-
-  it('should simulate a submit on <Style /> panel', () => {
-    const onClickOnSetPropertiesMock = jest.fn();
-
-    const { getByText } = arrange(
-      <Style
-        selectedElements={[{ backgroundColor: '#ffffff' }]}
-        onSetProperties={onClickOnSetPropertiesMock}
-      />
-    );
-
-    const element = getByText('Background color');
-
-    fireEvent.submit(element.parentNode.parentNode.nextSibling);
-
-    expect(onClickOnSetPropertiesMock).toHaveBeenCalledTimes(1);
+    expect(element.innerHTML).toStrictEqual('FFFFFF');
   });
 });

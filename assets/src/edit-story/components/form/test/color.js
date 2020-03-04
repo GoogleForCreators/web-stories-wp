@@ -35,19 +35,19 @@ describe('Form/Color', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = arrange(
+    const { getByLabelText } = arrange(
       <Color
-        value="#000000"
+        value={{ color: { r: 0, g: 255, b: 0 } }}
         isMultiple={false}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="color"
+        label="color"
       />
     );
 
-    const input = getByTestId('color');
+    const element = getByLabelText('color');
 
-    expect(input).toBeDefined();
+    expect(element.innerHTML).toStrictEqual('00FF00');
   });
   // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/378
 });
