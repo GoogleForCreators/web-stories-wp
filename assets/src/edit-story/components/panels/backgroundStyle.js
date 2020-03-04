@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Row } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
@@ -38,17 +39,18 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   useEffect(() => {
     setState({ flip });
   }, [flip]);
-  const handleSubmit = (evt) => {
+
+  useEffect(() => {
     onSetProperties(state);
-    evt.preventDefault();
-  };
+  }, [onSetProperties, state, state.flip]);
   return (
     <SimplePanel
       name="backgroundStyle"
       title={__('Background Style', 'web-stories')}
-      onSubmit={handleSubmit}
     >
-      <FlipControls properties={{ flip }} setState={setState} state={state} />
+      <Row expand={false}>
+        <FlipControls setState={setState} state={state} />
+      </Row>
     </SimplePanel>
   );
 }

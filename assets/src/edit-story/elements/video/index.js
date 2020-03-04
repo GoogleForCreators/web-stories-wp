@@ -32,6 +32,11 @@ export const defaultAttributes = {
   posterId: null,
   poster: null,
   videoId: 0,
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+  isFill: false,
 };
 
 export const hasEditMode = true;

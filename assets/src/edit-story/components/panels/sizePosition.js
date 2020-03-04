@@ -201,11 +201,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         />
         {isMedia && (
           <>
-            <FlipControls
-              properties={{ flip }}
-              setState={setState}
-              state={state}
-            />
+            <FlipControls setState={setState} state={state} />
             <Toggle
               icon={<Fullbleed />}
               value={state.isFill}

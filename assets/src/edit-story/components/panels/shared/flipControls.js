@@ -19,50 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Button, SelectMenu } from '../../form';
 import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
+import Toggle from '../../form/toggle';
 
-const FlipButton = styled(Button)`
-  background: transparent;
-  border: none;
-  padding: 8px;
-  margin: 0;
-
-  svg {
-    color: ${({ theme }) => theme.colors.fg.v1};
-    width: 16px;
-    height: 16px;
-  }
-`;
-
-function FlipControls({ properties, state, setState }) {
-  const { flip } = properties;
-
-  const FLIP_OFF = 'off';
-  const FLIP_ON = 'on';
-  const flipOptions = [
-    { name: __('Off', 'web-stories'), value: FLIP_OFF },
-    { name: __('On', 'web-stories'), value: FLIP_ON },
-  ];
-
+function FlipControls({ state, setState }) {
   const handleFlipChange = useCallback(
     (property) => (value) => {
       setState({
         ...state,
         flip: {
           ...state.flip,
-          [property]: 'on' === value,
+          [property]: value,
         },
       });
     },
@@ -70,34 +42,21 @@ function FlipControls({ properties, state, setState }) {
   );
   return (
     <>
-      {/** TODO: Implement flip horizontal mode */}
-      <FlipButton>
-        <FlipHorizontal />
-      </FlipButton>
-      {/** TODO: Implement flip vertical mode */}
-      <FlipButton>
-        <FlipVertical />
-      </FlipButton>
-      <SelectMenu
-        label={__('Flip: vertical', 'web-stories')}
-        options={flipOptions}
-        isMultiple={flip === ''}
-        value={state.flip?.vertical ? FLIP_ON : FLIP_OFF}
-        onChange={handleFlipChange('vertical')}
-      />
-      <SelectMenu
-        label={__('Flip: horizontal', 'web-stories')}
-        options={flipOptions}
-        isMultiple={flip === ''}
-        value={state.flip?.horizontal ? FLIP_ON : FLIP_OFF}
+      <Toggle
+        icon={<FlipHorizontal />}
+        value={state.flip?.horizontal}
         onChange={handleFlipChange('horizontal')}
+      />
+      <Toggle
+        icon={<FlipVertical />}
+        value={state.flip?.vertical}
+        onChange={handleFlipChange('vertical')}
       />
     </>
   );
 }
 
 FlipControls.propTypes = {
-  properties: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   setState: PropTypes.func.isRequired,
 };
