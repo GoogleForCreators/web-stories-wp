@@ -75,7 +75,7 @@ function getStopList(stops, isAngular = false) {
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
 function generatePatternCSS(
-  pattern,
+  pattern = null,
   { property = 'background', asString = true } = {}
 ) {
   const isBackground = property === 'background';

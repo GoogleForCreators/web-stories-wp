@@ -24,11 +24,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
+import generatePatternCSS from '../../../utils/generatePatternCSS';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
 const PAGE_THUMB_OUTLINE = 2;
+
+const DEFAULT_COLOR = { color: { r: 255, g: 255, b: 255 } };
 
 const Page = styled.button`
   padding: 0;
@@ -39,8 +42,8 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
+  ${({ backgroundColor }) =>
+    generatePatternCSS(backgroundColor || DEFAULT_COLOR)};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

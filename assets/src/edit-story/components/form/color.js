@@ -39,11 +39,6 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Label = styled.div`
-  width: 60px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.55)};
-`;
-
 const Box = styled.div`
   height: 32px;
   width: 122px;
@@ -76,6 +71,7 @@ const OpacityPreview = styled(Box)`
   line-height: 32px;
   text-align: center;
   cursor: ew-resize;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
 const transparentStyle = {
@@ -149,10 +145,10 @@ function getPreviewText(pattern) {
   }
 }
 
-function ColorInput({ onChange, isMultiple, opacity, label, value }) {
+function ColorInput({ onChange, isMultiple, opacity, value }) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
-  const opacityPreview = getPreviewOpacity(value, opacity);
+  const previewOpacity = getPreviewOpacity(value, opacity);
 
   const {
     actions: { showColorPickerAt, hideColorPicker },
@@ -163,14 +159,13 @@ function ColorInput({ onChange, isMultiple, opacity, label, value }) {
   const handleOpenEditing = useCallback(() => {
     showColorPickerAt(ref.current, {
       color: value,
-      onChange: () => onChange.bind(),
+      onChange,
       onClose: hideColorPicker,
     });
   }, [showColorPickerAt, hideColorPicker, value, onChange]);
 
   return (
     <Container ref={ref}>
-      {label && <Label>{label}</Label>}
       <Preview onClick={handleOpenEditing}>
         <VisualPreview style={previewStyle} />
         <TextualPreview>
@@ -180,18 +175,15 @@ function ColorInput({ onChange, isMultiple, opacity, label, value }) {
               _x('None', 'No color or gradient selected', 'web-stories')}
         </TextualPreview>
       </Preview>
-      {previewText && (
-        <OpacityPreview>
-          {opacityPreview}
-          {_x('%', 'Percentage', 'web-stories')}
-        </OpacityPreview>
-      )}
+      <OpacityPreview isVisible={Boolean(previewText)}>
+        {previewOpacity}
+        {_x('%', 'Percentage', 'web-stories')}
+      </OpacityPreview>
     </Container>
   );
 }
 
 ColorInput.propTypes = {
-  label: PropTypes.string,
   value: PatternPropType,
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,

@@ -89,8 +89,10 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
   const fontWeights = getCommonValue(selectedElements, 'fontWeights');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle') || 'normal';
   const fontFallback = getCommonValue(selectedElements, 'fontFallback');
-  const backgroundColor =
-    getCommonValue(selectedElements, 'backgroundColor') || '#000000';
+
+  // TODO make this work for multiple elements!
+  const backgroundColor = selectedElements[0].backgroundColor || null;
+  const color = selectedElements[0].color || null;
 
   const {
     state: { fonts },
@@ -108,22 +110,30 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
     lineHeight,
     padding,
     backgroundColor,
+    color,
   });
   const [lockRatio, setLockRatio] = useState(true);
   useEffect(() => {
-    setState({ textAlign, letterSpacing, lineHeight, padding });
+    setState((oldState) => ({
+      ...oldState,
+      textAlign,
+      letterSpacing,
+      lineHeight,
+      padding,
+    }));
   }, [textAlign, letterSpacing, lineHeight, padding]);
   useEffect(() => {
     const currentFontWeights = getFontWeight(fontFamily);
     const currentFontFallback = getFontFallback(fontFamily);
-    setState({
+    setState((oldState) => ({
+      ...oldState,
       fontFamily,
       fontStyle,
       fontSize,
       fontWeight,
       fontWeights: currentFontWeights,
       fontFallback: currentFontFallback,
-    });
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontFamily, fontStyle, fontSize, fontWeight, getFontWeight]);
   const handleSubmit = (evt) => {
@@ -147,7 +157,9 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
       };
     });
 
-    evt.preventDefault();
+    if (evt) {
+      evt.preventDefault();
+    }
   };
 
   const fontStyles = [
@@ -299,12 +311,18 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           }
         />
       </Row>
-      <Row>
+      <Row spaceBetween={false}>
         <Label>{__('Text', 'web-stories')}</Label>
+        <Color
+          value={state.color}
+          onChange={(value) => setState({ ...state, color: value })}
+        />
+      </Row>
+      <Row spaceBetween={false}>
+        <Label>{__('Textbox', 'web-stories')}</Label>
         <Color
           value={state.backgroundColor}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
-          opacity={1}
         />
       </Row>
       {/* TODO: Update padding logic */}

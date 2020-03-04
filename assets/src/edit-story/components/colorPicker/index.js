@@ -25,7 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -75,18 +75,13 @@ function ColorPicker({ color, onChange, onClose }) {
   } = useColor();
 
   useEffect(() => {
-    if (generatedColor && generatedColor !== color) {
+    if (generatedColor) {
       onChange(generatedColor);
     }
   }, [color, generatedColor, onChange]);
 
-  // When color updates from outside, reload in picker unless it's the same at the last export color
-  const generatedColorRef = useRef(generatedColor);
   useEffect(() => {
-    generatedColorRef.current = generatedColor;
-  }, [generatedColor]);
-  useEffect(() => {
-    if (color && color !== generatedColorRef.current) {
+    if (color) {
       load(color);
     }
   }, [color, load]);
@@ -114,7 +109,7 @@ function ColorPicker({ color, onChange, onClose }) {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  color: PatternPropType.isRequired,
+  color: PatternPropType,
 };
 
 ColorPicker.defaultProps = {

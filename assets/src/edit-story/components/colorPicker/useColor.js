@@ -26,6 +26,7 @@ export const TYPE_CONIC = 'conic';
 
 const initialState = {
   type: TYPE_SOLID,
+  regenerate: false,
   stops: [],
   currentColor: {
     r: 0,
@@ -46,6 +47,7 @@ const reducer = {
       case TYPE_LINEAR:
         return {
           ...state,
+          regenerate: false,
           color: stops[0].color,
           stops,
           angle,
@@ -54,6 +56,7 @@ const reducer = {
       case TYPE_RADIAL:
         return {
           ...state,
+          regenerate: false,
           color: stops[0].color,
           stops,
           center,
@@ -63,6 +66,7 @@ const reducer = {
       case TYPE_CONIC:
         return {
           ...state,
+          regenerate: false,
           color: stops[0].color,
           stops,
           angle,
@@ -73,6 +77,7 @@ const reducer = {
       default:
         return {
           ...state,
+          regenerate: false,
           currentColor: color,
         };
     }
@@ -80,6 +85,7 @@ const reducer = {
   setToSolid: (state) => ({
     ...state,
     type: TYPE_SOLID,
+    regenerate: true,
   }),
   setToGradient: (state, { payload }) => ({
     ...state,
@@ -94,9 +100,10 @@ const reducer = {
     foo: payload,
   }),
   updateCurrentColor: (state, { payload: { rgb } }) => {
-    const currentColor = `rgba(${Object.values(rgb).join(',')})`;
+    const currentColor = { ...rgb };
     const newState = {
       ...state,
+      regenerate: true,
       currentColor,
     };
 
@@ -135,11 +142,29 @@ const reducer = {
   }),
 };
 
+function regenerateColor(pattern) {
+  const { regenerate, type } = pattern;
+  if (!regenerate) {
+    return null;
+  }
+
+  switch (type) {
+    case TYPE_SOLID: {
+      const {
+        currentColor: { r, g, b, a },
+      } = pattern;
+      const minColor = a === 1 ? { r, g, b } : { r, g, b, a };
+      return { color: minColor };
+    }
+    default:
+      return null;
+  }
+}
+
 function useColor() {
   const [state, actions] = useReduction(initialState, reducer);
 
-  // TODO: Generate compact output for color
-  const generatedColor = {};
+  const generatedColor = regenerateColor(state);
 
   return {
     state: {

@@ -23,16 +23,19 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import generatePatternCSS from '../../utils/generatePatternCSS';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+
+const DEFAULT_COLOR = { color: { r: 255, g: 255, b: 255 } };
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
   overflowAllowed: false,
 })`
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
+  ${({ backgroundColor }) =>
+    generatePatternCSS(backgroundColor || DEFAULT_COLOR)};
 `;
 
 function DisplayLayer() {

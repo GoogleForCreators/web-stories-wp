@@ -45,7 +45,6 @@ function PageBackgroundPanel() {
   );
   return (
     <SimplePanel name="pagebackground" title={__('Page', 'web-stories')}>
-      {/* TODO: Replace with custom color picker component once implemented */}
       <Color value={color} onChange={handleChange} />
     </SimplePanel>
   );
