@@ -49,15 +49,18 @@ const FadedVideo = styled.video`
   max-height: initial;
 `;
 
+// Opacity of the mask is reduced depending on the opacity assigned to the video.
 const CropVideo = styled.video`
   position: absolute;
   ${videoWithScale}
   max-width: initial;
   max-height: initial;
   opacity: ${({ opacity }) =>
-    opacity ? opacity - opacity * MEDIA_MASK_OPACITY : null};
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the video.
 function VideoEdit({
   element: { id, src, origRatio, scale, focalX, focalY, mimeType, opacity },
   box: { x, y, width, height, rotationAngle },

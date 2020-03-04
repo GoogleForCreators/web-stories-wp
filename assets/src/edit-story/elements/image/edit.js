@@ -41,6 +41,7 @@ const Element = styled.div`
   ${elementFillContent}
 `;
 
+// Opacity of the mask is reduced depending on the opacity assigned to the image.
 const FadedImg = styled.img`
   position: absolute;
   opacity: ${({ opacity }) =>
@@ -49,10 +50,12 @@ const FadedImg = styled.img`
   ${imageWithScale}
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the image.
 const CropImg = styled.img`
   position: absolute;
   opacity: ${({ opacity }) =>
-    opacity ? opacity - opacity * MEDIA_MASK_OPACITY : null};
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
   ${imageWithScale}
 `;
 
