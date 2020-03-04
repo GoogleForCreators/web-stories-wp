@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import createSolid from '../../utils/createSolid';
 import useReduction from './useReduction';
+import insertStop from './insertStop';
 
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';
@@ -87,18 +89,75 @@ const reducer = {
     type: TYPE_SOLID,
     regenerate: true,
   }),
-  setToGradient: (state, { payload }) => ({
-    ...state,
-    type: payload,
-  }),
-  addStopAt: (state, { payload }) => ({
-    ...state,
-    foo: payload,
-  }),
-  moveCurrentStopTo: (state, { payload }) => ({
-    ...state,
-    foo: payload,
-  }),
+  setToGradient: (state, { payload }) => {
+    const stops = state.stops || [
+      { color: state.currentColor, position: 0 },
+      { color: state.currentColor, position: 1 },
+    ];
+    return {
+      ...state,
+      regenerate: true,
+      type: payload,
+      stops,
+    };
+  },
+  addStopAt: (state, { payload: newPosition }) => {
+    // If there's already a stop at this position, do nothing:
+    if (state.stops.some(({ position }) => position === newPosition)) {
+      return state;
+    }
+
+    const { index, color } = insertStop(state.stops, newPosition);
+
+    const stops = [
+      ...state.stops.slice(0, index),
+      { color, position: newPosition },
+      ...state.stops.slice(index),
+    ];
+    return {
+      ...state,
+      regenerate: true,
+      currentStopIndex: index,
+      stops,
+    };
+  },
+  moveCurrentStopTo: (state, { payload: newPosition }) => {
+    const index = state.currentStopIndex;
+    const stops = [
+      ...state.stops.slice(0, index),
+      { ...state.stops[index], position: newPosition },
+      ...state.stops.slice(index + 1),
+    ];
+
+    stops.sort((a, b) => b.position - a.position);
+
+    const currentStopIndex = stops.findIndex(
+      ({ position }) => position === newPosition
+    );
+
+    return {
+      ...state,
+      regenerate: true,
+      stops,
+      currentStopIndex,
+    };
+  },
+  removeCurrentStop: (state, {}) => {
+    // Can't have less than two stops
+    if (state.stops.length === 2) {
+      return state;
+    }
+    const index = state.currentStopIndex;
+    const stops = state.stops.splice(index, 1);
+    const currentStopIndex = index === stops.length ? index - 1 : index;
+
+    return {
+      ...state,
+      regenerate: true,
+      stops,
+      currentStopIndex,
+    };
+  },
   updateCurrentColor: (state, { payload: { rgb } }) => {
     const currentColor = { ...rgb };
     const newState = {
@@ -126,14 +185,9 @@ const reducer = {
     angle: state.angle + 90,
     regenerate: true,
   }),
-  selectStop: (state, { payload }) => ({
+  selectStop: (state, { payload: newIndex }) => ({
     ...state,
-    currentStopIndex: payload,
-  }),
-  deleteStop: (state, { payload: indexToDelete }) => ({
-    ...state,
-    stops: state.stops.filter((stop, index) => index !== indexToDelete),
-    regenerate: true,
+    currentStopIndex: Math.max(0, Math.min(state.stops.length - 1, newIndex)),
   }),
   reverseStops: (state) => ({
     ...state,
@@ -153,9 +207,9 @@ function regenerateColor(pattern) {
       const {
         currentColor: { r, g, b, a },
       } = pattern;
-      const minColor = a === 1 ? { r, g, b } : { r, g, b, a };
-      return { color: minColor };
+      return createSolid(r, g, b, a);
     }
+    // TODO: generate minimal color representations for gradients
     default:
       return null;
   }
