@@ -22,7 +22,9 @@ import generatePatternCSS from '../generatePatternCSS';
 describe('generatePatternCSS', () => {
   describe('given null', () => {
     it('should return transparent', () => {
-      expect(generatePatternCSS(null)).toBe('background: transparent');
+      expect(generatePatternCSS(null)).toStrictEqual({
+        background: 'transparent',
+      });
     });
   });
 
@@ -36,47 +38,26 @@ describe('generatePatternCSS', () => {
 
   describe('given a color', () => {
     it('should return shortest form if possible', () => {
-      expect(generatePatternCSS({ color: { r: 255, g: 0, b: 0 } })).toBe(
-        'background-color: #f00'
-      );
+      expect(
+        generatePatternCSS({ color: { r: 255, g: 0, b: 0 } })
+      ).toStrictEqual({ backgroundColor: '#f00' });
     });
 
     it('should return short form', () => {
-      expect(generatePatternCSS({ color: { r: 254, g: 0, b: 0, a: 1 } })).toBe(
-        'background-color: #fe0000'
-      );
+      expect(
+        generatePatternCSS({ color: { r: 254, g: 0, b: 0, a: 1 } })
+      ).toStrictEqual({ backgroundColor: '#fe0000' });
     });
 
     it('should return rgba if transparent', () => {
       expect(
         generatePatternCSS({ color: { r: 255, g: 0, b: 0, a: 0.7 } })
-      ).toBe('background-color: rgba(255,0,0,0.7)');
+      ).toStrictEqual({ backgroundColor: 'rgba(255,0,0,0.7)' });
     });
 
     it('should be able to render non-background properties', () => {
       expect(
-        generatePatternCSS(
-          { color: { r: 255, g: 0, b: 0 } },
-          { property: 'fill' }
-        )
-      ).toBe('fill: #f00');
-    });
-
-    it('should be able to render a style object', () => {
-      expect(
-        generatePatternCSS(
-          { color: { r: 255, g: 0, b: 0 } },
-          { asString: false }
-        )
-      ).toStrictEqual({ backgroundColor: '#f00' });
-    });
-
-    it('should be able to render a non-background style object', () => {
-      expect(
-        generatePatternCSS(
-          { color: { r: 255, g: 0, b: 0 } },
-          { property: 'fill', asString: false }
-        )
+        generatePatternCSS({ color: { r: 255, g: 0, b: 0 } }, 'fill')
       ).toStrictEqual({ fill: '#f00' });
     });
   });
@@ -92,26 +73,9 @@ describe('generatePatternCSS', () => {
               { color: { r: 0, g: 0, b: 255 }, position: 1 },
             ],
           },
-          { property: 'fill' }
+          'fill'
         )
       ).toThrow(/only generate solid/i);
-    });
-
-    it('should be able to render a style object', () => {
-      expect(
-        generatePatternCSS(
-          {
-            type: 'linear',
-            stops: [
-              { color: { r: 255, g: 0, b: 0 }, position: 0 },
-              { color: { r: 0, g: 0, b: 255 }, position: 1 },
-            ],
-          },
-          { asString: false }
-        )
-      ).toStrictEqual({
-        backgroundImage: 'linear-gradient(#f00 0%, #00f 100%)',
-      });
     });
   });
 
@@ -125,7 +89,9 @@ describe('generatePatternCSS', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
         })
-      ).toBe('background-image: linear-gradient(#f00 0%, #00f 100%)');
+      ).toStrictEqual({
+        backgroundImage: 'linear-gradient(#f00 0%, #00f 100%)',
+      });
     });
 
     it('should be able to render a multi-stop gradient with transparencies at an angle', () => {
@@ -139,9 +105,10 @@ describe('generatePatternCSS', () => {
           ],
           rotation: 0.25,
         })
-      ).toBe(
-        'background-image: linear-gradient(0.25turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'linear-gradient(0.25turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
+      });
     });
   });
 
@@ -155,7 +122,9 @@ describe('generatePatternCSS', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
         })
-      ).toBe('background-image: conic-gradient(#f00 0turn, #00f 1turn)');
+      ).toStrictEqual({
+        backgroundImage: 'conic-gradient(#f00 0turn, #00f 1turn)',
+      });
     });
 
     it('should be able to render a multi-stop gradient', () => {
@@ -168,9 +137,10 @@ describe('generatePatternCSS', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
         })
-      ).toBe(
-        'background-image: conic-gradient(rgba(255,0,0,0) 0turn, #f00 0.6turn, #00f 1turn)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'conic-gradient(rgba(255,0,0,0) 0turn, #f00 0.6turn, #00f 1turn)',
+      });
     });
 
     it('should be able to render at an angle', () => {
@@ -183,9 +153,10 @@ describe('generatePatternCSS', () => {
           ],
           rotation: 0.25,
         })
-      ).toBe(
-        'background-image: conic-gradient(from 0.25turn, #f00 0turn, #00f 1turn)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'conic-gradient(from 0.25turn, #f00 0turn, #00f 1turn)',
+      });
     });
 
     it('should be able to render off-center', () => {
@@ -198,9 +169,9 @@ describe('generatePatternCSS', () => {
           ],
           center: { x: 0.4, y: 0.6 },
         })
-      ).toBe(
-        'background-image: conic-gradient(at 40% 60%, #f00 0turn, #00f 1turn)'
-      );
+      ).toStrictEqual({
+        backgroundImage: 'conic-gradient(at 40% 60%, #f00 0turn, #00f 1turn)',
+      });
     });
 
     it('should be able to at an angle *and* off-center', () => {
@@ -214,9 +185,10 @@ describe('generatePatternCSS', () => {
           rotation: 0.25,
           center: { x: 0.4, y: 0.6 },
         })
-      ).toBe(
-        'background-image: conic-gradient(from 0.25turn at 40% 60%, #f00 0turn, #00f 1turn)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'conic-gradient(from 0.25turn at 40% 60%, #f00 0turn, #00f 1turn)',
+      });
     });
   });
 
@@ -230,7 +202,9 @@ describe('generatePatternCSS', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
         })
-      ).toBe('background-image: radial-gradient(#f00 0%, #00f 100%)');
+      ).toStrictEqual({
+        backgroundImage: 'radial-gradient(#f00 0%, #00f 100%)',
+      });
     });
 
     it('should be able to render a multi-stop gradient', () => {
@@ -243,9 +217,10 @@ describe('generatePatternCSS', () => {
             { color: { r: 0, g: 0, b: 255 }, position: 1 },
           ],
         })
-      ).toBe(
-        'background-image: radial-gradient(rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'radial-gradient(rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
+      });
     });
 
     it('should be able to render different size', () => {
@@ -258,9 +233,10 @@ describe('generatePatternCSS', () => {
           ],
           size: { w: 0.2, h: 0.45678 },
         })
-      ).toBe(
-        'background-image: radial-gradient(ellipse 20% 45.68%, #f00 0%, #00f 100%)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'radial-gradient(ellipse 20% 45.68%, #f00 0%, #00f 100%)',
+      });
     });
 
     it('should be able to render off-center', () => {
@@ -273,9 +249,9 @@ describe('generatePatternCSS', () => {
           ],
           center: { x: 0.4, y: 0.6 },
         })
-      ).toBe(
-        'background-image: radial-gradient(at 40% 60%, #f00 0%, #00f 100%)'
-      );
+      ).toStrictEqual({
+        backgroundImage: 'radial-gradient(at 40% 60%, #f00 0%, #00f 100%)',
+      });
     });
 
     it('should be able to different size *and* off-center', () => {
@@ -289,9 +265,10 @@ describe('generatePatternCSS', () => {
           size: { w: 0.2, h: 0.45678 },
           center: { x: 0.4, y: 0.6 },
         })
-      ).toBe(
-        'background-image: radial-gradient(ellipse 20% 45.68% at 40% 60%, #f00 0%, #00f 100%)'
-      );
+      ).toStrictEqual({
+        backgroundImage:
+          'radial-gradient(ellipse 20% 45.68% at 40% 60%, #f00 0%, #00f 100%)',
+      });
     });
   });
 });

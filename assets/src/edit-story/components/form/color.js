@@ -94,7 +94,7 @@ function getPreviewStyle(pattern, defaultColor) {
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
-    return generatePatternCSS(pattern, { asString: false });
+    return generatePatternCSS(pattern);
   }
   const {
     color: { r, g, b, a },
@@ -104,8 +104,8 @@ function getPreviewStyle(pattern, defaultColor) {
     return transparentStyle;
   }
 
-  // Otherwisecreate color, but with full opacity
-  return generatePatternCSS({ color: { r, g, b } }, { asString: false });
+  // Otherwise create color, but with full opacity
+  return generatePatternCSS({ color: { r, g, b } });
 }
 
 function getPreviewOpacity(pattern, specifiedOpacity = 1) {

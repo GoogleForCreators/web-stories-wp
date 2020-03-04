@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import generatePatternCSS from '../../utils/generatePatternCSS';
+import convertToCSS from '../../utils/convertToCSS';
 export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
@@ -72,11 +73,12 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  ${({ backgroundColor }) => generatePatternCSS(backgroundColor)};
+  ${({ backgroundColor }) => convertToCSS(generatePatternCSS(backgroundColor))};
 `;
 
 export const elementWithFontColor = css`
-  ${({ color }) => generatePatternCSS(color, { property: 'color' })};
+  ${({ color }) =>
+    convertToCSS(generatePatternCSS(color, { property: 'color' }))};
 `;
 
 export const elementWithFont = css`

@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 import useStory from '../../../app/story/useStory';
 import generatePatternCSS from '../../../utils/generatePatternCSS';
+import convertToCSS from '../../../utils/convertToCSS';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
@@ -43,7 +44,7 @@ const Page = styled.button`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   ${({ backgroundColor }) =>
-    generatePatternCSS(backgroundColor || DEFAULT_COLOR)};
+    convertToCSS(generatePatternCSS(backgroundColor || DEFAULT_COLOR))};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

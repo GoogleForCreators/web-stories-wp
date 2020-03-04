@@ -51,8 +51,8 @@ function TextOutput({
     padding: padding ? padding + '%' : null,
     textAlign: textAlign ? textAlign : null,
     whiteSpace: 'pre-wrap',
-    ...generatePatternCSS(backgroundColor, { asString: false }),
-    ...generatePatternCSS(color, { property: 'color', asString: false }),
+    ...generatePatternCSS(backgroundColor),
+    ...generatePatternCSS(color, 'color'),
   };
 
   return (

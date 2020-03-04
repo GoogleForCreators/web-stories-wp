@@ -14,22 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import generatePatternCSS from '../../utils/generatePatternCSS';
-
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function SquareOutput({ element: { backgroundColor } }) {
-  const style = generatePatternCSS(backgroundColor);
-  return <div className="fill" style={style} />;
+function convertToCSS(style) {
+  return Object.entries(style).reduce((str, [key, val]) => {
+    const casedKey = key.replace(
+      /[A-Z]/g,
+      (match) => `-${match.toLowerCase()}`
+    );
+    return `${str}${casedKey}:${val};`;
+  }, '');
 }
 
-SquareOutput.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareOutput;
+export default convertToCSS;

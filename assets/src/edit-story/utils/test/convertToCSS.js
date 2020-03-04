@@ -17,19 +17,21 @@
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import convertToCSS from '../convertToCSS';
 
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function SquareOutput({ element: { backgroundColor } }) {
-  const style = generatePatternCSS(backgroundColor);
-  return <div className="fill" style={style} />;
-}
-
-SquareOutput.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareOutput;
+describe('convertToCSS', () => {
+  it('should convert object correctly', () => {
+    const input = {
+      fill: 0,
+      backgroundColor: 'red',
+      borderLeftImage: 'radial-gradient(red, blue)',
+    };
+    const output = [
+      'fill:0',
+      'background-color:red',
+      'border-left-image:radial-gradient(red, blue)',
+    ];
+    const expected = output.map((v) => `${v};`).join('');
+    expect(convertToCSS(input)).toStrictEqual(expected);
+  });
+});

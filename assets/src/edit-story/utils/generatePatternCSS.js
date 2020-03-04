@@ -66,23 +66,15 @@ function getStopList(stops, isAngular = false) {
  * Generate CSS from a Pattern.
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
- * @param {Object} options Optional settings
- * @param {string} options.property Type of CSS to generate. Defaults to 'background',
+ * @param {Object} property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
- * @param {boolean} options.asString If true (default) generates a string, if false a style object,
  *
- * @return {string | Object} CSS declaration as string or object, e.g. 'fill: transparent' or
+ * @return {string | Object} CSS declaration as string or object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
-function generatePatternCSS(
-  pattern = null,
-  { property = 'background', asString = true } = {}
-) {
+function generatePatternCSS(pattern = null, property = 'background') {
   const isBackground = property === 'background';
   if (pattern === null) {
-    if (asString) {
-      return `${property}: transparent`;
-    }
     return { [property]: 'transparent' };
   }
 
@@ -101,10 +93,6 @@ function generatePatternCSS(
     const {
       color: { r, g, b, a = 1 },
     } = pattern;
-    if (asString) {
-      const stringPropertyPostfix = isBackground ? '-color' : '';
-      return `${property}${stringPropertyPostfix}: ${rgba(r, g, b, a)}`;
-    }
     const objectPropertyPostfix = isBackground ? 'Color' : '';
     return { [`${property}${objectPropertyPostfix}`]: rgba(r, g, b, a) };
   }
@@ -115,9 +103,6 @@ function generatePatternCSS(
   const stopList = getStopList(stops, type === 'conic');
   const parms = description ? [description, ...stopList] : stopList;
   const value = `${func}(${parms.join(', ')})`;
-  if (asString) {
-    return `background-image: ${value}`;
-  }
   return { backgroundImage: value };
 }
 

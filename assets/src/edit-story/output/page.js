@@ -34,9 +34,7 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
-  const backgroundStyles = generatePatternCSS(backgroundColor, {
-    asString: false,
-  });
+  const backgroundStyles = generatePatternCSS(backgroundColor);
   const backgroundNonFullbleedElements = page.elements.filter(
     (element) =>
       element.id === page.backgroundElementId &&
