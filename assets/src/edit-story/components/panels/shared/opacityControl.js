@@ -18,28 +18,33 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../../form';
+import { Numeric } from '../../form';
+
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
 
 function OpacityControl({ properties, state, setState }) {
   const { opacity } = properties;
 
   return (
-    <InputGroup
-      type="number"
-      label={__('Opacity', 'web-stories')}
+    <BoxedNumeric
+      suffix={__('Opacity', 'web-stories')}
+      symbol={_x('%', 'Percentage', 'web-stories')}
       value={state.opacity}
       isMultiple={'' === opacity}
-      onChange={(value) => setState({ ...state, opacity: value })}
-      postfix="%"
+      onChange={(value) => setState({ ...state, opacity: parseInt(value) })}
       min="1"
       max="100"
     />

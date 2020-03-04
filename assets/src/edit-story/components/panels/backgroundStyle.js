@@ -18,16 +18,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { Row } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import OpacityControl from './shared/opacityControl';
@@ -50,13 +51,15 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
       title={__('Background Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <OpacityControl
-        properties={{
-          opacity,
-        }}
-        setState={setState}
-        state={state}
-      />
+      <Row expand={false} spaceBetween={true}>
+        <OpacityControl
+          properties={{
+            opacity,
+          }}
+          setState={setState}
+          state={state}
+        />
+      </Row>
     </SimplePanel>
   );
 }
