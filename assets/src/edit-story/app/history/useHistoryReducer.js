@@ -89,6 +89,9 @@ function useHistoryReducer(size) {
   const { entries, offset, replayState } = state;
   const historyLength = entries.length;
 
+  // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
+  // It appears the only reason for deps here is to return boolean from this
+  // method, which is otherwise appears to be unused.
   const replay = useCallback(
     (deltaOffset) => {
       const newOffset = offset + deltaOffset;
