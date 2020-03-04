@@ -134,12 +134,8 @@ function Carousel() {
   const [carouselSize, setCarouselSize] = useState({});
   const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
 
-  const openModal = useCallback(() => setIsGridViewOpen(true), [
-    setIsGridViewOpen,
-  ]);
-  const closeModal = useCallback(() => setIsGridViewOpen(false), [
-    setIsGridViewOpen,
-  ]);
+  const openModal = useCallback(() => setIsGridViewOpen(true), []);
+  const closeModal = useCallback(() => setIsGridViewOpen(false), []);
 
   useResizeEffect(
     listRef,
@@ -275,14 +271,16 @@ function Carousel() {
           />
         </NavArea>
       </Wrapper>
-      <Modal
-        isOpen={isGridViewOpen}
-        onRequestClose={closeModal}
-        contentLabel={__('Grid View', 'web-stories')}
-        closeButtonLabel={__('Back', 'web-stories')}
-      >
-        <GridView />
-      </Modal>
+      {isGridViewOpen && (
+        <Modal
+          isOpen={isGridViewOpen}
+          onRequestClose={closeModal}
+          contentLabel={__('Grid View', 'web-stories')}
+          closeButtonLabel={__('Back', 'web-stories')}
+        >
+          <GridView />
+        </Modal>
+      )}
     </>
   );
 }
