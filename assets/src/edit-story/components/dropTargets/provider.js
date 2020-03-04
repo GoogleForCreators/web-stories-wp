@@ -40,7 +40,7 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { deleteElementById, updateElementById },
+    actions: { deleteElementById, setSelectedElementsById, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -130,15 +130,23 @@ function DropTargetsProvider({ children }) {
             updates: { dropTargetActive: false, elementReplacement: null },
           })
         );
+        setSelectedElementsById({ elementIds: activeDropTargetId });
         setactiveDropTargetId(null);
       }
     },
-    [activeDropTargetId, combineElements, currentPage, pushTransform]
+    [
+      activeDropTargetId,
+      combineElements,
+      currentPage,
+      pushTransform,
+      setSelectedElementsById,
+    ]
   );
 
   const state = {
     state: {
       dropTargets,
+      activeDropTargetId,
     },
     actions: {
       registerDropTarget,

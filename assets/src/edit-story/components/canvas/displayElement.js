@@ -66,14 +66,7 @@ function DisplayElement({ element }) {
       target.style.opacity = 1;
     } else {
       const { translate, rotate, resize, updates } = transform;
-      let transforms = '';
-      if (translate && translate[0] !== 0 && translate[1] !== 0) {
-        transforms += `translate(${translate[0]}px, ${translate[1]}px) `;
-      }
-      if (rotate) {
-        transforms += `rotate(${rotate}deg)`;
-      }
-      target.style.transform = transforms;
+      target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;

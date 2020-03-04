@@ -53,13 +53,7 @@ export default function WithMask({
   const mask = getElementMask(element);
   useTransformHandler(element.id, (transform) => {
     const elementReplacement = transform?.updates?.elementReplacement;
-    if (elementReplacement) {
-      const { type } = elementReplacement;
-      const { Display } = getDefinitionForType(type);
-      setReplacement(<Display element={elementReplacement} box={box} />);
-    } else {
-      setReplacement(null);
-    }
+    setReplacement(elementReplacement);
   });
 
   if (!mask?.type) {
@@ -70,6 +64,15 @@ export default function WithMask({
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
   const maskId = `mask-${mask.type}-${element.id}`;
+
+  const getDisplayElement = (el) => {
+    const { type } = el;
+    // Required two-step destructure because of a bug in eslint
+    // https://github.com/WordPress/gutenberg/issues/16418
+    const def = getDefinitionForType(type);
+    const Display = def.Display;
+    return <Display element={el} box={box} />;
+  };
 
   return (
     <div
@@ -87,7 +90,7 @@ export default function WithMask({
           </clipPath>
         </defs>
       </svg>
-      {replacement || children}
+      {replacement ? getDisplayElement(replacement) : children}
     </div>
   );
 }

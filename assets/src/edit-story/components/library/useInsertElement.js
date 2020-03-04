@@ -28,8 +28,8 @@ import { DEFAULT_MASK } from '../../masks';
 
 function useInsertElement() {
   const isMediaEl = (type) => {
-    const def = getDefinitionForType(type);
-    return def?.isMedia;
+    const { isMedia } = getDefinitionForType(type);
+    return isMedia;
   };
   const {
     actions: { addElement, setBackgroundElement },

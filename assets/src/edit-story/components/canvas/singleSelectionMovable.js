@@ -145,8 +145,11 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   // Drop targets
   const {
+    state: { activeDropTargetId },
     actions: { handleDrag, handleDrop },
   } = useDropTargets();
+
+  const snappable = !isDragging || (isDragging && !activeDropTargetId);
 
   return (
     <Movable
@@ -263,11 +266,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={true}
-      snapElement={true}
-      snapHorizontal={true}
-      snapVertical={true}
-      snapCenter={true}
+      snappable={snappable}
+      snapCenter={snappable}
       horizontalGuidelines={
         actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
       }
