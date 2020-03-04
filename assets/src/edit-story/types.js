@@ -117,22 +117,22 @@ StoryPropTypes.elements.background = PropTypes.shape({
 
 export default StoryPropTypes;
 
-export const Hex = PropTypes.shape({
+export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
   g: PropTypes.number.isRequired,
   b: PropTypes.number.isRequired,
   a: PropTypes.number,
 });
 
-export const ColorStop = PropTypes.shape({
-  stop: Hex.isRequired,
+export const ColorStopPropType = PropTypes.shape({
+  stop: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
 });
 
-export const Pattern = PropTypes.shape({
+export const PatternPropType = PropTypes.shape({
   type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
-  color: Hex,
-  stops: PropTypes.arrayOf(ColorStop),
+  color: HexPropType,
+  stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number.isRequired,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,

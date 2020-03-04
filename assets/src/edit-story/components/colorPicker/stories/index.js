@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
-import { useState, useEffect } from 'react';
+import { object } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -31,11 +30,9 @@ export default {
 };
 
 export const _default = () => {
-  const initialColor = text('Initial Color', '#44aaff');
+  const initialColor = object('Initial Color', {
+    color: { r: 255, g: 0, b: 0 },
+  });
 
-  const [color, setColor] = useState(initialColor);
-
-  useEffect(() => setColor(initialColor), [initialColor]);
-
-  return <ColorPicker color={color} onChange={setColor} />;
+  return <ColorPicker color={initialColor} onChange={() => {}} />;
 };

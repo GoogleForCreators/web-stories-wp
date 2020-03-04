@@ -30,6 +30,7 @@ import { useEffect, useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import { PatternPropType } from '../../types';
 import { Close } from '../button';
 import CurrentColorPicker from './currentColorPicker';
 import useColor from './useColor';
@@ -113,7 +114,7 @@ function ColorPicker({ color, onChange, onClose }) {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  color: PropTypes.string,
+  color: PatternPropType.isRequired,
 };
 
 ColorPicker.defaultProps = {
