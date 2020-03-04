@@ -15,14 +15,14 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useCallback } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 

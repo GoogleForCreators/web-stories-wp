@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -25,7 +26,6 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
 
 const SwitchContainer = styled.div`
   appearance: none;

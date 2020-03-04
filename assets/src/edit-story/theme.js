@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useContext } from '@wordpress/element';
+import { useContext } from 'react';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -65,7 +61,7 @@ const theme = {
       v3: '#D4D3D4',
       v4: '#B3B3B3',
       v5: '#DDDDDD',
-      v6: '#EDEDED',
+      v6: '#232636',
     },
     action: '#47A0F4',
     danger: '#FF0000',
@@ -87,7 +83,7 @@ const theme = {
     body2: {
       family: 'Roboto',
       size: '14px',
-      lineHeight: '20px',
+      lineHeight: '16px',
       letterSpacing: '0.0142em',
     },
     tab: {

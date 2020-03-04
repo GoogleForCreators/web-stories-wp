@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { text } from '@storybook/addon-knobs';
-
-/**
- * WordPress dependencies
- */
-import { useCallback, useState } from '@wordpress/element';
+import { useCallback, useState } from 'react';
 
 /**
  * Internal dependencies
