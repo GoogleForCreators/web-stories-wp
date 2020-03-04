@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**

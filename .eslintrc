@@ -110,8 +110,8 @@
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
-      "extends": ["plugin:jest/all", "plugin:testing-library/recommended"],
-      "plugins": ["jsx-a11y", "header", "testing-library"],
+      "extends": ["plugin:jest/all", "plugin:testing-library/recommended", "plugin:jest-dom/recommended"],
+      "plugins": ["jsx-a11y", "header", "testing-library", "jest-dom"],
       "rules": {
         "jest/lowercase-name": [
           "error",

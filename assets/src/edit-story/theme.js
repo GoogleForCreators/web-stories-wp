@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useContext } from '@wordpress/element';
+import { useContext } from 'react';
 
 export const GlobalStyle = createGlobalStyle`
 	*,

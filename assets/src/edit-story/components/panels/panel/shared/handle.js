@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
-import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**

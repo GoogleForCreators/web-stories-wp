@@ -18,11 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
