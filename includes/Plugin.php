@@ -46,11 +46,11 @@ class Plugin {
 
 		// REST API endpoints.
 
-		$fontsController = new Fonts_Controller();
-		add_action( 'rest_api_init', [ $fontsController, 'register_routes' ] );
+		$fonts_controller = new Fonts_Controller();
+		add_action( 'rest_api_init', [ $fonts_controller, 'register_routes' ] );
 
-		$linkController = new Link_Controller();
-		add_action( 'rest_api_init', [ $linkController, 'register_routes' ] );
+		$link_controller = new Link_Controller();
+		add_action( 'rest_api_init', [ $link_controller, 'register_routes' ] );
 
 		// Dashboard.
 
