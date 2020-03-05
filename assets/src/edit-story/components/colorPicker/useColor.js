@@ -133,10 +133,14 @@ const reducer = {
     };
   },
   moveCurrentStopTo: (state, { payload: newPosition }) => {
+    const desiredPosition = Math.max(0, Math.min(1, newPosition));
     const index = state.currentStopIndex;
     const stops = [
       ...state.stops.slice(0, index),
-      { ...state.stops[index], position: newPosition },
+      {
+        ...state.stops[index],
+        position: desiredPosition,
+      },
       ...state.stops.slice(index + 1),
     ];
 
@@ -144,7 +148,7 @@ const reducer = {
     stops.sort((a, b) => a.position - b.position);
 
     const currentStopIndex = stops.findIndex(
-      ({ position }) => position === newPosition
+      ({ position }) => position === desiredPosition
     );
 
     return {
