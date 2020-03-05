@@ -40,6 +40,7 @@ import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
+import getCommonObjectValue from './utils/getCommonObjectValue';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -51,7 +52,12 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const height = getCommonValue(selectedElements, 'height');
   const isFill = getCommonValue(selectedElements, 'isFill');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
-  const flip = getCommonValue(selectedElements, 'flip');
+  const flip = getCommonObjectValue(
+    selectedElements,
+    'flip',
+    ['horizontal', 'vertical'],
+    false
+  );
   const [state, setState] = useState({
     width,
     height,
@@ -67,7 +73,8 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
 
   useEffect(() => {
     setState({ width, height, flip, isFill, rotationAngle });
-  }, [width, height, isFill, rotationAngle, flip]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, height, isFill, rotationAngle, flip.horizontal, flip.vertical]);
 
   const updateProperties = useCallback(
     (evt) => {

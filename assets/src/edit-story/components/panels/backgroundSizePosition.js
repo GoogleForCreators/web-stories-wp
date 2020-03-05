@@ -30,11 +30,11 @@ import { __ } from '@wordpress/i18n';
 import { Button, Row } from '../form';
 import useStory from '../../app/story/useStory';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
 
 function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
-  const flip = getCommonValue(selectedElements, 'flip');
+  // Background can only have one selected element.
+  const flip = selectedElements[0].flip;
   const [state, setState] = useState({ flip });
 
   const {
