@@ -462,7 +462,7 @@ class Story_Post_Type {
 					[],
 					WEBSTORIES_VERSION
 				);
-				wp_styles()->do_item(self::WEB_STORIES_STYLE_HANDLE . '_fonts');
+				wp_styles()->do_item( self::WEB_STORIES_STYLE_HANDLE . '_fonts' );
 			}
 		}
 	}
