@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect } from 'react';
 import { rgba } from 'polished';
 
@@ -38,6 +38,8 @@ import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
+import { isEven, getResourceFromMediaPicker } from './mediaUtils';
+import MediaElement from './mediaElement';
 
 const Container = styled.div`
   display: grid;
@@ -46,20 +48,6 @@ const Container = styled.div`
 `;
 
 const Column = styled.div``;
-
-export const styledTiles = css`
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-`;
-
-const Image = styled.img`
-  ${styledTiles}
-`;
-
-const Video = styled.video`
-  ${styledTiles}
-`;
 
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -124,8 +112,10 @@ function MediaPane(props) {
    * @param {Object} attachment Attachment object from backbone media picker.
    */
   const onSelect = (attachment) => {
-    const resourceType = getResourceType(attachment.mime);
-    const resource = getResourceFromAttachment(attachment);
+    const resourceType = allowedImageMimeTypes.includes(attachment.mime)
+      ? 'image'
+      : 'video';
+    const resource = getResourceFromMediaPicker(attachment);
     const height = DEFAULT_WIDTH / (resource.width / resource.height);
 
     insertMediaElement(resourceType, resource, DEFAULT_WIDTH, height);
@@ -135,16 +125,6 @@ function MediaPane(props) {
     onSelect,
     onClose,
   });
-
-  /**
-   * Check if number is odd or even.
-   *
-   * @param {number} n Number
-   * @return {boolean} Is even.
-   */
-  const isEven = (n) => {
-    return n % 2 === 0;
-  };
 
   /**
    * Handle search term changes.
@@ -166,49 +146,6 @@ function MediaPane(props) {
       setMediaType(filter);
       reloadMedia();
     }
-  };
-
-  /**
-   * Gets the media type from the given MIME type
-   *
-   * @param {string} mimeType
-   */
-  const getResourceType = (mimeType) => {
-    return allowedVideoMimeTypes.includes(mimeType) ? 'video' : 'image';
-  };
-
-  /**
-   * Generates a resource object from a wordpress attachment
-   *
-   * @param {Object} attachment
-   */
-  const getResourceFromAttachment = (attachment) => {
-    const {
-      src,
-      url,
-      mime: mimeType,
-      oWidth,
-      oHeight,
-      width,
-      height,
-      id: videoId,
-      featured_media: posterId,
-      featured_media_src: poster,
-    } = attachment;
-    const resourceType = getResourceType(mimeType);
-    return {
-      src: url || src,
-      width: oWidth || width,
-      height: oHeight || height,
-      mimeType,
-      ...(resourceType === 'video'
-        ? {
-            posterId,
-            poster,
-            videoId,
-          }
-        : {}),
-    };
   };
 
   /**
@@ -236,53 +173,6 @@ function MediaPane(props) {
     }
 
     return element;
-  };
-
-  /**
-   * Get a formatted element for different media types.
-   *
-   * @param {Object} attachment Attachment object
-   * @param {number} width Width that element is inserted into editor.
-   * @return {null|*} Element or null if does not map to video/image.
-   */
-  const getMediaElement = (attachment, width) => {
-    const resourceType = getResourceType(attachment.mimeType);
-    const resource = getResourceFromAttachment(attachment);
-    const height = width / (resource.width / resource.height);
-    if (resourceType === 'image') {
-      return (
-        <Image
-          key={resource.src}
-          src={resource.src}
-          width={width}
-          height={height}
-          loading={'lazy'}
-          onClick={() =>
-            insertMediaElement(resourceType, resource, width, height)
-          }
-        />
-      );
-    }
-
-    return (
-      <Video
-        key={resource.src}
-        width={width}
-        height={height}
-        onClick={() =>
-          insertMediaElement(resourceType, resource, width, height)
-        }
-        onMouseEnter={(evt) => {
-          evt.target.play();
-        }}
-        onMouseLeave={(evt) => {
-          evt.target.pause();
-          evt.target.currentTime = 0;
-        }}
-      >
-        <source src={resource.src} type={resource.mimeType} />
-      </Video>
-    );
   };
 
   const filteredMedia = media.filter(
@@ -329,16 +219,26 @@ function MediaPane(props) {
             <Column>
               {filteredMedia
                 .filter((_, index) => isEven(index))
-                .map((attachment) =>
-                  getMediaElement(attachment, DEFAULT_WIDTH)
-                )}
+                .map((attachment) => (
+                  <MediaElement
+                    key={attachment.src}
+                    attachment={attachment}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
             </Column>
             <Column>
               {filteredMedia
                 .filter((_, index) => !isEven(index))
-                .map((attachment) =>
-                  getMediaElement(attachment, DEFAULT_WIDTH)
-                )}
+                .map((attachment) => (
+                  <MediaElement
+                    key={attachment.src}
+                    attachment={attachment}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
             </Column>
           </Container>
         )}
