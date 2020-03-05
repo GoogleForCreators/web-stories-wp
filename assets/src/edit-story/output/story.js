@@ -66,7 +66,11 @@ function CustomCSS() {
   );
 }
 
-function OutputStory({ story, pages, metadata: { publisher, poster } }) {
+function OutputStory({
+  story,
+  pages,
+  metadata: { publisher, fallbackPoster },
+}) {
   const ampExtensions = getUsedAmpExtensions(pages);
   return (
     <html amp="" lang="en">
@@ -92,7 +96,7 @@ function OutputStory({ story, pages, metadata: { publisher, poster } }) {
           publisher={publisher.name}
           publisher-logo-src={publisher.logo}
           title={story.title}
-          poster-portrait-src={story.posterPortraitUrl || poster}
+          poster-portrait-src={story.posterPortraitUrl || fallbackPoster}
         >
           {pages.map((page) => (
             <OutputPage key={page.id} page={page} />
@@ -111,7 +115,7 @@ OutputStory.propTypes = {
       name: PropTypes.string.isRequired,
       logo: PropTypes.string.isRequired,
     }),
-    poster: PropTypes.string.isRequired,
+    fallbackPoster: PropTypes.string.isRequired,
   }).isRequired,
 };
 

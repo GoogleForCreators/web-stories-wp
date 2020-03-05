@@ -326,8 +326,8 @@ class Story_Post_Type {
 						'fonts'    => '/web-stories/v1/fonts',
 					],
 					'metadata'         => [
-						'publisher' => self::get_publisher_data(),
-						'poster'    => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+						'publisher'      => self::get_publisher_data(),
+						'fallbackPoster' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 					],
 				],
 			]
