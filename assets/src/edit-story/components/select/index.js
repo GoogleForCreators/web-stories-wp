@@ -30,6 +30,20 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 
+const DropDownContainer = styled.div``;
+
+const DropDownSelect = styled.div.attrs({ tabIndex: '0', role: 'button' })``;
+
+const DropDownTitle = styled.span``;
+
+const DropDownListWrapper = styled.div``;
+
+const DropDownList = styled.div``;
+
+const DropDownItem = styled.div.attrs({ tabIndex: '0', role: 'option' })``;
+
+const DropDownItemSpan = styled.span``;
+
 function DropDown({ options, value, onChange, disabled }) {
   DropDown.selectRef = React.createRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -46,13 +60,7 @@ function DropDown({ options, value, onChange, disabled }) {
     DropDown.arrayOfOptionsRefs = [];
   };
 
-  const handleSubmit = () => {
-    // const info = {
-    //   parentId: parentId,
-    //   alleleId: alleleId,
-    //   allele: currentAllele
-    // };
-  };
+  const handleSubmit = () => {};
 
   const handleOpenOptions = (event) => {
     switch (event.type) {
@@ -130,36 +138,28 @@ function DropDown({ options, value, onChange, disabled }) {
   const setsize = options.length;
 
   return (
-    <div>
-      <div
-        tabIndex="0"
-        role="button"
+    <DropDownContainer>
+      <DropDownSelect
         onClick={handleOpenOptions}
         onKeyDown={handleOpenOptions}
         aria-pressed={openOptions}
         aria-expanded={openOptions}
-        className="select-allele"
         // Use the `ref` callback to store a reference to the text input DOM
         // element in an instance field
         ref={DropDown.selectRef}
       >
         {currentValue === undefined ? (
-          'Select an Allele'
+          'Select an Option'
         ) : (
-          <span>
-            <span>{currentValue}</span>{' '}
-            <span aria-hidden="true">{`&#9632;`}</span>
-          </span>
+          <DropDownTitle>{currentValue}</DropDownTitle>
         )}
-      </div>
-      <div>
+      </DropDownSelect>
+      <DropDownListWrapper>
         {openOptions === true ? (
-          <div className="options-alleles">
+          <DropDownList>
             {options.map(({ name, value: optValue }, index) => {
               return (
-                <div
-                  tabIndex="0"
-                  role="option"
+                <DropDownItem
                   id={optValue}
                   aria-selected={focusedOption === optValue}
                   key={optValue}
@@ -169,19 +169,16 @@ function DropDown({ options, value, onChange, disabled }) {
                   aria-posinset={index}
                   aria-setsize={setsize}
                 >
-                  <span>
-                    <span className="option-allele">{name}</span>{' '}
-                  </span>
-                </div>
+                  <DropDownItemSpan>{name}</DropDownItemSpan>
+                </DropDownItem>
               );
             })}
-          </div>
+          </DropDownList>
         ) : (
-          // clear the refs array when ColorListbox is not being rendered
           [clearOptionsRefs(), null]
         )}
-      </div>
-    </div>
+      </DropDownListWrapper>
+    </DropDownContainer>
   );
 }
 
