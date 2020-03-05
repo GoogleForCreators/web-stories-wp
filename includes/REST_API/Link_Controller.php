@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Link_Controller
  *
@@ -37,58 +38,62 @@ use WP_REST_Server;
  *
  * Class Link_Controller
  */
-class Link_Controller extends WP_REST_Controller {
+class Link_Controller extends WP_REST_Controller
+{
 
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->namespace = 'amp/v1';
-		$this->rest_base = 'link';
-	}
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->namespace = 'amp/v1';
+        $this->rest_base = 'link';
+    }
 
-	/**
-	 * Registers routes for links.
-	 *
-	 * @see register_rest_route()
-	 *
-	 * @return void
-	 */
-	public function register_routes() {
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base,
-			[
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_items' ],
-					// 'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_public_item_schema' ],
-			]
-		);
-	}
+    /**
+     * Registers routes for links.
+     *
+     * @see register_rest_route()
+     *
+     * @return void
+     */
+    public function register_routes()
+    {
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base,
+            [
+                [
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => [$this, 'parse_link'],
+                    'permission_callback' => [$this, 'parse_link_permissions_check'],
+                ],
+                'schema' => [$this, 'get_public_item_schema'],
+            ]
+        );
+    }
 
-	/**
-	 * Parses 
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function get_items( $request ) {
-		$url         = $request['url'];
+    /**
+     * Parses 
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function parse_link($request)
+    {
+        $url         = $request['url'];
 
-        if ( empty($url) ) {
-			return new WP_Error( 'rest_no_url_provided', __( 'No URL was provided to be parsed.', 'web-stories' ), [ 'status' => 400 ] );
-		}
+        if (empty($url)) {
+            return new WP_Error('rest_no_url_provided', __('No URL was provided to be parsed.', 'web-stories'), ['status' => 400]);
+        }
 
         $request = wp_remote_get($url);
-        if ( is_wp_error($request) ) {
-			return new WP_Error( 'rest_url_unreachable', __( 'The given URL could not be reached.', 'web-stories' ), [ 'status' => 400 ] );
-		}
+        if (is_wp_error($request)) {
+            return new WP_Error('rest_url_unreachable', __('The given URL could not be reached.', 'web-stories'), ['status' => 400]);
+        }
 
-        $body = wp_remote_retrieve_body( $request );
+        $body = wp_remote_retrieve_body($request);
 
         $doc = new \DOMDocument();
         $doc->strictErrorChecking = FALSE;
@@ -102,16 +107,15 @@ class Link_Controller extends WP_REST_Controller {
             $title = $html->xpath('//title')[0]->__toString();
             $ogTitle = @$html->xpath('//meta[@property="og:title"]')[0]['content']->__toString();
             $ogSitename = $html->xpath('//meta[@property="og:site_name"]')[0]['content']->__toString();
-        
+
             // Image
             $ogImage = $html->xpath('//meta[@property="og:image"]')[0]['content']->__toString();
             $icon = $html->xpath('//link[contains(@rel, "icon")]')[0]['href']->__toString();
             $touchIcon = $html->xpath('//link[contains(@rel, "apple-touch-icon")]')[0]['href']->__toString();
-    
+
             // Description
             $desc = $html->xpath('//meta[@name="description"]')[0]['content']->__toString();
             $ogDesc = $html->xpath('//meta[@property="og:description"]')[0]['content']->__toString();
-
         } catch (\Throwable $th) {
             // Do nothing
         }
@@ -121,18 +125,19 @@ class Link_Controller extends WP_REST_Controller {
             'image' => $touchIcon ?? $ogImage ?? $icon,
             'description' => $ogDesc ?? $desc
         ];
-		$response = rest_ensure_response( $parsed_tags );
-		return $response;
+        $response = rest_ensure_response($parsed_tags);
+        return $response;
     }
-    
-	/**
-	 * Checks if a given request has access to process urls.
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		return current_user_can( 'edit_posts' );
-	}
+
+    /**
+     * Checks if a given request has access to process urls.
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     *
+     * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function parse_link_permissions_check($request)
+    { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+        return current_user_can('edit_posts');
+    }
 }
