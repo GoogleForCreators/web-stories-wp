@@ -122,13 +122,55 @@ class Story_Renderer {
 	 */
 	protected function add_poster_images( $content ) {
 		$poster_images = Media::get_story_meta_images( $this->post );
+
 		unset( $poster_images['poster-portrait'] ); // Already exists.
+
 		foreach ( $poster_images as $attr => $url ) {
 			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
 			$content     = str_replace( 'poster-portrait-src=', $attr_markup . ' poster-portrait-src=', $content );
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Replaces the body start tag to fire a custom action.
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function replace_body_start_tag( $content ) {
+		ob_start();
+
+		/**
+		 * Prints scripts or data after opening the <body>.
+		 */
+		do_action( 'web_stories_body_open' );
+
+		$output = (string) ob_get_clean();
+
+		return str_replace( '<body>', '<body>' . $output, $content );
+	}
+
+	/**
+	 * Replaces the body end tag to fire a custom action.
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function replace_body_end_tag( $content ) {
+		ob_start();
+
+		/**
+		 * Prints scripts or data before closing the </body>.
+		 */
+		do_action( 'web_stories_footer' );
+
+		$output = (string) ob_get_clean();
+
+		return str_replace( '</body>', '</body>' . $output, $content );
 	}
 
 	/**
@@ -141,6 +183,8 @@ class Story_Renderer {
 		$markup = $this->replace_html_start_tag( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->add_poster_images( $markup );
+		$markup = $this->replace_body_start_tag( $markup );
+		$markup = $this->replace_body_end_tag( $markup );
 
 		return $markup;
 	}
