@@ -117,6 +117,19 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     [setState]
   );
 
+  const handleFlipChange = useCallback(
+    (property) => (value) => {
+      setState({
+        ...state,
+        flip: {
+          ...state.flip,
+          [property]: value,
+        },
+      });
+    },
+    [setState, state]
+  );
+
   const handleSetBackground = () => {
     const newState = {
       ...state,
@@ -205,7 +218,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         />
         {canFlip && (
           <>
-            <FlipControls setState={setState} state={state} />
+            <FlipControls onChange={handleFlipChange} value={state.flip} />
             <Toggle
               icon={<Fullbleed />}
               value={state.isFill}

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -27,38 +26,26 @@ import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
 
-function FlipControls({ state, setState }) {
-  const handleFlipChange = useCallback(
-    (property) => (value) => {
-      setState({
-        ...state,
-        flip: {
-          ...state.flip,
-          [property]: value,
-        },
-      });
-    },
-    [setState, state]
-  );
+function FlipControls({ value, onChange }) {
   return (
     <>
       <Toggle
         icon={<FlipHorizontal />}
-        value={state.flip?.horizontal}
-        onChange={handleFlipChange('horizontal')}
+        value={value?.horizontal}
+        onChange={onChange('horizontal')}
       />
       <Toggle
         icon={<FlipVertical />}
-        value={state.flip?.vertical}
-        onChange={handleFlipChange('vertical')}
+        value={value?.vertical}
+        onChange={onChange('vertical')}
       />
     </>
   );
 }
 
 FlipControls.propTypes = {
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
+  value: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default FlipControls;

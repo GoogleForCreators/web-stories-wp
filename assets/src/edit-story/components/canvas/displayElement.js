@@ -55,7 +55,7 @@ function DisplayElement({ element }) {
   } = useUnits();
 
   const { id, type, flip } = element;
-  const { Display } = getDefinitionForType(type);
+  const { Display, isMedia } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
 
@@ -77,7 +77,6 @@ function DisplayElement({ element }) {
     }
   });
 
-  const { isMedia } = getDefinitionForType(type);
   return (
     <Wrapper ref={wrapperRef} {...box}>
       <WithElementMask element={element} fill={true}>
