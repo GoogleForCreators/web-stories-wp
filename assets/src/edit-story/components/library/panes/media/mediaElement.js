@@ -13,14 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-function SquareLayerContent() {
-  return __('Square', 'web-stories');
-}
-
-export default SquareLayerContent;

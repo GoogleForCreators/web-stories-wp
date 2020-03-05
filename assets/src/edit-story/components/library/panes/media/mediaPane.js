@@ -124,17 +124,11 @@ function MediaPane(props) {
    * @param {Object} attachment Attachment object from backbone media picker.
    */
   const onSelect = (attachment) => {
-    const {
-      url: src,
-      mime: mimeType,
-      width: oWidth,
-      height: oHeight,
-      id,
-      featured_media: posterId,
-      featured_media_src: poster,
-    } = attachment;
-    const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
-    insertMediaElement(mediaEl, DEFAULT_WIDTH);
+    const resourceType = getResourceType(attachment.mime);
+    const resource = getResourceFromAttachment(attachment);
+    const height = DEFAULT_WIDTH / (resource.width / resource.height);
+
+    insertMediaElement(resourceType, resource, DEFAULT_WIDTH, height);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -175,100 +169,127 @@ function MediaPane(props) {
   };
 
   /**
+   * Gets the media type from the given MIME type
+   *
+   * @param {string} mimeType
+   */
+  const getResourceType = (mimeType) => {
+    return allowedVideoMimeTypes.includes(mimeType) ? 'video' : 'image';
+  };
+
+  /**
+   * Generates a resource object from a wordpress attachment
+   *
+   * @param {Object} attachment
+   */
+  const getResourceFromAttachment = (attachment) => {
+    const {
+      src,
+      url,
+      mime: mimeType,
+      oWidth,
+      oHeight,
+      width,
+      height,
+      id: videoId,
+      featured_media: posterId,
+      featured_media_src: poster,
+    } = attachment;
+    const resourceType = getResourceType(mimeType);
+    return {
+      src: url || src,
+      width: oWidth || width,
+      height: oHeight || height,
+      mimeType,
+      ...(resourceType === 'video'
+        ? {
+            posterId,
+            poster,
+            videoId,
+          }
+        : {}),
+    };
+  };
+
+  /**
    * Insert element such image, video and audio into the editor.
    *
-   * @param {Object} attachment Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Return onInsert or null.
+   * @param {string} type Resource type
+   * @param {Object} resource Resource object
+   * @param {number} width Width that element is inserted into editor.
+   * @param {number} height Height that element is inserted into editor.
+   * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (attachment, width) => {
-    const { src, mimeType, oWidth, oHeight } = attachment;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return insertElement('image', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-      });
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
-      const posterId = parseInt(posterIdRaw);
-      const videoEl = insertElement('video', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        mimeType,
-        videoId,
-        posterId,
-        poster,
-      });
+  const insertMediaElement = (type, resource, width, height) => {
+    const element = insertElement(type, {
+      resource,
+      width,
+      height,
+      x: 5,
+      y: 5,
+      rotationAngle: 0,
+    });
 
-      // Generate video poster if one not set.
-      if (videoId && !posterId) {
-        uploadVideoFrame(videoId, src, videoEl.id);
-      }
-
-      return videoEl;
+    // Generate video poster if one not set.
+    if (type === 'video' && resource.videoId && !resource.posterId) {
+      uploadVideoFrame(resource.videoId, resource.src, element.id);
     }
-    return null;
+
+    return element;
   };
 
   /**
    * Get a formatted element for different media types.
    *
-   * @param {Object} mediaEl Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Element or null if does not map to video/image.
+   * @param {Object} attachment Attachment object
+   * @param {number} width Width that element is inserted into editor.
+   * @return {null|*} Element or null if does not map to video/image.
    */
-  const getMediaElement = (mediaEl, width) => {
-    const { src, oWidth, oHeight, mimeType } = mediaEl;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
+  const getMediaElement = (attachment, width) => {
+    const resourceType = getResourceType(attachment.mimeType);
+    const resource = getResourceFromAttachment(attachment);
+    const height = width / (resource.width / resource.height);
+    if (resourceType === 'image') {
       return (
         <Image
-          key={src}
-          src={src}
+          key={resource.src}
+          src={resource.src}
           width={width}
           height={height}
           loading={'lazy'}
-          onClick={() => insertMediaElement(mediaEl, width)}
+          onClick={() =>
+            insertMediaElement(resourceType, resource, width, height)
+          }
         />
       );
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      return (
-        <Video
-          key={src}
-          width={width}
-          height={height}
-          onClick={() => insertMediaElement(mediaEl, width)}
-          onMouseEnter={(evt) => {
-            evt.target.play();
-          }}
-          onMouseLeave={(evt) => {
-            evt.target.pause();
-            evt.target.currentTime = 0;
-          }}
-        >
-          <source src={src} type={mimeType} />
-        </Video>
-      );
     }
-    return null;
+
+    return (
+      <Video
+        key={resource.src}
+        width={width}
+        height={height}
+        onClick={() =>
+          insertMediaElement(resourceType, resource, width, height)
+        }
+        onMouseEnter={(evt) => {
+          evt.target.play();
+        }}
+        onMouseLeave={(evt) => {
+          evt.target.pause();
+          evt.target.currentTime = 0;
+        }}
+      >
+        <source src={resource.src} type={resource.mimeType} />
+      </Video>
+    );
   };
+
+  const filteredMedia = media.filter(
+    ({ mimeType }) =>
+      allowedImageMimeTypes.includes(mimeType) ||
+      allowedVideoMimeTypes.includes(mimeType)
+  );
 
   return (
     <Pane id={paneId} {...props}>
@@ -306,18 +327,18 @@ function MediaPane(props) {
         ) : (
           <Container>
             <Column>
-              {media.map((mediaEl, index) => {
-                return isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
-              })}
+              {filteredMedia
+                .filter((_, index) => isEven(index))
+                .map((attachment) =>
+                  getMediaElement(attachment, DEFAULT_WIDTH)
+                )}
             </Column>
             <Column>
-              {media.map((mediaEl, index) => {
-                return !isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
-              })}
+              {filteredMedia
+                .filter((_, index) => !isEven(index))
+                .map((attachment) =>
+                  getMediaElement(attachment, DEFAULT_WIDTH)
+                )}
             </Column>
           </Container>
         )}
