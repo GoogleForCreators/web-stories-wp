@@ -49,4 +49,8 @@ export const resizeRules = {
   diagonal: true,
 };
 
-export const panels = [PanelTypes.SIZE_POSITION, PanelTypes.TEXT_STYLE];
+export const panels = [
+  PanelTypes.SIZE_POSITION,
+  PanelTypes.TEXT_STYLE,
+  PanelTypes.LINK,
+];
