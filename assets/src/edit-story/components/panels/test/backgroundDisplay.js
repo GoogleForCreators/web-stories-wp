@@ -29,7 +29,7 @@ import BackgroundDisplayPanel from '../backgroundDisplay.js';
 function setupPanel(isFullbleedBackground = undefined) {
   const selectedElements = [{ isFullbleedBackground }];
   const onSetProperties = jest.fn();
-  const { getByRole } = render(
+  const { getByText } = render(
     <ThemeProvider theme={theme}>
       <BackgroundDisplayPanel
         onSetProperties={onSetProperties}
@@ -37,28 +37,22 @@ function setupPanel(isFullbleedBackground = undefined) {
       />
     </ThemeProvider>
   );
-  const element = getByRole('combobox');
+
+  const onLabelEl = getByText('Fit to device');
+  const offLabelEl = getByText('Do not format');
+
   return {
-    element,
+    enable: () => fireEvent.click(onLabelEl),
+    disable: () => fireEvent.click(offLabelEl),
     onSetProperties,
   };
 }
 
 describe('BackgroundDisplayPanel', () => {
-  it('should display a dropdown with the default value', () => {
-    const { element } = setupPanel();
-    expect(element.value).toStrictEqual('yes');
-  });
-
-  it('should select other option if disabled', () => {
-    const { element } = setupPanel(false);
-    expect(element.value).toStrictEqual('no');
-  });
-
   it('should disable fullbleed', () => {
-    const { element, onSetProperties } = setupPanel(true);
+    const { disable, onSetProperties } = setupPanel(true);
 
-    fireEvent.change(element, { target: { value: 'no' } });
+    disable();
 
     expect(onSetProperties).toHaveBeenCalledWith({
       isFullbleedBackground: false,
@@ -66,9 +60,9 @@ describe('BackgroundDisplayPanel', () => {
   });
 
   it('should enable fullbleed', () => {
-    const { element, onSetProperties } = setupPanel(false);
+    const { enable, onSetProperties } = setupPanel(false);
 
-    fireEvent.change(element, { target: { value: 'yes' } });
+    enable();
 
     expect(onSetProperties).toHaveBeenCalledWith({
       isFullbleedBackground: true,
