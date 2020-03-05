@@ -28,6 +28,9 @@
 namespace Google\Web_Stories\REST_API;
 
 use DOMDocument;
+use DOMNameList;
+use DOMNode;
+use DOMNodeList;
 use DOMXpath;
 use WP_Error;
 use WP_REST_Controller;
@@ -115,36 +118,83 @@ class Link_Controller extends WP_REST_Controller {
 		$xpath = new DOMXpath( $doc );
 
 		// Link title.
-		$title_query        = $xpath->query( '//title' );
-		$og_title_query     = $xpath->query( '//meta[@property="og:title"]' );
+		/* @var DOMNodeList $title_query */
+		$title_query = $xpath->query( '//title' );
+		/* @var DOMNodeList $og_title_query */
+		$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
+		/* @var DOMNodeList $og_site_name_query */
 		$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
-		if ( $title_query->count() ) {
-			$title = $title_query->item( 0 )->textContent;
-		} else if ( $og_title_query->count() ) {
-			$title = $og_title_query->item( 0 )->getAttribute( 'content' );
-		} else if ( $og_site_name_query->count() ) {
-			$title = $og_site_name_query->item( 0 )->getAttribute( 'content' );
+		if ( $title_query instanceof DOMNodeList && $title_query->count() ) {
+			/** @var \DOMElement $title_node */
+			$title_node = $title_query->item( 0 );
+
+			if ( $title_node instanceof \DOMElement ) {
+				$title = $title_node->textContent;
+			}
+		} else if ( $og_title_query instanceof DOMNodeList && $og_title_query->count() ) {
+			/** @var \DOMElement $title_node */
+			$title_node = $og_title_query->item( 0 );
+
+			if ( $title_node instanceof \DOMElement ) {
+				$title = $title_node->getAttribute( 'content' );
+			}
+		} else if ( $og_site_name_query instanceof DOMNodeList && $og_site_name_query->count() ) {
+			/** @var \DOMElement $title_node */
+			$title_node = $og_site_name_query->item( 0 );
+
+			if ( $title_node instanceof \DOMElement ) {
+				$title = $title_node->getAttribute( 'content' );
+			}
 		}
 
 		// Site icon.
-		$og_image_query   = $xpath->query( '//meta[@property="og:image"]' );
-		$icon_query       = $xpath->query( '//link[contains(@rel, "icon")]' );
+		/* @var DOMNodeList $og_image_query */
+		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
+		/* @var DOMNodeList $icon_query */
+		$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
+		/* @var DOMNodeList $touch_icon_query */
 		$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
-		if ( $og_image_query->count() ) {
-			$image = $og_image_query->item( 0 )->getAttribute( 'content' );
-		} else if ( $icon_query->count() ) {
-			$image = $icon_query->item( 0 )->getAttribute( 'href' );
-		} else if ( $touch_icon_query->count() ) {
-			$image = $touch_icon_query->item( 0 )->getAttribute( 'href' );
+		if ( $og_image_query instanceof DOMNodeList && $og_image_query->count() ) {
+			/** @var \DOMElement $image_node */
+			$image_node = $og_image_query->item( 0 );
+			if ( $image_node instanceof \DOMElement ) {
+				$image = $image_node->getAttribute( 'content' );
+			}
+		} else if ( $icon_query instanceof DOMNodeList && $icon_query->count() ) {
+			/** @var \DOMElement $image_node */
+			$image_node = $icon_query->item( 0 );
+
+			if ( $image_node instanceof \DOMElement ) {
+				$image = $image_node->getAttribute( 'href' );
+			}
+		} else if ( $touch_icon_query instanceof DOMNodeList && $touch_icon_query->count() ) {
+			/** @var \DOMElement $image_node */
+			$image_node = $touch_icon_query->item( 0 );
+
+			if ( $image_node instanceof \DOMElement ) {
+				$image = $image_node->getAttribute( 'href' );
+			}
 		}
 
 		// Link description.
-		$description_query    = $xpath->query( '//meta[@name="description"]' );
+		/* @var DOMNodeList $description_query */
+		$description_query = $xpath->query( '//meta[@name="description"]' );
+		/* @var DOMNodeList $og_description_query */
 		$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
-		if ( $description_query->count() ) {
-			$description = $description_query->item( 0 )->getAttribute( 'content' );
-		} else if ( $og_description_query->count() ) {
-			$description = $og_description_query->item( 0 )->getAttribute( 'content' );
+		if ( $description_query instanceof DOMNodeList && $description_query->count() ) {
+			/** @var \DOMElement $description_node */
+			$description_node = $description_query->item( 0 );
+
+			if ( $description instanceof \DOMElement ) {
+				$description = $description_node->getAttribute( 'content' );
+			}
+		} else if ( $og_description_query instanceof DOMNodeList && $og_description_query->count() ) {
+			/** @var \DOMElement $description_node */
+			$description_node = $og_description_query->item( 0 );
+
+			if ( $description instanceof \DOMElement ) {
+				$description = $description_node->getAttribute( 'content' );
+			}
 		}
 
 		$parsed_tags = [
