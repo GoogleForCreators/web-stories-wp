@@ -114,8 +114,6 @@ class Story_Renderer {
 
 		/**
 		 * Prints scripts or data in the head tag on the front end.
-		 *
-		 * @since 1.3
 		 */
 		do_action( 'web_stories_story_head' );
 
