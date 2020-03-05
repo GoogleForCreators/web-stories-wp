@@ -27,7 +27,7 @@ export const HexPropType = PropTypes.shape({
 });
 
 export const ColorStopPropType = PropTypes.shape({
-  stop: HexPropType.isRequired,
+  color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
 });
 

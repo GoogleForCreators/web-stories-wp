@@ -99,7 +99,7 @@ function ColorPicker({ color, onChange, onClose }) {
   const ref = useRef();
 
   // Record this to be able to restore focus on close
-  const previousFocus = useRef(window.activeElement);
+  const previousFocus = useRef(document.activeElement);
   const handleClose = useCallback(() => {
     // If possible, restore focus to previously selected element
     if (previousFocus.current) {

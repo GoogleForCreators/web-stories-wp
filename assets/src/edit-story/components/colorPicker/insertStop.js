@@ -55,7 +55,7 @@ function insertStop(stops, newPosition) {
   const {
     color: { r: fr, g: fg, b: fb, a: fa = 1 },
   } = following;
-  const mix = (p, f) => p + (f - p) * ratio;
+  const mix = (p, f) => Math.round(p + (f - p) * ratio);
   const fullColor = {
     r: mix(pr, fr),
     g: mix(pg, fg),

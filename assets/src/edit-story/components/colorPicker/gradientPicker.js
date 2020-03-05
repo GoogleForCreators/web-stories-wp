@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -33,6 +29,11 @@ import { ColorStopPropType } from '../../types';
 import { ReactComponent as Reverse } from '../../icons/gradient_reverser.svg';
 import { ReactComponent as Rotate } from '../../icons/gradient_rotator.svg';
 import Pointer from './pointer';
+import GradientStop from './gradientStop';
+import useKeyMoveStop from './useKeyMoveStop';
+import useKeyAddStop from './useKeyAddStop';
+import useKeyDeleteStop from './useKeyDeleteStop';
+import useKeyFocus from './useKeyFocus';
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,6 +47,7 @@ const LINE_WIDTH = 12;
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
 
 const Line = styled.div.attrs(({ stops }) => ({
+  tabIndex: -1,
   style: generatePatternCSS({
     type: 'linear',
     // "Push" the ends of the gradient in, so it starts and
@@ -61,24 +63,11 @@ const Line = styled.div.attrs(({ stops }) => ({
   height: ${LINE_WIDTH}px;
   border-radius: ${LINE_WIDTH / 2}px;
   position: relative;
-`;
 
-const Stop = styled.button.attrs(({ position }) => ({
-  style: {
-    left: `${position * 155 + 6}px`,
-  },
-}))`
-  position: absolute;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  top: 6px;
-  ${({ isSelected }) =>
-    isSelected &&
-    `
-      transform-origin: 0 0;
-      transform: scale(1.333);
-    `}
+  &:focus {
+    /* The line will only have temporary focus while deleting stops */
+    outline: none;
+  }
 `;
 
 const Button = styled.button`
@@ -98,31 +87,38 @@ function GradientPicker({
   stops,
   currentStopIndex,
 
-  onSelect /*,
+  onSelect,
   onAdd,
   onDelete,
-  onMove*/,
+  onMove,
 
   onRotate,
   onReverse,
 }) {
+  const line = useRef();
+
+  useKeyMoveStop(line, onMove, stops, currentStopIndex);
+  useKeyAddStop(line, onAdd, stops, currentStopIndex);
+  useKeyDeleteStop(line, onDelete);
+  const stopRefs = useKeyFocus(line, stops, currentStopIndex);
+
   return (
     <Wrapper>
-      <Line stops={stops}>
+      <Line stops={stops} ref={line}>
         {stops.map(({ position }, index) => (
-          <Stop
+          <GradientStop
+            ref={(ref) => (stopRefs[index].current = ref)}
             key={index}
+            index={index}
             isSelected={index === currentStopIndex}
             position={position}
-            onClick={() => onSelect(index)}
-            /* translators: %d is stop percentage */
-            aria-label={sprintf(
-              __('Gradient stop at %d%%', 'web-stories'),
-              Math.round(position * 100)
-            )}
+            onSelect={onSelect}
+            onAdd={onAdd}
+            onDelete={onDelete}
+            onMove={onMove}
           >
             <Pointer offset={-6} />
-          </Stop>
+          </GradientStop>
         ))}
       </Line>
       <Button onClick={onReverse}>
@@ -139,12 +135,10 @@ GradientPicker.propTypes = {
   stops: PropTypes.arrayOf(ColorStopPropType),
   currentStopIndex: PropTypes.number.isRequired,
 
-  onSelect:
-    PropTypes.func
-      .isRequired /*,
+  onSelect: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onMove: PropTypes.func.isRequired*/,
+  onMove: PropTypes.func.isRequired,
 
   onReverse: PropTypes.func.isRequired,
   onRotate: PropTypes.func.isRequired,

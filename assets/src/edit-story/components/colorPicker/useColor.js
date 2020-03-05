@@ -124,6 +124,7 @@ const reducer = {
     return {
       ...state,
       regenerate: true,
+      currentColor: color,
       currentStopIndex: index,
       stops,
     };
@@ -136,7 +137,8 @@ const reducer = {
       ...state.stops.slice(index + 1),
     ];
 
-    stops.sort((a, b) => b.position - a.position);
+    // Sort by position
+    stops.sort((a, b) => a.position - b.position);
 
     const currentStopIndex = stops.findIndex(
       ({ position }) => position === newPosition
@@ -155,13 +157,15 @@ const reducer = {
       return state;
     }
     const index = state.currentStopIndex;
-    const stops = state.stops.splice(index, 1);
+    const stops = [...state.stops];
+    stops.splice(index, 1);
     const currentStopIndex = index === stops.length ? index - 1 : index;
 
     return {
       ...state,
       regenerate: true,
       stops,
+      currentColor: stops[currentStopIndex].color,
       currentStopIndex,
     };
   },
@@ -209,9 +213,12 @@ const reducer = {
       .map(({ color, position }) => ({ color, position: 1 - position }))
       .reverse();
 
+    const currentStopIndex = stops.length - state.currentStopIndex - 1;
+
     return {
       ...state,
       stops,
+      currentStopIndex,
       regenerate: true,
     };
   },
