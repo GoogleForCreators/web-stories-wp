@@ -40,7 +40,7 @@ const Img = styled.img`
 `;
 
 function ImageDisplay({
-  element: { id, src, opacity, origRatio, scale, focalX, focalY },
+  element: { id, src, origRatio, scale, focalX, focalY },
   box: { width, height },
 }) {
   const imageRef = useRef(null);
@@ -53,10 +53,6 @@ function ImageDisplay({
     focalY,
     origRatio
   );
-
-  if (opacity) {
-    imgProps.opacity = opacity / 100;
-  }
 
   useTransformHandler(id, (transform) => {
     const target = imageRef.current;

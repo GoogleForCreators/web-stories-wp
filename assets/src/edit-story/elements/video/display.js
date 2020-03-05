@@ -45,7 +45,6 @@ function VideoDisplay({
     mimeType,
     src,
     isBackground,
-    opacity,
     scale,
     focalX,
     focalY,
@@ -70,9 +69,6 @@ function VideoDisplay({
     focalY,
     origRatio
   );
-  if (opacity) {
-    videoProps.opacity = opacity / 100;
-  }
   return (
     <Element>
       <Video poster={poster} style={style} {...videoProps}>

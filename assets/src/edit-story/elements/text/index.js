@@ -36,6 +36,7 @@ export const defaultAttributes = {
   color: '#000000',
   letterSpacing: 'normal',
   lineHeight: 1.3,
+  opacity: 100,
   textAlign: 'initial',
 };
 

@@ -41,6 +41,7 @@ export const StoryElementPropsTypes = {
   height: PropTypes.number.isRequired,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
+  opacity: PropTypes.number,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
 };
@@ -81,7 +82,6 @@ StoryPropTypes.elements = {};
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropsTypes,
   src: PropTypes.string.isRequired,
-  opacity: PropTypes.number,
   origRatio: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
@@ -93,7 +93,6 @@ StoryPropTypes.elements.video = PropTypes.shape({
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   loop: PropTypes.bool,
-  opacity: PropTypes.number,
   poster: PropTypes.string,
   videoId: PropTypes.number.isRequired,
   posterId: PropTypes.number,
