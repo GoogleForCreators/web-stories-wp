@@ -124,6 +124,12 @@ function CanvasProvider({ children }) {
     ) {
       clearEditing();
     }
+    if (
+      lastSelectedElementId.current &&
+      !selectedElementIds.includes(lastSelectedElementId.current)
+    ) {
+      lastSelectedElementId.current = null;
+    }
   }, [editingElement, selectedElementIds, clearEditing]);
 
   useCanvasSelectionCopyPaste(pageContainer);
