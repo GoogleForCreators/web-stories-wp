@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { text, boolean } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -33,9 +33,7 @@ export default {
 export const _default = () => {
   const onLabel = text('OnLabel', 'Do not format');
   const offLabel = text('OffLabel', 'Fit to Device');
-  const toggled = boolean('Toggled', false);
-
-  const [value, setValue] = useState(toggled);
+  const [value, setValue] = useState(true);
 
   return (
     <Switch
