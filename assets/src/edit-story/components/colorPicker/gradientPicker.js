@@ -21,6 +21,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import generatePatternCSS from '../../utils/generatePatternCSS';
@@ -58,19 +63,22 @@ const Line = styled.div.attrs(({ stops }) => ({
   position: relative;
 `;
 
-const Stop = styled.div.attrs(({ position }) => ({
+const Stop = styled.button.attrs(({ position }) => ({
   style: {
     left: `${position * 155 + 6}px`,
   },
 }))`
   position: absolute;
+  background: transparent;
+  border: 0;
+  padding: 0;
   top: 6px;
   ${({ isSelected }) =>
     isSelected &&
     `
-    transform-origin: 0 0;
-    transform: scale(1.333);
-  `}
+      transform-origin: 0 0;
+      transform: scale(1.333);
+    `}
 `;
 
 const Button = styled.button`
@@ -106,8 +114,14 @@ function GradientPicker({
             key={index}
             isSelected={index === currentStopIndex}
             position={position}
+            onClick={() => onSelect(index)}
+            /* translators: %d is stop percentage */
+            aria-label={sprintf(
+              __('Gradient stop at %d%%', 'web-stories'),
+              Math.round(position * 100)
+            )}
           >
-            <Pointer onPointerDown={() => onSelect(index)} offset={-6} />
+            <Pointer offset={-6} />
           </Stop>
         ))}
       </Line>

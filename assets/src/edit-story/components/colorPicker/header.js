@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -37,7 +37,7 @@ const HEADER_FOOTER_HEIGHT = 50;
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   height: ${HEADER_FOOTER_HEIGHT}px;
   padding: ${CONTAINER_PADDING}px;
   position: relative;
@@ -50,28 +50,31 @@ const CloseButton = styled(Close)`
   margin-left: auto;
 `;
 
-const Solid = styled.button`
+const TypeSelector = styled.button`
   width: 20px;
   height: 20px;
   border-radius: 10px;
-  background-color: ${({ isActive }) => (isActive ? '#448FFF' : '#808080')};
   border: 0;
   opacity: 1;
   margin-right: 22px;
 `;
 
+const Solid = styled(TypeSelector)`
+  background-color: ${({ isActive }) => (isActive ? '#448FFF' : '#808080')};
+`;
+
 const insertActiveColor = ({ isActive }) => (isActive ? '#2F7BF6' : '#3A3A3A');
 
-const Linear = styled(Solid)`
+const Linear = styled(TypeSelector)`
   /* Looks better with color stops 10% in */
   background-image: linear-gradient(white 10%, ${insertActiveColor} 90%);
 `;
 
-const Radial = styled(Solid)`
+const Radial = styled(TypeSelector)`
   background-image: radial-gradient(white, ${insertActiveColor});
 `;
 
-const Conic = styled(Solid)`
+const Conic = styled(TypeSelector)`
   background-image: conic-gradient(white, ${insertActiveColor});
 `;
 
@@ -84,9 +87,15 @@ function Header({ type, setToGradient, setToSolid, onClose }) {
   ]);
   const setToConic = useCallback(() => setToGradient('conic'), [setToGradient]);
 
+  const solid = useRef();
+  useEffect(() => {
+    solid.current.focus();
+  }, []);
+
   return (
     <Wrapper>
       <Solid
+        ref={solid}
         isActive={type === 'solid'}
         onClick={setToSolid}
         aria-label={__('Solid pattern type', 'web-stories')}
