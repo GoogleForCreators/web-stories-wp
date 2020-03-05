@@ -260,6 +260,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
       }
       elementGuidelines={actionsEnabled ? otherNodes : []}
+      isDisplaySnapDigit={false}
     />
   );
 }

@@ -253,6 +253,7 @@ function MultiSelectionMovable({ selectedElements }) {
       horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
       verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
       elementGuidelines={otherNodes}
+      isDisplaySnapDigit={false}
     />
   );
 }
