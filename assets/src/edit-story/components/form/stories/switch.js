@@ -22,6 +22,7 @@ import { text, boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
+import { useState } from 'react';
 import Switch from '../switch';
 
 export default {
@@ -32,7 +33,16 @@ export default {
 export const _default = () => {
   const onLabel = text('OnLabel', 'Do not format');
   const offLabel = text('OffLabel', 'Fit to Device');
-  const value = boolean('Value', false);
+  const toggled = boolean('Toggled', false);
 
-  return <Switch value={value} onLabel={onLabel} offLabel={offLabel} />;
+  const [value, setValue] = useState(toggled);
+
+  return (
+    <Switch
+      value={value}
+      onLabel={onLabel}
+      offLabel={offLabel}
+      onChange={setValue}
+    />
+  );
 };

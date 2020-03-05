@@ -30,7 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
-  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.3)};
+  background: ${({ theme }) => theme.colors.bg.v3};
   border-radius: 100px;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
@@ -43,10 +43,6 @@ const SwitchContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: none;
-
-  &:focus {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.bg.v4};
-  }
 `;
 
 const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
@@ -63,11 +59,10 @@ const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
   border: 0 !important;
   padding: 0 !important;
   margin: -1px !important;
+  outline: none !important;
+  box-shadow: none !important;
   position: absolute;
-
-  &:focus {
-    box-shadow: none !important;
-  }
+  appearance: none;
 `;
 
 const Label = styled.label`
@@ -75,6 +70,7 @@ const Label = styled.label`
   width: 50%;
   text-align: center;
   opacity: 0.86;
+  cursor: pointer;
 
   ${({ disabled }) =>
     disabled &&
@@ -82,13 +78,17 @@ const Label = styled.label`
     cursor: default;
     opacity: 0.3;
 	`}
+
+  &:focus-within ~ span {
+    background-color: ${({ theme }) => theme.colors.action};
+  }
 `;
 
 const SwitchSpan = styled.span`
   position: absolute;
   z-index: 0;
-  top: 3px;
-  left: 3px;
+  top: 1px;
+  left: 1px;
   display: block;
   width: calc(50% - 3px);
   height: 26px;
@@ -96,9 +96,7 @@ const SwitchSpan = styled.span`
   background-color: ${({ theme }) => theme.colors.bg.v8};
   transition: left 0.15s ease-out;
 
-  ${RadioButton}[value=on]:checked + ${Label} ~ & {
-    left: 50%;
-  }
+  ${({ hasOffset }) => hasOffset && `left: calc(50% + 2px);`}
 `;
 
 function Switch({ value, disabled, onChange, onLabel, offLabel }) {
@@ -109,7 +107,6 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
   }, [value, setFlag]);
 
   const handleChange = (checked) => {
-    setFlag(checked);
     if (onChange) {
       onChange(checked);
     }
@@ -117,39 +114,45 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
 
   return (
     <SwitchContainer>
-      <Label disabled={disabled} htmlFor={`${onLabel}-${offLabel}-switch-off`}>
-        {offLabel}
-        <RadioButton
-          disabled={disabled}
-          onChange={() => handleChange(false)}
-          checked={!flag}
-          value="off"
-          id={`${onLabel}-${offLabel}-switch-off`}
-          aria-label={sprintf(__('Switch %s.', 'web-stories'), offLabel)}
-        />
-      </Label>
-      <Label disabled={disabled} htmlFor={`$${onLabel}-${offLabel}-switch-on`}>
+      <Label disabled={disabled}>
         {onLabel}
         <RadioButton
           disabled={disabled}
           onChange={() => handleChange(true)}
           checked={flag}
           value="on"
-          id={`$${onLabel}-${offLabel}-switch-on`}
-          aria-label={sprintf(__('Switch %s.', 'web-stories'), onLabel)}
+          aria-label={sprintf(
+            /* translators: %s: Switch toggle label. */
+            __('Switch %s.', 'web-stories'),
+            onLabel
+          )}
         />
       </Label>
-      <SwitchSpan />
+      <Label disabled={disabled}>
+        {offLabel}
+        <RadioButton
+          disabled={disabled}
+          onChange={() => handleChange(false)}
+          checked={!flag}
+          value="off"
+          aria-label={sprintf(
+            /* translators: %s: Switch toggle label. */
+            __('Switch %s.', 'web-stories'),
+            offLabel
+          )}
+        />
+      </Label>
+      <SwitchSpan hasOffset={!flag} />
     </SwitchContainer>
   );
 }
 
 Switch.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onLabel: PropTypes.string.isRequired,
+  offLabel: PropTypes.string.isRequired,
   value: PropTypes.bool,
-  onChange: PropTypes.func,
   disabled: PropTypes.bool,
-  onLabel: PropTypes.string,
-  offLabel: PropTypes.string,
 };
 
 Switch.defaultProps = {
