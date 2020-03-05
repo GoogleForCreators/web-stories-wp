@@ -18,13 +18,13 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function SquareOutput({ element: { backgroundColor } }) {
-  const style = generatePatternCSS(backgroundColor);
+  const style = generatePatternStyles(backgroundColor);
   return <div className="fill" style={style} />;
 }
 

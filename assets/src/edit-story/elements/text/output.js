@@ -19,7 +19,7 @@
  */
 import StoryPropTypes from '../../types';
 import { dataToEditorY } from '../../units';
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { generateFontFamily } from './util';
 
 /**
@@ -51,8 +51,8 @@ function TextOutput({
     padding: padding ? padding + '%' : null,
     textAlign: textAlign ? textAlign : null,
     whiteSpace: 'pre-wrap',
-    ...generatePatternCSS(backgroundColor),
-    ...generatePatternCSS(color, 'color'),
+    ...generatePatternStyles(backgroundColor),
+    ...generatePatternStyles(color, 'color'),
   };
 
   return (

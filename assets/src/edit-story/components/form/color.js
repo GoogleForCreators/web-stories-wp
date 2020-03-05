@@ -31,7 +31,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import createSolid from '../../utils/createSolid';
 import { useSidebar } from '../../app';
 
@@ -109,7 +109,7 @@ function getPreviewStyle(pattern, defaultColor) {
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
-    return generatePatternCSS(pattern);
+    return generatePatternStyles(pattern);
   }
   const {
     color: { r, g, b, a },
@@ -120,7 +120,7 @@ function getPreviewStyle(pattern, defaultColor) {
   }
 
   // Otherwise create color, but with full opacity
-  return generatePatternCSS(createSolid(r, g, b));
+  return generatePatternStyles(createSolid(r, g, b));
 }
 
 function getPreviewOpacity(pattern, specifiedOpacity = 1) {

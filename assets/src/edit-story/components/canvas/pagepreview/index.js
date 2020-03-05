@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
-import generatePatternCSS from '../../../utils/generatePatternCSS';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 import convertToCSS from '../../../utils/convertToCSS';
 import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
@@ -45,7 +45,7 @@ const Page = styled.button`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   ${({ backgroundColor }) =>
-    convertToCSS(generatePatternCSS(backgroundColor || DEFAULT_COLOR))};
+    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

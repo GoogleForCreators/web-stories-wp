@@ -73,7 +73,7 @@ function getStopList(stops, isAngular = false) {
  * @return {string | Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
-function generatePatternCSS(pattern = null, property = 'background') {
+function generatePatternStyles(pattern = null, property = 'background') {
   const isBackground = property === 'background';
   if (pattern === null) {
     return { [property]: 'transparent' };
@@ -107,4 +107,4 @@ function generatePatternCSS(pattern = null, property = 'background') {
   return { backgroundImage: value };
 }
 
-export default generatePatternCSS;
+export default generatePatternStyles;
