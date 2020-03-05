@@ -63,13 +63,13 @@ function getStopList(stops, isAngular = false) {
 }
 
 /**
- * Generate CSS from a Pattern.
+ * Generate CSS object from a Pattern.
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
  * @param {Object} property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
  *
- * @return {string | Object} CSS declaration as string or object, e.g. {fill: 'transparent'} or
+ * @return {string | Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
 function generatePatternCSS(pattern = null, property = 'background') {

@@ -36,16 +36,25 @@ const Wrapper = styled.div`
   margin-right: -3px;
 `;
 
+const LINE_LENGTH = 155;
+const LINE_WIDTH = 12;
+const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
+
 const Line = styled.div.attrs(({ stops }) => ({
   style: generatePatternCSS({
     type: 'linear',
-    stops,
+    // "Push" the ends of the gradient in, so it starts and
+    // ends at (LINE_WIDTH / 2) px
+    stops: stops.map(({ color, position }) => ({
+      color,
+      position: (position * LINE_LENGTH + LINE_WIDTH / 2) / LINE_FULL_LENGTH,
+    })),
     rotation: 0.25,
   }),
 }))`
-  width: 167px;
-  height: 12px;
-  border-radius: 6px;
+  width: ${LINE_FULL_LENGTH}px;
+  height: ${LINE_WIDTH}px;
+  border-radius: ${LINE_WIDTH / 2}px;
   position: relative;
 `;
 
@@ -60,7 +69,7 @@ const Stop = styled.div.attrs(({ position }) => ({
     isSelected &&
     `
     transform-origin: 0 0;
-    transform: scale(1.5);
+    transform: scale(1.333);
   `}
 `;
 
