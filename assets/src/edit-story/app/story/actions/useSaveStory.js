@@ -109,8 +109,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           status: newStatus,
           slug: newSlug,
           link,
-          // eslint-disable-next-line camelcase
-          poster_portrait_url,
+          poster_portrait_url: posterPortraitUrl,
         } = post;
 
         updateStory({
@@ -118,7 +117,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             status: newStatus,
             slug: newSlug,
             link,
-            posterPortraitUrl: poster_portrait_url,
+            posterPortraitUrl,
           },
         });
         refreshPostEditURL(storyId);
