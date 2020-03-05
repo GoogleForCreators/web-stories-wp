@@ -30,7 +30,6 @@ function getGradientDescription({ type, rotation, center, size }) {
   const centerString = center
     ? ` at ${round(100 * center.x, 2)}% ${round(100 * center.y, 2)}%`
     : '';
-  const rotationString = rotation ? `${rotation}turn` : '';
   switch (type) {
     case 'radial':
       if (!centerString && !sizeString) {
@@ -39,14 +38,16 @@ function getGradientDescription({ type, rotation, center, size }) {
       return `${sizeString}${centerString}`.trim();
 
     case 'conic':
-      if (!rotationString && !centerString) {
+      if (!rotation && !centerString) {
         return null;
       }
-      const fromRotationString = rotationString ? `from ${rotationString}` : '';
+      // Here we don't always need rotation, as default is 0turn
+      const fromRotationString = rotation ? `from ${rotation}turn` : '';
       return `${fromRotationString}${centerString}`.trim();
 
     case 'linear':
-      return rotationString;
+      // Always include rotation and offset by .5turn, as default is .5turn(?)
+      return `${((rotation || 0) + 0.5) % 1}turn`;
 
     default:
       return null;
@@ -63,13 +64,13 @@ function getStopList(stops, isAngular = false) {
 }
 
 /**
- * Generate CSS from a Pattern.
+ * Generate CSS object from a Pattern.
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
  * @param {Object} property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
  *
- * @return {string | Object} CSS declaration as string or object, e.g. {fill: 'transparent'} or
+ * @return {string | Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
 function generatePatternCSS(pattern = null, property = 'background') {

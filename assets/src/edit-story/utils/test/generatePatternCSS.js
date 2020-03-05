@@ -80,7 +80,7 @@ describe('generatePatternCSS', () => {
   });
 
   describe('given a linear gradient', () => {
-    it('should be able to render a two-stop gradient', () => {
+    it('should be able to render a two-stop gradient at default rotation', () => {
       expect(
         generatePatternCSS({
           type: 'linear',
@@ -90,7 +90,7 @@ describe('generatePatternCSS', () => {
           ],
         })
       ).toStrictEqual({
-        backgroundImage: 'linear-gradient(#f00 0%, #00f 100%)',
+        backgroundImage: 'linear-gradient(0.5turn, #f00 0%, #00f 100%)',
       });
     });
 
@@ -107,7 +107,7 @@ describe('generatePatternCSS', () => {
         })
       ).toStrictEqual({
         backgroundImage:
-          'linear-gradient(0.25turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
+          'linear-gradient(0.75turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
       });
     });
   });
