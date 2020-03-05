@@ -27,6 +27,8 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use DOMDocument;
+use DOMXpath;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -83,42 +85,72 @@ class Link_Controller extends WP_REST_Controller {
 			return new WP_Error( 'rest_no_url_provided', __( 'No URL was provided to be parsed.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$request = wp_remote_get( $url );
-		if ( is_wp_error( $request ) ) {
+		$request = wp_safe_remote_get(
+			$url,
+			[
+				'limit_response_size' => 153600, // 150 KB.
+			]
+		);
+
+		$html  = wp_remote_retrieve_body( $request );
+
+		// Strip <body>.
+		$html_head_end = stripos( $html, '</head>' );
+		if ( $html_head_end ) {
+			$html = substr( $html, 0, $html_head_end );
+		}
+
+		if ( ! $html ) {
 			return new WP_Error( 'rest_url_unreachable', __( 'The given URL could not be reached.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$body = wp_remote_retrieve_body( $request );
+		$title       = '';
+		$image       = '';
+		$description = '';
 
-		$doc                      = new \DOMDocument();
+		$doc                      = new DOMDocument();
 		$doc->strictErrorChecking = false;
-		@$doc->loadHTML( $body );
-		libxml_use_internal_errors( true );
-		$html = @simplexml_import_dom( $doc );
 
-		try {
+		$doc->loadHTML( $html );
+		$xpath = new DOMXpath( $doc );
 
-			// Title
-			$title      = $html->xpath( '//title' )[0]->__toString();
-			$ogTitle    = @$html->xpath( '//meta[@property="og:title"]' )[0]['content']->__toString();
-			$ogSitename = $html->xpath( '//meta[@property="og:site_name"]' )[0]['content']->__toString();
+		// Link title.
+		$title_query        = $xpath->query( '//title' );
+		$og_title_query     = $xpath->query( '//meta[@property="og:title"]' );
+		$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
+		if ( $title_query->count() ) {
+			$title = $title_query->item( 0 )->textContent;
+		} else if ( $og_title_query->count() ) {
+			$title = $og_title_query->item( 0 )->getAttribute( 'content' );
+		} else if ( $og_site_name_query->count() ) {
+			$title = $og_site_name_query->item( 0 )->getAttribute( 'content' );
+		}
 
-			// Image
-			$ogImage   = $html->xpath( '//meta[@property="og:image"]' )[0]['content']->__toString();
-			$icon      = $html->xpath( '//link[contains(@rel, "icon")]' )[0]['href']->__toString();
-			$touchIcon = $html->xpath( '//link[contains(@rel, "apple-touch-icon")]' )[0]['href']->__toString();
+		// Site icon.
+		$og_image_query   = $xpath->query( '//meta[@property="og:image"]' );
+		$icon_query       = $xpath->query( '//link[contains(@rel, "icon")]' );
+		$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
+		if ( $og_image_query->count() ) {
+			$image = $og_image_query->item( 0 )->getAttribute( 'content' );
+		} else if ( $icon_query->count() ) {
+			$image = $icon_query->item( 0 )->getAttribute( 'href' );
+		} else if ( $touch_icon_query->count() ) {
+			$image = $touch_icon_query->item( 0 )->getAttribute( 'href' );
+		}
 
-			// Description
-			$desc   = $html->xpath( '//meta[@name="description"]' )[0]['content']->__toString();
-			$ogDesc = $html->xpath( '//meta[@property="og:description"]' )[0]['content']->__toString();
-		} catch ( \Throwable $th ) {
-			// Do nothing
+		// Link description.
+		$description_query    = $xpath->query( '//meta[@name="description"]' );
+		$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
+		if ( $description_query->count() ) {
+			$description = $description_query->item( 0 )->getAttribute( 'content' );
+		} else if ( $og_description_query->count() ) {
+			$description = $og_description_query->item( 0 )->getAttribute( 'content' );
 		}
 
 		$parsed_tags = [
-			'title'       => $ogTitle ?? $title ?? $ogSitename,
-			'image'       => $touchIcon ?? $ogImage ?? $icon,
-			'description' => $ogDesc ?? $desc,
+			'title'       => $title,
+			'image'       => $image,
+			'description' => $description,
 		];
 
 		return rest_ensure_response( $parsed_tags );
