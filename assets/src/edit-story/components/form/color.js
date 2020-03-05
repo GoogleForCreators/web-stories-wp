@@ -40,7 +40,9 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Box = styled.div`
+const Box = styled.div.attrs({
+  tabIndex: 0,
+})`
   height: 32px;
   width: 122px;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
@@ -48,12 +50,22 @@ const Box = styled.div`
   border-radius: 4px;
   overflow: hidden;
   align-items: center;
+
+  &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.55)};
+  }
 `;
 
-const Preview = styled(Box)`
+const Preview = styled(Box).attrs({
+  as: 'button',
+})`
   display: flex;
   width: 122px;
   cursor: pointer;
+  padding: 0;
+  border: 0;
 `;
 
 const VisualPreview = styled.div`
@@ -66,7 +78,9 @@ const TextualPreview = styled.div`
   text-align: center;
 `;
 
-const OpacityPreview = styled(Box)`
+const OpacityPreview = styled(Box).attrs({
+  role: 'textbox',
+})`
   margin-left: 6px;
   width: 54px;
   line-height: 32px;
@@ -150,6 +164,7 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
   const previewOpacity = getPreviewOpacity(value, opacity);
+  const fullLabel = `${label}: ${previewText}`;
 
   const {
     actions: { showColorPickerAt, hideColorPicker },
@@ -167,9 +182,9 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
 
   return (
     <Container ref={ref}>
-      <Preview onClick={handleOpenEditing}>
+      <Preview onClick={handleOpenEditing} aria-label={fullLabel}>
         <VisualPreview style={previewStyle} />
-        <TextualPreview aria-label={label}>
+        <TextualPreview>
           {isMultiple
             ? __('Multiple', 'web-stories')
             : previewText ||
