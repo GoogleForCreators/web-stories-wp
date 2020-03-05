@@ -154,7 +154,7 @@ EditCropMovable.propTypes = {
   offsetY: PropTypes.number.isRequired,
   imgWidth: PropTypes.number.isRequired,
   imgHeight: PropTypes.number.isRequired,
-  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 export default EditCropMovable;

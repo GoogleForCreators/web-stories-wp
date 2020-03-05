@@ -98,15 +98,12 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     updateProperties();
   }, [state.isFill, updateProperties]);
 
-  let { isMedia } = getDefinitionForType(selectedElements[0].type);
-  if (selectedElements.length > 1) {
-    isMedia = false;
-  }
+  const isSingleElement = selectedElements.length === 1;
+  const isMedia =
+    isSingleElement && getDefinitionForType(selectedElements[0].type).isMedia;
 
-  let canFlip = isMedia || 'shape' === selectedElements[0].type;
-  if (selectedElements.length > 1) {
-    canFlip = false;
-  }
+  const canFlip =
+    (isMedia || 'shape' === selectedElements[0].type) && isSingleElement;
 
   const handleNumberChange = useCallback(
     (property) => (value) =>

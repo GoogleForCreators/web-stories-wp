@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { PanelTypes } from '../../components/panels';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -28,6 +29,7 @@ export { default as LayerIcon } from './icon';
 export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
   fontFamily: 'Arial',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,

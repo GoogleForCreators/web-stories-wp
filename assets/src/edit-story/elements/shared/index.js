@@ -97,3 +97,10 @@ export const elementWithStyle = css`
 export const elementWithFlip = css`
   transform: ${({ transformFlip }) => transformFlip};
 `;
+
+export const SHARED_DEFAULT_ATTRIBUTES = {
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+};
