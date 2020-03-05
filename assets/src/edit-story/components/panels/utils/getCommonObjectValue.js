@@ -34,9 +34,11 @@ function getCommonObjectValue(list, property, properties, defaultValue) {
   const commonValue = {};
   properties.forEach((prop) => {
     const propertyList = list.map((element) => element[property]);
-    commonValue[prop] =
-      getCommonValue(propertyList || { [prop]: defaultValue }, prop) ??
-      defaultValue;
+    const foundMatch = getCommonValue(
+      propertyList || { [prop]: defaultValue },
+      prop
+    );
+    commonValue[prop] = '' !== foundMatch ? foundMatch : defaultValue;
   });
   return commonValue;
 }
