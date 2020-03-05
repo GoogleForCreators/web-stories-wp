@@ -36,7 +36,7 @@
     "react-color": "^2.18.0",
     "react-dom": "^16.13.0",
     "react-modal": "^3.11.2",
-    "react-moveable": "^0.17.0",
+    "react-moveable": "^0.18.1",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.0.1",
     "uuid": "^7.0.1"
