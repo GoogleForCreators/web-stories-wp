@@ -14,18 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useColorPicker() {
-  return useContext(Context);
-}
-
-export default useColorPicker;
+export { default as SidebarProvider } from './provider';
+export { default as useSidebar } from './use';

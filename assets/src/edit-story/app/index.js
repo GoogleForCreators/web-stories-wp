@@ -34,6 +34,7 @@ import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSidebar, SidebarProvider } from './sidebar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -46,13 +47,15 @@ function App({ config }) {
             <StoryProvider storyId={storyId}>
               <FontProvider>
                 <MediaProvider>
-                  <GlobalStyle />
-                  <DefaultMoveableGlobalStyle />
-                  <CropMoveableGlobalStyle />
-                  <ModalGlobalStyle />
-                  <KeyboardOnlyOutlines>
-                    <Layout />
-                  </KeyboardOnlyOutlines>
+                  <SidebarProvider>
+                    <GlobalStyle />
+                    <DefaultMoveableGlobalStyle />
+                    <CropMoveableGlobalStyle />
+                    <ModalGlobalStyle />
+                    <KeyboardOnlyOutlines>
+                      <Layout />
+                    </KeyboardOnlyOutlines>
+                  </SidebarProvider>
                 </MediaProvider>
               </FontProvider>
             </StoryProvider>
@@ -69,4 +72,12 @@ App.propTypes = {
 
 export default App;
 
-export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
+export {
+  useHistory,
+  useAPI,
+  useStory,
+  useConfig,
+  useFont,
+  useMedia,
+  useSidebar,
+};

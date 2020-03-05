@@ -33,7 +33,7 @@ import { __, _x } from '@wordpress/i18n';
 import { PatternPropType } from '../../types';
 import generatePatternCSS from '../../utils/generatePatternCSS';
 import createSolid from '../../utils/createSolid';
-import useColorPicker from '../inspector/colorPickerProvider/useColorPicker';
+import { useSidebar } from '../../app';
 
 const Container = styled.div`
   display: flex;
@@ -168,7 +168,7 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
 
   const {
     actions: { showColorPickerAt, hideColorPicker },
-  } = useColorPicker();
+  } = useSidebar();
 
   const ref = useRef();
 

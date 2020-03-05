@@ -27,7 +27,6 @@ import { useEscapeToBlurEffect } from '../keyboard';
 import useInspector from './useInspector';
 import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
-import ColorPickerProvider from './colorPickerProvider';
 
 const Layout = styled.div`
   height: 100%;
@@ -58,16 +57,14 @@ function InspectorLayout() {
   } = useInspector();
   useEscapeToBlurEffect(ref);
   return (
-    <ColorPickerProvider>
-      <Layout ref={ref}>
-        <TabsArea>
-          <InspectorTabs />
-        </TabsArea>
-        <InspectorBackground ref={setInspectorContentNode}>
-          <InspectorContent />
-        </InspectorBackground>
-      </Layout>
-    </ColorPickerProvider>
+    <Layout ref={ref}>
+      <TabsArea>
+        <InspectorTabs />
+      </TabsArea>
+      <InspectorBackground ref={setInspectorContentNode}>
+        <InspectorContent />
+      </InspectorBackground>
+    </Layout>
   );
 }
 
