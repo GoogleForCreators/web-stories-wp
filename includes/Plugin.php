@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Fonts_Controller;
+use Google\Web_Stories\REST_API\Link_Controller;
 
 /**
  * Plugin class.
@@ -45,8 +46,11 @@ class Plugin {
 
 		// REST API endpoints.
 
-		$controller = new Fonts_Controller();
-		add_action( 'rest_api_init', [ $controller, 'register_routes' ] );
+		$fontsController = new Fonts_Controller();
+		add_action( 'rest_api_init', [ $fontsController, 'register_routes' ] );
+
+		$linkController = new Link_Controller();
+		add_action( 'rest_api_init', [ $linkController, 'register_routes' ] );
 
 		// Dashboard.
 
