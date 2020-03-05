@@ -28,12 +28,12 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
-		$this->assertArrayHasKey( '/amp/v1/link', $routes );
-		$this->assertCount( 1, $routes['/amp/v1/link'] );
+		$this->assertArrayHasKey( '/web-stories/v1/link', $routes );
+		$this->assertCount( 1, $routes['/web-stories/v1/link'] );
 	}
 
 	public function test_get_item_schema() {
-		$request = new WP_REST_Request( 'OPTIONS', '/amp/v1/link' );
+		$request = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/link' );
 		$request->set_query_params(
 			[
 				'url' => 'https://amp.dev/',
@@ -44,9 +44,9 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 
 		$this->assertNotEmpty( $data );
 
-		$this->assertCount( 3, $properties );
+		$this->assertCount( 3, array_keys( $data ) );
 		$this->assertArrayHasKey( 'title', $data );
 		$this->assertArrayHasKey( 'image', $data );
-		$this->assertArrayHasKey( 'description', $description );
+		$this->assertArrayHasKey( 'description', $data );
 	}
 }
