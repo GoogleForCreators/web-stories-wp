@@ -190,7 +190,7 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
   return false;
 }
 
-export function prettifytShortcut(shortcut) {
+export function prettifyShortcut(shortcut) {
   return shortcut
     .toLowerCase()
     .replace('ctrl', '^')

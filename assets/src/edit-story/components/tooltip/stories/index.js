@@ -25,10 +25,13 @@ import styled from 'styled-components';
  */
 import Tooltip from '../';
 
+const Container = styled.div`
+  margin: 60px 120px;
+`;
+
 const Content = styled.div`
   width: 100px;
   padding: 12px;
-  margin: 60px 120px;
   background: #333;
   color: white;
   display: inline-block;
@@ -55,8 +58,10 @@ export const _default = () => {
   );
 
   return (
-    <Tooltip title={title} shortcut={shortcut} placement={placement}>
-      <Content>{'Example'}</Content>
-    </Tooltip>
+    <Container>
+      <Tooltip title={title} shortcut={shortcut} placement={placement}>
+        <Content>{'Example'}</Content>
+      </Tooltip>
+    </Container>
   );
 };
