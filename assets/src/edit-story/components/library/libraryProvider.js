@@ -32,17 +32,17 @@ const SHAPES = 'shapes';
 const ELEMENTS = 'elements';
 const ANIMATION = 'animation';
 
+const TABS = {
+  MEDIA,
+  TEXT,
+  SHAPES,
+  ELEMENTS,
+  ANIMATION,
+};
+
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
   const insertElement = useInsertElement();
-
-  const tabs = {
-    MEDIA,
-    TEXT,
-    SHAPES,
-    ELEMENTS,
-    ANIMATION,
-  };
 
   const state = {
     state: {
@@ -53,7 +53,7 @@ function LibraryProvider({ children }) {
       insertElement,
     },
     data: {
-      tabs,
+      tabs: TABS,
     },
   };
 
