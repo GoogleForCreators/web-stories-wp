@@ -81,7 +81,7 @@ function OutputStory({
           content="width=device-width,minimum-scale=1,initial-scale=1"
         />
         {ampExtensions.map(({ name, src }) => (
-          <script key={src} async="" src={src} custom-element={name} />
+          <script key={src} async="async" src={src} custom-element={name} />
         ))}
         <Boilerplate />
         {/* Everything between these markers can be replaced server-side. */}
