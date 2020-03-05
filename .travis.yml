@@ -77,7 +77,10 @@ script:
     if [ "$LINT" = "1" ]; then
       composer --no-interaction validate --no-check-all
       composer --no-interaction normalize --dry-run
-      npm run lint
+      npm run lint:css
+      npm run lint:js
+      npm run lint:php
+      npm run lint:md
     fi
   - |
     if [ "$JS" = "1" ]; then
