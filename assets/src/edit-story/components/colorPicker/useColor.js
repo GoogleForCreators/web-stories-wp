@@ -49,8 +49,10 @@ const reducer = {
       case TYPE_LINEAR:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
           angle,
         };
@@ -58,8 +60,10 @@ const reducer = {
       case TYPE_RADIAL:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
           center,
           size,
@@ -68,8 +72,10 @@ const reducer = {
       case TYPE_CONIC:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
           angle,
           center,
@@ -79,6 +85,7 @@ const reducer = {
       default:
         return {
           ...state,
+          type,
           regenerate: false,
           currentColor: color,
         };
@@ -168,13 +175,13 @@ const reducer = {
 
     if (state.type !== TYPE_SOLID) {
       // Also update color for current stop
-      state.stops = [
-        state.stops.slice(0, state.currentStopIndex),
+      newState.stops = [
+        ...state.stops.slice(0, state.currentStopIndex),
         {
-          ...state.stop[state.currentStopIndex],
+          ...state.stops[state.currentStopIndex],
           color: currentColor,
         },
-        state.stops.slice(state.currentStopIndex + 1),
+        ...state.stops.slice(state.currentStopIndex + 1),
       ];
     }
 
@@ -182,18 +189,32 @@ const reducer = {
   },
   rotateClockwise: (state) => ({
     ...state,
-    angle: state.angle + 90,
+    rotation: state.rotation + 0.25,
     regenerate: true,
   }),
-  selectStop: (state, { payload: newIndex }) => ({
-    ...state,
-    currentStopIndex: Math.max(0, Math.min(state.stops.length - 1, newIndex)),
-  }),
-  reverseStops: (state) => ({
-    ...state,
-    stops: [...state.stops].reverse(),
-    regenerate: true,
-  }),
+  selectStop: (state, { payload: newIndex }) => {
+    const currentStopIndex = Math.max(
+      0,
+      Math.min(state.stops.length - 1, newIndex)
+    );
+    const currentColor = state.stops[currentStopIndex].color;
+    return {
+      ...state,
+      currentStopIndex,
+      currentColor,
+    };
+  },
+  reverseStops: (state) => {
+    const stops = state.stops
+      .map(({ color, position }) => ({ color, position: 1 - position }))
+      .reverse();
+
+    return {
+      ...state,
+      stops,
+      regenerate: true,
+    };
+  },
 };
 
 function regenerateColor(pattern) {

@@ -23,20 +23,15 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
-import { Close } from '../button';
 import CurrentColorPicker from './currentColorPicker';
+import GradientPicker from './gradientPicker';
+import Header from './header';
 import useColor from './useColor';
 
 const CONTAINER_PADDING = 15;
-const HEADER_FOOTER_HEIGHT = 50;
 
 const Container = styled.div`
   border-radius: 4px;
@@ -48,30 +43,31 @@ const Container = styled.div`
   font-weight: normal;
   font-size: 12px;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 `;
 
-const Header = styled.div`
-  height: ${HEADER_FOOTER_HEIGHT}px;
+const Body = styled.div`
+  border-top: 1px solid ${({ theme }) => rgba(theme.colors.fg.v2, 0.2)};
   padding: ${CONTAINER_PADDING}px;
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v2, 0.2)};
-  position: relative;
 `;
-
-const CloseButton = styled(Close)`
-  opacity: 1;
-  font-size: 15px;
-  line-height: 20px;
-  position: absolute;
-  right: ${CONTAINER_PADDING}px;
-  top: ${CONTAINER_PADDING}px;
-`;
-
-const Body = styled.div``;
 
 function ColorPicker({ color, onChange, onClose }) {
   const {
-    state: { currentColor, generatedColor },
-    actions: { load, updateCurrentColor },
+    state: { type, stops, currentStopIndex, currentColor, generatedColor },
+    actions: {
+      load,
+      updateCurrentColor,
+      reverseStops,
+      selectStop,
+      addStopAt,
+      removeCurrentStop,
+      rotateClockwise,
+      moveCurrentStopTo,
+      setToSolid,
+      setToGradient,
+    },
   } = useColor();
 
   useEffect(() => {
@@ -88,14 +84,26 @@ function ColorPicker({ color, onChange, onClose }) {
 
   return (
     <Container>
-      <Header>
-        <CloseButton
-          width={10}
-          height={10}
-          aria-label={__('Close', 'web-stories')}
-          onClick={onClose}
-        />
-      </Header>
+      <Header
+        type={type}
+        setToSolid={setToSolid}
+        setToGradient={setToGradient}
+        onClose={onClose}
+      />
+      {type !== 'solid' && (
+        <Body>
+          <GradientPicker
+            stops={stops}
+            currentStopIndex={currentStopIndex}
+            onSelect={selectStop}
+            onReverse={reverseStops}
+            onAdd={addStopAt}
+            onDelete={removeCurrentStop}
+            onRotate={rotateClockwise}
+            onMove={moveCurrentStopTo}
+          />
+        </Body>
+      )}
       <Body>
         <CurrentColorPicker
           color={currentColor}

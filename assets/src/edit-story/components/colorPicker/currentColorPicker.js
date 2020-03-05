@@ -50,7 +50,6 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  padding: ${CONTAINER_PADDING}px;
   padding-bottom: 0;
   display: grid;
   grid: 'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px;
