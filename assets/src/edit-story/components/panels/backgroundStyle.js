@@ -48,16 +48,18 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="backgroundStyle"
-      title={__('Background Style', 'web-stories')}
+      title={__('Style', 'web-stories')}
       onSubmit={handleSubmit}
     >
       <Row expand={false} spaceBetween={true}>
         <OpacityControl
-          properties={{
-            opacity,
-          }}
-          setState={setState}
-          state={state}
+          value={state.opacity}
+          onChange={(value) =>
+            setState({
+              ...state,
+              opacity: isNaN(value) || value === '' ? '' : parseFloat(value),
+            })
+          }
         />
       </Row>
     </SimplePanel>

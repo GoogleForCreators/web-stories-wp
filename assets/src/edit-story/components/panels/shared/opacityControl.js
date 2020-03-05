@@ -35,16 +35,13 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-function OpacityControl({ properties, state, setState }) {
-  const { opacity } = properties;
-
+function OpacityControl({ value, onChange }) {
   return (
     <BoxedNumeric
       suffix={__('Opacity', 'web-stories')}
       symbol={_x('%', 'Percentage', 'web-stories')}
-      value={state.opacity}
-      isMultiple={'' === opacity}
-      onChange={(value) => setState({ ...state, opacity: parseInt(value) })}
+      value={value}
+      onChange={onChange}
       min="1"
       max="100"
     />
@@ -52,9 +49,9 @@ function OpacityControl({ properties, state, setState }) {
 }
 
 OpacityControl.propTypes = {
-  properties: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
+  value: PropTypes.PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default OpacityControl;
