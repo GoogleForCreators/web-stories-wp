@@ -78,21 +78,26 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
 
   const updateProperties = useCallback(
     (evt) => {
-      onSetProperties(({ width: oldWidth, height: oldHeight }) => {
-        const { height: newHeight, width: newWidth } = state;
-        const update = { ...state };
-        const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
+      onSetProperties(
+        ({ width: oldWidth, height: oldHeight, type, flip: oldFlip }) => {
+          const { height: newHeight, width: newWidth } = state;
+          const update = {
+            ...state,
+            flip: 'text' === type ? oldFlip : state.flip,
+          };
+          const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
-        if (lockRatio && hasHeightOrWidth) {
-          const ratio = oldWidth / oldHeight;
-          if (newWidth === '') {
-            update.width = dataPixels(newHeight * ratio);
-          } else {
-            update.height = dataPixels(newWidth / ratio);
+          if (lockRatio && hasHeightOrWidth) {
+            const ratio = oldWidth / oldHeight;
+            if (newWidth === '') {
+              update.width = dataPixels(newHeight * ratio);
+            } else {
+              update.height = dataPixels(newWidth / ratio);
+            }
           }
+          return update;
         }
-        return update;
-      });
+      );
       if (evt) {
         evt.preventDefault();
         evt.stopPropagation();
@@ -108,7 +113,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const isSingleElement = selectedElements.length === 1;
   const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
-  const canFlip = isMedia || 'square' === selectedElements[0].type;
+  const canFlip = selectedElements.some(
+    ({ type }) => getDefinitionForType(type).canFlip
+  );
 
   const handleNumberChange = useCallback(
     (property) => (value) =>

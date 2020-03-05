@@ -38,6 +38,8 @@ export const hasEditMode = false;
 
 export const isMedia = false;
 
+export const canFlip = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,
