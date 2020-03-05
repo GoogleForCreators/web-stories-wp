@@ -34,7 +34,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$post     = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body></body></html>',
-			] 
+			]
 		);
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
@@ -50,7 +50,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body></body></html>",
-			] 
+			]
 		);
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
@@ -60,7 +60,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$this->assertNotContains( 'BAR', $actual );
 		$this->assertNotContains( $start_tag, $actual );
 		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<style amp-custom>', $actual );
+		$this->assertContains( '<meta name="generator" content="Web Stories', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 }
