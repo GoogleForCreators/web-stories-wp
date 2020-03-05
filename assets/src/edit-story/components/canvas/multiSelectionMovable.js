@@ -29,6 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -53,6 +54,7 @@ function MultiSelectionMovable({ selectedElements }) {
   } = useTransform();
 
   const [isDragging, setIsDragging] = useState(false);
+  const [canSnap, setCanSnap] = useState(true);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -61,6 +63,10 @@ function MultiSelectionMovable({ selectedElements }) {
       moveable.current.updateRect();
     }
   }, [selectedElements, moveable, nodesById]);
+
+  // ⌘ key disables snapping
+  useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
+  useGlobalKeyDownEffect('meta', () => setCanSnap(true), [setCanSnap], 'keyup');
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
@@ -245,13 +251,13 @@ function MultiSelectionMovable({ selectedElements }) {
         onGroupEventEnd({ targets, isResize: true });
       }}
       renderDirections={CORNER_HANDLES}
-      snappable={true}
-      snapElement={true}
-      snapHorizontal={true}
-      snapVertical={true}
-      snapCenter={true}
-      horizontalGuidelines={[0, canvasHeight / 2, canvasHeight]}
-      verticalGuidelines={[0, canvasWidth / 2, canvasWidth]}
+      snappable={canSnap}
+      snapElement={canSnap}
+      snapHorizontal={canSnap}
+      snapVertical={canSnap}
+      snapCenter={canSnap}
+      horizontalGuidelines={canSnap ? [0, canvasHeight / 2, canvasHeight] : []}
+      verticalGuidelines={canSnap ? [0, canvasWidth / 2, canvasWidth] : []}
       elementGuidelines={otherNodes}
       isDisplaySnapDigit={false}
     />

@@ -47,12 +47,14 @@ const globalRef = createRef();
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
+ * @param {string|undefined} mode
  */
 export function useKeyDownEffect(
   ref,
   keyNameOrSpec,
   callback,
-  deps = undefined
+  deps = undefined,
+  mode = undefined
 ) {
   const { keys } = useContext(Context);
   useEffect(
@@ -70,7 +72,7 @@ export function useKeyDownEffect(
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
       const handler = createKeyHandler(keySpec, callback);
-      mousetrap.bind(keySpec.key, handler);
+      mousetrap.bind(keySpec.key, handler, mode);
       return () => {
         mousetrap.unbind(keySpec.key);
       };
@@ -86,16 +88,18 @@ export function useKeyDownEffect(
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
+ * @param {string|undefined} mode
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
   callback,
-  deps = undefined
+  deps = undefined,
+  mode = undefined
 ) {
   if (!globalRef.current) {
     globalRef.current = document;
   }
-  useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
+  useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps, mode);
 }
 
 /**

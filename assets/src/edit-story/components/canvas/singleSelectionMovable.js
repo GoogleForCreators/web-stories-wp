@@ -29,6 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -37,9 +38,10 @@ const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
-  const moveable = useRef();
+  const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  const [canSnap, setCanSnap] = useState(true);
 
   const {
     actions: { updateSelectedElements },
@@ -91,6 +93,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       moveable.current.updateRect();
     }
   });
+
+  // ⌘ key disables snapping
+  useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
+  useGlobalKeyDownEffect('meta', () => setCanSnap(true), [setCanSnap], 'keyup');
 
   const box = getBox(selectedElement);
   const frame = {
@@ -248,18 +254,18 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={true}
-      snapElement={true}
-      snapHorizontal={true}
-      snapVertical={true}
-      snapCenter={true}
+      snappable={canSnap}
+      snapElement={canSnap}
+      snapHorizontal={canSnap}
+      snapVertical={canSnap}
+      snapCenter={canSnap}
       horizontalGuidelines={
-        actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
+        canSnap && actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
       }
       verticalGuidelines={
-        actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
+        canSnap && actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
       }
-      elementGuidelines={actionsEnabled ? otherNodes : []}
+      elementGuidelines={canSnap && actionsEnabled ? otherNodes : []}
       isDisplaySnapDigit={false}
     />
   );
