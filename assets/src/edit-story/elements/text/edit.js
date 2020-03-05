@@ -74,6 +74,7 @@ const TextBox = styled.div`
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
 
+  opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
   top: 0;
   left: 0;
@@ -93,6 +94,7 @@ function TextEdit({
     fontStyle,
     letterSpacing,
     lineHeight,
+    opacity,
     padding,
     textAlign,
   },
@@ -112,6 +114,7 @@ function TextEdit({
     textAlign,
     letterSpacing,
     lineHeight,
+    opacity,
     padding,
   };
   const wrapperRef = useRef(null);
