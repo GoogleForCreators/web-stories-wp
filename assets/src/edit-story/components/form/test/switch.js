@@ -36,91 +36,81 @@ ThemeProviderWrapper.propTypes = {
   children: PropTypes.any.isRequired,
 };
 
-describe('SlideSwitch', () => {
-  it('should render slide switch with On and Off label and false state and update when onlabel clicked', () => {
-    const offLabel = 'Off';
+describe('Switch', () => {
+  it('should render with default state that can be updated', () => {
     const onLabel = 'On';
-
-    const { getByText, getByLabelText } = render(<Switch />, {
-      wrapper: ThemeProviderWrapper,
-    });
-
-    expect(getByText(onLabel)).toBeInTheDocument();
-    expect(getByText(offLabel)).toBeInTheDocument();
-
-    const radioOff = getByLabelText(offLabel);
-    const radioOn = getByLabelText(onLabel);
-
-    expect(radioOff.checked).toStrictEqual(true);
-    expect(radioOn.checked).toStrictEqual(false);
-
-    fireEvent.click(getByText(onLabel));
-
-    expect(radioOff.checked).toStrictEqual(false);
-    expect(radioOn.checked).toStrictEqual(true);
-  });
-
-  it('should render slide switch with predefined value and update the state when offlabel click', () => {
-    const offLabel = 'Fit to device';
-    const onLabel = 'Do not fit';
+    const offLabel = 'Off';
+    const onChange = jest.fn();
 
     const { getByText, getByLabelText } = render(
-      <Switch onLabel={onLabel} offLabel={offLabel} value={true} />,
+      <Switch onChange={onChange} />,
+      {
+        wrapper: ThemeProviderWrapper,
+      }
+    );
+
+    const onLabelEl = getByText(onLabel);
+    const onLabelRadio = getByLabelText(onLabel);
+    const offLabelEl = getByText(offLabel);
+    const offLabelRadio = getByLabelText(offLabel);
+
+    expect(onLabelEl).toBeInTheDocument();
+    expect(offLabelEl).toBeInTheDocument();
+
+    expect(onLabelRadio.checked).toStrictEqual(false);
+    expect(offLabelRadio.checked).toStrictEqual(true);
+
+    fireEvent.click(onLabelEl);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(true);
+  });
+
+  it('should render with passed default value', () => {
+    const onLabel = 'On';
+    const offLabel = 'Off';
+    const onChange = jest.fn();
+
+    const { getByText, getByLabelText } = render(
+      <Switch
+        onChange={onChange}
+        onLabel={onLabel}
+        offLabel={offLabel}
+        value={true}
+      />,
       { wrapper: ThemeProviderWrapper }
     );
 
-    expect(getByText(onLabel)).toBeInTheDocument();
-    expect(getByText(offLabel)).toBeInTheDocument();
+    const onLabelEl = getByText(onLabel);
+    const onLabelRadio = getByLabelText(onLabel);
+    const offLabelEl = getByText(offLabel);
+    const offLabelRadio = getByLabelText(offLabel);
 
-    const radioOff = getByLabelText(offLabel);
-    const radioOn = getByLabelText(onLabel);
+    expect(onLabelRadio.checked).toStrictEqual(true);
+    expect(offLabelRadio.checked).toStrictEqual(false);
 
-    expect(radioOff.checked).toStrictEqual(false);
-    expect(radioOn.checked).toStrictEqual(true);
+    fireEvent.click(onLabelEl);
 
-    fireEvent.click(getByText(offLabel));
+    expect(onChange).toHaveBeenCalledTimes(0);
 
-    expect(radioOff.checked).toStrictEqual(true);
-    expect(radioOn.checked).toStrictEqual(false);
+    fireEvent.click(offLabelEl);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(false);
   });
 
-  it('should render slide switch with false value and then rerender with value true', () => {
-    const offLabel = 'Off';
-    const onLabel = 'On';
-
-    const { getByLabelText, rerender } = render(<Switch />, {
-      wrapper: ThemeProviderWrapper,
-    });
-
-    const radioOff = getByLabelText(offLabel);
-    const radioOn = getByLabelText(onLabel);
-
-    expect(radioOff.checked).toStrictEqual(true);
-    expect(radioOn.checked).toStrictEqual(false);
-
-    rerender(<Switch value={true} />, {
-      wrapper: ThemeProviderWrapper,
-    });
-
-    expect(radioOff.checked).toStrictEqual(false);
-    expect(radioOn.checked).toStrictEqual(true);
-  });
-
-  it('should render slide switch with false value and then call onChange when label clicked', () => {
+  it('should render as disabled', () => {
     const onLabel = 'On';
     const offLabel = 'Off';
-
     const onChange = jest.fn();
 
-    const { getByText } = render(<Switch onChange={onChange} />, {
+    const { getByText } = render(<Switch onChange={onChange} disabled />, {
       wrapper: ThemeProviderWrapper,
     });
 
     fireEvent.click(getByText(onLabel));
-    expect(onChange).toHaveBeenCalledWith(true);
-    expect(onChange).toHaveBeenCalledTimes(1);
-
     fireEvent.click(getByText(offLabel));
-    expect(onChange).toHaveBeenCalledWith(false);
+
+    expect(onChange).toHaveBeenCalledTimes(0);
   });
 });

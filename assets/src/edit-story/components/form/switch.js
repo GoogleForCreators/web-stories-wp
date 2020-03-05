@@ -25,7 +25,7 @@ import { rgba } from 'polished';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 const SwitchContainer = styled.div`
   appearance: none;
@@ -107,6 +107,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
   }, [value, setFlag]);
 
   const handleChange = (checked) => {
+    setFlag(checked);
     if (onChange) {
       onChange(checked);
     }
@@ -121,11 +122,6 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
           onChange={() => handleChange(true)}
           checked={flag}
           value="on"
-          aria-label={sprintf(
-            /* translators: %s: Switch toggle label. */
-            __('Switch %s.', 'web-stories'),
-            onLabel
-          )}
         />
       </Label>
       <Label disabled={disabled}>
@@ -135,11 +131,6 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
           onChange={() => handleChange(false)}
           checked={!flag}
           value="off"
-          aria-label={sprintf(
-            /* translators: %s: Switch toggle label. */
-            __('Switch %s.', 'web-stories'),
-            offLabel
-          )}
         />
       </Label>
       <SwitchSpan hasOffset={!flag} />
