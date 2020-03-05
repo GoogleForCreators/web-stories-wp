@@ -105,12 +105,20 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     })
       .then((post) => {
-        const { status: newStatus, slug: newSlug, link } = post;
+        const {
+          status: newStatus,
+          slug: newSlug,
+          link,
+          // eslint-disable-next-line camelcase
+          poster_portrait_url,
+        } = post;
+
         updateStory({
           properties: {
             status: newStatus,
             slug: newSlug,
             link,
+            posterPortraitUrl: poster_portrait_url,
           },
         });
         refreshPostEditURL(storyId);

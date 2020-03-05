@@ -92,7 +92,7 @@ function OutputStory({ story, pages, metadata: { publisher, poster } }) {
           publisher={publisher.name}
           publisher-logo-src={publisher.logo}
           title={story.title}
-          poster-portrait-src={story.featuredMediaUrl || poster}
+          poster-portrait-src={story.posterPortraitUrl || poster}
         >
           {pages.map((page) => (
             <OutputPage key={page.id} page={page} />
