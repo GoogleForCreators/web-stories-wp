@@ -54,5 +54,6 @@ export const panels = [
   PanelTypes.POSITION,
   PanelTypes.SCALE,
   PanelTypes.FILL,
+  PanelTypes.LINK,
   PanelTypes.MASK,
 ];

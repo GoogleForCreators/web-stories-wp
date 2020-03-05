@@ -15,27 +15,31 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import StoryPropTypes from '../../types';
+import { getLinkFromElement } from './index';
 
-const Input = styled.input`
-  display: block;
-  appearance: none;
-  box-shadow: none !important;
-  outline: none;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  opacity: 0.86;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  border-radius: 0 !important;
-
-  &:disabled {
-    background: transparent;
-    color: ${({ theme }) => theme.colors.fg.v1};
+function WithLink({ element, children, ...rest }) {
+  const link = getLinkFromElement(element);
+  if (!link) {
+    return children;
   }
-`;
+  return (
+    <a
+      href={link.url}
+      data-tooltip-icon={link.icon}
+      data-tooltip-text={link.desc}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+}
 
-export default Input;
+WithLink.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+  children: StoryPropTypes.children.isRequired,
+};
+
+export default WithLink;

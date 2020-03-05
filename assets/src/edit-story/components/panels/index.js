@@ -25,6 +25,7 @@ import PageBackgroundPanel from './pageBackground';
 import BackgroundStylePanel from './backgroundStyle';
 import FillPanel from './fill';
 import FontPanel from './font';
+import LinkPanel from './link';
 import MaskPanel from './mask';
 import MediaStylePanel from './mediaStyle';
 import SizePositionPanel from './sizePosition';
@@ -43,6 +44,7 @@ const BACKGROUND_STYLE = 'backgroundStyle';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
+const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
@@ -66,6 +68,7 @@ export const PanelTypes = {
   MEDIA_STYLE,
   TEXT,
   TEXT_STYLE,
+  LINK,
   FILL,
   VIDEO_POSTER,
   MASK,
@@ -137,6 +140,8 @@ export function getPanels(elements) {
           return { type, Panel: StylePanel };
         case TEXT:
           return { type, Panel: TextPanel };
+        case LINK:
+          return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
