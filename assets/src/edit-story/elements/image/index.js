@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { PanelTypes } from '../../components/panels';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -27,10 +28,10 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
   scale: 100,
   focalX: 50,
   focalY: 50,
-  opacity: 100,
 };
 
 export const hasEditMode = true;
