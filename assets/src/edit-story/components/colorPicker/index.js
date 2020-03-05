@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -46,6 +47,18 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  &.picker-appear {
+    opacity: 0.01;
+    margin-top: -10px;
+
+    &.picker-appear-active {
+      opacity: 1;
+      margin-top: 0;
+      transition: 300ms ease-out;
+      transition-property: opacity, margin-top;
+    }
+  }
 `;
 
 const Body = styled.div`
@@ -83,34 +96,36 @@ function ColorPicker({ color, onChange, onClose }) {
   }, [color, load]);
 
   return (
-    <Container>
-      <Header
-        type={type}
-        setToSolid={setToSolid}
-        setToGradient={setToGradient}
-        onClose={onClose}
-      />
-      {type !== 'solid' && (
+    <ReactCSSTransitionGroup transitionName="picker" transitionAppear={true}>
+      <Container>
+        <Header
+          type={type}
+          setToSolid={setToSolid}
+          setToGradient={setToGradient}
+          onClose={onClose}
+        />
+        {type !== 'solid' && (
+          <Body>
+            <GradientPicker
+              stops={stops}
+              currentStopIndex={currentStopIndex}
+              onSelect={selectStop}
+              onReverse={reverseStops}
+              onAdd={addStopAt}
+              onDelete={removeCurrentStop}
+              onRotate={rotateClockwise}
+              onMove={moveCurrentStopTo}
+            />
+          </Body>
+        )}
         <Body>
-          <GradientPicker
-            stops={stops}
-            currentStopIndex={currentStopIndex}
-            onSelect={selectStop}
-            onReverse={reverseStops}
-            onAdd={addStopAt}
-            onDelete={removeCurrentStop}
-            onRotate={rotateClockwise}
-            onMove={moveCurrentStopTo}
+          <CurrentColorPicker
+            color={currentColor}
+            onChange={updateCurrentColor}
           />
         </Body>
-      )}
-      <Body>
-        <CurrentColorPicker
-          color={currentColor}
-          onChange={updateCurrentColor}
-        />
-      </Body>
-    </Container>
+      </Container>
+    </ReactCSSTransitionGroup>
   );
 }
 
