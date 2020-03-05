@@ -84,10 +84,10 @@ function OutputStory({
           <script key={src} async="async" src={src} custom-element={name} />
         ))}
         <Boilerplate />
+        <CustomCSS />
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
         <link rel="canonical" href={story.link} />
-        <CustomCSS />
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
