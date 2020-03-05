@@ -27,6 +27,22 @@ const WebpackBar = require('webpackbar');
  * WordPress dependencies
  */
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+
+/**
+ * Prevents externalizing React, ReactDOM, and ReactDOMServer.
+ *
+ * @param {string} request Requested module
+ * @return {(string|undefined)} Script global
+ */
+function requestToExternal(request) {
+  if (['react', 'react-dom', 'react-dom/server'].includes(request)) {
+    return false;
+  }
+
+  return undefined;
+}
 
 const sharedConfig = {
   output: {
@@ -49,7 +65,10 @@ const sharedConfig = {
     ],
   },
   plugins: [
-    ...defaultConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      injectPolyfill: true,
+      requestToExternal,
+    }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
