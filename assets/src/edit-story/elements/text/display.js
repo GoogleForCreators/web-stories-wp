@@ -18,12 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useEffect, useRef } from 'react';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies

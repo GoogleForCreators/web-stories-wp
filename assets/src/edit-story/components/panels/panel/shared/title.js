@@ -19,21 +19,21 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useContext, useCallback } from 'react';
 import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
-import { useContext, useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import useInspector from '../../inspector/useInspector';
-import panelContext from './context';
+import useInspector from '../../../inspector/useInspector';
+import panelContext from '../context';
+import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import DragHandle from './handle';
-import { ReactComponent as Arrow } from './arrow.svg';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
@@ -76,8 +76,13 @@ const Heading = styled.span`
   color: inherit;
   margin: 0;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19px;
+`;
+
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Collapse = styled.span`
@@ -85,7 +90,6 @@ const Collapse = styled.span`
   width: 28px;
   height: 28px;
   display: flex; /* removes implicit line-height padding from child element */
-  opacity: 0.54;
 
   svg {
     width: 28px;
@@ -94,7 +98,13 @@ const Collapse = styled.span`
   }
 `;
 
-function Title({ children, isPrimary, isSecondary, isResizable }) {
+function Title({
+  children,
+  isPrimary,
+  isSecondary,
+  secondaryAction,
+  isResizable,
+}) {
   const {
     state: { isCollapsed, height, panelContentId },
     actions: { collapse, expand, setHeight },
@@ -139,9 +149,12 @@ function Title({ children, isPrimary, isSecondary, isResizable }) {
         aria-controls={panelContentId}
       >
         <Heading>{children}</Heading>
-        <Collapse isCollapsed={isCollapsed}>
-          <Arrow />
-        </Collapse>
+        <HeaderActions>
+          {secondaryAction}
+          <Collapse isCollapsed={isCollapsed}>
+            <Arrow />
+          </Collapse>
+        </HeaderActions>
       </HeaderButton>
     </Header>
   );
@@ -155,6 +168,10 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  secondaryAction: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 Title.defaultProps = {

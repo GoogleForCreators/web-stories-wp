@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useReducer, useCallback } from '@wordpress/element';
+import { useReducer, useCallback } from 'react';
 
 const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';

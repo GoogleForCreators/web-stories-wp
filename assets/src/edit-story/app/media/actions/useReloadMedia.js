@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useCallback } from '@wordpress/element';
+import { useCallback } from 'react';
 
 function useReloadMedia({ setIsMediaLoading, setIsMediaLoaded }) {
   const reloadMedia = useCallback(() => {

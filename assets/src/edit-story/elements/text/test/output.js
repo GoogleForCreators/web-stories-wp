@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { renderToString } from '@wordpress/element';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
@@ -49,7 +49,7 @@ describe('TextOutput', () => {
       },
     };
 
-    const output = renderToString(<TextOutput element={element} />);
+    const output = renderToStaticMarkup(<TextOutput element={element} />);
     expect(output).toStrictEqual(
       '<p class="fill" style="font-size:0.83333%;background:rgba(239,239,239,0.5);color:rgba(255,255,255,0.25);letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap">Content</p>'
     );

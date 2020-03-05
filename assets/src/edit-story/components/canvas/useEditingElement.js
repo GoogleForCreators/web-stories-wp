@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useCallback } from 'react';
 
 function useEditingElement() {
   const [editingElement, setEditingElement] = useState(null);

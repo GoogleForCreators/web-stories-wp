@@ -18,11 +18,7 @@
  * External dependencies
  */
 import ColorThief from 'colorthief';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect, useLayoutEffect } from '@wordpress/element';
+import { useRef, useEffect, useLayoutEffect } from 'react';
 
 const thief = new ColorThief();
 

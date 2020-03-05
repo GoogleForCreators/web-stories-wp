@@ -18,24 +18,20 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useCallback } from '@wordpress/element';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory, useHistory } from '../../../app';
 import { createPage } from '../../../elements';
-import { ReactComponent as Delete } from './delete_icon.svg';
-import { ReactComponent as Duplicate } from './duplicate_icon.svg';
-import { ReactComponent as Undo } from './undo_icon.svg';
-import { ReactComponent as Redo } from './redo_icon.svg';
-import { ReactComponent as Add } from './add_page.svg';
-import { ReactComponent as Layout } from './layout_helper.svg';
-import { ReactComponent as Text } from './text_helper.svg';
+import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
+import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
+import { ReactComponent as Undo } from '../../../icons/undo_icon.svg';
+import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
+import { ReactComponent as Add } from '../../../icons/add_page.svg';
+import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
+import { ReactComponent as Text } from '../../../icons/text_helper.svg';
 
 const HEIGHT = 28;
 

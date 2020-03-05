@@ -23,11 +23,9 @@ import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
 import MaskPanel from './mask';
-import RotationPanel from './rotationAngle';
-import SizePanel from './size';
-import PositionPanel from './position';
+import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
-import StylePanel from './textStyle';
+import TextStylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
@@ -38,13 +36,12 @@ export { default as ColorPresetPanel } from './colorPreset';
 const BACKGROUND = 'background';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const SCALE = 'scale';
-const ROTATION_ANGLE = 'rotationAngle';
 const TEXT = 'text';
-const SIZE = 'size';
-const POSITION = 'position';
+const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
 const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
+const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 const PAGE = 'page';
@@ -53,13 +50,12 @@ const NO_SELECTION = 'noselection';
 export const PanelTypes = {
   BACKGROUND,
   BACKGROUND_DISPLAY,
-  POSITION,
-  SIZE,
+  SIZE_POSITION,
   SCALE,
   BACKGROUND_COLOR,
   STYLE,
   TEXT,
-  ROTATION_ANGLE,
+  TEXT_STYLE,
   FILL,
   VIDEO_POSTER,
   MASK,
@@ -113,22 +109,18 @@ export function getPanels(elements) {
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
-        case POSITION:
-          return { type, Panel: PositionPanel };
         case SCALE:
           return { type, Panel: ScalePanel };
-        case ROTATION_ANGLE:
-          return { type, Panel: RotationPanel };
-        case SIZE:
-          return { type, Panel: SizePanel };
+        case SIZE_POSITION:
+          return { type, Panel: SizePositionPanel };
         case FILL:
           return { type, Panel: FillPanel };
         case BACKGROUND_COLOR:
           return { type, Panel: BackgroundColorPanel };
-        case STYLE:
-          return { type, Panel: StylePanel };
         case TEXT:
           return { type, Panel: TextPanel };
+        case TEXT_STYLE:
+          return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
           return { type, Panel: VideoPosterPanel };
         case MASK:
