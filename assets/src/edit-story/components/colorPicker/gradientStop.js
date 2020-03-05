@@ -87,7 +87,9 @@ function GradientStopWithRef(
   );
 }
 
-GradientStopWithRef.propTypes = {
+const GradientStop = forwardRef(GradientStopWithRef);
+
+GradientStop.propTypes = {
   position: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   isSelected: PropTypes.bool.isRequired,
@@ -100,4 +102,6 @@ GradientStopWithRef.propTypes = {
   onMove: PropTypes.func.isRequired,*/,
 };
 
-export default forwardRef(GradientStopWithRef);
+GradientStopWithRef.propTypes = GradientStop.propTypes;
+
+export default GradientStop;

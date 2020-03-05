@@ -30,7 +30,6 @@ function getGradientDescription({ type, rotation, center, size }) {
   const centerString = center
     ? ` at ${round(100 * center.x, 2)}% ${round(100 * center.y, 2)}%`
     : '';
-  const rotationString = rotation ? `${rotation}turn` : '';
   switch (type) {
     case 'radial':
       if (!centerString && !sizeString) {
@@ -39,14 +38,16 @@ function getGradientDescription({ type, rotation, center, size }) {
       return `${sizeString}${centerString}`.trim();
 
     case 'conic':
-      if (!rotationString && !centerString) {
+      if (!rotation && !centerString) {
         return null;
       }
-      const fromRotationString = rotationString ? `from ${rotationString}` : '';
+      // Here we don't always need rotation, as default is 0turn
+      const fromRotationString = rotation ? `from ${rotation}turn` : '';
       return `${fromRotationString}${centerString}`.trim();
 
     case 'linear':
-      return rotationString;
+      // Always include rotation and offset by .5turn, as default is .5turn(?)
+      return `${((rotation || 0) + 0.5) % 1}turn`;
 
     default:
       return null;

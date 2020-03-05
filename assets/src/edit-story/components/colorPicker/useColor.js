@@ -37,14 +37,14 @@ const initialState = {
     a: 0,
   },
   currentStopIndex: 0,
-  angle: 0,
+  rotation: 0.5,
   center: [],
   size: [],
 };
 
 const reducer = {
   load: (state, { payload }) => {
-    const { type, color, stops, angle, center, size } = payload;
+    const { type, color, stops, rotation, center, size } = payload;
     switch (type) {
       case TYPE_LINEAR:
         return {
@@ -54,7 +54,7 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          angle,
+          rotation,
         };
 
       case TYPE_RADIAL:
@@ -77,7 +77,7 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          angle,
+          rotation,
           center,
         };
 
@@ -97,7 +97,7 @@ const reducer = {
     regenerate: true,
   }),
   setToGradient: (state, { payload }) => {
-    const stops = state.stops || [
+    const stops = (state.stops && state.stops.lenth) || [
       { color: state.currentColor, position: 0 },
       { color: state.currentColor, position: 1 },
     ];
@@ -193,7 +193,7 @@ const reducer = {
   },
   rotateClockwise: (state) => ({
     ...state,
-    rotation: state.rotation + 0.25,
+    rotation: (state.rotation + 0.25) % 1,
     regenerate: true,
   }),
   selectStop: (state, { payload: newIndex }) => {
@@ -237,7 +237,45 @@ function regenerateColor(pattern) {
       } = pattern;
       return createSolid(r, g, b, a);
     }
-    // TODO: generate minimal color representations for gradients
+    case TYPE_LINEAR: {
+      const { stops, rotation } = pattern;
+      const minimal = {
+        type: TYPE_LINEAR,
+        stops,
+      };
+      if (rotation !== 0) {
+        minimal.rotation = rotation;
+      }
+      return minimal;
+    }
+    case TYPE_RADIAL: {
+      const { stops, center, size } = pattern;
+      const minimal = {
+        type: TYPE_RADIAL,
+        stops,
+      };
+      if (center && (center.x !== 0.5 || center.y !== 0.5)) {
+        minimal.center = center;
+      }
+      if (size && (size.w !== 0.5 || size.h !== 0.5)) {
+        minimal.size = size;
+      }
+      return minimal;
+    }
+    case TYPE_CONIC: {
+      const { stops, rotation, center } = pattern;
+      const minimal = {
+        type: TYPE_CONIC,
+        stops,
+      };
+      if (rotation !== 0) {
+        minimal.rotation = rotation;
+      }
+      if (center && center.every((coord) => coord === 0.5)) {
+        minimal.center = center;
+      }
+      return minimal;
+    }
     default:
       return null;
   }

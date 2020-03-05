@@ -50,10 +50,18 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Preview = styled(Box)`
+const Preview = styled(Box).attrs({
+  tabIndex: 0,
+})`
   display: flex;
   width: 122px;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.55)};
+  }
 `;
 
 const VisualPreview = styled.div`
@@ -150,6 +158,7 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
   const previewOpacity = getPreviewOpacity(value, opacity);
+  const fullLabel = `${label}: ${previewText}`;
 
   const {
     actions: { showColorPickerAt, hideColorPicker },
@@ -167,9 +176,9 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
 
   return (
     <Container ref={ref}>
-      <Preview onClick={handleOpenEditing}>
+      <Preview onClick={handleOpenEditing} aria-label={fullLabel}>
         <VisualPreview style={previewStyle} />
-        <TextualPreview aria-label={label}>
+        <TextualPreview>
           {isMultiple
             ? __('Multiple', 'web-stories')
             : previewText ||
