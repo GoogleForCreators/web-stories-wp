@@ -519,7 +519,11 @@ class Story_Post_Type {
 			return $class;
 		}
 
-		$class .= ' edit-story ';
+		$class .= ' edit-story';
+
+		if ( false === strpos( $class, 'folded' ) ) {
+			$class .= ' folded';
+		}
 
 		return $class;
 	}
