@@ -33,7 +33,7 @@ import { __, _x } from '@wordpress/i18n';
 import { PatternPropType } from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import createSolid from '../../utils/createSolid';
-import { useSidebar } from '../../app';
+import { useSidebar } from '../../app/sidebar';
 
 const Container = styled.div`
   display: flex;
