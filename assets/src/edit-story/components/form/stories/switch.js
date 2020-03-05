@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -31,8 +31,9 @@ export default {
 };
 
 export const _default = () => {
-  const onLabel = text('OnLabel', 'Do not format');
-  const offLabel = text('OffLabel', 'Fit to Device');
+  const onLabel = text('OnLabel', 'Fit to Device');
+  const offLabel = text('OffLabel', 'Do not format');
+  const disabled = boolean('Disabled', false);
   const [value, setValue] = useState(true);
 
   return (
@@ -41,6 +42,7 @@ export const _default = () => {
       onLabel={onLabel}
       offLabel={offLabel}
       onChange={setValue}
+      disabled={disabled}
     />
   );
 };
