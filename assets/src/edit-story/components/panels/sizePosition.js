@@ -106,11 +106,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   }, [state.isFill, updateProperties]);
 
   const isSingleElement = selectedElements.length === 1;
-  const isMedia =
-    isSingleElement && getDefinitionForType(selectedElements[0].type).isMedia;
+  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
-  const canFlip =
-    (isMedia || 'square' === selectedElements[0].type) && isSingleElement;
+  const canFlip = isMedia || 'square' === selectedElements[0].type;
 
   const handleNumberChange = useCallback(
     (property) => (value) =>
@@ -152,7 +150,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       title={__('Size & position', 'web-stories')}
       onSubmit={updateProperties}
     >
-      {isMedia && (
+      {isMedia && isSingleElement && (
         <Row expand>
           <Button onClick={handleSetBackground}>
             {__('Set as background', 'web-stories')}
@@ -223,17 +221,19 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         {canFlip && (
           <>
             <FlipControls onChange={handleFlipChange} value={state.flip} />
-            <Toggle
-              icon={<Fullbleed />}
-              value={state.isFill}
-              isMultiple={false}
-              onChange={(value) => {
-                setState({
-                  ...state,
-                  isFill: value,
-                });
-              }}
-            />
+            {isSingleElement && (
+              <Toggle
+                icon={<Fullbleed />}
+                value={state.isFill}
+                isMultiple={false}
+                onChange={(value) => {
+                  setState({
+                    ...state,
+                    isFill: value,
+                  });
+                }}
+              />
+            )}
           </>
         )}
       </Row>
