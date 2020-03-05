@@ -38,8 +38,8 @@ const initialState = {
   },
   currentStopIndex: 0,
   rotation: 0.5,
-  center: [],
-  size: [],
+  center: { x: 0.5, y: 0.5 },
+  size: { w: 1, h: 1 },
 };
 
 const reducer = {
@@ -54,7 +54,7 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          rotation,
+          rotation: isNaN(rotation) ? 0 : rotation,
         };
 
       case TYPE_RADIAL:
@@ -77,7 +77,7 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          rotation,
+          rotation: isNaN(rotation) ? 0 : rotation,
           center,
         };
 
@@ -97,10 +97,13 @@ const reducer = {
     regenerate: true,
   }),
   setToGradient: (state, { payload }) => {
-    const stops = (state.stops && state.stops.lenth) || [
-      { color: state.currentColor, position: 0 },
-      { color: state.currentColor, position: 1 },
-    ];
+    const stops =
+      state.stops && state.stops.length >= 2
+        ? state.stops
+        : [
+            { color: state.currentColor, position: 0 },
+            { color: state.currentColor, position: 1 },
+          ];
     return {
       ...state,
       regenerate: true,
@@ -257,7 +260,7 @@ function regenerateColor(pattern) {
       if (center && (center.x !== 0.5 || center.y !== 0.5)) {
         minimal.center = center;
       }
-      if (size && (size.w !== 0.5 || size.h !== 0.5)) {
+      if (size && (size.w !== 1 || size.h !== 1)) {
         minimal.size = size;
       }
       return minimal;
@@ -271,7 +274,7 @@ function regenerateColor(pattern) {
       if (rotation !== 0) {
         minimal.rotation = rotation;
       }
-      if (center && center.every((coord) => coord === 0.5)) {
+      if (center && (center.x !== 0.5 || center.y !== 0.5)) {
         minimal.center = center;
       }
       return minimal;

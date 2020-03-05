@@ -77,8 +77,7 @@ export const elementWithBackgroundColor = css`
 `;
 
 export const elementWithFontColor = css`
-  ${({ color }) =>
-    convertToCSS(generatePatternCSS(color, { property: 'color' }))};
+  ${({ color }) => convertToCSS(generatePatternCSS(color, 'color'))};
 `;
 
 export const elementWithFont = css`

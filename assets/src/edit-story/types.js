@@ -32,7 +32,7 @@ export const ColorStopPropType = PropTypes.shape({
 });
 
 export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
+  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
