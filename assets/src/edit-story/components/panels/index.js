@@ -22,12 +22,11 @@ import BackgroundPanel from './background';
 import ColorPanel from './color';
 import StylePanel from './style';
 import PageBackgroundPanel from './pageBackground';
-import BackgroundStylePanel from './backgroundStyle';
 import FillPanel from './fill';
 import FontPanel from './font';
 import LinkPanel from './link';
 import MaskPanel from './mask';
-import MediaStylePanel from './mediaStyle';
+import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
@@ -40,17 +39,16 @@ export { default as ColorPresetPanel } from './colorPreset';
 
 const BACKGROUND = 'background';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
-const BACKGROUND_STYLE = 'backgroundStyle';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
+const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
-const MEDIA_STYLE = 'mediaStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 const PAGE = 'page';
@@ -59,13 +57,12 @@ const NO_SELECTION = 'noselection';
 export const PanelTypes = {
   BACKGROUND,
   BACKGROUND_DISPLAY,
-  BACKGROUND_STYLE,
   SIZE_POSITION,
   SCALE,
   COLOR,
   FONT,
   STYLE,
-  MEDIA_STYLE,
+  LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
@@ -95,7 +92,7 @@ export function getPanels(elements) {
     const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND, Panel: BackgroundPanel },
-      { type: BACKGROUND_STYLE, Panel: BackgroundStylePanel },
+      { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
@@ -120,7 +117,8 @@ export function getPanels(elements) {
             return { type, Panel: BackgroundPanel };
           }
           return null;
-        case BACKGROUND_STYLE:
+        case LAYER_STYLE:
+          return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
@@ -128,8 +126,6 @@ export function getPanels(elements) {
           return { type, Panel: ScalePanel };
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
-        case MEDIA_STYLE:
-          return { type, Panel: MediaStylePanel };
         case FILL:
           return { type, Panel: FillPanel };
         case COLOR:

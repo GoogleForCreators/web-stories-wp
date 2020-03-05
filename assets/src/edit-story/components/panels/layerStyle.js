@@ -19,21 +19,26 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Row } from '../form';
+import { Row, Numeric } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
-import OpacityControl from './shared/opacityControl';
 
-function BackgroundStylePanel({ selectedElements, onSetProperties }) {
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+function LayerStylePanel({ selectedElements, onSetProperties }) {
   const opacity = getCommonValue(selectedElements, 'opacity');
   const [state, setState] = useState({ opacity });
 
@@ -44,15 +49,16 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
     onSetProperties(state);
     evt.preventDefault();
   };
-  // TODO: removing as background, flipping, layover will also be displayed here at some point.
   return (
     <SimplePanel
-      name="backgroundStyle"
-      title={__('Style', 'web-stories')}
+      name="layerStyle"
+      title={__('Layer', 'web-stories')}
       onSubmit={handleSubmit}
     >
       <Row expand={false} spaceBetween={true}>
-        <OpacityControl
+        <BoxedNumeric
+          suffix={__('Opacity', 'web-stories')}
+          symbol={_x('%', 'Percentage', 'web-stories')}
           value={state.opacity}
           onChange={(value) =>
             setState({
@@ -60,15 +66,17 @@ function BackgroundStylePanel({ selectedElements, onSetProperties }) {
               opacity: isNaN(value) || value === '' ? '' : parseFloat(value),
             })
           }
+          min="1"
+          max="100"
         />
       </Row>
     </SimplePanel>
   );
 }
 
-BackgroundStylePanel.propTypes = {
+LayerStylePanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default BackgroundStylePanel;
+export default LayerStylePanel;
