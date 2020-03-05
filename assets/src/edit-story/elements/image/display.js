@@ -35,7 +35,6 @@ const Element = styled.div`
 
 const Img = styled.img`
   position: absolute;
-  opacity: ${({ opacity }) => opacity};
   ${imageWithScale}
 `;
 

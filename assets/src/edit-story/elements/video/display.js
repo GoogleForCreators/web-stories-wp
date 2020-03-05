@@ -35,7 +35,6 @@ const Video = styled.video`
   position: absolute;
   max-width: initial;
   max-height: initial;
-  opacity: ${({ opacity }) => opacity};
   ${videoWithScale}
 `;
 
