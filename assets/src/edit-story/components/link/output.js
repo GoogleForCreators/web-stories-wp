@@ -17,30 +17,29 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
+import StoryPropTypes from '../../types';
+import { getLinkFromElement } from './index';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+function WithLink({ element, children, ...rest }) {
+  const link = getLinkFromElement(element);
+  if (!link) {
+    return children;
+  }
+  return (
+    <a
+      href={link.url}
+      data-tooltip-icon={link.icon}
+      data-tooltip-text={link.desc}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+}
+
+WithLink.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+  children: StoryPropTypes.children.isRequired,
 };
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-};
-
-export const panels = [
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.STYLE,
-  PanelTypes.LINK,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default WithLink;
