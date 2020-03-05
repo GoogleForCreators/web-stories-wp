@@ -185,14 +185,14 @@ class Link_Controller extends WP_REST_Controller {
 			/** @var \DOMElement $description_node */
 			$description_node = $description_query->item( 0 );
 
-			if ( $description instanceof \DOMElement ) {
+			if ( $description_node instanceof \DOMElement ) {
 				$description = $description_node->getAttribute( 'content' );
 			}
 		} else if ( $og_description_query instanceof DOMNodeList && $og_description_query->count() ) {
 			/** @var \DOMElement $description_node */
 			$description_node = $og_description_query->item( 0 );
 
-			if ( $description instanceof \DOMElement ) {
+			if ( $description_node instanceof \DOMElement ) {
 				$description = $description_node->getAttribute( 'content' );
 			}
 		}
