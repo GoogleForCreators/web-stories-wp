@@ -15,7 +15,7 @@
  */
 
 /**
- * Get props for media using scale and focal point.
+ * Get props for media specifically influenced by scale and focal point.
  *
  * @param {number} width      Original width.
  * @param {number} height     Original height.
@@ -23,17 +23,15 @@
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
  * @param {number} mediaRatio Media file ratio.
- * @param {number} opacity    Opacity in %.
  * @return {Object} Media properties.
  */
-function getMediaProps(
+function getMediaSizePositionProps(
   width,
   height,
   scale,
   focalX,
   focalY,
-  mediaRatio,
-  opacity
+  mediaRatio
 ) {
   const ratio = width / height;
   scale = Math.max(scale || 100, 100);
@@ -57,11 +55,10 @@ function getMediaProps(
     height: mediaHeight,
     offsetX,
     offsetY,
-    opacity: opacity ? opacity / 100 : null,
     scale,
     focalX,
     focalY,
   };
 }
 
-export default getMediaProps;
+export default getMediaSizePositionProps;

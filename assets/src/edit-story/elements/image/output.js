@@ -20,7 +20,7 @@
 import StoryPropTypes from '../../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { editorPixels } from '../../units';
-import { getMediaProps } from '../shared';
+import { getMediaSizePositionProps } from '../shared';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -33,7 +33,7 @@ function ImageOutput({
   // aspect ratio.
   const width = vw;
   const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     width,
     height,
     scale,

@@ -24,7 +24,7 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, getMediaSizePositionProps } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { imageWithScale, getImageWithScaleCss } from './util';
 
@@ -45,15 +45,18 @@ function ImageDisplay({
 }) {
   const imageRef = useRef(null);
 
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     width,
     height,
     scale,
     focalX,
     focalY,
-    origRatio,
-    opacity
+    origRatio
   );
+
+  if (opacity) {
+    imgProps.opacity = opacity / 100;
+  }
 
   useTransformHandler(id, (transform) => {
     const target = imageRef.current;
@@ -62,14 +65,13 @@ function ImageDisplay({
     } else {
       const { resize } = transform;
       if (resize[0] !== 0 && resize[1] !== 0) {
-        const newImgProps = getMediaProps(
+        const newImgProps = getMediaSizePositionProps(
           resize[0],
           resize[1],
           scale,
           focalX,
           focalY,
-          origRatio,
-          opacity
+          origRatio
         );
         target.style.cssText = getImageWithScaleCss(newImgProps);
       }

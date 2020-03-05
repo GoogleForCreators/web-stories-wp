@@ -26,7 +26,7 @@ import { useCallback, useState } from 'react';
 import {
   elementFillContent,
   CropBox,
-  getMediaProps,
+  getMediaSizePositionProps,
   EditPanMovable,
   ScalePanel,
   MEDIA_MASK_OPACITY,
@@ -85,7 +85,7 @@ function ImageEdit({ element, box }) {
     [id, updateElementById]
   );
 
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     width,
     height,
     scale,

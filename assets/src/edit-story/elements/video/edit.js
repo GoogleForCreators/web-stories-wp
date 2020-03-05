@@ -26,7 +26,7 @@ import { useCallback, useState } from 'react';
 import {
   elementFillContent,
   CropBox,
-  getMediaProps,
+  getMediaSizePositionProps,
   EditPanMovable,
   ScalePanel,
   MEDIA_MASK_OPACITY,
@@ -76,7 +76,7 @@ function VideoEdit({
     [id, updateElementById]
   );
 
-  const videoProps = getMediaProps(
+  const videoProps = getMediaSizePositionProps(
     width,
     height,
     scale,
