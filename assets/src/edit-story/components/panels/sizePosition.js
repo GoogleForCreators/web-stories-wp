@@ -83,7 +83,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           const { height: newHeight, width: newWidth } = state;
           const update = {
             ...state,
-            flip: 'text' === type ? oldFlip : state.flip,
+            flip: getDefinitionForType(type).canFlip ? state.flip : oldFlip,
           };
           const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
