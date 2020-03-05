@@ -93,7 +93,7 @@ const SwitchSpan = styled.span`
   width: calc(50% - 3px);
   height: 26px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.bg.v8};
+  background-color: ${({ theme }) => theme.colors.bg.v10};
   transition: left 0.15s ease-out;
 
   ${({ hasOffset }) => hasOffset && `left: calc(50% + 2px);`}
