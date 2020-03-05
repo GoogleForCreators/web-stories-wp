@@ -15,34 +15,34 @@
  */
 
 /**
+ * External dependencies
+ */
+import { boolean, text } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
+import { useState } from 'react';
+import Switch from '../switch';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+export default {
+  title: 'Components/Form/Switch',
+  component: Switch,
 };
 
-export const hasEditMode = false;
+export const _default = () => {
+  const onLabel = text('OnLabel', 'Fit to Device');
+  const offLabel = text('OffLabel', 'Do not format');
+  const disabled = boolean('Disabled', false);
+  const [value, setValue] = useState(true);
 
-export const isMedia = false;
-
-export const isMaskable = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
+  return (
+    <Switch
+      value={value}
+      onLabel={onLabel}
+      offLabel={offLabel}
+      onChange={setValue}
+      disabled={disabled}
+    />
+  );
 };
-
-export const panels = [
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.STYLE,
-  PanelTypes.LINK,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];

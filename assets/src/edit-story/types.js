@@ -25,6 +25,13 @@ StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
+StoryPropTypes.link = PropTypes.shape({
+  type: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+  desc: PropTypes.string,
+  icon: PropTypes.string,
+});
+
 StoryPropTypes.size = PropTypes.exact({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -84,6 +91,7 @@ const StoryElementPropsTypes = {
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
+  link: StoryPropTypes.link,
 };
 
 StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
