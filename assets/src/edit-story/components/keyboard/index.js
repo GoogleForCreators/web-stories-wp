@@ -45,16 +45,16 @@ const globalRef = createRef();
  *
  * @param {{current: Node}} ref
  * @param {string|Array|Object} keyNameOrSpec
+ * @param {string|undefined} type
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
- * @param {string|undefined} mode
  */
-export function useKeyDownEffect(
+function useKeyEffect(
   ref,
   keyNameOrSpec,
-  callback,
-  deps = undefined,
-  mode = undefined
+  type = 'keydown',
+  callback = () => {},
+  deps = undefined
 ) {
   const { keys } = useContext(Context);
   useEffect(
@@ -72,7 +72,7 @@ export function useKeyDownEffect(
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
       const handler = createKeyHandler(keySpec, callback);
-      mousetrap.bind(keySpec.key, handler, mode);
+      mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key);
       };
@@ -83,8 +83,31 @@ export function useKeyDownEffect(
 }
 
 /**
- * See https://craig.is/killing/mice#keys for the supported key codes.
- *
+ * @param {{current: Node}} ref
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ */
+export function useKeyDownEffect(
+  ref,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffect(ref, keyNameOrSpec, 'keydown', callback, deps);
+}
+
+/**
+ * @param {{current: Node}} ref
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ */
+export function useKeyUpEffect(ref, keyNameOrSpec, callback, deps = undefined) {
+  useKeyEffect(ref, keyNameOrSpec, 'keyup', callback, deps);
+}
+
+/**
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
@@ -93,13 +116,29 @@ export function useKeyDownEffect(
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
   callback,
-  deps = undefined,
-  mode = undefined
+  deps = undefined
 ) {
   if (!globalRef.current) {
     globalRef.current = document;
   }
-  useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps, mode);
+  useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
+}
+
+/**
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ * @param {string|undefined} mode
+ */
+export function useGlobalKeyUpEffect(
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  if (!globalRef.current) {
+    globalRef.current = document;
+  }
+  useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
 /**

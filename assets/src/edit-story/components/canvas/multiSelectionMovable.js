@@ -29,7 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
-import { useGlobalKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -66,7 +66,7 @@ function MultiSelectionMovable({ selectedElements }) {
 
   // ⌘ key disables snapping
   useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
-  useGlobalKeyDownEffect('meta', () => setCanSnap(true), [setCanSnap], 'keyup');
+  useGlobalKeyUpEffect('meta', () => setCanSnap(true), [setCanSnap]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
