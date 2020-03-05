@@ -39,13 +39,11 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends WP_REST_Controller {
-
-
 	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->namespace = 'amp/v1';
+		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'link';
 	}
 
@@ -72,7 +70,7 @@ class Link_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Parses 
+	 * Parses
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
@@ -122,8 +120,8 @@ class Link_Controller extends WP_REST_Controller {
 			'image'       => $touchIcon ?? $ogImage ?? $icon,
 			'description' => $ogDesc ?? $desc,
 		];
-		$response    = rest_ensure_response( $parsed_tags );
-		return $response;
+
+		return rest_ensure_response( $parsed_tags );
 	}
 
 	/**
