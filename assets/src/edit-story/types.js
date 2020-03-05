@@ -38,6 +38,13 @@ StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
+StoryPropTypes.link = PropTypes.shape({
+  type: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+  desc: PropTypes.string,
+  icon: PropTypes.string,
+});
+
 export const StoryElementPropsTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -48,6 +55,7 @@ export const StoryElementPropsTypes = {
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
+  link: StoryPropTypes.link,
 };
 
 StoryPropTypes.size = PropTypes.exact({
