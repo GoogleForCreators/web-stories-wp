@@ -15,11 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import getTransformFlip from './getTransformFlip';
-
-/**
  * Get props for media using scale and focal point.
  *
  * @param {number} width      Original width.
@@ -28,18 +23,9 @@ import getTransformFlip from './getTransformFlip';
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
  * @param {number} mediaRatio Media file ratio.
- * @param {Object} flip       Flip the element, either vertical or horizontal flip.
  * @return {Object} Media properties.
  */
-function getMediaProps(
-  width,
-  height,
-  scale,
-  focalX,
-  focalY,
-  mediaRatio,
-  flip = null
-) {
+function getMediaProps(width, height, scale, focalX, focalY, mediaRatio) {
   const ratio = width / height;
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;
@@ -64,7 +50,6 @@ function getMediaProps(
     scale,
     focalX,
     focalY,
-    transformFlip: getTransformFlip(flip),
   };
 }
 

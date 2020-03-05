@@ -102,13 +102,18 @@ function WithMask({ elementId, mask, fill, flip, style, children, ...rest }) {
     ...style,
   };
 
+  const transformFlip = getTransformFlip(flip);
+  if (transformFlip) {
+    allStyles.transform = allStyles.transform
+      ? `${allStyles.transform} ${transformFlip}`
+      : transformFlip;
+  }
   if (maskType) {
     // @todo: Chrome cannot do inline clip-path using data: URLs.
     // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
     const maskId = `mask-${maskType}-${elementId}`;
     allStyles.clipPath = `url(#${maskId})`;
-    allStyles.transform = getTransformFlip(flip);
 
     return (
       <div style={allStyles} {...rest}>

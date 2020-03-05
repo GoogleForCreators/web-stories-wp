@@ -25,7 +25,6 @@ import { useRef } from 'react';
  */
 import { getDefinitionForType } from '../../elements';
 import {
-  elementWithFlip,
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
@@ -34,7 +33,6 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import { WithElementMask } from '../../masks';
-import getTransformFlip from '../../elements/shared/getTransformFlip';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -43,19 +41,13 @@ const Wrapper = styled.div`
 	contain: layout paint;
 `;
 
-const WithFlip = styled.div`
-  width: 100%;
-  height: 100%;
-  ${elementWithFlip}
-`;
-
 function DisplayElement({ element }) {
   const {
     actions: { getBox },
   } = useUnits();
 
-  const { id, type, flip } = element;
-  const { Display, isMedia } = getDefinitionForType(type);
+  const { id, type } = element;
+  const { Display } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
 
@@ -80,9 +72,7 @@ function DisplayElement({ element }) {
   return (
     <Wrapper ref={wrapperRef} {...box}>
       <WithElementMask element={element} fill={true}>
-        <WithFlip transformFlip={isMedia && getTransformFlip(flip)}>
-          <Display element={element} box={box} />
-        </WithFlip>
+        <Display element={element} box={box} />
       </WithElementMask>
     </Wrapper>
   );
