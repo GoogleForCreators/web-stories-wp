@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -27,6 +27,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
+import { useKeyDownEffect } from '../keyboard';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -95,14 +96,28 @@ function ColorPicker({ color, onChange, onClose }) {
     }
   }, [color, load]);
 
+  const ref = useRef();
+
+  // Record this to be able to restore focus on close
+  const previousFocus = useRef(window.activeElement);
+  const handleClose = useCallback(() => {
+    // If possible, restore focus to previously selected element
+    if (previousFocus.current) {
+      previousFocus.current.focus();
+    }
+    onClose();
+  }, [onClose]);
+
+  useKeyDownEffect(ref, 'esc', handleClose);
+
   return (
-    <ReactCSSTransitionGroup transitionName="picker" transitionAppear={true}>
-      <Container>
+    <CSSTransition in appear={true} classNames="picker" timeout={300}>
+      <Container ref={ref}>
         <Header
           type={type}
           setToSolid={setToSolid}
           setToGradient={setToGradient}
-          onClose={onClose}
+          onClose={handleClose}
         />
         {type !== 'solid' && (
           <Body>
@@ -125,7 +140,7 @@ function ColorPicker({ color, onChange, onClose }) {
           />
         </Body>
       </Container>
-    </ReactCSSTransitionGroup>
+    </CSSTransition>
   );
 }
 
@@ -137,6 +152,7 @@ ColorPicker.propTypes = {
 
 ColorPicker.defaultProps = {
   color: null,
+  onClose: () => {},
 };
 
 export default ColorPicker;

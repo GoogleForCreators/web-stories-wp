@@ -85,7 +85,7 @@ const reducer = {
       default:
         return {
           ...state,
-          type,
+          type: TYPE_SOLID,
           regenerate: false,
           currentColor: color,
         };
