@@ -27,12 +27,12 @@ export const HexPropType = PropTypes.shape({
 });
 
 export const ColorStopPropType = PropTypes.shape({
-  stop: HexPropType.isRequired,
+  color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
 });
 
 export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'gradient', 'conic']),
+  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
