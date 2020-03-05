@@ -42,6 +42,7 @@ const Hint = styled.div`
   justify-content: center;
   flex-direction: row;
   max-width: 200px;
+  pointer-events: all;
 `;
 
 const Tooltip = styled.div`
@@ -60,6 +61,7 @@ const Tooltip = styled.div`
   justify-content: center;
   flex-direction: row;
   max-width: 200px;
+  pointer-events: all;
 
   &:after {
     content: '';
@@ -114,9 +116,17 @@ const LinkDesc = styled.span`
 `;
 
 const Wrapper = styled.div`
+  position: relative;
+`;
+
+const TooltipContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: none;
 `;
 
 function WithLink({ element, showTooltip, children, ...rest }) {
@@ -128,26 +138,28 @@ function WithLink({ element, showTooltip, children, ...rest }) {
 
   if (!showTooltip) {
     return (
-      <div {...rest}>
+      <Wrapper {...rest}>
         <LinkIcon />
         {children}
-      </div>
+      </Wrapper>
     );
   }
 
   return (
     <Wrapper {...rest}>
-      {link.type === LinkType.ONE_TAP ? (
-        <Hint>{link.url}</Hint>
-      ) : (
-        <Tooltip>
-          <BrandIcon src={link.icon} />
-          <LinkDesc>{link.desc || link.url}</LinkDesc>
-          <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
-            <LinkOutIcon />
-          </LinkOut>
-        </Tooltip>
-      )}
+      <TooltipContainer>
+        {link.type === LinkType.ONE_TAP ? (
+          <Hint>{link.url}</Hint>
+        ) : (
+          <Tooltip>
+            <BrandIcon src={link.icon} />
+            <LinkDesc>{link.desc || link.url}</LinkDesc>
+            <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
+              <LinkOutIcon />
+            </LinkOut>
+          </Tooltip>
+        )}
+      </TooltipContainer>
       {children}
     </Wrapper>
   );

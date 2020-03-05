@@ -25,13 +25,12 @@ import { debounce } from 'throttle-debounce';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useCallback, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { Input as BaseInput, Row } from '../form';
 import { createLink } from '../link';
 import { ReactComponent as Close } from '../../icons/close_icon.svg';
