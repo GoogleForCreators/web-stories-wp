@@ -17,13 +17,39 @@
 /**
  * Internal dependencies
  */
-import getPreviewOpacity from '../getPreviewOpacity';
+import getPreviewText from '../getPreviewText';
+import createSolid from '../../../../utils/createSolid';
 
-describe('<getPreviewOpacity />', () => {
-  it('should return', () => {
-    const input = 0;
-    const result = getPreviewOpacity(input);
-    const expected = 0;
+describe('getPreviewText', () => {
+  it('should return null for no pattern', () => {
+    const input = null;
+    const result = getPreviewText(input);
+    const expected = null;
     expect(result).toBe(expected);
+  });
+
+  it('should return null for transparent solid', () => {
+    const input = createSolid(255, 0, 0, 0);
+    const result = getPreviewText(input);
+    const expected = null;
+    expect(result).toBe(expected);
+  });
+
+  it('should return hex ignoring alpha for non-transparent solid', () => {
+    const input = createSolid(255, 0, 0, 0.1);
+    const result = getPreviewText(input);
+    const expected = 'FF0000';
+    expect(result).toBe(expected);
+  });
+
+  it('should return correct text for gradient', () => {
+    const linearResult = getPreviewText({ type: 'linear' });
+    expect(linearResult).toBe('Linear');
+
+    const radialResult = getPreviewText({ type: 'radial' });
+    expect(radialResult).toBe('Radial');
+
+    const conicResult = getPreviewText({ type: 'conic' });
+    expect(conicResult).toBe('Conic');
   });
 });
