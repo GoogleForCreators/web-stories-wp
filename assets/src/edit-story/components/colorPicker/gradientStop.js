@@ -30,17 +30,18 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import Pointer from './pointer';
+import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    left: `${position * 155 + 6}px`,
+    left: `${position * LINE_LENGTH + LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;
   background: transparent;
   border: 0;
   padding: 0;
-  top: 6px;
+  top: ${LINE_WIDTH / 2}px;
 
   &:focus {
     /* We auto-select stops on focus, so no extra focus display is necessary */
@@ -62,7 +63,6 @@ function GradientStopWithRef(
     isSelected,
 
     onSelect /*
-    onAdd,
     onDelete,
     onMove,*/,
   },
@@ -97,7 +97,6 @@ GradientStop.propTypes = {
   onSelect:
     PropTypes.func
       .isRequired /*
-  onAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,*/,
 };
