@@ -49,7 +49,7 @@ function ColorInput({
         value={value}
         label={label}
       />
-      <OpacityPreview opacity={opacity} label={label} />
+      <OpacityPreview opacity={opacity} value={value} />
     </Container>
   );
 }
