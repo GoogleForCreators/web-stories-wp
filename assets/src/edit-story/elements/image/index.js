@@ -38,6 +38,8 @@ export const editModeGrayout = true;
 
 export const isMedia = true;
 
+export const isMaskable = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,
@@ -46,10 +48,11 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.BACKGROUND,
+  PanelTypes.BACKGROUND_DISPLAY,
   PanelTypes.SIZE,
   PanelTypes.POSITION,
   PanelTypes.SCALE,
-  PanelTypes.ROTATION_ANGLE,
   PanelTypes.FILL,
+  PanelTypes.LINK,
   PanelTypes.MASK,
 ];

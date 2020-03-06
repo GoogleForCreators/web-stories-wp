@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import uuid from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
-import * as squareElement from './square';
+import * as shapeElement from './shape';
 import * as videoElement from './video';
 
 export const createNewElement = (type, attributes = {}) => {
@@ -40,7 +40,7 @@ export const createNewElement = (type, attributes = {}) => {
     ...defaultAttributes,
     ...attributes,
     type,
-    id: uuid(),
+    id: uuidv4(),
   };
 };
 
@@ -59,7 +59,7 @@ export const elementTypes = [
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
-  { type: 'square', name: __('Square', 'web-stories'), ...squareElement },
+  { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
 ];
 

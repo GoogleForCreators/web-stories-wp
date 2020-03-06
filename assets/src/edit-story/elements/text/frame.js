@@ -17,12 +17,9 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect, useCallback, useState } from '@wordpress/element';
+import { useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -41,7 +38,7 @@ const Element = styled.p`
   ${elementWithFont}
 
 	opacity: 0;
-  user-select: ${({ canSelect }) => (canSelect ? 'initial' : 'none')};
+  user-select: none;
 `;
 
 function TextFrame({
@@ -54,6 +51,7 @@ function TextFrame({
     fontWeight,
     fontStyle,
   },
+  wrapperRef,
 }) {
   const {
     actions: { dataToEditorY },
@@ -70,88 +68,80 @@ function TextFrame({
   } = useStory();
 
   const {
-    actions: { setEditingElement, setEditingElementWithState },
+    actions: { setEditingElementWithState },
   } = useCanvas();
   const isElementSelected = selectedElementIds.includes(id);
   const isElementOnlySelection =
     isElementSelected && selectedElementIds.length === 1;
-  const [hasFocus, setHasFocus] = useState(false);
+
+  const elementRef = useRef();
+
   useEffect(() => {
-    if (isElementOnlySelection) {
-      const timeout = window.setTimeout(setHasFocus, 300, true);
-      return () => {
-        window.clearTimeout(timeout);
-      };
+    if (!isElementOnlySelection) {
+      return undefined;
     }
 
-    clickTime.current = 0;
-    setHasFocus(false);
-    return undefined;
-  }, [isElementOnlySelection]);
+    const wrapper = wrapperRef.current;
+    const element = elementRef.current;
 
-  const clickTime = useRef();
-  const handleMouseDown = useCallback(() => {
-    clickTime.current = window.performance.now();
-  }, []);
-  const handleMouseUp = useCallback(
-    (evt) => {
-      const timingDifference = window.performance.now() - clickTime.current;
-      if (timingDifference > 100) {
-        // Only short clicks count
+    let clickTime = 0;
+
+    const handleKeyDown = (evt) => {
+      if (evt.metaKey || evt.altKey || evt.ctrlKey) {
+        // Some modifier (except shift) was pressed. Ignore and bubble
         return;
       }
+
+      if (evt.key === 'Enter') {
+        // Enter editing without writing or selecting anything
+        setEditingElementWithState(id, { selectAll: true });
+        evt.stopPropagation();
+        // Make sure no actual Enter is pressed
+        evt.preventDefault();
+      } else if (/^\w$/.test(evt.key)) {
+        // TODO: in above check all printable characters across alphabets, no just a-z0-9 as \w is
+        // Enter editing and clear content (first letter will be correctly inserted from keyup)
+        setEditingElementWithState(id, { clearContent: true });
+        evt.stopPropagation();
+      }
+    };
+
+    const handleMouseDown = () => {
+      clickTime = window.performance.now();
+    };
+
+    const handleMouseUp = (evt) => {
+      const timingDifference = window.performance.now() - clickTime;
+
+      if (timingDifference > 300) {
+        // Only short clicks count.
+        return;
+      }
+
       // Enter editing mode and place cursor at current selection offset
       evt.stopPropagation();
       setEditingElementWithState(id, {
         offset: getCaretCharacterOffsetWithin(
-          element.current,
+          elementRef.current,
           evt.clientX,
           evt.clientY
         ),
       });
-    },
-    [id, setEditingElementWithState]
-  );
+    };
 
-  const handleKeyDown = (evt) => {
-    if (evt.metaKey || evt.altKey || evt.ctrlKey) {
-      // Some modifier (except shift) was pressed. Ignore and bubble
-      return;
-    }
-
-    if (evt.key === 'Enter') {
-      // Enter editing without writing or selecting anything
-      setEditingElement(id);
-      evt.stopPropagation();
-      // Make sure no actual Enter is pressed
-      evt.preventDefault();
-    } else if (/^\w$/.test(evt.key)) {
-      // TODO: in above check all printable characters across alphabets, no just a-z0-9 as \w is
-      // Enter editing and clear content (first letter will be correctly inserted from keyup)
-      setEditingElementWithState(id, { clearContent: true });
-      evt.stopPropagation();
-    }
-
-    // ignore everything else and bubble.
-  };
-
-  if (hasFocus) {
-    props.onKeyDown = handleKeyDown;
-    props.onMouseDown = handleMouseDown;
-    props.onMouseUp = handleMouseUp;
-  }
-
-  const element = useRef();
-  useEffect(() => {
-    if (isElementOnlySelection && element.current) {
-      element.current.focus();
-    }
-  }, [isElementOnlySelection]);
+    wrapper.addEventListener('keydown', handleKeyDown);
+    element.addEventListener('mousedown', handleMouseDown);
+    element.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      wrapper.removeEventListener('keydown', handleKeyDown);
+      element.removeEventListener('mousedown', handleMouseDown);
+      element.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
 
   return (
     <Element
-      canSelect={hasFocus}
-      ref={element}
+      ref={elementRef}
       dangerouslySetInnerHTML={{ __html: content }}
       {...props}
     />
@@ -160,6 +150,7 @@ function TextFrame({
 
 TextFrame.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  wrapperRef: PropTypes.object.isRequired,
 };
 
 export default TextFrame;

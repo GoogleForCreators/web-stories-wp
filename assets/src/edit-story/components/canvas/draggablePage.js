@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { forwardRef, useCallback, useRef } from '@wordpress/element';
+import { forwardRef, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies

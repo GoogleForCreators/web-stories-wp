@@ -17,28 +17,24 @@
 /**
  * Internal dependencies
  */
+import { createNewElement, getDefinitionForType } from '..';
 import {
   DEFAULT_EDITOR_PAGE_WIDTH,
   DEFAULT_EDITOR_PAGE_HEIGHT,
 } from '../../constants';
-import { createNewElement, getDefinitionForType } from '../../elements';
 import { editorToDataX, editorToDataY } from '../../units';
 import { useStory } from '../../app';
 
 function useInsertElement() {
-  const {
-    actions: { addElement, setBackgroundElement },
-    state: { currentPage },
-  } = useStory();
-
   const isMediaEl = (type) => {
     const { isMedia } = getDefinitionForType(type);
     return isMedia;
   };
-  const insertElement = (
-    type,
-    { width, height, isBackground = true, ...props }
-  ) => {
+  const {
+    actions: { addElement, setBackgroundElement },
+    state: { currentPage },
+  } = useStory();
+  const insertElement = (type, { width, height, ...props }, isBackground) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),

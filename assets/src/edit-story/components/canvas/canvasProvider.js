@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -127,6 +123,12 @@ function CanvasProvider({ children }) {
         selectedElementIds[0] !== editingElement)
     ) {
       clearEditing();
+    }
+    if (
+      lastSelectedElementId.current &&
+      !selectedElementIds.includes(lastSelectedElementId.current)
+    ) {
+      lastSelectedElementId.current = null;
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 

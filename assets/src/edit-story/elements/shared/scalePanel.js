@@ -15,15 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

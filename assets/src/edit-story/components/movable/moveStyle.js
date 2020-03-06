@@ -53,7 +53,7 @@ export const GlobalStyle = createGlobalStyle`
 	.default-movable .moveable-control.moveable-w {
 		height: 16px !important;
 		width: 8px !important;
-		margin-right: -4px !important;
+		margin-left: -4px !important;
 	}
 
 	.default-movable.moveable-control-box .moveable-line.moveable-direction {

@@ -18,9 +18,12 @@
  */
 import { __, sprintf } from '@wordpress/i18n';
 /**
+ * External dependencies
+ */
+import { useRef } from 'react';
+/**
  * Internal dependencies
  */
-import { useRef } from '@wordpress/element';
 import { useConfig } from '../../app/config';
 import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';

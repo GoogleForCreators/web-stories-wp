@@ -18,16 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useLayoutEffect, useRef } from '@wordpress/element';
+import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
 import {
@@ -37,6 +33,7 @@ import {
 } from '../../elements/shared';
 import { useUnits } from '../../units';
 import { WithElementMask } from '../../masks';
+import WithLink from '../link/frame';
 import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
@@ -47,7 +44,7 @@ const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
-	pointer-events: initial;
+  pointer-events: initial;
 
 	&:focus,
 	&:active,
@@ -65,7 +62,7 @@ function FrameElement({ element }) {
     actions: { setNodeForElement, handleSelectElement },
   } = useCanvas();
   const {
-    state: { selectedElements },
+    state: { selectedElementIds },
   } = useStory();
   const {
     actions: { getBox },
@@ -74,9 +71,7 @@ function FrameElement({ element }) {
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-
-  const isSelected = selectedElements.includes(id);
-
+  const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
 
   return (
@@ -98,15 +93,22 @@ function FrameElement({ element }) {
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
     >
-      <WithElementMask element={element} fill={true}>
-        {Frame && <Frame element={element} box={box} />}
-      </WithElementMask>
+      <WithLink
+        element={element}
+        showTooltip={selectedElementIds.length === 1 && isSelected}
+      >
+        <WithElementMask element={element} fill={true}>
+          {Frame && (
+            <Frame wrapperRef={elementRef} element={element} box={box} />
+          )}
+        </WithElementMask>
+      </WithLink>
     </Wrapper>
   );
 }
 
 FrameElement.propTypes = {
-  element: PropTypes.object.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default FrameElement;

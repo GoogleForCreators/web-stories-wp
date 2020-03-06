@@ -24,7 +24,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useRef } from '@wordpress/element';
+import { useRef } from 'react';
 import StoryPropTypes from '../../types';
 import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
@@ -77,7 +77,12 @@ function CanvasDropzone({ children }) {
             oHeight,
             mimeType,
           };
-          insertMediaElement(mediaEl, DEFAULT_WIDTH, false);
+          insertMediaElement(
+            mediaEl,
+            DEFAULT_WIDTH,
+            undefined /** height */,
+            false /** isBackground */
+          );
         }
       );
     });

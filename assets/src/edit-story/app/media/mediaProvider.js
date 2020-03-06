@@ -18,23 +18,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useState } from '@wordpress/element';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import useLoadMedia from './actions/useLoadMedia';
 import useCompleteMedia from './actions/useCompleteMedia';
 import useReloadMedia from './actions/useReloadMedia';
 import useResetMedia from './actions/useResetMedia';
 import useUploadVideoFrame from './actions/useUploadVideoFrame';
 import useInsertMediaElement from './actions/useInsertMediaElement';
-import useGetMediaElement from './actions/useGetMediaElement';
 import Context from './context';
 
 function MediaProvider({ children }) {
@@ -45,13 +39,6 @@ function MediaProvider({ children }) {
   const [isMediaLoading, setIsMediaLoading] = useState(false);
 
   const DEFAULT_WIDTH = 150;
-
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-  } = useConfig();
 
   const completeMedia = useCompleteMedia({
     setIsMediaLoading,
@@ -76,14 +63,6 @@ function MediaProvider({ children }) {
   const { uploadVideoFrame } = useUploadVideoFrame();
   const insertMediaElement = useInsertMediaElement({
     uploadVideoFrame,
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-  });
-
-  const getMediaElement = useGetMediaElement({
-    insertMediaElement,
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
   });
 
   const state = {
@@ -102,7 +81,6 @@ function MediaProvider({ children }) {
       reloadMedia,
       resetMedia,
       insertMediaElement,
-      getMediaElement,
     },
   };
 

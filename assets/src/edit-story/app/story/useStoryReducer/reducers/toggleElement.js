@@ -38,18 +38,31 @@ function toggleElement(state, { elementId }) {
   const isBackgroundElement = currentPage.backgroundElementId === elementId;
   const hasExistingSelection = state.selection.length > 0;
 
-  // The bg element can't be added to non-empty selection
-  if (!wasSelected && isBackgroundElement && hasExistingSelection) {
-    return state;
+  // If it wasn't selected, we're adding the element to the selection.
+  if (!wasSelected) {
+    // The bg element can't be added to non-empty selection
+    if (isBackgroundElement && hasExistingSelection) {
+      return state;
+    }
+
+    // If bg element was already the (only) selection, set selection to new element only
+    if (state.selection.includes(currentPage.backgroundElementId)) {
+      return {
+        ...state,
+        selection: [elementId],
+      };
+    }
+
+    return {
+      ...state,
+      selection: [...state.selection, elementId],
+    };
   }
 
-  const newSelection = wasSelected
-    ? state.selection.filter((id) => id !== elementId)
-    : [...state.selection, elementId];
-
+  // Otherwise just filter out from current selection
   return {
     ...state,
-    selection: newSelection,
+    selection: state.selection.filter((id) => id !== elementId),
   };
 }
 

@@ -31,11 +31,11 @@ namespace Google\Web_Stories;
  */
 class Media {
 	/**
-	 * The image size for the AMP story card, used in an embed and the Latest Stories block.
+	 * The image size for the poster-portrait-src.
 	 *
 	 * @var string
 	 */
-	const STORY_CARD_IMAGE_SIZE = 'web-stories-poster-portrait';
+	const STORY_POSTER_IMAGE_SIZE = 'web-stories-poster-portrait';
 
 	/**
 	 * The image size for the poster-landscape-src.
@@ -74,6 +74,8 @@ class Media {
 
 	/**
 	 * Init.
+	 *
+	 * @return void
 	 */
 	public static function init() {
 		register_meta(
@@ -90,7 +92,7 @@ class Media {
 		);
 
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size( self::STORY_CARD_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
+		add_image_size( self::STORY_POSTER_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
 
 		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
@@ -111,19 +113,23 @@ class Media {
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
 	 *
 	 * @since 1.2.1
-	 * @see AMP_Story_Media::poster_portrait_fallback()
 	 *
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
 	 */
 	public static function get_story_meta_images( $post = null ) {
-		$thumbnail_id = get_post_thumbnail_id( $post );
+		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+
+		if ( 0 === $thumbnail_id ) {
+			return [];
+		}
 
 		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_CARD_IMAGE_SIZE ),
+			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_POSTER_IMAGE_SIZE ),
 			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
 			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
+
 		return array_filter( $images );
 	}
 
@@ -133,6 +139,7 @@ class Media {
 	 * Reduces unnecessary noise in the media library.
 	 *
 	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 * @return void
 	 */
 	public static function filter_poster_attachments( &$query ) {
 		$post_type = (array) $query->get( 'post_type' );
@@ -153,6 +160,8 @@ class Media {
 
 	/**
 	 * Registers additional REST API fields upon API initialization.
+	 *
+	 * @return void
 	 */
 	public static function rest_api_init() {
 		register_rest_field(
@@ -202,12 +211,12 @@ class Media {
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
 
 		if ( 'video' === $response['type'] ) {
-			$id    = get_post_thumbnail_id( $attachment );
-			$image = '';
-			if ( $id ) {
-				$image = wp_get_attachment_image_url( $id, 'medium' );
+			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
+			$image        = '';
+			if ( 0 === $thumbnail_id ) {
+				$image = wp_get_attachment_image_url( $thumbnail_id, 'medium' );
 			}
-			$response['featured_media']     = $id;
+			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
 

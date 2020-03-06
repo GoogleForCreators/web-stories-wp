@@ -18,16 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useCallback, useState } from '@wordpress/element';
+import { useCallback, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../app/api';
+import useResizeEffect from '../../utils/useResizeEffect';
 import Context from './context';
 
 const DESIGN = 'design';
@@ -42,14 +39,18 @@ function InspectorProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
+  const inspectorContentRef = useRef();
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
   const [isStatusesLoading, setIsStatusesLoading] = useState(false);
 
-  // TODO Implement `useResizeObserver` once either branch is merged
   const setInspectorContentNode = useCallback((node) => {
-    setInspectorContentHeight(node.clientHeight);
+    inspectorContentRef.current = node;
   }, []);
+
+  useResizeEffect(inspectorContentRef, ({ height }) =>
+    setInspectorContentHeight(height)
+  );
 
   const loadStatuses = useCallback(() => {
     if (!isStatusesLoading && statuses.length === 0) {

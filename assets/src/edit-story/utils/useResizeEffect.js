@@ -20,9 +20,9 @@
 import ResizeObserver from 'resize-observer-polyfill';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useEffect } from '@wordpress/element';
+import { useEffect } from 'react';
 
 /**
  * @param {!{current: ?Element}} ref Target node ref.

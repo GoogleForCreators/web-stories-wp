@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useState, useLayoutEffect } from '@wordpress/element';
+import { useState, useLayoutEffect } from 'react';
 
 /**
  * Internal dependencies

@@ -14,6 +14,36 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {
+window.ampStoriesEditSettings = {};
 
+global.wp = {
+  media: {
+    controller: {
+      Library: {
+        prototype: {
+          defaults: {
+            contentUserSetting: jest.fn(),
+          },
+        },
+      },
+      Cropper: {
+        extend: jest.fn(),
+      },
+    },
+    View: {
+      extend: jest.fn(),
+    },
+    view: {
+      Toolbar: {
+        Select: {
+          extend: jest.fn(),
+        },
+      },
+      MediaFrame: {
+        Select: {
+          extend: jest.fn(),
+        },
+      },
+    },
+  },
 };

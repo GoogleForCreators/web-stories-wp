@@ -18,12 +18,7 @@
  * External dependencies
  */
 import Modal from 'react-modal';
-
-/**
- * WordPress dependencies
- */
-import { render } from '@wordpress/element';
-import domReady from '@wordpress/dom-ready';
+import { render } from 'react-dom';
 
 /**
  * Internal dependencies
@@ -32,7 +27,7 @@ import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 /**
- * Initializes the block editor in the widgets screen.
+ * Initializes the web stories editor.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
@@ -46,7 +41,13 @@ const initialize = (id, config) => {
   render(<App config={config} />, appElement);
 };
 
-domReady(() => {
+const initializeWithConfig = () => {
   const { id, config } = window.ampStoriesEditSettings;
   initialize(id, config);
-});
+};
+
+if ('loading' === document.readyState) {
+  document.addEventListener('DOMContentLoaded', initializeWithConfig);
+} else {
+  initializeWithConfig();
+}

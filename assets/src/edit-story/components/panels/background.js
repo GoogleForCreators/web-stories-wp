@@ -18,18 +18,18 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
-import { ActionButton } from '../button';
+import { Button } from '../form';
 import { SimplePanel } from './panel';
 
 function BackgroundPanel({ selectedElements, onSetProperties }) {
@@ -58,12 +58,12 @@ function BackgroundPanel({ selectedElements, onSetProperties }) {
     onSetProperties(newState);
   };
   return (
-    <SimplePanel name="position" title={__('Background', 'amp')}>
-      <ActionButton onClick={handleClick}>
+    <SimplePanel name="position" title={__('Background', 'web-stories')}>
+      <Button onClick={handleClick}>
         {state.isBackground
-          ? __('Remove as Background', 'amp')
-          : __('Set as background', 'amp')}
-      </ActionButton>
+          ? __('Remove as Background', 'web-stories')
+          : __('Set as background', 'web-stories')}
+      </Button>
     </SimplePanel>
   );
 }

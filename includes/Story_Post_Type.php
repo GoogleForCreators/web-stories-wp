@@ -65,9 +65,11 @@ class Story_Post_Type {
 	/**
 	 * Registers the post type to store URLs with validation errors.
 	 *
+	 * @todo refactor
+	 *
 	 * @return void
 	 */
-	public static function register() {
+	public static function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -128,7 +130,7 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'wp_enqueue_scripts' ] );
+		add_action( 'web_stories_story_head', [ __CLASS__, 'enqueue_frontend_styles' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
@@ -146,14 +148,18 @@ class Story_Post_Type {
 			1
 		);
 
-		// todo: remove in order to not print any external scripts and styles.
-		add_action( 'web_stories_story_head', 'wp_enqueue_scripts', 1 );
-
 		add_filter(
 			'the_content',
 			static function ( $content ) {
 				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_filter( 'the_content', 'wpautop' );
+					remove_all_filters( 'the_content' );
+
+					$post = get_post();
+
+					if ( $post instanceof WP_Post ) {
+						$renderer = new Story_Renderer( $post );
+						return $renderer->render();
+					}
 				}
 
 				return $content;
@@ -177,8 +183,6 @@ class Story_Post_Type {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
-
-		Media::init();
 	}
 
 	/**
@@ -210,7 +214,7 @@ class Story_Post_Type {
 			// In lieu of an action being available to actually load the replacement editor, include it here
 			// after the current_screen action has occurred because the replace_editor filter fires twice.
 			if ( did_action( 'current_screen' ) ) {
-				require_once plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'includes/edit-story.php';
+				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/edit-story.php';
 			}
 		}
 
@@ -218,13 +222,22 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Enqueue Google fonts.
+	 * Enqueue Google Fonts on the frontend.
+	 *
+	 * @return void
 	 */
-	public static function wp_enqueue_scripts() {
-		if ( is_singular( self::POST_TYPE_SLUG ) ) {
-			$post = get_post();
-			self::load_fonts( $post );
+	public static function enqueue_frontend_styles() {
+		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
+			return;
 		}
+
+		$post = get_post();
+
+		if ( ! $post instanceof WP_Post ) {
+			return;
+		}
+
+		self::load_fonts( $post );
 	}
 
 	/**
@@ -232,6 +245,8 @@ class Story_Post_Type {
 	 * Enqueue scripts for the element editor.
 	 *
 	 * @param string $hook The current admin page.
+	 *
+	 * @return void
 	 */
 	public static function admin_enqueue_scripts( $hook ) {
 		$screen = get_current_screen();
@@ -252,14 +267,14 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$asset_file   = plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
+		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
 		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
 		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		$version      = isset( $asset['version'] ) ? $asset['version'] : [];
 
 		wp_enqueue_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
-			plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
 			$dependencies,
 			$version,
 			false
@@ -269,11 +284,17 @@ class Story_Post_Type {
 
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-		$rest_base        = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 		$post_thumbnails  = get_theme_support( 'post-thumbnails' );
+		$rest_base        = self::POST_TYPE_SLUG;
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
 
-		self::load_admin_fonts( $post );
+		if ( $post_type_object instanceof \WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+		}
+
+		if ( $post ) {
+			self::load_admin_fonts( $post );
+		}
 
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
@@ -299,7 +320,11 @@ class Story_Post_Type {
 						'media'    => '/wp/v2/media',
 						'users'    => '/wp/v2/users',
 						'statuses' => '/wp/v2/statuses',
-						'fonts'    => '/amp/v1/fonts',
+						'fonts'    => '/web-stories/v1/fonts',
+					],
+					'metadata'         => [
+						'publisher'      => self::get_publisher_data(),
+						'fallbackPoster' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 					],
 				],
 			]
@@ -307,9 +332,9 @@ class Story_Post_Type {
 
 		wp_enqueue_style(
 			self::WEB_STORIES_STYLE_HANDLE,
-			plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'wp-components' ],
-			'1.0.0'
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
+			[],
+			$version
 		);
 
 		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
@@ -391,6 +416,8 @@ class Story_Post_Type {
 	 * Load font from story data.
 	 *
 	 * @param WP_Post $post Post Object.
+	 *
+	 * @return void
 	 */
 	public static function load_fonts( $post ) {
 		$post_story_data       = json_decode( $post->post_content_filtered, true );
@@ -435,6 +462,7 @@ class Story_Post_Type {
 					[],
 					WEBSTORIES_VERSION
 				);
+				wp_styles()->do_item( self::WEB_STORIES_STYLE_HANDLE . '_fonts' );
 			}
 		}
 	}
@@ -443,6 +471,8 @@ class Story_Post_Type {
 	 * Load font in admin from story data.
 	 *
 	 * @param WP_Post $post Post Object.
+	 *
+	 * @return void
 	 */
 	public static function load_admin_fonts( $post ) {
 		$post_story_data       = json_decode( $post->post_content_filtered, true );
@@ -498,7 +528,12 @@ class Story_Post_Type {
 			return $class;
 		}
 
-		$class .= ' edit-story ';
+		$class .= ' edit-story';
+
+		// Overrides regular WordPress behavior by collapsing the admin menu by default.
+		if ( false === strpos( $class, 'folded' ) ) {
+			$class .= ' folded';
+		}
 
 		return $class;
 	}
@@ -638,7 +673,7 @@ class Story_Post_Type {
 	 */
 	public static function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
-			$template = plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) . 'includes/templates/single-web-story.php';
+			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
 		}
 
 		return $template;
@@ -679,7 +714,7 @@ class Story_Post_Type {
 
 		// Fallback to serving the WordPress logo.
 		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) . 'assets/images/fallback-wordpress-publisher-logo.png';
+			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 		}
 
 		/**
@@ -693,7 +728,24 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Returns the publisher data.
+	 *
+	 * @return array Publisher name and logo.
+	 */
+	private static function get_publisher_data() {
+		$publisher      = get_bloginfo( 'name' );
+		$publisher_logo = self::get_publisher_logo();
+
+		return [
+			'name' => $publisher,
+			'logo' => $publisher_logo,
+		];
+	}
+
+	/**
 	 * Prints the schema.org metadata on the single story template.
+	 *
+	 * @return void
 	 */
 	public static function print_schemaorg_metadata() {
 		$metadata = self::get_schemaorg_metadata();
@@ -709,44 +761,48 @@ class Story_Post_Type {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	public static function get_schemaorg_metadata() {
+		$publisher = self::get_publisher_data();
+
 		$metadata = [
 			'@context'  => 'http://schema.org',
 			'publisher' => [
 				'@type' => 'Organization',
-				'name'  => get_bloginfo( 'name' ),
+				'name'  => $publisher['name'],
+				'logo'  => $publisher['logo'],
 			],
 		];
 
-		$publisher_logo = self::get_publisher_logo();
-
-		if ( $publisher_logo ) {
-			$metadata['publisher']['logo'] = $publisher_logo;
-		}
-
+		/**
+		 * We're expecting a post object.
+		 *
+		 * @var WP_Post $post
+		 */
 		$post = get_queried_object();
 
-		$metadata = array_merge(
-			$metadata,
-			[
-				'@type'            => 'BlogPosting',
-				'mainEntityOfPage' => get_permalink(),
-				'headline'         => get_the_title(),
-				'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
-				'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
-			]
-		);
+		if ( $post instanceof WP_Post ) {
+			$metadata = array_merge(
+				$metadata,
+				[
+					'@type'            => 'BlogPosting',
+					'mainEntityOfPage' => get_permalink(),
+					'headline'         => get_the_title(),
+					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
+					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
+				]
+			);
 
-		$post_author = get_userdata( $post->post_author );
+			$post_author = get_userdata( (int) $post->post_author );
 
-		if ( $post_author ) {
-			$metadata['author'] = [
-				'@type' => 'Person',
-				'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
-			];
-		}
+			if ( $post_author ) {
+				$metadata['author'] = [
+					'@type' => 'Person',
+					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
+				];
+			}
 
-		if ( has_post_thumbnail( $post->ID ) ) {
-			$metadata['image'] = wp_get_attachment_image_url( get_post_thumbnail_id( $post->ID ), 'full' );
+			if ( has_post_thumbnail( $post->ID ) ) {
+				$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			}
 		}
 
 		/**

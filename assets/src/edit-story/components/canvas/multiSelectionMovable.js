@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -50,7 +46,7 @@ function MultiSelectionMovable({ selectedElements }) {
     },
   } = useCanvas();
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { editorToDataX, editorToDataY, dataToEditorY },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -100,6 +96,7 @@ function MultiSelectionMovable({ selectedElements }) {
     ? targetList.map(({ element }) => ({
         translate: [0, 0],
         rotate: element.rotationAngle,
+        direction: [0, 0],
         resize: [0, 0],
         updates: null,
       }))
@@ -110,6 +107,7 @@ function MultiSelectionMovable({ selectedElements }) {
    */
   const resetMoveable = () => {
     targetList.forEach(({ element, node }, i) => {
+      frames[i].direction = [0, 0];
       frames[i].translate = [0, 0];
       frames[i].resize = [0, 0];
       frames[i].updates = null;
@@ -139,6 +137,7 @@ function MultiSelectionMovable({ selectedElements }) {
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
+      const { direction } = frame;
       const { element, updateForResizeEvent } = targetList[i];
       const properties = {
         x: element.x + editorToDataX(frame.translate[0]),
@@ -157,7 +156,7 @@ function MultiSelectionMovable({ selectedElements }) {
         if (updateForResizeEvent) {
           Object.assign(
             properties,
-            updateForResizeEvent(element, newWidth, newHeight)
+            updateForResizeEvent(element, direction, newWidth, newHeight)
           );
         }
       }
@@ -216,7 +215,7 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onResizeGroup={({ events }) => {
-        events.forEach(({ target, width, height, drag }, i) => {
+        events.forEach(({ target, direction, width, height, drag }, i) => {
           const sFrame = frames[i];
           const { element, updateForResizeEvent } = targetList[i];
           let newHeight = height;
@@ -225,6 +224,7 @@ function MultiSelectionMovable({ selectedElements }) {
           if (updateForResizeEvent) {
             updates = updateForResizeEvent(
               element,
+              direction,
               editorToDataX(newWidth),
               editorToDataY(newHeight)
             );
@@ -234,6 +234,7 @@ function MultiSelectionMovable({ selectedElements }) {
           }
           target.style.width = `${newWidth}px`;
           target.style.height = `${newHeight}px`;
+          sFrame.direction = direction;
           sFrame.resize = [newWidth, newHeight];
           sFrame.translate = drag.beforeTranslate;
           sFrame.updates = updates;

@@ -18,66 +18,38 @@
  */
 import useInsertElement from '../../../elements/shared/useInsertElement';
 
-function useInsertMediaElement({
-  uploadVideoFrame,
-  allowedImageMimeTypes,
-  allowedVideoMimeTypes,
-}) {
+function useInsertMediaElement({ uploadVideoFrame }) {
   const insertElement = useInsertElement();
 
   /**
    * Insert element such image, video and audio into the editor.
    *
-   * @param {Object} attachment Attachment object
-   * @param {number} width      Width that element is inserted into editor.
+   * @param {Object} resource Resource object
+   * @param {number} width Width that element is inserted into editor.
+   * @param {number} height Height that element is inserted into editor.
    * @param {boolean} isBackground Whether the element should be set as the background element.
-   * @return {null|*}          Return onInsert or null.
+   * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (attachment, width, isBackground = true) => {
-    const { src, mimeType, oWidth, oHeight } = attachment;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return insertElement('image', {
-        src,
+  const insertMediaElement = (resource, width, height, isBackground = true) => {
+    const element = insertElement(
+      resource.type,
+      {
+        resource,
         width,
         height,
         x: 5,
         y: 5,
         rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        isBackground,
-      });
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
-      const posterId = parseInt(posterIdRaw);
-      const videoEl = insertElement('video', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        mimeType,
-        videoId,
-        posterId,
-        poster,
-        isBackground,
-      });
+      },
+      isBackground
+    );
 
-      // Generate video poster if one not set.
-      if (videoId && !posterId) {
-        uploadVideoFrame(videoId, src, videoEl.id);
-      }
-
-      return videoEl;
+    // Generate video poster if one not set.
+    if (resource.type === 'video' && resource.videoId && !resource.posterId) {
+      uploadVideoFrame(resource.videoId, resource.src, element.id);
     }
-    return null;
+
+    return element;
   };
 
   return insertMediaElement;

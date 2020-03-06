@@ -15,29 +15,52 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useMemo, useRef, useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
-import { Tabs, Media, Text, Shapes, Links } from './tabs';
+import { Tabs, getPanes } from './panes';
+import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
   const {
     state: { tab },
     actions: { setTab },
-    data: {
-      tabs: { MEDIA, TEXT, SHAPES, LINKS },
-    },
+    data: { tabs },
   } = useLibrary();
-  const tabs = [
-    [MEDIA, Media],
-    [TEXT, Text],
-    [SHAPES, Shapes],
-    [LINKS, Links],
-  ];
+  const panes = useMemo(() => getPanes(tabs), [tabs]);
+  const ref = useRef();
+  const handleNavigation = useCallback(
+    (direction) => () => {
+      const currentIndex = panes.findIndex(({ id }) => id === tab);
+      const nextPane = panes[currentIndex + direction];
+      if (!nextPane) {
+        return;
+      }
+
+      setTab(nextPane.id);
+      const tabId = getTabId(nextPane.id);
+      ref.current.querySelector(`#${tabId}`).focus();
+    },
+    [tab, setTab, panes]
+  );
+  // todo: support RTL
+  useKeyDownEffect(ref, 'left', handleNavigation(-1), [handleNavigation]);
+  useKeyDownEffect(ref, 'right', handleNavigation(1), [handleNavigation]);
   return (
-    <Tabs>
-      {tabs.map(([id, Tab]) => (
-        <Tab key={id} isActive={tab === id} onClick={() => setTab(id)} />
+    <Tabs ref={ref}>
+      {panes.map(({ id, Tab }) => (
+        <Tab
+          key={id}
+          id={getTabId(id)}
+          isActive={tab === id}
+          onClick={() => setTab(id)}
+        />
       ))}
     </Tabs>
   );

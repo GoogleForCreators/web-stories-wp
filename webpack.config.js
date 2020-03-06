@@ -22,12 +22,27 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /**
  * WordPress dependencies
  */
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+
+/**
+ * Prevents externalizing React, ReactDOM, and ReactDOMServer.
+ *
+ * @param {string} request Requested module
+ * @return {(string|undefined)} Script global
+ */
+function requestToExternal(request) {
+  if (['react', 'react-dom', 'react-dom/server'].includes(request)) {
+    return false;
+  }
+
+  return undefined;
+}
 
 const sharedConfig = {
   output: {
@@ -35,6 +50,29 @@ const sharedConfig = {
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
+  module: {
+    ...defaultConfig.module,
+    rules: [
+      ...defaultConfig.module.rules,
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'url-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+    ],
+  },
+  plugins: [
+    new DependencyExtractionWebpackPlugin({
+      injectPolyfill: true,
+      requestToExternal,
+    }),
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+  ],
   optimization: {
     minimizer: [
       new TerserPlugin({
@@ -59,30 +97,8 @@ const storiesEditor = {
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
   },
-  output: {
-    path: path.resolve(process.cwd(), 'assets', 'js'),
-    filename: '[name].js',
-  },
-  module: {
-    ...defaultConfig.module,
-    rules: [
-      ...defaultConfig.module.rules,
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-      },
-    ],
-  },
   plugins: [
-    ...defaultConfig.plugins,
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
+    ...sharedConfig.plugins,
     new WebpackBar({
       name: 'Stories Editor',
       color: '#fddb33',
@@ -103,4 +119,32 @@ const storiesEditor = {
   },
 };
 
-module.exports = [storiesEditor];
+const dashboard = {
+  ...defaultConfig,
+  ...sharedConfig,
+  entry: {
+    'stories-dashboard': './assets/src/dashboard/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'Dashboard',
+      color: '#ade2cd',
+    }),
+  ],
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        stories: {
+          name: 'stories-dashboard',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
+module.exports = [storiesEditor, dashboard];

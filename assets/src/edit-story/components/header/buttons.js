@@ -23,12 +23,12 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { Spinner } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory } from '../../app';
 import { Outline, Primary } from '../button';
 
@@ -60,7 +60,7 @@ function PreviewButton() {
    */
   const openPreviewLink = () => {
     const previewLink = addQueryArgs(link, { preview: 'true' });
-    window.open(previewLink, '_blank');
+    window.open(previewLink, 'story-preview');
   };
   return (
     <Outline onClick={openPreviewLink} isDisabled={isSaving}>
