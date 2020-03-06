@@ -19,7 +19,7 @@
  */
 import dataMediaElementToResource from '../v0005_mediaElementToResource';
 
-describe('dataSquareToShape', () => {
+describe('dataMediaElementToResource', () => {
   it('should convert all image and video elements to use resource', () => {
     expect(
       dataMediaElementToResource({
@@ -41,11 +41,11 @@ describe('dataSquareToShape', () => {
                 type: 'image',
                 mimeType: 'image/png',
                 src: 'https://example.com/image.png',
-                x: 11,
-                y: 21,
-                width: 101,
-                height: 201,
-                fontSize: 22,
+                x: 29,
+                y: 55,
+                width: 265,
+                height: 527,
+                fontSize: 58,
               },
             ],
           },
@@ -60,11 +60,11 @@ describe('dataSquareToShape', () => {
                 posterId: 100002,
                 videoId: 102113,
                 mimeType: 'video/mp4',
-                x: 11,
-                y: 21,
-                width: 101,
-                height: 201,
-                fontSize: 22,
+                x: 29,
+                y: 55,
+                width: 265,
+                height: 527,
+                fontSize: 58,
               },
             ],
           },
@@ -78,11 +78,11 @@ describe('dataSquareToShape', () => {
           elements: [
             {
               _test: 'element1',
-              type: 'shape',
-              x: 26,
-              y: 52,
-              width: 262,
-              height: 525,
+              type: 'square',
+              x: 10,
+              y: 20,
+              width: 100,
+              height: 200,
             },
             {
               _test: 'element2',
