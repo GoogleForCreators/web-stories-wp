@@ -33,6 +33,7 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
+import getTransformFlip from '../shared/getTransformFlip';
 import { videoWithScale } from './util';
 
 const Element = styled.div`
@@ -78,10 +79,10 @@ function VideoEdit({
     scale,
     focalX,
     focalY,
-    origRatio,
-    flip
+    origRatio
   );
 
+  videoProps.transformFlip = getTransformFlip(flip);
   return (
     <Element>
       <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>

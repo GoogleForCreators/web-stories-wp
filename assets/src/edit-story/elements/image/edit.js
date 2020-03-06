@@ -34,6 +34,7 @@ import {
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import { WithElementMask } from '../../masks';
+import getTransformFlip from '../shared/getTransformFlip';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
 
@@ -87,15 +88,16 @@ function ImageEdit({ element, box }) {
     scale,
     focalX,
     focalY,
-    origRatio,
-    flip
+    origRatio
   );
+
+  imgProps.transformFlip = getTransformFlip(flip);
 
   return (
     <Element>
       <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
       <CropBox ref={setCropBox}>
-        <WithElementMask element={element} fill={true}>
+        <WithElementMask element={element} fill={true} applyFlip={false}>
           <CropImg
             ref={setCroppedImage}
             draggable={false}

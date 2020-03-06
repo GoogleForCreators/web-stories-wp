@@ -92,7 +92,16 @@ WithElementMask.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-function WithMask({ elementId, mask, fill, flip, style, children, ...rest }) {
+function WithMask({
+  elementId,
+  mask,
+  fill,
+  flip,
+  style,
+  children,
+  applyFlip = true,
+  ...rest
+}) {
   const maskType = (mask && mask.type) || null;
 
   const fillStyle = fill ? FILL_STYLE : null;
@@ -103,7 +112,7 @@ function WithMask({ elementId, mask, fill, flip, style, children, ...rest }) {
   };
 
   const transformFlip = getTransformFlip(flip);
-  if (transformFlip) {
+  if (transformFlip && applyFlip) {
     allStyles.transform = allStyles.transform
       ? `${allStyles.transform} ${transformFlip}`
       : transformFlip;
@@ -128,6 +137,7 @@ function WithMask({ elementId, mask, fill, flip, style, children, ...rest }) {
       </div>
     );
   }
+
   return (
     <div style={allStyles} {...rest}>
       {children}
@@ -143,6 +153,7 @@ WithMask.propTypes = {
     vertical: PropTypes.bool,
     horizontal: PropTypes.bool,
   }),
+  applyFlip: PropTypes.bool,
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,
 };
