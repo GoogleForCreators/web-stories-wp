@@ -68,7 +68,7 @@ const CloseButton = styled(Close)`
 
 const Body = styled.div``;
 
-function ColorPicker({ color, onChange, onClose }) {
+function ColorPicker({ color, hasGradient, onChange, onClose }) {
   const {
     state: { currentColor, generatedColor },
     actions: { load, updateCurrentColor },
@@ -88,7 +88,8 @@ function ColorPicker({ color, onChange, onClose }) {
 
   return (
     <Container>
-      <Header>
+      {/* TODO: Make `hasGradient` do something */}
+      <Header hasGradient={hasGradient}>
         <CloseButton
           width={10}
           height={10}
@@ -109,11 +110,13 @@ function ColorPicker({ color, onChange, onClose }) {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
+  hasGradient: PropTypes.bool,
   color: PatternPropType,
 };
 
 ColorPicker.defaultProps = {
   color: null,
+  hasGradient: false,
 };
 
 export default ColorPicker;

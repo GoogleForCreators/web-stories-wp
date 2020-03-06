@@ -30,10 +30,10 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PatternPropType } from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
-import createSolid from '../../utils/createSolid';
-import { useSidebar } from '../../app/sidebar';
+import { PatternPropType } from '../../../types';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
+import createSolid from '../../../utils/createSolid';
+import { useSidebar } from '../../../app/sidebar';
 
 const Container = styled.div`
   display: flex;
@@ -160,7 +160,14 @@ function getPreviewText(pattern) {
   }
 }
 
-function ColorInput({ onChange, isMultiple, opacity, value, label }) {
+function ColorInput({
+  onChange,
+  hasGradient,
+  isMultiple,
+  opacity,
+  value,
+  label,
+}) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
   const previewOpacity = getPreviewOpacity(value, opacity);
@@ -176,9 +183,10 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
     showColorPickerAt(ref.current, {
       color: value,
       onChange,
+      hasGradient,
       onClose: hideColorPicker,
     });
-  }, [showColorPickerAt, hideColorPicker, value, onChange]);
+  }, [showColorPickerAt, hideColorPicker, value, onChange, hasGradient]);
 
   return (
     <Container ref={ref}>
@@ -202,6 +210,7 @@ function ColorInput({ onChange, isMultiple, opacity, value, label }) {
 ColorInput.propTypes = {
   value: PatternPropType,
   isMultiple: PropTypes.bool,
+  hasGradient: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   opacity: PropTypes.number,
   label: PropTypes.string,
@@ -210,6 +219,7 @@ ColorInput.propTypes = {
 ColorInput.defaultProps = {
   defaultColor: null,
   isMultiple: false,
+  hasGradient: false,
   opacity: null,
   labelledBy: null,
 };

@@ -321,6 +321,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
       <Row spaceBetween={false}>
         <Label>{__('Textbox', 'web-stories')}</Label>
         <Color
+          hasGradient
           value={state.backgroundColor}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
         />
