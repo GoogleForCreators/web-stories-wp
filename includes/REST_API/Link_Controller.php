@@ -28,8 +28,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use DOMDocument;
-use DOMNameList;
-use DOMNode;
 use DOMNodeList;
 use DOMXpath;
 use WP_Error;
@@ -82,7 +80,7 @@ class Link_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Parses
+	 * Parses a URL to return some metadata for inserting links.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
@@ -90,6 +88,23 @@ class Link_Controller extends WP_REST_Controller {
 	 */
 	public function parse_link( $request ) {
 		$url = $request['url'];
+
+		$cache_key = 'web_stories_link_data_' . md5( $url );
+		$cache_ttl = DAY_IN_SECONDS;
+		$data      = get_transient( $cache_key );
+		if ( ! empty( $data ) ) {
+			return json_decode( $data, true );
+		}
+
+		$title       = '';
+		$image       = '';
+		$description = '';
+
+		$data = [
+			'title'       => $title,
+			'image'       => $image,
+			'description' => $description,
+		];
 
 		$request = wp_safe_remote_get(
 			$url,
@@ -107,12 +122,10 @@ class Link_Controller extends WP_REST_Controller {
 		}
 
 		if ( ! $html ) {
+			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), array( 'status' => 404 ) );
 		}
 
-		$title       = '';
-		$image       = '';
-		$description = '';
 
 		$doc                      = new DOMDocument();
 		$doc->strictErrorChecking = false;
@@ -201,13 +214,15 @@ class Link_Controller extends WP_REST_Controller {
 			}
 		}
 
-		$parsed_tags = [
+		$data = [
 			'title'       => $title,
 			'image'       => $image,
 			'description' => $description,
 		];
 
-		return rest_ensure_response( $parsed_tags );
+		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+
+		return rest_ensure_response( $data );
 	}
 
 	/**

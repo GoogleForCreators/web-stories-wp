@@ -19,6 +19,13 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	const EXAMPLE_URL = 'https://example.com/';
 	const VALID_URL = 'https://amp.dev';
 
+	/**
+	 * Count of the number of requests attempted.
+	 *
+	 * @var int
+	 */
+	protected $request_count = 0;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
 			array(
@@ -47,6 +54,8 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		do_action( 'rest_api_init', $wp_rest_server );
 
 		add_filter( 'pre_http_request', array( $this, 'mock_http_request' ), 10, 3 );
+
+		$this->request_count = 0;
 	}
 
 	public function tearDown() {
@@ -68,6 +77,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	 * @return array Response data.
 	 */
 	public function mock_http_request( $preempt, $r, $url ) {
+		$this->request_count += 1;
 
 		if ( false !== strpos( $url, self::EMPTY_URL ) ) {
 			return [
@@ -139,9 +149,13 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::INVALID_URL );
 		$response = rest_get_server()->dispatch( $request );
+		$data = $response->get_data();
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertEquals( 404, $response->get_status() );
-		$data = $response->get_data();
 		$this->assertEquals( $data['code'], 'rest_invalid_url' );
 	}
 
@@ -157,6 +171,10 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 			'image'       => '',
 			'description' => '',
 		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSets( $expected, $data );
@@ -175,6 +193,10 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 			'description' => '',
 		];
 
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
+
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSets( $expected, $data );
 	}
@@ -191,6 +213,10 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 			'image'       => 'https://amp.dev/static/img/sharing/default-600x314.png',
 			'description' => 'Whether you are a publisher, e-commerce company, storyteller, advertiser or email sender, AMP makes it easy to create great experiences on the web. Use AMP to build websites, stories, ads and emails.',
 		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSets( $expected, $data );
