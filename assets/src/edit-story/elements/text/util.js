@@ -17,8 +17,38 @@
 /**
  * External dependencies
  */
-import { RichUtils } from 'draft-js';
+import { RichUtils, SelectionState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
+
+export function getSelectionForAll(content) {
+  const firstBlock = content.getFirstBlock();
+  const lastBlock = content.getLastBlock();
+  return new SelectionState({
+    anchorKey: firstBlock.getKey(),
+    anchorOffset: 0,
+    focusKey: lastBlock.getKey(),
+    focusOffset: lastBlock.getLength(),
+  });
+}
+
+export function getSelectionForOffset(content, offset) {
+  const blocks = content.getBlocksAsArray();
+  let countdown = offset;
+  for (let i = 0; i < blocks.length && countdown >= 0; i++) {
+    const block = blocks[i];
+    const length = block.getLength();
+    if (countdown <= length) {
+      const selection = new SelectionState({
+        anchorKey: block.getKey(),
+        anchorOffset: countdown,
+      });
+      return selection;
+    }
+    // +1 char for the delimiter.
+    countdown -= length + 1;
+  }
+  return null;
+}
 
 export function getFilteredState(editorState, oldEditorState) {
   const shouldFilterPaste =
