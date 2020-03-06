@@ -20,7 +20,7 @@
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import createSolid from '../../../utils/createSolid';
 
-const transparentStyle = {
+export const transparentStyle = {
   backgroundImage:
     'conic-gradient(#fff 0.25turn, #d3d4d4 0turn 0.5turn, #fff 0turn .75turn, #d3d4d4 0turn 1turn)',
   backgroundSize: '66.67% 66.67%',
