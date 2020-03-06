@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { CSSTransition } from 'react-transition-group';
-import { useEffect, useRef, useLayoutEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -97,28 +97,20 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
     }
   }, [color, load]);
 
+  // Detect focus out of color picker (clicks or focuses outside)
   const containerRef = useRef();
-  const closeRef = useRef();
-  const previousFocus = useRef(document.activeElement);
-
   useFocusOut(containerRef.current, onClose);
 
-  useLayoutEffect(() => {
-    closeRef.current.focus();
-  }, []);
+  // Re-establish focus when actively exiting by button or key press
+  const previousFocus = useRef(document.activeElement);
+  const handleCloseAndRefocus = useCallback(() => {
+    if (previousFocus.current) {
+      previousFocus.current.focus();
+    }
+    onClose();
+  }, [onClose]);
 
-  useEffect(
-    () => () => {
-      // Notice the double arrow - this function runs on unmount.
-      if (previousFocus.current) {
-        // Re-focus old focus
-        previousFocus.current.focus();
-      }
-    },
-    []
-  );
-
-  useKeyDownEffect(containerRef, 'esc', onClose);
+  useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
 
   return (
     <CSSTransition in appear={true} classNames="picker" timeout={300}>
@@ -128,7 +120,7 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
           type={type}
           setToGradient={setToGradient}
           setToSolid={setToSolid}
-          onClose={onClose}
+          onClose={handleCloseAndRefocus}
         />
         {type !== 'solid' && (
           <Body>

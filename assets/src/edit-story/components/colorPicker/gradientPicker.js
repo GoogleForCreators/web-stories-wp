@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { ColorStopPropType } from '../../types';
 import { ReactComponent as Reverse } from '../../icons/gradient_reverser.svg';
 import { ReactComponent as Rotate } from '../../icons/gradient_rotator.svg';
@@ -48,7 +48,7 @@ const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
 
 const Line = styled.div.attrs(({ stops }) => ({
   tabIndex: -1,
-  style: generatePatternCSS({
+  style: generatePatternStyles({
     type: 'linear',
     // "Push" the ends of the gradient in, so it starts and
     // ends at (LINE_WIDTH / 2) px
