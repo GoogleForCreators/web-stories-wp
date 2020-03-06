@@ -6,7 +6,37 @@ use Spy_REST_Server;
 use WP_REST_Request;
 
 class Link_Controller extends \WP_Test_REST_TestCase {
+	/**
+	 * @var \WP_REST_Server
+	 */
 	protected $server;
+
+	protected static $editor;
+	protected static $subscriber;
+
+	const INVALID_URL = 'https://www.notreallyawebsite.com/foobar.html';
+	const EMPTY_URL = 'https://empty.example.com/';
+	const EXAMPLE_URL = 'https://example.com/';
+	const VALID_URL = 'https://amp.dev';
+
+	public static function wpSetUpBeforeClass( $factory ) {
+		self::$subscriber = $factory->user->create(
+			array(
+				'role' => 'subscriber',
+			)
+		);
+		self::$editor     = $factory->user->create(
+			array(
+				'role'       => 'editor',
+				'user_email' => 'editor@example.com',
+			)
+		);
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$subscriber );
+		self::delete_user( self::$editor );
+	}
 
 	public function setUp() {
 		parent::setUp();
@@ -15,6 +45,8 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
+
+		add_filter( 'pre_http_request', array( $this, 'mock_http_request' ), 10, 3 );
 	}
 
 	public function tearDown() {
@@ -23,30 +55,144 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
+
+		remove_filter( 'pre_http_request', array( $this, 'mock_http_request' ) );
+	}
+
+	/**
+	 * Intercept link processing requests and mock responses.
+	 *
+	 * @param mixed  $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param mixed  $r       HTTP request arguments.
+	 * @param string $url     The request URL.
+	 * @return array Response data.
+	 */
+	public function mock_http_request( $preempt, $r, $url ) {
+
+		if ( false !== strpos( $url, self::EMPTY_URL ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => '<html></html>',
+			];
+		}
+
+		if ( false !== strpos( $url, self::EXAMPLE_URL ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => file_get_contents( __DIR__ . '/../../data/example.com.html' ),
+			];
+		}
+
+		if ( false !== strpos( $url, self::VALID_URL ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => file_get_contents( __DIR__ . '/../../data/amp.dev.html' ),
+			];
+		}
+
+		return array(
+			'response' => array(
+				'code' => 404,
+			),
+		);
 	}
 
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/link', $routes );
-		$this->assertCount( 1, $routes['/web-stories/v1/link'] );
+
+		$route = $routes['/web-stories/v1/link'];
+		$this->assertCount( 1, $route );
+		$this->assertArrayHasKey( 'callback', $route[0] );
+		$this->assertArrayHasKey( 'permission_callback', $route[0] );
+		$this->assertArrayHasKey( 'methods', $route[0] );
+		$this->assertArrayHasKey( 'args', $route[0] );
 	}
 
-	public function test_get_item_schema() {
-		$request = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/link' );
-		$request->set_query_params(
-			[
-				'url' => 'https://amp.dev/',
-			]
-		);
+	public function test_without_permission() {
+		// Test without a login.
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 400, $response->get_status() );
+
+		// Test with a user that does not have edit_posts capability.
+		wp_set_current_user( self::$subscriber );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::VALID_URL );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 403, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertEquals( $data['code'], 'rest_forbidden' );
+	}
+
+	public function test_invalid_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::INVALID_URL );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 404, $response->get_status() );
+		$data = $response->get_data();
+		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+	}
+
+	public function test_empty_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::EMPTY_URL );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertNotEmpty( $data );
+		$expected = [
+			'title'       => '',
+			'image'       => '',
+			'description' => '',
+		];
 
-		$this->assertCount( 3, array_keys( $data ) );
-		$this->assertArrayHasKey( 'title', $data );
-		$this->assertArrayHasKey( 'image', $data );
-		$this->assertArrayHasKey( 'description', $data );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSets( $expected, $data );
+	}
+
+	public function test_example_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::EXAMPLE_URL );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => 'Example Domain',
+			'image'       => '',
+			'description' => '',
+		];
+
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSets( $expected, $data );
+	}
+
+	public function test_valid_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::VALID_URL );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => 'AMP - a web component framework to easily create user-first web experiences - amp.dev',
+			'image'       => 'https://amp.dev/static/img/sharing/default-600x314.png',
+			'description' => 'Whether you are a publisher, e-commerce company, storyteller, advertiser or email sender, AMP makes it easy to create great experiences on the web. Use AMP to build websites, stories, ads and emails.',
+		];
+
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSets( $expected, $data );
 	}
 }

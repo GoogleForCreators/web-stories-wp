@@ -68,8 +68,15 @@ class Link_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'parse_link' ],
 					'permission_callback' => [ $this, 'parse_link_permissions_check' ],
+					'args'                => [
+						'url'       => [
+							'description'       => __( 'The URL to process.', 'web-stories' ),
+							'type'              => 'string',
+							'required'          => true,
+							'sanitize_callback' => 'esc_url_raw',
+						],
+					],
 				],
-				'schema' => [ $this, 'get_public_item_schema' ],
 			]
 		);
 	}
@@ -83,10 +90,6 @@ class Link_Controller extends WP_REST_Controller {
 	 */
 	public function parse_link( $request ) {
 		$url = $request['url'];
-
-		if ( empty( $url ) ) {
-			return new WP_Error( 'rest_no_url_provided', __( 'No URL was provided to be parsed.', 'web-stories' ), [ 'status' => 400 ] );
-		}
 
 		$request = wp_safe_remote_get(
 			$url,
@@ -104,7 +107,7 @@ class Link_Controller extends WP_REST_Controller {
 		}
 
 		if ( ! $html ) {
-			return new WP_Error( 'rest_url_unreachable', __( 'The given URL could not be reached.', 'web-stories' ), [ 'status' => 400 ] );
+			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), array( 'status' => 404 ) );
 		}
 
 		$title       = '';
@@ -181,6 +184,7 @@ class Link_Controller extends WP_REST_Controller {
 		$description_query = $xpath->query( '//meta[@name="description"]' );
 		/* @var DOMNodeList $og_description_query */
 		$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
+
 		if ( $description_query instanceof DOMNodeList && $description_query->count() ) {
 			/** @var \DOMElement $description_node */
 			$description_node = $description_query->item( 0 );
@@ -207,13 +211,15 @@ class Link_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Checks if a given request has access to process urls.
+	 * Checks if current user can process links.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 *
-	 * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
+	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
-	public function parse_link_permissions_check( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		return current_user_can( 'edit_posts' );
+	public function parse_link_permissions_check() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), array( 'status' => rest_authorization_required_code() ) );
+		}
+
+		return true;
 	}
 }
