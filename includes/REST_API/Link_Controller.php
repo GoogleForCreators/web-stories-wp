@@ -140,21 +140,21 @@ class Link_Controller extends WP_REST_Controller {
 		$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
 		/* @var DOMNodeList $og_site_name_query */
 		$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
-		if ( $title_query instanceof DOMNodeList && $title_query->count() ) {
+		if ( $title_query instanceof DOMNodeList && $title_query->length > 0 ) {
 			/** @var \DOMElement $title_node */
 			$title_node = $title_query->item( 0 );
 
 			if ( $title_node instanceof \DOMElement ) {
 				$title = $title_node->textContent;
 			}
-		} else if ( $og_title_query instanceof DOMNodeList && $og_title_query->count() ) {
+		} else if ( $og_title_query instanceof DOMNodeList && $og_title_query->length > 0 ) {
 			/** @var \DOMElement $title_node */
 			$title_node = $og_title_query->item( 0 );
 
 			if ( $title_node instanceof \DOMElement ) {
 				$title = $title_node->getAttribute( 'content' );
 			}
-		} else if ( $og_site_name_query instanceof DOMNodeList && $og_site_name_query->count() ) {
+		} else if ( $og_site_name_query instanceof DOMNodeList && $og_site_name_query->length > 0 ) {
 			/** @var \DOMElement $title_node */
 			$title_node = $og_site_name_query->item( 0 );
 
@@ -170,20 +170,20 @@ class Link_Controller extends WP_REST_Controller {
 		$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
 		/* @var DOMNodeList $touch_icon_query */
 		$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
-		if ( $og_image_query instanceof DOMNodeList && $og_image_query->count() ) {
+		if ( $og_image_query instanceof DOMNodeList && $og_image_query->length > 0 ) {
 			/** @var \DOMElement $image_node */
 			$image_node = $og_image_query->item( 0 );
 			if ( $image_node instanceof \DOMElement ) {
 				$image = $image_node->getAttribute( 'content' );
 			}
-		} else if ( $icon_query instanceof DOMNodeList && $icon_query->count() ) {
+		} else if ( $icon_query instanceof DOMNodeList && $icon_query->length > 0 ) {
 			/** @var \DOMElement $image_node */
 			$image_node = $icon_query->item( 0 );
 
 			if ( $image_node instanceof \DOMElement ) {
 				$image = $image_node->getAttribute( 'href' );
 			}
-		} else if ( $touch_icon_query instanceof DOMNodeList && $touch_icon_query->count() ) {
+		} else if ( $touch_icon_query instanceof DOMNodeList && $touch_icon_query->length > 0 ) {
 			/** @var \DOMElement $image_node */
 			$image_node = $touch_icon_query->item( 0 );
 
@@ -198,14 +198,14 @@ class Link_Controller extends WP_REST_Controller {
 		/* @var DOMNodeList $og_description_query */
 		$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
 
-		if ( $description_query instanceof DOMNodeList && $description_query->count() ) {
+		if ( $description_query instanceof DOMNodeList && $description_query->length > 0 ) {
 			/** @var \DOMElement $description_node */
 			$description_node = $description_query->item( 0 );
 
 			if ( $description_node instanceof \DOMElement ) {
 				$description = $description_node->getAttribute( 'content' );
 			}
-		} else if ( $og_description_query instanceof DOMNodeList && $og_description_query->count() ) {
+		} else if ( $og_description_query instanceof DOMNodeList && $og_description_query->length > 0 ) {
 			/** @var \DOMElement $description_node */
 			$description_node = $og_description_query->item( 0 );
 
