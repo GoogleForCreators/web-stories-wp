@@ -15,36 +15,34 @@
  */
 
 /**
+ * External dependencies
+ */
+import { boolean, text } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
-import App from '../../../assets/src/edit-story/app';
+import { useState } from 'react';
+import Switch from '../switch';
 
 export default {
-  title: 'Playground|Stories Editor',
-};
-
-// @todo: Find better way to mock these.
-const config = {
-  allowedMimeTypes: {
-    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    audio: [],
-    video: ['video/mp4'],
-  },
-  storyId: 1234,
-  api: {
-    stories: '',
-    media: '',
-    fonts: '',
-  },
-  metadata: {
-    publisher: {
-      name: '',
-      logo: '',
-    },
-    poster: '',
-  },
+  title: 'Components/Form/Switch',
+  component: Switch,
 };
 
 export const _default = () => {
-  return <App config={config} />;
+  const onLabel = text('OnLabel', 'Fit to Device');
+  const offLabel = text('OffLabel', 'Do not format');
+  const disabled = boolean('Disabled', false);
+  const [value, setValue] = useState(true);
+
+  return (
+    <Switch
+      value={value}
+      onLabel={onLabel}
+      offLabel={offLabel}
+      onChange={setValue}
+      disabled={disabled}
+    />
+  );
 };
