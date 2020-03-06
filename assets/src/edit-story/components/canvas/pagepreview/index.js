@@ -45,7 +45,7 @@ const Page = styled.button`
   ${({ backgroundColor, theme }) =>
     convertToCSS(
       generatePatternStyles(
-        backgroundColor || createSolidFromString(theme.color.fg.v1)
+        backgroundColor || createSolidFromString(theme.colors.fg.v1)
       )
     )};
   flex: none;
