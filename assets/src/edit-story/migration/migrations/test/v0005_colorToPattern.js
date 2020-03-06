@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import colorToPattern from '../v0004_colorToPattern';
+import colorToPattern from '../v0005_colorToPattern';
 
 describe('colorToPattern', () => {
   it('should fullbleed to fill', () => {
