@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory } from '../../app';
 import {
@@ -98,7 +98,9 @@ function FrameElement({ element }) {
         showTooltip={selectedElementIds.length === 1 && isSelected}
       >
         <WithElementMask element={element} fill={true}>
-          {Frame && <Frame element={element} box={box} />}
+          {Frame && (
+            <Frame wrapperRef={elementRef} element={element} box={box} />
+          )}
         </WithElementMask>
       </WithLink>
     </Wrapper>
@@ -106,7 +108,7 @@ function FrameElement({ element }) {
 }
 
 FrameElement.propTypes = {
-  element: PropTypes.object.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default FrameElement;

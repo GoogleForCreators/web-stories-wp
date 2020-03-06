@@ -26,3 +26,4 @@ export { default as Color } from './color';
 export { default as Numeric } from './numeric';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
+export { default as Switch } from './switch';
