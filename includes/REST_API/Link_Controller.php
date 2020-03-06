@@ -31,6 +31,7 @@ use DOMDocument;
 use DOMNodeList;
 use DOMXpath;
 use WP_Error;
+use WP_Http;
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -106,14 +107,19 @@ class Link_Controller extends WP_REST_Controller {
 			'description' => $description,
 		];
 
-		$request = wp_safe_remote_get(
+		$response = wp_safe_remote_get(
 			$url,
 			[
 				'limit_response_size' => 153600, // 150 KB.
 			]
 		);
 
-		$html  = wp_remote_retrieve_body( $request );
+		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
+			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), array( 'status' => 404 ) );
+		}
+
+		$html  = wp_remote_retrieve_body( $response );
 
 		// Strip <body>.
 		$html_head_end = stripos( $html, '</head>' );
