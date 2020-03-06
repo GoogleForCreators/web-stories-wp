@@ -517,7 +517,12 @@ class Story_Post_Type {
 			return $class;
 		}
 
-		$class .= ' edit-story ';
+		$class .= ' edit-story';
+
+		// Overrides regular WordPress behavior by collapsing the admin menu by default.
+		if ( false === strpos( $class, 'folded' ) ) {
+			$class .= ' folded';
+		}
 
 		return $class;
 	}
