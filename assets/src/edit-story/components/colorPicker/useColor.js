@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import useReduction from './useReduction';
+import useReduction from '../../utils/useReduction';
 
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';
