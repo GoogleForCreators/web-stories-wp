@@ -24,7 +24,7 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import StoryElementPropsTypes from '../../types';
+import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
@@ -148,7 +148,7 @@ EditCropMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   cropBox: PropTypes.object.isRequired,
   croppedImage: PropTypes.object.isRequired,
-  flip: StoryElementPropsTypes.flip,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,

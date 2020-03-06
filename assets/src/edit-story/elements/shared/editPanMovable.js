@@ -24,7 +24,7 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
-import StoryElementPropsTypes from '../../types';
+import StoryPropTypes from '../../types';
 import getFocalFromOffset from './getFocalFromOffset';
 import getTransformFlip from './getTransformFlip';
 
@@ -120,7 +120,7 @@ EditPanMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   fullMedia: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
-  flip: StoryElementPropsTypes.flip,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
