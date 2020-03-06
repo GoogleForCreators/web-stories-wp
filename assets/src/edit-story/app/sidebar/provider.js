@@ -39,9 +39,9 @@ const SidebarLayout = styled.div`
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
-  display: grid;
+  height: 0;
   z-index: 2;
+  display: grid;
   grid:
     '. sidebar .' 1fr
     / minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px) 1fr minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
@@ -49,7 +49,6 @@ const SidebarLayout = styled.div`
 
 const Sidebar = styled.div`
   grid-area: sidebar;
-  height: 100%;
   position: relative;
 `;
 
@@ -81,7 +80,7 @@ function SidebarProvider({ children }) {
     });
   }, []);
 
-  const hideColorPicker = useCallback(() => {
+  const hideSidebar = useCallback(() => {
     setSidebarState(null);
   }, []);
 
@@ -91,7 +90,7 @@ function SidebarProvider({ children }) {
     },
     actions: {
       showColorPickerAt,
-      hideColorPicker,
+      hideSidebar,
     },
   };
 
