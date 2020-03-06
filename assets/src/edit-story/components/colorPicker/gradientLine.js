@@ -32,6 +32,7 @@ import useKeyMoveStop from './useKeyMoveStop';
 import useKeyAddStop from './useKeyAddStop';
 import useKeyDeleteStop from './useKeyDeleteStop';
 import useKeyFocus from './useKeyFocus';
+import usePointerAddStop from './usePointerAddStop';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
@@ -61,6 +62,17 @@ const Line = styled.div.attrs(({ stops }) => ({
   }
 `;
 
+const TempPointer = styled(Pointer).attrs(({ x }) => ({
+  style: {
+    left: `${x}px`,
+  },
+  offset: -LINE_WIDTH / 2,
+}))`
+  opacity: 0.6;
+  top: ${LINE_WIDTH / 2}px;
+  pointer-events: none;
+`;
+
 function GradientPicker({
   stops,
   currentStopIndex,
@@ -77,6 +89,8 @@ function GradientPicker({
   useKeyDeleteStop(line, onDelete);
   const stopRefs = useKeyFocus(line, stops, currentStopIndex);
 
+  const tempPointerPosition = usePointerAddStop(line, onAdd);
+
   return (
     <Line stops={stops} ref={line}>
       {stops.map(({ position }, index) => (
@@ -91,9 +105,10 @@ function GradientPicker({
           onDelete={onDelete}
           onMove={onMove}
         >
-          <Pointer offset={-6} />
+          <Pointer offset={-LINE_WIDTH / 2} />
         </GradientStop>
       ))}
+      {tempPointerPosition && <TempPointer x={tempPointerPosition} />}
     </Line>
   );
 }
