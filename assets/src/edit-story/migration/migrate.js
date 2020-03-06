@@ -20,11 +20,15 @@
 import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
 import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
 import fullbleedToFill from './migrations/v0003_fullbleedToFill';
+import squareToShape from './migrations/v0004_squareToShape';
+import mediaElementToResource from './migrations/v0005_mediaElementToResource';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
+  4: [squareToShape],
+  5: [mediaElementToResource],
 };
 
 export const DATA_VERSION = Math.max.apply(

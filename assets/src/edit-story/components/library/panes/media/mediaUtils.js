@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+const getTypeFromMime = (mimeType) => {
+  return mimeType.startsWith('image/') ? 'image' : 'video';
+};
+
 /**
  * Generates a resource object from a wordpress attachment
  *
@@ -32,7 +36,7 @@ export const getResourceFromAttachment = (attachment) => {
     featured_media_src: poster,
   } = attachment;
   return {
-    type: mimeType.startsWith('image/') ? 'image' : 'video',
+    type: getTypeFromMime(mimeType),
     src: url || src,
     width: oWidth,
     height: oHeight,
@@ -53,7 +57,7 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
     src,
     url,
-    mime,
+    mime: mimeType,
     width,
     height,
     id: videoId,
@@ -61,11 +65,11 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     featured_media_src: poster,
   } = mediaPickerEl;
   return {
-    type: mime.startsWith('image/') ? 'image' : 'video',
+    type: getTypeFromMime(mimeType),
     src: url || src,
     width,
     height,
-    mimeType: mime,
+    mimeType,
     posterId,
     poster,
     videoId,
