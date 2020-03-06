@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
+import useFocusOut from '../../utils/useFocusOut';
 import { Close } from '../button';
 import CurrentColorPicker from './currentColorPicker';
 import useColor from './useColor';
@@ -86,11 +87,33 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
     }
   }, [color, load]);
 
+  const containerRef = useRef();
+  const closeRef = useRef();
+  const previousFocus = useRef(document.activeElement);
+
+  useFocusOut(containerRef.current, onClose);
+
+  useLayoutEffect(() => {
+    closeRef.current.focus();
+  }, []);
+
+  useEffect(
+    () => () => {
+      // Notice the double arrow - this function runs on unmount.
+      if (previousFocus.current) {
+        // Re-focus old focus
+        previousFocus.current.focus();
+      }
+    },
+    []
+  );
+
   return (
-    <Container>
+    <Container ref={containerRef}>
       {/* TODO: Make `hasGradient` do something */}
       <Header hasGradient={hasGradient}>
         <CloseButton
+          ref={closeRef}
           width={10}
           height={10}
           aria-label={__('Close', 'web-stories')}
