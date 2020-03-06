@@ -52,7 +52,7 @@ function VideoOutput({
     src: resource.src,
   };
   const props = {
-    autoPlay: true,
+    autoPlay: 'autoplay',
     poster: resource.poster,
     layout: 'fill',
   };

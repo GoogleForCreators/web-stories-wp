@@ -1,1 +1,19 @@
-comment: false
+coverage:
+  status:
+    project:
+      default:
+        threshold: 1%
+        branches:
+          - master
+        if_not_found: success
+        if_ci_failed: error
+        # Disable once code base is more mature.
+        informational: true
+        only_pulls: true
+
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: true
+  branches:
+    - "master"
