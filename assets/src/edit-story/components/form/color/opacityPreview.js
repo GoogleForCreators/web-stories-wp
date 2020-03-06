@@ -21,54 +21,44 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { _x } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
-import ColorPreview from './colorPreview';
-import OpacityPreview from './opacityPreview';
+import getPreviewText from './getPreviewText';
+import getPreviewOpacity from './getPreviewOpacity';
+import ColorBox from './colorBox';
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
+const PreviewBox = styled(ColorBox).attrs({
+  role: 'textbox',
+})`
+  margin-left: 6px;
+  width: 54px;
+  line-height: 32px;
+  text-align: center;
+  cursor: ew-resize;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
-function ColorInput({
-  onChange,
-  hasGradient,
-  isMultiple,
-  opacity,
-  value,
-  label,
-}) {
+function OpacityPreview({ opacity, value }) {
+  const hasPreviewText = Boolean(getPreviewText(value));
+  const previewOpacity = getPreviewOpacity(value, opacity);
+
   return (
-    <Container>
-      <ColorPreview
-        onChange={onChange}
-        hasGradient={hasGradient}
-        isMultiple={isMultiple}
-        value={value}
-        label={label}
-      />
-      <OpacityPreview opacity={opacity} label={label} />
-    </Container>
+    <PreviewBox isVisible={hasPreviewText}>
+      {previewOpacity}
+      {_x('%', 'Percentage', 'web-stories')}
+    </PreviewBox>
   );
 }
 
-ColorInput.propTypes = {
+OpacityPreview.propTypes = {
   value: PatternPropType,
-  isMultiple: PropTypes.bool,
-  hasGradient: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
   opacity: PropTypes.number,
-  label: PropTypes.string,
 };
 
-ColorInput.defaultProps = {
-  defaultColor: null,
-  isMultiple: false,
-  hasGradient: false,
-  opacity: null,
-  labelledBy: null,
-};
-
-export default ColorInput;
+export default OpacityPreview;
