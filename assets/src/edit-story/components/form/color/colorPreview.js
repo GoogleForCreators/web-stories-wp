@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -74,6 +74,9 @@ function ColorPreview({ onChange, hasGradient, isMultiple, value, label }) {
       onClose: hideSidebar,
     });
   }, [showColorPickerAt, hideSidebar, value, onChange, hasGradient]);
+
+  // Always hide color picker on unmount - note the double arrows
+  useEffect(() => () => hideSidebar(), [hideSidebar]);
 
   return (
     <Preview ref={ref} onClick={handleOpenEditing} aria-label={fullLabel}>
