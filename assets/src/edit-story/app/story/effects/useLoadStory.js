@@ -62,6 +62,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           story_data: storyDataRaw,
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
+          poster_portrait_url: posterPortraitUrl,
           password,
         } = post;
 
@@ -82,6 +83,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           link,
           featuredMedia,
           featuredMediaUrl,
+          posterPortraitUrl,
           password,
         };
 

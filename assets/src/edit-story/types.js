@@ -48,6 +48,19 @@ export const PatternPropType = PropTypes.shape({
 
 const StoryPropTypes = {};
 
+StoryPropTypes.story = PropTypes.shape({
+  storyId: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  author: PropTypes.number.isRequired,
+  slug: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  modified: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  featuredMedia: PropTypes.number.isRequired,
+  password: PropTypes.string.isRequired,
+});
+
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
@@ -151,3 +164,22 @@ StoryPropTypes.elements.background = PropTypes.shape({
 });
 
 export default StoryPropTypes;
+
+/**
+ * Story object.
+ *
+ * @typedef {Story} Story
+ * @property {Object} story - A story object.
+ * @property {number} storyId Story post id.
+ * @property {string} title Story title.
+ * @property {string} status Post status, draft or published.
+ * @property {Array}  pages Array of all pages.
+ * @property {number} author User ID of story author.
+ * @property {string} slug The slug of the story.
+ * @property {string} date The publish date of the story.
+ * @property {string} modified The modified date of the story.
+ * @property {string} content AMP HTML content.
+ * @property {string} excerpt Short description.
+ * @property {number} featuredMedia Featured media ID.
+ * @property {string} password Password
+ */
