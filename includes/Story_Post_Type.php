@@ -152,7 +152,14 @@ class Story_Post_Type {
 			'the_content',
 			static function ( $content ) {
 				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_filter( 'the_content', 'wpautop' );
+					remove_all_filters( 'the_content' );
+
+					$post = get_post();
+
+					if ( $post instanceof WP_Post ) {
+						$renderer = new Story_Renderer( $post );
+						return $renderer->render();
+					}
 				}
 
 				return $content;
@@ -313,7 +320,11 @@ class Story_Post_Type {
 						'media'    => '/wp/v2/media',
 						'users'    => '/wp/v2/users',
 						'statuses' => '/wp/v2/statuses',
-						'fonts'    => '/amp/v1/fonts',
+						'fonts'    => '/web-stories/v1/fonts',
+					],
+					'metadata'         => [
+						'publisher'      => self::get_publisher_data(),
+						'fallbackPoster' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 					],
 				],
 			]
@@ -451,7 +462,7 @@ class Story_Post_Type {
 					[],
 					WEBSTORIES_VERSION
 				);
-				wp_styles()->do_item(self::WEB_STORIES_STYLE_HANDLE . '_fonts');
+				wp_styles()->do_item( self::WEB_STORIES_STYLE_HANDLE . '_fonts' );
 			}
 		}
 	}
@@ -717,6 +728,21 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Returns the publisher data.
+	 *
+	 * @return array Publisher name and logo.
+	 */
+	private static function get_publisher_data() {
+		$publisher      = get_bloginfo( 'name' );
+		$publisher_logo = self::get_publisher_logo();
+
+		return [
+			'name' => $publisher,
+			'logo' => $publisher_logo,
+		];
+	}
+
+	/**
 	 * Prints the schema.org metadata on the single story template.
 	 *
 	 * @return void
@@ -735,49 +761,48 @@ class Story_Post_Type {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	public static function get_schemaorg_metadata() {
+		$publisher = self::get_publisher_data();
+
 		$metadata = [
 			'@context'  => 'http://schema.org',
 			'publisher' => [
 				'@type' => 'Organization',
-				'name'  => get_bloginfo( 'name' ),
+				'name'  => $publisher['name'],
+				'logo'  => $publisher['logo'],
 			],
 		];
-
-		$publisher_logo = self::get_publisher_logo();
-
-		if ( $publisher_logo ) {
-			$metadata['publisher']['logo'] = $publisher_logo;
-		}
 
 		/**
 		 * We're expecting a post object.
 		 *
-		 * @var \WP_Post $post
+		 * @var WP_Post $post
 		 */
 		$post = get_queried_object();
 
-		$metadata = array_merge(
-			$metadata,
-			[
-				'@type'            => 'BlogPosting',
-				'mainEntityOfPage' => get_permalink(),
-				'headline'         => get_the_title(),
-				'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
-				'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
-			]
-		);
+		if ( $post instanceof WP_Post ) {
+			$metadata = array_merge(
+				$metadata,
+				[
+					'@type'            => 'BlogPosting',
+					'mainEntityOfPage' => get_permalink(),
+					'headline'         => get_the_title(),
+					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
+					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
+				]
+			);
 
-		$post_author = get_userdata( (int) $post->post_author );
+			$post_author = get_userdata( (int) $post->post_author );
 
-		if ( $post_author ) {
-			$metadata['author'] = [
-				'@type' => 'Person',
-				'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
-			];
-		}
+			if ( $post_author ) {
+				$metadata['author'] = [
+					'@type' => 'Person',
+					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
+				];
+			}
 
-		if ( has_post_thumbnail( $post->ID ) ) {
-			$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			if ( has_post_thumbnail( $post->ID ) ) {
+				$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			}
 		}
 
 		/**
