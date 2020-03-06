@@ -15,23 +15,30 @@
  */
 
 /**
- * External dependencies
- */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
-
-/**
  * Internal dependencies
  */
-import toBeValidAMPDocument from './matchers/toBeValidAMPDocument';
-import toBeValidAMPStory from './matchers/toBeValidAMPStory';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
+import ImageOutput from '../output';
 
-expect.extend({
-  toBeValidAMPDocument,
-  toBeValidAMPStory,
-  toBeValidAMPStoryPage,
-  toBeValidAMPStoryElement,
+describe('Image output', () => {
+  it('should produce valid AMP output', async () => {
+    const props = {
+      element: {
+        id: '123',
+        videoId: 123,
+        type: 'image',
+        mimeType: 'image/png',
+        src: 'https://example.com/image.png',
+        scale: 1,
+        origRatio: 9 / 16,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    await expect(<ImageOutput {...props} />).toBeValidAMPStoryElement();
+  });
 });

@@ -17,21 +17,26 @@
 /**
  * External dependencies
  */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
-
+import { renderToStaticMarkup } from 'react-dom/server';
 /**
  * Internal dependencies
  */
-import toBeValidAMPDocument from './matchers/toBeValidAMPDocument';
-import toBeValidAMPStory from './matchers/toBeValidAMPStory';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
+import { getAMPValidationErrors, WrapPage } from './utils';
 
-expect.extend({
-  toBeValidAMPDocument,
-  toBeValidAMPStory,
-  toBeValidAMPStoryPage,
-  toBeValidAMPStoryElement,
-});
+async function toBeValidAMPStoryPage(stringOrComponent) {
+  const string = renderToStaticMarkup(stringOrComponent);
+  const errors = await getAMPValidationErrors(
+    <WrapPage>{stringOrComponent}</WrapPage>
+  );
+  const pass = errors.length === 0;
+
+  return {
+    pass,
+    message: () =>
+      pass
+        ? `Expected ${string} not to be valid AMP.`
+        : `Expected ${string} to be valid AMP. Errors:\n${errors.join('\n')}`,
+  };
+}
+
+export default toBeValidAMPStoryPage;
