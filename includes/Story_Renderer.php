@@ -170,7 +170,7 @@ class Story_Renderer {
 
 		$output = (string) ob_get_clean();
 
-		return str_replace( '</body>', '</body>' . $output, $content );
+		return str_replace( '</body>', $output . '</body>', $content );
 	}
 
 	/**

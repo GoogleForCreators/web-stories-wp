@@ -63,4 +63,48 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$this->assertContains( '<meta name="generator" content="Web Stories', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
+
+	public function test_replace_body_start_tag() {
+		$expected = '<html amp lang="en-US"><head></head><body>Hello World<span>Foo</span></body></html>';
+		$post     = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><span>Foo</span></body></html>',
+			]
+		);
+
+		$function = static function() {
+			echo 'Hello World';
+		};
+
+		add_action(	'web_stories_body_open', $function );
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$actual   = $renderer->render();
+
+		remove_action(	'web_stories_body_open', $function );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	public function test_replace_body_end_tag() {
+		$expected = '<html amp lang="en-US"><head></head><body><span>Foo</span>Hello World</body></html>';
+		$post     = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><span>Foo</span></body></html>',
+			]
+		);
+
+		$function = static function() {
+			echo 'Hello World';
+		};
+
+		add_action(	'web_stories_footer', $function );
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$actual   = $renderer->render();
+
+		remove_action(	'web_stories_footer', $function );
+
+		$this->assertSame( $expected, $actual );
+	}
 }
