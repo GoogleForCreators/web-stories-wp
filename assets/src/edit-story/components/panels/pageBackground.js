@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../app';
 import { useTheme } from '../../theme';
-import createSolid from '../../utils/createSolid';
+import createSolidFromString from '../../utils/createSolidFromString';
 import { Color } from '../form';
 import { SimplePanel } from './panel';
 
@@ -40,7 +40,7 @@ function PageBackgroundPanel() {
   } = useStory();
   const theme = useTheme();
   const currentBackground =
-    currentPage?.backgroundColor || createSolid(theme.colors.fg.v1);
+    currentPage?.backgroundColor || createSolidFromString(theme.colors.fg.v1);
   const [color, setColor] = useState(currentBackground);
   useEffect(() => setColor(currentBackground), [currentBackground]);
   const handleChange = useCallback(
