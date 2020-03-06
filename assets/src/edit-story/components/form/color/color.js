@@ -64,11 +64,11 @@ ColorInput.propTypes = {
 };
 
 ColorInput.defaultProps = {
-  defaultColor: null,
+  value: null,
   isMultiple: false,
   hasGradient: false,
   opacity: null,
-  labelledBy: null,
+  label: null,
 };
 
 export default ColorInput;

@@ -77,7 +77,7 @@ function ColorPreview({ onChange, hasGradient, isMultiple, value, label }) {
 
   return (
     <Preview ref={ref} onClick={handleOpenEditing} aria-label={fullLabel}>
-      <VisualPreview style={previewStyle} />
+      <VisualPreview role="status" style={previewStyle} />
       <TextualPreview>
         {isMultiple
           ? __('Multiple', 'web-stories')
@@ -94,6 +94,12 @@ ColorPreview.propTypes = {
   hasGradient: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+};
+
+ColorPreview.defaultProps = {
+  isMultiple: false,
+  hasGradient: false,
+  label: null,
 };
 
 export default ColorPreview;

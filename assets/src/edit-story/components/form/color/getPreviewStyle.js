@@ -26,12 +26,9 @@ const transparentStyle = {
   backgroundSize: '66.67% 66.67%',
 };
 
-function getPreviewStyle(pattern, defaultColor) {
+function getPreviewStyle(pattern) {
   if (!pattern) {
-    if (!defaultColor) {
-      return transparentStyle;
-    }
-    return { backgroundColor: `#${defaultColor}` };
+    return transparentStyle;
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
