@@ -66,6 +66,7 @@ class Fonts_Controller extends WP_REST_Controller {
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 					'args'                => $this->get_collection_params(),
 				],
+				'schema' => [ $this, 'get_public_item_schema' ],
 			]
 		);
 	}
