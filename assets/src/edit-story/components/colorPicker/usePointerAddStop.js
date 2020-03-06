@@ -34,7 +34,7 @@ function usePointerAddStop(ref, onAdd) {
 
     const nodeLeftEdge = node.getBoundingClientRect().left;
 
-    const onClick = (evt) => {
+    const onPointerDown = (evt) => {
       if (evt.target !== node) {
         return;
       }
@@ -62,11 +62,11 @@ function usePointerAddStop(ref, onAdd) {
 
     node.addEventListener('pointermove', onPointerMove);
     node.addEventListener('pointerleave', onPointerLeave);
-    node.addEventListener('click', onClick);
+    node.addEventListener('pointerdown', onPointerDown);
     return () => {
       node.removeEventListener('pointermove', onPointerMove);
       node.removeEventListener('pointerleave', onPointerLeave);
-      node.removeEventListener('click', onClick);
+      node.removeEventListener('pointerdown', onPointerDown);
     };
   }, [ref, onAdd]);
 
