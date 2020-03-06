@@ -140,7 +140,7 @@ StoryPropTypes.elements.video = PropTypes.shape({
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropsTypes,
   content: PropTypes.string,
-  color: PatternPropType,
+  color: PatternPropType.isRequired,
   backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
