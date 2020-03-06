@@ -90,9 +90,16 @@ class Link_Controller extends WP_REST_Controller {
 	public function parse_link( $request ) {
 		$url = $request['url'];
 
+		/**
+		 * Filters the link data TTL value.
+		 *
+		 * @param int $time Time to live (in seconds). Default is 1 day.
+		 * @param string $url The attempted URL.
+		 */
+		$cache_ttl = apply_filters( 'web_stories_link_data_cache_ttl', DAY_IN_SECONDS, $url );
 		$cache_key = 'web_stories_link_data_' . md5( $url );
-		$cache_ttl = DAY_IN_SECONDS;
-		$data      = get_transient( $cache_key );
+
+		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
 			return json_decode( $data, true );
 		}
