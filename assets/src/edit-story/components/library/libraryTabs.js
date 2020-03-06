@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -35,7 +35,7 @@ function LibraryTabs() {
     data: { tabs },
   } = useLibrary();
   const { isRTL } = useConfig();
-  const panes = getPanes(tabs);
+  const panes = useMemo(() => getPanes(tabs), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
     (direction) => () => {
@@ -56,15 +56,12 @@ function LibraryTabs() {
   const forwardDirection = isRTL ? -1 : 1;
 
   useKeyDownEffect(ref, 'left', handleNavigation(backwardDirection), [
-    tab,
-    setTab,
-    panes,
+    handleNavigation,
   ]);
   useKeyDownEffect(ref, 'right', handleNavigation(forwardDirection), [
-    tab,
-    setTab,
-    panes,
+    handleNavigation,
   ]);
+
   return (
     <Tabs ref={ref}>
       {panes.map(({ id, Tab }) => (
