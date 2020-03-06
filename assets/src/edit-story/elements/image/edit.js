@@ -63,8 +63,8 @@ function ImageEdit({ element, box }) {
     origRatio,
     scale,
     flip,
-    focalX,
-    focalY,
+    focalX = 50,
+    focalY = 50,
     isFill,
     isBackground,
   } = element;
@@ -86,8 +86,8 @@ function ImageEdit({ element, box }) {
     width,
     height,
     scale,
-    focalX,
-    focalY,
+    flip && flip.horizontal ? 100 - focalX : focalX,
+    flip && flip.vertical ? 100 - focalY : focalY,
     origRatio
   );
 
@@ -112,6 +112,7 @@ function ImageEdit({ element, box }) {
           setProperties={setProperties}
           cropBox={cropBox}
           croppedImage={croppedImage}
+          flip={flip}
           x={x}
           y={y}
           width={width}
@@ -121,16 +122,15 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           imgWidth={imgProps.width}
           imgHeight={imgProps.height}
-          transformFlip={imgProps.transformFlip}
         />
       )}
 
       {fullImage && croppedImage && (
         <EditPanMovable
           setProperties={setProperties}
-          flip={flip}
           fullMedia={fullImage}
           croppedMedia={croppedImage}
+          flip={flip}
           x={x}
           y={y}
           width={width}
@@ -140,7 +140,6 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           mediaWidth={imgProps.width}
           mediaHeight={imgProps.height}
-          transformFlip={imgProps.transformFlip}
         />
       )}
 

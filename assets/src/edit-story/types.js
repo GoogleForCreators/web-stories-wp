@@ -45,6 +45,11 @@ StoryPropTypes.link = PropTypes.shape({
   icon: PropTypes.string,
 });
 
+StoryPropTypes.flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
 export const StoryElementPropsTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -53,6 +58,7 @@ export const StoryElementPropsTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   rotationAngle: PropTypes.number.isRequired,
+  flip: StoryPropTypes.flip,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
