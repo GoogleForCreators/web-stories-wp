@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -39,8 +39,14 @@ function PageBackgroundPanel() {
     actions: { updateCurrentPageProperties },
   } = useStory();
   const theme = useTheme();
-  const currentBackground =
-    currentPage?.backgroundColor || createSolidFromString(theme.colors.fg.v1);
+  const defaultColor = useMemo(
+    () => createSolidFromString(theme.colors.fg.v1),
+    [theme.colors.fg.v1]
+  );
+  const currentBackground = useMemo(
+    () => currentPage?.backgroundColor || defaultColor,
+    [currentPage, defaultColor]
+  );
   const [color, setColor] = useState(currentBackground);
   useEffect(() => setColor(currentBackground), [currentBackground]);
   const handleChange = useCallback(
