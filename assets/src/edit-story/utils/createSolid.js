@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { parseToRgb } from 'polished';
+
 function createSolid(r, g, b, a = 1) {
+  if (typeof r === 'string') {
+    const { red, green, blue, alpha } = parseToRgb(r);
+    return createSolid(red, green, blue, alpha);
+  }
   if (a !== 1) {
     return { color: { r, g, b, a } };
   }

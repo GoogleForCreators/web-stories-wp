@@ -33,8 +33,6 @@ import DisplayElement from '../displayElement';
 
 const PAGE_THUMB_OUTLINE = 2;
 
-const DEFAULT_COLOR = createSolid(255, 255, 255);
-
 const Page = styled.button`
   padding: 0;
   margin: 0;
@@ -44,8 +42,10 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  ${({ backgroundColor }) =>
-    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
+  ${({ backgroundColor, theme }) =>
+    convertToCSS(
+      generatePatternStyles(backgroundColor || createSolid(theme.color.fg.v1))
+    )};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

@@ -28,17 +28,19 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import { useTheme } from '../../theme';
 import createSolid from '../../utils/createSolid';
 import { Color } from '../form';
 import { SimplePanel } from './panel';
 
-const DEFAULT_COLOR = createSolid(255, 255, 255);
 function PageBackgroundPanel() {
   const {
     state: { currentPage },
     actions: { updateCurrentPageProperties },
   } = useStory();
-  const currentBackground = currentPage?.backgroundColor || DEFAULT_COLOR;
+  const theme = useTheme();
+  const currentBackground =
+    currentPage?.backgroundColor || createSolid(theme.colors.fg.v1);
   const [color, setColor] = useState(currentBackground);
   useEffect(() => setColor(currentBackground), [currentBackground]);
   const handleChange = useCallback(

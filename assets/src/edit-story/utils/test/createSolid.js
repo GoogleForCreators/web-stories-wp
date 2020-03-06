@@ -20,21 +20,31 @@
 import createSolid from '../createSolid';
 
 describe('createSolid', () => {
-  it('should convert with specifying opacity', () => {
-    expect(createSolid(255, 0, 0)).toStrictEqual({
-      color: { r: 255, g: 0, b: 0 },
+  describe('when given integers', () => {
+    it('should convert with specifying opacity', () => {
+      expect(createSolid(255, 0, 0)).toStrictEqual({
+        color: { r: 255, g: 0, b: 0 },
+      });
+    });
+
+    it('should convert with full opacity', () => {
+      expect(createSolid(0, 255, 0, 1)).toStrictEqual({
+        color: { r: 0, g: 255, b: 0 },
+      });
+    });
+
+    it('should convert with less than full opacity', () => {
+      expect(createSolid(0, 0, 255, 0.1)).toStrictEqual({
+        color: { r: 0, g: 0, b: 255, a: 0.1 },
+      });
     });
   });
 
-  it('should convert with full opacity', () => {
-    expect(createSolid(0, 255, 0, 1)).toStrictEqual({
-      color: { r: 0, g: 255, b: 0 },
-    });
-  });
-
-  it('should convert with less than full opacity', () => {
-    expect(createSolid(0, 0, 255, 0.1)).toStrictEqual({
-      color: { r: 0, g: 0, b: 255, a: 0.1 },
+  describe('when given a string', () => {
+    it('should convert via polished', () => {
+      expect(createSolid('red')).toStrictEqual({
+        color: { r: 255, g: 0, b: 0 },
+      });
     });
   });
 });
