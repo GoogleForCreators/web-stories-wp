@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
 export { default as getMediaProps } from './getMediaProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
@@ -73,11 +73,12 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  ${({ backgroundColor }) => convertToCSS(generatePatternCSS(backgroundColor))};
+  ${({ backgroundColor }) =>
+    convertToCSS(generatePatternStyles(backgroundColor))};
 `;
 
 export const elementWithFontColor = css`
-  ${({ color }) => convertToCSS(generatePatternCSS(color, 'color'))};
+  ${({ color }) => convertToCSS(generatePatternStyles(color, 'color'))};
 `;
 
 export const elementWithFont = css`

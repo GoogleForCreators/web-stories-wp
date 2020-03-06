@@ -48,21 +48,29 @@ export const PatternPropType = PropTypes.shape({
 
 const StoryPropTypes = {};
 
+StoryPropTypes.story = PropTypes.shape({
+  storyId: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  author: PropTypes.number.isRequired,
+  slug: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  modified: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  featuredMedia: PropTypes.number.isRequired,
+  password: PropTypes.string.isRequired,
+});
+
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
-export const StoryElementPropsTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  rotationAngle: PropTypes.number.isRequired,
-  isFill: PropTypes.bool,
-  mask: StoryPropTypes.mask,
-};
+StoryPropTypes.link = PropTypes.shape({
+  type: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+  desc: PropTypes.string,
+  icon: PropTypes.string,
+});
 
 StoryPropTypes.size = PropTypes.exact({
   width: PropTypes.number.isRequired,
@@ -86,21 +94,57 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
-export const StoryLayerPropsTypes = {
+StoryPropTypes.imageResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
+});
+
+StoryPropTypes.videoResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
+  videoId: PropTypes.number.isRequired,
+  poster: PropTypes.string,
+  posterId: PropTypes.number,
+});
+
+StoryPropTypes.resource = PropTypes.oneOfType([
+  StoryPropTypes.imageResource,
+  StoryPropTypes.videoResource,
+]);
+
+const StoryLayerPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
 
+const StoryElementPropsTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  rotationAngle: PropTypes.number.isRequired,
+  isFill: PropTypes.bool,
+  mask: StoryPropTypes.mask,
+  link: StoryPropTypes.link,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
 
-StoryPropTypes.layer = PropTypes.shape(StoryLayerPropsTypes);
+StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropsTypes,
-  src: PropTypes.string.isRequired,
-  origRatio: PropTypes.number.isRequired,
+  resource: StoryPropTypes.imageResource,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
@@ -108,18 +152,14 @@ StoryPropTypes.elements.image = PropTypes.shape({
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropsTypes,
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
+  resource: StoryPropTypes.videoResource,
   loop: PropTypes.bool,
-  poster: PropTypes.string,
-  videoId: PropTypes.number.isRequired,
-  posterId: PropTypes.number,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropsTypes,
   content: PropTypes.string,
-  color: PatternPropType,
+  color: PatternPropType.isRequired,
   backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
@@ -132,14 +172,33 @@ StoryPropTypes.elements.text = PropTypes.shape({
   textAlign: PropTypes.string,
 });
 
-StoryPropTypes.elements.square = PropTypes.shape({
+StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropsTypes,
   backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({
-  ...StoryLayerPropsTypes,
+  ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
 });
 
 export default StoryPropTypes;
+
+/**
+ * Story object.
+ *
+ * @typedef {Story} Story
+ * @property {Object} story - A story object.
+ * @property {number} storyId Story post id.
+ * @property {string} title Story title.
+ * @property {string} status Post status, draft or published.
+ * @property {Array}  pages Array of all pages.
+ * @property {number} author User ID of story author.
+ * @property {string} slug The slug of the story.
+ * @property {string} date The publish date of the story.
+ * @property {string} modified The modified date of the story.
+ * @property {string} content AMP HTML content.
+ * @property {string} excerpt Short description.
+ * @property {number} featuredMedia Featured media ID.
+ * @property {string} password Password
+ */

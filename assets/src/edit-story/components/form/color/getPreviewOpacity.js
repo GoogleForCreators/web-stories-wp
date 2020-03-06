@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useColorPicker() {
-  return useContext(Context);
+function getPreviewOpacity(pattern, specifiedOpacity = 1) {
+  if (!pattern) {
+    return specifiedOpacity * 100;
+  }
+  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
+  if (!isSolidPattern) {
+    return specifiedOpacity * 100;
+  }
+  const {
+    color: { a = 1 },
+  } = pattern;
+  return a * 100;
 }
 
-export default useColorPicker;
+export default getPreviewOpacity;

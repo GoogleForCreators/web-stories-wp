@@ -15,8 +15,14 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { createContext } from 'react';
+import createSolidFromString from '../createSolidFromString';
 
-export default createContext({ state: {}, actions: {} });
+describe('createSolidFromString', () => {
+  it('should convert via polished', () => {
+    expect(createSolidFromString('red')).toStrictEqual({
+      color: { r: 255, g: 0, b: 0 },
+    });
+  });
+});

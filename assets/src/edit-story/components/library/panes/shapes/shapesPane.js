@@ -47,12 +47,6 @@ const ShapePreview = styled.div`
   margin-right: 24px;
 `;
 
-const Square = styled.div`
-  width: ${PREVIEW_SIZE}px;
-  height: ${PREVIEW_SIZE}px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-`;
-
 const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.v1};
 `;
@@ -73,29 +67,12 @@ function ShapesPane(props) {
       />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
-          {/** Square shape */}
-          <ShapePreview
-            key={'square'}
-            onClick={() => {
-              insertElement('square', {
-                backgroundColor: createSolid(51, 51, 51),
-                width: 200,
-                height: 200,
-                x: 5,
-                y: 5,
-                rotationAngle: 0,
-              });
-            }}
-            alt={__('Square', 'web-stories')}
-          >
-            <Square />
-          </ShapePreview>
           {/** Basic masks */}
           {MASKS.map((mask) => (
             <ShapePreview
               key={mask.type}
               onClick={() => {
-                insertElement('square', {
+                insertElement('shape', {
                   backgroundColor: createSolid(51, 51, 51),
                   width: 200,
                   height: 200,

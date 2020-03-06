@@ -19,16 +19,44 @@
  */
 import { rgba } from 'polished';
 
-function round(val, pos) {
+/**
+ * Truncate a number to a given number of decimals.
+ *
+ * @param {number} val Number to truncate
+ * @param {number} pos Maximum number of allowed decimals
+ *
+ * @return {number} Number in given precision
+ */
+function truncate(val, pos) {
   return Number(val.toFixed(pos));
 }
 
+/**
+ * Get a description for a gradient - that is the first parameter to the
+ * gradient function. It might be null (but never for linears).
+ *
+ * For a linear gradient, always return the rotation as description.
+ *
+ * For a radial gradient, return either center, size, both or none
+ * depending on whether the values are set.
+ *
+ * For a conic gradient, return either center, start angle, both or none
+ * depending on whether the values are set.
+ *
+ * @param {Object} pattern Gradient pattern description
+ * @param {string} pattern.type Gradient type as a string
+ * @param {number} pattern.rotation Gradient rotation between 0 and 1
+ * @param {Object} pattern.center Gradient center if not 50/50
+ * @param {Object} pattern.size Gradient size if not full size
+ *
+ * @return {string} Minimal description for gradient.
+ */
 function getGradientDescription({ type, rotation, center, size }) {
   const sizeString = size
-    ? `ellipse ${round(100 * size.w, 2)}% ${round(100 * size.h, 2)}%`
+    ? `ellipse ${truncate(100 * size.w, 2)}% ${truncate(100 * size.h, 2)}%`
     : '';
   const centerString = center
-    ? ` at ${round(100 * center.x, 2)}% ${round(100 * center.y, 2)}%`
+    ? ` at ${truncate(100 * center.x, 2)}% ${truncate(100 * center.y, 2)}%`
     : '';
   switch (type) {
     case 'radial':
@@ -54,9 +82,18 @@ function getGradientDescription({ type, rotation, center, size }) {
   }
 }
 
+/**
+ * Convert a list of stops to serialized minimal versions. And use percent
+ * or turn as unit depending on whether stops are angular or not.
+ *
+ * @param {Array} stops List of stops as an object with color and position
+ * @param {boolean} isAngular Are the stops in percent of a turn or percent?
+ *
+ * @return {Array} List of serialized stops
+ */
 function getStopList(stops, isAngular = false) {
   const getPosition = (val) =>
-    isAngular ? `${round(val, 4)}turn` : `${round(val * 100, 2)}%`;
+    isAngular ? `${truncate(val, 4)}turn` : `${truncate(val * 100, 2)}%`;
   const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a);
   return stops.map(
     ({ color, position }) => `${getColor(color)} ${getPosition(position)}`
@@ -67,13 +104,13 @@ function getStopList(stops, isAngular = false) {
  * Generate CSS object from a Pattern.
  *
  * @param {Object} pattern Patterns as describe by the Pattern type
- * @param {Object} property Type of CSS to generate. Defaults to 'background',
+ * @param {string} property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
  *
- * @return {string | Object} CSS declaration as object, e.g. {fill: 'transparent'} or
+ * @return {Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
-function generatePatternCSS(pattern = null, property = 'background') {
+function generatePatternStyles(pattern = null, property = 'background') {
   const isBackground = property === 'background';
   if (pattern === null) {
     return { [property]: 'transparent' };
@@ -107,4 +144,4 @@ function generatePatternCSS(pattern = null, property = 'background') {
   return { backgroundImage: value };
 }
 
-export default generatePatternCSS;
+export default generatePatternStyles;

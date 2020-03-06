@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import createSolid from '../../utils/createSolid';
-import useReduction from './useReduction';
+import useReduction from '../../utils/useReduction';
 import insertStop from './insertStop';
 
 export const TYPE_SOLID = 'solid';

@@ -28,12 +28,12 @@ class Fonts_Controller extends \WP_Test_REST_TestCase {
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
-		$this->assertArrayHasKey( '/amp/v1/fonts', $routes );
-		$this->assertCount( 1, $routes['/amp/v1/fonts'] );
+		$this->assertArrayHasKey( '/web-stories/v1/fonts', $routes );
+		$this->assertCount( 1, $routes['/web-stories/v1/fonts'] );
 	}
 
 	public function test_get_item_schema() {
-		$request  = new WP_REST_Request( 'OPTIONS', '/amp/v1/fonts' );
+		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/fonts' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 

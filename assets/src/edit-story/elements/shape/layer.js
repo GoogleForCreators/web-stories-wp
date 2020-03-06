@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-export { default } from './colorPickerProvider';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+function ShapeLayerContent() {
+  return __('Shape', 'web-stories');
+}
+
+export default ShapeLayerContent;

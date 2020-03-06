@@ -21,6 +21,7 @@ import StoryPropTypes from '../types';
 import { WithElementMask } from '../masks';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
+import WithLink from '../components/link/output';
 
 function OutputElement({ element }) {
   const { id, type } = element;
@@ -45,7 +46,16 @@ function OutputElement({ element }) {
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
       }}
     >
-      <Output element={element} box={box} />
+      <WithLink
+        element={element}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'block',
+        }}
+      >
+        <Output element={element} box={box} />
+      </WithLink>
     </WithElementMask>
   );
 }

@@ -15,31 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
+import Context from './context';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
-};
+function useSidebar() {
+  return useContext(Context);
+}
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-};
-
-export const panels = [
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.STYLE,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default useSidebar;

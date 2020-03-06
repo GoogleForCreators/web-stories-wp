@@ -44,6 +44,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
     <SimplePanel name="bgcolor" title={__('Background color', 'web-stories')}>
       <Row>
         <Color
+          hasGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}
           onChange={handleChange}

@@ -30,15 +30,15 @@ const Element = styled.div`
   ${elementWithBackgroundColor}
 `;
 
-function SquareDisplay({ element: { backgroundColor } }) {
+function ShapeDisplay({ element: { backgroundColor } }) {
   const props = {
     backgroundColor,
   };
   return <Element {...props} />;
 }
 
-SquareDisplay.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
+ShapeDisplay.propTypes = {
+  element: StoryPropTypes.elements.shape.isRequired,
 };
 
-export default SquareDisplay;
+export default ShapeDisplay;

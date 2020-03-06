@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import generatePatternCSS from '../generatePatternCSS';
+import generatePatternStyles from '../generatePatternStyles';
 
-describe('generatePatternCSS', () => {
+describe('generatePatternStyles', () => {
   describe('given null', () => {
     it('should return transparent', () => {
-      expect(generatePatternCSS(null)).toStrictEqual({
+      expect(generatePatternStyles(null)).toStrictEqual({
         background: 'transparent',
       });
     });
@@ -30,7 +30,7 @@ describe('generatePatternCSS', () => {
 
   describe('given an unknown type', () => {
     it('should throw error', () => {
-      expect(() => generatePatternCSS({ type: 'comic' })).toThrow(
+      expect(() => generatePatternStyles({ type: 'comic' })).toThrow(
         /unknown pattern type/i
       );
     });
@@ -39,25 +39,25 @@ describe('generatePatternCSS', () => {
   describe('given a color', () => {
     it('should return shortest form if possible', () => {
       expect(
-        generatePatternCSS({ color: { r: 255, g: 0, b: 0 } })
+        generatePatternStyles({ color: { r: 255, g: 0, b: 0 } })
       ).toStrictEqual({ backgroundColor: '#f00' });
     });
 
     it('should return short form', () => {
       expect(
-        generatePatternCSS({ color: { r: 254, g: 0, b: 0, a: 1 } })
+        generatePatternStyles({ color: { r: 254, g: 0, b: 0, a: 1 } })
       ).toStrictEqual({ backgroundColor: '#fe0000' });
     });
 
     it('should return rgba if transparent', () => {
       expect(
-        generatePatternCSS({ color: { r: 255, g: 0, b: 0, a: 0.7 } })
+        generatePatternStyles({ color: { r: 255, g: 0, b: 0, a: 0.7 } })
       ).toStrictEqual({ backgroundColor: 'rgba(255,0,0,0.7)' });
     });
 
     it('should be able to render non-background properties', () => {
       expect(
-        generatePatternCSS({ color: { r: 255, g: 0, b: 0 } }, 'fill')
+        generatePatternStyles({ color: { r: 255, g: 0, b: 0 } }, 'fill')
       ).toStrictEqual({ fill: '#f00' });
     });
   });
@@ -65,7 +65,7 @@ describe('generatePatternCSS', () => {
   describe('given any gradient', () => {
     it('should not be able to render non-background properties', () => {
       expect(() =>
-        generatePatternCSS(
+        generatePatternStyles(
           {
             type: 'linear',
             stops: [
@@ -82,7 +82,7 @@ describe('generatePatternCSS', () => {
   describe('given a linear gradient', () => {
     it('should be able to render a two-stop gradient at default rotation', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'linear',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -96,7 +96,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render a multi-stop gradient with transparencies at an angle', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'linear',
           stops: [
             { color: { r: 255, g: 0, b: 0, a: 0 }, position: 0 },
@@ -115,7 +115,7 @@ describe('generatePatternCSS', () => {
   describe('given a conic gradient', () => {
     it('should be able to render a two-stop gradient', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'conic',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -129,7 +129,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render a multi-stop gradient', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'conic',
           stops: [
             { color: { r: 255, g: 0, b: 0, a: 0 }, position: 0 },
@@ -145,7 +145,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render at an angle', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'conic',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -161,7 +161,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render off-center', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'conic',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -176,7 +176,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to at an angle *and* off-center', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'conic',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -195,7 +195,7 @@ describe('generatePatternCSS', () => {
   describe('given a radial gradient', () => {
     it('should be able to render a two-stop gradient', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'radial',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -209,7 +209,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render a multi-stop gradient', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'radial',
           stops: [
             { color: { r: 255, g: 0, b: 0, a: 0 }, position: 0 },
@@ -225,7 +225,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render different size', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'radial',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -241,7 +241,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to render off-center', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'radial',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -256,7 +256,7 @@ describe('generatePatternCSS', () => {
 
     it('should be able to different size *and* off-center', () => {
       expect(
-        generatePatternCSS({
+        generatePatternStyles({
           type: 'radial',
           stops: [
             { color: { r: 255, g: 0, b: 0 }, position: 0 },

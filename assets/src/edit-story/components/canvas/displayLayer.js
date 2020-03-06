@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import generatePatternCSS from '../../utils/generatePatternCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
 import createSolid from '../../utils/createSolid';
 import useCanvas from './useCanvas';
@@ -37,7 +37,7 @@ const DisplayPageArea = styled(PageArea).attrs({
   overflowAllowed: false,
 })`
   ${({ backgroundColor }) =>
-    convertToCSS(generatePatternCSS(backgroundColor || DEFAULT_COLOR))};
+    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
 `;
 
 function DisplayLayer() {

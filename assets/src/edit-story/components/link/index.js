@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import generatePatternCSS from '../../utils/generatePatternCSS';
-
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function SquareOutput({ element: { backgroundColor } }) {
-  const style = generatePatternCSS(backgroundColor);
-  return <div className="fill" style={style} />;
-}
-
-SquareOutput.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
+export const LinkType = {
+  ONE_TAP: 1,
+  TWO_TAP: 2,
 };
 
-export default SquareOutput;
+export function getLinkFromElement(element) {
+  return element.link || null;
+}
+
+export function createLink({
+  url = '',
+  type = LinkType.TWO_TAP,
+  ...rest
+} = {}) {
+  return {
+    type,
+    url,
+    ...rest,
+  };
+}

@@ -25,19 +25,21 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
-import { OutputPage } from '../../../output';
+import { useConfig } from '../../config';
+import OutputStory from '../../../output/story';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
  *
- * @param {Object} pages Object of pages.
- * @return {Element} Markup of pages.
+ * @param {import('../../../types').Story} story Story object.
+ * @param {Array<Object>} pages List of pages.
+ * @param {Object} metadata Metadata.
+ * @return {Element} Story markup.
  */
-const getStoryMarkupFromPages = (pages) => {
-  const markup = pages.map((page) => {
-    return renderToStaticMarkup(<OutputPage page={page} />);
-  });
-  return markup.join('');
+const getStoryMarkup = (story, pages, metadata) => {
+  return renderToStaticMarkup(
+    <OutputStory story={story} pages={pages} metadata={metadata} />
+  );
 };
 
 /**
@@ -53,6 +55,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
+  const { metadata } = useConfig();
   const [isSaving, setIsSaving] = useState(false);
 
   /**
@@ -86,7 +89,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     } = story;
 
-    const content = getStoryMarkupFromPages(pages);
+    const content = getStoryMarkup(story, pages, metadata);
     saveStoryById({
       storyId,
       title,
@@ -102,12 +105,19 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
     })
       .then((post) => {
-        const { status: newStatus, slug: newSlug, link } = post;
+        const {
+          status: newStatus,
+          slug: newSlug,
+          link,
+          poster_portrait_url: posterPortraitUrl,
+        } = post;
+
         updateStory({
           properties: {
             status: newStatus,
             slug: newSlug,
             link,
+            posterPortraitUrl,
           },
         });
         refreshPostEditURL(storyId);
@@ -118,7 +128,15 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       .finally(() => {
         setIsSaving(false);
       });
-  }, [storyId, pages, story, updateStory, saveStoryById, refreshPostEditURL]);
+  }, [
+    story,
+    pages,
+    metadata,
+    saveStoryById,
+    storyId,
+    updateStory,
+    refreshPostEditURL,
+  ]);
 
   return { saveStory, isSaving };
 }

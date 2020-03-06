@@ -15,12 +15,14 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { createContext } from 'react';
 
-function SquareLayerContent() {
-  return __('Square', 'web-stories');
-}
-
-export default SquareLayerContent;
+export default createContext({
+  state: {},
+  actions: {
+    showColorPickerAt: () => {},
+    hideSidebar: () => {},
+  },
+});
