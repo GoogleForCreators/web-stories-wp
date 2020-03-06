@@ -521,6 +521,7 @@ class Story_Post_Type {
 
 		$class .= ' edit-story';
 
+		// Overrides regular WordPress behavior by collapsing the admin menu by default.
 		if ( false === strpos( $class, 'folded' ) ) {
 			$class .= ' folded';
 		}
