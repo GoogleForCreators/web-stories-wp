@@ -20,16 +20,11 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import { useConfig } from '../../../../app/config';
-import { getResourceFromAttachment } from './mediaUtils';
-
-export const styledTiles = css`
+const styledTiles = css`
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
+  object-fit: contain;
 `;
 
 const Image = styled.img`
@@ -43,30 +38,23 @@ const Video = styled.video`
 /**
  * Get a formatted element for different media types.
  *
- * @param {Object} attachment Attachment object
+ * @param {Object} resource Resource object
  * @param {number} width Width that element is inserted into editor.
  * @param {number} height Height that element is inserted into editor.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
-  attachment,
+  resource,
   width: requestedWidth,
   height: requestedHeight,
   onInsert,
 }) => {
-  const {
-    allowedMimeTypes: { image: allowedImageMimeTypes },
-  } = useConfig();
+  const oRatio =
+    resource.width && resource.height ? resource.width / resource.height : 1;
+  const width = requestedWidth || requestedHeight / oRatio;
+  const height = requestedHeight || width / oRatio;
 
-  const resourceType = allowedImageMimeTypes.includes(attachment.mimeType)
-    ? 'image'
-    : 'video';
-  const resource = getResourceFromAttachment(attachment);
-  const width =
-    requestedWidth || requestedHeight / (resource.width / resource.height);
-  const height = requestedHeight || width / (resource.width / resource.height);
-
-  if (resourceType === 'image') {
+  if (resource.type === 'image') {
     return (
       <Image
         key={resource.src}
@@ -74,7 +62,7 @@ const MediaElement = ({
         width={width}
         height={height}
         loading={'lazy'}
-        onClick={() => onInsert(resourceType, resource, width, height)}
+        onClick={() => onInsert(resource, width, height)}
       />
     );
   }
@@ -84,7 +72,7 @@ const MediaElement = ({
       key={resource.src}
       width={width}
       height={height}
-      onClick={() => onInsert(resourceType, resource, width, height)}
+      onClick={() => onInsert(resource, width, height)}
       onMouseEnter={(evt) => {
         evt.target.play();
       }}
@@ -99,7 +87,7 @@ const MediaElement = ({
 };
 
 MediaElement.propTypes = {
-  attachment: PropTypes.object,
+  resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
   onInsert: PropTypes.func,

@@ -38,7 +38,10 @@ import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
-import { isEven, getResourceFromMediaPicker } from './mediaUtils';
+import {
+  getResourceFromMediaPicker,
+  getResourceFromAttachment,
+} from './mediaUtils';
 import MediaElement from './mediaElement';
 
 const Container = styled.div`
@@ -109,16 +112,15 @@ function MediaPane(props) {
   /**
    * Callback of select in media picker to insert media element.
    *
-   * @param {Object} attachment Attachment object from backbone media picker.
+   * @param {Object} mediaPickerEl Object coming from backbone media picker.
    */
-  const onSelect = (attachment) => {
-    const resourceType = allowedImageMimeTypes.includes(attachment.mime)
-      ? 'image'
-      : 'video';
-    const resource = getResourceFromMediaPicker(attachment);
-    const height = DEFAULT_WIDTH / (resource.width / resource.height);
+  const onSelect = (mediaPickerEl) => {
+    const resource = getResourceFromMediaPicker(mediaPickerEl);
+    const oRatio =
+      resource.width && resource.height ? resource.width / resource.height : 1;
+    const height = DEFAULT_WIDTH / oRatio;
 
-    insertMediaElement(resourceType, resource, DEFAULT_WIDTH, height);
+    insertMediaElement(resource, DEFAULT_WIDTH, height);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -151,14 +153,13 @@ function MediaPane(props) {
   /**
    * Insert element such image, video and audio into the editor.
    *
-   * @param {string} type Resource type
    * @param {Object} resource Resource object
    * @param {number} width Width that element is inserted into editor.
    * @param {number} height Height that element is inserted into editor.
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (type, resource, width, height) => {
-    const element = insertElement(type, {
+  const insertMediaElement = (resource, width, height) => {
+    const element = insertElement(resource.type, {
       resource,
       width,
       height,
@@ -168,18 +169,30 @@ function MediaPane(props) {
     });
 
     // Generate video poster if one not set.
-    if (type === 'video' && resource.videoId && !resource.posterId) {
+    if (resource.type === 'video' && resource.videoId && !resource.posterId) {
       uploadVideoFrame(resource.videoId, resource.src, element.id);
     }
 
     return element;
   };
 
-  const filteredMedia = media.filter(
-    ({ mimeType }) =>
-      allowedImageMimeTypes.includes(mimeType) ||
-      allowedVideoMimeTypes.includes(mimeType)
-  );
+  /**
+   * Check if number is odd or even.
+   *
+   * @param {number} n Number
+   * @return {boolean} Is even.
+   */
+  const isEven = (n) => {
+    return n % 2 === 0;
+  };
+
+  const resources = media
+    .filter(
+      ({ mimeType }) =>
+        allowedImageMimeTypes.includes(mimeType) ||
+        allowedVideoMimeTypes.includes(mimeType)
+    )
+    .map((attachment) => getResourceFromAttachment(attachment));
 
   return (
     <Pane id={paneId} {...props}>
@@ -217,24 +230,24 @@ function MediaPane(props) {
         ) : (
           <Container>
             <Column>
-              {filteredMedia
+              {resources
                 .filter((_, index) => isEven(index))
-                .map((attachment) => (
+                .map((resource) => (
                   <MediaElement
-                    key={attachment.src}
-                    attachment={attachment}
+                    resource={resource}
+                    key={resource.src}
                     width={DEFAULT_WIDTH}
                     onInsert={insertMediaElement}
                   />
                 ))}
             </Column>
             <Column>
-              {filteredMedia
+              {resources
                 .filter((_, index) => !isEven(index))
-                .map((attachment) => (
+                .map((resource) => (
                   <MediaElement
-                    key={attachment.src}
-                    attachment={attachment}
+                    resource={resource}
+                    key={resource.src}
                     width={DEFAULT_WIDTH}
                     onInsert={insertMediaElement}
                   />

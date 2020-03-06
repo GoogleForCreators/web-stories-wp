@@ -55,6 +55,7 @@ StoryPropTypes.page = PropTypes.shape({
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -62,6 +63,7 @@ StoryPropTypes.imageResource = PropTypes.shape({
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -106,14 +108,12 @@ StoryPropTypes.elements.image = PropTypes.shape({
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
-  mask: StoryPropTypes.mask.isRequired,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropsTypes,
   resource: StoryPropTypes.videoResource,
   loop: PropTypes.bool,
-  mask: StoryPropTypes.mask.isRequired,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
@@ -135,7 +135,6 @@ StoryPropTypes.elements.text = PropTypes.shape({
 StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropsTypes,
   backgroundColor: PropTypes.string,
-  mask: StoryPropTypes.mask.isRequired,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({

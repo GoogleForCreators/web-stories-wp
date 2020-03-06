@@ -15,19 +15,10 @@
  */
 
 /**
- * Check if number is odd or even.
- *
- * @param {number} n Number
- * @return {boolean} Is even.
- */
-export const isEven = (n) => {
-  return n % 2 === 0;
-};
-
-/**
  * Generates a resource object from a wordpress attachment
  *
  * @param {Object} attachment
+ * @return {Object}
  */
 export const getResourceFromAttachment = (attachment) => {
   const {
@@ -41,6 +32,7 @@ export const getResourceFromAttachment = (attachment) => {
     featured_media_src: poster,
   } = attachment;
   return {
+    type: mimeType.startsWith('image/') ? 'image' : 'video',
     src: url || src,
     width: oWidth,
     height: oHeight,
@@ -55,6 +47,7 @@ export const getResourceFromAttachment = (attachment) => {
  * Generates a resource object from a wordpress media picker object
  *
  * @param {Object} mediaPickerEl
+ * @return {Object}
  */
 export const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
@@ -68,6 +61,7 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     featured_media_src: poster,
   } = mediaPickerEl;
   return {
+    type: mime.startsWith('image/') ? 'image' : 'video',
     src: url || src,
     width,
     height,
