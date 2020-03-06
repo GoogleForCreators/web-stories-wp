@@ -23,6 +23,7 @@ import { render, fireEvent, act } from '@testing-library/react';
  * Internal dependencies
  */
 import { TestFrameElement } from '../../../components/canvas/test/_utils';
+import createSolid from '../../../utils/createSolid';
 
 jest.useFakeTimers();
 
@@ -43,6 +44,7 @@ describe('TextFrame: enter edit mode', () => {
       rotationAngle: 0,
       fontSize: 20,
       content: 'hello world',
+      color: createSolid(255, 255, 255),
     };
 
     storyContext = {};
