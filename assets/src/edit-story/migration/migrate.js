@@ -27,8 +27,7 @@ const MIGRATIONS = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
-  4: [squareToShape],
-  5: [mediaElementToResource],
+  4: [squareToShape, mediaElementToResource],
 };
 
 export const DATA_VERSION = Math.max.apply(
