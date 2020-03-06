@@ -18,7 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import { forwardRef } from 'react';
 
 /**
@@ -43,9 +44,18 @@ const Indicator = styled.button`
   width: ${COMPACT_THUMB_WIDTH}px;
   height: ${COMPACT_THUMB_HEIGHT}px;
   border: 0;
-  background: #ffffff;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0.28)};
+  outline: 0;
   cursor: pointer;
+  background: ${({ isActive, theme }) =>
+    isActive ? theme.colors.selection : 'rgba(255, 255, 255, 0.28)'};
+  ${({ isActive, theme }) =>
+    !isActive &&
+    css`
+      &:hover,
+      &:focus {
+        background: ${rgba(theme.colors.selection, 0.3)};
+      }
+    `}
 `;
 
 const CompactIndicator = forwardRef(CompactIndicatorWithRef);

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLayoutEffect, useRef, useState, useCallback } from 'react';
 
 /**
@@ -33,6 +33,7 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
+  Keyboard as KeyboardShortcutsButton,
 } from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
@@ -42,12 +43,9 @@ import {
   COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
-import { PAGE_THUMB_OUTLINE } from '../pagepreview';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
-const CAROUSEL_THUMB_RIGHT_MARGIN = PAGE_THUMB_OUTLINE + 1;
-const CAROUSEL_COMPACT_RIGHT_MARGIN = 8;
 
 const SCROLLBAR_HEIGHT = 8;
 const ARROWS_BOTTOM_MARGIN = SCROLLBAR_HEIGHT + CAROUSEL_BOTTOM_SCROLL_MARGIN;
@@ -55,7 +53,7 @@ const ARROWS_BOTTOM_MARGIN = SCROLLBAR_HEIGHT + CAROUSEL_BOTTOM_SCROLL_MARGIN;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: 'left-navigation carousel right-navigation' auto / 53px 1fr 53px;
+  grid: 'left-navigation carousel right-navigation menu' auto / 53px 1fr 53px 53px;
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -74,7 +72,25 @@ const NavArea = styled(Area)`
   margin-bottom: ${ARROWS_BOTTOM_MARGIN}px;
 `;
 
-const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
+const MenuArea = styled(Area).attrs({ area: 'menu' })``;
+
+const MenuIconsWrapper = styled.div`
+  ${({ isCompact }) =>
+    isCompact
+      ? css`
+          padding-bottom: 16px;
+        `
+      : css`
+          position: absolute;
+          bottom: 44px;
+        `}
+`;
+
+const List = styled(Area).attrs({
+  area: 'carousel',
+  as: 'ul',
+  role: 'listbox',
+})`
   flex-direction: row;
   align-items: center;
   justify-content: ${({ hasHorizontalOverflow }) =>
@@ -98,12 +114,11 @@ const List = styled(Area).attrs({ as: 'ul', role: 'listbox' })`
 `;
 
 const StyledGridViewButton = styled(GridViewButton)`
-  position: absolute;
-  bottom: 24px;
+  margin-top: 18px;
 `;
 
 const Li = styled.li`
-  margin: 0 ${({ marginRight = 0 }) => marginRight}px 0 0;
+  margin: 0 10px 0 0;
   &:last-of-type {
     margin: 0;
   }
@@ -202,9 +217,6 @@ function Carousel() {
   const scrollByPx = carouselSize.width;
 
   const Item = isCompact ? CompactIndicator : DraggablePage;
-  const itemMarginRight = isCompact
-    ? CAROUSEL_COMPACT_RIGHT_MARGIN
-    : CAROUSEL_THUMB_RIGHT_MARGIN;
   const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
     carouselSize
   );
@@ -221,16 +233,12 @@ function Carousel() {
             aria-label={__('Scroll Left', 'web-stories')}
           />
         </NavArea>
-        <List
-          area="carousel"
-          ref={listRef}
-          hasHorizontalOverflow={hasHorizontalOverflow}
-        >
+        <List ref={listRef} hasHorizontalOverflow={hasHorizontalOverflow}>
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <Li key={index} marginRight={itemMarginRight}>
+              <Li key={index}>
                 <Item
                   onClick={handleClickPage(page)}
                   dragIndicatorOffset={2}
@@ -263,13 +271,22 @@ function Carousel() {
             height="24"
             aria-label={__('Scroll Right', 'web-stories')}
           />
-          <StyledGridViewButton
-            width="24"
-            height="24"
-            onClick={openModal}
-            aria-label={__('Grid View', 'web-stories')}
-          />
         </NavArea>
+        <MenuArea>
+          <MenuIconsWrapper isCompact={isCompact}>
+            <KeyboardShortcutsButton
+              width="24"
+              height="24"
+              aria-label={__('Keyboard Shortcuts', 'web-stories')}
+            />
+            <StyledGridViewButton
+              width="24"
+              height="24"
+              onClick={openModal}
+              aria-label={__('Grid View', 'web-stories')}
+            />
+          </MenuIconsWrapper>
+        </MenuArea>
       </Wrapper>
       {isGridViewOpen && (
         <Modal

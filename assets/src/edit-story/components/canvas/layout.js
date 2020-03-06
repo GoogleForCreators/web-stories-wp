@@ -42,8 +42,8 @@ const MENU_HEIGHT = 48;
 export const CAROUSEL_VERTICAL_PADDING = 24;
 export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
 
-export const COMPACT_THUMB_WIDTH = 48;
-export const COMPACT_THUMB_HEIGHT = 4;
+export const COMPACT_THUMB_WIDTH = 72;
+export const COMPACT_THUMB_HEIGHT = 8;
 
 const MAX_CAROUSEL_THUMB_HEIGHT = 128;
 // @todo: UX needed for min thumb size
@@ -123,7 +123,7 @@ const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'carousel',
-  overflowAllowed: false,
+  overflowAllowed: true,
 })``;
 
 /**

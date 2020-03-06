@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -28,26 +29,39 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-export const PAGE_THUMB_OUTLINE = 3;
+export const PAGE_THUMB_INDICATOR_HEIGHT = 6;
 
 const Page = styled.button`
   display: block;
-  padding: 0;
-  border: ${PAGE_THUMB_OUTLINE}px solid
+  cursor: pointer;
+  padding: 4px 0 0 0;
+  border: 0;
+  border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
+  background-color: transparent;
   width: ${({ width }) => width}px;
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
+  outline: 0;
+  ${({ isActive, theme }) =>
+    !isActive &&
+    css`
+      &:hover,
+      &:focus {
+        border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
+          ${rgba(theme.colors.selection, 0.3)};
+      }
+    `}
 `;
 
 const PreviewWrapper = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  background-color: ${({ theme, backgroundColor }) =>
+    backgroundColor || theme.colors.fg.v1};
 `;
 
 function PagePreview({ index, forwardedRef, ...props }) {
@@ -59,12 +73,8 @@ function PagePreview({ index, forwardedRef, ...props }) {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page
-          {...props}
-          backgroundColor={page.backgroundColor}
-          ref={forwardedRef}
-        >
-          <PreviewWrapper>
+        <Page {...props} ref={forwardedRef}>
+          <PreviewWrapper backgroundColor={page.backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement key={id} element={{ id, ...rest }} />
             ))}
