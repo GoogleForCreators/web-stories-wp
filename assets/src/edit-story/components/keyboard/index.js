@@ -44,24 +44,27 @@ const globalRef = createRef();
 /**
  * See https://craig.is/killing/mice#keys for the supported key codes.
  *
- * @param {{current: Node}} ref
+ * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {string|undefined} type
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
 function useKeyEffect(
-  ref,
+  refOrNode,
   keyNameOrSpec,
-  type = 'keydown',
-  callback = () => {},
+  type,
+  callback,
   deps = undefined
 ) {
   const { keys } = useContext(Context);
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
-      const node = ref.current;
+      const node =
+        typeof refOrNode.current !== 'undefined'
+          ? refOrNode.current
+          : refOrNode;
       if (!node) {
         return undefined;
       }
@@ -85,28 +88,33 @@ function useKeyEffect(
 }
 
 /**
- * @param {{current: Node}} ref
+ * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
 export function useKeyDownEffect(
-  ref,
+  refOrNode,
   keyNameOrSpec,
   callback,
   deps = undefined
 ) {
-  useKeyEffect(ref, keyNameOrSpec, 'keydown', callback, deps);
+  useKeyEffect(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
 /**
- * @param {{current: Node}} ref
+ * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
-export function useKeyUpEffect(ref, keyNameOrSpec, callback, deps = undefined) {
-  useKeyEffect(ref, keyNameOrSpec, 'keyup', callback, deps);
+export function useKeyUpEffect(
+  refOrNode,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffect(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
 }
 
 /**
