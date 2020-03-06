@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Tooltip from '../';
+import WithTooltip from '../';
 
 const Container = styled.div`
   margin: 60px 120px;
@@ -39,7 +39,7 @@ const Content = styled.div`
 
 export default {
   title: 'Components/Tooltip',
-  component: Tooltip,
+  component: WithTooltip,
 };
 
 export const _default = () => {
@@ -59,9 +59,9 @@ export const _default = () => {
 
   return (
     <Container>
-      <Tooltip title={title} shortcut={shortcut} placement={placement}>
+      <WithTooltip title={title} shortcut={shortcut} placement={placement}>
         <Content>{'Example'}</Content>
-      </Tooltip>
+      </WithTooltip>
     </Container>
   );
 };

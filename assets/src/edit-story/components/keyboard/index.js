@@ -200,8 +200,7 @@ export function prettifyShortcut(shortcut) {
     .replace('up', '↑')
     .replace('right', '→')
     .replace('down', '↓')
-    .replace('backspace', '⌫')
-    .replace('del', '⌫')
+    .replace('delete', '⌫')
     .split('+')
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join('');

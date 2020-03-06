@@ -37,7 +37,7 @@ import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
-import Tooltip from '../../tooltip';
+import WithTooltip from '../../tooltip';
 
 const HEIGHT = 28;
 
@@ -141,37 +141,37 @@ function PageMenu() {
         <Options>
           <PageCount>{`Page ${currentPageNumber}`}</PageCount>
           <Space />
-          <Tooltip title={__('Delete page', 'web-stories')} shortcut="del">
+          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
             <Icon onClick={handleDeletePage}>
               <Delete />
             </Icon>
-          </Tooltip>
+          </WithTooltip>
           <Space />
-          <Tooltip title={__('Duplicate page', 'web-stories')}>
+          <WithTooltip title={__('Duplicate page', 'web-stories')}>
             <Icon onClick={handleDuplicatePage}>
               <Duplicate />
             </Icon>
-          </Tooltip>
+          </WithTooltip>
           <Space />
-          <Tooltip title={__('New page', 'web-stories')}>
+          <WithTooltip title={__('New page', 'web-stories')}>
             <Icon onClick={handleAddPage}>
               <Add />
             </Icon>
-          </Tooltip>
+          </WithTooltip>
           <Space />
           <Divider />
           <Space />
-          <Tooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
+          <WithTooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
             <Icon disabled={!canUndo} onClick={handleUndo}>
               <Undo />
             </Icon>
-          </Tooltip>
+          </WithTooltip>
           <Space />
-          <Tooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
+          <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
             <Icon disabled={!canRedo} onClick={handleRedo}>
               <Redo />
             </Icon>
-          </Tooltip>
+          </WithTooltip>
         </Options>
         <Options>
           <Icon disabled>

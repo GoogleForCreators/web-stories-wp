@@ -33,7 +33,6 @@ const PADDING = 4;
 
 const Wrapper = styled.div`
   position: relative;
-  display: inline-block;
 `;
 
 const Container = styled.div`
@@ -48,7 +47,12 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Tip = styled.div`
+/**
+ * To circumvent overflow: hidden; on the parent
+ * container, we position the tooltip using
+ * position: fixed; and offset using transforms
+ */
+const Tooltip = styled.div`
   position: fixed;
   background-color: ${({ theme }) => theme.colors.bg.v0};
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -146,7 +150,7 @@ const Tip = styled.div`
     }`}
 `;
 
-const Tooltip = ({
+function WithTooltip({
   title,
   shortcut,
   arrow = true,
@@ -154,8 +158,10 @@ const Tooltip = ({
   children,
   onMouseEnter = () => {},
   onMouseLeave = () => {},
+  onFocus = () => {},
+  onBlur = () => {},
   ...props
-}) => {
+}) {
   const [shown, setShown] = useState(false);
 
   return (
@@ -169,28 +175,38 @@ const Tooltip = ({
         setShown(false);
         onMouseLeave(e);
       }}
+      onFocus={(e) => {
+        setShown(true);
+        onFocus(e);
+      }}
+      onBlur={(e) => {
+        setShown(false);
+        onBlur(e);
+      }}
     >
       <Container placement={placement}>
-        <Tip arrow={arrow} placement={placement} shown={shown}>
+        <Tooltip arrow={arrow} placement={placement} shown={shown}>
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
-        </Tip>
+        </Tooltip>
       </Container>
       {children}
     </Wrapper>
   );
-};
+}
 
-Tooltip.propTypes = {
+WithTooltip.propTypes = {
   title: PropTypes.string,
   shortcut: PropTypes.string,
   arrow: PropTypes.bool,
   placement: PropTypes.string,
   onMouseLeave: PropTypes.func,
   onMouseEnter: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
 };
 
-export default Tooltip;
+export default WithTooltip;
