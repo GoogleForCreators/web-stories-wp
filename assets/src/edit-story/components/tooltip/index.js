@@ -156,8 +156,8 @@ function WithTooltip({
   arrow = true,
   placement = 'bottom',
   children,
-  onMouseEnter = () => {},
-  onMouseLeave = () => {},
+  onPointerEnter = () => {},
+  onPointerLeave = () => {},
   onFocus = () => {},
   onBlur = () => {},
   ...props
@@ -167,13 +167,13 @@ function WithTooltip({
   return (
     <Wrapper
       {...props}
-      onMouseEnter={(e) => {
+      onPointerEnter={(e) => {
         setShown(true);
-        onMouseEnter(e);
+        onPointerEnter(e);
       }}
-      onMouseLeave={(e) => {
+      onPointerLeave={(e) => {
         setShown(false);
-        onMouseLeave(e);
+        onPointerLeave(e);
       }}
       onFocus={(e) => {
         setShown(true);
@@ -199,8 +199,8 @@ WithTooltip.propTypes = {
   shortcut: PropTypes.string,
   arrow: PropTypes.bool,
   placement: PropTypes.string,
-  onMouseLeave: PropTypes.func,
-  onMouseEnter: PropTypes.func,
+  onPointerEnter: PropTypes.func,
+  onPointerLeave: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   children: PropTypes.oneOfType([

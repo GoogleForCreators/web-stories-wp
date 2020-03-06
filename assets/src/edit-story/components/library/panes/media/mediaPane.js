@@ -255,10 +255,10 @@ function MediaPane(props) {
           width={width}
           height={height}
           onClick={() => insertMediaElement(mediaEl, width)}
-          onMouseEnter={(evt) => {
+          onPointerEnter={(evt) => {
             evt.target.play();
           }}
-          onMouseLeave={(evt) => {
+          onPointerLeave={(evt) => {
             evt.target.pause();
             evt.target.currentTime = 0;
           }}
