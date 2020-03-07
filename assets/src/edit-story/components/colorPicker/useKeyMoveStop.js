@@ -19,16 +19,9 @@
  */
 import { useKeyDownEffect } from '../keyboard';
 
-function useKeyMoveStop(ref, onMove, stops, currentStopIndex) {
-  const currentPosition = stops[currentStopIndex].position;
-  useKeyDownEffect(ref, 'left', () => onMove(currentPosition - 0.01), [
-    onMove,
-    currentPosition,
-  ]);
-  useKeyDownEffect(ref, 'right', () => onMove(currentPosition + 0.01), [
-    onMove,
-    currentPosition,
-  ]);
+function useKeyMoveStop(ref, onMove) {
+  useKeyDownEffect(ref, 'left', () => onMove(0.01), [onMove]);
+  useKeyDownEffect(ref, 'right', () => onMove(0.01), [onMove]);
 }
 
 export default useKeyMoveStop;

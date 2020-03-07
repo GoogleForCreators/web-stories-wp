@@ -62,9 +62,7 @@ function GradientStopWithRef(
     index,
     isSelected,
 
-    onSelect /*
-    onDelete,
-    onMove,*/,
+    onSelect,
   },
   ref
 ) {
@@ -94,11 +92,7 @@ GradientStop.propTypes = {
   index: PropTypes.number.isRequired,
   isSelected: PropTypes.bool.isRequired,
 
-  onSelect:
-    PropTypes.func
-      .isRequired /*
-  onDelete: PropTypes.func.isRequired,
-  onMove: PropTypes.func.isRequired,*/,
+  onSelect: PropTypes.func.isRequired,
 };
 
 GradientStopWithRef.propTypes = GradientStop.propTypes;

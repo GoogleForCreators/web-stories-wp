@@ -132,9 +132,13 @@ const reducer = {
       stops,
     };
   },
-  moveCurrentStopTo: (state, { payload: newPosition }) => {
-    const desiredPosition = Math.max(0, Math.min(1, newPosition));
+  moveCurrentStopBy: (state, { payload: deltaPosition }) => {
     const index = state.currentStopIndex;
+    const currentPosition = state.stops[index].position;
+    const desiredPosition = Math.max(
+      0,
+      Math.min(1, currentPosition + deltaPosition)
+    );
     const stops = [
       ...state.stops.slice(0, index),
       {

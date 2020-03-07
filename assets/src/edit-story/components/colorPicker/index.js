@@ -79,7 +79,7 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
       addStopAt,
       removeCurrentStop,
       rotateClockwise,
-      moveCurrentStopTo,
+      moveCurrentStopBy,
       setToSolid,
       setToGradient,
     },
@@ -132,7 +132,7 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
               onAdd={addStopAt}
               onDelete={removeCurrentStop}
               onRotate={rotateClockwise}
-              onMove={moveCurrentStopTo}
+              onMove={moveCurrentStopBy}
             />
           </Body>
         )}

@@ -25,15 +25,18 @@ import PropTypes from 'prop-types';
  */
 import useStory from '../../../app/story/useStory';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
-import createSolidFromString from '../../../utils/createSolidFromString';
+import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
 const PAGE_THUMB_OUTLINE = 2;
 
-const Page = styled.button`
+const DEFAULT_COLOR = createSolid(255, 255, 255);
+
+const Page = styled.button.attrs(({ backgroundColor }) => ({
+  style: generatePatternStyles(backgroundColor || DEFAULT_COLOR),
+}))`
   padding: 0;
   margin: 0;
   border: none;
@@ -42,12 +45,7 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  ${({ backgroundColor, theme }) =>
-    convertToCSS(
-      generatePatternStyles(
-        backgroundColor || createSolidFromString(theme.colors.fg.v1)
-      )
-    )};
+
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

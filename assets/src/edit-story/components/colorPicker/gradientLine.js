@@ -33,6 +33,7 @@ import useKeyAddStop from './useKeyAddStop';
 import useKeyDeleteStop from './useKeyDeleteStop';
 import useKeyFocus from './useKeyFocus';
 import usePointerAddStop from './usePointerAddStop';
+import usePointerMoveStop from './usePointerMoveStop';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
@@ -89,6 +90,7 @@ function GradientPicker({
   useKeyDeleteStop(line, onDelete);
   const stopRefs = useKeyFocus(line, stops, currentStopIndex);
 
+  usePointerMoveStop(line, onMove, onDelete);
   const tempPointerPosition = usePointerAddStop(line, onAdd);
 
   return (
@@ -101,9 +103,6 @@ function GradientPicker({
           isSelected={index === currentStopIndex}
           position={position}
           onSelect={onSelect}
-          onAdd={onAdd}
-          onDelete={onDelete}
-          onMove={onMove}
         >
           <Pointer offset={-LINE_WIDTH / 2} />
         </GradientStop>
