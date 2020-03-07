@@ -41,6 +41,7 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/assets/src/edit-story/**/*.js',
     '!**/test/**',
+    '!**/stories/**',
   ],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

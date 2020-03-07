@@ -17,30 +17,20 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
+import StoryPropTypes from '../../types';
 
-export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+/**
+ * Returns AMP HTML for saving into post content for displaying in the FE.
+ */
+function ShapeOutput({ element: { backgroundColor } }) {
+  const style = {
+    background: backgroundColor,
+  };
+  return <div className="fill" style={style} />;
+}
+
+ShapeOutput.propTypes = {
+  element: StoryPropTypes.elements.shape.isRequired,
 };
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-};
-
-export const panels = [
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.STYLE,
-  PanelTypes.LINK,
-  PanelTypes.FILL,
-  PanelTypes.MASK,
-];
+export default ShapeOutput;

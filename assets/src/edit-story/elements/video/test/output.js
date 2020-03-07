@@ -24,10 +24,8 @@ describe('Video output', () => {
     const props = {
       element: {
         id: '123',
-        videoId: 123,
         type: 'video',
         mimeType: 'video/mp4',
-        src: 'https://example.com',
         poster: 'https://example.com/poster.png',
         scale: 1,
         origRatio: 9 / 16,
@@ -36,6 +34,14 @@ describe('Video output', () => {
         height: 1920,
         width: 1080,
         rotationAngle: 0,
+        resource: {
+          type: 'video',
+          mimeType: 'video/mp4',
+          videoId: 123,
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
       },
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };

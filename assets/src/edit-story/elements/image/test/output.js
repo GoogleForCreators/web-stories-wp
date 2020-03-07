@@ -24,10 +24,8 @@ describe('Image output', () => {
     const props = {
       element: {
         id: '123',
-        videoId: 123,
         type: 'image',
         mimeType: 'image/png',
-        src: 'https://example.com/image.png',
         scale: 1,
         origRatio: 9 / 16,
         x: 50,
@@ -35,6 +33,13 @@ describe('Image output', () => {
         height: 1920,
         width: 1080,
         rotationAngle: 0,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
       },
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
