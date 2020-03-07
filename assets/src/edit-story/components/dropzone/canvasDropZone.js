@@ -30,6 +30,7 @@ import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
 import { useConfig } from '../../app/config';
 import { INSPECTOR_MAX_WIDTH } from '../../constants';
+import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
 import { disableDefaults } from './utils';
 import { Heading, Icon, OverContent, OverlayWrapper, Text } from './shared';
 import DropZone, { useDropZone } from './';
@@ -50,7 +51,6 @@ function CanvasDropzone({ children }) {
   } = useDropZone();
   const { uploadFile } = useUploader();
   const {
-    state: { DEFAULT_WIDTH },
     actions: { insertMediaElement },
   } = useMedia();
   const { allowedFileTypes } = useConfig();
@@ -59,32 +59,15 @@ function CanvasDropzone({ children }) {
     disableDefaults(evt);
     const files = [...evt.dataTransfer.files];
     files.forEach((file) => {
-      uploadFile(file).then(
-        ({
-          id,
-          guid: { rendered: src },
-          media_details: { width: oWidth, height: oHeight },
-          mime_type: mimeType,
-          featured_media: posterId,
-          featured_media_src: poster,
-        }) => {
-          const mediaEl = {
-            id,
-            posterId,
-            poster,
-            src,
-            oWidth,
-            oHeight,
-            mimeType,
-          };
-          insertMediaElement(
-            mediaEl,
-            DEFAULT_WIDTH,
-            undefined /** height */,
-            false /** isBackground */
-          );
-        }
-      );
+      uploadFile(file).then((res) => {
+        const resource = getResourceFromUploadAPI(res);
+        insertMediaElement(
+          resource,
+          resource.width,
+          resource.height,
+          false /** isBackground */
+        );
+      });
     });
   };
 

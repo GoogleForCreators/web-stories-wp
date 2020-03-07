@@ -64,14 +64,39 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     featured_media: posterId,
     featured_media_src: poster,
   } = mediaPickerEl;
+  const type = getTypeFromMime(mimeType);
   return {
-    type: getTypeFromMime(mimeType),
+    type,
     src: url || src,
     width,
     height,
     mimeType,
-    posterId,
-    poster,
-    videoId,
+    ...(type === 'video' ? { posterId, poster, videoId } : {}),
+  };
+};
+
+/**
+ * Generates a resource object from the upload API response object
+ *
+ * @param {Object} file
+ * @return {Object}
+ */
+export const getResourceFromUploadAPI = (file) => {
+  const {
+    guid: { rendered: src },
+    mime_type: mimeType,
+    media_details: { width, height },
+    id: videoId,
+    featured_media: posterId,
+    featured_media_src: poster,
+  } = file;
+  const type = getTypeFromMime(mimeType);
+  return {
+    type,
+    src,
+    width,
+    height,
+    mimeType,
+    ...(type === 'video' ? { posterId, poster, videoId } : {}),
   };
 };
