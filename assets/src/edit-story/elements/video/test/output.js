@@ -40,6 +40,6 @@ describe('Video output', () => {
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
-    await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
+    await expect(<VideoOutput {...props} />).toBeValidAMP();
   });
 });

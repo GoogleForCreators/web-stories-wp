@@ -55,7 +55,7 @@ describe('Story output', () => {
       },
     };
 
-    await expect(<StoryOutput {...props} />).toBeValidAMPDocument();
+    await expect(<StoryOutput {...props} />).toBeValidAMP();
   });
 
   it('requires at least one page', async () => {
@@ -84,6 +84,6 @@ describe('Story output', () => {
       },
     };
 
-    await expect(<StoryOutput {...props} />).not.toBeValidAMPDocument();
+    await expect(<StoryOutput {...props} />).not.toBeValidAMP();
   });
 });

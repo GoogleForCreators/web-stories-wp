@@ -24,14 +24,10 @@ import '@testing-library/jest-dom';
 /**
  * Internal dependencies
  */
-import toBeValidAMPDocument from './matchers/toBeValidAMPDocument';
-import toBeValidAMPStory from './matchers/toBeValidAMPStory';
+import toBeValidAMP from './matchers/toBeValidAMP';
 import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
 
 expect.extend({
-  toBeValidAMPDocument,
-  toBeValidAMPStory,
+  toBeValidAMP,
   toBeValidAMPStoryPage,
-  toBeValidAMPStoryElement,
 });
