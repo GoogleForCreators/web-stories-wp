@@ -20,7 +20,7 @@
 import { useKeyDownEffect } from '../keyboard';
 
 function useKeyMoveStop(ref, onMove) {
-  useKeyDownEffect(ref, 'left', () => onMove(0.01), [onMove]);
+  useKeyDownEffect(ref, 'left', () => onMove(-0.01), [onMove]);
   useKeyDownEffect(ref, 'right', () => onMove(0.01), [onMove]);
 }
 
