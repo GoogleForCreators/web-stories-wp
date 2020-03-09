@@ -35,20 +35,18 @@ const Preview = styled.button`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-const inputStyles = {
-  /* stylelint-disable-next-line rule-empty-line-before */
-  input: {
-    fontFamily: 'monospace',
-    width: '60px',
-  },
-};
-
-function EditableHexPreview({ hex, onChange }) {
+function EditablePreview({ value, width, format, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const enableEditing = useCallback(() => setIsEditing(true), []);
   const disableEditing = useCallback(() => setIsEditing(false), []);
   const wrapperRef = useRef();
   const editableRef = useRef();
+  const inputStyles = {
+    input: {
+      fontFamily: 'monospace',
+      width: `${width}px`,
+    },
+  };
 
   // Handle ESC keypress to toggle input field.
   useKeyDownEffect(wrapperRef, { key: 'esc', editable: true }, disableEditing, [
@@ -69,13 +67,13 @@ function EditableHexPreview({ hex, onChange }) {
   }, [isEditing]);
 
   if (!isEditing) {
-    return <Preview onClick={enableEditing}>{hex}</Preview>;
+    return <Preview onClick={enableEditing}>{format(value)}</Preview>;
   }
 
   return (
     <div ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
       <EditableInput
-        value={hex}
+        value={value}
         ref={editableRef}
         onChange={onChange}
         onChangeComplete={disableEditing}
@@ -85,9 +83,16 @@ function EditableHexPreview({ hex, onChange }) {
   );
 }
 
-EditableHexPreview.propTypes = {
-  hex: PropTypes.string,
+EditablePreview.propTypes = {
+  value: PropTypes.string,
+  width: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  format: PropTypes.func,
 };
 
-export default EditableHexPreview;
+EditablePreview.defaultProps = {
+  width: 60,
+  format: (val) => val,
+};
+
+export default EditablePreview;
