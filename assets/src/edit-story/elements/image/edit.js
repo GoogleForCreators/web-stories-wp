@@ -26,9 +26,10 @@ import { useCallback, useState } from 'react';
 import {
   elementFillContent,
   CropBox,
-  getMediaProps,
+  getMediaSizePositionProps,
   EditPanMovable,
   ScalePanel,
+  MEDIA_MASK_OPACITY,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -40,20 +41,35 @@ const Element = styled.div`
   ${elementFillContent}
 `;
 
+// Opacity of the mask is reduced depending on the opacity assigned to the image.
 const FadedImg = styled.img`
   position: absolute;
-  opacity: 0.4;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${imageWithScale}
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the image.
 const CropImg = styled.img`
   position: absolute;
+  opacity: ${({ opacity }) =>
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
   ${imageWithScale}
 `;
 
 function ImageEdit({ element, box }) {
-  const { id, resource, scale, focalX, focalY, isFill, isBackground } = element;
+  const {
+    id,
+    resource,
+    opacity,
+    scale,
+    focalX,
+    focalY,
+    isFill,
+    isBackground,
+  } = element;
   const { x, y, width, height, rotationAngle } = box;
 
   const [fullImage, setFullImage] = useState(null);
@@ -68,7 +84,7 @@ function ImageEdit({ element, box }) {
     [id, updateElementById]
   );
 
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     resource,
     width,
     height,
@@ -84,6 +100,7 @@ function ImageEdit({ element, box }) {
         draggable={false}
         src={resource.src}
         {...imgProps}
+        opacity={opacity / 100}
       />
       <CropBox ref={setCropBox}>
         <WithElementMask element={element} fill={true}>
@@ -92,6 +109,7 @@ function ImageEdit({ element, box }) {
             draggable={false}
             src={resource.src}
             {...imgProps}
+            opacity={opacity / 100}
           />
         </WithElementMask>
       </CropBox>

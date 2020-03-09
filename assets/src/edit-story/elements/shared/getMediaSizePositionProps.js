@@ -15,7 +15,7 @@
  */
 
 /**
- * Get props for media using scale and focal point.
+ * Get props for media specifically influenced by scale and focal point.
  *
  * @param {Object} resource   Media resource.
  * @param {number} width      Original width.
@@ -25,7 +25,14 @@
  * @param {number} focalY     Y axis focal point.
  * @return {Object} Media properties.
  */
-function getMediaProps(resource, width, height, scale, focalX, focalY) {
+function getMediaSizePositionProps(
+  resource,
+  width,
+  height,
+  scale,
+  focalX,
+  focalY
+) {
   const ratio = width / height;
   const oRatio =
     resource.width && resource.height ? resource.width / resource.height : 1;
@@ -54,4 +61,4 @@ function getMediaProps(resource, width, height, scale, focalX, focalY) {
   };
 }
 
-export default getMediaProps;
+export default getMediaSizePositionProps;
