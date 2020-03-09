@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-function getPreviewOpacity(pattern) {
+function applyOpacityChange(pattern, newOpacity) {
   if (!pattern) {
     return null;
   }
-  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
-  if (!isSolidPattern) {
-    // TODO: Logic for extracting opacity from gradient pattern
-    return 100;
+
+  const { type } = pattern;
+
+  // Return the same color, just with opacity applied
+  if (!type || type === 'solid') {
+    const {
+      color: { r, g, b },
+    } = pattern;
+    return { color: { r, g, b, a: newOpacity } };
   }
-  const {
-    color: { a = 1 },
-  } = pattern;
-  return Math.round(a * 100);
+
+  // TODO: Return gradient with opacity applied
+  return pattern;
 }
 
-export default getPreviewOpacity;
+export default applyOpacityChange;
