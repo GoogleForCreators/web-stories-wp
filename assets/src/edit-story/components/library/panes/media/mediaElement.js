@@ -73,10 +73,10 @@ const MediaElement = ({
       width={width}
       height={height}
       onClick={() => onInsert(resource, width, height)}
-      onMouseEnter={(evt) => {
+      onPointerEnter={(evt) => {
         evt.target.play();
       }}
-      onMouseLeave={(evt) => {
+      onPointerLeave={(evt) => {
         evt.target.pause();
         evt.target.currentTime = 0;
       }}

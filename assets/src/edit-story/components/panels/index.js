@@ -25,6 +25,7 @@ import BackgroundSizePositionPanel from './backgroundSizePosition';
 import FontPanel from './font';
 import LinkPanel from './link';
 import MaskPanel from './mask';
+import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
@@ -40,6 +41,7 @@ const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const COLOR = 'color';
 const SCALE = 'scale';
 const FONT = 'font';
+const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
@@ -59,6 +61,7 @@ export const PanelTypes = {
   COLOR,
   FONT,
   STYLE,
+  LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
@@ -88,6 +91,7 @@ export function getPanels(elements) {
     const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
+      { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
@@ -106,6 +110,10 @@ export function getPanels(elements) {
     .map((type) => {
       switch (type) {
         case BACKGROUND_SIZE_POSITION:
+          // Onlt display when isBackround.
+          return null;
+        case LAYER_STYLE:
+          return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;

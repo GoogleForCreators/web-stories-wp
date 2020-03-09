@@ -55,10 +55,7 @@ function OutputPage({ page }) {
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
-        <div
-          className="page-safe-area"
-          style={{ ...aspectRatioStyles, ...backgroundStyles }}
-        >
+        <div className="page-safe-area" style={{ ...aspectRatioStyles }}>
           {backgroundNonFullbleedElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}

@@ -27,9 +27,10 @@ import {
   elementFillContent,
   elementWithFlip,
   CropBox,
-  getMediaProps,
+  getMediaSizePositionProps,
   EditPanMovable,
   ScalePanel,
+  MEDIA_MASK_OPACITY,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -42,16 +43,22 @@ const Element = styled.div`
   ${elementFillContent}
 `;
 
+// Opacity of the mask is reduced depending on the opacity assigned to the image.
 const FadedImg = styled.img`
   position: absolute;
-  opacity: 0.4;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${imageWithScale}
   ${elementWithFlip}
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the image.
 const CropImg = styled.img`
   position: absolute;
+  opacity: ${({ opacity }) =>
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
   ${imageWithScale}
   ${elementWithFlip}
 `;
@@ -60,10 +67,11 @@ function ImageEdit({ element, box }) {
   const {
     id,
     resource,
+    opacity,
     scale,
     flip,
-    focalX = 50,
-    focalY = 50,
+    focalX,
+    focalY,
     isFill,
     isBackground,
   } = element;
@@ -81,7 +89,7 @@ function ImageEdit({ element, box }) {
     [id, updateElementById]
   );
 
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     resource,
     width,
     height,
@@ -99,6 +107,7 @@ function ImageEdit({ element, box }) {
         draggable={false}
         src={resource.src}
         {...imgProps}
+        opacity={opacity / 100}
       />
       <CropBox ref={setCropBox}>
         <WithElementMask element={element} fill={true} applyFlip={false}>
@@ -107,27 +116,10 @@ function ImageEdit({ element, box }) {
             draggable={false}
             src={resource.src}
             {...imgProps}
+            opacity={opacity / 100}
           />
         </WithElementMask>
       </CropBox>
-
-      {!isFill && !isBackground && cropBox && croppedImage && (
-        <EditCropMovable
-          setProperties={setProperties}
-          cropBox={cropBox}
-          croppedImage={croppedImage}
-          flip={flip}
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          rotationAngle={rotationAngle}
-          offsetX={imgProps.offsetX}
-          offsetY={imgProps.offsetY}
-          imgWidth={imgProps.width}
-          imgHeight={imgProps.height}
-        />
-      )}
 
       {fullImage && croppedImage && (
         <EditPanMovable
@@ -144,6 +136,24 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           mediaWidth={imgProps.width}
           mediaHeight={imgProps.height}
+        />
+      )}
+
+      {!isFill && !isBackground && cropBox && croppedImage && (
+        <EditCropMovable
+          setProperties={setProperties}
+          cropBox={cropBox}
+          croppedImage={croppedImage}
+          flip={flip}
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
+          offsetX={imgProps.offsetX}
+          offsetY={imgProps.offsetY}
+          imgWidth={imgProps.width}
+          imgHeight={imgProps.height}
         />
       )}
 

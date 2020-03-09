@@ -50,6 +50,7 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.SIZE_POSITION,
+  PanelTypes.LAYER_STYLE,
   PanelTypes.MASK,
   PanelTypes.LINK,
 ];
