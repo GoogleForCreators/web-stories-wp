@@ -5,7 +5,12 @@
   "description": "Visual storytelling for WordPress.",
   "author": "Google",
   "license": "Apache-2.0",
-  "keywords": ["amp", "stories", "storytelling", "wordpress"],
+  "keywords": [
+    "amp",
+    "stories",
+    "storytelling",
+    "wordpress"
+  ],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
