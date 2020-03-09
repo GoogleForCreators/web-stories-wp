@@ -15,27 +15,25 @@
  */
 
 /**
- * External dependencies
- */
-import { renderToStaticMarkup } from 'react-dom/server';
-
-/**
  * Internal dependencies
  */
-import { getAMPValidationErrors } from './utils';
+import ShapeOutput from '../output';
 
-async function toBeValidAMP(stringOrComponent, ...args) {
-  const string = renderToStaticMarkup(stringOrComponent);
-  const errors = await getAMPValidationErrors(string, ...args);
-  const pass = errors.length === 0;
+describe('Shape output', () => {
+  it('should produce valid AMP output', async () => {
+    const props = {
+      element: {
+        type: 'shape',
+        id: '123',
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
 
-  return {
-    pass,
-    message: () =>
-      pass
-        ? `Expected ${string} not to be valid AMP.`
-        : `Expected ${string} to be valid AMP. Errors:\n${errors.join('\n')}`,
-  };
-}
-
-export default toBeValidAMP;
+    await expect(<ShapeOutput {...props} />).toBeValidAMPStoryElement();
+  });
+});

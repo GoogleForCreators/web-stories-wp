@@ -15,28 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
  * Internal dependencies
  */
-import toBeValidAMP from './toBeValidAMP';
+import { AmpStory, getAMPValidationErrors } from './utils';
 
-// eslint-disable-next-line react/prop-types
-function WrapPage({ children }) {
-  return (
-    <amp-story
-      standalone="standalone"
-      publisher="Example Publisher"
-      publisher-logo-src="https://example.com/publisher.png"
-      title="Example Story"
-      poster-portrait-src="https://example.com/poster.png"
-    >
-      {children}
-    </amp-story>
+async function toBeValidAMPStoryPage(stringOrComponent, ...args) {
+  const string = renderToStaticMarkup(stringOrComponent);
+  const errors = await getAMPValidationErrors(
+    <AmpStory>{stringOrComponent}</AmpStory>,
+    ...args
   );
-}
 
-// eslint-disable-next-line require-await
-async function toBeValidAMPStoryPage(stringOrComponent) {
-  return toBeValidAMP(<WrapPage>{stringOrComponent}</WrapPage>);
+  const pass = errors.length === 0;
+
+  return {
+    pass,
+    message: () =>
+      pass
+        ? `Expected ${string} not to be valid AMP.`
+        : `Expected ${string} to be valid AMP. Errors:\n${errors.join('\n')}`,
+  };
 }
 
 export default toBeValidAMPStoryPage;

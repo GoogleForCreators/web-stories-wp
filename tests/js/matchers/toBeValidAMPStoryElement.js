@@ -22,11 +22,24 @@ import { renderToStaticMarkup } from 'react-dom/server';
 /**
  * Internal dependencies
  */
-import { getAMPValidationErrors } from './utils';
+import {
+  AmpStory,
+  AmpStoryPage,
+  AmpStoryGridLayer,
+  getAMPValidationErrors,
+} from './utils';
 
-async function toBeValidAMP(stringOrComponent, ...args) {
+async function toBeValidAMPStoryElement(stringOrComponent, ...args) {
   const string = renderToStaticMarkup(stringOrComponent);
-  const errors = await getAMPValidationErrors(string, ...args);
+  const errors = await getAMPValidationErrors(
+    <AmpStory>
+      <AmpStoryPage>
+        <AmpStoryGridLayer>{stringOrComponent}</AmpStoryGridLayer>
+      </AmpStoryPage>
+    </AmpStory>,
+    ...args
+  );
+
   const pass = errors.length === 0;
 
   return {
@@ -38,4 +51,4 @@ async function toBeValidAMP(stringOrComponent, ...args) {
   };
 }
 
-export default toBeValidAMP;
+export default toBeValidAMPStoryElement;
