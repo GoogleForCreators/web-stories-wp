@@ -82,7 +82,7 @@ const AlphaWrapper = styled.div`
 `;
 
 const Footer = styled.div`
-  padding: ${CONTAINER_PADDING}px 0;
+  padding: ${CONTAINER_PADDING}px;
   height: ${HEADER_FOOTER_HEIGHT}px;
   font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
@@ -91,7 +91,7 @@ const Footer = styled.div`
 
 const EyedropperWrapper = styled.div`
   position: absolute;
-  left: 0;
+  left: ${CONTAINER_PADDING}px;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
@@ -109,7 +109,7 @@ const CurrentWrapper = styled.div`
 
 const CurrentAlphaWrapper = styled.div`
   position: absolute;
-  right: 0;
+  right: ${CONTAINER_PADDING}px;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
