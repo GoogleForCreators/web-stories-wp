@@ -96,23 +96,6 @@ function ImageEdit({ element, box }) {
         </WithElementMask>
       </CropBox>
 
-      {!isFill && !isBackground && cropBox && croppedImage && (
-        <EditCropMovable
-          setProperties={setProperties}
-          cropBox={cropBox}
-          croppedImage={croppedImage}
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          rotationAngle={rotationAngle}
-          offsetX={imgProps.offsetX}
-          offsetY={imgProps.offsetY}
-          imgWidth={imgProps.width}
-          imgHeight={imgProps.height}
-        />
-      )}
-
       {fullImage && croppedImage && (
         <EditPanMovable
           setProperties={setProperties}
@@ -127,6 +110,23 @@ function ImageEdit({ element, box }) {
           offsetY={imgProps.offsetY}
           mediaWidth={imgProps.width}
           mediaHeight={imgProps.height}
+        />
+      )}
+
+      {!isFill && !isBackground && cropBox && croppedImage && (
+        <EditCropMovable
+          setProperties={setProperties}
+          cropBox={cropBox}
+          croppedImage={croppedImage}
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
+          offsetX={imgProps.offsetX}
+          offsetY={imgProps.offsetY}
+          imgWidth={imgProps.width}
+          imgHeight={imgProps.height}
         />
       )}
 

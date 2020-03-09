@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
 
@@ -38,31 +39,33 @@ import { useSidebar, SidebarProvider } from './sidebar';
 import Layout from './layout';
 
 function App({ config }) {
-  const { storyId } = config;
+  const { storyId, isRTL } = config;
   return (
-    <ThemeProvider theme={theme}>
-      <ConfigProvider config={config}>
-        <APIProvider>
-          <HistoryProvider size={50}>
-            <StoryProvider storyId={storyId}>
-              <FontProvider>
-                <MediaProvider>
-                  <SidebarProvider>
-                    <GlobalStyle />
-                    <DefaultMoveableGlobalStyle />
-                    <CropMoveableGlobalStyle />
-                    <ModalGlobalStyle />
-                    <KeyboardOnlyOutlines>
-                      <Layout />
-                    </KeyboardOnlyOutlines>
-                  </SidebarProvider>
-                </MediaProvider>
-              </FontProvider>
-            </StoryProvider>
-          </HistoryProvider>
-        </APIProvider>
-      </ConfigProvider>
-    </ThemeProvider>
+    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider config={config}>
+          <APIProvider>
+            <HistoryProvider size={50}>
+              <StoryProvider storyId={storyId}>
+                <FontProvider>
+                  <MediaProvider>
+                    <SidebarProvider>
+                      <GlobalStyle />
+                      <DefaultMoveableGlobalStyle />
+                      <CropMoveableGlobalStyle />
+                      <ModalGlobalStyle />
+                      <KeyboardOnlyOutlines>
+                        <Layout />
+                      </KeyboardOnlyOutlines>
+                    </SidebarProvider>
+                  </MediaProvider>
+                </FontProvider>
+              </StoryProvider>
+            </HistoryProvider>
+          </APIProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </StyleSheetManager>
   );
 }
 
