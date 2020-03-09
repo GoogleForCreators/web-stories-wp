@@ -39,7 +39,7 @@ function EditablePreview({ value, width, format, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const enableEditing = useCallback(() => setIsEditing(true), []);
   const disableEditing = useCallback(() => setIsEditing(false), []);
-  const wrapperRef = useRef();
+  const wrapperRef = useRef(null);
   const editableRef = useRef();
   const inputStyles = {
     input: {
