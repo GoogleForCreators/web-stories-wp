@@ -22,14 +22,16 @@ import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
 import fullbleedToFill from './migrations/v0003_fullbleedToFill';
 import squareToShape from './migrations/v0004_squareToShape';
 import mediaElementToResource from './migrations/v0004_mediaElementToResource';
-import colorToPattern from './migrations/v0005_colorToPattern';
+import setOpacity from './migrations/v0005_setOpacity';
+import colorToPattern from './migrations/v0006_colorToPattern';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
   2: [dataPixelTo1080],
   3: [fullbleedToFill],
   4: [squareToShape, mediaElementToResource],
-  5: [colorToPattern],
+  5: [setOpacity],
+  6: [colorToPattern],
 };
 
 export const DATA_VERSION = Math.max.apply(

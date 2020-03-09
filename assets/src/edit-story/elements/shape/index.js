@@ -18,12 +18,14 @@
  * Internal dependencies
  */
 import { PanelTypes } from '../../components/panels';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundColor: '#ffffff',
 };
 
@@ -41,6 +43,7 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.SIZE_POSITION,
+  PanelTypes.LAYER_STYLE,
   PanelTypes.STYLE,
   PanelTypes.LINK,
   PanelTypes.FILL,

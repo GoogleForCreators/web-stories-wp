@@ -31,11 +31,13 @@ import getPreviewTextMock from '../getPreviewText';
 jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
-function arrange(children = null) {
-  const { queryByRole } = render(
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+function arrange() {
+  const { queryByLabelText } = render(
+    <ThemeProvider theme={theme}>
+      <OpacityPreview onChange={() => {}} />
+    </ThemeProvider>
   );
-  return queryByRole('textbox');
+  return queryByLabelText('Opacity');
 }
 
 describe('<OpacityPreview />', () => {
@@ -43,27 +45,21 @@ describe('<OpacityPreview />', () => {
     getPreviewOpacityMock.mockReset();
     getPreviewTextMock.mockReset();
 
-    getPreviewOpacityMock.mockImplementation(() => {
-      return 100;
-    });
-    getPreviewTextMock.mockImplementation(() => {
-      return 'FF0000';
-    });
+    getPreviewOpacityMock.mockImplementation(() => 100);
+    getPreviewTextMock.mockImplementation(() => 'FF0000');
   });
 
   it('should render correct opacity when there is a text', () => {
-    const element = arrange(<OpacityPreview />);
+    const element = arrange();
 
     expect(element).toBeDefined();
-    expect(element).toHaveTextContent('100%');
+    expect(element).toHaveValue('100%');
   });
 
   it('should be hidden when no text', () => {
-    getPreviewTextMock.mockImplementationOnce(() => {
-      return null;
-    });
+    getPreviewTextMock.mockImplementation(() => null);
 
-    const element = arrange(<OpacityPreview />);
-    expect(element).toBeNull();
+    const element = arrange();
+    expect(element).toHaveStyle('visibility: hidden');
   });
 });

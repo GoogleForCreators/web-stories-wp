@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { _x } from '@wordpress/i18n';
+import { _x, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -80,6 +80,8 @@ function OpacityPreview({ value, onChange }) {
 
   return (
     <Input
+      type="text"
+      aria-label={__('Opacity', 'web-stories')}
       isVisible={hasPreviewText}
       onBlur={handleBlur}
       onFocus={disablePostfix}
