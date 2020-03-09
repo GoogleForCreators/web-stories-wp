@@ -90,7 +90,7 @@ const Footer = styled.div`
 
 const EyedropperWrapper = styled.div`
   position: absolute;
-  left: ${CONTAINER_PADDING}px;
+  left: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
@@ -108,7 +108,7 @@ const CurrentWrapper = styled.div`
 
 const CurrentAlphaWrapper = styled.div`
   position: absolute;
-  right: ${CONTAINER_PADDING}px;
+  right: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
