@@ -42,6 +42,8 @@ export const canFlip = true;
 
 export const isMaskable = true;
 
+export const canFill = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,

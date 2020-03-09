@@ -111,7 +111,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   }, [state.isFill, updateProperties]);
 
   const isSingleElement = selectedElements.length === 1;
-  const { isMedia } = getDefinitionForType(selectedElements[0].type);
+  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.some(
     ({ type }) => getDefinitionForType(type).canFlip
@@ -226,22 +226,20 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           disabled={isFill}
         />
         {canFlip && (
-          <>
-            <FlipControls onChange={handleFlipChange} value={state.flip} />
-            {isSingleElement && (
-              <Toggle
-                icon={<Fullbleed />}
-                value={state.isFill}
-                isMultiple={false}
-                onChange={(value) => {
-                  setState({
-                    ...state,
-                    isFill: value,
-                  });
-                }}
-              />
-            )}
-          </>
+          <FlipControls onChange={handleFlipChange} value={state.flip} />
+        )}
+        {canFill && isSingleElement && (
+          <Toggle
+            icon={<Fullbleed />}
+            value={state.isFill}
+            isMultiple={false}
+            onChange={(value) => {
+              setState({
+                ...state,
+                isFill: value,
+              });
+            }}
+          />
         )}
       </Row>
     </SimplePanel>
