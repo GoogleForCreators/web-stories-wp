@@ -50,7 +50,7 @@ function AmpStory({ children }) {
 /**
  * Tests a given string for its AMP compatibility.
  *
- *Uses AMP Optimizer to add any missing tags and extension imports.
+ * Uses AMP Optimizer to add any missing tags and extension imports.
  *
  * @see https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer#incomplete-markup
  *
