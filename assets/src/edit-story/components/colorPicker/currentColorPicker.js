@@ -81,7 +81,7 @@ const AlphaWrapper = styled.div`
 `;
 
 const Footer = styled.div`
-  padding: ${CONTAINER_PADDING}px;
+  padding: ${CONTAINER_PADDING}px 0;
   height: ${HEADER_FOOTER_HEIGHT}px;
   font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
@@ -90,7 +90,7 @@ const Footer = styled.div`
 
 const EyedropperWrapper = styled.div`
   position: absolute;
-  left: ${CONTAINER_PADDING}px;
+  left: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
@@ -108,12 +108,15 @@ const CurrentWrapper = styled.div`
 
 const CurrentAlphaWrapper = styled.div`
   position: absolute;
-  right: ${CONTAINER_PADDING}px;
+  right: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
   const alphaPercentage = Math.round(rgb.a * 100);
+  const hexValue = hex.substr(1);
+
+  const handleFormatHex = useCallback((v) => `#${v}`, []);
 
   const handleHexInputChange = useCallback(
     (value) => onChange({ hex: value }),
@@ -175,12 +178,17 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
           />
         </EyedropperWrapper>
         <CurrentWrapper>
-          <EditablePreview value={hex} onChange={handleHexInputChange} />
+          <EditablePreview
+            value={hexValue}
+            onChange={handleHexInputChange}
+            width={65}
+            format={handleFormatHex}
+          />
         </CurrentWrapper>
         <CurrentAlphaWrapper>
           <EditablePreview
             value={alphaPercentage}
-            width={30}
+            width={35}
             format={handleFormatPercentage}
             onChange={handleOpacityInputChange}
           />
