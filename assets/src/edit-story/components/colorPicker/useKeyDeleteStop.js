@@ -22,7 +22,7 @@ import { useKeyDownEffect } from '../keyboard';
 function useKeyDeleteStop(ref, onDelete) {
   useKeyDownEffect(
     ref,
-    ['del', 'backspace'],
+    'delete',
     () => {
       ref.current.focus();
       onDelete();
