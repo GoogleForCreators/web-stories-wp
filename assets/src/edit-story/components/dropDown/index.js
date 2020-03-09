@@ -71,8 +71,10 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
 const DropDownTitle = styled.span`
   user-select: none;
   color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.label.weight};
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
 `;
 
@@ -83,7 +85,9 @@ const DropDownList = styled.ul`
   top: 100%;
   left: 0;
   z-index: 1000;
-  display: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   float: left;
   min-width: 160px;
   width: 100%;
@@ -118,11 +122,13 @@ const DropDownList = styled.ul`
 `;
 
 const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 16px;
   margin: 0;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.label.weight};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.bg.v11};
