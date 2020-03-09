@@ -14,13 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-function SquareLayerContent() {
-  return __('Square', 'web-stories');
+function dataSquareToShape({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-export default SquareLayerContent;
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement({ type, ...rest }) {
+  const element = {
+    type: type === 'square' ? 'shape' : type,
+    ...rest,
+  };
+  return element;
+}
+
+export default dataSquareToShape;

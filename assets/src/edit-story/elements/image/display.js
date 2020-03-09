@@ -39,18 +39,18 @@ const Img = styled.img`
 `;
 
 function ImageDisplay({
-  element: { id, src, origRatio, scale, focalX, focalY },
+  element: { id, resource, scale, focalX, focalY },
   box: { width, height },
 }) {
   const imageRef = useRef(null);
 
   const imgProps = getMediaProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   useTransformHandler(id, (transform) => {
@@ -61,12 +61,12 @@ function ImageDisplay({
       const { resize } = transform;
       if (resize[0] !== 0 && resize[1] !== 0) {
         const newImgProps = getMediaProps(
+          resource,
           resize[0],
           resize[1],
           scale,
           focalX,
-          focalY,
-          origRatio
+          focalY
         );
         target.style.cssText = getImageWithScaleCss(newImgProps);
       }
@@ -75,7 +75,7 @@ function ImageDisplay({
 
   return (
     <Element>
-      <Img ref={imageRef} draggable={false} src={src} {...imgProps} />
+      <Img ref={imageRef} draggable={false} src={resource.src} {...imgProps} />
     </Element>
   );
 }
