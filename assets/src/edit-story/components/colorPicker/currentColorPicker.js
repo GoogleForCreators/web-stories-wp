@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
@@ -32,7 +33,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Eyedropper } from '../button';
 import Pointer from './pointer';
-import EditableHexPreview from './editableHexPreview';
+import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 15;
 const EYEDROPPER_ICON_SIZE = 15;
@@ -114,6 +115,19 @@ const CurrentAlphaWrapper = styled.div`
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
   const alphaPercentage = Math.round(rgb.a * 100);
 
+  const handleHexInputChange = useCallback(
+    (value) => onChange({ hex: value }),
+    [onChange]
+  );
+
+  const handleFormatPercentage = useCallback((v) => `${v}%`, []);
+
+  const handleOpacityInputChange = useCallback(
+    (value) =>
+      onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
+    [rgb, onChange]
+  );
+
   return (
     <Container>
       <Body>
@@ -161,9 +175,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
           />
         </EyedropperWrapper>
         <CurrentWrapper>
-          <EditableHexPreview hex={hex} onChange={onChange} />
+          <EditablePreview value={hex} onChange={handleHexInputChange} />
         </CurrentWrapper>
-        <CurrentAlphaWrapper>{alphaPercentage + '%'}</CurrentAlphaWrapper>
+        <CurrentAlphaWrapper>
+          <EditablePreview
+            value={alphaPercentage}
+            width={30}
+            format={handleFormatPercentage}
+            onChange={handleOpacityInputChange}
+          />
+        </CurrentAlphaWrapper>
       </Footer>
     </Container>
   );

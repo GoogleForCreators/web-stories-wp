@@ -185,7 +185,7 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
     return true;
   }
   if (tagName === 'INPUT') {
-    return !NON_EDITABLE_INPUT_TYPES.contains(type);
+    return !NON_EDITABLE_INPUT_TYPES.includes(type);
   }
   return false;
 }
