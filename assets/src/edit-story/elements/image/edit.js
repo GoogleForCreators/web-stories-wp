@@ -59,8 +59,7 @@ const CropImg = styled.img`
 function ImageEdit({ element, box }) {
   const {
     id,
-    src,
-    origRatio,
+    resource,
     scale,
     flip,
     focalX,
@@ -83,25 +82,30 @@ function ImageEdit({ element, box }) {
   );
 
   const imgProps = getMediaProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   imgProps.transformFlip = getTransformFlip(flip);
 
   return (
     <Element>
-      <FadedImg ref={setFullImage} draggable={false} src={src} {...imgProps} />
+      <FadedImg
+        ref={setFullImage}
+        draggable={false}
+        src={resource.src}
+        {...imgProps}
+      />
       <CropBox ref={setCropBox}>
         <WithElementMask element={element} fill={true} applyFlip={false}>
           <CropImg
             ref={setCroppedImage}
             draggable={false}
-            src={src}
+            src={resource.src}
             {...imgProps}
           />
         </WithElementMask>

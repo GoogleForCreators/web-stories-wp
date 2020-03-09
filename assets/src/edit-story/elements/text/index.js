@@ -47,6 +47,8 @@ export const isMedia = false;
 
 export const canFlip = false;
 
+export const isMaskable = false;
+
 export const resizeRules = {
   vertical: false,
   horizontal: true,

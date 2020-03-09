@@ -41,6 +41,8 @@ export const editModeGrayout = true;
 
 export const isMedia = true;
 
+export const isMaskable = true;
+
 export const canFlip = true;
 
 export const resizeRules = {

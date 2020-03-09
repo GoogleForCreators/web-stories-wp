@@ -59,7 +59,7 @@ const CropVideo = styled.video`
 `;
 
 function VideoEdit({
-  element: { id, src, origRatio, scale, flip, focalX, focalY, mimeType },
+  element: { id, resource, scale, flip, focalX, focalY },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -74,25 +74,25 @@ function VideoEdit({
   );
 
   const videoProps = getMediaProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   videoProps.transformFlip = getTransformFlip(flip);
   return (
     <Element>
       <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>
-        <source src={src} type={mimeType} />
+        <source src={resource.src} type={resource.mimeType} />
       </FadedVideo>
       <CropBox>
         <CropVideo
           ref={setCroppedVideo}
           draggable={false}
-          src={src}
+          src={resource.src}
           {...videoProps}
         />
       </CropBox>
