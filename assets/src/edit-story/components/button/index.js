@@ -69,18 +69,21 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  opacity: 0.3;
   color: ${({ theme }) => theme.colors.fg.v1};
+
+  svg {
+    width: ${({ width }) => width}px;
+    height: ${({ height }) => height}px;
+  }
+`;
+
+const StyledButtonWithOpacity = styled(StyledButton)`
+  opacity: 0.3;
 
   &:focus,
   &:active,
   &:hover {
     opacity: 1;
-  }
-
-  svg {
-    width: ${({ width }) => width}px;
-    height: ${({ height }) => height}px;
   }
 `;
 
@@ -102,15 +105,15 @@ export const Outline = styled(Base)`
 `;
 
 export const LeftArrow = (props) => (
-  <StyledButton {...props}>
+  <StyledButtonWithOpacity {...props}>
     <LeftArrowIcon />
-  </StyledButton>
+  </StyledButtonWithOpacity>
 );
 
 export const RightArrow = (props) => (
-  <StyledButton {...props}>
+  <StyledButtonWithOpacity {...props}>
     <RightArrowIcon />
-  </StyledButton>
+  </StyledButtonWithOpacity>
 );
 
 export const Undo = (props) => (
