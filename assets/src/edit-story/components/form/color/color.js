@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -24,6 +25,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
+import applyOpacityChange from './applyOpacityChange';
 import ColorPreview from './colorPreview';
 import OpacityPreview from './opacityPreview';
 
@@ -32,14 +34,11 @@ const Container = styled.div`
   align-items: center;
 `;
 
-function ColorInput({
-  onChange,
-  hasGradient,
-  isMultiple,
-  opacity,
-  value,
-  label,
-}) {
+function ColorInput({ onChange, hasGradient, isMultiple, value, label }) {
+  const handleOpacityChange = useCallback(
+    (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
+    [value, onChange]
+  );
   return (
     <Container>
       <ColorPreview
@@ -49,7 +48,7 @@ function ColorInput({
         value={value}
         label={label}
       />
-      <OpacityPreview opacity={opacity} value={value} />
+      <OpacityPreview value={value} onChange={handleOpacityChange} />
     </Container>
   );
 }
@@ -59,7 +58,6 @@ ColorInput.propTypes = {
   isMultiple: PropTypes.bool,
   hasGradient: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  opacity: PropTypes.number,
   label: PropTypes.string,
 };
 
