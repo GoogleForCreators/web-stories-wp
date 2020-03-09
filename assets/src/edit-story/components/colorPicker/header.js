@@ -78,7 +78,7 @@ const Conic = styled(TypeSelector)`
   background-image: conic-gradient(white, ${insertActiveColor});
 `;
 
-function Header({ type, setToGradient, setToSolid, onClose }) {
+function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
   const setToLinear = useCallback(() => setToGradient('linear'), [
     setToGradient,
   ]);
@@ -100,21 +100,25 @@ function Header({ type, setToGradient, setToSolid, onClose }) {
         onClick={setToSolid}
         aria-label={__('Solid pattern type', 'web-stories')}
       />
-      <Linear
-        isActive={type === 'linear'}
-        onClick={setToLinear}
-        aria-label={__('Linear gradient pattern type', 'web-stories')}
-      />
-      <Radial
-        isActive={type === 'radial'}
-        onClick={setToRadial}
-        aria-label={__('Radial gradient pattern type', 'web-stories')}
-      />
-      <Conic
-        isActive={type === 'conic'}
-        onClick={setToConic}
-        aria-label={__('Conic gradient pattern type', 'web-stories')}
-      />
+      {hasGradient && (
+        <>
+          <Linear
+            isActive={type === 'linear'}
+            onClick={setToLinear}
+            aria-label={__('Linear gradient pattern type', 'web-stories')}
+          />
+          <Radial
+            isActive={type === 'radial'}
+            onClick={setToRadial}
+            aria-label={__('Radial gradient pattern type', 'web-stories')}
+          />
+          <Conic
+            isActive={type === 'conic'}
+            onClick={setToConic}
+            aria-label={__('Conic gradient pattern type', 'web-stories')}
+          />
+        </>
+      )}
       <CloseButton
         width={10}
         height={10}
@@ -127,6 +131,7 @@ function Header({ type, setToGradient, setToSolid, onClose }) {
 
 Header.propTypes = {
   type: PropTypes.string.isRequired,
+  hasGradient: PropTypes.bool.isRequired,
   setToGradient: PropTypes.func.isRequired,
   setToSolid: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
