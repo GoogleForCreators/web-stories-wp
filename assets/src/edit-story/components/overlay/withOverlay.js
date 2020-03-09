@@ -29,6 +29,7 @@ import Context from './context';
 const Overlay = styled.div`
   position: absolute;
   top: 0;
+  /*! @noflip */
   left: 0;
   width: 0;
   height: 0;

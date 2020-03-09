@@ -46,7 +46,7 @@ function DisplayElement({ element }) {
     actions: { getBox },
   } = useUnits();
 
-  const { id, type } = element;
+  const { id, opacity, type } = element;
   const { Display } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
@@ -71,7 +71,13 @@ function DisplayElement({ element }) {
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithElementMask element={element} fill={true}>
+      <WithElementMask
+        element={element}
+        fill={true}
+        style={{
+          opacity: opacity ? opacity / 100 : null,
+        }}
+      >
         <Display element={element} box={box} />
       </WithElementMask>
     </Wrapper>

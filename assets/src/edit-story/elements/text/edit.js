@@ -18,11 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Editor, EditorState } from 'draft-js';
 import { rgba } from 'polished';
-import { Editor, EditorState, SelectionState } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import {
+  useMemo,
   useState,
   useEffect,
   useLayoutEffect,
@@ -45,7 +46,12 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import { getFilteredState, getHandleKeyCommand } from './util';
+import {
+  getFilteredState,
+  getHandleKeyCommand,
+  getSelectionForAll,
+  getSelectionForOffset,
+} from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
@@ -75,6 +81,7 @@ const TextBox = styled.div`
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
 
+  opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
   top: 0;
   left: 0;
@@ -96,6 +103,7 @@ function TextEdit({
     fontStyle,
     letterSpacing,
     lineHeight,
+    opacity,
     padding,
     textAlign,
     textDecoration,
@@ -119,6 +127,7 @@ function TextEdit({
     textAlign,
     letterSpacing,
     lineHeight,
+    opacity,
     padding,
     textDecoration,
   };
@@ -139,26 +148,36 @@ function TextEdit({
     [id, updateElementById]
   );
 
-  const { offset, clearContent } = editingElementState || {};
-  // To clear content, we can't just use createEmpty() or even pure white-space.
-  // The editor needs some content to insert the first character in,
-  // so we use a non-breaking space instead and trim it on save if still present.
-  const contentWithBreaks = (content || '')
-    .split('\n')
-    .map((s) => {
-      // @todo This logic is temporary and will change with selecting part + marking bold.
-      if (bold) {
-        return `<p><strong>${s}</strong></p>`;
-      }
-      return `<p>${s}</p>`;
-    })
-    .join('');
-  const EMPTY_VALUE = '\u00A0';
-  const initialState = clearContent
-    ? EditorState.createWithContent(stateFromHTML(EMPTY_VALUE))
-    : EditorState.createWithContent(stateFromHTML(contentWithBreaks));
+  const { offset, clearContent, selectAll } = editingElementState || {};
+  const initialState = useMemo(() => {
+    const contentWithBreaks = (content || '')
+      .split('\n')
+      .map((s) => {
+        // @todo This logic is temporary and will change with selecting part + marking bold.
+        if (bold) {
+          return `<p><strong>${s}</strong></p>`;
+        }
+        return `<p>${s}</p>`;
+      })
+      .join('');
+    let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
+    if (clearContent) {
+      // If `clearContent` is specified, push the update to clear content so that
+      // it can be undone.
+      state = EditorState.push(state, stateFromHTML(''), 'remove-range');
+    }
+    let selection;
+    if (selectAll) {
+      selection = getSelectionForAll(state.getCurrentContent());
+    } else if (offset) {
+      selection = getSelectionForOffset(state.getCurrentContent(), offset);
+    }
+    if (selection) {
+      state = EditorState.forceSelection(state, selection);
+    }
+    return state;
+  }, [content, clearContent, selectAll, offset, bold]);
   const [editorState, setEditorState] = useState(initialState);
-  const mustAddOffset = useRef(offset ? 2 : 0);
   const editorHeightRef = useRef(0);
 
   // This is to allow the finalizing useEffect to *not* depend on editorState,
@@ -170,33 +189,11 @@ function TextEdit({
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
     (newEditorState) => {
-      const wrapper = wrapperRef.current;
-      const textBox = textBoxRef.current;
-      let filteredState = getFilteredState(newEditorState, editorState);
-      if (mustAddOffset.current) {
-        // For some reason forced selection only sticks the second time around?
-        // Several other checks have been attempted here without success.
-        // Optimize at your own perril!
-        mustAddOffset.current--;
-        const key = filteredState
-          .getCurrentContent()
-          .getFirstBlock()
-          .getKey();
-        const selectionState = new SelectionState({
-          anchorKey: key,
-          anchorOffset: offset,
-        });
-        filteredState = EditorState.forceSelection(
-          filteredState,
-          selectionState
-        );
-      }
+      const filteredState = getFilteredState(newEditorState, editorState);
       lastKnownState.current = filteredState.getCurrentContent();
-      editorHeightRef.current = textBox.offsetHeight;
       setEditorState(filteredState);
-      wrapper.style.height = `${editorHeightRef.current}px`;
     },
-    [editorState, offset]
+    [editorState]
   );
 
   // Handle basic key commands such as bold, italic and underscore.
@@ -244,10 +241,18 @@ function TextEdit({
     [setProperties, x, y, height, rotationAngle, editorToDataY, editorToDataX]
   );
 
-  // Set focus when initially rendered
+  // Set focus when initially rendered.
   useLayoutEffect(() => {
     editorRef.current.focus();
   }, []);
+
+  // Remeasure the height on each content update.
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const textBox = textBoxRef.current;
+    editorHeightRef.current = textBox.offsetHeight;
+    wrapper.style.height = `${editorHeightRef.current}px`;
+  }, [editorState]);
 
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);

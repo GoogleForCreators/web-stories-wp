@@ -22,7 +22,9 @@ import BackgroundPanel from './background';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
 import FillPanel from './fill';
+import LinkPanel from './link';
 import MaskPanel from './mask';
+import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
@@ -36,6 +38,8 @@ export { default as ColorPresetPanel } from './colorPreset';
 const BACKGROUND = 'background';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const SCALE = 'scale';
+const LAYER_STYLE = 'layerStyle';
+const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const FILL = 'fill';
@@ -54,8 +58,10 @@ export const PanelTypes = {
   SCALE,
   BACKGROUND_COLOR,
   STYLE,
+  LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
+  LINK,
   FILL,
   VIDEO_POSTER,
   MASK,
@@ -82,6 +88,7 @@ export function getPanels(elements) {
     const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND, Panel: BackgroundPanel },
+      { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
@@ -106,6 +113,8 @@ export function getPanels(elements) {
             return { type, Panel: BackgroundPanel };
           }
           return null;
+        case LAYER_STYLE:
+          return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
@@ -119,6 +128,8 @@ export function getPanels(elements) {
           return { type, Panel: BackgroundColorPanel };
         case TEXT:
           return { type, Panel: TextPanel };
+        case LINK:
+          return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:

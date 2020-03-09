@@ -20,23 +20,23 @@
 import StoryPropTypes from '../../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { editorPixels } from '../../units';
-import { getMediaProps } from '../shared';
+import { getMediaSizePositionProps } from '../shared';
 
 function VideoOutput({
-  element: { mimeType, src, poster, scale, focalX, focalY, origRatio },
+  element: { resource, scale, focalX, focalY },
   box: { width: vw, height: vh },
 }) {
   // Width and height are taken from the basis of 100% taking into account the
   // aspect ratio.
   const width = vw;
   const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   const wrapperStyle = {
@@ -48,12 +48,12 @@ function VideoOutput({
   };
 
   const sourceProps = {
-    type: mimeType,
-    src,
+    type: resource.mimeType,
+    src: resource.src,
   };
   const props = {
-    autoPlay: true,
-    poster,
+    autoPlay: 'autoplay',
+    poster: resource.poster,
     layout: 'fill',
   };
 

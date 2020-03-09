@@ -21,17 +21,23 @@ import styled from 'styled-components';
 import { useCallback } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { useStory, useHistory } from '../../../app';
+import { useStory, useHistory, useConfig } from '../../../app';
 import { createPage } from '../../../elements';
 import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
 import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
-import { ReactComponent as Undo } from '../../../icons/undo_icon.svg';
-import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
+import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
+import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import WithTooltip from '../../tooltip';
 
 const HEIGHT = 28;
 
@@ -107,6 +113,7 @@ function PageMenu() {
     state: { currentPageNumber, currentPage },
     actions: { deleteCurrentPage, addPage },
   } = useStory();
+  const { isRTL } = useConfig();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -133,29 +140,62 @@ function PageMenu() {
     <Wrapper>
       <Box>
         <Options>
-          <PageCount>{`Page ${currentPageNumber}`}</PageCount>
+          <PageCount>
+            {sprintf(
+              /* translators: %s: Page number. */
+              __('Page %s', 'web-stories'),
+              currentPageNumber
+            )}
+          </PageCount>
           <Space />
-          <Icon onClick={handleDeletePage}>
-            <Delete />
-          </Icon>
+          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
+            <Icon
+              onClick={handleDeletePage}
+              aria-label={__('Delete Page', 'web-stories')}
+            >
+              <Delete />
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon onClick={handleDuplicatePage}>
-            <Duplicate />
-          </Icon>
+          <WithTooltip title={__('Duplicate page', 'web-stories')}>
+            <Icon
+              onClick={handleDuplicatePage}
+              aria-label={__('Dupliccate Page', 'web-stories')}
+            >
+              <Duplicate />
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon onClick={handleAddPage}>
-            <Add />
-          </Icon>
+          <WithTooltip title={__('New page', 'web-stories')}>
+            <Icon
+              onClick={handleAddPage}
+              aria-label={__('Add New Page', 'web-stories')}
+            >
+              <Add />
+            </Icon>
+          </WithTooltip>
           <Space />
           <Divider />
           <Space />
-          <Icon disabled={!canUndo} onClick={handleUndo}>
-            <Undo />
-          </Icon>
+          <WithTooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
+            <Icon
+              disabled={!canUndo}
+              onClick={handleUndo}
+              aria-label={__('Undo Changes', 'web-stories')}
+            >
+              {isRTL ? <RightArrow /> : <LeftArrow />}
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon disabled={!canRedo} onClick={handleRedo}>
-            <Redo />
-          </Icon>
+          <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
+            <Icon
+              disabled={!canRedo}
+              onClick={handleRedo}
+              aria-label={__('Redo Changes', 'web-stories')}
+            >
+              {isRTL ? <LeftArrow /> : <RightArrow />}
+            </Icon>
+          </WithTooltip>
         </Options>
         <Options>
           <Icon disabled>

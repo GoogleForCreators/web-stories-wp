@@ -22,15 +22,15 @@ import StoryPropTypes from '../../types';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function SquareOutput({ element: { backgroundColor } }) {
+function ShapeOutput({ element: { backgroundColor } }) {
   const style = {
     background: backgroundColor,
   };
   return <div className="fill" style={style} />;
 }
 
-SquareOutput.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
+ShapeOutput.propTypes = {
+  element: StoryPropTypes.elements.shape.isRequired,
 };
 
-export default SquareOutput;
+export default ShapeOutput;

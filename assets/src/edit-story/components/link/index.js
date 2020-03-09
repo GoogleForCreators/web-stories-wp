@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+export const LinkType = {
+  ONE_TAP: 1,
+  TWO_TAP: 2,
+};
 
-function SquareLayerContent() {
-  return __('Square', 'web-stories');
+export function getLinkFromElement(element) {
+  return element.link || null;
 }
 
-export default SquareLayerContent;
+export function createLink({
+  url = '',
+  type = LinkType.TWO_TAP,
+  ...rest
+} = {}) {
+  return {
+    type,
+    url,
+    ...rest,
+  };
+}

@@ -27,21 +27,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Switch } from '../form';
 import { SimplePanel } from './panel';
 
 function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
   const { isFullbleedBackground } = selectedElements[0];
 
-  const handleChange = (evt) => {
+  const handleChange = (value) => {
     onSetProperties({
-      isFullbleedBackground: evt.target.value === 'yes',
+      isFullbleedBackground: value,
     });
   };
 
   return (
     <SimplePanel
       name="backgroundDisplay"
-      title={__('Background Display Options', 'amp')}
+      title={__('Background Display Options', 'web-stories')}
     >
       <p>
         {/* todo: re-consider wording; add help dialog */
@@ -50,17 +51,12 @@ function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
           'web-stories'
         )}
       </p>
-      {/* todo: use properly styled switch component */}
-      <select
-        value={isFullbleedBackground === false ? 'no' : 'yes'}
+      <Switch
+        value={isFullbleedBackground !== false}
+        onLabel={__('Fit to device', 'web-stories')}
+        offLabel={__('Do not format', 'web-stories')}
         onChange={handleChange}
-        onBlur={(evt) =>
-          evt.target.form.dispatchEvent(new window.Event('submit'))
-        }
-      >
-        <option value="yes">{__('Fit to device', 'web-stories')}</option>
-        <option value="no">{__('Do not format', 'web-stories')}</option>
-      </select>
+      />
     </SimplePanel>
   );
 }

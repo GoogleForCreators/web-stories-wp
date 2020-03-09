@@ -23,6 +23,7 @@ import { useContext, useEffect, createRef } from 'react';
 /**
  * Internal dependencies
  */
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -43,21 +44,27 @@ const globalRef = createRef();
 /**
  * See https://craig.is/killing/mice#keys for the supported key codes.
  *
- * @param {{current: Node}} ref
+ * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
+ * @param {string|undefined} type
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
-export function useKeyDownEffect(
-  ref,
+function useKeyEffect(
+  refOrNode,
   keyNameOrSpec,
+  type,
   callback,
   deps = undefined
 ) {
   const { keys } = useContext(Context);
+  const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
-      const node = ref.current;
+      const node =
+        typeof refOrNode.current !== 'undefined'
+          ? refOrNode.current
+          : refOrNode;
       if (!node) {
         return undefined;
       }
@@ -69,23 +76,52 @@ export function useKeyDownEffect(
       }
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
-      const handler = createKeyHandler(keySpec, callback);
-      mousetrap.bind(keySpec.key, handler);
+      const handler = createKeyHandler(keySpec, batchingCallback);
+      mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    deps || []
+    [batchingCallback, keys]
   );
 }
 
 /**
- * See https://craig.is/killing/mice#keys for the supported key codes.
- *
+ * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
+ */
+export function useKeyDownEffect(
+  refOrNode,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffect(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
+}
+
+/**
+ * @param {Node|{current: Node}} refOrNode
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ */
+export function useKeyUpEffect(
+  refOrNode,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffect(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
+}
+
+/**
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ * @param {string|undefined} mode
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
@@ -96,6 +132,23 @@ export function useGlobalKeyDownEffect(
     globalRef.current = document;
   }
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
+}
+
+/**
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ * @param {string|undefined} mode
+ */
+export function useGlobalKeyUpEffect(
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  if (!globalRef.current) {
+    globalRef.current = document;
+  }
+  useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
 /**
@@ -186,4 +239,20 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
     return !NON_EDITABLE_INPUT_TYPES.contains(type);
   }
   return false;
+}
+
+export function prettifyShortcut(shortcut) {
+  return shortcut
+    .toLowerCase()
+    .replace('ctrl', '^')
+    .replace('cmd', '⌘')
+    .replace('shift', '⇧')
+    .replace('left', '←')
+    .replace('up', '↑')
+    .replace('right', '→')
+    .replace('down', '↓')
+    .replace('delete', '⌫')
+    .split('+')
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join('');
 }
