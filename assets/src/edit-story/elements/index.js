@@ -27,25 +27,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import pick from '../utils/objectPick';
 import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
 import * as videoElement from './video';
-
-const MERGE_ELEMENT_PROPS_TO_KEEP = [
-  'id',
-  'type',
-  'x',
-  'y',
-  'width',
-  'height',
-  'rotationAngle',
-  'isFill',
-  'mask',
-  'link',
-]
 
 export const createNewElement = (type, attributes = {}) => {
   const element = elementTypes.find((el) => el.type === type);
@@ -59,18 +45,6 @@ export const createNewElement = (type, attributes = {}) => {
 };
 
 export const createPage = (attributes) => createNewElement('page', attributes);
-
-export const mergeElements = (
-  from,
-  into,
-  keep = MERGE_ELEMENT_PROPS_TO_KEEP
-) => {
-  return {
-    ...from,
-    ...pick(into, keep),
-    type: from.type,
-  };
-};
 
 export const elementTypes = [
   {
@@ -91,3 +65,14 @@ export const elementTypes = [
 
 export const getDefinitionForType = (type) =>
   elementTypes.find((el) => el.type === type);
+
+export const getTypeFromResource = (resource) => {
+  switch (resource.type) {
+    case 'image':
+      return 'image';
+    case 'video':
+      return 'video';
+    default:
+      return 'shape';
+  }
+};

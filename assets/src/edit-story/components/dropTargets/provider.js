@@ -26,6 +26,7 @@ import { useState, useCallback } from 'react';
  */
 import { useTransform } from '../transform';
 import { useStory } from '../../app';
+import { getTypeFromResource } from '../../elements';
 import Context from './context';
 
 function DropTargetsProvider({ children }) {
@@ -43,8 +44,8 @@ function DropTargetsProvider({ children }) {
     (x, y) => {
       const underCursor = document.elementsFromPoint(x, y);
       return (
-        Object.keys(dropTargets).find(
-          (id) => underCursor.includes(dropTargets[id])
+        Object.keys(dropTargets).find((id) =>
+          underCursor.includes(dropTargets[id])
         ) || null
       );
     },
@@ -70,11 +71,15 @@ function DropTargetsProvider({ children }) {
    */
   const handleDrag = useCallback(
     (resourceOrElement, x, y) => {
-      const id = resourceOrElement.id
-      const resource = resourceOrElement.resource || resourceOrElement
+      const id = resourceOrElement.id;
+      const resource = resourceOrElement.resource || resourceOrElement;
       const dropTargetId = getDropTargetFromCursor(x, y);
 
-      if (dropTargetId && dropTargetId !== id && dropTargetId !== activeDropTargetId) {
+      if (
+        dropTargetId &&
+        dropTargetId !== id &&
+        dropTargetId !== activeDropTargetId
+      ) {
         pushTransform(dropTargetId, {
           updates: { dropTargetActive: true, replacement: resource },
         });
@@ -112,13 +117,13 @@ function DropTargetsProvider({ children }) {
    */
   const handleDrop = useCallback(
     (resourceOrElement) => {
-      const id = resourceOrElement.id
-      const resource = resourceOrElement.resource || resourceOrElement
+      const id = resourceOrElement.id;
+      const resource = resourceOrElement.resource || resourceOrElement;
 
       if (activeDropTargetId && activeDropTargetId !== id) {
         updateElementById({
           elementId: activeDropTargetId,
-          properties: { resource, type: resource.type },
+          properties: { resource, type: getTypeFromResource(resource) },
         });
         if (id) {
           deleteElementById({ elementId: id });
@@ -136,8 +141,10 @@ function DropTargetsProvider({ children }) {
     [
       activeDropTargetId,
       currentPage,
+      deleteElementById,
       pushTransform,
       setSelectedElementsById,
+      updateElementById,
     ]
   );
 

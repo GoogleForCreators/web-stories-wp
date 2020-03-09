@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType, getTypeFromResource } from '../../elements';
 import {
   elementWithPosition,
   elementWithSize,
@@ -46,7 +46,17 @@ function DisplayElement({ element }) {
     actions: { getBox },
   } = useUnits();
 
-  const { id, type } = element;
+  const [replacement, setReplacement] = useState(null);
+
+  const replacementElement = replacement
+    ? {
+        id: element.id,
+        type: getTypeFromResource(replacement),
+        resource: replacement,
+      }
+    : null;
+
+  const { id, type } = replacementElement || element;
   const { Display } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
@@ -69,6 +79,7 @@ function DisplayElement({ element }) {
       }
       if (updates) {
         target.style.opacity = updates.overDropTarget ? 0.6 : 1;
+        setReplacement(updates?.replacement);
       }
     }
   });
@@ -76,7 +87,7 @@ function DisplayElement({ element }) {
   return (
     <Wrapper ref={wrapperRef} {...box}>
       <WithMask element={element} fill={true} box={box}>
-        <Display element={element} box={box} />
+        <Display element={replacementElement || element} box={box} />
       </WithMask>
     </Wrapper>
   );

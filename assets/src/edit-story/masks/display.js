@@ -18,16 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 
 import StoryPropTypes from '../types';
-import { useTransformHandler } from '../components/transform';
-import { getDefinitionForType } from '../elements';
 import { getElementMask } from './';
 
 const FILL_STYLE = {
@@ -46,11 +42,7 @@ export default function WithMask({
   box,
   ...rest
 }) {
-  const [replacement, setReplacement] = useState(null);
   const mask = getElementMask(element);
-  useTransformHandler(element.id, (transform) => {
-    setReplacement(transform?.updates?.replacement);
-  });
 
   if (!mask?.type) {
     return children;
@@ -60,15 +52,6 @@ export default function WithMask({
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
   const maskId = `mask-${mask.type}-${element.id}`;
-
-  const getDisplayElement = (resource) => {
-    const { type } = resource;
-    // Required two-step destructure because of a bug in eslint
-    // https://github.com/WordPress/gutenberg/issues/16418
-    const def = getDefinitionForType(type);
-    const Display = def.Display;
-    return <Display element={{ id: uuidv4(), resource }} box={box} />;
-  };
 
   return (
     <div
@@ -86,7 +69,7 @@ export default function WithMask({
           </clipPath>
         </defs>
       </svg>
-      {replacement ? getDisplayElement(replacement) : children}
+      {children}
     </div>
   );
 }
