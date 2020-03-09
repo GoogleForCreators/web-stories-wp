@@ -81,7 +81,7 @@ const Layer = styled.div`
   display: grid;
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
+    '.         .         .         .         .       ' minmax(16px, 1fr)
     '.         prev      page      next      .       ' var(--page-height-px)
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
