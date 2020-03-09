@@ -62,7 +62,7 @@ const CropVideo = styled.video`
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the video.
 function VideoEdit({
-  element: { id, src, origRatio, scale, focalX, focalY, mimeType, opacity },
+  element: { id, resource, scale, focalX, focalY, opacity },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -77,12 +77,12 @@ function VideoEdit({
   );
 
   const videoProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   return (
@@ -93,13 +93,13 @@ function VideoEdit({
         {...videoProps}
         opacity={opacity / 100}
       >
-        <source src={src} type={mimeType} />
+        <source src={resource.src} type={resource.mimeType} />
       </FadedVideo>
       <CropBox>
         <CropVideo
           ref={setCroppedVideo}
           draggable={false}
-          src={src}
+          src={resource.src}
           {...videoProps}
           opacity={opacity / 100}
         />

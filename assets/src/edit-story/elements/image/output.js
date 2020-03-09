@@ -26,7 +26,7 @@ import { getMediaSizePositionProps } from '../shared';
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function ImageOutput({
-  element: { src, origRatio, scale, focalX, focalY, opacity },
+  element: { resource, scale, focalX, focalY, opacity },
   box: { width: vw, height: vh },
 }) {
   // Width and height are taken from the basis of 100% taking into account the
@@ -34,12 +34,12 @@ function ImageOutput({
   const width = vw;
   const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
   const imgProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   const wrapperStyle = {
@@ -53,7 +53,7 @@ function ImageOutput({
 
   const props = {
     layout: 'fill',
-    src,
+    src: resource.src,
   };
 
   return (

@@ -23,7 +23,7 @@ import { editorPixels } from '../../units';
 import { getMediaSizePositionProps } from '../shared';
 
 function VideoOutput({
-  element: { mimeType, src, poster, scale, focalX, focalY, opacity, origRatio },
+  element: { resource, scale, focalX, focalY, opacity },
   box: { width: vw, height: vh },
 }) {
   // Width and height are taken from the basis of 100% taking into account the
@@ -31,12 +31,12 @@ function VideoOutput({
   const width = vw;
   const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
   const imgProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   const wrapperStyle = {
@@ -49,12 +49,12 @@ function VideoOutput({
   };
 
   const sourceProps = {
-    type: mimeType,
-    src,
+    type: resource.mimeType,
+    src: resource.src,
   };
   const props = {
     autoPlay: 'autoplay',
-    poster,
+    poster: resource.poster,
     layout: 'fill',
   };
 

@@ -62,9 +62,8 @@ const CropImg = styled.img`
 function ImageEdit({ element, box }) {
   const {
     id,
-    src,
+    resource,
     opacity,
-    origRatio,
     scale,
     focalX,
     focalY,
@@ -86,12 +85,12 @@ function ImageEdit({ element, box }) {
   );
 
   const imgProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
 
   return (
@@ -99,7 +98,7 @@ function ImageEdit({ element, box }) {
       <FadedImg
         ref={setFullImage}
         draggable={false}
-        src={src}
+        src={resource.src}
         {...imgProps}
         opacity={opacity / 100}
       />
@@ -108,7 +107,7 @@ function ImageEdit({ element, box }) {
           <CropImg
             ref={setCroppedImage}
             draggable={false}
-            src={src}
+            src={resource.src}
             {...imgProps}
             opacity={opacity / 100}
           />

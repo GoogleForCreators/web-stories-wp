@@ -33,6 +33,8 @@ export const hasEditMode = false;
 
 export const isMedia = false;
 
+export const isMaskable = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,

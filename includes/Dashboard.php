@@ -128,7 +128,5 @@ class Dashboard {
 			[],
 			$version
 		);
-
-		wp_styles()->add_data( self::SCRIPT_HANDLE, 'rtl', 'replace' );
 	}
 }

@@ -45,20 +45,6 @@ StoryPropTypes.link = PropTypes.shape({
   icon: PropTypes.string,
 });
 
-export const StoryElementPropsTypes = {
-  id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  rotationAngle: PropTypes.number.isRequired,
-  isFill: PropTypes.bool,
-  opacity: PropTypes.number,
-  mask: StoryPropTypes.mask,
-  link: StoryPropTypes.link,
-};
-
 StoryPropTypes.size = PropTypes.exact({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
@@ -81,21 +67,58 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
-export const StoryLayerPropsTypes = {
+StoryPropTypes.imageResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
+});
+
+StoryPropTypes.videoResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  mimeType: PropTypes.string.isRequired,
+  videoId: PropTypes.number.isRequired,
+  poster: PropTypes.string,
+  posterId: PropTypes.number,
+});
+
+StoryPropTypes.resource = PropTypes.oneOfType([
+  StoryPropTypes.imageResource,
+  StoryPropTypes.videoResource,
+]);
+
+const StoryLayerPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
 
+const StoryElementPropsTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  rotationAngle: PropTypes.number.isRequired,
+  isFill: PropTypes.bool,
+  mask: StoryPropTypes.mask,
+  link: StoryPropTypes.link,
+  opacity: PropTypes.number,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
 
-StoryPropTypes.layer = PropTypes.shape(StoryLayerPropsTypes);
+StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropsTypes,
-  src: PropTypes.string.isRequired,
-  origRatio: PropTypes.number.isRequired,
+  resource: StoryPropTypes.imageResource,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
@@ -103,12 +126,8 @@ StoryPropTypes.elements.image = PropTypes.shape({
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropsTypes,
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
+  resource: StoryPropTypes.videoResource,
   loop: PropTypes.bool,
-  poster: PropTypes.string,
-  videoId: PropTypes.number.isRequired,
-  posterId: PropTypes.number,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
@@ -123,18 +142,17 @@ StoryPropTypes.elements.text = PropTypes.shape({
   fontStyle: PropTypes.string,
   letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   lineHeight: PropTypes.number,
-  opacity: PropTypes.number,
   padding: PropTypes.number,
   textAlign: PropTypes.string,
 });
 
-StoryPropTypes.elements.square = PropTypes.shape({
+StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropsTypes,
   backgroundColor: PropTypes.string,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({
-  ...StoryLayerPropsTypes,
+  ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
 });
 

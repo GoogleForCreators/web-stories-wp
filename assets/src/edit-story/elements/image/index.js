@@ -40,6 +40,8 @@ export const editModeGrayout = true;
 
 export const isMedia = true;
 
+export const isMaskable = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,

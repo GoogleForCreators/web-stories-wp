@@ -14,4 +14,26 @@
  * limitations under the License.
  */
 
-module.exports = {};
+function dataSquareToShape({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement({ type, ...rest }) {
+  const element = {
+    type: type === 'square' ? 'shape' : type,
+    ...rest,
+  };
+  return element;
+}
+
+export default dataSquareToShape;

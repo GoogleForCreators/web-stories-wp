@@ -17,30 +17,31 @@
 /**
  * Get props for media specifically influenced by scale and focal point.
  *
+ * @param {Object} resource   Media resource.
  * @param {number} width      Original width.
  * @param {number} height     Original height.
  * @param {number} scale      Scale, 100 is the default.
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
- * @param {number} mediaRatio Media file ratio.
  * @return {Object} Media properties.
  */
 function getMediaSizePositionProps(
+  resource,
   width,
   height,
   scale,
   focalX,
-  focalY,
-  mediaRatio
+  focalY
 ) {
   const ratio = width / height;
+  const oRatio =
+    resource.width && resource.height ? resource.width / resource.height : 1;
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;
   focalY = typeof focalY === 'number' ? focalY : 50;
-  const mediaWidth =
-    (mediaRatio <= ratio ? width : height * mediaRatio) * scale * 0.01;
+  const mediaWidth = (oRatio <= ratio ? width : height * oRatio) * scale * 0.01;
   const mediaHeight =
-    (mediaRatio <= ratio ? width / mediaRatio : height) * scale * 0.01;
+    (oRatio <= ratio ? width / oRatio : height) * scale * 0.01;
   const offsetX = Math.max(
     0,
     Math.min(mediaWidth * focalX * 0.01 - width * 0.5, mediaWidth - width)
@@ -49,7 +50,6 @@ function getMediaSizePositionProps(
     0,
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
-
   return {
     width: mediaWidth,
     height: mediaHeight,
