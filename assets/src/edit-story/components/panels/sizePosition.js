@@ -83,7 +83,11 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           const { height: newHeight, width: newWidth } = state;
           const update = {
             ...state,
-            flip: getDefinitionForType(type).canFlip ? state.flip : oldFlip,
+            flip:
+              // Ensure flip change only if flip controls are actually visible (canFlip).
+              canFlip && getDefinitionForType(type).canFlip
+                ? state.flip
+                : oldFlip,
           };
           const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
@@ -103,7 +107,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         evt.stopPropagation();
       }
     },
-    [lockRatio, onSetProperties, state]
+    [canFlip, lockRatio, onSetProperties, state]
   );
 
   useEffect(() => {
@@ -113,7 +117,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
 
-  const canFlip = selectedElements.some(
+  const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
