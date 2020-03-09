@@ -34,7 +34,9 @@ function useFocusOut(node, callback) {
 
     const onDocumentClick = (evt) => {
       // If something outside the target node is clicked, callback time!
-      if (!node.contains(evt.target)) {
+      const isInDocument = node.ownerDocument.contains(evt.target);
+      const isInNode = node.contains(evt.target);
+      if (!isInNode && isInDocument) {
         callback();
       }
     };

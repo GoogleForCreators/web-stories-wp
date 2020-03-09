@@ -20,7 +20,12 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { EditableInput } from 'react-color/lib/components/common';
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useRef, useLayoutEffect, useState } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useKeyDownEffect } from '../keyboard';
 
 const Preview = styled.button`
   padding: 0;
@@ -40,41 +45,40 @@ const inputStyles = {
 
 function EditableHexPreview({ hex, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
+  const enableEditing = useCallback(() => setIsEditing(true), []);
+  const disableEditing = useCallback(() => setIsEditing(false), []);
+  const wrapperRef = useRef();
+  const editableRef = useRef();
 
   // Handle ESC keypress to toggle input field.
-  const handleKeyPress = useCallback(
-    (evt) => {
-      if ('Escape' === evt.key && isEditing) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        setIsEditing(false);
-      }
-    },
-    [isEditing]
-  );
-
-  useLayoutEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
-
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [handleKeyPress]);
+  useKeyDownEffect(wrapperRef, { key: 'esc', editable: true }, disableEditing, [
+    isEditing,
+  ]);
 
   const handleOnBlur = (evt) => {
     if (!evt.currentTarget.contains(document.activeElement)) {
-      setIsEditing(false);
+      disableEditing();
     }
   };
 
+  useLayoutEffect(() => {
+    if (isEditing && editableRef.current) {
+      editableRef.current.input.focus();
+      editableRef.current.input.select();
+    }
+  }, [isEditing]);
+
   if (!isEditing) {
-    return <Preview onClick={() => setIsEditing(true)}>{hex}</Preview>;
+    return <Preview onClick={enableEditing}>{hex}</Preview>;
   }
 
   return (
-    <div tabIndex={-1} onBlur={handleOnBlur}>
+    <div ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
       <EditableInput
         value={hex}
+        ref={editableRef}
         onChange={onChange}
-        onChangeComplete={() => setIsEditing(false)}
+        onChangeComplete={disableEditing}
         style={inputStyles}
       />
     </div>
