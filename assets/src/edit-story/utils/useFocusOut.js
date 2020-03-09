@@ -19,8 +19,9 @@
  */
 import { useLayoutEffect } from 'react';
 
-function useFocusOut(node, callback) {
+function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
+    const node = ref.current;
     if (!node) {
       return undefined;
     }
@@ -48,7 +49,8 @@ function useFocusOut(node, callback) {
       node.removeEventListener('focusout', onFocusOut);
       node.ownerDocument.removeEventListener('click', onDocumentClick);
     };
-  }, [node, callback]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps || []);
 }
 
 export default useFocusOut;

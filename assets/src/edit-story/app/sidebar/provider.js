@@ -25,7 +25,6 @@ import { useState, useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import ColorPicker from '../../components/colorPicker';
-import createSolid from '../../utils/createSolid';
 import {
   LIBRARY_MIN_WIDTH,
   LIBRARY_MAX_WIDTH,
@@ -100,13 +99,7 @@ function SidebarProvider({ children }) {
         <Sidebar ref={ref}>
           {hasSidebar && (
             <SidebarContent top={offset}>
-              {type === TYPE_COLORPICKER && (
-                <ColorPicker
-                  color={createSolid(255, 255, 255)}
-                  onChange={() => {}}
-                  {...props}
-                />
-              )}
+              {type === TYPE_COLORPICKER && <ColorPicker {...props} />}
             </SidebarContent>
           )}
         </Sidebar>
