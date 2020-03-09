@@ -45,6 +45,7 @@ function EditablePreview({ value, width, format, onChange }) {
     input: {
       fontFamily: 'monospace',
       width: `${width}px`,
+      textAlign: 'center',
     },
   };
 
@@ -85,13 +86,12 @@ function EditablePreview({ value, width, format, onChange }) {
 
 EditablePreview.propTypes = {
   value: PropTypes.string,
-  width: PropTypes.number,
+  width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   format: PropTypes.func,
 };
 
 EditablePreview.defaultProps = {
-  width: 60,
   format: (val) => val,
 };
 
