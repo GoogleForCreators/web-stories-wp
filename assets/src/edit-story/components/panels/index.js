@@ -27,7 +27,6 @@ import LinkPanel from './link';
 import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
-import ScalePanel from './scale';
 import TextStylePanel from './textStyle';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
@@ -39,7 +38,6 @@ export { default as ColorPresetPanel } from './colorPreset';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const COLOR = 'color';
-const SCALE = 'scale';
 const FONT = 'font';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
@@ -57,7 +55,6 @@ export const PanelTypes = {
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   SIZE_POSITION,
-  SCALE,
   COLOR,
   FONT,
   STYLE,
@@ -117,8 +114,6 @@ export function getPanels(elements) {
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
-        case SCALE:
-          return { type, Panel: ScalePanel };
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
         case COLOR:
