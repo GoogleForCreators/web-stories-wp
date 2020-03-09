@@ -60,6 +60,7 @@ function PageBackgroundPanel() {
     <SimplePanel name="pagebackground" title={__('Page', 'web-stories')}>
       <Color
         hasGradient
+        hasOpacity={false}
         value={color}
         onChange={handleChange}
         label={__('Current page color', 'web-stories')}

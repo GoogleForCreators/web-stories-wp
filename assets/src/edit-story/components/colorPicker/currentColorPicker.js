@@ -113,7 +113,7 @@ const CurrentAlphaWrapper = styled.div`
   bottom: ${CONTAINER_PADDING}px;
 `;
 
-function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
+function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex.substr(1);
 
@@ -155,18 +155,22 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
             onChange={onChange}
           />
         </HueWrapper>
-        <AlphaWrapper>
-          <Alpha
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={-3} currentColor={rgb} withAlpha />}
-            rgb={rgb}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </AlphaWrapper>
+        {showOpacity && (
+          <AlphaWrapper>
+            <Alpha
+              direction="vertical"
+              width={`${CONTROLS_WIDTH}px`}
+              height={`${BODY_HEIGHT}px`}
+              radius={`${CONTROLS_BORDER_RADIUS}px`}
+              pointer={() => (
+                <Pointer offset={-3} currentColor={rgb} withAlpha />
+              )}
+              rgb={rgb}
+              hsl={hsl}
+              onChange={onChange}
+            />
+          </AlphaWrapper>
+        )}
       </Body>
       <Footer>
         {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
@@ -186,14 +190,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
             format={handleFormatHex}
           />
         </CurrentWrapper>
-        <CurrentAlphaWrapper>
-          <EditablePreview
-            value={alphaPercentage}
-            width={35}
-            format={handleFormatPercentage}
-            onChange={handleOpacityInputChange}
-          />
-        </CurrentAlphaWrapper>
+        {showOpacity && (
+          <CurrentAlphaWrapper>
+            <EditablePreview
+              value={alphaPercentage}
+              width={35}
+              format={handleFormatPercentage}
+              onChange={handleOpacityInputChange}
+            />
+          </CurrentAlphaWrapper>
+        )}
       </Footer>
     </Container>
   );
@@ -201,10 +207,15 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange }) {
 
 CurrentColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
+  showOpacity: PropTypes.bool,
   rgb: PropTypes.object,
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
+};
+
+CurrentColorPicker.defaultProps = {
+  showOpacity: true,
 };
 
 export default CustomPicker(CurrentColorPicker);

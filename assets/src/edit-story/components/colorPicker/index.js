@@ -69,7 +69,7 @@ const CloseButton = styled(Close)`
 
 const Body = styled.div``;
 
-function ColorPicker({ color, hasGradient, onChange, onClose }) {
+function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
   const {
     state: { currentColor, generatedColor },
     actions: { load, updateCurrentColor },
@@ -124,6 +124,7 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
         <CurrentColorPicker
           color={currentColor}
           onChange={updateCurrentColor}
+          showOpacity={hasOpacity}
         />
       </Body>
     </Container>
@@ -134,12 +135,14 @@ ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   hasGradient: PropTypes.bool,
+  hasOpacity: PropTypes.bool,
   color: PatternPropType,
 };
 
 ColorPicker.defaultProps = {
   color: null,
   hasGradient: false,
+  hasOpacity: true,
 };
 
 export default ColorPicker;

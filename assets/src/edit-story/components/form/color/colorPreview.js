@@ -55,7 +55,14 @@ const TextualPreview = styled.div`
   text-align: center;
 `;
 
-function ColorPreview({ onChange, hasGradient, isMultiple, value, label }) {
+function ColorPreview({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  isMultiple,
+  value,
+  label,
+}) {
   const previewStyle = getPreviewStyle(isMultiple ? null : value);
   const previewText = getPreviewText(value);
   const fullLabel = `${label}: ${previewText}`;
@@ -71,9 +78,17 @@ function ColorPreview({ onChange, hasGradient, isMultiple, value, label }) {
       color: value,
       onChange,
       hasGradient,
+      hasOpacity,
       onClose: hideSidebar,
     });
-  }, [showColorPickerAt, hideSidebar, value, onChange, hasGradient]);
+  }, [
+    showColorPickerAt,
+    hideSidebar,
+    value,
+    onChange,
+    hasGradient,
+    hasOpacity,
+  ]);
 
   // Always hide color picker on unmount - note the double arrows
   useEffect(() => () => hideSidebar(), [hideSidebar]);
@@ -95,6 +110,7 @@ ColorPreview.propTypes = {
   value: PatternPropType,
   isMultiple: PropTypes.bool,
   hasGradient: PropTypes.bool,
+  hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
 };
@@ -102,6 +118,7 @@ ColorPreview.propTypes = {
 ColorPreview.defaultProps = {
   isMultiple: false,
   hasGradient: false,
+  hasOpacity: true,
   label: null,
 };
 
