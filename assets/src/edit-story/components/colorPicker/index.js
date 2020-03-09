@@ -91,7 +91,7 @@ function ColorPicker({ color, hasGradient, onChange, onClose }) {
   const closeRef = useRef();
   const previousFocus = useRef(document.activeElement);
 
-  useFocusOut(containerRef.current, onClose);
+  useFocusOut(containerRef, onClose);
 
   useLayoutEffect(() => {
     closeRef.current.focus();
