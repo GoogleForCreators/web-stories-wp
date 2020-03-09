@@ -36,9 +36,9 @@ export const defaultAttributes = {
   fontSize: 36,
   fontStyle: 'normal',
   color: '#000000',
-  letterSpacing: 'normal',
+  letterSpacing: 0,
   lineHeight: 1.3,
-  textAlign: 'initial',
+  textAlign: 'none',
   textDecoration: 'none',
   padding: {
     vertical: 0,

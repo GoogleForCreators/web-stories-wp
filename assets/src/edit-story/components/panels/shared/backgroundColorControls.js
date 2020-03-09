@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -27,35 +28,33 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../../form';
+import { Color, Numeric } from '../../form';
 
-function BackgroundColorControls({ properties, state, setState }) {
-  const { backgroundColor, backgroundOpacity } = properties;
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+function BackgroundColorControls({ state, setState }) {
   return (
     <>
-      <InputGroup
-        type="color"
-        label={__('Background color', 'web-stories')}
-        value={state.backgroundColor}
-        isMultiple={backgroundColor === ''}
+      <Color
+        value={state.backgroundColor || '#000000'}
         onChange={(value) => setState({ ...state, backgroundColor: value })}
       />
-      <InputGroup
-        type="number"
-        label={__('Background Opacity', 'web-stories')}
+      <BoxedNumeric
+        ariaLabel={__('Background Opacity', 'web-stories')}
+        flexBasis={58}
+        textCenter
         value={state.backgroundOpacity}
-        isMultiple={'' === backgroundOpacity}
         onChange={(value) => setState({ ...state, backgroundOpacity: value })}
         postfix={_x('%', 'Percentage', 'web-stories')}
-        min="1"
-        max="100"
       />
     </>
   );
 }
 
 BackgroundColorControls.propTypes = {
-  properties: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   setState: PropTypes.func.isRequired,
 };

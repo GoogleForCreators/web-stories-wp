@@ -27,7 +27,7 @@ import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import ScalePanel from './scale';
-import TextStylePanel from './textStyle';
+import TextStylePanel from './textStyle/index';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';

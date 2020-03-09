@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -27,35 +28,39 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../../form';
+import { Color, Label, Numeric, Row } from '../../form';
 import BackgroundColorControls from '../shared/backgroundColorControls';
 
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
 function ColorControls({ properties, state, setState }) {
-  const { color, backgroundColor, backgroundOpacity, textOpacity } = properties;
+  const { color, textOpacity } = properties;
   return (
     <>
-      <InputGroup
-        type="color"
-        label={__('Color', 'web-stories')}
-        value={state.color}
-        isMultiple={color === ''}
-        onChange={(value) => setState({ ...state, color: value })}
-      />
-      <InputGroup
-        type="number"
-        label={__('Text Opacity', 'web-stories')}
-        value={state.textOpacity}
-        isMultiple={'' === textOpacity}
-        onChange={(value) => setState({ ...state, textOpacity: value })}
-        postfix={_x('%', 'Percentage', 'web-stories')}
-        min="1"
-        max="100"
-      />
-      <BackgroundColorControls
-        state={state}
-        setState={setState}
-        properties={{ backgroundColor, backgroundOpacity }}
-      />
+      <Row>
+        <Label>{__('Textbox', 'web-stories')}</Label>
+        <Color
+          isMultiple={'' === color}
+          value={state.color || '#000000'}
+          onChange={(value) => setState({ ...state, color: value })}
+        />
+        <BoxedNumeric
+          ariaLabel={__('Text Opacity', 'web-stories')}
+          value={state.textOpacity}
+          isMultiple={'' === textOpacity}
+          flexBasis={58}
+          textCenter
+          onChange={(value) => setState({ ...state, textOpacity: value })}
+          postfix={_x('%', 'Percentage', 'web-stories')}
+        />
+      </Row>
+      <Row>
+        <Label>{__('Textbox', 'web-stories')}</Label>
+        <BackgroundColorControls state={state} setState={setState} />
+      </Row>
     </>
   );
 }

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -27,8 +28,19 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup } from '../../form';
+import { Label, Numeric, Row, Toggle } from '../../form';
 import { dataPixels } from '../../../units';
+import { ReactComponent as Locked } from '../../../icons/lock.svg';
+import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
+
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+const Space = styled.div`
+  flex: 0 0 10px;
+`;
 
 function PaddingControls({
   properties,
@@ -40,11 +52,11 @@ function PaddingControls({
 }) {
   const { padding } = properties;
   return (
-    <>
-      <InputGroup
-        label={__('Padding Horizontal', 'web-stories')}
+    <Row>
+      <Label>{__('Padding', 'web-stories')}</Label>
+      <BoxedNumeric
+        suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={state.padding.horizontal}
-        isMultiple={'' === padding}
         onChange={(value) => {
           const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
           const newPadding = {
@@ -57,12 +69,19 @@ function PaddingControls({
               : padding.vertical;
           setState({ ...state, padding: newPadding });
         }}
-        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
       />
-      <InputGroup
-        label={__('Padding Vertical', 'web-stories')}
+      <Space />
+      <Toggle
+        icon={<Locked />}
+        uncheckedIcon={<Unlocked />}
+        isMultiple={false}
+        value={lockPaddingRatio}
+        onChange={setLockPaddingRatio}
+      />
+      <Space />
+      <BoxedNumeric
+        suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={state.padding.vertical}
-        isMultiple={'' === padding}
         onChange={(value) => {
           const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
           const newPadding = {
@@ -78,15 +97,8 @@ function PaddingControls({
               : padding.horizontal;
           setState({ ...state, padding: newPadding });
         }}
-        postfix={_x('px', 'pixels, the measurement of size', 'web-stories')}
       />
-      <InputGroup
-        type="checkbox"
-        label={__('Keep padding ratio', 'web-stories')}
-        value={lockPaddingRatio}
-        onChange={setLockPaddingRatio}
-      />
-    </>
+    </Row>
   );
 }
 

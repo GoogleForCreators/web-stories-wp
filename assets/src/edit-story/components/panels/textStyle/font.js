@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -28,9 +29,18 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { InputGroup, SelectMenu } from '../../form';
+import { Numeric, Row, SelectMenu } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
+
+const Space = styled.div`
+  flex: 0 0 10px;
+`;
+
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
 
 function FontControls({ properties, state, setState }) {
   const { fontFamily, fontWeight, fontSize } = properties;
@@ -47,61 +57,68 @@ function FontControls({ properties, state, setState }) {
   return (
     <>
       {fonts && (
-        <SelectMenu
-          label={__('Font family', 'web-stories')}
-          options={fonts}
-          value={state.fontFamily}
-          isMultiple={fontFamily === ''}
-          onChange={(value) => {
-            const currentFontWeights = getFontWeight(value);
-            const currentFontFallback = getFontFallback(value);
-            const fontWeightsArr = currentFontWeights.map(
-              ({ value: weight }) => weight
-            );
+        <Row>
+          <SelectMenu
+            ariaLabel={__('Font family', 'web-stories')}
+            options={fonts}
+            value={state.fontFamily}
+            isMultiple={fontFamily === ''}
+            onChange={(value) => {
+              const currentFontWeights = getFontWeight(value);
+              const currentFontFallback = getFontFallback(value);
+              const fontWeightsArr = currentFontWeights.map(
+                ({ value: weight }) => weight
+              );
 
-            // The default weight is 400 or empty if there are none available.
-            let defaultWeight = fontWeightsArr?.length ? 400 : '';
-            // If the font doesn't have 400 as an option, let's take the first available option.
-            if (
-              fontWeightsArr?.length &&
-              !fontWeightsArr.includes(defaultWeight.toString())
-            ) {
-              defaultWeight = fontWeightsArr[0];
-            }
-            const newFontWeight =
-              fontWeightsArr &&
-              fontWeightsArr.includes(state.fontWeight.toString())
-                ? state.fontWeight
-                : defaultWeight;
+              // The default weight is 400 or empty if there are none available.
+              let defaultWeight = fontWeightsArr?.length ? 400 : '';
+              // If the font doesn't have 400 as an option, let's take the first available option.
+              if (
+                fontWeightsArr?.length &&
+                !fontWeightsArr.includes(defaultWeight.toString())
+              ) {
+                defaultWeight = fontWeightsArr[0];
+              }
+              const newFontWeight =
+                fontWeightsArr &&
+                fontWeightsArr.includes(state.fontWeight.toString())
+                  ? state.fontWeight
+                  : defaultWeight;
 
-            setState({
-              ...state,
-              fontFamily: value,
-              fontWeight: parseInt(newFontWeight),
-              fontWeights: currentFontWeights,
-              fontFallback: currentFontFallback,
-            });
-          }}
-        />
+              setState({
+                ...state,
+                fontFamily: value,
+                fontWeight: parseInt(newFontWeight),
+                fontWeights: currentFontWeights,
+                fontFallback: currentFontFallback,
+              });
+            }}
+          />
+        </Row>
       )}
-      {state.fontWeights && (
-        <SelectMenu
-          label={__('Font weight', 'web-stories')}
-          options={state.fontWeights}
-          value={state.fontWeight}
-          isMultiple={fontWeight === ''}
-          onChange={handleNumberChange('fontWeight')}
+      <Row>
+        {state.fontWeights && (
+          <>
+            <SelectMenu
+              ariaLabel={__('Font weight', 'web-stories')}
+              options={state.fontWeights}
+              value={state.fontWeight}
+              isMultiple={fontWeight === ''}
+              onChange={handleNumberChange('fontWeight')}
+            />
+            <Space />
+          </>
+        )}
+        <BoxedNumeric
+          ariaLabel={__('Font size', 'web-stories')}
+          value={state.fontSize}
+          isMultiple={fontSize === ''}
+          max={PAGE_HEIGHT}
+          flexBasis={58}
+          textCenter
+          onChange={handleNumberChange('fontSize')}
         />
-      )}
-      <InputGroup
-        type="number"
-        label={__('Font size', 'web-stories')}
-        value={state.fontSize}
-        isMultiple={fontSize === ''}
-        postfix={'px'}
-        max={PAGE_HEIGHT}
-        onChange={handleNumberChange('fontSize')}
-      />
+      </Row>
     </>
   );
 }

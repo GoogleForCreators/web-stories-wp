@@ -18,7 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -28,41 +29,133 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, Color } from '../../form';
-import { SimplePanel } from './../panel';
-import getCommonValue from './../utils/getCommonValue';
+import { Numeric, Row, ToggleButton } from '../../form';
+import { ReactComponent as VerticalOffset } from '../../../icons/offset_vertical.svg';
+import { ReactComponent as HorizontalOffset } from '../../../icons/offset_horizontal.svg';
+import { ReactComponent as LeftAlign } from '../../../icons/left_align.svg';
+import { ReactComponent as CenterAlign } from '../../../icons/center_align.svg';
+import { ReactComponent as RightAlign } from '../../../icons/right_align.svg';
+import { ReactComponent as MiddleAlign } from '../../../icons/middle_align.svg';
+import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
+import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
+import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 
-function StylePanel({ selectedElements, onSetProperties }) {
-  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const [state, setState] = useState({ backgroundColor });
-  useEffect(() => {
-    setState({ backgroundColor });
-  }, [backgroundColor]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+const ExpandedNumeric = styled(BoxedNumeric)`
+  flex-grow: 1;
+
+  svg {
+    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const Space = styled.div`
+  flex: 0 0 10px;
+`;
+
+function StylePanel({ properties, state, setState }) {
+  const { lineHeight, letterSpacing } = properties;
   return (
-    <SimplePanel
-      name="bgcolor"
-      title={__('Background color', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
-      <Row expand={true}>
-        <Color
-          value={state.backgroundColor}
-          isMultiple={backgroundColor === ''}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
-          opacity={1}
+    <>
+      <Row>
+        <ExpandedNumeric
+          ariaLabel={__('Line-height', 'web-stories')}
+          value={state.lineHeight || 0}
+          suffix={<VerticalOffset />}
+          isMultiple={lineHeight === ''}
+          onChange={(value) =>
+            setState({ ...state, lineHeight: parseFloat(value) })
+          }
+        />
+        <Space />
+        {/* TODO: What is meant by % for letter-spacing? */}
+        <ExpandedNumeric
+          ariaLabel={__('Letter-spacing', 'web-stories')}
+          value={state.letterSpacing || 0}
+          suffix={<HorizontalOffset />}
+          symbol="%"
+          isMultiple={letterSpacing === ''}
+          onChange={(value) =>
+            setState({ ...state, letterSpacing: parseFloat(value) })
+          }
         />
       </Row>
-    </SimplePanel>
+      <Row>
+        <ToggleButton
+          icon={<LeftAlign />}
+          value={state.textAlign === 'left'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'left' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<CenterAlign />}
+          value={state.textAlign === 'center'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'center' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<RightAlign />}
+          value={state.textAlign === 'right'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'right' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<MiddleAlign />}
+          value={state.textAlign === 'justify'}
+          isMultiple={false}
+          onChange={(value) =>
+            setState({ ...state, textAlign: value ? 'justify' : '' })
+          }
+        />
+        <ToggleButton
+          icon={<BoldIcon />}
+          value={state.bold}
+          isMultiple={false}
+          IconWidth={9}
+          IconHeight={10}
+          onChange={(value) => setState({ ...state, bold: value })}
+        />
+        <ToggleButton
+          icon={<ItalicIcon />}
+          value={state.fontStyle === 'italic'}
+          isMultiple={false}
+          IconWidth={10}
+          IconHeight={10}
+          onChange={(value) =>
+            setState({ ...state, fontStyle: value ? 'italic' : 'normal' })
+          }
+        />
+        <ToggleButton
+          icon={<UnderlineIcon />}
+          value={state.textDecoration === 'underline'}
+          isMultiple={false}
+          IconWidth={8}
+          IconHeight={21}
+          onChange={(value) =>
+            setState({ ...state, textDecoration: value ? 'underline' : 'none' })
+          }
+        />
+      </Row>
+    </>
   );
 }
 
 StylePanel.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  properties: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired,
+  setState: PropTypes.func.isRequired,
 };
 
 export default StylePanel;

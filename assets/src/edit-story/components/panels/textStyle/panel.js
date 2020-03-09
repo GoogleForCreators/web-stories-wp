@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -129,54 +129,72 @@ function StylePanel({ selectedElements, onSetProperties }) {
     backgroundColor,
     backgroundOpacity,
   ]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    onSetProperties((properties) => {
-      const {
-        padding: oldPadding,
-        width,
-        height: oldHeight,
-        rotationAngle,
-        x,
-        y,
-      } = properties;
-      const { padding: newPadding } = state;
-      const updatedState = removeUnsetValues(state);
-      const newProperties = { ...properties, ...updatedState };
-      const newHeight = dataPixels(calculateTextHeight(newProperties, width));
-      const [dx, dy] = calcRotatedResizeOffset(
-        rotationAngle,
-        0,
-        0,
-        0,
-        newHeight - oldHeight
-      );
-      const ratio = getPaddingRatio(oldPadding.horizontal, oldPadding.vertical);
-      if (
-        lockPaddingRatio &&
-        (newPadding.horizontal === '' || newPadding.vertical === '') &&
-        ratio
-      ) {
-        if (newPadding.horizontal === '') {
-          newPadding.horizontal = Math.round(
-            dataPixels(newPadding.vertical * ratio)
-          );
-        } else {
-          newPadding.horizontal = Math.round(
-            dataPixels(newPadding.horizontal / ratio)
-          );
+  const handleSubmit = useCallback(
+    (evt) => {
+      onSetProperties(state);
+      onSetProperties((properties) => {
+        const {
+          padding: oldPadding,
+          width,
+          height: oldHeight,
+          rotationAngle,
+          x,
+          y,
+        } = properties;
+        const { padding: newPadding } = state;
+        const updatedState = removeUnsetValues(state);
+        const newProperties = { ...properties, ...updatedState };
+        const newHeight = dataPixels(calculateTextHeight(newProperties, width));
+        const [dx, dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          0,
+          0,
+          0,
+          newHeight - oldHeight
+        );
+        const ratio = getPaddingRatio(
+          oldPadding.horizontal,
+          oldPadding.vertical
+        );
+        if (
+          lockPaddingRatio &&
+          (newPadding.horizontal === '' || newPadding.vertical === '') &&
+          ratio
+        ) {
+          if (newPadding.horizontal === '') {
+            newPadding.horizontal = Math.round(
+              dataPixels(newPadding.vertical * ratio)
+            );
+          } else {
+            newPadding.horizontal = Math.round(
+              dataPixels(newPadding.horizontal / ratio)
+            );
+          }
         }
+        return {
+          ...updatedState,
+          height: newHeight,
+          x: dataPixels(x + dx),
+          y: dataPixels(y + dy),
+          padding: newPadding,
+        };
+      });
+      if (evt) {
+        evt.preventDefault();
       }
-      return {
-        ...updatedState,
-        height: newHeight,
-        x: dataPixels(x + dx),
-        y: dataPixels(y + dy),
-        padding: newPadding,
-      };
-    });
-    evt.preventDefault();
-  };
+    },
+    [lockPaddingRatio, onSetProperties, state]
+  );
+
+  useEffect(() => {
+    handleSubmit();
+  }, [
+    state.textAlign,
+    state.bold,
+    state.fontStyle,
+    state.textDecoration,
+    handleSubmit,
+  ]);
 
   const getPaddingRatio = (horizontal, vertical) => {
     if (!vertical || !horizontal) {
