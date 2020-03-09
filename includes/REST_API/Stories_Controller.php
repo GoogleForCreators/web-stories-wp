@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -92,6 +93,12 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
+		if ( in_array( 'poster_portrait_url', $fields, true ) ) {
+			$poster_images               = Media::get_story_meta_images( $post );
+			$image                       = $poster_images['poster-portrait'];
+			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -134,6 +141,15 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 		$schema['properties']['featured_media_url'] = [
 			'description' => __( 'URL to enqueue the image', 'web-stories' ),
+			'type'        => 'string',
+			'format'      => 'uri',
+			'context'     => [ 'view', 'edit', 'embed' ],
+			'readonly'    => true,
+			'default'     => '',
+		];
+
+		$schema['properties']['poster_portrait_url'] = [
+			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
 			'type'        => 'string',
 			'format'      => 'uri',
 			'context'     => [ 'view', 'edit', 'embed' ],

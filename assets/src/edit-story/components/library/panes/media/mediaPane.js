@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect } from 'react';
 import { rgba } from 'polished';
 
@@ -38,6 +38,11 @@ import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
+import {
+  getResourceFromMediaPicker,
+  getResourceFromAttachment,
+} from './mediaUtils';
+import MediaElement from './mediaElement';
 
 const Container = styled.div`
   display: grid;
@@ -46,20 +51,6 @@ const Container = styled.div`
 `;
 
 const Column = styled.div``;
-
-export const styledTiles = css`
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-`;
-
-const Image = styled.img`
-  ${styledTiles}
-`;
-
-const Video = styled.video`
-  ${styledTiles}
-`;
 
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -121,36 +112,21 @@ function MediaPane(props) {
   /**
    * Callback of select in media picker to insert media element.
    *
-   * @param {Object} attachment Attachment object from backbone media picker.
+   * @param {Object} mediaPickerEl Object coming from backbone media picker.
    */
-  const onSelect = (attachment) => {
-    const {
-      url: src,
-      mime: mimeType,
-      width: oWidth,
-      height: oHeight,
-      id,
-      featured_media: posterId,
-      featured_media_src: poster,
-    } = attachment;
-    const mediaEl = { src, mimeType, oWidth, oHeight, id, posterId, poster };
-    insertMediaElement(mediaEl, DEFAULT_WIDTH);
+  const onSelect = (mediaPickerEl) => {
+    const resource = getResourceFromMediaPicker(mediaPickerEl);
+    const oRatio =
+      resource.width && resource.height ? resource.width / resource.height : 1;
+    const height = DEFAULT_WIDTH / oRatio;
+
+    insertMediaElement(resource, DEFAULT_WIDTH, height);
   };
 
   const openMediaPicker = useMediaPicker({
     onSelect,
     onClose,
   });
-
-  /**
-   * Check if number is odd or even.
-   *
-   * @param {number} n Number
-   * @return {boolean} Is even.
-   */
-  const isEven = (n) => {
-    return n % 2 === 0;
-  };
 
   /**
    * Handle search term changes.
@@ -177,98 +153,46 @@ function MediaPane(props) {
   /**
    * Insert element such image, video and audio into the editor.
    *
-   * @param {Object} attachment Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Return onInsert or null.
+   * @param {Object} resource Resource object
+   * @param {number} width Width that element is inserted into editor.
+   * @param {number} height Height that element is inserted into editor.
+   * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (attachment, width) => {
-    const { src, mimeType, oWidth, oHeight } = attachment;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return insertElement('image', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-      });
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      const { id: videoId, poster, posterId: posterIdRaw } = attachment;
-      const posterId = parseInt(posterIdRaw);
-      const videoEl = insertElement('video', {
-        src,
-        width,
-        height,
-        x: 5,
-        y: 5,
-        rotationAngle: 0,
-        origRatio,
-        origWidth: oWidth,
-        origHeight: oHeight,
-        mimeType,
-        videoId,
-        posterId,
-        poster,
-      });
+  const insertMediaElement = (resource, width, height) => {
+    const element = insertElement(resource.type, {
+      resource,
+      width,
+      height,
+      x: 5,
+      y: 5,
+      rotationAngle: 0,
+    });
 
-      // Generate video poster if one not set.
-      if (videoId && !posterId) {
-        uploadVideoFrame(videoId, src, videoEl.id);
-      }
-
-      return videoEl;
+    // Generate video poster if one not set.
+    if (resource.type === 'video' && resource.videoId && !resource.posterId) {
+      uploadVideoFrame(resource.videoId, resource.src, element.id);
     }
-    return null;
+
+    return element;
   };
 
   /**
-   * Get a formatted element for different media types.
+   * Check if number is odd or even.
    *
-   * @param {Object} mediaEl Attachment object
-   * @param {number} width      Width that element is inserted into editor.
-   * @return {null|*}          Element or null if does not map to video/image.
+   * @param {number} n Number
+   * @return {boolean} Is even.
    */
-  const getMediaElement = (mediaEl, width) => {
-    const { src, oWidth, oHeight, mimeType } = mediaEl;
-    const origRatio = oWidth / oHeight;
-    const height = width / origRatio;
-    if (allowedImageMimeTypes.includes(mimeType)) {
-      return (
-        <Image
-          key={src}
-          src={src}
-          width={width}
-          height={height}
-          loading={'lazy'}
-          onClick={() => insertMediaElement(mediaEl, width)}
-        />
-      );
-    } else if (allowedVideoMimeTypes.includes(mimeType)) {
-      return (
-        <Video
-          key={src}
-          width={width}
-          height={height}
-          onClick={() => insertMediaElement(mediaEl, width)}
-          onMouseEnter={(evt) => {
-            evt.target.play();
-          }}
-          onMouseLeave={(evt) => {
-            evt.target.pause();
-            evt.target.currentTime = 0;
-          }}
-        >
-          <source src={src} type={mimeType} />
-        </Video>
-      );
-    }
-    return null;
+  const isEven = (n) => {
+    return n % 2 === 0;
   };
+
+  const resources = media
+    .filter(
+      ({ mimeType }) =>
+        allowedImageMimeTypes.includes(mimeType) ||
+        allowedVideoMimeTypes.includes(mimeType)
+    )
+    .map((attachment) => getResourceFromAttachment(attachment));
 
   return (
     <Pane id={paneId} {...props}>
@@ -306,18 +230,28 @@ function MediaPane(props) {
         ) : (
           <Container>
             <Column>
-              {media.map((mediaEl, index) => {
-                return isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
-              })}
+              {resources
+                .filter((_, index) => isEven(index))
+                .map((resource) => (
+                  <MediaElement
+                    resource={resource}
+                    key={resource.src}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
             </Column>
             <Column>
-              {media.map((mediaEl, index) => {
-                return !isEven(index)
-                  ? getMediaElement(mediaEl, DEFAULT_WIDTH)
-                  : null;
-              })}
+              {resources
+                .filter((_, index) => !isEven(index))
+                .map((resource) => (
+                  <MediaElement
+                    resource={resource}
+                    key={resource.src}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
             </Column>
           </Container>
         )}
