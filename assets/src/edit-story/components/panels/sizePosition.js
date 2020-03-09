@@ -76,6 +76,13 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height, isFill, rotationAngle, flip.horizontal, flip.vertical]);
 
+  const isSingleElement = selectedElements.length === 1;
+  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
+
+  const canFlip = selectedElements.every(
+    ({ type }) => getDefinitionForType(type).canFlip
+  );
+
   const updateProperties = useCallback(
     (evt) => {
       onSetProperties(
@@ -113,13 +120,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   useEffect(() => {
     updateProperties();
   }, [state.isFill, updateProperties]);
-
-  const isSingleElement = selectedElements.length === 1;
-  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
-
-  const canFlip = selectedElements.every(
-    ({ type }) => getDefinitionForType(type).canFlip
-  );
 
   const handleNumberChange = useCallback(
     (property) => (value) =>
