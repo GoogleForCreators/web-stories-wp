@@ -126,19 +126,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     [setState]
   );
 
-  const handleFlipChange = useCallback(
-    (property) => (value) => {
-      setState({
-        ...state,
-        flip: {
-          ...state.flip,
-          [property]: value,
-        },
-      });
-    },
-    [setState, state]
-  );
-
   const handleSetBackground = () => {
     const newState = {
       ...state,
@@ -226,7 +213,15 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           disabled={isFill}
         />
         {canFlip && (
-          <FlipControls onChange={handleFlipChange} value={state.flip} />
+          <FlipControls
+            onChange={(value) => {
+              setState({
+                ...state,
+                flip: value,
+              });
+            }}
+            value={state.flip}
+          />
         )}
         {canFill && isSingleElement && (
           <Toggle
