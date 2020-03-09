@@ -62,7 +62,6 @@ class Dashboard extends \WP_UnitTestCase {
 		$dashboard->enqueue_assets( $dashboard->get_hook_suffix() );
 		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
-		$this->assertSame( 'replace', wp_styles()->get_data( $dashboard::SCRIPT_HANDLE, 'rtl' ) );
 		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );
 	}
 }

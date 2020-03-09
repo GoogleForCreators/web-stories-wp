@@ -44,7 +44,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->namespace = 'amp/v1';
+		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'fonts';
 	}
 

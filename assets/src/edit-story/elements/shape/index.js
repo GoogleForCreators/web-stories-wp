@@ -19,40 +19,30 @@
  */
 import { PanelTypes } from '../../components/panels';
 export { default as Display } from './display';
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
 export { default as Output } from './output';
-export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
-export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
-  fontFamily: 'Arial',
-  fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-  fontWeight: 400,
-  fontSize: 36,
-  fontStyle: 'normal',
-  color: '#000000',
-  letterSpacing: 'normal',
-  lineHeight: 1.3,
-  textAlign: 'initial',
+  backgroundColor: '#ffffff',
 };
 
-export const hasEditMode = true;
+export const hasEditMode = false;
 
 export const isMedia = false;
 
-export const isMaskable = false;
+export const isMaskable = true;
 
 export const resizeRules = {
-  vertical: false,
+  vertical: true,
   horizontal: true,
   diagonal: true,
 };
 
 export const panels = [
   PanelTypes.SIZE_POSITION,
-  PanelTypes.TEXT_STYLE,
+  PanelTypes.STYLE,
   PanelTypes.LINK,
+  PanelTypes.FILL,
+  PanelTypes.MASK,
 ];

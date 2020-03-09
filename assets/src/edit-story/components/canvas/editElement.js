@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -43,24 +42,16 @@ const Wrapper = styled.div`
 `;
 
 function EditElement({ element }) {
-  const ref = useRef(null);
   const { id, type } = element;
   const {
     actions: { getBox },
   } = useUnits();
 
   const { Edit } = getDefinitionForType(type);
-
   const box = getBox(element);
-
-  useEffect(() => {
-    ref.current.focus();
-  }, []);
 
   return (
     <Wrapper
-      ref={ref}
-      tabIndex="0"
       aria-labelledby={`layer-${id}`}
       {...box}
       onMouseDown={(evt) => evt.stopPropagation()}

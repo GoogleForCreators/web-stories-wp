@@ -15,22 +15,12 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import StoryPropTypes from '../../types';
+import { __ } from '@wordpress/i18n';
 
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function SquareOutput({ element: { backgroundColor } }) {
-  const style = {
-    background: backgroundColor,
-  };
-  return <div className="fill" style={style} />;
+function ShapeLayerContent() {
+  return __('Shape', 'web-stories');
 }
 
-SquareOutput.propTypes = {
-  element: StoryPropTypes.elements.square.isRequired,
-};
-
-export default SquareOutput;
+export default ShapeLayerContent;
