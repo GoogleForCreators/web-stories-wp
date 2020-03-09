@@ -23,12 +23,12 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory, useHistory } from '../../../app';
+import { useStory, useHistory, useConfig } from '../../../app';
 import { createPage } from '../../../elements';
 import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
 import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
-import { ReactComponent as Undo } from '../../../icons/undo_icon.svg';
-import { ReactComponent as Redo } from '../../../icons/redo_icon.svg';
+import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
+import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
@@ -107,6 +107,7 @@ function PageMenu() {
     state: { currentPageNumber, currentPage },
     actions: { deleteCurrentPage, addPage },
   } = useStory();
+  const { isRTL } = useConfig();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -150,11 +151,11 @@ function PageMenu() {
           <Divider />
           <Space />
           <Icon disabled={!canUndo} onClick={handleUndo}>
-            <Undo />
+            {isRTL ? <RightArrow /> : <LeftArrow />}
           </Icon>
           <Space />
           <Icon disabled={!canRedo} onClick={handleRedo}>
-            <Redo />
+            {isRTL ? <LeftArrow /> : <RightArrow />}
           </Icon>
         </Options>
         <Options>
