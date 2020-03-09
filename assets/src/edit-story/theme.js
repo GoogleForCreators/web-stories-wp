@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useContext } from '@wordpress/element';
+import { useContext } from 'react';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -54,6 +50,7 @@ const theme = {
       v7: '#07080C',
       v8: '#2A3140',
       v9: '#232636',
+      v10: '#44485B',
     },
     mg: {
       v1: '#616877',

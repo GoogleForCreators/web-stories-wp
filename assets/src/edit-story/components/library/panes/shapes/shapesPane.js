@@ -62,7 +62,7 @@ function ShapesPane(props) {
       <SearchInput
         value={''}
         placeholder={__('Search shapes...', 'web-stories')}
-        onChange={() => {}}
+        onChange={() => { }}
       />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
@@ -72,7 +72,7 @@ function ShapesPane(props) {
               key={mask.type}
               onClick={() => {
                 insertElement('shape', {
-                  backgroundColor: '#333',
+                  resource: { color: '#333' },
                   width: 200,
                   height: 200,
                   x: 5,

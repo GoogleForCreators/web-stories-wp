@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect } from '@wordpress/element';
+import { useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -97,8 +93,8 @@ function WithDropTarget({ element, children }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          onFocus={() => { }}
+          onBlur={() => { }}
         />
       </DropTargetSVG>
     </>

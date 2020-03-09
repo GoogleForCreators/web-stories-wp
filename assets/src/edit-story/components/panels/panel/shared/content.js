@@ -19,12 +19,8 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { useContext } from '@wordpress/element';
 
 /**
  * Internal dependencies

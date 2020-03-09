@@ -18,15 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { useRef } from '@wordpress/element';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
@@ -49,16 +46,12 @@ const EditPageArea = withOverlay(styled(PageArea).attrs({
 `);
 
 function EditLayer({}) {
-  const ref = useRef(null);
   const {
     state: { currentPage },
   } = useStory();
   const {
     state: { editingElement: editingElementId },
-    actions: { clearEditing },
   } = useCanvas();
-
-  useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing());
 
   const editingElement =
     editingElementId &&
@@ -69,15 +62,31 @@ function EditLayer({}) {
     return null;
   }
 
-  const { editModeGrayout } = getDefinitionForType(editingElement.type);
+  return <EditLayerForElement element={editingElement} />;
+}
+
+function EditLayerForElement({ element }) {
+  const ref = useRef(null);
+  const { editModeGrayout } = getDefinitionForType(element.type);
+
+  const {
+    actions: { clearEditing },
+  } = useCanvas();
+  useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing(), [
+    clearEditing,
+  ]);
 
   return (
     <LayerWithGrayout ref={ref} grayout={editModeGrayout} pointerEvents="none">
       <EditPageArea>
-        <EditElement element={editingElement} />
+        <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>
   );
 }
+
+EditLayerForElement.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
 
 export default EditLayer;

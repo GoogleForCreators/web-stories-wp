@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies

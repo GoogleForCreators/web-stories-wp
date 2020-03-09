@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useRef, useCallback } from '@wordpress/element';
+import { useMemo, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ function LibraryTabs() {
     actions: { setTab },
     data: { tabs },
   } = useLibrary();
-  const panes = getPanes(tabs);
+  const panes = useMemo(() => getPanes(tabs), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
     (direction) => () => {
@@ -50,8 +50,8 @@ function LibraryTabs() {
     [tab, setTab, panes]
   );
   // todo: support RTL
-  useKeyDownEffect(ref, 'left', handleNavigation(-1), [tab, setTab, panes]);
-  useKeyDownEffect(ref, 'right', handleNavigation(1), [tab, setTab, panes]);
+  useKeyDownEffect(ref, 'left', handleNavigation(-1), [handleNavigation]);
+  useKeyDownEffect(ref, 'right', handleNavigation(1), [handleNavigation]);
   return (
     <Tabs ref={ref}>
       {panes.map(({ id, Tab }) => (

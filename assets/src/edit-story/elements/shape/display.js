@@ -30,9 +30,9 @@ const Element = styled.div`
   ${elementWithBackgroundColor}
 `;
 
-function ShapeDisplay({ element: { backgroundColor } }) {
+function ShapeDisplay({ element: { resource } }) {
   const props = {
-    backgroundColor,
+    backgroundColor: resource.color,
   };
   return <Element {...props} />;
 }

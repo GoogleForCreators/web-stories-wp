@@ -29,9 +29,11 @@ export const defaultAttributes = {
   controls: false,
   loop: false,
   autoPlay: true,
-  posterId: null,
-  poster: null,
-  videoId: 0,
+  resource: {
+    posterId: null,
+    poster: null,
+    videoId: 0,
+  }
 };
 
 export const hasEditMode = true;

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { useState } from '@wordpress/element';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -36,17 +32,17 @@ const SHAPES = 'shapes';
 const ELEMENTS = 'elements';
 const ANIMATION = 'animation';
 
+const TABS = {
+  MEDIA,
+  TEXT,
+  SHAPES,
+  ELEMENTS,
+  ANIMATION,
+};
+
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
-  const { insertElement, createElementDef } = useInsertElement();
-
-  const tabs = {
-    MEDIA,
-    TEXT,
-    SHAPES,
-    ELEMENTS,
-    ANIMATION,
-  };
+  const { insertElement } = useInsertElement();
 
   const state = {
     state: {
@@ -55,10 +51,9 @@ function LibraryProvider({ children }) {
     actions: {
       setTab,
       insertElement,
-      createElementDef,
     },
     data: {
-      tabs,
+      tabs: TABS,
     },
   };
 

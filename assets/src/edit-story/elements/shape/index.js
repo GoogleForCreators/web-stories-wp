@@ -24,7 +24,10 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
-  backgroundColor: '#ffffff',
+  resource: {
+    style: 'solid',
+    color: '#ffffff'
+  },
 };
 
 export const hasEditMode = false;
@@ -42,6 +45,7 @@ export const resizeRules = {
 export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.STYLE,
+  PanelTypes.LINK,
   PanelTypes.FILL,
   PanelTypes.MASK,
 ];

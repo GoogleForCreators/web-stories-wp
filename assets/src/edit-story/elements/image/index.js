@@ -29,7 +29,7 @@ export { default as LayerIcon } from './icon';
 export const defaultAttributes = {
   scale: 100,
   focalX: 50,
-  focalY: 50,
+  focalY: 50
 };
 
 export const hasEditMode = true;
@@ -53,5 +53,6 @@ export const panels = [
   PanelTypes.POSITION,
   PanelTypes.SCALE,
   PanelTypes.FILL,
+  PanelTypes.LINK,
   PanelTypes.MASK,
 ];

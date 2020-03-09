@@ -28,6 +28,7 @@ module.exports = {
     '<rootDir>/tests/js/setup-globals',
     '<rootDir>/tests/js/setup-mocks',
   ],
+  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',
@@ -40,6 +41,7 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/assets/src/edit-story/**/*.js',
     '!**/test/**',
+    '!**/stories/**',
   ],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

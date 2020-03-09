@@ -27,13 +27,25 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { StoryElementPropsTypes } from '../types';
 import pick from '../utils/objectPick';
 import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
 import * as videoElement from './video';
+
+const MERGE_ELEMENT_PROPS_TO_KEEP = [
+  'id',
+  'type',
+  'x',
+  'y',
+  'width',
+  'height',
+  'rotationAngle',
+  'isFill',
+  'mask',
+  'link',
+]
 
 export const createNewElement = (type, attributes = {}) => {
   const element = elementTypes.find((el) => el.type === type);
@@ -51,7 +63,7 @@ export const createPage = (attributes) => createNewElement('page', attributes);
 export const mergeElements = (
   from,
   into,
-  keep = Object.keys(StoryElementPropsTypes)
+  keep = MERGE_ELEMENT_PROPS_TO_KEEP
 ) => {
   return {
     ...from,

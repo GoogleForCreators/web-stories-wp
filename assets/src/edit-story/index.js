@@ -18,12 +18,7 @@
  * External dependencies
  */
 import Modal from 'react-modal';
-
-/**
- * WordPress dependencies
- */
-import { render } from '@wordpress/element';
-import domReady from '@wordpress/dom-ready';
+import { render } from 'react-dom';
 
 /**
  * Internal dependencies
@@ -46,7 +41,13 @@ const initialize = (id, config) => {
   render(<App config={config} />, appElement);
 };
 
-domReady(() => {
+const initializeWithConfig = () => {
   const { id, config } = window.ampStoriesEditSettings;
   initialize(id, config);
-});
+};
+
+if ('loading' === document.readyState) {
+  document.addEventListener('DOMContentLoaded', initializeWithConfig);
+} else {
+  initializeWithConfig();
+}

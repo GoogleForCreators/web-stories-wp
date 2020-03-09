@@ -35,7 +35,8 @@ function useInsertElement() {
     actions: { addElement, setBackgroundElement },
     state: { currentPage },
   } = useStory();
-  const createElementDef = (type, { width, height, ...props }) => {
+
+  const createElement = (type, { width, height, ...props }) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
@@ -44,17 +45,15 @@ function useInsertElement() {
       height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
       ...(isMediaEl(type)
         ? {
-            mask: DEFAULT_MASK,
-          }
+          mask: DEFAULT_MASK,
+        }
         : {}),
     });
     return element;
   };
-  const insertElement = (typeOrDef, props) => {
-    const element =
-      typeof typeOrDef === 'string'
-        ? createElementDef(typeOrDef, props)
-        : typeOrDef;
+
+  const insertElement = (type, props) => {
+    const element = createElement(type, props);
     addElement({ element });
     if (
       isMediaEl(element.type) &&
@@ -65,7 +64,7 @@ function useInsertElement() {
     return element;
   };
 
-  return { createElementDef, insertElement };
+  return { insertElement };
 }
 
 export default useInsertElement;

@@ -34,7 +34,7 @@ export const MaskTypes = {
   PENTAGON: 'pentagon',
 };
 
-export const CLIP_PATHS = {
+const CLIP_PATHS = {
   [MaskTypes.HEART]:
     'M 0.5,1 C 0.5,1,0,0.7,0,0.3 A 0.25,0.25,1,1,1,0.5,0.3 A 0.25,0.25,1,1,1,1,0.3 C 1,0.7,0.5,1,0.5,1 Z',
   [MaskTypes.STAR]:

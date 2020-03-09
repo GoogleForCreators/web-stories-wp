@@ -19,23 +19,18 @@
  */
 import PropTypes from 'prop-types';
 import { throttle } from 'throttle-debounce';
-
-/**
- * WordPress dependencies
- */
-import { useState, useCallback } from '@wordpress/element';
+import { useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { mergeElements } from '../../elements';
 import { useTransform } from '../transform';
 import { useStory } from '../../app';
 import Context from './context';
 
 function DropTargetsProvider({ children }) {
   const [dropTargets, setDropTargets] = useState({});
-  const [activeDropTargetId, setactiveDropTargetId] = useState(null);
+  const [activeDropTargetId, setActiveDropTargetId] = useState(null);
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -45,11 +40,11 @@ function DropTargetsProvider({ children }) {
   } = useStory();
 
   const getDropTargetFromCursor = useCallback(
-    (x, y, element) => {
+    (x, y) => {
       const underCursor = document.elementsFromPoint(x, y);
       return (
         Object.keys(dropTargets).find(
-          (id) => underCursor.includes(dropTargets[id]) && id !== element.id
+          (id) => underCursor.includes(dropTargets[id])
         ) || null
       );
     },
@@ -74,26 +69,35 @@ function DropTargetsProvider({ children }) {
    * Dragging elements
    */
   const handleDrag = useCallback(
-    (element, x, y) => {
-      const dropTargetId = getDropTargetFromCursor(x, y, element);
-      if (dropTargetId && activeDropTargetId !== dropTargetId) {
+    (resourceOrElement, x, y) => {
+      const id = resourceOrElement.id
+      const resource = resourceOrElement.resource || resourceOrElement
+      const dropTargetId = getDropTargetFromCursor(x, y);
+
+      if (dropTargetId && dropTargetId !== id && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          updates: { dropTargetActive: true, elementReplacement: element },
+          updates: { dropTargetActive: true, replacement: resource },
         });
-        pushTransform(element.id, {
-          updates: { overDropTarget: true },
-        });
+        if (id) {
+          pushTransform(id, {
+            updates: { overDropTarget: true },
+          });
+        }
       } else if (!dropTargetId) {
         (currentPage?.elements || []).forEach((el) =>
           pushTransform(el.id, {
-            updates: { dropTargetActive: false, elementReplacement: null },
+            updates: { dropTargetActive: false, replacement: null },
           })
         );
-        pushTransform(element.id, {
-          updates: { overDropTarget: false },
-        });
+        if (id) {
+          pushTransform(id, {
+            updates: { overDropTarget: false },
+          });
+        }
       }
-      setactiveDropTargetId(dropTargetId);
+      if (dropTargetId !== id) {
+        setActiveDropTargetId(dropTargetId);
+      }
     },
     [activeDropTargetId, currentPage, getDropTargetFromCursor, pushTransform]
   );
@@ -106,37 +110,31 @@ function DropTargetsProvider({ children }) {
   /**
    * Dropping and merging elements
    */
-  const combineElements = useCallback(
-    (dropTargetId, selectedElement) => {
-      const dropTarget = currentPage?.elements.find(
-        (element) => element.id === dropTargetId
-      );
-      updateElementById({
-        elementId: dropTargetId,
-        properties: mergeElements(selectedElement, dropTarget),
-      });
-      deleteElementById({ elementId: selectedElement.id });
-    },
-    [currentPage, deleteElementById, updateElementById]
-  );
-
   const handleDrop = useCallback(
-    (element) => {
-      if (activeDropTargetId && activeDropTargetId !== element.id) {
-        combineElements(activeDropTargetId, element);
+    (resourceOrElement) => {
+      const id = resourceOrElement.id
+      const resource = resourceOrElement.resource || resourceOrElement
+
+      if (activeDropTargetId && activeDropTargetId !== id) {
+        updateElementById({
+          elementId: activeDropTargetId,
+          properties: { resource, type: resource.type },
+        });
+        if (id) {
+          deleteElementById({ elementId: id });
+        }
         // Reset styles on all other elements
         (currentPage?.elements || []).forEach((el) =>
           pushTransform(el.id, {
-            updates: { dropTargetActive: false, elementReplacement: null },
+            updates: { dropTargetActive: false, replacement: null },
           })
         );
         setSelectedElementsById({ elementIds: activeDropTargetId });
-        setactiveDropTargetId(null);
+        setActiveDropTargetId(null);
       }
     },
     [
       activeDropTargetId,
-      combineElements,
       currentPage,
       pushTransform,
       setSelectedElementsById,

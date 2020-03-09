@@ -15,25 +15,28 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { useState, useCallback } from '@wordpress/element';
+import { useReducer, useCallback, useState } from 'react';
 
 function useEditingElement() {
-  const [editingElement, setEditingElement] = useState(null);
-  const [editingElementState, setEditingElementState] = useState({});
+  const [state, dispatch] = useReducer(reducer, {
+    editingElement: null,
+    editingElementState: {},
+  });
   const [nodesById, setNodesById] = useState({});
 
-  const clearEditing = useCallback(() => setEditingElement(null), []);
+  const clearEditing = useCallback(
+    () => dispatch({ editingElement: null }),
+    []
+  );
 
   const setEditingElementWithoutState = useCallback((id) => {
-    setEditingElement(id);
-    setEditingElementState({});
+    dispatch({ editingElement: id });
   }, []);
 
-  const setEditingElementWithState = useCallback((id, state) => {
-    setEditingElement(id);
-    setEditingElementState(state);
+  const setEditingElementWithState = useCallback((id, editingState) => {
+    dispatch({ editingElement: id, editingElementState: editingState });
   }, []);
 
   const setNodeForElement = useCallback(
@@ -41,6 +44,7 @@ function useEditingElement() {
     [setNodesById]
   );
 
+  const { editingElement, editingElementState } = state;
   return {
     nodesById,
     editingElement,
@@ -49,6 +53,14 @@ function useEditingElement() {
     setEditingElementWithoutState,
     clearEditing,
     setNodeForElement,
+  };
+}
+
+function reducer(state, { editingElement, editingElementState = {} }) {
+  return {
+    ...state,
+    editingElement,
+    editingElementState,
   };
 }
 

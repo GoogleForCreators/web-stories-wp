@@ -18,15 +18,12 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-
-/**
- * WordPress dependencies
- */
-import { useContext, useEffect, createRef } from '@wordpress/element';
+import { useContext, useEffect, createRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -59,6 +56,7 @@ export function useKeyDownEffect(
   deps = undefined
 ) {
   const { keys } = useContext(Context);
+  const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
       const node = ref.current;
@@ -73,14 +71,14 @@ export function useKeyDownEffect(
       }
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
-      const handler = createKeyHandler(keySpec, callback);
+      const handler = createKeyHandler(keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler);
       return () => {
         mousetrap.unbind(keySpec.key);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    deps || []
+    [batchingCallback, keys]
   );
 }
 
