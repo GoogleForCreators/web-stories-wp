@@ -39,7 +39,11 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function LayerStylePanel({ selectedElements, onSetProperties }) {
-  const opacity = getCommonValue(selectedElements, 'opacity');
+  let opacity = getCommonValue(selectedElements, 'opacity');
+  if (!opacity) {
+    // Default opacity is always 100.
+    opacity = 100;
+  }
   const [state, setState] = useState({ opacity });
 
   useEffect(() => {
