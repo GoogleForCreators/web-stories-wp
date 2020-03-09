@@ -21,8 +21,8 @@ import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
 import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
 import fullbleedToFill from './migrations/v0003_fullbleedToFill';
 import squareToShape from './migrations/v0004_squareToShape';
-import mediaElementToResource from './migrations/v0005_mediaElementToResource';
-import setOpacity from './migrations/v0006_setOpacity';
+import mediaElementToResource from './migrations/v0004_mediaElementToResource';
+import setOpacity from './migrations/v0005_setOpacity';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
