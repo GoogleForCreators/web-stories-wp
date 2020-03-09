@@ -24,13 +24,15 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
+import StoryPropTypes from '../../types';
 import getFocalFromOffset from './getFocalFromOffset';
+import getTransformFlip from './getTransformFlip';
 
 function EditPanMovable({
   setProperties,
   fullMedia,
-  flip,
   croppedMedia,
+  flip,
   x,
   y,
   width,
@@ -40,10 +42,10 @@ function EditPanMovable({
   offsetY,
   mediaWidth,
   mediaHeight,
-  transformFlip,
 }) {
   const moveableRef = useRef();
   const translateRef = useRef([0, 0]);
+  const transformFlip = getTransformFlip(flip);
 
   const update = () => {
     const [tx, ty] = translateRef.current;
@@ -79,9 +81,11 @@ function EditPanMovable({
       onDragEnd={() => {
         const [tx, ty] = translateRef.current;
         translateRef.current = [0, 0];
+        const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
+        const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - ty);
         setProperties({
-          focalX: getFocalFromOffset(width, mediaWidth, offsetX - tx),
-          focalY: getFocalFromOffset(height, mediaHeight, offsetY - ty),
+          focalX: flip && flip.horizontal ? 100 - panFocalX : panFocalX,
+          focalY: flip && flip.vertical ? 100 - panFocalY : panFocalY,
         });
         update();
       }}
@@ -114,12 +118,9 @@ function EditPanMovable({
 
 EditPanMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
-  flip: PropTypes.shape({
-    vertical: PropTypes.bool,
-    horizontal: PropTypes.bool,
-  }),
   fullMedia: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
@@ -129,7 +130,6 @@ EditPanMovable.propTypes = {
   offsetY: PropTypes.number.isRequired,
   mediaWidth: PropTypes.number.isRequired,
   mediaHeight: PropTypes.number.isRequired,
-  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
 };
 
 export default EditPanMovable;

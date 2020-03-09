@@ -24,14 +24,17 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
+import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import getTransformFlip from '../shared/getTransformFlip';
 import { getFocalFromOffset } from './../shared';
 
 function EditCropMovable({
   setProperties,
   cropBox,
   croppedImage,
+  flip,
   x,
   y,
   width,
@@ -41,7 +44,6 @@ function EditCropMovable({
   offsetY,
   imgWidth,
   imgHeight,
-  transformFlip,
 }) {
   const {
     actions: { editorToDataX, editorToDataY },
@@ -49,6 +51,7 @@ function EditCropMovable({
 
   const moveableRef = useRef();
   const cropRef = useRef([0, 0, 0, 0, 0, 0]);
+  const transformFlip = getTransformFlip(flip);
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
@@ -129,8 +132,8 @@ function EditCropMovable({
           width: editorToDataX(resizeWidth),
           height: editorToDataY(resizeHeight),
           scale: resizeScale,
-          focalX: resizeFocalX,
-          focalY: resizeFocalY,
+          focalX: flip && flip.horizontal ? 100 - resizeFocalX : resizeFocalX,
+          focalY: flip && flip.vertical ? 100 - resizeFocalY : resizeFocalY,
         });
       }}
       snappable={true}
@@ -145,6 +148,7 @@ EditCropMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   cropBox: PropTypes.object.isRequired,
   croppedImage: PropTypes.object.isRequired,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
@@ -154,7 +158,6 @@ EditCropMovable.propTypes = {
   offsetY: PropTypes.number.isRequired,
   imgWidth: PropTypes.number.isRequired,
   imgHeight: PropTypes.number.isRequired,
-  transformFlip: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 export default EditCropMovable;

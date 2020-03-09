@@ -78,8 +78,8 @@ function VideoEdit({
     width,
     height,
     scale,
-    focalX,
-    focalY
+    flip && flip.horizontal ? 100 - focalX : focalX,
+    flip && flip.vertical ? 100 - focalY : focalY
   );
 
   videoProps.transformFlip = getTransformFlip(flip);
@@ -100,9 +100,9 @@ function VideoEdit({
       {fullVideo && croppedVideo && (
         <EditPanMovable
           setProperties={setProperties}
-          flip={flip}
           fullMedia={fullVideo}
           croppedMedia={croppedVideo}
+          flip={flip}
           x={x}
           y={y}
           width={width}
@@ -112,7 +112,6 @@ function VideoEdit({
           offsetY={videoProps.offsetY}
           mediaWidth={videoProps.width}
           mediaHeight={videoProps.height}
-          transformFlip={videoProps.transformFlip}
         />
       )}
 
