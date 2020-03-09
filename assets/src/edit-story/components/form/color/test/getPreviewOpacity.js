@@ -28,11 +28,17 @@ describe('getPreviewOpacity', () => {
     expect(result).toBe(expected);
   });
 
-  // TODO: Update this when implemention is done
-  it('should return 100 for non-solid pattern', () => {
+  it('should return default alpha for non-solid pattern', () => {
     const pattern = { type: 'linear' };
     const result = getPreviewOpacity(pattern);
     const expected = 100;
+    expect(result).toBe(expected);
+  });
+
+  it('should return non-default alpha for non-solid pattern', () => {
+    const pattern = { type: 'linear', alpha: 0.7 };
+    const result = getPreviewOpacity(pattern);
+    const expected = 70;
     expect(result).toBe(expected);
   });
 

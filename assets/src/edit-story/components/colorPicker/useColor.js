@@ -38,13 +38,14 @@ const initialState = {
   },
   currentStopIndex: 0,
   rotation: 0.5,
+  alpha: 1,
   center: { x: 0.5, y: 0.5 },
   size: { w: 1, h: 1 },
 };
 
 const reducer = {
   load: (state, { payload }) => {
-    const { type, color, stops, rotation, center, size } = payload;
+    const { type, color, stops, rotation, center, size, alpha } = payload;
     switch (type) {
       case TYPE_LINEAR:
         return {
@@ -54,6 +55,7 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
+          alpha,
           rotation: isNaN(rotation) ? 0 : rotation,
         };
 
@@ -67,6 +69,7 @@ const reducer = {
           stops,
           center,
           size,
+          alpha,
         };
 
       case TYPE_CONIC:
@@ -79,6 +82,7 @@ const reducer = {
           stops,
           rotation: isNaN(rotation) ? 0 : rotation,
           center,
+          alpha,
         };
 
       case TYPE_SOLID:
@@ -249,7 +253,7 @@ function regenerateColor(pattern) {
       return createSolid(r, g, b, a);
     }
     case TYPE_LINEAR: {
-      const { stops, rotation } = pattern;
+      const { stops, rotation, alpha } = pattern;
       const minimal = {
         type: TYPE_LINEAR,
         stops,
@@ -257,10 +261,13 @@ function regenerateColor(pattern) {
       if (rotation !== 0) {
         minimal.rotation = rotation;
       }
+      if (alpha !== 1) {
+        minimal.alpha = alpha;
+      }
       return minimal;
     }
     case TYPE_RADIAL: {
-      const { stops, center, size } = pattern;
+      const { stops, center, size, alpha } = pattern;
       const minimal = {
         type: TYPE_RADIAL,
         stops,
@@ -271,10 +278,13 @@ function regenerateColor(pattern) {
       if (size && (size.w !== 1 || size.h !== 1)) {
         minimal.size = size;
       }
+      if (alpha !== 1) {
+        minimal.alpha = alpha;
+      }
       return minimal;
     }
     case TYPE_CONIC: {
-      const { stops, rotation, center } = pattern;
+      const { stops, rotation, center, alpha } = pattern;
       const minimal = {
         type: TYPE_CONIC,
         stops,
@@ -284,6 +294,9 @@ function regenerateColor(pattern) {
       }
       if (center && (center.x !== 0.5 || center.y !== 0.5)) {
         minimal.center = center;
+      }
+      if (alpha !== 1) {
+        minimal.alpha = alpha;
       }
       return minimal;
     }
