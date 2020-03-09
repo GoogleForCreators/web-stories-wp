@@ -28,7 +28,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import {
   LeftArrow,
   RightArrow,
@@ -47,7 +47,7 @@ const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: 'left-navigation carousel right-navigation' auto / 53px 1fr 53px;
+  grid: 'prev-navigation carousel next-navigation' auto / 53px 1fr 53px;
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -82,6 +82,7 @@ function Carousel() {
     state: { pages, currentPageIndex, currentPageId },
     actions: { setCurrentPage },
   } = useStory();
+  const { isRTL } = useConfig();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -141,6 +142,10 @@ function Carousel() {
 
   const scrollBy = useCallback(
     (offset) => {
+      if (isRTL) {
+        offset *= -1;
+      }
+
       if (!listRef.current.scrollBy) {
         listRef.current.scrollLeft += offset;
         return;
@@ -151,22 +156,27 @@ function Carousel() {
         behavior: 'smooth',
       });
     },
-    [listRef]
+    [listRef, isRTL]
   );
 
-  const isAtBeginningOfList = 0 === scrollPercentage;
-  const isAtEndOfList = 1 === scrollPercentage;
+  const isAtBeginningOfList = isRTL
+    ? 1 === scrollPercentage
+    : 0 === scrollPercentage;
+  const isAtEndOfList = isRTL ? 0 === scrollPercentage : 1 === scrollPercentage;
+
+  const PrevButton = isRTL ? RightArrow : LeftArrow;
+  const NextButton = isRTL ? LeftArrow : RightArrow;
 
   return (
     <>
       <Wrapper>
-        <Area area="left-navigation">
-          <LeftArrow
+        <Area area="prev-navigation">
+          <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-(2 * PAGE_THUMB_WIDTH))}
+            onClick={() => scrollBy(-2 * PAGE_THUMB_WIDTH)}
             width="24"
             height="24"
-            aria-label={__('Scroll Left', 'web-stories')}
+            aria-label={__('Scroll Backward', 'web-stories')}
           />
         </Area>
         <List
@@ -200,13 +210,13 @@ function Carousel() {
             );
           })}
         </List>
-        <Area area="right-navigation">
-          <RightArrow
+        <Area area="next-navigation">
+          <NextButton
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
             onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
             width="24"
             height="24"
-            aria-label={__('Scroll Right', 'web-stories')}
+            aria-label={__('Scroll Forward', 'web-stories')}
           />
           <StyledGridViewButton
             width="24"

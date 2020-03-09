@@ -308,6 +308,7 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
+					'isRTL'            => is_rtl(),
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
 					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
@@ -336,8 +337,6 @@ class Story_Post_Type {
 			[],
 			$version
 		);
-
-		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
 	}
 
 	/**
