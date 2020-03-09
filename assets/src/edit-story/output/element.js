@@ -24,7 +24,7 @@ import { getBox } from '../units/dimensions';
 import WithLink from '../components/link/output';
 
 function OutputElement({ element }) {
-  const { id, type } = element;
+  const { id, opacity, type } = element;
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
@@ -44,6 +44,7 @@ function OutputElement({ element }) {
         width: `${width}%`,
         height: `${height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
+        opacity: opacity ? opacity / 100 : null,
       }}
     >
       <WithLink

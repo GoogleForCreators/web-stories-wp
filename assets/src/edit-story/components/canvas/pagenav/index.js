@@ -30,13 +30,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PAGE_NAV_BUTTON_WIDTH } from '../../../constants';
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import { LeftArrow, RightArrow } from '../../button';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: ${({ isNext }) => (isNext ? 'flex-end' : 'flex-start')};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: ${PAGE_NAV_BUTTON_WIDTH}px;
   height: ${PAGE_NAV_BUTTON_WIDTH}px;
@@ -51,6 +50,7 @@ function PageNav({ isNext }) {
     state: { pages, currentPageIndex },
     actions: { setCurrentPage },
   } = useStory();
+  const { isRTL } = useConfig();
   const handleClick = useCallback(() => {
     const newPage = isNext
       ? pages[currentPageIndex + 1]
@@ -72,13 +72,21 @@ function PageNav({ isNext }) {
     width: PAGE_NAV_BUTTON_WIDTH,
     height: PAGE_NAV_BUTTON_WIDTH,
   };
+
+  const PrevButton = isRTL ? RightArrow : LeftArrow;
+  const NextButton = isRTL ? LeftArrow : RightArrow;
+
+  if (isNext) {
+    return (
+      <Wrapper>
+        <NextButton {...buttonProps} />
+      </Wrapper>
+    );
+  }
+
   return (
-    <Wrapper isNext={isNext}>
-      {isNext ? (
-        <RightArrow {...buttonProps} />
-      ) : (
-        <LeftArrow {...buttonProps} />
-      )}
+    <Wrapper>
+      <PrevButton {...buttonProps} />
     </Wrapper>
   );
 }

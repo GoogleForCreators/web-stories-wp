@@ -20,7 +20,10 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { useDropTargets } from '../../../../app'
+/**
+ * Internal dependencies
+ */
+import { useDropTargets } from '../../../../app';
 
 const styledTiles = css`
   width: 100%;
@@ -61,7 +64,6 @@ const MediaElement = ({
     onDragEnd: () => handleDrop(resource),
   };
 
-
   if (resource.type === 'image') {
     return (
       <Image
@@ -82,10 +84,10 @@ const MediaElement = ({
       width={width}
       height={height}
       onClick={() => onInsert(resource, width, height)}
-      onMouseEnter={(evt) => {
+      onPointerEnter={(evt) => {
         evt.target.play();
       }}
-      onMouseLeave={(evt) => {
+      onPointerLeave={(evt) => {
         evt.target.pause();
         evt.target.currentTime = 0;
       }}

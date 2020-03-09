@@ -56,7 +56,7 @@ function DisplayElement({ element }) {
       }
     : null;
 
-  const { id, type } = replacementElement || element;
+  const { id, opacity, type } = replacementElement || element;
   const { Display } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
@@ -86,7 +86,7 @@ function DisplayElement({ element }) {
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithMask element={element} fill={true} box={box}>
+      <WithMask element={element} fill={true} box={box} opacity={opacity}>
         <Display element={replacementElement || element} box={box} />
       </WithMask>
     </Wrapper>

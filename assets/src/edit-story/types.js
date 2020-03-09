@@ -114,6 +114,7 @@ const StoryElementPropTypes = {
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
+  opacity: PropTypes.number,
 };
 
 StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);

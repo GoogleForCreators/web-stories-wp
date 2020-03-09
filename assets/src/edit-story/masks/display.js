@@ -40,12 +40,23 @@ export default function WithMask({
   style,
   children,
   box,
+  opacity,
   ...rest
 }) {
   const mask = getElementMask(element);
 
   if (!mask?.type) {
-    return children;
+    return (
+      <div
+        style={{
+          ...style,
+          opacity: opacity ? opacity / 100 : null,
+        }}
+        {...rest}
+      >
+        {children}
+      </div>
+    );
   }
 
   // @todo: Chrome cannot do inline clip-path using data: URLs.
@@ -59,6 +70,7 @@ export default function WithMask({
         ...(fill ? FILL_STYLE : {}),
         ...style,
         clipPath: `url(#${maskId})`,
+        opacity: opacity ? opacity / 100 : null,
       }}
       {...rest}
     >
@@ -76,6 +88,7 @@ export default function WithMask({
 
 WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  opacity: PropTypes.number,
   style: PropTypes.object,
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,

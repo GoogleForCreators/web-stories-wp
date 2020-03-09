@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, getMediaSizePositionProps } from '../shared';
 import StoryPropTypes from '../../types';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -51,7 +51,7 @@ function VideoDisplay({
     };
   }
 
-  const videoProps = getMediaProps(
+  const videoProps = getMediaSizePositionProps(
     resource,
     width,
     height,

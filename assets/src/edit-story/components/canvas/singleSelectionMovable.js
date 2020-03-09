@@ -29,6 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
+import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -37,9 +38,10 @@ const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
-  const moveable = useRef();
+  const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  const [snapDisabled, setSnapDisabled] = useState(true);
 
   const {
     actions: { updateSelectedElements },
@@ -91,6 +93,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       moveable.current.updateRect();
     }
   });
+
+  // ⌘ key disables snapping
+  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true), [
+    setSnapDisabled,
+  ]);
+  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false), [setSnapDisabled]);
 
   const box = getBox(selectedElement);
   const frame = {
@@ -145,7 +153,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     actions: { handleDrag, handleDrop },
   } = useDropTargets();
 
-  const snappable = !isDragging || (isDragging && !activeDropTargetId);
+  const canSnap = !isDragging || (isDragging && !activeDropTargetId);
 
   return (
     <Movable
@@ -262,15 +270,22 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={snappable}
-      snapCenter={snappable}
+      snappable={canSnap && !snapDisabled}
+      snapCenter={canSnap && !snapDisabled}
       horizontalGuidelines={
-        actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
+        canSnap && !snapDisabled && actionsEnabled
+          ? [0, canvasHeight / 2, canvasHeight]
+          : []
       }
       verticalGuidelines={
-        actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
+        canSnap && !snapDisabled && actionsEnabled
+          ? [0, canvasWidth / 2, canvasWidth]
+          : []
       }
-      elementGuidelines={actionsEnabled ? otherNodes : []}
+      elementGuidelines={
+        canSnap && !snapDisabled && actionsEnabled ? otherNodes : []
+      }
+      isDisplaySnapDigit={false}
     />
   );
 }

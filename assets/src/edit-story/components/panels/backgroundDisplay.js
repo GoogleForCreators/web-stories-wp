@@ -42,7 +42,7 @@ function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
   return (
     <SimplePanel
       name="backgroundDisplay"
-      title={__('Background Display Options', 'amp')}
+      title={__('Background Display Options', 'web-stories')}
     >
       <p>
         {/* todo: re-consider wording; add help dialog */

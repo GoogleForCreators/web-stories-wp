@@ -26,9 +26,10 @@ import { useCallback, useState } from 'react';
 import {
   elementFillContent,
   CropBox,
-  getMediaProps,
+  getMediaSizePositionProps,
   EditPanMovable,
   ScalePanel,
+  MEDIA_MASK_OPACITY,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
@@ -40,22 +41,28 @@ const Element = styled.div`
 
 const FadedVideo = styled.video`
   position: absolute;
-  opacity: 0.4;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${videoWithScale}
   max-width: initial;
   max-height: initial;
 `;
 
+// Opacity of the mask is reduced depending on the opacity assigned to the video.
 const CropVideo = styled.video`
   position: absolute;
   ${videoWithScale}
   max-width: initial;
   max-height: initial;
+  opacity: ${({ opacity }) =>
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the video.
 function VideoEdit({
-  element: { id, resource, scale, focalX, focalY },
+  element: { id, resource, scale, focalX, focalY, opacity },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -69,7 +76,7 @@ function VideoEdit({
     [id, updateElementById]
   );
 
-  const videoProps = getMediaProps(
+  const videoProps = getMediaSizePositionProps(
     resource,
     width,
     height,
@@ -80,7 +87,12 @@ function VideoEdit({
 
   return (
     <Element>
-      <FadedVideo ref={setFullVideo} draggable={false} {...videoProps}>
+      <FadedVideo
+        ref={setFullVideo}
+        draggable={false}
+        {...videoProps}
+        opacity={opacity / 100}
+      >
         <source src={resource.src} type={resource.mimeType} />
       </FadedVideo>
       <CropBox>
@@ -89,6 +101,7 @@ function VideoEdit({
           draggable={false}
           src={resource.src}
           {...videoProps}
+          opacity={opacity / 100}
         />
       </CropBox>
 
