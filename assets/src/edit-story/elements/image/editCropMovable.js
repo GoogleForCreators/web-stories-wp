@@ -132,8 +132,8 @@ function EditCropMovable({
           width: editorToDataX(resizeWidth),
           height: editorToDataY(resizeHeight),
           scale: resizeScale,
-          focalX: flip && flip.horizontal ? 100 - resizeFocalX : resizeFocalX,
-          focalY: flip && flip.vertical ? 100 - resizeFocalY : resizeFocalY,
+          focalX: flip?.horizontal ? 100 - resizeFocalX : resizeFocalX,
+          focalY: flip?.vertical ? 100 - resizeFocalY : resizeFocalY,
         });
       }}
       snappable={true}

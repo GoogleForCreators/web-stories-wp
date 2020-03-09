@@ -84,8 +84,8 @@ function EditPanMovable({
         const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
         const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - ty);
         setProperties({
-          focalX: flip && flip.horizontal ? 100 - panFocalX : panFocalX,
-          focalY: flip && flip.vertical ? 100 - panFocalY : panFocalY,
+          focalX: flip?.horizontal ? 100 - panFocalX : panFocalX,
+          focalY: flip?.vertical ? 100 - panFocalY : panFocalY,
         });
         update();
       }}

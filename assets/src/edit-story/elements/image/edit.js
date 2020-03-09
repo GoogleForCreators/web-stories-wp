@@ -94,8 +94,8 @@ function ImageEdit({ element, box }) {
     width,
     height,
     scale,
-    flip && flip.horizontal ? 100 - focalX : focalX,
-    flip && flip.vertical ? 100 - focalY : focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
   imgProps.transformFlip = getTransformFlip(flip);

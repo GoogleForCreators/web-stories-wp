@@ -85,8 +85,8 @@ function VideoEdit({
     width,
     height,
     scale,
-    flip && flip.horizontal ? 100 - focalX : focalX,
-    flip && flip.vertical ? 100 - focalY : focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
   videoProps.transformFlip = getTransformFlip(flip);
