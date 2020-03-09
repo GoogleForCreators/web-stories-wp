@@ -32,11 +32,13 @@ import {
 async function toBeValidAMPStoryElement(stringOrComponent, ...args) {
   const string = renderToStaticMarkup(stringOrComponent);
   const errors = await getAMPValidationErrors(
-    <AmpStory>
-      <AmpStoryPage>
-        <AmpStoryGridLayer>{stringOrComponent}</AmpStoryGridLayer>
-      </AmpStoryPage>
-    </AmpStory>,
+    renderToStaticMarkup(
+      <AmpStory>
+        <AmpStoryPage>
+          <AmpStoryGridLayer>{stringOrComponent}</AmpStoryGridLayer>
+        </AmpStoryPage>
+      </AmpStory>
+    ),
     ...args
   );
 

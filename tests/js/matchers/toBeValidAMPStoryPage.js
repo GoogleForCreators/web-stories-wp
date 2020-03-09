@@ -27,7 +27,7 @@ import { AmpStory, getAMPValidationErrors } from './utils';
 async function toBeValidAMPStoryPage(stringOrComponent, ...args) {
   const string = renderToStaticMarkup(stringOrComponent);
   const errors = await getAMPValidationErrors(
-    <AmpStory>{stringOrComponent}</AmpStory>,
+    renderToStaticMarkup(<AmpStory>{stringOrComponent}</AmpStory>),
     ...args
   );
 
