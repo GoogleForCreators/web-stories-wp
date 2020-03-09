@@ -36,6 +36,7 @@ function MediaProvider({ children }) {
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+    resetFilters,
     setMediaType,
     setSearchTerm,
   } = actions;
@@ -60,9 +61,7 @@ function MediaProvider({ children }) {
     searchTerm,
   ]);
 
-  useEffect(() => {
-    fetchMedia();
-  }, [fetchMedia, mediaType, searchTerm]);
+  useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
 
   const context = {
     state,
@@ -70,6 +69,7 @@ function MediaProvider({ children }) {
       setMediaType,
       setSearchTerm,
       fetchMedia,
+      resetFilters,
       uploadVideoFrame,
     },
   };

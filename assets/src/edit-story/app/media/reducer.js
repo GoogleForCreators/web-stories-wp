@@ -59,6 +59,14 @@ function reducer(state, { type, payload }) {
       };
     }
 
+    case types.RESET_FILTERS: {
+      return {
+        ...state,
+        searchTerm: '',
+        mediaType: '',
+      };
+    }
+
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
       return {

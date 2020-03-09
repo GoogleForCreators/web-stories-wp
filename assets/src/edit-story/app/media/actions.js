@@ -34,6 +34,10 @@ export const fetchMediaSuccess = (dispatch) => ({
   });
 };
 
+export const resetFilters = (dispatch) => () => {
+  dispatch({ type: types.RESET_FILTERS });
+};
+
 export const fetchMediaError = (dispatch) => () => {
   dispatch({ type: types.FETCH_MEDIA_ERROR });
 };

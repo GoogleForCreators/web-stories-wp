@@ -85,7 +85,7 @@ const DEFAULT_WIDTH = 150;
 function MediaPane(props) {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-    actions: { fetchMedia, setMediaType, setSearchTerm, uploadVideoFrame },
+    actions: { resetFilters, setMediaType, setSearchTerm, uploadVideoFrame },
   } = useMedia();
 
   const {
@@ -99,7 +99,7 @@ function MediaPane(props) {
     actions: { insertElement },
   } = useLibrary();
 
-  const onClose = fetchMedia;
+  const onClose = resetFilters;
 
   /**
    * Callback of select in media picker to insert media element.
