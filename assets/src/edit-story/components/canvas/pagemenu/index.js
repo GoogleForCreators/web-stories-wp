@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { useCallback } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory, useHistory, useConfig } from '../../../app';
@@ -134,27 +139,50 @@ function PageMenu() {
     <Wrapper>
       <Box>
         <Options>
-          <PageCount>{`Page ${currentPageNumber}`}</PageCount>
+          <PageCount>
+            {sprintf(
+              /* translators: %s: Page number. */
+              __('Page %s', 'web-stories'),
+              currentPageNumber
+            )}
+          </PageCount>
           <Space />
-          <Icon onClick={handleDeletePage}>
+          <Icon
+            onClick={handleDeletePage}
+            aria-label={__('Delete Page', 'web-stories')}
+          >
             <Delete />
           </Icon>
           <Space />
-          <Icon onClick={handleDuplicatePage}>
+          <Icon
+            onClick={handleDuplicatePage}
+            aria-label={__('Dupliccate Page', 'web-stories')}
+          >
             <Duplicate />
           </Icon>
           <Space />
-          <Icon onClick={handleAddPage}>
+          <Icon
+            onClick={handleAddPage}
+            aria-label={__('Add New Page', 'web-stories')}
+          >
             <Add />
           </Icon>
           <Space />
           <Divider />
           <Space />
-          <Icon disabled={!canUndo} onClick={handleUndo}>
+          <Icon
+            disabled={!canUndo}
+            onClick={handleUndo}
+            aria-label={__('Undo Changes', 'web-stories')}
+          >
             {isRTL ? <RightArrow /> : <LeftArrow />}
           </Icon>
           <Space />
-          <Icon disabled={!canRedo} onClick={handleRedo}>
+          <Icon
+            disabled={!canRedo}
+            onClick={handleRedo}
+            aria-label={__('Redo Changes', 'web-stories')}
+          >
             {isRTL ? <LeftArrow /> : <RightArrow />}
           </Icon>
         </Options>
