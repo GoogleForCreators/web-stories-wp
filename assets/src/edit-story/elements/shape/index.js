@@ -27,10 +27,6 @@ export { default as LayerIcon } from './icon';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundColor: '#ffffff',
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
   isFill: false,
 };
 
