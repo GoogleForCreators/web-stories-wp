@@ -21,34 +21,31 @@ import createSolid from '../../../../utils/createSolid';
 import getPreviewOpacity from '../getPreviewOpacity';
 
 describe('getPreviewOpacity', () => {
-  it('should return specified value as percent for no pattern', () => {
+  it('should return null for no pattern', () => {
     const pattern = null;
-    const opacity = 0.3;
-    const result = getPreviewOpacity(pattern, opacity);
-    const expected = 30;
+    const result = getPreviewOpacity(pattern);
+    const expected = null;
     expect(result).toBe(expected);
   });
 
-  it('should return specified value as percent for non-solid pattern', () => {
+  // TODO: Update this when implemention is done
+  it('should return 100 for non-solid pattern', () => {
     const pattern = { type: 'linear' };
-    const opacity = 0.3;
-    const result = getPreviewOpacity(pattern, opacity);
-    const expected = 30;
+    const result = getPreviewOpacity(pattern);
+    const expected = 100;
     expect(result).toBe(expected);
   });
 
   it('should return 100% for solid pattern without alpha component', () => {
     const pattern = createSolid(255, 0, 0);
-    const opacity = 0.3;
-    const result = getPreviewOpacity(pattern, opacity);
+    const result = getPreviewOpacity(pattern);
     const expected = 100;
     expect(result).toBe(expected);
   });
 
   it('should return alpha as percent for solid pattern with alpha component', () => {
     const pattern = createSolid(255, 0, 0, 0.2);
-    const opacity = 0.3;
-    const result = getPreviewOpacity(pattern, opacity);
+    const result = getPreviewOpacity(pattern);
     const expected = 20;
     expect(result).toBe(expected);
   });
