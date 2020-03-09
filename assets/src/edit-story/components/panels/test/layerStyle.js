@@ -42,4 +42,27 @@ describe('Panels/LayerStyle', () => {
     const element = getByText('Layer');
     expect(element).toBeDefined();
   });
+
+  it('should set opacity to 100 if not set', () => {
+    const { getByText } = arrange(
+      <LayerStyle selectedElements={[{}]} onSetProperties={() => null} />
+    );
+
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('100%');
+  });
+
+  it('should set opacity to 100 if set to 0', () => {
+    const { getByText } = arrange(
+      <LayerStyle
+        selectedElements={[{ opacity: 0 }]}
+        onSetProperties={() => null}
+      />
+    );
+
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('100%');
+  });
 });
