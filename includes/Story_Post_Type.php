@@ -326,8 +326,6 @@ class Story_Post_Type {
 			[],
 			$version
 		);
-
-		wp_styles()->add_data( self::WEB_STORIES_STYLE_HANDLE, 'rtl', 'replace' );
 	}
 
 	/**
