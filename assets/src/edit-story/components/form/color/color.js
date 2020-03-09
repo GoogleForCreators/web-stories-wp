@@ -34,7 +34,14 @@ const Container = styled.div`
   align-items: center;
 `;
 
-function ColorInput({ onChange, hasGradient, isMultiple, value, label }) {
+function ColorInput({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  isMultiple,
+  value,
+  label,
+}) {
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
@@ -44,11 +51,14 @@ function ColorInput({ onChange, hasGradient, isMultiple, value, label }) {
       <ColorPreview
         onChange={onChange}
         hasGradient={hasGradient}
+        hasOpacity={hasOpacity}
         isMultiple={isMultiple}
         value={value}
         label={label}
       />
-      <OpacityPreview value={value} onChange={handleOpacityChange} />
+      {hasOpacity && (
+        <OpacityPreview value={value} onChange={handleOpacityChange} />
+      )}
     </Container>
   );
 }
@@ -57,6 +67,7 @@ ColorInput.propTypes = {
   value: PatternPropType,
   isMultiple: PropTypes.bool,
   hasGradient: PropTypes.bool,
+  hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
 };
@@ -65,6 +76,7 @@ ColorInput.defaultProps = {
   value: null,
   isMultiple: false,
   hasGradient: false,
+  hasOpacity: true,
   opacity: null,
   label: null,
 };

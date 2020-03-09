@@ -103,7 +103,7 @@ describe('<ColorPreview />', () => {
     expect(button).toHaveTextContent('None');
   });
 
-  it('should invoke callback when clicked', () => {
+  it('should invoke callback with proper arguments when clicked', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { a: 1 };
@@ -112,6 +112,7 @@ describe('<ColorPreview />', () => {
         onChange={onChange}
         value={value}
         hasGradient
+        hasOpacity={false}
         onClose={onClose}
         label="Color"
       />
@@ -123,6 +124,7 @@ describe('<ColorPreview />', () => {
       color: value,
       onChange,
       hasGradient: true,
+      hasOpacity: false,
       onClose: hideSidebar,
     });
   });
