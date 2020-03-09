@@ -37,6 +37,7 @@ import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import WithTooltip from '../../tooltip';
 
 const HEIGHT = 28;
 
@@ -147,44 +148,54 @@ function PageMenu() {
             )}
           </PageCount>
           <Space />
-          <Icon
-            onClick={handleDeletePage}
-            aria-label={__('Delete Page', 'web-stories')}
-          >
-            <Delete />
-          </Icon>
+          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
+            <Icon
+              onClick={handleDeletePage}
+              aria-label={__('Delete Page', 'web-stories')}
+            >
+              <Delete />
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon
-            onClick={handleDuplicatePage}
-            aria-label={__('Dupliccate Page', 'web-stories')}
-          >
-            <Duplicate />
-          </Icon>
+          <WithTooltip title={__('Duplicate page', 'web-stories')}>
+            <Icon
+              onClick={handleDuplicatePage}
+              aria-label={__('Dupliccate Page', 'web-stories')}
+            >
+              <Duplicate />
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon
-            onClick={handleAddPage}
-            aria-label={__('Add New Page', 'web-stories')}
-          >
-            <Add />
-          </Icon>
+          <WithTooltip title={__('New page', 'web-stories')}>
+            <Icon
+              onClick={handleAddPage}
+              aria-label={__('Add New Page', 'web-stories')}
+            >
+              <Add />
+            </Icon>
+          </WithTooltip>
           <Space />
           <Divider />
           <Space />
-          <Icon
-            disabled={!canUndo}
-            onClick={handleUndo}
-            aria-label={__('Undo Changes', 'web-stories')}
-          >
-            {isRTL ? <RightArrow /> : <LeftArrow />}
-          </Icon>
+          <WithTooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
+            <Icon
+              disabled={!canUndo}
+              onClick={handleUndo}
+              aria-label={__('Undo Changes', 'web-stories')}
+            >
+              {isRTL ? <RightArrow /> : <LeftArrow />}
+            </Icon>
+          </WithTooltip>
           <Space />
-          <Icon
-            disabled={!canRedo}
-            onClick={handleRedo}
-            aria-label={__('Redo Changes', 'web-stories')}
-          >
-            {isRTL ? <LeftArrow /> : <RightArrow />}
-          </Icon>
+          <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
+            <Icon
+              disabled={!canRedo}
+              onClick={handleRedo}
+              aria-label={__('Redo Changes', 'web-stories')}
+            >
+              {isRTL ? <LeftArrow /> : <RightArrow />}
+            </Icon>
+          </WithTooltip>
         </Options>
         <Options>
           <Icon disabled>

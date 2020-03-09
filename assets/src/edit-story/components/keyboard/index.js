@@ -189,3 +189,19 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
   }
   return false;
 }
+
+export function prettifyShortcut(shortcut) {
+  return shortcut
+    .toLowerCase()
+    .replace('ctrl', '^')
+    .replace('cmd', '⌘')
+    .replace('shift', '⇧')
+    .replace('left', '←')
+    .replace('up', '↑')
+    .replace('right', '→')
+    .replace('down', '↓')
+    .replace('delete', '⌫')
+    .split('+')
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join('');
+}
