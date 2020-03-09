@@ -18,66 +18,63 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import useLoadMedia from './actions/useLoadMedia';
-import useCompleteMedia from './actions/useCompleteMedia';
-import useReloadMedia from './actions/useReloadMedia';
-import useResetMedia from './actions/useResetMedia';
-import useUploadVideoFrame from './actions/useUploadVideoFrame';
+import { useAPI } from '../api';
+import useUploadVideoFrame from './utils/useUploadVideoFrame';
+import useMediaReducer from './useMediaReducer';
 import Context from './context';
 
 function MediaProvider({ children }) {
-  const [media, setMedia] = useState([]);
-  const [mediaType, setMediaType] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isMediaLoaded, setIsMediaLoaded] = useState(false);
-  const [isMediaLoading, setIsMediaLoading] = useState(false);
-
-  const completeMedia = useCompleteMedia({
-    setIsMediaLoading,
-    setIsMediaLoaded,
-  });
-  const loadMedia = useLoadMedia({
-    setMedia,
-    completeMedia,
-    setIsMediaLoading,
-    isMediaLoaded,
-    isMediaLoading,
-    mediaType,
-    searchTerm,
-  });
-  const reloadMedia = useReloadMedia({ setIsMediaLoading, setIsMediaLoaded });
-  const resetMedia = useResetMedia({
+  const { state, actions } = useMediaReducer();
+  const { uploadVideoFrame } = useUploadVideoFrame();
+  const { mediaType, searchTerm } = state;
+  const {
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
     setMediaType,
     setSearchTerm,
-    reloadMedia,
-  });
+  } = actions;
 
-  const { uploadVideoFrame } = useUploadVideoFrame();
+  const {
+    actions: { getMedia },
+  } = useAPI();
 
-  const state = {
-    state: {
-      media,
-      isMediaLoading,
-      isMediaLoaded,
-      mediaType,
-      searchTerm,
-    },
+  const fetchMedia = useCallback(() => {
+    fetchMediaStart();
+    getMedia({ mediaType, searchTerm })
+      .then((media) => {
+        fetchMediaSuccess({ media, mediaType, searchTerm });
+      })
+      .catch(fetchMediaError);
+  }, [
+    fetchMediaError,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    getMedia,
+    mediaType,
+    searchTerm,
+  ]);
+
+  useEffect(() => {
+    fetchMedia();
+  }, [fetchMedia, mediaType, searchTerm]);
+
+  const context = {
+    state,
     actions: {
       setMediaType,
       setSearchTerm,
-      loadMedia,
-      reloadMedia,
-      resetMedia,
+      fetchMedia,
       uploadVideoFrame,
     },
   };
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return <Context.Provider value={context}>{children}</Context.Provider>;
 }
 
 MediaProvider.propTypes = {

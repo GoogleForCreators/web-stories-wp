@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -86,28 +85,21 @@ const DEFAULT_WIDTH = 150;
 function MediaPane(props) {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-    actions: {
-      loadMedia,
-      reloadMedia,
-      resetMedia,
-      setMediaType,
-      setSearchTerm,
-      uploadVideoFrame,
-    },
+    actions: { fetchMedia, setMediaType, setSearchTerm, uploadVideoFrame },
   } = useMedia();
+
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+
   const {
     actions: { insertElement },
   } = useLibrary();
 
-  useEffect(loadMedia);
-
-  const onClose = resetMedia;
+  const onClose = fetchMedia;
 
   /**
    * Callback of select in media picker to insert media element.
@@ -134,8 +126,7 @@ function MediaPane(props) {
    * @param {Object} evt Doc Event
    */
   const onSearch = (evt) => {
-    setSearchTerm(evt.target.value);
-    reloadMedia();
+    setSearchTerm({ searchTerm: evt.target.value });
   };
 
   /**
@@ -143,11 +134,8 @@ function MediaPane(props) {
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = (filter) => {
-    if (filter !== mediaType) {
-      setMediaType(filter);
-      reloadMedia();
-    }
+  const onFilter = (filter) => () => {
+    setMediaType({ mediaType: filter });
   };
 
   /**
@@ -218,7 +206,7 @@ function MediaPane(props) {
             <FilterButton
               key={index}
               active={filter === mediaType}
-              onClick={() => onFilter(filter)}
+              onClick={onFilter(filter)}
             >
               {name}
             </FilterButton>
