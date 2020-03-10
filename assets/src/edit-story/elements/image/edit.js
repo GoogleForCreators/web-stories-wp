@@ -34,7 +34,7 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
@@ -110,7 +110,7 @@ function ImageEdit({ element, box }) {
         opacity={opacity / 100}
       />
       <CropBox ref={setCropBox}>
-        <WithElementMask element={element} fill={true} applyFlip={false}>
+        <WithMask element={element} fill={true} applyFlip={false}>
           <CropImg
             ref={setCroppedImage}
             draggable={false}
@@ -118,7 +118,7 @@ function ImageEdit({ element, box }) {
             {...imgProps}
             opacity={opacity / 100}
           />
-        </WithElementMask>
+        </WithMask>
       </CropBox>
 
       {fullImage && croppedImage && (

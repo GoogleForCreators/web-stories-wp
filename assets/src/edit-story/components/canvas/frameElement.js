@@ -32,7 +32,7 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/frame';
 import WithLink from '../link/frame';
 import useCanvas from './useCanvas';
 
@@ -97,11 +97,11 @@ function FrameElement({ element }) {
         element={element}
         showTooltip={selectedElementIds.length === 1 && isSelected}
       >
-        <WithElementMask element={element} fill={true}>
+        <WithMask element={element} fill={true}>
           {Frame && (
             <Frame wrapperRef={elementRef} element={element} box={box} />
           )}
-        </WithElementMask>
+        </WithMask>
       </WithLink>
     </Wrapper>
   );

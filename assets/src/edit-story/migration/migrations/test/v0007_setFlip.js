@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import setFlip from '../v0006_setFlip';
+import setFlip from '../v0007_setFlip';
 
 describe('setFlip', () => {
   it('should set flip if not set', () => {

@@ -23,16 +23,21 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import convertToCSS from '../../utils/convertToCSS';
+import createSolid from '../../utils/createSolid';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+
+const DEFAULT_COLOR = createSolid(255, 255, 255);
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
   overflowAllowed: false,
 })`
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
+  ${({ backgroundColor }) =>
+    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
 `;
 
 function DisplayLayer() {

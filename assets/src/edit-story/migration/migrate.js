@@ -23,7 +23,8 @@ import fullbleedToFill from './migrations/v0003_fullbleedToFill';
 import squareToShape from './migrations/v0004_squareToShape';
 import mediaElementToResource from './migrations/v0004_mediaElementToResource';
 import setOpacity from './migrations/v0005_setOpacity';
-import setFlip from './migrations/v0006_setFlip';
+import colorToPattern from './migrations/v0006_colorToPattern';
+import setFlip from './migrations/v0007_setFlip';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -31,7 +32,8 @@ const MIGRATIONS = {
   3: [fullbleedToFill],
   4: [squareToShape, mediaElementToResource],
   5: [setOpacity],
-  6: [setFlip],
+  6: [colorToPattern],
+  7: [setFlip],
 };
 
 export const DATA_VERSION = Math.max.apply(

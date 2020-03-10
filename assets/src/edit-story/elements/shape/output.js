@@ -18,14 +18,13 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function ShapeOutput({ element: { backgroundColor } }) {
-  const style = {
-    background: backgroundColor,
-  };
+  const style = generatePatternStyles(backgroundColor);
   return <div className="fill" style={style} />;
 }
 

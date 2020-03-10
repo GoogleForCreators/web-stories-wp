@@ -29,12 +29,15 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
+import { useTransform, TransformProvider } from '../components/transform';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSidebar, SidebarProvider } from './sidebar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -48,13 +51,19 @@ function App({ config }) {
               <StoryProvider storyId={storyId}>
                 <FontProvider>
                   <MediaProvider>
-                    <GlobalStyle />
-                    <DefaultMoveableGlobalStyle />
-                    <CropMoveableGlobalStyle />
-                    <ModalGlobalStyle />
-                    <KeyboardOnlyOutlines>
-                      <Layout />
-                    </KeyboardOnlyOutlines>
+                    <SidebarProvider>
+                      <TransformProvider>
+                        <DropTargetsProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <KeyboardOnlyOutlines>
+                            <Layout />
+                          </KeyboardOnlyOutlines>
+                        </DropTargetsProvider>
+                      </TransformProvider>
+                    </SidebarProvider>
                   </MediaProvider>
                 </FontProvider>
               </StoryProvider>
@@ -72,4 +81,14 @@ App.propTypes = {
 
 export default App;
 
-export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
+export {
+  useHistory,
+  useAPI,
+  useDropTargets,
+  useTransform,
+  useStory,
+  useConfig,
+  useFont,
+  useMedia,
+  useSidebar,
+};

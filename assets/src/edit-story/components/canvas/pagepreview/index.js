@@ -24,6 +24,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
+import convertToCSS from '../../../utils/convertToCSS';
+import createSolidFromString from '../../../utils/createSolidFromString';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
@@ -39,8 +42,12 @@ const Page = styled.button`
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  background-color: ${({ theme, backgroundColor }) =>
-    backgroundColor || theme.colors.fg.v1};
+  ${({ backgroundColor, theme }) =>
+    convertToCSS(
+      generatePatternStyles(
+        backgroundColor || createSolidFromString(theme.colors.fg.v1)
+      )
+    )};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 

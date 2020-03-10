@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -27,12 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
-import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getDefinitionForType } from '../elements';
-
-// Important! This file cannot use `styled-components` or any stateful/context
-// React features to stay compatible with the "output" templates.
 
 export const MaskTypes = {
   HEART: 'heart',
@@ -89,103 +79,6 @@ export const MASKS = [
     path: CLIP_PATHS[MaskTypes.PENTAGON],
   },
 ];
-
-const FILL_STYLE = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-};
-
-export function WithElementMask({ element, fill, style, children, ...rest }) {
-  const mask = getElementMask(element);
-  return (
-    <WithMask
-      fill={fill}
-      flip={element.flip}
-      style={style}
-      mask={mask}
-      elementId={element.id}
-      {...rest}
-    >
-      {children}
-    </WithMask>
-  );
-}
-
-WithElementMask.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  style: PropTypes.object,
-  fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
-};
-
-function WithMask({
-  elementId,
-  mask,
-  fill,
-  flip,
-  style,
-  children,
-  applyFlip = true,
-  ...rest
-}) {
-  const maskType = (mask && mask.type) || null;
-
-  const fillStyle = fill ? FILL_STYLE : null;
-
-  const allStyles = {
-    ...fillStyle,
-    ...style,
-  };
-
-  const transformFlip = getTransformFlip(flip);
-  if (transformFlip && applyFlip) {
-    allStyles.transform = allStyles.transform
-      ? `${allStyles.transform} ${transformFlip}`
-      : transformFlip;
-  }
-  if (maskType) {
-    // @todo: Chrome cannot do inline clip-path using data: URLs.
-    // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-    const maskId = `mask-${maskType}-${elementId}`;
-    allStyles.clipPath = `url(#${maskId})`;
-
-    return (
-      <div style={allStyles} {...rest}>
-        <svg width={0} height={0}>
-          <defs>
-            <clipPath id={maskId} clipPathUnits="objectBoundingBox">
-              <path d={CLIP_PATHS[maskType]} />
-            </clipPath>
-          </defs>
-        </svg>
-        {children}
-      </div>
-    );
-  }
-
-  return (
-    <div style={allStyles} {...rest}>
-      {children}
-    </div>
-  );
-}
-
-WithMask.propTypes = {
-  elementId: PropTypes.string.isRequired,
-  mask: StoryPropTypes.mask,
-  style: PropTypes.object,
-  flip: PropTypes.shape({
-    vertical: PropTypes.bool,
-    horizontal: PropTypes.bool,
-  }),
-  applyFlip: PropTypes.bool,
-  fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
-};
 
 export const DEFAULT_MASK = MASKS.find(
   (mask) => mask.type === MaskTypes.RECTANGLE
