@@ -88,7 +88,7 @@ class Link_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_link( $request ) {
-		$url = $request['url'];
+		$url = untrailingslashit( $request['url'] );
 
 		/**
 		 * Filters the link data TTL value.
