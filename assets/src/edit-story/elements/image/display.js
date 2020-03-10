@@ -24,9 +24,10 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent, getMediaSizePositionProps } from '../shared';
+import { elementFillContent } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { mediaWithScale, getMediaWithScaleCss } from '../media/util';
+import { getMediaSizePositionProps } from '../media';
 
 const Element = styled.div`
   ${elementFillContent}

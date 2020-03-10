@@ -28,7 +28,7 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
-import { getFocalFromOffset } from './../shared';
+import getFocalFromOffset from './getFocalFromOffset';
 
 function EditCropMovable({
   setProperties,

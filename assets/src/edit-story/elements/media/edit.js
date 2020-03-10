@@ -23,21 +23,17 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  elementFillContent,
-  elementWithFlip,
-  CropBox,
-  getMediaSizePositionProps,
-  EditPanMovable,
-  ScalePanel,
-  MEDIA_MASK_OPACITY,
-} from '../shared';
+import { elementFillContent, elementWithFlip } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import EditCropMovable from '../shared/editCropMovable';
+import EditCropMovable from './editCropMovable';
 import { mediaWithScale } from './util';
+import getMediaSizePositionProps from './getMediaSizePositionProps';
+import EditPanMovable from './editPanMovable';
+import ScalePanel from './scalePanel';
+import { CropBox, MEDIA_MASK_OPACITY } from './';
 
 const Element = styled.div`
   ${elementFillContent}
