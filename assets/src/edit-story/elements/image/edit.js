@@ -36,8 +36,8 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import EditCropMovable from '../shared/editCropMovable';
 import { imageWithScale } from './util';
-import EditCropMovable from './editCropMovable';
 
 const Element = styled.div`
   ${elementFillContent}

@@ -35,6 +35,8 @@ import {
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
+import EditCropMovable from '../shared/editCropMovable';
+import WithMask from '../../masks/display';
 import { videoWithScale } from './util';
 
 const Element = styled.div`
@@ -65,12 +67,21 @@ const CropVideo = styled.video`
 
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the video.
-function VideoEdit({
-  element: { id, resource, scale, flip, focalX, focalY, opacity },
-  box: { x, y, width, height, rotationAngle },
-}) {
+function VideoEdit({ element, box: { x, y, width, height, rotationAngle } }) {
+  const {
+    id,
+    resource,
+    scale,
+    flip,
+    focalX,
+    focalY,
+    opacity,
+    isFill,
+    isBackground,
+  } = element;
   const [fullVideo, setFullVideo] = useState(null);
   const [croppedVideo, setCroppedVideo] = useState(null);
+  const [cropBox, setCropBox] = useState(null);
 
   const {
     actions: { updateElementById },
@@ -100,14 +111,16 @@ function VideoEdit({
       >
         <source src={resource.src} type={resource.mimeType} />
       </FadedVideo>
-      <CropBox>
-        <CropVideo
-          ref={setCroppedVideo}
-          draggable={false}
-          src={resource.src}
-          {...videoProps}
-          opacity={opacity / 100}
-        />
+      <CropBox ref={setCropBox}>
+        <WithMask element={element} fill={true} applyFlip={false}>
+          <CropVideo
+            ref={setCroppedVideo}
+            draggable={false}
+            src={resource.src}
+            {...videoProps}
+            opacity={opacity / 100}
+          />
+        </WithMask>
       </CropBox>
 
       {fullVideo && croppedVideo && (
@@ -125,6 +138,24 @@ function VideoEdit({
           offsetY={videoProps.offsetY}
           mediaWidth={videoProps.width}
           mediaHeight={videoProps.height}
+        />
+      )}
+
+      {!isFill && !isBackground && cropBox && croppedVideo && (
+        <EditCropMovable
+          setProperties={setProperties}
+          cropBox={cropBox}
+          croppedImage={croppedVideo}
+          flip={flip}
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rotationAngle={rotationAngle}
+          offsetX={videoProps.offsetX}
+          offsetY={videoProps.offsetY}
+          imgWidth={videoProps.width}
+          imgHeight={videoProps.height}
         />
       )}
 
