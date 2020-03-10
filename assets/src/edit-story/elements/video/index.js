@@ -37,6 +37,7 @@ export const defaultAttributes = {
     videoId: 0,
   },
   isFill: false,
+  scale: 100,
 };
 
 export const hasEditMode = true;

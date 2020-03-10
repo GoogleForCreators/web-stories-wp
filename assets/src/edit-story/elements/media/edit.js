@@ -44,7 +44,7 @@ const Element = styled.div`
 `;
 
 // Opacity of the mask is reduced depending on the opacity assigned to the image.
-const FadedMedia = styled.img`
+const FadedImage = styled.img`
   position: absolute;
   opacity: ${({ opacity }) =>
     opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
@@ -53,14 +53,36 @@ const FadedMedia = styled.img`
   ${elementWithFlip}
 `;
 
+const FadedVideo = styled.video`
+  position: absolute;
+  opacity: ${({ opacity }) =>
+    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
+  pointer-events: none;
+  ${mediaWithScale}
+  ${elementWithFlip}
+  max-width: initial;
+  max-height: initial;
+`;
+
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the image.
-const CropMedia = styled.img`
+const CropImage = styled.img`
   position: absolute;
   opacity: ${({ opacity }) =>
     opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
   ${mediaWithScale}
   ${elementWithFlip}
+`;
+
+// Opacity of the mask is reduced depending on the opacity assigned to the video.
+const CropVideo = styled.video`
+  position: absolute;
+  ${mediaWithScale}
+  ${elementWithFlip}
+  max-width: initial;
+  max-height: initial;
+  opacity: ${({ opacity }) =>
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
 function MediaEdit({ element, box }) {
@@ -74,6 +96,7 @@ function MediaEdit({ element, box }) {
     focalY,
     isFill,
     isBackground,
+    type,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
 
@@ -100,24 +123,53 @@ function MediaEdit({ element, box }) {
 
   mediaProps.transformFlip = getTransformFlip(flip);
 
-  return (
-    <Element>
-      <FadedMedia
+  const fadedMedia =
+    'image' === type ? (
+      <FadedImage
         ref={setFullMedia}
         draggable={false}
         src={resource.src}
         {...mediaProps}
         opacity={opacity / 100}
       />
+    ) : (
+      <FadedVideo
+        ref={setFullMedia}
+        draggable={false}
+        {...mediaProps}
+        opacity={opacity / 100}
+      >
+        <source src={resource.src} type={resource.mimeType} />
+      </FadedVideo>
+    );
+
+  const cropMedia =
+    'image' === type ? (
+      <CropImage
+        ref={setCroppedMedia}
+        draggable={false}
+        src={resource.src}
+        {...mediaProps}
+        opacity={opacity / 100}
+      />
+    ) : (
+      <CropVideo
+        ref={setCroppedMedia}
+        draggable={false}
+        src={resource.src}
+        {...mediaProps}
+        opacity={opacity / 100}
+      >
+        <source src={resource.src} type={resource.mimeType} />
+      </CropVideo>
+    );
+
+  return (
+    <Element>
+      {fadedMedia}
       <CropBox ref={setCropBox}>
         <WithMask element={element} fill={true} applyFlip={false}>
-          <CropMedia
-            ref={setCroppedMedia}
-            draggable={false}
-            src={resource.src}
-            {...mediaProps}
-            opacity={opacity / 100}
-          />
+          {cropMedia}
         </WithMask>
       </CropBox>
 
