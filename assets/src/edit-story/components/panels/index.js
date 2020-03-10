@@ -19,14 +19,12 @@
  */
 import { elementTypes } from '../../elements';
 import PageBackgroundPanel from './pageBackground';
-import BackgroundColorPanel from './backgroundColor';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import LinkPanel from './link';
 import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle/index';
-import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
@@ -39,8 +37,6 @@ const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
-const FILL = 'fill';
-const BACKGROUND_COLOR = 'backgroundColor';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
@@ -52,13 +48,11 @@ export const PanelTypes = {
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   SIZE_POSITION,
-  BACKGROUND_COLOR,
   STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
-  FILL,
   VIDEO_POSTER,
   MASK,
 };
@@ -112,10 +106,6 @@ export function getPanels(elements) {
           return null;
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
-        case BACKGROUND_COLOR:
-          return { type, Panel: BackgroundColorPanel };
-        case TEXT:
-          return { type, Panel: TextPanel };
         case LINK:
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:

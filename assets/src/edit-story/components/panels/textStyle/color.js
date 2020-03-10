@@ -18,43 +18,28 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Color, Label, Numeric, Row } from '../../form';
-
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
+import { Color, Label, Row } from '../../form';
 
 function ColorControls({ properties, state, setState }) {
-  const { backgroundColor, color, textOpacity } = properties;
+  const { backgroundColor, color } = properties;
 
   return (
     <>
       <Row>
-        <Label>{__('Textbox', 'web-stories')}</Label>
+        <Label>{__('Text', 'web-stories')}</Label>
         <Color
           isMultiple={'' === color}
           value={state.color || '#000000'}
           onChange={(value) => setState({ ...state, color: value })}
-        />
-        <BoxedNumeric
-          ariaLabel={__('Text Opacity', 'web-stories')}
-          value={state.textOpacity}
-          isMultiple={'' === textOpacity}
-          flexBasis={58}
-          textCenter
-          onChange={(value) => setState({ ...state, textOpacity: value })}
-          postfix={_x('%', 'Percentage', 'web-stories')}
         />
       </Row>
       <Row>
@@ -65,14 +50,6 @@ function ColorControls({ properties, state, setState }) {
           isMultiple={backgroundColor === ''}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
           label={__('Background color', 'web-stories')}
-        />
-        <BoxedNumeric
-          ariaLabel={__('Background Opacity', 'web-stories')}
-          flexBasis={58}
-          textCenter
-          value={state.backgroundOpacity}
-          onChange={(value) => setState({ ...state, backgroundOpacity: value })}
-          postfix={_x('%', 'Percentage', 'web-stories')}
         />
       </Row>
     </>
