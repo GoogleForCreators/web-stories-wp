@@ -15,8 +15,8 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	protected static $subscriber;
 
 	const INVALID_URL = 'https://www.notreallyawebsite.com/foobar.html';
-	const EMPTY_URL = 'https://empty.example.com/';
-	const EXAMPLE_URL = 'https://example.com/';
+	const EMPTY_URL = 'https://empty.example.com';
+	const EXAMPLE_URL = 'https://example.com';
 	const VALID_URL = 'https://amp.dev';
 
 	/**
@@ -215,6 +215,28 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		];
 
 		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
+
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSets( $expected, $data );
+	}
+
+	public function test_removes_trailing_slashes() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::EXAMPLE_URL );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => 'Example Domain',
+			'image'       => '',
+			'description' => '',
+		];
+
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::EXAMPLE_URL . '/' );
 		rest_get_server()->dispatch( $request );
 		$this->assertEquals( 1, $this->request_count );
 
