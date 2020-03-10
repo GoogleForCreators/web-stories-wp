@@ -161,11 +161,9 @@ class Link_Controller extends WP_REST_Controller {
 
 		// Link title.
 
-		/* @var DOMNodeList $title_query */
 		$title_query = $xpath->query( '//title' );
 
 		if ( $title_query instanceof DOMNodeList && $title_query->length > 0 ) {
-			/** @var DOMElement $title_node */
 			$title_node = $title_query->item( 0 );
 
 			if ( $title_node instanceof DOMElement ) {
@@ -174,42 +172,35 @@ class Link_Controller extends WP_REST_Controller {
 		}
 
 		if ( ! $title ) {
-			/* @var DOMNodeList $og_title_query */
 			$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
 			$title = $this->get_dom_attribute_content( $og_title_query, 'content' );
 		}
 
 		if ( ! $title ) {
-			/* @var DOMNodeList $og_site_name_query */
 			$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
 			$title = $this->get_dom_attribute_content( $og_site_name_query, 'content' );
 		}
 
 		// Site icon.
 
-		/* @var DOMNodeList $og_image_query */
 		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
 		$image = $this->get_dom_attribute_content( $og_image_query, 'content' );
 
 		if ( ! $image ) {
-			/* @var DOMNodeList $icon_query */
 			$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
 			$image = $this->get_dom_attribute_content( $icon_query, 'content' );
 		}
 
 		if ( ! $image ) {
-			/* @var DOMNodeList $touch_icon_query */
 			$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
 			$image = $this->get_dom_attribute_content( $touch_icon_query, 'href' );
 		}
 
 		// Link description.
-		/* @var DOMNodeList $description_query */
 		$description_query = $xpath->query( '//meta[@name="description"]' );
 		$description = $this->get_dom_attribute_content( $description_query, 'content' );
 
 		if ( ! $description ) {
-			/* @var DOMNodeList $og_description_query */
 			$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
 			$description          = $this->get_dom_attribute_content( $og_description_query, 'content' );
 		}
@@ -228,7 +219,7 @@ class Link_Controller extends WP_REST_Controller {
 	/**
 	 * Retrieve content of a given DOM node attribute.
 	 *
-	 * @param DOMNodeList $query XPath query result.
+	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
 	 * @param string $attribute Attribute name.
 	 *
 	 * @return string|false Attribute content on success, false otherwise.
@@ -241,11 +232,11 @@ class Link_Controller extends WP_REST_Controller {
 		/** @var DOMElement $node */
 		$node = $query->item( 0 );
 
-		if ( $node instanceof DOMElement ) {
-			return $node->getAttribute( $attribute );
+		if ( ! $node instanceof DOMElement ) {
+			return false;
 		}
 
-		return false;
+		return $node->getAttribute( $attribute );
 	}
 
 	/**
