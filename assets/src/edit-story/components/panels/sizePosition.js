@@ -34,74 +34,87 @@ import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
-import { ReactComponent as FlipVertical } from '../../icons/flip_vertical.svg';
-import { ReactComponent as FlipHorizontal } from '../../icons/flip_horizontal.svg';
 import Toggle from '../form/toggle';
+import useStory from '../../app/story/useStory';
+import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import FlipControls from './shared/flipControls';
+import getCommonObjectValue from './utils/getCommonObjectValue';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
 `;
 
-const FlipButton = styled(Button)`
-  background: transparent;
-  border: none;
-  padding: 8px;
-  margin: 0;
-
-  svg {
-    color: ${({ theme }) => theme.colors.fg.v1};
-    width: 16px;
-    height: 16px;
-  }
-`;
-
 function SizePositionPanel({ selectedElements, onSetProperties }) {
-  const x = getCommonValue(selectedElements, 'x');
-  const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const isFill = getCommonValue(selectedElements, 'isFill');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
+  const flip = getCommonObjectValue(
+    selectedElements,
+    'flip',
+    ['horizontal', 'vertical'],
+    false
+  );
   const [state, setState] = useState({
-    x,
-    y,
     width,
     height,
+    flip,
     isFill,
     rotationAngle,
   });
   const [lockRatio, setLockRatio] = useState(true);
 
+  const {
+    actions: { setBackgroundElement },
+  } = useStory();
+
   useEffect(() => {
-    setState({ x, y, width, height, isFill, rotationAngle });
-  }, [x, y, width, height, isFill, rotationAngle]);
+    setState({ width, height, flip, isFill, rotationAngle });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, height, isFill, rotationAngle, flip.horizontal, flip.vertical]);
+
+  const isSingleElement = selectedElements.length === 1;
+  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
+
+  const canFlip = selectedElements.every(
+    ({ type }) => getDefinitionForType(type).canFlip
+  );
 
   const updateProperties = useCallback(
     (evt) => {
-      onSetProperties(({ width: oldWidth, height: oldHeight }) => {
-        const { height: newHeight, width: newWidth } = state;
-        const update = { ...state };
-        const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
+      onSetProperties(
+        ({ width: oldWidth, height: oldHeight, type, flip: oldFlip }) => {
+          const { height: newHeight, width: newWidth } = state;
+          const update = {
+            ...state,
+            flip:
+              // Ensure flip change only if flip controls are actually visible (canFlip).
+              canFlip && getDefinitionForType(type).canFlip
+                ? state.flip
+                : oldFlip,
+          };
+          const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
-        if (lockRatio && hasHeightOrWidth) {
-          const ratio = oldWidth / oldHeight;
-          if (newWidth === '') {
-            update.width = dataPixels(newHeight * ratio);
-          } else {
-            update.height = dataPixels(newWidth / ratio);
+          if (lockRatio && hasHeightOrWidth) {
+            const ratio = oldWidth / oldHeight;
+            if (newWidth === '') {
+              update.width = dataPixels(newHeight * ratio);
+            } else {
+              update.height = dataPixels(newWidth / ratio);
+            }
           }
+          return update;
         }
-        return update;
-      });
+      );
       if (evt) {
         evt.preventDefault();
         evt.stopPropagation();
       }
     },
-    [lockRatio, onSetProperties, state]
+    [canFlip, lockRatio, onSetProperties, state]
   );
 
   useEffect(() => {
@@ -117,29 +130,31 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     [setState]
   );
 
+  const handleSetBackground = () => {
+    const newState = {
+      ...state,
+      isBackground: true,
+      opacity: 100,
+      overlay: null,
+    };
+    setState(newState);
+    const backgroundId = selectedElements[0].id;
+    setBackgroundElement({ elementId: backgroundId });
+  };
+
   return (
     <SimplePanel
       name="size"
       title={__('Size & position', 'web-stories')}
       onSubmit={updateProperties}
     >
-      {/** Position */}
-      <Row expand>
-        <BoxedNumeric
-          suffix={_x('X', 'The X axis', 'web-stories')}
-          value={state.x}
-          isMultiple={x === ''}
-          onChange={handleNumberChange('x')}
-          disabled={isFill}
-        />
-        <BoxedNumeric
-          suffix={_x('Y', 'The Y axis', 'web-stories')}
-          value={state.y}
-          isMultiple={y === ''}
-          onChange={handleNumberChange('y')}
-          disabled={isFill}
-        />
-      </Row>
+      {isMedia && isSingleElement && (
+        <Row expand>
+          <Button onClick={handleSetBackground}>
+            {__('Set as background', 'web-stories')}
+          </Button>
+        </Row>
+      )}
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
@@ -201,25 +216,30 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           onChange={handleNumberChange('rotationAngle')}
           disabled={isFill}
         />
-        {/** TODO: Implement flip horizontal mode */}
-        <FlipButton>
-          <FlipHorizontal />
-        </FlipButton>
-        {/** TODO: Implement flip vertical mode */}
-        <FlipButton>
-          <FlipVertical />
-        </FlipButton>
-        <Toggle
-          icon={<Fullbleed />}
-          value={state.isFill}
-          isMultiple={false}
-          onChange={(value) => {
-            setState({
-              ...state,
-              isFill: value,
-            });
-          }}
-        />
+        {canFlip && (
+          <FlipControls
+            onChange={(value) => {
+              setState({
+                ...state,
+                flip: value,
+              });
+            }}
+            value={state.flip}
+          />
+        )}
+        {canFill && isSingleElement && (
+          <Toggle
+            icon={<Fullbleed />}
+            value={state.isFill}
+            isMultiple={false}
+            onChange={(value) => {
+              setState({
+                ...state,
+                isFill: value,
+              });
+            }}
+          />
+        )}
       </Row>
     </SimplePanel>
   );

@@ -123,6 +123,11 @@ const StoryLayerPropTypes = {
   type: PropTypes.string.isRequired,
 };
 
+StoryPropTypes.flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
 const StoryElementPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -130,6 +135,7 @@ const StoryElementPropTypes = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  flip: StoryPropTypes.flip,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
