@@ -118,7 +118,7 @@ function MediaInput({
       ) : (
         <DefaultImage size={size} />
       )}
-      <EditBtn onClick={openMediaPicker} circle={circle}>
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
         <EditIcon />
       </EditBtn>
     </Container>
