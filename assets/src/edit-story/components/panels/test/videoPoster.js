@@ -36,14 +36,14 @@ jest.mock('../../mediaPicker', () => ({
 
 describe('Panels/VideoPoster', () => {
   it('should render <VideoPoster /> panel', () => {
-    const { getByRole } = arrange(
+    const { getByLabelText } = arrange(
       <VideoPoster
         selectedElements={[{ featuredMedia: null, poster: null }]}
         onSetProperties={() => null}
       />
     );
 
-    const element = getByRole('button');
+    const element = getByLabelText('Select as video poster');
 
     expect(element).toBeDefined();
   });
@@ -51,14 +51,14 @@ describe('Panels/VideoPoster', () => {
   it('should simulate a click on <VideoPoster />', () => {
     const onClickOnSetPropertiesMock = jest.fn();
 
-    const { getByRole } = arrange(
+    const { getByLabelText } = arrange(
       <VideoPoster
         selectedElements={[{ featuredMedia: null, poster: null }]}
         onSetProperties={onClickOnSetPropertiesMock}
       />
     );
 
-    const element = getByRole('button');
+    const element = getByLabelText('Select as video poster');
 
     fireEvent.click(element);
 
