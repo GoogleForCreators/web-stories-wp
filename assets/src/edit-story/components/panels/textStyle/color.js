@@ -60,7 +60,7 @@ function ColorControls({ selectedElements, onSetProperties }) {
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
           isMultiple={'' === color}
-          value={state.color || '#000000'}
+          value={state.color}
           onChange={(value) => setState({ ...state, color: value })}
         />
       </Row>
