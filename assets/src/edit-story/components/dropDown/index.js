@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
+import { useKeyDownEffect } from '../keyboard';
 
 const DropDownContainer = styled.div`
   width: 100px;
@@ -123,7 +124,8 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
 `;
 
 function DropDown({ options, value, onChange, disabled }) {
-  DropDown.selectRef = React.createRef();
+  DropDown.wrapperRef = useRef(null);
+  DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
 
   const [openOptions, setOpenOptions] = useState(false);
@@ -133,6 +135,9 @@ function DropDown({ options, value, onChange, disabled }) {
     () => options.find((item) => item.value === value),
     [value, options]
   );
+  const toggleOptions = useCallback(() => setOpenOptions(false), []);
+
+  useKeyDownEffect(DropDown.wrapperRef, { key: 'esc' }, toggleOptions);
 
   DropDown.handleClickOutside = () => setOpenOptions(false);
 
@@ -237,7 +242,7 @@ function DropDown({ options, value, onChange, disabled }) {
   const setSize = options.length;
 
   return (
-    <DropDownContainer>
+    <DropDownContainer ref={DropDown.wrapperRef} tabIndex={-1}>
       <DropDownSelect
         onClick={handleOpenOptions}
         onKeyDown={handleOpenOptions}
