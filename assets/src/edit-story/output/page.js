@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
+import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import OutputElement from './element';
 
@@ -33,7 +34,7 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
-  const backgroundStyles = backgroundColor ? { backgroundColor } : null;
+  const backgroundStyles = generatePatternStyles(backgroundColor);
   const backgroundNonFullbleedElements = page.elements.filter(
     (element) =>
       element.id === page.backgroundElementId &&

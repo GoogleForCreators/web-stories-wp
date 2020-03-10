@@ -37,6 +37,7 @@ import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSidebar, SidebarProvider } from './sidebar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -50,17 +51,19 @@ function App({ config }) {
               <StoryProvider storyId={storyId}>
                 <FontProvider>
                   <MediaProvider>
-                    <TransformProvider>
-                      <DropTargetsProvider>
-                        <GlobalStyle />
-                        <DefaultMoveableGlobalStyle />
-                        <CropMoveableGlobalStyle />
-                        <ModalGlobalStyle />
-                        <KeyboardOnlyOutlines>
-                          <Layout />
-                        </KeyboardOnlyOutlines>
-                      </DropTargetsProvider>
-                    </TransformProvider>
+                    <SidebarProvider>
+                      <TransformProvider>
+                        <DropTargetsProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <KeyboardOnlyOutlines>
+                            <Layout />
+                          </KeyboardOnlyOutlines>
+                        </DropTargetsProvider>
+                      </TransformProvider>
+                    </SidebarProvider>
                   </MediaProvider>
                 </FontProvider>
               </StoryProvider>
@@ -87,4 +90,5 @@ export {
   useConfig,
   useFont,
   useMedia,
+  useSidebar,
 };

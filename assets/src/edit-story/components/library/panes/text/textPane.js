@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../../../constants';
+import createSolid from '../../../../utils/createSolid';
 import { editorToDataY } from '../../../../units/dimensions';
 import { Section, MainButton, Title, SearchInput, Header } from '../../common';
 import { FontPreview } from '../../text';
@@ -74,7 +75,7 @@ function TextPane(props) {
           onClick={() =>
             insertElement('text', {
               content: __('Text', 'web-stories'),
-              color: 'black',
+              color: createSolid(0, 0, 0),
               ...DEFAULT_TEXT_TRANSFORM,
             })
           }
@@ -95,7 +96,7 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 content: __('Text', 'web-stories'),
-                color: 'black',
+                color: createSolid(0, 0, 0),
                 ...DEFAULT_TEXT_TRANSFORM,
                 ...preset,
                 fontSize: editorToDataY(

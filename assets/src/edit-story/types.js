@@ -19,6 +19,33 @@
  */
 import PropTypes from 'prop-types';
 
+export const HexPropType = PropTypes.shape({
+  r: PropTypes.number.isRequired,
+  g: PropTypes.number.isRequired,
+  b: PropTypes.number.isRequired,
+  a: PropTypes.number,
+});
+
+export const ColorStopPropType = PropTypes.shape({
+  color: HexPropType.isRequired,
+  position: PropTypes.number.isRequired,
+});
+
+export const PatternPropType = PropTypes.shape({
+  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
+  color: HexPropType,
+  stops: PropTypes.arrayOf(ColorStopPropType),
+  rotation: PropTypes.number,
+  center: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+  size: PropTypes.shape({
+    w: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({
@@ -133,8 +160,8 @@ StoryPropTypes.elements.video = PropTypes.shape({
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
-  color: PropTypes.string,
-  backgroundColor: PropTypes.string,
+  color: PatternPropType.isRequired,
+  backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
@@ -148,7 +175,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
 
 StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropTypes,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({

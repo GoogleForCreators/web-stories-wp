@@ -19,6 +19,7 @@
  */
 import StoryPropTypes from '../../types';
 import { dataToEditorY } from '../../units';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { generateFontFamily } from './util';
 
 /**
@@ -45,13 +46,13 @@ function TextOutput({
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontWeight: fontWeight ? fontWeight : null,
-    background: backgroundColor,
-    color,
     lineHeight,
     letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
     padding: padding ? padding + '%' : null,
     textAlign: textAlign ? textAlign : null,
     whiteSpace: 'pre-wrap',
+    ...generatePatternStyles(backgroundColor),
+    ...generatePatternStyles(color, 'color'),
   };
 
   return (

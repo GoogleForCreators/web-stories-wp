@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -130,11 +131,11 @@ export const GridView = (props) => (
   </StyledButton>
 );
 
-export const Close = (props) => (
-  <StyledButton {...props}>
+export const Close = forwardRef((props, ref) => (
+  <StyledButton {...props} ref={ref}>
     <CloseIcon />
   </StyledButton>
-);
+));
 
 export const Eyedropper = (props) => (
   <StyledButton {...props}>
