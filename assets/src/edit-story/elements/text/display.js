@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -53,7 +52,6 @@ function TextDisplay({
     content,
     color,
     backgroundColor,
-    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -64,7 +62,6 @@ function TextDisplay({
     padding,
     textAlign,
     textDecoration,
-    textOpacity,
   },
 }) {
   const ref = useRef(null);
@@ -74,10 +71,8 @@ function TextDisplay({
   } = useUnits();
 
   const props = {
-    color: textOpacity ? rgba(color, textOpacity / 100) : color,
-    backgroundColor: backgroundOpacity
-      ? rgba(backgroundColor, backgroundOpacity / 100)
-      : backgroundColor,
+    color,
+    backgroundColor,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontFallback,
     fontStyle,

@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { rgba } from 'polished';
-
-/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -36,7 +31,6 @@ function TextOutput({
     content,
     color,
     backgroundColor,
-    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -47,7 +41,6 @@ function TextOutput({
     padding,
     textAlign,
     textDecoration,
-    textOpacity,
   },
 }) {
   const style = {
@@ -55,10 +48,6 @@ function TextOutput({
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontWeight: fontWeight ? fontWeight : null,
-    background: backgroundOpacity
-      ? rgba(backgroundColor, backgroundOpacity / 100)
-      : backgroundColor,
-    color: textOpacity ? rgba(color, textOpacity / 100) : color,
     lineHeight,
     letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
     padding: padding

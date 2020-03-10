@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { Editor, EditorState } from 'draft-js';
-import { rgba } from 'polished';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import {
@@ -95,7 +94,6 @@ function TextEdit({
     content,
     color,
     backgroundColor,
-    backgroundOpacity,
     fontFamily,
     fontFallback,
     fontSize,
@@ -107,7 +105,6 @@ function TextEdit({
     padding,
     textAlign,
     textDecoration,
-    textOpacity,
   },
   box: { x, y, height, rotationAngle },
 }) {
@@ -115,10 +112,8 @@ function TextEdit({
     actions: { dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
-    color: textOpacity ? rgba(color, textOpacity / 100) : color,
-    backgroundColor: backgroundOpacity
-      ? rgba(backgroundColor, backgroundOpacity / 100)
-      : backgroundColor,
+    color,
+    backgroundColor,
     fontFamily,
     fontFallback,
     fontStyle,
