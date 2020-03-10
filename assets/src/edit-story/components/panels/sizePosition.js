@@ -150,7 +150,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     >
       {isMedia && isSingleElement && (
         <Row expand>
-          <Button onClick={handleSetBackground}>
+          <Button onClick={handleSetBackground} fullWidth>
             {__('Set as background', 'web-stories')}
           </Button>
         </Row>

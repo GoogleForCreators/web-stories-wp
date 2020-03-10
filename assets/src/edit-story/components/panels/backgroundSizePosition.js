@@ -65,7 +65,7 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
       title={__('Size & Position', 'web-stories')}
     >
       <Row expand={false}>
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} fullWidth>
           {__('Remove as Background', 'web-stories')}
         </Button>
       </Row>
