@@ -43,7 +43,7 @@ function addElements(state, { elements }) {
   const filteredElements = elements.filter(
     ({ id }) => !existingIds.includes(id)
   );
-  // Use only last of multiple elements with same id by turning into and object and getting the values.
+  // Use only last of multiple elements with same id by turning into an object and getting the values.
   const deduplicatedElements = Object.values(
     Object.fromEntries(filteredElements.map((element) => [element.id, element]))
   );
