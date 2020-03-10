@@ -42,29 +42,15 @@ import FontControls from './font';
 function StylePanel({ selectedElements, onSetProperties }) {
   const padding = getCommonValue(selectedElements, 'padding') ?? '';
 
-  // Color settings.
-  const color = getCommonValue(selectedElements, 'color');
-  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const backgroundOpacity = getCommonValue(
-    selectedElements,
-    'backgroundOpacity'
-  );
-
   const [state, setState] = useState({
-    backgroundColor,
-    backgroundOpacity,
-    color,
     padding,
   });
   const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
   useEffect(() => {
     setState({
-      backgroundColor,
-      backgroundOpacity,
-      color,
       padding,
     });
-  }, [color, padding, backgroundColor, backgroundOpacity]);
+  }, [padding]);
   const handleSubmit = useCallback(
     (evt) => {
       onSetProperties(state);
@@ -122,16 +108,6 @@ function StylePanel({ selectedElements, onSetProperties }) {
     [lockPaddingRatio, onSetProperties, state]
   );
 
-  useEffect(() => {
-    handleSubmit();
-  }, [
-    state.textAlign,
-    state.bold,
-    state.fontStyle,
-    state.textDecoration,
-    handleSubmit,
-  ]);
-
   const getPaddingRatio = (horizontal, vertical) => {
     if (!vertical || !horizontal) {
       return false;
@@ -154,13 +130,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
         onSetProperties={onSetProperties}
       />
       <ColorControls
-        state={state}
-        setState={setState}
-        properties={{
-          backgroundColor,
-          backgroundOpacity,
-          color,
-        }}
+        selectedElements={selectedElements}
+        onSetProperties={onSetProperties}
       />
       <PaddingControls
         getPaddingRatio={getPaddingRatio}

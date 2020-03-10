@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,9 +29,30 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Row } from '../../form';
+import getCommonValue from '../utils/getCommonValue';
 
-function ColorControls({ properties, state, setState }) {
-  const { backgroundColor, color } = properties;
+function ColorControls({ selectedElements, onSetProperties }) {
+  const color = getCommonValue(selectedElements, 'color');
+  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
+
+  const [state, setState] = useState({
+    backgroundColor,
+    color,
+  });
+  useEffect(() => {
+    setState({
+      backgroundColor,
+      color,
+    });
+  }, [color, backgroundColor]);
+
+  const updateProperties = useCallback(() => {
+    onSetProperties(state);
+  }, [onSetProperties, state]);
+
+  useEffect(() => {
+    updateProperties();
+  }, [state.backgroundColor, state.color, updateProperties]);
 
   return (
     <>
@@ -57,9 +79,8 @@ function ColorControls({ properties, state, setState }) {
 }
 
 ColorControls.propTypes = {
-  properties: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default ColorControls;
