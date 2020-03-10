@@ -16,7 +16,8 @@
 
 /**
  * Infer element type from mime type of its resource
- * @param {string} mimeType 
+ *
+ * @param {string} mimeType
  * @return {string}
  */
 const getTypeFromMime = (mimeType) => {
@@ -26,8 +27,8 @@ const getTypeFromMime = (mimeType) => {
 /**
  * Generates a resource object from a wordpress attachment
  *
- * @param {Object} attachment
- * @return {Object}
+ * @param {Object} attachment WP Attachment object
+ * @return {Object} Resource object
  */
 export const getResourceFromAttachment = (attachment) => {
   const {
@@ -55,8 +56,8 @@ export const getResourceFromAttachment = (attachment) => {
 /**
  * Generates a resource object from a wordpress media picker object
  *
- * @param {Object} mediaPickerEl
- * @return {Object}
+ * @param {Object} mediaPickerEl WP Media Picker object
+ * @return {Object} Resource object
  */
 export const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {

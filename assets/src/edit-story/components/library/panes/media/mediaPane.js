@@ -228,33 +228,33 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-            <Container>
-              <Column>
-                {resources
-                  .filter((_, index) => isEven(index))
-                  .map((resource) => (
-                    <MediaElement
-                      resource={resource}
-                      key={resource.src}
-                      width={DEFAULT_WIDTH}
-                      onInsert={insertMediaElement}
-                    />
-                  ))}
-              </Column>
-              <Column>
-                {resources
-                  .filter((_, index) => !isEven(index))
-                  .map((resource) => (
-                    <MediaElement
-                      resource={resource}
-                      key={resource.src}
-                      width={DEFAULT_WIDTH}
-                      onInsert={insertMediaElement}
-                    />
-                  ))}
-              </Column>
-            </Container>
-          )}
+          <Container>
+            <Column>
+              {resources
+                .filter((_, index) => isEven(index))
+                .map((resource) => (
+                  <MediaElement
+                    resource={resource}
+                    key={resource.src}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
+            </Column>
+            <Column>
+              {resources
+                .filter((_, index) => !isEven(index))
+                .map((resource) => (
+                  <MediaElement
+                    resource={resource}
+                    key={resource.src}
+                    width={DEFAULT_WIDTH}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
+            </Column>
+          </Container>
+        )}
       </Dropzone>
     </Pane>
   );

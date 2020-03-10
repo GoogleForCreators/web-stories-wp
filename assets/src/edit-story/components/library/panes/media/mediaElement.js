@@ -42,6 +42,12 @@ const Video = styled.video`
 
 /**
  * Get a formatted element for different media types.
+ *
+ * @param {Object} param Parameters object
+ * @param {Object} param.resource Resource object
+ * @param {number} param.width Width that element is inserted into editor.
+ * @param {number} param.height Height that element is inserted into editor.
+ * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
   resource,

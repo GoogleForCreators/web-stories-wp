@@ -17,6 +17,9 @@
 /**
  * WordPress dependencies
  */
+/**
+ * External dependencies
+ */
 import { useContext } from 'react';
 
 /**
