@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,8 +31,6 @@ import { __ } from '@wordpress/i18n';
 import { dataPixels } from '../../../units';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
-import removeUnsetValues from '../utils/removeUnsetValues';
-import getCommonValue from '../utils/getCommonValue';
 import { SimplePanel } from '../panel';
 import TextStyleControls from './textStyle';
 import ColorControls from './color';
@@ -40,32 +38,11 @@ import PaddingControls from './padding';
 import FontControls from './font';
 
 function StylePanel({ selectedElements, onSetProperties }) {
-  const padding = getCommonValue(selectedElements, 'padding') ?? '';
-
-  const [state, setState] = useState({
-    padding,
-  });
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
-  useEffect(() => {
-    setState({
-      padding,
-    });
-  }, [padding]);
   const handleSubmit = useCallback(
     (evt) => {
-      onSetProperties(state);
       onSetProperties((properties) => {
-        const {
-          padding: oldPadding,
-          width,
-          height: oldHeight,
-          rotationAngle,
-          x,
-          y,
-        } = properties;
-        const { padding: newPadding } = state;
-        const updatedState = removeUnsetValues(state);
-        const newProperties = { ...properties, ...updatedState };
+        const { width, height: oldHeight, rotationAngle, x, y } = properties;
+        const newProperties = { ...properties };
         const newHeight = dataPixels(calculateTextHeight(newProperties, width));
         const [dx, dy] = calcRotatedResizeOffset(
           rotationAngle,
@@ -74,47 +51,18 @@ function StylePanel({ selectedElements, onSetProperties }) {
           0,
           newHeight - oldHeight
         );
-        const ratio = getPaddingRatio(
-          oldPadding.horizontal,
-          oldPadding.vertical
-        );
-        if (
-          lockPaddingRatio &&
-          (newPadding.horizontal === '' || newPadding.vertical === '') &&
-          ratio
-        ) {
-          if (newPadding.horizontal === '') {
-            newPadding.horizontal = Math.round(
-              dataPixels(newPadding.vertical * ratio)
-            );
-          } else {
-            newPadding.horizontal = Math.round(
-              dataPixels(newPadding.horizontal / ratio)
-            );
-          }
-        }
         return {
-          ...updatedState,
           height: newHeight,
           x: dataPixels(x + dx),
           y: dataPixels(y + dy),
-          padding: newPadding,
         };
       });
       if (evt) {
         evt.preventDefault();
       }
     },
-    [lockPaddingRatio, onSetProperties, state]
+    [onSetProperties]
   );
-
-  const getPaddingRatio = (horizontal, vertical) => {
-    if (!vertical || !horizontal) {
-      return false;
-    }
-    return horizontal / vertical;
-  };
-
   return (
     <SimplePanel
       name="style"
@@ -134,12 +82,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
         onSetProperties={onSetProperties}
       />
       <PaddingControls
-        getPaddingRatio={getPaddingRatio}
-        properties={{ padding }}
-        state={state}
-        lockPaddingRatio={lockPaddingRatio}
-        setLockPaddingRatio={setLockPaddingRatio}
-        setState={setState}
+        selectedElements={selectedElements}
+        onSetProperties={onSetProperties}
       />
     </SimplePanel>
   );

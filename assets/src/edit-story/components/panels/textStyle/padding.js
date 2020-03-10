@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -32,6 +33,8 @@ import { Label, Numeric, Row, Toggle } from '../../form';
 import { dataPixels } from '../../../units';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
+import getCommonValue from '../utils/getCommonValue';
+import removeUnsetValues from '../utils/removeUnsetValues';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -42,15 +45,57 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function PaddingControls({
-  properties,
-  state,
-  setState,
-  setLockPaddingRatio,
-  lockPaddingRatio,
-  getPaddingRatio,
-}) {
-  const { padding } = properties;
+function PaddingControls({ selectedElements, onSetProperties }) {
+  const padding = getCommonValue(selectedElements, 'padding') ?? '';
+
+  const [state, setState] = useState({
+    padding,
+  });
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
+  useEffect(() => {
+    setState({
+      padding,
+    });
+  }, [padding]);
+  const updateProperties = useCallback(() => {
+    onSetProperties(state);
+    onSetProperties((properties) => {
+      const { padding: oldPadding } = properties;
+      const { padding: newPadding } = state;
+      const updatedState = removeUnsetValues(state);
+      const ratio = getPaddingRatio(oldPadding.horizontal, oldPadding.vertical);
+      if (
+        lockPaddingRatio &&
+        (newPadding.horizontal === '' || newPadding.vertical === '') &&
+        ratio
+      ) {
+        if (newPadding.horizontal === '') {
+          newPadding.horizontal = Math.round(
+            dataPixels(newPadding.vertical * ratio)
+          );
+        } else {
+          newPadding.horizontal = Math.round(
+            dataPixels(newPadding.horizontal / ratio)
+          );
+        }
+      }
+      return {
+        ...updatedState,
+        padding: newPadding,
+      };
+    });
+  }, [lockPaddingRatio, onSetProperties, state]);
+
+  useEffect(() => {
+    updateProperties();
+  }, [state.padding, updateProperties]);
+
+  const getPaddingRatio = (horizontal, vertical) => {
+    if (!vertical || !horizontal) {
+      return false;
+    }
+    return horizontal / vertical;
+  };
   return (
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
@@ -103,12 +148,8 @@ function PaddingControls({
 }
 
 PaddingControls.propTypes = {
-  properties: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
-  setLockPaddingRatio: PropTypes.func.isRequired,
-  lockPaddingRatio: PropTypes.bool.isRequired,
-  getPaddingRatio: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default PaddingControls;
