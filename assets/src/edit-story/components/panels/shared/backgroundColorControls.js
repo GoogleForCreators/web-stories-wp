@@ -39,6 +39,7 @@ function BackgroundColorControls({ state, setState }) {
   return (
     <>
       <Color
+        hasGradient
         value={state.backgroundColor || '#000000'}
         onChange={(value) => setState({ ...state, backgroundColor: value })}
       />

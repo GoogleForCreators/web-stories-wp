@@ -18,15 +18,13 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import BackgroundPanel from './background';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundColorPanel from './backgroundColor';
-import FillPanel from './fill';
+import BackgroundSizePositionPanel from './backgroundSizePosition';
 import LinkPanel from './link';
 import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
-import ScalePanel from './scale';
 import TextStylePanel from './textStyle/index';
 import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
@@ -35,9 +33,8 @@ import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
-const BACKGROUND = 'background';
+const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
-const SCALE = 'scale';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
@@ -52,10 +49,9 @@ const PAGE = 'page';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
-  BACKGROUND,
+  BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   SIZE_POSITION,
-  SCALE,
   BACKGROUND_COLOR,
   STYLE,
   LAYER_STYLE,
@@ -87,7 +83,7 @@ export function getPanels(elements) {
   if (isBackground) {
     const panels = [
       { type: PAGE, Panel: PageBackgroundPanel },
-      { type: BACKGROUND, Panel: BackgroundPanel },
+      { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
@@ -106,24 +102,16 @@ export function getPanels(elements) {
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {
-        case BACKGROUND:
-          // @todo Would be good to have a general logic for panels supporting multi-selection instead.
-          // Only display when one element selected.
-          if (1 === elements.length) {
-            return { type, Panel: BackgroundPanel };
-          }
+        case BACKGROUND_SIZE_POSITION:
+          // Only display when isBackround.
           return null;
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
-        case SCALE:
-          return { type, Panel: ScalePanel };
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
-        case FILL:
-          return { type, Panel: FillPanel };
         case BACKGROUND_COLOR:
           return { type, Panel: BackgroundColorPanel };
         case TEXT:

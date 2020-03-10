@@ -72,6 +72,7 @@ function TextDisplay({
   const {
     actions: { dataToEditorY },
   } = useUnits();
+
   const props = {
     color: textOpacity ? rgba(color, textOpacity / 100) : color,
     backgroundColor: backgroundOpacity

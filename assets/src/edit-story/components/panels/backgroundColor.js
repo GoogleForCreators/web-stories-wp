@@ -18,19 +18,25 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { Row, Color, Numeric } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
-import BackgroundColorControls from './shared/backgroundColorControls';
+
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
 
 function BackgroundColorPanel({ selectedElements, onSetProperties }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -38,14 +44,21 @@ function BackgroundColorPanel({ selectedElements, onSetProperties }) {
     selectedElements,
     'backgroundOpacity'
   );
-  const [state, setState] = useState({ backgroundColor, backgroundOpacity });
+  const [state, setState] = useState({ backgroundOpacity });
   useEffect(() => {
-    setState({ backgroundColor, backgroundOpacity });
-  }, [backgroundColor, backgroundOpacity]);
+    setState({ backgroundOpacity });
+  }, [backgroundOpacity]);
   const handleSubmit = (evt) => {
-    onSetProperties(state);
+    onSetProperties({ backgroundOpacity: state.backgroundOpacity });
     evt.preventDefault();
   };
+
+  const handleChange = useCallback(
+    (newColor) => {
+      onSetProperties({ backgroundColor: newColor });
+    },
+    [onSetProperties]
+  );
 
   return (
     <SimplePanel
@@ -53,11 +66,23 @@ function BackgroundColorPanel({ selectedElements, onSetProperties }) {
       title={__('Background color', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <BackgroundColorControls
-        state={state}
-        setState={setState}
-        properties={{ backgroundColor, backgroundOpacity }}
-      />
+      <Row>
+        <Color
+          hasGradient
+          value={backgroundColor}
+          isMultiple={backgroundColor === ''}
+          onChange={handleChange}
+          label={__('Background color', 'web-stories')}
+        />
+        <BoxedNumeric
+          ariaLabel={__('Background Opacity', 'web-stories')}
+          flexBasis={58}
+          textCenter
+          value={state.backgroundOpacity}
+          onChange={(value) => setState({ ...state, backgroundOpacity: value })}
+          postfix={_x('%', 'Percentage', 'web-stories')}
+        />
+      </Row>
     </SimplePanel>
   );
 }

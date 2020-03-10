@@ -25,6 +25,7 @@ import { useCallback, useState } from 'react';
  */
 import {
   elementFillContent,
+  elementWithFlip,
   CropBox,
   getMediaSizePositionProps,
   EditPanMovable,
@@ -33,7 +34,8 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/display';
+import getTransformFlip from '../shared/getTransformFlip';
 import { imageWithScale } from './util';
 import EditCropMovable from './editCropMovable';
 
@@ -48,6 +50,7 @@ const FadedImg = styled.img`
     opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${imageWithScale}
+  ${elementWithFlip}
 `;
 
 // Opacity is adjusted so that the double image opacity would equal
@@ -57,6 +60,7 @@ const CropImg = styled.img`
   opacity: ${({ opacity }) =>
     opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
   ${imageWithScale}
+  ${elementWithFlip}
 `;
 
 function ImageEdit({ element, box }) {
@@ -65,6 +69,7 @@ function ImageEdit({ element, box }) {
     resource,
     opacity,
     scale,
+    flip,
     focalX,
     focalY,
     isFill,
@@ -89,9 +94,11 @@ function ImageEdit({ element, box }) {
     width,
     height,
     scale,
-    focalX,
-    focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
+
+  imgProps.transformFlip = getTransformFlip(flip);
 
   return (
     <Element>
@@ -103,7 +110,7 @@ function ImageEdit({ element, box }) {
         opacity={opacity / 100}
       />
       <CropBox ref={setCropBox}>
-        <WithElementMask element={element} fill={true}>
+        <WithMask element={element} fill={true} applyFlip={false}>
           <CropImg
             ref={setCroppedImage}
             draggable={false}
@@ -111,7 +118,7 @@ function ImageEdit({ element, box }) {
             {...imgProps}
             opacity={opacity / 100}
           />
-        </WithElementMask>
+        </WithMask>
       </CropBox>
 
       {fullImage && croppedImage && (
@@ -119,6 +126,7 @@ function ImageEdit({ element, box }) {
           setProperties={setProperties}
           fullMedia={fullImage}
           croppedMedia={croppedImage}
+          flip={flip}
           x={x}
           y={y}
           width={width}
@@ -136,6 +144,7 @@ function ImageEdit({ element, box }) {
           setProperties={setProperties}
           cropBox={cropBox}
           croppedImage={croppedImage}
+          flip={flip}
           x={x}
           y={y}
           width={width}

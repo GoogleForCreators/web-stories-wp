@@ -29,7 +29,6 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Numeric, Row } from '../../form';
-import BackgroundColorControls from '../shared/backgroundColorControls';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -37,7 +36,8 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function ColorControls({ properties, state, setState }) {
-  const { color, textOpacity } = properties;
+  const { backgroundColor, color, textOpacity } = properties;
+
   return (
     <>
       <Row>
@@ -59,7 +59,21 @@ function ColorControls({ properties, state, setState }) {
       </Row>
       <Row>
         <Label>{__('Textbox', 'web-stories')}</Label>
-        <BackgroundColorControls state={state} setState={setState} />
+        <Color
+          hasGradient
+          value={state.backgroundColor}
+          isMultiple={backgroundColor === ''}
+          onChange={(value) => setState({ ...state, backgroundColor: value })}
+          label={__('Background color', 'web-stories')}
+        />
+        <BoxedNumeric
+          ariaLabel={__('Background Opacity', 'web-stories')}
+          flexBasis={58}
+          textCenter
+          value={state.backgroundOpacity}
+          onChange={(value) => setState({ ...state, backgroundOpacity: value })}
+          postfix={_x('%', 'Percentage', 'web-stories')}
+        />
       </Row>
     </>
   );

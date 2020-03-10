@@ -22,6 +22,7 @@ import { render, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import createSolid from '../../../utils/createSolid';
 import { TestFrameElement } from './_utils';
 
 describe('FrameElement selection', () => {
@@ -51,6 +52,7 @@ describe('FrameElement selection', () => {
       rotationAngle: 0,
       fontSize: 20,
       content: 'hello world',
+      color: createSolid(255, 255, 255),
     };
     const { container } = render(
       <TestFrameElement storyContext={storyContext} element={element} />
@@ -73,6 +75,7 @@ describe('FrameElement selection', () => {
       rotationAngle: 0,
       fontSize: 20,
       content: 'hello world',
+      color: createSolid(255, 255, 255),
     };
     const { container } = render(
       <TestFrameElement storyContext={storyContext} element={element} />
@@ -95,6 +98,7 @@ describe('FrameElement selection', () => {
       rotationAngle: 0,
       fontSize: 20,
       content: 'hello world',
+      color: createSolid(255, 255, 255),
     };
     storyContext = {
       ...storyContext,
@@ -123,6 +127,7 @@ describe('FrameElement selection', () => {
       rotationAngle: 0,
       fontSize: 20,
       content: 'hello world',
+      color: createSolid(255, 255, 255),
     };
     const { container } = render(
       <TestFrameElement storyContext={storyContext} element={element} />

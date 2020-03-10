@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
+import { useEffect, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { CustomPicker } from 'react-color';
-import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { rgba } from 'polished';
 
 /**
@@ -31,16 +30,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Close, Eyedropper } from '../button';
-import Pointer from './pointer';
-import EditableHexPreview from './editableHexPreview';
+import { PatternPropType } from '../../types';
+import useFocusOut from '../../utils/useFocusOut';
+import { Close } from '../button';
+import CurrentColorPicker from './currentColorPicker';
+import useColor from './useColor';
 
 const CONTAINER_PADDING = 15;
-const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 50;
-const BODY_HEIGHT = 140;
-const CONTROLS_WIDTH = 12;
-const CONTROLS_BORDER_RADIUS = 6;
 
 const Container = styled.div`
   border-radius: 4px;
@@ -70,76 +67,53 @@ const CloseButton = styled(Close)`
   top: ${CONTAINER_PADDING}px;
 `;
 
-const Body = styled.div`
-  padding: ${CONTAINER_PADDING}px;
-  padding-bottom: 0;
-  display: grid;
-  grid: 'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px;
-  grid-gap: 10px;
-`;
+const Body = styled.div``;
 
-const SaturationWrapper = styled.div`
-  position: relative;
-  width: 167px;
-  height: ${BODY_HEIGHT}px;
-  grid-area: saturation;
-`;
+function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
+  const {
+    state: { currentColor, generatedColor },
+    actions: { load, updateCurrentColor },
+  } = useColor();
 
-const HueWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
-  grid-area: hue;
-`;
+  useEffect(() => {
+    if (generatedColor) {
+      onChange(generatedColor);
+    }
+  }, [color, generatedColor, onChange]);
 
-const AlphaWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
-  background: #fff;
-  border-radius: ${CONTROLS_BORDER_RADIUS}px;
-  grid-area: alpha;
-`;
+  useEffect(() => {
+    if (color) {
+      load(color);
+    }
+  }, [color, load]);
 
-const Footer = styled.div`
-  padding: ${CONTAINER_PADDING}px;
-  height: ${HEADER_FOOTER_HEIGHT}px;
-  font-size: ${CONTROLS_WIDTH}px;
-  line-height: 19px;
-  position: relative;
-`;
+  const containerRef = useRef();
+  const closeRef = useRef();
+  const previousFocus = useRef(document.activeElement);
 
-const EyedropperWrapper = styled.div`
-  position: absolute;
-  left: ${CONTAINER_PADDING}px;
-  bottom: ${CONTAINER_PADDING}px;
-`;
+  useFocusOut(containerRef, onClose);
 
-const EyedropperButton = styled(Eyedropper)`
-  line-height: ${EYEDROPPER_ICON_SIZE}px;
-`;
+  useLayoutEffect(() => {
+    closeRef.current.focus();
+  }, []);
 
-const CurrentWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  text-align: center;
-  bottom: ${CONTAINER_PADDING}px;
-`;
-
-const CurrentAlphaWrapper = styled.div`
-  position: absolute;
-  right: ${CONTAINER_PADDING}px;
-  bottom: ${CONTAINER_PADDING}px;
-`;
-
-function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
-  const alphaPercentage = Math.round(rgb.a * 100);
+  useEffect(
+    () => () => {
+      // Notice the double arrow - this function runs on unmount.
+      if (previousFocus.current) {
+        // Re-focus old focus
+        previousFocus.current.focus();
+      }
+    },
+    []
+  );
 
   return (
-    <Container>
-      <Header>
+    <Container ref={containerRef}>
+      {/* TODO: Make `hasGradient` do something */}
+      <Header hasGradient={hasGradient}>
         <CloseButton
+          ref={closeRef}
           width={10}
           height={10}
           aria-label={__('Close', 'web-stories')}
@@ -147,54 +121,12 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
         />
       </Header>
       <Body>
-        <SaturationWrapper>
-          <Saturation
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={-6} currentColor={rgb} />}
-            hsl={hsl}
-            hsv={hsv}
-            onChange={onChange}
-          />
-        </SaturationWrapper>
-        <HueWrapper>
-          <Hue
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={0} currentColor={rgb} />}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </HueWrapper>
-        <AlphaWrapper>
-          <Alpha
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={-3} currentColor={rgb} withAlpha />}
-            rgb={rgb}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </AlphaWrapper>
+        <CurrentColorPicker
+          color={currentColor}
+          onChange={updateCurrentColor}
+          showOpacity={hasOpacity}
+        />
       </Body>
-      <Footer>
-        {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
-        <EyedropperWrapper>
-          <EyedropperButton
-            width={EYEDROPPER_ICON_SIZE}
-            height={EYEDROPPER_ICON_SIZE}
-            aria-label={__('Select color', 'web-stories')}
-            isDisabled
-          />
-        </EyedropperWrapper>
-        <CurrentWrapper>
-          <EditableHexPreview hex={hex} onChange={onChange} />
-        </CurrentWrapper>
-        <CurrentAlphaWrapper>{alphaPercentage + '%'}</CurrentAlphaWrapper>
-      </Footer>
     </Container>
   );
 }
@@ -202,10 +134,15 @@ function ColorPicker({ rgb, hsl, hsv, hex, onChange, onClose }) {
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  rgb: PropTypes.object,
-  hex: PropTypes.string,
-  hsl: PropTypes.object,
-  hsv: PropTypes.object,
+  hasGradient: PropTypes.bool,
+  hasOpacity: PropTypes.bool,
+  color: PatternPropType,
 };
 
-export default CustomPicker(ColorPicker);
+ColorPicker.defaultProps = {
+  color: null,
+  hasGradient: false,
+  hasOpacity: true,
+};
+
+export default ColorPicker;

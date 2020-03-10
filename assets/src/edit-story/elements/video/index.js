@@ -31,14 +31,21 @@ export const defaultAttributes = {
   controls: false,
   loop: false,
   autoPlay: true,
-  posterId: null,
-  poster: null,
-  videoId: 0,
+  resource: {
+    posterId: null,
+    poster: null,
+    videoId: 0,
+  },
+  isFill: false,
 };
 
 export const hasEditMode = true;
 
 export const isMedia = true;
+
+export const canFlip = true;
+
+export const canFill = true;
 
 export const isMaskable = true;
 
@@ -49,11 +56,10 @@ export const resizeRules = {
 };
 
 export const panels = [
-  PanelTypes.BACKGROUND,
+  PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.BACKGROUND_DISPLAY,
-  PanelTypes.SCALE,
+  PanelTypes.SIZE_POSITION,
   PanelTypes.VIDEO_POSTER,
-  PanelTypes.FILL,
   PanelTypes.MASK,
 ];

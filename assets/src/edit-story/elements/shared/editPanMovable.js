@@ -24,12 +24,15 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
+import StoryPropTypes from '../../types';
 import getFocalFromOffset from './getFocalFromOffset';
+import getTransformFlip from './getTransformFlip';
 
 function EditPanMovable({
   setProperties,
   fullMedia,
   croppedMedia,
+  flip,
   x,
   y,
   width,
@@ -42,11 +45,14 @@ function EditPanMovable({
 }) {
   const moveableRef = useRef();
   const translateRef = useRef([0, 0]);
+  const transformFlip = getTransformFlip(flip);
 
   const update = () => {
     const [tx, ty] = translateRef.current;
-    fullMedia.style.transform = `translate(${tx}px, ${ty}px)`;
-    croppedMedia.style.transform = `translate(${tx}px, ${ty}px)`;
+    fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
+      ''}`;
+    croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
+      ''}`;
   };
 
   // Refresh moveables to ensure that the selection rect is always correct.
@@ -62,15 +68,24 @@ function EditPanMovable({
       draggable={true}
       throttleDrag={0}
       onDrag={({ dist }) => {
-        translateRef.current = dist;
+        let [tx, ty] = dist;
+        if (flip.vertical) {
+          ty = -ty;
+        }
+        if (flip.horizontal) {
+          tx = -tx;
+        }
+        translateRef.current = [tx, ty];
         update();
       }}
       onDragEnd={() => {
         const [tx, ty] = translateRef.current;
         translateRef.current = [0, 0];
+        const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
+        const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - ty);
         setProperties({
-          focalX: getFocalFromOffset(width, mediaWidth, offsetX - tx),
-          focalY: getFocalFromOffset(height, mediaHeight, offsetY - ty),
+          focalX: flip?.horizontal ? 100 - panFocalX : panFocalX,
+          focalY: flip?.vertical ? 100 - panFocalY : panFocalY,
         });
         update();
       }}
@@ -105,6 +120,7 @@ EditPanMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   fullMedia: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,

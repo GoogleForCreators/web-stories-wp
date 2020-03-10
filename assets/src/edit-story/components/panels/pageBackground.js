@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +29,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../app';
 import { useTheme } from '../../theme';
-import { InputGroup } from '../form';
+import createSolidFromString from '../../utils/createSolidFromString';
+import { Color } from '../form';
 import { SimplePanel } from './panel';
 
 function PageBackgroundPanel() {
@@ -38,8 +39,14 @@ function PageBackgroundPanel() {
     actions: { updateCurrentPageProperties },
   } = useStory();
   const theme = useTheme();
-  const defaultColor = theme.colors.fg.v1;
-  const currentBackground = currentPage?.backgroundColor || defaultColor;
+  const defaultColor = useMemo(
+    () => createSolidFromString(theme.colors.fg.v1),
+    [theme.colors.fg.v1]
+  );
+  const currentBackground = useMemo(
+    () => currentPage?.backgroundColor || defaultColor,
+    [currentPage, defaultColor]
+  );
   const [color, setColor] = useState(currentBackground);
   useEffect(() => setColor(currentBackground), [currentBackground]);
   const handleChange = useCallback(
@@ -51,12 +58,12 @@ function PageBackgroundPanel() {
   );
   return (
     <SimplePanel name="pagebackground" title={__('Page', 'web-stories')}>
-      {/* TODO: Replace with custom color picker component once implemented */}
-      <InputGroup
-        type="color"
-        label={__('Background color', 'web-stories')}
+      <Color
+        hasGradient
+        hasOpacity={false}
         value={color}
         onChange={handleChange}
+        label={__('Current page color', 'web-stories')}
       />
     </SimplePanel>
   );

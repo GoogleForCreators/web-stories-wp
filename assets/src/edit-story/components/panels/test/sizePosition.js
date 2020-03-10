@@ -25,19 +25,30 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../../../theme';
 import SizePosition from '../sizePosition';
+import { getDefinitionForType } from '../../../elements';
+
+jest.mock('../../../elements');
 
 function arrange(children = null) {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 }
 
 describe('Panels/SizePosition', () => {
+  getDefinitionForType.mockImplementation((type) => {
+    return {
+      isMedia: 'image' === type,
+    };
+  });
   it('should render <SizePosition /> panel', () => {
     const { getByText } = arrange(
       <SizePosition
         selectedElements={[
           {
-            x: 0,
-            y: 0,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            isBackground: false,
             width: 100,
             height: 100,
             isFill: false,
@@ -52,6 +63,35 @@ describe('Panels/SizePosition', () => {
     );
 
     const element = getByText('Size & position');
+
+    expect(element).toBeDefined();
+  });
+
+  it('should render Background button for Image', () => {
+    const { getByText } = arrange(
+      <SizePosition
+        selectedElements={[
+          {
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            isBackground: false,
+            width: 100,
+            height: 100,
+            isFill: false,
+            rotationAngle: 0,
+            type: 'image',
+          },
+        ]}
+        onSetProperties={() => null}
+      />,
+      {
+        actions: { setBackgroundElement: () => null },
+      }
+    );
+
+    const element = getByText('Set as background');
 
     expect(element).toBeDefined();
   });

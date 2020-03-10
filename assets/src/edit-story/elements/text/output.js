@@ -23,6 +23,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import { generateFontFamily } from './util';
@@ -70,6 +71,8 @@ function TextOutput({
     textAlign: textAlign ? textAlign : null,
     textDecoration,
     whiteSpace: 'pre-wrap',
+    ...generatePatternStyles(backgroundColor),
+    ...generatePatternStyles(color, 'color'),
   };
 
   // @todo This logic is temporary and will change with selecting part + marking bold.
