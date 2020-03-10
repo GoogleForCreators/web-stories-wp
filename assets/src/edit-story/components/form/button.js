@@ -34,8 +34,8 @@ const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  ${({ fill }) =>
-    fill &&
+  ${({ fullWidth }) =>
+    fullWidth &&
     `
       flex: 1;
       width: 100%;

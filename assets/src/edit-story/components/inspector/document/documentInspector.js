@@ -168,7 +168,7 @@ function DocumentInspector() {
             />
           )}
 
-        <Button onClick={handleRemoveStory} fill>
+        <Button onClick={handleRemoveStory} fullWidth>
           {__('Move to trash', 'web-stories')}
         </Button>
       </SimplePanel>
@@ -196,13 +196,13 @@ function DocumentInspector() {
       >
         {featuredMediaUrl && <Img src={featuredMediaUrl} />}
         {featuredMediaUrl && (
-          <Button onClick={handleRemoveImage} fill>
+          <Button onClick={handleRemoveImage} fullWidth>
             {__('Remove image', 'web-stories')}
           </Button>
         )}
 
         {postThumbnails && (
-          <Button onClick={openMediaPicker} fill>
+          <Button onClick={openMediaPicker} fullWidth>
             {featuredMediaUrl
               ? __('Replace image', 'web-stories')
               : __('Set featured image', 'web-stories')}
