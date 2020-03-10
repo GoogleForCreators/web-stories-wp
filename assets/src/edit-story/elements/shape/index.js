@@ -27,13 +27,18 @@ export { default as LayerIcon } from './icon';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundColor: '#ffffff',
+  isFill: false,
 };
 
 export const hasEditMode = false;
 
 export const isMedia = false;
 
+export const canFlip = true;
+
 export const isMaskable = true;
+
+export const canFill = true;
 
 export const resizeRules = {
   vertical: true,
@@ -44,8 +49,6 @@ export const resizeRules = {
 export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
-  PanelTypes.STYLE,
-  PanelTypes.LINK,
-  PanelTypes.FILL,
   PanelTypes.MASK,
+  PanelTypes.LINK,
 ];

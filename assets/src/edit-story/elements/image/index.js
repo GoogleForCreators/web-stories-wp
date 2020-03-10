@@ -32,6 +32,7 @@ export const defaultAttributes = {
   scale: 100,
   focalX: 50,
   focalY: 50,
+  isFill: false,
 };
 
 export const hasEditMode = true;
@@ -42,6 +43,10 @@ export const isMedia = true;
 
 export const isMaskable = true;
 
+export const canFlip = true;
+
+export const canFill = true;
+
 export const resizeRules = {
   vertical: true,
   horizontal: true,
@@ -49,11 +54,10 @@ export const resizeRules = {
 };
 
 export const panels = [
-  PanelTypes.BACKGROUND,
+  PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.BACKGROUND_DISPLAY,
-  PanelTypes.SCALE,
-  PanelTypes.FILL,
+  PanelTypes.SIZE_POSITION,
   PanelTypes.LINK,
   PanelTypes.MASK,
 ];

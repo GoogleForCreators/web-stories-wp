@@ -101,4 +101,12 @@ export const MEDIA_MASK_OPACITY = 0.4;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
   opacity: 100,
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
 };
+
+export const elementWithFlip = css`
+  transform: ${({ transformFlip }) => transformFlip};
+`;

@@ -24,14 +24,17 @@ import { useEffect, useRef } from 'react';
  * Internal dependencies
  */
 import Movable from '../../components/movable';
+import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import getTransformFlip from '../shared/getTransformFlip';
 import { getFocalFromOffset } from './../shared';
 
 function EditCropMovable({
   setProperties,
   cropBox,
   croppedImage,
+  flip,
   x,
   y,
   width,
@@ -48,6 +51,7 @@ function EditCropMovable({
 
   const moveableRef = useRef();
   const cropRef = useRef([0, 0, 0, 0, 0, 0]);
+  const transformFlip = getTransformFlip(flip);
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
@@ -81,7 +85,9 @@ function EditCropMovable({
         const bottom = dirY > 0 ? dh : 0;
         cropRef.current = [fx, fy, left, right, top, bottom];
         cropBox.style.transform = `translate(${fx}px, ${fy}px)`;
-        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px)`;
+        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px) ${transformFlip ??
+          ''}`;
+
         if (delta[0]) {
           cropBox.style.width = `${resizeWidth}px`;
         }
@@ -126,8 +132,8 @@ function EditCropMovable({
           width: editorToDataX(resizeWidth),
           height: editorToDataY(resizeHeight),
           scale: resizeScale,
-          focalX: resizeFocalX,
-          focalY: resizeFocalY,
+          focalX: flip?.horizontal ? 100 - resizeFocalX : resizeFocalX,
+          focalY: flip?.vertical ? 100 - resizeFocalY : resizeFocalY,
         });
       }}
       snappable={true}
@@ -142,6 +148,7 @@ EditCropMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   cropBox: PropTypes.object.isRequired,
   croppedImage: PropTypes.object.isRequired,
+  flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
