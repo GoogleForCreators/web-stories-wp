@@ -114,12 +114,22 @@ class Link_Controller extends WP_REST_Controller {
 			'description' => $description,
 		];
 
-		$response = wp_safe_remote_get(
-			$url,
-			[
-				'limit_response_size' => 153600, // 150 KB.
-			]
-		);
+		$args = [
+			'limit_response_size' => 153600, // 150 KB.
+			'timeout' => 7, // Default is 5 seconds.
+		];
+
+		/**
+		 * Filters the HTTP request args for link data retrieval.
+		 *
+		 * Can be used to adjust timeout and response size limit.
+		 *
+		 * @param array $args Arguments used for the HTTP request
+		 * @param string $url The attempted URL.
+		 */
+		$args = apply_filters( 'web_stories_link_data_request_args', $args, $url );
+
+		$response = wp_safe_remote_get( $url, $args );
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
