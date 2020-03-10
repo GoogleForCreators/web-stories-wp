@@ -66,4 +66,22 @@ describe('TextOutput', () => {
       '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)">Content</p>'
     );
   });
+  it('should produce valid AMP output', async () => {
+    const props = {
+      element: {
+        type: 'text',
+        id: '123',
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        content: 'Hello World',
+        color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    await expect(<TextOutput {...props} />).toBeValidAMPStoryElement();
+  });
 });

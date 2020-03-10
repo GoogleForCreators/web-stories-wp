@@ -92,6 +92,9 @@ StoryPropTypes.children = PropTypes.oneOfType([
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+  backgroundElementId: PropTypes.string,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
