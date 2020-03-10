@@ -44,7 +44,7 @@ const DropDownContainer = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.font};
 `;
 
-const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
+const DropDownSelect = styled.div.attrs({ role: 'Listbox', tabIndex: '0' })`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -242,9 +242,11 @@ function DropDown({ options, value, onChange, disabled }) {
         onClick={handleOpenOptions}
         onKeyDown={handleOpenOptions}
         aria-pressed={openOptions}
+        aria-haspopup={true}
         aria-expanded={openOptions}
         disabled={disabled}
         ref={DropDown.selectRef}
+        aria-disabled={disabled}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) ||
