@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -27,6 +27,7 @@ import { debounce } from 'throttle-debounce';
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -96,29 +97,10 @@ const DropDownList = styled.ul`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
   background-clip: padding-box;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-
-  li {
-    cursor: pointer;
-    :hover {
-      background: #ddd;
-    }
-    & > a {
-      display: block;
-      padding: 5px 20px;
-      clear: both;
-      font-weight: 400;
-      line-height: 1.42857143;
-      color: #333;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-  }
+  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
 `;
 
 const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
@@ -140,8 +122,6 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 `;
 
-const DropDownItemSpan = styled.a``;
-
 function DropDown({ options, value, onChange, disabled }) {
   DropDown.selectRef = React.createRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -149,13 +129,10 @@ function DropDown({ options, value, onChange, disabled }) {
   const [openOptions, setOpenOptions] = useState(false);
   const [focusedOption, setFocusedOption] = useState(undefined);
   const [searchValue, setSearchValue] = useState('');
-  const [activeItem, setActiveItem] = useState(
-    options.find((item) => item.value === value)
+  const activeItem = useMemo(
+    () => options.find((item) => item.value === value),
+    [value, options]
   );
-
-  useEffect(() => {
-    setActiveItem(options.find((item) => item.value === value));
-  }, [value, options]);
 
   DropDown.handleClickOutside = () => setOpenOptions(false);
 
@@ -257,7 +234,7 @@ function DropDown({ options, value, onChange, disabled }) {
     }
   };
 
-  const setsize = options.length;
+  const setSize = options.length;
 
   return (
     <DropDownContainer>
@@ -270,7 +247,8 @@ function DropDown({ options, value, onChange, disabled }) {
         ref={DropDown.selectRef}
       >
         <DropDownTitle>
-          {(activeItem && activeItem.name) || 'Select an Option'}
+          {(activeItem && activeItem.name) ||
+            __('Select an Option', 'web-stories')}
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
@@ -287,9 +265,9 @@ function DropDown({ options, value, onChange, disabled }) {
                   onKeyDown={(e) => handleOptionsEvents(optValue, index, e)}
                   ref={setOptionRef}
                   aria-posinset={index}
-                  aria-setsize={setsize}
+                  aria-setsize={setSize}
                 >
-                  <DropDownItemSpan>{name}</DropDownItemSpan>
+                  {name}
                 </DropDownItem>
               );
             })}
