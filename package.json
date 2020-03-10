@@ -44,6 +44,7 @@
     "uuid": "^7.0.2"
   },
   "devDependencies": {
+    "@ampproject/toolbox-optimizer": "^2.0.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -64,6 +65,7 @@
     "@wordpress/eslint-plugin": "^4.0.0",
     "@wordpress/jest-puppeteer-axe": "^1.6.0",
     "@wordpress/scripts": "^7.1.2",
+    "amphtml-validator": "^1.0.30",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
