@@ -19,6 +19,33 @@
  */
 import PropTypes from 'prop-types';
 
+export const HexPropType = PropTypes.shape({
+  r: PropTypes.number.isRequired,
+  g: PropTypes.number.isRequired,
+  b: PropTypes.number.isRequired,
+  a: PropTypes.number,
+});
+
+export const ColorStopPropType = PropTypes.shape({
+  color: HexPropType.isRequired,
+  position: PropTypes.number.isRequired,
+});
+
+export const PatternPropType = PropTypes.shape({
+  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
+  color: HexPropType,
+  stops: PropTypes.arrayOf(ColorStopPropType),
+  rotation: PropTypes.number,
+  center: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+  size: PropTypes.shape({
+    w: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({
@@ -96,27 +123,34 @@ const StoryLayerPropTypes = {
   type: PropTypes.string.isRequired,
 };
 
-const StoryElementPropsTypes = {
+StoryPropTypes.flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
+const StoryElementPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  flip: StoryPropTypes.flip,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
+  opacity: PropTypes.number,
 };
 
-StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
+StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   resource: StoryPropTypes.imageResource,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
@@ -124,16 +158,16 @@ StoryPropTypes.elements.image = PropTypes.shape({
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   resource: StoryPropTypes.videoResource,
   loop: PropTypes.bool,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   content: PropTypes.string,
-  color: PropTypes.string,
-  backgroundColor: PropTypes.string,
+  color: PatternPropType.isRequired,
+  backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
@@ -146,8 +180,8 @@ StoryPropTypes.elements.text = PropTypes.shape({
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
-  ...StoryElementPropsTypes,
-  backgroundColor: PropTypes.string,
+  ...StoryElementPropTypes,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({

@@ -17,51 +17,52 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import theme from '../../../theme';
-import Fill from '../fill';
+import LayerStyle from '../layerStyle';
 
 function arrange(children = null) {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 }
 
-describe('Panels/Fill', () => {
-  it('should render <Fill /> panel', () => {
+describe('Panels/LayerStyle', () => {
+  it('should render <LayerStyle /> panel', () => {
     const { getByText } = arrange(
-      <Fill
-        selectedElements={[{ isFill: false }]}
+      <LayerStyle
+        selectedElements={[{ opacity: 100 }]}
         onSetProperties={() => null}
-      />,
-      {
-        actions: { setBackgroundElement: () => null },
-      }
-    );
-
-    const element = getByText('Set as fill');
-
-    expect(element).toBeDefined();
-  });
-
-  it('should simulate a click on <Fill />', () => {
-    const onClickOnSetPropertiesMock = jest.fn();
-
-    const { getByText } = arrange(
-      <Fill
-        selectedElements={[{ isFill: false }]}
-        onSetProperties={onClickOnSetPropertiesMock}
       />
     );
 
-    const element = getByText('Set as fill');
+    const element = getByText('Layer');
+    expect(element).toBeDefined();
+  });
 
-    fireEvent.click(element);
+  it('should set opacity to 100 if not set', () => {
+    const { getByText } = arrange(
+      <LayerStyle selectedElements={[{}]} onSetProperties={() => null} />
+    );
 
-    expect(onClickOnSetPropertiesMock).toHaveBeenCalledTimes(1);
-    expect(element.textContent).toStrictEqual('Unset as fill');
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('100%');
+  });
+
+  it('should set opacity to 100 if set to 0', () => {
+    const { getByText } = arrange(
+      <LayerStyle
+        selectedElements={[{ opacity: 0 }]}
+        onSetProperties={() => null}
+      />
+    );
+
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('100%');
   });
 });

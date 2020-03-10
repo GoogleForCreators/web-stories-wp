@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import dataMediaElementToResource from '../v0005_mediaElementToResource';
+import dataMediaElementToResource from '../v0004_mediaElementToResource';
 
 describe('dataMediaElementToResource', () => {
   it('should convert all image and video elements to use resource', () => {

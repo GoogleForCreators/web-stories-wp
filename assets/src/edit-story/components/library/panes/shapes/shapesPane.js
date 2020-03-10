@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { MASKS } from '../../../../masks';
 import useLibrary from '../../useLibrary';
+import createSolid from '../../../../utils/createSolid';
 import { Section, Title, SearchInput, Header } from '../../common';
 import { Pane } from '../shared';
 import paneId from './paneId';
@@ -72,7 +73,7 @@ function ShapesPane(props) {
               key={mask.type}
               onClick={() => {
                 insertElement('shape', {
-                  backgroundColor: '#333',
+                  backgroundColor: createSolid(51, 51, 51),
                   width: 200,
                   height: 200,
                   x: 5,

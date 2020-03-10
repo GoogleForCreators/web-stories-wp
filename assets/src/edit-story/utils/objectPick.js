@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-module.exports = {};
+export default function pick(o, fields) {
+  return Object.assign({}, ...fields.map((prop) => ({ [prop]: o && o[prop] })));
+}

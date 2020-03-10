@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -34,26 +34,21 @@ import getCommonValue from './utils/getCommonValue';
 
 function StylePanel({ selectedElements, onSetProperties }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const [state, setState] = useState({ backgroundColor });
-  useEffect(() => {
-    setState({ backgroundColor });
-  }, [backgroundColor]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
+  const handleChange = useCallback(
+    (newColor) => {
+      onSetProperties({ backgroundColor: newColor });
+    },
+    [onSetProperties]
+  );
   return (
-    <SimplePanel
-      name="bgcolor"
-      title={__('Background color', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
-      <Row expand={true}>
+    <SimplePanel name="bgcolor" title={__('Background color', 'web-stories')}>
+      <Row>
         <Color
-          value={state.backgroundColor}
+          hasGradient
+          value={backgroundColor}
           isMultiple={backgroundColor === ''}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
-          opacity={1}
+          onChange={handleChange}
+          label={__('Background color', 'web-stories')}
         />
       </Row>
     </SimplePanel>

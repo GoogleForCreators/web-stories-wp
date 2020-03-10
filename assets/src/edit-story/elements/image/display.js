@@ -24,7 +24,7 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, getMediaSizePositionProps } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { imageWithScale, getImageWithScaleCss } from './util';
 
@@ -44,7 +44,7 @@ function ImageDisplay({
 }) {
   const imageRef = useRef(null);
 
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     resource,
     width,
     height,
@@ -59,8 +59,8 @@ function ImageDisplay({
       target.style.transform = '';
     } else {
       const { resize } = transform;
-      if (resize[0] !== 0 && resize[1] !== 0) {
-        const newImgProps = getMediaProps(
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
+        const newImgProps = getMediaSizePositionProps(
           resource,
           resize[0],
           resize[1],
@@ -72,7 +72,6 @@ function ImageDisplay({
       }
     }
   });
-
   return (
     <Element>
       <Img ref={imageRef} draggable={false} src={resource.src} {...imgProps} />

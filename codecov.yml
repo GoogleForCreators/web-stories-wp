@@ -12,8 +12,8 @@ coverage:
         only_pulls: true
 
 comment:
-  layout: "reach, diff, flags, files"
+  layout: 'reach, diff, flags, files'
   behavior: default
   require_changes: true
   branches:
-    - "master"
+    - 'master'

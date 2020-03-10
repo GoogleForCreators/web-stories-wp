@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
 
@@ -28,38 +29,49 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
+import { useTransform, TransformProvider } from '../components/transform';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSidebar, SidebarProvider } from './sidebar';
 import Layout from './layout';
 
 function App({ config }) {
-  const { storyId } = config;
+  const { storyId, isRTL } = config;
   return (
-    <ThemeProvider theme={theme}>
-      <ConfigProvider config={config}>
-        <APIProvider>
-          <HistoryProvider size={50}>
-            <StoryProvider storyId={storyId}>
-              <FontProvider>
-                <MediaProvider>
-                  <GlobalStyle />
-                  <DefaultMoveableGlobalStyle />
-                  <CropMoveableGlobalStyle />
-                  <ModalGlobalStyle />
-                  <KeyboardOnlyOutlines>
-                    <Layout />
-                  </KeyboardOnlyOutlines>
-                </MediaProvider>
-              </FontProvider>
-            </StoryProvider>
-          </HistoryProvider>
-        </APIProvider>
-      </ConfigProvider>
-    </ThemeProvider>
+    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider config={config}>
+          <APIProvider>
+            <HistoryProvider size={50}>
+              <StoryProvider storyId={storyId}>
+                <FontProvider>
+                  <MediaProvider>
+                    <SidebarProvider>
+                      <TransformProvider>
+                        <DropTargetsProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <KeyboardOnlyOutlines>
+                            <Layout />
+                          </KeyboardOnlyOutlines>
+                        </DropTargetsProvider>
+                      </TransformProvider>
+                    </SidebarProvider>
+                  </MediaProvider>
+                </FontProvider>
+              </StoryProvider>
+            </HistoryProvider>
+          </APIProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </StyleSheetManager>
   );
 }
 
@@ -69,4 +81,14 @@ App.propTypes = {
 
 export default App;
 
-export { useHistory, useAPI, useStory, useConfig, useFont, useMedia };
+export {
+  useHistory,
+  useAPI,
+  useDropTargets,
+  useTransform,
+  useStory,
+  useConfig,
+  useFont,
+  useMedia,
+  useSidebar,
+};

@@ -18,20 +18,27 @@
  * Internal dependencies
  */
 import { PanelTypes } from '../../components/panels';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundColor: '#ffffff',
+  isFill: false,
 };
 
 export const hasEditMode = false;
 
 export const isMedia = false;
 
+export const canFlip = true;
+
 export const isMaskable = true;
+
+export const canFill = true;
 
 export const resizeRules = {
   vertical: true,
@@ -41,8 +48,7 @@ export const resizeRules = {
 
 export const panels = [
   PanelTypes.SIZE_POSITION,
-  PanelTypes.STYLE,
-  PanelTypes.LINK,
-  PanelTypes.FILL,
+  PanelTypes.LAYER_STYLE,
   PanelTypes.MASK,
+  PanelTypes.LINK,
 ];

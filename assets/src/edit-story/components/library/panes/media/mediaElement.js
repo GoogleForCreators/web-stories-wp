@@ -20,6 +20,11 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import { useDropTargets } from '../../../../app';
+
 const styledTiles = css`
   width: 100%;
   border-radius: 10px;
@@ -38,9 +43,10 @@ const Video = styled.video`
 /**
  * Get a formatted element for different media types.
  *
- * @param {Object} resource Resource object
- * @param {number} width Width that element is inserted into editor.
- * @param {number} height Height that element is inserted into editor.
+ * @param {Object} param Parameters object
+ * @param {Object} param.resource Resource object
+ * @param {number} param.width Width that element is inserted into editor.
+ * @param {number} param.height Height that element is inserted into editor.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -54,6 +60,18 @@ const MediaElement = ({
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
 
+  const {
+    actions: { handleDrag, handleDrop, isDropSource },
+  } = useDropTargets();
+
+  const dropTargetsBindings = isDropSource(resource.type)
+    ? {
+        draggable: 'true',
+        onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
+        onDragEnd: () => handleDrop(resource),
+      }
+    : {};
+
   if (resource.type === 'image') {
     return (
       <Image
@@ -63,6 +81,7 @@ const MediaElement = ({
         height={height}
         loading={'lazy'}
         onClick={() => onInsert(resource, width, height)}
+        {...dropTargetsBindings}
       />
     );
   }
@@ -73,13 +92,14 @@ const MediaElement = ({
       width={width}
       height={height}
       onClick={() => onInsert(resource, width, height)}
-      onMouseEnter={(evt) => {
+      onPointerEnter={(evt) => {
         evt.target.play();
       }}
-      onMouseLeave={(evt) => {
+      onPointerLeave={(evt) => {
         evt.target.pause();
         evt.target.currentTime = 0;
       }}
+      {...dropTargetsBindings}
     >
       <source src={resource.src} type={resource.mimeType} />
     </Video>
