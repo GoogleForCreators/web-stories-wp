@@ -71,8 +71,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   );
   const handleChangeIcon = useCallback(
     (image) => {
-      const icon =
-        image.sizes && image.sizes.medium ? image.sizes.medium.url : image.url;
+      const icon = image.sizes?.medium?.url || image.url;
       setState((originalState) => ({
         ...originalState,
         icon,

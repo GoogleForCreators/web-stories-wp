@@ -48,8 +48,7 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
   const handleChangeImage = (image) => {
     const newState = {
       featuredMedia: image.id,
-      poster:
-        image.sizes && image.sizes.medium ? image.sizes.medium.url : image.url,
+      poster: image.sizes?.medium?.url || image.url,
     };
     setState({ ...state, ...newState });
     onSetProperties(newState);
