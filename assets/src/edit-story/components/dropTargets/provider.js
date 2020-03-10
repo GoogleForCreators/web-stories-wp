@@ -96,11 +96,6 @@ function DropTargetsProvider({ children }) {
           });
         }
       } else if (!dropTargetId) {
-        (currentPage?.elements || []).forEach((el) =>
-          pushTransform(el.id, {
-            dropTargets: { active: false, replacement: null },
-          })
-        );
         if (selfId) {
           pushTransform(selfId, {
             dropTargets: { hover: false },
@@ -108,6 +103,13 @@ function DropTargetsProvider({ children }) {
         }
       }
       setActiveDropTargetId(dropTargetId);
+      (currentPage?.elements || [])
+        .filter(({ id }) => id !== dropTargetId)
+        .forEach((el) =>
+          pushTransform(el.id, {
+            dropTargets: { active: false, replacement: null },
+          })
+        );
     },
     [activeDropTargetId, currentPage, getDropTargetFromCursor, pushTransform]
   );

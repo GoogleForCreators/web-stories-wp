@@ -40,7 +40,6 @@ export default function WithMask({
   style,
   children,
   box,
-  opacity,
   ...rest
 }) {
   const mask = getElementMask(element);
@@ -51,7 +50,6 @@ export default function WithMask({
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
-          opacity: opacity ? opacity / 100 : null,
         }}
         {...rest}
       >
@@ -71,7 +69,6 @@ export default function WithMask({
         ...(fill ? FILL_STYLE : {}),
         ...style,
         clipPath: `url(#${maskId})`,
-        opacity: opacity ? opacity / 100 : null,
       }}
       {...rest}
     >
@@ -89,7 +86,6 @@ export default function WithMask({
 
 WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  opacity: PropTypes.number,
   style: PropTypes.object,
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,

@@ -86,7 +86,14 @@ function DisplayElement({ element }) {
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithMask element={element} fill={true} box={box} opacity={opacity}>
+      <WithMask
+        element={element}
+        fill={true}
+        box={box}
+        style={{
+          opacity: opacity ? opacity / 100 : null,
+        }}
+      >
         <Display element={replacementElement || element} box={box} />
       </WithMask>
     </Wrapper>
