@@ -23,7 +23,7 @@ describe('Page output', () => {
   it('should produce valid AMP output', async () => {
     const props = {
       id: '123',
-      backgroundColor: '#fff000',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
       page: {
         id: '123',
         elements: [],

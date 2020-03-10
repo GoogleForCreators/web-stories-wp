@@ -30,6 +30,7 @@ describe('Shape output', () => {
         height: 1920,
         width: 1080,
         rotationAngle: 0,
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
       },
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };

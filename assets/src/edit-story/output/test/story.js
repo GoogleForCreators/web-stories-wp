@@ -23,7 +23,7 @@ describe('Story output', () => {
   it('should produce valid AMP output', async () => {
     const props = {
       id: '123',
-      backgroundColor: '#fff000',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
       story: {
         title: 'Example',
         slug: 'example',
@@ -39,7 +39,7 @@ describe('Story output', () => {
       pages: [
         {
           id: '123',
-          backgroundColor: '#fff000',
+          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
           page: {
             id: '123',
           },
@@ -61,7 +61,7 @@ describe('Story output', () => {
   it('requires at least one page', async () => {
     const props = {
       id: '123',
-      backgroundColor: '#fff000',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
       story: {
         title: 'Example',
         slug: 'example',
