@@ -15,21 +15,23 @@
  */
 
 /**
- * External dependencies
+ * Returns transform scale value based on the flip setting.
+ *
+ * @param {Object} flip Flip value.
  */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
+function getTransformFlip(flip) {
+  let transformFlip = null;
+  if (!flip) {
+    return transformFlip;
+  }
+  if (flip.vertical && flip.horizontal) {
+    transformFlip = 'scale(-1, -1)';
+  } else if (flip.horizontal) {
+    transformFlip = 'scaleX(-1)';
+  } else if (flip.vertical) {
+    transformFlip = 'scaleY(-1)';
+  }
+  return transformFlip;
+}
 
-/**
- * Internal dependencies
- */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+export default getTransformFlip;

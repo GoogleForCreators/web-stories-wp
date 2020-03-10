@@ -15,21 +15,21 @@
  */
 
 /**
- * External dependencies
- */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
-
-/**
  * Internal dependencies
  */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+import PageOutput from '../page';
 
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
+describe('Page output', () => {
+  it('should produce valid AMP output', async () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      page: {
+        id: '123',
+        elements: [],
+      },
+    };
+
+    await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+  });
 });

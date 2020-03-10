@@ -93,6 +93,9 @@ StoryPropTypes.children = PropTypes.oneOfType([
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+  backgroundElementId: PropTypes.string,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
@@ -124,6 +127,11 @@ const StoryLayerPropTypes = {
   type: PropTypes.string.isRequired,
 };
 
+StoryPropTypes.flip = PropTypes.shape({
+  vertical: PropTypes.bool,
+  horizontal: PropTypes.bool,
+});
+
 const StoryElementPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -131,6 +139,7 @@ const StoryElementPropTypes = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  flip: StoryPropTypes.flip,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
