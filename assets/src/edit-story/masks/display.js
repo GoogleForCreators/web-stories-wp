@@ -37,7 +37,6 @@ const FILL_STYLE = {
 export default function WithMask({
   element,
   fill,
-  flip,
   style,
   children,
   box,
@@ -45,6 +44,7 @@ export default function WithMask({
   ...rest
 }) {
   const mask = getElementMask(element);
+  const { flip } = element;
 
   const transformFlip = getTransformFlip(flip);
   if (transformFlip && applyFlip) {
@@ -96,7 +96,6 @@ export default function WithMask({
 WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
-  flip: PropTypes.object,
   applyFlip: PropTypes.bool,
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,

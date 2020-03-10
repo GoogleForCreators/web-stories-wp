@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -58,18 +58,7 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
     setBackgroundElement({ elementId: null });
     onSetProperties(newState);
   };
-  const handleFlipChange = useCallback(
-    (property) => (value) => {
-      setState({
-        ...state,
-        flip: {
-          ...state.flip,
-          [property]: value,
-        },
-      });
-    },
-    [setState, state]
-  );
+
   return (
     <SimplePanel
       name="backgroundSizePosition"
@@ -81,7 +70,10 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
         </Button>
       </Row>
       <Row expand={false}>
-        <FlipControls onChange={handleFlipChange} value={state.flip} />
+        <FlipControls
+          onChange={(value) => setState({ ...state, flip: value })}
+          value={state.flip}
+        />
       </Row>
     </SimplePanel>
   );
