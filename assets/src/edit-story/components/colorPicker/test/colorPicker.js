@@ -74,13 +74,13 @@ describe('<ColorPicker />', () => {
     document.body.tabIndex = 0;
     expect(document.body).toHaveFocus();
 
-    const { closeButton, onClose } = arrange();
+    const { dialog, onClose } = arrange();
     expect(document.body).not.toHaveFocus();
 
     // press escape and wait for onClose to be invoked
     await wait(() => {
       const promise = getResolvingPromise(onClose);
-      fireEvent.keyDown(closeButton, { key: 'Escape', which: 27 });
+      fireEvent.keyDown(dialog, { key: 'Escape', which: 27 });
       return promise;
     });
 
@@ -96,7 +96,7 @@ describe('<ColorPicker />', () => {
     const { closeButton, onClose } = arrange();
     expect(document.body).not.toHaveFocus();
 
-    // press escape and wait for onClose to be invoked
+    // click close button and wait for onClose to be invoked
     await wait(() => {
       const promise = getResolvingPromise(onClose);
       fireEvent.click(closeButton);
