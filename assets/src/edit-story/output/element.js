@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import { WithElementMask } from '../masks';
+import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/link/output';
@@ -34,7 +34,7 @@ function OutputElement({ element }) {
   const { x, y, width, height, rotationAngle } = box;
 
   return (
-    <WithElementMask
+    <WithMask
       element={element}
       id={'el-' + id}
       className="wrapper"
@@ -57,7 +57,7 @@ function OutputElement({ element }) {
       >
         <Output element={element} box={box} />
       </WithLink>
-    </WithElementMask>
+    </WithMask>
   );
 }
 

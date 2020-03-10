@@ -29,6 +29,8 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
+import { useTransform, TransformProvider } from '../components/transform';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
@@ -50,13 +52,17 @@ function App({ config }) {
                 <FontProvider>
                   <MediaProvider>
                     <SidebarProvider>
-                      <GlobalStyle />
-                      <DefaultMoveableGlobalStyle />
-                      <CropMoveableGlobalStyle />
-                      <ModalGlobalStyle />
-                      <KeyboardOnlyOutlines>
-                        <Layout />
-                      </KeyboardOnlyOutlines>
+                      <TransformProvider>
+                        <DropTargetsProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <KeyboardOnlyOutlines>
+                            <Layout />
+                          </KeyboardOnlyOutlines>
+                        </DropTargetsProvider>
+                      </TransformProvider>
                     </SidebarProvider>
                   </MediaProvider>
                 </FontProvider>
@@ -78,6 +84,8 @@ export default App;
 export {
   useHistory,
   useAPI,
+  useDropTargets,
+  useTransform,
   useStory,
   useConfig,
   useFont,

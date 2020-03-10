@@ -45,8 +45,7 @@ function MaskPanel({ selectedElements, onSetProperties }) {
       const newMask = MASKS.find((aMask) => aMask.type === newType);
       onSetProperties({
         mask: {
-          type: newType,
-          ...newMask.defaultProps,
+          ...newMask,
         },
       });
     }

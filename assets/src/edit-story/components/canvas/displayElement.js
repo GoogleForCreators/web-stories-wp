@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import {
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
-import { WithElementMask } from '../../masks';
+import WithMask from '../../masks/display';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -46,7 +46,17 @@ function DisplayElement({ element }) {
     actions: { getBox },
   } = useUnits();
 
-  const { id, opacity, type } = element;
+  const [replacement, setReplacement] = useState(null);
+
+  const replacementElement = replacement
+    ? {
+        ...element,
+        type: replacement.type,
+        resource: replacement,
+      }
+    : null;
+
+  const { id, opacity, type } = replacementElement || element;
   const { Display } = getDefinitionForType(type);
 
   const wrapperRef = useRef(null);
@@ -59,27 +69,33 @@ function DisplayElement({ element }) {
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
+      target.style.opacity = 1;
     } else {
-      const { translate, rotate, resize } = transform;
-      target.style.transform = `translate(${translate[0]}px, ${translate[1]}px) rotate(${rotate}deg)`;
-      if (resize[0] !== 0 && resize[1] !== 0) {
+      const { translate, rotate, resize, dropTargets } = transform;
+      target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
+      }
+      if (Boolean(dropTargets)) {
+        target.style.opacity = dropTargets.hover ? 0.6 : 1;
+        setReplacement(dropTargets.replacement || null);
       }
     }
   });
 
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <WithElementMask
+      <WithMask
         element={element}
         fill={true}
+        box={box}
         style={{
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={element} box={box} />
-      </WithElementMask>
+        <Display element={replacementElement || element} box={box} />
+      </WithMask>
     </Wrapper>
   );
 }
