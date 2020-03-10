@@ -142,5 +142,6 @@ export const GlobalStyle = createGlobalStyle`
 		background: #47a0f4 !important;
 		width: 2px;
 		height: 2px;
+		pointer-events: none;
 	}
 `;

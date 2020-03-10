@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-export { default as getMediaProps } from './getMediaProps';
+export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
 export { default as ScalePanel } from './scalePanel';
@@ -93,3 +93,9 @@ export const elementWithStyle = css`
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
 `;
+
+export const MEDIA_MASK_OPACITY = 0.4;
+
+export const SHARED_DEFAULT_ATTRIBUTES = {
+  opacity: 100,
+};

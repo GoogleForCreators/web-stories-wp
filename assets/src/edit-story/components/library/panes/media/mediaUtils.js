@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Infer element type from mime type of its resource
+ * @param {string} mimeType 
+ * @return {string}
+ */
 const getTypeFromMime = (mimeType) => {
   return mimeType.startsWith('image/') ? 'image' : 'video';
 };

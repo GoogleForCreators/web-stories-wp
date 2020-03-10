@@ -20,7 +20,7 @@
 import StoryPropTypes from '../../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { editorPixels } from '../../units';
-import { getMediaProps } from '../shared';
+import { getMediaSizePositionProps } from '../shared';
 
 function VideoOutput({
   element: { resource, scale, focalX, focalY },
@@ -30,7 +30,7 @@ function VideoOutput({
   // aspect ratio.
   const width = vw;
   const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
-  const imgProps = getMediaProps(
+  const imgProps = getMediaSizePositionProps(
     resource,
     width,
     height,
