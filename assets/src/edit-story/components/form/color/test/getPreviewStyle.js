@@ -45,7 +45,7 @@ describe('getPreviewStyle', () => {
     expect(generatePatternStylesMock).toHaveBeenCalledWith(pattern);
   });
 
-  it('should return ignore alpha for non-solid', () => {
+  it('should ignore alpha for non-solid', () => {
     const pattern = { type: 'linear', alpha: 0.7 };
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });

@@ -45,7 +45,6 @@ const Page = styled.button.attrs(({ backgroundColor }) => ({
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
 
