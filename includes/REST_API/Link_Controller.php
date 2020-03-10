@@ -28,6 +28,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use DOMDocument;
+use DOMElement;
 use DOMNodeList;
 use DOMXpath;
 use WP_Error;
@@ -159,95 +160,92 @@ class Link_Controller extends WP_REST_Controller {
 		$xpath = new DOMXpath( $doc );
 
 		// Link title.
+
 		/* @var DOMNodeList $title_query */
 		$title_query = $xpath->query( '//title' );
-		/* @var DOMNodeList $og_title_query */
-		$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
-		/* @var DOMNodeList $og_site_name_query */
-		$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
+
 		if ( $title_query instanceof DOMNodeList && $title_query->length > 0 ) {
-			/** @var \DOMElement $title_node */
+			/** @var DOMElement $title_node */
 			$title_node = $title_query->item( 0 );
 
-			if ( $title_node instanceof \DOMElement ) {
+			if ( $title_node instanceof DOMElement ) {
 				$title = $title_node->textContent;
-			}
-		} else if ( $og_title_query instanceof DOMNodeList && $og_title_query->length > 0 ) {
-			/** @var \DOMElement $title_node */
-			$title_node = $og_title_query->item( 0 );
-
-			if ( $title_node instanceof \DOMElement ) {
-				$title = $title_node->getAttribute( 'content' );
-			}
-		} else if ( $og_site_name_query instanceof DOMNodeList && $og_site_name_query->length > 0 ) {
-			/** @var \DOMElement $title_node */
-			$title_node = $og_site_name_query->item( 0 );
-
-			if ( $title_node instanceof \DOMElement ) {
-				$title = $title_node->getAttribute( 'content' );
 			}
 		}
 
+		if ( ! $title ) {
+			/* @var DOMNodeList $og_title_query */
+			$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
+			$title = $this->get_dom_attribute_content( $og_title_query, 'content' );
+		}
+
+		if ( ! $title ) {
+			/* @var DOMNodeList $og_site_name_query */
+			$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
+			$title = $this->get_dom_attribute_content( $og_site_name_query, 'content' );
+		}
+
 		// Site icon.
+
 		/* @var DOMNodeList $og_image_query */
 		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
-		/* @var DOMNodeList $icon_query */
-		$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
-		/* @var DOMNodeList $touch_icon_query */
-		$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
-		if ( $og_image_query instanceof DOMNodeList && $og_image_query->length > 0 ) {
-			/** @var \DOMElement $image_node */
-			$image_node = $og_image_query->item( 0 );
-			if ( $image_node instanceof \DOMElement ) {
-				$image = $image_node->getAttribute( 'content' );
-			}
-		} else if ( $icon_query instanceof DOMNodeList && $icon_query->length > 0 ) {
-			/** @var \DOMElement $image_node */
-			$image_node = $icon_query->item( 0 );
+		$image = $this->get_dom_attribute_content( $og_image_query, 'content' );
 
-			if ( $image_node instanceof \DOMElement ) {
-				$image = $image_node->getAttribute( 'href' );
-			}
-		} else if ( $touch_icon_query instanceof DOMNodeList && $touch_icon_query->length > 0 ) {
-			/** @var \DOMElement $image_node */
-			$image_node = $touch_icon_query->item( 0 );
+		if ( ! $image ) {
+			/* @var DOMNodeList $icon_query */
+			$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
+			$image = $this->get_dom_attribute_content( $icon_query, 'content' );
+		}
 
-			if ( $image_node instanceof \DOMElement ) {
-				$image = $image_node->getAttribute( 'href' );
-			}
+		if ( ! $image ) {
+			/* @var DOMNodeList $touch_icon_query */
+			$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
+			$image = $this->get_dom_attribute_content( $touch_icon_query, 'href' );
 		}
 
 		// Link description.
 		/* @var DOMNodeList $description_query */
 		$description_query = $xpath->query( '//meta[@name="description"]' );
-		/* @var DOMNodeList $og_description_query */
-		$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
+		$description = $this->get_dom_attribute_content( $description_query, 'content' );
 
-		if ( $description_query instanceof DOMNodeList && $description_query->length > 0 ) {
-			/** @var \DOMElement $description_node */
-			$description_node = $description_query->item( 0 );
-
-			if ( $description_node instanceof \DOMElement ) {
-				$description = $description_node->getAttribute( 'content' );
-			}
-		} else if ( $og_description_query instanceof DOMNodeList && $og_description_query->length > 0 ) {
-			/** @var \DOMElement $description_node */
-			$description_node = $og_description_query->item( 0 );
-
-			if ( $description_node instanceof \DOMElement ) {
-				$description = $description_node->getAttribute( 'content' );
-			}
+		if ( ! $description ) {
+			/* @var DOMNodeList $og_description_query */
+			$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
+			$description          = $this->get_dom_attribute_content( $og_description_query, 'content' );
 		}
 
 		$data = [
-			'title'       => $title,
-			'image'       => $image,
-			'description' => $description,
+			'title'       => $title ?: '',
+			'image'       => $image ?: '',
+			'description' => $description ?: '',
 		];
 
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
 		return rest_ensure_response( $data );
+	}
+
+	/**
+	 * Retrieve content of a given DOM node attribute.
+	 *
+	 * @param DOMNodeList $query XPath query result.
+	 * @param string $attribute Attribute name.
+	 *
+	 * @return string|false Attribute content on success, false otherwise.
+	 */
+	private function get_dom_attribute_content( $query, $attribute ) {
+		if ( ! $query instanceof DOMNodeList || $query->length === 0 ) {
+			return false;
+		}
+
+		/** @var DOMElement $node */
+		$node = $query->item( 0 );
+
+		if ( $node instanceof DOMElement ) {
+			return $node->getAttribute( $attribute );
+		}
+
+		return false;
 	}
 
 	/**
