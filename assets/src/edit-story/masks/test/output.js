@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import { WithElementMask } from '../';
+import WithMask from '../output';
 
-describe('WithElementMask', () => {
+describe('WithMask', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should produce valid AMP output', async () => {
     const props = {
@@ -44,15 +44,15 @@ describe('WithElementMask', () => {
       },
       mask: {
         type: 'heart',
-        fill: false,
+        fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
         style: {},
       },
     };
 
     await expect(
-      <WithElementMask {...props}>
+      <WithMask {...props}>
         <amp-img src="https://example.com/image.png" layout="fill" />
-      </WithElementMask>
+      </WithMask>
     ).toBeValidAMPStoryElement();
   });
 });
