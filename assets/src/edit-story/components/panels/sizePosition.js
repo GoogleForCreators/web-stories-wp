@@ -117,10 +117,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     [canFlip, lockRatio, onSetProperties, state]
   );
 
-  useEffect(() => {
-    updateProperties();
-  }, [state.isFill, updateProperties]);
-
   const handleNumberChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
