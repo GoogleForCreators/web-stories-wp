@@ -77,9 +77,9 @@ function DisplayElement({ element }) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
-      if (dropTargets !== null) {
-        target.style.opacity = dropTargets?.hover ? 0.6 : 1;
-        setReplacement(dropTargets?.replacement);
+      if (Boolean(dropTargets)) {
+        target.style.opacity = dropTargets.hover ? 0.6 : 1;
+        setReplacement(dropTargets.replacement || null);
       }
     }
   });

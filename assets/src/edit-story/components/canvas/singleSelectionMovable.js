@@ -165,8 +165,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
-        const resource = selectedElement.resource;
-        handleDrag(resource, clientX, clientY, selectedElement.id);
+        if (selectedElement.resource) {
+          handleDrag(
+            selectedElement.resource,
+            clientX,
+            clientY,
+            selectedElement.id
+          );
+        }
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
@@ -183,8 +189,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
-          const resource = selectedElement.resource;
-          handleDrop(resource, selectedElement.id);
+          if (selectedElement.resource) {
+            handleDrop(selectedElement.resource, selectedElement.id);
+          }
         }
         resetMoveable(target);
       }}
