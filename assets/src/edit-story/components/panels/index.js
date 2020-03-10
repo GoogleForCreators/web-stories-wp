@@ -24,7 +24,7 @@ import LinkPanel from './link';
 import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
-import TextStylePanel from './textStyle/index';
+import TextStylePanel from './textStyle';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
