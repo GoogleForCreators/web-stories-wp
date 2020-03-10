@@ -57,5 +57,6 @@ export const panels = [
   PanelTypes.SCALE,
   PanelTypes.VIDEO_POSTER,
   PanelTypes.FILL,
+  PanelTypes.LINK,
   PanelTypes.MASK,
 ];
