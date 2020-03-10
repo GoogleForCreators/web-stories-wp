@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -39,6 +40,7 @@ import { ReactComponent as MiddleAlign } from '../../../icons/middle_align.svg';
 import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
+import getCommonValue from '../utils/getCommonValue';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -59,8 +61,47 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function StylePanel({ properties, state, setState }) {
-  const { lineHeight, letterSpacing } = properties;
+function StylePanel({ selectedElements, onSetProperties }) {
+  const textAlign = getCommonValue(selectedElements, 'textAlign');
+  const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
+  const lineHeight = getCommonValue(selectedElements, 'lineHeight');
+  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
+  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
+  const bold = getCommonValue(selectedElements, 'bold');
+
+  const [state, setState] = useState({
+    bold,
+    fontStyle,
+    textDecoration,
+    textAlign,
+    letterSpacing,
+    lineHeight,
+  });
+  useEffect(() => {
+    setState({
+      bold,
+      textAlign,
+      letterSpacing,
+      lineHeight,
+      fontStyle,
+      textDecoration,
+    });
+  }, [bold, textAlign, letterSpacing, lineHeight, fontStyle, textDecoration]);
+
+  const updateProperties = useCallback(() => {
+    onSetProperties(state);
+  }, [onSetProperties, state]);
+
+  useEffect(() => {
+    updateProperties();
+  }, [
+    state.textAlign,
+    state.bold,
+    state.fontStyle,
+    state.textDecoration,
+    updateProperties,
+  ]);
+
   return (
     <>
       <Row>
@@ -151,9 +192,8 @@ function StylePanel({ properties, state, setState }) {
 }
 
 StylePanel.propTypes = {
-  properties: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default StylePanel;

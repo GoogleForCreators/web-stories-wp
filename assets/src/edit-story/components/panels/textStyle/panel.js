@@ -41,14 +41,6 @@ import PaddingControls from './padding';
 import FontControls from './font';
 
 function StylePanel({ selectedElements, onSetProperties }) {
-  // TextStyle settings
-  const textAlign = getCommonValue(selectedElements, 'textAlign');
-  const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
-  const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
-  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
-  const bold = getCommonValue(selectedElements, 'bold');
-
   const padding = getCommonValue(selectedElements, 'padding') ?? '';
 
   // Font settings.
@@ -74,19 +66,13 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const [state, setState] = useState({
     backgroundColor,
     backgroundOpacity,
-    bold,
     color,
     fontFamily,
-    fontStyle,
     fontSize,
     fontWeight,
     fontFallback,
     fontWeights,
-    textDecoration,
-    textAlign,
     textOpacity,
-    letterSpacing,
-    lineHeight,
     padding,
   });
   const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
@@ -96,36 +82,24 @@ function StylePanel({ selectedElements, onSetProperties }) {
     setState({
       backgroundColor,
       backgroundOpacity,
-      bold,
       color,
       textOpacity,
-      textAlign,
-      letterSpacing,
-      lineHeight,
       padding,
       fontFamily,
-      fontStyle,
       fontSize,
       fontWeight,
       fontWeights: currentFontWeights,
       fontFallback: currentFontFallback,
-      textDecoration,
     });
   }, [
-    bold,
     color,
     textOpacity,
-    textAlign,
-    letterSpacing,
-    lineHeight,
     padding,
     getFontWeight,
     fontFamily,
     getFontFallback,
-    fontStyle,
     fontSize,
     fontWeight,
-    textDecoration,
     backgroundColor,
     backgroundOpacity,
   ]);
@@ -215,15 +189,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
         state={state}
       />
       <TextStyleControls
-        state={state}
-        setState={setState}
-        properties={{
-          lineHeight,
-          letterSpacing,
-          fontStyle,
-          textAlign,
-          textDecoration,
-        }}
+        selectedElements={selectedElements}
+        onSetProperties={onSetProperties}
       />
       <ColorControls
         state={state}
