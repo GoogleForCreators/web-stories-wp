@@ -22,7 +22,7 @@ import { useEffect, useRef } from 'react';
 /**
  * Hook to see which prop changes are causing a component to re-render.
  *
- * Only used for development, and removed
+ * Only used for development, and removed for production builds.
  *
  * @see https://github.com/gragland/usehooks
  *
