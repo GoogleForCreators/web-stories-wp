@@ -22,6 +22,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
@@ -94,7 +99,11 @@ function GradientPicker({
   const tempPointerPosition = usePointerAddStop(line, onAdd);
 
   return (
-    <Line stops={stops} ref={line}>
+    <Line
+      stops={stops}
+      ref={line}
+      aria-label={__('Gradient line', 'web-stories')}
+    >
       {stops.map(({ position }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}

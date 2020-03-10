@@ -109,6 +109,10 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
   const handleCloseAndRefocus = useCallback(() => {
+    // Ignore reason: In Jest, focus is always on document.body if not on any specific
+    // element, so it can never be falsy, as it can be in a real browser.
+
+    // istanbul ignore else
     if (previousFocus.current) {
       previousFocus.current.focus();
     }

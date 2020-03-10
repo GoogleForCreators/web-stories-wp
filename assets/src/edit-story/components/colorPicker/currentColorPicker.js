@@ -183,6 +183,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </EyedropperWrapper>
         <CurrentWrapper>
           <EditablePreview
+            label={__('Edit hex value', 'web-stories')}
             value={hexValue}
             onChange={handleHexInputChange}
             width={65}
@@ -192,6 +193,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         {showOpacity && (
           <CurrentAlphaWrapper>
             <EditablePreview
+              label={__('Edit opacity', 'web-stories')}
               value={alphaPercentage}
               width={35}
               format={handleFormatPercentage}
