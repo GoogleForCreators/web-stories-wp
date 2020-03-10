@@ -74,12 +74,10 @@ function StylePanel({ properties, state, setState }) {
           }
         />
         <Space />
-        {/* TODO: What is meant by % for letter-spacing? */}
         <ExpandedNumeric
           ariaLabel={__('Letter-spacing', 'web-stories')}
           value={state.letterSpacing || 0}
           suffix={<HorizontalOffset />}
-          symbol="%"
           isMultiple={letterSpacing === ''}
           onChange={(value) =>
             setState({ ...state, letterSpacing: parseFloat(value) })

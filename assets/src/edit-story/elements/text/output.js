@@ -25,7 +25,6 @@ import { rgba } from 'polished';
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import { generateFontFamily } from './util';
 
 /**
@@ -63,9 +62,9 @@ function TextOutput({
     lineHeight,
     letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
     padding: padding
-      ? `${dataToEditorX(PAGE_WIDTH, padding.horizontal)}% ${dataToEditorY(
-          PAGE_HEIGHT,
-          padding.vertical
+      ? `${dataToEditorY(padding.vertical, 100)}% ${dataToEditorX(
+          padding.horizontal,
+          100
         )}%`
       : null,
     textAlign: textAlign ? textAlign : null,
