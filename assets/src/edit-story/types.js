@@ -168,7 +168,6 @@ StoryPropTypes.elements.text = PropTypes.shape({
   content: PropTypes.string,
   color: PatternPropType.isRequired,
   backgroundColor: PatternPropType,
-  backgroundOpacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
@@ -182,7 +181,6 @@ StoryPropTypes.elements.text = PropTypes.shape({
   }),
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
-  textOpacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({

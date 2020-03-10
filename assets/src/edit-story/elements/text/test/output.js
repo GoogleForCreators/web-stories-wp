@@ -29,14 +29,26 @@ describe('TextOutput', () => {
     const element = {
       id: '123',
       content: 'Content',
-      color: '#ffffff',
-      backgroundColor: '#efefef',
-      backgroundOpacity: 50,
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 0.5,
+        },
+      },
+      backgroundColor: {
+        color: {
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 0.3,
+        },
+      },
       fontSize: 16,
       letterSpacing: 1.3,
       textAlign: 'left',
       textDecoration: 'none',
-      textOpacity: 25,
       type: 'text',
       x: 10,
       y: 10,
@@ -51,7 +63,7 @@ describe('TextOutput', () => {
 
     const output = renderToStaticMarkup(<TextOutput element={element} />);
     expect(output).toStrictEqual(
-      '<p class="fill" style="font-size:0.83333%;background:rgba(239,239,239,0.5);color:rgba(255,255,255,0.25);letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap">Content</p>'
+      '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)">Content</p>'
     );
   });
 });
