@@ -30,9 +30,11 @@ import {
   EditPanMovable,
   ScalePanel,
   MEDIA_MASK_OPACITY,
+  elementWithFlip,
 } from '../shared';
 import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
+import getTransformFlip from '../shared/getTransformFlip';
 import { videoWithScale } from './util';
 
 const Element = styled.div`
@@ -45,6 +47,7 @@ const FadedVideo = styled.video`
     opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${videoWithScale}
+  ${elementWithFlip}
   max-width: initial;
   max-height: initial;
 `;
@@ -53,6 +56,7 @@ const FadedVideo = styled.video`
 const CropVideo = styled.video`
   position: absolute;
   ${videoWithScale}
+  ${elementWithFlip}
   max-width: initial;
   max-height: initial;
   opacity: ${({ opacity }) =>
@@ -62,7 +66,7 @@ const CropVideo = styled.video`
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the video.
 function VideoEdit({
-  element: { id, resource, scale, focalX, focalY, opacity },
+  element: { id, resource, scale, flip, focalX, focalY, opacity },
   box: { x, y, width, height, rotationAngle },
 }) {
   const [fullVideo, setFullVideo] = useState(null);
@@ -81,10 +85,11 @@ function VideoEdit({
     width,
     height,
     scale,
-    focalX,
-    focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
+  videoProps.transformFlip = getTransformFlip(flip);
   return (
     <Element>
       <FadedVideo
@@ -110,6 +115,7 @@ function VideoEdit({
           setProperties={setProperties}
           fullMedia={fullVideo}
           croppedMedia={croppedVideo}
+          flip={flip}
           x={x}
           y={y}
           width={width}

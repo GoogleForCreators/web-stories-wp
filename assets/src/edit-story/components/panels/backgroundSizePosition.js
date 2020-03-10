@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -28,46 +27,61 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Button, Row } from '../form';
 import useStory from '../../app/story/useStory';
-import { Button } from '../form';
 import { SimplePanel } from './panel';
+import FlipControls from './shared/flipControls';
 
-function BackgroundPanel({ selectedElements, onSetProperties }) {
-  // Remove background: check if is background.
+function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
+  // Background can only have one selected element.
+  const flip = selectedElements[0].flip;
+  const [state, setState] = useState({ flip });
+
   const {
     actions: { setBackgroundElement },
   } = useStory();
-  const { overlay, opacity, isBackground } = selectedElements[0];
 
-  const [state, setState] = useState({ isBackground, opacity, overlay });
   useEffect(() => {
-    setState({ isBackground });
-  }, [isBackground]);
+    setState({ flip });
+  }, [flip]);
+
+  useEffect(() => {
+    onSetProperties(state);
+  }, [onSetProperties, state, state.flip]);
+
   const handleClick = () => {
-    const newIsBackground = !state.isBackground;
     const newState = {
-      isBackground: newIsBackground,
+      isBackground: false,
+      opacity: 100,
       overlay: null,
     };
-    setState(newState);
-    const backgroundId = newIsBackground ? selectedElements[0].id : null;
-    setBackgroundElement({ elementId: backgroundId });
+    setBackgroundElement({ elementId: null });
     onSetProperties(newState);
   };
+
   return (
-    <SimplePanel name="position" title={__('Background', 'web-stories')}>
-      <Button onClick={handleClick}>
-        {state.isBackground
-          ? __('Remove as Background', 'web-stories')
-          : __('Set as background', 'web-stories')}
-      </Button>
+    <SimplePanel
+      name="backgroundSizePosition"
+      title={__('Size & Position', 'web-stories')}
+    >
+      <Row expand={false}>
+        <Button onClick={handleClick}>
+          {__('Remove as Background', 'web-stories')}
+        </Button>
+      </Row>
+      <Row expand={false}>
+        <FlipControls
+          onChange={(value) => setState({ ...state, flip: value })}
+          value={state.flip}
+        />
+      </Row>
     </SimplePanel>
   );
 }
 
-BackgroundPanel.propTypes = {
+BackgroundSizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default BackgroundPanel;
+export default BackgroundSizePositionPanel;

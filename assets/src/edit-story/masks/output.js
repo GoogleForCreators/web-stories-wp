@@ -27,8 +27,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-
 import StoryPropTypes from '../types';
+import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getElementMask } from '.';
 
 const FILL_STYLE = {
@@ -48,6 +48,14 @@ export default function WithMask({
   ...rest
 }) {
   const mask = getElementMask(element);
+  const { flip } = element;
+
+  const transformFlip = getTransformFlip(flip);
+  if (transformFlip) {
+    style.transform = style.transform
+      ? `${style.transform} ${transformFlip}`
+      : transformFlip;
+  }
 
   if (!mask?.type) {
     return (

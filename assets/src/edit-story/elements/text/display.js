@@ -67,6 +67,7 @@ function TextDisplay({
   const {
     actions: { dataToEditorY },
   } = useUnits();
+
   const props = {
     color,
     backgroundColor,
