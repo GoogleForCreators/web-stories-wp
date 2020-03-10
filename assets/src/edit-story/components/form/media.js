@@ -128,7 +128,7 @@ function MediaInput({
 MediaInput.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
   isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
