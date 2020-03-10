@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Link_Controller
  *
