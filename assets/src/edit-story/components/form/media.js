@@ -48,12 +48,14 @@ const Container = styled.div`
 const DefaultImage = styled(DefaultImageSvg)`
   width: 100%;
   height: 100%;
+  display: block;
   padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
 `;
 
 const EditIcon = styled(EditPencilSvg)`
   width: 100%;
   height: 100%;
+  display: block;
 `;
 
 const EditBtn = styled.button`
@@ -65,16 +67,12 @@ const EditBtn = styled.button`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
   background: ${({ theme }) => theme.colors.bg.v0};
-  ${({ circle }) =>
-    circle
-      ? `
-        left: 0px;
-        bottom: 0px;
-    `
-      : `
-        left: 4px;
-        bottom: 4px;
-    `};
+  left: ${({ circle }) => (circle ? 0 : 4)}px;
+  bottom: ${({ circle }) => (circle ? 0 : 4)}px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 `;
 
 const Img = styled.img`
