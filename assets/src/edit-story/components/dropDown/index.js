@@ -214,7 +214,7 @@ function DropDown({ options, value, onChange, disabled }) {
   useEffect(() => {
     if (searchValue !== '') {
       const searchIndex = options.findIndex((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+        item.name.toLowerCase().startsWith(searchValue.toLowerCase())
       );
       if (searchIndex >= 0) {
         DropDown.arrayOfOptionsRefs[searchIndex].focus();
