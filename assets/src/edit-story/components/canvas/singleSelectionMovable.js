@@ -23,12 +23,13 @@ import { useRef, useEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import Movable from '../movable';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
+import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -37,9 +38,10 @@ const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
-  const moveable = useRef();
+  const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  const [snapDisabled, setSnapDisabled] = useState(true);
 
   const {
     actions: { updateSelectedElements },
@@ -92,6 +94,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     }
   });
 
+  // ⌘ key disables snapping
+  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true), [
+    setSnapDisabled,
+  ]);
+  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false), [setSnapDisabled]);
+
   const box = getBox(selectedElement);
   const frame = {
     translate: [0, 0],
@@ -137,6 +145,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
+  // Drop targets
+  const {
+    state: { activeDropTargetId },
+    actions: { handleDrag, handleDrop },
+  } = useDropTargets();
+
+  const canSnap = !isDragging || (isDragging && !activeDropTargetId);
+
   return (
     <Movable
       className="default-movable"
@@ -146,9 +162,17 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       draggable={actionsEnabled}
       resizable={actionsEnabled && !isDragging}
       rotatable={actionsEnabled && !isDragging}
-      onDrag={({ target, beforeTranslate }) => {
+      onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
+        if (selectedElement.resource) {
+          handleDrag(
+            selectedElement.resource,
+            clientX,
+            clientY,
+            selectedElement.id
+          );
+        }
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
@@ -165,6 +189,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
+          if (selectedElement.resource) {
+            handleDrop(selectedElement.resource, selectedElement.id);
+          }
         }
         resetMoveable(target);
       }}
@@ -248,18 +275,22 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={true}
-      snapElement={true}
-      snapHorizontal={true}
-      snapVertical={true}
-      snapCenter={true}
+      snappable={canSnap && !snapDisabled}
+      snapCenter={canSnap && !snapDisabled}
       horizontalGuidelines={
-        actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
+        canSnap && !snapDisabled && actionsEnabled
+          ? [0, canvasHeight / 2, canvasHeight]
+          : []
       }
       verticalGuidelines={
-        actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
+        canSnap && !snapDisabled && actionsEnabled
+          ? [0, canvasWidth / 2, canvasWidth]
+          : []
       }
-      elementGuidelines={actionsEnabled ? otherNodes : []}
+      elementGuidelines={
+        canSnap && !snapDisabled && actionsEnabled ? otherNodes : []
+      }
+      isDisplaySnapDigit={false}
     />
   );
 }

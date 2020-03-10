@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -27,6 +28,7 @@ import { ReactComponent as RedoIcon } from '../../icons/redo.svg';
 import { ReactComponent as LeftArrowIcon } from '../../icons/arrow_left.svg';
 import { ReactComponent as RightArrowIcon } from '../../icons/arrow_right.svg';
 import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
+import { ReactComponent as KeyboardIcon } from '../../icons/keyboard.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
 
@@ -68,18 +70,21 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  opacity: 0.3;
   color: ${({ theme }) => theme.colors.fg.v1};
+
+  svg {
+    width: ${({ width }) => width}px;
+    height: ${({ height }) => height}px;
+  }
+`;
+
+const StyledButtonWithOpacity = styled(StyledButton)`
+  opacity: 0.3;
 
   &:focus,
   &:active,
   &:hover {
     opacity: 1;
-  }
-
-  svg {
-    width: ${({ width }) => width}px;
-    height: ${({ height }) => height}px;
   }
 `;
 
@@ -101,15 +106,15 @@ export const Outline = styled(Base)`
 `;
 
 export const LeftArrow = (props) => (
-  <StyledButton {...props}>
+  <StyledButtonWithOpacity {...props}>
     <LeftArrowIcon />
-  </StyledButton>
+  </StyledButtonWithOpacity>
 );
 
 export const RightArrow = (props) => (
-  <StyledButton {...props}>
+  <StyledButtonWithOpacity {...props}>
     <RightArrowIcon />
-  </StyledButton>
+  </StyledButtonWithOpacity>
 );
 
 export const Undo = (props) => (
@@ -130,11 +135,17 @@ export const GridView = (props) => (
   </StyledButton>
 );
 
-export const Close = (props) => (
+export const Keyboard = (props) => (
   <StyledButton {...props}>
-    <CloseIcon />
+    <KeyboardIcon />
   </StyledButton>
 );
+
+export const Close = forwardRef((props, ref) => (
+  <StyledButton {...props} ref={ref}>
+    <CloseIcon />
+  </StyledButton>
+));
 
 export const Eyedropper = (props) => (
   <StyledButton {...props}>

@@ -31,11 +31,11 @@ namespace Google\Web_Stories;
  */
 class Media {
 	/**
-	 * The image size for the AMP story card, used in an embed and the Latest Stories block.
+	 * The image size for the poster-portrait-src.
 	 *
 	 * @var string
 	 */
-	const STORY_CARD_IMAGE_SIZE = 'web-stories-poster-portrait';
+	const STORY_POSTER_IMAGE_SIZE = 'web-stories-poster-portrait';
 
 	/**
 	 * The image size for the poster-landscape-src.
@@ -92,7 +92,7 @@ class Media {
 		);
 
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size( self::STORY_CARD_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
+		add_image_size( self::STORY_POSTER_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
 
 		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
@@ -113,7 +113,6 @@ class Media {
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
 	 *
 	 * @since 1.2.1
-	 * @see AMP_Story_Media::poster_portrait_fallback()
 	 *
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
@@ -126,7 +125,7 @@ class Media {
 		}
 
 		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_CARD_IMAGE_SIZE ),
+			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_POSTER_IMAGE_SIZE ),
 			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
 			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
