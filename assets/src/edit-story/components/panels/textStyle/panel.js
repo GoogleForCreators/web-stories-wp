@@ -38,6 +38,7 @@ import PaddingControls from './padding';
 import FontControls from './font';
 
 function StylePanel({ selectedElements, onSetProperties }) {
+  // Update size and position if relevant values have changed.
   const handleSubmit = useCallback(
     (evt) => {
       onSetProperties((properties) => {
