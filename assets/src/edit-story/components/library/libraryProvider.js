@@ -42,7 +42,7 @@ const TABS = {
 
 function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
-  const { insertElement } = useInsertElement();
+  const insertElement = useInsertElement();
 
   const state = {
     state: {

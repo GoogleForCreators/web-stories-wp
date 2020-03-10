@@ -55,14 +55,16 @@ const MediaElement = ({
   const height = requestedHeight || width / oRatio;
 
   const {
-    actions: { handleDrag, handleDrop },
+    actions: { handleDrag, handleDrop, isDropSource },
   } = useDropTargets();
 
-  const dropTargetsBindings = {
-    draggable: 'true',
-    onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
-    onDragEnd: () => handleDrop(resource),
-  };
+  const dropTargetsBindings = isDropSource(resource.type)
+    ? {
+        draggable: 'true',
+        onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
+        onDragEnd: () => handleDrop(resource),
+      }
+    : {};
 
   if (resource.type === 'image') {
     return (

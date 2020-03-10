@@ -27,26 +27,30 @@ import { useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
 
 function useInsertElement() {
-  const isMediaEl = (type) => {
-    const { isMedia } = getDefinitionForType(type);
-    return isMedia;
+  const isMaskable = (type) => {
+    const { isMaskable: maskable } = getDefinitionForType(type);
+    return maskable;
+  };
+  const isMedia = (type) => {
+    const { isMedia: media } = getDefinitionForType(type);
+    return media;
   };
   const {
     actions: { addElement, setBackgroundElement },
     state: { currentPage },
   } = useStory();
 
-  const createElement = (type, { width, height, ...props }) => {
+  const createElement = (type, { width, height, mask, ...props }) => {
     const element = createNewElement(type, {
       ...props,
       x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
       y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
       width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
       height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
-      ...(isMediaEl(type)
+      ...(isMaskable(type)
         ? {
-          mask: DEFAULT_MASK,
-        }
+            mask: mask || DEFAULT_MASK,
+          }
         : {}),
     });
     return element;
@@ -56,15 +60,15 @@ function useInsertElement() {
     const element = createElement(type, props);
     addElement({ element });
     if (
-      isMediaEl(element.type) &&
-      !currentPage.elements.some(({ type: elType }) => isMediaEl(elType))
+      isMedia(element.type) &&
+      !currentPage.elements.some(({ type: elType }) => isMedia(elType))
     ) {
       setBackgroundElement({ elementId: element.id });
     }
     return element;
   };
 
-  return { insertElement };
+  return insertElement;
 }
 
 export default useInsertElement;

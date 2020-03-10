@@ -86,13 +86,6 @@ StoryPropTypes.videoResource = PropTypes.shape({
   posterId: PropTypes.number,
 });
 
-StoryPropTypes.colorResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  // TODO(wassgha): Merge with #452
-  style: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
-  color: PropTypes.string,
-});
-
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
@@ -155,7 +148,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
 
 StoryPropTypes.elements.shape = PropTypes.shape({
   ...StoryElementPropTypes,
-  resource: StoryPropTypes.colorResource,
+  backgroundColor: PropTypes.string,
 });
 
 StoryPropTypes.elements.background = PropTypes.shape({

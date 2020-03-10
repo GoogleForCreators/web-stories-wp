@@ -65,14 +65,3 @@ export const elementTypes = [
 
 export const getDefinitionForType = (type) =>
   elementTypes.find((el) => el.type === type);
-
-export const getTypeFromResource = (resource) => {
-  switch (resource.type) {
-    case 'image':
-      return 'image';
-    case 'video':
-      return 'video';
-    default:
-      return 'shape';
-  }
-};

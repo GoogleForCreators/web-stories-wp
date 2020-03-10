@@ -49,6 +49,7 @@ export default function WithMask({
     return (
       <div
         style={{
+          ...(fill ? FILL_STYLE : {}),
           ...style,
           opacity: opacity ? opacity / 100 : null,
         }}

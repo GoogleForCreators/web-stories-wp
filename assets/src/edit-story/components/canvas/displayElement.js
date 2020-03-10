@@ -23,7 +23,7 @@ import { useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { getDefinitionForType, getTypeFromResource } from '../../elements';
+import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
   elementWithSize,
@@ -50,8 +50,8 @@ function DisplayElement({ element }) {
 
   const replacementElement = replacement
     ? {
-        id: element.id,
-        type: getTypeFromResource(replacement),
+        ...element,
+        type: replacement.type,
         resource: replacement,
       }
     : null;
@@ -71,15 +71,15 @@ function DisplayElement({ element }) {
       target.style.height = '';
       target.style.opacity = 1;
     } else {
-      const { translate, rotate, resize, updates } = transform;
+      const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
       if (resize && resize[0] !== 0 && resize[1] !== 0) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
-      if (updates) {
-        target.style.opacity = updates.overDropTarget ? 0.6 : 1;
-        setReplacement(updates?.replacement);
+      if (dropTargets !== null) {
+        target.style.opacity = dropTargets?.hover ? 0.6 : 1;
+        setReplacement(dropTargets?.replacement);
       }
     }
   });

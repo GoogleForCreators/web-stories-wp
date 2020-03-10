@@ -68,7 +68,7 @@ function WithDropTarget({ element, children }) {
 
   useTransformHandler(element.id, (transform) => {
     const target = pathRef.current;
-    target.style.opacity = transform?.updates?.dropTargetActive ? 0.3 : 0;
+    target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
   });
 
   if (!mask) {
@@ -93,8 +93,8 @@ function WithDropTarget({ element, children }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          onFocus={() => { }}
-          onBlur={() => { }}
+          onFocus={() => {}}
+          onBlur={() => {}}
         />
       </DropTargetSVG>
     </>
@@ -109,7 +109,17 @@ WithDropTarget.propTypes = {
 export default function WithMask({ element, fill, style, children, ...rest }) {
   const mask = getElementMask(element);
   if (!mask?.type) {
-    return children;
+    return (
+      <div
+        style={{
+          ...(fill ? FILL_STYLE : {}),
+          ...style,
+        }}
+        {...rest}
+      >
+        {children}
+      </div>
+    );
   }
 
   // @todo: Chrome cannot do inline clip-path using data: URLs.

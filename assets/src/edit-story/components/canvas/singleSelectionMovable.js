@@ -141,11 +141,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     }
   };
 
-  const {
-    isMaskable,
-    resizeRules = {},
-    updateForResizeEvent,
-  } = getDefinitionForType(selectedElement.type);
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
+    selectedElement.type
+  );
 
   // Drop targets
   const {
@@ -167,9 +165,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
         setTransformStyle(target);
-        if (isMaskable) {
-          handleDrag(selectedElement, clientX, clientY);
-        }
+        const resource = selectedElement.resource;
+        handleDrag(resource, clientX, clientY, selectedElement.id);
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
@@ -186,7 +183,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
-          handleDrop(selectedElement);
+          const resource = selectedElement.resource;
+          handleDrop(resource, selectedElement.id);
         }
         resetMoveable(target);
       }}

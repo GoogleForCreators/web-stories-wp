@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { throttle } from 'throttle-debounce';
 import { useState, useCallback } from 'react';
 
 /**
@@ -26,8 +25,10 @@ import { useState, useCallback } from 'react';
  */
 import { useTransform } from '../transform';
 import { useStory } from '../../app';
-import { getTypeFromResource } from '../../elements';
 import Context from './context';
+
+const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
+const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
 
 function DropTargetsProvider({ children }) {
   const [dropTargets, setDropTargets] = useState({});
@@ -41,11 +42,11 @@ function DropTargetsProvider({ children }) {
   } = useStory();
 
   const getDropTargetFromCursor = useCallback(
-    (x, y) => {
+    (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
       return (
-        Object.keys(dropTargets).find((id) =>
-          underCursor.includes(dropTargets[id])
+        Object.keys(dropTargets).find(
+          (id) => underCursor.includes(dropTargets[id]) && id !== ignoreId
         ) || null
       );
     },
@@ -66,72 +67,72 @@ function DropTargetsProvider({ children }) {
     [dropTargets]
   );
 
+  const isDropSource = (type) => {
+    return DROP_SOURCE_ALLOWED_TYPES.includes(type);
+  };
+
+  const isDropTarget = (type) => {
+    return DROP_TARGET_ALLOWED_TYPES.includes(type);
+  };
+
   /**
    * Dragging elements
    */
   const handleDrag = useCallback(
-    (resourceOrElement, x, y) => {
-      const id = resourceOrElement.id;
-      const resource = resourceOrElement.resource || resourceOrElement;
-      const dropTargetId = getDropTargetFromCursor(x, y);
+    (resource, x, y, selfId = null) => {
+      if (!isDropSource(resource?.type)) {
+        return;
+      }
 
-      if (
-        dropTargetId &&
-        dropTargetId !== id &&
-        dropTargetId !== activeDropTargetId
-      ) {
+      const dropTargetId = getDropTargetFromCursor(x, y, selfId);
+
+      if (dropTargetId && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          updates: { dropTargetActive: true, replacement: resource },
+          dropTargets: { active: true, replacement: resource },
         });
-        if (id) {
-          pushTransform(id, {
-            updates: { overDropTarget: true },
+        if (selfId) {
+          pushTransform(selfId, {
+            dropTargets: { hover: true },
           });
         }
       } else if (!dropTargetId) {
         (currentPage?.elements || []).forEach((el) =>
           pushTransform(el.id, {
-            updates: { dropTargetActive: false, replacement: null },
+            dropTargets: { active: false, replacement: null },
           })
         );
-        if (id) {
-          pushTransform(id, {
-            updates: { overDropTarget: false },
+        if (selfId) {
+          pushTransform(selfId, {
+            dropTargets: { hover: false },
           });
         }
       }
-      if (dropTargetId !== id) {
-        setActiveDropTargetId(dropTargetId);
-      }
+      setActiveDropTargetId(dropTargetId);
     },
     [activeDropTargetId, currentPage, getDropTargetFromCursor, pushTransform]
-  );
-
-  const throttledHandleDrag = useCallback(
-    throttle(300, (element, x, y) => handleDrag(element, x, y)),
-    [handleDrag]
   );
 
   /**
    * Dropping and merging elements
    */
   const handleDrop = useCallback(
-    (resourceOrElement) => {
-      const id = resourceOrElement.id;
-      const resource = resourceOrElement.resource || resourceOrElement;
+    (resource, selfId = null) => {
+      if (!isDropSource(resource?.type)) {
+        return;
+      }
 
-      if (activeDropTargetId && activeDropTargetId !== id) {
+      if (activeDropTargetId && activeDropTargetId !== selfId) {
         updateElementById({
           elementId: activeDropTargetId,
-          properties: { resource, type: getTypeFromResource(resource) },
+          properties: { resource, type: resource.type },
         });
-        if (id) {
-          deleteElementById({ elementId: id });
+        if (selfId) {
+          deleteElementById({ elementId: selfId });
         }
         // Reset styles on all other elements
         (currentPage?.elements || []).forEach((el) =>
           pushTransform(el.id, {
-            updates: { dropTargetActive: false, replacement: null },
+            dropTargets: { active: false, replacement: null },
           })
         );
         setSelectedElementsById({ elementIds: activeDropTargetId });
@@ -155,7 +156,9 @@ function DropTargetsProvider({ children }) {
     },
     actions: {
       registerDropTarget,
-      handleDrag: throttledHandleDrag,
+      isDropSource,
+      isDropTarget,
+      handleDrag,
       handleDrop,
     },
   };

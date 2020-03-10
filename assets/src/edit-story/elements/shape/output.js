@@ -22,9 +22,9 @@ import StoryPropTypes from '../../types';
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function ShapeOutput({ element: { resource: { color } } }) {
+function ShapeOutput({ element: { backgroundColor } }) {
   const style = {
-    background: color,
+    background: backgroundColor,
   };
   return <div className="fill" style={style} />;
 }

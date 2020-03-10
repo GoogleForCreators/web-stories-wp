@@ -50,7 +50,18 @@ export default function WithMask({
   const mask = getElementMask(element);
 
   if (!mask?.type) {
-    return children;
+    return (
+      <div
+        style={{
+          ...(fill ? FILL_STYLE : {}),
+          ...style,
+          clipPath: `url(#${maskId})`,
+        }}
+        {...rest}
+      >
+        {children}
+      </div>
+    );
   }
 
   // @todo: Chrome cannot do inline clip-path using data: URLs.
