@@ -48,7 +48,6 @@ import CompactIndicator from './compactIndicator';
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
 const SCROLLBAR_HEIGHT = 8;
-const ARROWS_BOTTOM_MARGIN = SCROLLBAR_HEIGHT + CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
 const Wrapper = styled.div`
   position: relative;
@@ -69,7 +68,7 @@ const Area = styled.div`
 `;
 
 const NavArea = styled(Area)`
-  margin-bottom: ${ARROWS_BOTTOM_MARGIN}px;
+  margin-bottom: ${({ marginBottom }) => marginBottom}px;
 `;
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
@@ -78,12 +77,20 @@ const MenuIconsWrapper = styled.div`
   ${({ isCompact }) =>
     isCompact
       ? css`
-          padding-bottom: 16px;
+          margin-bottom: 16px;
         `
       : css`
           position: absolute;
           bottom: 44px;
         `}
+`;
+
+const OverflowButtons = styled.div`
+  position: relative;
+  & > * {
+    position: absolute;
+    bottom: 10px;
+  }
 `;
 
 const List = styled(Area).attrs({
@@ -111,10 +118,6 @@ const List = styled(Area).attrs({
     background-color: rgba(255, 255, 255, 0.54);
     border-radius: ${SCROLLBAR_HEIGHT * 2}px;
   }
-`;
-
-const StyledGridViewButton = styled(GridViewButton)`
-  margin-top: 18px;
 `;
 
 const Li = styled.li`
@@ -220,11 +223,14 @@ function Carousel() {
   const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
     carouselSize
   );
+  const arrowsBottomMargin = isCompact
+    ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_HEIGHT
+    : CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
   return (
     <>
       <Wrapper>
-        <NavArea area="left-navigation">
+        <NavArea area="left-navigation" marginBottom={arrowsBottomMargin}>
           <LeftArrow
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
             onClick={() => scrollBy(-scrollByPx)}
@@ -263,7 +269,7 @@ function Carousel() {
             );
           })}
         </List>
-        <NavArea area="right-navigation">
+        <NavArea area="right-navigation" marginBottom={arrowsBottomMargin}>
           <RightArrow
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
             onClick={() => scrollBy(scrollByPx)}
@@ -274,12 +280,14 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <KeyboardShortcutsButton
-              width="24"
-              height="24"
-              aria-label={__('Keyboard Shortcuts', 'web-stories')}
-            />
-            <StyledGridViewButton
+            <OverflowButtons>
+              <KeyboardShortcutsButton
+                width="24"
+                height="24"
+                aria-label={__('Keyboard Shortcuts', 'web-stories')}
+              />
+            </OverflowButtons>
+            <GridViewButton
               width="24"
               height="24"
               onClick={openModal}
