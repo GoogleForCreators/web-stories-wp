@@ -123,7 +123,7 @@ const StoryLayerPropTypes = {
   type: PropTypes.string.isRequired,
 };
 
-const StoryElementPropsTypes = {
+const StoryElementPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
@@ -137,14 +137,14 @@ const StoryElementPropsTypes = {
   opacity: PropTypes.number,
 };
 
-StoryPropTypes.element = PropTypes.shape(StoryElementPropsTypes);
+StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   resource: StoryPropTypes.imageResource,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
@@ -152,13 +152,13 @@ StoryPropTypes.elements.image = PropTypes.shape({
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   resource: StoryPropTypes.videoResource,
   loop: PropTypes.bool,
 });
 
 StoryPropTypes.elements.text = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   content: PropTypes.string,
   color: PatternPropType.isRequired,
   backgroundColor: PatternPropType,
@@ -174,7 +174,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
-  ...StoryElementPropsTypes,
+  ...StoryElementPropTypes,
   backgroundColor: PatternPropType,
 });
 
