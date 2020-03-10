@@ -117,11 +117,15 @@ function StylePanel({ selectedElements, onSetProperties }) {
         <Space />
         <ExpandedNumeric
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={state.letterSpacing || 0}
+          value={state.letterSpacing ? state.letterSpacing * 100 : 0}
           suffix={<HorizontalOffset />}
+          symbol="%"
           isMultiple={letterSpacing === ''}
           onChange={(value) =>
-            setState({ ...state, letterSpacing: parseFloat(value) })
+            setState({
+              ...state,
+              letterSpacing: parseInt(value) ? parseInt(value) / 100 : 0,
+            })
           }
         />
       </Row>
@@ -160,7 +164,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={state.bold}
+          value={state.bold || false}
           isMultiple={false}
           IconWidth={9}
           IconHeight={10}
