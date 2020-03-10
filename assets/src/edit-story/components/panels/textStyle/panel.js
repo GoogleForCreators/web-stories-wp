@@ -28,7 +28,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useFont } from '../../../app/font';
 import { dataPixels } from '../../../units';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
@@ -43,13 +42,6 @@ import FontControls from './font';
 function StylePanel({ selectedElements, onSetProperties }) {
   const padding = getCommonValue(selectedElements, 'padding') ?? '';
 
-  // Font settings.
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
-  const fontSize = getCommonValue(selectedElements, 'fontSize');
-  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
-  const fontWeights = getCommonValue(selectedElements, 'fontWeights');
-  const fontFallback = getCommonValue(selectedElements, 'fontFallback');
-
   // Color settings.
   const color = getCommonValue(selectedElements, 'color');
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -57,52 +49,22 @@ function StylePanel({ selectedElements, onSetProperties }) {
     selectedElements,
     'backgroundOpacity'
   );
-  const textOpacity = getCommonValue(selectedElements, 'textOpacity');
-
-  const {
-    actions: { getFontWeight, getFontFallback },
-  } = useFont();
 
   const [state, setState] = useState({
     backgroundColor,
     backgroundOpacity,
     color,
-    fontFamily,
-    fontSize,
-    fontWeight,
-    fontFallback,
-    fontWeights,
-    textOpacity,
     padding,
   });
   const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
   useEffect(() => {
-    const currentFontWeights = getFontWeight(fontFamily);
-    const currentFontFallback = getFontFallback(fontFamily);
     setState({
       backgroundColor,
       backgroundOpacity,
       color,
-      textOpacity,
       padding,
-      fontFamily,
-      fontSize,
-      fontWeight,
-      fontWeights: currentFontWeights,
-      fontFallback: currentFontFallback,
     });
-  }, [
-    color,
-    textOpacity,
-    padding,
-    getFontWeight,
-    fontFamily,
-    getFontFallback,
-    fontSize,
-    fontWeight,
-    backgroundColor,
-    backgroundOpacity,
-  ]);
+  }, [color, padding, backgroundColor, backgroundOpacity]);
   const handleSubmit = useCallback(
     (evt) => {
       onSetProperties(state);
@@ -184,9 +146,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
       onSubmit={handleSubmit}
     >
       <FontControls
-        properties={{ fontFamily, fontWeight, fontSize }}
-        setState={setState}
-        state={state}
+        selectedElements={selectedElements}
+        onSetProperties={onSetProperties}
       />
       <TextStyleControls
         selectedElements={selectedElements}
@@ -199,7 +160,6 @@ function StylePanel({ selectedElements, onSetProperties }) {
           backgroundColor,
           backgroundOpacity,
           color,
-          textOpacity,
         }}
       />
       <PaddingControls

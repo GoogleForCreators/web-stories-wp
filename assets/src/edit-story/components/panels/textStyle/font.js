@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -32,6 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { Numeric, Row, SelectMenu } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
+import getCommonValue from '../utils/getCommonValue';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -42,12 +43,44 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-function FontControls({ properties, state, setState }) {
-  const { fontFamily, fontWeight, fontSize } = properties;
+function FontControls({ selectedElements, onSetProperties }) {
+  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const fontSize = getCommonValue(selectedElements, 'fontSize');
+  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
+  const fontWeights = getCommonValue(selectedElements, 'fontWeights');
+  const fontFallback = getCommonValue(selectedElements, 'fontFallback');
   const {
     state: { fonts },
     actions: { getFontWeight, getFontFallback },
   } = useFont();
+
+  const [state, setState] = useState({
+    fontFamily,
+    fontSize,
+    fontWeight,
+    fontFallback,
+    fontWeights,
+  });
+
+  useEffect(() => {
+    const currentFontWeights = getFontWeight(fontFamily);
+    const currentFontFallback = getFontFallback(fontFamily);
+    setState({
+      fontFamily,
+      fontSize,
+      fontWeight,
+      fontWeights: currentFontWeights,
+      fontFallback: currentFontFallback,
+    });
+  }, [getFontWeight, fontFamily, getFontFallback, fontSize, fontWeight]);
+
+  const updateProperties = useCallback(() => {
+    onSetProperties(state);
+  }, [onSetProperties, state]);
+
+  useEffect(() => {
+    updateProperties();
+  }, [state.fontFamily, state.fontSize, state.fontWeight, updateProperties]);
 
   const handleNumberChange = useCallback(
     (property) => (value) =>
@@ -124,9 +157,8 @@ function FontControls({ properties, state, setState }) {
 }
 
 FontControls.propTypes = {
-  properties: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
-  setState: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default FontControls;
