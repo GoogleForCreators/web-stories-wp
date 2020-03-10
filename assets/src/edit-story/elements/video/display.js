@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaProps } from '../shared';
+import { elementFillContent, getMediaSizePositionProps } from '../shared';
 import StoryPropTypes from '../../types';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -40,16 +40,7 @@ const Video = styled.video`
 
 function VideoDisplay({
   box: { width, height },
-  element: {
-    mimeType,
-    src,
-    isBackground,
-    scale,
-    focalX,
-    focalY,
-    origRatio,
-    poster,
-  },
+  element: { resource, isBackground, scale, focalX, focalY },
 }) {
   let style = {};
   if (isBackground) {
@@ -60,18 +51,18 @@ function VideoDisplay({
     };
   }
 
-  const videoProps = getMediaProps(
+  const videoProps = getMediaSizePositionProps(
+    resource,
     width,
     height,
     scale,
     focalX,
-    focalY,
-    origRatio
+    focalY
   );
   return (
     <Element>
-      <Video poster={poster} style={style} {...videoProps}>
-        <source src={src} type={mimeType} />
+      <Video poster={resource.poster} style={style} {...videoProps}>
+        <source src={resource.src} type={resource.mimeType} />
       </Video>
     </Element>
   );

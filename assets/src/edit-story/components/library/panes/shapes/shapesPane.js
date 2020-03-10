@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { MASKS } from '../../../../masks';
 import useLibrary from '../../useLibrary';
+import createSolid from '../../../../utils/createSolid';
 import { Section, Title, SearchInput, Header } from '../../common';
 import { Pane } from '../shared';
 import paneId from './paneId';
@@ -44,12 +45,6 @@ const ShapePreview = styled.div`
   position: relative;
   margin-left: 24px;
   margin-right: 24px;
-`;
-
-const Square = styled.div`
-  width: ${PREVIEW_SIZE}px;
-  height: ${PREVIEW_SIZE}px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const Path = styled.path`
@@ -72,30 +67,13 @@ function ShapesPane(props) {
       />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
-          {/** Square shape */}
-          <ShapePreview
-            key={'square'}
-            onClick={() => {
-              insertElement('square', {
-                backgroundColor: '#333',
-                width: 200,
-                height: 200,
-                x: 5,
-                y: 5,
-                rotationAngle: 0,
-              });
-            }}
-            alt={__('Square', 'web-stories')}
-          >
-            <Square />
-          </ShapePreview>
           {/** Basic masks */}
           {MASKS.map((mask) => (
             <ShapePreview
               key={mask.type}
               onClick={() => {
-                insertElement('square', {
-                  backgroundColor: '#333',
+                insertElement('shape', {
+                  backgroundColor: createSolid(51, 51, 51),
                   width: 200,
                   height: 200,
                   x: 5,

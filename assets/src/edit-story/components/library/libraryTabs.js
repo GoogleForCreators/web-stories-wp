@@ -17,11 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../app';
 import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
 import { Tabs, getPanes } from './panes';
@@ -33,7 +34,8 @@ function LibraryTabs() {
     actions: { setTab },
     data: { tabs },
   } = useLibrary();
-  const panes = getPanes(tabs);
+  const { isRTL } = useConfig();
+  const panes = useMemo(() => getPanes(tabs), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
     (direction) => () => {
@@ -49,9 +51,17 @@ function LibraryTabs() {
     },
     [tab, setTab, panes]
   );
-  // todo: support RTL
-  useKeyDownEffect(ref, 'left', handleNavigation(-1), [tab, setTab, panes]);
-  useKeyDownEffect(ref, 'right', handleNavigation(1), [tab, setTab, panes]);
+
+  const backwardDirection = isRTL ? 1 : -1;
+  const forwardDirection = isRTL ? -1 : 1;
+
+  useKeyDownEffect(ref, 'left', handleNavigation(backwardDirection), [
+    handleNavigation,
+  ]);
+  useKeyDownEffect(ref, 'right', handleNavigation(forwardDirection), [
+    handleNavigation,
+  ]);
+
   return (
     <Tabs ref={ref}>
       {panes.map(({ id, Tab }) => (

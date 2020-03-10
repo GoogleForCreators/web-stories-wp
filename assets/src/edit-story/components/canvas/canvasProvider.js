@@ -28,7 +28,6 @@ import {
   DEFAULT_EDITOR_PAGE_WIDTH,
   DEFAULT_EDITOR_PAGE_HEIGHT,
 } from '../../constants';
-import { TransformProvider } from '../transform';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
@@ -124,6 +123,12 @@ function CanvasProvider({ children }) {
     ) {
       clearEditing();
     }
+    if (
+      lastSelectedElementId.current &&
+      !selectedElementIds.includes(lastSelectedElementId.current)
+    ) {
+      lastSelectedElementId.current = null;
+    }
   }, [editingElement, selectedElementIds, clearEditing]);
 
   useCanvasSelectionCopyPaste(pageContainer);
@@ -152,9 +157,7 @@ function CanvasProvider({ children }) {
 
   return (
     <Context.Provider value={state}>
-      <UnitsProvider pageSize={pageSize}>
-        <TransformProvider>{children}</TransformProvider>
-      </UnitsProvider>
+      <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>
     </Context.Provider>
   );
 }

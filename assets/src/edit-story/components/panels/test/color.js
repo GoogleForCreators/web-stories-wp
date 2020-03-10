@@ -24,6 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
+import createSolid from '../../../utils/createSolid';
 import Color from '../color';
 
 function arrange(children = null) {
@@ -34,14 +35,14 @@ describe('Panels/Color', () => {
   it('should render <Color /> panel', () => {
     const { getByLabelText } = arrange(
       <Color
-        selectedElements={[{ color: '#ffffff' }]}
+        selectedElements={[{ color: createSolid(255, 0, 255) }]}
         onSetProperties={() => null}
       />
     );
 
-    const element = getByLabelText('Color');
-
+    const element = getByLabelText(/Color/);
     expect(element).toBeDefined();
+    // TODO: Actually verify that the element label is 'Color: FF00FF'
   });
   // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/378
 });

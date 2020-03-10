@@ -22,7 +22,9 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-export { default as getMediaProps } from './getMediaProps';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import convertToCSS from '../../utils/convertToCSS';
+export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
 export { default as ScalePanel } from './scalePanel';
@@ -71,11 +73,12 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  ${({ backgroundColor }) =>
+    convertToCSS(generatePatternStyles(backgroundColor))};
 `;
 
 export const elementWithFontColor = css`
-  color: ${({ color }) => color};
+  ${({ color }) => convertToCSS(generatePatternStyles(color, 'color'))};
 `;
 
 export const elementWithFont = css`
@@ -92,4 +95,18 @@ export const elementWithStyle = css`
   letter-spacing: ${({ letterSpacing }) =>
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
+`;
+
+export const MEDIA_MASK_OPACITY = 0.4;
+
+export const SHARED_DEFAULT_ATTRIBUTES = {
+  opacity: 100,
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+};
+
+export const elementWithFlip = css`
+  transform: ${({ transformFlip }) => transformFlip};
 `;

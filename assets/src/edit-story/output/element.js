@@ -18,12 +18,13 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import { WithElementMask } from '../masks';
+import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
+import WithLink from '../components/link/output';
 
 function OutputElement({ element }) {
-  const { id, type } = element;
+  const { id, opacity, type } = element;
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
@@ -33,7 +34,7 @@ function OutputElement({ element }) {
   const { x, y, width, height, rotationAngle } = box;
 
   return (
-    <WithElementMask
+    <WithMask
       element={element}
       id={'el-' + id}
       className="wrapper"
@@ -43,10 +44,20 @@ function OutputElement({ element }) {
         width: `${width}%`,
         height: `${height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
+        opacity: opacity ? opacity / 100 : null,
       }}
     >
-      <Output element={element} box={box} />
-    </WithElementMask>
+      <WithLink
+        element={element}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'block',
+        }}
+      >
+        <Output element={element} box={box} />
+      </WithLink>
+    </WithMask>
   );
 }
 
