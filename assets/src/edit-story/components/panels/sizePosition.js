@@ -37,6 +37,7 @@ import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
 import Toggle from '../form/toggle';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
+import WithTooltip from '../tooltip';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
@@ -176,16 +177,18 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           }}
           disabled={isFill}
         />
-        <Toggle
-          icon={<Locked />}
-          uncheckedIcon={<Unlocked />}
-          value={lockRatio}
-          isMultiple={false}
-          onChange={(value) => {
-            setLockRatio(value);
-          }}
-          disabled={isFill}
-        />
+        <WithTooltip title={__('Constrain proportions', 'web-stories')}>
+          <Toggle
+            icon={<Locked />}
+            uncheckedIcon={<Unlocked />}
+            value={lockRatio}
+            isMultiple={false}
+            onChange={(value) => {
+              setLockRatio(value);
+            }}
+            disabled={isFill}
+          />
+        </WithTooltip>
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={state.height}
@@ -228,17 +231,19 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           />
         )}
         {canFill && isSingleElement && (
-          <Toggle
-            icon={<Fullbleed />}
-            value={state.isFill}
-            isMultiple={false}
-            onChange={(value) => {
-              setState({
-                ...state,
-                isFill: value,
-              });
-            }}
-          />
+          <WithTooltip title={__('Full bleed', 'web-stories')}>
+            <Toggle
+              icon={<Fullbleed />}
+              value={state.isFill}
+              isMultiple={false}
+              onChange={(value) => {
+                setState({
+                  ...state,
+                  isFill: value,
+                });
+              }}
+            />
+          </WithTooltip>
         )}
       </Row>
     </SimplePanel>

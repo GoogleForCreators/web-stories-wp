@@ -20,29 +20,39 @@
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
+import WithTooltip from '../../tooltip';
 
 function FlipControls({ value, onChange }) {
   return (
     <>
-      <Toggle
-        icon={<FlipHorizontal />}
-        value={value.horizontal}
-        onChange={(horizontal) => {
-          onChange({ ...value, horizontal });
-        }}
-      />
-      <Toggle
-        icon={<FlipVertical />}
-        value={value.vertical}
-        onChange={(vertical) => {
-          onChange({ ...value, vertical });
-        }}
-      />
+      <WithTooltip title={__('Flip horizontally', 'web-stories')}>
+        <Toggle
+          icon={<FlipHorizontal />}
+          value={value.horizontal}
+          onChange={(horizontal) => {
+            onChange({ ...value, horizontal });
+          }}
+        />
+      </WithTooltip>
+      <WithTooltip title={__('Flip vertically', 'web-stories')}>
+        <Toggle
+          icon={<FlipVertical />}
+          value={value.vertical}
+          onChange={(vertical) => {
+            onChange({ ...value, vertical });
+          }}
+        />
+      </WithTooltip>
     </>
   );
 }

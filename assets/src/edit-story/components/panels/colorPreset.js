@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as Add } from '../../icons/add_page.svg';
+import WithTooltip from '../tooltip';
 import { Panel, PanelTitle, PanelContent } from './panel';
 
 const AddColorPresetButton = styled.div`
@@ -77,9 +78,11 @@ function ColorPresetPanel() {
       <PanelTitle
         isPrimary
         secondaryAction={
-          <AddColorPresetButton onClick={() => null}>
-            <Add />
-          </AddColorPresetButton>
+          <WithTooltip title={__('Add color preset', 'web-stories')}>
+            <AddColorPresetButton onClick={() => null}>
+              <Add />
+            </AddColorPresetButton>
+          </WithTooltip>
         }
       >
         {__('Color presets', 'web-stories')}
