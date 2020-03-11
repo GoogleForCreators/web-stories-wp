@@ -158,7 +158,7 @@ const MediaElement = ({
         <source src={src} type={mimeType} />
       </Video>
       {showVideoDetail && <PlayIcon />}
-      <Duration>{lengthFormatted}</Duration>
+      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
     </Container>
   );
 };
