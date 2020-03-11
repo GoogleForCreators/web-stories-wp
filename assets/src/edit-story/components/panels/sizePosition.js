@@ -33,7 +33,6 @@ import { Button, Row, Numeric } from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
-import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
 import Toggle from '../form/toggle';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
@@ -41,6 +40,7 @@ import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
 import getCommonObjectValue from './utils/getCommonObjectValue';
+import FillControl from './shared/fillControl';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -48,9 +48,9 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function SizePositionPanel({ selectedElements, onSetProperties }) {
+  const isFill = getCommonValue(selectedElements, 'isFill');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = getCommonObjectValue(
     selectedElements,
@@ -62,7 +62,6 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     width,
     height,
     flip,
-    isFill,
     rotationAngle,
   });
   const [lockRatio, setLockRatio] = useState(true);
@@ -72,9 +71,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   } = useStory();
 
   useEffect(() => {
-    setState({ width, height, flip, isFill, rotationAngle });
+    setState({ width, height, flip, rotationAngle });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, isFill, rotationAngle, flip.horizontal, flip.vertical]);
+  }, [width, height, rotationAngle, flip.horizontal, flip.vertical]);
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
@@ -224,16 +223,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           />
         )}
         {canFill && isSingleElement && (
-          <Toggle
-            icon={<Fullbleed />}
-            value={state.isFill}
-            isMultiple={false}
-            onChange={(value) => {
-              setState({
-                ...state,
-                isFill: value,
-              });
-            }}
+          <FillControl
+            selectedElements={selectedElements}
+            onSetProperties={onSetProperties}
           />
         )}
       </Row>
