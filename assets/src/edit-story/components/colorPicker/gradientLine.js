@@ -119,6 +119,7 @@ function GradientPicker({
       {tempPointerPosition && (
         <TempPointer
           aria-label={sprintf(
+            /* translators: %d: stop percentage */
             __('Temporary gradient stop at %d%%', 'web-stories'),
             Math.round(
               (100 * (tempPointerPosition - LINE_WIDTH / 2)) / LINE_LENGTH
