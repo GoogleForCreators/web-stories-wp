@@ -15,20 +15,33 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { forwardRef } from 'react';
+
+/**
  * Internal dependencies
  */
-import LibraryProvider from './libraryProvider';
-import LibraryLayout from './libraryLayout';
-import LibraryUploadDropTarget from './libraryUploadDropTarget';
+import useUploadDropTarget from './use';
 
-function Library() {
-  return (
-    <LibraryProvider>
-      <LibraryUploadDropTarget>
-        <LibraryLayout />
-      </LibraryUploadDropTarget>
-    </LibraryProvider>
-  );
+const Overlay = styled.div`
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+function UploadDropTargetOverlayWithRef(props, ref) {
+  const { isDragging } = useUploadDropTarget();
+  if (!isDragging) {
+    return null;
+  }
+  return <Overlay ref={ref} {...props} />;
 }
 
-export default Library;
+const UploadDropTargetOverlay = forwardRef(UploadDropTargetOverlayWithRef);
+
+export default UploadDropTargetOverlay;

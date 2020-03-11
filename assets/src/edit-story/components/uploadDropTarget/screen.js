@@ -15,20 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { rgba } from 'polished';
+
+/**
  * Internal dependencies
  */
-import LibraryProvider from './libraryProvider';
-import LibraryLayout from './libraryLayout';
-import LibraryUploadDropTarget from './libraryUploadDropTarget';
+import UploadDropTargetOverlay from './overlay';
 
-function Library() {
-  return (
-    <LibraryProvider>
-      <LibraryUploadDropTarget>
-        <LibraryLayout />
-      </LibraryUploadDropTarget>
-    </LibraryProvider>
-  );
-}
+const UploadDropTargetScreen = styled(UploadDropTargetOverlay)`
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v11, 0.6)};
+`;
 
-export default Library;
+export default UploadDropTargetScreen;

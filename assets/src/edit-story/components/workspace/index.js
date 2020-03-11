@@ -22,19 +22,22 @@ import Canvas from '../canvas';
 import { SidebarProvider } from '../sidebar';
 import CanvasProvider from '../canvas/canvasProvider';
 import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
+import WorkspaceUploadDropTarget from './workspaceUploadDropTarget';
 
 function Workspace() {
   return (
     <CanvasProvider>
       <SidebarProvider>
-        <WorkspaceLayout>
-          <CanvasArea>
-            <Canvas />
-          </CanvasArea>
-          <InspectorArea>
-            <Inspector />
-          </InspectorArea>
-        </WorkspaceLayout>
+        <WorkspaceUploadDropTarget>
+          <WorkspaceLayout>
+            <CanvasArea>
+              <Canvas />
+            </CanvasArea>
+            <InspectorArea>
+              <Inspector />
+            </InspectorArea>
+          </WorkspaceLayout>
+        </WorkspaceUploadDropTarget>
       </SidebarProvider>
     </CanvasProvider>
   );

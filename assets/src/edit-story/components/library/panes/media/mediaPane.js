@@ -33,7 +33,6 @@ import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
 import { MainButton, Title, SearchInput, Header } from '../../common';
-import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
@@ -85,7 +84,7 @@ const DEFAULT_WIDTH = 150;
 function MediaPane(props) {
   const {
     state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-    actions: { resetFilters, setMediaType, setSearchTerm, uploadVideoFrame },
+    actions: { resetFilters, setMediaType, setSearchTerm },
   } = useMedia();
 
   const {
@@ -147,7 +146,7 @@ function MediaPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = (resource, width, height) => {
-    const element = insertElement(resource.type, {
+    return insertElement(resource.type, {
       resource,
       width,
       height,
@@ -155,13 +154,6 @@ function MediaPane(props) {
       y: 5,
       rotationAngle: 0,
     });
-
-    // Generate video poster if one not set.
-    if (resource.type === 'video' && resource.videoId && !resource.posterId) {
-      uploadVideoFrame(resource.videoId, resource.src, element.id);
-    }
-
-    return element;
   };
 
   /**
@@ -184,66 +176,64 @@ function MediaPane(props) {
 
   return (
     <Pane id={paneId} {...props}>
-      <Dropzone>
-        <Header>
-          <Title>
-            {__('Media', 'web-stories')}
-            {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-          </Title>
-          <MainButton onClick={openMediaPicker}>
-            {__('Upload', 'web-stories')}
-          </MainButton>
-        </Header>
+      <Header>
+        <Title>
+          {__('Media', 'web-stories')}
+          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+        </Title>
+        <MainButton onClick={openMediaPicker}>
+          {__('Upload', 'web-stories')}
+        </MainButton>
+      </Header>
 
-        <SearchInput
-          value={searchTerm}
-          placeholder={__('Search media...', 'web-stories')}
-          onChange={onSearch}
-        />
+      <SearchInput
+        value={searchTerm}
+        placeholder={__('Search media...', 'web-stories')}
+        onChange={onSearch}
+      />
 
-        <FilterButtons>
-          {FILTERS.map(({ filter, name }, index) => (
-            <FilterButton
-              key={index}
-              active={filter === mediaType}
-              onClick={onFilter(filter)}
-            >
-              {name}
-            </FilterButton>
-          ))}
-        </FilterButtons>
+      <FilterButtons>
+        {FILTERS.map(({ filter, name }, index) => (
+          <FilterButton
+            key={index}
+            active={filter === mediaType}
+            onClick={onFilter(filter)}
+          >
+            {name}
+          </FilterButton>
+        ))}
+      </FilterButtons>
 
-        {isMediaLoaded && !media.length ? (
-          <Message>{__('No media found', 'web-stories')}</Message>
-        ) : (
-          <Container>
-            <Column>
-              {resources
-                .filter((_, index) => isEven(index))
-                .map((resource) => (
-                  <MediaElement
-                    resource={resource}
-                    key={resource.src}
-                    width={DEFAULT_WIDTH}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            <Column>
-              {resources
-                .filter((_, index) => !isEven(index))
-                .map((resource) => (
-                  <MediaElement
-                    resource={resource}
-                    key={resource.src}
-                    width={DEFAULT_WIDTH}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-          </Container>
-        )}
-      </Dropzone>
+      {isMediaLoaded && !media.length ? (
+        <Message>{__('No media found', 'web-stories')}</Message>
+      ) : (
+        <Container>
+          <Column>
+            {resources
+              .filter((_, index) => isEven(index))
+              .map((resource) => (
+                <MediaElement
+                  resource={resource}
+                  key={resource.src}
+                  width={DEFAULT_WIDTH}
+                  onInsert={insertMediaElement}
+                />
+              ))}
+          </Column>
+          <Column>
+            {resources
+              .filter((_, index) => !isEven(index))
+              .map((resource) => (
+                <MediaElement
+                  resource={resource}
+                  key={resource.src}
+                  width={DEFAULT_WIDTH}
+                  onInsert={insertMediaElement}
+                />
+              ))}
+          </Column>
+        </Container>
+      )}
     </Pane>
   );
 }
