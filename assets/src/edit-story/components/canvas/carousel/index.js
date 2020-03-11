@@ -43,6 +43,7 @@ import {
   COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
+import DropZoneProvider from '../../dropzone/dropZoneProvider';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
@@ -238,7 +239,7 @@ function Carousel() {
     : CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
   return (
-    <>
+    <DropZoneProvider>
       <Wrapper>
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -316,7 +317,7 @@ function Carousel() {
           <GridView />
         </Modal>
       )}
-    </>
+    </DropZoneProvider>
   );
 }
 
