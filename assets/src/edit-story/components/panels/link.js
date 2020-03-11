@@ -108,13 +108,26 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     onSetProperties(state);
     evt.preventDefault();
   };
+  const handleLinkChange = useCallback(
+    (evt) => {
+      const { value: url } = evt.target;
+      setState((originalState) => {
+        const update = {
+          ...originalState,
+          link: { ...originalState.link, url },
+        };
+        onSetProperties(update);
+        return update;
+      });
+    },
+    [onSetProperties]
+  );
   const canLink = selectedElements.length === 1 && !isFill;
   const populateMetadata = useCallback(
     debounce(300, async (/** url */) => {
       // TODO(wassgha): Implement getting the page metadata
     })
   );
-
   useEffect(() => {
     if (state.link?.url) {
       populateMetadata(state.link?.url);
@@ -138,13 +151,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
           <Input
             type="text"
             disabled={!canLink}
-            onChange={(evt) => {
-              const { value: url } = evt.target;
-              setState({
-                ...state,
-                link: { ...state.link, url },
-              });
-            }}
+            onChange={handleLinkChange}
             onBlur={(evt) =>
               evt.target.form.dispatchEvent(new window.Event('submit'))
             }

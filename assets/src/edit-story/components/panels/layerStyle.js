@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -53,6 +53,18 @@ function LayerStylePanel({ selectedElements, onSetProperties }) {
     onSetProperties(state);
     evt.preventDefault();
   };
+  const handleOpacityChange = useCallback(
+    (value) =>
+      setState((originalState) => {
+        const update = {
+          ...originalState,
+          opacity: isNaN(value) || value === '' ? '' : parseFloat(value),
+        };
+        onSetProperties(update);
+        return update;
+      }),
+    [onSetProperties]
+  );
   return (
     <SimplePanel
       name="layerStyle"
@@ -64,12 +76,7 @@ function LayerStylePanel({ selectedElements, onSetProperties }) {
           suffix={__('Opacity', 'web-stories')}
           symbol={_x('%', 'Percentage', 'web-stories')}
           value={state.opacity}
-          onChange={(value) =>
-            setState({
-              ...state,
-              opacity: isNaN(value) || value === '' ? '' : parseFloat(value),
-            })
-          }
+          onChange={handleOpacityChange}
           min="1"
           max="100"
         />

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
+import { debounce } from 'throttle-debounce';
 
 /**
  * Internal dependencies
@@ -34,12 +35,12 @@ function useDesignPanels() {
   const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
 
   const onSetProperties = useCallback(
-    (newPropertiesOrUpdater) => {
+    debounce(300, (newPropertiesOrUpdater) => {
       updateSelectedElements({
         properties: (currentProperties) =>
           calcProperties(currentProperties, newPropertiesOrUpdater),
       });
-    },
+    }),
     [updateSelectedElements]
   );
 

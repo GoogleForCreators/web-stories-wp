@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -136,31 +136,72 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fontFamily, fontStyle, fontSize, fontWeight, getFontWeight]);
-  const handleSubmit = (evt) => {
-    onSetProperties((properties) => {
-      const { width, height: oldHeight, rotationAngle, x, y } = properties;
-      const updatedState = removeUnsetValues(state);
-      const newProperties = { ...properties, ...updatedState };
-      const newHeight = dataPixels(calculateTextHeight(newProperties, width));
-      const [dx, dy] = calcRotatedResizeOffset(
-        rotationAngle,
-        0,
-        0,
-        0,
-        newHeight - oldHeight
-      );
-      return {
-        ...updatedState,
-        height: newHeight,
-        x: dataPixels(x + dx),
-        y: dataPixels(y + dy),
-      };
-    });
-
-    if (evt) {
-      evt.preventDefault();
-    }
-  };
+  const updateProperties = useCallback(
+    (originalState) => {
+      onSetProperties((properties) => {
+        const { width, height: oldHeight, rotationAngle, x, y } = properties;
+        const updatedState = removeUnsetValues(originalState);
+        const newProperties = { ...properties, ...updatedState };
+        const newHeight = dataPixels(calculateTextHeight(newProperties, width));
+        const [dx, dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          0,
+          0,
+          0,
+          newHeight - oldHeight
+        );
+        return {
+          ...updatedState,
+          height: newHeight,
+          x: dataPixels(x + dx),
+          y: dataPixels(y + dy),
+        };
+      });
+    },
+    [onSetProperties]
+  );
+  const handleSubmit = useCallback(
+    (evt) => {
+      updateProperties(state);
+      if (evt) {
+        evt.preventDefault();
+      }
+    },
+    [updateProperties, state]
+  );
+  const handleStateChange = useCallback(
+    (property, value) =>
+      setState((originalState) => {
+        const update = { ...originalState, [property]: value };
+        updateProperties(update);
+        return update;
+      }),
+    [updateProperties]
+  );
+  const handleFontFamilyChange = useCallback(
+    (value) =>
+      setState((originalState) => {
+        const currentFontWeights = getFontWeight(value);
+        const currentFontFallback = getFontFallback(value);
+        const fontWeightsArr = currentFontWeights.map(
+          ({ thisValue }) => thisValue
+        );
+        const newFontWeight =
+          fontWeightsArr && fontWeightsArr.includes(originalState.fontWeight)
+            ? originalState.fontWeight
+            : 400;
+        const update = {
+          ...originalState,
+          fontFamily: value,
+          fontWeight: parseInt(newFontWeight),
+          fontWeights: currentFontWeights,
+          fontFallback: currentFontFallback,
+        };
+        updateProperties(update);
+        return update;
+      }),
+    [updateProperties, getFontWeight, getFontFallback]
+  );
 
   const fontStyles = [
     { name: __('Normal', 'web-stories'), value: 'normal' },
@@ -180,24 +221,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
             options={fonts}
             value={state.fontFamily}
             isMultiple={fontFamily === ''}
-            onChange={(value) => {
-              const currentFontWeights = getFontWeight(value);
-              const currentFontFallback = getFontFallback(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ thisValue }) => thisValue
-              );
-              const newFontWeight =
-                fontWeightsArr && fontWeightsArr.includes(state.fontWeight)
-                  ? state.fontWeight
-                  : 400;
-              setState({
-                ...state,
-                fontFamily: value,
-                fontWeight: parseInt(newFontWeight),
-                fontWeights: currentFontWeights,
-                fontFallback: currentFontFallback,
-              });
-            }}
+            onChange={handleFontFamilyChange}
           />
         )}
       </Row>
@@ -207,7 +231,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           options={fontStyles}
           isMultiple={fontStyle === ''}
           value={state.fontStyle}
-          onChange={(value) => setState({ ...state, fontStyle: value })}
+          onChange={(value) => handleStateChange('fontStyle', value)}
         />
         <Space />
         <BoxedNumeric
@@ -218,9 +242,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           max={MAX_FONT_SIZE}
           flexBasis={58}
           textCenter
-          onChange={(value) =>
-            setState({ ...state, fontSize: parseInt(value) })
-          }
+          onChange={(value) => handleStateChange('fontSize', parseInt(value))}
         />
       </Row>
       <Row>
@@ -230,9 +252,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           value={state.lineHeight || 0}
           suffix={<VerticalOffset />}
           isMultiple={lineHeight === ''}
-          onChange={(value) =>
-            setState({ ...state, lineHeight: parseInt(value) })
-          }
+          onChange={(value) => handleStateChange('lineHeight', parseInt(value))}
         />
         <Space />
         {/* TODO: Add horizontal offset logic */}
@@ -243,7 +263,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           symbol="%"
           isMultiple={letterSpacing === ''}
           onChange={(value) =>
-            setState({ ...state, letterSpacing: parseInt(value) })
+            handleStateChange('letterSpacing', parseInt(value))
           }
         />
       </Row>
@@ -253,7 +273,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           value={state.textAlign === 'left'}
           isMultiple={false}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'left' : '' })
+            handleStateChange('textAlign', value ? 'left' : '')
           }
         />
         <ToggleButton
@@ -261,7 +281,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           value={state.textAlign === 'center'}
           isMultiple={false}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'center' : '' })
+            handleStateChange('textAlign', value ? 'center' : '')
           }
         />
         <ToggleButton
@@ -269,45 +289,44 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
           value={state.textAlign === 'right'}
           isMultiple={false}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'right' : '' })
+            handleStateChange('textAlign', value ? 'right' : '')
           }
         />
         <ToggleButton
           icon={<MiddleAlign />}
           value={state.textAlign === 'justify'}
-          isMultiple={false}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'justify' : '' })
+            handleStateChange('textAlign', value ? 'justify' : '')
           }
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={state.fontStyles === 'bold'}
+          value={state.fontStyle === 'bold'}
           isMultiple={false}
           IconWidth={9}
           IconHeight={10}
           onChange={(value) =>
-            setState({ ...state, fontStyles: value ? 'bold' : '' })
+            handleStateChange('fontStyle', value ? 'bold' : '')
           }
         />
         <ToggleButton
           icon={<ItalicIcon />}
-          value={state.fontStyles === 'italic'}
+          value={state.fontStyle === 'italic'}
           isMultiple={false}
           IconWidth={10}
           IconHeight={10}
           onChange={(value) =>
-            setState({ ...state, fontStyles: value ? 'italic' : '' })
+            handleStateChange('fontStyle', value ? 'italic' : '')
           }
         />
         <ToggleButton
           icon={<UnderlineIcon />}
-          value={state.fontStyles === 'underline'}
+          value={state.fontStyle === 'underline'}
           isMultiple={false}
           IconWidth={8}
           IconHeight={21}
           onChange={(value) =>
-            setState({ ...state, fontStyles: value ? 'underline' : '' })
+            handleStateChange('fontStyle', value ? 'underline' : '')
           }
         />
       </Row>
@@ -315,7 +334,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
           value={state.color}
-          onChange={(value) => setState({ ...state, color: value })}
+          onChange={(value) => handleStateChange('color', value)}
         />
       </Row>
       <Row spaceBetween={false}>
@@ -323,7 +342,7 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         <Color
           hasGradient
           value={state.backgroundColor}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
+          onChange={(value) => handleStateChange('backgroundColor', value)}
         />
       </Row>
       {/* TODO: Update padding logic */}

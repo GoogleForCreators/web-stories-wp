@@ -84,16 +84,16 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   );
 
   const updateProperties = useCallback(
-    (evt) => {
+    (originalState) => {
       onSetProperties(
         ({ width: oldWidth, height: oldHeight, type, flip: oldFlip }) => {
-          const { height: newHeight, width: newWidth } = state;
+          const { height: newHeight, width: newWidth } = originalState;
           const update = {
-            ...state,
+            ...originalState,
             flip:
               // Ensure flip change only if flip controls are actually visible (canFlip).
               canFlip && getDefinitionForType(type).canFlip
-                ? state.flip
+                ? originalState.flip
                 : oldFlip,
           };
           const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
@@ -109,21 +109,78 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           return update;
         }
       );
+    },
+    [canFlip, lockRatio, onSetProperties]
+  );
+
+  const handleSubmit = useCallback(
+    (evt) => {
+      updateProperties(state);
       if (evt) {
         evt.preventDefault();
         evt.stopPropagation();
       }
     },
-    [canFlip, lockRatio, onSetProperties, state]
+    [updateProperties, state]
   );
 
-  const handleNumberChange = useCallback(
-    (property) => (value) =>
-      setState((originalState) => ({
-        ...originalState,
-        [property]: isNaN(value) || value === '' ? '' : parseFloat(value),
-      })),
-    [setState]
+  const handleWidthChange = useCallback(
+    (value) => {
+      const ratio = width / height;
+      const newWidth = isNaN(value) || value === '' ? '' : parseFloat(value);
+
+      setState((originalState) => {
+        const update = {
+          ...originalState,
+          width: newWidth,
+          height:
+            height !== '' && typeof newWidth === 'number' && lockRatio
+              ? dataPixels(newWidth / ratio)
+              : height,
+        };
+        updateProperties(update);
+
+        return update;
+      });
+    },
+    [updateProperties, height, width, lockRatio]
+  );
+
+  const handleHeightChange = useCallback(
+    (value) => {
+      const ratio = width / height;
+      const newHeight = isNaN(value) || value === '' ? '' : parseFloat(value);
+      setState((originalState) => {
+        const update = {
+          ...originalState,
+          height: newHeight,
+          width:
+            width !== '' && typeof newHeight === 'number' && lockRatio
+              ? dataPixels(newHeight * ratio)
+              : width,
+        };
+        updateProperties(update);
+
+        return update;
+      });
+    },
+    [updateProperties, height, width, lockRatio]
+  );
+
+  const handleRotationAngleChange = useCallback(
+    (value) => {
+      setState((originalState) => {
+        const update = {
+          ...originalState,
+          rotationAngle: isNaN(value) || value === '' ? '' : parseFloat(value),
+        };
+
+        updateProperties(update);
+
+        return update;
+      });
+    },
+    [updateProperties]
   );
 
   const handleSetBackground = () => {
@@ -142,7 +199,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     <SimplePanel
       name="size"
       title={__('Size & position', 'web-stories')}
-      onSubmit={updateProperties}
+      onSubmit={handleSubmit}
     >
       {isMedia && isSingleElement && (
         <Row expand>
@@ -157,19 +214,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={state.width}
           isMultiple={width === ''}
-          onChange={(value) => {
-            const ratio = width / height;
-            const newWidth =
-              isNaN(value) || value === '' ? '' : parseFloat(value);
-            setState({
-              ...state,
-              width: newWidth,
-              height:
-                height !== '' && typeof newWidth === 'number' && lockRatio
-                  ? dataPixels(newWidth / ratio)
-                  : height,
-            });
-          }}
+          onChange={handleWidthChange}
           disabled={isFill}
         />
         <Toggle
@@ -186,19 +231,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={state.height}
           isMultiple={height === ''}
-          onChange={(value) => {
-            const ratio = width / height;
-            const newHeight =
-              isNaN(value) || value === '' ? '' : parseFloat(value);
-            setState({
-              ...state,
-              height: newHeight,
-              width:
-                width !== '' && typeof newHeight === 'number' && lockRatio
-                  ? dataPixels(newHeight * ratio)
-                  : width,
-            });
-          }}
+          onChange={handleHeightChange}
           disabled={isFill}
         />
       </Row>
@@ -209,7 +242,7 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={state.rotationAngle}
           isMultiple={rotationAngle === ''}
-          onChange={handleNumberChange('rotationAngle')}
+          onChange={handleRotationAngleChange}
           disabled={isFill}
         />
         {canFlip && (
