@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useCallback } from 'react';
-
-function useReloadMedia({ setIsMediaLoading, setIsMediaLoaded }) {
-  const reloadMedia = useCallback(() => {
-    setIsMediaLoading(false);
-    setIsMediaLoaded(false);
-  }, [setIsMediaLoading, setIsMediaLoaded]);
-
-  return reloadMedia;
-}
-
-export default useReloadMedia;
+export const FETCH_MEDIA_START = 'FETCH_MEDIA_START';
+export const FETCH_MEDIA_SUCCESS = 'FETCH_MEDIA_SUCCESS';
+export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
+export const RESET_FILTERS = 'RESET_FILTERS';
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_MEDIA_TYPE = 'SET_MEDIA_TYPE';

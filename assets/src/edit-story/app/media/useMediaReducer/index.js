@@ -14,19 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useCallback } from 'react';
-
-function useResetMedia({ setMediaType, setSearchTerm, reloadMedia }) {
-  const resetMedia = useCallback(() => {
-    setMediaType('');
-    setSearchTerm('');
-    reloadMedia();
-  }, [setMediaType, setSearchTerm, reloadMedia]);
-
-  return resetMedia;
-}
-
-export default useResetMedia;
+export { default } from './useMediaReducer';
