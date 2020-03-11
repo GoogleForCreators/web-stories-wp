@@ -21,7 +21,6 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import onClickOutside from 'react-onclickoutside';
 import { debounce } from 'throttle-debounce';
 
 /**
@@ -34,6 +33,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../keyboard';
+import useFocusOut from '../../utils/useFocusOut';
 
 const DropDownContainer = styled.div`
   width: 100px;
@@ -137,9 +137,8 @@ function DropDown({ options, value, onChange, disabled }) {
   );
   const toggleOptions = useCallback(() => setOpenOptions(false), []);
 
+  useFocusOut(DropDown.wrapperRef, toggleOptions);
   useKeyDownEffect(DropDown.wrapperRef, { key: 'esc' }, toggleOptions);
-
-  DropDown.handleClickOutside = () => setOpenOptions(false);
 
   const clearOptionsRefs = () => {
     DropDown.arrayOfOptionsRefs = [];
@@ -298,8 +297,4 @@ DropDown.defaultProps = {
   disabled: false,
 };
 
-const clickOutsideConfig = {
-  handleClickOutside: () => DropDown.handleClickOutside,
-};
-
-export default onClickOutside(DropDown, clickOutsideConfig);
+export default DropDown;

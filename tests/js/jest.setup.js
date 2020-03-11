@@ -20,3 +20,16 @@
 // Extend Jest matchers.
 // See https://github.com/testing-library/jest-dom.
 import '@testing-library/jest-dom';
+
+/**
+ * Internal dependencies
+ */
+import toBeValidAMP from './matchers/toBeValidAMP';
+import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
+import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+
+expect.extend({
+  toBeValidAMP,
+  toBeValidAMPStoryElement,
+  toBeValidAMPStoryPage,
+});

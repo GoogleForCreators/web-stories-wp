@@ -76,12 +76,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 			echo 'Hello World';
 		};
 
-		add_action(	'web_stories_body_open', $function );
+		add_action( 'web_stories_body_open', $function );
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
 		$actual   = $renderer->render();
 
-		remove_action(	'web_stories_body_open', $function );
+		remove_action( 'web_stories_body_open', $function );
 
 		$this->assertSame( $expected, $actual );
 	}
@@ -98,12 +98,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 			echo 'Hello World';
 		};
 
-		add_action(	'web_stories_footer', $function );
+		add_action( 'web_stories_footer', $function );
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
 		$actual   = $renderer->render();
 
-		remove_action(	'web_stories_footer', $function );
+		remove_action( 'web_stories_footer', $function );
 
 		$this->assertSame( $expected, $actual );
 	}

@@ -36,6 +36,7 @@ export const PatternPropType = PropTypes.shape({
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
+  alpha: PropTypes.number,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -92,6 +93,9 @@ StoryPropTypes.children = PropTypes.oneOfType([
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+  backgroundElementId: PropTypes.string,
+  backgroundColor: PatternPropType,
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({

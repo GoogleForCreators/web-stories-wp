@@ -29,6 +29,10 @@ class Dashboard extends \WP_UnitTestCase {
 		);
 	}
 
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$user_id );
+	}
+
 	public function test_add_menu_page_no_permissions() {
 		$dashboard = new \Google\Web_Stories\Dashboard();
 		$this->assertNull( $dashboard->get_hook_suffix() );

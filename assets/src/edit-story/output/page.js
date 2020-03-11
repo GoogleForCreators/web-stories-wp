@@ -23,7 +23,7 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
-  const { id, backgroundColor } = page;
+  const { id, backgroundColor, elements, backgroundElementId } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
     width: `calc(100 * var(--story-page-vw))`, // 100vw
@@ -35,18 +35,18 @@ function OutputPage({ page }) {
       PAGE_WIDTH}))`,
   };
   const backgroundStyles = generatePatternStyles(backgroundColor);
-  const backgroundNonFullbleedElements = page.elements.filter(
+  const backgroundNonFullbleedElements = elements.filter(
     (element) =>
-      element.id === page.backgroundElementId &&
+      element.id === backgroundElementId &&
       element.isFullbleedBackground === false
   );
-  const backgroundFullbleedElements = page.elements.filter(
+  const backgroundFullbleedElements = elements.filter(
     (element) =>
-      element.id === page.backgroundElementId &&
+      element.id === backgroundElementId &&
       element.isFullbleedBackground !== false
   );
-  const regularElements = page.elements.filter(
-    (element) => element.id !== page.backgroundElementId
+  const regularElements = elements.filter(
+    (element) => element.id !== backgroundElementId
   );
   return (
     <amp-story-page id={id}>

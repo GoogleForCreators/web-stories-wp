@@ -56,8 +56,10 @@ function DisplayElement({ element }) {
       }
     : null;
 
-  const { id, opacity, type } = replacementElement || element;
+  const { id, opacity, type } = element;
   const { Display } = getDefinitionForType(type);
+  const { Display: Replacement } =
+    getDefinitionForType(replacement?.type) || {};
 
   const wrapperRef = useRef(null);
 
@@ -77,8 +79,10 @@ function DisplayElement({ element }) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
-      if (Boolean(dropTargets)) {
+      if (typeof dropTargets?.hover !== 'undefined') {
         target.style.opacity = dropTargets.hover ? 0.6 : 1;
+      }
+      if (typeof dropTargets?.replacement !== 'undefined') {
         setReplacement(dropTargets.replacement || null);
       }
     }
@@ -94,7 +98,10 @@ function DisplayElement({ element }) {
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={replacementElement || element} box={box} />
+        <Display element={element} box={box} />
+        {replacementElement && (
+          <Replacement element={replacementElement} box={box} />
+        )}
       </WithMask>
     </Wrapper>
   );

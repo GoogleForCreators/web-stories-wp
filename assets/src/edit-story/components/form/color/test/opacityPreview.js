@@ -17,13 +17,14 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, wait, act, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import theme from '../../../../theme';
+import createSolid from '../../../../utils/createSolid';
 import OpacityPreview from '../opacityPreview';
 import getPreviewOpacityMock from '../getPreviewOpacity';
 import getPreviewTextMock from '../getPreviewText';
@@ -31,13 +32,26 @@ import getPreviewTextMock from '../getPreviewText';
 jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
-function arrange() {
-  const { queryByLabelText } = render(
+function arrange(customProps = {}) {
+  const onChange = jest.fn();
+  const props = {
+    onChange,
+    value: createSolid(0, 0, 0),
+    ...customProps,
+  };
+  const { queryByLabelText, rerender } = render(
     <ThemeProvider theme={theme}>
-      <OpacityPreview onChange={() => {}} />
+      <OpacityPreview {...props} />
     </ThemeProvider>
   );
-  return queryByLabelText('Opacity');
+  const element = queryByLabelText('Opacity');
+  const wrappedRerender = (extraProps) =>
+    rerender(
+      <ThemeProvider theme={theme}>
+        <OpacityPreview {...props} {...extraProps} />
+      </ThemeProvider>
+    );
+  return { element, onChange, rerender: wrappedRerender };
 }
 
 describe('<OpacityPreview />', () => {
@@ -49,17 +63,55 @@ describe('<OpacityPreview />', () => {
     getPreviewTextMock.mockImplementation(() => 'FF0000');
   });
 
-  it('should render correct opacity when there is a text', () => {
-    const element = arrange();
+  it('should render (and rerender) correct opacity when there is a text', () => {
+    const { element, rerender } = arrange({ value: createSolid(255, 0, 0) });
+
+    expect(getPreviewOpacityMock).toHaveBeenCalledWith(createSolid(255, 0, 0));
 
     expect(element).toBeDefined();
     expect(element).toHaveValue('100%');
+
+    // Try again with a different value
+    getPreviewOpacityMock.mockReset();
+    getPreviewOpacityMock.mockImplementation(() => 20);
+    rerender({ value: createSolid(255, 0, 0, 0.2) });
+    expect(getPreviewOpacityMock).toHaveBeenCalledWith(
+      createSolid(255, 0, 0, 0.2)
+    );
+    expect(element).toBeDefined();
+    expect(element).toHaveValue('20%');
   });
 
   it('should be hidden when no text', () => {
     getPreviewTextMock.mockImplementation(() => null);
 
-    const element = arrange();
+    const { element } = arrange();
     expect(element).toHaveStyle('visibility: hidden');
+  });
+
+  it('should remove postfix when there is focus but add again when blurred', async () => {
+    const { element } = arrange();
+
+    act(() => element.focus());
+
+    await wait(() => expect(element).toHaveFocus());
+    expect(element).toHaveValue('100');
+
+    document.body.tabIndex = 0; // Allow body to be focused
+    act(() => document.body.focus());
+
+    await wait(() => expect(element).not.toHaveFocus());
+    expect(element).toHaveValue('100%');
+  });
+
+  it('should invoke callback with valid input only', () => {
+    const { element, onChange } = arrange();
+
+    fireEvent.change(element, { target: { value: '50' } });
+    expect(onChange).toHaveBeenCalledWith(0.5);
+
+    onChange.mockReset();
+    fireEvent.change(element, { target: { value: 'ten' } });
+    expect(onChange).not.toHaveBeenCalled();
   });
 });

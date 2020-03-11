@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -25,40 +26,43 @@ import PropTypes from 'prop-types';
  */
 import useStory from '../../../app/story/useStory';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
-import createSolidFromString from '../../../utils/createSolidFromString';
+import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-const PAGE_THUMB_OUTLINE = 2;
+export const PAGE_THUMB_INDICATOR_HEIGHT = 6;
 
 const Page = styled.button`
-  padding: 0;
-  margin: 0;
-  border: none;
-  outline: ${PAGE_THUMB_OUTLINE}px solid
+  display: block;
+  cursor: pointer;
+  padding: 4px 0 0 0;
+  border: 0;
+  border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
+  background-color: transparent;
   width: ${({ width }) => width}px;
-  ${({ backgroundColor, theme }) =>
-    convertToCSS(
-      generatePatternStyles(
-        backgroundColor || createSolidFromString(theme.colors.fg.v1)
-      )
-    )};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
-
-  &:focus,
-  &:hover {
-    outline: ${PAGE_THUMB_OUTLINE}px solid
-      ${({ theme }) => theme.colors.selection};
-  }
+  outline: 0;
+  ${({ isActive, theme }) =>
+    !isActive &&
+    css`
+      &:hover,
+      &:focus {
+        border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
+          ${rgba(theme.colors.selection, 0.3)};
+      }
+    `}
 `;
 
-const PreviewWrapper = styled.div`
+const DEFAULT_COLOR = createSolid(255, 255, 255);
+
+const PreviewWrapper = styled.div.attrs(({ backgroundColor }) => ({
+  style: generatePatternStyles(backgroundColor || DEFAULT_COLOR),
+}))`
   height: 100%;
   position: relative;
   overflow: hidden;
@@ -73,12 +77,8 @@ function PagePreview({ index, forwardedRef, ...props }) {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page
-          {...props}
-          backgroundColor={page.backgroundColor}
-          ref={forwardedRef}
-        >
-          <PreviewWrapper>
+        <Page {...props} ref={forwardedRef}>
+          <PreviewWrapper backgroundColor={page.backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement key={id} element={{ id, ...rest }} />
             ))}

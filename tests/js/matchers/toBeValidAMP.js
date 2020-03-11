@@ -17,16 +17,25 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
-function useResetMedia({ setMediaType, setSearchTerm, reloadMedia }) {
-  const resetMedia = useCallback(() => {
-    setMediaType('');
-    setSearchTerm('');
-    reloadMedia();
-  }, [setMediaType, setSearchTerm, reloadMedia]);
+/**
+ * Internal dependencies
+ */
+import { getAMPValidationErrors } from './utils';
 
-  return resetMedia;
+async function toBeValidAMP(stringOrComponent, ...args) {
+  const string = renderToStaticMarkup(stringOrComponent);
+  const errors = await getAMPValidationErrors(string, ...args);
+  const pass = errors.length === 0;
+
+  return {
+    pass,
+    message: () =>
+      pass
+        ? `Expected ${string} not to be valid AMP.`
+        : `Expected ${string} to be valid AMP. Errors:\n${errors.join('\n')}`,
+  };
 }
 
-export default useResetMedia;
+export default toBeValidAMP;

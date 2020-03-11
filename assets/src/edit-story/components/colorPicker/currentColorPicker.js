@@ -51,7 +51,6 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  padding: ${CONTAINER_PADDING}px;
   padding-bottom: 0;
   display: grid;
   grid: 'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px;
@@ -91,7 +90,7 @@ const Footer = styled.div`
 
 const EyedropperWrapper = styled.div`
   position: absolute;
-  left: ${CONTAINER_PADDING}px;
+  left: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
@@ -109,7 +108,7 @@ const CurrentWrapper = styled.div`
 
 const CurrentAlphaWrapper = styled.div`
   position: absolute;
-  right: ${CONTAINER_PADDING}px;
+  right: 0;
   bottom: ${CONTAINER_PADDING}px;
 `;
 
@@ -184,6 +183,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </EyedropperWrapper>
         <CurrentWrapper>
           <EditablePreview
+            label={__('Edit hex value', 'web-stories')}
             value={hexValue}
             onChange={handleHexInputChange}
             width={65}
@@ -193,6 +193,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         {showOpacity && (
           <CurrentAlphaWrapper>
             <EditablePreview
+              label={__('Edit opacity', 'web-stories')}
               value={alphaPercentage}
               width={35}
               format={handleFormatPercentage}

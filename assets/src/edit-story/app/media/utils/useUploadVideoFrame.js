@@ -25,7 +25,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import getFirstFrameOfVideo from '../utils/getFirstFrameOfVideo';
+import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 function useUploadVideoFrame() {
   const {
