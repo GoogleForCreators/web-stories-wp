@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-
 /**
  * Internal dependencies
  */
@@ -49,14 +48,13 @@ function FlipControls({ selectedElements, onSetProperties }) {
   );
 
   const updateProperties = useCallback(() => {
-    onSetProperties(({ flip: oldFlip, type }) => {
-      const update = {
+    onSetProperties(({ flip: oldFlip }) => {
+      return {
         ...state,
         flip:
           // Ensure flip change only if flip controls are actually visible (canFlip).
-          canFlip && getDefinitionForType(type).canFlip ? state.flip : oldFlip,
+          canFlip ? state.flip : oldFlip,
       };
-      return update;
     });
   }, [canFlip, onSetProperties, state]);
 
