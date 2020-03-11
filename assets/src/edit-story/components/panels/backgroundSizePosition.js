@@ -17,7 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,21 +32,9 @@ import { SimplePanel } from './panel';
 import FlipControls from './shared/flipControls';
 
 function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
-  // Background can only have one selected element.
-  const flip = selectedElements[0].flip;
-  const [state, setState] = useState({ flip });
-
   const {
     actions: { setBackgroundElement },
   } = useStory();
-
-  useEffect(() => {
-    setState({ flip });
-  }, [flip]);
-
-  useEffect(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state, state.flip]);
 
   const handleClick = () => {
     const newState = {
@@ -71,8 +58,8 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
       </Row>
       <Row expand={false}>
         <FlipControls
-          onChange={(value) => setState({ ...state, flip: value })}
-          value={state.flip}
+          selectedElements={selectedElements}
+          onSetProperties={onSetProperties}
         />
       </Row>
     </SimplePanel>

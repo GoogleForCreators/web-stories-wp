@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -25,22 +26,65 @@ import PropTypes from 'prop-types';
 import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
+import getCommonObjectValue from '../utils/getCommonObjectValue';
+import { getDefinitionForType } from '../../../elements';
 
-function FlipControls({ value, onChange }) {
+function FlipControls({ selectedElements, onSetProperties }) {
+  const flip = getCommonObjectValue(
+    selectedElements,
+    'flip',
+    ['horizontal', 'vertical'],
+    false
+  );
+  const [state, setState] = useState({
+    flip,
+  });
+  useEffect(() => {
+    setState({ flip });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flip.horizontal, flip.vertical]);
+
+  const canFlip = selectedElements.every(
+    ({ type }) => getDefinitionForType(type).canFlip
+  );
+
+  const updateProperties = useCallback(() => {
+    onSetProperties(({ flip: oldFlip, type }) => {
+      const update = {
+        ...state,
+        flip:
+          // Ensure flip change only if flip controls are actually visible (canFlip).
+          canFlip && getDefinitionForType(type).canFlip ? state.flip : oldFlip,
+      };
+      return update;
+    });
+  }, [canFlip, onSetProperties, state]);
+
+  useEffect(() => {
+    updateProperties();
+  }, [state.flip.horizontal, state.flip.vertical, updateProperties]);
+
+  const onChange = (value) => {
+    setState({
+      ...state,
+      flip: value,
+    });
+  };
+
   return (
     <>
       <Toggle
         icon={<FlipHorizontal />}
-        value={value.horizontal}
+        value={flip.horizontal}
         onChange={(horizontal) => {
-          onChange({ ...value, horizontal });
+          onChange({ ...flip, horizontal });
         }}
       />
       <Toggle
         icon={<FlipVertical />}
-        value={value.vertical}
+        value={flip.vertical}
         onChange={(vertical) => {
-          onChange({ ...value, vertical });
+          onChange({ ...flip, vertical });
         }}
       />
     </>
@@ -48,8 +92,8 @@ function FlipControls({ value, onChange }) {
 }
 
 FlipControls.propTypes = {
-  value: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
+  selectedElements: PropTypes.array.isRequired,
+  onSetProperties: PropTypes.func.isRequired,
 };
 
 export default FlipControls;

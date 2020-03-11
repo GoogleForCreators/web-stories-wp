@@ -39,7 +39,6 @@ import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 import FlipControls from './shared/flipControls';
-import getCommonObjectValue from './utils/getCommonObjectValue';
 import FillControl from './shared/fillControl';
 
 const BoxedNumeric = styled(Numeric)`
@@ -52,16 +51,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
-  const flip = getCommonObjectValue(
-    selectedElements,
-    'flip',
-    ['horizontal', 'vertical'],
-    false
-  );
   const [state, setState] = useState({
     width,
     height,
-    flip,
     rotationAngle,
   });
   const [lockRatio, setLockRatio] = useState(true);
@@ -71,9 +63,8 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
   } = useStory();
 
   useEffect(() => {
-    setState({ width, height, flip, rotationAngle });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, rotationAngle, flip.horizontal, flip.vertical]);
+    setState({ width, height, rotationAngle });
+  }, [width, height, rotationAngle]);
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
@@ -84,36 +75,29 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
 
   const updateProperties = useCallback(
     (evt) => {
-      onSetProperties(
-        ({ width: oldWidth, height: oldHeight, type, flip: oldFlip }) => {
-          const { height: newHeight, width: newWidth } = state;
-          const update = {
-            ...state,
-            flip:
-              // Ensure flip change only if flip controls are actually visible (canFlip).
-              canFlip && getDefinitionForType(type).canFlip
-                ? state.flip
-                : oldFlip,
-          };
-          const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
+      onSetProperties(({ width: oldWidth, height: oldHeight }) => {
+        const { height: newHeight, width: newWidth } = state;
+        const update = {
+          ...state,
+        };
+        const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
 
-          if (lockRatio && hasHeightOrWidth) {
-            const ratio = oldWidth / oldHeight;
-            if (newWidth === '') {
-              update.width = dataPixels(newHeight * ratio);
-            } else {
-              update.height = dataPixels(newWidth / ratio);
-            }
+        if (lockRatio && hasHeightOrWidth) {
+          const ratio = oldWidth / oldHeight;
+          if (newWidth === '') {
+            update.width = dataPixels(newHeight * ratio);
+          } else {
+            update.height = dataPixels(newWidth / ratio);
           }
-          return update;
         }
-      );
+        return update;
+      });
       if (evt) {
         evt.preventDefault();
         evt.stopPropagation();
       }
     },
-    [canFlip, lockRatio, onSetProperties, state]
+    [lockRatio, onSetProperties, state]
   );
 
   const handleNumberChange = useCallback(
@@ -213,13 +197,8 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         />
         {canFlip && (
           <FlipControls
-            onChange={(value) => {
-              setState({
-                ...state,
-                flip: value,
-              });
-            }}
-            value={state.flip}
+            selectedElements={selectedElements}
+            onSetProperties={onSetProperties}
           />
         )}
         {canFill && isSingleElement && (
