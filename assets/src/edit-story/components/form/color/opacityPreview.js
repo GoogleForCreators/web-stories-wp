@@ -76,7 +76,7 @@ function OpacityPreview({ value, onChange }) {
     updateFromValue();
   }, [enablePostfix, updateFromValue]);
 
-  useEffect(() => updateFromValue(), [updateFromValue]);
+  useEffect(() => updateFromValue(), [updateFromValue, value]);
 
   return (
     <Input

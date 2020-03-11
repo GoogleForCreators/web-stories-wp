@@ -32,11 +32,13 @@ const POINTER_SIZE = 12;
 const BORDER_WIDTH = 2;
 
 // The attrs method is more performant for frequently changed styles.
-const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => ({
-  style: {
-    background: withAlpha ? rgba(currentColor) : rgb(currentColor),
-  },
-}))`
+const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
+  return {
+    style: {
+      background: withAlpha ? rgba(currentColor) : rgb(currentColor),
+    },
+  };
+})`
   width: ${POINTER_SIZE}px;
   height: ${POINTER_SIZE}px;
   transform: translate(
@@ -63,6 +65,7 @@ const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => ({
 Pointer.defaultProps = {
   currentRGB: {},
   currentRGBA: {},
+  currentColor: {},
 };
 
 export default Pointer;

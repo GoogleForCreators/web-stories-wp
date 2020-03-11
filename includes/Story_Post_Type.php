@@ -322,6 +322,7 @@ class Story_Post_Type {
 						'users'    => '/wp/v2/users',
 						'statuses' => '/wp/v2/statuses',
 						'fonts'    => '/web-stories/v1/fonts',
+						'link'     => '/web-stories/v1/link',
 					],
 					'metadata'         => [
 						'publisher'      => self::get_publisher_data(),

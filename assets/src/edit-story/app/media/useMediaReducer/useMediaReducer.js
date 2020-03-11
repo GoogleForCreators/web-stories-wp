@@ -17,15 +17,32 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useReducer, useMemo } from 'react';
 
-function useCompleteMedia({ setIsMediaLoading, setIsMediaLoaded }) {
-  const completeMedia = useCallback(() => {
-    setIsMediaLoading(false);
-    setIsMediaLoaded(true);
-  }, [setIsMediaLoading, setIsMediaLoaded]);
+/**
+ * Internal dependencies
+ */
+import reducer, { INITIAL_STATE } from './reducer';
+import * as actionsToWrap from './actions';
 
-  return completeMedia;
+const wrapWithDispatch = (actions, dispatch) =>
+  Object.keys(actions).reduce(
+    (collection, action) => ({
+      ...collection,
+      [action]: actions[action](dispatch),
+    }),
+    {}
+  );
+
+function useMediaReducer() {
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
+
+  return {
+    state,
+    actions,
+  };
 }
 
-export default useCompleteMedia;
+export default useMediaReducer;

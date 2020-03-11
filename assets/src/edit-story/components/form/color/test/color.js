@@ -17,17 +17,18 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import theme from '../../../../theme';
+import createSolid from '../../../../utils/createSolid';
 import Color from '../color';
+import applyOpacityChange from '../applyOpacityChange';
 
-jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('../getPreviewText', () => jest.fn());
+jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
@@ -52,10 +53,30 @@ describe('<Color />', () => {
     expect(colorPreview).toBeInTheDocument();
     expect(opacityInput).toBeInTheDocument();
   });
+
   it('should not render opacity input when disabled', () => {
     const { colorPreview, opacityInput } = arrange({ hasOpacity: false });
 
     expect(colorPreview).toBeInTheDocument();
     expect(opacityInput).toBeNull();
+  });
+
+  it('should update via `applyOpacityChange` when opacity changes', () => {
+    const { opacityInput, onChange } = arrange({
+      value: createSolid(255, 0, 0),
+    });
+
+    applyOpacityChange.mockImplementationOnce(() =>
+      createSolid(255, 0, 0, 0.3)
+    );
+
+    fireEvent.change(opacityInput, { target: { value: '30' } });
+
+    expect(applyOpacityChange).toHaveBeenCalledWith(
+      createSolid(255, 0, 0),
+      0.3
+    );
+
+    expect(onChange).toHaveBeenCalledWith(createSolid(255, 0, 0, 0.3));
   });
 });

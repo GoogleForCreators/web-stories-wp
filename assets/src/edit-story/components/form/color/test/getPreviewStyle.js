@@ -45,6 +45,14 @@ describe('getPreviewStyle', () => {
     expect(generatePatternStylesMock).toHaveBeenCalledWith(pattern);
   });
 
+  it('should ignore alpha for non-solid', () => {
+    const pattern = { type: 'linear', alpha: 0.7 };
+    const result = getPreviewStyle(pattern);
+    expect(result).toStrictEqual({ backgroundColor: 'red' });
+    // Note the absense of alpha below
+    expect(generatePatternStylesMock).toHaveBeenCalledWith({ type: 'linear' });
+  });
+
   it('should return transparent for transparent solid', () => {
     const pattern = createSolid(255, 0, 255, 0);
     const result = getPreviewStyle(pattern);

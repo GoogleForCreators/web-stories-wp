@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useCallback } from 'react';
+export const LINE_LENGTH = 155;
+export const LINE_WIDTH = 12;
 
-function useReloadMedia({ setIsMediaLoading, setIsMediaLoaded }) {
-  const reloadMedia = useCallback(() => {
-    setIsMediaLoading(false);
-    setIsMediaLoaded(false);
-  }, [setIsMediaLoading, setIsMediaLoaded]);
-
-  return reloadMedia;
-}
-
-export default useReloadMedia;
+export const TYPE_SOLID = 'solid';
+export const TYPE_LINEAR = 'linear';
+export const TYPE_RADIAL = 'radial';
+export const TYPE_CONIC = 'conic';

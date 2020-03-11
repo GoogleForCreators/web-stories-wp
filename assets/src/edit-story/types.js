@@ -36,6 +36,7 @@ export const PatternPropType = PropTypes.shape({
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
+  alpha: PropTypes.number,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,

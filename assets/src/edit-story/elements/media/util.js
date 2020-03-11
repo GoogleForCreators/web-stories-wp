@@ -17,16 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { css } from 'styled-components';
 
-function useResetMedia({ setMediaType, setSearchTerm, reloadMedia }) {
-  const resetMedia = useCallback(() => {
-    setMediaType('');
-    setSearchTerm('');
-    reloadMedia();
-  }, [setMediaType, setSearchTerm, reloadMedia]);
+export const mediaWithScale = css`
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+`;
 
-  return resetMedia;
+export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
+  // todo@: This is a complete duplication of `mediaWithScale` above. But
+  // no other apparent way to execute interpolate `mediaWithScale` dynamically.
+  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
-
-export default useResetMedia;

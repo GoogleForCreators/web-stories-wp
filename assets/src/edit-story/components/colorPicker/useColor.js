@@ -18,11 +18,9 @@
  * Internal dependencies
  */
 import useReduction from '../../utils/useReduction';
-
-export const TYPE_SOLID = 'solid';
-export const TYPE_LINEAR = 'linear';
-export const TYPE_RADIAL = 'radial';
-export const TYPE_CONIC = 'conic';
+import insertStop from './insertStop';
+import regenerateColor from './regenerateColor';
+import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL, TYPE_CONIC } from './constants';
 
 const initialState = {
   type: TYPE_SOLID,
@@ -35,48 +33,59 @@ const initialState = {
     a: 0,
   },
   currentStopIndex: 0,
-  angle: 0,
-  center: [],
-  size: [],
+  rotation: 0.5,
+  alpha: 1,
+  center: { x: 0.5, y: 0.5 },
+  size: { w: 1, h: 1 },
 };
 
 const reducer = {
   load: (state, { payload }) => {
-    const { type, color, stops, angle, center, size } = payload;
+    const { type, color, stops, rotation, center, size, alpha } = payload;
     switch (type) {
       case TYPE_LINEAR:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
-          angle,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
+          rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
         };
 
       case TYPE_RADIAL:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
-          center,
-          size,
+          center: typeof center !== 'undefined' ? center : state.center,
+          size: typeof size !== 'undefined' ? size : state.size,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
         };
 
       case TYPE_CONIC:
         return {
           ...state,
+          type,
           regenerate: false,
-          color: stops[0].color,
+          currentColor: stops[0].color,
+          currentStopIndex: 0,
           stops,
-          angle,
-          center,
+          rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
+          center: typeof center !== 'undefined' ? center : state.center,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
         };
 
       case TYPE_SOLID:
       default:
         return {
           ...state,
+          type: TYPE_SOLID,
           regenerate: false,
           currentColor: color,
         };
@@ -87,18 +96,94 @@ const reducer = {
     type: TYPE_SOLID,
     regenerate: true,
   }),
-  setToGradient: (state, { payload }) => ({
-    ...state,
-    type: payload,
-  }),
-  addStopAt: (state, { payload }) => ({
-    ...state,
-    foo: payload,
-  }),
-  moveCurrentStopTo: (state, { payload }) => ({
-    ...state,
-    foo: payload,
-  }),
+  setToGradient: (state, { payload }) => {
+    const stops =
+      state.stops && state.stops.length >= 2
+        ? state.stops
+        : [
+            { color: state.currentColor, position: 0 },
+            { color: state.currentColor, position: 1 },
+          ];
+    return {
+      ...state,
+      regenerate: true,
+      type: payload,
+      stops,
+    };
+  },
+  addStopAt: (state, { payload: newPosition }) => {
+    // If there's already a stop at this position, do nothing:
+    if (state.stops.some(({ position }) => position === newPosition)) {
+      return state;
+    }
+
+    const { index, color } = insertStop(state.stops, newPosition);
+
+    const stops = [
+      ...state.stops.slice(0, index),
+      { color, position: newPosition },
+      ...state.stops.slice(index),
+    ];
+    return {
+      ...state,
+      regenerate: true,
+      currentColor: color,
+      currentStopIndex: index,
+      stops,
+    };
+  },
+  moveCurrentStopBy: (state, { payload: deltaPosition }) => {
+    const index = state.currentStopIndex;
+    const currentPosition = state.stops[index].position;
+    // Clamp by 0 and 1, round to 4 decimals
+    const desiredPosition = Math.max(
+      0,
+      Math.min(1, Number((currentPosition + deltaPosition).toFixed(4)))
+    );
+    if (desiredPosition === currentPosition) {
+      return state;
+    }
+    const stops = [
+      ...state.stops.slice(0, index),
+      {
+        ...state.stops[index],
+        position: desiredPosition,
+      },
+      ...state.stops.slice(index + 1),
+    ];
+
+    // Sort by position
+    stops.sort((a, b) => a.position - b.position);
+
+    const currentStopIndex = stops.findIndex(
+      ({ position }) => position === desiredPosition
+    );
+
+    return {
+      ...state,
+      regenerate: true,
+      stops,
+      currentStopIndex,
+    };
+  },
+  removeCurrentStop: (state, {}) => {
+    // Can't have less than two stops
+    if (state.stops.length === 2) {
+      return state;
+    }
+    const index = state.currentStopIndex;
+    const stops = [...state.stops];
+    stops.splice(index, 1);
+    const currentStopIndex = index === stops.length ? index - 1 : index;
+
+    return {
+      ...state,
+      regenerate: true,
+      stops,
+      currentColor: stops[currentStopIndex].color,
+      currentStopIndex,
+    };
+  },
   updateCurrentColor: (state, { payload: { rgb } }) => {
     const currentColor = { ...rgb };
     const newState = {
@@ -109,13 +194,13 @@ const reducer = {
 
     if (state.type !== TYPE_SOLID) {
       // Also update color for current stop
-      state.stops = [
-        state.stops.slice(0, state.currentStopIndex),
+      newState.stops = [
+        ...state.stops.slice(0, state.currentStopIndex),
         {
-          ...state.stop[state.currentStopIndex],
+          ...state.stops[state.currentStopIndex],
           color: currentColor,
         },
-        state.stops.slice(state.currentStopIndex + 1),
+        ...state.stops.slice(state.currentStopIndex + 1),
       ];
     }
 
@@ -123,43 +208,36 @@ const reducer = {
   },
   rotateClockwise: (state) => ({
     ...state,
-    angle: state.angle + 90,
+    rotation: (state.rotation + 0.25) % 1,
     regenerate: true,
   }),
-  selectStop: (state, { payload }) => ({
-    ...state,
-    currentStopIndex: payload,
-  }),
-  deleteStop: (state, { payload: indexToDelete }) => ({
-    ...state,
-    stops: state.stops.filter((stop, index) => index !== indexToDelete),
-    regenerate: true,
-  }),
-  reverseStops: (state) => ({
-    ...state,
-    stops: [...state.stops].reverse(),
-    regenerate: true,
-  }),
+  selectStop: (state, { payload: newIndex }) => {
+    const currentStopIndex = Math.max(
+      0,
+      Math.min(state.stops.length - 1, newIndex)
+    );
+    const currentColor = state.stops[currentStopIndex].color;
+    return {
+      ...state,
+      currentStopIndex,
+      currentColor,
+    };
+  },
+  reverseStops: (state) => {
+    const stops = state.stops
+      .map(({ color, position }) => ({ color, position: 1 - position }))
+      .reverse();
+
+    const currentStopIndex = stops.length - state.currentStopIndex - 1;
+
+    return {
+      ...state,
+      stops,
+      currentStopIndex,
+      regenerate: true,
+    };
+  },
 };
-
-function regenerateColor(pattern) {
-  const { regenerate, type } = pattern;
-  if (!regenerate) {
-    return null;
-  }
-
-  switch (type) {
-    case TYPE_SOLID: {
-      const {
-        currentColor: { r, g, b, a },
-      } = pattern;
-      const minColor = a === 1 ? { r, g, b } : { r, g, b, a };
-      return { color: minColor };
-    }
-    default:
-      return null;
-  }
-}
 
 function useColor() {
   const [state, actions] = useReduction(initialState, reducer);

@@ -18,34 +18,10 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { editorPixels } from '../../units';
-import { getMediaSizePositionProps } from '../shared';
+import MediaOutput from '../media/output';
 
-function VideoOutput({
-  element: { resource, scale, focalX, focalY },
-  box: { width: vw, height: vh },
-}) {
-  // Width and height are taken from the basis of 100% taking into account the
-  // aspect ratio.
-  const width = vw;
-  const height = (vh * PAGE_HEIGHT) / PAGE_WIDTH;
-  const imgProps = getMediaSizePositionProps(
-    resource,
-    width,
-    height,
-    scale,
-    focalX,
-    focalY
-  );
-
-  const wrapperStyle = {
-    position: 'absolute',
-    width: `${editorPixels((imgProps.width / width) * 100)}%`,
-    height: `${editorPixels((imgProps.height / height) * 100)}%`,
-    left: `${-editorPixels((imgProps.offsetX / width) * 100)}%`,
-    top: `${-editorPixels((imgProps.offsetY / height) * 100)}%`,
-  };
+function VideoOutput({ element, box }) {
+  const { resource } = element;
 
   const sourceProps = {
     type: resource.mimeType,
@@ -58,11 +34,11 @@ function VideoOutput({
   };
 
   return (
-    <div style={wrapperStyle}>
+    <MediaOutput element={element} box={box}>
       <amp-video {...props}>
         <source {...sourceProps} />
       </amp-video>
-    </div>
+    </MediaOutput>
   );
 }
 

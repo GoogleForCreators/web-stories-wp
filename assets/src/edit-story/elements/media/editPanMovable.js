@@ -25,8 +25,8 @@ import { useEffect, useRef } from 'react';
  */
 import Movable from '../../components/movable';
 import StoryPropTypes from '../../types';
+import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
-import getTransformFlip from './getTransformFlip';
 
 function EditPanMovable({
   setProperties,
