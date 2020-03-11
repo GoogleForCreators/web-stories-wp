@@ -54,7 +54,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
       isActive ? theme.colors.bg.v4 : rgba(theme.colors.bg.v0, 0.2)};
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
     background: ${({ theme }) => theme.colors.action};
   }
