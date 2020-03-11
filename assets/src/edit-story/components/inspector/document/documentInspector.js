@@ -36,17 +36,9 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import { SelectMenu, InputGroup } from '../../form';
+import { SelectMenu, InputGroup, Button } from '../../form';
 import useInspector from '../useInspector';
 
-const Button = styled.button`
-  color: ${({ theme }) => theme.colors.mg.v1};
-  font-size: 14px;
-  width: 100%;
-  padding: 15px;
-  background: none;
-  margin: 5px 0;
-`;
 const Img = styled.img`
   width: 100%;
   max-height: 300px;
@@ -176,10 +168,9 @@ function DocumentInspector() {
             />
           )}
 
-        <Button
-          onClick={handleRemoveStory}
-          dangerouslySetInnerHTML={{ __html: 'Move to trash' }}
-        />
+        <Button onClick={handleRemoveStory} fullWidth>
+          {__('Move to trash', 'web-stories')}
+        </Button>
       </SimplePanel>
       <SimplePanel name="excerpt" title={__('Excerpt', 'web-stories')}>
         <InputGroup
@@ -205,14 +196,13 @@ function DocumentInspector() {
       >
         {featuredMediaUrl && <Img src={featuredMediaUrl} />}
         {featuredMediaUrl && (
-          <Button
-            onClick={handleRemoveImage}
-            dangerouslySetInnerHTML={{ __html: 'Remove image' }}
-          />
+          <Button onClick={handleRemoveImage} fullWidth>
+            {__('Remove image', 'web-stories')}
+          </Button>
         )}
 
         {postThumbnails && (
-          <Button onClick={openMediaPicker}>
+          <Button onClick={openMediaPicker} fullWidth>
             {featuredMediaUrl
               ? __('Replace image', 'web-stories')
               : __('Set featured image', 'web-stories')}

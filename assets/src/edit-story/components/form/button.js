@@ -23,17 +23,23 @@ import { rgba } from 'polished';
 const Button = styled.button`
   background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  border: none;
   border-radius: 4px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: 4px 12px;
+  padding: 6px 14px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  ${({ fullWidth }) =>
+    fullWidth &&
+    `
+      flex: 1;
+      width: 100%;
+    `}
 `;
 
 export default Button;
