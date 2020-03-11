@@ -42,7 +42,7 @@ describe('getUsedAmpExtensions', () => {
     );
   });
 
-  it('should include the amp-video script if there are videos', () => {
+  it('should include the amp-video script if there is a video', () => {
     const pages = [
       {
         elements: [{ type: 'video' }],
@@ -51,6 +51,36 @@ describe('getUsedAmpExtensions', () => {
 
     const actual = getUsedAmpExtensions(pages);
 
+    expect(actual).toHaveLength(3);
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([
+        {
+          name: 'amp-video',
+          src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
+        },
+      ])
+    );
+  });
+
+  it('should include the amp-video script only once if there are multiple videos', () => {
+    const pages = [
+      {
+        elements: [{ type: 'video' }],
+      },
+      {
+        elements: [{ type: 'text' }],
+      },
+      {
+        elements: [{ type: 'video' }],
+      },
+      {
+        elements: [{ type: 'video' }],
+      },
+    ];
+
+    const actual = getUsedAmpExtensions(pages);
+
+    expect(actual).toHaveLength(3);
     expect(actual).toStrictEqual(
       expect.arrayContaining([
         {
