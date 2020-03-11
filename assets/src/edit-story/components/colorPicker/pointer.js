@@ -33,9 +33,6 @@ const BORDER_WIDTH = 2;
 
 // The attrs method is more performant for frequently changed styles.
 const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
-  if (!currentColor) {
-    return {};
-  }
   return {
     style: {
       background: withAlpha ? rgba(currentColor) : rgb(currentColor),

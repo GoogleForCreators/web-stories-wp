@@ -21,6 +21,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
 import { ColorStopPropType } from '../../types';
@@ -70,11 +74,17 @@ function GradientPicker({
         onDelete={onDelete}
         onMove={onMove}
       />
-      <Button onClick={onReverse}>
+      <Button
+        onClick={onReverse}
+        aria-label={__('Reverse gradient stops', 'web-stories')}
+      >
         <Reverse />
       </Button>
-      <Button onClick={onRotate}>
-        <Rotate />
+      <Button
+        onClick={onRotate}
+        aria-label={__('Rotate gradient', 'web-stories')}
+      >
+        <Rotate id="gradient-rotator" />
       </Button>
     </Wrapper>
   );

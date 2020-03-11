@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -116,7 +116,17 @@ function GradientPicker({
           <Pointer offset={-LINE_WIDTH / 2} />
         </GradientStop>
       ))}
-      {tempPointerPosition && <TempPointer x={tempPointerPosition} />}
+      {tempPointerPosition && (
+        <TempPointer
+          aria-label={sprintf(
+            __('Temporary gradient stop at %d%%', 'web-stories'),
+            Math.round(
+              (100 * (tempPointerPosition - LINE_WIDTH / 2)) / LINE_LENGTH
+            )
+          )}
+          x={tempPointerPosition}
+        />
+      )}
     </Line>
   );
 }

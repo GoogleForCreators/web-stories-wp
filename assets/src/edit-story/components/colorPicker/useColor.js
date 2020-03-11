@@ -17,14 +17,10 @@
 /**
  * Internal dependencies
  */
-import createSolid from '../../utils/createSolid';
 import useReduction from '../../utils/useReduction';
 import insertStop from './insertStop';
-
-export const TYPE_SOLID = 'solid';
-export const TYPE_LINEAR = 'linear';
-export const TYPE_RADIAL = 'radial';
-export const TYPE_CONIC = 'conic';
+import regenerateColor from './regenerateColor';
+import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL, TYPE_CONIC } from './constants';
 
 const initialState = {
   type: TYPE_SOLID,
@@ -139,9 +135,10 @@ const reducer = {
   moveCurrentStopBy: (state, { payload: deltaPosition }) => {
     const index = state.currentStopIndex;
     const currentPosition = state.stops[index].position;
+    // Clamp by 0 and 1, round to 4 decimals
     const desiredPosition = Math.max(
       0,
-      Math.min(1, currentPosition + deltaPosition)
+      Math.min(1, Number((currentPosition + deltaPosition).toFixed(4)))
     );
     const stops = [
       ...state.stops.slice(0, index),
@@ -238,72 +235,6 @@ const reducer = {
     };
   },
 };
-
-function regenerateColor(pattern) {
-  const { regenerate, type } = pattern;
-  if (!regenerate) {
-    return null;
-  }
-
-  switch (type) {
-    case TYPE_SOLID: {
-      const {
-        currentColor: { r, g, b, a },
-      } = pattern;
-      return createSolid(r, g, b, a);
-    }
-    case TYPE_LINEAR: {
-      const { stops, rotation, alpha } = pattern;
-      const minimal = {
-        type: TYPE_LINEAR,
-        stops,
-      };
-      if (rotation !== 0) {
-        minimal.rotation = rotation;
-      }
-      if (alpha !== 1) {
-        minimal.alpha = alpha;
-      }
-      return minimal;
-    }
-    case TYPE_RADIAL: {
-      const { stops, center, size, alpha } = pattern;
-      const minimal = {
-        type: TYPE_RADIAL,
-        stops,
-      };
-      if (center && (center.x !== 0.5 || center.y !== 0.5)) {
-        minimal.center = center;
-      }
-      if (size && (size.w !== 1 || size.h !== 1)) {
-        minimal.size = size;
-      }
-      if (alpha !== 1) {
-        minimal.alpha = alpha;
-      }
-      return minimal;
-    }
-    case TYPE_CONIC: {
-      const { stops, rotation, center, alpha } = pattern;
-      const minimal = {
-        type: TYPE_CONIC,
-        stops,
-      };
-      if (rotation !== 0) {
-        minimal.rotation = rotation;
-      }
-      if (center && (center.x !== 0.5 || center.y !== 0.5)) {
-        minimal.center = center;
-      }
-      if (alpha !== 1) {
-        minimal.alpha = alpha;
-      }
-      return minimal;
-    }
-    default:
-      return null;
-  }
-}
 
 function useColor() {
   const [state, actions] = useReduction(initialState, reducer);

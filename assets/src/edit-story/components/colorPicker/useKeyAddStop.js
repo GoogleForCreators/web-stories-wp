@@ -19,6 +19,10 @@
  */
 import { useKeyDownEffect } from '../keyboard';
 
+function truncate(val, pos) {
+  return Number(val.toFixed(pos));
+}
+
 function getNewStopPosition(stops, currentStopIndex) {
   const numStops = stops.length;
   const isLastStopFocussed = currentStopIndex === numStops - 1;
@@ -45,11 +49,12 @@ function getNewStopPosition(stops, currentStopIndex) {
 }
 
 function useKeyAddStop(ref, onAdd, stops, currentStopIndex) {
-  const newStopPosition = getNewStopPosition(stops, currentStopIndex);
-  useKeyDownEffect(ref, 'enter', () => onAdd(newStopPosition), [
-    onAdd,
-    newStopPosition,
-  ]);
+  useKeyDownEffect(
+    ref,
+    'enter',
+    () => onAdd(truncate(getNewStopPosition(stops, currentStopIndex), 4)),
+    [onAdd, stops, currentStopIndex]
+  );
 }
 
 export default useKeyAddStop;

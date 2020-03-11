@@ -74,6 +74,7 @@ function GradientStopWithRef(
       position={position}
       onFocus={() => onSelect(index)}
       onClick={() => onSelect(index)}
+      aria-selected={isSelected}
       /* translators: %d is stop percentage */
       aria-label={sprintf(
         __('Gradient stop at %d%%', 'web-stories'),

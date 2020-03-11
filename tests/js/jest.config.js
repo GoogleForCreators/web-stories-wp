@@ -29,6 +29,11 @@ module.exports = {
     '<rootDir>/tests/js/setup-mocks',
     'jest-canvas-mock',
   ],
+  testMatch: [
+    '**/__tests__/**/*.[jt]s',
+    '**/test/**/*.[jt]s',
+    '**/?(*.)test.[jt]s',
+  ],
   setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',

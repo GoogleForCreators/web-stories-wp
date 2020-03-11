@@ -23,14 +23,12 @@ import { useLayoutEffect, useState } from 'react';
  * Internal dependencies
  */
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import { getPageX } from './utils';
 
 function usePointerAddStop(ref, onAdd) {
   const [tempPointerPosition, setTempPointerPosition] = useState(null);
   useLayoutEffect(() => {
     const node = ref.current;
-    if (!node) {
-      return undefined;
-    }
 
     const nodeLeftEdge = node.getBoundingClientRect().left;
 
@@ -40,7 +38,7 @@ function usePointerAddStop(ref, onAdd) {
       }
 
       const relativePosition =
-        (evt.pageX - nodeLeftEdge - LINE_WIDTH / 2) / LINE_LENGTH;
+        (getPageX(evt) - nodeLeftEdge - LINE_WIDTH / 2) / LINE_LENGTH;
       onAdd(relativePosition);
       setTempPointerPosition(null);
     };
@@ -51,7 +49,7 @@ function usePointerAddStop(ref, onAdd) {
         return;
       }
 
-      setTempPointerPosition(evt.pageX - nodeLeftEdge);
+      setTempPointerPosition(getPageX(evt) - nodeLeftEdge);
     };
 
     const onPointerLeave = (evt) => {

@@ -23,23 +23,26 @@ import { useLayoutEffect, useRef } from 'react';
  * Internal dependencies
  */
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import {
+  getPageX,
+  getPageY,
+  setPointerCapture,
+  releasePointerCapture,
+} from './utils';
 
 function usePointerMoveStop(ref, onMove, onDelete) {
   const lastPageX = useRef(null);
   useLayoutEffect(() => {
     const node = ref.current;
-    if (!node) {
-      return undefined;
-    }
 
     const lineY = node.getBoundingClientRect().top + LINE_WIDTH * 1.5;
 
     const onPointerMove = (evt) => {
-      const relativeDeltaX = evt.pageX - lastPageX.current;
-      lastPageX.current = evt.pageX;
+      const relativeDeltaX = getPageX(evt) - lastPageX.current;
+      lastPageX.current = getPageX(evt);
       onMove(relativeDeltaX / LINE_LENGTH);
 
-      const absoluteDeltaY = Math.abs(lineY - evt.pageY);
+      const absoluteDeltaY = Math.abs(lineY - getPageY(evt));
       if (absoluteDeltaY > 30) {
         onDelete();
         onPointerUp(evt);
@@ -48,7 +51,7 @@ function usePointerMoveStop(ref, onMove, onDelete) {
 
     const onPointerUp = (evt) => {
       lastPageX.current = null;
-      evt.target.releasePointerCapture(evt.pointerId);
+      releasePointerCapture(evt);
       evt.target.removeEventListener('pointermove', onPointerMove);
       evt.target.removeEventListener('pointerup', onPointerUp);
     };
@@ -57,8 +60,8 @@ function usePointerMoveStop(ref, onMove, onDelete) {
       if (evt.target === node) {
         return;
       }
-      lastPageX.current = evt.pageX;
-      evt.target.setPointerCapture(evt.pointerId);
+      lastPageX.current = getPageX(evt);
+      setPointerCapture(evt);
       evt.target.addEventListener('pointermove', onPointerMove);
       evt.target.addEventListener('pointerup', onPointerUp);
     };
