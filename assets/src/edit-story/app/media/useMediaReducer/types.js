@@ -14,22 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
-
-/**
- * Internal dependencies
- */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+export const FETCH_MEDIA_START = 'FETCH_MEDIA_START';
+export const FETCH_MEDIA_SUCCESS = 'FETCH_MEDIA_SUCCESS';
+export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
+export const RESET_FILTERS = 'RESET_FILTERS';
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_MEDIA_TYPE = 'SET_MEDIA_TYPE';

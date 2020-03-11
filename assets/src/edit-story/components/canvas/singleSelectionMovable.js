@@ -41,7 +41,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
-  const [snapDisabled, setSnapDisabled] = useState(true);
+  const [snapDisabled, setSnapDisabled] = useState(false);
 
   const {
     actions: { updateSelectedElements },
