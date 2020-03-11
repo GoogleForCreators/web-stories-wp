@@ -19,6 +19,11 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { PanelTypes } from '../../components/panels';
+
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMovable } from './editPanMovable';
@@ -44,3 +49,35 @@ export const CropBox = styled.div`
 `;
 
 export const MEDIA_MASK_OPACITY = 0.4;
+
+export const MEDIA_DEFAULT_ATTRIBUTES = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+  isFill: false,
+};
+
+export const hasEditMode = true;
+
+export const isMedia = true;
+
+export const canFlip = true;
+
+export const canFill = true;
+
+export const isMaskable = true;
+
+export const editModeGrayout = true;
+
+export const resizeRules = {
+  vertical: true,
+  horizontal: true,
+  diagonal: true,
+};
+
+export const MEDIA_PANELS = [
+  PanelTypes.BACKGROUND_SIZE_POSITION,
+  PanelTypes.LAYER_STYLE,
+  PanelTypes.BACKGROUND_DISPLAY,
+  PanelTypes.SIZE_POSITION,
+];
