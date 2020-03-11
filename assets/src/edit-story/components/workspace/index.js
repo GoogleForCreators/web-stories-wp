@@ -25,8 +25,8 @@ import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
   return (
-    <SidebarProvider>
-      <CanvasProvider>
+    <CanvasProvider>
+      <SidebarProvider>
         <WorkspaceLayout>
           <CanvasArea>
             <Canvas />
@@ -35,8 +35,8 @@ function Workspace() {
             <Inspector />
           </InspectorArea>
         </WorkspaceLayout>
-      </CanvasProvider>
-    </SidebarProvider>
+      </SidebarProvider>
+    </CanvasProvider>
   );
 }
 
