@@ -100,6 +100,12 @@ const theme = {
       lineHeight: '18px',
       weight: '400',
     },
+    duration: {
+      family: 'Roboto',
+      size: '12px',
+      lineHeight: '1',
+      weight: '500',
+    },
   },
 };
 
