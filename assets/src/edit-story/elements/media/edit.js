@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback, useState } from 'react';
 
 /**
@@ -39,8 +39,8 @@ const Element = styled.div`
   ${elementFillContent}
 `;
 
-// Opacity of the mask is reduced depending on the opacity assigned to the image.
-const FadedImage = styled.img`
+// Opacity of the mask is reduced depending on the opacity assigned to the media.
+const fadedMediaCSS = css`
   position: absolute;
   opacity: ${({ opacity }) =>
     opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
@@ -49,36 +49,35 @@ const FadedImage = styled.img`
   ${elementWithFlip}
 `;
 
+const FadedImage = styled.img`
+  ${fadedMediaCSS}
+`;
+
 const FadedVideo = styled.video`
-  position: absolute;
-  opacity: ${({ opacity }) =>
-    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
-  pointer-events: none;
-  ${mediaWithScale}
-  ${elementWithFlip}
+  ${fadedMediaCSS}
   max-width: initial;
   max-height: initial;
+`;
+
+const cropMediaCSS = css`
+  ${mediaWithScale}
+  ${elementWithFlip}
+  position: absolute;
+  opacity: ${({ opacity }) =>
+    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the image.
 const CropImage = styled.img`
-  position: absolute;
-  opacity: ${({ opacity }) =>
-    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
-  ${mediaWithScale}
-  ${elementWithFlip}
+  ${cropMediaCSS}
 `;
 
 // Opacity of the mask is reduced depending on the opacity assigned to the video.
 const CropVideo = styled.video`
-  position: absolute;
-  ${mediaWithScale}
-  ${elementWithFlip}
+  ${cropMediaCSS}
   max-width: initial;
   max-height: initial;
-  opacity: ${({ opacity }) =>
-    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
 function MediaEdit({ element, box }) {
@@ -119,53 +118,39 @@ function MediaEdit({ element, box }) {
 
   mediaProps.transformFlip = getTransformFlip(flip);
 
-  const fadedMedia =
-    'image' === type ? (
-      <FadedImage
-        ref={setFullMedia}
-        draggable={false}
-        src={resource.src}
-        {...mediaProps}
-        opacity={opacity / 100}
-      />
-    ) : (
-      <FadedVideo
-        ref={setFullMedia}
-        draggable={false}
-        {...mediaProps}
-        opacity={opacity / 100}
-      >
-        <source src={resource.src} type={resource.mimeType} />
-      </FadedVideo>
-    );
+  const fadedMediaProps = {
+    ref: setFullMedia,
+    draggable: false,
+    opacity: opacity / 100,
+    ...mediaProps,
+  };
 
-  const cropMedia =
-    'image' === type ? (
-      <CropImage
-        ref={setCroppedMedia}
-        draggable={false}
-        src={resource.src}
-        {...mediaProps}
-        opacity={opacity / 100}
-      />
-    ) : (
-      <CropVideo
-        ref={setCroppedMedia}
-        draggable={false}
-        src={resource.src}
-        {...mediaProps}
-        opacity={opacity / 100}
-      >
-        <source src={resource.src} type={resource.mimeType} />
-      </CropVideo>
-    );
+  const cropMediaProps = {
+    ref: setCroppedMedia,
+    draggable: false,
+    src: resource.src,
+    opacity: opacity / 100,
+    ...mediaProps,
+  };
 
+  const isImage = 'image' === type;
+  const isVideo = 'video' === type;
   return (
     <Element>
-      {fadedMedia}
+      {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
+      {isVideo && (
+        <FadedVideo {...fadedMediaProps}>
+          <source src={resource.src} type={resource.mimeType} />
+        </FadedVideo>
+      )}
       <CropBox ref={setCropBox}>
         <WithMask element={element} fill={true} applyFlip={false}>
-          {cropMedia}
+          {isImage && <CropImage {...cropMediaProps} />}
+          {isVideo && (
+            <CropVideo {...cropMediaProps}>
+              <source src={resource.src} type={resource.mimeType} />
+            </CropVideo>
+          )}
         </WithMask>
       </CropBox>
 
