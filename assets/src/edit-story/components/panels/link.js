@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { TextInput, Media, Row } from '../form';
-import { createLink } from '../link';
+import { createLink, inferLinkType } from '../link';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -53,10 +53,12 @@ const Note = styled.span`
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
+  const y = getCommonValue(selectedElements, 'y');
+  const inferredLinkType = inferLinkType(y);
   const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
 
-  const [state, setState] = useState({ link: createLink() });
+  const [state, setState] = useState(createLink('', inferredLinkType));
   useEffect(() => {
     setState({ ...link });
   }, [link]);

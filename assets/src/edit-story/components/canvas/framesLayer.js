@@ -25,6 +25,7 @@ import { useRef } from 'react';
  */
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
+import { LinkGuidelines } from '../link';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
@@ -60,6 +61,7 @@ function FramesLayer() {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
         <Selection />
+        <LinkGuidelines />
       </FramesPageArea>
     </Layer>
   );

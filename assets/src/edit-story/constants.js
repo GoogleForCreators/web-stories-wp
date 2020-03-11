@@ -33,6 +33,11 @@ export const DEFAULT_EDITOR_PAGE_HEIGHT = 732;
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
 
+export const CTA_ZONE_PERCENT = 0.2; /** Bottom 20% */
+export const SAFE_MARGIN_TOP = 46; /** 46px */
+export const SAFE_MARGIN_RIGHT = 32; /** 32px */
+export const SAFE_MARGIN_LEFT = 32; /** 32px */
+
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',
   BACK: 'BACK',
