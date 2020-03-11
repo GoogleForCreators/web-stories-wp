@@ -80,7 +80,7 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
       onSubmit={handleSubmit}
     >
       {state.poster && <Img src={state.poster} />}
-      <Button onClick={openMediaPicker}>
+      <Button onClick={openMediaPicker} fullWidth>
         {state.poster
           ? __('Replace poster image', 'web-stories')
           : __('Set poster image', 'web-stories')}
