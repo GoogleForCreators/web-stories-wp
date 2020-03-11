@@ -81,11 +81,12 @@ function useLayerReordering(layer) {
     const onAbort = (evt) => {
       if (evt.key === 'Escape') {
         setDragTarget(null);
+        evt.stopPropagation();
       }
     };
 
     dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
-    dragTarget.ownerDocument.addEventListener('keydown', onAbort);
+    dragTarget.ownerDocument.addEventListener('keydown', onAbort, true);
     dragTarget.addEventListener('pointermove', onMove);
 
     return () => {
@@ -93,7 +94,7 @@ function useLayerReordering(layer) {
       setIsReordering(false);
       dragTarget.removeEventListener('pointermove', onMove);
       dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
-      dragTarget.ownerDocument.removeEventListener('keydown', onAbort);
+      dragTarget.ownerDocument.removeEventListener('keydown', onAbort, true);
     };
   }, [
     dragTarget,

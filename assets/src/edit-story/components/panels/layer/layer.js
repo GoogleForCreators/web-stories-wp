@@ -42,6 +42,7 @@ const LayerButton = styled.button.attrs({
   width: 100%;
   overflow: hidden;
   align-items: center;
+  user-select: none;
 
   ${({ isSelected, theme }) =>
     isSelected &&
