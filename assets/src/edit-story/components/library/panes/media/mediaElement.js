@@ -82,10 +82,18 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
+  const {
+    src,
+    type,
+    mimeType,
+    width: originalWidth,
+    height: originalHeight,
+  } = resource;
   const oRatio =
-    resource.width && resource.height ? resource.width / resource.height : 1;
+    originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
+
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
 
@@ -101,16 +109,18 @@ const MediaElement = ({
       }
     : {};
 
-  if (resource.type === 'image') {
+  const onClick = () => onInsert(resource, width, height);
+
+  if (type === 'image') {
     return (
       <Image
-        key={resource.src}
-        src={resource.src}
+        key={src}
+        src={src}
         ref={mediaElement}
         width={width}
         height={height}
         loading={'lazy'}
-        onClick={() => onInsert(resource, width, height)}
+        onClick={onClick}
         {...dropTargetsBindings}
       />
     );
@@ -131,21 +141,25 @@ const MediaElement = ({
     }
   };
 
+  const { lengthFormatted, poster } = resource;
   return (
-    <Container onPointerEnter={pointerEnter} onPointerLeave={pointerLeave}>
+    <Container
+      onPointerEnter={pointerEnter}
+      onPointerLeave={pointerLeave}
+      onClick={onClick}
+    >
       <Video
-        key={resource.src}
-        poster={resource.poster}
+        key={src}
         ref={mediaElement}
+        poster={poster}
         width={width}
         height={height}
-        onClick={() => onInsert(resource, width, height)}
         {...dropTargetsBindings}
       >
-        <source src={resource.src} type={resource.mimeType} />
+        <source src={src} type={mimeType} />
       </Video>
       {showVideoDetail && <PlayIcon />}
-      <Duration>{resource.lengthFormatted}</Duration>
+      <Duration>{lengthFormatted}</Duration>
     </Container>
   );
 };
