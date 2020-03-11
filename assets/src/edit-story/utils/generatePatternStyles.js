@@ -77,6 +77,8 @@ function getGradientDescription({ type, rotation, center, size }) {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
       return `${((rotation || 0) + 0.5) % 1}turn`;
 
+    // Ignore reason: only here because of eslint, will not happen
+    // istanbul ignore next
     default:
       return null;
   }
@@ -92,7 +94,7 @@ function getGradientDescription({ type, rotation, center, size }) {
  *
  * @return {Array} List of serialized stops
  */
-function getStopList(stops, alpha, isAngular = false) {
+function getStopList(stops, alpha, isAngular) {
   const getPosition = (val) =>
     isAngular ? `${truncate(val, 4)}turn` : `${truncate(val * 100, 2)}%`;
   const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a * alpha);
