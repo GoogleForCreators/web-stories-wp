@@ -19,27 +19,54 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
+import { useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
+import { ReactComponent as Play } from './play.svg';
 
 const styledTiles = css`
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+
   object-fit: contain;
 `;
 
 const Image = styled.img`
   ${styledTiles}
+  margin-bottom: 10px;
 `;
 
 const Video = styled.video`
   ${styledTiles}
 `;
 
+const Container = styled.div`
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+`;
+const PlayIcon = styled(Play)`
+  height: 24px;
+  position: absolute;
+  width: 24px;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+`;
+const Duration = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  font-family: ${({ theme }) => theme.fonts.duration.family};
+  font-size: ${({ theme }) => theme.fonts.duration.size};
+  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+  padding: 2px 8px;
+  border-radius: 8px;
+`;
 /**
  * Get a formatted element for different media types.
  *
@@ -59,6 +86,8 @@ const MediaElement = ({
     resource.width && resource.height ? resource.width / resource.height : 1;
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
+  const mediaElement = useRef();
+  const [showVideoDetail, setShowVideoDetail] = useState(true);
 
   const {
     actions: { handleDrag, handleDrop, isDropSource },
@@ -77,6 +106,7 @@ const MediaElement = ({
       <Image
         key={resource.src}
         src={resource.src}
+        ref={mediaElement}
         width={width}
         height={height}
         loading={'lazy'}
@@ -86,23 +116,37 @@ const MediaElement = ({
     );
   }
 
+  const pointerEnter = () => {
+    setShowVideoDetail(false);
+    if (mediaElement.current) {
+      mediaElement.current.play();
+    }
+  };
+
+  const pointerLeave = () => {
+    setShowVideoDetail(true);
+    if (mediaElement.current) {
+      mediaElement.current.pause();
+      mediaElement.current.currentTime = 0;
+    }
+  };
+
   return (
-    <Video
-      key={resource.src}
-      width={width}
-      height={height}
-      onClick={() => onInsert(resource, width, height)}
-      onPointerEnter={(evt) => {
-        evt.target.play();
-      }}
-      onPointerLeave={(evt) => {
-        evt.target.pause();
-        evt.target.currentTime = 0;
-      }}
-      {...dropTargetsBindings}
-    >
-      <source src={resource.src} type={resource.mimeType} />
-    </Video>
+    <Container onPointerEnter={pointerEnter} onPointerLeave={pointerLeave}>
+      <Video
+        key={resource.src}
+        poster={resource.poster}
+        ref={mediaElement}
+        width={width}
+        height={height}
+        onClick={() => onInsert(resource, width, height)}
+        {...dropTargetsBindings}
+      >
+        <source src={resource.src} type={resource.mimeType} />
+      </Video>
+      {showVideoDetail && <PlayIcon />}
+      <Duration>{resource.lengthFormatted}</Duration>
+    </Container>
   );
 };
 
