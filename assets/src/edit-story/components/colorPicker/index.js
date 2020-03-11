@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { PatternPropType } from '../../types';
 import useFocusOut from '../../utils/useFocusOut';
 import { Close } from '../button';
+import { useKeyDownEffect } from '../keyboard';
 import CurrentColorPicker from './currentColorPicker';
 import useColor from './useColor';
 
@@ -92,6 +93,9 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
   const previousFocus = useRef(document.activeElement);
 
   useFocusOut(containerRef, onClose);
+  useKeyDownEffect(containerRef, { key: 'esc', editable: true }, onClose, [
+    onClose,
+  ]);
 
   useLayoutEffect(() => {
     closeRef.current.focus();
