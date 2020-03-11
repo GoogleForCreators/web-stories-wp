@@ -17,15 +17,15 @@
 /**
  * Infer element type from mime type of its resource
  *
- * @param {string} mimeType
- * @return {string}
+ * @param {string} mimeType Mime type.
+ * @return {string} Element type.
  */
 const getTypeFromMime = (mimeType) => {
   return mimeType.startsWith('image/') ? 'image' : 'video';
 };
 
 /**
- * Generates a resource object from a wordpress attachment
+ * Generates a resource object from a WordPress attachment
  *
  * @param {Object} attachment WP Attachment object
  * @return {Object} Resource object
@@ -57,7 +57,7 @@ export const getResourceFromAttachment = (attachment) => {
 };
 
 /**
- * Generates a resource object from a wordpress media picker object
+ * Generates a resource object from a WordPress media picker object
  *
  * @param {Object} mediaPickerEl WP Media Picker object
  * @return {Object} Resource object

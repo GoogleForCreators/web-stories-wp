@@ -121,7 +121,6 @@ export function useKeyUpEffect(
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
- * @param {string|undefined} mode
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
@@ -138,7 +137,6 @@ export function useGlobalKeyDownEffect(
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
- * @param {string|undefined} mode
  */
 export function useGlobalKeyUpEffect(
   keyNameOrSpec,
