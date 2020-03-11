@@ -103,14 +103,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     // Move first stop left (does nothing)
     fireEvent.keyDown(firstStop, { key: 'ArrowLeft', which: 37 });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 255, b: 0 }, position: 0.5 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    expect(onChange).not.toHaveBeenCalled();
 
     // Move first stop right 10 times
     Array(10)
@@ -131,7 +124,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       ],
     });
 
-    expect(onChange).toHaveBeenCalledTimes(11);
+    expect(onChange).toHaveBeenCalledTimes(10);
   });
 
   it('should reorder stops when moving with arrow keys past another stop', () => {

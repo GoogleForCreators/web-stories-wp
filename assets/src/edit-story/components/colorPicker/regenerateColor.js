@@ -24,10 +24,17 @@ function regenerateSolid({ currentColor: { r, g, b, a } }) {
   return createSolid(r, g, b, a);
 }
 
+function regenerateStops(stops) {
+  return stops.map(({ color: { r, g, b, a }, position }) => ({
+    color: createSolid(r, g, b, a).color,
+    position,
+  }));
+}
+
 function regenerateLinear({ stops, rotation, alpha }) {
   const minimal = {
     type: TYPE_LINEAR,
-    stops,
+    stops: regenerateStops(stops),
   };
   if (rotation !== 0) {
     minimal.rotation = rotation;
@@ -41,7 +48,7 @@ function regenerateLinear({ stops, rotation, alpha }) {
 function regenerateRadial({ stops, center, size, alpha }) {
   const minimal = {
     type: TYPE_RADIAL,
-    stops,
+    stops: regenerateStops(stops),
   };
   if (center && (center.x !== 0.5 || center.y !== 0.5)) {
     minimal.center = center;
@@ -58,7 +65,7 @@ function regenerateRadial({ stops, center, size, alpha }) {
 function regenerateConic({ stops, rotation, center, alpha }) {
   const minimal = {
     type: TYPE_CONIC,
-    stops,
+    stops: regenerateStops(stops),
   };
   if (rotation !== 0) {
     minimal.rotation = rotation;

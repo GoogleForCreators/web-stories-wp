@@ -171,7 +171,8 @@ ColorPicker.propTypes = {
 
 ColorPicker.defaultProps = {
   color: null,
-  onClose: () => {},
+  // Ignore reason: Just a default handler
+  onClose: /* istanbul ignore next */ () => {},
   hasGradient: false,
   hasOpacity: true,
 };

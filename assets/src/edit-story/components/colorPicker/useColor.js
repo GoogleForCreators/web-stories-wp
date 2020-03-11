@@ -51,8 +51,8 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          alpha,
-          rotation: isNaN(rotation) ? 0 : rotation,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
+          rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
         };
 
       case TYPE_RADIAL:
@@ -63,9 +63,9 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          center,
-          size,
-          alpha,
+          center: typeof center !== 'undefined' ? center : state.center,
+          size: typeof size !== 'undefined' ? size : state.size,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
         };
 
       case TYPE_CONIC:
@@ -76,9 +76,9 @@ const reducer = {
           currentColor: stops[0].color,
           currentStopIndex: 0,
           stops,
-          rotation: isNaN(rotation) ? 0 : rotation,
-          center,
-          alpha,
+          rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
+          center: typeof center !== 'undefined' ? center : state.center,
+          alpha: isNaN(alpha) ? state.alpha : alpha,
         };
 
       case TYPE_SOLID:
@@ -140,6 +140,9 @@ const reducer = {
       0,
       Math.min(1, Number((currentPosition + deltaPosition).toFixed(4)))
     );
+    if (desiredPosition === currentPosition) {
+      return state;
+    }
     const stops = [
       ...state.stops.slice(0, index),
       {

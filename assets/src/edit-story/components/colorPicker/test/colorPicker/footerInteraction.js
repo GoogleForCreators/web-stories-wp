@@ -83,4 +83,32 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
 
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255, 0.7));
   });
+
+  it('should set opacity to default when edited with illegal value and invoke onChange', async () => {
+    const { getEditableAlphaElement, getSolidButton, onChange } = arrange({
+      color: createSolid(0, 0, 255, 0.4),
+      hasGradient: true,
+    });
+
+    // At first it's a button
+    const initialButton = getEditableAlphaElement();
+    fireEvent.click(initialButton);
+
+    // When clicked, it's an input
+    const input = getEditableAlphaElement();
+    await wait(() => expect(input).toHaveFocus());
+    fireEvent.change(input, { target: { value: 'ten' } });
+
+    // focus solid button in order to blur and thus abort editin
+    // NB: has to be done with `act` rather than `fireEvent.focus` due to
+    // https://github.com/testing-library/react-testing-library/issues/376
+    act(() => getSolidButton().focus());
+
+    // It's the button again
+    await wait(() =>
+      expect(getEditableAlphaElement()).toHaveTextContent(/100%/i)
+    );
+
+    expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255, 1));
+  });
 });
