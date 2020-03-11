@@ -59,6 +59,8 @@ const FadedVideo = styled.video`
   max-height: initial;
 `;
 
+// Opacity is adjusted so that the double image opacity would equal
+// the opacity assigned to the image.
 const cropMediaCSS = css`
   ${mediaWithScale}
   ${elementWithFlip}
@@ -67,8 +69,6 @@ const cropMediaCSS = css`
     opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
 
-// Opacity is adjusted so that the double image opacity would equal
-// the opacity assigned to the image.
 const CropImage = styled.img`
   ${cropMediaCSS}
 `;

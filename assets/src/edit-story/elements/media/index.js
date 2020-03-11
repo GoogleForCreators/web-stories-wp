@@ -38,7 +38,7 @@ export const CropBox = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
+    border: 1px solid ${({ theme }) => theme.colors.mg.v1};
     pointer-events: none;
   }
 `;
