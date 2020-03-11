@@ -38,8 +38,8 @@ export const getResourceFromAttachment = (attachment) => {
     oWidth,
     oHeight,
     id: videoId,
-    featured_media: posterId,
-    featured_media_src: poster,
+    posterId,
+    poster,
   } = attachment;
   return {
     type: getTypeFromMime(mimeType),
