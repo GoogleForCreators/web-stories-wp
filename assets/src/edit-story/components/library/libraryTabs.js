@@ -26,7 +26,7 @@ import { useConfig } from '../../app';
 import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
 import { Tabs, getPanes } from './panes';
-import { getTabId } from './panes/shared';
+import { getTabId, getPaneId } from './panes/shared';
 
 function LibraryTabs() {
   const {
@@ -68,6 +68,7 @@ function LibraryTabs() {
         <Tab
           key={id}
           id={getTabId(id)}
+          paneId={getPaneId(id)}
           isActive={tab === id}
           onClick={() => setTab(id)}
         />

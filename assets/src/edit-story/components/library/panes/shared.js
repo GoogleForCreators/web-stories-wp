@@ -32,9 +32,10 @@ const Tabs = styled.ul.attrs({
   list-style: none;
 `;
 
-const Tab = styled.li.attrs(({ isActive }) => ({
+const Tab = styled.li.attrs(({ isActive, paneId }) => ({
   tabIndex: isActive ? 0 : -1,
   role: 'tab',
+  'aria-controls': paneId,
   'aria-selected': isActive,
 }))`
   width: 72px;
@@ -52,11 +53,6 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   &:hover {
     background: ${({ isActive, theme }) =>
       isActive ? theme.colors.bg.v4 : rgba(theme.colors.bg.v0, 0.2)};
-  }
-
-  &:focus {
-    outline: none;
-    background: ${({ theme }) => theme.colors.action};
   }
 
   svg {
