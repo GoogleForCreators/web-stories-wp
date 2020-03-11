@@ -24,7 +24,6 @@ import styled from 'styled-components';
  */
 import { useStory } from '../../app';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import convertToCSS from '../../utils/convertToCSS';
 import createSolid from '../../utils/createSolid';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
@@ -32,13 +31,11 @@ import { Layer, PageArea } from './layout';
 
 const DEFAULT_COLOR = createSolid(255, 255, 255);
 
-const DisplayPageArea = styled(PageArea).attrs({
+const DisplayPageArea = styled(PageArea).attrs(({ backgroundColor }) => ({
   className: 'container',
   overflowAllowed: false,
-})`
-  ${({ backgroundColor }) =>
-    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
-`;
+  style: generatePatternStyles(backgroundColor || DEFAULT_COLOR),
+}))``;
 
 function DisplayLayer() {
   const {

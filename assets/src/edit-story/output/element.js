@@ -36,6 +36,7 @@ function OutputElement({ element }) {
   return (
     <WithMask
       element={element}
+      box={box}
       id={'el-' + id}
       className="wrapper"
       style={{

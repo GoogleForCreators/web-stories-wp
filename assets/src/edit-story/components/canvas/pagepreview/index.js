@@ -26,8 +26,7 @@ import PropTypes from 'prop-types';
  */
 import useStory from '../../../app/story/useStory';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
-import createSolidFromString from '../../../utils/createSolidFromString';
+import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
@@ -59,16 +58,14 @@ const Page = styled.button`
     `}
 `;
 
-const PreviewWrapper = styled.div`
+const DEFAULT_COLOR = createSolid(255, 255, 255);
+
+const PreviewWrapper = styled.div.attrs(({ backgroundColor }) => ({
+  style: generatePatternStyles(backgroundColor || DEFAULT_COLOR),
+}))`
   height: 100%;
   position: relative;
   overflow: hidden;
-  ${({ backgroundColor, theme }) =>
-    convertToCSS(
-      generatePatternStyles(
-        backgroundColor || createSolidFromString(theme.colors.fg.v1)
-      )
-    )};
 `;
 
 function PagePreview({ index, forwardedRef, ...props }) {

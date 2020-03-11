@@ -1,5 +1,6 @@
 .travis_deploy_key
 .idea/
+.vscode/
 .DS_Store
 node_modules
 /vendor

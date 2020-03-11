@@ -31,7 +31,21 @@ export default {
 
 export const _default = () => {
   const initialColor = object('Initial Color', {
-    color: { r: 255, g: 0, b: 0 },
+    type: 'linear',
+    stops: [
+      {
+        color: { r: 255, g: 0, b: 0 },
+        position: 0,
+      },
+      {
+        color: { r: 0, g: 255, b: 0 },
+        position: 0.5,
+      },
+      {
+        color: { r: 0, g: 0, b: 255 },
+        position: 1,
+      },
+    ],
   });
 
   return <ColorPicker color={initialColor} onChange={() => {}} />;

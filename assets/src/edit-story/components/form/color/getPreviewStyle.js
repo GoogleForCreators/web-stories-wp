@@ -32,7 +32,9 @@ function getPreviewStyle(pattern) {
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
-    return generatePatternStyles(pattern);
+    // Should filter out alpha component
+    const opaquePattern = { ...pattern, alpha: undefined };
+    return generatePatternStyles(opaquePattern);
   }
   const {
     color: { r, g, b, a },

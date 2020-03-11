@@ -35,7 +35,7 @@ const Preview = styled.button`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function EditablePreview({ value, width, format, onChange }) {
+function EditablePreview({ label, value, width, format, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const enableEditing = useCallback(() => setIsEditing(true), []);
   const disableEditing = useCallback(() => setIsEditing(false), []);
@@ -55,7 +55,9 @@ function EditablePreview({ value, width, format, onChange }) {
   ]);
 
   const handleOnBlur = (evt) => {
-    if (!evt.currentTarget.contains(document.activeElement)) {
+    // Ignore reason: There's no practical way to simulate the else occuring
+    // istanbul ignore else
+    if (!evt.currentTarget.contains(evt.relatedTarget)) {
       disableEditing();
     }
   };
@@ -64,11 +66,16 @@ function EditablePreview({ value, width, format, onChange }) {
     if (isEditing && editableRef.current) {
       editableRef.current.input.focus();
       editableRef.current.input.select();
+      editableRef.current.input.setAttribute('aria-label', label);
     }
-  }, [isEditing]);
+  }, [isEditing, label]);
 
   if (!isEditing) {
-    return <Preview onClick={enableEditing}>{format(value)}</Preview>;
+    return (
+      <Preview aria-label={label} onClick={enableEditing}>
+        {format(value)}
+      </Preview>
+    );
   }
 
   return (
@@ -85,14 +92,16 @@ function EditablePreview({ value, width, format, onChange }) {
 }
 
 EditablePreview.propTypes = {
+  label: PropTypes.string,
   value: PropTypes.string,
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  format: PropTypes.func,
+  format: PropTypes.func.isRequired,
 };
 
 EditablePreview.defaultProps = {
-  format: (val) => val,
+  label: '',
+  value: '',
 };
 
 export default EditablePreview;

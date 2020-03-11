@@ -22,7 +22,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaSizePositionProps } from '../shared';
+import { elementFillContent } from '../shared';
+import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
 import { getBackgroundStyle, videoWithScale } from './util';
 

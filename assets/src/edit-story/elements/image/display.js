@@ -24,9 +24,10 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent, getMediaSizePositionProps } from '../shared';
+import { elementFillContent } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { imageWithScale, getImageWithScaleCss } from './util';
+import { mediaWithScale, getMediaWithScaleCss } from '../media/util';
+import { getMediaSizePositionProps } from '../media';
 
 const Element = styled.div`
   ${elementFillContent}
@@ -35,7 +36,7 @@ const Element = styled.div`
 
 const Img = styled.img`
   position: absolute;
-  ${imageWithScale}
+  ${mediaWithScale}
 `;
 
 function ImageDisplay({
@@ -68,7 +69,7 @@ function ImageDisplay({
           focalX,
           focalY
         );
-        target.style.cssText = getImageWithScaleCss(newImgProps);
+        target.style.cssText = getMediaWithScaleCss(newImgProps);
       }
     }
   });

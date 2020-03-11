@@ -19,7 +19,7 @@
  */
 import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
-import VisibleImage from '../shared/visibleImage';
+import VisibleImage from '../media/visibleImage';
 
 function ImageLayerContent({ element: { src } }) {
   const alt = getFileName(src);

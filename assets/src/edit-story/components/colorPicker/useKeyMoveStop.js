@@ -15,19 +15,13 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { css } from 'styled-components';
+import { useKeyDownEffect } from '../keyboard';
 
-export const imageWithScale = css`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
-`;
-
-export function getImageWithScaleCss({ width, height, offsetX, offsetY }) {
-  // todo@: This is a complete duplication of `imageWithScale` above. But
-  // no other apparent way to execute interpolate `imageWithScale` dynamically.
-  return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
+function useKeyMoveStop(ref, onMove) {
+  useKeyDownEffect(ref, 'left', () => onMove(-0.01), [onMove]);
+  useKeyDownEffect(ref, 'right', () => onMove(0.01), [onMove]);
 }
+
+export default useKeyMoveStop;

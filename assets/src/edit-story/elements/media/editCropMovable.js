@@ -28,12 +28,12 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
-import { getFocalFromOffset } from './../shared';
+import getFocalFromOffset from './getFocalFromOffset';
 
 function EditCropMovable({
   setProperties,
   cropBox,
-  croppedImage,
+  croppedMedia,
   flip,
   x,
   y,
@@ -42,8 +42,8 @@ function EditCropMovable({
   rotationAngle,
   offsetX,
   offsetY,
-  imgWidth,
-  imgHeight,
+  mediaWidth,
+  mediaHeight,
 }) {
   const {
     actions: { editorToDataX, editorToDataY },
@@ -85,7 +85,7 @@ function EditCropMovable({
         const bottom = dirY > 0 ? dh : 0;
         cropRef.current = [fx, fy, left, right, top, bottom];
         cropBox.style.transform = `translate(${fx}px, ${fy}px)`;
-        croppedImage.style.transform = `translate(${-fx}px, ${-fy}px) ${transformFlip ??
+        croppedMedia.style.transform = `translate(${-fx}px, ${-fy}px) ${transformFlip ??
           ''}`;
 
         if (delta[0]) {
@@ -99,7 +99,7 @@ function EditCropMovable({
         const [fx, fy, left, right, top, bottom] = cropRef.current;
         cropRef.current = [0, 0, 0, 0, 0, 0];
         cropBox.style.transform = '';
-        croppedImage.style.transform = '';
+        croppedMedia.style.transform = '';
         cropBox.style.width = '';
         cropBox.style.height = '';
         if (left === 0 && right === 0 && top === 0 && bottom === 0) {
@@ -115,15 +115,15 @@ function EditCropMovable({
           bottom
         );
         const resizeScale =
-          Math.min(imgWidth / resizeWidth, imgHeight / resizeHeight) * 100;
+          Math.min(mediaWidth / resizeWidth, mediaHeight / resizeHeight) * 100;
         const resizeFocalX = getFocalFromOffset(
           resizeWidth,
-          imgWidth,
+          mediaWidth,
           offsetX + fx
         );
         const resizeFocalY = getFocalFromOffset(
           resizeHeight,
-          imgHeight,
+          mediaHeight,
           offsetY + fy
         );
         setProperties({
@@ -138,8 +138,8 @@ function EditCropMovable({
       }}
       snappable={true}
       // todo@: it looks like resizing bounds are not supported.
-      verticalGuidelines={[x - offsetX, x - offsetX + imgWidth]}
-      horizontalGuidelines={[y - offsetY, y - offsetY + imgHeight]}
+      verticalGuidelines={[x - offsetX, x - offsetX + mediaWidth]}
+      horizontalGuidelines={[y - offsetY, y - offsetY + mediaHeight]}
     />
   );
 }
@@ -147,7 +147,7 @@ function EditCropMovable({
 EditCropMovable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   cropBox: PropTypes.object.isRequired,
-  croppedImage: PropTypes.object.isRequired,
+  croppedMedia: PropTypes.object.isRequired,
   flip: StoryPropTypes.flip,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
@@ -156,8 +156,8 @@ EditCropMovable.propTypes = {
   rotationAngle: PropTypes.number.isRequired,
   offsetX: PropTypes.number.isRequired,
   offsetY: PropTypes.number.isRequired,
-  imgWidth: PropTypes.number.isRequired,
-  imgHeight: PropTypes.number.isRequired,
+  mediaWidth: PropTypes.number.isRequired,
+  mediaHeight: PropTypes.number.isRequired,
 };
 
 export default EditCropMovable;

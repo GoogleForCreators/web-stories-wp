@@ -19,6 +19,7 @@
  */
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -26,38 +27,19 @@ export { default as Output } from './output';
 export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
+export {
+  canFill,
+  canFlip,
+  isMaskable,
+  isMedia,
+  hasEditMode,
+  editModeGrayout,
+  resizeRules,
+} from '../media';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-  isFill: false,
+  ...MEDIA_DEFAULT_ATTRIBUTES,
 };
 
-export const hasEditMode = true;
-
-export const editModeGrayout = true;
-
-export const isMedia = true;
-
-export const isMaskable = true;
-
-export const canFlip = true;
-
-export const canFill = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-};
-
-export const panels = [
-  PanelTypes.BACKGROUND_SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.BACKGROUND_DISPLAY,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.LINK,
-  PanelTypes.MASK,
-];
+export const panels = [...MEDIA_PANELS, PanelTypes.LINK, PanelTypes.MASK];
