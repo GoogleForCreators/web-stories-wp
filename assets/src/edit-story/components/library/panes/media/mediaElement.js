@@ -85,7 +85,6 @@ const MediaElement = ({
   const {
     src,
     type,
-    mimeType,
     width: originalWidth,
     height: originalHeight,
   } = resource;
@@ -141,7 +140,7 @@ const MediaElement = ({
     }
   };
 
-  const { lengthFormatted, poster } = resource;
+  const { lengthFormatted, poster, mimeType } = resource;
   return (
     <Container
       onPointerEnter={pointerEnter}
