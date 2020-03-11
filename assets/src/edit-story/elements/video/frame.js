@@ -15,34 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-import { useCallback } from 'react';
-
-/**
  * Internal dependencies
  */
-import { useCanvas } from '../../components/canvas';
-import useDoubleClick from '../../utils/useDoubleClick';
-import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';
+import MediaFrame from '../media/frame';
 
-const Element = styled.div`
-  ${elementFillContent}
-`;
-
-function VideoFrame({ element: { id } }) {
-  const {
-    actions: { setEditingElement },
-  } = useCanvas();
-  const handleSingleClick = useCallback(() => {}, []);
-  const handleDoubleClick = useCallback(() => setEditingElement(id), [
-    id,
-    setEditingElement,
-  ]);
-  const getHandleClick = useDoubleClick(handleSingleClick, handleDoubleClick);
-  return <Element onClick={getHandleClick(id)} />;
+function VideoFrame({ element }) {
+  return <MediaFrame element={element} />;
 }
 
 VideoFrame.propTypes = {
