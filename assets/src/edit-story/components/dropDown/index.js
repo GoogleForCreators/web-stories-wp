@@ -208,6 +208,12 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     [isOpen, value, focusedIndex, options, handleMoveFocus]
   );
 
+  const clearSearchValue = useCallback(
+    debounce(800, () => {
+      setSearchValue('');
+    })
+  );
+
   const handleKeyDown = useCallback(
     ({ keyCode }) => {
       const searchTerm = searchValue + String.fromCharCode(keyCode);
@@ -288,12 +294,6 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   const handleItemClick = (option) => {
     handleCurrentValue(option);
   };
-
-  const clearSearchValue = useCallback(
-    debounce(800, () => {
-      setSearchValue('');
-    })
-  );
 
   const setOptionRef = (element) => {
     if (element !== null) {
