@@ -29,14 +29,19 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
+import { Route, RouterProvider } from './router';
+import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <KeyboardOnlyOutline />
-      <h1>{__('Dashboard', 'web-stories')}</h1>
-      <p>{__('Coming soon', 'web-stories')}</p>
+      <RouterProvider>
+        <GlobalStyle />
+        <KeyboardOnlyOutline />
+        <Route exact path="/" component={<MyStoriesView />} />
+        <Route path="/templates-gallery" component={<TemplatesGalleryView />} />
+        <Route path="/my-bookmarks" component={<MyBookmarksView />} />
+      </RouterProvider>
     </ThemeProvider>
   );
 }
