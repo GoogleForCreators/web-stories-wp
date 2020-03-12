@@ -182,6 +182,18 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     setIsOpen(false);
   }, []);
 
+  const handleMoveFocus = useCallback(
+    (offset) => {
+      const findIndex = options.findIndex(
+        (item) => item.value === focusedValue
+      );
+      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
+        setFocusedValue(options[findIndex + offset].value);
+      }
+    },
+    [focusedValue, options]
+  );
+
   const handleUpDown = useCallback(
     ({ key }) => {
       if (!isOpen) {
@@ -194,18 +206,6 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
       }
     },
     [isOpen, value, focusedIndex, options, handleMoveFocus]
-  );
-
-  const handleMoveFocus = useCallback(
-    (offset) => {
-      const findIndex = options.findIndex(
-        (item) => item.value === focusedValue
-      );
-      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
-        setFocusedValue(options[findIndex + offset].value);
-      }
-    },
-    [focusedValue, options]
   );
 
   const handleKeyDown = useCallback(
