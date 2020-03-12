@@ -35,6 +35,7 @@ import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
 import getCommonValue from '../utils/getCommonValue';
 import removeUnsetValues from '../utils/removeUnsetValues';
+import getPaddingRatio from '../utils/getPaddingRatio';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -58,7 +59,6 @@ function PaddingControls({ selectedElements, onSetProperties }) {
     });
   }, [padding]);
   const updateProperties = useCallback(() => {
-    onSetProperties(state);
     onSetProperties((properties) => {
       const { padding: oldPadding } = properties;
       const { padding: newPadding } = state;
@@ -90,12 +90,6 @@ function PaddingControls({ selectedElements, onSetProperties }) {
     updateProperties();
   }, [state.padding, updateProperties]);
 
-  const getPaddingRatio = (horizontal, vertical) => {
-    if (!vertical || !horizontal) {
-      return false;
-    }
-    return horizontal / vertical;
-  };
   return (
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
