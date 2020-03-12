@@ -44,12 +44,12 @@ const Img = styled.img`
 `;
 
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
-  const featuredMedia = getCommonValue(selectedElements, 'featuredMedia');
-  const poster = getCommonValue(selectedElements, 'poster');
-  const [state, setState] = useState({ featuredMedia, poster });
+  const resource = getCommonValue(selectedElements, 'resource');
+  const { posterId, poster } = resource;
+  const [state, setState] = useState({ posterId, poster });
   useEffect(() => {
-    setState({ featuredMedia, poster });
-  }, [featuredMedia, poster]);
+    setState({ posterId, poster });
+  }, [posterId, poster]);
 
   const handleSubmit = (evt) => {
     onSetProperties(state);
@@ -58,12 +58,12 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
 
   const handleChangeImage = (image) => {
     const newState = {
-      featuredMedia: image.id,
+      posterId: image.id,
       poster:
         image.sizes && image.sizes.medium ? image.sizes.medium.url : image.url,
     };
     setState({ ...state, ...newState });
-    onSetProperties(newState);
+    onSetProperties({ resource: newState });
   };
 
   const openMediaPicker = useMediaPicker({

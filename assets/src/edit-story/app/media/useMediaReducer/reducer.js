@@ -21,6 +21,7 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
+  processing: [],
   mediaType: '',
   searchTerm: '',
   isMediaLoading: false,
@@ -64,6 +65,7 @@ function reducer(state, { type, payload }) {
         ...state,
         searchTerm: '',
         mediaType: '',
+        isMediaLoaded: false,
       };
     }
 
@@ -80,6 +82,37 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         mediaType,
+      };
+    }
+
+    case types.ADD_PROCESSING: {
+      const { videoId } = payload;
+      return {
+        processing: state.processing.push(videoId),
+        ...state,
+      };
+    }
+
+    case types.REMOVE_PROCESSING: {
+      const { videoId } = payload;
+      const processing = state.processing.filter((e) => e !== videoId);
+      return {
+        processing,
+        ...state,
+      };
+    }
+
+    case types.UPDATE_MEDIA_ELEMENT: {
+      const { videoId, posterId, poster } = payload;
+
+      state.media.forEach((element, index) => {
+        if (element.id === videoId) {
+          state.media[index].posterId = posterId;
+          state.media[index].poster = poster;
+        }
+      });
+      return {
+        ...state,
       };
     }
 

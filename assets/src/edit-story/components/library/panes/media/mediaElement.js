@@ -82,12 +82,7 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
-  const {
-    src,
-    type,
-    width: originalWidth,
-    height: originalHeight,
-  } = resource;
+  const { src, type, width: originalWidth, height: originalHeight } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;

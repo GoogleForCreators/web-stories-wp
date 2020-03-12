@@ -49,3 +49,22 @@ export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
 export const setMediaType = (dispatch) => ({ mediaType }) => {
   dispatch({ type: types.SET_MEDIA_TYPE, payload: { mediaType } });
 };
+
+export const setProcessing = (dispatch) => ({ videoId }) => {
+  dispatch({ type: types.ADD_PROCESSING, payload: { videoId } });
+};
+
+export const removeProcessing = (dispatch) => ({ videoId }) => {
+  dispatch({ type: types.REMOVE_PROCESSING, payload: { videoId } });
+};
+
+export const updateMediaElement = (dispatch) => ({
+  videoId,
+  posterId,
+  poster,
+}) => {
+  dispatch({
+    type: types.UPDATE_MEDIA_ELEMENT,
+    payload: { videoId, posterId, poster },
+  });
+};

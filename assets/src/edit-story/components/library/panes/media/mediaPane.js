@@ -111,8 +111,9 @@ function MediaPane(props) {
     const oRatio =
       resource.width && resource.height ? resource.width / resource.height : 1;
     const height = DEFAULT_WIDTH / oRatio;
-
+    console.log(resource);
     insertMediaElement(resource, DEFAULT_WIDTH, height);
+    resetFilters();
   };
 
   const openMediaPicker = useMediaPicker({

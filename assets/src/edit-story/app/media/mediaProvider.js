@@ -24,14 +24,15 @@ import { useEffect, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../api';
+import { useConfig } from '../config';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
 import Context from './context';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
-  const { uploadVideoFrame } = useUploadVideoFrame();
-  const { mediaType, searchTerm } = state;
+
+  const { processing, media, mediaType, searchTerm, isMediaLoaded } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -39,17 +40,29 @@ function MediaProvider({ children }) {
     resetFilters,
     setMediaType,
     setSearchTerm,
+    setProcessing,
+    removeProcessing,
+    updateMediaElement,
   } = actions;
-
+  const { uploadVideoFrame } = useUploadVideoFrame({
+    processing,
+    setProcessing,
+    removeProcessing,
+    updateMediaElement,
+  });
   const {
     actions: { getMedia },
   } = useAPI();
 
+  const {
+    allowedMimeTypes: { video: allowedVideoMimeTypes },
+  } = useConfig();
+
   const fetchMedia = useCallback(() => {
     fetchMediaStart();
     getMedia({ mediaType, searchTerm })
-      .then((media) => {
-        fetchMediaSuccess({ media, mediaType, searchTerm });
+      .then((mediaItems) => {
+        fetchMediaSuccess({ media: mediaItems, mediaType, searchTerm });
       })
       .catch(fetchMediaError);
   }, [
@@ -62,6 +75,19 @@ function MediaProvider({ children }) {
   ]);
 
   useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
+
+  const generatePoster = useCallback(() => {
+    const processor = async ({ mimeType, posterId, id, src }) => {
+      if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+        await uploadVideoFrame(id, src);
+      }
+    };
+    if (media) {
+      media.forEach(processor);
+    }
+  }, [media, allowedVideoMimeTypes, uploadVideoFrame]);
+
+  useEffect(generatePoster, [media, mediaType, searchTerm]);
 
   const context = {
     state,
