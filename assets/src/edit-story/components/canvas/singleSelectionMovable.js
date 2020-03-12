@@ -155,7 +155,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   return (
     <Movable
-      className="default-movable"
+      className={`default-movable ${isDragging ? 'dragging' : ''}`}
       zIndex={0}
       ref={moveable}
       target={targetEl}
