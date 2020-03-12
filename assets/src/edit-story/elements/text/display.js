@@ -67,7 +67,7 @@ function TextDisplay({
   const ref = useRef(null);
 
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
   const props = {
@@ -80,7 +80,10 @@ function TextDisplay({
     fontWeight,
     letterSpacing,
     lineHeight,
-    padding,
+    padding: {
+      horizontal: dataToEditorX(padding.horizontal),
+      vertical: dataToEditorY(padding.vertical),
+    },
     textAlign,
     textDecoration,
   };

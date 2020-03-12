@@ -110,7 +110,7 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
 }) {
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
     color,
@@ -124,7 +124,10 @@ function TextEdit({
     letterSpacing,
     lineHeight,
     opacity,
-    padding,
+    padding: {
+      horizontal: dataToEditorX(padding.horizontal),
+      vertical: dataToEditorY(padding.vertical),
+    },
     textDecoration,
   };
   const wrapperRef = useRef(null);
