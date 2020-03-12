@@ -32,6 +32,7 @@ import useLiveRegion from '../../../utils/useLiveRegion';
 import Layer from './layer';
 import LayerContext from './context';
 import LayerSeparator from './separator';
+import LayerScroller from './scroller';
 
 const REORDER_MESSAGE = __(
   /* translators: d: new layer position. */
@@ -44,11 +45,19 @@ const LayerList = styled.div.attrs({ role: 'listbox' })`
   flex-direction: column;
   width: 100%;
   align-items: stretch;
+  user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
 `;
 
 function LayerPanel() {
   const {
-    state: { layers, isReordering, currentSeparator },
+    state: {
+      layers,
+      isReordering,
+      currentSeparator,
+      canScrollUp,
+      canScrollDown,
+    },
+    actions: { setScrollTarget },
   } = useContext(LayerContext);
   const speak = useLiveRegion('assertive');
 
@@ -67,13 +76,17 @@ function LayerPanel() {
   }
 
   return (
-    <LayerList>
+    <LayerList ref={setScrollTarget} hasUserSelect={!isReordering}>
+      {canScrollUp && <LayerScroller direction={-1} />}
+
       {layers.map((layer) => (
         <Fragment key={layer.id}>
           {isReordering && <LayerSeparator position={layer.position + 1} />}
           <Layer layer={layer} />
         </Fragment>
       ))}
+
+      {canScrollDown && <LayerScroller direction={1} />}
     </LayerList>
   );
 }
