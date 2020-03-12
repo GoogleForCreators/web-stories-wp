@@ -17,36 +17,13 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
-export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
-export { default as getFocalFromOffset } from './getFocalFromOffset';
-export { default as EditPanMovable } from './editPanMovable';
-export { default as ScalePanel } from './scalePanel';
-
-export const CropBox = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
-    pointer-events: none;
-  }
-`;
 
 export const elementFillContent = css`
   position: absolute;
@@ -96,8 +73,6 @@ export const elementWithStyle = css`
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
 `;
-
-export const MEDIA_MASK_OPACITY = 0.4;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
   opacity: 100,

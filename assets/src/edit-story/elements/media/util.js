@@ -19,15 +19,15 @@
  */
 import { css } from 'styled-components';
 
-export const imageWithScale = css`
+export const mediaWithScale = css`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   left: ${({ offsetX }) => `${-offsetX}px`};
   top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
-export function getImageWithScaleCss({ width, height, offsetX, offsetY }) {
-  // todo@: This is a complete duplication of `imageWithScale` above. But
-  // no other apparent way to execute interpolate `imageWithScale` dynamically.
+export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
+  // todo@: This is a complete duplication of `mediaWithScale` above. But
+  // no other apparent way to execute interpolate `mediaWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }

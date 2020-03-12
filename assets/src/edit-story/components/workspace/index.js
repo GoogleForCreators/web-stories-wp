@@ -17,16 +17,27 @@
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import MediaEdit from '../media/edit';
+import Inspector from '../inspector';
+import Canvas from '../canvas';
+import { SidebarProvider } from '../sidebar';
+import CanvasProvider from '../canvas/canvasProvider';
+import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
 
-function ImageEdit({ element, box }) {
-  return <MediaEdit element={element} box={box} />;
+function Workspace() {
+  return (
+    <CanvasProvider>
+      <SidebarProvider>
+        <WorkspaceLayout>
+          <CanvasArea>
+            <Canvas />
+          </CanvasArea>
+          <InspectorArea>
+            <Inspector />
+          </InspectorArea>
+        </WorkspaceLayout>
+      </SidebarProvider>
+    </CanvasProvider>
+  );
 }
 
-ImageEdit.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
-  box: StoryPropTypes.box.isRequired,
-};
-
-export default ImageEdit;
+export default Workspace;

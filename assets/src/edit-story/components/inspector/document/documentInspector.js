@@ -91,10 +91,7 @@ function DocumentInspector() {
       updateStory({
         properties: {
           featuredMedia: image.id,
-          featuredMediaUrl:
-            image.sizes && image.sizes.medium
-              ? image.sizes.medium.url
-              : image.url,
+          featuredMediaUrl: image.sizes?.medium?.url || image.url,
         },
       }),
     [updateStory]

@@ -19,27 +19,54 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
+import { useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
+import { ReactComponent as Play } from './play.svg';
 
 const styledTiles = css`
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+
   object-fit: contain;
 `;
 
 const Image = styled.img`
   ${styledTiles}
+  margin-bottom: 10px;
 `;
 
 const Video = styled.video`
   ${styledTiles}
 `;
 
+const Container = styled.div`
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+`;
+const PlayIcon = styled(Play)`
+  height: 24px;
+  position: absolute;
+  width: 24px;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+`;
+const Duration = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  font-family: ${({ theme }) => theme.fonts.duration.family};
+  font-size: ${({ theme }) => theme.fonts.duration.size};
+  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+  padding: 2px 8px;
+  border-radius: 8px;
+`;
 /**
  * Get a formatted element for different media types.
  *
@@ -55,10 +82,14 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
+  const { src, type, width: originalWidth, height: originalHeight } = resource;
   const oRatio =
-    resource.width && resource.height ? resource.width / resource.height : 1;
+    originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
+
+  const mediaElement = useRef();
+  const [showVideoDetail, setShowVideoDetail] = useState(true);
 
   const {
     actions: { handleDrag, handleDrop, isDropSource },
@@ -72,37 +103,58 @@ const MediaElement = ({
       }
     : {};
 
-  if (resource.type === 'image') {
+  const onClick = () => onInsert(resource, width, height);
+
+  if (type === 'image') {
     return (
       <Image
-        key={resource.src}
-        src={resource.src}
+        key={src}
+        src={src}
+        ref={mediaElement}
         width={width}
         height={height}
         loading={'lazy'}
-        onClick={() => onInsert(resource, width, height)}
+        onClick={onClick}
         {...dropTargetsBindings}
       />
     );
   }
 
+  const pointerEnter = () => {
+    setShowVideoDetail(false);
+    if (mediaElement.current) {
+      mediaElement.current.play();
+    }
+  };
+
+  const pointerLeave = () => {
+    setShowVideoDetail(true);
+    if (mediaElement.current) {
+      mediaElement.current.pause();
+      mediaElement.current.currentTime = 0;
+    }
+  };
+
+  const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Video
-      key={resource.src}
-      width={width}
-      height={height}
-      onClick={() => onInsert(resource, width, height)}
-      onPointerEnter={(evt) => {
-        evt.target.play();
-      }}
-      onPointerLeave={(evt) => {
-        evt.target.pause();
-        evt.target.currentTime = 0;
-      }}
-      {...dropTargetsBindings}
+    <Container
+      onPointerEnter={pointerEnter}
+      onPointerLeave={pointerLeave}
+      onClick={onClick}
     >
-      <source src={resource.src} type={resource.mimeType} />
-    </Video>
+      <Video
+        key={src}
+        ref={mediaElement}
+        poster={poster}
+        width={width}
+        height={height}
+        {...dropTargetsBindings}
+      >
+        <source src={src} type={mimeType} />
+      </Video>
+      {showVideoDetail && <PlayIcon />}
+      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+    </Container>
   );
 };
 

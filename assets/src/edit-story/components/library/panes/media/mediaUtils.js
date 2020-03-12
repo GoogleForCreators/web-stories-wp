@@ -40,7 +40,9 @@ export const getResourceFromAttachment = (attachment) => {
     id: videoId,
     posterId,
     poster,
+    lengthFormatted,
   } = attachment;
+
   return {
     type: getTypeFromMime(mimeType),
     src: url || src,
@@ -50,6 +52,7 @@ export const getResourceFromAttachment = (attachment) => {
     posterId,
     poster,
     videoId,
+    lengthFormatted,
   };
 };
 
