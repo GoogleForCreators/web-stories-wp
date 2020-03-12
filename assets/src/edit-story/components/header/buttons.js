@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { __ } from '@wordpress/i18n';
 import { Spinner } from '@wordpress/components';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -73,6 +74,46 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
+    },
+    actions: { updateStory },
+  } = useStory();
+
+  const handlePublish = useCallback(
+    () => updateStory({ properties: { status: 'publish' } }),
+    [updateStory]
+  );
+
+  return (
+    <Primary onClick={handlePublish} isDisabled={isSaving}>
+      {__('Publish', 'web-stories')}
+    </Primary>
+  );
+}
+
+function SwitchToDraft() {
+  const {
+    state: {
+      meta: { isSaving },
+    },
+    actions: { updateStory },
+  } = useStory();
+
+  const handleUnPublish = useCallback(
+    () => updateStory({ properties: { status: 'draft' } }),
+    [updateStory]
+  );
+
+  return (
+    <Outline onClick={handleUnPublish} isDisabled={isSaving}>
+      {__('Switch to Draft', 'web-stories')}
+    </Outline>
+  );
+}
+
+function Update() {
+  const {
+    state: {
+      meta: { isSaving },
       story: { status },
     },
     actions: { saveStory },
@@ -86,11 +127,15 @@ function Publish() {
       text = __('Update', 'web-stories');
       break;
     case 'future':
-      text = __('Scheduled', 'web-stories');
+      text = __('Schedule', 'web-stories');
       break;
     default:
       text = __('Save draft', 'web-stories');
-      break;
+      return (
+        <Outline onClick={saveStory} isDisabled={isSaving}>
+          {text}
+        </Outline>
+      );
   }
 
   return (
@@ -109,13 +154,23 @@ function Loading() {
 }
 
 function Buttons() {
+  const {
+    state: {
+      story: { status },
+    },
+  } = useStory();
+  const isDraft = 'draft' === status;
   return (
     <ButtonList>
       <List>
         <Loading />
+        {isDraft && <Update />}
+        {!isDraft && <SwitchToDraft />}
+        <Space />
         <PreviewButton />
         <Space />
-        <Publish />
+        {isDraft && <Publish />}
+        {!isDraft && <Update />}
         <Space />
       </List>
     </ButtonList>
