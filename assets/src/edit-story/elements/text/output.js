@@ -20,7 +20,7 @@
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
-import { generateFontFamily } from './util';
+import { draftMarkupToContent, generateFontFamily } from './util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -63,16 +63,11 @@ function TextOutput({
     ...generatePatternStyles(color, 'color'),
   };
 
-  // @todo This logic is temporary and will change with selecting part + marking bold.
-  if (bold) {
-    content = `<strong>${content}</strong>`;
-  }
-
   return (
     <p
       className="fill"
       style={style}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
     />
   );
 }

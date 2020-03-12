@@ -46,6 +46,7 @@ import {
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
+  draftMarkupToContent,
   getFilteredState,
   getHandleKeyCommand,
   getSelectionForAll,
@@ -148,11 +149,7 @@ function TextEdit({
     const contentWithBreaks = (content || '')
       .split('\n')
       .map((s) => {
-        // @todo This logic is temporary and will change with selecting part + marking bold.
-        if (bold) {
-          return `<p><strong>${s}</strong></p>`;
-        }
-        return `<p>${s}</p>`;
+        return `<p>${draftMarkupToContent(s, bold)}</p>`;
       })
       .join('');
     let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));

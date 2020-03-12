@@ -34,7 +34,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { generateFontFamily } from './util';
+import { draftMarkupToContent, generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
@@ -100,15 +100,10 @@ function TextDisplay({
       : '';
   });
 
-  // @todo This logic is temporary and will change with selecting part + marking bold.
-  if (bold) {
-    content = `<strong>${content}</strong>`;
-  }
-
   return (
     <Element
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
       {...props}
     />
   );
