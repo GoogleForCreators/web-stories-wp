@@ -45,7 +45,7 @@ const DropDownContainer = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.font};
 `;
 
-const DropDownSelect = styled.div.attrs({ role: 'Listbox', tabIndex: '0' })`
+const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -82,7 +82,7 @@ const DropDownTitle = styled.span`
 
 const DropDownListWrapper = styled.div``;
 
-const DropDownList = styled.ul`
+const DropDownList = styled.ul.attrs({ role: 'listbox' })`
   position: absolute;
   top: 100%;
   left: 0;
@@ -123,90 +123,170 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 `;
 
+const possibleNormalKeysForSearch = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+];
+
 function DropDown({ options, value, onChange, disabled }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
 
-  const [openOptions, setOpenOptions] = useState(false);
-  const [focusedOption, setFocusedOption] = useState(undefined);
+  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [focusedValue, setFocusedValue] = useState(null);
+  const focusedIndex = useMemo(
+    () => options.findIndex((item) => item.value === focusedValue),
+    [focusedValue, options]
+  );
   const activeItem = useMemo(
     () => options.find((item) => item.value === value),
     [value, options]
   );
-  const toggleOptions = useCallback(() => setOpenOptions(false), []);
+  const toggleOptions = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handleUpDown = useCallback(
+    ({ key }) => {
+      if (!isOpen) {
+        setIsOpen(true);
+        setFocusedValue(value);
+      } else if (key === 'ArrowUp' && focusedIndex !== 0) {
+        handleMoveFocus(-1);
+      } else if (key === 'ArrowDown' && focusedIndex < options.length - 1) {
+        handleMoveFocus(1);
+      }
+    },
+    [isOpen, value, focusedIndex, options, handleMoveFocus]
+  );
+
+  const handleMoveFocus = useCallback(
+    (offset) => {
+      const findIndex = options.findIndex(
+        (item) => item.value === focusedValue
+      );
+      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
+        setFocusedValue(options[findIndex + offset].value);
+      }
+    },
+    [focusedValue, options]
+  );
+
+  const handleKeyDown = useCallback(
+    ({ keyCode }) => {
+      const searchTerm = searchValue + String.fromCharCode(keyCode);
+      setSearchValue(searchTerm);
+      const searchIndex = options.findIndex((item) =>
+        item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+      );
+      if (searchIndex >= 0) {
+        setFocusedValue(options[searchIndex].value);
+      }
+      clearSearchValue();
+    },
+    [clearSearchValue, searchValue, options]
+  );
+
+  const handleEnter = useCallback(() => {
+    if (!isOpen) {
+      setIsOpen(true);
+      setFocusedValue(value);
+    } else {
+      handleCurrentValue(focusedValue);
+    }
+  }, [isOpen, focusedValue, handleCurrentValue, value]);
 
   useFocusOut(DropDown.wrapperRef, toggleOptions);
-  useKeyDownEffect(DropDown.wrapperRef, { key: 'esc' }, toggleOptions);
+  useKeyDownEffect(DropDown.wrapperRef, { key: 'esc' }, toggleOptions, [
+    toggleOptions,
+  ]);
+  useKeyDownEffect(
+    DropDown.wrapperRef,
+    { key: ['up', 'down'], shift: true },
+    handleUpDown,
+    [handleUpDown]
+  );
+  useKeyDownEffect(
+    DropDown.wrapperRef,
+    { key: possibleNormalKeysForSearch, shift: true },
+    handleKeyDown,
+    [handleKeyDown]
+  );
+  useKeyDownEffect(
+    DropDown.wrapperRef,
+    { key: ['space', 'enter'], shift: true },
+    handleEnter,
+    [handleEnter]
+  );
 
   const clearOptionsRefs = () => {
     DropDown.arrayOfOptionsRefs = [];
   };
 
-  const handleOpenOptions = (event) => {
-    switch (event.type) {
-      case 'click':
-        setOpenOptions(!openOptions);
-        setFocusedOption(document.activeElement.id);
-        break;
-      case 'keydown':
-        if (event.key === 'Enter' || event.key === ' ') {
-          _handleOpenOptions(event);
-        }
-        break;
-      default:
+  useEffect(() => {
+    if (focusedValue) {
+      const findIndex = options.findIndex(
+        (item) => item.value === focusedValue
+      );
+      DropDown.arrayOfOptionsRefs[findIndex].focus();
     }
-  };
+  }, [focusedValue, options]);
 
-  const _handleOpenOptions = useCallback(() => {
-    setOpenOptions(!openOptions);
-  }, [openOptions]);
+  const handleSelectClick = () => {
+    setIsOpen(!isOpen);
+    setFocusedValue(isOpen ? null : value);
+  };
 
   const handleCurrentValue = useCallback(
     (option) => {
       if (onChange) {
         onChange(option);
       }
+      setIsOpen(false);
+      setFocusedValue(null);
+      DropDown.selectRef.current.focus();
     },
     [onChange]
   );
 
-  const handleSelectElement = (event, index) => {
-    event.preventDefault();
-    if (index >= 0 && index < DropDown.arrayOfOptionsRefs.length) {
-      DropDown.arrayOfOptionsRefs[index].focus();
-      setFocusedOption(document.activeElement.id);
-    }
-  };
-
-  const handleOptionsEvents = (option, index, event) => {
-    switch (event.type) {
-      case 'click':
-        handleCurrentValue(option);
-        setOpenOptions(!openOptions);
-        break;
-      case 'keydown':
-        if (event.key === 'Enter' || event.key === ' ') {
-          handleCurrentValue(option);
-          setOpenOptions(!openOptions);
-          DropDown.selectRef.current.focus();
-        } else if (event.key === 'ArrowUp') {
-          handleSelectElement(event, index - 1);
-        } else if (event.key === 'ArrowDown') {
-          handleSelectElement(event, index + 1);
-        } else if (event.key === 'Escape') {
-          event.preventDefault();
-          setOpenOptions(!openOptions);
-          DropDown.selectRef.current.focus();
-        } else {
-          const searchTerm = searchValue + String.fromCharCode(event.keyCode);
-          setSearchValue(searchTerm);
-          clearSearchValue();
-        }
-        break;
-      default:
-    }
+  const handleItemClick = (option) => {
+    handleCurrentValue(option);
   };
 
   const clearSearchValue = useCallback(
@@ -215,39 +295,19 @@ function DropDown({ options, value, onChange, disabled }) {
     })
   );
 
-  useEffect(() => {
-    if (searchValue !== '') {
-      const searchIndex = options.findIndex((item) =>
-        item.name.toLowerCase().startsWith(searchValue.toLowerCase())
-      );
-      if (searchIndex >= 0) {
-        DropDown.arrayOfOptionsRefs[searchIndex].focus();
-      }
-    }
-  }, [searchValue, options]);
-
-  useEffect(() => {
-    if (openOptions) {
-      DropDown.arrayOfOptionsRefs[0].focus();
-    }
-  }, [openOptions]);
-
   const setOptionRef = (element) => {
     if (element !== null) {
       DropDown.arrayOfOptionsRefs.push(element);
     }
   };
 
-  const setSize = options.length;
-
   return (
     <DropDownContainer ref={DropDown.wrapperRef} tabIndex={-1}>
       <DropDownSelect
-        onClick={handleOpenOptions}
-        onKeyDown={handleOpenOptions}
-        aria-pressed={openOptions}
+        onClick={handleSelectClick}
+        aria-pressed={isOpen}
         aria-haspopup={true}
-        aria-expanded={openOptions}
+        aria-expanded={isOpen}
         disabled={disabled}
         ref={DropDown.selectRef}
         aria-disabled={disabled}
@@ -259,19 +319,21 @@ function DropDown({ options, value, onChange, disabled }) {
         <DropDownIcon />
       </DropDownSelect>
       <DropDownListWrapper>
-        {openOptions ? (
-          <DropDownList>
-            {options.map(({ name, value: optValue }, index) => {
+        {isOpen ? (
+          <DropDownList
+            aria-multiselectable={false}
+            aria-required={false}
+            aria-activedescendant={activeItem ? activeItem.value : ''}
+            aria-labelledby={__('Dropdown', 'web-stories')}
+          >
+            {options.map(({ name, value: optValue }) => {
               return (
                 <DropDownItem
                   id={optValue}
-                  aria-selected={focusedOption === optValue}
+                  aria-selected={activeItem && activeItem.value === optValue}
                   key={optValue}
-                  onClick={(e) => handleOptionsEvents(optValue, index, e)}
-                  onKeyDown={(e) => handleOptionsEvents(optValue, index, e)}
+                  onClick={() => handleItemClick(optValue)}
                   ref={setOptionRef}
-                  aria-posinset={index}
-                  aria-setsize={setSize}
                 >
                   {name}
                 </DropDownItem>
