@@ -16,6 +16,7 @@
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
+export const CANVAS_MIN_WIDTH = 480;
 export const LIBRARY_MIN_WIDTH = 220;
 export const LIBRARY_MAX_WIDTH = 360;
 export const INSPECTOR_MIN_WIDTH = 220;
