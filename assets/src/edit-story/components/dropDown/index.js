@@ -229,6 +229,18 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     [clearSearchValue, searchValue, options]
   );
 
+  const handleCurrentValue = useCallback(
+    (option) => {
+      if (onChange) {
+        onChange(option);
+      }
+      setIsOpen(false);
+      setFocusedValue(null);
+      DropDown.selectRef.current.focus();
+    },
+    [onChange]
+  );
+
   const handleEnter = useCallback(() => {
     if (!isOpen) {
       setIsOpen(true);
@@ -278,18 +290,6 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     setIsOpen(!isOpen);
     setFocusedValue(isOpen ? null : value);
   };
-
-  const handleCurrentValue = useCallback(
-    (option) => {
-      if (onChange) {
-        onChange(option);
-      }
-      setIsOpen(false);
-      setFocusedValue(null);
-      DropDown.selectRef.current.focus();
-    },
-    [onChange]
-  );
 
   const handleItemClick = (option) => {
     handleCurrentValue(option);
