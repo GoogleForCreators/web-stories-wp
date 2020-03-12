@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { forwardRef } from 'react';
 
 /**
@@ -44,4 +45,8 @@ function UploadDropTargetOverlayWithRef(props, ref) {
 
 const UploadDropTargetOverlay = forwardRef(UploadDropTargetOverlayWithRef);
 
-export default UploadDropTargetOverlay;
+const UploadDropTargetScreen = styled(UploadDropTargetOverlay)`
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v11, 0.6)};
+`;
+
+export { UploadDropTargetOverlay, UploadDropTargetScreen };

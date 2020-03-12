@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import UploadDropTargetOverlay from './overlay';
+import { UploadDropTargetOverlay } from './overlay';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const Container = styled(UploadDropTargetOverlay)`

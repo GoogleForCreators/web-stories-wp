@@ -112,4 +112,9 @@ UploadDropTarget.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
+UploadDropTarget.defaultProps = {
+  label: null,
+  labelledBy: null,
+};
+
 export default UploadDropTarget;
