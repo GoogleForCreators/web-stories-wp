@@ -74,18 +74,24 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
+      story: { date },
     },
     actions: { updateStory },
   } = useStory();
+
+  const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(
     () => updateStory({ properties: { status: 'publish' } }),
     [updateStory]
   );
 
+  const text = hasFutureDate
+    ? __('Schedule', 'web-stories')
+    : __('Publish', 'web-stories');
   return (
     <Primary onClick={handlePublish} isDisabled={isSaving}>
-      {__('Publish', 'web-stories')}
+      {text}
     </Primary>
   );
 }
