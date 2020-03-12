@@ -37,22 +37,17 @@ import {
 } from '../uploadDropTarget';
 import { useUploader } from '../../app/uploader';
 import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
-import {
-  useLayoutParamsCssVars,
-  Layer as CanvasLayer,
-  PageArea,
-} from '../canvas/layout';
-import { useInsertElement } from '../canvas';
-import { WorkspaceLayout, CanvasArea } from './layout';
+import { Layer as CanvasLayer, PageArea } from './layout';
+import useInsertElement from './useInsertElement';
 
-const MESSAGE_ID = 'edit-story-workspace-upload-message';
+const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
 const PageAreaCover = styled(PageArea)`
   background-color: ${({ theme }) => theme.colors.fg.v1};
   outline: 2px solid ${({ theme }) => theme.colors.selection};
 `;
 
-function WorkspaceUploadDropTarget({ children }) {
+function CanvasUploadDropTarget({ children }) {
   const { uploadFile } = useUploader();
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
@@ -93,19 +88,14 @@ function WorkspaceUploadDropTarget({ children }) {
   );
 }
 
-WorkspaceUploadDropTarget.propTypes = {
+CanvasUploadDropTarget.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
 function UploadCanvasOverlay({ children }) {
-  const canvasLayoutStyles = useLayoutParamsCssVars();
   return (
-    <UploadDropTargetOverlay style={canvasLayoutStyles}>
-      <WorkspaceLayout>
-        <CanvasArea>
-          <CanvasLayer>{children}</CanvasLayer>
-        </CanvasArea>
-      </WorkspaceLayout>
+    <UploadDropTargetOverlay>
+      <CanvasLayer>{children}</CanvasLayer>
     </UploadDropTargetOverlay>
   );
 }
@@ -114,4 +104,4 @@ UploadCanvasOverlay.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-export default WorkspaceUploadDropTarget;
+export default CanvasUploadDropTarget;
