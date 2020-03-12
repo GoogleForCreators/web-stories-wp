@@ -162,7 +162,7 @@ const possibleNormalKeysForSearch = [
   '0',
 ];
 
-function DropDown({ options, value, onChange, disabled }) {
+function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -313,8 +313,7 @@ function DropDown({ options, value, onChange, disabled }) {
         aria-disabled={disabled}
       >
         <DropDownTitle>
-          {(activeItem && activeItem.name) ||
-            __('Select an Option', 'web-stories')}
+          {(activeItem && activeItem.name) || __('', 'web-stories')}
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
@@ -324,7 +323,7 @@ function DropDown({ options, value, onChange, disabled }) {
             aria-multiselectable={false}
             aria-required={false}
             aria-activedescendant={activeItem ? activeItem.value : ''}
-            aria-labelledby={__('Dropdown', 'web-stories')}
+            aria-labelledby={ariaLabel}
           >
             {options.map(({ name, value: optValue }) => {
               return (
@@ -353,10 +352,12 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
+  ariaLabel: __('Dropdown', 'web-stories'),
 };
 
 export default DropDown;

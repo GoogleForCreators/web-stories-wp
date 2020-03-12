@@ -30,15 +30,8 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Color,
-  SelectMenu,
-  Numeric,
-  Row,
-  Label,
-  Toggle,
-  ToggleButton,
-} from '../form';
+import DropDown from '../dropDown';
+import { Color, Numeric, Row, Label, Toggle, ToggleButton } from '../form';
 import { useFont } from '../../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import { calculateTextHeight } from '../../utils/textMeasurements';
@@ -175,11 +168,10 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
     >
       <Row>
         {fonts && (
-          <SelectMenu
+          <DropDown
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
             value={state.fontFamily}
-            isMultiple={fontFamily === ''}
             onChange={(value) => {
               const currentFontWeights = getFontWeight(value);
               const currentFontFallback = getFontFallback(value);
@@ -202,10 +194,9 @@ function TextStylePanel({ selectedElements, onSetProperties }) {
         )}
       </Row>
       <Row>
-        <SelectMenu
+        <DropDown
           ariaLabel={__('Font style', 'web-stories')}
           options={fontStyles}
-          isMultiple={fontStyle === ''}
           value={state.fontStyle}
           onChange={(value) => setState({ ...state, fontStyle: value })}
         />

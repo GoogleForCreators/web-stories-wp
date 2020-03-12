@@ -30,7 +30,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SelectMenu, Row, Numeric } from '../form';
+import DropDown from '../dropDown';
+import { Row, Numeric } from '../form';
 import { useFont } from '../../app';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE } from '../../constants';
 import { calculateTextHeight } from '../../utils/textMeasurements';
@@ -131,11 +132,10 @@ function FontPanel({ selectedElements, onSetProperties }) {
     >
       <Row>
         {fonts && (
-          <SelectMenu
+          <DropDown
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
             value={state.fontFamily}
-            isMultiple={fontFamily === ''}
             onChange={(value) => {
               const currentFontWeights = getFontWeight(value);
               const currentFontFallback = getFontFallback(value);
@@ -158,10 +158,9 @@ function FontPanel({ selectedElements, onSetProperties }) {
         )}
       </Row>
       <Row>
-        <SelectMenu
+        <DropDown
           ariaLabel={__('Font style', 'web-stories')}
           options={fontStyles}
-          isMultiple={fontStyle === ''}
           value={state.fontStyle}
           onChange={(value) => setState({ ...state, fontStyle: value })}
         />
@@ -203,11 +202,10 @@ function FontPanel({ selectedElements, onSetProperties }) {
         />
       </Row>
       {state.fontWeights && (
-        <SelectMenu
-          label={__('Font weight', 'web-stories')}
+        <DropDown
+          ariaLabel={__('Font weight', 'web-stories')}
           options={state.fontWeights}
           value={state.fontWeight}
-          isMultiple={fontWeight === ''}
           onChange={(value) =>
             setState({ ...state, fontWeight: parseInt(value) })
           }
