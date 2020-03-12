@@ -32,10 +32,9 @@ const Tabs = styled.ul.attrs({
   list-style: none;
 `;
 
-const Tab = styled.li.attrs(({ isActive, paneId }) => ({
+const Tab = styled.li.attrs(({ isActive }) => ({
   tabIndex: isActive ? 0 : -1,
   role: 'tab',
-  'aria-controls': paneId,
   'aria-selected': isActive,
 }))`
   width: 72px;
