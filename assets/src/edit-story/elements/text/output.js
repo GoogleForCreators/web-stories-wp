@@ -42,7 +42,11 @@ function TextOutput({
     textAlign,
     textDecoration,
   },
+  box: { width },
 }) {
+  const horizontalPadding = dataToEditorX(padding.horizontal, width);
+  // The padding % is taken based on width, thus using X and width for vertical, too.
+  const verticalPadding = dataToEditorX(padding.vertical, width);
   const style = {
     fontSize: `${dataToEditorY(fontSize, 100)}%`,
     fontStyle: fontStyle ? fontStyle : null,
@@ -50,12 +54,7 @@ function TextOutput({
     fontWeight: fontWeight ? fontWeight : null,
     lineHeight,
     letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
-    padding: padding
-      ? `${dataToEditorY(padding.vertical, 100)}% ${dataToEditorX(
-          padding.horizontal,
-          100
-        )}%`
-      : null,
+    padding: padding ? `${verticalPadding}% ${horizontalPadding}%` : null,
     textAlign: textAlign ? textAlign : null,
     textDecoration,
     whiteSpace: 'pre-wrap',
@@ -74,6 +73,7 @@ function TextOutput({
 
 TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextOutput;
