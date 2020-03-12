@@ -55,11 +55,7 @@ function CanvasUploadDropTarget({ children }) {
       files.forEach((file) => {
         uploadFile(file).then((res) => {
           const resource = getResourceFromUploadAPI(res);
-          insertElement(resource.type, {
-            resource,
-            width: resource.width,
-            height: resource.height,
-          });
+          insertElement(resource.type, { resource });
         });
       });
     },

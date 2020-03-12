@@ -22,46 +22,41 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../../../constants';
+import { PAGE_WIDTH } from '../../../../constants';
 import createSolid from '../../../../utils/createSolid';
-import { editorToDataY } from '../../../../units/dimensions';
+import { dataFontEm } from '../../../../units';
 import { Section, MainButton, Title, SearchInput, Header } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
 
+// By default, the element should be 50% of the page.
+const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+
 const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
-    fontSize: 48,
+    fontSize: dataFontEm(3),
     fontWeight: 800,
     fontFamily: 'Ubuntu',
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    fontSize: 32,
+    fontSize: dataFontEm(2),
     fontWeight: 500,
     fontFamily: 'Ubuntu',
   },
   {
     id: 'body-text',
     title: __('Body text', 'web-stories'),
-    fontSize: 16,
+    fontSize: dataFontEm(1),
     fontWeight: 'normal',
     fontFamily: 'Ubuntu',
   },
 ];
-
-const DEFAULT_TEXT_TRANSFORM = {
-  width: 50,
-  height: 20,
-  x: 5,
-  y: 5,
-  rotationAngle: 0,
-};
 
 function TextPane(props) {
   const {
@@ -76,7 +71,7 @@ function TextPane(props) {
             insertElement('text', {
               content: __('Text', 'web-stories'),
               color: createSolid(0, 0, 0),
-              ...DEFAULT_TEXT_TRANSFORM,
+              width: DEFAULT_ELEMENT_WIDTH,
             })
           }
         >
@@ -97,12 +92,8 @@ function TextPane(props) {
               insertElement('text', {
                 content: __('Text', 'web-stories'),
                 color: createSolid(0, 0, 0),
-                ...DEFAULT_TEXT_TRANSFORM,
+                width: DEFAULT_ELEMENT_WIDTH,
                 ...preset,
-                fontSize: editorToDataY(
-                  preset.fontSize,
-                  DEFAULT_EDITOR_PAGE_HEIGHT
-                ),
               })
             }
           />

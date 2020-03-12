@@ -35,6 +35,7 @@ import { useMediaPicker } from '../../../mediaPicker';
 import { MainButton, Title, SearchInput, Header } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import paneId from './paneId';
 import {
   getResourceFromMediaPicker,
@@ -79,7 +80,9 @@ const FILTERS = [
   { filter: 'video', name: __('Video', 'web-stories') },
 ];
 
-const DEFAULT_WIDTH = 150;
+// By default, the element should be 50% of the page.
+const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
@@ -107,11 +110,7 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    const oRatio =
-      resource.width && resource.height ? resource.width / resource.height : 1;
-    const height = DEFAULT_WIDTH / oRatio;
-
-    insertMediaElement(resource, DEFAULT_WIDTH, height);
+    insertMediaElement(resource);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -141,19 +140,11 @@ function MediaPane(props) {
    * Insert element such image, video and audio into the editor.
    *
    * @param {Object} resource Resource object
-   * @param {number} width Width that element is inserted into editor.
-   * @param {number} height Height that element is inserted into editor.
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (resource, width, height) => {
-    return insertElement(resource.type, {
-      resource,
-      width,
-      height,
-      x: 5,
-      y: 5,
-      rotationAngle: 0,
-    });
+  const insertMediaElement = (resource) => {
+    const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
+    return insertElement(resource.type, { resource, width });
   };
 
   /**
@@ -215,7 +206,7 @@ function MediaPane(props) {
                 <MediaElement
                   resource={resource}
                   key={resource.src}
-                  width={DEFAULT_WIDTH}
+                  width={PREVIEW_SIZE}
                   onInsert={insertMediaElement}
                 />
               ))}
@@ -227,7 +218,7 @@ function MediaPane(props) {
                 <MediaElement
                   resource={resource}
                   key={resource.src}
-                  width={DEFAULT_WIDTH}
+                  width={PREVIEW_SIZE}
                   onInsert={insertMediaElement}
                 />
               ))}
