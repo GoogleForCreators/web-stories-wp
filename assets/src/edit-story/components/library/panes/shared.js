@@ -54,6 +54,11 @@ const Tab = styled.li.attrs(({ isActive }) => ({
       isActive ? theme.colors.bg.v4 : rgba(theme.colors.bg.v0, 0.2)};
   }
 
+  .useskeyboard &:focus {
+    outline: none;
+    background: ${({ theme }) => theme.colors.action};
+  }
+
   svg {
     display: block;
     width: 28px;

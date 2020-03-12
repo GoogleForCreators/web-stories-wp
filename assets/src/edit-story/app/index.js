@@ -20,7 +20,10 @@
 import { ThemeProvider, StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
+/**
+ * Internal dependencies
+ */
+import KeyboardOnlyOutlines from '../utils/keyboardOnlyOutline';
 
 /**
  * Internal dependencies
@@ -58,9 +61,8 @@ function App({ config }) {
                           <DefaultMoveableGlobalStyle />
                           <CropMoveableGlobalStyle />
                           <ModalGlobalStyle />
-                          <KeyboardOnlyOutlines>
-                            <Layout />
-                          </KeyboardOnlyOutlines>
+                          <KeyboardOnlyOutlines />
+                          <Layout />
                         </DropTargetsProvider>
                       </TransformProvider>
                     </SidebarProvider>
