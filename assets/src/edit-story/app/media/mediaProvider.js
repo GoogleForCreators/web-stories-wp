@@ -31,7 +31,7 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
   const { uploadVideoFrame } = useUploadVideoFrame();
-  const { mediaType, searchTerm } = state;
+  const { page, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -39,37 +39,59 @@ function MediaProvider({ children }) {
     resetFilters,
     setMediaType,
     setSearchTerm,
+    setPage,
   } = actions;
 
   const {
     actions: { getMedia },
   } = useAPI();
 
-  const fetchMedia = useCallback(() => {
-    fetchMediaStart();
-    getMedia({ mediaType, searchTerm })
-      .then((media) => {
-        fetchMediaSuccess({ media, mediaType, searchTerm });
-      })
-      .catch(fetchMediaError);
-  }, [
-    fetchMediaError,
-    fetchMediaStart,
-    fetchMediaSuccess,
-    getMedia,
-    mediaType,
-    searchTerm,
-  ]);
+  const fetchMedia = useCallback(
+    ({ page: p = 1 } = {}) => {
+      fetchMediaStart({ page: p });
+      getMedia({ mediaType, searchTerm, page: p })
+        .then(({ data, headers }) => {
+          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          fetchMediaSuccess({
+            media: data,
+            mediaType,
+            searchTerm,
+            page: p,
+            totalPages,
+          });
+        })
+        .catch(fetchMediaError);
+    },
+    [
+      fetchMediaError,
+      fetchMediaStart,
+      fetchMediaSuccess,
+      getMedia,
+      mediaType,
+      searchTerm,
+    ]
+  );
 
-  useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
+  const resetAfterUpload = useCallback(() => {
+    resetFilters();
+    if (!mediaType && !searchTerm && page === 1) {
+      fetchMedia();
+    }
+  }, [fetchMedia, mediaType, page, resetFilters, searchTerm]);
+
+  useEffect(() => {
+    fetchMedia({ page });
+  }, [fetchMedia, mediaType, searchTerm, page]);
 
   const context = {
     state,
     actions: {
+      setPage,
       setMediaType,
       setSearchTerm,
       fetchMedia,
       resetFilters,
+      resetAfterUpload,
       uploadVideoFrame,
     },
   };

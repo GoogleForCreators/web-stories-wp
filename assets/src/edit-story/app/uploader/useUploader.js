@@ -27,7 +27,7 @@ import { useMedia } from '../media';
 
 function useUploader(refreshLibrary = true) {
   const {
-    actions: { resetFilters },
+    actions: { resetAfterUpload },
   } = useMedia();
   const {
     actions: { uploadMedia },
@@ -72,7 +72,7 @@ function useUploader(refreshLibrary = true) {
 
     const promise = uploadMedia(file, additionalData);
     if (refreshLibrary) {
-      promise.finally(resetFilters);
+      promise.finally(resetAfterUpload);
     }
     return promise;
   };

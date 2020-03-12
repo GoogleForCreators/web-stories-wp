@@ -105,10 +105,10 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm }) => {
+    ({ mediaType, searchTerm, page }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, { per_page: perPage });
+      apiPath = addQueryArgs(apiPath, { per_page: perPage, page });
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -118,30 +118,35 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath }).then((data) =>
-        data.map(
-          ({
-            id,
-            guid: { rendered: src },
-            media_details: {
-              width: oWidth,
-              height: oHeight,
-              length_formatted: lengthFormatted,
-            },
-            mime_type: mimeType,
-            featured_media: posterId,
-            featured_media_src: poster,
-          }) => ({
-            id,
-            posterId,
-            poster,
-            src,
-            oWidth,
-            oHeight,
-            mimeType,
-            lengthFormatted,
-          })
-        )
+      return apiFetch({ path: apiPath, parse: false }).then(
+        async (response) => {
+          const json = await response.json();
+          const data = json.map(
+            ({
+              id,
+              guid: { rendered: src },
+              media_details: {
+                width: oWidth,
+                height: oHeight,
+                length_formatted: lengthFormatted,
+              },
+              mime_type: mimeType,
+              featured_media: posterId,
+              featured_media_src: poster,
+            }) => ({
+              id,
+              posterId,
+              poster,
+              src,
+              oWidth,
+              oHeight,
+              mimeType,
+              lengthFormatted,
+            })
+          );
+
+          return { data, headers: response.headers };
+        }
       );
     },
     [media]

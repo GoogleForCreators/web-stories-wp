@@ -20,3 +20,4 @@ export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
 export const RESET_FILTERS = 'RESET_FILTERS';
 export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
 export const SET_MEDIA_TYPE = 'SET_MEDIA_TYPE';
+export const SET_PAGE = 'SET_PAGE';

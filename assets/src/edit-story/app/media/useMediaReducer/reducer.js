@@ -21,9 +21,20 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
+  page: 1,
+  totalPages: 1,
+  hasMore: true,
   mediaType: '',
   searchTerm: '',
   isMediaLoading: false,
+  isMediaLoaded: false,
+};
+
+const resetOnFilterChange = {
+  page: 1,
+  totalPages: null,
+  hasMore: true,
+  media: [],
   isMediaLoaded: false,
 };
 
@@ -38,11 +49,15 @@ function reducer(state, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, mediaType, searchTerm } = payload;
+      const { media, mediaType, searchTerm, page, totalPages } = payload;
       if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
+        const hasMore = page < totalPages;
         return {
           ...state,
-          media,
+          media: [...state.media, ...media],
+          page,
+          totalPages,
+          hasMore,
           isMediaLoaded: true,
           isMediaLoading: false,
         };
@@ -53,7 +68,6 @@ function reducer(state, { type, payload }) {
     case types.FETCH_MEDIA_ERROR: {
       return {
         ...state,
-        media: [],
         isMediaLoaded: true,
         isMediaLoading: false,
       };
@@ -62,6 +76,7 @@ function reducer(state, { type, payload }) {
     case types.RESET_FILTERS: {
       return {
         ...state,
+        ...resetOnFilterChange,
         searchTerm: '',
         mediaType: '',
       };
@@ -69,17 +84,29 @@ function reducer(state, { type, payload }) {
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
+      if (searchTerm === state.searchTerm) return state;
       return {
         ...state,
+        ...resetOnFilterChange,
         searchTerm,
       };
     }
 
     case types.SET_MEDIA_TYPE: {
       const { mediaType } = payload;
+      if (mediaType === state.mediaType) return state;
       return {
         ...state,
+        ...resetOnFilterChange,
         mediaType,
+      };
+    }
+
+    case types.SET_PAGE: {
+      const { page } = payload;
+      return {
+        ...state,
+        page,
       };
     }
 

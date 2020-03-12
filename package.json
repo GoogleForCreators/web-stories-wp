@@ -28,6 +28,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
+    "intersection-observer-polyfill": "^0.1.0",
     "mousetrap": "^1.6.5",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
