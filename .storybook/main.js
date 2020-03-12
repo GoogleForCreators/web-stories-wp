@@ -18,6 +18,7 @@ module.exports = {
   stories: [
     './stories/**/*.js',
     '../assets/src/edit-story/**/stories/*.(js|mdx)',
+    '../assets/src/dashboard/**/stories/*.(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',
