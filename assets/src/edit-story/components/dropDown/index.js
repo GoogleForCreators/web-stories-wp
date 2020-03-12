@@ -118,7 +118,7 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v11};
+    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.95)};
     outline: none;
   }
 `;
