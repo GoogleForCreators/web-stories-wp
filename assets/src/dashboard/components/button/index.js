@@ -34,19 +34,19 @@ const StyledButton = styled.button`
   align-items: center;
   cursor: pointer;
   padding: 0;
-  background-color: ${({ type }) =>
-    type === BUTTON_TYPES.PRIMARY ? '#2979FF' : 'transparent'};
-  color: #fff;
+  background-color: ${({ theme, type }) =>
+    type === BUTTON_TYPES.PRIMARY ? theme.colors.bluePrimary : 'transparent'};
+  color: ${({ theme }) => theme.colors.white};
   opacity: ${({ isCta }) => (isCta ? '1' : '0.75')};
-  text-shadow: ${({ type }) =>
-    type === BUTTON_TYPES.SECONDARY && '0px 1px 1px rgba(0, 0, 0, 0.55)'};
+  text-shadow: ${({ theme, type }) =>
+    type === BUTTON_TYPES.SECONDARY && theme.text.shadow};
 
   &:focus,
   &:active,
   &:hover {
     opacity: 1;
-    text-shadow: ${({ type }) =>
-      type === BUTTON_TYPES.SECONDARY && '0px 1px 1px rgba(0, 0, 0, 1)'};
+    text-shadow: ${({ theme, type }) =>
+      type === BUTTON_TYPES.SECONDARY && theme.text.shadow};
   }
   &:disabled {
     pointer-events: none;
