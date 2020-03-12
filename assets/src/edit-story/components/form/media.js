@@ -1,0 +1,159 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { rgba } from 'polished';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
+import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
+import { useMediaPicker } from '../mediaPicker';
+
+const Container = styled.div`
+  width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
+  height: ${({ size }) => (size ? `${size}px` : '148px')};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
+  border: none;
+  margin-right: 12px;
+  position: relative;
+  cursor: pointer;
+
+  ${({ circle }) => circle && 'border-radius: 50%;'}
+`;
+
+const DefaultImage = styled(DefaultImageSvg)`
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
+`;
+
+const EditIcon = styled(EditPencilSvg)`
+  width: 100%;
+  height: 100%;
+  display: block;
+`;
+
+const EditBtn = styled.button`
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.bg.v0};
+  left: ${({ circle }) => (circle ? 0 : 4)}px;
+  bottom: ${({ circle }) => (circle ? 0 : 4)}px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  ${({ circle }) => circle && 'border-radius: 50%;'}
+`;
+
+function MediaInput({
+  className,
+  onBlur,
+  onChange,
+  label,
+  title,
+  buttonInsertText,
+  type,
+  value,
+  ariaLabel,
+  disabled,
+  circle,
+  size,
+  ...rest
+}) {
+  const openMediaPicker = useMediaPicker({
+    title,
+    buttonInsertText,
+    onSelect: onChange,
+    type,
+  });
+
+  return (
+    <Container
+      className={`${className}`}
+      disabled={disabled}
+      circle={circle}
+      size={size}
+      onClick={openMediaPicker}
+      {...rest}
+    >
+      {value ? (
+        <Img src={value} circle={circle} />
+      ) : (
+        <DefaultImage size={size} />
+      )}
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
+        <EditIcon />
+      </EditBtn>
+    </Container>
+  );
+}
+
+MediaInput.propTypes = {
+  className: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.any,
+  isMultiple: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  disabled: PropTypes.bool,
+  size: PropTypes.number,
+  circle: PropTypes.bool,
+  ariaLabel: PropTypes.string,
+  type: PropTypes.string,
+  buttonInsertText: PropTypes.string,
+  title: PropTypes.string,
+};
+
+MediaInput.defaultProps = {
+  className: null,
+  disabled: false,
+  isMultiple: false,
+  symbol: '',
+  flexBasis: 100,
+  textCenter: false,
+  circle: false,
+  ariaLabel: __('Standard input', 'web-stories'),
+  size: null,
+  type: 'image',
+  buttonInsertText: __('Choose an image', 'web-stories'),
+  title: __('Choose an image', 'web-stories'),
+};
+
+export default MediaInput;

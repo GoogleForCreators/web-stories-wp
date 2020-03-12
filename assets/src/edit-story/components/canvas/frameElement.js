@@ -98,9 +98,9 @@ function FrameElement({ element }) {
         showTooltip={selectedElementIds.length === 1 && isSelected}
       >
         <WithMask element={element} fill={true}>
-          {Frame && (
+          {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
-          )}
+          ) : null}
         </WithMask>
       </WithLink>
     </Wrapper>

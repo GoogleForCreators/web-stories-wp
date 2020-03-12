@@ -15,15 +15,17 @@
  */
 
 export { default as Button } from './button';
+export { default as Color } from './color';
 export { default as Group } from './group';
 export { default as Input } from './input';
 export { default as InputGroup } from './inputGroup';
 export { default as Label } from './label';
+export { default as Media } from './media';
+export { default as Numeric } from './numeric';
 export { default as Row } from './row';
 export { default as SelectMenu } from './select';
 export { default as Spacer } from './spacer';
-export { default as Color } from './color';
-export { default as Numeric } from './numeric';
+export { default as Switch } from './switch';
+export { default as TextInput } from './text';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
-export { default as Switch } from './switch';

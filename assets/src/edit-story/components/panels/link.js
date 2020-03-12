@@ -31,83 +31,65 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Input as BaseInput, Row } from '../form';
+import { TextInput, Media, Row } from '../form';
 import { createLink } from '../link';
-import { ReactComponent as Close } from '../../icons/close_icon.svg';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
+const BoxedTextInput = styled(TextInput)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+const ExpandedTextInput = styled(BoxedTextInput)`
+  flex-grow: 1;
+`;
+
 const Note = styled.span`
-  color: ${({ theme }) => theme.colors.mg.v1};
-  font-size: 11px;
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 12px;
   line-height: 16px;
-  margin-bottom: 6px;
-`;
-
-/** TODO(@wassgha): Replace with text input component once done */
-const Input = styled(BaseInput)`
-  width: 100%;
-  border: none !important;
-  margin: 0;
-  border-radius: 4px !important;
-`;
-
-/** TODO(@wassgha): Replace with text input component once done */
-const InputContainer = styled.div`
-  position: relative;
-  width: 100%;
-  background: ${({ theme, disabled }) =>
-    disabled ? theme.colors.fg.v3 : theme.colors.fg.v1};
-  color: ${({ theme }) => theme.colors.mg.v1};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3} !important;
-  border-radius: 4px !important;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-`;
-
-const BrandIcon = styled.img`
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.fg.v3};
-  border: none;
-  margin-right: 8px;
-`;
-
-const DeleteButton = styled.button`
-  position: absolute;
-  right: 8px;
-  appearance: none;
-  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.54)};
-  width: 16px;
-  height: 16px;
-  border: none;
-  padding: 0px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CloseIcon = styled(Close)`
-  width: 12px;
-  height: 12px;
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
   const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
+
   const [state, setState] = useState({ link: createLink() });
   useEffect(() => {
-    setState({ link });
+    setState({ ...link });
   }, [link]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
+
+  const handleChange = useCallback(
+    (property) => (value) =>
+      setState((originalState) => ({
+        ...originalState,
+        [property]: value,
+      })),
+    [setState]
+  );
+  const handleChangeIcon = useCallback(
+    (image) => {
+      const icon = image.sizes?.medium?.url || image.url;
+      setState((originalState) => ({
+        ...originalState,
+        icon,
+      }));
+      onSetProperties({ link: { ...state, icon } });
+    },
+    [onSetProperties, state]
+  );
+  const handleSubmit = useCallback(
+    (evt) => {
+      onSetProperties({ link: state?.url ? state : null });
+      if (evt) {
+        evt.preventDefault();
+      }
+    },
+    [state, onSetProperties]
+  );
+
   const canLink = selectedElements.length === 1 && !isFill;
   const populateMetadata = useCallback(
     debounce(300, async (/** url */) => {
@@ -116,16 +98,19 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   );
 
   useEffect(() => {
-    if (state.link?.url) {
-      populateMetadata(state.link?.url);
+    if (state?.url) {
+      populateMetadata(state?.url);
+    } else if (state.url === '' || state.desc || state.icon) {
+      setState({ url: null, desc: null, icon: null });
+      onSetProperties({ link: null });
     }
-  }, [populateMetadata, state]);
+  }, [onSetProperties, populateMetadata, state]);
 
   return (
     <SimplePanel
       name="link"
       title={__('Link', 'web-stories')}
-      onSubmit={handleSubmit}
+      onSubmit={(evt) => handleSubmit(evt)}
     >
       <Row>
         <Note>
@@ -134,64 +119,37 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       </Row>
 
       <Row>
-        <InputContainer disabled={!canLink}>
-          <Input
-            type="text"
-            disabled={!canLink}
-            onChange={(evt) => {
-              const { value: url } = evt.target;
-              setState({
-                ...state,
-                link: { ...state.link, url },
-              });
-            }}
-            onBlur={(evt) =>
-              evt.target.form.dispatchEvent(new window.Event('submit'))
-            }
-            placeholder={__('Web address', 'web-stories')}
-            value={state.link?.url}
-            expand
-          />
-          {Boolean(state.link) && (
-            <DeleteButton
-              onClick={() => {
-                setState({ link: null });
-                onSetProperties({ link: null });
-              }}
-            >
-              <CloseIcon />
-            </DeleteButton>
-          )}
-        </InputContainer>
+        <ExpandedTextInput
+          placeholder={__('Web address', 'web-stories')}
+          disabled={!canLink}
+          onChange={handleChange('url')}
+          value={state.url || ''}
+          clear
+        />
       </Row>
 
-      {Boolean(state.link) && (
+      {Boolean(state.url) && (
         <Row>
-          <InputContainer disabled={!canLink}>
-            <Input
-              type="text"
-              disabled={!canLink}
-              onChange={(evt) =>
-                setState({
-                  ...state,
-                  link: { ...state.link, desc: evt.target.value },
-                })
-              }
-              onBlur={(evt) =>
-                evt.target.form.dispatchEvent(new window.Event('submit'))
-              }
-              placeholder={__('Optional description', 'web-stories')}
-              value={state.link?.desc}
-              isMultiple={link === ''}
-              expand
-            />
-          </InputContainer>
+          <ExpandedTextInput
+            placeholder={__('Optional description', 'web-stories')}
+            disabled={!canLink}
+            onChange={handleChange('desc')}
+            value={state.desc || ''}
+          />
         </Row>
       )}
       {/** TODO(@wassgha): Replace with image upload component */}
-      {Boolean(state.link) && (
-        <Row>
-          <BrandIcon src={state.link?.icon} />
+      {Boolean(state.url) && (
+        <Row spaceBetween={false}>
+          <Media
+            value={state?.icon}
+            onChange={handleChangeIcon}
+            title={__('Select as link icon', 'web-stories')}
+            buttonInsertText={__('Select as link icon', 'web-stories')}
+            type={'image'}
+            size={60}
+            circle
+          />
           <span>{__('Optional brand icon', 'web-stories')}</span>
         </Row>
       )}

@@ -25,30 +25,20 @@ import { useState, useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import ColorPicker from '../../components/colorPicker';
-import {
-  LIBRARY_MIN_WIDTH,
-  LIBRARY_MAX_WIDTH,
-  INSPECTOR_MIN_WIDTH,
-  INSPECTOR_MAX_WIDTH,
-} from '../../constants';
+import { WorkspaceLayout, CanvasArea } from '../workspace/layout';
 import Context from './context';
 
-const SidebarLayout = styled.div`
+const SidebarLayout = styled(WorkspaceLayout)`
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   height: 0;
   z-index: 2;
-  display: grid;
-  grid:
-    '. sidebar .' 1fr
-    / minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px) 1fr minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
 `;
 
-const Sidebar = styled.div`
-  grid-area: sidebar;
-  position: relative;
+const Sidebar = styled(CanvasArea)`
+  overflow: visible;
 `;
 
 const SidebarContent = styled.div`
