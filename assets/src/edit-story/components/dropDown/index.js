@@ -182,6 +182,18 @@ function DropDown({ options, value, onChange, disabled }) {
     setIsOpen(false);
   }, []);
 
+  const handleMoveFocus = useCallback(
+    (offset) => {
+      const findIndex = options.findIndex(
+        (item) => item.value === focusedValue
+      );
+      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
+        setFocusedValue(options[findIndex + offset].value);
+      }
+    },
+    [focusedValue, options]
+  );
+
   const handleUpDown = useCallback(
     ({ key }) => {
       if (!isOpen) {
@@ -196,16 +208,10 @@ function DropDown({ options, value, onChange, disabled }) {
     [isOpen, value, focusedIndex, options, handleMoveFocus]
   );
 
-  const handleMoveFocus = useCallback(
-    (offset) => {
-      const findIndex = options.findIndex(
-        (item) => item.value === focusedValue
-      );
-      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
-        setFocusedValue(options[findIndex + offset].value);
-      }
-    },
-    [focusedValue, options]
+  const clearSearchValue = useCallback(
+    debounce(800, () => {
+      setSearchValue('');
+    })
   );
 
   const handleKeyDown = useCallback(
@@ -221,6 +227,18 @@ function DropDown({ options, value, onChange, disabled }) {
       clearSearchValue();
     },
     [clearSearchValue, searchValue, options]
+  );
+
+  const handleCurrentValue = useCallback(
+    (option) => {
+      if (onChange) {
+        onChange(option);
+      }
+      setIsOpen(false);
+      setFocusedValue(null);
+      DropDown.selectRef.current.focus();
+    },
+    [onChange]
   );
 
   const handleEnter = useCallback(() => {
@@ -273,27 +291,9 @@ function DropDown({ options, value, onChange, disabled }) {
     setFocusedValue(isOpen ? null : value);
   };
 
-  const handleCurrentValue = useCallback(
-    (option) => {
-      if (onChange) {
-        onChange(option);
-      }
-      setIsOpen(false);
-      setFocusedValue(null);
-      DropDown.selectRef.current.focus();
-    },
-    [onChange]
-  );
-
   const handleItemClick = (option) => {
     handleCurrentValue(option);
   };
-
-  const clearSearchValue = useCallback(
-    debounce(800, () => {
-      setSearchValue('');
-    })
-  );
 
   const setOptionRef = (element) => {
     if (element !== null) {
