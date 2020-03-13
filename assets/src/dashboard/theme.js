@@ -30,10 +30,6 @@ export const GlobalStyle = createGlobalStyle`
 	*::before {
 		box-sizing: border-box;
     }
-    
-    h1 {
-      font-family: 'Google Sans', 'Roboto', sans-serif;
-    }
 `;
 
 export function useTheme() {
@@ -41,6 +37,30 @@ export function useTheme() {
 }
 
 const theme = {
+  colors: {
+    gray900: '#1A1D1F',
+    gray800: '#2C3033',
+    gray700: '#3F454A',
+    gray600: '#4F575F',
+    gray500: '#606B74',
+    gray400: '#6D7A85',
+    gray300: '#848D96',
+    gray200: '#9AA1A9',
+    gray100: '#B8BCBF',
+    gray75: '#D9DBDD',
+    gray50: '#EEEEEE',
+    // gray25: '#F7F7F7', gray25 is duplicated, it looks like F6F6 wins out in the docs, keeping this here for now for reference.
+    gray25: '#F6F6F6',
+    white: '#fff',
+    bluePrimary: '#2979FF',
+    blueLight: '#EAF2FF',
+  },
+  border: {
+    buttonRadius: '100px',
+  },
+  text: {
+    shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
+  },
   fonts: {
     heading1: {
       family: 'Google Sans',
@@ -71,6 +91,12 @@ const theme = {
       size: '15px',
       lineHeight: '18px',
       weight: '400',
+    },
+    button: {
+      family: 'Google Sans, Sans Serif',
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
     },
   },
 };
