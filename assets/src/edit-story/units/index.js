@@ -23,4 +23,5 @@ export {
   dataToEditorY,
   editorToDataX,
   editorToDataY,
+  dataFontEm,
 } from './dimensions';

@@ -22,14 +22,13 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-} from '../../constants';
+import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
-import { editorToDataX, editorToDataY } from '../../units';
+import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+
+const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
   const {
@@ -63,7 +62,7 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props) => {
-      const element = createElement(type, props);
+      const element = createElementForCanvas(type, props);
       const { id: elementId, resource } = element;
       addElement({ element });
       if (
@@ -91,21 +90,94 @@ function useInsertElement() {
  * @param {?Object} props.mask The element's mask.
  * @return {!Object} The new element.
  */
-function createElement(type, { width, height, mask, ...rest }) {
-  const { isMaskable } = getDefinitionForType(type);
+function createElementForCanvas(
+  type,
+  { resource, x, y, width, height, rotationAngle, mask, ...rest }
+) {
+  const {
+    defaultAttributes,
+    isMaskable,
+    updateForResizeEvent,
+  } = getDefinitionForType(type);
+
+  const attrs = { ...defaultAttributes, ...rest };
+
+  // Width and height defaults. Width takes precedence.
+  const ratio =
+    resource && isNum(resource.width) && isNum(resource.height)
+      ? resource.width / resource.height
+      : 1;
+  if (!isNum(width)) {
+    if (isNum(height)) {
+      // Height is known: use aspect ratio.
+      width = height * ratio;
+    } else if (resource) {
+      // Resource is available: take resource's width with DPR, but limit
+      // to fit on the page.
+      width = Math.min(resource.width * DEFAULT_DPR, PAGE_WIDTH * 0.8);
+    } else {
+      // Default to half of page.
+      width = PAGE_WIDTH / 2;
+    }
+  }
+  if (!isNum(height) && updateForResizeEvent) {
+    // Try resize API with width-only direction.
+    height = updateForResizeEvent(attrs, RESIZE_WIDTH_DIRECTION, width).height;
+  }
+  if (!isNum(height)) {
+    // Fallback to simple ratio calculation.
+    height = width / ratio;
+  }
+
+  // Ensure that the element fits on the page.
+  if (width > PAGE_WIDTH || height > PAGE_HEIGHT) {
+    const pageRatio = PAGE_WIDTH / PAGE_HEIGHT;
+    const newRatio = width / height;
+    if (newRatio <= pageRatio) {
+      width = Math.min(width, PAGE_WIDTH);
+      height = width / newRatio;
+    } else {
+      height = Math.min(height, PAGE_HEIGHT);
+      width = height * newRatio;
+    }
+  }
+  width = dataPixels(width);
+  height = dataPixels(height);
+
+  // X and y defaults: in the top quarter of the page.
+  if (!isNum(x)) {
+    x = (PAGE_WIDTH / 4) * Math.random();
+  }
+  if (!isNum(y)) {
+    y = (PAGE_HEIGHT / 4) * Math.random();
+  }
+  x = dataPixels(Math.min(x, PAGE_WIDTH - width));
+  y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
+
   const element = createNewElement(type, {
-    ...rest,
-    x: editorToDataX(80 * Math.random(), DEFAULT_EDITOR_PAGE_WIDTH),
-    y: editorToDataY(70 * Math.random(), DEFAULT_EDITOR_PAGE_HEIGHT),
-    width: editorToDataX(width, DEFAULT_EDITOR_PAGE_WIDTH),
-    height: editorToDataY(height, DEFAULT_EDITOR_PAGE_HEIGHT),
+    ...attrs,
+    resource,
+    x,
+    y,
+    width,
+    height,
+    rotationAngle: rotationAngle || 0,
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,
         }
       : {}),
   });
+
   return element;
+}
+
+/**
+ * @param {?number|undefined} value The value.
+ * @return {boolean} Whether the value has been set.
+ */
+function isNum(value) {
+  return typeof value === 'number';
 }
 
 /**
@@ -118,3 +190,4 @@ function isMedia(type) {
 }
 
 export default useInsertElement;
+export { createElementForCanvas };

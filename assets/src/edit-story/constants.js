@@ -30,6 +30,12 @@ export const PAGE_HEIGHT = 1920;
 export const DEFAULT_EDITOR_PAGE_WIDTH = 412;
 export const DEFAULT_EDITOR_PAGE_HEIGHT = 732;
 
+// Default device pixel ratio.
+export const DEFAULT_DPR = 0.5;
+
+// Default 1em value for font size.
+export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
+
 // @todo Confirm real min-max font sizes.
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
