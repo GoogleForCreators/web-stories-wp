@@ -59,9 +59,15 @@ describe('TextOutput', () => {
         vertical: 0,
         horizontal: 0,
       },
+      box: { width: 1080 },
     };
 
-    const output = renderToStaticMarkup(<TextOutput element={element} />);
+    const output = renderToStaticMarkup(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
     expect(output).toStrictEqual(
       '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)">Content</p>'
     );
@@ -103,7 +109,12 @@ describe('TextOutput', () => {
       bold: true,
     };
 
-    const output = renderToStaticMarkup(<TextOutput element={element} />);
+    const output = renderToStaticMarkup(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
     expect(output).toStrictEqual(
       '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)"><strong>Content</strong></p>'
     );
@@ -120,6 +131,10 @@ describe('TextOutput', () => {
         rotationAngle: 0,
         content: 'Hello World',
         color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        padding: {
+          horizontal: 0,
+          vertical: 0,
+        },
       },
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
