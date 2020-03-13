@@ -30,6 +30,7 @@ import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
+import CanvasDropzone from './canvasDropzone';
 
 const Background = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v1};
@@ -48,12 +49,14 @@ function CanvasLayout() {
   return (
     <Background ref={backgroundRef} style={layoutParamsCss}>
       <CanvasUploadDropTarget>
-        <SelectionCanvas>
-          <DisplayLayer />
-          <NavLayer />
-          <FramesLayer />
-        </SelectionCanvas>
-        <EditLayer />
+        <CanvasDropzone>
+          <SelectionCanvas>
+            <DisplayLayer />
+            <NavLayer />
+            <FramesLayer />
+          </SelectionCanvas>
+          <EditLayer />
+        </CanvasDropzone>
       </CanvasUploadDropTarget>
     </Background>
   );

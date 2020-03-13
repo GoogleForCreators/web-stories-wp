@@ -98,6 +98,9 @@ const MediaElement = ({
   const dropTargetsBindings = isDropSource(resource.type)
     ? {
         draggable: 'true',
+        onDragStart: (e) => {
+          e.dataTransfer.setData('resource/media', JSON.stringify(resource));
+        },
         onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
         onDragEnd: () => handleDrop(resource),
       }
