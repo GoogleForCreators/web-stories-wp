@@ -22,7 +22,6 @@ import ColorPanel from './color';
 import StylePanel from './style';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
-import FontPanel from './font';
 import LinkPanel from './link';
 import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
@@ -118,8 +117,6 @@ export function getPanels(elements) {
           return { type, Panel: SizePositionPanel };
         case COLOR:
           return { type, Panel: ColorPanel };
-        case FONT:
-          return { type, Panel: FontPanel };
         case STYLE:
           return { type, Panel: StylePanel };
         case TEXT:
