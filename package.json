@@ -57,7 +57,7 @@
     "@storybook/addon-storysource": "^5.3.14",
     "@storybook/addon-viewport": "^5.3.14",
     "@storybook/react": "^5.3.14",
-    "@testing-library/dom": "^6.15.0",
+    "@testing-library/dom": "^7.0.3",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.5.0",
     "@testing-library/react-hooks": "^3.2.1",
