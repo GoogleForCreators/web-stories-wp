@@ -56,19 +56,26 @@ function disableDefaults(evt) {
   evt.stopPropagation();
 }
 
-function UploadDropTarget({ label, labelledBy, onDrop, children }) {
+function UploadDropTarget({ disabled, label, labelledBy, onDrop, children }) {
   const [isDragging, setIsDragging] = useState(false);
 
-  const onDragEnter = useCallback((evt) => {
-    const { dataTransfer } = evt;
-    if (getDragType(dataTransfer) !== 'file') {
-      // Only consider DND with files.
-      return;
-    }
-    disableDefaults(evt);
-    dataTransfer.effectAllowed = 'copy';
-    setIsDragging(true);
-  }, []);
+  const onDragEnter = useCallback(
+    (evt) => {
+      const { dataTransfer } = evt;
+      if (getDragType(dataTransfer) !== 'file') {
+        // Only consider DND with files.
+        return;
+      }
+      disableDefaults(evt);
+      if (disabled) {
+        dataTransfer.effectAllowed = 'none';
+      } else {
+        dataTransfer.effectAllowed = 'copy';
+        setIsDragging(true);
+      }
+    },
+    [disabled]
+  );
 
   const onDragLeave = useCallback((evt) => {
     disableDefaults(evt);
@@ -79,15 +86,19 @@ function UploadDropTarget({ label, labelledBy, onDrop, children }) {
     (evt) => {
       disableDefaults(evt);
       setIsDragging(false);
-      if (onDrop) {
+      if (!disabled && onDrop) {
         onDrop([...evt.dataTransfer.files]);
       }
     },
-    [onDrop]
+    [disabled, onDrop]
   );
 
   return (
-    <DropTargetComponent onDragEnter={onDragEnter} onDrop={onDropHandler}>
+    <DropTargetComponent
+      onDragEnter={onDragEnter}
+      onDragOver={disableDefaults}
+      onDrop={onDropHandler}
+    >
       {isDragging && (
         <Glasspane
           onDragEnter={onDragEnter}
@@ -106,15 +117,18 @@ function UploadDropTarget({ label, labelledBy, onDrop, children }) {
 }
 
 UploadDropTarget.propTypes = {
+  disabled: PropTypes.bool,
   label: PropTypes.string,
   labelledBy: PropTypes.string,
-  onDrop: PropTypes.func.isRequired,
+  onDrop: PropTypes.func,
   children: StoryPropTypes.children.isRequired,
 };
 
 UploadDropTarget.defaultProps = {
+  disabled: false,
   label: null,
   labelledBy: null,
+  onDrop: null,
 };
 
 export default UploadDropTarget;
