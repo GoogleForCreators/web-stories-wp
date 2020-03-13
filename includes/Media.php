@@ -100,7 +100,7 @@ class Media {
 		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_SMALL_IMAGE_DIMENSION, true );
 
-		//add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
+		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
 
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 

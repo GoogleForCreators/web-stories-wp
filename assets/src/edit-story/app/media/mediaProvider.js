@@ -32,7 +32,7 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
 
-  const { processing, media, mediaType, searchTerm, isMediaLoaded } = state;
+  const { processing, media, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
