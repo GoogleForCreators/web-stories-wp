@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { useEffect } from 'react';
-import IntersectionObserver from 'intersection-observer-polyfill';
+const IntersectionObserver = require('intersection-observer-polyfill/dist/IntersectionObserver');
 
 /**
  * @param {!{current: ?Element}} ref Target node ref.
- * @param {function(entry: IntersectionObserverEntry)} handler The intersection
+ * @param {function(IntersectionObserverEntry)} handler The intersection
  * handler.
- * @param {?Object: IntersectionObserverInit} options The IntersectionObserver options.
+ * @param {?Object} options The IntersectionObserver options.
  * @param {!Array=} deps The effect's dependencies.
  */
 function useIntersectionEffect(ref, handler, options = {}, deps = undefined) {
