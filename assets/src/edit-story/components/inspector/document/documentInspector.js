@@ -36,7 +36,8 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import { SelectMenu, InputGroup, Button } from '../../form';
+import { InputGroup, Button } from '../../form';
+import DropDown from '../../dropDown';
 import useInspector from '../useInspector';
 
 const Img = styled.img`
@@ -134,9 +135,8 @@ function DocumentInspector() {
           onChange={handleChangeValue('date')}
         />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <SelectMenu
-            label={__('Author', 'web-stories')}
-            name="user"
+          <DropDown
+            ariaLabel={__('Author', 'web-stories')}
             options={users}
             value={author}
             disabled={isSaving}
@@ -144,9 +144,8 @@ function DocumentInspector() {
           />
         )}
         {capabilities && capabilities.hasPublishAction && statuses && (
-          <SelectMenu
-            label={__('Visibility', 'web-stories')}
-            name="status"
+          <DropDown
+            ariaLabel={__('Visibility', 'web-stories')}
             options={allStatuses}
             disabled={isSaving}
             value={status}
