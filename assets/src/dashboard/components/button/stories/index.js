@@ -54,6 +54,7 @@ const LongContainer = styled.div`
 `;
 const LongButton = styled(Button)`
   width: 90%;
+  height: 100px;
 `;
 export const _LongButton = () => {
   return (
@@ -84,6 +85,7 @@ const SecondaryButtonContainer = styled.div`
 
 const LargerFontChild = styled.span`
   font-size: 22px;
+  margin: 10px auto;
 `;
 
 export const Button2 = () => {
