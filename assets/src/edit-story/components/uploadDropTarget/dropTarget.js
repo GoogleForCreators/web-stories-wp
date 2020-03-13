@@ -96,8 +96,8 @@ function UploadDropTarget({ disabled, label, labelledBy, onDrop, children }) {
   return (
     <DropTargetComponent
       onDragEnter={onDragEnter}
-      onDragOver={disableDefaults}
       onDrop={onDropHandler}
+      onDragOver={disableDefaults}
     >
       {isDragging && (
         <Glasspane

@@ -24,21 +24,28 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import { useDropTargets } from '../dropTargets';
 import useInsertElement from './useInsertElement';
 
 const Container = styled.div``;
 
 function CanvasDropzone({ children }) {
   const insertElement = useInsertElement();
+  const {
+    state: { activeDropTargetId },
+  } = useDropTargets();
+
   const onDropHandler = useCallback(
     (e) => {
       const isMedia = e.dataTransfer.types.includes('resource/media');
-      if (isMedia) {
+      if (isMedia && !activeDropTargetId) {
         const resource = JSON.parse(e.dataTransfer.getData('resource/media'));
         insertElement(resource.type, { resource });
+        e.stopPropagation();
+        e.preventDefault();
       }
     },
-    [insertElement]
+    [insertElement, activeDropTargetId]
   );
   const onDragOverHandler = (e) => {
     e.stopPropagation();
