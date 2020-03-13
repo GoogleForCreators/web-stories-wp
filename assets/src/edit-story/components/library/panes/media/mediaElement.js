@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -109,27 +109,15 @@ const MediaElement = ({
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
-  const createDraggableGhost = useCallback(
-    (w, h) => {
-      const ghost = document.createElement('div');
-      const ghostImg = new window.Image(w, h);
-      ghostImg.src = resource.poster || resource.src;
-      ghost.appendChild(ghostImg);
-      return ghost;
-    },
-    [resource]
-  );
-
   const dropTargetsBindings = useMemo(
     () => ({
       draggable: 'true',
       onDragStart: (e) => {
         setDragging(true);
         const { x, y, width: w, height: h } = measureMediaElement();
-        const ghost = createDraggableGhost(w, h);
         const offsetX = e.clientX - x;
         const offsetY = e.clientY - y;
-        e.dataTransfer.setDragImage(ghost, offsetX, offsetY);
+        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
         e.dataTransfer.setData(
           'resource/media',
           JSON.stringify({
@@ -147,7 +135,7 @@ const MediaElement = ({
         handleDrop(resource);
       },
     }),
-    [createDraggableGhost, resource, handleDrag, handleDrop]
+    [resource, handleDrag, handleDrop]
   );
 
   const onClick = () => onInsert(resource, width, height);
