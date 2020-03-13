@@ -87,6 +87,7 @@ const MediaElement = ({
     type,
     width: originalWidth,
     height: originalHeight,
+    local,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -108,7 +109,7 @@ const MediaElement = ({
       }
     : {};
 
-  const onClick = () => onInsert(resource, width, height);
+  const onClick = !local ? () => onInsert(resource, width, height) : null;
 
   if (type === 'image') {
     return (

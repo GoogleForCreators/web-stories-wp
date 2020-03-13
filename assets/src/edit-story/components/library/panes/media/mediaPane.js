@@ -180,7 +180,10 @@ function MediaPane(props) {
         allowedImageMimeTypes.includes(mimeType) ||
         allowedVideoMimeTypes.includes(mimeType)
     )
-    .map((attachment) => getResourceFromAttachment(attachment));
+    .map((resource) => {
+      if (resource.local) return resource;
+      return getResourceFromAttachment(resource);
+    });
 
   return (
     <Pane id={paneId} {...props}>

@@ -66,6 +66,7 @@ function MediaProvider({ children }) {
   const context = {
     state,
     actions: {
+      ...actions,
       setMediaType,
       setSearchTerm,
       fetchMedia,

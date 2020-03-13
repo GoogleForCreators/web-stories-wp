@@ -84,3 +84,48 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     videoId,
   };
 };
+
+/**
+ * Generates a resource object from a local File object
+ *
+ * @param {Object} file FIle object
+ * @return {Object} Resource object
+ */
+export const getResourceFromLocalFile = (file) => {
+  return new Promise((resolve, reject) => {
+    const mimeType = file.type;
+    const reader = new window.FileReader();
+    let src;
+    let width;
+    let height;
+    reader.onload = function(e) {
+      src = e.target.result;
+
+      const img = new window.Image();
+
+      img.onload = function() {
+        width = img.width;
+        height = img.height;
+
+        resolve({
+          type: getTypeFromMime(mimeType),
+          src,
+          width,
+          height,
+          mimeType,
+          posterId: Math.floor(Date.now() / 1000),
+          poster: '',
+          videoId: undefined,
+          local: true,
+          lengthFormatted: undefined,
+        });
+      };
+
+      img.src = src;
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file);
+  });
+};

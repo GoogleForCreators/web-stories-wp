@@ -31,6 +31,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useUploader } from '../../../app/uploader';
 import StoryPropTypes from '../../../types';
 import { useConfig } from '../../../app/config';
+import { useMedia } from '../../../app/media';
+import { getResourceFromLocalFile } from '../../../components/library/panes/media/mediaUtils';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const DropzoneComponent = styled.div`
@@ -70,6 +72,10 @@ const Overlay = styled.div`
 function Dropzone({ children }) {
   const [isDragging, setIsDragging] = useState(false);
   const { uploadFile } = useUploader();
+  const {
+    state: { media, mediaType, searchTerm },
+    actions: { fetchMediaSuccess },
+  } = useMedia();
   const { allowedFileTypes } = useConfig();
 
   const ref = useRef(null);
@@ -100,11 +106,49 @@ function Dropzone({ children }) {
     }
   };
 
-  const onDropHandler = (evt) => {
+  const onDropHandler = async (evt) => {
     disableDefaults(evt);
     const files = [...evt.dataTransfer.files];
-    files.forEach(uploadFile);
+    const localFiles = files.map(getResourceFromLocalFile);
+    const localMedia = await Promise.all(localFiles);
+    const filesUploading = files.map((file) => uploadFile(file));
+
+    fetchMediaSuccess({
+      media: [...localMedia, ...media],
+      mediaType,
+      searchTerm,
+    });
     setIsDragging(false);
+
+    Promise.all(filesUploading).then((uploadedFiles) => {
+      const uploadedMedia = uploadedFiles.map(
+        ({
+          guid: { rendered: src },
+          media_details: {
+            width: oWidth,
+            height: oHeight,
+            length_formatted: lengthFormatted,
+          },
+          mime_type: mimeType,
+          featured_media: posterId,
+          featured_media_src: poster,
+        }) => ({
+          posterId,
+          poster,
+          src,
+          oWidth,
+          oHeight,
+          mimeType,
+          lengthFormatted,
+        })
+      );
+
+      fetchMediaSuccess({
+        media: [...uploadedMedia, ...media],
+        mediaType,
+        searchTerm,
+      });
+    });
   };
 
   return (
