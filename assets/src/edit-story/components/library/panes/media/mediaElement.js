@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -103,35 +103,51 @@ const MediaElement = ({
   const [dragging, setDragging] = useState(false);
 
   const {
-    actions: { handleDrag, handleDrop, isDropSource },
+    actions: { handleDrag, handleDrop },
   } = useDropTargets();
 
+  const measureMediaElement = () =>
+    mediaElement?.current?.getBoundingClientRect();
+
+  const createDraggableGhost = useCallback(
+    (w, h) => {
+      const ghost = document.createElement('div');
+      const ghostImg = new window.Image(w, h);
+      ghostImg.src = resource.poster || resource.src;
+      ghost.appendChild(ghostImg);
+      return ghost;
+    },
+    [resource]
+  );
+
   const dropTargetsBindings = useMemo(
-    () =>
-      isDropSource(resource.type)
-        ? {
-            draggable: 'true',
-            onDragStart: (e) => {
-              setDragging(true);
-              const ghost = new window.Image(resource.width, resource.height);
-              ghost.src = resource.src;
-              e.dataTransfer.setDragImage(ghost, 0, 0);
-              e.dataTransfer.setData(
-                'resource/media',
-                JSON.stringify(resource)
-              );
-            },
-            onDrag: (e) => {
-              handleDrag(resource, e.clientX, e.clientY);
-            },
-            onDragEnd: (e) => {
-              e.preventDefault();
-              setDragging(false);
-              handleDrop(resource);
-            },
-          }
-        : {},
-    [isDropSource, resource, handleDrag, handleDrop]
+    () => ({
+      draggable: 'true',
+      onDragStart: (e) => {
+        setDragging(true);
+        const { x, y, width: w, height: h } = measureMediaElement();
+        const ghost = createDraggableGhost(w, h);
+        const offsetX = e.clientX - x;
+        const offsetY = e.clientY - y;
+        e.dataTransfer.setDragImage(ghost, offsetX, offsetY);
+        e.dataTransfer.setData(
+          'resource/media',
+          JSON.stringify({
+            resource,
+            offset: { x: offsetX, y: offsetY, w, h },
+          })
+        );
+      },
+      onDrag: (e) => {
+        handleDrag(resource, e.clientX, e.clientY);
+      },
+      onDragEnd: (e) => {
+        e.preventDefault();
+        setDragging(false);
+        handleDrop(resource);
+      },
+    }),
+    [createDraggableGhost, resource, handleDrag, handleDrop]
   );
 
   const onClick = () => onInsert(resource, width, height);

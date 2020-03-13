@@ -25,6 +25,8 @@ import { useCallback } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { useDropTargets } from '../dropTargets';
+import { useUnits } from '../../units';
+import useCanvas from './useCanvas';
 import useInsertElement from './useInsertElement';
 
 const Container = styled.div``;
@@ -34,18 +36,42 @@ function CanvasDropzone({ children }) {
   const {
     state: { activeDropTargetId },
   } = useDropTargets();
+  const {
+    state: { pageContainer },
+  } = useCanvas();
+  const {
+    actions: { editorToDataX, editorToDataY },
+  } = useUnits();
 
   const onDropHandler = useCallback(
     (e) => {
       const isMedia = e.dataTransfer.types.includes('resource/media');
       if (isMedia && !activeDropTargetId) {
-        const resource = JSON.parse(e.dataTransfer.getData('resource/media'));
-        insertElement(resource.type, { resource });
-        e.stopPropagation();
-        e.preventDefault();
+        const {
+          resource,
+          offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
+        } = JSON.parse(e.dataTransfer.getData('resource/media'));
+        const { x, y } = pageContainer?.getBoundingClientRect();
+
+        insertElement(resource.type, {
+          resource,
+          x: editorToDataX(e.clientX - x - offsetX),
+          y: editorToDataY(e.clientY - y - offsetY),
+          width: editorToDataX(offsetWidth),
+          height: editorToDataY(offsetHeight),
+        });
       }
+
+      e.stopPropagation();
+      e.preventDefault();
     },
-    [insertElement, activeDropTargetId]
+    [
+      activeDropTargetId,
+      pageContainer,
+      insertElement,
+      editorToDataX,
+      editorToDataY,
+    ]
   );
   const onDragOverHandler = (e) => {
     e.stopPropagation();
