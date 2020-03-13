@@ -38,14 +38,14 @@ const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
-    fontSize: dataFontEm(3),
+    fontSize: dataFontEm(2),
     fontWeight: 800,
     fontFamily: 'Ubuntu',
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    fontSize: dataFontEm(2),
+    fontSize: dataFontEm(1.5),
     fontWeight: 500,
     fontFamily: 'Ubuntu',
   },
