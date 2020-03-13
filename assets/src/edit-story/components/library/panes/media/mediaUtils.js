@@ -86,33 +86,31 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
 };
 
 /**
- * Generates a resource object from a local File object
+ * Generates a virtual image to pick metadata resource
  *
- * @param {Object} file FIle object
- * @return {Object} Resource object
+ * @param {Object} image File object
+ * @return {Promise} Resource object
  */
-export const getResourceFromLocalFile = (file) => {
+
+const getImageMetadata = (image) => {
+  const reader = new window.FileReader();
+
   return new Promise((resolve, reject) => {
-    const mimeType = file.type;
-    const reader = new window.FileReader();
-    let src;
-    let width;
-    let height;
     reader.onload = function(e) {
-      src = e.target.result;
+      const src = e.target.result;
 
       const img = new window.Image();
 
       img.onload = function() {
-        width = img.width;
-        height = img.height;
+        const width = img.width;
+        const height = img.height;
 
         resolve({
-          type: getTypeFromMime(mimeType),
+          type: 'image',
           src,
           width,
           height,
-          mimeType,
+          mimeType: image.type,
           posterId: Math.floor(Date.now() / 1000),
           poster: '',
           videoId: undefined,
@@ -126,6 +124,95 @@ export const getResourceFromLocalFile = (file) => {
 
     reader.onerror = reject;
 
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(image);
   });
+};
+
+/**
+ * Generates a virtual video to pick metadata resource
+ *
+ * @param {Object} video File object
+ * @return {Promise} Resource object
+ */
+
+const getVideoMetadata = (video) => {
+  const reader = new window.FileReader();
+
+  return new Promise((resolve, reject) => {
+    reader.onload = function() {
+      const blob = new window.Blob([reader.result], { type: video.type });
+      const src = URL.createObjectURL(blob);
+      const v = document.createElement('video');
+
+      const snapshot = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = v.videoWidth;
+        canvas.height = v.videoHeight;
+        canvas.getContext('2d').drawImage(v, 0, 0, canvas.width, canvas.height);
+        const poster = canvas.toDataURL();
+        const success = poster.length > 100000;
+
+        if (success) {
+          const img = new window.Image();
+
+          img.onload = function() {
+            const width = img.width;
+            const height = img.height;
+
+            resolve({
+              type: 'video',
+              src,
+              width,
+              height,
+              mimeType: video.type,
+              posterId: Math.floor(Date.now() / 1000),
+              poster,
+              videoId: Math.floor(Date.now() / 1000),
+              local: true,
+              lengthFormatted: undefined,
+            });
+          };
+
+          img.src = poster;
+        }
+        return success;
+      };
+      const timeupdate = () => {
+        if (snapshot()) {
+          v.removeEventListener('timeupdate', timeupdate);
+          v.pause();
+        }
+      };
+      v.addEventListener(
+        'loadeddata',
+        () => snapshot() && v.removeEventListener('timeupdate', timeupdate)
+      );
+      v.addEventListener('timeupdate', timeupdate);
+      v.preload = 'metadata';
+      v.src = src;
+      v.muted = true;
+      v.playsInline = true;
+      v.play();
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsArrayBuffer(video);
+  });
+};
+
+/**
+ * Generates a resource object from a local File object
+ *
+ * @param {Object} file File object
+ * @return {Object} Resource object
+ */
+export const getResourceFromLocalFile = (file) => {
+  const type = getTypeFromMime(file.type);
+
+  if (type === 'image') {
+    return getImageMetadata(file);
+  }
+
+  return getVideoMetadata(file);
 };

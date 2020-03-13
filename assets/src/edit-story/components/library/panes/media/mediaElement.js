@@ -113,16 +113,19 @@ const MediaElement = ({
 
   if (type === 'image') {
     return (
-      <Image
-        key={src}
-        src={src}
-        ref={mediaElement}
-        width={width}
-        height={height}
-        loading={'lazy'}
-        onClick={onClick}
-        {...dropTargetsBindings}
-      />
+      <>
+        <Image
+          key={src}
+          src={src}
+          ref={mediaElement}
+          width={width}
+          height={height}
+          loading={'lazy'}
+          onClick={onClick}
+          {...dropTargetsBindings}
+        />
+        {local && 'Uploading image...'}
+      </>
     );
   }
 
@@ -143,24 +146,27 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container
-      onPointerEnter={pointerEnter}
-      onPointerLeave={pointerLeave}
-      onClick={onClick}
-    >
-      <Video
-        key={src}
-        ref={mediaElement}
-        poster={poster}
-        width={width}
-        height={height}
-        {...dropTargetsBindings}
+    <>
+      <Container
+        onPointerEnter={pointerEnter}
+        onPointerLeave={pointerLeave}
+        onClick={onClick}
       >
-        <source src={src} type={mimeType} />
-      </Video>
-      {showVideoDetail && <PlayIcon />}
-      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
-    </Container>
+        <Video
+          key={src}
+          ref={mediaElement}
+          poster={poster}
+          width={width}
+          height={height}
+          {...dropTargetsBindings}
+        >
+          <source src={src} type={mimeType} />
+        </Video>
+        {showVideoDetail && <PlayIcon />}
+        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      </Container>
+      {local && 'Uploading video...'}
+    </>
   );
 };
 
