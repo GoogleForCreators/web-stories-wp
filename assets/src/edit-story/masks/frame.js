@@ -56,7 +56,7 @@ function WithDropTarget({ element, children }) {
   const pathRef = useRef(null);
 
   const {
-    actions: { registerDropTarget },
+    actions: { registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
   const { id } = element;
@@ -64,7 +64,10 @@ function WithDropTarget({ element, children }) {
 
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
-  }, [id, pathRef, registerDropTarget]);
+    return () => {
+      unregisterDropTarget(id);
+    };
+  }, [id, registerDropTarget, unregisterDropTarget]);
 
   useTransformHandler(element.id, (transform) => {
     const target = pathRef.current;

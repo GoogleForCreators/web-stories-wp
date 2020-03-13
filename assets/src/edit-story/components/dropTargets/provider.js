@@ -57,15 +57,16 @@ function DropTargetsProvider({ children }) {
    * Registering drop targets
    */
 
-  const registerDropTarget = useCallback(
-    (id, ref) => {
-      if (id in dropTargets) {
-        return;
-      }
-      setDropTargets({ ...dropTargets, [id]: ref });
-    },
-    [dropTargets]
-  );
+  const registerDropTarget = useCallback((id, ref) => {
+    setDropTargets((prev) => ({ ...prev, [id]: ref }));
+  }, []);
+
+  const unregisterDropTarget = useCallback((id) => {
+    setDropTargets((prev) => {
+      const { [id]: _, ...without } = prev;
+      return without;
+    });
+  }, []);
 
   const isDropSource = (type) => {
     return DROP_SOURCE_ALLOWED_TYPES.includes(type);
@@ -158,6 +159,7 @@ function DropTargetsProvider({ children }) {
     },
     actions: {
       registerDropTarget,
+      unregisterDropTarget,
       isDropSource,
       isDropTarget,
       handleDrag,
