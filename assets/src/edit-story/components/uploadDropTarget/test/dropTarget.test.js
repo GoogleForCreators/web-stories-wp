@@ -142,10 +142,10 @@ describe('UploadDropTarget', () => {
       expect(isDragging()).toBe(true);
     });
 
-    it('should ignore dragging over the container', () => {
+    it('should cancel dragging over the container', () => {
       const event = fireDragEvent(container, 'dragOver');
-      expect(event.preventDefault).not.toHaveBeenCalledWith();
-      expect(event.stopPropagation).not.toHaveBeenCalledWith();
+      expect(event.preventDefault).toHaveBeenCalledWith();
+      expect(event.stopPropagation).toHaveBeenCalledWith();
       expect(isDragging()).toBe(true);
     });
 
