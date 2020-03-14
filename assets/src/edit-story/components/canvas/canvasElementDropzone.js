@@ -26,12 +26,16 @@ import { useCallback } from 'react';
 import StoryPropTypes from '../../types';
 import { useDropTargets } from '../dropTargets';
 import { useUnits } from '../../units';
+import { isDragType } from '../../utils/dragEvent';
 import useCanvas from './useCanvas';
 import useInsertElement from './useInsertElement';
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
-function CanvasDropzone({ children }) {
+function CanvasElementDropzone({ children }) {
   const insertElement = useInsertElement();
   const {
     state: { activeDropTargetId },
@@ -45,8 +49,7 @@ function CanvasDropzone({ children }) {
 
   const onDropHandler = useCallback(
     (e) => {
-      const isMedia = e.dataTransfer.types.includes('resource/media');
-      if (isMedia && !activeDropTargetId) {
+      if (isDragType(e, 'resource/media') && !activeDropTargetId) {
         const {
           resource,
           offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
@@ -60,10 +63,10 @@ function CanvasDropzone({ children }) {
           width: editorToDataX(offsetWidth),
           height: editorToDataY(offsetHeight),
         });
-      }
 
-      e.stopPropagation();
-      e.preventDefault();
+        e.stopPropagation();
+        e.preventDefault();
+      }
     },
     [
       activeDropTargetId,
@@ -73,10 +76,16 @@ function CanvasDropzone({ children }) {
       editorToDataY,
     ]
   );
-  const onDragOverHandler = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
+  const onDragOverHandler = useCallback(
+    (e) => {
+      if (!isDragType(e, 'resource/media') || activeDropTargetId) {
+        return;
+      }
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    [activeDropTargetId]
+  );
 
   return (
     <Container onDrop={onDropHandler} onDragOver={onDragOverHandler}>
@@ -85,8 +94,8 @@ function CanvasDropzone({ children }) {
   );
 }
 
-CanvasDropzone.propTypes = {
+CanvasElementDropzone.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 
-export default CanvasDropzone;
+export default CanvasElementDropzone;
