@@ -15,9 +15,9 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	protected static $subscriber;
 
 	const INVALID_URL = 'https://www.notreallyawebsite.com/foobar.html';
-	const EMPTY_URL = 'https://empty.example.com';
+	const EMPTY_URL   = 'https://empty.example.com';
 	const EXAMPLE_URL = 'https://example.com';
-	const VALID_URL = 'https://amp.dev';
+	const VALID_URL   = 'https://amp.dev';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -28,15 +28,15 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
-			array(
+			[
 				'role' => 'subscriber',
-			)
+			]
 		);
 		self::$editor     = $factory->user->create(
-			array(
+			[
 				'role'       => 'editor',
 				'user_email' => 'editor@example.com',
-			)
+			]
 		);
 	}
 
@@ -53,7 +53,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		add_filter( 'pre_http_request', array( $this, 'mock_http_request' ), 10, 3 );
+		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 
 		$this->request_count = 0;
 	}
@@ -65,7 +65,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		remove_filter( 'pre_http_request', array( $this, 'mock_http_request' ) );
+		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 	}
 
 	/**
@@ -106,11 +106,11 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 			];
 		}
 
-		return array(
-			'response' => array(
+		return [
+			'response' => [
 				'code' => 404,
-			),
-		);
+			],
+		];
 	}
 
 	public function test_register_routes() {
@@ -149,7 +149,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::INVALID_URL );
 		$response = rest_get_server()->dispatch( $request );
-		$data = $response->get_data();
+		$data     = $response->get_data();
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );

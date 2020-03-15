@@ -20,7 +20,6 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "dependencies": {
-    "@moxy/react-keyboard-only-outlines": "^1.0.1",
     "@wordpress/api-fetch": "^3.11.0",
     "@wordpress/components": "^9.2.3",
     "@wordpress/i18n": "^3.9.0",

@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -30,8 +30,18 @@ import { ReactComponent as Play } from './play.svg';
 
 const styledTiles = css`
   width: 100%;
-
   object-fit: contain;
+  transition: 0.2s transform, 0.15s opacity;
+  ${({ dragging }) =>
+    dragging
+      ? `
+    transform: scale(0);
+    opacity: 0;
+  `
+      : `
+    transform: scale(1);
+    opacity: 1;
+  `}
 `;
 
 const Image = styled.img`
@@ -82,12 +92,7 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
-  const {
-    src,
-    type,
-    width: originalWidth,
-    height: originalHeight,
-  } = resource;
+  const { src, type, width: originalWidth, height: originalHeight } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -95,18 +100,43 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
+  const [dragging, setDragging] = useState(false);
 
   const {
-    actions: { handleDrag, handleDrop, isDropSource },
+    actions: { handleDrag, handleDrop },
   } = useDropTargets();
 
-  const dropTargetsBindings = isDropSource(resource.type)
-    ? {
-        draggable: 'true',
-        onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
-        onDragEnd: () => handleDrop(resource),
-      }
-    : {};
+  const measureMediaElement = () =>
+    mediaElement?.current?.getBoundingClientRect();
+
+  const dropTargetsBindings = useMemo(
+    () => ({
+      draggable: 'true',
+      onDragStart: (e) => {
+        setDragging(true);
+        const { x, y, width: w, height: h } = measureMediaElement();
+        const offsetX = e.clientX - x;
+        const offsetY = e.clientY - y;
+        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
+        e.dataTransfer.setData(
+          'resource/media',
+          JSON.stringify({
+            resource,
+            offset: { x: offsetX, y: offsetY, w, h },
+          })
+        );
+      },
+      onDrag: (e) => {
+        handleDrag(resource, e.clientX, e.clientY);
+      },
+      onDragEnd: (e) => {
+        e.preventDefault();
+        setDragging(false);
+        handleDrop(resource);
+      },
+    }),
+    [resource, handleDrag, handleDrop]
+  );
 
   const onClick = () => onInsert(resource, width, height);
 
@@ -120,6 +150,7 @@ const MediaElement = ({
         height={height}
         loading={'lazy'}
         onClick={onClick}
+        dragging={dragging}
         {...dropTargetsBindings}
       />
     );
@@ -153,6 +184,7 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
+        dragging={dragging}
         {...dropTargetsBindings}
       >
         <source src={src} type={mimeType} />

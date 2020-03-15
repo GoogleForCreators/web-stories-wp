@@ -14,21 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import LibraryProvider from './libraryProvider';
-import LibraryLayout from './libraryLayout';
-import LibraryUploadDropTarget from './libraryUploadDropTarget';
-
-function Library() {
-  return (
-    <LibraryProvider>
-      <LibraryUploadDropTarget>
-        <LibraryLayout />
-      </LibraryUploadDropTarget>
-    </LibraryProvider>
-  );
-}
-
-export default Library;
+export { default as UploadDropTarget } from './dropTarget';
+export { default as UploadDropTargetMessageOverlay } from './message';
+export { UploadDropTargetOverlay, UploadDropTargetScreen } from './overlay';
+export { default as useUploadDropTarget } from './use';
