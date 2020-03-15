@@ -65,7 +65,11 @@ const Icon = styled(UploadIcon)`
 `;
 
 function UploadDropTargetMessageOverlay({ message, ...rest }) {
-  const { allowedFileTypes } = useConfig();
+  const { allowedMimeTypes = {} } = useConfig();
+  const allowedFileTypes = Object.keys(allowedMimeTypes).reduce(
+    (acc, cur) => [...acc, ...allowedMimeTypes[cur]],
+    []
+  );
   return (
     <Container {...rest}>
       <Box>
