@@ -61,13 +61,13 @@ function DraggablePageWithRef(
         type: 'page',
         index: pageIndex,
       };
-      evt.dataTransfer.setData('text', JSON.stringify(pageData));
+      evt.dataTransfer.setData('page', JSON.stringify(pageData));
     },
     [pageIndex]
   );
 
   const onDrop = (evt, { position }) => {
-    const droppedEl = JSON.parse(evt.dataTransfer.getData('text'));
+    const droppedEl = JSON.parse(evt.dataTransfer.getData('page'));
     if (!droppedEl || 'page' !== droppedEl.type) {
       return;
     }

@@ -24,6 +24,7 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { isDragType } from '../../utils/dragEvent';
 import Context from './context';
 
 const DropZoneWrapper = styled.div`
@@ -72,6 +73,10 @@ function DropZoneProvider({ children }) {
   };
 
   const onDragOver = (evt) => {
+    if (!isDragType(evt, 'page')) {
+      return;
+    }
+
     evt.preventDefault();
     // Get the hovered dropzone. // @todo Consider dropzone inside dropzone, will we need this?
     const foundDropZones = dropZones.filter((dropZone) => {

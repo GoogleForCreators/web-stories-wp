@@ -25,8 +25,8 @@ import { useCallback, useState } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import { isDraggingFile } from '../../utils/dragEvent';
 import Context from './context';
-import getDragType from './getDragType';
 
 const DropTargetComponent = styled.div`
   position: relative;
@@ -60,13 +60,13 @@ function UploadDropTarget({ disabled, label, labelledBy, onDrop, children }) {
   const [isDragging, setIsDragging] = useState(false);
 
   const onDragEnter = useCallback(
-    (evt) => {
-      const { dataTransfer } = evt;
-      if (getDragType(dataTransfer) !== 'file') {
+    (e) => {
+      const { dataTransfer } = e;
+      if (!isDraggingFile(e)) {
         // Only consider DND with files.
         return;
       }
-      disableDefaults(evt);
+      disableDefaults(e);
       if (disabled) {
         dataTransfer.effectAllowed = 'none';
       } else {
@@ -96,8 +96,8 @@ function UploadDropTarget({ disabled, label, labelledBy, onDrop, children }) {
   return (
     <DropTargetComponent
       onDragEnter={onDragEnter}
-      onDragOver={disableDefaults}
       onDrop={onDropHandler}
+      onDragOver={disableDefaults}
     >
       {isDragging && (
         <Glasspane
