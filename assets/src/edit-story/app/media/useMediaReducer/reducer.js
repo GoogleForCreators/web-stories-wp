@@ -30,14 +30,6 @@ export const INITIAL_STATE = {
   isMediaLoaded: false,
 };
 
-const resetOnFilterChange = {
-  page: 1,
-  totalPages: null,
-  hasMore: true,
-  media: [],
-  isMediaLoaded: false,
-};
-
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.FETCH_MEDIA_START: {
@@ -74,20 +66,15 @@ function reducer(state, { type, payload }) {
     }
 
     case types.RESET_FILTERS: {
-      return {
-        ...state,
-        ...resetOnFilterChange,
-        searchTerm: '',
-        mediaType: '',
-      };
+      return { ...INITIAL_STATE };
     }
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
       if (searchTerm === state.searchTerm) return state;
       return {
-        ...state,
-        ...resetOnFilterChange,
+        ...INITIAL_STATE,
+        mediaType: state.mediaType,
         searchTerm,
       };
     }
@@ -96,8 +83,7 @@ function reducer(state, { type, payload }) {
       const { mediaType } = payload;
       if (mediaType === state.mediaType) return state;
       return {
-        ...state,
-        ...resetOnFilterChange,
+        ...INITIAL_STATE,
         mediaType,
       };
     }
