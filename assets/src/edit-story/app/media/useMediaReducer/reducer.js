@@ -21,7 +21,7 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
-  page: 1,
+  pagingNum: 1,
   totalPages: 1,
   hasMore: true,
   mediaType: '',
@@ -41,13 +41,13 @@ function reducer(state, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, mediaType, searchTerm, page, totalPages } = payload;
+      const { media, mediaType, searchTerm, pagingNum, totalPages } = payload;
       if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
-        const hasMore = page < totalPages;
+        const hasMore = pagingNum < totalPages;
         return {
           ...state,
           media: [...state.media, ...media],
-          page,
+          pagingNum,
           totalPages,
           hasMore,
           isMediaLoaded: true,
@@ -89,11 +89,10 @@ function reducer(state, { type, payload }) {
       };
     }
 
-    case types.SET_PAGE: {
-      const { page } = payload;
+    case types.SET_NEXT_PAGE: {
       return {
         ...state,
-        page,
+        pagingNum: state.pagingNum + 1,
       };
     }
 

@@ -113,7 +113,6 @@ const PREVIEW_SIZE = 150;
 function MediaPane(props) {
   const {
     state: {
-      page,
       hasMore,
       media,
       isMediaLoading,
@@ -122,7 +121,7 @@ function MediaPane(props) {
       searchTerm,
     },
     actions: {
-      setPage,
+      setNextPage,
       resetWithFetch,
       setMediaType,
       setSearchTerm,
@@ -212,16 +211,16 @@ function MediaPane(props) {
     refContainerFooter,
     {
       root: refContainer,
-      rootMargin: '0px 0px 0px 0px',
+      rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) return;
       if (!hasMore) return;
       if (!entry.isIntersecting) return;
 
-      setPage({ page: page + 1 });
+      setNextPage();
     },
-    [page, hasMore, isMediaLoading, isMediaLoaded]
+    [hasMore, isMediaLoading, isMediaLoaded]
   );
 
   return (

@@ -31,7 +31,7 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
   const { uploadVideoFrame } = useUploadVideoFrame();
-  const { page, mediaType, searchTerm } = state;
+  const { pagingNum, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -39,7 +39,7 @@ function MediaProvider({ children }) {
     resetFilters,
     setMediaType,
     setSearchTerm,
-    setPage,
+    setNextPage,
   } = actions;
 
   const {
@@ -47,16 +47,16 @@ function MediaProvider({ children }) {
   } = useAPI();
 
   const fetchMedia = useCallback(
-    ({ page: p = 1 } = {}) => {
-      fetchMediaStart({ page: p });
-      getMedia({ mediaType, searchTerm, page: p })
+    ({ pagingNum: p = 1 } = {}) => {
+      fetchMediaStart({ pagingNum: p });
+      getMedia({ mediaType, searchTerm, pagingNum: p })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
           fetchMediaSuccess({
             media: data,
             mediaType,
             searchTerm,
-            page: p,
+            pagingNum: p,
             totalPages,
           });
         })
@@ -74,19 +74,19 @@ function MediaProvider({ children }) {
 
   const resetWithFetch = useCallback(() => {
     resetFilters();
-    if (!mediaType && !searchTerm && page === 1) {
+    if (!mediaType && !searchTerm && pagingNum === 1) {
       fetchMedia();
     }
-  }, [fetchMedia, mediaType, page, resetFilters, searchTerm]);
+  }, [fetchMedia, mediaType, pagingNum, resetFilters, searchTerm]);
 
   useEffect(() => {
-    fetchMedia({ page });
-  }, [fetchMedia, mediaType, searchTerm, page]);
+    fetchMedia({ pagingNum });
+  }, [fetchMedia, mediaType, searchTerm, pagingNum]);
 
   const context = {
     state,
     actions: {
-      setPage,
+      setNextPage,
       setMediaType,
       setSearchTerm,
       fetchMedia,

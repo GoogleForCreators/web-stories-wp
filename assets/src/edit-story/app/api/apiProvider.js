@@ -105,10 +105,10 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, page }) => {
+    ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, { per_page: perPage, page });
+      apiPath = addQueryArgs(apiPath, { per_page: perPage, page: pagingNum });
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -120,8 +120,8 @@ function APIProvider({ children }) {
 
       return apiFetch({ path: apiPath, parse: false }).then(
         async (response) => {
-          const json = await response.json();
-          const data = json.map(
+          const jsonArray = await response.json();
+          const data = jsonArray.map(
             ({
               id,
               guid: { rendered: src },

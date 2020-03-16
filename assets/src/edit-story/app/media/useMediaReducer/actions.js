@@ -19,20 +19,20 @@
  */
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch) => ({ page }) => {
-  dispatch({ type: types.FETCH_MEDIA_START, payload: { page } });
+export const fetchMediaStart = (dispatch) => ({ pagingNum }) => {
+  dispatch({ type: types.FETCH_MEDIA_START, payload: { pagingNum } });
 };
 
 export const fetchMediaSuccess = (dispatch) => ({
   media,
   mediaType,
   searchTerm,
-  page,
+  pagingNum,
   totalPages,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, page, totalPages },
+    payload: { media, mediaType, searchTerm, pagingNum, totalPages },
   });
 };
 
@@ -52,6 +52,6 @@ export const setMediaType = (dispatch) => ({ mediaType }) => {
   dispatch({ type: types.SET_MEDIA_TYPE, payload: { mediaType } });
 };
 
-export const setPage = (dispatch) => ({ page }) => {
-  dispatch({ type: types.SET_PAGE, payload: { page } });
+export const setNextPage = (dispatch) => () => {
+  dispatch({ type: types.SET_NEXT_PAGE });
 };
