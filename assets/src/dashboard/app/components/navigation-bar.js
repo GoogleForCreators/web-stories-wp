@@ -28,7 +28,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useRouteHistory } from '../router';
-import { WebStoriesLogo } from './';
+import WebStoriesLogo from '../../images/logo.svg';
 
 const Nav = styled.nav`
   justify-content: space-between;

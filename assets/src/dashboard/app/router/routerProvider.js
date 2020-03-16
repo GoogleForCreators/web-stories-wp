@@ -35,13 +35,10 @@ function RouterProvider({ children, ...props }) {
   );
 
   useEffect(() => {
-    const removeHistoryListener = history.current.listen((location) => {
+    return history.current.listen((location) => {
       setQueryParams(queryString.parse(location.search));
       setCurrentPath(location.pathname);
     });
-    return () => {
-      removeHistoryListener();
-    };
   }, []);
 
   const value = useMemo(

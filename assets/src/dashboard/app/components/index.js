@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export { default as WebStoriesLogo } from './logo';
 export { default as NavigationBar } from './navigation-bar';
