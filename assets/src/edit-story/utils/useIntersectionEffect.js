@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect } from 'react';
-const IntersectionObserver = require('intersection-observer-polyfill/dist/IntersectionObserver');
 
 /**
  * @param {!{current: ?Element}} ref Target node ref.
@@ -39,7 +38,7 @@ function useIntersectionEffect(ref, handler, options = {}, deps = undefined) {
         return;
       }
 
-      const observer = new IntersectionObserver((entries) => {
+      const observer = new window.IntersectionObserver((entries) => {
         const last = entries.length > 0 ? entries[entries.length - 1] : null;
         if (last) {
           handler(last);
