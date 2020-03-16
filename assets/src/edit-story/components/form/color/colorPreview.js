@@ -30,7 +30,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
-import { useSidebar } from '../../../app/sidebar';
+import { useSidebar } from '../../sidebar';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';

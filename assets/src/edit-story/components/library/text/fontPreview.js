@@ -31,6 +31,9 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useFont } from '../../../app';
+import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+
+const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
 
 const Preview = styled.div`
   position: relative;
@@ -45,7 +48,7 @@ const Preview = styled.div`
 
 const Text = styled.span`
   background: none;
-  font-size: ${({ fontSize }) => fontSize}px;
+  font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ theme }) => theme.colors.fg.v1};

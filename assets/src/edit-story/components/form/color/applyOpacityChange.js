@@ -29,8 +29,11 @@ function applyOpacityChange(pattern, newOpacity) {
     return { color: { r, g, b, a: newOpacity } };
   }
 
-  // TODO: Return gradient with opacity applied
-  return pattern;
+  // Return gradient with opacity applied
+  return {
+    ...pattern,
+    alpha: newOpacity,
+  };
 }
 
 export default applyOpacityChange;

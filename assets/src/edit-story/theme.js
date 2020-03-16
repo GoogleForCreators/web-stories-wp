@@ -51,6 +51,7 @@ const theme = {
       v8: '#2A3140',
       v9: '#232636',
       v10: '#44485B',
+      v11: '#08223A',
     },
     mg: {
       v1: '#616877',
@@ -100,6 +101,12 @@ const theme = {
       size: '15px',
       lineHeight: '18px',
       weight: '400',
+    },
+    duration: {
+      family: 'Roboto',
+      size: '12px',
+      lineHeight: '1',
+      weight: '500',
     },
   },
 };

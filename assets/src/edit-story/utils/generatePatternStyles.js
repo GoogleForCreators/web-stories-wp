@@ -77,6 +77,8 @@ function getGradientDescription({ type, rotation, center, size }) {
       // Always include rotation and offset by .5turn, as default is .5turn(?)
       return `${((rotation || 0) + 0.5) % 1}turn`;
 
+    // Ignore reason: only here because of eslint, will not happen
+    // istanbul ignore next
     default:
       return null;
   }
@@ -87,14 +89,15 @@ function getGradientDescription({ type, rotation, center, size }) {
  * or turn as unit depending on whether stops are angular or not.
  *
  * @param {Array} stops List of stops as an object with color and position
+ * @param {number} alpha Alpha opacity to multiple to each stop
  * @param {boolean} isAngular Are the stops in percent of a turn or percent?
  *
  * @return {Array} List of serialized stops
  */
-function getStopList(stops, isAngular = false) {
+function getStopList(stops, alpha, isAngular) {
   const getPosition = (val) =>
     isAngular ? `${truncate(val, 4)}turn` : `${truncate(val * 100, 2)}%`;
-  const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a);
+  const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a * alpha);
   return stops.map(
     ({ color, position }) => `${getColor(color)} ${getPosition(position)}`
   );
@@ -135,10 +138,10 @@ function generatePatternStyles(pattern = null, property = 'background') {
     return { [`${property}${objectPropertyPostfix}`]: rgba(r, g, b, a) };
   }
 
-  const { stops } = pattern;
+  const { stops, alpha = 1 } = pattern;
   const func = `${type}-gradient`;
   const description = getGradientDescription(pattern);
-  const stopList = getStopList(stops, type === 'conic');
+  const stopList = getStopList(stops, alpha, type === 'conic');
   const parms = description ? [description, ...stopList] : stopList;
   const value = `${func}(${parms.join(', ')})`;
   return { backgroundImage: value };

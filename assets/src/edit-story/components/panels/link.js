@@ -58,7 +58,9 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
 
-  const [state, setState] = useState(createLink('', inferredLinkType));
+  const [state, setState] = useState({
+    link: createLink('', inferredLinkType),
+  });
   useEffect(() => {
     setState({ ...link });
   }, [link]);

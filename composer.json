@@ -6,7 +6,9 @@
   "license": "Apache-2.0",
   "require": {
     "php": "^5.6 || ^7.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-dom": "*",
+    "ext-libxml": "*"
   },
   "require-dev": {
     "automattic/vipwpcs": "dev-develop",

@@ -40,15 +40,17 @@ const getUsedAmpExtensions = (pages) => {
     },
   ];
 
+  const ampVideo = {
+    name: 'amp-video',
+    src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
+  };
+
   for (const { elements } of pages) {
     for (const { type } of elements) {
       switch (type) {
         // Todo: eventually check for amp-fit-text if ever added.
         case 'video':
-          extensions.push({
-            name: 'amp-video',
-            src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
-          });
+          extensions.push(ampVideo);
           break;
         default:
           break;

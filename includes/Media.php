@@ -105,6 +105,8 @@ class Media {
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
+
+		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
 	}
 
 	/**
@@ -221,5 +223,18 @@ class Media {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Filters the list of mime types and file extensions.
+	 *
+	 * @param string[] $mime_types Mime types keyed by the file extension regex
+	 *                             corresponding to those types.
+	 *
+	 * @return string[]
+	 */
+	public static function upload_mimes( array $mime_types ) {
+		$mime_types['svg'] = 'image/svg+xml';
+		return $mime_types;
 	}
 }

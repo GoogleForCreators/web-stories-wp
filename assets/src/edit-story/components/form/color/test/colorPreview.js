@@ -24,7 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../../theme';
-import SidebarContext from '../../../../app/sidebar/context';
+import SidebarContext from '../../../sidebar/context';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
