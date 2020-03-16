@@ -31,9 +31,6 @@ function useIntersectionEffect(ref, handler, options = {}, deps = undefined) {
     () => {
       const node = ref.current;
       const usingRoot = 'root' in options;
-      if (usingRoot) {
-        options.root = options.root.current;
-      }
       if (!node || (usingRoot && !options.root)) {
         return;
       }

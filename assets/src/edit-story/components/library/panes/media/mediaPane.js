@@ -218,7 +218,7 @@ function MediaPane(props) {
       setPage({ page: page + 1 });
     },
     {
-      root: refContainer,
+      root: refContainer.current,
       rootMargin: '0px 0px 0px 0px',
     },
     [page, hasMore, isMediaLoading, isMediaLoaded]
