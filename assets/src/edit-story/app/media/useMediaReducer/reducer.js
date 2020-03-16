@@ -84,6 +84,7 @@ function reducer(state, { type, payload }) {
       if (mediaType === state.mediaType) return state;
       return {
         ...INITIAL_STATE,
+        searchTerm: state.searchTerm,
         mediaType,
       };
     }
