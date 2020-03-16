@@ -20,9 +20,6 @@
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { useContext } from 'react';
 
-/**
- * Internal dependencies
- */
 export const GlobalStyle = createGlobalStyle`
   @import url(//fonts.googleapis.com/css?family=Google+Sans);
 	*,
@@ -54,6 +51,10 @@ const theme = {
     white: '#fff',
     bluePrimary: '#2979FF',
     blueLight: '#EAF2FF',
+    // taken from edit-stories
+    action: '#47A0F4',
+    danger: '#FF0000',
+    selection: '#44aaff',
   },
   border: {
     buttonRadius: '100px',
@@ -93,7 +94,7 @@ const theme = {
       weight: '400',
     },
     button: {
-      family: 'Google Sans, Sans Serif',
+      family: "'Google Sans', 'Sans Serif'",
       size: '14px',
       lineHeight: '20px',
       weight: '500',

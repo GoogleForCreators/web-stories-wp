@@ -23,31 +23,29 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES } from '../../constants';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const StyledButton = styled.button`
   align-items: center;
-  background-color: ${({ theme, type }) =>
-    type === BUTTON_TYPES.PRIMARY ? theme.colors.bluePrimary : 'transparent'};
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border: 1px solid transparent;
-  border-radius: ${({ theme, type }) =>
-    type === BUTTON_TYPES.PRIMARY ? theme.border.buttonRadius : 'none'};
+  border-radius: ${({ theme }) => theme.border.buttonRadius};
   display: flex;
   height: 40px;
   min-width: 132px;
-  opacity: ${({ isCta }) => (isCta ? '1' : '0.75')};
+  opacity: 0.75;
   padding: 0;
-  text-shadow: ${({ theme, type }) =>
-    type === BUTTON_TYPES.SECONDARY && theme.text.shadow};
 
   &:focus,
   &:active,
   &:hover {
     opacity: 1;
-    text-shadow: ${({ theme, type }) =>
-      type === BUTTON_TYPES.SECONDARY && theme.text.shadow};
+    outline: none;
+  }
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => theme.colors.action};
   }
 
   &:disabled {
@@ -56,6 +54,26 @@ const StyledButton = styled.button`
   }
 `;
 
+const PrimaryButton = styled(StyledButton)`
+  background-color: ${({ theme }) => theme.colors.bluePrimary};
+`;
+
+// TODO: address CTA active styling
+const CtaButton = styled(StyledButton)`
+  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  opacity: 1;
+`;
+
+const SecondaryButton = styled(StyledButton)`
+  background-color: transparent;
+  text-shadow: ${({ theme }) => theme.text.shadow};
+
+  &:focus,
+  &:active,
+  &:hover {
+    text-shadow: ${({ theme }) => theme.text.shadow};
+  }
+`;
 const StyledChildren = styled.span`
   font-family: ${({ theme }) => theme.fonts.button.family};
   font-size: ${({ theme }) => theme.fonts.button.size};
@@ -68,21 +86,22 @@ const StyledChildren = styled.span`
 const Button = ({
   children,
   isDisabled,
-  isCta,
   onClick,
   type = BUTTON_TYPES.PRIMARY,
   ...rest
 }) => {
+  const ButtonOptions = {
+    [BUTTON_TYPES.PRIMARY]: PrimaryButton,
+    [BUTTON_TYPES.SECONDARY]: SecondaryButton,
+    [BUTTON_TYPES.CTA]: CtaButton,
+  };
+
+  const StyledButtonByType = ButtonOptions[type];
+
   return (
-    <StyledButton
-      disabled={isDisabled}
-      isCta={isCta}
-      onClick={onClick}
-      type={type}
-      {...rest}
-    >
+    <StyledButtonByType disabled={isDisabled} onClick={onClick} {...rest}>
       <StyledChildren>{children}</StyledChildren>
-    </StyledButton>
+    </StyledButtonByType>
   );
 };
 

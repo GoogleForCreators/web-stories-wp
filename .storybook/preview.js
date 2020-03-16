@@ -34,6 +34,7 @@ import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/compon
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
+import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -70,6 +71,7 @@ addDecorator((story, { id }) => {
     return (
       <ThemeProvider theme={dashboardTheme}>
         <DashboardGlobalStyle />
+        <DashboardKeyboardOnlyOutline />
         {story()}
       </ThemeProvider>
     );

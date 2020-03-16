@@ -35,12 +35,15 @@ export default {
 export const _default = () => {
   return (
     <Button
-      isCta={boolean('isCta')}
       isDisabled={boolean('isDisabled')}
       onClick={action('clicked')}
       type={select(
         'type',
-        { primary: BUTTON_TYPES.PRIMARY, secondary: BUTTON_TYPES.SECONDARY },
+        {
+          cta: BUTTON_TYPES.CTA,
+          primary: BUTTON_TYPES.PRIMARY,
+          secondary: BUTTON_TYPES.SECONDARY,
+        },
         BUTTON_TYPES.PRIMARY
       )}
     >
@@ -59,12 +62,15 @@ export const _LongButton = () => {
   return (
     <LongContainer>
       <LongButton
-        isCta={boolean('isCta')}
         isDisabled={boolean('isDisabled')}
         onClick={action('clicked')}
         type={select(
           'type',
-          { primary: BUTTON_TYPES.PRIMARY, secondary: BUTTON_TYPES.SECONDARY },
+          {
+            cta: BUTTON_TYPES.CTA,
+            primary: BUTTON_TYPES.PRIMARY,
+            secondary: BUTTON_TYPES.SECONDARY,
+          },
           BUTTON_TYPES.PRIMARY
         )}
       >
@@ -91,12 +97,15 @@ export const SecondaryButton = () => {
   return (
     <SecondaryButtonContainer>
       <Button
-        isCta={boolean('isCta', true)}
         isDisabled={boolean('isDisabled')}
         onClick={action('clicked')}
         type={select(
           'type',
-          { primary: BUTTON_TYPES.PRIMARY, secondary: BUTTON_TYPES.SECONDARY },
+          {
+            cta: BUTTON_TYPES.CTA,
+            primary: BUTTON_TYPES.PRIMARY,
+            secondary: BUTTON_TYPES.SECONDARY,
+          },
           BUTTON_TYPES.SECONDARY
         )}
       >
