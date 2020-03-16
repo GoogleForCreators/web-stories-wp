@@ -34,8 +34,6 @@ import { dataPixels } from '../../../units';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
 import getCommonValue from '../utils/getCommonValue';
-import removeUnsetValues from '../utils/removeUnsetValues';
-import getPaddingRatio from '../utils/getPaddingRatio';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -59,36 +57,32 @@ function PaddingControls({ selectedElements, onSetProperties }) {
     });
   }, [padding]);
   const updateProperties = useCallback(() => {
-    onSetProperties((properties) => {
-      const { padding: oldPadding } = properties;
-      const { padding: newPadding } = state;
-      const updatedState = removeUnsetValues(state);
-      const ratio = getPaddingRatio(oldPadding.horizontal, oldPadding.vertical);
-      if (
-        lockPaddingRatio &&
-        (newPadding.horizontal === '' || newPadding.vertical === '') &&
-        ratio
-      ) {
-        if (newPadding.horizontal === '') {
-          newPadding.horizontal = Math.round(
-            dataPixels(newPadding.vertical * ratio)
-          );
-        } else {
-          newPadding.horizontal = Math.round(
-            dataPixels(newPadding.horizontal / ratio)
-          );
-        }
-      }
-      return {
-        ...updatedState,
-        padding: newPadding,
-      };
-    });
-  }, [lockPaddingRatio, onSetProperties, state]);
+    onSetProperties(state);
+  }, [onSetProperties, state]);
 
   useEffect(() => {
-    updateProperties();
+    // Don't update the values when input is empty.
+    if (state.padding.vertical !== '' && state.padding.horizontal !== '') {
+      updateProperties();
+    }
   }, [state.padding, updateProperties]);
+
+  const handleChange = useCallback(
+    (property) => (value) => {
+      const unchangedProperty =
+        'horizontal' === property ? 'vertical' : 'horizontal';
+      const newPadding = {
+        [property]:
+          isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
+      };
+      newPadding[unchangedProperty] =
+        typeof newPadding[property] === 'number' && lockPaddingRatio
+          ? dataPixels(newPadding[property])
+          : padding[unchangedProperty];
+      setState({ ...state, padding: newPadding });
+    },
+    [lockPaddingRatio, padding, state]
+  );
 
   return (
     <Row>
@@ -96,18 +90,7 @@ function PaddingControls({ selectedElements, onSetProperties }) {
       <BoxedNumeric
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={state.padding.horizontal}
-        onChange={(value) => {
-          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
-          const newPadding = {
-            horizontal:
-              isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
-          };
-          newPadding.vertical =
-            typeof padding.horizontal === 'number' && lockPaddingRatio && ratio
-              ? Math.round(dataPixels(parseInt(newPadding.horizontal)) / ratio)
-              : padding.vertical;
-          setState({ ...state, padding: newPadding });
-        }}
+        onChange={handleChange('horizontal')}
       />
       <Space />
       <Toggle
@@ -121,21 +104,7 @@ function PaddingControls({ selectedElements, onSetProperties }) {
       <BoxedNumeric
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={state.padding.vertical}
-        onChange={(value) => {
-          const ratio = getPaddingRatio(padding.horizontal, padding.vertical);
-          const newPadding = {
-            vertical:
-              isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
-          };
-          newPadding.horizontal =
-            padding.horizontal !== '' &&
-            typeof padding.vertical === 'number' &&
-            lockPaddingRatio &&
-            ratio
-              ? Math.round(dataPixels(parseInt(newPadding.vertical)) / ratio)
-              : padding.horizontal;
-          setState({ ...state, padding: newPadding });
-        }}
+        onChange={handleChange('vertical')}
       />
     </Row>
   );

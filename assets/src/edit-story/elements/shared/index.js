@@ -82,6 +82,7 @@ export const SHARED_DEFAULT_ATTRIBUTES = {
     vertical: false,
     horizontal: false,
   },
+  rotationAngle: 0,
 };
 
 export const elementWithFlip = css`
