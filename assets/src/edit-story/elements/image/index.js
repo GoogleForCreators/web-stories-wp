@@ -42,4 +42,9 @@ export const defaultAttributes = {
   ...MEDIA_DEFAULT_ATTRIBUTES,
 };
 
-export const panels = [...MEDIA_PANELS, PanelTypes.LINK, PanelTypes.MASK];
+export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
+  ...MEDIA_PANELS,
+  PanelTypes.LINK,
+  PanelTypes.MASK,
+];

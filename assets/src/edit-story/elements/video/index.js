@@ -50,6 +50,7 @@ export const defaultAttributes = {
 };
 
 export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
   ...MEDIA_PANELS,
   PanelTypes.VIDEO_POSTER,
   PanelTypes.LINK,

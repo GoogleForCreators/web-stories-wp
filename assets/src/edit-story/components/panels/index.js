@@ -32,6 +32,7 @@ import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
+import ElementAlignmentPanel from './elementAlignment';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -49,9 +50,11 @@ const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
 const MASK = 'mask';
 const PAGE = 'page';
+const ELEMENT_ALIGNMENT = 'element_alignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
+  ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   SIZE_POSITION,
@@ -132,6 +135,8 @@ export function getPanels(elements) {
           return { type, Panel: VideoPosterPanel };
         case MASK:
           return { type, Panel: MaskPanel };
+        case ELEMENT_ALIGNMENT:
+          return { type, Panel: ElementAlignmentPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }
