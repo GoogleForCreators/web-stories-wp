@@ -15,20 +15,8 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import LibraryProvider from './libraryProvider';
-import LibraryLayout from './libraryLayout';
-import LibraryUploadDropTarget from './libraryUploadDropTarget';
+import { createContext } from 'react';
 
-function Library() {
-  return (
-    <LibraryProvider>
-      <LibraryUploadDropTarget>
-        <LibraryLayout />
-      </LibraryUploadDropTarget>
-    </LibraryProvider>
-  );
-}
-
-export default Library;
+export default createContext({});
