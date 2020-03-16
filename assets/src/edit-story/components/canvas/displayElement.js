@@ -65,28 +65,32 @@ function DisplayElement({ element }) {
 
   const box = getBox(element);
 
-  useTransformHandler(id, (transform) => {
-    const target = wrapperRef.current;
-    if (transform === null) {
-      target.style.transform = '';
-      target.style.width = '';
-      target.style.height = '';
-      target.style.opacity = 1;
-    } else {
-      const { translate, rotate, resize, dropTargets } = transform;
-      target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
-      if (resize && resize[0] !== 0 && resize[1] !== 0) {
-        target.style.width = `${resize[0]}px`;
-        target.style.height = `${resize[1]}px`;
+  useTransformHandler(
+    id,
+    (transform) => {
+      const target = wrapperRef.current;
+      if (transform === null) {
+        target.style.transform = '';
+        target.style.width = '';
+        target.style.height = '';
+        target.style.opacity = 1;
+      } else {
+        const { translate, rotate, resize, dropTargets } = transform;
+        target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
+        if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          target.style.width = `${resize[0]}px`;
+          target.style.height = `${resize[1]}px`;
+        }
+        if (typeof dropTargets?.hover !== 'undefined') {
+          target.style.opacity = dropTargets.hover ? 0 : 1;
+        }
+        if (typeof dropTargets?.replacement !== 'undefined') {
+          setReplacement(dropTargets.replacement || null);
+        }
       }
-      if (typeof dropTargets?.hover !== 'undefined') {
-        target.style.opacity = dropTargets.hover ? 0 : 1;
-      }
-      if (typeof dropTargets?.replacement !== 'undefined') {
-        setReplacement(dropTargets.replacement || null);
-      }
-    }
-  });
+    },
+    [setReplacement]
+  );
 
   return (
     <Wrapper ref={wrapperRef} {...box}>

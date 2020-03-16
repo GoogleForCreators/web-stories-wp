@@ -37,7 +37,7 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { deleteElementById, setSelectedElementsById, updateElementById },
+    actions: { deleteSelectedElements, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -129,25 +129,30 @@ function DropTargetsProvider({ children }) {
           elementId: activeDropTargetId,
           properties: { resource, type: resource.type },
         });
-        if (selfId) {
-          deleteElementById({ elementId: selfId });
-        }
-        // Reset styles on all other elements
-        (currentPage?.elements || []).forEach((el) =>
-          pushTransform(el.id, {
-            dropTargets: { active: false, replacement: null },
-          })
-        );
-        setSelectedElementsById({ elementIds: activeDropTargetId });
+
+        // Reset styles on visisble elements
+        (currentPage?.elements || [])
+          .filter(
+            ({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId
+          )
+          .forEach((el) => {
+            pushTransform(el.id, {
+              dropTargets: { active: false, replacement: null },
+            });
+          });
         setActiveDropTargetId(null);
+
+        if (selfId) {
+          deleteSelectedElements();
+        }
       }
     },
     [
       activeDropTargetId,
       currentPage,
-      deleteElementById,
+      dropTargets,
+      deleteSelectedElements,
       pushTransform,
-      setSelectedElementsById,
       updateElementById,
     ]
   );

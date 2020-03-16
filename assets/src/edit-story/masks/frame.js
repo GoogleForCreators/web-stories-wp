@@ -71,6 +71,9 @@ function WithDropTarget({ element, children }) {
 
   useTransformHandler(element.id, (transform) => {
     const target = pathRef.current;
+    if (!target) {
+      return;
+    }
     target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
   });
 
