@@ -20,6 +20,13 @@
  * Hides all controls that interfere with the dashboard UI.
  */
 
+@import url(//fonts.googleapis.com/css?family=Google+Sans);
+
+body {
+  background: #fff;
+  color: #1a1d1f;
+}
+
 #screen-meta,
 #screen-meta-links {
   display: none;

@@ -31,6 +31,7 @@ import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { Route, RouterProvider } from './router';
 import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
+import { NavigationBar } from './components';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
       <RouterProvider>
         <GlobalStyle />
         <KeyboardOnlyOutline />
+        <NavigationBar />
         <Route exact path="/" component={<MyStoriesView />} />
         <Route path="/templates-gallery" component={<TemplatesGalleryView />} />
         <Route path="/my-bookmarks" component={<MyBookmarksView />} />
