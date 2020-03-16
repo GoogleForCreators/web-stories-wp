@@ -34,16 +34,41 @@ import {
   UploadDropTargetMessageOverlay,
 } from '../uploadDropTarget';
 import { useUploader } from '../../app/uploader';
+import { useMedia } from '../../app/media';
+import {
+  getResourceFromLocalFile,
+  getResourceFromUploadAPI,
+} from '../../components/library/panes/media/mediaUtils';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
   const { uploadFile } = useUploader();
+  const {
+    state: { media, mediaType, searchTerm },
+    actions: { fetchMediaSuccess },
+  } = useMedia();
   const onDropHandler = useCallback(
-    (files) => {
-      files.forEach(uploadFile);
+    async (files) => {
+      const localFiles = files.map(getResourceFromLocalFile);
+      const localMedia = await Promise.all(localFiles);
+      const filesUploading = files.map((file) => uploadFile(file));
+      fetchMediaSuccess({
+        media: [...localMedia, ...media],
+        mediaType,
+        searchTerm,
+      });
+      Promise.all(filesUploading).then((uploadedFiles) => {
+        const uploadedMedia = uploadedFiles.map(getResourceFromUploadAPI);
+
+        fetchMediaSuccess({
+          media: [...uploadedMedia, ...media],
+          mediaType,
+          searchTerm,
+        });
+      });
     },
-    [uploadFile]
+    [fetchMediaSuccess, uploadFile, media, mediaType, searchTerm]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

@@ -144,7 +144,7 @@ const MediaElement = ({
     [resource, handleDrag, handleDrop]
   );
 
-  const onClick = !local ? () => onInsert(resource, width, height) : null;
+  const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
     return (

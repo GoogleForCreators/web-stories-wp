@@ -98,6 +98,7 @@ const getImageMetadata = (image) => {
   return new Promise((resolve, reject) => {
     reader.onload = function(e) {
       const src = e.target.result;
+      const randomId = Math.floor(Date.now() / 1000);
 
       const img = new window.Image();
 
@@ -111,7 +112,7 @@ const getImageMetadata = (image) => {
           width,
           height,
           mimeType: image.type,
-          posterId: Math.floor(Date.now() / 1000),
+          posterId: randomId,
           poster: '',
           videoId: undefined,
           local: true,
@@ -143,6 +144,7 @@ const getVideoMetadata = (video) => {
       const blob = new window.Blob([reader.result], { type: video.type });
       const src = URL.createObjectURL(blob);
       const v = document.createElement('video');
+      const randomId = Math.floor(Date.now() / 1000);
 
       const snapshot = () => {
         const canvas = document.createElement('canvas');
@@ -165,9 +167,9 @@ const getVideoMetadata = (video) => {
               width,
               height,
               mimeType: video.type,
-              posterId: Math.floor(Date.now() / 1000),
+              posterId: randomId,
               poster,
-              videoId: Math.floor(Date.now() / 1000),
+              videoId: randomId,
               local: true,
               lengthFormatted: undefined,
             });
@@ -227,7 +229,11 @@ export const getResourceFromUploadAPI = (file) => {
   const {
     guid: { rendered: src },
     mime_type: mimeType,
-    media_details: { width, height },
+    media_details: {
+      width: oWidth, // TODO: check why we are using this format `oWidth` on media library and improve it
+      height: oHeight, // TODO: check why we are using this format `oHeight` on media library and improve it
+      length_formatted: lengthFormatted, // TODO: check why we are using this format `lengthFormatted` on media library and improve it
+    },
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
@@ -236,9 +242,12 @@ export const getResourceFromUploadAPI = (file) => {
   return {
     type,
     src,
-    width,
-    height,
+    width: oWidth,
+    height: oHeight,
     mimeType,
+    lengthFormatted,
+    oWidth,
+    oHeight,
     ...(type === 'video' ? { posterId, poster, videoId } : {}),
   };
 };
