@@ -15,6 +15,12 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { defaultAttributes as DefaultVideoAttributes } from '../../../../elements/video';
+import { defaultAttributes as DefaultImageAttributes } from '../../../../elements/image';
+
+/**
  * Infer element type from mime type of its resource
  *
  * @param {string} mimeType Mime type.
@@ -117,6 +123,7 @@ const getImageMetadata = (image) => {
           videoId: undefined,
           local: true,
           lengthFormatted: undefined,
+          defaultAttributes: DefaultImageAttributes,
         });
       };
 
@@ -172,6 +179,7 @@ const getVideoMetadata = (video) => {
               videoId: randomId,
               local: true,
               lengthFormatted: undefined,
+              defaultAttributes: DefaultVideoAttributes,
             });
           };
 
@@ -229,11 +237,7 @@ export const getResourceFromUploadAPI = (file) => {
   const {
     guid: { rendered: src },
     mime_type: mimeType,
-    media_details: {
-      width: oWidth, // TODO: check why we are using this format `oWidth` on media library and improve it
-      height: oHeight, // TODO: check why we are using this format `oHeight` on media library and improve it
-      length_formatted: lengthFormatted, // TODO: check why we are using this format `lengthFormatted` on media library and improve it
-    },
+    media_details: { width, height, length_formatted: lengthFormatted },
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
@@ -242,12 +246,14 @@ export const getResourceFromUploadAPI = (file) => {
   return {
     type,
     src,
-    width: oWidth,
-    height: oHeight,
+    width,
+    height,
     mimeType,
     lengthFormatted,
-    oWidth,
-    oHeight,
+    oWidth: width, // TODO: check why we are using this format `oWidth` on media library and improve it
+    oHeight: height, // TODO: check why we are using this format `oHeight` on media library and improve it
+    defaultAttributes:
+      type === 'video' ? DefaultVideoAttributes : DefaultImageAttributes,
     ...(type === 'video' ? { posterId, poster, videoId } : {}),
   };
 };

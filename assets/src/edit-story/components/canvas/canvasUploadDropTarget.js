@@ -36,7 +36,12 @@ import {
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
 import { useUploader } from '../../app/uploader';
-import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
+import { useMedia } from '../../app/media';
+import { useStory } from '../../app/story';
+import {
+  getResourceFromUploadAPI,
+  getResourceFromLocalFile,
+} from '../library/panes/media/mediaUtils';
 import { Layer as CanvasLayer, PageArea } from './layout';
 import useInsertElement from './useInsertElement';
 
@@ -49,17 +54,70 @@ const PageAreaCover = styled(PageArea)`
 
 function CanvasUploadDropTarget({ children }) {
   const { uploadFile } = useUploader();
+  const {
+    state: { media, mediaType, searchTerm },
+    actions: { fetchMediaSuccess },
+  } = useMedia();
+  const {
+    actions: { updateElementById },
+  } = useStory();
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
-    (files) => {
-      files.forEach((file) => {
-        uploadFile(file).then((res) => {
-          const resource = getResourceFromUploadAPI(res);
-          insertElement(resource.type, { resource });
+    async (files) => {
+      const resourcesOnCanvas = await Promise.all(
+        files.map(async (file) => {
+          const locaResourceId = media.length + 1;
+          const resource = {
+            ...(await getResourceFromLocalFile(file)),
+            id: locaResourceId,
+          };
+          fetchMediaSuccess({
+            media: [resource, ...media],
+            mediaType,
+            searchTerm,
+          });
+          const element = insertElement(resource.type, { resource });
+
+          return {
+            elementId: element.id,
+            locaResourceId,
+            resource,
+            element,
+            localFile: file,
+          };
+        })
+      );
+
+      resourcesOnCanvas.forEach((resourceOnCanvas) => {
+        uploadFile(resourceOnCanvas.localFile).then((res) => {
+          const resource = getResourceFromUploadAPI(res); // TODO: `res` is not responding the poster value, which is not displaying when updating the element on canvas
+
+          // TODO: Should update the media library with the last version of the resource
+          // fetchMediaSuccess({
+          //   media: [resource, ...media],
+          //   mediaType,
+          //   searchTerm,
+          // });
+
+          return updateElementById({
+            elementId: resourceOnCanvas.elementId,
+            properties: {
+              resource,
+              type: resource.type,
+            },
+          });
         });
       });
     },
-    [insertElement, uploadFile]
+    [
+      insertElement,
+      updateElementById,
+      fetchMediaSuccess,
+      uploadFile,
+      media,
+      mediaType,
+      searchTerm,
+    ]
   );
 
   return (
