@@ -72,7 +72,7 @@ function MediaProvider({ children }) {
     ]
   );
 
-  const resetAfterUpload = useCallback(() => {
+  const resetWithFetch = useCallback(() => {
     resetFilters();
     if (!mediaType && !searchTerm && page === 1) {
       fetchMedia();
@@ -91,7 +91,7 @@ function MediaProvider({ children }) {
       setSearchTerm,
       fetchMedia,
       resetFilters,
-      resetAfterUpload,
+      resetWithFetch,
       uploadVideoFrame,
     },
   };

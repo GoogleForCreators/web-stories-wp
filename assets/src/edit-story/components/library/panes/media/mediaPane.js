@@ -123,7 +123,7 @@ function MediaPane(props) {
     },
     actions: {
       setPage,
-      resetAfterUpload,
+      resetWithFetch,
       setMediaType,
       setSearchTerm,
       uploadVideoFrame,
@@ -141,7 +141,7 @@ function MediaPane(props) {
     actions: { insertElement },
   } = useLibrary();
 
-  const onClose = resetAfterUpload;
+  const onClose = resetWithFetch;
 
   /**
    * Callback of select in media picker to insert media element.
