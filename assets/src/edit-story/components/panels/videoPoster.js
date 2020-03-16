@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 /**
@@ -29,27 +28,17 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useMediaPicker } from '../mediaPicker';
+import { Media } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-const Button = styled.button`
-  color: ${({ theme }) => theme.colors.mg.v1};
-  font-size: 11px;
-`;
-const Img = styled.img`
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-`;
-
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
-  const resource = getCommonValue(selectedElements, 'resource');
-  const { posterId, poster } = resource;
-  const [state, setState] = useState({ posterId, poster });
+  const featuredMedia = getCommonValue(selectedElements, 'featuredMedia');
+  const poster = getCommonValue(selectedElements, 'poster');
+  const [state, setState] = useState({ featuredMedia, poster });
   useEffect(() => {
-    setState({ posterId, poster });
-  }, [posterId, poster]);
+    setState({ featuredMedia, poster });
+  }, [featuredMedia, poster]);
 
   const handleSubmit = (evt) => {
     onSetProperties(state);
@@ -58,20 +47,12 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
 
   const handleChangeImage = (image) => {
     const newState = {
-      posterId: image.id,
-      poster:
-        image.sizes && image.sizes.medium ? image.sizes.medium.url : image.url,
+      featuredMedia: image.id,
+      poster: image.sizes?.medium?.url || image.url,
     };
     setState({ ...state, ...newState });
-    onSetProperties({ resource: newState });
+    onSetProperties(newState);
   };
-
-  const openMediaPicker = useMediaPicker({
-    title: __('Select as video poster', 'web-stories'),
-    buttonInsertText: __('Set as video poster', 'web-stories'),
-    onSelect: handleChangeImage,
-    type: 'image',
-  });
 
   return (
     <SimplePanel
@@ -79,12 +60,13 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
       title={__('Poster image', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      {state.poster && <Img src={state.poster} />}
-      <Button onClick={openMediaPicker} fullWidth>
-        {state.poster
-          ? __('Replace poster image', 'web-stories')
-          : __('Set poster image', 'web-stories')}
-      </Button>
+      <Media
+        value={state.poster}
+        onChange={handleChangeImage}
+        title={__('Select as video poster', 'web-stories')}
+        buttonInsertText={__('Set as video poster', 'web-stories')}
+        type={'image'}
+      />
     </SimplePanel>
   );
 }

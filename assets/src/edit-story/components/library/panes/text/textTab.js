@@ -31,9 +31,15 @@ import { __ } from '@wordpress/i18n';
 import createSolid from '../../../../utils/createSolid';
 import useLibrary from '../../useLibrary';
 import { Tab } from '../shared';
+import { PAGE_WIDTH } from '../../../../constants';
+import { dataFontEm } from '../../../../units';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
+
+// By default, the element should be 50% of the page.
+const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+const DEFAULT_FONT_SIZE = dataFontEm(2);
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
@@ -81,13 +87,8 @@ function TextTab(props) {
     insertElement('text', {
       content: __('Double-click to edit...', 'web-stories'),
       color: createSolid(0, 0, 0),
-      fontSize: 100,
-      backgroundColor: createSolid(255, 255, 255),
-      width: 300,
-      height: 100,
-      x: 50,
-      y: 20,
-      rotationAngle: 0,
+      fontSize: DEFAULT_FONT_SIZE,
+      width: DEFAULT_ELEMENT_WIDTH,
     });
   };
   const { isActive } = props;

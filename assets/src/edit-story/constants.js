@@ -16,6 +16,7 @@
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
+export const CANVAS_MIN_WIDTH = 480;
 export const LIBRARY_MIN_WIDTH = 220;
 export const LIBRARY_MAX_WIDTH = 360;
 export const INSPECTOR_MIN_WIDTH = 220;
@@ -28,6 +29,12 @@ export const PAGE_WIDTH = 1080;
 export const PAGE_HEIGHT = 1920;
 export const DEFAULT_EDITOR_PAGE_WIDTH = 412;
 export const DEFAULT_EDITOR_PAGE_HEIGHT = 732;
+
+// Default device pixel ratio.
+export const DEFAULT_DPR = 0.5;
+
+// Default 1em value for font size.
+export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 
 // @todo Confirm real min-max font sizes.
 export const MIN_FONT_SIZE = 30;

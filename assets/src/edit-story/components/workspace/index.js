@@ -17,18 +17,27 @@
 /**
  * Internal dependencies
  */
-import LibraryProvider from './libraryProvider';
-import LibraryLayout from './libraryLayout';
-import LibraryUploadDropTarget from './libraryUploadDropTarget';
+import Inspector from '../inspector';
+import Canvas from '../canvas';
+import { SidebarProvider } from '../sidebar';
+import CanvasProvider from '../canvas/canvasProvider';
+import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
 
-function Library() {
+function Workspace() {
   return (
-    <LibraryProvider>
-      <LibraryUploadDropTarget>
-        <LibraryLayout />
-      </LibraryUploadDropTarget>
-    </LibraryProvider>
+    <CanvasProvider>
+      <SidebarProvider>
+        <WorkspaceLayout>
+          <CanvasArea>
+            <Canvas />
+          </CanvasArea>
+          <InspectorArea>
+            <Inspector />
+          </InspectorArea>
+        </WorkspaceLayout>
+      </SidebarProvider>
+    </CanvasProvider>
   );
 }
 
-export default Library;
+export default Workspace;

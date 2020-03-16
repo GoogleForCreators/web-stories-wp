@@ -32,6 +32,8 @@ body.edit-story #wpbody-content {
 
 body.edit-story #edit-story {
   background-color: #191c28;
+  position: relative;
+  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
 }
 
 body.edit-story .loading-message {
