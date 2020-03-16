@@ -87,15 +87,22 @@ function reducer(state, { type, payload }) {
 
     case types.ADD_PROCESSING: {
       const { videoId } = payload;
+      if (!videoId || state.processing.includes(videoId)) {
+        return state;
+      }
       return {
-        processing: state.processing.push(videoId),
+        processing: [...state.processing, videoId],
         ...state,
       };
     }
 
     case types.REMOVE_PROCESSING: {
       const { videoId } = payload;
-      const processing = state.processing.filter((e) => e !== videoId);
+      if (!videoId || !state.processing.includes(videoId)) {
+        return state;
+      }
+      const currentProcessing = [...state.processing];
+      const processing = currentProcessing.filter((e) => e !== videoId);
       return {
         processing,
         ...state,
@@ -105,13 +112,25 @@ function reducer(state, { type, payload }) {
     case types.UPDATE_MEDIA_ELEMENT: {
       const { videoId, posterId, poster } = payload;
 
-      state.media.forEach((element, index) => {
-        if (element.id === videoId) {
-          state.media[index].posterId = posterId;
-          state.media[index].poster = poster;
-        }
-      });
+      const mediaIndex = state.media.findIndex(({ id }) => id === videoId);
+      if (mediaIndex === -1) {
+        return state;
+      }
+
+      const updatedVideo = {
+        ...state.media[mediaIndex],
+        posterId,
+        poster,
+      };
+
+      const newMedia = [
+        ...state.media.slice(0, mediaIndex),
+        updatedVideo,
+        ...state.media.slice(mediaIndex + 1),
+      ];
+
       return {
+        media: newMedia,
         ...state,
       };
     }
