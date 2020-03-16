@@ -39,9 +39,9 @@ const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   const [snapDisabled, setSnapDisabled] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const {
     actions: { updateSelectedElements },
@@ -58,6 +58,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+  const {
+    state: { activeDropTargetId },
+    actions: { handleDrag, handleDrop, setDraggingResource },
+  } = useDropTargets();
 
   const otherNodes = Object.values(
     objectWithout(nodesById, [selectedElement.id])
@@ -145,12 +149,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
-  // Drop targets
-  const {
-    state: { activeDropTargetId },
-    actions: { handleDrag, handleDrop },
-  } = useDropTargets();
-
   const canSnap = !isDragging || (isDragging && !activeDropTargetId);
 
   return (
@@ -177,10 +175,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       throttleDrag={0}
       onDragStart={({ set }) => {
         setIsDragging(true);
+        setDraggingResource(selectedElement.resource);
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
         setIsDragging(false);
+        setDraggingResource(null);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {

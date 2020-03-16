@@ -31,6 +31,7 @@ const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
 const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
 
 function DropTargetsProvider({ children }) {
+  const [draggingResource, setDraggingResource] = useState(null);
   const [dropTargets, setDropTargets] = useState({});
   const [activeDropTargetId, setActiveDropTargetId] = useState(null);
   const {
@@ -161,6 +162,7 @@ function DropTargetsProvider({ children }) {
     state: {
       dropTargets,
       activeDropTargetId,
+      draggingResource,
     },
     actions: {
       registerDropTarget,
@@ -169,6 +171,7 @@ function DropTargetsProvider({ children }) {
       isDropTarget,
       handleDrag,
       handleDrop,
+      setDraggingResource,
     },
   };
 

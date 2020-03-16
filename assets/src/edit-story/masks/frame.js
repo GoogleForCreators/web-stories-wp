@@ -54,12 +54,14 @@ const DropTargetPath = styled.path`
 
 function WithDropTarget({ element, children }) {
   const pathRef = useRef(null);
+  const indicatorRef = useRef(null);
 
   const {
+    state: { draggingResource },
     actions: { registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
-  const { id } = element;
+  const { id, resource } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
@@ -90,17 +92,32 @@ function WithDropTarget({ element, children }) {
         height="100%"
         preserveAspectRatio="none"
       >
+        {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          ref={pathRef}
+          ref={indicatorRef}
           vectorEffect="non-scaling-stroke"
-          strokeWidth="32"
+          strokeWidth="4"
           fill="none"
           stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          style={
+            draggingResource && draggingResource !== resource
+              ? { opacity: 1 }
+              : {}
+          }
+        />
+        {/** Drop target shown when an element is in the drop target area  */}
+        <DropTargetPath
+          ref={pathRef}
+          vectorEffect="non-scaling-stroke"
+          strokeWidth="36"
+          fill="none"
+          stroke="#0063F9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d={mask?.path}
         />
       </DropTargetSVG>
     </>
