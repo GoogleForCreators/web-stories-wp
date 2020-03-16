@@ -34,7 +34,11 @@ import getCommonValue from './utils/getCommonValue';
 
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
   const resource = getCommonValue(selectedElements, 'resource');
-  const { posterId, poster } = resource;
+  let posterId = 0;
+  let poster = '';
+  if (resource) {
+    ({ posterId, poster } = resource);
+  }
   const [state, setState] = useState({ posterId, poster });
   useEffect(() => {
     setState({ posterId, poster });
