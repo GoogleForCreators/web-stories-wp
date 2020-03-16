@@ -19,12 +19,23 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * External dependencies
+ */
+import { ThemeProvider } from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import theme, { GlobalStyle } from '../theme';
+
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <h1>{__('Dashboard', 'web-stories')}</h1>
       <p>{__('Coming soon', 'web-stories')}</p>
-    </div>
+    </ThemeProvider>
   );
 }
 

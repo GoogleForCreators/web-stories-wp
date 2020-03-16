@@ -20,17 +20,20 @@
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { useContext } from 'react';
 
+/**
+ * Internal dependencies
+ */
 export const GlobalStyle = createGlobalStyle`
+  @import url(//fonts.googleapis.com/css?family=Google+Sans);
 	*,
 	*::after,
 	*::before {
 		box-sizing: border-box;
-	}
-
-  /* WP admin menu arrow color */
-  ul#adminmenu a.wp-has-current-submenu::after {
-    border-right-color: ${({ theme }) => theme.colors.bg.v4};
-  }
+    }
+    
+    h1 {
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+    }
 `;
 
 export function useTheme() {
@@ -38,45 +41,13 @@ export function useTheme() {
 }
 
 const theme = {
-  colors: {
-    bg: {
-      v0: '#000000',
-      v1: '#191C28',
-      v2: '#202124',
-      v3: '#242A3B',
-      v4: '#2F3449',
-      v5: '#575D65',
-      v6: '#1D222F',
-      v7: '#07080C',
-      v8: '#2A3140',
-      v9: '#232636',
-      v10: '#44485B',
-      v11: '#08223A',
-    },
-    mg: {
-      v1: '#616877',
-      v2: '#DADADA',
-    },
-    fg: {
-      v0: '#000000',
-      v1: '#FFFFFF',
-      v2: '#E5E5E5',
-      v3: '#D4D3D4',
-      v4: '#B3B3B3',
-      v5: '#DDDDDD',
-      v6: '#232636',
-    },
-    action: '#47A0F4',
-    danger: '#FF0000',
-    selection: '#44aaff',
-    grayout: 'rgba(0, 0, 0, 0.5)',
-    whiteout: 'rgba(255, 255, 255, 0.5)',
-    t: {
-      bg: '#000000CC',
-      fg: '#FFFFFFCC',
-    },
-  },
   fonts: {
+    heading1: {
+      family: 'Google Sans',
+      size: '38px',
+      lineHeight: '53px',
+      letterSpacing: '-0.005em',
+    },
     body1: {
       family: 'Roboto',
       size: '16px',
@@ -90,9 +61,9 @@ const theme = {
       letterSpacing: '0.0142em',
     },
     tab: {
-      family: 'Roboto',
-      size: '12px',
-      lineHeight: '1.2',
+      family: 'Google Sans',
+      size: '14px',
+      lineHeight: '20px',
       weight: '500',
     },
     label: {
@@ -100,12 +71,6 @@ const theme = {
       size: '15px',
       lineHeight: '18px',
       weight: '400',
-    },
-    duration: {
-      family: 'Roboto',
-      size: '12px',
-      lineHeight: '1',
-      weight: '500',
     },
   },
 };
