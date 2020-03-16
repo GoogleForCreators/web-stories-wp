@@ -123,7 +123,7 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 `;
 
-const possibleNormalKeysForSearch = [
+const availableKeysForSearch = [
   'a',
   'b',
   'c',
@@ -180,6 +180,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
+    setFocusedValue(null);
   }, []);
 
   const handleMoveFocus = useCallback(
@@ -216,17 +217,19 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
 
   const handleKeyDown = useCallback(
     ({ keyCode }) => {
-      const searchTerm = searchValue + String.fromCharCode(keyCode);
-      setSearchValue(searchTerm);
-      const searchIndex = options.findIndex((item) =>
-        item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-      );
-      if (searchIndex >= 0) {
-        setFocusedValue(options[searchIndex].value);
+      if (isOpen) {
+        const searchTerm = searchValue + String.fromCharCode(keyCode);
+        setSearchValue(searchTerm);
+        const searchIndex = options.findIndex((item) =>
+          item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+        );
+        if (searchIndex >= 0) {
+          setFocusedValue(options[searchIndex].value);
+        }
+        clearSearchValue();
       }
-      clearSearchValue();
     },
-    [clearSearchValue, searchValue, options]
+    [clearSearchValue, searchValue, options, isOpen]
   );
 
   const handleCurrentValue = useCallback(
@@ -262,7 +265,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   );
   useKeyDownEffect(
     DropDown.wrapperRef,
-    { key: possibleNormalKeysForSearch, shift: true },
+    { key: availableKeysForSearch, shift: true },
     handleKeyDown,
     [handleKeyDown]
   );
