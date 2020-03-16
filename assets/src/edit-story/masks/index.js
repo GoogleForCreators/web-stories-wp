@@ -92,6 +92,6 @@ export function getElementMask({ type, mask }) {
 }
 
 function getDefaultElementMask(type) {
-  const { isMedia } = getDefinitionForType(type);
-  return isMedia ? DEFAULT_MASK : null;
+  const { isMaskable } = getDefinitionForType(type);
+  return isMaskable ? DEFAULT_MASK : null;
 }

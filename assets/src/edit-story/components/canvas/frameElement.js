@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -49,17 +49,15 @@ const Wrapper = styled.div`
 	&:focus,
 	&:active,
 	&:hover {
-		outline: ${({ theme, dragging }) =>
-      dragging ? 'none' : `1px solid ${theme.colors.selection}`};
+		outline: ${({ theme, hasMask }) =>
+      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
 `;
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame } = getDefinitionForType(type);
+  const { Frame, isMaskable } = getDefinitionForType(type);
   const elementRef = useRef();
-
-  const [dragging, setDragging] = useState(false);
 
   const {
     actions: { setNodeForElement, handleSelectElement },
@@ -86,11 +84,7 @@ function FrameElement({ element }) {
         if (!isSelected) {
           handleSelectElement(id, evt);
         }
-        setDragging(true);
         evt.stopPropagation();
-      }}
-      onMouseUp={() => {
-        setDragging(false);
       }}
       onFocus={(evt) => {
         if (!isSelected) {
@@ -99,7 +93,7 @@ function FrameElement({ element }) {
       }}
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
-      dragging={dragging}
+      hasMask={isMaskable}
     >
       <WithLink
         element={element}
