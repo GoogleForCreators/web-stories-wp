@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT, DEFAULT_EM } from '../constants';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -27,6 +27,16 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
  */
 export function dataPixels(v) {
   return Number(v.toFixed(0));
+}
+
+/**
+ * Returns the font size in the "data" space for the specified "em" value.
+ *
+ * @param {number} v The "em" value. E.g. 2 for "2em".
+ * @return {number} The font size for the specified "em" value.
+ */
+export function dataFontEm(v) {
+  return dataPixels(v * DEFAULT_EM);
 }
 
 /**
