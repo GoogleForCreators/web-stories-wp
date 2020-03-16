@@ -22,8 +22,11 @@
 import React, { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
+const KEYBOARD_USER_CLASS = `useskeyboard`;
+export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
+
 const OutlineStyles = createGlobalStyle`
-    *:focus {
+    body:not(${KEYBOARD_USER_SELECTOR}) *:focus {
         outline: none !important;
     }
 `;
@@ -35,9 +38,6 @@ const ACCEPTED_KEYS = [
   'ArrowRight',
   'Tab',
 ];
-
-const KEYBOARD_USER_CLASS = `useskeyboard`;
-export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 const KeyboardOnlyOutline = () => {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
@@ -53,8 +53,8 @@ const KeyboardOnlyOutline = () => {
     }
   };
 
-  document.addEventListener('keydown', handleKeydown);
-  document.addEventListener('mousedown', handleMousedown);
+  document.addEventListener('keydown', handleKeydown, true);
+  document.addEventListener('mousedown', handleMousedown, true);
 
   useEffect(() => {
     return function cleanup() {
@@ -67,7 +67,7 @@ const KeyboardOnlyOutline = () => {
     document.body.classList.toggle(KEYBOARD_USER_CLASS, usingKeyboard);
   }, [usingKeyboard]);
 
-  return !usingKeyboard ? <OutlineStyles /> : null;
+  return <OutlineStyles />;
 };
 
 KeyboardOnlyOutline.propTypes = {};
