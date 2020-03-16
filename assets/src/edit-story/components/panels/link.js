@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { debounce } from 'throttle-debounce';
 
 /**
  * WordPress dependencies
@@ -35,6 +34,8 @@ import { TextInput, Media, Row } from '../form';
 import { createLink } from '../link';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import { useAPI } from '../../app/api';
+import { useDebouncedCallback } from 'use-debounce';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -56,7 +57,8 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
 
-  const [state, setState] = useState({ link: createLink() });
+  const [fetchingMetadata, setFetchingMetadata] = useState(false);
+  const [state, setState] = useState({ ...(link || createLink()) });
   useEffect(() => {
     setState({ ...link });
   }, [link]);
@@ -82,7 +84,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   );
   const handleSubmit = useCallback(
     (evt) => {
-      onSetProperties({ link: state?.url ? state : null });
+      onSetProperties({ link: state?.url ? { ...state } : null });
       if (evt) {
         evt.preventDefault();
       }
@@ -90,21 +92,32 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     [state, onSetProperties]
   );
 
+  const {
+    actions: { getLinkMetadata },
+  } = useAPI();
+
   const canLink = selectedElements.length === 1 && !isFill;
-  const populateMetadata = useCallback(
-    debounce(300, async (/** url */) => {
-      // TODO(wassgha): Implement getting the page metadata
-    })
-  );
+
+  const [populateMetadata] = useDebouncedCallback((url) => {
+    setFetchingMetadata(true);
+    getLinkMetadata(url).then(({ title, image }) => {
+      setState((originalState) => ({
+        ...originalState,
+        desc: title,
+        icon: image,
+      }));
+      setFetchingMetadata(false);
+    });
+  }, 1200);
 
   useEffect(() => {
-    if (state?.url) {
-      populateMetadata(state?.url);
-    } else if (state.url === '' || state.desc || state.icon) {
+    if (state.url === '') {
       setState({ url: null, desc: null, icon: null });
       onSetProperties({ link: null });
+    } else if (state.url) {
+      populateMetadata(state.url);
     }
-  }, [onSetProperties, populateMetadata, state]);
+  }, [onSetProperties, state.url]);
 
   return (
     <SimplePanel
@@ -138,7 +151,6 @@ function LinkPanel({ selectedElements, onSetProperties }) {
           />
         </Row>
       )}
-      {/** TODO(@wassgha): Replace with image upload component */}
       {Boolean(state.url) && (
         <Row spaceBetween={false}>
           <Media
@@ -148,6 +160,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
             size={60}
+            loading={fetchingMetadata}
             circle
           />
           <span>{__('Optional brand icon', 'web-stories')}</span>
