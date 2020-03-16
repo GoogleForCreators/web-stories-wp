@@ -164,12 +164,8 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         clipPath: `url(#${maskId})`,
       }}
       {...rest}
-      onPointerOver={() => {
-        setHover(true);
-      }}
-      onPointerOut={() => {
-        setHover(false);
-      }}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
     >
       <svg width={0} height={0}>
         <defs>

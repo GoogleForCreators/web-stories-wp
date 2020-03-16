@@ -143,6 +143,8 @@ function DropTargetsProvider({ children }) {
           });
         setActiveDropTargetId(null);
 
+        // TODO(wassgha): once https://github.com/daybrush/moveable/issues/197
+        // is resolved, go back to using deleteElementById({ elementId: selfId });
         if (selfId) {
           deleteSelectedElements();
         }

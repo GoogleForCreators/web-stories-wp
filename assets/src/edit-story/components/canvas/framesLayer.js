@@ -89,7 +89,10 @@ function FramesLayer() {
         {Boolean(draggingResource) && isDropSource(draggingResource.type) && (
           <FrameSidebar>
             <Hint>
-              {__('Drop targets are outlined in blue', 'web-stories')}
+              {__(
+                'Drop targets are outlined in blue. Use ⌘ to disable snapping.',
+                'web-stories'
+              )}
             </Hint>
           </FrameSidebar>
         )}
