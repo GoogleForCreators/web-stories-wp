@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import validUrl from 'valid-url';
 
 /**
  * WordPress dependencies
@@ -30,12 +31,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce';
 import { TextInput, Media, Row } from '../form';
 import { createLink } from '../link';
+import { useAPI } from '../../app/api';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
-import { useAPI } from '../../app/api';
-import { useDebouncedCallback } from 'use-debounce';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -99,12 +100,15 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const canLink = selectedElements.length === 1 && !isFill;
 
   const [populateMetadata] = useDebouncedCallback((url) => {
+    if (!validUrl.isUri(url)) {
+      return;
+    }
     setFetchingMetadata(true);
     getLinkMetadata(url).then(({ title, image }) => {
       setState((originalState) => ({
         ...originalState,
-        desc: title,
-        icon: image,
+        desc: title ? title : originalState.desc,
+        icon: image ? image : originalState.icon,
       }));
       setFetchingMetadata(false);
     });
@@ -117,7 +121,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     } else if (state.url) {
       populateMetadata(state.url);
     }
-  }, [onSetProperties, state.url]);
+  }, [onSetProperties, populateMetadata, state.url]);
 
   return (
     <SimplePanel

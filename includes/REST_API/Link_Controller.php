@@ -131,11 +131,6 @@ class Link_Controller extends WP_REST_Controller {
 
 		$response = wp_safe_remote_get( $url, $args );
 
-		$redirect_location = $response['headers']['location'];
-		if (is_array($redirect_location)) {
-			$redirect_location = array_pop($redirect_location);
-		}   
-
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
@@ -195,16 +190,16 @@ class Link_Controller extends WP_REST_Controller {
 		// Site icon.
 
 		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
-		$image          = WP_Http::make_absolute_url($this->get_dom_attribute_content( $og_image_query, 'content' ), $redirect_location);
+		$image          = $this->get_dom_attribute_content( $og_image_query, 'content' );
 
 		if ( ! $image ) {
 			$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
-			$image      = WP_Http::make_absolute_url($this->get_dom_attribute_content( $icon_query, 'content' ), $redirect_location);
+			$image      = $this->get_dom_attribute_content( $icon_query, 'content' );
 		}
 
 		if ( ! $image ) {
 			$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
-			$image            = WP_Http::make_absolute_url($this->get_dom_attribute_content( $touch_icon_query, 'href' ), $redirect_location);
+			$image            = $this->get_dom_attribute_content( $touch_icon_query, 'href' );
 		}
 
 		// Link description.
