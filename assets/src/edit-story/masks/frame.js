@@ -115,7 +115,7 @@ function WithDropTarget({ element, children, hover }) {
         <DropTargetPath
           ref={pathRef}
           vectorEffect="non-scaling-stroke"
-          strokeWidth="36"
+          strokeWidth="48"
           fill="none"
           stroke="#0063F9"
           strokeLinecap="round"
