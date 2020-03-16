@@ -210,16 +210,16 @@ function MediaPane(props) {
 
   useIntersectionEffect(
     refContainerFooter,
+    {
+      root: refContainer,
+      rootMargin: '0px 0px 0px 0px',
+    },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) return;
       if (!hasMore) return;
       if (!entry.isIntersecting) return;
 
       setPage({ page: page + 1 });
-    },
-    {
-      root: refContainer.current,
-      rootMargin: '0px 0px 0px 0px',
     },
     [page, hasMore, isMediaLoading, isMediaLoaded]
   );
