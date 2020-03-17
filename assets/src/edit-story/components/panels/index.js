@@ -21,7 +21,6 @@ import { elementTypes } from '../../elements';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import LinkPanel from './link';
-import MaskPanel from './mask';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
@@ -40,7 +39,6 @@ const SIZE_POSITION = 'sizePosition';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
-const MASK = 'mask';
 const PAGE = 'page';
 const NO_SELECTION = 'noselection';
 
@@ -54,7 +52,6 @@ export const PanelTypes = {
   TEXT_STYLE,
   LINK,
   VIDEO_POSTER,
-  MASK,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -112,8 +109,6 @@ export function getPanels(elements) {
           return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
           return { type, Panel: VideoPosterPanel };
-        case MASK:
-          return { type, Panel: MaskPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }
