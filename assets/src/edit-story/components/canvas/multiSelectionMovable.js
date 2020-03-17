@@ -173,7 +173,7 @@ function MultiSelectionMovable({ selectedElements }) {
 
   return (
     <Movable
-      className="default-movable"
+      className={`default-movable ${isDragging ? 'dragging' : ''}`}
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}

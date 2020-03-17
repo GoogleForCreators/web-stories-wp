@@ -98,3 +98,11 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
   }
   return fontFamilyDisplay;
 };
+
+export const draftMarkupToContent = (content, bold) => {
+  // @todo This logic is temporary and will change with selecting part + marking bold/italic/underline.
+  if (bold) {
+    return `<strong>${content}</strong>`;
+  }
+  return content;
+};
