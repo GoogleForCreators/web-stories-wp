@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { isInsideRange } from './utils';
 
 /**
@@ -48,7 +49,7 @@ function addPage(state, { page, position }) {
   const newPage = {
     elements: [],
     backgroundElementId: null,
-    backgroundOverlay: null,
+    backgroundOverlay: OverlayType.NONE,
     ...page,
   };
 

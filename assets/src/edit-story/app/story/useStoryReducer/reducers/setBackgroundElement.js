@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { moveArrayElement } from './utils';
 
 /**
@@ -61,7 +62,7 @@ function setBackgroundElement(state, { elementId }) {
       ...page,
       elements: updatedElements,
       backgroundElementId: null,
-      backgroundOverlay: null,
+      backgroundOverlay: OverlayType.NONE,
     };
   } else {
     // Does the element even exist or is it already background
