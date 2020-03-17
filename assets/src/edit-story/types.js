@@ -195,6 +195,7 @@ StoryPropTypes.elements.shape = PropTypes.shape({
 StoryPropTypes.elements.background = PropTypes.shape({
   ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
+  overlay: PatternPropType,
 });
 
 export default StoryPropTypes;
