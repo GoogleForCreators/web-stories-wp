@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 /**
@@ -28,46 +28,23 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Row } from '../form';
-import { ReactComponent as OverlayNoneIcon } from '../../icons/overlay_none.svg';
-import { ReactComponent as OverlaySolidIcon } from '../../icons/overlay_solid.svg';
-import { ReactComponent as OverlayLinearIcon } from '../../icons/overlay_linear.svg';
-import { ReactComponent as OverlayRadialIcon } from '../../icons/overlay_radial.svg';
 import ToggleButton from '../form/toggleButton';
+import { useStory } from '../../app';
+import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
 import { SimplePanel } from './panel';
 
-const OverlayType = {
-  NONE: 'none',
-  SOLID: 'solid',
-  LINEAR: 'linear',
-  RADIAL: 'radial',
-};
-
-const OverlayPreset = {
-  [OverlayType.NONE]: {
-    label: __('None', 'web-stories'),
-    icon: <OverlayNoneIcon />,
-  },
-  [OverlayType.SOLID]: {
-    label: __('Solid', 'web-stories'),
-    icon: <OverlaySolidIcon />,
-  },
-  [OverlayType.LINEAR]: {
-    label: __('Linear', 'web-stories'),
-    icon: <OverlayLinearIcon />,
-  },
-  [OverlayType.GRADIENT]: {
-    label: __('Radial', 'web-stories'),
-    icon: <OverlayRadialIcon />,
-  },
-};
-
-function BackgroundOverlayPanel({ selectedElements, onSetProperties }) {
-  const { overlay: initOverlay } = selectedElements[0];
-  const [overlay, setOverlay] = useState(initOverlay || OverlayType.NONE);
+function BackgroundOverlayPanel() {
+  const {
+    state: { currentPage },
+    actions: { updateCurrentPageProperties },
+  } = useStory();
+  const [overlay, setOverlay] = useState(
+    currentPage.backgroundOverlay || OverlayType.NONE
+  );
 
   useEffect(() => {
-    onSetProperties({ overlay });
-  }, [onSetProperties, overlay]);
+    updateCurrentPageProperties({ properties: { backgroundOverlay: overlay } });
+  }, [updateCurrentPageProperties, overlay]);
 
   return (
     <SimplePanel name="backgroundOverlay" title={__('Overlay', 'web-stories')}>
@@ -82,6 +59,8 @@ function BackgroundOverlayPanel({ selectedElements, onSetProperties }) {
               value={overlay === type}
               isMultiple={false}
               onChange={() => setOverlay(type)}
+              iconWidth={22}
+              iconHeight={16}
             />
           );
         })}
@@ -90,9 +69,6 @@ function BackgroundOverlayPanel({ selectedElements, onSetProperties }) {
   );
 }
 
-BackgroundOverlayPanel.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
-};
+BackgroundOverlayPanel.propTypes = {};
 
 export default BackgroundOverlayPanel;

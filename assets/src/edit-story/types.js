@@ -96,6 +96,7 @@ StoryPropTypes.page = PropTypes.shape({
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundElementId: PropTypes.string,
   backgroundColor: PatternPropType,
+  backgroundOverlay: PatternPropType,
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
@@ -195,7 +196,6 @@ StoryPropTypes.elements.shape = PropTypes.shape({
 StoryPropTypes.elements.background = PropTypes.shape({
   ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
-  overlay: PatternPropType,
 });
 
 export default StoryPropTypes;

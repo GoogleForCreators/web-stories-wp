@@ -74,6 +74,7 @@ function deleteElements(state, { elementIds }) {
     idsToDelete.includes(oldPage.backgroundElementId)
   ) {
     newPage.backgroundElementId = null;
+    newPage.backgroundOverlay = null;
   }
 
   const newPages = [

@@ -48,6 +48,7 @@ function addPage(state, { page, position }) {
   const newPage = {
     elements: [],
     backgroundElementId: null,
+    backgroundOverlay: null,
     ...page,
   };
 
