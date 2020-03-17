@@ -44,11 +44,11 @@ const PillLabel = styled.label`
   border: ${({ theme, isSelected }) =>
     isSelected ? '1px solid transparent' : `1px solid ${theme.colors.gray50}`};
   border-radius: ${({ theme }) => theme.border.buttonRadius};
-  font-family: ${({ theme }) => theme.fonts.googleSans};
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.01em;
+  font-family: ${({ theme }) => theme.fonts.pill.family};
+  font-weight: ${({ theme }) => theme.fonts.pill.weight};
+  font-size: ${({ theme }) => theme.fonts.pill.size};
+  line-height: ${({ theme }) => theme.fonts.pill.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing};
 `;
 PillLabel.propTypes = {
   isSelected: PropTypes.bool,
