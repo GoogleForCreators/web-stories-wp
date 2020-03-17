@@ -30,15 +30,15 @@ import { __ } from '@wordpress/i18n';
  */
 import { Media } from '../form';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
+import getCommonObjectValue from './utils/getCommonObjectValue';
 
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
-  const resource = getCommonValue(selectedElements, 'resource');
-  let posterId = 0;
-  let poster = '';
-  if (resource) {
-    ({ posterId, poster } = resource);
-  }
+  const { posterId, poster } = getCommonObjectValue(
+    selectedElements,
+    'resource',
+    ['posterId', 'poster'],
+    false
+  );
   const [state, setState] = useState({ posterId, poster });
   useEffect(() => {
     setState({ posterId, poster });
