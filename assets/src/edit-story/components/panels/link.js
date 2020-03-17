@@ -59,8 +59,9 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const inferredLinkType = inferLinkType(y);
 
   const [state, setState] = useState({
-    link: createLink('', inferredLinkType),
+    ...(link || createLink({ type: inferredLinkType })),
   });
+
   useEffect(() => {
     setState({ ...link });
   }, [link]);
@@ -68,10 +69,12 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const handleChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
-        ...originalState,
+        ...(originalState && originalState?.type
+          ? originalState
+          : createLink({ type: inferredLinkType })),
         [property]: value,
       })),
-    [setState]
+    [setState, inferredLinkType]
   );
   const handleChangeIcon = useCallback(
     (image) => {
@@ -82,11 +85,11 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       }));
       onSetProperties({ link: { ...state, icon } });
     },
-    [onSetProperties, state]
+    [state, onSetProperties]
   );
   const handleSubmit = useCallback(
     (evt) => {
-      onSetProperties({ link: state?.url ? state : null });
+      onSetProperties({ link: state?.url ? { ...state } : null });
       if (evt) {
         evt.preventDefault();
       }
@@ -102,13 +105,13 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   );
 
   useEffect(() => {
-    if (state?.url) {
-      populateMetadata(state?.url);
-    } else if (state.url === '' || state.desc || state.icon) {
-      setState({ url: null, desc: null, icon: null });
+    if (state.url === '') {
+      setState({ url: null, desc: null, icon: null, type: inferredLinkType });
       onSetProperties({ link: null });
+    } else if (state?.url) {
+      populateMetadata(state?.url);
     }
-  }, [onSetProperties, populateMetadata, state]);
+  }, [onSetProperties, populateMetadata, inferredLinkType, state]);
 
   return (
     <SimplePanel

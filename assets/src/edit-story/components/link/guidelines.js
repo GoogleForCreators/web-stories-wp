@@ -91,6 +91,7 @@ function LinkGuidelines({}) {
     if (!linkType || !link || link.type === linkType || !hasOneTapLinks) {
       return;
     }
+
     updateElementById({
       elementId: selectedElement.id,
       properties: {
