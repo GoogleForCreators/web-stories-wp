@@ -36,7 +36,7 @@ function useInsertElement() {
     state: { currentPage },
   } = useStory();
   const {
-    actions: { uploadVideoFrame },
+    actions: { uploadVideoPoster },
   } = useMedia();
 
   /**
@@ -50,10 +50,10 @@ function useInsertElement() {
 
       // Generate video poster if one not set.
       if (type === 'video' && videoId && !posterId) {
-        uploadVideoFrame(videoId, src, elementId);
+        uploadVideoPoster(videoId, src, elementId);
       }
     },
-    [uploadVideoFrame]
+    [uploadVideoPoster]
   );
 
   /**

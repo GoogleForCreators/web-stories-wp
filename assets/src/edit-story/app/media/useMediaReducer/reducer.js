@@ -22,6 +22,7 @@ import * as types from './types';
 export const INITIAL_STATE = {
   media: [],
   processing: [],
+  processed: [],
   mediaType: '',
   searchTerm: '',
   isMediaLoading: false,
@@ -91,8 +92,8 @@ function reducer(state, { type, payload }) {
         return state;
       }
       return {
-        processing: [...state.processing, videoId],
         ...state,
+        processing: [...state.processing, videoId],
       };
     }
 
@@ -103,9 +104,11 @@ function reducer(state, { type, payload }) {
       }
       const currentProcessing = [...state.processing];
       const processing = currentProcessing.filter((e) => e !== videoId);
+
       return {
-        processing,
         ...state,
+        processing,
+        processed: [...state.processed, videoId],
       };
     }
 
@@ -130,8 +133,8 @@ function reducer(state, { type, payload }) {
       ];
 
       return {
-        media: newMedia,
         ...state,
+        media: newMedia,
       };
     }
 

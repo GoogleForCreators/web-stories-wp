@@ -32,7 +32,7 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
 
-  const { processing, media, mediaType, searchTerm } = state;
+  const { processing, processed, media, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -45,10 +45,11 @@ function MediaProvider({ children }) {
     updateMediaElement,
   } = actions;
   const { uploadVideoFrame } = useUploadVideoFrame({
-    processing,
+    updateMediaElement,
     setProcessing,
     removeProcessing,
-    updateMediaElement,
+    processing,
+    processed,
   });
   const {
     actions: { getMedia },
@@ -76,18 +77,46 @@ function MediaProvider({ children }) {
 
   useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
 
+  const uploadVideoPoster = useCallback(
+    (videoId, src, elementId = 0) => {
+      const process = async () => {
+        if (processed.includes(videoId) || processing.includes(videoId)) {
+          return;
+        }
+        setProcessing({ videoId });
+        await uploadVideoFrame(videoId, src, elementId);
+        removeProcessing({ videoId });
+      };
+      process();
+    },
+    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
+  );
+
+  const processor = useCallback(
+    ({ mimeType, posterId, id, src }) => {
+      const process = async () => {
+        if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+          await uploadVideoPoster(id, src);
+        }
+      };
+      process();
+    },
+    [allowedVideoMimeTypes, uploadVideoPoster]
+  );
+
+
   const generatePoster = useCallback(() => {
-    const processor = async ({ mimeType, posterId, id, src }) => {
-      if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
-        await uploadVideoFrame(id, src);
-      }
+    const looper = async () => {
+      await media.reduce((accumulatorPromise, el) => {
+        return accumulatorPromise.then(() => processor(el));
+      }, Promise.resolve());
     };
     if (media) {
-      media.forEach(processor);
+      looper();
     }
-  }, [media, allowedVideoMimeTypes, uploadVideoFrame]);
+  }, [media, processor]);
 
-  useEffect(generatePoster, [media, mediaType, searchTerm]);
+  useEffect(generatePoster, [media.length, mediaType, searchTerm]);
 
   const context = {
     state,
@@ -96,7 +125,7 @@ function MediaProvider({ children }) {
       setSearchTerm,
       fetchMedia,
       resetFilters,
-      uploadVideoFrame,
+      uploadVideoPoster,
     },
   };
 

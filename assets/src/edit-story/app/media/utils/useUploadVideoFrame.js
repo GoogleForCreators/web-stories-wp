@@ -27,12 +27,7 @@ import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
-function useUploadVideoFrame({
-  processing,
-  setProcessing,
-  removeProcessing,
-  updateMediaElement,
-}) {
+function useUploadVideoFrame({ updateMediaElement }) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -47,10 +42,6 @@ function useUploadVideoFrame({
   );
 
   const processData = async (videoId, src, elementId = 0) => {
-    if (processing.includes(videoId)) {
-      return;
-    }
-    setProcessing({ videoId });
     try {
       const obj = await getFirstFrameOfVideo(src);
       const { id: posterId, source_url: poster } = await uploadFile(obj);
@@ -68,7 +59,6 @@ function useUploadVideoFrame({
         setProperties(elementId, newState);
       }
       updateMediaElement({ videoId, posterId, poster });
-      removeProcessing({ videoId });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
     }
@@ -83,7 +73,6 @@ function useUploadVideoFrame({
     uploadFile,
     updateMedia,
     setProperties,
-    processing,
   ]);
 
   return {
