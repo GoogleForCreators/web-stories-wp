@@ -179,7 +179,10 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     [focusedValue, options]
   );
   const activeItem = useMemo(
-    () => options.find((item) => item.value.toString() === value.toString()),
+    () =>
+      options.find(
+        (item) => value && item.value.toString() === value.toString()
+      ),
     [value, options]
   );
   const toggleOptions = useCallback(() => {
