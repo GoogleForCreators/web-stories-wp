@@ -64,49 +64,50 @@ function CanvasUploadDropTarget({ children }) {
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
     async (files) => {
-      const resourcesOnCanvas = await Promise.all(
+      const filesOnCanvas = await Promise.all(
         files.map(async (file) => {
-          const locaResourceId = media.length + 1;
-          const resource = {
-            ...(await getResourceFromLocalFile(file)),
-            id: locaResourceId,
-          };
-          fetchMediaSuccess({
-            media: [resource, ...media],
-            mediaType,
-            searchTerm,
-          });
-          const element = insertElement(resource.type, { resource });
+          const resource = await getResourceFromLocalFile(file);
 
           return {
-            elementId: element.id,
-            locaResourceId,
-            resource,
-            element,
-            localFile: file,
+            element: insertElement(resource.type, { resource }),
+            file,
           };
         })
       );
 
-      resourcesOnCanvas.forEach((resourceOnCanvas) => {
-        uploadFile(resourceOnCanvas.localFile).then((res) => {
-          const resource = getResourceFromUploadAPI(res); // TODO: `res` is not responding the poster value, which is not displaying when updating the element on canvas
+      fetchMediaSuccess({
+        media: [
+          ...filesOnCanvas.map(({ element: { resource } }) => resource),
+          ...media,
+        ],
+        mediaType,
+        searchTerm,
+      });
 
-          // TODO: Should update the media library with the last version of the resource
-          // fetchMediaSuccess({
-          //   media: [resource, ...media],
-          //   mediaType,
-          //   searchTerm,
-          // });
+      const filesUploadedOnCanvas = await Promise.all(
+        filesOnCanvas.map(async ({ element, file }) => {
+          const uploadedFile = await uploadFile(file);
+          const resource = getResourceFromUploadAPI(uploadedFile);
 
-          return updateElementById({
-            elementId: resourceOnCanvas.elementId,
+          updateElementById({
+            elementId: element.elementId,
             properties: {
-              resource,
-              type: resource.type,
+              resource: {
+                ...resource,
+                poster: resource.poster,
+              },
+              type: element.resource.type,
             },
           });
-        });
+
+          return resource;
+        })
+      );
+
+      fetchMediaSuccess({
+        media: [...filesUploadedOnCanvas.map((resource) => resource), ...media],
+        mediaType,
+        searchTerm,
       });
     },
     [

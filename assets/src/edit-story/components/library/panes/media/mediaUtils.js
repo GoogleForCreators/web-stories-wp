@@ -19,6 +19,7 @@
  */
 import { defaultAttributes as DefaultVideoAttributes } from '../../../../elements/video';
 import { defaultAttributes as DefaultImageAttributes } from '../../../../elements/image';
+import getFirstFrameOfVideo from '../../../../app/media/utils/getFirstFrameOfVideo';
 
 /**
  * Infer element type from mime type of its resource
@@ -98,19 +99,17 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
  * @return {Promise} Resource object
  */
 
-const getImageMetadata = (image) => {
+const getImageResource = (image) => {
   const reader = new window.FileReader();
 
   return new Promise((resolve, reject) => {
     reader.onload = function(e) {
       const src = e.target.result;
-      const randomId = Math.floor(Date.now() / 1000);
-
       const img = new window.Image();
 
       img.onload = function() {
-        const width = img.width;
-        const height = img.height;
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
 
         resolve({
           type: 'image',
@@ -118,7 +117,7 @@ const getImageMetadata = (image) => {
           width,
           height,
           mimeType: image.type,
-          posterId: randomId,
+          posterId: undefined,
           poster: '',
           videoId: undefined,
           local: true,
@@ -143,66 +142,39 @@ const getImageMetadata = (image) => {
  * @return {Promise} Resource object
  */
 
-const getVideoMetadata = (video) => {
+const getVideoResource = (video) => {
   const reader = new window.FileReader();
 
   return new Promise((resolve, reject) => {
-    reader.onload = function() {
-      const blob = new window.Blob([reader.result], { type: video.type });
-      const src = URL.createObjectURL(blob);
-      const v = document.createElement('video');
-      const randomId = Math.floor(Date.now() / 1000);
-
-      const snapshot = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = v.videoWidth;
-        canvas.height = v.videoHeight;
-        canvas.getContext('2d').drawImage(v, 0, 0, canvas.width, canvas.height);
-        const poster = canvas.toDataURL();
-        const success = poster.length > 100000;
-
-        if (success) {
-          const img = new window.Image();
-
-          img.onload = function() {
-            const width = img.width;
-            const height = img.height;
-
-            resolve({
-              type: 'video',
-              src,
-              width,
-              height,
-              mimeType: video.type,
-              posterId: randomId,
-              poster,
-              videoId: randomId,
-              local: true,
-              lengthFormatted: undefined,
-              defaultAttributes: DefaultVideoAttributes,
-            });
-          };
-
-          img.src = poster;
-        }
-        return success;
-      };
-      const timeupdate = () => {
-        if (snapshot()) {
-          v.removeEventListener('timeupdate', timeupdate);
-          v.pause();
-        }
-      };
-      v.addEventListener(
-        'loadeddata',
-        () => snapshot() && v.removeEventListener('timeupdate', timeupdate)
+    reader.onload = async () => {
+      const src = window.URL.createObjectURL(
+        new window.Blob([reader.result], { type: video.type })
       );
-      v.addEventListener('timeupdate', timeupdate);
-      v.preload = 'metadata';
-      v.src = src;
-      v.muted = true;
-      v.playsInline = true;
-      v.play();
+      const poster = window.URL.createObjectURL(
+        await getFirstFrameOfVideo(src)
+      );
+      const img = new window.Image();
+
+      img.onload = function() {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+
+        resolve({
+          type: 'video',
+          src,
+          width,
+          height,
+          mimeType: video.type,
+          posterId: undefined,
+          poster,
+          videoId: undefined,
+          local: true,
+          lengthFormatted: undefined,
+          defaultAttributes: DefaultVideoAttributes,
+        });
+      };
+
+      img.src = poster;
     };
 
     reader.onerror = reject;
@@ -221,10 +193,10 @@ export const getResourceFromLocalFile = (file) => {
   const type = getTypeFromMime(file.type);
 
   if (type === 'image') {
-    return getImageMetadata(file);
+    return getImageResource(file);
   }
 
-  return getVideoMetadata(file);
+  return getVideoResource(file);
 };
 
 /**
@@ -250,8 +222,8 @@ export const getResourceFromUploadAPI = (file) => {
     height,
     mimeType,
     lengthFormatted,
-    oWidth: width, // TODO: check why we are using this format `oWidth` on media library and improve it
-    oHeight: height, // TODO: check why we are using this format `oHeight` on media library and improve it
+    oWidth: width,
+    oHeight: height,
     defaultAttributes:
       type === 'video' ? DefaultVideoAttributes : DefaultImageAttributes,
     ...(type === 'video' ? { posterId, poster, videoId } : {}),
