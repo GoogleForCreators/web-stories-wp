@@ -29,7 +29,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, SelectMenu } from '../../form';
+import DropDown from '../../dropDown';
+import { Numeric, Row } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import getCommonValue from '../utils/getCommonValue';
@@ -91,11 +92,10 @@ function FontControls({ selectedElements, onSetProperties }) {
     <>
       {fonts && (
         <Row>
-          <SelectMenu
+          <DropDown
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
             value={state.fontFamily}
-            isMultiple={fontFamily === ''}
             onChange={(value) => {
               const currentFontWeights = getFontWeight(value);
               const currentFontFallback = getFontFallback(value);
@@ -132,11 +132,10 @@ function FontControls({ selectedElements, onSetProperties }) {
       <Row>
         {state.fontWeights && (
           <>
-            <SelectMenu
+            <DropDown
               ariaLabel={__('Font weight', 'web-stories')}
               options={state.fontWeights}
               value={state.fontWeight}
-              isMultiple={fontWeight === ''}
               onChange={handleNumberChange('fontWeight')}
             />
             <Space />
