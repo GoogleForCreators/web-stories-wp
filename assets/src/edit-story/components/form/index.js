@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { default as MULTIPLE_VALUE } from './multipleValue';
 export { default as Button } from './button';
 export { default as Color } from './color';
 export { default as Group } from './group';

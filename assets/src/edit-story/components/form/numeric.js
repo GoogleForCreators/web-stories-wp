@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Input } from '../form';
+import { Input, MULTIPLE_VALUE } from '../form';
 
 const StyledInput = styled(Input)`
   width: 100%;
@@ -72,6 +72,8 @@ function Numeric({
   disabled,
   ...rest
 }) {
+  // @todo: always do this automatically and turn it to const.
+  isMultiple = value === MULTIPLE_VALUE ? true : isMultiple;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [focused, setFocus] = useState(false);
 
@@ -88,11 +90,23 @@ function Numeric({
         prefix={prefix}
         suffix={suffix}
         label={label}
-        value={`${value}${!focused ? symbol : ''}`}
+        value={
+          value === MULTIPLE_VALUE ? '' : `${value}${focused ? '' : symbol}`
+        }
         aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
-        onChange={(evt) => onChange(evt.target.value, evt)}
+        onChange={(evt) => {
+          const newValue = evt.target.value;
+          if (newValue === '') {
+            onChange(MULTIPLE_VALUE, evt);
+          } else {
+            const valueAsNumber = parseFloat(evt.target.value);
+            if (!isNaN(valueAsNumber)) {
+              onChange(valueAsNumber, evt);
+            }
+          }
+        }}
         onBlur={(evt) => {
           if (evt.target.form) {
             evt.target.form.dispatchEvent(new window.Event('submit'));
@@ -130,7 +144,7 @@ Numeric.defaultProps = {
   disabled: false,
   isMultiple: false,
   symbol: '',
-  flexBasis: 100,
+  flexBasis: 110,
   textCenter: false,
   ariaLabel: __('Standard input', 'web-stories'),
 };

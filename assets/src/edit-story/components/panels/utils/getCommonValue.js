@@ -15,25 +15,34 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { MULTIPLE_VALUE } from '../../form';
+
+/**
  * Get the common value `property` for all objects in `list`, if they
- * in fact are all the same. If they are not all equal, return an empty string.
+in fact are all the same. If they are not all equal, return an empty string.
+ 
+Example usage:
+```
+getCommonValue( [ { a: 1 }, { a:  1  } ], 'a' );  // returns: 1
+getCommonValue( [ { a: 1 }, {        } ], 'a' );  // returns: MULTIPLE_VALUE
+getCommonValue( [ { a: 1 }, { a:  2  } ], 'a' );  // returns: MULTIPLE_VALUE
+getCommonValue( [ { a: 1 }, { a: '1' } ], 'a' );  // returns: MULTIPLE_VALUE
+```
  *
- * Example usage:
- * ```
- * getCommonValue( [ { a: 1 }, { a:  1  } ], 'a' );  // returns: 1
- * getCommonValue( [ { a: 1 }, {        } ], 'a' );  // returns: ''
- * getCommonValue( [ { a: 1 }, { a:  2  } ], 'a' );  // returns: ''
- * getCommonValue( [ { a: 1 }, { a: '1' } ], 'a' );  // returns: ''
- * ```
- *
- * @param {Array.<Object>} list  List of objects
- * @param {string} property Property to check on all objects
+ * @param {Array<Object>} list List of objects
+ * @param {string|function(Object):any} propertyOrFunc Property to check on all objects.
  * @return {any} Returns common value or empty string if not similar
  */
-function getCommonValue(list, property) {
-  const first = list[0][property];
-  const allMatch = list.every((el) => el[property] === first);
-  return allMatch ? first : '';
+function getCommonValue(list, propertyOrFunc) {
+  const func =
+    typeof propertyOrFunc === 'function'
+      ? propertyOrFunc
+      : (item) => item[propertyOrFunc];
+  const first = func(list[0]);
+  const allMatch = list.every((el) => func(el) === first);
+  return allMatch ? first : MULTIPLE_VALUE;
 }
 
 export default getCommonValue;

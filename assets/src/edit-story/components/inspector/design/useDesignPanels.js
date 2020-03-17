@@ -24,6 +24,7 @@ import { useCallback, useMemo } from 'react';
  */
 import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
+import updateProperties from './updateProperties';
 
 function useDesignPanels() {
   const {
@@ -37,7 +38,7 @@ function useDesignPanels() {
     (newPropertiesOrUpdater) => {
       updateSelectedElements({
         properties: (currentProperties) =>
-          calcProperties(currentProperties, newPropertiesOrUpdater),
+          updateProperties(currentProperties, newPropertiesOrUpdater),
       });
     },
     [updateSelectedElements]
@@ -51,35 +52,6 @@ function useDesignPanels() {
       selectedElements,
     },
   };
-}
-
-/**
- * @param {Object} currentProperties The existing element properties.
- * @param {Object|function(Object):Object} newPropertiesOrUpdater Either a map
- * of the updated properties or a function that will return a map of the updated
- * properties.
- * @return {Object} The updated properties.
- */
-function calcProperties(currentProperties, newPropertiesOrUpdater) {
-  const newProperties =
-    typeof newPropertiesOrUpdater === 'function'
-      ? newPropertiesOrUpdater(currentProperties)
-      : newPropertiesOrUpdater;
-
-  // Filter out empty properties (empty strings specifically)
-  const updatedKeys = Object.keys(newProperties).filter(
-    (key) => newProperties[key] !== ''
-  );
-
-  if (updatedKeys.length === 0) {
-    // Of course abort if no keys have a value
-    return {};
-  }
-
-  const properties = Object.fromEntries(
-    updatedKeys.map((key) => [key, newProperties[key]])
-  );
-  return properties;
 }
 
 export default useDesignPanels;

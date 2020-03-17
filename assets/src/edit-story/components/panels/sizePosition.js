@@ -29,12 +29,11 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Button, Row, Numeric } from '../form';
+import { Button, Row, Numeric, Toggle } from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
-import Toggle from '../form/toggle';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';

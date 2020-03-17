@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import useDesignPanels from './useDesignPanels';
-import DesignPanel from './designPanel';
-
-function DesignPanels() {
-  const { panels, panelProperties } = useDesignPanels();
-  return panels.map(({ Panel, type }) => (
-    <DesignPanel key={type} panelType={Panel} {...panelProperties} />
-  ));
-}
-
-export default DesignPanels;
+export { default as getCommonValue } from './getCommonValue';
