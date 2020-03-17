@@ -23,7 +23,6 @@ export { default as Label } from './label';
 export { default as Media } from './media';
 export { default as Numeric } from './numeric';
 export { default as Row } from './row';
-export { default as SelectMenu } from './select';
 export { default as Spacer } from './spacer';
 export { default as Switch } from './switch';
 export { default as TextInput } from './text';

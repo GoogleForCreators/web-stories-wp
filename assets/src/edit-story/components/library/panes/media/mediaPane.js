@@ -120,13 +120,7 @@ function MediaPane(props) {
       mediaType,
       searchTerm,
     },
-    actions: {
-      setNextPage,
-      resetWithFetch,
-      setMediaType,
-      setSearchTerm,
-      uploadVideoFrame,
-    },
+    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
   } = useMedia();
 
   const {
