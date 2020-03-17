@@ -35,15 +35,9 @@ import {
   UploadDropTargetMessageOverlay,
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
 import { useMedia } from '../../app/media';
-import { useStory } from '../../app/story';
-import {
-  getResourceFromUploadAPI,
-  getResourceFromLocalFile,
-} from '../library/panes/media/mediaUtils';
+
 import { Layer as CanvasLayer, PageArea } from './layout';
-import useInsertElement from './useInsertElement';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
@@ -53,72 +47,14 @@ const PageAreaCover = styled(PageArea)`
 `;
 
 function CanvasUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
   const {
-    state: { media, mediaType, searchTerm },
-    actions: { fetchMediaSuccess },
+    actions: { uploadMediaFromWorkspace },
   } = useMedia();
-  const {
-    actions: { updateElementById },
-  } = useStory();
-  const insertElement = useInsertElement();
   const onDropHandler = useCallback(
-    async (files) => {
-      const filesOnCanvas = await Promise.all(
-        files.map(async (file) => {
-          const resource = await getResourceFromLocalFile(file);
-
-          return {
-            element: insertElement(resource.type, { resource }),
-            file,
-          };
-        })
-      );
-
-      fetchMediaSuccess({
-        media: [
-          ...filesOnCanvas.map(({ element: { resource } }) => resource),
-          ...media,
-        ],
-        mediaType,
-        searchTerm,
-      });
-
-      const filesUploadedOnCanvas = await Promise.all(
-        filesOnCanvas.map(async ({ element, file }) => {
-          const uploadedFile = await uploadFile(file);
-          const resource = getResourceFromUploadAPI(uploadedFile);
-
-          updateElementById({
-            elementId: element.elementId,
-            properties: {
-              resource: {
-                ...resource,
-                poster: resource.poster,
-              },
-              type: element.resource.type,
-            },
-          });
-
-          return resource;
-        })
-      );
-
-      fetchMediaSuccess({
-        media: [...filesUploadedOnCanvas.map((resource) => resource), ...media],
-        mediaType,
-        searchTerm,
-      });
+    (files) => {
+      uploadMediaFromWorkspace(files);
     },
-    [
-      insertElement,
-      updateElementById,
-      fetchMediaSuccess,
-      uploadFile,
-      media,
-      mediaType,
-      searchTerm,
-    ]
+    [uploadMediaFromWorkspace]
   );
 
   return (

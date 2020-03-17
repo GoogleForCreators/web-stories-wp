@@ -17,8 +17,6 @@
 /**
  * Internal dependencies
  */
-import { defaultAttributes as DefaultVideoAttributes } from '../../../../elements/video';
-import { defaultAttributes as DefaultImageAttributes } from '../../../../elements/image';
 import getFirstFrameOfVideo from '../../../../app/media/utils/getFirstFrameOfVideo';
 
 /**
@@ -122,7 +120,6 @@ const getImageResource = (image) => {
           videoId: undefined,
           local: true,
           lengthFormatted: undefined,
-          defaultAttributes: DefaultImageAttributes,
         });
       };
 
@@ -170,7 +167,6 @@ const getVideoResource = (video) => {
           videoId: undefined,
           local: true,
           lengthFormatted: undefined,
-          defaultAttributes: DefaultVideoAttributes,
         });
       };
 
@@ -224,8 +220,6 @@ export const getResourceFromUploadAPI = (file) => {
     lengthFormatted,
     oWidth: width,
     oHeight: height,
-    defaultAttributes:
-      type === 'video' ? DefaultVideoAttributes : DefaultImageAttributes,
     ...(type === 'video' ? { posterId, poster, videoId } : {}),
   };
 };

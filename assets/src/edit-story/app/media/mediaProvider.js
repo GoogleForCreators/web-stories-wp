@@ -24,14 +24,26 @@ import { useEffect, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../api';
+import { useUploader } from '../uploader';
+import { useStory } from '../story';
+import {
+  getResourceFromLocalFile,
+  getResourceFromUploadAPI,
+} from '../../components/library/panes/media/mediaUtils';
+import useInsertElement from '../../components/canvas/useInsertElement';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
 import Context from './context';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
+  const { uploadFile } = useUploader();
+  const {
+    actions: { updateElementById },
+  } = useStory();
+  const insertElement = useInsertElement();
   const { uploadVideoFrame } = useUploadVideoFrame();
-  const { mediaType, searchTerm } = state;
+  const { media, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -48,8 +60,8 @@ function MediaProvider({ children }) {
   const fetchMedia = useCallback(() => {
     fetchMediaStart();
     getMedia({ mediaType, searchTerm })
-      .then((media) => {
-        fetchMediaSuccess({ media, mediaType, searchTerm });
+      .then((res) => {
+        fetchMediaSuccess({ media: res, mediaType, searchTerm });
       })
       .catch(fetchMediaError);
   }, [
@@ -60,6 +72,108 @@ function MediaProvider({ children }) {
     mediaType,
     searchTerm,
   ]);
+
+  const uploadMediaFromLibrary = useCallback(
+    async (files) => {
+      try {
+        const localMedia = await Promise.all(
+          files.map(getResourceFromLocalFile)
+        );
+        const filesUploading = files.map((file) => uploadFile(file));
+        fetchMediaSuccess({
+          media: [...localMedia, ...media],
+          mediaType,
+          searchTerm,
+        });
+        const uploadedFiles = await Promise.all(filesUploading);
+        const uploadedMedia = uploadedFiles.map(getResourceFromUploadAPI);
+
+        fetchMediaSuccess({
+          media: [...uploadedMedia, ...media],
+          mediaType,
+          searchTerm,
+        });
+      } catch (e) {
+        fetchMediaError(e);
+      }
+    },
+    [
+      fetchMediaSuccess,
+      fetchMediaError,
+      uploadFile,
+      media,
+      mediaType,
+      searchTerm,
+    ]
+  );
+
+  const uploadMediaFromWorkspace = useCallback(
+    async (files) => {
+      try {
+        const filesOnCanvas = await Promise.all(
+          files.map(async (file) => {
+            const resource = await getResourceFromLocalFile(file);
+            const element = insertElement(resource.type, { resource });
+
+            return {
+              element,
+              file,
+            };
+          })
+        );
+
+        fetchMediaSuccess({
+          media: [
+            ...filesOnCanvas.map(({ element: { resource } }) => resource),
+            ...media,
+          ],
+          mediaType,
+          searchTerm,
+        });
+
+        const filesUploadedOnCanvas = await Promise.all(
+          filesOnCanvas.map(async ({ element, file }) => {
+            const uploadedFile = await uploadFile(file);
+            const resource = getResourceFromUploadAPI(uploadedFile);
+
+            updateElementById({
+              elementId: element.elementId,
+              properties: {
+                resource: {
+                  ...resource,
+                  poster: resource.poster,
+                },
+                type: element.resource.type,
+              },
+            });
+
+            return resource;
+          })
+        );
+
+        fetchMediaSuccess({
+          media: [
+            ...filesUploadedOnCanvas.map((resource) => resource),
+            ...media,
+          ],
+          mediaType,
+          searchTerm,
+        });
+      } catch (e) {
+        fetchMediaError(e);
+      }
+    },
+    [
+      fetchMediaSuccess,
+      fetchMediaError,
+      uploadFile,
+      insertElement,
+      updateElementById,
+      media,
+      mediaType,
+      searchTerm,
+    ]
+  );
 
   useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
 
@@ -72,6 +186,8 @@ function MediaProvider({ children }) {
       fetchMedia,
       resetFilters,
       uploadVideoFrame,
+      uploadMediaFromLibrary,
+      uploadMediaFromWorkspace,
     },
   };
 
