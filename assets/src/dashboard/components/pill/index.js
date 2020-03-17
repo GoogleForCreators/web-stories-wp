@@ -25,17 +25,42 @@ import styled from 'styled-components';
  */
 import getRandomNumber from '../../utils/getRandomNumber';
 
-// should allow for radio or checkbox inputs or just handle for those
 const PILL_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
 };
 
-const PillLabel = styled.label``;
-const PillInput = styled.input``;
+// TODO hover, action, disabled styles
+const PillLabel = styled.label`
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  margin: auto;
+  padding: 6px 16px;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.blueLight : theme.colors.white};
+  color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.bluePrimary : theme.colors.gray600};
+  border: ${({ theme, isSelected }) =>
+    isSelected ? '1px solid transparent' : `1px solid ${theme.colors.gray50}`};
+  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  font-family: ${({ theme }) => theme.fonts.googleSans};
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+`;
+
+const PillInput = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+`;
 
 const Pill = ({
-  displayText,
+  children,
   inputType = PILL_TYPES.CHECKBOX,
   isSelected,
   name,
@@ -45,7 +70,7 @@ const Pill = ({
 }) => {
   const id = `${name}_${getRandomNumber()}`;
   return (
-    <PillLabel htmlFor={id}>
+    <PillLabel htmlFor={id} isSelected={isSelected}>
       <PillInput
         type={inputType}
         id={id}
@@ -55,17 +80,17 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      {displayText}
+      {children}
     </PillLabel>
   );
 };
 
 Pill.propTypes = {
-  inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
-  displayText: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
   isSelected: PropTypes.bool,
 };
 
