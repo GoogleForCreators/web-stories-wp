@@ -50,7 +50,7 @@ function useInsertElement() {
 
       // Generate video poster if one not set.
       if (type === 'video' && videoId && !posterId) {
-        uploadVideoPoster(videoId, src, elementId);
+        uploadVideoPoster(videoId, src, elementId, resource);
       }
     },
     [uploadVideoPoster]

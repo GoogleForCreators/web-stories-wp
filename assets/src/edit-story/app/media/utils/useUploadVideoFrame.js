@@ -41,7 +41,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
     [updateElementById]
   );
 
-  const processData = async (videoId, src, elementId = 0) => {
+  const processData = async (videoId, src, elementId = 0, resource = {}) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
       const { id: posterId, source_url: poster } = await uploadFile(obj);
@@ -55,7 +55,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
         post: storyId,
       });
       if (elementId) {
-        const newState = { resource: { posterId, poster } };
+        // TODO Update all elements that use video.
+        const newState = { resource: { ...resource, posterId, poster } };
         setProperties(elementId, newState);
       }
       updateMediaElement({ videoId, posterId, poster });
