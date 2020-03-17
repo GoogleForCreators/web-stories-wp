@@ -135,6 +135,8 @@ class Story_Renderer {
 
 	/**
 	 * Print amp-analytics script.
+	 *
+	 * @return void
 	 */
 	public function print_analytics_script() {
 		?>
@@ -144,6 +146,8 @@ class Story_Renderer {
 
 	/**
 	 * Prints AMP Analytics based on Site Kit configuration.
+	 *
+	 * @return void
 	 */
 	protected function print_amp_analytics() {
 		if ( ! defined( 'GOOGLESITEKIT_PLUGIN_MAIN_FILE' ) ) {
