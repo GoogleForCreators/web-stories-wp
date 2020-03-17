@@ -49,13 +49,14 @@ const Wrapper = styled.div`
 	&:focus,
 	&:active,
 	&:hover {
-		outline: 1px solid ${({ theme }) => theme.colors.selection};
+		outline: ${({ theme, hasMask }) =>
+      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
 `;
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame } = getDefinitionForType(type);
+  const { Frame, isMaskable } = getDefinitionForType(type);
   const elementRef = useRef();
 
   const {
@@ -92,6 +93,7 @@ function FrameElement({ element }) {
       }}
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
+      hasMask={isMaskable}
     >
       <WithLink
         element={element}

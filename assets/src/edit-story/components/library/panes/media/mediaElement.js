@@ -103,7 +103,7 @@ const MediaElement = ({
   const [dragging, setDragging] = useState(false);
 
   const {
-    actions: { handleDrag, handleDrop },
+    actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
   const measureMediaElement = () =>
@@ -114,6 +114,7 @@ const MediaElement = ({
       draggable: 'true',
       onDragStart: (e) => {
         setDragging(true);
+        setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
         const offsetY = e.clientY - y;
@@ -132,10 +133,11 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDragging(false);
+        setDraggingResource(null);
         handleDrop(resource);
       },
     }),
-    [resource, handleDrag, handleDrop]
+    [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
   const onClick = () => onInsert(resource, width, height);
