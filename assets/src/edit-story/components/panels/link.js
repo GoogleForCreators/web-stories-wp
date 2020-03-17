@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { TextInput, Media, Row } from '../form';
-import { createLink, inferLinkType } from '../link';
+import { createLink, inferLinkType, LinkType } from '../link';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -54,9 +54,9 @@ const Note = styled.span`
 
 function LinkPanel({ selectedElements, onSetProperties }) {
   const y = getCommonValue(selectedElements, 'y');
-  const inferredLinkType = inferLinkType(y);
   const link = getCommonValue(selectedElements, 'link') || null;
   const isFill = getCommonValue(selectedElements, 'isFill');
+  const inferredLinkType = inferLinkType(y);
 
   const [state, setState] = useState({
     link: createLink('', inferredLinkType),
@@ -132,7 +132,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         />
       </Row>
 
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -143,7 +143,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         </Row>
       )}
       {/** TODO(@wassgha): Replace with image upload component */}
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row spaceBetween={false}>
           <Media
             value={state?.icon}

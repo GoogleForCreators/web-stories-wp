@@ -37,12 +37,13 @@ const Hint = styled.div`
   font-size: 14px;
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  margin-top: -68px;
+  margin-top: -52px;
   display: flex;
   justify-content: center;
   flex-direction: row;
   max-width: 200px;
   pointer-events: all;
+  padding: 2px 6px;
 `;
 
 const Tooltip = styled.div`

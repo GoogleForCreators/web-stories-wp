@@ -58,6 +58,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+  const {
+    state: { activeDropTargetId },
+    actions: { handleDrag, handleDrop, setDraggingResource },
+  } = useDropTargets();
 
   const otherNodes = Object.values(
     objectWithout(nodesById, [selectedElement.id])
@@ -118,6 +122,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     }
     pushTransform(selectedElement.id, frame);
   };
+  // TODO(@wassgha): Figure out why this is needed? Should be already bound
+  const boundSetTransformStyle = setTransformStyle.bind(this);
 
   /**
    * Resets Movable once the action is done, sets the initial values.
@@ -145,17 +151,11 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.type
   );
 
-  // Drop targets
-  const {
-    state: { activeDropTargetId },
-    actions: { handleDrag, handleDrop },
-  } = useDropTargets();
-
   const canSnap = !isDragging || (isDragging && !activeDropTargetId);
 
   return (
     <Movable
-      className="default-movable"
+      className={`default-movable ${isDragging ? 'dragging' : ''}`}
       zIndex={0}
       ref={moveable}
       target={targetEl}
@@ -164,7 +164,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       rotatable={actionsEnabled && !isDragging}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
-        setTransformStyle(target);
+        boundSetTransformStyle(target);
         if (selectedElement.resource) {
           handleDrag(
             selectedElement.resource,
@@ -177,10 +177,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       throttleDrag={0}
       onDragStart={({ set }) => {
         setIsDragging(true);
+        setDraggingResource(selectedElement.resource);
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
         setIsDragging(false);
+        setDraggingResource(null);
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {

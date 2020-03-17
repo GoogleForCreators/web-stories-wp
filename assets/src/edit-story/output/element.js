@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
@@ -22,8 +27,9 @@ import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/link/output';
+import { CTA_ZONE_PERCENT } from '../constants';
 
-function OutputElement({ element }) {
+function OutputElement({ element, cta }) {
   const { id, opacity, type } = element;
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
@@ -41,9 +47,9 @@ function OutputElement({ element }) {
       className="wrapper"
       style={{
         left: `${x}%`,
-        top: `${y}%`,
+        top: `${cta ? y - 100 * (1 - CTA_ZONE_PERCENT) : y}%`,
         width: `${width}%`,
-        height: `${height}%`,
+        height: `${cta ? height * (1 / CTA_ZONE_PERCENT) : height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: opacity ? opacity / 100 : null,
       }}
@@ -64,6 +70,7 @@ function OutputElement({ element }) {
 
 OutputElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  cta: PropTypes.bool,
 };
 
 export default OutputElement;

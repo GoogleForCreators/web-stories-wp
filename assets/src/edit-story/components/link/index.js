@@ -31,7 +31,7 @@ export function getLinkFromElement(element) {
 }
 
 export function inferLinkType(y) {
-  return y >= PAGE_HEIGHT - PAGE_HEIGHT * CTA_ZONE_PERCENT
+  return y >= PAGE_HEIGHT * (1 - CTA_ZONE_PERCENT)
     ? LinkType.ONE_TAP
     : LinkType.TWO_TAP;
 }

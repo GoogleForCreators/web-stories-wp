@@ -15,14 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+import { LinkType } from '../components/link';
 import OutputElement from './element';
 
-function OutputPage({ page }) {
+function OutputPage({ page, index }) {
   const { id, backgroundColor, elements, backgroundElementId } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
@@ -46,7 +52,14 @@ function OutputPage({ page }) {
       element.isFullbleedBackground !== false
   );
   const regularElements = elements.filter(
-    (element) => element.id !== backgroundElementId
+    (element) =>
+      element.id !== backgroundElementId &&
+      element.link?.type !== LinkType.ONE_TAP
+  );
+  const ctaElements = elements.filter(
+    (element) =>
+      element.id !== backgroundElementId &&
+      element.link?.type === LinkType.ONE_TAP
   );
   return (
     <amp-story-page id={id}>
@@ -67,12 +80,20 @@ function OutputPage({ page }) {
           ))}
         </div>
       </amp-story-grid-layer>
+      {ctaElements.length && index >= 1 && (
+        <amp-story-cta-layer>
+          {ctaElements.map((element) => (
+            <OutputElement key={'el-' + element.id} element={element} cta />
+          ))}
+        </amp-story-cta-layer>
+      )}
     </amp-story-page>
   );
 }
 
 OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  index: PropTypes.number,
 };
 
 export default OutputPage;

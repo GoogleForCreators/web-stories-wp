@@ -19,16 +19,20 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useState, useEffect } from 'react';
 
-/**
- * Internal dependencies
- */
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import { useStory } from '../../app';
+import { useUnits } from '../../units';
 import { CTA_ZONE_PERCENT } from '../../constants';
+import { useTransformHandler } from '../transform';
 import { LinkType, inferLinkType, getLinkFromElement } from '.';
 
 const Separator = styled.div`
@@ -54,29 +58,57 @@ const Tip = styled.span`
 `;
 
 function LinkGuidelines({}) {
+  const [linkType, setLinkType] = useState(LinkType.TWO_TAP);
   const {
-    state: { selectedElements },
+    state: { selectedElements, currentPageNumber },
+    actions: { updateElementById },
   } = useStory();
+  const {
+    actions: { editorToDataY },
+  } = useUnits();
 
   const selectedElement = selectedElements.length === 1 && selectedElements[0];
-  if (!selectedElement) {
-    return null;
-  }
-
   const link = getLinkFromElement(selectedElement);
-  if (!link) {
+  const hasOneTapLinks = selectedElement && link && currentPageNumber !== 1;
+
+  useEffect(() => {
+    if (hasOneTapLinks) {
+      setLinkType(inferLinkType(selectedElement?.y));
+    }
+  }, [hasOneTapLinks, selectedElement, setLinkType]);
+
+  useTransformHandler(selectedElement?.id, (transform) => {
+    if (!hasOneTapLinks) {
+      return;
+    }
+    const translateY = transform?.translate?.[1];
+    if (translateY) {
+      setLinkType(inferLinkType(selectedElement.y + editorToDataY(translateY)));
+    }
+  });
+
+  useEffect(() => {
+    if (!linkType || !link || link.type === linkType || !hasOneTapLinks) {
+      return;
+    }
+    updateElementById({
+      elementId: selectedElement.id,
+      properties: {
+        link: { ...link, type: linkType },
+      },
+    });
+  }, [linkType, link, hasOneTapLinks, selectedElement, updateElementById]);
+
+  if (!selectedElement || !link || currentPageNumber === 1) {
     return null;
   }
-
-  const { x, y, width: w, height: h } = selectedElement;
-  const inferredLinkType = inferLinkType(x, y, w, h);
 
   return (
     <Separator>
-      <Tip active={inferredLinkType === LinkType.TWO_TAP} pos={'top'}>
+      <Tip active={linkType === LinkType.TWO_TAP} pos={'top'}>
         {__('2-TAP LINK', 'web-stories')}
       </Tip>
-      <Tip active={inferredLinkType === LinkType.ONE_TAP} pos={'bottom'}>
+      <Tip active={linkType === LinkType.ONE_TAP} pos={'bottom'}>
         {__('1-TAP LINK', 'web-stories')}
       </Tip>
     </Separator>
