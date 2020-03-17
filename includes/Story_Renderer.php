@@ -134,6 +134,85 @@ class Story_Renderer {
 	}
 
 	/**
+	 * Prints AMP Analytics based on Site Kit configuration.
+	 */
+	protected function print_amp_analytics() {
+		if ( ! defined( 'GOOGLESITEKIT_PLUGIN_MAIN_FILE' ) ) {
+			return;
+		}
+		$option = 'googlesitekit_analytics_settings';
+		// Should support network mode?
+		$site_kit_analytics = get_option( $option, [] );
+		if ( empty( $site_kit_analytics ) || empty( $site_kit_analytics['propertyID'] ) ) {
+			return;
+		}
+
+		if ( isset( $site_kit_analytics['trackingDisabled'] ) ) {
+			$exclusions = $site_kit_analytics['trackingDisabled'];
+			$disabled   = [ 'loggedinUsers', $exclusions, true ] && is_user_logged_in();
+			if ( $disabled ) {
+				return;
+			}
+		}
+
+		$tracking_id = $site_kit_analytics['propertyID'];
+		$gtag        = [
+			'vars'            => [
+				'gtag_id' => $tracking_id,
+				'config'  => [
+					$tracking_id => [
+						'groups' => 'default',
+						'linker' => [
+							'domains' => [ wp_parse_url( home_url(), PHP_URL_HOST ) ],
+						],
+					],
+				],
+			],
+			'optoutElementId' => '__gaOptOutExtension',
+		];
+
+		// Run Site Kit filter to not lose any potential changes.
+		$gtag_filtered = apply_filters( 'googlesitekit_amp_gtag_opt', $gtag );
+
+		// Ensure gtag is still array.
+		if ( ! is_array( $gtag_filtered ) ) {
+			$gtag_filtered = $gtag;
+		}
+
+		if ( ! isset( $gtag_filtered['vars'] ) || ! is_array( $gtag_filtered['vars'] ) ) {
+			$gtag_filtered['vars'] = $gtag['vars'];
+		}
+
+		$gtag_filtered['vars']['gtag_id'] = $tracking_id;
+
+		?>
+			<amp-analytics type="gtag" data-credentials="include">
+				<script type="application/json">
+					<?php echo wp_json_encode( $gtag_filtered ); ?>
+				</script>
+			</amp-analytics>
+		<?php
+	}
+
+	/**
+	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
+	 *
+	 * @param string $content Story markup.
+	 * @return string Updated story markup.
+	 */
+	protected function maybe_add_analytics( $content ) {
+		ob_start();
+
+		// @todo This would ideally be used in Site Kit plugin directly perhaps.
+		do_action( 'web_stories_print_analytics' );
+
+		$this->print_amp_analytics();
+
+		$output = (string) ob_get_clean();
+		return str_replace( '</amp-story>', '</amp-story>' . $output, $content );
+	}
+
+	/**
 	 * Replaces the body start tag to fire a custom action.
 	 *
 	 * @param string $content Story markup.
@@ -185,6 +264,7 @@ class Story_Renderer {
 		$markup = $this->add_poster_images( $markup );
 		$markup = $this->replace_body_start_tag( $markup );
 		$markup = $this->replace_body_end_tag( $markup );
+		$markup = $this->maybe_add_analytics( $markup );
 
 		return $markup;
 	}
