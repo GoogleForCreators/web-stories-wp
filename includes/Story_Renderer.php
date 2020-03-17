@@ -169,8 +169,6 @@ class Story_Renderer {
 			}
 		}
 
-		add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
-
 		$tracking_id = $site_kit_analytics['propertyID'];
 		$gtag        = [
 			'vars'            => [
@@ -225,6 +223,9 @@ class Story_Renderer {
 		$this->print_amp_analytics();
 
 		$output = (string) ob_get_clean();
+		if ( ! empty( $output ) ) {
+			add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
+		}
 		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 
