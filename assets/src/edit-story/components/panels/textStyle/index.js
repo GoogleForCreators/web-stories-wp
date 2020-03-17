@@ -14,28 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-import { rgba } from 'polished';
-
-const ColorBox = styled.div.attrs({
-  tabIndex: 0,
-})`
-  height: 32px;
-  width: 122px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)} !important;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)} !important;
-  border-radius: 4px;
-  overflow: hidden;
-  align-items: center;
-
-  &:focus {
-    outline: none;
-    background: ${({ theme }) => theme.colors.fg.v1};
-    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.55)};
-  }
-`;
-
-export default ColorBox;
+export { default } from './panel';
