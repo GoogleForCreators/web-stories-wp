@@ -32,7 +32,6 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { Numeric, Row } from '../form';
 import { calculateTextHeight } from '../../utils/textMeasurements';
-import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { ReactComponent as AlignBottom } from '../../icons/align_bottom.svg';
 import { ReactComponent as AlignTop } from '../../icons/align_top.svg';
 import { ReactComponent as AlignCenter } from '../../icons/align_center.svg';
@@ -44,7 +43,7 @@ import { ReactComponent as VerticalDistribute } from '../../icons/vertical_distr
 import { dataPixels } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
-import getBoundRect from './utils/getBoundRect';
+import getBoundRect, { calcRotatedObjectPositionAndSize } from './utils/getBoundRect';
 import removeUnsetValues from './utils/removeUnsetValues';
 
 const IconButton = styled.button`
@@ -84,94 +83,153 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   const isJustifyEnabled = selectedElements.length < 2;
   const isDistributionEnabled = selectedElements.length < 3;
 
-  const [state, setState] = useState({
-    ...boundRect,
-  });
-  console.log('---boundrect---', boundRect);
-  const handleSubmit = (evt) => {
-    console.log('--handlesubmit--');
+  const handleAlignLeft = () => {
     onSetProperties((properties) => {
-      const { x, y } = properties;
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetX = 0;
+      if (rotationAngle) {
+        const { width: newWidth } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetX = (newWidth - width) / 2;
+      }
       return {
-        x,
-        y,
+        x: boundRect.startX + offSetX,
       };
     });
+  };
 
-    if (evt) {
-      evt.preventDefault();
-    }
+  const handleAlignCenter = () => {
+    const centerX = (boundRect.endX + boundRect.startX) / 2;
+    onSetProperties((properties) => {
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetX = 0;
+      if (rotationAngle) {
+        const { width: newWidth } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetX = (newWidth - width) / 2;
+      }
+      return {
+        x: centerX - width / 2 + offSetX,
+      };
+    });
+  };
+
+  const handleAlignRight = () => {
+    onSetProperties((properties) => {
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetX = 0;
+      if (rotationAngle) {
+        const { width: newWidth } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetX = (newWidth - width) / 2;
+      }
+      return {
+        x: boundRect.endX - width + offSetX,
+      };
+    });
+  };
+
+  const handleAlignTop = () => {
+    onSetProperties((properties) => {
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetY = 0;
+      if (rotationAngle) {
+        const { height: newHeight } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetY = (newHeight - height) / 2;
+      }
+      return {
+        y: boundRect.startY - offSetY,
+      };
+    });
+  };
+
+  const handleAlignMiddle = () => {
+    const centerY = (boundRect.endY + boundRect.startY) / 2;
+    onSetProperties((properties) => {
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetY = 0;
+      if (rotationAngle) {
+        const { height: newHeight } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetY = (newHeight - height) / 2;
+      }
+      return {
+        y: centerY - height / 2 - offSetY,
+      };
+    });
+  };
+
+  const handleAlignBottom = () => {
+    onSetProperties((properties) => {
+      const { x, y, width, height, rotationAngle } = properties;
+      let offSetY = 0;
+      if (rotationAngle) {
+        const { height: newHeight } = calcRotatedObjectPositionAndSize(
+          rotationAngle,
+          x,
+          y,
+          width,
+          height
+        );
+        offSetY = (newHeight - height) / 2;
+      }
+      return {
+        y: boundRect.endY - height - offSetY,
+      };
+    });
   };
 
   return (
-    <SimplePanel
-      name="style"
-      title={__('Style', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
+    <SimplePanel name="style" title={__('Element Alignment', 'web-stories')}>
       <Row>
-        <IconButton
-          disabled={isDistributionEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, textAlign: value ? 'left' : '' })
-          // }
-        >
+        <IconButton disabled={isDistributionEnabled}>
           <HorizontalDistribute />
         </IconButton>
-        <IconButton
-          disabled={isDistributionEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, textAlign: value ? 'center' : '' })
-          // }
-        >
+        <IconButton disabled={isDistributionEnabled}>
           <VerticalDistribute />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, textAlign: value ? 'right' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignLeft}>
           <AlignLeft />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, textAlign: value ? 'justify' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignCenter}>
           <AlignCenter />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, fontStyles: value ? 'bold' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignRight}>
           <AlignRight />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, fontStyles: value ? 'italic' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignTop}>
           <AlignTop />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, fontStyles: value ? 'underline' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignMiddle}>
           <AlignMiddle />
         </IconButton>
-        <IconButton
-          disabled={isJustifyEnabled}
-          // onChange={(value) =>
-          //   setState({ ...state, fontStyles: value ? 'underline' : '' })
-          // }
-        >
+        <IconButton disabled={isJustifyEnabled} onClick={handleAlignBottom}>
           <AlignBottom />
         </IconButton>
       </Row>
