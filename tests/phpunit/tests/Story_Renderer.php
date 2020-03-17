@@ -107,4 +107,51 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		$this->assertSame( $expected, $actual );
 	}
+
+	public function test_maybe_add_analytics() {
+		// Test content unchanged when the config is not set.
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$options  = [
+			'accountID'             => '',
+			'adsenseLinked'         => false,
+			'anonymizeIP'           => true,
+			'internalWebPropertyID' => '',
+			'profileID'             => '',
+			'propertyID'            => '',
+			'trackingDisabled'      => [ 'loggedinUsers' ],
+			'useSnippet'            => true,
+		];
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$option   = 'googlesitekit_analytics_settings';
+
+		add_option( $option, $options );
+		$expected                  = '<html amp lang="en-US"><head></head><body><amp-story></amp-story></body></html>';
+		$actual_with_empty_options = $renderer->render();
+		$this->assertSame( $expected, $actual_with_empty_options );
+
+		// Test content with amp-analytics tag and script if config set.
+		$post_with_meta_tag = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head><meta name="web-stories-replace-head-start"/><meta name="web-stories-replace-head-end"/></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$renderer                    = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
+		$options['propertyID']       = '123foo';
+		$options['trackingDisabled'] = [];
+		update_option( $option, $options );
+
+		$actual_with_options = $renderer->render();
+
+		$this->assertContains( '<amp-analytics', $actual_with_options );
+		$this->assertContains( '"gtag_id":"123foo"', $actual_with_options );
+		$this->assertContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual_with_options );
+
+		delete_option( $option );
+	}
 }
