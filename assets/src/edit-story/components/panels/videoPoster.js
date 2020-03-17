@@ -31,8 +31,10 @@ import { __ } from '@wordpress/i18n';
 import { Media } from '../form';
 import { SimplePanel } from './panel';
 import getCommonObjectValue from './utils/getCommonObjectValue';
+import getCommonValue from './utils/getCommonValue';
 
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
+  const resource = getCommonValue(selectedElements, 'resource');
   const { posterId, poster } = getCommonObjectValue(
     selectedElements,
     'resource',
@@ -55,7 +57,7 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
       poster: image.sizes?.medium?.url || image.url,
     };
     setState({ ...state, ...newState });
-    onSetProperties({ resource: newState });
+    onSetProperties({ resource: { ...resource, ...newState } });
   };
 
   return (
