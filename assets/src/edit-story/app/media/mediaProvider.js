@@ -104,7 +104,6 @@ function MediaProvider({ children }) {
     [allowedVideoMimeTypes, uploadVideoPoster]
   );
 
-
   const generatePoster = useCallback(() => {
     const looper = async () => {
       await media.reduce((accumulatorPromise, el) => {
