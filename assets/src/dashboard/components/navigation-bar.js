@@ -27,8 +27,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useRouteHistory } from '../router';
-import WebStoriesLogo from '../../images/logo.svg';
+import { useRouteHistory } from '../app/router';
+import WebStoriesLogo from '../images/logo.svg';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -46,7 +46,8 @@ const Link = styled.a`
   letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
   text-decoration: none;
   margin-left: 40px;
-  color: ${({ active }) => (active ? '#1a1d1f' : '#606B74')};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.gray900 : theme.colors.gray500};
 `;
 
 const paths = [

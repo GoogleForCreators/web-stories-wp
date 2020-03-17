@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { ThemeProvider } from 'styled-components';
@@ -29,9 +24,9 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
+import { NavigationBar } from '../components';
 import { Route, RouterProvider } from './router';
 import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
-import { NavigationBar } from './components';
 
 function App() {
   return (

@@ -15,3 +15,4 @@
  */
 
 export { default as NavigationBar } from './navigation-bar';
+export { default as Button } from './button';
