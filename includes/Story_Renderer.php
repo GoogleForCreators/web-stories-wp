@@ -134,6 +134,15 @@ class Story_Renderer {
 	}
 
 	/**
+	 * Print amp-analytics script.
+	 */
+	public function print_analytics_script() {
+		?>
+		<script async="async" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" custom-element="amp-analytics"></script>
+		<?php
+	}
+
+	/**
 	 * Prints AMP Analytics based on Site Kit configuration.
 	 */
 	protected function print_amp_analytics() {
@@ -141,19 +150,26 @@ class Story_Renderer {
 			return;
 		}
 		$option = 'googlesitekit_analytics_settings';
-		// Should support network mode?
+
 		$site_kit_analytics = get_option( $option, [] );
 		if ( empty( $site_kit_analytics ) || empty( $site_kit_analytics['propertyID'] ) ) {
 			return;
 		}
 
+		// If useSnippet is set and false, don't display anything.
+		if ( isset( $site_kit_analytics['useSnippet'] ) && false === $site_kit_analytics['useSnippet'] ) {
+			return;
+		}
+
 		if ( isset( $site_kit_analytics['trackingDisabled'] ) ) {
 			$exclusions = $site_kit_analytics['trackingDisabled'];
-			$disabled   = [ 'loggedinUsers', $exclusions, true ] && is_user_logged_in();
+			$disabled   = in_array( 'loggedinUsers', $exclusions, true ) && is_user_logged_in();
 			if ( $disabled ) {
 				return;
 			}
 		}
+
+		add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
 
 		$tracking_id = $site_kit_analytics['propertyID'];
 		$gtag        = [
@@ -203,13 +219,13 @@ class Story_Renderer {
 	protected function maybe_add_analytics( $content ) {
 		ob_start();
 
-		// @todo This would ideally be used in Site Kit plugin directly perhaps.
+		// @todo This would ideally be used in Site Kit plugin directly to reuse the method already existing there.
 		do_action( 'web_stories_print_analytics' );
 
 		$this->print_amp_analytics();
 
 		$output = (string) ob_get_clean();
-		return str_replace( '</amp-story>', '</amp-story>' . $output, $content );
+		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 
 	/**
@@ -260,12 +276,12 @@ class Story_Renderer {
 	public function render() {
 		$markup = $this->post->post_content;
 		$markup = $this->replace_html_start_tag( $markup );
+		// Add before replace_html_head to leverage the `web_stories_story_head` action.
+		$markup = $this->maybe_add_analytics( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->add_poster_images( $markup );
 		$markup = $this->replace_body_start_tag( $markup );
 		$markup = $this->replace_body_end_tag( $markup );
-		$markup = $this->maybe_add_analytics( $markup );
-
 		return $markup;
 	}
 }
