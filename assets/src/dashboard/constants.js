@@ -14,31 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+export const BUTTON_TYPES = {
+  CTA: 'cta',
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+};
 
-/**
- * External dependencies
- */
-import { ThemeProvider } from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import theme, { GlobalStyle } from '../theme';
-import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <KeyboardOnlyOutline />
-      <h1>{__('Dashboard', 'web-stories')}</h1>
-      <p>{__('Coming soon', 'web-stories')}</p>
-    </ThemeProvider>
-  );
-}
-
-export default App;
+export const KEYBOARD_USER_CLASS = `useskeyboard`;
+export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
