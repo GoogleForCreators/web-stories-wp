@@ -114,11 +114,11 @@ const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   font-weight: ${({ theme }) => theme.fonts.label.weight};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.bg.v11};
+    background-color: ${({ theme }) => theme.colors.bg.v12};
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v11};
+    background-color: ${({ theme }) => theme.colors.bg.v12};
     outline: none;
   }
 `;

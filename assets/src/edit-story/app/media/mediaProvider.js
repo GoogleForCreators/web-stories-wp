@@ -31,7 +31,7 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
   const { uploadVideoFrame } = useUploadVideoFrame();
-  const { mediaType, searchTerm } = state;
+  const { pagingNum, mediaType, searchTerm } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -39,37 +39,59 @@ function MediaProvider({ children }) {
     resetFilters,
     setMediaType,
     setSearchTerm,
+    setNextPage,
   } = actions;
 
   const {
     actions: { getMedia },
   } = useAPI();
 
-  const fetchMedia = useCallback(() => {
-    fetchMediaStart();
-    getMedia({ mediaType, searchTerm })
-      .then((media) => {
-        fetchMediaSuccess({ media, mediaType, searchTerm });
-      })
-      .catch(fetchMediaError);
-  }, [
-    fetchMediaError,
-    fetchMediaStart,
-    fetchMediaSuccess,
-    getMedia,
-    mediaType,
-    searchTerm,
-  ]);
+  const fetchMedia = useCallback(
+    ({ pagingNum: p = 1 } = {}) => {
+      fetchMediaStart({ pagingNum: p });
+      getMedia({ mediaType, searchTerm, pagingNum: p })
+        .then(({ data, headers }) => {
+          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          fetchMediaSuccess({
+            media: data,
+            mediaType,
+            searchTerm,
+            pagingNum: p,
+            totalPages,
+          });
+        })
+        .catch(fetchMediaError);
+    },
+    [
+      fetchMediaError,
+      fetchMediaStart,
+      fetchMediaSuccess,
+      getMedia,
+      mediaType,
+      searchTerm,
+    ]
+  );
 
-  useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
+  const resetWithFetch = useCallback(() => {
+    resetFilters();
+    if (!mediaType && !searchTerm && pagingNum === 1) {
+      fetchMedia();
+    }
+  }, [fetchMedia, mediaType, pagingNum, resetFilters, searchTerm]);
+
+  useEffect(() => {
+    fetchMedia({ pagingNum });
+  }, [fetchMedia, mediaType, searchTerm, pagingNum]);
 
   const context = {
     state,
     actions: {
+      setNextPage,
       setMediaType,
       setSearchTerm,
       fetchMedia,
       resetFilters,
+      resetWithFetch,
       uploadVideoFrame,
     },
   };

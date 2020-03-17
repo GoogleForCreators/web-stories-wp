@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -76,15 +76,35 @@ function DocumentInspector() {
     loadUsers();
   });
 
-  const allStatuses = useMemo(() => {
-    const disabledStatuses =
-      status === 'future' ? ['pending'] : ['future', 'pending'];
-    return statuses.filter(({ value }) => !disabledStatuses.includes(value));
-  }, [status, statuses]);
+  const privateStatus = 'private';
+
+  // Allow switching between public and private.
+  const visibilityOptions = statuses.some(
+    ({ value }) => value === privateStatus
+  )
+    ? [
+        { name: __('Public', 'web-stories'), value: '' },
+        { name: __('Private', 'web-stories'), value: 'private' },
+      ]
+    : false;
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
     [updateStory]
+  );
+
+  const handleChangeVisibility = useCallback(
+    (value) => {
+      // If value is empty, keep the same status.
+      const newStatus =
+        privateStatus === status && '' === value ? 'publish' : value;
+      updateStory({
+        properties: {
+          status: newStatus && newStatus.length ? newStatus : status,
+        },
+      });
+    },
+    [status, updateStory]
   );
 
   const handleChangeImage = useCallback(
@@ -146,10 +166,10 @@ function DocumentInspector() {
         {capabilities && capabilities.hasPublishAction && statuses && (
           <DropDown
             ariaLabel={__('Visibility', 'web-stories')}
-            options={allStatuses}
+            options={visibilityOptions}
             disabled={isSaving}
-            value={status}
-            onChange={handleChangeValue('status')}
+            value={privateStatus === status ? status : ''}
+            onChange={handleChangeVisibility}
           />
         )}
         {capabilities &&

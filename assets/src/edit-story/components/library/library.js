@@ -19,11 +19,14 @@
  */
 import LibraryProvider from './libraryProvider';
 import LibraryLayout from './libraryLayout';
+import LibraryUploadDropTarget from './libraryUploadDropTarget';
 
 function Library() {
   return (
     <LibraryProvider>
-      <LibraryLayout />
+      <LibraryUploadDropTarget>
+        <LibraryLayout />
+      </LibraryUploadDropTarget>
     </LibraryProvider>
   );
 }

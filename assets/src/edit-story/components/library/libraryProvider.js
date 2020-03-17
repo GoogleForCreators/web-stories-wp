@@ -23,8 +23,8 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
+import { useInsertElement } from '../canvas';
 import Context from './context';
-import useInsertElement from './useInsertElement';
 
 const MEDIA = 'media';
 const TEXT = 'text';

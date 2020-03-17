@@ -78,7 +78,7 @@ function getOrCreateMeasurer({
     fontStyle,
     fontWeight,
     fontSize: `${fontSize}px`,
-    lineHeight,
+    lineHeight: lineHeight || 'normal',
     letterSpacing: `${letterSpacing ? letterSpacing + 'em' : null}`,
     textAlign,
     padding: `${padding ? padding : '0'}%`,

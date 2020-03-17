@@ -31,13 +31,14 @@ const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
 const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
 
 function DropTargetsProvider({ children }) {
+  const [draggingResource, setDraggingResource] = useState(null);
   const [dropTargets, setDropTargets] = useState({});
   const [activeDropTargetId, setActiveDropTargetId] = useState(null);
   const {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { deleteElementById, setSelectedElementsById, updateElementById },
+    actions: { deleteSelectedElements, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -57,15 +58,16 @@ function DropTargetsProvider({ children }) {
    * Registering drop targets
    */
 
-  const registerDropTarget = useCallback(
-    (id, ref) => {
-      if (id in dropTargets) {
-        return;
-      }
-      setDropTargets({ ...dropTargets, [id]: ref });
-    },
-    [dropTargets]
-  );
+  const registerDropTarget = useCallback((id, ref) => {
+    setDropTargets((prev) => ({ ...prev, [id]: ref }));
+  }, []);
+
+  const unregisterDropTarget = useCallback((id) => {
+    setDropTargets((prev) => {
+      const { [id]: _, ...without } = prev;
+      return without;
+    });
+  }, []);
 
   const isDropSource = (type) => {
     return DROP_SOURCE_ALLOWED_TYPES.includes(type);
@@ -128,25 +130,32 @@ function DropTargetsProvider({ children }) {
           elementId: activeDropTargetId,
           properties: { resource, type: resource.type },
         });
-        if (selfId) {
-          deleteElementById({ elementId: selfId });
-        }
-        // Reset styles on all other elements
-        (currentPage?.elements || []).forEach((el) =>
-          pushTransform(el.id, {
-            dropTargets: { active: false, replacement: null },
-          })
-        );
-        setSelectedElementsById({ elementIds: activeDropTargetId });
+
+        // Reset styles on visisble elements
+        (currentPage?.elements || [])
+          .filter(
+            ({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId
+          )
+          .forEach((el) => {
+            pushTransform(el.id, {
+              dropTargets: { active: false, replacement: null },
+            });
+          });
         setActiveDropTargetId(null);
+
+        // TODO(wassgha): once https://github.com/daybrush/moveable/issues/197
+        // is resolved, go back to using deleteElementById({ elementId: selfId });
+        if (selfId) {
+          deleteSelectedElements();
+        }
       }
     },
     [
       activeDropTargetId,
       currentPage,
-      deleteElementById,
+      dropTargets,
+      deleteSelectedElements,
       pushTransform,
-      setSelectedElementsById,
       updateElementById,
     ]
   );
@@ -155,13 +164,16 @@ function DropTargetsProvider({ children }) {
     state: {
       dropTargets,
       activeDropTargetId,
+      draggingResource,
     },
     actions: {
       registerDropTarget,
+      unregisterDropTarget,
       isDropSource,
       isDropTarget,
       handleDrag,
       handleDrop,
+      setDraggingResource,
     },
   };
 
