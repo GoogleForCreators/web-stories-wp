@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types'; // import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -50,6 +50,9 @@ const PillLabel = styled.label`
   line-height: 20px;
   letter-spacing: 0.01em;
 `;
+PillLabel.propTypes = {
+  isSelected: PropTypes.bool,
+};
 
 const PillInput = styled.input`
   opacity: 0;
