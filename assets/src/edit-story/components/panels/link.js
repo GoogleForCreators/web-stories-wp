@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import validUrl from 'valid-url';
 
 /**
  * WordPress dependencies
@@ -35,6 +34,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { TextInput, Media, Row } from '../form';
 import { createLink } from '../link';
 import { useAPI } from '../../app/api';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
@@ -100,18 +100,23 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const canLink = selectedElements.length === 1 && !isFill;
 
   const [populateMetadata] = useDebouncedCallback((url) => {
-    if (!validUrl.isUri(url)) {
+    if (!isValidUrl(withProtocol(url))) {
       return;
     }
     setFetchingMetadata(true);
-    getLinkMetadata(url).then(({ title, image }) => {
-      setState((originalState) => ({
-        ...originalState,
-        desc: title ? title : originalState.desc,
-        icon: image ? image : originalState.icon,
-      }));
-      setFetchingMetadata(false);
-    });
+    getLinkMetadata(withProtocol(url))
+      .then(({ title, image }) => {
+        setState((originalState) => ({
+          ...originalState,
+          desc: title ? title : originalState.desc,
+          icon: image
+            ? toAbsoluteUrl(withProtocol(originalState.url), image)
+            : originalState.icon,
+        }));
+      })
+      .finally(() => {
+        setFetchingMetadata(false);
+      });
   }, 1200);
 
   useEffect(() => {
