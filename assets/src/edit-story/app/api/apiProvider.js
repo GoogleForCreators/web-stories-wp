@@ -24,6 +24,7 @@ import { useCallback } from 'react';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+import axios from 'axios';
 
 /**
  * Internal dependencies
@@ -157,12 +158,22 @@ function APIProvider({ children }) {
    */
   const uploadMedia = useCallback(
     (file, additionalData) => {
+      // Intercept window.fetch to support progressive upload indicator
+      apiFetch.setFetchHandler((options) => {
+        const { url, path, body, headers } = options;
+
+        return axios.post(url || path, body, {
+          headers,
+        });
+      });
+
       // Create upload payload
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
       Object.entries(additionalData).forEach(([key, value]) =>
         data.append(key, value)
       );
+
       return apiFetch({
         path: media,
         body: data,
