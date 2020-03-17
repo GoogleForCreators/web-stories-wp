@@ -109,7 +109,7 @@ function setBackgroundElement(state, { elementId }) {
     newPage = {
       ...page,
       backgroundElementId: elementId,
-      backgroundOverlay: null,
+      backgroundOverlay: OverlayType.NONE,
       elements: newElements,
     };
   }
