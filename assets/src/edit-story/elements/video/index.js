@@ -54,5 +54,4 @@ export const panels = [
   ...MEDIA_PANELS,
   PanelTypes.VIDEO_POSTER,
   PanelTypes.LINK,
-  PanelTypes.MASK,
 ];

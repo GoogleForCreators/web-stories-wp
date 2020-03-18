@@ -28,11 +28,13 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../theme';
+import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <KeyboardOnlyOutline />
       <h1>{__('Dashboard', 'web-stories')}</h1>
       <p>{__('Coming soon', 'web-stories')}</p>
     </ThemeProvider>

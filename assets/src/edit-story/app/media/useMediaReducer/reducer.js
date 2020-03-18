@@ -21,6 +21,9 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
+  pagingNum: 1,
+  totalPages: 1,
+  hasMore: true,
   mediaType: '',
   searchTerm: '',
   isMediaLoading: false,
@@ -38,11 +41,15 @@ function reducer(state, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, mediaType, searchTerm } = payload;
+      const { media, mediaType, searchTerm, pagingNum, totalPages } = payload;
       if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
+        const hasMore = pagingNum < totalPages;
         return {
           ...state,
-          media,
+          media: [...state.media, ...media],
+          pagingNum,
+          totalPages,
+          hasMore,
           isMediaLoaded: true,
           isMediaLoading: false,
         };
@@ -53,33 +60,39 @@ function reducer(state, { type, payload }) {
     case types.FETCH_MEDIA_ERROR: {
       return {
         ...state,
-        media: [],
         isMediaLoaded: true,
         isMediaLoading: false,
       };
     }
 
     case types.RESET_FILTERS: {
-      return {
-        ...state,
-        searchTerm: '',
-        mediaType: '',
-      };
+      return { ...INITIAL_STATE };
     }
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
+      if (searchTerm === state.searchTerm) return state;
       return {
-        ...state,
+        ...INITIAL_STATE,
+        mediaType: state.mediaType,
         searchTerm,
       };
     }
 
     case types.SET_MEDIA_TYPE: {
       const { mediaType } = payload;
+      if (mediaType === state.mediaType) return state;
+      return {
+        ...INITIAL_STATE,
+        searchTerm: state.searchTerm,
+        mediaType,
+      };
+    }
+
+    case types.SET_NEXT_PAGE: {
       return {
         ...state,
-        mediaType,
+        pagingNum: state.pagingNum + 1,
       };
     }
 

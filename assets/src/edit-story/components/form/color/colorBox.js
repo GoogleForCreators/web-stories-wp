@@ -25,8 +25,8 @@ const ColorBox = styled.div.attrs({
 })`
   height: 32px;
   width: 122px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)} !important;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)} !important;
   border-radius: 4px;
   overflow: hidden;
   align-items: center;

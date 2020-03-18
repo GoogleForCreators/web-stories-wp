@@ -68,4 +68,9 @@ export const GlobalStyle = createGlobalStyle`
 		top: -16px;
 		height: 16px;
 	}
+
+	.default-movable.dragging .moveable-line.moveable-rotation-line,
+	.default-movable.dragging .moveable-line.moveable-direction {
+		display: none;
+	}
 `;
