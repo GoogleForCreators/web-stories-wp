@@ -38,7 +38,11 @@ function useDesignPanels() {
     (newPropertiesOrUpdater) => {
       updateSelectedElements({
         properties: (currentProperties) =>
-          updateProperties(currentProperties, newPropertiesOrUpdater),
+          updateProperties(
+            currentProperties,
+            newPropertiesOrUpdater,
+            /* commitValues */ true
+          ),
       });
     },
     [updateSelectedElements]

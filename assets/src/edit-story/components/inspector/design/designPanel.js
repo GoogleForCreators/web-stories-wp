@@ -67,7 +67,11 @@ function DesignPanel({
         const newUpdates = {};
         selectedElements.forEach((element) => {
           const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
-          const newUpdate = updateProperties(prevUpdatedElement, update);
+          const newUpdate = updateProperties(
+            prevUpdatedElement,
+            update,
+            /* commitValues */ false
+          );
           newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
         });
         return newUpdates;
