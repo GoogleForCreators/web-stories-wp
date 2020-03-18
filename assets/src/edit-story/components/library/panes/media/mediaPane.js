@@ -49,7 +49,9 @@ const Container = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-const Column = styled.div``;
+const Column = styled.div`
+  position: relative;
+`;
 
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};

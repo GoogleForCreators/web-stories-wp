@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useState, useRef, useMemo } from 'react';
@@ -30,7 +31,6 @@ import { ReactComponent as Play } from './play.svg';
 
 const styledTiles = css`
   width: 100%;
-  object-fit: contain;
   transition: 0.2s transform, 0.15s opacity;
   ${({ dragging }) =>
     dragging
@@ -54,6 +54,11 @@ const Video = styled.video`
 `;
 
 const Container = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const Media = styled.div`
   width: 100%;
   position: relative;
   margin-bottom: 10px;
@@ -77,6 +82,35 @@ const Duration = styled.div`
   padding: 2px 8px;
   border-radius: 8px;
 `;
+
+const gradientAnimation = keyframes`
+    0% { background-position:0% 50% }
+    50% { background-position:100% 50% }
+    100% { background-position:0% 50% }
+`;
+
+const UploadingIndicator = styled.div`
+  height: 4px;
+  background: linear-gradient(270deg, #4285f4 15%, #15d8fd 50%, #4285f4 85%);
+  background-size: 400% 400%;
+  position: absolute;
+  bottom: 10px;
+
+  animation: ${gradientAnimation} 4s ease infinite;
+
+  &.uploading-indicator {
+    &.appear {
+      width: 0;
+    }
+
+    &.appear-done {
+      width: 100%;
+      transition: 1s ease-out;
+      transition-property: width;
+    }
+  }
+`;
+
 /**
  * Get a formatted element for different media types.
  *
@@ -149,9 +183,9 @@ const MediaElement = ({
 
   if (type === 'image') {
     return (
-      <>
+      <Container>
         <Image
-          key={src + id}
+          key={id}
           src={src}
           ref={mediaElement}
           width={width}
@@ -161,8 +195,17 @@ const MediaElement = ({
           dragging={dragging}
           {...dropTargetsBindings}
         />
-        {local && 'Uploading image...'}
-      </>
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+      </Container>
     );
   }
 
@@ -183,14 +226,14 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <>
-      <Container
+    <Container>
+      <Media
         onPointerEnter={pointerEnter}
         onPointerLeave={pointerLeave}
         onClick={onClick}
       >
         <Video
-          key={src + id}
+          key={id}
           ref={mediaElement}
           poster={poster}
           width={width}
@@ -202,9 +245,18 @@ const MediaElement = ({
         </Video>
         {showVideoDetail && <PlayIcon />}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
-      </Container>
-      {local && 'Uploading video...'}
-    </>
+      </Media>
+      {local && (
+        <CSSTransition
+          in
+          appear={true}
+          timeout={0}
+          className="uploading-indicator"
+        >
+          <UploadingIndicator />
+        </CSSTransition>
+      )}
+    </Container>
   );
 };
 

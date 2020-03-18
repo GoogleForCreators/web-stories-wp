@@ -85,19 +85,16 @@ function MediaProvider({ children }) {
           mediaType,
           searchTerm,
         });
-        const uploadedFiles = await Promise.all(filesUploading);
-        const uploadedMedia = uploadedFiles.map(getResourceFromUploadAPI);
+        await Promise.all(filesUploading);
 
-        fetchMediaSuccess({
-          media: [...uploadedMedia, ...media],
-          mediaType,
-          searchTerm,
-        });
+        // To avoid race conditions updating media library, a new request is necessary
+        fetchMedia();
       } catch (e) {
         fetchMediaError(e);
       }
     },
     [
+      fetchMedia,
       fetchMediaSuccess,
       fetchMediaError,
       uploadFile,
@@ -131,7 +128,7 @@ function MediaProvider({ children }) {
           searchTerm,
         });
 
-        const filesUploadedOnCanvas = await Promise.all(
+        await Promise.all(
           filesOnCanvas.map(async ({ element, file }) => {
             const uploadedFile = await uploadFile(file);
             const resource = getResourceFromUploadAPI(uploadedFile);
@@ -151,19 +148,14 @@ function MediaProvider({ children }) {
           })
         );
 
-        fetchMediaSuccess({
-          media: [
-            ...filesUploadedOnCanvas.map((resource) => resource),
-            ...media,
-          ],
-          mediaType,
-          searchTerm,
-        });
+        // To avoid race conditions updating media library, a new request is necessary
+        fetchMedia();
       } catch (e) {
         fetchMediaError(e);
       }
     },
     [
+      fetchMedia,
       fetchMediaSuccess,
       fetchMediaError,
       uploadFile,
