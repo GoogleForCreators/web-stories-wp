@@ -32,12 +32,10 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
 
   const currentPageIndexRef = useRef();
   const selectedElementIdsRef = useRef();
-  const pagesRef = useRef();
   useEffect(() => {
     currentPageIndexRef.current = current;
     selectedElementIdsRef.current = selection;
-    pagesRef.current = pages;
-  }, [current, selection, pages]);
+  }, [current, selection]);
 
   useEffect(() => {
     appendToHistory({
