@@ -21,6 +21,8 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
+  processing: [],
+  processed: [],
   pagingNum: 1,
   totalPages: 1,
   hasMore: true,
@@ -66,7 +68,11 @@ function reducer(state, { type, payload }) {
     }
 
     case types.RESET_FILTERS: {
-      return { ...INITIAL_STATE };
+      return {
+        ...INITIAL_STATE,
+        processing: [...state.processing],
+        processed: [...state.processed],
+      };
     }
 
     case types.SET_SEARCH_TERM: {
@@ -74,6 +80,8 @@ function reducer(state, { type, payload }) {
       if (searchTerm === state.searchTerm) return state;
       return {
         ...INITIAL_STATE,
+        processing: [...state.processing],
+        processed: [...state.processed],
         mediaType: state.mediaType,
         searchTerm,
       };
@@ -84,6 +92,8 @@ function reducer(state, { type, payload }) {
       if (mediaType === state.mediaType) return state;
       return {
         ...INITIAL_STATE,
+        processing: [...state.processing],
+        processed: [...state.processed],
         searchTerm: state.searchTerm,
         mediaType,
       };
@@ -93,6 +103,58 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         pagingNum: state.pagingNum + 1,
+      };
+    }
+
+    case types.ADD_PROCESSING: {
+      const { videoId } = payload;
+      if (!videoId || state.processing.includes(videoId)) {
+        return state;
+      }
+      return {
+        ...state,
+        processing: [...state.processing, videoId],
+      };
+    }
+
+    case types.REMOVE_PROCESSING: {
+      const { videoId } = payload;
+      if (!videoId || !state.processing.includes(videoId)) {
+        return state;
+      }
+      const currentProcessing = [...state.processing];
+      const processing = currentProcessing.filter((e) => e !== videoId);
+
+      return {
+        ...state,
+        processing,
+        processed: [...state.processed, videoId],
+      };
+    }
+
+    case types.UPDATE_MEDIA_ELEMENT: {
+      const { videoId, posterId, poster } = payload;
+
+      const mediaIndex = state.media.findIndex(({ id }) => id === videoId);
+      if (mediaIndex === -1) {
+        return state;
+      }
+
+      const updatedVideo = {
+        ...state.media[mediaIndex],
+        posterId,
+        poster,
+      };
+
+      const newMedia = [
+        ...state.media.slice(0, mediaIndex),
+        updatedVideo,
+        ...state.media.slice(mediaIndex + 1),
+      ];
+
+      return {
+        ...state,
+        media: newMedia,
       };
     }
 

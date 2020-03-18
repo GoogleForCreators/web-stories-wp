@@ -21,7 +21,11 @@ import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
 
-function VideoLayerContent({ element: { poster } }) {
+function VideoLayerContent({
+  element: {
+    resource: { poster },
+  },
+}) {
   const alt = getFileName(poster);
   return <VisibleImage src={poster} alt={alt} height="20" />;
 }
