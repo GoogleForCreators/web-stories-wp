@@ -42,6 +42,7 @@ const Separator = styled.div`
   width: 100%;
   border-bottom: 3px dashed ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
   mix-blend-mode: difference;
+  pointer-events: none;
   z-index: 1;
 `;
 
@@ -73,7 +74,7 @@ function LinkGuidelines({}) {
 
   useEffect(() => {
     if (hasOneTapLinks) {
-      setLinkType(inferLinkType(selectedElement?.y));
+      setLinkType(inferLinkType(selectedElement));
     }
   }, [hasOneTapLinks, selectedElement, setLinkType]);
 
@@ -83,7 +84,12 @@ function LinkGuidelines({}) {
     }
     const translateY = transform?.translate?.[1];
     if (translateY) {
-      setLinkType(inferLinkType(selectedElement.y + editorToDataY(translateY)));
+      setLinkType(
+        inferLinkType({
+          ...selectedElement,
+          y: selectedElement?.y + editorToDataY(translateY),
+        })
+      );
     }
   });
 

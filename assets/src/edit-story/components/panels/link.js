@@ -25,16 +25,20 @@ import { debounce } from 'throttle-debounce';
 /**
  * WordPress dependencies
  */
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { TextInput, Media, Row } from '../form';
-import { createLink, inferLinkType, LinkType } from '../link';
+import {
+  createLink,
+  inferLinkType,
+  getLinkFromElement,
+  LinkType,
+} from '../link';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -53,10 +57,12 @@ const Note = styled.span`
 `;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
-  const y = getCommonValue(selectedElements, 'y');
-  const link = getCommonValue(selectedElements, 'link') || null;
-  const isFill = getCommonValue(selectedElements, 'isFill');
-  const inferredLinkType = inferLinkType(y);
+  const selectedElement = selectedElements[0];
+  const { isFill } = selectedElement;
+  const link = getLinkFromElement(selectedElement);
+  const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
+    selectedElement,
+  ]);
 
   const [state, setState] = useState({
     ...(link || createLink({ type: inferredLinkType })),

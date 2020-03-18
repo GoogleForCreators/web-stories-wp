@@ -83,7 +83,7 @@ function OutputPage({ page, index }) {
       {ctaElements.length && index >= 1 && (
         <amp-story-cta-layer>
           {ctaElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} cta />
+            <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </amp-story-cta-layer>
       )}

@@ -40,10 +40,9 @@ export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
 
+// See constraints at
+// https://amp.dev/documentation/components/amp-story-cta-layer/#constraints
 export const CTA_ZONE_PERCENT = 0.2; /** Bottom 20% */
-export const SAFE_MARGIN_TOP = 46; /** 46px */
-export const SAFE_MARGIN_RIGHT = 32; /** 32px */
-export const SAFE_MARGIN_LEFT = 32; /** 32px */
 
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',

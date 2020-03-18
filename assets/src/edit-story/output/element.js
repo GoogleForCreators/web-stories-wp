@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
@@ -28,14 +23,18 @@ import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/link/output';
 import { CTA_ZONE_PERCENT } from '../constants';
+import { LinkType } from '../components/link';
 
-function OutputElement({ element, cta }) {
+function OutputElement({ element }) {
   const { id, opacity, type } = element;
 
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
 
-  // Box is calculated based on the 100%:100% basis for width and height.
+  // CTA links
+  const isCTA = element.link?.type === LinkType.ONE_TAP;
+
+  // Box is calculated based on the 100%:100% basis for width and height
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
@@ -47,9 +46,9 @@ function OutputElement({ element, cta }) {
       className="wrapper"
       style={{
         left: `${x}%`,
-        top: `${cta ? y - 100 * (1 - CTA_ZONE_PERCENT) : y}%`,
+        top: `${isCTA ? y - 100 * (1 - CTA_ZONE_PERCENT) : y}%`,
         width: `${width}%`,
-        height: `${cta ? height * (1 / CTA_ZONE_PERCENT) : height}%`,
+        height: `${isCTA ? height * (1 / CTA_ZONE_PERCENT) : height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: opacity ? opacity / 100 : null,
       }}
@@ -70,7 +69,6 @@ function OutputElement({ element, cta }) {
 
 OutputElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  cta: PropTypes.bool,
 };
 
 export default OutputElement;
