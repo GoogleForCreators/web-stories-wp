@@ -81,26 +81,52 @@ function getBoundRect(list) {
  */
 export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
   /// variables
-  const px = x + width * 0.5;
-  const py = y + height * 0.5;
-  const ar = (angle * Math.PI) / 180;
+  const centerX = x + width * 0.5;
+  const centerY = y + height * 0.5;
+  const radian = (angle * Math.PI) / 180;
   /// get corner coordinates
-  const c1 = getCorner(px, py, x, y, ar);
-  const c2 = getCorner(px, py, x + width, y, ar);
-  const c3 = getCorner(px, py, x + width, y + height, ar);
-  const c4 = getCorner(px, py, x, y + height, ar);
+  const topLeftPoint = getCorner(centerX, centerY, x, y, radian);
+  const topRightPoint = getCorner(centerX, centerY, x + width, y, radian);
+  const bottomRightPoint = getCorner(
+    centerX,
+    centerY,
+    x + width,
+    y + height,
+    radian
+  );
+  const bottomLeftPoint = getCorner(centerX, centerY, x, y + height, radian);
 
   /// get bounding box
-  const bx1 = Math.min(c1.x, c2.x, c3.x, c4.x);
-  const by1 = Math.min(c1.y, c2.y, c3.y, c4.y);
-  const bx2 = Math.max(c1.x, c2.x, c3.x, c4.x);
-  const by2 = Math.max(c1.y, c2.y, c3.y, c4.y);
+  const boundTopLeftX = Math.min(
+    topLeftPoint.x,
+    topRightPoint.x,
+    bottomRightPoint.x,
+    bottomLeftPoint.x
+  );
+  const boundTopLeftY = Math.min(
+    topLeftPoint.y,
+    topRightPoint.y,
+    bottomRightPoint.y,
+    bottomLeftPoint.y
+  );
+  const boundBottomRightX = Math.max(
+    topLeftPoint.x,
+    topRightPoint.x,
+    bottomRightPoint.x,
+    bottomLeftPoint.x
+  );
+  const boundBottomRightY = Math.max(
+    topLeftPoint.y,
+    topRightPoint.y,
+    bottomRightPoint.y,
+    bottomLeftPoint.y
+  );
 
   return {
-    x: bx1,
-    y: by1,
-    width: bx2 - bx1,
-    height: by2 - by1,
+    x: boundTopLeftX,
+    y: boundTopLeftY,
+    width: boundBottomRightX - boundTopLeftX,
+    height: boundBottomRightY - boundTopLeftY,
   };
 }
 
