@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { dataPixels } from '../../../units/dimensions';
+
+/**
  * Get the bound rect value for all objects in `list`,
  *
  * ```
@@ -95,7 +100,7 @@ export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
     x: bx1,
     y: by1,
     width: bx2 - bx1,
-    height: by2 - bx1,
+    height: by2 - by1,
   };
 }
 
@@ -109,8 +114,8 @@ function getCorner(pivotX, pivotY, cornerX, cornerY, angle) {
   angle += Math.atan2(diffY, diffX);
 
   /// get new x and y and round it off to integer
-  const x = pivotX + distance * Math.cos(angle);
-  const y = pivotY + distance * Math.sin(angle);
+  const x = dataPixels(pivotX + distance * Math.cos(angle));
+  const y = dataPixels(pivotY + distance * Math.sin(angle));
 
   return { x, y };
 }

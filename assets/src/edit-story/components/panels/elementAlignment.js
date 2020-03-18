@@ -20,18 +20,15 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Numeric, Row } from '../form';
-import { calculateTextHeight } from '../../utils/textMeasurements';
 import { ReactComponent as AlignBottom } from '../../icons/align_bottom.svg';
 import { ReactComponent as AlignTop } from '../../icons/align_top.svg';
 import { ReactComponent as AlignCenter } from '../../icons/align_center.svg';
@@ -41,15 +38,24 @@ import { ReactComponent as AlignRight } from '../../icons/align_right.svg';
 import { ReactComponent as HorizontalDistribute } from '../../icons/horizontal_distribute.svg';
 import { ReactComponent as VerticalDistribute } from '../../icons/vertical_distribute.svg';
 import { dataPixels } from '../../units/dimensions';
-import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
-import getBoundRect, { calcRotatedObjectPositionAndSize } from './utils/getBoundRect';
-import removeUnsetValues from './utils/removeUnsetValues';
+import getBoundRect, {
+  calcRotatedObjectPositionAndSize,
+} from './utils/getBoundRect';
+
+const ElementRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  border-top: 1px solid ${({ theme }) => theme.colors.bg.v9};
+`;
 
 const IconButton = styled.button`
   display: flex;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   justify-content: center;
   align-items: center;
   background-color: unset;
@@ -76,12 +82,19 @@ const IconButton = styled.button`
   }
 `;
 
+const SeparateBorder = styled.div`
+  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  height: 12px;
+  margin-left: 4px;
+  margin-right: 4px;
+`;
+
 function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   const boundRect = getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
 
-  const isJustifyEnabled = selectedElements.length < 2;
-  const isDistributionEnabled = selectedElements.length < 3;
+  const isJustifyEnabled = isFill || selectedElements.length < 2;
+  const isDistributionEnabled = isFill || selectedElements.length < 3;
 
   const handleAlignLeft = () => {
     onSetProperties((properties) => {
@@ -106,20 +119,9 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   const handleAlignCenter = () => {
     const centerX = (boundRect.endX + boundRect.startX) / 2;
     onSetProperties((properties) => {
-      const { x, y, width, height, rotationAngle } = properties;
-      let offSetX = 0;
-      if (rotationAngle) {
-        const { width: newWidth } = calcRotatedObjectPositionAndSize(
-          rotationAngle,
-          x,
-          y,
-          width,
-          height
-        );
-        offSetX = (newWidth - width) / 2;
-      }
+      const { width } = properties;
       return {
-        x: centerX - width / 2 + offSetX,
+        x: centerX - width / 2,
       };
     });
   };
@@ -139,7 +141,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
         offSetX = (newWidth - width) / 2;
       }
       return {
-        x: boundRect.endX - width + offSetX,
+        x: boundRect.endX - width - offSetX,
       };
     });
   };
@@ -159,7 +161,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
         offSetY = (newHeight - height) / 2;
       }
       return {
-        y: boundRect.startY - offSetY,
+        y: boundRect.startY + offSetY,
       };
     });
   };
@@ -167,20 +169,9 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   const handleAlignMiddle = () => {
     const centerY = (boundRect.endY + boundRect.startY) / 2;
     onSetProperties((properties) => {
-      const { x, y, width, height, rotationAngle } = properties;
-      let offSetY = 0;
-      if (rotationAngle) {
-        const { height: newHeight } = calcRotatedObjectPositionAndSize(
-          rotationAngle,
-          x,
-          y,
-          width,
-          height
-        );
-        offSetY = (newHeight - height) / 2;
-      }
+      const { height } = properties;
       return {
-        y: centerY - height / 2 - offSetY,
+        y: centerY - height / 2,
       };
     });
   };
@@ -205,35 +196,132 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
     });
   };
 
+  const handleHorizontalDistribution = () => {
+    const offSetWidth = dataPixels(
+      (boundRect.endX - boundRect.startX) / (selectedElements.length - 1)
+    );
+    onSetProperties((properties) => {
+      const { id, x, y, width, height, rotationAngle } = properties;
+      const elementIndex = selectedElements.findIndex((item) => item.id === id);
+      if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
+        let offSetX = 0;
+        if (rotationAngle) {
+          const { width: newWidth } = calcRotatedObjectPositionAndSize(
+            rotationAngle,
+            x,
+            y,
+            width,
+            height
+          );
+          offSetX = (newWidth - width) / 2;
+        }
+        return {
+          x:
+            elementIndex === 0
+              ? boundRect.startX + offSetX
+              : boundRect.endX - width - offSetX,
+        };
+      }
+      const centerX = boundRect.startX + offSetWidth * elementIndex;
+      return {
+        x: centerX - width / 2,
+      };
+    });
+  };
+
+  const handleVerticalDistribution = () => {
+    const offSetHeight = dataPixels(
+      (boundRect.endY - boundRect.startY) / (selectedElements.length - 1)
+    );
+    onSetProperties((properties) => {
+      const { id, x, y, width, height, rotationAngle } = properties;
+      const elementIndex = selectedElements.findIndex((item) => item.id === id);
+      if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
+        let offSetY = 0;
+        if (rotationAngle) {
+          const { height: newHeight } = calcRotatedObjectPositionAndSize(
+            rotationAngle,
+            x,
+            y,
+            width,
+            height
+          );
+          offSetY = (newHeight - height) / 2;
+        }
+        return {
+          y:
+            elementIndex === 0
+              ? boundRect.startY + offSetY
+              : boundRect.endY - height - offSetY,
+        };
+      }
+      const centerY = boundRect.startY + offSetHeight * elementIndex;
+      return {
+        y: centerY - height / 2,
+      };
+    });
+  };
+
   return (
-    <SimplePanel name="style" title={__('Element Alignment', 'web-stories')}>
-      <Row>
-        <IconButton disabled={isDistributionEnabled}>
-          <HorizontalDistribute />
-        </IconButton>
-        <IconButton disabled={isDistributionEnabled}>
-          <VerticalDistribute />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignLeft}>
-          <AlignLeft />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignCenter}>
-          <AlignCenter />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignRight}>
-          <AlignRight />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignTop}>
-          <AlignTop />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignMiddle}>
-          <AlignMiddle />
-        </IconButton>
-        <IconButton disabled={isJustifyEnabled} onClick={handleAlignBottom}>
-          <AlignBottom />
-        </IconButton>
-      </Row>
-    </SimplePanel>
+    <ElementRow>
+      <IconButton
+        disabled={isDistributionEnabled}
+        onClick={handleHorizontalDistribution}
+        aria-label={__('Horizontal Distribution', 'web-stories')}
+      >
+        <HorizontalDistribute />
+      </IconButton>
+      <IconButton
+        disabled={isDistributionEnabled}
+        onClick={handleVerticalDistribution}
+        aria-label={__('Vertical Distribution', 'web-stories')}
+      >
+        <VerticalDistribute />
+      </IconButton>
+      <SeparateBorder />
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignLeft}
+        aria-label={__('Justify Left', 'web-stories')}
+      >
+        <AlignLeft />
+      </IconButton>
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignCenter}
+        aria-label={__('Justify Center', 'web-stories')}
+      >
+        <AlignCenter />
+      </IconButton>
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignRight}
+        aria-label={__('Justify Right', 'web-stories')}
+      >
+        <AlignRight />
+      </IconButton>
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignTop}
+        aria-label={__('Justify Top', 'web-stories')}
+      >
+        <AlignTop />
+      </IconButton>
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignMiddle}
+        aria-label={__('Justify Middle', 'web-stories')}
+      >
+        <AlignMiddle />
+      </IconButton>
+      <IconButton
+        disabled={isJustifyEnabled}
+        onClick={handleAlignBottom}
+        aria-label={__('Justify Bottom', 'web-stories')}
+      >
+        <AlignBottom />
+      </IconButton>
+    </ElementRow>
   );
 }
 
