@@ -34,7 +34,7 @@ const demoItems = [
 ];
 
 const DropdownWrapper = styled.div`
-  width: 400px;
+  width: 200px;
 `;
 
 const FillerContainer = styled.div`

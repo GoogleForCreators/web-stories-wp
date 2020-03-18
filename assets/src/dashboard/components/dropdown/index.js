@@ -23,6 +23,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg';
+import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
+
 import PopoverMenu from '../popover-menu';
 
 const DropdownContainer = styled.div`
@@ -67,7 +70,16 @@ const InnerDropdownText = styled.span`
   white-space: nowrap;
 `;
 
-const DropdownIcon = styled.span``;
+const DropdownIcon = styled.span`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  & > svg {
+    color: ${({ theme }) => theme.colors.gray300};
+    width: 10px;
+    height: 5px;
+  }
+`;
 
 const Dropdown = ({
   ariaLabel,
@@ -124,7 +136,6 @@ const Dropdown = ({
     return value ? getCurrentLabel() : placeholder;
   }, [value, placeholder, items]);
 
-  // TODO Add Icon and remove || placeholder
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
       <Label aria-label={ariaLabel}>
@@ -134,7 +145,9 @@ const Dropdown = ({
           disabled={disabled}
         >
           <InnerDropdownText>{currentLabel}</InnerDropdownText>
-          <DropdownIcon>{'||'}</DropdownIcon>
+          <DropdownIcon>
+            {showMenu ? <DropUpArrow /> : <DropDownArrow />}
+          </DropdownIcon>
         </InnerDropdown>
       </Label>
 
