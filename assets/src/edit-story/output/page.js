@@ -20,7 +20,7 @@
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
-import { generateOverlayStyles } from '../utils/backgroundOverlay';
+import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
@@ -69,7 +69,7 @@ function OutputPage({ page }) {
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
-        {backgroundOverlay && backgroundOverlay !== 'none' && (
+        {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
           <div
             className="page-background-overlay-area"
             style={{ ...backgroundOverlayStyles }}
