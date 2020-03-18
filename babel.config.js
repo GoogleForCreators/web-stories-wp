@@ -26,7 +26,6 @@ module.exports = function(api) {
     ...config,
     plugins: [
       ...config.plugins,
-      'inline-react-svg',
       'babel-plugin-styled-components',
       '@babel/plugin-proposal-class-properties',
     ],

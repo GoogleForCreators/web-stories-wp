@@ -28,7 +28,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useRouteHistory } from '../app/router';
-import WebStoriesLogo from '../images/logo.svg';
+import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -37,6 +37,11 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   padding: 20px;
+`;
+
+const WebStoriesLogo = styled(WebStoriesLogoSVG)`
+  width: 37px;
+  height: 28px;
 `;
 
 const Link = styled.a`
