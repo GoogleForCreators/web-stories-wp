@@ -15,7 +15,6 @@
  */
 
 export { isUri as isValidUrl } from 'valid-url';
-export { resolve as toAbsoluteUrl } from 'url';
 
 /**
  * Prepends a protocol (default http) to a URL that
@@ -27,4 +26,12 @@ export { resolve as toAbsoluteUrl } from 'url';
  */
 export function withProtocol(url, protocol = 'http') {
   return /^(?:f|ht)tps?\:\/\//.test(url) ? url : `${protocol}://${url}`;
+}
+
+export function toAbsoluteUrl(base, path) {
+  try {
+    return new URL(path, base).href;
+  } catch (error) {
+    return path;
+  }
 }

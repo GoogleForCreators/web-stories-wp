@@ -100,17 +100,18 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const canLink = selectedElements.length === 1 && !isFill;
 
   const [populateMetadata] = useDebouncedCallback((url) => {
-    if (!isValidUrl(withProtocol(url))) {
+    const urlWithProtocol = withProtocol(url);
+    if (!isValidUrl(urlWithProtocol)) {
       return;
     }
     setFetchingMetadata(true);
-    getLinkMetadata(withProtocol(url))
+    getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
         setState((originalState) => ({
           ...originalState,
           desc: title ? title : originalState.desc,
           icon: image
-            ? toAbsoluteUrl(withProtocol(originalState.url), image)
+            ? toAbsoluteUrl(urlWithProtocol, image)
             : originalState.icon,
         }));
       })
