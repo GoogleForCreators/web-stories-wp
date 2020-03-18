@@ -166,16 +166,16 @@ function StylePanel({ selectedElements, onSetProperties }) {
           icon={<BoldIcon />}
           value={state.bold || false}
           isMultiple={false}
-          IconWidth={9}
-          IconHeight={10}
+          iconWidth={9}
+          iconHeight={10}
           onChange={(value) => setState({ ...state, bold: value })}
         />
         <ToggleButton
           icon={<ItalicIcon />}
           value={state.fontStyle === 'italic'}
           isMultiple={false}
-          IconWidth={10}
-          IconHeight={10}
+          iconWidth={10}
+          iconHeight={10}
           onChange={(value) =>
             setState({ ...state, fontStyle: value ? 'italic' : 'normal' })
           }
@@ -184,8 +184,8 @@ function StylePanel({ selectedElements, onSetProperties }) {
           icon={<UnderlineIcon />}
           value={state.textDecoration === 'underline'}
           isMultiple={false}
-          IconWidth={8}
-          IconHeight={21}
+          iconWidth={8}
+          iconHeight={21}
           onChange={(value) =>
             setState({ ...state, textDecoration: value ? 'underline' : 'none' })
           }
