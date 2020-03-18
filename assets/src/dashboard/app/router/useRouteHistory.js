@@ -14,37 +14,18 @@
  * limitations under the License.
  */
 
-/*
- * WordPress admin page integration
- *
- * Hides all controls that interfere with the dashboard UI.
+/**
+ * External dependencies
  */
+import { useContext } from 'react';
 
-@import url(//fonts.googleapis.com/css?family=Google+Sans);
+/**
+ * Internal dependencies
+ */
+import { RouterContext } from './routerProvider';
 
-body {
-  background: #fff;
-  color: #1a1d1f;
+function useRouteHistory() {
+  return useContext(RouterContext);
 }
 
-#screen-meta,
-#screen-meta-links {
-  display: none;
-}
-
-body.web-story_page_dashboard #wpcontent,
-body.web-story_page_dashboard #wpbody-content {
-  padding: 0;
-}
-
-body.web-story_page_dashboard #web-stories-dashboard {
-  overflow: hidden;
-}
-
-body.web-story_page_dashboard #web-stories-dashboard .loading-message {
-  text-align: center;
-}
-
-body.web-story_page_dashboard #wpfooter {
-  display: none;
-}
+export default useRouteHistory;
