@@ -170,10 +170,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [focusedValue, setFocusedValue] = useState(null);
-  const isNullOrUndefined = (item) => {
-    if (item === null || item === undefined) return true;
-    return false;
-  };
+  const isNullOrUndefined = (item) => item === null || item === undefined;
   const focusedIndex = useMemo(
     () =>
       options.findIndex(
@@ -199,16 +196,14 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
 
   const handleMoveFocus = useCallback(
     (offset) => {
-      const findIndex = options.findIndex(
-        (item) =>
-          !isNullOrUndefined(focusedValue) &&
-          item.value.toString() === focusedValue.toString()
-      );
-      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
-        setFocusedValue(options[findIndex + offset].value);
+      if (
+        focusedIndex + offset >= 0 &&
+        focusedIndex + offset < options.length
+      ) {
+        setFocusedValue(options[focusedIndex + offset].value);
       }
     },
-    [focusedValue, options]
+    [focusedIndex, options]
   );
 
   const handleUpDown = useCallback(
@@ -296,15 +291,10 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
 
   useEffect(() => {
     if (!isNullOrUndefined(focusedValue)) {
-      const findIndex = options.findIndex(
-        (item) =>
-          !isNullOrUndefined(focusedValue) &&
-          item.value.toString() === focusedValue.toString()
-      );
-      if (findIndex < 0) return;
-      DropDown.arrayOfOptionsRefs[findIndex].focus();
+      if (focusedIndex < 0) return;
+      DropDown.arrayOfOptionsRefs[focusedIndex].focus();
     }
-  }, [focusedValue, options]);
+  }, [focusedValue, options, focusedIndex]);
 
   const handleSelectClick = () => {
     setIsOpen(!isOpen);
