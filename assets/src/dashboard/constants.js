@@ -20,5 +20,11 @@ export const BUTTON_TYPES = {
   SECONDARY: 'secondary',
 };
 
+export const KEYS = {
+  ENTER: 'Enter',
+  UP: 'ArrowUp',
+  DOWN: 'ArrowDown',
+};
+
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;

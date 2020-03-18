@@ -106,6 +106,23 @@ const theme = {
       lineHeight: '20px',
       letterSpacing: '0.01em',
     },
+    popoverMenu: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '400',
+      letterSpacing: '0.01em',
+    },
+    dropdown: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
+  },
+  zIndex: {
+    popoverMenu: 10,
   },
 };
 
