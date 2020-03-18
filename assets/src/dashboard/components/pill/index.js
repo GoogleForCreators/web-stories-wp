@@ -20,11 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import getRandomNumber from '../../utils/getRandomNumber';
-
 const PILL_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
@@ -71,12 +66,10 @@ const Pill = ({
   value,
   ...rest
 }) => {
-  const id = `${name}_${getRandomNumber()}`;
   return (
-    <PillLabel htmlFor={id} isSelected={isSelected}>
+    <PillLabel isSelected={isSelected}>
       <PillInput
         type={inputType}
-        id={id}
         name={name}
         onClick={(e) => onClick(e, value)}
         value={value}

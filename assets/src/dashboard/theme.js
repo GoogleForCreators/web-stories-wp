@@ -94,13 +94,13 @@ const theme = {
       weight: '400',
     },
     button: {
-      family: "'Google Sans', 'Sans Serif'",
+      family: "'Google Sans', Sans Serif",
       size: '14px',
       lineHeight: '20px',
       weight: '500',
     },
     pill: {
-      family: "'Google Sans', 'Sans Serif'",
+      family: "'Google Sans', Sans Serif",
       weight: 500,
       size: '14px',
       lineHeight: '20px',

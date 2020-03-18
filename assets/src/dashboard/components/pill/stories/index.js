@@ -86,10 +86,10 @@ export const _default = () => {
             inputType="checkbox"
             name="demo_checkbox"
             onClick={action('on click selected')}
-            value={text(`value${index}`, value)}
-            isSelected={boolean(`isSelected${index}`, selected)}
+            value={value}
+            isSelected={boolean(`isSelected: ${index}`, selected)}
           >
-            <IconSpan>{icon}</IconSpan> {label}
+            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
           </Pill>
         );
       })}
@@ -107,10 +107,10 @@ export const _radioGroup = () => {
             inputType="radio"
             name="demo_radio"
             onClick={action('on click selected')}
-            value={text(`value${index}`, value)}
-            isSelected={boolean(`isSelected${index}`, selected)}
+            value={value}
+            isSelected={boolean(`isSelected: ${index}`, selected)}
           >
-            {text(`children${index}`, label)}
+            {text(`label: ${index}`, label)}
           </Pill>
         );
       })}
