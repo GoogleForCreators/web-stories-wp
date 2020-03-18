@@ -31,6 +31,9 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Input, MULTIPLE_VALUE } from '../form';
+import useFormContext from './useFormContext';
+
+const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`
   width: 100%;
@@ -63,7 +66,6 @@ function Numeric({
   onChange,
   prefix,
   suffix,
-  isMultiple,
   label,
   symbol,
   value,
@@ -72,10 +74,11 @@ function Numeric({
   disabled,
   ...rest
 }) {
-  // @todo: always do this automatically and turn it to const.
-  isMultiple = value === MULTIPLE_VALUE ? true : isMultiple;
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+  const { isMultiple } = useFormContext();
+  const placeholder =
+    isMultiple && value === MULTIPLE_VALUE ? __('multiple', 'web-stories') : '';
   const [focused, setFocus] = useState(false);
+  const [dot, setDot] = useState(false);
 
   return (
     <Container
@@ -91,7 +94,9 @@ function Numeric({
         suffix={suffix}
         label={label}
         value={
-          value === MULTIPLE_VALUE ? '' : `${value}${focused ? '' : symbol}`
+          value === MULTIPLE_VALUE
+            ? ''
+            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
         aria-label={ariaLabel}
         disabled={disabled}
@@ -101,7 +106,8 @@ function Numeric({
           if (newValue === '') {
             onChange(MULTIPLE_VALUE, evt);
           } else {
-            const valueAsNumber = parseFloat(evt.target.value);
+            setDot(newValue[newValue.length - 1] === DECIMAL_POINT);
+            const valueAsNumber = parseFloat(newValue);
             if (!isNaN(valueAsNumber)) {
               onChange(valueAsNumber, evt);
             }
@@ -127,7 +133,6 @@ Numeric.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   prefix: PropTypes.any,
@@ -142,7 +147,6 @@ Numeric.propTypes = {
 Numeric.defaultProps = {
   className: null,
   disabled: false,
-  isMultiple: false,
   symbol: '',
   flexBasis: 110,
   textCenter: false,

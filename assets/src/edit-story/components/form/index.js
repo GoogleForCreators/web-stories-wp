@@ -29,3 +29,4 @@ export { default as Switch } from './switch';
 export { default as TextInput } from './text';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
+export { default as usePresubmitHandler } from './usePresubmitHandler';

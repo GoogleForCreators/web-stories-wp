@@ -25,6 +25,8 @@ import { useCallback, useMemo, useState } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
+import FormContext from '../../form/context';
+import useHandlers from '../../../utils/useHandlers';
 import updateProperties from './updateProperties';
 
 const Form = styled.form`
@@ -38,6 +40,16 @@ function DesignPanel({
   onSetProperties,
   ...rest
 }) {
+  const [presubmitHandlers, registerPresubmitHandler] = useHandlers();
+
+  const formContext = useMemo(
+    () => ({
+      isMultiple: selectedElements.length > 1,
+      registerPresubmitHandler,
+    }),
+    [selectedElements, registerPresubmitHandler]
+  );
+
   const [elementUpdates, setElementUpdates] = useState({});
 
   const updatedElements = useMemo(() => {
@@ -53,12 +65,29 @@ function DesignPanel({
         evt.preventDefault();
       }
       if (Object.keys(elementUpdates).length > 0) {
-        onSetProperties((element) => elementUpdates[element.id]);
+        const commitUpdates = elementUpdates;
+        if (presubmitHandlers.length > 0) {
+          selectedElements.forEach((element) => {
+            const precommitUpdate = updateProperties(
+              element,
+              elementUpdates[element.id],
+              /* commitValues */ true
+            );
+            let commitUpdate = precommitUpdate;
+            presubmitHandlers.forEach((handler) => {
+              const handlerUpdate = handler({ ...element, ...commitUpdate });
+              commitUpdate = { ...commitUpdate, ...handlerUpdate };
+            });
+            commitUpdates[element.id] = commitUpdate;
+          });
+        }
+
+        onSetProperties((element) => commitUpdates[element.id]);
         // Reset.
         setElementUpdates({});
       }
     },
-    [elementUpdates, onSetProperties]
+    [presubmitHandlers, selectedElements, elementUpdates, onSetProperties]
   );
 
   const pushUpdate = useCallback(
@@ -86,13 +115,15 @@ function DesignPanel({
   const Panel = panelType;
   return (
     <Form onSubmit={submit}>
-      <Panel
-        selectedElements={updatedElements}
-        onSetProperties={onSetProperties}
-        pushUpdate={pushUpdate}
-        submit={submit}
-        {...rest}
-      />
+      <FormContext.Provider value={formContext}>
+        <Panel
+          selectedElements={updatedElements}
+          onSetProperties={onSetProperties}
+          pushUpdate={pushUpdate}
+          submit={submit}
+          {...rest}
+        />
+      </FormContext.Provider>
     </Form>
   );
 }
