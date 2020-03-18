@@ -20,6 +20,7 @@
 import { elementTypes } from '../../elements';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
+import BackgroundOverlayPanel from './backgroundOverlay';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
@@ -33,6 +34,7 @@ export { default as ColorPresetPanel } from './colorPreset';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
+const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
@@ -48,6 +50,7 @@ export const PanelTypes = {
   ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
+  BACKGROUND_OVERLAY,
   SIZE_POSITION,
   STYLE,
   LAYER_STYLE,
@@ -80,6 +83,7 @@ export function getPanels(elements) {
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
+      { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
@@ -102,6 +106,9 @@ export function getPanels(elements) {
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
+          // Only display when isBackground.
+          return null;
+        case BACKGROUND_OVERLAY:
           // Only display when isBackground.
           return null;
         case SIZE_POSITION:
