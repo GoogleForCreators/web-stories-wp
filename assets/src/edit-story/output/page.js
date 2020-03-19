@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
@@ -29,7 +24,7 @@ import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import { LinkType } from '../components/link';
 import OutputElement from './element';
 
-function OutputPage({ page, index }) {
+function OutputPage({ page }) {
   const {
     id,
     backgroundColor,
@@ -94,7 +89,7 @@ function OutputPage({ page, index }) {
           ))}
         </div>
       </amp-story-grid-layer>
-      {ctaElements.length && index >= 1 && (
+      {ctaElements.length && (
         <amp-story-cta-layer>
           {ctaElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
@@ -107,7 +102,6 @@ function OutputPage({ page, index }) {
 
 OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  index: PropTypes.number,
 };
 
 export default OutputPage;

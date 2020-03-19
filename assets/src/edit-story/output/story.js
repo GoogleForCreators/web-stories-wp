@@ -60,8 +60,8 @@ function OutputStory({
           title={story.title}
           poster-portrait-src={story.posterPortraitUrl || fallbackPoster}
         >
-          {pages.map((page, index) => (
-            <OutputPage key={page.id} page={page} index={index} />
+          {pages.map((page) => (
+            <OutputPage key={page.id} page={page} />
           ))}
         </amp-story>
       </body>

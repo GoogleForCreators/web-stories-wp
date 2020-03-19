@@ -122,6 +122,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       .then(({ title, image }) => {
         setState((originalState) => ({
           ...originalState,
+          url: urlWithProtocol,
           desc: title ? title : originalState.desc,
           icon: image
             ? toAbsoluteUrl(urlWithProtocol, image)

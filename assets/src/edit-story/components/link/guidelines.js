@@ -40,10 +40,18 @@ const Separator = styled.div`
   bottom: ${CTA_ZONE_PERCENT * 100}%;
   left: 0px;
   width: 100%;
-  border-bottom: 3px dashed ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
   mix-blend-mode: difference;
   pointer-events: none;
   z-index: 1;
+  background-image: linear-gradient(
+    to right,
+    ${({ theme }) => theme.colors.fg.v1} 60%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: bottom;
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+  height: 2px;
 `;
 
 const Tip = styled.span`
@@ -69,8 +77,7 @@ function LinkGuidelines({}) {
   } = useUnits();
 
   const selectedElement = selectedElements.length === 1 && selectedElements[0];
-  const link = getLinkFromElement(selectedElement);
-  const hasOneTapLinks = selectedElement && link && currentPageNumber !== 1;
+  const hasOneTapLinks = selectedElement?.link && currentPageNumber >= 1;
 
   useEffect(() => {
     if (hasOneTapLinks) {
@@ -94,19 +101,19 @@ function LinkGuidelines({}) {
   });
 
   useEffect(() => {
+    const link = getLinkFromElement(selectedElement);
     if (!linkType || !link || link.type === linkType || !hasOneTapLinks) {
       return;
     }
-
     updateElementById({
-      elementId: selectedElement.id,
+      elementId: selectedElement?.id,
       properties: {
         link: { ...link, type: linkType },
       },
     });
-  }, [linkType, link, hasOneTapLinks, selectedElement, updateElementById]);
+  }, [linkType, hasOneTapLinks, updateElementById, selectedElement]);
 
-  if (!selectedElement || !link || currentPageNumber === 1) {
+  if (!selectedElement || !selectedElement?.link || currentPageNumber === 1) {
     return null;
   }
 

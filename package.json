@@ -161,9 +161,6 @@
       "pre-commit": "lint-staged"
     }
   },
-  "resolutions": {
-    "scheduler": "0.18.0"
-  },
   "lint-staged": {
     "*.js": "npm run lint:js:fix",
     "*.(js|css)": "npm run lint:css:fix",
