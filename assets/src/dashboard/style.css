@@ -20,7 +20,7 @@
  * Hides all controls that interfere with the dashboard UI.
  */
 
-@import url(//fonts.googleapis.com/css?family=Google+Sans);
+@import url(//fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b);
 
 body {
   background: #fff;
@@ -47,4 +47,10 @@ body.web-story_page_dashboard #web-stories-dashboard .loading-message {
 
 body.web-story_page_dashboard #wpfooter {
   display: none;
+}
+
+/* Copied from forms.css in WordPress, avoids issues with "Collapse menu" button */
+
+button {
+  font-size: inherit;
 }
