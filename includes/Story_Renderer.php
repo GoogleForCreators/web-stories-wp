@@ -208,7 +208,7 @@ class Story_Renderer {
 					'vars' => [
 						'event_name'     => 'custom',
 						'event_action'   => 'story_complete',
-						'event_category' => '${title}',
+						'event_category' => "$title",
 						'send_to'        => [
 							$tracking_id,
 						],
