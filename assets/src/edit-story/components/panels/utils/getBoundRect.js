@@ -19,14 +19,6 @@
  */
 import { dataPixels } from '../../../units/dimensions';
 
-/**
- * Get the outer frame value for all objects in `list` with size,
- *
- * ```
- *
- * @param {Array.<Object>} list  List of objects
- * @return {any} Returns common value or empty string if not similar
- */
 function getBoundRect(list) {
   const firstElementProperties = list[0].rotationAngle
     ? calcRotatedObjectPositionAndSize(
@@ -69,16 +61,6 @@ function getBoundRect(list) {
   };
 }
 
-/**
- * Calculates the position of a rotated shape.
- *
- * @param {number} angle The rotation angle in degrees.
- * @param {number} x The resize delta on the left.
- * @param {number} y The resize delta on the right.
- * @param {number} width The resize delta on the top.
- * @param {number} height The resize delta on the bottom.
- * @return {Object} The new positions object.
- */
 export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
   /// variables
   const centerX = x + width * 0.5;
