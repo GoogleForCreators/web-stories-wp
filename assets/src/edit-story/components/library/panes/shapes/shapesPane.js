@@ -42,12 +42,16 @@ const PREVIEW_SIZE = 36;
 const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const ShapePreview = styled.div`
   position: relative;
-  margin-left: 24px;
-  margin-right: 24px;
+  padding: 0.5em;
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: center;
 `;
 
 const Path = styled.path`
@@ -71,29 +75,34 @@ function ShapesPane(props) {
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
           {/** Basic masks */}
-          {MASKS.map((mask) => (
-            <ShapePreview
-              key={mask.type}
-              onClick={() => {
-                insertElement('shape', {
-                  backgroundColor: createSolid(51, 51, 51),
-                  width: DEFAULT_ELEMENT_WIDTH,
-                  mask: {
-                    type: mask.type,
-                  },
-                });
-              }}
-              alt={mask.name}
-            >
-              <svg
-                viewBox={'0 0 1 1'}
-                width={PREVIEW_SIZE}
-                height={PREVIEW_SIZE}
+          {MASKS.map((mask) => {
+            const widthMultiplier = mask.ratio > 1 ? 1 / mask.ratio : 1;
+            const heightMultiplier = mask.ratio <= 1 ? mask.ratio : 1;
+            return (
+              <ShapePreview
+                key={mask.type}
+                onClick={() => {
+                  insertElement('shape', {
+                    backgroundColor: createSolid(51, 51, 51),
+                    width: DEFAULT_ELEMENT_WIDTH * widthMultiplier,
+                    height: DEFAULT_ELEMENT_WIDTH * heightMultiplier,
+                    mask: {
+                      type: mask.type,
+                    },
+                  });
+                }}
+                alt={mask.name}
               >
-                <Path d={mask.path} />
-              </svg>
-            </ShapePreview>
-          ))}
+                <svg
+                  viewBox={'0 0 ' + widthMultiplier + ' ' + heightMultiplier}
+                  width={PREVIEW_SIZE * widthMultiplier}
+                  height={PREVIEW_SIZE * heightMultiplier}
+                >
+                  <Path d={mask.path} />
+                </svg>
+              </ShapePreview>
+            );
+          })}
         </SectionContent>
       </Section>
     </Pane>
