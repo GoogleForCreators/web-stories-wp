@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { GeneralAnimationPropTypes } from './types';
 
-function Animator({ id, animation, config, trigger }) {
+function AnimatorOutput({ id, animation, config, trigger }) {
   const configs = Array.isArray(config) ? config : [config];
 
   return (
@@ -49,7 +49,7 @@ const AnimationConfigPropTypes = PropTypes.shape({
   ...GeneralAnimationPropTypes,
 });
 
-Animator.propTypes = {
+AnimatorOutput.propTypes = {
   id: PropTypes.string.isRequired,
   animation: PropTypes.string.isRequired,
   config: PropTypes.oneOfType([
@@ -59,4 +59,4 @@ Animator.propTypes = {
   trigger: PropTypes.oneOf(['visibility']),
 };
 
-export default Animator;
+export default AnimatorOutput;

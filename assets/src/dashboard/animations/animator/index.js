@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export { default as Animation } from './animation';
-export { default as Animator } from './animator';
+export { default as AnimationOutput } from './animationOutput';
+export { default as AnimatorOutput } from './animatorOutput';
 export { default as WithAnimation } from './output';

@@ -22,7 +22,7 @@ import { number } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { Animator, Animation, WithAnimation } from '../animator';
+import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
 import { ANIMATION_TYPE } from '../constants';
 import AnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -38,8 +38,8 @@ export const _default = () => {
 
   return (
     <>
-      <Animation id={name} keyframes={keyframes} {...config} />
-      <Animator
+      <AnimationOutput id={name} keyframes={keyframes} {...config} />
+      <AnimatorOutput
         id={`${name}-solo`}
         animation={name}
         config={{
@@ -83,8 +83,8 @@ export const Cascading = () => {
 
   return (
     <>
-      <Animation id={name} keyframes={keyframes} {...config} />
-      <Animator
+      <AnimationOutput id={name} keyframes={keyframes} {...config} />
+      <AnimatorOutput
         id={`${name}-group`}
         animation={name}
         config={elementConfigs.map(({ id }, index) => ({

@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
 
-function Animation({ id, keyframes, ...options }) {
+function AnimationOutput({ id, keyframes, ...options }) {
   return (
     <amp-animation id={id} layout="nodisplay">
       <script
@@ -40,10 +40,10 @@ function Animation({ id, keyframes, ...options }) {
   );
 }
 
-Animation.propTypes = {
+AnimationOutput.propTypes = {
   id: PropTypes.string.isRequired,
   keyframes: KeyframesPropTypes.isRequired,
   ...GeneralAnimationPropTypes,
 };
 
-export default Animation;
+export default AnimationOutput;
