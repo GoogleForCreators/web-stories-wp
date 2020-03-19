@@ -106,6 +106,16 @@ function reducer(state, { type, payload }) {
       };
     }
 
+    // Why I am getting Cyclomatic Complexity of 21 adding a new statement on this reducer?
+    case types.SET_MEDIA: {
+      const { media } = payload;
+
+      return {
+        ...state,
+        media,
+      };
+    }
+
     case types.ADD_PROCESSING: {
       const { videoId } = payload;
       if (!videoId || state.processing.includes(videoId)) {

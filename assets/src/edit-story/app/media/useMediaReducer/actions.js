@@ -74,3 +74,10 @@ export const updateMediaElement = (dispatch) => ({
     payload: { videoId, posterId, poster },
   });
 };
+
+export const setMedia = (dispatch) => ({ media }) => {
+  dispatch({
+    type: types.SET_MEDIA,
+    payload: { media },
+  });
+};

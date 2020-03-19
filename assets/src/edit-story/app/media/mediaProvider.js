@@ -53,6 +53,7 @@ function MediaProvider({ children }) {
   const {
     fetchMediaStart,
     fetchMediaSuccess,
+    setMedia,
     fetchMediaError,
     resetFilters,
     setMediaType,
@@ -103,59 +104,70 @@ function MediaProvider({ children }) {
     ]
   );
 
+  const resetMedia = useCallback(
+    ({ pagingNum: p = 1 } = {}) => {
+      fetchMediaStart({ pagingNum: p });
+      getMedia({ mediaType, searchTerm, pagingNum: p })
+        .then(({ data }) => {
+          setMedia({
+            media: data,
+          });
+        })
+        .catch(fetchMediaError);
+    },
+    [
+      setMedia,
+      fetchMediaError,
+      fetchMediaStart,
+      getMedia,
+      mediaType,
+      searchTerm,
+    ]
+  );
+
   const uploadMediaFromLibrary = useCallback(
     async (files) => {
       try {
         const localMedia = await Promise.all(
-          files.map(getResourceFromLocalFile)
+          files.map(getResourceFromLocalFile).reverse()
         );
         const filesUploading = files.map((file) => uploadFile(file));
-        fetchMediaSuccess({
+        setMedia({
           media: [...localMedia, ...media],
-          mediaType,
-          searchTerm,
         });
         await Promise.all(filesUploading);
 
         // To avoid race conditions updating media library, a new request is necessary
-        fetchMedia();
+        resetMedia({ pagingNum });
       } catch (e) {
         fetchMediaError(e);
       }
     },
-    [
-      fetchMedia,
-      fetchMediaSuccess,
-      fetchMediaError,
-      uploadFile,
-      media,
-      mediaType,
-      searchTerm,
-    ]
+    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
   );
 
   const uploadMediaFromWorkspace = useCallback(
     async (files) => {
       try {
         const filesOnCanvas = await Promise.all(
-          files.map(async (file) => {
-            const resource = await getResourceFromLocalFile(file);
-            const element = insertElement(resource.type, { resource });
+          files
+            .map(async (file) => {
+              const resource = await getResourceFromLocalFile(file);
+              const element = insertElement(resource.type, { resource });
 
-            return {
-              element,
-              file,
-            };
-          })
+              return {
+                element,
+                file,
+              };
+            })
+            .reverse()
         );
 
-        fetchMediaSuccess({
+        setMedia({
           media: [
             ...filesOnCanvas.map(({ element: { resource } }) => resource),
             ...media,
           ],
-          mediaType,
-          searchTerm,
         });
 
         await Promise.all(
@@ -179,21 +191,20 @@ function MediaProvider({ children }) {
         );
 
         // To avoid race conditions updating media library, a new request is necessary
-        fetchMedia();
+        resetMedia({ pagingNum });
       } catch (e) {
         fetchMediaError(e);
       }
     },
     [
-      fetchMedia,
-      fetchMediaSuccess,
+      resetMedia,
+      setMedia,
       fetchMediaError,
       uploadFile,
       insertElement,
       updateElementById,
       media,
-      mediaType,
-      searchTerm,
+      pagingNum,
     ]
   );
 
