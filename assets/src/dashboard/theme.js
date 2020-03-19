@@ -121,9 +121,6 @@ const theme = {
       letterSpacing: '0.01em',
     },
   },
-  zIndex: {
-    popoverMenu: 10,
-  },
 };
 
 export default theme;
