@@ -31,6 +31,7 @@ function VideoOutput({ element, box }) {
     autoPlay: 'autoplay',
     poster: resource.poster,
     layout: 'fill',
+    loop: element.loop,
   };
 
   return (

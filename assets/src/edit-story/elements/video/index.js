@@ -51,6 +51,7 @@ export const defaultAttributes = {
 
 export const panels = [
   ...MEDIA_PANELS,
+  PanelTypes.VIDEO_OPTIONS,
   PanelTypes.VIDEO_POSTER,
   PanelTypes.LINK,
 ];

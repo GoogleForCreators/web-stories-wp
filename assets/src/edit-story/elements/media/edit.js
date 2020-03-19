@@ -92,6 +92,7 @@ function MediaEdit({ element, box }) {
     isFill,
     isBackground,
     type,
+    loop,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
 
@@ -139,7 +140,7 @@ function MediaEdit({ element, box }) {
     <Element>
       {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
       {isVideo && (
-        <FadedVideo {...fadedMediaProps}>
+        <FadedVideo {...fadedMediaProps} loop={loop}>
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
@@ -147,7 +148,7 @@ function MediaEdit({ element, box }) {
         <WithMask element={element} fill={true} applyFlip={false}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
-            <CropVideo {...cropMediaProps}>
+            <CropVideo {...cropMediaProps} loop={loop}>
               <source src={resource.src} type={resource.mimeType} />
             </CropVideo>
           )}

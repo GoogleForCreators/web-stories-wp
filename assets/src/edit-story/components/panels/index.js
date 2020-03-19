@@ -28,6 +28,7 @@ import TextStylePanel from './textStyle';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
+import VideoOptionsPanel from './videoOptions';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -40,6 +41,7 @@ const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
+const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_POSTER = 'videoPoster';
 const PAGE = 'page';
 const NO_SELECTION = 'noselection';
@@ -54,6 +56,7 @@ export const PanelTypes = {
   TEXT,
   TEXT_STYLE,
   LINK,
+  VIDEO_OPTIONS,
   VIDEO_POSTER,
 };
 
@@ -84,6 +87,7 @@ export function getPanels(elements) {
     ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
+      panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
     }
     return panels;
@@ -116,6 +120,8 @@ export function getPanels(elements) {
           return { type, Panel: TextStylePanel };
         case VIDEO_POSTER:
           return { type, Panel: VideoPosterPanel };
+        case VIDEO_OPTIONS:
+          return { type, Panel: VideoOptionsPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }
