@@ -23,15 +23,21 @@ import { useEffect, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../api';
+import { useAPI, useConfig } from '../';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
 import Context from './context';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
-  const { uploadVideoFrame } = useUploadVideoFrame();
-  const { pagingNum, mediaType, searchTerm } = state;
+  const {
+    processing,
+    processed,
+    media,
+    pagingNum,
+    mediaType,
+    searchTerm,
+  } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -40,11 +46,24 @@ function MediaProvider({ children }) {
     setMediaType,
     setSearchTerm,
     setNextPage,
+    setProcessing,
+    removeProcessing,
+    updateMediaElement,
   } = actions;
 
+  const { uploadVideoFrame } = useUploadVideoFrame({
+    updateMediaElement,
+    setProcessing,
+    removeProcessing,
+    processing,
+    processed,
+  });
   const {
     actions: { getMedia },
   } = useAPI();
+  const {
+    allowedMimeTypes: { video: allowedVideoMimeTypes },
+  } = useConfig();
 
   const fetchMedia = useCallback(
     ({ pagingNum: p = 1 } = {}) => {
@@ -81,7 +100,47 @@ function MediaProvider({ children }) {
 
   useEffect(() => {
     fetchMedia({ pagingNum });
-  }, [fetchMedia, mediaType, searchTerm, pagingNum]);
+  }, [fetchMedia, mediaType, pagingNum, searchTerm]);
+
+  const uploadVideoPoster = useCallback(
+    (videoId, src, elementId = 0) => {
+      const process = async () => {
+        if (processed.includes(videoId) || processing.includes(videoId)) {
+          return;
+        }
+        setProcessing({ videoId });
+        await uploadVideoFrame(videoId, src, elementId);
+        removeProcessing({ videoId });
+      };
+      process();
+    },
+    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
+  );
+
+  const processor = useCallback(
+    ({ mimeType, posterId, id, src }) => {
+      const process = async () => {
+        if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+          await uploadVideoPoster(id, src);
+        }
+      };
+      process();
+    },
+    [allowedVideoMimeTypes, uploadVideoPoster]
+  );
+
+  const generatePoster = useCallback(() => {
+    const looper = async () => {
+      await media.reduce((accumulatorPromise, el) => {
+        return accumulatorPromise.then(() => processor(el));
+      }, Promise.resolve());
+    };
+    if (media) {
+      looper();
+    }
+  }, [media, processor]);
+
+  useEffect(generatePoster, [media.length, mediaType, searchTerm]);
 
   const context = {
     state,
@@ -92,7 +151,7 @@ function MediaProvider({ children }) {
       fetchMedia,
       resetFilters,
       resetWithFetch,
-      uploadVideoFrame,
+      uploadVideoPoster,
     },
   };
 

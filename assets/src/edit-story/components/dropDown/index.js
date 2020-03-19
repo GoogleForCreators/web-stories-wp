@@ -21,7 +21,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { debounce } from 'throttle-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -170,18 +170,22 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [focusedValue, setFocusedValue] = useState(null);
+  const isNullOrUndefined = (item) => item === null || item === undefined;
   const focusedIndex = useMemo(
     () =>
       options.findIndex(
         (item) =>
-          focusedValue && item.value.toString() === focusedValue.toString()
+          !isNullOrUndefined(focusedValue) &&
+          item.value.toString() === focusedValue.toString()
       ),
     [focusedValue, options]
   );
   const activeItem = useMemo(
     () =>
       options.find(
-        (item) => value && item.value.toString() === value.toString()
+        (item) =>
+          !isNullOrUndefined(value) &&
+          item.value.toString() === value.toString()
       ),
     [value, options]
   );
@@ -192,15 +196,14 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
 
   const handleMoveFocus = useCallback(
     (offset) => {
-      const findIndex = options.findIndex(
-        (item) =>
-          focusedValue && item.value.toString() === focusedValue.toString()
-      );
-      if (findIndex + offset >= 0 && findIndex + offset < options.length) {
-        setFocusedValue(options[findIndex + offset].value);
+      if (
+        focusedIndex + offset >= 0 &&
+        focusedIndex + offset < options.length
+      ) {
+        setFocusedValue(options[focusedIndex + offset].value);
       }
     },
-    [focusedValue, options]
+    [focusedIndex, options]
   );
 
   const handleUpDown = useCallback(
@@ -217,11 +220,9 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
     [isOpen, value, focusedIndex, options, handleMoveFocus]
   );
 
-  const clearSearchValue = useCallback(
-    debounce(800, () => {
-      setSearchValue('');
-    })
-  );
+  const [clearSearchValue] = useDebouncedCallback(() => {
+    setSearchValue('');
+  }, 800);
 
   const handleKeyDown = useCallback(
     ({ keyCode }) => {
@@ -289,15 +290,11 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
   };
 
   useEffect(() => {
-    if (focusedValue) {
-      const findIndex = options.findIndex(
-        (item) =>
-          focusedValue && item.value.toString() === focusedValue.toString()
-      );
-      if (findIndex < 0) return;
-      DropDown.arrayOfOptionsRefs[findIndex].focus();
+    if (!isNullOrUndefined(focusedValue)) {
+      if (focusedIndex < 0) return;
+      DropDown.arrayOfOptionsRefs[focusedIndex].focus();
     }
-  }, [focusedValue, options]);
+  }, [focusedValue, options, focusedIndex]);
 
   const handleSelectClick = () => {
     setIsOpen(!isOpen);
@@ -342,7 +339,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
             {options.map(({ name, value: optValue }) => {
               return (
                 <DropDownItem
-                  id={optValue}
+                  id={`dropDown-${optValue}`}
                   aria-selected={activeItem && activeItem.value === optValue}
                   key={optValue}
                   onClick={() => handleItemClick(optValue)}
@@ -372,6 +369,8 @@ DropDown.propTypes = {
 DropDown.defaultProps = {
   disabled: false,
   ariaLabel: __('DropDown', 'web-stories'),
+  value: '',
+  options: [],
 };
 
 export default DropDown;

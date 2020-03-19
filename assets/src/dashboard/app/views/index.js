@@ -14,24 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import getFileName from '../../utils/getFileName';
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-
-function VideoLayerContent({
-  element: {
-    resource: { poster },
-  },
-}) {
-  const alt = getFileName(poster);
-  return <VisibleImage src={poster} alt={alt} height="20" />;
-}
-
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export { default as MyStoriesView } from './my-stories';
+export { default as TemplatesGalleryView } from './templates-gallery';
+export { default as MyBookmarksView } from './my-bookmarks';

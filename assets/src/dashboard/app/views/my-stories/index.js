@@ -15,23 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import getFileName from '../../utils/getFileName';
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import { ViewHeader } from '../../../components';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster },
-  },
-}) {
-  const alt = getFileName(poster);
-  return <VisibleImage src={poster} alt={alt} height="20" />;
+function MyStories() {
+  return (
+    <div>
+      <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+    </div>
+  );
 }
 
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export default MyStories;

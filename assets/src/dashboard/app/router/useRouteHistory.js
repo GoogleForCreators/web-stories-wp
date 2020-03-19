@@ -15,23 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import getFileName from '../../utils/getFileName';
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import { RouterContext } from './routerProvider';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster },
-  },
-}) {
-  const alt = getFileName(poster);
-  return <VisibleImage src={poster} alt={alt} height="20" />;
+function useRouteHistory() {
+  return useContext(RouterContext);
 }
 
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export default useRouteHistory;

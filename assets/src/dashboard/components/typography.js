@@ -15,23 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import getFileName from '../../utils/getFileName';
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import styled from 'styled-components';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster },
-  },
-}) {
-  const alt = getFileName(poster);
-  return <VisibleImage src={poster} alt={alt} height="20" />;
-}
-
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export const ViewHeader = styled.h1`
+  font-family: ${({ theme }) => theme.fonts.heading1.family};
+  font-size: ${({ theme }) => theme.fonts.heading1.size};
+  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
+  font-weight: bold;
+  margin: 40px 20px;
+`;
