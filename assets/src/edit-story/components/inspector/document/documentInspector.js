@@ -18,16 +18,13 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
+import { rgba } from 'polished';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * External dependencies
- */
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -50,6 +47,18 @@ const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
   border-radius: 4px;
   flex-grow: 1;
+  &:focus {
+    background-color: #fff;
+  }
+`;
+
+// @todo replace color with theme code.
+const Label = styled.span`
+  color: ${({ theme, hasExceeded }) =>
+    hasExceeded ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 12px;
+  line-height: 16px;
 `;
 
 function DocumentInspector() {
@@ -89,10 +98,27 @@ function DocumentInspector() {
     [updateStory]
   );
 
+  // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
+  const handleChangePassword = useCallback(
+    (value) => {
+      if (value.length <= 20) {
+        updateStory({
+          properties: { password: value },
+        });
+      }
+    },
+    [updateStory]
+  );
+
+  const isValidPassword = (value) => {
+    return value && value.length <= 20;
+  };
+
+  // @todo Design details.
   const handleChangeVisibility = useCallback(
     (value) => {
       // If password protected but no password, do nothing.
-      if (value === passwordProtected && !password) {
+      if (value === passwordProtected && !isValidPassword(value)) {
         return;
       }
       // If password protected, keep the previous status.
@@ -101,6 +127,7 @@ function DocumentInspector() {
           ? { password }
           : {
               status: value,
+              password: null,
             };
       updateStory({ properties });
     },
@@ -171,15 +198,21 @@ function DocumentInspector() {
               />
             </Row>
             {
-              <Row>
-                <BoxedTextInput
-                  label={__('Password', 'web-stories')}
-                  type={'password'}
-                  value={password}
-                  onChange={handleChangeValue('password')}
-                  placeholder={__('Enter a password', 'web-stories')}
-                />
-              </Row>
+              <>
+                <Row>
+                  <BoxedTextInput
+                    label={__('Password', 'web-stories')}
+                    value={password}
+                    onChange={handleChangePassword}
+                    placeholder={__('Enter a password', 'web-stories')}
+                  />
+                </Row>
+                <Row>
+                  <Label hasExceeded={password && password.length > 20}>
+                    {__('Must not exceed 20 characters', 'web-stories')}
+                  </Label>
+                </Row>
+              </>
             }
           </>
         )}
