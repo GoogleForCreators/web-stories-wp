@@ -29,6 +29,8 @@ import styled from 'styled-components';
  */
 import { useRouteHistory } from '../app/router';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
+import { BUTTON_TYPES } from '../constants';
+import Button from './button';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -42,6 +44,16 @@ const Nav = styled.nav`
 const WebStoriesLogo = styled(WebStoriesLogoSVG)`
   width: 37px;
   height: 28px;
+`;
+
+const LinksContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    margin-left: 40px;
+  }
 `;
 
 const Link = styled.a`
@@ -69,7 +81,7 @@ function NavigationBar() {
   return (
     <Nav>
       <WebStoriesLogo />
-      <div>
+      <LinksContainer>
         {paths.map((path) => (
           <Link
             active={path.route === state.currentPath}
@@ -79,7 +91,10 @@ function NavigationBar() {
             {path.label}
           </Link>
         ))}
-      </div>
+        <Button type={BUTTON_TYPES.CTA} onClick={void 0}>
+          {__('Create Story', 'web-stories')}
+        </Button>
+      </LinksContainer>
     </Nav>
   );
 }
