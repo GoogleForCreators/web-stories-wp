@@ -85,7 +85,7 @@ export function getPanels(elements) {
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
       { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
     ];
-    // If the selected element's type is video, display poster panel, too.
+    // If the selected element's type is video, display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({
         type: VIDEO_ACCESSIBILITY,
