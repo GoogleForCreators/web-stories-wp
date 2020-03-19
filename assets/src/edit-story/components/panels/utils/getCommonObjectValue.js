@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../../form';
 import getCommonValue from './getCommonValue';
 
 // @todo Test.
@@ -38,7 +39,8 @@ function getCommonObjectValue(list, property, properties, defaultValue) {
       propertyList || { [prop]: defaultValue },
       prop
     );
-    commonValue[prop] = '' !== foundMatch ? foundMatch : defaultValue;
+    commonValue[prop] =
+      MULTIPLE_VALUE !== foundMatch ? foundMatch : defaultValue;
   });
   return commonValue;
 }

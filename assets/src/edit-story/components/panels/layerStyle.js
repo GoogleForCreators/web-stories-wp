@@ -37,8 +37,12 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+function defaultOpacity({ opacity }) {
+  return opacity || 100;
+}
+
 function LayerStylePanel({ selectedElements, pushUpdate }) {
-  const opacity = getCommonValue(selectedElements, 'opacity');
+  const opacity = getCommonValue(selectedElements, defaultOpacity);
   return (
     <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
       <Row expand={false} spaceBetween={true}>

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -31,11 +31,17 @@ function arrange(children = null) {
 }
 
 describe('Panels/LayerStyle', () => {
+  let pushUpdate;
+
+  beforeEach(() => {
+    pushUpdate = jest.fn();
+  });
+
   it('should render <LayerStyle /> panel', () => {
     const { getByText } = arrange(
       <LayerStyle
         selectedElements={[{ opacity: 100 }]}
-        onSetProperties={() => null}
+        pushUpdate={pushUpdate}
       />
     );
 
@@ -45,7 +51,7 @@ describe('Panels/LayerStyle', () => {
 
   it('should set opacity to 100 if not set', () => {
     const { getByText } = arrange(
-      <LayerStyle selectedElements={[{}]} onSetProperties={() => null} />
+      <LayerStyle selectedElements={[{}]} pushUpdate={pushUpdate} />
     );
 
     const element = getByText('Opacity');
@@ -55,14 +61,38 @@ describe('Panels/LayerStyle', () => {
 
   it('should set opacity to 100 if set to 0', () => {
     const { getByText } = arrange(
-      <LayerStyle
-        selectedElements={[{ opacity: 0 }]}
-        onSetProperties={() => null}
-      />
+      <LayerStyle selectedElements={[{ opacity: 0 }]} pushUpdate={pushUpdate} />
     );
 
     const element = getByText('Opacity');
     const input = element.getElementsByTagName('input')[0];
     expect(input.value).toStrictEqual('100%');
+  });
+
+  it('should set opacity to 49 if set to 49', () => {
+    const { getByText } = arrange(
+      <LayerStyle
+        selectedElements={[{ opacity: 49 }]}
+        pushUpdate={pushUpdate}
+      />
+    );
+
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('49%');
+  });
+
+  it('should update opacity value on change', () => {
+    const { getByText } = arrange(
+      <LayerStyle
+        selectedElements={[{ opacity: 49 }]}
+        pushUpdate={pushUpdate}
+      />
+    );
+
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    fireEvent.change(input, { target: { value: '23' } });
+    expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 });
   });
 });
