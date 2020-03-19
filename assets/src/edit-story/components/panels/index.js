@@ -21,11 +21,12 @@ import { elementTypes } from '../../elements';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
+import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
-import VideoPosterPanel from './videoPoster';
+import VideoAccessibilityPanel from './videoAccessibility';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
 export { default as LayerPanel } from './layer';
@@ -34,13 +35,14 @@ export { default as ColorPresetPanel } from './colorPreset';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
+const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
-const VIDEO_POSTER = 'videoPoster';
+const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const PAGE = 'page';
 const NO_SELECTION = 'noselection';
 
@@ -48,13 +50,14 @@ export const PanelTypes = {
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   BACKGROUND_OVERLAY,
+  IMAGE_ACCESSIBILITY,
   SIZE_POSITION,
   STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
-  VIDEO_POSTER,
+  VIDEO_ACCESSIBILITY,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -84,7 +87,10 @@ export function getPanels(elements) {
     ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
-      panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
+      panels.push({
+        type: VIDEO_ACCESSIBILITY,
+        Panel: VideoAccessibilityPanel,
+      });
     }
     return panels;
   }
@@ -114,8 +120,10 @@ export function getPanels(elements) {
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
-        case VIDEO_POSTER:
-          return { type, Panel: VideoPosterPanel };
+        case VIDEO_ACCESSIBILITY:
+          return { type, Panel: VideoAccessibilityPanel };
+        case IMAGE_ACCESSIBILITY:
+          return { type, Panel: ImageAccessibilityPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }

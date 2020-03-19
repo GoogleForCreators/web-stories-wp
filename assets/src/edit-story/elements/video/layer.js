@@ -17,16 +17,14 @@
 /**
  * Internal dependencies
  */
-import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster },
+    resource: { poster, alt },
   },
 }) {
-  const alt = getFileName(poster);
   return <VisibleImage src={poster} alt={alt} height="20" />;
 }
 
