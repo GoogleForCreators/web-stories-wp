@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -112,18 +112,19 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     updates: null,
   };
 
-  const setTransformStyle = (target) => {
-    target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
-    if (frame.resize[0]) {
-      target.style.width = `${frame.resize[0]}px`;
-    }
-    if (frame.resize[1]) {
-      target.style.height = `${frame.resize[1]}px`;
-    }
-    pushTransform(selectedElement.id, frame);
-  };
-  // TODO(@wassgha): Figure out why this is needed? Should be already bound
-  const boundSetTransformStyle = setTransformStyle.bind(this);
+  const setTransformStyle = useCallback(
+    (target) => {
+      target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
+      if (frame.resize[0]) {
+        target.style.width = `${frame.resize[0]}px`;
+      }
+      if (frame.resize[1]) {
+        target.style.height = `${frame.resize[1]}px`;
+      }
+      pushTransform(selectedElement.id, frame);
+    },
+    [frame, pushTransform, selectedElement.id]
+  );
 
   /**
    * Resets Movable once the action is done, sets the initial values.
@@ -164,7 +165,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       rotatable={actionsEnabled && !isDragging}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
         frame.translate = beforeTranslate;
-        boundSetTransformStyle(target);
+        setTransformStyle(target);
         if (selectedElement.resource) {
           handleDrag(
             selectedElement.resource,
