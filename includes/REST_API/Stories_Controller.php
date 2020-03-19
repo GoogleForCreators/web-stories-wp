@@ -95,7 +95,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 		if ( in_array( 'poster_portrait_url', $fields, true ) ) {
 			$poster_images               = Media::get_story_meta_images( $post );
-			$image                       = $poster_images['poster-portrait'];
+			$image                       = isset( $poster_images['poster-portrait'] ) ? $poster_images['poster-portrait'] : null;
 			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 

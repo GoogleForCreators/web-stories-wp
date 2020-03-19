@@ -52,10 +52,19 @@ const BoxedTextInput = styled(TextInput)`
   }
 `;
 
+const LabelRow = styled(Row)`
+  margin-top: -10px;
+`;
+
+// @todo Use theme instead of color directly.
+const Permalink = styled.a`
+  color: #4285f4;
+`;
+
 // @todo replace color with theme code.
 const Label = styled.span`
-  color: ${({ theme, hasExceeded }) =>
-    hasExceeded ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme, warning }) =>
+    warning ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;
@@ -70,7 +79,7 @@ function DocumentInspector() {
   const {
     state: {
       meta: { isSaving },
-      story: { author, status, slug, date, featuredMediaUrl, password },
+      story: { author, status, slug, date, featuredMediaUrl, password, link },
       capabilities,
     },
     actions: { updateStory, deleteStory },
@@ -207,11 +216,11 @@ function DocumentInspector() {
                     placeholder={__('Enter a password', 'web-stories')}
                   />
                 </Row>
-                <Row>
-                  <Label hasExceeded={password && password.length > 20}>
+                <LabelRow>
+                  <Label warning={password && password.length > 20}>
                     {__('Must not exceed 20 characters', 'web-stories')}
                   </Label>
-                </Row>
+                </LabelRow>
               </>
             }
           </>
@@ -253,13 +262,21 @@ function DocumentInspector() {
         )}
       </SimplePanel>
       <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
-        <InputGroup
-          label={__('URL Slug', 'web-stories')}
-          type={'text'}
-          value={slug}
-          disabled={isSaving}
-          onChange={handleChangeValue('slug')}
-        />
+        <Row>
+          <BoxedTextInput
+            label={__('URL Slug', 'web-stories')}
+            value={slug}
+            onChange={handleChangeValue('slug')}
+            placeholder={__('Enter slug', 'web-stories')}
+          />
+        </Row>
+        <LabelRow>
+          <Label>
+            <Permalink rel="noopener noreferrer" target="_blank" href={link}>
+              {link}
+            </Permalink>
+          </Label>
+        </LabelRow>
       </SimplePanel>
     </>
   );
