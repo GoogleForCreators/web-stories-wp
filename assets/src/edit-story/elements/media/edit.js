@@ -92,7 +92,6 @@ function MediaEdit({ element, box }) {
     isFill,
     isBackground,
     type,
-    loop,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
   const [fullMedia, setFullMedia] = useState(null);
@@ -139,7 +138,7 @@ function MediaEdit({ element, box }) {
     <Element>
       {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
       {isVideo && (
-        <FadedVideo {...fadedMediaProps} loop={loop}>
+        <FadedVideo {...fadedMediaProps}>
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
