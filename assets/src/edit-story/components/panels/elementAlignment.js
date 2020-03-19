@@ -68,12 +68,10 @@ const IconButton = styled.button`
     background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   }
 
-  ${({ disabled }) =>
-    disabled &&
-    `
+  &:disabled {
     pointer-events: none;
-		opacity: .2;
-	`}
+    opacity: 0.2;
+  }
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};
@@ -101,14 +99,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       const { x, y, width, height, rotationAngle } = properties;
       let offSetX = 0;
       if (rotationAngle) {
-        const { width: newWidth } = calcRotatedObjectPositionAndSize(
+        const { width: frameWidth } = calcRotatedObjectPositionAndSize(
           rotationAngle,
           x,
           y,
           width,
           height
         );
-        offSetX = (newWidth - width) / 2;
+        offSetX = (frameWidth - width) / 2;
       }
       return {
         x: boundRect.startX + offSetX,
@@ -131,14 +129,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       const { x, y, width, height, rotationAngle } = properties;
       let offSetX = 0;
       if (rotationAngle) {
-        const { width: newWidth } = calcRotatedObjectPositionAndSize(
+        const { width: frameWidth } = calcRotatedObjectPositionAndSize(
           rotationAngle,
           x,
           y,
           width,
           height
         );
-        offSetX = (newWidth - width) / 2;
+        offSetX = (frameWidth - width) / 2;
       }
       return {
         x: boundRect.endX - width - offSetX,
@@ -151,14 +149,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       const { x, y, width, height, rotationAngle } = properties;
       let offSetY = 0;
       if (rotationAngle) {
-        const { height: newHeight } = calcRotatedObjectPositionAndSize(
+        const { height: frameHeight } = calcRotatedObjectPositionAndSize(
           rotationAngle,
           x,
           y,
           width,
           height
         );
-        offSetY = (newHeight - height) / 2;
+        offSetY = (frameHeight - height) / 2;
       }
       return {
         y: boundRect.startY + offSetY,
@@ -181,14 +179,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       const { x, y, width, height, rotationAngle } = properties;
       let offSetY = 0;
       if (rotationAngle) {
-        const { height: newHeight } = calcRotatedObjectPositionAndSize(
+        const { height: frameHeight } = calcRotatedObjectPositionAndSize(
           rotationAngle,
           x,
           y,
           width,
           height
         );
-        offSetY = (newHeight - height) / 2;
+        offSetY = (frameHeight - height) / 2;
       }
       return {
         y: boundRect.endY - height - offSetY,
@@ -197,7 +195,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   };
 
   const handleHorizontalDistribution = () => {
-    const offSetWidth = dataPixels(
+    const offsetWidth = dataPixels(
       (boundRect.endX - boundRect.startX) / (selectedElements.length - 1)
     );
     onSetProperties((properties) => {
@@ -206,14 +204,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
         let offSetX = 0;
         if (rotationAngle) {
-          const { width: newWidth } = calcRotatedObjectPositionAndSize(
+          const { width: frameWidth } = calcRotatedObjectPositionAndSize(
             rotationAngle,
             x,
             y,
             width,
             height
           );
-          offSetX = (newWidth - width) / 2;
+          offSetX = (frameWidth - width) / 2;
         }
         return {
           x:
@@ -222,7 +220,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
               : boundRect.endX - width - offSetX,
         };
       }
-      const centerX = boundRect.startX + offSetWidth * elementIndex;
+      const centerX = boundRect.startX + offsetWidth * elementIndex;
       return {
         x: centerX - width / 2,
       };
@@ -230,7 +228,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   };
 
   const handleVerticalDistribution = () => {
-    const offSetHeight = dataPixels(
+    const offsetHeight = dataPixels(
       (boundRect.endY - boundRect.startY) / (selectedElements.length - 1)
     );
     onSetProperties((properties) => {
@@ -239,14 +237,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
         let offSetY = 0;
         if (rotationAngle) {
-          const { height: newHeight } = calcRotatedObjectPositionAndSize(
+          const { height: frameHeight } = calcRotatedObjectPositionAndSize(
             rotationAngle,
             x,
             y,
             width,
             height
           );
-          offSetY = (newHeight - height) / 2;
+          offSetY = (frameHeight - height) / 2;
         }
         return {
           y:
@@ -255,7 +253,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
               : boundRect.endY - height - offSetY,
         };
       }
-      const centerY = boundRect.startY + offSetHeight * elementIndex;
+      const centerY = boundRect.startY + offsetHeight * elementIndex;
       return {
         y: centerY - height / 2,
       };

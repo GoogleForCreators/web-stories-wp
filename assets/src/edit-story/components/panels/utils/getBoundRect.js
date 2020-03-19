@@ -20,7 +20,7 @@
 import { dataPixels } from '../../../units/dimensions';
 
 /**
- * Get the bound rect value for all objects in `list`,
+ * Get the outer frame value for all objects in `list` with size,
  *
  * ```
  *
@@ -52,12 +52,12 @@ function getBoundRect(list) {
           el.height
         )
       : el;
-    if (elementProperties.x < startX) startX = elementProperties.x;
-    if (elementProperties.y < startY) startY = elementProperties.y;
+    startX = Math.min(elementProperties.x, startX);
+    startY = Math.min(elementProperties.y, startY);
     const elEndX = elementProperties.x + elementProperties.width;
     const elEndY = elementProperties.y + elementProperties.height;
-    if (elEndX > endX) endX = elEndX;
-    if (elEndY > endY) endY = elEndY;
+    endX = Math.max(elEndX, endX);
+    endY = Math.max(elEndY, endY);
   });
   return {
     startX,
