@@ -108,8 +108,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$this->assertSame( $expected, $actual );
 	}
 
-	public function test_maybe_add_analytics() {
-		// Test content unchanged when the config is not set.
+	/**
+	 * Tests that analytics tag is not added if tracking ID is missing.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
+	 */
+	public function test_maybe_add_analytics_empty_tracking_id() {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
@@ -134,6 +138,15 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$actual_with_empty_options = $renderer->render();
 		$this->assertSame( $expected, $actual_with_empty_options );
 
+		delete_option( $option );
+	}
+
+	/**
+	 * Tests that analytics tag is added properly if tracking ID is added.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
+	 */
+	public function test_maybe_add_analytics_with_configuration() {
 		// Test content with amp-analytics tag and script if config set.
 		$post_with_meta_tag = self::factory()->post->create_and_get(
 			[
@@ -141,17 +154,52 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer                    = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
-		$options['propertyID']       = '123foo';
-		$options['trackingDisabled'] = [];
-		update_option( $option, $options );
+		$options = [
+			'propertyID'       => '123foo',
+			'trackingDisabled' => [],
+			'useSnippet'       => true,
+		];
 
+		$option = 'googlesitekit_analytics_settings';
+		add_option( $option, $options );
+
+		$renderer            = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
 		$actual_with_options = $renderer->render();
 
 		$this->assertContains( '<amp-analytics', $actual_with_options );
 		$this->assertContains( '"gtag_id":"123foo"', $actual_with_options );
 		$this->assertContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual_with_options );
+	}
 
-		delete_option( $option );
+	/**
+	 * Tests that analytics tag is correctly removed via filter.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
+	 */
+	public function test_maybe_add_analytics_remove_with_filter() {
+		// Test content with amp-analytics tag and script if config set.
+		$post_with_meta_tag = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head><meta name="web-stories-replace-head-start"/><meta name="web-stories-replace-head-end"/></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$options = [
+			'propertyID'       => '123foo',
+			'trackingDisabled' => [],
+			'useSnippet'       => true,
+		];
+
+		$option = 'googlesitekit_analytics_settings';
+		add_option( $option, $options );
+
+		add_filter( 'web_stories_gtag', '__return_false' );
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
+		$actual   = $renderer->render();
+
+		$this->assertNotContains( '<amp-analytics', $actual );
+		$this->assertNotContains( '"gtag_id":"123foo"', $actual );
+		$this->assertNotContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
 	}
 }

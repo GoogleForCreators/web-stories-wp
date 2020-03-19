@@ -196,8 +196,8 @@ class Story_Renderer {
 					'vars' => [
 						'event_name'     => 'custom',
 						'event_action'   => 'story_progress',
-						'event_category' => "${$title}",
-						'event_label'    => "${story_id}",
+						'event_category' => "$title",
+						'event_label'    => "$story_id",
 						'send_to'        => [
 							$tracking_id,
 						],
@@ -266,6 +266,8 @@ class Story_Renderer {
 		$this->print_amp_analytics();
 
 		$output = (string) ob_get_clean();
+
+		// If analytics tag was added, let's include the required script, too.
 		if ( ! empty( $output ) ) {
 			add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
 		}
