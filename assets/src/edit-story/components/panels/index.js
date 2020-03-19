@@ -18,16 +18,13 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import ColorPanel from './color';
-import StylePanel from './style';
 import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
-import FontPanel from './font';
+import BackgroundOverlayPanel from './backgroundOverlay';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
-import TextPanel from './text';
 import VideoPosterPanel from './videoPoster';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
@@ -36,13 +33,11 @@ export { default as ColorPresetPanel } from './colorPreset';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
-const COLOR = 'color';
-const FONT = 'font';
+const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
-const FILL = 'fill';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_POSTER = 'videoPoster';
@@ -52,15 +47,13 @@ const NO_SELECTION = 'noselection';
 export const PanelTypes = {
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
+  BACKGROUND_OVERLAY,
   SIZE_POSITION,
-  COLOR,
-  FONT,
   STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
-  FILL,
   VIDEO_POSTER,
 };
 
@@ -87,6 +80,7 @@ export function getPanels(elements) {
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
+      { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
     ];
     // If the selected element's type is video, display poster panel, too.
     if ('video' === elements[0].type) {
@@ -104,23 +98,18 @@ export function getPanels(elements) {
     .map((type) => {
       switch (type) {
         case BACKGROUND_SIZE_POSITION:
-          // Onlt display when isBackround.
+          // Only display when isBackround.
           return null;
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
+        case BACKGROUND_OVERLAY:
+          // Only display when isBackground.
+          return null;
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
-        case COLOR:
-          return { type, Panel: ColorPanel };
-        case FONT:
-          return { type, Panel: FontPanel };
-        case STYLE:
-          return { type, Panel: StylePanel };
-        case TEXT:
-          return { type, Panel: TextPanel };
         case LINK:
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:

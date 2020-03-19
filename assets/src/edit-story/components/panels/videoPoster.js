@@ -30,15 +30,21 @@ import { __ } from '@wordpress/i18n';
  */
 import { Media } from '../form';
 import { SimplePanel } from './panel';
+import getCommonObjectValue from './utils/getCommonObjectValue';
 import getCommonValue from './utils/getCommonValue';
 
 function VideoPosterPanel({ selectedElements, onSetProperties }) {
-  const featuredMedia = getCommonValue(selectedElements, 'featuredMedia');
-  const poster = getCommonValue(selectedElements, 'poster');
-  const [state, setState] = useState({ featuredMedia, poster });
+  const resource = getCommonValue(selectedElements, 'resource');
+  const { posterId, poster } = getCommonObjectValue(
+    selectedElements,
+    'resource',
+    ['posterId', 'poster'],
+    false
+  );
+  const [state, setState] = useState({ posterId, poster });
   useEffect(() => {
-    setState({ featuredMedia, poster });
-  }, [featuredMedia, poster]);
+    setState({ posterId, poster });
+  }, [posterId, poster]);
 
   const handleSubmit = (evt) => {
     onSetProperties(state);
@@ -47,11 +53,11 @@ function VideoPosterPanel({ selectedElements, onSetProperties }) {
 
   const handleChangeImage = (image) => {
     const newState = {
-      featuredMedia: image.id,
+      posterId: image.id,
       poster: image.sizes?.medium?.url || image.url,
     };
     setState({ ...state, ...newState });
-    onSetProperties(newState);
+    onSetProperties({ resource: { ...resource, ...newState } });
   };
 
   return (

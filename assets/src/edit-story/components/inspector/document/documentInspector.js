@@ -36,7 +36,8 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import { SelectMenu, InputGroup, Button } from '../../form';
+import { InputGroup, Button } from '../../form';
+import DropDown from '../../dropDown';
 import useInspector from '../useInspector';
 
 const Img = styled.img`
@@ -85,7 +86,7 @@ function DocumentInspector() {
         { name: __('Public', 'web-stories'), value: '' },
         { name: __('Private', 'web-stories'), value: 'private' },
       ]
-    : false;
+    : [];
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
@@ -154,19 +155,17 @@ function DocumentInspector() {
           onChange={handleChangeValue('date')}
         />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <SelectMenu
-            label={__('Author', 'web-stories')}
-            name="user"
+          <DropDown
+            ariaLabel={__('Author', 'web-stories')}
             options={users}
             value={author}
             disabled={isSaving}
             onChange={handleChangeValue('author')}
           />
         )}
-        {capabilities && capabilities.hasPublishAction && visibilityOptions && (
-          <SelectMenu
-            label={__('Visibility', 'web-stories')}
-            name="status"
+        {capabilities && capabilities.hasPublishAction && statuses && (
+          <DropDown
+            ariaLabel={__('Visibility', 'web-stories')}
             options={visibilityOptions}
             disabled={isSaving}
             value={privateStatus === status ? status : ''}

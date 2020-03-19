@@ -38,7 +38,7 @@ describe('Panels/VideoPoster', () => {
   it('should render <VideoPoster /> panel', () => {
     const { getByLabelText } = arrange(
       <VideoPoster
-        selectedElements={[{ featuredMedia: null, poster: null }]}
+        selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
         onSetProperties={() => null}
       />
     );
@@ -53,7 +53,7 @@ describe('Panels/VideoPoster', () => {
 
     const { getByLabelText } = arrange(
       <VideoPoster
-        selectedElements={[{ featuredMedia: null, poster: null }]}
+        selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
         onSetProperties={onClickOnSetPropertiesMock}
       />
     );

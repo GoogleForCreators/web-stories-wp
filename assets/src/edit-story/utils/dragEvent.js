@@ -18,8 +18,7 @@
  * Get Drag Type from event.
  *
  * @param {DragEvent} e The drag event.
- * @param type
- * @param {string} The type of transfer payload to test against
+ * @param {string} type The type of transfer payload to test against
  * @return {boolean} Whether the drag is of the specified type
  */
 export function isDragType(e, type) {
