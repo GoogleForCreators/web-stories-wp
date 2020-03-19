@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, fonts, users, statuses },
+    api: { stories, media, fonts, link, users, statuses },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -195,6 +195,23 @@ function APIProvider({ children }) {
     [media]
   );
 
+  /**
+   * Gets metadata (title, favicon, etc.) from
+   * a provided URL.
+   *
+   * @param  {number} url
+   * @return {Promise} Result promise
+   */
+  const getLinkMetadata = useCallback(
+    (url) => {
+      const path = addQueryArgs(link, { url });
+      return apiFetch({
+        path,
+      });
+    },
+    [link]
+  );
+
   const getAllFonts = useCallback(
     ({}) => {
       return apiFetch({ path: fonts }).then((data) =>
@@ -220,6 +237,7 @@ function APIProvider({ children }) {
     actions: {
       getStoryById,
       getMedia,
+      getLinkMetadata,
       saveStoryById,
       deleteStoryById,
       getAllFonts,

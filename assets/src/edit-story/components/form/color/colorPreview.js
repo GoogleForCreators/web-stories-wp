@@ -37,6 +37,7 @@ import ColorBox from './colorBox';
 
 const Preview = styled(ColorBox).attrs({
   as: 'button',
+  type: 'button',
 })`
   display: flex;
   width: 122px;

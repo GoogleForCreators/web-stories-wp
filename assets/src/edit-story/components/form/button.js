@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-const Button = styled.button`
+const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
   background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
   border: none;
@@ -34,6 +34,7 @@ const Button = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  user-select: none;
   ${({ fullWidth }) =>
     fullWidth &&
     `

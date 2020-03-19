@@ -28,9 +28,11 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
+    "history": "^4.10.1",
     "mousetrap": "^1.6.5",
     "polished": "^3.4.4",
     "prop-types": "^15.7.2",
+    "query-string": "^6.11.1",
     "react": "^16.13.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.13.0",
@@ -39,9 +41,10 @@
     "react-transition-group": "^4.3.0",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.0.1",
-    "throttle-debounce": "^2.1.0",
+    "use-debounce": "^3.4.0",
     "use-reduction": "^2.0.0",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.0.0",

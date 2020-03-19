@@ -86,7 +86,7 @@ function DocumentInspector() {
         { name: __('Public', 'web-stories'), value: '' },
         { name: __('Private', 'web-stories'), value: 'private' },
       ]
-    : false;
+    : [];
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),

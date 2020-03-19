@@ -21,7 +21,6 @@ import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { useContext } from 'react';
 
 export const GlobalStyle = createGlobalStyle`
-  @import url(//fonts.googleapis.com/css?family=Google+Sans);
 	*,
 	*::after,
 	*::before {
@@ -85,6 +84,7 @@ const theme = {
       family: 'Google Sans',
       size: '14px',
       lineHeight: '20px',
+      letterSpacing: '0.01em',
       weight: '500',
     },
     label: {
@@ -94,10 +94,17 @@ const theme = {
       weight: '400',
     },
     button: {
-      family: "'Google Sans', 'Sans Serif'",
+      family: "'Google Sans', Sans Serif",
       size: '14px',
       lineHeight: '20px',
       weight: '500',
+    },
+    pill: {
+      family: "'Google Sans', Sans Serif",
+      weight: 500,
+      size: '14px',
+      lineHeight: '20px',
+      letterSpacing: '0.01em',
     },
   },
 };

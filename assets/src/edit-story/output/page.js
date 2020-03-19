@@ -20,10 +20,17 @@
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
-  const { id, backgroundColor, elements, backgroundElementId } = page;
+  const {
+    id,
+    backgroundColor,
+    elements,
+    backgroundElementId,
+    backgroundOverlay,
+  } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
     width: `calc(100 * var(--story-page-vw))`, // 100vw
@@ -35,6 +42,7 @@ function OutputPage({ page }) {
       PAGE_WIDTH}))`,
   };
   const backgroundStyles = generatePatternStyles(backgroundColor);
+  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundNonFullbleedElements = elements.filter(
     (element) =>
       element.id === backgroundElementId &&
@@ -61,6 +69,12 @@ function OutputPage({ page }) {
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
+        {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
+          <div
+            className="page-background-overlay-area"
+            style={{ ...backgroundOverlayStyles }}
+          />
+        )}
         <div className="page-safe-area" style={aspectRatioStyles}>
           {regularElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
