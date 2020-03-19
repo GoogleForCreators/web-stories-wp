@@ -48,3 +48,9 @@ body.web-story_page_dashboard #web-stories-dashboard .loading-message {
 body.web-story_page_dashboard #wpfooter {
   display: none;
 }
+
+/* Copied from forms.css in WordPress, avoids issues with "Collapse menu" button */
+
+button {
+  font-size: inherit;
+}
