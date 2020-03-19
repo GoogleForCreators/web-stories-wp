@@ -34,6 +34,10 @@ const Form = styled.form`
   margin: 0;
 `;
 
+const AutoSubmitButton = styled.input.attrs({ type: 'submit' })`
+  display: none;
+`;
+
 function DesignPanel({
   panelType,
   selectedElements,
@@ -115,6 +119,7 @@ function DesignPanel({
   const Panel = panelType;
   return (
     <Form onSubmit={submit}>
+      <AutoSubmitButton />
       <FormContext.Provider value={formContext}>
         <Panel
           selectedElements={updatedElements}
