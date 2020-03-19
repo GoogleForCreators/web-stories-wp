@@ -19,8 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -30,26 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media, Row, TextInput } from '../form';
+import { Media, Row } from '../form';
+import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import getCommonObjectValue from './utils/getCommonObjectValue';
 import getCommonValue from './utils/getCommonValue';
-
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const ExpandedTextInput = styled(BoxedTextInput)`
-  flex-grow: 1;
-`;
-
-const Note = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: 16px;
-`;
 
 function VideoAccessibilityPanel({ selectedElements, onSetProperties }) {
   const resource = getCommonValue(selectedElements, 'resource');
@@ -121,9 +104,7 @@ function VideoAccessibilityPanel({ selectedElements, onSetProperties }) {
         />
       </Row>
       <Row>
-        <Note>
-          {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
-        </Note>
+        <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
       </Row>
     </SimplePanel>
   );

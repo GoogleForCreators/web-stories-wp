@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -29,19 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput } from '../form';
+import { Row } from '../form';
+import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import getCommonObjectValue from './utils/getCommonObjectValue';
 import getCommonValue from './utils/getCommonValue';
-
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const ExpandedTextInput = styled(BoxedTextInput)`
-  flex-grow: 1;
-`;
 
 function ImageAccessibilityPanel({ selectedElements, onSetProperties }) {
   const resource = getCommonValue(selectedElements, 'resource');
@@ -85,6 +76,9 @@ function ImageAccessibilityPanel({ selectedElements, onSetProperties }) {
           onChange={handleChange('alt')}
           clear
         />
+      </Row>
+      <Row>
+        <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
       </Row>
     </SimplePanel>
   );
