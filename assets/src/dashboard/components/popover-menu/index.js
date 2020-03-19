@@ -24,7 +24,7 @@ import { useEffect, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { KEYS } from '../../constants';
+import { KEYS, Z_INDEX } from '../../constants';
 
 export const DROPDOWN_MENU_DIRECTIONS = {
   UP: 'up',
@@ -48,7 +48,7 @@ export const Menu = styled.ul`
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
-  z-index: ${({ theme }) => theme.zIndex.popoverMenu};
+  z-index: ${Z_INDEX.POPOVER_MENU};
   width: 100%;
 `;
 Menu.propTypes = {

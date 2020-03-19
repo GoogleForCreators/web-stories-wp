@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
 import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
-
+import useFocusOut from '../../utils/useFocusOut';
 import PopoverMenu from '../popover-menu';
 
 const DropdownContainer = styled.div`
@@ -93,23 +93,11 @@ const Dropdown = ({
   const [showMenu, setShowMenu] = useState(false);
   const dropdownRef = useRef();
 
-  const handleOutsideClick = (e) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(e.target) &&
-      showMenu === true
-    ) {
-      setShowMenu(false);
-    }
-  };
+  const handleFocusOut = useCallback(() => {
+    setShowMenu(false);
+  }, []);
 
-  useEffect(() => {
-    document.addEventListener('click', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
-  });
+  useFocusOut(dropdownRef, handleFocusOut);
 
   const handleInnerDropdownClick = () => {
     if (!disabled) {
