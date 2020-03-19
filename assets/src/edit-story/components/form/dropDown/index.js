@@ -51,7 +51,10 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  background-color: ${({ theme, isDocumentPanel }) =>
+    isDocumentPanel
+      ? rgba(theme.colors.fg.v1, 0.1)
+      : rgba(theme.colors.bg.v0, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -162,7 +165,7 @@ const availableKeysForSearch = [
   '0',
 ];
 
-function DropDown({ options, value, onChange, disabled, ariaLabel }) {
+function DropDown({ options, value, onChange, disabled, ariaLabel, isDocumentPanel }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -321,6 +324,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
         disabled={disabled}
         ref={DropDown.selectRef}
         aria-disabled={disabled}
+        isDocumentPanel={isDocumentPanel}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) ||

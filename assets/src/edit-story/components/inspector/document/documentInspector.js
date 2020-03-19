@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 
@@ -25,6 +25,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { DateTimePicker } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -33,14 +34,7 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import {
-  InputGroup,
-  Button,
-  TextInput,
-  Row,
-  DropDown,
-  Label,
-} from '../../form';
+import { Button, TextInput, Row, DropDown, Label } from '../../form';
 import useInspector from '../useInspector';
 
 const Img = styled.img`
@@ -80,6 +74,20 @@ const FieldLabel = styled(Label)`
   flex-basis: ${({ width }) => (width ? width : 64)}px;
 `;
 
+const BoxedText = styled.div`
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  display: flex;
+  flex-direction: row;
+  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  flex: 1;
+  padding: 7px 2px;
+  border-radius: 4px;
+`;
+
 function DocumentInspector() {
   const {
     actions: { loadStatuses, loadUsers },
@@ -97,6 +105,8 @@ function DocumentInspector() {
 
   const { postThumbnails } = useConfig();
 
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
   useEffect(() => {
     loadStatuses();
     loadUsers();
@@ -107,10 +117,11 @@ function DocumentInspector() {
     ['draft', 'publish', 'private'].includes(value)
   );
 
-  visibilityOptions.push({
+  // @todo Add this back once we have FE implementation, too.
+  /*visibilityOptions.push({
     name: __('Password Protected', 'web-stories'),
     value: passwordProtected,
-  });
+  });*/
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
@@ -146,7 +157,7 @@ function DocumentInspector() {
           ? { password }
           : {
               status: value,
-              password: null,
+              password: '',
             };
       updateStory({ properties });
     },
@@ -215,9 +226,10 @@ function DocumentInspector() {
                 disabled={isSaving}
                 value={getStatusValue(status)}
                 onChange={handleChangeVisibility}
+                isDocumentPanel={true}
               />
             </Row>
-            {
+            {passwordProtected === status && (
               <>
                 <Row>
                   <BoxedTextInput
@@ -233,7 +245,7 @@ function DocumentInspector() {
                   </Helper>
                 </HelperRow>
               </>
-            }
+            )}
           </>
         )}
         <Button onClick={handleRemoveStory} fullWidth>
@@ -241,13 +253,21 @@ function DocumentInspector() {
         </Button>
       </SimplePanel>
       <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
-        <InputGroup
-          label={__('Publish', 'web-stories')}
-          type={'datetime-local'}
-          value={date}
-          disabled={isSaving}
-          onChange={handleChangeValue('date')}
-        />
+        <Row>
+          <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
+          <BoxedText>
+            {date}
+
+          </BoxedText>
+          {showDatePicker && (
+            <DateTimePicker
+              key="date-time-picker"
+              currentDate={date}
+              onChange={handleChangeValue('date')}
+              is12Hour={false}
+            />
+          )}
+        </Row>
         {capabilities && capabilities.hasAssignAuthorAction && users && (
           <Row>
             <FieldLabel>{label}</FieldLabel>
@@ -257,6 +277,7 @@ function DocumentInspector() {
               value={author}
               disabled={isSaving}
               onChange={handleChangeValue('author')}
+              isDocumentPanel={true}
             />
           </Row>
         )}
