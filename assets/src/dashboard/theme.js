@@ -121,6 +121,48 @@ const theme = {
       letterSpacing: '0.01em',
     },
   },
+  grid: {
+    desktop: {
+      width: '1280px',
+      columns: 5,
+      gap: '25px',
+      itemWidth: '221px',
+      itemHeight: '453px',
+    },
+    tablet: {
+      width: '1120px',
+      columns: 5,
+      gap: '22px',
+      itemWidth: '189px',
+      itemHeight: '395px',
+    },
+    mobile: {
+      width: '800px',
+      columns: 4,
+      gap: '20px',
+      itemWidth: '162px',
+      itemHeight: '347px',
+    },
+    min: {
+      width: '684px',
+      columns: 3,
+      gap: '24px',
+      itemWidth: '185px',
+      itemHeight: '395px',
+    },
+  },
+  breakpoint: {
+    desktop: 'screen and (max-width: 1440px)',
+    tablet: 'screen and (max-width: 1280px)',
+    mobile: 'screen and (max-width: 960px)',
+    min: 'screen and (max-width: 720px)',
+    raw: {
+      desktop: 1440,
+      tablet: 1280,
+      mobile: 960,
+      min: 720,
+    },
+  },
 };
 
 export default theme;
