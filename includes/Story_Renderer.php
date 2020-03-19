@@ -156,7 +156,13 @@ class Story_Renderer {
 		$option = 'googlesitekit_analytics_settings';
 
 		$site_kit_analytics = get_option( $option, [] );
-		if ( empty( $site_kit_analytics ) || empty( $site_kit_analytics['propertyID'] ) ) {
+
+		// Ensure filters used in Site Kit apply here, too.
+		$tracking_id = apply_filters( 'googlesitekit_analytics_internal_web_property_id', '' );
+		if ( empty( $tracking_id ) && ! empty( $site_kit_analytics['propertyID'] ) ) {
+			$tracking_id = $site_kit_analytics['propertyID'];
+		}
+		if ( empty( $site_kit_analytics ) || empty( $tracking_id ) ) {
 			return;
 		}
 
@@ -173,24 +179,57 @@ class Story_Renderer {
 			}
 		}
 
-		$tracking_id = $site_kit_analytics['propertyID'];
-		$gtag        = [
-			'vars'            => [
+		$title    = $this->post->post_title;
+		$story_id = $this->post->ID;
+		$gtag     = [
+			'vars'     => [
 				'gtag_id' => $tracking_id,
 				'config'  => [
 					$tracking_id => [
 						'groups' => 'default',
-						'linker' => [
-							'domains' => [ wp_parse_url( home_url(), PHP_URL_HOST ) ],
+					],
+				],
+			],
+			'triggers' => [
+				'storyProgress' => [
+					'on'   => 'story-page-visible',
+					'vars' => [
+						'event_name'     => 'custom',
+						'event_action'   => 'story_progress',
+						'event_category' => "${$title}",
+						'event_label'    => "${story_id}",
+						'send_to'        => [
+							$tracking_id,
+						],
+					],
+				],
+				'storyEnd'      => [
+					'on'   => 'story-last-page-visible',
+					'vars' => [
+						'event_name'     => 'custom',
+						'event_action'   => 'story_complete',
+						'event_category' => '${title}',
+						'send_to'        => [
+							$tracking_id,
 						],
 					],
 				],
 			],
-			'optoutElementId' => '__gaOptOutExtension',
 		];
 
-		// Run Site Kit filter to not lose any potential changes.
-		$gtag_filtered = apply_filters( 'googlesitekit_amp_gtag_opt', $gtag );
+		/**
+		 * Filters Analytics tag configuration.
+		 *
+		 * Allows modification or removal of the tag.
+		 *
+		 * @param array $gtag Array used to generate config for analytics.
+		 */
+		$gtag_filtered = apply_filters( 'web_stories_gtag', $gtag );
+
+		// If the configuration was removed, don't display the tag.
+		if ( empty( $gtag_filtered ) ) {
+			return;
+		}
 
 		// Ensure gtag is still array.
 		if ( ! is_array( $gtag_filtered ) ) {
