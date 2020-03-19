@@ -63,17 +63,17 @@ const categoryDemoData = [
 ];
 
 const DemoFieldSet = styled.fieldset`
-  width: 550px;
+  width: 55rem;
   margin: 0;
   border: none;
   > label {
-    margin: 0 16px 0 0;
+    margin: 0 1.6rem 0 0;
   }
 `;
 
 const IconSpan = styled.span`
   color: purple;
-  margin-right: 5px;
+  margin-right: 0.5rem;
 `;
 
 export const _default = () => {

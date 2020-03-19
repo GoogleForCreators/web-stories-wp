@@ -22,7 +22,7 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import theme, { GlobalStyle } from '../theme';
+import theme from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { NavigationBar } from '../components';
 import { Route, RouterProvider } from './router';
@@ -32,7 +32,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider>
-        <GlobalStyle />
         <KeyboardOnlyOutline />
         <NavigationBar />
         <Route exact path="/" component={<MyStoriesView />} />

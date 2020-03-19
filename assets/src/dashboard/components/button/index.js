@@ -29,11 +29,11 @@ const StyledButton = styled.button`
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 0.1rem solid transparent;
   border-radius: ${({ theme }) => theme.border.buttonRadius};
   display: flex;
-  height: 40px;
-  min-width: 132px;
+  height: 4rem;
+  min-width: 1.32rem;
   opacity: 0.75;
   padding: 0;
 
@@ -80,7 +80,7 @@ const StyledChildren = styled.span`
   font-weight: ${({ theme }) => theme.fonts.button.weight};
   line-height: ${({ theme }) => theme.fonts.button.lineHeight};
   margin: auto;
-  padding: 10px 24px;
+  padding: 1rem 2.4rem;
 `;
 
 const Button = ({

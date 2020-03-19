@@ -31,10 +31,9 @@ import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
-import dashboardTheme, {
-  GlobalStyle as DashboardGlobalStyle,
-} from '../assets/src/dashboard/theme';
+import dashboardTheme from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
+import DashboardStyleSheet from '../assets/src/dashboard/style.css';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -69,11 +68,13 @@ addDecorator((story, { id }) => {
 
   if (useDashboardTheme) {
     return (
-      <ThemeProvider theme={dashboardTheme}>
-        <DashboardGlobalStyle />
-        <DashboardKeyboardOnlyOutline />
-        {story()}
-      </ThemeProvider>
+      <>
+        <link rel="stylesheet" href={DashboardStyleSheet} />
+        <ThemeProvider theme={dashboardTheme}>
+          <DashboardKeyboardOnlyOutline />
+          {story()}
+        </ThemeProvider>
+      </>
     );
   }
 

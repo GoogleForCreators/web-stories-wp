@@ -35,15 +35,15 @@ import Button from './button';
 const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
+  border-bottom: ${({ theme }) => `0.1rem solid ${theme.colors.gray50}`};
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  padding: 2rem;
 `;
 
 const WebStoriesLogo = styled(WebStoriesLogoSVG)`
-  width: 37px;
-  height: 28px;
+  width: 3.7rem;
+  height: 2.8rem;
 `;
 
 const LinksContainer = styled.div`
@@ -52,7 +52,7 @@ const LinksContainer = styled.div`
   justify-content: space-between;
 
   button {
-    margin-left: 40px;
+    margin-left: 4rem;
   }
 `;
 
@@ -62,7 +62,7 @@ const Link = styled.a`
   line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
   text-decoration: none;
-  margin-left: 40px;
+  margin-left: 4rem;
   color: ${({ theme, active }) =>
     active ? theme.colors.gray900 : theme.colors.gray500};
 `;

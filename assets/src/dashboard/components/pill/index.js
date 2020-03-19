@@ -31,13 +31,15 @@ const PillLabel = styled.label`
   display: inline-flex;
   justify-content: center;
   margin: auto;
-  padding: 6px 16px;
+  padding: 0.6rem 1.6rem;
   background-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.blueLight : theme.colors.white};
   color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.bluePrimary : theme.colors.gray600};
   border: ${({ theme, isSelected }) =>
-    isSelected ? '1px solid transparent' : `1px solid ${theme.colors.gray50}`};
+    isSelected
+      ? '0.1rem solid transparent'
+      : `0.1rem solid ${theme.colors.gray50}`};
   border-radius: ${({ theme }) => theme.border.buttonRadius};
   font-family: ${({ theme }) => theme.fonts.pill.family};
   font-weight: ${({ theme }) => theme.fonts.pill.weight};

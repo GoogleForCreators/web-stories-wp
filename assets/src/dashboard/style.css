@@ -20,9 +20,22 @@
  * Hides all controls that interfere with the dashboard UI.
  */
 
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* root font size is 10px */
+}
+
 body {
   background: #fff;
-  color: #1a1d1f;
+  color: #1a1d1f; /* theme.colors.gray900 */
+  font-family: 'Google Sans', Sans Serif;
+  font-size: 1.4rem;
 }
 
 #screen-meta,

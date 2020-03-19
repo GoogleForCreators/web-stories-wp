@@ -53,7 +53,7 @@ export const _default = () => {
 };
 
 const LongContainer = styled.div`
-  width: 300px;
+  width: 30rem;
 `;
 const LongButton = styled(Button)`
   width: 90%;
@@ -81,8 +81,8 @@ export const _LongButton = () => {
 };
 
 const SecondaryButtonContainer = styled.div`
-  width: 400px;
-  height: 200px;
+  width: 40rem;
+  height: 20rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -90,7 +90,7 @@ const SecondaryButtonContainer = styled.div`
 `;
 
 const LargerFontChild = styled.span`
-  font-size: 22px;
+  font-size: 2.2rem;
 `;
 
 export const SecondaryButton = () => {

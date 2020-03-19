@@ -17,16 +17,8 @@
 /**
  * External dependencies
  */
-import { createGlobalStyle, ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 import { useContext } from 'react';
-
-export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-    }
-`;
 
 export function useTheme() {
   return useContext(ThemeContext);
@@ -56,54 +48,54 @@ const theme = {
     selection: '#44aaff',
   },
   border: {
-    buttonRadius: '100px',
+    buttonRadius: '10rem',
   },
   text: {
-    shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
+    shadow: '0 0.1rem 0.1rem rgba(0, 0, 0, 1)',
   },
   fonts: {
     heading1: {
       family: 'Google Sans',
-      size: '38px',
-      lineHeight: '53px',
+      size: '3.8rem',
+      lineHeight: '5.3rem',
       letterSpacing: '-0.005em',
     },
     body1: {
       family: 'Roboto',
-      size: '16px',
-      lineHeight: '24px',
+      size: '1.6rem',
+      lineHeight: '2.4rem',
       letterSpacing: '0.00625em',
     },
     body2: {
       family: 'Roboto',
-      size: '14px',
-      lineHeight: '16px',
+      size: '1.4rem',
+      lineHeight: '1.6rem',
       letterSpacing: '0.0142em',
     },
     tab: {
       family: 'Google Sans',
-      size: '14px',
-      lineHeight: '20px',
+      size: '1.4rem',
+      lineHeight: '2rem',
       letterSpacing: '0.01em',
       weight: '500',
     },
     label: {
       family: 'Roboto',
-      size: '15px',
-      lineHeight: '18px',
+      size: '1.5rem',
+      lineHeight: '1.8rem',
       weight: '400',
     },
     button: {
       family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      size: '1.4rem',
+      lineHeight: '2rem',
       weight: '500',
     },
     pill: {
       family: "'Google Sans', Sans Serif",
       weight: 500,
-      size: '14px',
-      lineHeight: '20px',
+      size: '1.4rem',
+      lineHeight: '2rem',
       letterSpacing: '0.01em',
     },
   },
