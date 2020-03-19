@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { ThemeProvider } from 'styled-components';
@@ -28,13 +23,22 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../theme';
+import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
+import { NavigationBar } from '../components';
+import { Route, RouterProvider } from './router';
+import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <h1>{__('Dashboard', 'web-stories')}</h1>
-      <p>{__('Coming soon', 'web-stories')}</p>
+      <RouterProvider>
+        <GlobalStyle />
+        <KeyboardOnlyOutline />
+        <NavigationBar />
+        <Route exact path="/" component={<MyStoriesView />} />
+        <Route path="/templates-gallery" component={<TemplatesGalleryView />} />
+        <Route path="/my-bookmarks" component={<MyBookmarksView />} />
+      </RouterProvider>
     </ThemeProvider>
   );
 }

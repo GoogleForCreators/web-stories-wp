@@ -34,7 +34,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { generateFontFamily } from './util';
+import { draftMarkupToContent, generateFontFamily } from './util';
 
 const Element = styled.p`
 	margin: 0;
@@ -48,6 +48,7 @@ const Element = styled.p`
 function TextDisplay({
   element: {
     id,
+    bold,
     content,
     color,
     backgroundColor,
@@ -60,12 +61,13 @@ function TextDisplay({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   },
 }) {
   const ref = useRef(null);
 
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
   const props = {
@@ -78,8 +80,12 @@ function TextDisplay({
     fontWeight,
     letterSpacing,
     lineHeight,
-    padding,
+    padding: {
+      horizontal: dataToEditorX(padding.horizontal),
+      vertical: dataToEditorY(padding.vertical),
+    },
     textAlign,
+    textDecoration,
   };
   const {
     actions: { maybeEnqueueFontStyle },
@@ -100,7 +106,7 @@ function TextDisplay({
   return (
     <Element
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
       {...props}
     />
   );
