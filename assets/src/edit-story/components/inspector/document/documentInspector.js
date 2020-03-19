@@ -36,7 +36,7 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import { InputGroup, Button } from '../../form';
+import { InputGroup, Button, TextInput, Row } from '../../form';
 import DropDown from '../../dropDown';
 import useInspector from '../useInspector';
 
@@ -44,6 +44,12 @@ const Img = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
+`;
+
+const BoxedTextInput = styled(TextInput)`
+  padding: 6px 6px;
+  border-radius: 4px;
+  flex-grow: 1;
 `;
 
 function DocumentInspector() {
@@ -155,22 +161,26 @@ function DocumentInspector() {
       >
         {capabilities && capabilities.hasPublishAction && statuses && (
           <>
-            <DropDown
-              ariaLabel={__('Visibility', 'web-stories')}
-              options={visibilityOptions}
-              disabled={isSaving}
-              value={getStatusValue(status)}
-              onChange={handleChangeVisibility}
-            />
-            {passwordProtected === status && (
-              <InputGroup
-                label={__('Password', 'web-stories')}
-                type={'password'}
-                value={password}
+            <Row>
+              <DropDown
+                ariaLabel={__('Visibility', 'web-stories')}
+                options={visibilityOptions}
                 disabled={isSaving}
-                onChange={handleChangeValue('password')}
+                value={getStatusValue(status)}
+                onChange={handleChangeVisibility}
               />
-            )}
+            </Row>
+            {
+              <Row>
+                <BoxedTextInput
+                  label={__('Password', 'web-stories')}
+                  type={'password'}
+                  value={password}
+                  onChange={handleChangeValue('password')}
+                  placeholder={__('Enter a password', 'web-stories')}
+                />
+              </Row>
+            }
           </>
         )}
         <Button onClick={handleRemoveStory} fullWidth>
