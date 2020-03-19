@@ -68,17 +68,15 @@ function DocumentInspector() {
     loadUsers();
   });
 
-  const privateStatus = 'private';
+  const passwordProtected = 'protected';
+  const visibilityOptions = statuses.filter(({ value }) =>
+    ['draft', 'publish', 'private'].includes(value)
+  );
 
-  // Allow switching between public and private.
-  const visibilityOptions = statuses.some(
-    ({ value }) => value === privateStatus
-  )
-    ? [
-        { name: __('Public', 'web-stories'), value: '' },
-        { name: __('Private', 'web-stories'), value: 'private' },
-      ]
-    : [];
+  visibilityOptions.push({
+    name: __('Password Protected', 'web-stories'),
+    value: passwordProtected,
+  });
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
@@ -87,16 +85,20 @@ function DocumentInspector() {
 
   const handleChangeVisibility = useCallback(
     (value) => {
-      // If value is empty, keep the same status.
-      const newStatus =
-        privateStatus === status && '' === value ? 'publish' : value;
-      updateStory({
-        properties: {
-          status: newStatus && newStatus.length ? newStatus : status,
-        },
-      });
+      // If password protected but no password, do nothing.
+      if (value === passwordProtected && !password) {
+        return;
+      }
+      // If password protected, keep the previous status.
+      const properties =
+        passwordProtected === status
+          ? { password }
+          : {
+              status: value,
+            };
+      updateStory({ properties });
     },
-    [status, updateStory]
+    [password, status, updateStory]
   );
 
   const handleChangeImage = useCallback(
@@ -126,6 +128,18 @@ function DocumentInspector() {
     [deleteStory]
   );
 
+  const getStatusValue = (value) => {
+    // Always display protected visibility, independent of the status.
+    if (password && password.length) {
+      return passwordProtected;
+    }
+    // Display as public even if scheduled for future, private post can't be scheduled.
+    if ('future' === value) {
+      return 'publish';
+    }
+    return value;
+  };
+
   const openMediaPicker = useMediaPicker({
     title: __('Select as featured image', 'web-stories'),
     buttonInsertText: __('Set as featured image', 'web-stories'),
@@ -140,26 +154,25 @@ function DocumentInspector() {
         title={__('Status & Visibility', 'web-stories')}
       >
         {capabilities && capabilities.hasPublishAction && statuses && (
-          <DropDown
-            ariaLabel={__('Visibility', 'web-stories')}
-            options={visibilityOptions}
-            disabled={isSaving}
-            value={privateStatus === status ? status : ''}
-            onChange={handleChangeVisibility}
-          />
-        )}
-        {capabilities &&
-          capabilities.hasPublishAction &&
-          status !== 'private' && (
-            <InputGroup
-              label={__('Password', 'web-stories')}
-              type={'password'}
-              value={password}
+          <>
+            <DropDown
+              ariaLabel={__('Visibility', 'web-stories')}
+              options={visibilityOptions}
               disabled={isSaving}
-              onChange={handleChangeValue('password')}
+              value={getStatusValue(status)}
+              onChange={handleChangeVisibility}
             />
-          )}
-
+            {passwordProtected === status && (
+              <InputGroup
+                label={__('Password', 'web-stories')}
+                type={'password'}
+                value={password}
+                disabled={isSaving}
+                onChange={handleChangeValue('password')}
+              />
+            )}
+          </>
+        )}
         <Button onClick={handleRemoveStory} fullWidth>
           {__('Move to trash', 'web-stories')}
         </Button>
