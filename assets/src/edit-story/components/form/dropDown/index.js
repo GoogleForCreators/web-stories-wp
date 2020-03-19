@@ -31,9 +31,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
-import { useKeyDownEffect } from '../keyboard';
-import useFocusOut from '../../utils/useFocusOut';
+import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import { useKeyDownEffect } from '../../keyboard';
+import useFocusOut from '../../../utils/useFocusOut';
 
 const DropDownContainer = styled.div`
   width: 100px;

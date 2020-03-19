@@ -33,8 +33,14 @@ import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
-import { InputGroup, Button, TextInput, Row } from '../../form';
-import DropDown from '../../dropDown';
+import {
+  InputGroup,
+  Button,
+  TextInput,
+  Row,
+  DropDown,
+  Label,
+} from '../../form';
 import useInspector from '../useInspector';
 
 const Img = styled.img`
@@ -52,7 +58,7 @@ const BoxedTextInput = styled(TextInput)`
   }
 `;
 
-const LabelRow = styled(Row)`
+const HelperRow = styled(Row)`
   margin-top: -10px;
 `;
 
@@ -62,12 +68,16 @@ const Permalink = styled.a`
 `;
 
 // @todo replace color with theme code.
-const Label = styled.span`
+const Helper = styled.span`
   color: ${({ theme, warning }) =>
     warning ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;
+`;
+
+const FieldLabel = styled(Label)`
+  flex-basis: ${({ width }) => (width ? width : 64)}px;
 `;
 
 function DocumentInspector() {
@@ -189,6 +199,7 @@ function DocumentInspector() {
     type: 'image',
   });
 
+  const label = __('Author', 'web-stories');
   return (
     <>
       <SimplePanel
@@ -216,11 +227,11 @@ function DocumentInspector() {
                     placeholder={__('Enter a password', 'web-stories')}
                   />
                 </Row>
-                <LabelRow>
-                  <Label warning={password && password.length > 20}>
+                <HelperRow>
+                  <Helper warning={password && password.length > 20}>
                     {__('Must not exceed 20 characters', 'web-stories')}
-                  </Label>
-                </LabelRow>
+                  </Helper>
+                </HelperRow>
               </>
             }
           </>
@@ -238,13 +249,16 @@ function DocumentInspector() {
           onChange={handleChangeValue('date')}
         />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <DropDown
-            ariaLabel={__('Author', 'web-stories')}
-            options={users}
-            value={author}
-            disabled={isSaving}
-            onChange={handleChangeValue('author')}
-          />
+          <Row>
+            <FieldLabel>{label}</FieldLabel>
+            <DropDown
+              ariaLabel={label}
+              options={users}
+              value={author}
+              disabled={isSaving}
+              onChange={handleChangeValue('author')}
+            />
+          </Row>
         )}
         {featuredMediaUrl && <Img src={featuredMediaUrl} />}
         {featuredMediaUrl && (
@@ -270,13 +284,13 @@ function DocumentInspector() {
             placeholder={__('Enter slug', 'web-stories')}
           />
         </Row>
-        <LabelRow>
-          <Label>
+        <HelperRow>
+          <Helper>
             <Permalink rel="noopener noreferrer" target="_blank" href={link}>
               {link}
             </Permalink>
-          </Label>
-        </LabelRow>
+          </Helper>
+        </HelperRow>
       </SimplePanel>
     </>
   );
