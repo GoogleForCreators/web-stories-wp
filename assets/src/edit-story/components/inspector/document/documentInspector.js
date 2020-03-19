@@ -55,15 +55,7 @@ function DocumentInspector() {
   const {
     state: {
       meta: { isSaving },
-      story: {
-        author,
-        status,
-        slug,
-        date,
-        excerpt,
-        featuredMediaUrl,
-        password,
-      },
+      story: { author, status, slug, date, featuredMediaUrl, password },
       capabilities,
     },
     actions: { updateStory, deleteStory },
@@ -147,22 +139,6 @@ function DocumentInspector() {
         name="status"
         title={__('Status & Visibility', 'web-stories')}
       >
-        <InputGroup
-          label={__('Published date', 'web-stories')}
-          type={'datetime-local'}
-          value={date}
-          disabled={isSaving}
-          onChange={handleChangeValue('date')}
-        />
-        {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <DropDown
-            ariaLabel={__('Author', 'web-stories')}
-            options={users}
-            value={author}
-            disabled={isSaving}
-            onChange={handleChangeValue('author')}
-          />
-        )}
         {capabilities && capabilities.hasPublishAction && statuses && (
           <DropDown
             ariaLabel={__('Visibility', 'web-stories')}
@@ -188,28 +164,23 @@ function DocumentInspector() {
           {__('Move to trash', 'web-stories')}
         </Button>
       </SimplePanel>
-      <SimplePanel name="excerpt" title={__('Excerpt', 'web-stories')}>
+      <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
         <InputGroup
-          label={__('Write an excerpt (optional)', 'web-stories')}
-          type={'text'}
-          value={excerpt}
+          label={__('Publish', 'web-stories')}
+          type={'datetime-local'}
+          value={date}
           disabled={isSaving}
-          onChange={handleChangeValue('excerpt')}
+          onChange={handleChangeValue('date')}
         />
-      </SimplePanel>
-      <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
-        <InputGroup
-          label={__('URL Slug', 'web-stories')}
-          type={'text'}
-          value={slug}
-          disabled={isSaving}
-          onChange={handleChangeValue('slug')}
-        />
-      </SimplePanel>
-      <SimplePanel
-        name="featureImage"
-        title={__('Featured image', 'web-stories')}
-      >
+        {capabilities && capabilities.hasAssignAuthorAction && users && (
+          <DropDown
+            ariaLabel={__('Author', 'web-stories')}
+            options={users}
+            value={author}
+            disabled={isSaving}
+            onChange={handleChangeValue('author')}
+          />
+        )}
         {featuredMediaUrl && <Img src={featuredMediaUrl} />}
         {featuredMediaUrl && (
           <Button onClick={handleRemoveImage} fullWidth>
@@ -224,6 +195,15 @@ function DocumentInspector() {
               : __('Set featured image', 'web-stories')}
           </Button>
         )}
+      </SimplePanel>
+      <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
+        <InputGroup
+          label={__('URL Slug', 'web-stories')}
+          type={'text'}
+          value={slug}
+          disabled={isSaving}
+          onChange={handleChangeValue('slug')}
+        />
       </SimplePanel>
     </>
   );
