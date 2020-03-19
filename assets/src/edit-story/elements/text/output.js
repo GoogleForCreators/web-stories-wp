@@ -18,15 +18,16 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { dataToEditorY } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import { generateFontFamily } from './util';
+import { dataToEditorX, dataToEditorY } from '../../units';
+import { draftMarkupToContent, generateFontFamily } from './util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function TextOutput({
   element: {
+    bold,
     content,
     color,
     backgroundColor,
@@ -39,17 +40,23 @@ function TextOutput({
     lineHeight,
     padding,
     textAlign,
+    textDecoration,
   },
+  box: { width },
 }) {
+  const horizontalPadding = dataToEditorX(padding.horizontal, width);
+  // The padding % is taken based on width, thus using X and width for vertical, too.
+  const verticalPadding = dataToEditorX(padding.vertical, width);
   const style = {
     fontSize: `${dataToEditorY(fontSize, 100)}%`,
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontWeight: fontWeight ? fontWeight : null,
     lineHeight,
-    letterSpacing: letterSpacing ? letterSpacing + 'em' : null,
-    padding: padding ? padding + '%' : null,
+    letterSpacing: isNaN(letterSpacing) ? null : letterSpacing + 'em',
+    padding: padding ? `${verticalPadding}% ${horizontalPadding}%` : null,
     textAlign: textAlign ? textAlign : null,
+    textDecoration,
     whiteSpace: 'pre-wrap',
     ...generatePatternStyles(backgroundColor),
     ...generatePatternStyles(color, 'color'),
@@ -59,13 +66,14 @@ function TextOutput({
     <p
       className="fill"
       style={style}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
     />
   );
 }
 
 TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextOutput;

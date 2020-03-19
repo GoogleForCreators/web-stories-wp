@@ -37,7 +37,7 @@ import ColorBox from './colorBox';
 const Input = styled(ColorBox).attrs({
   as: 'input',
 })`
-  border: 0;
+  border: none !important;
   margin-left: 6px;
   width: 54px;
   line-height: 32px;

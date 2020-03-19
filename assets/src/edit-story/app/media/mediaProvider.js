@@ -23,7 +23,7 @@ import { useEffect, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../api';
+import { useAPI, useConfig } from '../';
 import { useUploader } from '../uploader';
 import { useStory } from '../story';
 import {
@@ -42,8 +42,14 @@ function MediaProvider({ children }) {
     actions: { updateElementById },
   } = useStory();
   const insertElement = useInsertElement();
-  const { uploadVideoFrame } = useUploadVideoFrame();
-  const { media, mediaType, searchTerm } = state;
+  const {
+    processing,
+    processed,
+    media,
+    pagingNum,
+    mediaType,
+    searchTerm,
+  } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -51,27 +57,51 @@ function MediaProvider({ children }) {
     resetFilters,
     setMediaType,
     setSearchTerm,
+    setNextPage,
+    setProcessing,
+    removeProcessing,
+    updateMediaElement,
   } = actions;
 
+  const { uploadVideoFrame } = useUploadVideoFrame({
+    updateMediaElement,
+    setProcessing,
+    removeProcessing,
+    processing,
+    processed,
+  });
   const {
     actions: { getMedia },
   } = useAPI();
+  const {
+    allowedMimeTypes: { video: allowedVideoMimeTypes },
+  } = useConfig();
 
-  const fetchMedia = useCallback(() => {
-    fetchMediaStart();
-    getMedia({ mediaType, searchTerm })
-      .then((res) => {
-        fetchMediaSuccess({ media: res, mediaType, searchTerm });
-      })
-      .catch(fetchMediaError);
-  }, [
-    fetchMediaError,
-    fetchMediaStart,
-    fetchMediaSuccess,
-    getMedia,
-    mediaType,
-    searchTerm,
-  ]);
+  const fetchMedia = useCallback(
+    ({ pagingNum: p = 1 } = {}) => {
+      fetchMediaStart({ pagingNum: p });
+      getMedia({ mediaType, searchTerm, pagingNum: p })
+        .then(({ data, headers }) => {
+          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          fetchMediaSuccess({
+            media: data,
+            mediaType,
+            searchTerm,
+            pagingNum: p,
+            totalPages,
+          });
+        })
+        .catch(fetchMediaError);
+    },
+    [
+      fetchMediaError,
+      fetchMediaStart,
+      fetchMediaSuccess,
+      getMedia,
+      mediaType,
+      searchTerm,
+    ]
+  );
 
   const uploadMediaFromLibrary = useCallback(
     async (files) => {
@@ -167,19 +197,69 @@ function MediaProvider({ children }) {
     ]
   );
 
-  useEffect(fetchMedia, [fetchMedia, mediaType, searchTerm]);
+  const resetWithFetch = useCallback(() => {
+    resetFilters();
+    if (!mediaType && !searchTerm && pagingNum === 1) {
+      fetchMedia();
+    }
+  }, [fetchMedia, mediaType, pagingNum, resetFilters, searchTerm]);
+
+  useEffect(() => {
+    fetchMedia({ pagingNum });
+  }, [fetchMedia, mediaType, pagingNum, searchTerm]);
+
+  const uploadVideoPoster = useCallback(
+    (videoId, src, elementId = 0) => {
+      const process = async () => {
+        if (processed.includes(videoId) || processing.includes(videoId)) {
+          return;
+        }
+        setProcessing({ videoId });
+        await uploadVideoFrame(videoId, src, elementId);
+        removeProcessing({ videoId });
+      };
+      process();
+    },
+    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
+  );
+
+  const processor = useCallback(
+    ({ mimeType, posterId, id, src }) => {
+      const process = async () => {
+        if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+          await uploadVideoPoster(id, src);
+        }
+      };
+      process();
+    },
+    [allowedVideoMimeTypes, uploadVideoPoster]
+  );
+
+  const generatePoster = useCallback(() => {
+    const looper = async () => {
+      await media.reduce((accumulatorPromise, el) => {
+        return accumulatorPromise.then(() => processor(el));
+      }, Promise.resolve());
+    };
+    if (media) {
+      looper();
+    }
+  }, [media, processor]);
+
+  useEffect(generatePoster, [media.length, mediaType, searchTerm]);
 
   const context = {
     state,
     actions: {
-      ...actions,
+      setNextPage,
       setMediaType,
       setSearchTerm,
       fetchMedia,
       resetFilters,
-      uploadVideoFrame,
       uploadMediaFromLibrary,
       uploadMediaFromWorkspace,
+      resetWithFetch,
+      uploadVideoPoster,
     },
   };
 

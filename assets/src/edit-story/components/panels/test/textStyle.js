@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -77,7 +77,10 @@ describe('Panels/TextStyle', () => {
             {
               textAlign: 'normal',
               fontSize: 0,
-              padding: 0,
+              padding: {
+                horizontal: 0,
+                vertical: 0,
+              },
               fontFamily: 'ABeeZee',
             },
           ]}
@@ -91,40 +94,5 @@ describe('Panels/TextStyle', () => {
     const element = getByText('Style');
 
     expect(element).toBeDefined();
-  });
-
-  it('should simulate a submit on <TextStyle /> panel', async () => {
-    const onClickOnSetPropertiesMock = jest.fn();
-    let container;
-
-    await act(async () => {
-      await global.fetch
-        .doMockIf(/^\/amp\/v1\/fonts/)
-        .mockResponse(JSON.stringify([{ name: 'ABeeZee', value: 'ABeeZee' }]), {
-          status: 200,
-        });
-
-      container = arrange(
-        <TextStyle
-          selectedElements={[
-            {
-              textAlign: 'normal',
-              fontSize: 0,
-              padding: 0,
-              fontFamily: 'ABeeZee',
-            },
-          ]}
-          onSetProperties={onClickOnSetPropertiesMock}
-        />
-      );
-    });
-
-    const { getByText } = container;
-
-    const element = getByText('Style');
-
-    fireEvent.submit(element.parentNode.parentNode.nextSibling);
-
-    expect(onClickOnSetPropertiesMock).toHaveBeenCalledTimes(1);
   });
 });

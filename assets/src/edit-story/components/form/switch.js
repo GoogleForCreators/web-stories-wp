@@ -27,6 +27,11 @@ import { rgba } from 'polished';
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
@@ -79,7 +84,7 @@ const Label = styled.label`
     opacity: 0.3;
 	`}
 
-  &:focus-within ~ span {
+  ${KEYBOARD_USER_SELECTOR} &:focus-within ~ span {
     background-color: ${({ theme }) => theme.colors.action};
   }
 `;

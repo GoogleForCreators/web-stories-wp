@@ -67,11 +67,13 @@ export const elementWithFont = css`
 `;
 
 export const elementWithStyle = css`
-  padding: ${({ padding }) => (padding ? padding : '0')}%;
+  padding: ${({ padding }) =>
+    padding ? `${padding.vertical}px ${padding.horizontal}px` : '0'};
   line-height: ${({ lineHeight }) => lineHeight};
   letter-spacing: ${({ letterSpacing }) =>
     letterSpacing ? letterSpacing + 'em' : null};
   text-align: ${({ textAlign }) => textAlign};
+  text-decoration: ${({ textDecoration }) => textDecoration};
 `;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
@@ -80,6 +82,7 @@ export const SHARED_DEFAULT_ATTRIBUTES = {
     vertical: false,
     horizontal: false,
   },
+  rotationAngle: 0,
 };
 
 export const elementWithFlip = css`

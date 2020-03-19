@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -32,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
+import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, Title, SearchInput, Header } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
@@ -44,9 +46,12 @@ import {
 import MediaElement from './mediaElement';
 
 const Container = styled.div`
+  grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
+  overflow: auto;
+  padding: 15px 1em 0 1em;
 `;
 
 const Column = styled.div`
@@ -56,12 +61,13 @@ const Column = styled.div`
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 16px;
+  padding: 1em;
 `;
 
 const FilterButtons = styled.div`
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   padding: 18px 0;
-  margin: 10px 0 15px;
+  margin: 10px 0 0 0;
 `;
 
 const FilterButton = styled.button`
@@ -76,6 +82,26 @@ const FilterButton = styled.button`
   text-transform: uppercase;
 `;
 
+const Padding = styled.div`
+  grid-area: header;
+  padding: 1em 1em 0 1em;
+`;
+
+const StyledPane = styled(Pane)`
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+`;
+
+const Inner = styled.div`
+  height: 100%;
+  display: grid;
+  grid:
+    'header   ' auto
+    'infinitescroll' 1fr
+    / 1fr;
+`;
+
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
@@ -88,8 +114,15 @@ const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-    actions: { resetFilters, setMediaType, setSearchTerm },
+    state: {
+      hasMore,
+      media,
+      isMediaLoading,
+      isMediaLoaded,
+      mediaType,
+      searchTerm,
+    },
+    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
   } = useMedia();
 
   const {
@@ -103,7 +136,7 @@ function MediaPane(props) {
     actions: { insertElement },
   } = useLibrary();
 
-  const onClose = resetFilters;
+  const onClose = resetWithFetch;
 
   /**
    * Callback of select in media picker to insert media element.
@@ -170,67 +203,91 @@ function MediaPane(props) {
       return getResourceFromAttachment(resource);
     });
 
+  const refContainer = useRef();
+  const refContainerFooter = useRef();
+
+  useIntersectionEffect(
+    refContainerFooter,
+    {
+      root: refContainer,
+      rootMargin: '0px 0px 300px 0px',
+    },
+    (entry) => {
+      if (!isMediaLoaded || isMediaLoading) return;
+      if (!hasMore) return;
+      if (!entry.isIntersecting) return;
+
+      setNextPage();
+    },
+    [hasMore, isMediaLoading, isMediaLoaded]
+  );
+
   return (
-    <Pane id={paneId} {...props}>
-      <Header>
-        <Title>
-          {__('Media', 'web-stories')}
-          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-        </Title>
-        <MainButton onClick={openMediaPicker}>
-          {__('Upload', 'web-stories')}
-        </MainButton>
-      </Header>
+    <StyledPane id={paneId} {...props}>
+      <Inner>
+        <Padding>
+          <Header>
+            <Title>
+              {__('Media', 'web-stories')}
+              {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+            </Title>
+            <MainButton onClick={openMediaPicker}>
+              {__('Upload', 'web-stories')}
+            </MainButton>
+          </Header>
 
-      <SearchInput
-        value={searchTerm}
-        placeholder={__('Search media...', 'web-stories')}
-        onChange={onSearch}
-      />
+          <SearchInput
+            value={searchTerm}
+            placeholder={__('Search media...', 'web-stories')}
+            onChange={onSearch}
+          />
 
-      <FilterButtons>
-        {FILTERS.map(({ filter, name }, index) => (
-          <FilterButton
-            key={index}
-            active={filter === mediaType}
-            onClick={onFilter(filter)}
-          >
-            {name}
-          </FilterButton>
-        ))}
-      </FilterButtons>
+          <FilterButtons>
+            {FILTERS.map(({ filter, name }, index) => (
+              <FilterButton
+                key={index}
+                active={filter === mediaType}
+                onClick={onFilter(filter)}
+              >
+                {name}
+              </FilterButton>
+            ))}
+          </FilterButtons>
+        </Padding>
 
-      {isMediaLoaded && !media.length ? (
-        <Message>{__('No media found', 'web-stories')}</Message>
-      ) : (
-        <Container>
-          <Column>
-            {resources
-              .filter((_, index) => isEven(index))
-              .map((resource) => (
-                <MediaElement
-                  resource={resource}
-                  key={resource.src}
-                  width={PREVIEW_SIZE}
-                  onInsert={insertMediaElement}
-                />
-              ))}
-          </Column>
-          <Column>
-            {resources
-              .filter((_, index) => !isEven(index))
-              .map((resource) => (
-                <MediaElement
-                  resource={resource}
-                  key={resource.src}
-                  width={PREVIEW_SIZE}
-                  onInsert={insertMediaElement}
-                />
-              ))}
-          </Column>
-        </Container>
-      )}
-    </Pane>
+        {isMediaLoaded && !media.length ? (
+          <Message>{__('No media found', 'web-stories')}</Message>
+        ) : (
+          <Container ref={refContainer}>
+            <Column>
+              {resources
+                .filter((_, index) => isEven(index))
+                .map((resource, i) => (
+                  <MediaElement
+                    resource={resource}
+                    key={i}
+                    width={PREVIEW_SIZE}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
+            </Column>
+            <Column>
+              {resources
+                .filter((_, index) => !isEven(index))
+                .map((resource, i) => (
+                  <MediaElement
+                    resource={resource}
+                    key={i}
+                    width={PREVIEW_SIZE}
+                    onInsert={insertMediaElement}
+                  />
+                ))}
+            </Column>
+            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
+          </Container>
+        )}
+      </Inner>
+    </StyledPane>
   );
 }
 

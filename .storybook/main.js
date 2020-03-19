@@ -17,10 +17,12 @@
 module.exports = {
   stories: [
     './stories/**/*.js',
+    '../assets/src/dashboard/**/stories/*.(js|mdx)',
     '../assets/src/edit-story/**/stories/*.(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',
+    '@storybook/addon-actions',
     '@storybook/addon-docs',
     '@storybook/addon-knobs/register',
     '@storybook/addon-storysource/register',

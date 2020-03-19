@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('setBackgroundElement', () => {
@@ -30,6 +31,7 @@ describe('setBackgroundElement', () => {
           id: '111',
           elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
           backgroundElementId: null,
+          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -42,6 +44,7 @@ describe('setBackgroundElement', () => {
     expect(result.pages[0]).toStrictEqual({
       id: '111',
       backgroundElementId: '456',
+      backgroundOverlay: OverlayType.NONE,
       elements: [
         { id: '456', isBackground: true },
         { id: '123' },
@@ -60,6 +63,7 @@ describe('setBackgroundElement', () => {
           id: '111',
           elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
           backgroundElementId: null,
+          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -86,6 +90,7 @@ describe('setBackgroundElement', () => {
             { id: '789' },
           ],
           backgroundElementId: '123',
+          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -112,6 +117,7 @@ describe('setBackgroundElement', () => {
             { id: '789' },
           ],
           backgroundElementId: '123',
+          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -139,6 +145,7 @@ describe('setBackgroundElement', () => {
               { id: '789' },
             ],
             backgroundElementId: '123',
+            backgroundOverlay: OverlayType.NONE,
           },
         ],
         current: '111',
@@ -151,6 +158,7 @@ describe('setBackgroundElement', () => {
       expect(result.pages[0]).toStrictEqual({
         id: '111',
         backgroundElementId: '789',
+        backgroundOverlay: OverlayType.NONE,
         elements: [{ id: '789', isBackground: true }, { id: '456' }],
       });
     });
@@ -169,6 +177,7 @@ describe('setBackgroundElement', () => {
               { id: '789' },
             ],
             backgroundElementId: '123',
+            backgroundOverlay: OverlayType.NONE,
           },
         ],
         current: '111',
@@ -181,6 +190,7 @@ describe('setBackgroundElement', () => {
       expect(result.pages[0]).toStrictEqual({
         id: '111',
         backgroundElementId: '789',
+        backgroundOverlay: OverlayType.NONE,
         elements: [{ id: '789', isBackground: true }, { id: '456' }],
       });
       expect(result.selection).toStrictEqual([]);
