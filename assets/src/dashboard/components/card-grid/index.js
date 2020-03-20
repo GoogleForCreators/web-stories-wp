@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-
 const GridContainer = styled.div`
   display: grid;
   width: ${({ theme }) => theme.grid.desktop.width};

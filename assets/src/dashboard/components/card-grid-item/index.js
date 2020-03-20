@@ -20,9 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
 const StyledGridItem = styled.div`
   width: ${({ theme }) => theme.grid.desktop.itemWidth};
   height: ${({ theme }) => theme.grid.desktop.itemHeight};
