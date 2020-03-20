@@ -28,15 +28,59 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
     date: selectedTime,
   });
 
-  // @todo Add callback.
+  // @todo Add callbacks.
   const onChangeEvent = (prop) => (evt) => {
     setState({ ...state, [prop]: evt.target.value });
+  };
+
+  const onChangeMinutes = (evt) => {
+    const minutes = evt.target.value;
+    setState({
+      ...state,
+      minutes: minutes === '' ? '' : ('0' + minutes).slice(-2),
+    });
+  };
+
+  const getMaxHours = () => {
+    return is12Hour ? 12 : 23;
+  };
+
+  const getMinHours = () => {
+    return is12Hour ? 1 : 0;
   };
 
   const changeDate = (newDate) => {
     const dateWithStartOfMinutes = newDate.clone().startOf('minute');
     setState({ date: dateWithStartOfMinutes });
     onChange(newDate.format(TIMEZONELESS_FORMAT));
+  };
+
+  const updateMinutes = () => {
+    const { minutes, date } = state;
+    const value = parseInt(minutes);
+    if (isNaN(value) || value < 0 || value > 59) {
+      //this.syncState( this.props );
+      return;
+    }
+    const newDate = date.clone().minutes(value);
+    changeDate(newDate);
+  };
+
+  const updateHours = () => {
+    const { am, hours, date } = state;
+    const value = parseInt(hours);
+    if (
+      isNaN(value) ||
+      (is12Hour && (value < 1 || value > 12)) ||
+      (!is12Hour && (value < 0 || value > 23))
+    ) {
+      return;
+    }
+
+    const newDate = is12Hour
+      ? date.clone().hours(am === 'AM' ? value % 12 : ((value % 12) + 12) % 24)
+      : date.clone().hours(value);
+    changeDate(newDate);
   };
 
   const updateDay = () => {
@@ -59,6 +103,33 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
     }
     const newDate = date.clone().month(value - 1);
     changeDate(newDate);
+  };
+
+  const updateYear = () => {
+    const { year, date } = state;
+    const value = parseInt(year);
+    if (isNaN(value) || value < 0 || value > 9999) {
+      //this.syncState( this.props );
+      return;
+    }
+    const newDate = date.clone().year(value);
+    changeDate(newDate);
+  };
+
+  const updateAmPm = (value) => {
+    return () => {
+      const { am, date, hours } = state;
+      if (am === value) {
+        return;
+      }
+      let newDate;
+      if (value === 'PM') {
+        newDate = date.clone().hours(((parseInt(hours) % 12) + 12) % 24);
+      } else {
+        newDate = date.clone().hours(parseInt(hours) % 12);
+      }
+      changeDate(newDate);
+    };
   };
 
   const renderDay = (day) => {
@@ -125,21 +196,21 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
         </legend>
         <div className="components-datetime__time-wrapper">
           {renderDayMonthFormat(is12Hour)}
-          {/*<div className="components-datetime__time-field components-datetime__time-field-year">
+          <div className="components-datetime__time-field components-datetime__time-field-year">
             <input
               aria-label={__('Year')}
               className="components-datetime__time-field-year-input"
               type="number"
               step={1}
               value={state.year}
-              onChange={this.onChangeYear}
-              onBlur={this.updateYear}
+              onChange={onChangeEvent('year')}
+              onBlur={updateYear}
             />
-          </div>*/}
+          </div>
         </div>
       </fieldset>
 
-      {/* <fieldset>
+      <fieldset>
         <legend className="components-datetime__time-legend invisible">
           {__('Time')}
         </legend>
@@ -150,11 +221,11 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               className="components-datetime__time-field-hours-input"
               type="number"
               step={1}
-              min={this.getMinHours()}
-              max={this.getMaxHours()}
+              min={getMinHours()}
+              max={getMaxHours()}
               value={state.hours}
-              onChange={this.onChangeHours}
-              onBlur={this.updateHours}
+              onChange={onChangeEvent('hours')}
+              onBlur={updateHours}
             />
             <span
               className="components-datetime__time-separator"
@@ -169,8 +240,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               min={0}
               max={59}
               value={state.minutes}
-              onChange={this.onChangeMinutes}
-              onBlur={this.updateMinutes}
+              onChange={onChangeMinutes}
+              onBlur={updateMinutes}
             />
           </div>
           {is12Hour && (
@@ -178,7 +249,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               <Button
                 isPrimary={state.am === 'AM'}
                 isSecondary={state.am !== 'AM'}
-                onClick={this.updateAmPm('AM')}
+                onClick={updateAmPm('AM')}
                 className="components-datetime__time-am-button"
               >
                 {__('AM')}
@@ -186,7 +257,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               <Button
                 isPrimary={state.am === 'PM'}
                 isSecondary={state.am !== 'PM'}
-                onClick={this.updateAmPm('PM')}
+                onClick={updateAmPm('PM')}
                 className="components-datetime__time-pm-button"
               >
                 {__('PM')}
@@ -194,7 +265,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
             </ButtonGroup>
           )}
         </div>
-      </fieldset>*/}
+      </fieldset>
     </div>
   );
 }
