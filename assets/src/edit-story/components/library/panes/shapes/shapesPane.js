@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { MASKS } from '../../../../masks';
 import useLibrary from '../../useLibrary';
 import createSolid from '../../../../utils/createSolid';
-import { Section, Title, SearchInput, Header } from '../../common';
+import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import { PAGE_WIDTH } from '../../../../constants';
 import paneId from './paneId';
@@ -43,6 +43,7 @@ const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  margin: -0.2em -1em 0.5em -1em;
 `;
 
 const ShapePreview = styled.div`
@@ -63,12 +64,9 @@ function ShapesPane(props) {
   } = useLibrary();
   return (
     <Pane id={paneId} {...props}>
-      <Header>
-        <Title>{__('Shapes', 'web-stories')}</Title>
-      </Header>
       <SearchInput
         value={''}
-        placeholder={__('Search shapes...', 'web-stories')}
+        placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
       />
       <Section title={__('Basic shapes', 'web-stories')}>
