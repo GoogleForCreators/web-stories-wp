@@ -46,11 +46,12 @@ export const defaultAttributes = {
     posterId: null,
     poster: null,
     videoId: 0,
+    title: '',
   },
 };
 
 export const panels = [
   ...MEDIA_PANELS,
-  PanelTypes.VIDEO_POSTER,
   PanelTypes.LINK,
+  PanelTypes.VIDEO_ACCESSIBILITY,
 ];

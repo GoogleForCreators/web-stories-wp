@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import styled from 'styled-components';
+import { rgba } from 'polished';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster, alt },
-  },
-}) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
-}
+const Note = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 12px;
+  line-height: 16px;
+`;
 
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export default Note;

@@ -30,6 +30,9 @@ function VideoOutput({ element, box }) {
   const props = {
     autoPlay: 'autoplay',
     poster: resource.poster,
+    artwork: resource.poster,
+    title: resource.title,
+    alt: resource.alt,
     layout: 'fill',
   };
 
