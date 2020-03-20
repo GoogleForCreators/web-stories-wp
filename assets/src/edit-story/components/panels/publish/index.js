@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -37,6 +37,7 @@ import useInspector from '../../inspector/useInspector';
 import { useStory } from '../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
 import { getReadableDate, getReadableTime } from './utils';
+import useOutSideClickHandler from './useOutsideClickHandler';
 
 const Img = styled.img`
   width: 100%;
@@ -94,23 +95,9 @@ function PublishPanel() {
   const dateTimePickerNode = useRef();
   const dateFieldNode = useRef();
 
-  const handleOutsideCalendarClick = (e) => {
-    if (
-      (dateTimePickerNode.current &&
-        dateTimePickerNode.current.contains(e.target)) ||
-      (dateFieldNode.current && dateFieldNode.current.contains(e.target))
-    ) {
-      return;
-    }
-    setShowDatePicker(false);
-  };
-
-  useLayoutEffect(() => {
-    document.addEventListener('mousedown', handleOutsideCalendarClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideCalendarClick);
-    };
-  }, []);
+  useOutSideClickHandler([dateTimePickerNode, dateFieldNode], () =>
+    setShowDatePicker(false)
+  );
   const handleDateChange = useCallback(
     (value, close = false) => {
       if (close && showDatePicker) {
