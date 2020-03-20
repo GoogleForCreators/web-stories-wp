@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 import useDragHandlers from '../useDragHandlers';
 import useKeyboardHandlers from '../useKeyboardHandlers';
 
-const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
+const Handle = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.07)};
   border: 0;
   padding: 0;
@@ -45,13 +45,13 @@ const Handle = styled.button.attrs({ type: 'button', role: 'separator' })`
   cursor: row-resize;
 `;
 
-const Bar = styled.div`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+const Bar = styled.div.attrs({
+  tabIndex: 0,
+})`
+  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  text-indent: -10000px; /* hide the text from non-screen-readers */
-  opacity: 0.1;
 `;
 
 function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
@@ -60,15 +60,15 @@ function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle
-      ref={handle}
-      role="slider"
-      aria-orientation="vertical"
-      aria-valuenow={height}
-      aria-valuemin={minHeight}
-      aria-valuemax={maxHeight}
-    >
-      <Bar>{__('Set panel height', 'web-stories')}</Bar>
+    <Handle ref={handle}>
+      <Bar
+        role="slider"
+        aria-orientation="vertical"
+        aria-valuenow={height}
+        aria-valuemin={minHeight}
+        aria-valuemax={maxHeight}
+        aria-label={__('Set panel height', 'web-stories')}
+      />
     </Handle>
   );
 }
