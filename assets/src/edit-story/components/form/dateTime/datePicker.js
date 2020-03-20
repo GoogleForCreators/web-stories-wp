@@ -11,7 +11,7 @@ import moment from 'moment';
 import 'react-dates/initialize';
 import { DayPickerSingleDateController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -27,15 +27,20 @@ function DatePicker({ currentDate, onChange }) {
   const momentDate = currentDate ? moment(currentDate) : moment();
 
   const nodeRef = useRef();
-
-  const onChangeMoment = (newDate) => {
-    const momentTime = {
-      hours: momentDate.hours(),
-      minutes: momentDate.minutes(),
-      seconds: 0,
-    };
-    onChange(newDate.set(momentTime).format(TIMEZONELESS_FORMAT));
-  };
+  const onChangeMoment = useCallback(
+    (newDate) => {
+      const momentTime = {
+        hours: momentDate.hours(),
+        minutes: momentDate.minutes(),
+        seconds: 0,
+      };
+      onChange(
+        newDate.set(momentTime).format(TIMEZONELESS_FORMAT),
+        /* Close calendar */ true
+      );
+    },
+    [momentDate, onChange]
+  );
 
   /**
    * Note: This comment is copied from Gutenberg.

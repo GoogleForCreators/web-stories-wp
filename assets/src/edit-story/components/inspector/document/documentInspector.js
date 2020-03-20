@@ -142,6 +142,16 @@ function DocumentInspector() {
     [updateStory]
   );
 
+  const handleDateChange = useCallback(
+    (value, close = false) => {
+      if (close && showDatePicker) {
+        setShowDatePicker(false);
+      }
+      updateStory({ properties: { date: value } });
+    },
+    [showDatePicker, updateStory]
+  );
+
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
   const handleChangePassword = useCallback(
     (value) => {
@@ -287,7 +297,7 @@ function DocumentInspector() {
               <DateTimePicker
                 key="date-time-picker"
                 value={date}
-                onChange={handleChangeValue('date')}
+                onChange={handleDateChange}
                 is12Hour={true}
               />
             </DateTimeWrapper>

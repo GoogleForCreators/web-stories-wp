@@ -142,7 +142,6 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
     date: selectedTime,
   });
 
-  // @todo Add callbacks.
   const onChangeEvent = (prop) => (evt) => {
     setState({ ...state, [prop]: evt.target.value });
   };
@@ -172,8 +171,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   const updateMinutes = () => {
     const { minutes, date } = state;
     const value = parseInt(minutes);
-    if (isNaN(value) || value < 0 || value > 59) {
-      //this.syncState( this.props );
+    if (isNaN(value) || value < 0 || value > 59 || minutes === value) {
       return;
     }
     const newDate = date.clone().minutes(value);
@@ -186,7 +184,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
     if (
       isNaN(value) ||
       (is12Hour && (value < 1 || value > 12)) ||
-      (!is12Hour && (value < 0 || value > 23))
+      (!is12Hour && (value < 0 || value > 23)) ||
+      hours === value
     ) {
       return;
     }
@@ -200,7 +199,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   const updateDay = () => {
     const { day, date } = state;
     const value = parseInt(day);
-    if (isNaN(value) || value < 1 || value > 31) {
+    if (isNaN(value) || value < 1 || value > 31 || day === value) {
       return;
     }
     const newDate = date.clone().date(value);
@@ -210,7 +209,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   const updateMonth = () => {
     const { month, date } = state;
     const value = parseInt(month);
-    if (isNaN(value) || value < 1 || value > 12) {
+    if (isNaN(value) || value < 1 || value > 12 || month === value) {
       return;
     }
     const newDate = date.clone().month(value - 1);
@@ -220,7 +219,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   const updateYear = () => {
     const { year, date } = state;
     const value = parseInt(year);
-    if (isNaN(value) || value < 0 || value > 9999) {
+    if (isNaN(value) || value < 0 || value > 9999 || year === value) {
       return;
     }
     const newDate = date.clone().year(value);
