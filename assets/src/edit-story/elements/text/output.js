@@ -30,6 +30,7 @@ function TextOutput({
     bold,
     content,
     color,
+    backgroundType,
     backgroundColor,
     fontFamily,
     fontFallback,
@@ -47,7 +48,8 @@ function TextOutput({
   const horizontalPadding = dataToEditorX(padding.horizontal, width);
   // The padding % is taken based on width, thus using X and width for vertical, too.
   const verticalPadding = dataToEditorX(padding.vertical, width);
-  const style = {
+
+  const fillStyle = {
     fontSize: `${dataToEditorY(fontSize, 100)}%`,
     fontStyle: fontStyle ? fontStyle : null,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
@@ -62,11 +64,61 @@ function TextOutput({
     ...generatePatternStyles(color, 'color'),
   };
 
+  const highlightStyle = {
+    ...fillStyle,
+    fontSize: undefined,
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    webkitBoxDecorationBreak: 'clone',
+    boxDecorationBreak: 'clone',
+    borderRadius: '3px',
+    position: 'relative',
+    color: 'transparent',
+  };
+
+  const originalStyle = {
+    margin: 0,
+    fontSize: `${dataToEditorY(fontSize, 100)}%`,
+  };
+
+  const cloneStyle = {
+    ...originalStyle,
+    transform: 'translateY(-100%)',
+  };
+
+  if (backgroundType === 'highlight') {
+    return (
+      <>
+        <p style={originalStyle}>
+          <span
+            style={highlightStyle}
+            dangerouslySetInnerHTML={{
+              __html: draftMarkupToContent(content, bold),
+            }}
+          />
+        </p>
+        <p style={cloneStyle}>
+          <span
+            style={{
+              ...highlightStyle,
+              backgroundColor: 'transparent',
+              ...generatePatternStyles(color, 'color'),
+            }}
+            dangerouslySetInnerHTML={{
+              __html: draftMarkupToContent(content, bold),
+            }}
+          />
+        </p>
+      </>
+    );
+  }
+
   return (
     <p
       className="fill"
-      style={style}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      style={fillStyle}
+      dangerouslySetInnerHTML={{
+        __html: draftMarkupToContent(content, bold),
+      }}
     />
   );
 }

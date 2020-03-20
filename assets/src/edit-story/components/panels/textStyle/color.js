@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 
 /**
@@ -28,23 +29,32 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Color, Label, Row } from '../../form';
+import { Color, Label, Row, ToggleButton } from '../../form';
 import getCommonValue from '../utils/getCommonValue';
+import { ReactComponent as FillIcon } from '../../../icons/fill_icon.svg';
+import { ReactComponent as HighlightIcon } from '../../../icons/highlight_icon.svg';
+
+const Space = styled.div`
+  flex: ${({ flex }) => flex};
+`;
 
 function ColorControls({ selectedElements, onSetProperties }) {
   const color = getCommonValue(selectedElements, 'color');
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
+  const backgroundType = getCommonValue(selectedElements, 'backgroundType');
 
   const [state, setState] = useState({
+    backgroundType,
     backgroundColor,
     color,
   });
   useEffect(() => {
     setState({
+      backgroundType,
       backgroundColor,
       color,
     });
-  }, [color, backgroundColor]);
+  }, [color, backgroundColor, backgroundType]);
 
   const updateProperties = useCallback(() => {
     onSetProperties(state);
@@ -52,7 +62,12 @@ function ColorControls({ selectedElements, onSetProperties }) {
 
   useEffect(() => {
     updateProperties();
-  }, [state.backgroundColor, state.color, updateProperties]);
+  }, [
+    state.backgroundType,
+    state.backgroundColor,
+    state.color,
+    updateProperties,
+  ]);
 
   return (
     <>
@@ -74,6 +89,31 @@ function ColorControls({ selectedElements, onSetProperties }) {
           label={__('Background color', 'web-stories')}
         />
       </Row>
+      {backgroundColor && (
+        <Row>
+          <Space flex="1" />
+          <ToggleButton
+            icon={<FillIcon width={32} height={32} />}
+            value={state.backgroundType === 'fill'}
+            isMultiple={false}
+            label={__('Fill', 'web-stories')}
+            onChange={(value) =>
+              setState({ ...state, backgroundType: value ? 'fill' : '' })
+            }
+          />
+          <Space flex="0 0 10px" />
+          <ToggleButton
+            icon={<HighlightIcon width={32} height={32} />}
+            label={__('Highlight', 'web-stories')}
+            value={state.backgroundType === 'highlight'}
+            isMultiple={false}
+            onChange={(value) =>
+              setState({ ...state, backgroundType: value ? 'highlight' : '' })
+            }
+          />
+          <Space flex="2" />
+        </Row>
+      )}
     </>
   );
 }

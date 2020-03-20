@@ -36,7 +36,34 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
 import { draftMarkupToContent, generateFontFamily } from './util';
 
-const Element = styled.p`
+const Original = styled.p`
+  margin: 0;
+`;
+
+const Clone = styled.p`
+  margin: 0;
+  transform: translateY(-100%);
+
+  span {
+    background: transparent;
+    ${elementWithFontColor}
+  }
+`;
+
+const HighlightElement = styled.span`
+	${elementFillContent}
+	${elementWithFont}
+	${elementWithBackgroundColor}
+	${elementWithStyle}
+  border-radius: 3px;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  position: relative;
+  color: transparent;
+`;
+
+const FillElement = styled.p`
 	margin: 0;
 	${elementFillContent}
 	${elementWithFont}
@@ -52,6 +79,7 @@ function TextDisplay({
     content,
     color,
     backgroundColor,
+    backgroundType,
     fontFamily,
     fontFallback,
     fontSize,
@@ -103,10 +131,37 @@ function TextDisplay({
       : '';
   });
 
+  if (backgroundType === 'highlight') {
+    return (
+      <>
+        <Original>
+          <HighlightElement
+            ref={ref}
+            dangerouslySetInnerHTML={{
+              __html: draftMarkupToContent(content, bold),
+            }}
+            {...props}
+          />
+        </Original>
+        <Clone {...props}>
+          <HighlightElement
+            ref={ref}
+            dangerouslySetInnerHTML={{
+              __html: draftMarkupToContent(content, bold),
+            }}
+            {...props}
+          />
+        </Clone>
+      </>
+    );
+  }
+
   return (
-    <Element
+    <FillElement
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{
+        __html: draftMarkupToContent(content, bold),
+      }}
       {...props}
     />
   );
