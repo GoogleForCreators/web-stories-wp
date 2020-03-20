@@ -12,6 +12,7 @@ import moment from 'moment';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+// @todo Replace these with local components.
 import { ButtonGroup, Button } from '@wordpress/components';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
