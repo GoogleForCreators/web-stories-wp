@@ -42,6 +42,10 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
+  const ctaContainerStyles = {
+    position: 'absolute',
+    bottom: 0,
+  };
   const backgroundStyles = generatePatternStyles(backgroundColor);
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundNonFullbleedElements = elements.filter(
@@ -91,9 +95,14 @@ function OutputPage({ page }) {
       </amp-story-grid-layer>
       {ctaElements.length && (
         <amp-story-cta-layer>
-          {ctaElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} />
-          ))}
+          <div
+            className="page-cta-area"
+            style={{ ...aspectRatioStyles, ...ctaContainerStyles }}
+          >
+            {ctaElements.map((element) => (
+              <OutputElement key={'el-' + element.id} element={element} />
+            ))}
+          </div>
         </amp-story-cta-layer>
       )}
     </amp-story-page>
