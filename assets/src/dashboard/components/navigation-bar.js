@@ -29,7 +29,7 @@ import styled from 'styled-components';
  */
 import { useRouteHistory } from '../app/router';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES } from '../constants';
+import { BUTTON_TYPES, NEW_STORY_URL } from '../constants';
 import Button from './button';
 import Dropdown from './dropdown';
 
@@ -117,9 +117,7 @@ function NavigationBar() {
         ))}
         <Button
           type={BUTTON_TYPES.CTA}
-          onClick={() =>
-            (window.location.href = 'post-new.php?post_type=web-story')
-          }
+          onClick={() => (window.location.href = NEW_STORY_URL)}
         >
           {__('Create Story', 'web-stories')}
         </Button>
