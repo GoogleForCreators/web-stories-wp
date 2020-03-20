@@ -7,6 +7,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -19,8 +20,8 @@ const DateTimeWrapper = styled.div`
   top: 30px;
   left: -255px;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
-  border: 1px solid #e2e4e7;
-  background: #fff;
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
+  background-color: ${({ theme }) => theme.colors.fg.v1};
   z-index: 1;
   width: 270px;
   padding: 4px;

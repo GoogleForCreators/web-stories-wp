@@ -14,13 +14,14 @@ import 'react-dates/lib/css/_datepicker.css';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 const isRTL = () => document.documentElement.dir === 'rtl';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
-  border-top: 1px solid #e2e4e7;
+  border-top: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
 `;
 
 function DatePicker({ currentDate, onChange }) {

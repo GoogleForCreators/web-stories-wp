@@ -30,10 +30,9 @@ const HelperRow = styled(Row)`
   margin-top: -10px;
 `;
 
-// @todo replace color with theme code.
 const Helper = styled.span`
   color: ${({ theme, warning }) =>
-    warning ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
+    warning ? theme.colors.warning : rgba(theme.colors.fg.v1, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;

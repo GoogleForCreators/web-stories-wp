@@ -69,9 +69,11 @@ const theme = {
     },
     action: '#47A0F4',
     danger: '#FF0000',
+    warning: '#EA4335',
     selection: '#44aaff',
     grayout: 'rgba(0, 0, 0, 0.5)',
     whiteout: 'rgba(255, 255, 255, 0.5)',
+    link: '#4285f4',
     t: {
       bg: '#000000CC',
       fg: '#FFFFFFCC',

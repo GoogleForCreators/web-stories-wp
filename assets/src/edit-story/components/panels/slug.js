@@ -32,9 +32,8 @@ import { Row, TextInput, HelperText } from '../form';
 import { useStory } from '../../app/story';
 import { SimplePanel } from './panel';
 
-// @todo Use theme instead of color directly.
 const Permalink = styled.a`
-  color: #4285f4;
+  color: ${({ theme }) => theme.colors.link};
 `;
 
 const BoxedTextInput = styled(TextInput)`
@@ -42,7 +41,7 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.fg.v1};
   }
 `;
 
