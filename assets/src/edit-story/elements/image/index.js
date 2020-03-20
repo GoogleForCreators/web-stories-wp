@@ -42,4 +42,8 @@ export const defaultAttributes = {
   ...MEDIA_DEFAULT_ATTRIBUTES,
 };
 
-export const panels = [...MEDIA_PANELS, PanelTypes.LINK];
+export const panels = [
+  ...MEDIA_PANELS,
+  PanelTypes.LINK,
+  PanelTypes.IMAGE_ACCESSIBILITY,
+];
