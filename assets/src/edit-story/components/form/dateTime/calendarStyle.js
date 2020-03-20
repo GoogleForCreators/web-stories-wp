@@ -65,6 +65,9 @@ export const GlobalStyle = createGlobalStyle`
   border-radius: 50%;
   text-align: center;
 }
+.CalendarDay__default:hover {
+  border: 1px solid transparent;
+}
 .CalendarDay__selected {
   background: #0085ba;
 }
