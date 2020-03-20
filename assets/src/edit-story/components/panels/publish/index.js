@@ -67,6 +67,14 @@ const DateWrapper = styled.div`
   padding: 5px 0 5px 2px;
 `;
 
+const Date = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+`;
+
+const Time = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
+`;
+
 const DateTimeWrapper = styled.div`
   position: relative;
 `;
@@ -155,8 +163,8 @@ function PublishPanel() {
           ref={dateFieldNode}
         >
           <DateWrapper>
-            {getReadableDate(date)}
-            {getReadableTime(date)}
+            <Date>{getReadableDate(date)}</Date>{' '}
+            <Time>{getReadableTime(date)}</Time>
           </DateWrapper>
           <StyledToggleIcon />
         </BoxedText>
