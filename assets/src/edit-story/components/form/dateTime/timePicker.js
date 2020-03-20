@@ -7,6 +7,7 @@
  */
 import { useState } from 'react';
 import moment from 'moment';
+import styled, { css } from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -16,6 +17,60 @@ import { __ } from '@wordpress/i18n';
 import { ButtonGroup, Button } from '@wordpress/components';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+
+const DateTimeWrapper = styled.div`
+  margin-bottom: 1em;
+`;
+
+const Fieldset = styled.fieldset`
+  margin-top: 0.5em;
+  position: relative;
+`;
+
+const Legend = styled.legend`
+  position: absolute;
+  top: -999em;
+  left: -999em;
+`;
+
+const InputRow = styled.div`
+  display: flex;
+`;
+
+const inputCSS = css`
+  min-height: 30px;
+  box-shadow: 0 0 0 transparent;
+  transition: box-shadow 0.1s linear;
+  border-radius: 4px;
+  border: 1px solid #7e8993;
+`;
+
+const NumberInput = styled.input`
+  ${inputCSS}
+  padding: 2px;
+  margin-right: 4px;
+  text-align: center;
+`;
+
+const SelectInput = styled.select`
+  font-size: 13px;
+  line-height: 1.38461538;
+  color: #32373c;
+  border-color: #7e8993;
+  box-shadow: none;
+  border-radius: 3px;
+  padding: 3px 24px 3px 8px;
+  min-height: 28px;
+  max-width: 25rem;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background: #fff
+    url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2…%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E)
+    no-repeat right 5px top 55%;
+  background-size: 16px 16px;
+  cursor: pointer;
+  margin-right: 4px;
+`;
 
 function TimePicker({ currentTime, onChange, is12Hour }) {
   const selectedTime = currentTime ? moment(currentTime) : moment();
@@ -139,7 +194,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
         key="render-day"
         className="components-datetime__time-field components-datetime__time-field-day"
       >
-        <input
+        <NumberInput
           aria-label={__('Day', 'web-stories')}
           className="components-datetime__time-field-day-input"
           type="number"
@@ -159,9 +214,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
         key="render-month"
         className="components-datetime__time-field components-datetime__time-field-month"
       >
-        <select
+        <SelectInput
           aria-label={__('Month')}
-          className="components-datetime__time-field-month-select"
           value={month}
           onChange={onChangeEvent('month')}
           onBlur={updateMonth}
@@ -178,7 +232,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
           <option value="10">{__('October')}</option>
           <option value="11">{__('November')}</option>
           <option value="12">{__('December')}</option>
-        </select>
+        </SelectInput>
       </div>
     );
   };
@@ -190,15 +244,13 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   return (
-    <div>
-      <fieldset>
-        <legend className="components-datetime__time-legend invisible">
-          {__('Date')}
-        </legend>
-        <div className="components-datetime__time-wrapper">
+    <DateTimeWrapper>
+      <Fieldset>
+        <Legend>{__('Date')}</Legend>
+        <InputRow>
           {renderDayMonthFormat(is12Hour)}
           <div className="components-datetime__time-field components-datetime__time-field-year">
-            <input
+            <NumberInput
               aria-label={__('Year')}
               className="components-datetime__time-field-year-input"
               type="number"
@@ -208,16 +260,14 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               onBlur={updateYear}
             />
           </div>
-        </div>
-      </fieldset>
+        </InputRow>
+      </Fieldset>
 
-      <fieldset>
-        <legend className="components-datetime__time-legend invisible">
-          {__('Time')}
-        </legend>
-        <div className="components-datetime__time-wrapper">
+      <Fieldset>
+        <Legend>{__('Time')}</Legend>
+        <InputRow>
           <div className="components-datetime__time-field components-datetime__time-field-time">
-            <input
+            <NumberInput
               aria-label={__('Hours')}
               className="components-datetime__time-field-hours-input"
               type="number"
@@ -234,7 +284,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
             >
               {':'}
             </span>
-            <input
+            <NumberInput
               aria-label={__('Minutes')}
               className="components-datetime__time-field-minutes-input"
               type="number"
@@ -265,9 +315,9 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               </Button>
             </ButtonGroup>
           )}
-        </div>
-      </fieldset>
-    </div>
+        </InputRow>
+      </Fieldset>
+    </DateTimeWrapper>
   );
 }
 

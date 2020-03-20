@@ -18,6 +18,10 @@ const DateTimeWrapper = styled.div`
   position: absolute;
   top: 30px;
   left: -250px;
+  box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
+  border: 1px solid #e2e4e7;
+  background: #fff;
+  z-index: 1;
 `;
 
 function DateTimePicker({ value, onChange, is12Hour = true }) {

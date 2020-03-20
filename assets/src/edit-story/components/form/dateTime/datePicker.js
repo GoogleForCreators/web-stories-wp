@@ -10,10 +10,20 @@ import moment from 'moment';
 // See: https://github.com/airbnb/react-dates#initialize
 import 'react-dates/initialize';
 import { DayPickerSingleDateController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import { useRef } from 'react';
+import styled from 'styled-components';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 const isRTL = () => document.documentElement.dir === 'rtl';
+
+const CalendarWrapper = styled.div`
+  min-height: 236px;
+  border-top: 1px solid #e2e4e7;
+  margin-left: -8px;
+  margin-right: -8px;
+  padding-left: 4px;
+`;
 
 function DatePicker({ currentDate, isInvalidDate, onChange }) {
   const momentDate = currentDate ? moment(currentDate) : moment();
@@ -59,7 +69,7 @@ function DatePicker({ currentDate, isInvalidDate, onChange }) {
   };
 
   return (
-    <div className="components-datetime__date" ref={nodeRef}>
+    <CalendarWrapper ref={nodeRef}>
       <DayPickerSingleDateController
         date={momentDate}
         daySize={30}
@@ -82,7 +92,7 @@ function DatePicker({ currentDate, isInvalidDate, onChange }) {
         onPrevMonthClick={keepFocusInside}
         onNextMonthClick={keepFocusInside}
       />
-    </div>
+    </CalendarWrapper>
   );
 }
 

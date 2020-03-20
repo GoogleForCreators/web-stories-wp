@@ -95,7 +95,6 @@ const DateWrapper = styled.div`
 
 const DateTimeWrapper = styled.div`
   position: relative;
-  background: #fff;
 `;
 
 const StyledToggleIcon = styled(ToggleIcon)`
