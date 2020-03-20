@@ -232,43 +232,65 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   };
 
   const handleHorizontalDistribution = () => {
-    const offsetWidth = dataPixels(
-      (boundRect.endX - boundRect.startX) / (selectedElements.length - 1)
+    updatedSelectedElementsWithFrame.sort(
+      (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
+    );
+    const commonSpaceWidth = dataPixels(
+      (boundRect.width -
+        updatedSelectedElementsWithFrame.reduce(
+          (sum, element) => sum + element.frameWidth,
+          0
+        )) /
+        (updatedSelectedElementsWithFrame.length - 1)
     );
     onSetProperties((properties) => {
-      const { id, width } = properties;
-      updatedSelectedElementsWithFrame.sort(
-        (a, b) => a.frameX + a.frameWidth - (b.frameX + b.frameWidth)
-      );
+      const { id } = properties;
       const elementIndex = updatedSelectedElementsWithFrame.findIndex(
         (item) => item.id === id
       );
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
         return {};
       }
-      const centerX = boundRect.startX + offsetWidth * elementIndex;
+      const previousElement =
+        updatedSelectedElementsWithFrame[elementIndex - 1];
+      const currentElement = updatedSelectedElementsWithFrame[elementIndex];
       return {
-        x: centerX - width / 2,
+        x:
+          previousElement.frameX +
+          previousElement.frameWidth +
+          commonSpaceWidth +
+          (currentElement.frameWidth - currentElement.width) / 2,
       };
     });
   };
 
   const handleVerticalDistribution = () => {
-    const offsetHeight = dataPixels(
-      (boundRect.endY - boundRect.startY) / (selectedElements.length - 1)
+    updatedSelectedElementsWithFrame.sort(
+      (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
+    );
+    const commonSpaceHeight = dataPixels(
+      (boundRect.height -
+        updatedSelectedElementsWithFrame.reduce(
+          (sum, element) => sum + element.frameHeight,
+          0
+        )) /
+        (updatedSelectedElementsWithFrame.length - 1)
     );
     onSetProperties((properties) => {
-      const { id, height } = properties;
-      updatedSelectedElementsWithFrame.sort(
-        (a, b) => a.frameY + a.frameHeight - (b.frameY + b.frameHeight)
-      );
+      const { id } = properties;
       const elementIndex = selectedElements.findIndex((item) => item.id === id);
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
         return {};
       }
-      const centerY = boundRect.startY + offsetHeight * elementIndex;
+      const previousElement =
+        updatedSelectedElementsWithFrame[elementIndex - 1];
+      const currentElement = updatedSelectedElementsWithFrame[elementIndex];
       return {
-        y: centerY - height / 2,
+        y:
+          previousElement.frameY +
+          previousElement.frameHeight +
+          commonSpaceHeight +
+          (currentElement.frameHeight - currentElement.height) / 2,
       };
     });
   };
