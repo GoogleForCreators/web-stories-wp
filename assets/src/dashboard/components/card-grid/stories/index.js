@@ -15,13 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-// import { action } from '@storybook/addon-actions';
-// import { boolean, select, text } from '@storybook/addon-knobs';
-// import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
 import CardGrid from '../';
@@ -43,7 +36,7 @@ export const _default = () => {
       <CardGridItem />
       <CardGridItem />
       <CardGridItem />
-      <CardGridItem />{' '}
+      <CardGridItem />
     </CardGrid>
   );
 };

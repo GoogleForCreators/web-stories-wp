@@ -31,7 +31,7 @@ const wrapper = (children) => {
 };
 
 describe('CardGrid', () => {
-  it('should render the default non cta button', () => {
+  it('should render CardGrid', () => {
     const { getAllByTestId } = wrapper(
       <CardGrid>
         <div data-testid={'test-child'}>{'Item 1'}</div>

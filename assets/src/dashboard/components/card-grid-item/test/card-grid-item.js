@@ -31,7 +31,7 @@ const wrapper = (children) => {
 };
 
 describe('CardGridItem', () => {
-  it('should render the default non cta button', () => {
+  it('should render CardGridItem', () => {
     const { getByText } = wrapper(
       <CardGridItem>
         <div>
