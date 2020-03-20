@@ -83,13 +83,11 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
-  const viewboxY = mask.ratio <= 1 ? mask.ratio : 1 / mask.ratio;
-
   return (
     <>
       {children}
       <DropTargetSVG
-        viewBox={'0 0 1 ' + viewboxY}
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
