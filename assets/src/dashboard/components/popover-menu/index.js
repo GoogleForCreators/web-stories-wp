@@ -49,7 +49,6 @@ export const Menu = styled.ul`
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
   z-index: ${Z_INDEX.POPOVER_MENU};
-  width: 100%;
 `;
 Menu.propTypes = {
   isOpen: PropTypes.bool,

@@ -16,6 +16,8 @@
 
 export { default as NavigationBar } from './navigation-bar';
 export { default as Button } from './button';
+export { default as PopoverMenu } from './popover-menu';
+export { default as Dropdown } from './dropdown';
 export { ViewHeader } from './typography';
 export { default as PopoverMenu } from './popover-menu';
 export { default as Dropdown } from './dropdown';

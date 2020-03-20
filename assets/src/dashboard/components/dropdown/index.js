@@ -70,6 +70,7 @@ const InnerDropdownText = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-right: 10px;
 `;
 
 const DropdownIcon = styled.span`
@@ -133,6 +134,7 @@ const Dropdown = ({
         <InnerDropdown
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
+          transparent={transparent}
           disabled={disabled}
           transparent={transparent}
         >
