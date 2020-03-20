@@ -13,23 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-
-function VideoLayerContent({
-  element: {
-    resource: { poster, alt },
-  },
-}) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
-}
-
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default VideoLayerContent;
+export { default as ExpandedTextInput } from './expandedTextInput';
+export { default as flipControls } from './flipControls';
+export { default as Note } from './note';
