@@ -83,7 +83,7 @@ function LinkGuidelines({}) {
     if (hasOneTapLinks) {
       setLinkType(inferLinkType(selectedElement));
     }
-  }, [hasOneTapLinks, selectedElement, setLinkType]);
+  }, [hasOneTapLinks, selectedElement?.y, setLinkType]);
 
   useTransformHandler(selectedElement?.id, (transform) => {
     if (!hasOneTapLinks) {
@@ -111,7 +111,7 @@ function LinkGuidelines({}) {
         link: { ...link, type: linkType },
       },
     });
-  }, [linkType, hasOneTapLinks, updateElementById, selectedElement]);
+  }, [linkType, hasOneTapLinks, updateElementById, selectedElement?.id, selectedElement?.y]);
 
   if (!selectedElement || !selectedElement?.link || currentPageNumber === 1) {
     return null;

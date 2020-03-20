@@ -112,19 +112,16 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     updates: null,
   };
 
-  const setTransformStyle = useCallback(
-    (target) => {
-      target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
-      if (frame.resize[0]) {
-        target.style.width = `${frame.resize[0]}px`;
-      }
-      if (frame.resize[1]) {
-        target.style.height = `${frame.resize[1]}px`;
-      }
-      pushTransform(selectedElement.id, frame);
-    },
-    [frame, pushTransform, selectedElement.id]
-  );
+  const setTransformStyle = (target) => {
+    target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
+    if (frame.resize[0]) {
+      target.style.width = `${frame.resize[0]}px`;
+    }
+    if (frame.resize[1]) {
+      target.style.height = `${frame.resize[1]}px`;
+    }
+    pushTransform(selectedElement.id, frame);
+  };
 
   /**
    * Resets Movable once the action is done, sets the initial values.
