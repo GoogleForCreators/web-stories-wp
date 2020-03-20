@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
@@ -22,11 +26,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-/**
- * External dependencies
- */
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Switch } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
