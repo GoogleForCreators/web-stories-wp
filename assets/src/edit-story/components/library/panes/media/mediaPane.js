@@ -38,11 +38,11 @@ import { MainButton, Title, SearchInput, Header } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
-import paneId from './paneId';
 import {
   getResourceFromMediaPicker,
   getResourceFromAttachment,
-} from './mediaUtils';
+} from '../../../../app/media/utils';
+import paneId from './paneId';
 import MediaElement from './mediaElement';
 
 const Container = styled.div`

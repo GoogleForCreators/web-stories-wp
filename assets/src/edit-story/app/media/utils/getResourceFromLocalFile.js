@@ -17,78 +17,8 @@
 /**
  * Internal dependencies
  */
-import getFirstFrameOfVideo from '../../../../app/media/utils/getFirstFrameOfVideo';
-
-/**
- * Infer element type from mime type of its resource
- *
- * @param {string} mimeType Mime type.
- * @return {string} Element type.
- */
-const getTypeFromMime = (mimeType) => {
-  return mimeType.startsWith('image/') ? 'image' : 'video';
-};
-
-/**
- * Generates a resource object from a WordPress attachment
- *
- * @param {Object} attachment WP Attachment object
- * @return {Object} Resource object
- */
-export const getResourceFromAttachment = (attachment) => {
-  const {
-    src,
-    url,
-    mimeType,
-    oWidth,
-    oHeight,
-    id: videoId,
-    posterId,
-    poster,
-    lengthFormatted,
-  } = attachment;
-
-  return {
-    type: getTypeFromMime(mimeType),
-    src: url || src,
-    width: oWidth,
-    height: oHeight,
-    mimeType,
-    posterId,
-    poster,
-    videoId,
-    lengthFormatted,
-  };
-};
-
-/**
- * Generates a resource object from a WordPress media picker object
- *
- * @param {Object} mediaPickerEl WP Media Picker object
- * @return {Object} Resource object
- */
-export const getResourceFromMediaPicker = (mediaPickerEl) => {
-  const {
-    src,
-    url,
-    mime: mimeType,
-    width,
-    height,
-    id: videoId,
-    featured_media: posterId,
-    featured_media_src: poster,
-  } = mediaPickerEl;
-  return {
-    type: getTypeFromMime(mimeType),
-    src: url || src,
-    width,
-    height,
-    mimeType,
-    posterId,
-    poster,
-    videoId,
-  };
-};
+import getTypeFromMime from './getTypeFromMime';
+import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 /**
  * Generates a virtual image to pick metadata resource
@@ -195,31 +125,4 @@ export const getResourceFromLocalFile = (file) => {
   return getVideoResource(file);
 };
 
-/**
- * Generates a resource object from the upload API response object
- *
- * @param {Object} file The uploaded file payload.
- * @return {Object} Resource object.
- */
-export const getResourceFromUploadAPI = (file) => {
-  const {
-    guid: { rendered: src },
-    mime_type: mimeType,
-    media_details: { width, height, length_formatted: lengthFormatted },
-    id: videoId,
-    featured_media: posterId,
-    featured_media_src: poster,
-  } = file;
-  const type = getTypeFromMime(mimeType);
-  return {
-    type,
-    src,
-    width,
-    height,
-    mimeType,
-    lengthFormatted,
-    oWidth: width,
-    oHeight: height,
-    ...(type === 'video' ? { posterId, poster, videoId } : {}),
-  };
-};
+export default getResourceFromLocalFile;

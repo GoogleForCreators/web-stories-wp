@@ -29,7 +29,7 @@ import { useStory } from '../story';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
-} from '../../components/library/panes/media/mediaUtils';
+} from '../../app/media/utils';
 import useInsertElement from '../../components/canvas/useInsertElement';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
