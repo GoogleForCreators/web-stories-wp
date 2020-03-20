@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -42,6 +42,7 @@ function DesignPanel({
   panelType,
   selectedElements,
   onSetProperties,
+  registerSubmitHandler,
   ...rest
 }) {
   const [presubmitHandlers, registerPresubmitHandler] = useHandlers();
@@ -63,18 +64,15 @@ function DesignPanel({
     }));
   }, [selectedElements, elementUpdates]);
 
-  const submit = useCallback(
-    (evt) => {
-      if (evt) {
-        evt.preventDefault();
-      }
-      if (Object.keys(elementUpdates).length > 0) {
-        const commitUpdates = elementUpdates;
+  const internalSubmit = useCallback(
+    (updates) => {
+      if (Object.keys(updates).length > 0) {
+        const commitUpdates = updates;
         if (presubmitHandlers.length > 0) {
           selectedElements.forEach((element) => {
             const precommitUpdate = updateProperties(
               element,
-              elementUpdates[element.id],
+              updates[element.id],
               /* commitValues */ true
             );
             let commitUpdate = precommitUpdate;
@@ -91,13 +89,23 @@ function DesignPanel({
         setElementUpdates({});
       }
     },
-    [presubmitHandlers, selectedElements, elementUpdates, onSetProperties]
+    [presubmitHandlers, selectedElements, onSetProperties]
   );
+
+  const submit = registerSubmitHandler(useCallback(
+    (evt) => {
+      if (evt) {
+        evt.preventDefault();
+      }
+      internalSubmit(elementUpdates);
+    },
+    [internalSubmit, elementUpdates]
+  ));
 
   const pushUpdate = useCallback(
     (update, submitArg = false) => {
+      const newUpdates = {};
       setElementUpdates((prevUpdates) => {
-        const newUpdates = {};
         selectedElements.forEach((element) => {
           const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
           const newUpdate = updateProperties(
@@ -110,10 +118,10 @@ function DesignPanel({
         return newUpdates;
       });
       if (submitArg) {
-        submit();
+        internalSubmit(newUpdates);
       }
     },
-    [selectedElements, submit]
+    [selectedElements, internalSubmit]
   );
 
   const Panel = panelType;
@@ -137,6 +145,7 @@ DesignPanel.propTypes = {
   panelType: PropTypes.func.isRequired,
   selectedElements: PropTypes.arrayOf(StoryPropTypes.element).isRequired,
   onSetProperties: PropTypes.func.isRequired,
+  registerSubmitHandler: PropTypes.func.isRequired,
 };
 
 export default DesignPanel;

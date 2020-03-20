@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -25,18 +25,21 @@ import { useCallback, useMemo } from 'react';
 import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
 import updateProperties from './updateProperties';
+import useHandlers from '../../../utils/useHandlers';
 
 function useDesignPanels() {
   const {
-    state: { selectedElements },
-    actions: { deleteSelectedElements, updateSelectedElements },
+    state: { selectedElementIds, selectedElements },
+    actions: { deleteSelectedElements, updateElementsById },
   } = useStory();
 
   const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
+  const [submitHandlers, registerSubmitHandler] = useHandlers();
 
   const onSetProperties = useCallback(
     (newPropertiesOrUpdater) => {
-      updateSelectedElements({
+      updateElementsById({
+        elementIds: selectedElementIds,
         properties: (currentProperties) =>
           updateProperties(
             currentProperties,
@@ -45,11 +48,33 @@ function useDesignPanels() {
           ),
       });
     },
-    [updateSelectedElements]
+    [selectedElementIds, updateElementsById]
   );
+
+  const createSubmitHandlerForPanel = useCallback((panelId) =>
+    (submit) => {
+      submitHandlers.forEach(handler => handler(onSetProperties, panelId, submit));
+      return submit;
+    }
+  , [onSetProperties]);
+
+  useEffect(() => {
+    const submits = {};
+    const handler = (onSetPropertiesArg, panelId, submit) => {
+      if (onSetProperties === onSetPropertiesArg) {
+        submits[panelId] = submit;
+      }
+    };
+    const unregister = registerSubmitHandler(handler);
+    return () => {
+      unregister();
+      Object.values(submits).forEach(submit => submit());
+    };
+  }, [onSetProperties]);
 
   return {
     panels,
+    createSubmitHandlerForPanel,
     panelProperties: {
       onSetProperties,
       deleteSelectedElements,
