@@ -165,7 +165,14 @@ const availableKeysForSearch = [
   '0',
 ];
 
-function DropDown({ options, value, onChange, disabled, ariaLabel, isDocumentPanel }) {
+function DropDown({
+  options,
+  value,
+  onChange,
+  disabled,
+  ariaLabel,
+  isDocumentPanel,
+}) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -368,6 +375,7 @@ DropDown.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  isDocumentPanel: PropTypes.bool,
 };
 
 DropDown.defaultProps = {

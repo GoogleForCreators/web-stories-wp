@@ -15,6 +15,7 @@ import styled, { css } from 'styled-components';
 import { __ } from '@wordpress/i18n';
 // @todo Replace these with local components.
 import { ButtonGroup, Button } from '@wordpress/components';
+import PropTypes from 'prop-types';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
@@ -43,6 +44,11 @@ const inputCSS = css`
   transition: box-shadow 0.1s linear;
   border-radius: 4px;
   border: 1px solid #7e8993;
+  box-sizing: border-box;
+  height: 28px;
+  vertical-align: middle;
+  background-color: #fff;
+  color: #32373c;
 `;
 
 const NumberInput = styled.input`
@@ -50,6 +56,7 @@ const NumberInput = styled.input`
   padding: 2px;
   margin-right: 4px;
   text-align: center;
+  width: ${({ width }) => width}px;
 `;
 
 const SelectInput = styled.select`
@@ -63,13 +70,18 @@ const SelectInput = styled.select`
   min-height: 28px;
   max-width: 25rem;
   vertical-align: middle;
-  -webkit-appearance: none;
   background: #fff
-    url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2…%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E)
+    url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E)
     no-repeat right 5px top 55%;
   background-size: 16px 16px;
   cursor: pointer;
   margin-right: 4px;
+`;
+
+const DateTimeSeparator = styled.span`
+  display: inline-block;
+  padding: 0 3px 0 0;
+  color: #555d66;
 `;
 
 function TimePicker({ currentTime, onChange, is12Hour }) {
@@ -203,6 +215,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
           min={1}
           onChange={onChangeEvent('day')}
           onBlur={updateDay}
+          width={35}
         />
       </div>
     );
@@ -215,23 +228,23 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
         className="components-datetime__time-field components-datetime__time-field-month"
       >
         <SelectInput
-          aria-label={__('Month')}
+          aria-label={__('Month', 'web-stories')}
           value={month}
           onChange={onChangeEvent('month')}
           onBlur={updateMonth}
         >
-          <option value="01">{__('January')}</option>
-          <option value="02">{__('February')}</option>
-          <option value="03">{__('March')}</option>
-          <option value="04">{__('April')}</option>
-          <option value="05">{__('May')}</option>
-          <option value="06">{__('June')}</option>
-          <option value="07">{__('July')}</option>
-          <option value="08">{__('August')}</option>
-          <option value="09">{__('September')}</option>
-          <option value="10">{__('October')}</option>
-          <option value="11">{__('November')}</option>
-          <option value="12">{__('December')}</option>
+          <option value="01">{__('January', 'web-stories')}</option>
+          <option value="02">{__('February', 'web-stories')}</option>
+          <option value="03">{__('March', 'web-stories')}</option>
+          <option value="04">{__('April', 'web-stories')}</option>
+          <option value="05">{__('May', 'web-stories')}</option>
+          <option value="06">{__('June', 'web-stories')}</option>
+          <option value="07">{__('July', 'web-stories')}</option>
+          <option value="08">{__('August', 'web-stories')}</option>
+          <option value="09">{__('September', 'web-stories')}</option>
+          <option value="10">{__('October', 'web-stories')}</option>
+          <option value="11">{__('November', 'web-stories')}</option>
+          <option value="12">{__('December', 'web-stories')}</option>
         </SelectInput>
       </div>
     );
@@ -246,29 +259,30 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   return (
     <DateTimeWrapper>
       <Fieldset>
-        <Legend>{__('Date')}</Legend>
+        <Legend>{__('Date', 'web-stories')}</Legend>
         <InputRow>
           {renderDayMonthFormat(is12Hour)}
           <div className="components-datetime__time-field components-datetime__time-field-year">
             <NumberInput
-              aria-label={__('Year')}
+              aria-label={__('Year', 'web-stories')}
               className="components-datetime__time-field-year-input"
               type="number"
               step={1}
               value={state.year}
               onChange={onChangeEvent('year')}
               onBlur={updateYear}
+              width={55}
             />
           </div>
         </InputRow>
       </Fieldset>
 
       <Fieldset>
-        <Legend>{__('Time')}</Legend>
+        <Legend>{__('Time', 'web-stories')}</Legend>
         <InputRow>
           <div className="components-datetime__time-field components-datetime__time-field-time">
             <NumberInput
-              aria-label={__('Hours')}
+              aria-label={__('Hours', 'web-stories')}
               className="components-datetime__time-field-hours-input"
               type="number"
               step={1}
@@ -278,14 +292,9 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
-            <span
-              className="components-datetime__time-separator"
-              aria-hidden="true"
-            >
-              {':'}
-            </span>
+            <DateTimeSeparator aria-hidden="true">{':'}</DateTimeSeparator>
             <NumberInput
-              aria-label={__('Minutes')}
+              aria-label={__('Minutes', 'web-stories')}
               className="components-datetime__time-field-minutes-input"
               type="number"
               min={0}
@@ -303,7 +312,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
                 onClick={updateAmPm('AM')}
                 className="components-datetime__time-am-button"
               >
-                {__('AM')}
+                {__('AM', 'web-stories')}
               </Button>
               <Button
                 isPrimary={state.am === 'PM'}
@@ -311,7 +320,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
                 onClick={updateAmPm('PM')}
                 className="components-datetime__time-pm-button"
               >
-                {__('PM')}
+                {__('PM', 'web-stories')}
               </Button>
             </ButtonGroup>
           )}
@@ -320,5 +329,11 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
     </DateTimeWrapper>
   );
 }
+
+TimePicker.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  currentTime: PropTypes.object,
+  is12Hour: PropTypes.bool,
+};
 
 export default TimePicker;

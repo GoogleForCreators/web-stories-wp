@@ -13,6 +13,7 @@ import { DayPickerSingleDateController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { useRef } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 const isRTL = () => document.documentElement.dir === 'rtl';
@@ -20,12 +21,9 @@ const isRTL = () => document.documentElement.dir === 'rtl';
 const CalendarWrapper = styled.div`
   min-height: 236px;
   border-top: 1px solid #e2e4e7;
-  margin-left: -8px;
-  margin-right: -8px;
-  padding-left: 4px;
 `;
 
-function DatePicker({ currentDate, isInvalidDate, onChange }) {
+function DatePicker({ currentDate, onChange }) {
   const momentDate = currentDate ? moment(currentDate) : moment();
 
   const nodeRef = useRef();
@@ -86,14 +84,16 @@ function DatePicker({ currentDate, isInvalidDate, onChange }) {
         transitionDuration={0}
         weekDayFormat="ddd"
         isRTL={isRTL()}
-        isOutsideRange={(date) => {
-          return isInvalidDate && isInvalidDate(date.toDate());
-        }}
         onPrevMonthClick={keepFocusInside}
         onNextMonthClick={keepFocusInside}
       />
     </CalendarWrapper>
   );
 }
+
+DatePicker.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  currentDate: PropTypes.object,
+};
 
 export default DatePicker;
