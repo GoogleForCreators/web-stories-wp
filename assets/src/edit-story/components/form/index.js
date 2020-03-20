@@ -16,9 +16,7 @@
 
 export { default as Button } from './button';
 export { default as Color } from './color';
-export { default as Group } from './group';
 export { default as Input } from './input';
-export { default as InputGroup } from './inputGroup';
 export { default as Label } from './label';
 export { default as Media } from './media';
 export { default as Numeric } from './numeric';

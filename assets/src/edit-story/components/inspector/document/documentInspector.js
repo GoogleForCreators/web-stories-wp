@@ -25,17 +25,18 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { DateTimePicker } from '@wordpress/components';
 
 /**
  * Internal dependencies
  */
+import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
 import { useStory } from '../../../app/story';
 import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
 import { useMediaPicker } from '../../mediaPicker';
 import { Button, TextInput, Row, DropDown, Label } from '../../form';
 import useInspector from '../useInspector';
+import DateTimePicker from '../../form/dateTime/dateTimePicker';
 
 const Img = styled.img`
   width: 100%;
@@ -74,7 +75,7 @@ const FieldLabel = styled(Label)`
   flex-basis: ${({ width }) => (width ? width : 64)}px;
 `;
 
-const BoxedText = styled.div`
+const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
@@ -84,8 +85,22 @@ const BoxedText = styled.div`
   flex-direction: row;
   background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   flex: 1;
-  padding: 7px 2px;
+  padding: 2px;
   border-radius: 4px;
+`;
+
+const DateWrapper = styled.div`
+  padding: 5px 0 5px 2px;
+`;
+
+const DateTimeWrapper = styled.div`
+  position: relative;
+  background: #fff;
+`;
+
+const StyledToggleIcon = styled(ToggleIcon)`
+  height: 26px;
+  flex: 1;
 `;
 
 function DocumentInspector() {
@@ -255,17 +270,28 @@ function DocumentInspector() {
       <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
         <Row>
           <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
-          <BoxedText>
-            {date}
-
+          <BoxedText
+            aria-pressed={showDatePicker}
+            aria-haspopup={true}
+            aria-expanded={showDatePicker}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowDatePicker(!showDatePicker);
+            }}
+          >
+            <DateWrapper>{date}</DateWrapper>
+            <StyledToggleIcon />
           </BoxedText>
           {showDatePicker && (
-            <DateTimePicker
-              key="date-time-picker"
-              currentDate={date}
-              onChange={handleChangeValue('date')}
-              is12Hour={false}
-            />
+            <DateTimeWrapper>
+              {/* @todo get the actual value for is12Hour */}
+              <DateTimePicker
+                key="date-time-picker"
+                value={date}
+                onChange={handleChangeValue('date')}
+                is12Hour={true}
+              />
+            </DateTimeWrapper>
           )}
         </Row>
         {capabilities && capabilities.hasAssignAuthorAction && users && (
