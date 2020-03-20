@@ -21,7 +21,7 @@ import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
 
 function VideoOutput({ element, box }) {
-  const { resource } = element;
+  const { resource, loop } = element;
 
   const sourceProps = {
     type: resource.mimeType,
@@ -34,6 +34,7 @@ function VideoOutput({ element, box }) {
     title: resource.title,
     alt: resource.alt,
     layout: 'fill',
+    loop: loop ? 'loop' : undefined,
   };
 
   return (

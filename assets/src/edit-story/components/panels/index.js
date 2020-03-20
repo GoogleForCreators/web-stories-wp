@@ -29,6 +29,7 @@ import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
+import VideoOptionsPanel from './videoOptions';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
@@ -42,6 +43,7 @@ const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
 const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
+const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const PAGE = 'page';
 const NO_SELECTION = 'noselection';
@@ -56,6 +58,7 @@ export const PanelTypes = {
   TEXT,
   TEXT_STYLE,
   LINK,
+  VIDEO_OPTIONS,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
 };
@@ -87,6 +90,7 @@ export function getPanels(elements) {
     ];
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
+      panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({
         type: VIDEO_ACCESSIBILITY,
         Panel: VideoAccessibilityPanel,
@@ -125,6 +129,8 @@ export function getPanels(elements) {
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
+        case VIDEO_OPTIONS:
+          return { type, Panel: VideoOptionsPanel };
         case VIDEO_ACCESSIBILITY:
           return { type, Panel: VideoAccessibilityPanel };
         case IMAGE_ACCESSIBILITY:
