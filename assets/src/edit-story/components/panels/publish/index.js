@@ -155,8 +155,8 @@ function PublishPanel() {
           ref={dateFieldNode}
         >
           <DateWrapper>
-            {getReadableDate()}
-            {getReadableTime()}
+            {getReadableDate(date)}
+            {getReadableTime(date)}
           </DateWrapper>
           <StyledToggleIcon />
         </BoxedText>
