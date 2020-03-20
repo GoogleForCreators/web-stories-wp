@@ -115,7 +115,12 @@ function NavigationBar() {
             {path.label}
           </Link>
         ))}
-        <Button type={BUTTON_TYPES.CTA} onClick={() => {}}>
+        <Button
+          type={BUTTON_TYPES.CTA}
+          onClick={() =>
+            (window.location.href = 'post-new.php?post_type=web-story')
+          }
+        >
           {__('Create Story', 'web-stories')}
         </Button>
       </LinksContainer>
