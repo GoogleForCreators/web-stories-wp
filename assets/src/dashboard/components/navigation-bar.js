@@ -41,7 +41,7 @@ const Link = styled.a`
   text-decoration: none;
   margin-left: 40px;
   color: ${({ theme, active }) =>
-    active ? theme.colors.gray900 : theme.colors.gray500};
+    active ? theme.colors.gray900 : theme.colors.gray600};
 `;
 
 const DropdownContainer = styled.div`
