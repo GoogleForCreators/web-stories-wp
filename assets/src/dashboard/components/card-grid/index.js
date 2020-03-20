@@ -22,37 +22,30 @@ import styled from 'styled-components';
 
 const GridContainer = styled.div`
   display: grid;
-  width: ${({ theme }) => theme.grid.desktop.width};
-  grid-template-columns: repeat(
-    ${({ theme }) => theme.grid.desktop.columns},
-    1fr
-  );
+  max-width: ${({ theme }) => `${theme.breakpoint.raw.desktop}px`};
+  grid-template-columns: ${({ theme }) =>
+    `repeat(${theme.grid.desktop.columns},
+    ${theme.grid.desktop.fr})`};
   grid-gap: ${({ theme }) => theme.grid.desktop.gap};
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    width: ${({ theme }) => theme.grid.tablet.width};
-    grid-template-columns: repeat(
-      ${({ theme }) => theme.grid.tablet.columns},
-      1fr
-    );
+    grid-template-columns: ${({ theme }) =>
+      `repeat(${theme.grid.tablet.columns},
+    ${theme.grid.tablet.fr})`};
     grid-gap: ${({ theme }) => theme.grid.tablet.gap};
   }
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: ${({ theme }) => theme.grid.mobile.width};
-    grid-template-columns: repeat(
-      ${({ theme }) => theme.grid.mobile.columns},
-      1fr
-    );
+    grid-template-columns: ${({ theme }) =>
+      `repeat(${theme.grid.mobile.columns},
+    ${theme.grid.mobile.fr})`};
     grid-gap: ${({ theme }) => theme.grid.mobile.gap};
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    width: ${({ theme }) => theme.grid.min.width};
-    grid-template-columns: repeat(
-      ${({ theme }) => theme.grid.min.columns},
-      1fr
-    );
+    grid-template-columns: ${({ theme }) =>
+      `repeat(${theme.grid.min.columns},
+    ${theme.grid.min.fr})`};
     grid-gap: ${({ theme }) => theme.grid.min.gap};
   }
 `;
