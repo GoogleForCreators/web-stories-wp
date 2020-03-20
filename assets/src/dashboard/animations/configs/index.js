@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-export const BUTTON_TYPES = {
-  CTA: 'cta',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
+/**
+ * Internal dependencies
+ */
+import { ANIMATION_TYPE } from '../constants';
+import BounceConfig from './bounce';
 
-export const KEYS = {
-  ENTER: 'Enter',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
-
-export const KEYBOARD_USER_CLASS = `useskeyboard`;
-export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
-
-export const Z_INDEX = {
-  POPOVER_MENU: 10,
+export default {
+  [ANIMATION_TYPE.Bounce]: BounceConfig,
 };

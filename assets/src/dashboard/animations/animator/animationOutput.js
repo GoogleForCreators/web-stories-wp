@@ -15,33 +15,35 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import { withProtocol } from '../../utils/url';
-import { getLinkFromElement } from './index';
+import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
 
-function WithLink({ element, children, ...rest }) {
-  const link = getLinkFromElement(element);
-  if (!link) {
-    return children;
-  }
-  const urlWithProtocol = withProtocol(link.url);
+function AnimationOutput({ id, keyframes, ...options }) {
   return (
-    <a
-      href={urlWithProtocol}
-      data-tooltip-icon={link.icon}
-      data-tooltip-text={link.desc}
-      {...rest}
-    >
-      {children}
-    </a>
+    <amp-animation id={id} layout="nodisplay">
+      <script
+        type="application/json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            keyframes,
+            ...options,
+          }),
+        }}
+      />
+    </amp-animation>
   );
 }
 
-WithLink.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  children: StoryPropTypes.children.isRequired,
+AnimationOutput.propTypes = {
+  id: PropTypes.string.isRequired,
+  keyframes: KeyframesPropTypes.isRequired,
+  ...GeneralAnimationPropTypes,
 };
 
-export default WithLink;
+export default AnimationOutput;

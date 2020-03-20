@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -30,19 +30,30 @@ import { __ } from '@wordpress/i18n';
  */
 import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row } from '../form';
-import { createLink } from '../link';
+import {
+  createLink,
+  inferLinkType,
+  getLinkFromElement,
+  LinkType,
+} from '../link';
 import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
 import { SimplePanel } from './panel';
 import { Note, ExpandedTextInput } from './shared';
-import getCommonValue from './utils/getCommonValue';
 
 function LinkPanel({ selectedElements, onSetProperties }) {
-  const link = getCommonValue(selectedElements, 'link') || null;
-  const isFill = getCommonValue(selectedElements, 'isFill');
+  const selectedElement = selectedElements[0];
+  const { isFill } = selectedElement;
+  const link = getLinkFromElement(selectedElement);
+  const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
+    selectedElement,
+  ]);
+
+  const [state, setState] = useState({
+    ...(link || createLink({ type: inferredLinkType })),
+  });
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
-  const [state, setState] = useState({ ...(link || createLink()) });
   useEffect(() => {
     setState({ ...link });
   }, [link]);
@@ -50,10 +61,12 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const handleChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
-        ...originalState,
+        ...(originalState && originalState?.type
+          ? originalState
+          : createLink({ type: inferredLinkType })),
         [property]: value,
       })),
-    [setState]
+    [setState, inferredLinkType]
   );
   const handleChangeIcon = useCallback(
     (image) => {
@@ -64,7 +77,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       }));
       onSetProperties({ link: { ...state, icon } });
     },
-    [onSetProperties, state]
+    [state, onSetProperties]
   );
   const handleSubmit = useCallback(
     (evt) => {
@@ -92,6 +105,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       .then(({ title, image }) => {
         setState((originalState) => ({
           ...originalState,
+          url: urlWithProtocol,
           desc: title ? title : originalState.desc,
           icon: image
             ? toAbsoluteUrl(urlWithProtocol, image)
@@ -105,12 +119,12 @@ function LinkPanel({ selectedElements, onSetProperties }) {
 
   useEffect(() => {
     if (state.url === '') {
-      setState({ url: null, desc: null, icon: null });
+      setState({ url: null, desc: null, icon: null, type: inferredLinkType });
       onSetProperties({ link: null });
     } else if (state.url) {
-      populateMetadata(state.url);
+      populateMetadata(state?.url);
     }
-  }, [onSetProperties, populateMetadata, state.url]);
+  }, [onSetProperties, populateMetadata, inferredLinkType, state.url, state]);
 
   return (
     <SimplePanel
@@ -134,7 +148,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         />
       </Row>
 
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -144,7 +158,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
           />
         </Row>
       )}
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row spaceBetween={false}>
           <Media
             value={state?.icon}

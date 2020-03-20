@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
+import { LinkGuidelines } from '../link';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
@@ -96,6 +97,7 @@ function FramesLayer() {
             </Hint>
           </FrameSidebar>
         )}
+        <LinkGuidelines />
       </FramesPageArea>
     </Layer>
   );
