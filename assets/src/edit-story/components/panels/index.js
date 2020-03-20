@@ -32,6 +32,7 @@ export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 export { default as PublishPanel } from './publish';
 export { default as SlugPanel } from './slug';
+export { default as StatusPanel } from './status';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
