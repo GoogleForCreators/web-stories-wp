@@ -81,8 +81,8 @@ function ShapesPane(props) {
                 onClick={() => {
                   insertElement('shape', {
                     backgroundColor: createSolid(51, 51, 51),
-                    width: DEFAULT_ELEMENT_WIDTH,
-                    height: DEFAULT_ELEMENT_WIDTH * mask.ratio,
+                    width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
+                    height: DEFAULT_ELEMENT_WIDTH,
                     mask: {
                       type: mask.type,
                     },
@@ -91,9 +91,9 @@ function ShapesPane(props) {
                 alt={mask.name}
               >
                 <svg
-                  viewBox={`0 0 1 ${mask.ratio}`}
-                  width={PREVIEW_SIZE}
-                  height={PREVIEW_SIZE * mask.ratio}
+                  viewBox={`0 0 1 ${1 / mask.ratio}`}
+                  width={PREVIEW_SIZE * mask.ratio}
+                  height={PREVIEW_SIZE}
                 >
                   <Path d={mask.path} />
                 </svg>

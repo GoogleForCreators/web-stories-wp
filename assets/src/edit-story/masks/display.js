@@ -85,7 +85,7 @@ export default function WithMask({
         <defs>
           <clipPath
             id={maskId}
-            transform={`scale(1 ${1 / mask.ratio})`}
+            transform={`scale(1 ${mask.ratio})`}
             clipPathUnits="objectBoundingBox"
           >
             <path d={mask.path} />
