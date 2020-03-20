@@ -46,10 +46,8 @@ function getBoundRect(list) {
       : el;
     startX = Math.min(elementProperties.x, startX);
     startY = Math.min(elementProperties.y, startY);
-    const elEndX = elementProperties.x + elementProperties.width;
-    const elEndY = elementProperties.y + elementProperties.height;
-    endX = Math.max(elEndX, endX);
-    endY = Math.max(elEndY, endY);
+    endX = Math.max(elementProperties.x + elementProperties.width, endX);
+    endY = Math.max(elementProperties.y + elementProperties.height, endY);
   });
   return {
     startX,
