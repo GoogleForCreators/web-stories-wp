@@ -34,7 +34,7 @@ function VideoOutput({ element, box }) {
     title: resource.title,
     alt: resource.alt,
     layout: 'fill',
-    loop,
+    loop: loop ? 'loop' : undefined,
   };
 
   return (
