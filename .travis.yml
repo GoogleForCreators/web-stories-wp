@@ -114,7 +114,7 @@ script:
     if [ "$E2E" = "1" ]; then
       npm run build:js
       npm run env:start
-      npm run env:e2e:ci
+      npm run test:e2e:ci
       npm run env:stop
     fi
   - set +e
