@@ -32,7 +32,7 @@ export default {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.Bounce;
+  const name = ANIMATION_TYPE.BOUNCE;
   const { keyframes, ...config } = getAnimationConfigs[name]();
   const label = 'Animate';
 
@@ -68,7 +68,7 @@ export const _default = () => {
 };
 
 export const Cascading = () => {
-  const name = ANIMATION_TYPE.Bounce;
+  const name = ANIMATION_TYPE.BOUNCE;
   const { keyframes, ...config } = getAnimationConfigs[name]();
   const elementConfigs = [
     { id: 'e1', color: 'red', width: '50px' },

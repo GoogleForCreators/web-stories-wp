@@ -15,12 +15,12 @@
  */
 
 export const ANIMATION_TYPE = {
-  Bounce: 'bounce',
-  Spin: 'spin',
+  BOUNCE: 'bounce',
+  SPIN: 'spin',
 };
 
 export const SPIN_TYPE = {
-  Clockwise: 'clockwise',
-  CounterClockwise: 'counterClockwise',
-  PingPong: 'pingPong',
+  CLOCKWISE: 'clockwise',
+  COUNTER_CLOCKWISE: 'counterClockwise',
+  PING_PONG: 'pingPong',
 };

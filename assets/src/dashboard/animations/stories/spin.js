@@ -113,7 +113,7 @@ Spin.propTypes = {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.Spin;
+  const name = ANIMATION_TYPE.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name]();
 
   return (
@@ -135,9 +135,9 @@ export const _default = () => {
 };
 
 export const defaultCounterClockwise = () => {
-  const name = ANIMATION_TYPE.Spin;
+  const name = ANIMATION_TYPE.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
-    SPIN_TYPE.CounterClockwise
+    SPIN_TYPE.COUNTER_CLOCKWISE
   );
 
   return (
@@ -159,7 +159,7 @@ export const defaultCounterClockwise = () => {
 };
 
 export const fastToSlowClockwise = () => {
-  const name = ANIMATION_TYPE.Spin;
+  const name = ANIMATION_TYPE.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name]();
 
   return (
@@ -188,9 +188,9 @@ export const fastToSlowClockwise = () => {
 };
 
 export const fastToSlowCounterClockwise = () => {
-  const name = ANIMATION_TYPE.Spin;
+  const name = ANIMATION_TYPE.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
-    SPIN_TYPE.CounterClockwise
+    SPIN_TYPE.COUNTER_CLOCKWISE
   );
 
   return (
@@ -219,9 +219,9 @@ export const fastToSlowCounterClockwise = () => {
 };
 
 export const pingPongSpin = () => {
-  const name = ANIMATION_TYPE.Spin;
+  const name = ANIMATION_TYPE.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
-    SPIN_TYPE.PingPong
+    SPIN_TYPE.PING_PONG
   );
 
   return (

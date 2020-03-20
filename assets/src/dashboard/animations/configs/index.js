@@ -22,6 +22,6 @@ import getBounceConfig from './bounce';
 import getSpinConfig from './spin';
 
 export default {
-  [ANIMATION_TYPE.Bounce]: getBounceConfig,
-  [ANIMATION_TYPE.Spin]: getSpinConfig,
+  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPE.SPIN]: getSpinConfig,
 };
