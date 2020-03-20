@@ -157,7 +157,6 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
   const maskId = `mask-${mask.type}-${element.id}`;
-  const heightMultiplier = mask.ratio <= 1 ? 1 / mask.ratio : mask.ratio;
 
   return (
     <div
@@ -174,7 +173,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         <defs>
           <clipPath
             id={maskId}
-            transform={`scale(1 ${heightMultiplier})`}
+            transform={`scale(1 ${1 / mask.ratio})`}
             clipPathUnits="objectBoundingBox"
           >
             <path d={mask.path} />
