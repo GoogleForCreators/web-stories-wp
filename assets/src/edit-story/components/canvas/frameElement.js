@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -68,6 +68,9 @@ function FrameElement({ element }) {
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { activeDropTargetId },
+  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
@@ -97,7 +100,8 @@ function FrameElement({ element }) {
     >
       <WithLink
         element={element}
-        showTooltip={selectedElementIds.length === 1 && isSelected}
+        active={selectedElementIds.length === 1 && isSelected}
+        dragging={!!activeDropTargetId}
       >
         <WithMask element={element} fill={true}>
           {Frame ? (

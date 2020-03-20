@@ -63,7 +63,7 @@ const Tip = styled.span`
   filter: none;
   color: ${({ theme, active }) =>
     active ? theme.colors.success.v0 : rgba(theme.colors.fg.v1, 0.84)};
-  ${({ pos }) => (pos === 'top' ? `bottom: 0px;` : `top: 0px;`)}
+  ${({ pos }) => (pos === 'top' ? `bottom: 8px;` : `top: 8px;`)}
 `;
 
 function LinkGuidelines({}) {
@@ -111,7 +111,13 @@ function LinkGuidelines({}) {
         link: { ...link, type: linkType },
       },
     });
-  }, [linkType, hasOneTapLinks, updateElementById, selectedElement?.id, selectedElement?.y]);
+  }, [
+    linkType,
+    hasOneTapLinks,
+    updateElementById,
+    selectedElement?.id,
+    selectedElement?.y,
+  ]);
 
   if (!selectedElement || !selectedElement?.link || currentPageNumber === 1) {
     return null;

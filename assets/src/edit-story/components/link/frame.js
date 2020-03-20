@@ -28,6 +28,8 @@ import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
 import { getLinkFromElement, LinkType } from './index';
+import { useState, useEffect } from 'react';
+import { useTransformHandler } from '../transform';
 
 const Hint = styled.div`
   position: relative;
@@ -130,14 +132,14 @@ const TooltipContainer = styled.div`
   pointer-events: none;
 `;
 
-function WithLink({ element, showTooltip, children, ...rest }) {
+function WithLink({ element, active, dragging, children, ...rest }) {
   const link = getLinkFromElement(element);
 
-  if (!link) {
+  if (!link || dragging) {
     return children;
   }
 
-  if (!showTooltip) {
+  if (!active && !dragging) {
     return (
       <Wrapper {...rest}>
         <LinkIcon />
@@ -168,7 +170,8 @@ function WithLink({ element, showTooltip, children, ...rest }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  showTooltip: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
+  dragging: PropTypes.bool.isRequired,
   children: StoryPropTypes.children.isRequired,
 };
 
