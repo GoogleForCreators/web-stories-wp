@@ -39,7 +39,7 @@ export const defaultAttributes = {
   color: '#000000',
   letterSpacing: 0,
   lineHeight: 1.3,
-  textAlign: 'none',
+  textAlign: 'initial',
   textDecoration: 'none',
   padding: {
     vertical: 0,

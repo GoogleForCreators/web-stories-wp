@@ -13,3 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { rgba } from 'polished';
+
+const Note = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: 12px;
+  line-height: 16px;
+`;
+
+export default Note;

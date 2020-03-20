@@ -94,7 +94,6 @@ function MediaEdit({ element, box }) {
     type,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
-
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
