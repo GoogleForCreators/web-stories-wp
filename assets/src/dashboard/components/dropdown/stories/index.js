@@ -64,6 +64,7 @@ export const _default = () => {
           action(`clicked on dropdown item ${item.value}`)(item);
           setValue(item.value);
         }}
+        transparent={boolean('transparent')}
       />
       <FillerContainer />
     </DropdownWrapper>

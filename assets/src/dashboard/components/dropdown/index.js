@@ -29,7 +29,7 @@ import useFocusOut from '../../utils/useFocusOut';
 import PopoverMenu from '../popover-menu';
 
 const DropdownContainer = styled.div`
-  position: relative;
+  position: static;
 `;
 
 const Label = styled.label`
@@ -39,7 +39,8 @@ const Label = styled.label`
 
 export const InnerDropdown = styled.button`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.gray25};
+  background-color: ${({ theme, transparent }) =>
+    transparent ? 'transparent' : theme.colors.gray25};
   border-radius: 4px;
   border: 1px solid transparent;
   color: ${({ theme }) => theme.colors.gray600};
@@ -52,6 +53,7 @@ export const InnerDropdown = styled.button`
   justify-content: space-between;
   letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight};
+  margin-right: 10px;
   padding: 10px 16px;
   width: 100%;
 
@@ -88,6 +90,7 @@ const Dropdown = ({
   onChange,
   value,
   placeholder,
+  transparent,
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -131,6 +134,7 @@ const Dropdown = ({
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
           disabled={disabled}
+          transparent={transparent}
         >
           <InnerDropdownText>{currentLabel}</InnerDropdownText>
           <DropdownIcon>
@@ -160,6 +164,7 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
+  transparent: PropTypes.bool,
 };
 
 export default Dropdown;
