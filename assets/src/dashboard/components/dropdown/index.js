@@ -134,7 +134,6 @@ const Dropdown = ({
         <InnerDropdown
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
-          transparent={transparent}
           disabled={disabled}
           transparent={transparent}
         >
