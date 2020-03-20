@@ -42,14 +42,13 @@ const PREVIEW_SIZE = 36;
 const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const ShapePreview = styled.div`
   position: relative;
-  padding: 0.5em;
-  flex: 0 0 20%;
+  padding: 0.8em 0.5em;
+  flex: 0 0 25%;
   display: flex;
   justify-content: center;
 `;

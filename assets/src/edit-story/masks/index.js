@@ -39,16 +39,18 @@ export const MaskTypes = {
 };
 
 const CLIP_PATHS = {
+  [MaskTypes.RECTANGLE]: 'M 0,0 1,0 1,1 0,1 0,0',
+  [MaskTypes.CIRCLE]:
+    'M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z M 0.5 0 ',
+  [MaskTypes.TRIANGLE]: 'M 0.5 0 L 1 1 L 0 1 Z M 0.5 0',
   [MaskTypes.HEART]:
     'M.99834689.27724859C.98374997.1165844.87003101.00001922.7277144.00001922c-.0948137 0-.18162681.05102248-.23047608.13279699C.44883142.04998394.36557613 0 .27228183 0 .12998435 0 .01624632.1165652.00166847.27722932c-.00115382.007097-.00588463.0444451.00850059.10535296.0207321.0878518.06861968.1677608.13845102.23103404l.34838744.31615494.35436847-.31613565c.0698315-.0632926.1177191-.14318227.13845114-.23105333.0143856-.0608885.009655-.0982371.00852-.10533369z',
   [MaskTypes.STAR]:
     'M 0.50000026,0.78688566 0.19262278,0.95082018 0.2500004,0.6065577 0,0.36065594 0.34426194,0.31147556 0.50000026,0 0.65573858,0.31147556 1,0.36065594 0.75000014,0.6065577 0.80737774,0.95082018 Z m 0,0',
-  [MaskTypes.RECTANGLE]: 'M 0,0 1,0 1,1 0,1 0,0',
-  [MaskTypes.TRIANGLE]: 'M 0.5 0 L 1 1 L 0 1 Z M 0.5 0',
-  [MaskTypes.CIRCLE]:
-    'M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z M 0.5 0 ',
   [MaskTypes.PENTAGON]:
     'M 0.50000026,0 1,0.36065593 0.80737774,0.95082017 H 0.19262279 L 0,0.36065593 Z m 0,0',
+  [MaskTypes.HEXAGON]:
+    'm 0.74863333,0 h -0.494535 L 0,0.42896111 0.25409833,0.86611944 h 0.494535 L 1,0.42896111 Z',
   [MaskTypes.BLOB_1]:
     'M 0.648438 0.285156 C 0.675781 0.347656 0.671875 0.410156 0.691406 0.472656 C 0.710938 0.535156 0.753906 0.601562 0.75 0.683594 C 0.75 0.761719 0.707031 0.851562 0.640625 0.867188 C 0.574219 0.882812 0.488281 0.828125 0.398438 0.789062 C 0.308594 0.75 0.21875 0.734375 0.175781 0.675781 C 0.128906 0.621094 0.132812 0.527344 0.148438 0.4375 C 0.160156 0.34375 0.191406 0.253906 0.25 0.195312 C 0.3125 0.132812 0.40625 0.105469 0.484375 0.128906 C 0.558594 0.148438 0.617188 0.21875 0.648438 0.285156 Z M 0.648438 0.285156',
   [MaskTypes.BLOB_2]:
@@ -60,6 +62,24 @@ const CLIP_PATHS = {
 };
 
 export const MASKS = [
+  {
+    type: MaskTypes.RECTANGLE,
+    name: __('Rectangle', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.RECTANGLE],
+    ratio: 1,
+  },
+  {
+    type: MaskTypes.CIRCLE,
+    name: __('Circle', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.CIRCLE],
+    ratio: 1,
+  },
+  {
+    type: MaskTypes.TRIANGLE,
+    name: __('Triangle', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.TRIANGLE],
+    ratio: 1,
+  },
   {
     type: MaskTypes.HEART,
     name: __('Heart', 'web-stories'),
@@ -73,28 +93,16 @@ export const MASKS = [
     ratio: 0.951,
   },
   {
-    type: MaskTypes.RECTANGLE,
-    name: __('Rectangle', 'web-stories'),
-    path: CLIP_PATHS[MaskTypes.RECTANGLE],
-    ratio: 1,
-  },
-  {
-    type: MaskTypes.TRIANGLE,
-    name: __('Triangle', 'web-stories'),
-    path: CLIP_PATHS[MaskTypes.TRIANGLE],
-    ratio: 1,
-  },
-  {
-    type: MaskTypes.CIRCLE,
-    name: __('Circle', 'web-stories'),
-    path: CLIP_PATHS[MaskTypes.CIRCLE],
-    ratio: 1,
-  },
-  {
     type: MaskTypes.PENTAGON,
     name: __('Pentagon', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.PENTAGON],
     ratio: 0.951,
+  },
+  {
+    type: MaskTypes.HEXAGON,
+    name: __('Hexagon', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.HEXAGON],
+    ratio: 0.866,
   },
   {
     type: MaskTypes.BLOB_1,
