@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -90,6 +91,42 @@ const SeparateBorder = styled.div`
 function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   const boundRect = getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
+
+  const updatedSelectedElementsWithFrame = useMemo(
+    () =>
+      selectedElements.map((item) => {
+        const { id, x, y, width, height, rotationAngle } = item;
+        let frameX = x;
+        let frameY = y;
+        let frameWidth = width;
+        let frameHeight = height;
+        if (rotationAngle) {
+          const elementFrame = calcRotatedObjectPositionAndSize(
+            rotationAngle,
+            x,
+            y,
+            width,
+            height
+          );
+          frameX = elementFrame.x;
+          frameY = elementFrame.y;
+          frameWidth = elementFrame.width;
+          frameHeight = elementFrame.height;
+        }
+        return {
+          id,
+          x,
+          y,
+          width,
+          height,
+          frameX,
+          frameY,
+          frameWidth,
+          frameHeight,
+        };
+      }),
+    [selectedElements]
+  );
 
   const isJustifyEnabled = isFill || selectedElements.length < 2;
   const isDistributionEnabled = isFill || selectedElements.length < 3;
@@ -199,26 +236,15 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       (boundRect.endX - boundRect.startX) / (selectedElements.length - 1)
     );
     onSetProperties((properties) => {
-      const { id, x, y, width, height, rotationAngle } = properties;
-      const elementIndex = selectedElements.findIndex((item) => item.id === id);
+      const { id, width } = properties;
+      updatedSelectedElementsWithFrame.sort(
+        (a, b) => a.frameX + a.frameWidth - (b.frameX + b.frameWidth)
+      );
+      const elementIndex = updatedSelectedElementsWithFrame.findIndex(
+        (item) => item.id === id
+      );
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
-        let offsetX = 0;
-        if (rotationAngle) {
-          const { width: frameWidth } = calcRotatedObjectPositionAndSize(
-            rotationAngle,
-            x,
-            y,
-            width,
-            height
-          );
-          offsetX = (frameWidth - width) / 2;
-        }
-        return {
-          x:
-            elementIndex === 0
-              ? boundRect.startX + offsetX
-              : boundRect.endX - width - offsetX,
-        };
+        return {};
       }
       const centerX = boundRect.startX + offsetWidth * elementIndex;
       return {
@@ -232,26 +258,13 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       (boundRect.endY - boundRect.startY) / (selectedElements.length - 1)
     );
     onSetProperties((properties) => {
-      const { id, x, y, width, height, rotationAngle } = properties;
+      const { id, height } = properties;
+      updatedSelectedElementsWithFrame.sort(
+        (a, b) => a.frameY + a.frameHeight - (b.frameY + b.frameHeight)
+      );
       const elementIndex = selectedElements.findIndex((item) => item.id === id);
       if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
-        let offsetY = 0;
-        if (rotationAngle) {
-          const { height: frameHeight } = calcRotatedObjectPositionAndSize(
-            rotationAngle,
-            x,
-            y,
-            width,
-            height
-          );
-          offsetY = (frameHeight - height) / 2;
-        }
-        return {
-          y:
-            elementIndex === 0
-              ? boundRect.startY + offsetY
-              : boundRect.endY - height - offsetY,
-        };
+        return {};
       }
       const centerY = boundRect.startY + offsetHeight * elementIndex;
       return {
