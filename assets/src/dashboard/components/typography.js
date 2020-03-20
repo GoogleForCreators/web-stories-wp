@@ -15,21 +15,15 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { ViewHeader } from '../../../components';
-
-function TemplatesGallery() {
-  return (
-    <div>
-      <ViewHeader>{__('Explore Templates', 'web-stories')}</ViewHeader>
-    </div>
-  );
-}
-
-export default TemplatesGallery;
+export const ViewHeader = styled.h1`
+  font-family: ${({ theme }) => theme.fonts.heading1.family};
+  font-size: ${({ theme }) => theme.fonts.heading1.size};
+  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
+  font-weight: bold;
+  margin: 40px 20px;
+`;

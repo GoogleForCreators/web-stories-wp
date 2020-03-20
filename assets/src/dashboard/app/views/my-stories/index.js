@@ -19,10 +19,15 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { ViewHeader } from '../../../components';
+
 function MyStories() {
   return (
     <div>
-      <h1>{__('My Stories', 'web-stories')}</h1>
+      <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
     </div>
   );
 }

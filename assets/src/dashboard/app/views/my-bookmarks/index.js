@@ -19,10 +19,15 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { ViewHeader } from '../../../components';
+
 function MyBookmarks() {
   return (
     <div>
-      <h1>{__('My Bookmarks', 'web-stories')}</h1>
+      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
     </div>
   );
 }
