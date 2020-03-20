@@ -27,3 +27,4 @@ export { default as TextInput } from './text';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
 export { default as DropDown } from './dropDown';
+export { default as DateTime } from './dateTime';

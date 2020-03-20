@@ -17,16 +17,9 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useLayoutEffect,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
-import moment from 'moment';
 
 /**
  * WordPress dependencies
@@ -36,20 +29,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
 import { useStory } from '../../../app/story';
-import { useConfig } from '../../../app/config';
 import { SimplePanel } from '../../panels/panel';
-import { useMediaPicker } from '../../mediaPicker';
-import { Button, TextInput, Row, DropDown, Label } from '../../form';
+import { Button, TextInput, Row, DropDown } from '../../form';
 import useInspector from '../useInspector';
-import DateTimePicker from '../../form/dateTime/dateTimePicker';
-
-const Img = styled.img`
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-`;
+import { PublishPanel } from '../../panels';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -78,81 +62,25 @@ const Helper = styled.span`
   line-height: 16px;
 `;
 
-const FieldLabel = styled(Label)`
-  flex-basis: ${({ width }) => (width ? width : 64)}px;
-`;
-
-const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  display: flex;
-  flex-direction: row;
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  flex: 1;
-  padding: 2px;
-  border-radius: 4px;
-`;
-
-const DateWrapper = styled.div`
-  padding: 5px 0 5px 2px;
-`;
-
-const DateTimeWrapper = styled.div`
-  position: relative;
-`;
-
-const StyledToggleIcon = styled(ToggleIcon)`
-  height: 26px;
-  flex: 1;
-`;
-
 function DocumentInspector() {
   const {
     actions: { loadStatuses, loadUsers },
-    state: { users, statuses },
+    state: { statuses },
   } = useInspector();
 
   const {
     state: {
       meta: { isSaving },
-      story: { author, status, slug, date, featuredMediaUrl, password, link },
+      story: { status, slug, password, link },
       capabilities,
     },
     actions: { updateStory, deleteStory },
   } = useStory();
 
-  const { postThumbnails } = useConfig();
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
   useEffect(() => {
     loadStatuses();
     loadUsers();
   });
-
-  const dateTimePickerNode = useRef();
-  const dateFieldNode = useRef();
-
-  const handleOutsideCalendarClick = (e) => {
-    if (
-      (dateTimePickerNode.current &&
-        dateTimePickerNode.current.contains(e.target)) ||
-      (dateFieldNode.current && dateFieldNode.current.contains(e.target))
-    ) {
-      return;
-    }
-    setShowDatePicker(false);
-  };
-
-  useLayoutEffect(() => {
-    document.addEventListener('mousedown', handleOutsideCalendarClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideCalendarClick);
-    };
-  }, []);
 
   const passwordProtected = 'protected';
   const visibilityOptions = statuses.filter(({ value }) =>
@@ -168,16 +96,6 @@ function DocumentInspector() {
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
     [updateStory]
-  );
-
-  const handleDateChange = useCallback(
-    (value, close = false) => {
-      if (close && showDatePicker) {
-        setShowDatePicker(false);
-      }
-      updateStory({ properties: { date: value } });
-    },
-    [showDatePicker, updateStory]
   );
 
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
@@ -216,25 +134,6 @@ function DocumentInspector() {
     [password, status, updateStory]
   );
 
-  const handleChangeImage = useCallback(
-    (image) =>
-      updateStory({
-        properties: {
-          featuredMedia: image.id,
-          featuredMediaUrl: image.sizes?.medium?.url || image.url,
-        },
-      }),
-    [updateStory]
-  );
-
-  const handleRemoveImage = useCallback(
-    (evt) => {
-      updateStory({ properties: { featuredMedia: 0, featuredMediaUrl: '' } });
-      evt.preventDefault();
-    },
-    [updateStory]
-  );
-
   const handleRemoveStory = useCallback(
     (evt) => {
       deleteStory();
@@ -255,28 +154,6 @@ function DocumentInspector() {
     return value;
   };
 
-  const openMediaPicker = useMediaPicker({
-    title: __('Select as featured image', 'web-stories'),
-    buttonInsertText: __('Set as featured image', 'web-stories'),
-    onSelect: handleChangeImage,
-    type: 'image',
-  });
-
-  const getReadableDate = (value) => {
-    const displayDate = value ? moment(value) : moment();
-    return `${displayDate.format('MM')}/${displayDate.format(
-      'DD'
-    )}/${displayDate.format('YYYY')}`;
-  };
-
-  const getReadableTime = (value) => {
-    const displayTime = value ? moment(value) : moment();
-    return `${displayTime.format('hh')}:${displayTime.format(
-      'mm'
-    )}${displayTime.format('A')}`;
-  };
-
-  const label = __('Author', 'web-stories');
   return (
     <>
       <SimplePanel
@@ -318,66 +195,7 @@ function DocumentInspector() {
           {__('Move to trash', 'web-stories')}
         </Button>
       </SimplePanel>
-      <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
-        <Row>
-          <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
-          <BoxedText
-            aria-pressed={showDatePicker}
-            aria-haspopup={true}
-            aria-expanded={showDatePicker}
-            onClick={(e) => {
-              e.preventDefault();
-              setShowDatePicker(!showDatePicker);
-            }}
-            ref={dateFieldNode}
-          >
-            <DateWrapper>
-              {getReadableDate()}
-              {getReadableTime()}
-            </DateWrapper>
-            <StyledToggleIcon />
-          </BoxedText>
-          {showDatePicker && (
-            <DateTimeWrapper>
-              {/* @todo get the actual value for is12Hour */}
-              <DateTimePicker
-                key="date-time-picker"
-                value={date}
-                onChange={handleDateChange}
-                is12Hour={true}
-                forwardedRef={dateTimePickerNode}
-              />
-            </DateTimeWrapper>
-          )}
-        </Row>
-        {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <Row>
-            <FieldLabel>{label}</FieldLabel>
-            <DropDown
-              ariaLabel={label}
-              options={users}
-              value={author}
-              disabled={isSaving}
-              onChange={handleChangeValue('author')}
-              isDocumentPanel={true}
-            />
-          </Row>
-        )}
-        {featuredMediaUrl && <Img src={featuredMediaUrl} />}
-        {featuredMediaUrl && (
-          <Button onClick={handleRemoveImage} fullWidth>
-            {__('Remove image', 'web-stories')}
-          </Button>
-        )}
-
-        {postThumbnails && (
-          <Button onClick={openMediaPicker} fullWidth>
-            {featuredMediaUrl
-              ? __('Replace image', 'web-stories')
-              : __('Set featured image', 'web-stories')}
-          </Button>
-        )}
-      </SimplePanel>
+      <PublishPanel />
       <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
         <Row>
           <BoxedTextInput
