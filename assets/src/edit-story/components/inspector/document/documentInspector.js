@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
-import { rgba } from 'polished';
 import styled from 'styled-components';
 
 /**
@@ -31,9 +30,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
-import { Button, TextInput, Row, DropDown } from '../../form';
+import { Button, TextInput, Row, DropDown, HelperText } from '../../form';
 import useInspector from '../useInspector';
-import { PublishPanel } from '../../panels';
+import { PublishPanel, SlugPanel } from '../../panels';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -42,24 +41,6 @@ const BoxedTextInput = styled(TextInput)`
   &:focus {
     background-color: #fff;
   }
-`;
-
-const HelperRow = styled(Row)`
-  margin-top: -10px;
-`;
-
-// @todo Use theme instead of color directly.
-const Permalink = styled.a`
-  color: #4285f4;
-`;
-
-// @todo replace color with theme code.
-const Helper = styled.span`
-  color: ${({ theme, warning }) =>
-    warning ? '#EA4335' : rgba(theme.colors.fg.v1, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: 16px;
 `;
 
 function DocumentInspector() {
@@ -71,7 +52,7 @@ function DocumentInspector() {
   const {
     state: {
       meta: { isSaving },
-      story: { status, slug, password, link },
+      story: { status, password },
       capabilities,
     },
     actions: { updateStory, deleteStory },
@@ -92,11 +73,6 @@ function DocumentInspector() {
     name: __('Password Protected', 'web-stories'),
     value: passwordProtected,
   });*/
-
-  const handleChangeValue = useCallback(
-    (prop) => (value) => updateStory({ properties: { [prop]: value } }),
-    [updateStory]
-  );
 
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
   const handleChangePassword = useCallback(
@@ -182,11 +158,9 @@ function DocumentInspector() {
                     placeholder={__('Enter a password', 'web-stories')}
                   />
                 </Row>
-                <HelperRow>
-                  <Helper warning={password && password.length > 20}>
-                    {__('Must not exceed 20 characters', 'web-stories')}
-                  </Helper>
-                </HelperRow>
+                <HelperText isWarning={password && password.length > 20}>
+                  {__('Must not exceed 20 characters', 'web-stories')}
+                </HelperText>
               </>
             )}
           </>
@@ -196,23 +170,7 @@ function DocumentInspector() {
         </Button>
       </SimplePanel>
       <PublishPanel />
-      <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
-        <Row>
-          <BoxedTextInput
-            label={__('URL Slug', 'web-stories')}
-            value={slug}
-            onChange={handleChangeValue('slug')}
-            placeholder={__('Enter slug', 'web-stories')}
-          />
-        </Row>
-        <HelperRow>
-          <Helper>
-            <Permalink rel="noopener noreferrer" target="_blank" href={link}>
-              {link}
-            </Permalink>
-          </Helper>
-        </HelperRow>
-      </SimplePanel>
+      <SlugPanel />
     </>
   );
 }
