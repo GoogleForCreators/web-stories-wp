@@ -18,8 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -31,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { TextInput, Media, Row } from '../form';
+import { Media, Row } from '../form';
 import {
   createLink,
   inferLinkType,
@@ -41,22 +39,7 @@ import {
 import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
 import { SimplePanel } from './panel';
-
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const ExpandedTextInput = styled(BoxedTextInput)`
-  flex-grow: 1;
-`;
-
-const Note = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: 16px;
-`;
+import { Note, ExpandedTextInput } from './shared';
 
 function LinkPanel({ selectedElements, onSetProperties }) {
   const selectedElement = selectedElements[0];

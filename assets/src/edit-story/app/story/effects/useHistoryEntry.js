@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -29,15 +29,23 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const {
     actions: { appendToHistory },
   } = useHistory();
+
+  const currentPageIndexRef = useRef();
+  const selectedElementIdsRef = useRef();
+  useEffect(() => {
+    currentPageIndexRef.current = current;
+    selectedElementIdsRef.current = selection;
+  }, [current, selection]);
+
   useEffect(() => {
     appendToHistory({
       story,
-      current,
+      current: currentPageIndexRef.current,
+      selection: selectedElementIdsRef.current,
       pages,
-      selection,
       capabilities,
     });
-  }, [appendToHistory, story, current, pages, selection, capabilities]);
+  }, [capabilities, story, pages, appendToHistory]);
 }
 
 export default useHistoryEntry;
