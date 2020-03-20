@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 
@@ -125,6 +131,27 @@ function DocumentInspector() {
     loadStatuses();
     loadUsers();
   });
+
+  const dateTimePickerNode = useRef();
+  const dateFieldNode = useRef();
+
+  const handleOutsideCalendarClick = (e) => {
+    if (
+      (dateTimePickerNode.current &&
+        dateTimePickerNode.current.contains(e.target)) ||
+      (dateFieldNode.current && dateFieldNode.current.contains(e.target))
+    ) {
+      return;
+    }
+    setShowDatePicker(false);
+  };
+
+  useLayoutEffect(() => {
+    document.addEventListener('mousedown', handleOutsideCalendarClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideCalendarClick);
+    };
+  }, []);
 
   const passwordProtected = 'protected';
   const visibilityOptions = statuses.filter(({ value }) =>
@@ -287,6 +314,7 @@ function DocumentInspector() {
               e.preventDefault();
               setShowDatePicker(!showDatePicker);
             }}
+            ref={dateFieldNode}
           >
             <DateWrapper>{date}</DateWrapper>
             <StyledToggleIcon />
@@ -299,6 +327,7 @@ function DocumentInspector() {
                 value={date}
                 onChange={handleDateChange}
                 is12Hour={true}
+                forwardedRef={dateTimePickerNode}
               />
             </DateTimeWrapper>
           )}

@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
-// @todo Adjust this properly.
 const DateTimeWrapper = styled.div`
   position: absolute;
   top: 30px;
@@ -27,9 +26,9 @@ const DateTimeWrapper = styled.div`
   padding: 4px;
 `;
 
-function DateTimePicker({ value, onChange, is12Hour = true }) {
+function DateTimePicker({ value, onChange, is12Hour = true, forwardedRef }) {
   return (
-    <DateTimeWrapper>
+    <DateTimeWrapper ref={forwardedRef}>
       <TimePicker currentTime={value} onChange={onChange} is12Hour={is12Hour} />
       <DatePicker currentDate={value} onChange={onChange} />
     </DateTimeWrapper>
@@ -40,6 +39,7 @@ DateTimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
+  forwardedRef: PropTypes.func,
 };
 
 export default DateTimePicker;
