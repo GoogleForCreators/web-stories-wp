@@ -155,7 +155,7 @@ jobs:
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
-        - npm run build-storybook
+        - npm run build:storybook
       deploy:
         - provider: pages
           edge: true
