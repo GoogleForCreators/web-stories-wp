@@ -79,11 +79,14 @@ function LinkGuidelines({}) {
   const selectedElement = selectedElements.length === 1 && selectedElements[0];
   const hasOneTapLinks = selectedElement?.link && currentPageNumber >= 1;
 
+  // Disable reason: This effect only needs to be called whenever `selectedElement.y` changes (not `selectedElement` as a whole)
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (hasOneTapLinks) {
       setLinkType(inferLinkType(selectedElement));
     }
   }, [hasOneTapLinks, selectedElement?.y, setLinkType]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useTransformHandler(selectedElement?.id, (transform) => {
     if (!hasOneTapLinks) {
@@ -100,6 +103,8 @@ function LinkGuidelines({}) {
     }
   });
 
+  // Disable reason: This effect only needs to be called whenever `selectedElement.y` changes (not `selectedElement` as a whole)
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const link = getLinkFromElement(selectedElement);
     if (!linkType || !link || link.type === linkType || !hasOneTapLinks) {
@@ -118,6 +123,7 @@ function LinkGuidelines({}) {
     selectedElement?.id,
     selectedElement?.y,
   ]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   if (!selectedElement || !selectedElement?.link || currentPageNumber === 1) {
     return null;
