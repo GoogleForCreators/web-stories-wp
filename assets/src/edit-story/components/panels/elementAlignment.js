@@ -243,25 +243,24 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
         )) /
         (updatedSelectedElementsWithFrame.length - 1)
     );
-    onSetProperties((properties) => {
-      const { id } = properties;
-      const elementIndex = updatedSelectedElementsWithFrame.findIndex(
-        (item) => item.id === id
-      );
-      if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
-        return {};
+    const updatedX = {};
+    let offsetX = 0;
+    updatedSelectedElementsWithFrame.forEach((element, index) => {
+      const { id, x, width, frameWidth } = element;
+      if (
+        index === 0 ||
+        index === updatedSelectedElementsWithFrame.length - 1
+      ) {
+        updatedX[id] = { x };
+        offsetX = x;
+      } else {
+        updatedX[id] = {
+          x: offsetX + (frameWidth - width) / 2,
+        };
       }
-      const previousElement =
-        updatedSelectedElementsWithFrame[elementIndex - 1];
-      const currentElement = updatedSelectedElementsWithFrame[elementIndex];
-      return {
-        x:
-          previousElement.frameX +
-          previousElement.frameWidth +
-          commonSpaceWidth +
-          (currentElement.frameWidth - currentElement.width) / 2,
-      };
+      offsetX += frameWidth + commonSpaceWidth;
     });
+    onSetProperties(({ id }) => updatedX[id]);
   };
 
   const handleVerticalDistribution = () => {
@@ -276,23 +275,24 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
         )) /
         (updatedSelectedElementsWithFrame.length - 1)
     );
-    onSetProperties((properties) => {
-      const { id } = properties;
-      const elementIndex = selectedElements.findIndex((item) => item.id === id);
-      if (elementIndex === 0 || elementIndex === selectedElements.length - 1) {
-        return {};
+    const updatedY = {};
+    let offsetY = 0;
+    updatedSelectedElementsWithFrame.forEach((element, index) => {
+      const { id, y, height, frameHeight } = element;
+      if (
+        index === 0 ||
+        index === updatedSelectedElementsWithFrame.length - 1
+      ) {
+        updatedY[id] = { y };
+        offsetY = y;
+      } else {
+        updatedY[id] = {
+          y: offsetY + (frameHeight - height) / 2,
+        };
       }
-      const previousElement =
-        updatedSelectedElementsWithFrame[elementIndex - 1];
-      const currentElement = updatedSelectedElementsWithFrame[elementIndex];
-      return {
-        y:
-          previousElement.frameY +
-          previousElement.frameHeight +
-          commonSpaceHeight +
-          (currentElement.frameHeight - currentElement.height) / 2,
-      };
+      offsetY += frameHeight + commonSpaceHeight;
     });
+    onSetProperties(({ id }) => updatedY[id]);
   };
 
   return (
