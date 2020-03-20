@@ -82,8 +82,8 @@ export function getPanels(elements) {
       { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
-      { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
       { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
+      { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
