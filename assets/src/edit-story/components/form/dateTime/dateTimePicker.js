@@ -38,7 +38,7 @@ function DateTimePicker({ value, onChange, is12Hour = true }) {
 
 DateTimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.object,
+  value: PropTypes.string,
   is12Hour: PropTypes.bool,
 };
 

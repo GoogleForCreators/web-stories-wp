@@ -93,7 +93,7 @@ function DatePicker({ currentDate, onChange }) {
 
 DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  currentDate: PropTypes.object,
+  currentDate: PropTypes.string,
 };
 
 export default DatePicker;

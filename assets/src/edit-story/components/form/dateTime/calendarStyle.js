@@ -8,54 +8,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-.components-datetime__time-am-button.is-toggled,
-.components-datetime__time-pm-button.is-toggled {
-  background: #edeff0;
-  border-color: #8f98a1;
-  box-shadow: inset 0 2px 5px -3px #555d66;
-}
-.components-button {
-  display: inline-flex;
-  text-decoration: none;
-  font-size: 13px;
-  margin: 0;
-  border: 0;
-  cursor: pointer;
-  transition: box-shadow 0.1s linear;
-  padding: 0 10px;
-  line-height: 2;
-  height: 28px;
-  border-radius: 3px;
-  white-space: nowrap;
-  border-width: 1px;
-  border-style: solid;
-  color: rgb(0, 117, 175);
-  border-color: rgb(0, 117, 175);
-  background: #f3f5f6;
-}
-
-.components-button:focus:not(:disabled) {
-    outline: 2px solid transparent;
-}
-
-.components-button:focus:enabled {
-    background: #f3f5f6;
-    color: rgb(0, 93, 140);
-    border-color: rgb(0, 118, 177);
-    box-shadow: 0 0 0 1px rgb(0, 118, 177);
-    text-decoration: none;
-}
-
-.components-datetime__time-pm-button {
-  margin-left: -1px;
-  border-radius: 0 3px 3px 0;
-}
-.components-datetime__time-am-button {
-  margin-left: 8px;
-  margin-right: -1px;
-  border-radius: 3px 0 0 3px;
-}
-
 .CalendarMonth_caption {
   font-size: 13px;
 }
