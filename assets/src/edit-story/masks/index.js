@@ -70,46 +70,55 @@ export const MASKS = [
     type: MaskTypes.STAR,
     name: __('Star', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.STAR],
+    ratio: 1,
   },
   {
     type: MaskTypes.RECTANGLE,
     name: __('Rectangle', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.RECTANGLE],
+    ratio: 1,
   },
   {
     type: MaskTypes.TRIANGLE,
     name: __('Triangle', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.TRIANGLE],
+    ratio: 1,
   },
   {
     type: MaskTypes.CIRCLE,
     name: __('Circle', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.CIRCLE],
+    ratio: 1,
   },
   {
     type: MaskTypes.PENTAGON,
     name: __('Pentagon', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.PENTAGON],
+    ratio: 1,
   },
   {
     type: MaskTypes.BLOB_1,
     name: __('Blob 1', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_1],
+    ratio: 1,
   },
   {
     type: MaskTypes.BLOB_2,
     name: __('Blob 2', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_2],
+    ratio: 1,
   },
   {
     type: MaskTypes.BLOB_3,
     name: __('Blob 3', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_3],
+    ratio: 1,
   },
   {
     type: MaskTypes.BLOB_4,
     name: __('Blob 4', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_4],
+    ratio: 1,
   },
 ];
 

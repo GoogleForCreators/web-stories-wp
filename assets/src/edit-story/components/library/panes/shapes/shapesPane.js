@@ -76,16 +76,18 @@ function ShapesPane(props) {
         <SectionContent>
           {/** Basic masks */}
           {MASKS.map((mask) => {
-            const widthMultiplier = mask.ratio > 1 ? 1 / mask.ratio : 1;
-            const heightMultiplier = mask.ratio <= 1 ? mask.ratio : 1;
+            const heightMultiplier =
+              mask.ratio <= 1 ? mask.ratio : 1 / mask.ratio;
             return (
               <ShapePreview
                 key={mask.type}
                 onClick={() => {
                   insertElement('shape', {
                     backgroundColor: createSolid(51, 51, 51),
-                    width: DEFAULT_ELEMENT_WIDTH * widthMultiplier,
-                    height: DEFAULT_ELEMENT_WIDTH * heightMultiplier,
+                    width: DEFAULT_ELEMENT_WIDTH,
+                    height:
+                      DEFAULT_ELEMENT_WIDTH *
+                      (mask.ratio <= 1 ? mask.ratio : 1 / mask.ratio),
                     mask: {
                       type: mask.type,
                     },
@@ -94,8 +96,8 @@ function ShapesPane(props) {
                 alt={mask.name}
               >
                 <svg
-                  viewBox={'0 0 ' + widthMultiplier + ' ' + heightMultiplier}
-                  width={PREVIEW_SIZE * widthMultiplier}
+                  viewBox={'0 0 1 ' + heightMultiplier}
+                  width={PREVIEW_SIZE}
                   height={PREVIEW_SIZE * heightMultiplier}
                 >
                   <Path d={mask.path} />

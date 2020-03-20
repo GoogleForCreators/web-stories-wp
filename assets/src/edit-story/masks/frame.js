@@ -83,11 +83,13 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
+  const viewboxY = mask.ratio <= 1 ? mask.ratio : 1 / mask.ratio;
+
   return (
     <>
       {children}
       <DropTargetSVG
-        viewBox="0 0 1 1"
+        viewBox={'0 0 1 ' + viewboxY}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
@@ -155,6 +157,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
   const maskId = `mask-${mask.type}-${element.id}`;
+  const heightMultiplier = mask.ratio <= 1 ? 1 / mask.ratio : mask.ratio;
 
   return (
     <div
@@ -169,7 +172,11 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={'scale(1 ' + heightMultiplier + ')'}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>
