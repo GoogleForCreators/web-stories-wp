@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import { TextInput } from '../../form';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster, alt },
-  },
-}) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
-}
+const BoxedTextInput = styled(TextInput)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
 
-VideoLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
+const ExpandedTextInput = styled(BoxedTextInput)`
+  flex-grow: 1;
+`;
 
-export default VideoLayerContent;
+export default ExpandedTextInput;

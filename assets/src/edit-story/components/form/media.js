@@ -38,7 +38,6 @@ const Container = styled.div`
   height: ${({ size }) => (size ? `${size}px` : '148px')};
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
   border: none;
-  margin-right: 12px;
   position: relative;
   cursor: pointer;
 

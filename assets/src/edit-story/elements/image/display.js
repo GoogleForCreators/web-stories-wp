@@ -75,7 +75,13 @@ function ImageDisplay({
   });
   return (
     <Element>
-      <Img ref={imageRef} draggable={false} src={resource.src} {...imgProps} />
+      <Img
+        ref={imageRef}
+        draggable={false}
+        src={resource.src}
+        alt={resource.alt}
+        {...imgProps}
+      />
     </Element>
   );
 }

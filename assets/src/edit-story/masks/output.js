@@ -63,7 +63,6 @@ export default function WithMask({
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
-          clipPath: `url(#${maskId})`,
         }}
         {...rest}
       >
@@ -91,7 +90,7 @@ export default function WithMask({
         <defs>
           <clipPath
             id={maskId}
-            transform={'scale(1 ' + heightMultiplier + ')'}
+            transform={`scale(1 ${heightMultiplier})`}
             clipPathUnits="objectBoundingBox"
           >
             <path d={mask.path} />

@@ -174,7 +174,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         <defs>
           <clipPath
             id={maskId}
-            transform={'scale(1 ' + heightMultiplier + ')'}
+            transform={`scale(1 ${heightMultiplier})`}
             clipPathUnits="objectBoundingBox"
           >
             <path d={mask.path} />
