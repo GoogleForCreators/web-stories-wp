@@ -41,7 +41,7 @@ const Video = styled.video`
 
 function VideoDisplay({
   box: { width, height },
-  element: { resource, isBackground, scale, focalX, focalY },
+  element: { resource, isBackground, scale, focalX, focalY, loop },
 }) {
   let style = {};
   if (isBackground) {
@@ -62,7 +62,7 @@ function VideoDisplay({
   );
   return (
     <Element>
-      <Video poster={resource.poster} style={style} {...videoProps}>
+      <Video poster={resource.poster} style={style} {...videoProps} loop={loop}>
         <source src={resource.src} type={resource.mimeType} />
       </Video>
     </Element>

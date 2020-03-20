@@ -24,7 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
-import VideoPoster from '../videoPoster';
+import VideoAccessibility from '../videoAccessibility';
 
 function arrange(children = null) {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
@@ -34,10 +34,10 @@ jest.mock('../../mediaPicker', () => ({
   useMediaPicker: () => {},
 }));
 
-describe('Panels/VideoPoster', () => {
-  it('should render <VideoPoster /> panel', () => {
+describe('Panels/VideoAccessibility', () => {
+  it('should render <VideoAccessibility /> panel', () => {
     const { getByLabelText } = arrange(
-      <VideoPoster
+      <VideoAccessibility
         selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
         onSetProperties={() => null}
       />
@@ -48,11 +48,11 @@ describe('Panels/VideoPoster', () => {
     expect(element).toBeDefined();
   });
 
-  it('should simulate a click on <VideoPoster />', () => {
+  it('should simulate a click on <VideoAccessibility />', () => {
     const onClickOnSetPropertiesMock = jest.fn();
 
     const { getByLabelText } = arrange(
-      <VideoPoster
+      <VideoAccessibility
         selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
         onSetProperties={onClickOnSetPropertiesMock}
       />

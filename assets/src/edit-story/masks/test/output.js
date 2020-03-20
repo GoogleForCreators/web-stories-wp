@@ -20,6 +20,27 @@
 import WithMask from '../output';
 
 describe('WithMask', () => {
+  it('should produce valid AMP output when no mask is set', async () => {
+    const props = {
+      element: {
+        id: '123',
+        type: 'text',
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    await expect(
+      <WithMask {...props}>
+        <p>{'Hello World'}</p>
+      </WithMask>
+    ).toBeValidAMPStoryElement();
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should produce valid AMP output', async () => {
     const props = {
@@ -47,6 +68,7 @@ describe('WithMask', () => {
         fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
         style: {},
       },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
     await expect(
