@@ -26,6 +26,7 @@ import {
 } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
+import moment from 'moment';
 
 /**
  * WordPress dependencies
@@ -261,6 +262,20 @@ function DocumentInspector() {
     type: 'image',
   });
 
+  const getReadableDate = (value) => {
+    const displayDate = value ? moment(value) : moment();
+    return `${displayDate.format('MM')}/${displayDate.format(
+      'DD'
+    )}/${displayDate.format('YYYY')}`;
+  };
+
+  const getReadableTime = (value) => {
+    const displayTime = value ? moment(value) : moment();
+    return `${displayTime.format('hh')}:${displayTime.format(
+      'mm'
+    )}${displayTime.format('A')}`;
+  };
+
   const label = __('Author', 'web-stories');
   return (
     <>
@@ -316,7 +331,10 @@ function DocumentInspector() {
             }}
             ref={dateFieldNode}
           >
-            <DateWrapper>{date}</DateWrapper>
+            <DateWrapper>
+              {getReadableDate()}
+              {getReadableTime()}
+            </DateWrapper>
             <StyledToggleIcon />
           </BoxedText>
           {showDatePicker && (
