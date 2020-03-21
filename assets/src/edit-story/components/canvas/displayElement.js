@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 	${elementWithSize}
 	${elementWithRotation}
 	contain: layout paint;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
 const BackgroundOverlay = styled.div`
@@ -52,7 +52,7 @@ const BackgroundOverlay = styled.div`
   left: 0;
 `;
 const ReplacementContainer = styled.div`
-  transition: opacity 0.25s;
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
 `;
 

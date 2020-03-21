@@ -161,6 +161,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       resizable={actionsEnabled && !isDragging}
       rotatable={actionsEnabled && !isDragging}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
+        if (!isDragging) {
+          setIsDragging(true);
+          setDraggingResource(selectedElement.resource);
+        }
         frame.translate = beforeTranslate;
         setTransformStyle(target);
         if (selectedElement.resource) {
@@ -174,8 +178,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
-        setIsDragging(true);
-        setDraggingResource(selectedElement.resource);
         set(frame.translate);
       }}
       onDragEnd={async ({ target }) => {
