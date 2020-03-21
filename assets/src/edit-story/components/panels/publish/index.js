@@ -191,6 +191,7 @@ function PublishPanel() {
         </Row>
       )}
       <Row>
+        {/* @todo Replace this with selection to choose between publisher logos */}
         <LabelWrapper>
           <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
           <Required />
