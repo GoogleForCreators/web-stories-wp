@@ -63,6 +63,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
           poster_portrait_url: posterPortraitUrl,
+          publisher_logo: publisherLogo,
           password,
         } = post;
 
@@ -84,6 +85,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featuredMedia,
           featuredMediaUrl,
           posterPortraitUrl,
+          publisherLogo,
           password,
         };
 

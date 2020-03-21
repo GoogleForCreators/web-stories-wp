@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 /**
@@ -29,24 +29,30 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Button, Row, DropDown, DateTime, Label } from '../../form';
+import { Row, DropDown, DateTime, Label, Media } from '../../form';
 import { SimplePanel } from '../panel';
-import { useMediaPicker } from '../../mediaPicker';
-import { useConfig } from '../../../app/config';
 import useInspector from '../../inspector/useInspector';
 import { useStory } from '../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
 import { getReadableDate, getReadableTime } from './utils';
 import useOutSideClickHandler from './useOutsideClickHandler';
 
-const Img = styled.img`
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
+const LabelWrapper = styled.div`
+  width: 106px;
 `;
 
+// @todo Fix design here, it's random currently.
 const FieldLabel = styled(Label)`
-  flex-basis: ${({ width }) => (width ? width : 64)}px;
+  flex-basis: ${({ width }) => (width ? width : '64px')};
+  ${({ isWarning, theme }) =>
+    isWarning &&
+    css`
+      color: ${theme.colors.required};
+    `}
+`;
+
+const MediaWrapper = styled.div`
+  flex-basis: 134px;
 `;
 
 const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
@@ -92,12 +98,11 @@ function PublishPanel() {
   const {
     state: {
       meta: { isSaving },
-      story: { author, date, featuredMediaUrl },
+      story: { author, date, featuredMediaUrl, publisherLogo },
       capabilities,
     },
     actions: { updateStory },
   } = useStory();
-  const { postThumbnails } = useConfig();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimePickerNode = useRef();
@@ -116,7 +121,7 @@ function PublishPanel() {
     [showDatePicker, updateStory]
   );
 
-  const handleChangeImage = useCallback(
+  const handleChangeCover = useCallback(
     (image) =>
       updateStory({
         properties: {
@@ -126,21 +131,15 @@ function PublishPanel() {
       }),
     [updateStory]
   );
-
-  const handleRemoveImage = useCallback(
-    (evt) => {
-      updateStory({ properties: { featuredMedia: 0, featuredMediaUrl: '' } });
-      evt.preventDefault();
-    },
+  const handleChangePublisherLogo = useCallback(
+    (image) =>
+      updateStory({
+        properties: {
+          publisherLogo: image.id,
+        },
+      }),
     [updateStory]
   );
-
-  const openMediaPicker = useMediaPicker({
-    title: __('Select as featured image', 'web-stories'),
-    buttonInsertText: __('Set as featured image', 'web-stories'),
-    onSelect: handleChangeImage,
-    type: 'image',
-  });
 
   const handleChangeValue = useCallback(
     (prop) => (value) => updateStory({ properties: { [prop]: value } }),
@@ -193,20 +192,41 @@ function PublishPanel() {
           />
         </Row>
       )}
-      {featuredMediaUrl && <Img src={featuredMediaUrl} />}
-      {featuredMediaUrl && (
-        <Button onClick={handleRemoveImage} fullWidth>
-          {__('Remove image', 'web-stories')}
-        </Button>
-      )}
-
-      {postThumbnails && (
-        <Button onClick={openMediaPicker} fullWidth>
-          {featuredMediaUrl
-            ? __('Replace image', 'web-stories')
-            : __('Set featured image', 'web-stories')}
-        </Button>
-      )}
+      <Row>
+        <LabelWrapper>
+          <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
+          <FieldLabel isWarning={true}>
+            {__('required', 'web-stories')}
+          </FieldLabel>
+        </LabelWrapper>
+        <MediaWrapper>
+          <Media
+            value={publisherLogo}
+            onChange={handleChangePublisherLogo}
+            title={__('Select as publisher logo', 'web-stories')}
+            buttonInsertText={__('Select as publisher logo', 'web-stories')}
+            type={'image'}
+            size={80}
+          />
+        </MediaWrapper>
+      </Row>
+      <Row>
+        <LabelWrapper>
+          <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
+          <FieldLabel isWarning={true}>
+            {__('required', 'web-stories')}
+          </FieldLabel>
+        </LabelWrapper>
+        <MediaWrapper>
+          <Media
+            value={featuredMediaUrl}
+            onChange={handleChangeCover}
+            title={__('Select as cover image', 'web-stories')}
+            buttonInsertText={__('Select as cover image', 'web-stories')}
+            type={'image'}
+          />
+        </MediaWrapper>
+      </Row>
     </SimplePanel>
   );
 }

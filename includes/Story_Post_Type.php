@@ -284,7 +284,6 @@ class Story_Post_Type {
 
 		$post             = get_post();
 		$story_id         = ( $post ) ? $post->ID : null;
-		$post_thumbnails  = get_theme_support( 'post-thumbnails' );
 		$rest_base        = self::POST_TYPE_SLUG;
 		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
 
@@ -312,7 +311,6 @@ class Story_Post_Type {
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
 					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
-					'postThumbnails'   => $post_thumbnails,
 					'storyId'          => $story_id,
 					'previewLink'      => get_preview_post_link( $story_id ),
 					'maxUpload'        => $max_upload_size,
