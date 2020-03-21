@@ -34,6 +34,7 @@ import { SimplePanel } from '../panel';
 import useInspector from '../../inspector/useInspector';
 import { useStory } from '../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
+import { useKeyDownEffect } from '../../keyboard';
 import { getReadableDate, getReadableTime } from './utils';
 import useOutSideClickHandler from './useOutsideClickHandler';
 
@@ -61,6 +62,9 @@ const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   flex: 1;
   padding: 2px;
   border-radius: 4px;
+  :focus {
+    outline: -webkit-focus-ring-color auto 5px;
+  }
 `;
 
 const DateWrapper = styled.div`
@@ -101,6 +105,15 @@ function PublishPanel() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimePickerNode = useRef();
   const dateFieldNode = useRef();
+
+  useKeyDownEffect(
+    dateFieldNode,
+    { key: ['space', 'enter'] },
+    () => {
+      setShowDatePicker(!showDatePicker);
+    },
+    [showDatePicker]
+  );
 
   useOutSideClickHandler([dateTimePickerNode, dateFieldNode], () =>
     setShowDatePicker(false)

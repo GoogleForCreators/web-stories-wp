@@ -93,7 +93,7 @@ function DatePicker({ currentDate, onChange }) {
         onDateChange={onChangeMoment}
         transitionDuration={0}
         weekDayFormat="ddd"
-        isRTL={isRTL()}
+        isRTL={isRTL}
         onPrevMonthClick={keepFocusInside}
         onNextMonthClick={keepFocusInside}
       />
