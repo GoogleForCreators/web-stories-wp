@@ -154,7 +154,6 @@ function MediaInput({
       disabled={disabled}
       circle={circle}
       size={size}
-      onClick={openMediaPicker}
       {...rest}
     >
       {value ? (

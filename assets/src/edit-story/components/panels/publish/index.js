@@ -131,6 +131,8 @@ function PublishPanel() {
       }),
     [updateStory]
   );
+
+  // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
     (image) => {
       updateStory({

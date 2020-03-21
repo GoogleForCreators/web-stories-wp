@@ -16,8 +16,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../app';
+
 const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
-const isRTL = () => document.documentElement.dir === 'rtl';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
@@ -25,6 +29,7 @@ const CalendarWrapper = styled.div`
 `;
 
 function DatePicker({ currentDate, onChange }) {
+  const { isRTL } = useConfig();
   const momentDate = currentDate ? moment(currentDate) : moment();
 
   const nodeRef = useRef();
@@ -46,7 +51,6 @@ function DatePicker({ currentDate, onChange }) {
   /**
    * Note: This comment is copied from Gutenberg.
    *
-   * Todo: We should remove this function ASAP.
    * It is kept because focus is lost when we click on the previous and next month buttons.
    * This focus loss closes the date picker popover.
    * Ideally we should add an upstream commit on react-dates to fix this issue.
