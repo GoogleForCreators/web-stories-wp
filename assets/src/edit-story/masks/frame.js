@@ -26,7 +26,6 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
-import { useTransformHandler } from '../components/transform';
 import { getElementMask } from './';
 
 const FILL_STYLE = {
@@ -54,10 +53,9 @@ const DropTargetPath = styled.path`
 
 function WithDropTarget({ element, children, hover }) {
   const pathRef = useRef(null);
-  const indicatorRef = useRef(null);
 
   const {
-    state: { draggingResource },
+    state: { draggingResource, activeDropTargetId },
     actions: { isDropSource, registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
@@ -71,14 +69,6 @@ function WithDropTarget({ element, children, hover }) {
     };
   }, [id, registerDropTarget, unregisterDropTarget]);
 
-  useTransformHandler(element.id, (transform) => {
-    const target = pathRef.current;
-    if (!target) {
-      return;
-    }
-    target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
-  });
-
   if (!mask) {
     return children;
   }
@@ -91,10 +81,14 @@ function WithDropTarget({ element, children, hover }) {
         width="100%"
         height="100%"
         preserveAspectRatio="none"
+        style={{
+          // Fixes issue where the outline prevents double-clicks from
+          // reaching the frame:
+          zIndex: activeDropTargetId === element.id ? 1 : -1,
+        }}
       >
         {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          ref={indicatorRef}
           vectorEffect="non-scaling-stroke"
           strokeWidth="4"
           fill="none"
@@ -121,6 +115,9 @@ function WithDropTarget({ element, children, hover }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
+          style={{
+            opacity: activeDropTargetId === element.id ? 0.3 : 0,
+          }}
         />
       </DropTargetSVG>
     </>

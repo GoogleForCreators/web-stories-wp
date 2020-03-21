@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -34,6 +34,7 @@ function DropTargetsProvider({ children }) {
   const [draggingResource, setDraggingResource] = useState(null);
   const [dropTargets, setDropTargets] = useState({});
   const [activeDropTargetId, setActiveDropTargetId] = useState(null);
+  const tempWorkaroundTimer = useRef(null);
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -122,7 +123,7 @@ function DropTargetsProvider({ children }) {
   const handleDrop = useCallback(
     (resource, selfId = null) => {
       if (!isDropSource(resource?.type)) {
-        return;
+        return Promise.resolve();
       }
 
       if (activeDropTargetId && activeDropTargetId !== selfId) {
@@ -141,14 +142,22 @@ function DropTargetsProvider({ children }) {
               dropTargets: { active: false, replacement: null },
             });
           });
-        setActiveDropTargetId(null);
 
         // TODO(wassgha): once https://github.com/daybrush/moveable/issues/197
         // is resolved, go back to using deleteElementById({ elementId: selfId });
-        if (selfId) {
-          deleteSelectedElements();
-        }
+        // and remove setTimeout hack
+        return new Promise((resolve) => {
+          tempWorkaroundTimer.current = setTimeout(() => {
+            if (selfId) {
+              deleteSelectedElements();
+            }
+            setActiveDropTargetId(null);
+            resolve();
+          }, 5);
+        });
       }
+
+      return Promise.resolve();
     },
     [
       activeDropTargetId,
@@ -159,6 +168,10 @@ function DropTargetsProvider({ children }) {
       updateElementById,
     ]
   );
+
+  useEffect(() => {
+    return () => clearTimeout(tempWorkaroundTimer.current);
+  });
 
   const state = {
     state: {

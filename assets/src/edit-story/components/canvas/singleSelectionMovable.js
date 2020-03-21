@@ -178,9 +178,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setDraggingResource(selectedElement.resource);
         set(frame.translate);
       }}
-      onDragEnd={({ target }) => {
-        setIsDragging(false);
-        setDraggingResource(null);
+      onDragEnd={async ({ target }) => {
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {
@@ -190,9 +188,11 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           };
           updateSelectedElements({ properties });
           if (selectedElement.resource) {
-            handleDrop(selectedElement.resource, selectedElement.id);
+            await handleDrop(selectedElement.resource, selectedElement.id);
           }
         }
+        setIsDragging(false);
+        setDraggingResource(null);
         resetMoveable(target);
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
