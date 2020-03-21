@@ -29,3 +29,4 @@ export { default as ToggleButton } from './toggleButton';
 export { default as DropDown } from './dropDown';
 export { default as DateTime } from './dateTime';
 export { default as HelperText } from './helperText';
+export { default as Required } from './required';

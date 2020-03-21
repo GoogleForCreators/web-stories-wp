@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { rgba } from 'polished';
 
 /**
@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, DateTime, Label, Media } from '../../form';
+import { Row, DropDown, DateTime, Label, Media, Required } from '../../form';
 import { SimplePanel } from '../panel';
 import useInspector from '../../inspector/useInspector';
 import { useStory } from '../../../app/story';
@@ -41,14 +41,8 @@ const LabelWrapper = styled.div`
   width: 106px;
 `;
 
-// @todo Fix design here, it's random currently.
 const FieldLabel = styled(Label)`
   flex-basis: ${({ width }) => (width ? width : '64px')};
-  ${({ isWarning, theme }) =>
-    isWarning &&
-    css`
-      color: ${theme.colors.required};
-    `}
 `;
 
 const MediaWrapper = styled.div`
@@ -199,9 +193,7 @@ function PublishPanel() {
       <Row>
         <LabelWrapper>
           <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
-          <FieldLabel isWarning={true}>
-            {__('required', 'web-stories')}
-          </FieldLabel>
+          <Required />
         </LabelWrapper>
         <MediaWrapper>
           <Media
@@ -217,9 +209,7 @@ function PublishPanel() {
       <Row>
         <LabelWrapper>
           <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
-          <FieldLabel isWarning={true}>
-            {__('required', 'web-stories')}
-          </FieldLabel>
+          <Required />
         </LabelWrapper>
         <MediaWrapper>
           <Media

@@ -75,7 +75,6 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      logo: PropTypes.string.isRequired,
     }),
     fallbackPoster: PropTypes.string.isRequired,
   }).isRequired,
