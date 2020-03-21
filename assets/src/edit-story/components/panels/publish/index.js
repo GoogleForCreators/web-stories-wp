@@ -132,13 +132,14 @@ function PublishPanel() {
     [updateStory]
   );
   const handleChangePublisherLogo = useCallback(
-    (image) =>
+    (image) => {
       updateStory({
         properties: {
           publisherLogo: image.id,
-          publisherLogoUrl: image.sizes?.thumb?.url || image.url,
+          publisherLogoUrl: image.sizes?.thumbnail?.url || image.url,
         },
-      }),
+      });
+    },
     [updateStory]
   );
 

@@ -56,9 +56,9 @@ function OutputStory({
         <amp-story
           standalone="standalone"
           publisher={publisher.name}
-          publisher-logo-src={publisher.logo}
+          publisher-logo-src={story.publisherLogoUrl}
           title={story.title}
-          poster-portrait-src={story.posterPortraitUrl || fallbackPoster}
+          poster-portrait-src={story.featuredMediaUrl || fallbackPoster}
         >
           {pages.map((page) => (
             <OutputPage key={page.id} page={page} />

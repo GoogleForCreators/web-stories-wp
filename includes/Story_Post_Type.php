@@ -684,66 +684,14 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get the publisher logo.
-	 *
-	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
-	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
-	 *
-	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
-	 */
-	private static function get_publisher_logo() {
-		$logo_image_url = null;
-
-		// This should be square, at least 96px in width/height. The 512 is used because the site icon would have this size generated.
-		$logo_width  = 512;
-		$logo_height = 512;
-
-		// Use the Custom Logo if set, but only if it is square.
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		// Since publisher logo is mandatory then doing the check here if theme support custom logo.
-		if ( $custom_logo_id ) {
-			$custom_logo_img = wp_get_attachment_image_src( $custom_logo_id, [ $logo_width, $logo_height ], false );
-			if ( $custom_logo_img && ( $custom_logo_img[2] === $custom_logo_img[1] ) ) {
-				$logo_image_url = $custom_logo_img[0];
-			}
-		}
-
-		// Try Site Icon, though it is not ideal for non-Story because it should be square.
-		$site_icon_id = get_option( 'site_icon' );
-		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$site_icon_src = wp_get_attachment_image_src( $site_icon_id, [ $logo_width, $logo_height ], false );
-			if ( ! empty( $site_icon_src ) ) {
-				$logo_image_url = $site_icon_src[0];
-			}
-		}
-
-		// Fallback to serving the WordPress logo.
-		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-		}
-
-		/**
-		 * Filters the publisher's logo.
-		 *
-		 * This should point to a square image.
-		 *
-		 * @param string $logo_image_url URL to the publisher's logo.
-		 */
-		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
-	}
-
-	/**
 	 * Returns the publisher data.
 	 *
 	 * @return array Publisher name and logo.
 	 */
 	private static function get_publisher_data() {
-		$publisher      = get_bloginfo( 'name' );
-		$publisher_logo = self::get_publisher_logo();
-
+		$publisher = get_bloginfo( 'name' );
 		return [
 			'name' => $publisher,
-			'logo' => $publisher_logo,
 		];
 	}
 
