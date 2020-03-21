@@ -40,7 +40,7 @@ DateTimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
-  forwardedRef: PropTypes.func,
+  forwardedRef: PropTypes.object,
 };
 
 export default DateTimePicker;

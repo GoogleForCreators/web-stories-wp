@@ -92,6 +92,7 @@ function StatusPanel() {
   // @todo Design details.
   const handleChangeVisibility = useCallback(
     (evt) => {
+      evt.preventDefault();
       const value = evt.target.value;
       // If password protected but no password, do nothing.
       if (value === passwordProtected && !isValidPassword(password)) {
