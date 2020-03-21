@@ -99,9 +99,9 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
-		if ( in_array( 'publisher_logo', $fields, true ) ) {
-			$publisher_logo_id      = get_theme_mod( 'custom_logo' );
-			$data['publisher_logo'] = $publisher_logo_id ? wp_get_attachment_url( $publisher_logo_id ) : '';
+		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
+			$publisher_logo_id          = get_theme_mod( 'custom_logo' );
+			$data['publisher_logo_url'] = $publisher_logo_id ? wp_get_attachment_url( $publisher_logo_id ) : '';
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -180,10 +180,12 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'default'     => '',
 		];
 
-		$schema['properties']['publisher_logo'] = [
-			'description' => __( 'Publisher logo ID.', 'web-stories' ),
-			'context'     => [ 'edit' ],
-			'default'     => [],
+		$schema['properties']['publisher_logo_url'] = [
+			'description' => __( 'Publisher logo URL.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'views', 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
 		];
 
 		$this->schema = $schema;

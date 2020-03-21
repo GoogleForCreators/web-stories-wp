@@ -700,7 +700,8 @@ class Story_Post_Type {
 
 		// Use the Custom Logo if set, but only if it is square.
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		if ( has_custom_logo() && $custom_logo_id ) {
+		// Since publisher logo is mandatory then doing the check here if theme support custom logo.
+		if ( $custom_logo_id ) {
 			$custom_logo_img = wp_get_attachment_image_src( $custom_logo_id, [ $logo_width, $logo_height ], false );
 			if ( $custom_logo_img && ( $custom_logo_img[2] === $custom_logo_img[1] ) ) {
 				$logo_image_url = $custom_logo_img[0];

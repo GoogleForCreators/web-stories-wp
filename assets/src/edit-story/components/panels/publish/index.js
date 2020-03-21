@@ -98,7 +98,7 @@ function PublishPanel() {
   const {
     state: {
       meta: { isSaving },
-      story: { author, date, featuredMediaUrl, publisherLogo },
+      story: { author, date, featuredMediaUrl, publisherLogoUrl },
       capabilities,
     },
     actions: { updateStory },
@@ -136,6 +136,7 @@ function PublishPanel() {
       updateStory({
         properties: {
           publisherLogo: image.id,
+          publisherLogoUrl: image.sizes?.thumb?.url || image.url,
         },
       }),
     [updateStory]
@@ -201,7 +202,7 @@ function PublishPanel() {
         </LabelWrapper>
         <MediaWrapper>
           <Media
-            value={publisherLogo}
+            value={publisherLogoUrl}
             onChange={handleChangePublisherLogo}
             title={__('Select as publisher logo', 'web-stories')}
             buttonInsertText={__('Select as publisher logo', 'web-stories')}
