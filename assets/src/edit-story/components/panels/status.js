@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput, HelperText, DropDown, Button } from '../form';
+import { Row, TextInput, HelperText, Button, RadioGroup } from '../form';
 import { useStory } from '../../app/story';
 import useInspector from '../inspector/useInspector';
 import { SimplePanel } from './panel';
@@ -91,9 +91,10 @@ function StatusPanel() {
 
   // @todo Design details.
   const handleChangeVisibility = useCallback(
-    (value) => {
+    (evt) => {
+      const value = evt.target.value;
       // If password protected but no password, do nothing.
-      if (value === passwordProtected && !isValidPassword(value)) {
+      if (value === passwordProtected && !isValidPassword(password)) {
         return;
       }
       // If password protected, keep the previous status.
@@ -134,13 +135,11 @@ function StatusPanel() {
       {capabilities && capabilities.hasPublishAction && statuses && (
         <>
           <Row>
-            <DropDown
-              ariaLabel={__('Visibility', 'web-stories')}
+            <RadioGroup
               options={visibilityOptions}
-              disabled={isSaving}
-              value={getStatusValue(status)}
               onChange={handleChangeVisibility}
-              isDocumentPanel={true}
+              value={getStatusValue(status)}
+              disabled={isSaving}
             />
           </Row>
           {passwordProtected === status && (
