@@ -721,7 +721,6 @@ class Story_Post_Type {
 			'publisher' => [
 				'@type' => 'Organization',
 				'name'  => $publisher['name'],
-				'logo'  => $publisher['logo'],
 			],
 		];
 
