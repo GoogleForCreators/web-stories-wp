@@ -135,11 +135,17 @@ function DropTargetsProvider({ children }) {
         // Reset styles on visisble elements
         (currentPage?.elements || [])
           .filter(
-            ({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId
+            ({ id }) =>
+              !(id in Object.keys(dropTargets)) &&
+              id !== selfId &&
+              id !== activeDropTargetId
           )
           .forEach((el) => {
             pushTransform(el.id, {
-              dropTargets: { active: false, replacement: null },
+              dropTargets: {
+                active: false,
+                replacement: null,
+              },
             });
           });
 
@@ -171,7 +177,7 @@ function DropTargetsProvider({ children }) {
 
   useEffect(() => {
     return () => clearTimeout(tempWorkaroundTimer.current);
-  });
+  }, []);
 
   const state = {
     state: {

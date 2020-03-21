@@ -28,8 +28,6 @@ import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
 import { getLinkFromElement, LinkType } from './index';
-import { useState, useEffect } from 'react';
-import { useTransformHandler } from '../transform';
 
 const Hint = styled.div`
   position: relative;
@@ -118,10 +116,6 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-const Wrapper = styled.div`
-  position: relative;
-`;
-
 const TooltipContainer = styled.div`
   position: absolute;
   width: 100%;
@@ -132,39 +126,33 @@ const TooltipContainer = styled.div`
   pointer-events: none;
 `;
 
-function WithLink({ element, active, dragging, children, ...rest }) {
+function WithLink({ element, active, dragging, children }) {
   const link = getLinkFromElement(element);
 
-  if (!link || dragging) {
-    return children;
-  }
-
-  if (!active && !dragging) {
-    return (
-      <Wrapper {...rest}>
-        <LinkIcon />
-        {children}
-      </Wrapper>
-    );
-  }
-
   return (
-    <Wrapper {...rest}>
-      <TooltipContainer>
-        {link.type === LinkType.ONE_TAP ? (
-          <Hint>{link.url}</Hint>
-        ) : (
-          <Tooltip>
-            <BrandIcon src={link.icon} />
-            <LinkDesc>{link.desc || link.url}</LinkDesc>
-            <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
-              <LinkOutIcon />
-            </LinkOut>
-          </Tooltip>
-        )}
-      </TooltipContainer>
+    <>
       {children}
-    </Wrapper>
+      {link && !active && !dragging && <LinkIcon />}
+      {link && active && !dragging && (
+        <TooltipContainer>
+          {link.type === LinkType.ONE_TAP ? (
+            <Hint>{link.url}</Hint>
+          ) : (
+            <Tooltip>
+              <BrandIcon src={link.icon} />
+              <LinkDesc>{link.desc || link.url}</LinkDesc>
+              <LinkOut
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkOutIcon />
+              </LinkOut>
+            </Tooltip>
+          )}
+        </TooltipContainer>
+      )}
+    </>
   );
 }
 

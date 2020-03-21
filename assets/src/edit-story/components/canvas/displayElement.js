@@ -53,6 +53,7 @@ const BackgroundOverlay = styled.div`
 `;
 const ReplacementContainer = styled.div`
   transition: opacity 0.25s;
+  pointer-events: none;
 `;
 
 function DisplayElement({ element }) {
