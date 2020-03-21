@@ -33,15 +33,20 @@ body.admin-color-ocean .CalendarDay__selected {
   background: #a3b9a2;
 }
 body.admin-color-midnight .CalendarDay__selected {
-  background: #e14d43; }
+  background: #e14d43;
+}
 body.admin-color-ectoplasm .CalendarDay__selected {
-  background: #a7b656; }
+  background: #a7b656;
+}
 body.admin-color-coffee .CalendarDay__selected {
-  background: #c2a68c; }
+  background: #c2a68c;
+}
 body.admin-color-blue .CalendarDay__selected {
-  background: #82b4cb; }
+  background: #82b4cb;
+}
 body.admin-color-light .CalendarDay__selected {
-  background: #0085ba; }
+  background: #0085ba;
+}
 body.admin-color-sunrise .CalendarDay__selected:hover {
   background: rgb(178, 114, 63);
 }
@@ -70,10 +75,12 @@ body.admin-color-light .CalendarDay__selected:hover {
   color: #191e23;
   border-color: #007cba;
   box-shadow: 0 0 0 1px #007cba;
-  outline: 2px solid transparent; }
+  outline: 2px solid transparent;
+}
 .DayPicker_weekHeader {
-  top: 50px; }
-.components-datetime__date.is-description-visible .DayPicker,
-.components-datetime__date.is-description-visible .components-datetime__date-help-button {
-  visibility: hidden; }
+  top: 50px;
+}
+.components-datetime__date.is-description-visible .DayPicker {
+  visibility: hidden;
+}
 `;
