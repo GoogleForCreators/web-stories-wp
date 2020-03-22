@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export default function() {
+export default function () {
   return {
     fill: 'forwards',
     duration: 1500,
