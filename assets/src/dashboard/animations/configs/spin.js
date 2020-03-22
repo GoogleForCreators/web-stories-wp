@@ -19,7 +19,7 @@
  */
 import { SPIN_TYPE } from '../constants';
 
-export default function(type) {
+export default function (type) {
   const frames = {
     [SPIN_TYPE.CLOCKWISE]: {
       transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
