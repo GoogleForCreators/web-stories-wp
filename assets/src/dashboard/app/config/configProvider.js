@@ -14,21 +14,26 @@
  * limitations under the License.
  */
 
-export const BUTTON_TYPES = {
-  CTA: 'cta',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function ConfigProvider({ config, children }) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
+}
+
+ConfigProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  config: PropTypes.object.isRequired,
 };
 
-export const KEYS = {
-  ENTER: 'Enter',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
-
-export const KEYBOARD_USER_CLASS = `useskeyboard`;
-export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
-
-export const Z_INDEX = {
-  POPOVER_MENU: 10,
-};
+export default ConfigProvider;

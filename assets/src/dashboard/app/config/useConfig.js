@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-export const BUTTON_TYPES = {
-  CTA: 'cta',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
 
-export const KEYS = {
-  ENTER: 'Enter',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
+/**
+ * Internal dependencies
+ */
+import Context from './context';
 
-export const KEYBOARD_USER_CLASS = `useskeyboard`;
-export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
+function useConfig() {
+  return useContext(Context);
+}
 
-export const Z_INDEX = {
-  POPOVER_MENU: 10,
-};
+export default useConfig;

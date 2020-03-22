@@ -36,12 +36,14 @@ const StyledButton = styled.button`
   min-width: 132px;
   opacity: 0.75;
   padding: 0;
+  text-decoration: none;
 
   &:focus,
   &:active,
   &:hover {
     opacity: 1;
     outline: none;
+    color: ${({ theme }) => theme.colors.white};
   }
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
