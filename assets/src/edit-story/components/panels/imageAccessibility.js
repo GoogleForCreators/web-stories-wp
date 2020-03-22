@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,58 +28,65 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media } from '../form';
+import { Row } from '../form';
+import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import getCommonObjectValue from './utils/getCommonObjectValue';
 import getCommonValue from './utils/getCommonValue';
 
-function VideoPosterPanel({ selectedElements, onSetProperties }) {
+function ImageAccessibilityPanel({ selectedElements, onSetProperties }) {
   const resource = getCommonValue(selectedElements, 'resource');
-  const { posterId, poster } = getCommonObjectValue(
+  const { alt } = getCommonObjectValue(
     selectedElements,
     'resource',
-    ['posterId', 'poster'],
+    ['alt'],
     false
   );
-  const [state, setState] = useState({ posterId, poster });
+  const [state, setState] = useState({ alt });
   useEffect(() => {
-    setState({ posterId, poster });
-  }, [posterId, poster]);
+    setState({ alt });
+  }, [alt]);
 
   const handleSubmit = (evt) => {
     onSetProperties(state);
     evt.preventDefault();
   };
 
-  const handleChangeImage = (image) => {
-    const newState = {
-      posterId: image.id,
-      poster: image.sizes?.medium?.url || image.url,
-    };
-    setState({ ...state, ...newState });
-    onSetProperties({ resource: { ...resource, ...newState } });
-  };
+  const handleChange = useCallback(
+    (property) => (value) => {
+      const newState = {
+        [property]: value,
+      };
+      setState({ ...state, ...newState });
+      onSetProperties({ resource: { ...resource, ...newState } });
+    },
+    [state, onSetProperties, resource]
+  );
 
   return (
     <SimplePanel
-      name="videoPoster"
-      title={__('Poster image', 'web-stories')}
+      name="imageAccessibility"
+      title={__('Accessibility', 'web-stories')}
       onSubmit={handleSubmit}
     >
-      <Media
-        value={state.poster}
-        onChange={handleChangeImage}
-        title={__('Select as video poster', 'web-stories')}
-        buttonInsertText={__('Set as video poster', 'web-stories')}
-        type={'image'}
-      />
+      <Row>
+        <ExpandedTextInput
+          placeholder={__('Assistive text', 'web-stories')}
+          value={state.alt || ''}
+          onChange={handleChange('alt')}
+          clear
+        />
+      </Row>
+      <Row>
+        <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
+      </Row>
     </SimplePanel>
   );
 }
 
-VideoPosterPanel.propTypes = {
+ImageAccessibilityPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   onSetProperties: PropTypes.func.isRequired,
 };
 
-export default VideoPosterPanel;
+export default ImageAccessibilityPanel;

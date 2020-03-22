@@ -13,3 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+function WithAnimation({ id, style, children }) {
+  return (
+    <div id={id} style={style}>
+      {children}
+    </div>
+  );
+}
+
+WithAnimation.propTypes = {
+  id: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
+
+export default WithAnimation;
