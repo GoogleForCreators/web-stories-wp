@@ -77,7 +77,7 @@ function FrameElement({ element }) {
   }, [id, setNodeForElement]);
   const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
-  const isBackground = currentPage.backgroundElementId === id;
+  const isBackground = currentPage?.backgroundElementId === id;
 
   return (
     <Wrapper

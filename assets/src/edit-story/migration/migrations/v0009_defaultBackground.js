@@ -17,44 +17,53 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
-/**
- * Internal dependencies
- */
-import { createNewElement } from '../../../elements';
-import theme from '../../../theme';
-import { PAGE_WIDTH } from '../../../constants';
-import { MaskTypes } from '../../../masks';
-import createSolidFromString from '../../../utils/createSolidFromString';
+import { v4 as uuidv4 } from 'uuid';
 
-// By default, the element should be 33% of the page.
+const PAGE_WIDTH = 1080;
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 
-// Make sure pages have background elements at all times
-function usePageBackgrounds({ currentPage, setBackgroundElement, addElement }) {
-  useEffect(() => {
-    if (!currentPage || currentPage?.backgroundElementId) {
-      return;
-    }
-    const element = createNewElement('shape', {
+function defaultBackground({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
+
+function reducePage({
+  elements,
+  backgroundElementId,
+  backgroundColor,
+  ...rest
+}) {
+  if (!backgroundElementId) {
+    const element = {
+      type: 'shape',
       x: (PAGE_WIDTH / 4) * Math.random(),
       y: (PAGE_WIDTH / 4) * Math.random(),
       width: DEFAULT_ELEMENT_WIDTH,
       height: DEFAULT_ELEMENT_WIDTH,
       rotationAngle: 0,
       mask: {
-        type: MaskTypes.RECTANGLE,
+        type: 'rectangle',
       },
       flip: {
         vertical: false,
         horizontal: false,
       },
       isBackground: true,
-      backgroundColor: createSolidFromString(theme.colors.fg.v1),
-    });
-    addElement({ element });
-    setBackgroundElement({ elementId: element.id });
-  }, [addElement, currentPage, setBackgroundElement]);
+      backgroundColor: backgroundColor || {
+        color: { r: 255, g: 255, b: 255, a: 1 },
+      },
+      id: uuidv4(),
+    };
+    elements.unshift(element);
+    backgroundElementId = element.id;
+  }
+  return {
+    backgroundElementId,
+    elements,
+    ...rest,
+  };
 }
 
-export default usePageBackgrounds;
+export default defaultBackground;

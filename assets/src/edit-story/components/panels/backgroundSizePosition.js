@@ -34,7 +34,7 @@ import FlipControls from './shared/flipControls';
 
 function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
   // Background can only have one selected element.
-  const flip = selectedElements[0].flip;
+  const flip = selectedElements[0]?.flip;
   const [state, setState] = useState({ flip });
 
   const {
