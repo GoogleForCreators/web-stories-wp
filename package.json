@@ -33,7 +33,7 @@
     "polished": "^3.5.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-color": "^2.18.0",
     "react-dom": "^16.13.0",
     "react-modal": "^3.11.2",
