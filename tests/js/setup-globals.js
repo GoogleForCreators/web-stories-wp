@@ -15,6 +15,7 @@
  */
 
 window.webStoriesEditorSettings = {};
+window.webStoriesDashboardSettings = {};
 
 global.wp = {
   media: {
