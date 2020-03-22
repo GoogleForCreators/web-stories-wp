@@ -74,7 +74,7 @@ export default function WithMask({
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}`;
+  const maskId = `mask-${mask.type}-${element.id}-output`;
 
   return (
     <div
