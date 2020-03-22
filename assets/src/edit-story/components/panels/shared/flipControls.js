@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
@@ -35,6 +40,7 @@ function FlipControls({ value, onChange }) {
         onChange={(horizontal) => {
           onChange({ ...value, horizontal });
         }}
+        aria-label={__('Flip horizontally', 'web-stories')}
       />
       <Toggle
         icon={<FlipVertical />}
@@ -42,6 +48,7 @@ function FlipControls({ value, onChange }) {
         onChange={(vertical) => {
           onChange({ ...value, vertical });
         }}
+        aria-label={__('Flip vertically', 'web-stories')}
       />
     </>
   );

@@ -137,6 +137,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, textAlign: value ? 'left' : '' })
           }
+          aria-label={__('Align Text Left', 'web-stories')}
         />
         <ToggleButton
           icon={<CenterAlign />}
@@ -145,6 +146,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, textAlign: value ? 'center' : '' })
           }
+          aria-label={__('Align Text Center', 'web-stories')}
         />
         <ToggleButton
           icon={<RightAlign />}
@@ -153,6 +155,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, textAlign: value ? 'right' : '' })
           }
+          aria-label={__('Align Text Right', 'web-stories')}
         />
         <ToggleButton
           icon={<MiddleAlign />}
@@ -161,6 +164,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, textAlign: value ? 'justify' : '' })
           }
+          aria-label={__('Align Text Justify', 'web-stories')}
         />
         <ToggleButton
           icon={<BoldIcon />}
@@ -169,6 +173,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           iconWidth={9}
           iconHeight={10}
           onChange={(value) => setState({ ...state, bold: value })}
+          aria-label={__('Bold', 'web-stories')}
         />
         <ToggleButton
           icon={<ItalicIcon />}
@@ -179,6 +184,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, fontStyle: value ? 'italic' : 'normal' })
           }
+          aria-label={__('Italic', 'web-stories')}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
@@ -189,6 +195,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
           onChange={(value) =>
             setState({ ...state, textDecoration: value ? 'underline' : 'none' })
           }
+          aria-label={__('Underline', 'web-stories')}
         />
       </Row>
     </>

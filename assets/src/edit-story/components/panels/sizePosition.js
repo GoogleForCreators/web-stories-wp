@@ -181,6 +181,11 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
             setLockRatio(value);
           }}
           disabled={isFill}
+          aria-label={
+            lockRatio
+              ? __('Unlock aspect ratio', 'web-stories')
+              : __('Lock aspect ratio', 'web-stories')
+          }
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
