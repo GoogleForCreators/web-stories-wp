@@ -99,7 +99,6 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundElementId: PropTypes.string,
-  backgroundColor: PatternPropType,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
@@ -144,7 +143,7 @@ const StoryElementPropTypes = {
   y: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  flip: StoryPropTypes.flip,
+  flip: StoryPropTypes.flip.isRequired,
   rotationAngle: PropTypes.number.isRequired,
   isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,

@@ -18,20 +18,13 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import { LinkType } from '../components/link';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
-  const {
-    id,
-    backgroundColor,
-    elements,
-    backgroundElementId,
-    backgroundOverlay,
-  } = page;
+  const { id, elements, backgroundElementId, backgroundOverlay } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
     width: `calc(100 * var(--story-page-vw))`, // 100vw
@@ -46,7 +39,15 @@ function OutputPage({ page }) {
     position: 'absolute',
     bottom: 0,
   };
-  const backgroundStyles = generatePatternStyles(backgroundColor);
+  const backgroundStyles = {
+    backgroundColor: 'white',
+    backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
+      linear-gradient(-45deg, #999999 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #999999 75%),
+      linear-gradient(-45deg, transparent 75%, #999999 75%)`,
+    backgroundSize: '20px 20px',
+    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+  };
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundNonFullbleedElements = elements.filter(
     (element) =>
