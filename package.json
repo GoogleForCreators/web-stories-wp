@@ -30,7 +30,7 @@
     "draftjs-filters": "^2.3.0",
     "history": "^4.10.1",
     "mousetrap": "^1.6.5",
-    "polished": "^3.4.4",
+    "polished": "^3.5.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
     "react": "^16.13.0",
