@@ -14,37 +14,5 @@
  * limitations under the License.
  */
 
-window.webStoriesEditorSettings = {};
-window.webStoriesDashboardSettings = {};
-
-global.wp = {
-  media: {
-    controller: {
-      Library: {
-        prototype: {
-          defaults: {
-            contentUserSetting: jest.fn(),
-          },
-        },
-      },
-      Cropper: {
-        extend: jest.fn(),
-      },
-    },
-    View: {
-      extend: jest.fn(),
-    },
-    view: {
-      Toolbar: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-      MediaFrame: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-    },
-  },
-};
+export { default as ConfigProvider } from './configProvider';
+export { default as useConfig } from './useConfig';

@@ -14,37 +14,18 @@
  * limitations under the License.
  */
 
-window.webStoriesEditorSettings = {};
-window.webStoriesDashboardSettings = {};
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
 
-global.wp = {
-  media: {
-    controller: {
-      Library: {
-        prototype: {
-          defaults: {
-            contentUserSetting: jest.fn(),
-          },
-        },
-      },
-      Cropper: {
-        extend: jest.fn(),
-      },
-    },
-    View: {
-      extend: jest.fn(),
-    },
-    view: {
-      Toolbar: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-      MediaFrame: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-    },
-  },
-};
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useConfig() {
+  return useContext(Context);
+}
+
+export default useConfig;

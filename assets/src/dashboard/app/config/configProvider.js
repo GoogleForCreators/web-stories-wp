@@ -14,37 +14,26 @@
  * limitations under the License.
  */
 
-window.webStoriesEditorSettings = {};
-window.webStoriesDashboardSettings = {};
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
-global.wp = {
-  media: {
-    controller: {
-      Library: {
-        prototype: {
-          defaults: {
-            contentUserSetting: jest.fn(),
-          },
-        },
-      },
-      Cropper: {
-        extend: jest.fn(),
-      },
-    },
-    View: {
-      extend: jest.fn(),
-    },
-    view: {
-      Toolbar: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-      MediaFrame: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-    },
-  },
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function ConfigProvider({ config, children }) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
+}
+
+ConfigProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  config: PropTypes.object.isRequired,
 };
+
+export default ConfigProvider;
