@@ -21,6 +21,7 @@ import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
+import { LinkType } from '../components/link';
 import OutputElement from './element';
 
 function OutputPage({ page }) {
@@ -41,6 +42,10 @@ function OutputPage({ page }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
       PAGE_WIDTH}))`,
   };
+  const ctaContainerStyles = {
+    position: 'absolute',
+    bottom: 0,
+  };
   const backgroundStyles = generatePatternStyles(backgroundColor);
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundNonFullbleedElements = elements.filter(
@@ -54,7 +59,14 @@ function OutputPage({ page }) {
       element.isFullbleedBackground !== false
   );
   const regularElements = elements.filter(
-    (element) => element.id !== backgroundElementId
+    (element) =>
+      element.id !== backgroundElementId &&
+      element.link?.type !== LinkType.ONE_TAP
+  );
+  const ctaElements = elements.filter(
+    (element) =>
+      element.id !== backgroundElementId &&
+      element.link?.type === LinkType.ONE_TAP
   );
   return (
     <amp-story-page id={id}>
@@ -81,6 +93,18 @@ function OutputPage({ page }) {
           ))}
         </div>
       </amp-story-grid-layer>
+      {ctaElements.length && (
+        <amp-story-cta-layer>
+          <div
+            className="page-cta-area"
+            style={{ ...aspectRatioStyles, ...ctaContainerStyles }}
+          >
+            {ctaElements.map((element) => (
+              <OutputElement key={'el-' + element.id} element={element} />
+            ))}
+          </div>
+        </amp-story-cta-layer>
+      )}
     </amp-story-page>
   );
 }

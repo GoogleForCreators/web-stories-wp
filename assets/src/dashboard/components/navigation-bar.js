@@ -29,8 +29,24 @@ import styled from 'styled-components';
  */
 import { useRouteHistory } from '../app/router';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES } from '../constants';
+import { BUTTON_TYPES, NEW_STORY_URL } from '../constants';
 import Button from './button';
+import Dropdown from './dropdown';
+
+const Link = styled.a`
+  font-family: ${({ theme }) => theme.fonts.tab.family};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
+  text-decoration: none;
+  margin-left: 40px;
+  color: ${({ theme, active }) =>
+    active ? theme.colors.gray900 : theme.colors.gray600};
+`;
+
+const DropdownContainer = styled.div`
+  display: none;
+`;
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -39,11 +55,21 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   padding: 20px;
+
+  @media (max-width: 800px) {
+    ${Link} {
+      display: none;
+    }
+    ${DropdownContainer} {
+      display: block;
+    }
+  }
 `;
 
 const WebStoriesLogo = styled(WebStoriesLogoSVG)`
   width: 37px;
   height: 28px;
+  margin-right: 95px;
 `;
 
 const LinksContainer = styled.div`
@@ -56,42 +82,43 @@ const LinksContainer = styled.div`
   }
 `;
 
-const Link = styled.a`
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
-  text-decoration: none;
-  margin-left: 40px;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.gray900 : theme.colors.gray500};
-`;
-
 const paths = [
-  { route: '/', label: __('My Stories', 'web-stories') },
+  { value: '/', label: __('My Stories', 'web-stories') },
   {
-    route: '/templates-gallery',
+    value: '/templates-gallery',
     label: __('Templates Gallery', 'web-stories'),
   },
-  { route: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
+  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
 function NavigationBar() {
-  const { state } = useRouteHistory();
+  const { state, actions } = useRouteHistory();
   return (
     <Nav>
       <WebStoriesLogo />
+      <DropdownContainer>
+        <Dropdown
+          transparent
+          ariaLabel="Dashboard Navigation"
+          items={paths}
+          value={state.currentPath}
+          onChange={(path) => actions.push(path.value)}
+        />
+      </DropdownContainer>
       <LinksContainer>
         {paths.map((path) => (
           <Link
-            active={path.route === state.currentPath}
-            key={path.route}
-            href={`#${path.route}`}
+            active={path.value === state.currentPath}
+            key={path.value}
+            href={`#${path.value}`}
           >
             {path.label}
           </Link>
         ))}
-        <Button type={BUTTON_TYPES.CTA} onClick={void 0}>
+        <Button
+          type={BUTTON_TYPES.CTA}
+          onClick={() => (window.location.href = NEW_STORY_URL)}
+        >
           {__('Create Story', 'web-stories')}
         </Button>
       </LinksContainer>
