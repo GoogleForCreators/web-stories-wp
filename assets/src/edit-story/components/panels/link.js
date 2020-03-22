@@ -18,6 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Dialog from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 /**
  * WordPress dependencies
@@ -38,8 +45,28 @@ import {
 } from '../link';
 import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
+import { ReactComponent as Info } from '../../icons/info.svg';
 import { SimplePanel } from './panel';
 import { Note, ExpandedTextInput } from './shared';
+
+const BrandIconText = styled.span`
+  margin-left: 12px;
+`;
+
+const ActionableNote = styled(Note)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+`;
+
+const InfoIcon = styled(Info)`
+  width: 13px;
+  height: 13px;
+  margin-top: -2px;
+  margin-left: 2px;
+  justify-self: flex-end;
+`;
 
 function LinkPanel({ selectedElements, onSetProperties }) {
   const selectedElement = selectedElements[0];
@@ -124,7 +151,13 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     } else if (state.url) {
       populateMetadata(state?.url);
     }
-  }, [onSetProperties, populateMetadata, inferredLinkType, state.url, state]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSetProperties, populateMetadata, inferredLinkType, state.url]);
+
+  // Instructional modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   return (
     <SimplePanel
@@ -133,9 +166,10 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       onSubmit={(evt) => handleSubmit(evt)}
     >
       <Row>
-        <Note>
+        <ActionableNote onClick={() => openModal()}>
           {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
-        </Note>
+          <InfoIcon />
+        </ActionableNote>
       </Row>
 
       <Row>
@@ -170,9 +204,31 @@ function LinkPanel({ selectedElements, onSetProperties }) {
             loading={fetchingMetadata}
             circle
           />
-          <span>{__('Optional brand icon', 'web-stories')}</span>
+          <BrandIconText>
+            {__('Optional brand icon', 'web-stories')}
+          </BrandIconText>
         </Row>
       )}
+      <Dialog
+        open={isModalOpen}
+        onClose={closeModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {__('How to apply a link', 'web-stories')}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {__('This is how you insert a link', 'web-stories')}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeModal} color="primary">
+            {__('Back', 'web-stories')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </SimplePanel>
   );
 }
