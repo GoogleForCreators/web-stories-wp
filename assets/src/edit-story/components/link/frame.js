@@ -28,8 +28,6 @@ import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
 import { getLinkFromElement, LinkType } from './index';
-import { useState, useEffect } from 'react';
-import { useTransformHandler } from '../transform';
 
 const Hint = styled.div`
   position: relative;
