@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -35,9 +35,34 @@ const Wrapper = styled.section`
 function Panel({ initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [height, setHeight] = useState(initialHeight);
+  const [manuallyChanged, setManuallyChanged] = useState(false);
 
   const collapse = useCallback(() => setIsCollapsed(true), []);
-  const expand = useCallback(() => setIsCollapsed(false), []);
+  const expand = useCallback(() => {
+    setIsCollapsed(false);
+    setHeight(initialHeight);
+  }, [initialHeight]);
+
+  useEffect(() => {
+    if (height === 0 && isCollapsed === false) {
+      collapse();
+    }
+  }, [collapse, height, isCollapsed]);
+
+  useEffect(() => {
+    if (manuallyChanged) {
+      return;
+    }
+    setHeight(initialHeight);
+  }, [manuallyChanged, initialHeight]);
+
+  const manuallySetHeight = useCallback(
+    (h) => {
+      setManuallyChanged(true);
+      setHeight(h);
+    },
+    [setManuallyChanged, setHeight]
+  );
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
 
@@ -48,7 +73,7 @@ function Panel({ initialHeight, name, children }) {
       panelContentId,
     },
     actions: {
-      setHeight,
+      setHeight: manuallySetHeight,
       collapse,
       expand,
     },

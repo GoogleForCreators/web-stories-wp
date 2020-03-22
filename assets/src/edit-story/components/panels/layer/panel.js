@@ -23,13 +23,19 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Panel, PanelTitle, PanelContent } from '../panel';
-import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
+import { LAYER_HEIGHT, DEFAULT_LAYERS_VISIBLE } from './constants';
 import LayerList from './layerList';
 import LayerProvider from './provider';
+import useLayers from './useLayers';
 
 function LayerPanel() {
+  const layers = useLayers();
+
   return (
-    <Panel name="layers" initialHeight={DEFAULT_LAYERS_VISIBLE * LAYER_HEIGHT}>
+    <Panel
+      name="layers"
+      initialHeight={(layers?.length || DEFAULT_LAYERS_VISIBLE) * LAYER_HEIGHT}
+    >
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
       </PanelTitle>
