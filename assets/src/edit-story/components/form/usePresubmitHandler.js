@@ -25,7 +25,8 @@ import { useEffect } from 'react';
 import useFormContext from './useFormContext';
 
 /**
- * @param {Function} handler The handler function.
+ * @param {Function} handler The handler function with three arguments: the new
+ * element state, the element's updated properties, and the old element state.
  * @param {Array|undefined} deps The handler dependencies. See `useCallback`.
  */
 function usePresubmitHandler(handler, deps = undefined) {

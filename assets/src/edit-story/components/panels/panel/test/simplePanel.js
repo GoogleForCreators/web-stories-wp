@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -43,25 +43,5 @@ describe('Panels/Panel/SimplePanel', () => {
 
     expect(titleElement).toBeDefined();
     expect(contentElement).toBeDefined();
-  });
-
-  it('should simulate submit on <SimplePanel />', () => {
-    const onSubmitMock = jest.fn();
-
-    const { getByText } = arrange(
-      <SimplePanel
-        name="simple-panel"
-        title="Simple Panel"
-        onSubmit={onSubmitMock}
-      >
-        <div>{'Simple Panel Content'}</div>
-      </SimplePanel>
-    );
-
-    const contentElement = getByText('Simple Panel Content');
-
-    fireEvent.submit(contentElement.parentElement);
-
-    expect(onSubmitMock).toHaveBeenCalledTimes(1);
   });
 });

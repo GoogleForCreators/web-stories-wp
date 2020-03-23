@@ -57,7 +57,12 @@ function arrange(children = null) {
 }
 
 describe('Panels/TextStyle', () => {
+  let pushUpdate;
+  let pushUpdateForObject;
+
   beforeEach(() => {
+    pushUpdate = jest.fn();
+    pushUpdateForObject = jest.fn();
     global.fetch.resetMocks();
   });
 
@@ -84,7 +89,8 @@ describe('Panels/TextStyle', () => {
               fontFamily: 'ABeeZee',
             },
           ]}
-          onSetProperties={() => null}
+          pushUpdate={pushUpdate}
+          pushUpdateForObject={pushUpdateForObject}
         />
       );
     });
@@ -95,4 +101,6 @@ describe('Panels/TextStyle', () => {
 
     expect(element).toBeDefined();
   });
+
+  // QQQQ: lots of tests
 });

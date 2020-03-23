@@ -52,15 +52,9 @@ describe('updateProperties', () => {
     expect(updateProperties(element, () => undefined)).toStrictEqual({});
   });
 
-  it('should use "multi" values in non-commit mode', () => {
-    expect(updateProperties(element, { x: MULTIPLE_VALUE })).toStrictEqual({
-      x: MULTIPLE_VALUE,
-    });
-  });
-
-  it('should remove "multi" values in commit mode', () => {
+  it('should remove "multi" values', () => {
     expect(
-      updateProperties(element, { x: MULTIPLE_VALUE }, true)
-    ).toStrictEqual({});
+      updateProperties(element, { x: MULTIPLE_VALUE, y: 1 }, true)
+    ).toStrictEqual({ y: 1 });
   });
 });

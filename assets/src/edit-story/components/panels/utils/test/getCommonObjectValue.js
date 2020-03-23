@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import getCommonObjectValue from '../getCommonObjectValue';
+import { MULTIPLE_VALUE } from '../../../form';
 
 describe('getCommonObjectValue', () => {
   it('should return matching values for the defined properties', () => {
@@ -36,7 +37,8 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const obj = getCommonObjectValue(elements, 'foo', { a: false, b: false });
+    const defaultShape = { a: 0, b: 0 };
+    const obj = getCommonObjectValue(elements, 'foo', defaultShape);
     expect(obj.a).toStrictEqual(matchingValue);
   });
 
@@ -56,8 +58,9 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const obj = getCommonObjectValue(elements, 'foo', { a: false, b: false });
-    expect(obj.b).toStrictEqual(false);
+    const defaultShape = { a: 0, b: 0 };
+    const obj = getCommonObjectValue(elements, 'foo', defaultShape);
+    expect(obj.b).toStrictEqual(MULTIPLE_VALUE);
   });
 
   it('should only return defined properties', () => {
@@ -78,7 +81,8 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const obj = getCommonObjectValue(elements, 'foo', { b: false, c: false });
+    const defaultShape = { b: 0, c: 0 };
+    const obj = getCommonObjectValue(elements, 'foo', defaultShape);
     expect(obj.a).toBeUndefined();
     expect(obj.b).toBeDefined();
     expect(obj.c).toBeDefined();

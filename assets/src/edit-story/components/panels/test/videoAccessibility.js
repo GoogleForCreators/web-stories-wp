@@ -17,51 +17,43 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import VideoAccessibility from '../videoAccessibility';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
-  useMediaPicker: () => {},
+  useMediaPicker: ({ onSelect }) => {
+    const image = { url: 'media1' };
+    onSelect(image);
+  },
 }));
 
 describe('Panels/VideoAccessibility', () => {
+  function renderVideoAccessibility(...args) {
+    return renderPanel(VideoAccessibility, ...args);
+  }
+
   it('should render <VideoAccessibility /> panel', () => {
-    const { getByLabelText } = arrange(
-      <VideoAccessibility
-        selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
-        onSetProperties={() => null}
-      />
-    );
+    const { getByLabelText } = renderVideoAccessibility([
+      { resource: { posterId: 0, poster: '' } },
+    ]);
 
     const element = getByLabelText('Select as video poster');
-
     expect(element).toBeDefined();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
-    const onClickOnSetPropertiesMock = jest.fn();
-
-    const { getByLabelText } = arrange(
-      <VideoAccessibility
-        selectedElements={[{ resource: { posterId: 0, poster: '' } }]}
-        onSetProperties={onClickOnSetPropertiesMock}
-      />
-    );
+    const { getByLabelText, pushUpdate } = renderVideoAccessibility([
+      { resource: { posterId: 0, poster: '' } },
+    ]);
 
     const element = getByLabelText('Select as video poster');
-
     fireEvent.click(element);
-
-    expect(onClickOnSetPropertiesMock).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 });

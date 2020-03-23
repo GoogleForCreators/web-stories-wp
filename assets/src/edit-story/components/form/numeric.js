@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
+// QQQQ: int-only?
 const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`

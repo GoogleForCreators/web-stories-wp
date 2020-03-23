@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, act } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -74,10 +74,11 @@ describe('DesignPanel', () => {
 
   describe('single element', () => {
     let selectedElements;
+    let form;
 
     beforeEach(() => {
       selectedElements = [element1];
-      render(
+      const { container } = render(
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={selectedElements}
@@ -85,6 +86,7 @@ describe('DesignPanel', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
+      form = container.firstElementChild;
     });
 
     it('should configure form context', () => {
@@ -105,7 +107,6 @@ describe('DesignPanel', () => {
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
 
       // Second update.
@@ -119,9 +120,10 @@ describe('DesignPanel', () => {
         y: 14,
       });
 
-      expect(presubmitHandler1).not.toHaveBeenCalledWith(expect.anything());
-      expect(presubmitHandler2).not.toHaveBeenCalledWith(expect.anything());
-      expect(onSetProperties).not.toHaveBeenCalledWith(expect.anything());
+      const any = expect.anything();
+      expect(presubmitHandler1).not.toHaveBeenCalledWith(any, any, any);
+      expect(presubmitHandler2).not.toHaveBeenCalledWith(any, any, any);
+      expect(onSetProperties).not.toHaveBeenCalledWith(any);
     });
 
     it('should submit updates and run presubmits', () => {
@@ -135,15 +137,27 @@ describe('DesignPanel', () => {
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
 
       // Submit.
-      const { submit } = lastProps;
-      act(() => submit());
-      expect(presubmitHandler1).toHaveBeenCalledWith(expect.anything());
-      expect(presubmitHandler2).toHaveBeenCalledWith(expect.anything());
-      expect(onSetProperties).toHaveBeenCalledWith(expect.anything());
+      fireEvent.submit(form);
+
+      const any = expect.anything();
+      expect(presubmitHandler1).toHaveBeenCalledWith(any, any, any);
+      expect(presubmitHandler2).toHaveBeenCalledWith(any, any, any);
+
+      const presubmitArgs = presubmitHandler1.mock.calls[0];
+      // Based on: presubmit(newElement, update, oldElement).
+      expect(presubmitArgs[0]).toStrictEqual({
+        ...element1,
+        x: 12,
+      });
+      expect(presubmitArgs[1]).toStrictEqual({
+        x: 12,
+      });
+      expect(presubmitArgs[2]).toStrictEqual(element1);
+
+      expect(onSetProperties).toHaveBeenCalledWith(any);
       const func = onSetProperties.mock.calls[0][0];
       expect(func(element1)).toStrictEqual({
         x: 12 + 1,
@@ -162,14 +176,14 @@ describe('DesignPanel', () => {
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
 
       // Submit on exit.
       act(() => submitHandler());
-      expect(presubmitHandler1).toHaveBeenCalledWith(expect.anything());
-      expect(presubmitHandler2).toHaveBeenCalledWith(expect.anything());
-      expect(onSetProperties).toHaveBeenCalledWith(expect.anything());
+      const any = expect.anything();
+      expect(presubmitHandler1).toHaveBeenCalledWith(any, any, any);
+      expect(presubmitHandler2).toHaveBeenCalledWith(any, any, any);
+      expect(onSetProperties).toHaveBeenCalledWith(any);
       const func = onSetProperties.mock.calls[0][0];
       expect(func(element1)).toStrictEqual({
         x: 12 + 1,
@@ -180,10 +194,11 @@ describe('DesignPanel', () => {
 
   describe('multiple elements', () => {
     let selectedElements;
+    let form;
 
     beforeEach(() => {
       selectedElements = [element1, element2];
-      render(
+      const { container } = render(
         <DesignPanel
           panelType={CustomPanel}
           selectedElements={selectedElements}
@@ -191,6 +206,7 @@ describe('DesignPanel', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
+      form = container.firstElementChild;
     });
 
     it('should configure form context', () => {
@@ -207,12 +223,10 @@ describe('DesignPanel', () => {
       expect(updatedElement1).toStrictEqual({
         ...element1,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
       expect(updatedElement2).toStrictEqual({
         ...element2,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
     });
 
@@ -227,12 +241,10 @@ describe('DesignPanel', () => {
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
-        y: MULTIPLE_VALUE,
       });
 
       // Submit.
-      const { submit } = lastProps;
-      act(() => submit());
+      fireEvent.submit(form);
       expect(presubmitHandler1).toHaveBeenCalledTimes(2);
       expect(presubmitHandler2).toHaveBeenCalledTimes(2);
       expect(onSetProperties).toHaveBeenCalledTimes(1);

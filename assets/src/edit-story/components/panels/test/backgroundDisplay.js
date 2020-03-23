@@ -28,11 +28,11 @@ import BackgroundDisplayPanel from '../backgroundDisplay.js';
 
 function setupPanel(isFullbleedBackground = undefined) {
   const selectedElements = [{ isFullbleedBackground }];
-  const onSetProperties = jest.fn();
+  const pushUpdate = jest.fn();
   const { getByText } = render(
     <ThemeProvider theme={theme}>
       <BackgroundDisplayPanel
-        onSetProperties={onSetProperties}
+        pushUpdate={pushUpdate}
         selectedElements={selectedElements}
       />
     </ThemeProvider>
@@ -44,28 +44,34 @@ function setupPanel(isFullbleedBackground = undefined) {
   return {
     enable: () => fireEvent.click(onLabelEl),
     disable: () => fireEvent.click(offLabelEl),
-    onSetProperties,
+    pushUpdate,
   };
 }
 
 describe('BackgroundDisplayPanel', () => {
   it('should disable fullbleed', () => {
-    const { disable, onSetProperties } = setupPanel(true);
+    const { disable, pushUpdate } = setupPanel(true);
 
     disable();
 
-    expect(onSetProperties).toHaveBeenCalledWith({
-      isFullbleedBackground: false,
-    });
+    expect(pushUpdate).toHaveBeenCalledWith(
+      {
+        isFullbleedBackground: false,
+      },
+      true
+    );
   });
 
   it('should enable fullbleed', () => {
-    const { enable, onSetProperties } = setupPanel(false);
+    const { enable, pushUpdate } = setupPanel(false);
 
     enable();
 
-    expect(onSetProperties).toHaveBeenCalledWith({
-      isFullbleedBackground: true,
-    });
+    expect(pushUpdate).toHaveBeenCalledWith(
+      {
+        isFullbleedBackground: true,
+      },
+      true
+    );
   });
 });

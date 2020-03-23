@@ -34,11 +34,19 @@ function arrange(children = null) {
 }
 
 describe('Panels/SizePosition', () => {
-  getDefinitionForType.mockImplementation((type) => {
-    return {
-      isMedia: 'image' === type,
-    };
+  let pushUpdate;
+  let pushUpdateForObject;
+
+  beforeEach(() => {
+    pushUpdate = jest.fn();
+    pushUpdateForObject = jest.fn();
+    getDefinitionForType.mockImplementation((type) => {
+      return {
+        isMedia: 'image' === type,
+      };
+    });
   });
+
   it('should render <SizePosition /> panel', () => {
     const { getByText } = arrange(
       <SizePosition
@@ -55,7 +63,8 @@ describe('Panels/SizePosition', () => {
             rotationAngle: 0,
           },
         ]}
-        onSetProperties={() => null}
+        pushUpdate={pushUpdate}
+        pushUpdateForObject={pushUpdateForObject}
       />,
       {
         actions: { setBackgroundElement: () => null },
@@ -84,7 +93,8 @@ describe('Panels/SizePosition', () => {
             type: 'image',
           },
         ]}
-        onSetProperties={() => null}
+        pushUpdate={pushUpdate}
+        pushUpdateForObject={pushUpdateForObject}
       />,
       {
         actions: { setBackgroundElement: () => null },
@@ -95,4 +105,6 @@ describe('Panels/SizePosition', () => {
 
     expect(element).toBeDefined();
   });
+
+  // QQQQ: lots of tests
 });
