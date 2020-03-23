@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { MASKS } from '../../../../masks';
 import useLibrary from '../../useLibrary';
 import createSolid from '../../../../utils/createSolid';
-import { Section, Title, SearchInput, Header } from '../../common';
+import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import { PAGE_WIDTH } from '../../../../constants';
 import paneId from './paneId';
@@ -42,12 +42,16 @@ const PREVIEW_SIZE = 36;
 const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin: -0.2em -1em 0.5em -1em;
 `;
 
 const ShapePreview = styled.div`
   position: relative;
-  margin-left: 24px;
-  margin-right: 24px;
+  padding: 0.8em 0.5em;
+  flex: 0 0 25%;
+  display: flex;
+  justify-content: center;
 `;
 
 const Path = styled.path`
@@ -60,40 +64,40 @@ function ShapesPane(props) {
   } = useLibrary();
   return (
     <Pane id={paneId} {...props}>
-      <Header>
-        <Title>{__('Shapes', 'web-stories')}</Title>
-      </Header>
       <SearchInput
         value={''}
-        placeholder={__('Search shapes...', 'web-stories')}
+        placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
       />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
           {/** Basic masks */}
-          {MASKS.map((mask) => (
-            <ShapePreview
-              key={mask.type}
-              onClick={() => {
-                insertElement('shape', {
-                  backgroundColor: createSolid(51, 51, 51),
-                  width: DEFAULT_ELEMENT_WIDTH,
-                  mask: {
-                    type: mask.type,
-                  },
-                });
-              }}
-              alt={mask.name}
-            >
-              <svg
-                viewBox={'0 0 1 1'}
-                width={PREVIEW_SIZE}
-                height={PREVIEW_SIZE}
+          {MASKS.map((mask) => {
+            return (
+              <ShapePreview
+                key={mask.type}
+                onClick={() => {
+                  insertElement('shape', {
+                    backgroundColor: createSolid(51, 51, 51),
+                    width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
+                    height: DEFAULT_ELEMENT_WIDTH,
+                    mask: {
+                      type: mask.type,
+                    },
+                  });
+                }}
+                alt={mask.name}
               >
-                <Path d={mask.path} />
-              </svg>
-            </ShapePreview>
-          ))}
+                <svg
+                  viewBox={`0 0 1 ${1 / mask.ratio}`}
+                  width={PREVIEW_SIZE * mask.ratio}
+                  height={PREVIEW_SIZE}
+                >
+                  <Path d={mask.path} />
+                </svg>
+              </ShapePreview>
+            );
+          })}
         </SectionContent>
       </Section>
     </Pane>

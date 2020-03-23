@@ -53,11 +53,7 @@ export default function useMediaPicker({
 
     // When an image is selected, run a callback.
     fileFrame.on('select', () => {
-      attachment = fileFrame
-        .state()
-        .get('selection')
-        .first()
-        .toJSON();
+      attachment = fileFrame.state().get('selection').first().toJSON();
       onSelect(attachment);
     });
 

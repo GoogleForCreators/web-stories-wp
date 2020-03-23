@@ -24,7 +24,7 @@ import { number } from '@storybook/addon-knobs';
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
 import { ANIMATION_TYPE } from '../constants';
-import AnimationConfigs from '../configs';
+import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
 export default {
@@ -32,12 +32,12 @@ export default {
 };
 
 export const _default = () => {
-  const { keyframes, ...config } = AnimationConfigs[ANIMATION_TYPE.Bounce];
-  const name = ANIMATION_TYPE.Bounce;
+  const name = ANIMATION_TYPE.BOUNCE;
+  const { keyframes, ...config } = getAnimationConfigs[name]();
   const label = 'Animate';
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <AnimationOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-solo`}
@@ -63,12 +63,13 @@ export const _default = () => {
           style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
         />
       </WithAnimation>
-    </>
+    </div>
   );
 };
 
 export const Cascading = () => {
-  const { keyframes, ...config } = AnimationConfigs[ANIMATION_TYPE.Bounce];
+  const name = ANIMATION_TYPE.BOUNCE;
+  const { keyframes, ...config } = getAnimationConfigs[name]();
   const elementConfigs = [
     { id: 'e1', color: 'red', width: '50px' },
     { id: 'e2', color: 'orange', width: '100px' },
@@ -76,13 +77,12 @@ export const Cascading = () => {
     { id: 'e4', color: 'green', width: '150px' },
   ];
 
-  const name = ANIMATION_TYPE.Bounce;
   const increment = number('Delay (ms)', 200);
   const delay = 100;
   const label = 'Animate';
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <AnimationOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-group`}
@@ -120,6 +120,6 @@ export const Cascading = () => {
           </WithAnimation>
         ))}
       </div>
-    </>
+    </div>
   );
 };

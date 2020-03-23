@@ -70,6 +70,7 @@ const InnerDropdownText = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: ${({ theme }) => theme.colors.gray800};
 `;
 
 const DropdownIcon = styled.span`

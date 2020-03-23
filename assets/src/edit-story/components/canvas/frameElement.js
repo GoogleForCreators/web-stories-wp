@@ -101,7 +101,7 @@ function FrameElement({ element }) {
       <WithLink
         element={element}
         active={selectedElementIds.length === 1 && isSelected}
-        dragging={!!activeDropTargetId}
+        dragging={Boolean(activeDropTargetId)}
       >
         <WithMask element={element} fill={true}>
           {Frame ? (

@@ -17,69 +17,75 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
+import useHandlers from '../../../utils/useHandlers';
+import updateProperties from './updateProperties';
 
 function useDesignPanels() {
   const {
-    state: { selectedElements },
-    actions: { deleteSelectedElements, updateSelectedElements },
+    state: { selectedElementIds, selectedElements },
+    actions: { deleteSelectedElements, updateElementsById },
   } = useStory();
 
   const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
+  const [submitHandlers, registerSubmitHandler] = useHandlers();
 
   const onSetProperties = useCallback(
     (newPropertiesOrUpdater) => {
-      updateSelectedElements({
-        properties: (currentProperties) =>
-          calcProperties(currentProperties, newPropertiesOrUpdater),
+      updateElementsById({
+        elementIds: selectedElementIds,
+        properties: (currentProperties) => {
+          const update = updateProperties(
+            currentProperties,
+            newPropertiesOrUpdater,
+            /* commitValues */ true
+          );
+          return update;
+        },
       });
     },
-    [updateSelectedElements]
+    [selectedElementIds, updateElementsById]
   );
+
+  const createSubmitHandlerForPanel = useCallback(
+    (panelId) => (submit) => {
+      submitHandlers.forEach((handler) =>
+        handler(onSetProperties, panelId, submit)
+      );
+      return submit;
+    },
+    [onSetProperties, submitHandlers]
+  );
+
+  useEffect(() => {
+    const submits = {};
+    const handler = (onSetPropertiesArg, panelId, submit) => {
+      if (onSetProperties === onSetPropertiesArg) {
+        submits[panelId] = submit;
+      }
+    };
+    const unregister = registerSubmitHandler(handler);
+    return () => {
+      unregister();
+      Object.values(submits).forEach((submit) => submit());
+    };
+  }, [onSetProperties, registerSubmitHandler]);
 
   return {
     panels,
+    createSubmitHandlerForPanel,
     panelProperties: {
       onSetProperties,
       deleteSelectedElements,
       selectedElements,
     },
   };
-}
-
-/**
- * @param {Object} currentProperties The existing element properties.
- * @param {Object|function(Object):Object} newPropertiesOrUpdater Either a map
- * of the updated properties or a function that will return a map of the updated
- * properties.
- * @return {Object} The updated properties.
- */
-function calcProperties(currentProperties, newPropertiesOrUpdater) {
-  const newProperties =
-    typeof newPropertiesOrUpdater === 'function'
-      ? newPropertiesOrUpdater(currentProperties)
-      : newPropertiesOrUpdater;
-
-  // Filter out empty properties (empty strings specifically)
-  const updatedKeys = Object.keys(newProperties).filter(
-    (key) => newProperties[key] !== ''
-  );
-
-  if (updatedKeys.length === 0) {
-    // Of course abort if no keys have a value
-    return {};
-  }
-
-  const properties = Object.fromEntries(
-    updatedKeys.map((key) => [key, newProperties[key]])
-  );
-  return properties;
 }
 
 export default useDesignPanels;

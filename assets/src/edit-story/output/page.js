@@ -39,8 +39,9 @@ function OutputPage({ page }) {
     maxHeight: `calc(100 * var(--story-page-vh))`, // 100vh
     maxWidth: `calc(100 * ${PAGE_WIDTH / PAGE_HEIGHT} * var(--story-page-vh))`, // 9/16 * 100vh
     // todo@: this expression uses CSS `min()`, which is still very sparsely supported.
-    fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${PAGE_HEIGHT /
-      PAGE_WIDTH}))`,
+    fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${
+      PAGE_HEIGHT / PAGE_WIDTH
+    }))`,
   };
   const ctaContainerStyles = {
     position: 'absolute',
@@ -93,7 +94,7 @@ function OutputPage({ page }) {
           ))}
         </div>
       </amp-story-grid-layer>
-      {ctaElements.length && (
+      {ctaElements.length ? (
         <amp-story-cta-layer>
           <div
             className="page-cta-area"
@@ -104,7 +105,7 @@ function OutputPage({ page }) {
             ))}
           </div>
         </amp-story-cta-layer>
-      )}
+      ) : null}
     </amp-story-page>
   );
 }

@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import { ThemeProvider } from 'styled-components';
+import { StyleSheetManager, ThemeProvider } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -25,22 +27,37 @@ import { ThemeProvider } from 'styled-components';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { NavigationBar } from '../components';
-import { Route, RouterProvider } from './router';
+import { useRouteHistory, Route, RouterProvider } from './router';
+import { useConfig, ConfigProvider } from './config';
 import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
 
-function App() {
+function App({ config }) {
+  const { isRTL } = config;
   return (
-    <ThemeProvider theme={theme}>
-      <RouterProvider>
-        <GlobalStyle />
-        <KeyboardOnlyOutline />
-        <NavigationBar />
-        <Route exact path="/" component={<MyStoriesView />} />
-        <Route path="/templates-gallery" component={<TemplatesGalleryView />} />
-        <Route path="/my-bookmarks" component={<MyBookmarksView />} />
-      </RouterProvider>
-    </ThemeProvider>
+    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider config={config}>
+          <RouterProvider>
+            <GlobalStyle />
+            <KeyboardOnlyOutline />
+            <NavigationBar />
+            <Route exact path="/" component={<MyStoriesView />} />
+            <Route
+              path="/templates-gallery"
+              component={<TemplatesGalleryView />}
+            />
+            <Route path="/my-bookmarks" component={<MyBookmarksView />} />
+          </RouterProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </StyleSheetManager>
   );
 }
 
+App.propTypes = {
+  config: PropTypes.object.isRequired,
+};
+
 export default App;
+
+export { useConfig, useRouteHistory };
