@@ -55,6 +55,9 @@ export const MEDIA_DEFAULT_ATTRIBUTES = {
   focalX: 50,
   focalY: 50,
   isFill: false,
+  resource: {
+    alt: '',
+  },
 };
 
 export const hasEditMode = true;

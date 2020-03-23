@@ -42,7 +42,7 @@ const initialize = (id, config) => {
 };
 
 const initializeWithConfig = () => {
-  const { id, config } = window.ampStoriesEditSettings;
+  const { id, config } = window.webStoriesEditorSettings;
   initialize(id, config);
 };
 

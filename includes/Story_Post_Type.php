@@ -35,21 +35,21 @@ use WP_Screen;
  */
 class Story_Post_Type {
 	/**
-	 * The slug of the post type to store URLs that have AMP errors.
+	 * The slug of the stories post type.
 	 *
 	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
 
 	/**
-	 * AMP Stories script handle.
+	 * Web Stories editor script handle.
 	 *
 	 * @var string
 	 */
 	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
 
 	/**
-	 * AMP Stories style handle.
+	 * Web Stories editor style handle.
 	 *
 	 * @var string
 	 */
@@ -304,7 +304,7 @@ class Story_Post_Type {
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
-			'ampStoriesEditSettings',
+			'webStoriesEditorSettings',
 			[
 				'id'     => 'edit-story',
 				'config' => [
@@ -339,7 +339,7 @@ class Story_Post_Type {
 			$version
 		);
 
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349
+		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
 		wp_styles()->registered['wp-admin']->deps = array_diff(
 			wp_styles()->registered['wp-admin']->deps,
 			[ 'forms' ]

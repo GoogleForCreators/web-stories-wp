@@ -87,7 +87,7 @@ function WithDropTarget({ element, children, hover }) {
     <>
       {children}
       <DropTargetSVG
-        viewBox="0 0 1 1"
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
@@ -169,7 +169,11 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>

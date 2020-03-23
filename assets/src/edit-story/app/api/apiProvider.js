@@ -108,7 +108,11 @@ function APIProvider({ children }) {
     ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, { per_page: perPage, page: pagingNum });
+      apiPath = addQueryArgs(apiPath, {
+        context: 'edit',
+        per_page: perPage,
+        page: pagingNum,
+      });
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -130,9 +134,12 @@ function APIProvider({ children }) {
                 height: oHeight,
                 length_formatted: lengthFormatted,
               },
+              title: { raw: title },
+              description: { raw: description },
               mime_type: mimeType,
               featured_media: posterId,
               featured_media_src: poster,
+              alt_text: alt,
             }) => ({
               id,
               posterId,
@@ -142,6 +149,8 @@ function APIProvider({ children }) {
               oHeight,
               mimeType,
               lengthFormatted,
+              alt: alt ? alt : description,
+              title,
             })
           );
 

@@ -121,7 +121,9 @@ const List = styled(Area).attrs({
   }
 `;
 
-const Li = styled.li`
+const Li = styled.li.attrs({
+  role: 'option',
+})`
   margin: 0 10px 0 0;
   &:last-of-type {
     margin: 0;

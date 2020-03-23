@@ -41,6 +41,8 @@ export const getResourceFromAttachment = (attachment) => {
     posterId,
     poster,
     lengthFormatted,
+    title,
+    alt,
   } = attachment;
 
   return {
@@ -53,6 +55,8 @@ export const getResourceFromAttachment = (attachment) => {
     poster,
     videoId,
     lengthFormatted,
+    title,
+    alt,
   };
 };
 
@@ -72,6 +76,8 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
+    title,
+    alt,
   } = mediaPickerEl;
   return {
     type: getTypeFromMime(mimeType),
@@ -82,6 +88,8 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     posterId,
     poster,
     videoId,
+    title,
+    alt,
   };
 };
 
