@@ -25,12 +25,11 @@ import { useEffect, useCallback } from 'react';
  */
 import { useAPI, useConfig } from '../';
 import { useUploader } from '../uploader';
-import { useStory } from '../story';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
+  getResourceFromAttachment,
 } from '../../app/media/utils';
-import useInsertElement from '../../components/canvas/useInsertElement';
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
 import Context from './context';
@@ -38,10 +37,6 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
   const { uploadFile } = useUploader();
-  const {
-    actions: { updateElementById },
-  } = useStory();
-  const insertElement = useInsertElement();
   const {
     processing,
     processed,
@@ -147,15 +142,18 @@ function MediaProvider({ children }) {
   );
 
   const uploadMediaFromWorkspace = useCallback(
-    async (files) => {
+    async (files, { insertElement, updateElementById }) => {
       try {
         const filesOnCanvas = await Promise.all(
           files
             .map(async (file) => {
               const resource = await getResourceFromLocalFile(file);
-              const element = insertElement(resource.type, { resource });
+              const element = insertElement(resource.type, {
+                resource: getResourceFromAttachment(resource),
+              });
 
               return {
+                resource,
                 element,
                 file,
               };
@@ -164,10 +162,7 @@ function MediaProvider({ children }) {
         );
 
         setMedia({
-          media: [
-            ...filesOnCanvas.map(({ element: { resource } }) => resource),
-            ...media,
-          ],
+          media: [...filesOnCanvas.map(({ resource }) => resource), ...media],
         });
 
         await Promise.all(
@@ -196,16 +191,7 @@ function MediaProvider({ children }) {
         fetchMediaError(e);
       }
     },
-    [
-      resetMedia,
-      setMedia,
-      fetchMediaError,
-      uploadFile,
-      insertElement,
-      updateElementById,
-      media,
-      pagingNum,
-    ]
+    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
   );
 
   const resetWithFetch = useCallback(() => {

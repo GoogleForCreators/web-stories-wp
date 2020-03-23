@@ -36,6 +36,7 @@ export const getResourceFromAttachment = (attachment) => {
     posterId,
     poster,
     lengthFormatted,
+    local,
   } = attachment;
 
   return {
@@ -48,6 +49,7 @@ export const getResourceFromAttachment = (attachment) => {
     poster,
     videoId,
     lengthFormatted,
+    local,
   };
 };
 

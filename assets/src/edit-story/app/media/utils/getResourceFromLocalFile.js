@@ -36,20 +36,17 @@ const getImageResource = (image) => {
       const img = new window.Image();
 
       img.onload = function() {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
+        const oWidth = img.naturalWidth;
+        const oHeight = img.naturalHeight;
 
         resolve({
           type: 'image',
           src,
-          width,
-          height,
+          oWidth,
+          oHeight,
           mimeType: image.type,
-          posterId: undefined,
           poster: '',
-          videoId: undefined,
           local: true,
-          lengthFormatted: undefined,
         });
       };
 
@@ -83,20 +80,17 @@ const getVideoResource = (video) => {
       const img = new window.Image();
 
       img.onload = function() {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
+        const oWidth = img.naturalWidth;
+        const oHeight = img.naturalHeight;
 
         resolve({
           type: 'video',
           src,
-          width,
-          height,
+          oWidth,
+          oHeight,
           mimeType: video.type,
-          posterId: undefined,
           poster,
-          videoId: undefined,
           local: true,
-          lengthFormatted: undefined,
         });
       };
 

@@ -36,6 +36,8 @@ import {
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
 import { useMedia } from '../../app/media';
+import { useStory } from '../../app/story';
+import useInsertElement from '../canvas/useInsertElement';
 
 import { Layer as CanvasLayer, PageArea } from './layout';
 
@@ -50,11 +52,15 @@ function CanvasUploadDropTarget({ children }) {
   const {
     actions: { uploadMediaFromWorkspace },
   } = useMedia();
+  const insertElement = useInsertElement();
+  const {
+    actions: { updateElementById },
+  } = useStory();
   const onDropHandler = useCallback(
     (files) => {
-      uploadMediaFromWorkspace(files);
+      uploadMediaFromWorkspace(files, { insertElement, updateElementById });
     },
-    [uploadMediaFromWorkspace]
+    [uploadMediaFromWorkspace, insertElement, updateElementById]
   );
 
   return (

@@ -198,10 +198,7 @@ function MediaPane(props) {
         allowedImageMimeTypes.includes(mimeType) ||
         allowedVideoMimeTypes.includes(mimeType)
     )
-    .map((resource) => {
-      if (resource.local) return resource;
-      return getResourceFromAttachment(resource);
-    });
+    .map(getResourceFromAttachment);
 
   const refContainer = useRef();
   const refContainerFooter = useRef();
