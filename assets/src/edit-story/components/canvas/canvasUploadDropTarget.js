@@ -36,6 +36,7 @@ import {
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
 import { useUploader } from '../../app/uploader';
+import { useSnackbar } from '../../app/snackbar';
 import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
 import { Layer as CanvasLayer, PageArea } from './layout';
 import useInsertElement from './useInsertElement';
@@ -49,17 +50,50 @@ const PageAreaCover = styled(PageArea)`
 
 function CanvasUploadDropTarget({ children }) {
   const { uploadFile } = useUploader();
+  const { createSnackbar } = useSnackbar();
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
-    (files) => {
-      files.forEach((file) => {
-        uploadFile(file).then((res) => {
+    async (files) => {
+      const errorFiles = [];
+      const possibleRetryFiles = [];
+      for (const file of files) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const res = await uploadFile(file);
           const resource = getResourceFromUploadAPI(res);
           insertElement(resource.type, { resource });
+        } catch (e) {
+          if (e.name !== 'SizeError' && e.name !== 'ValidError') {
+            possibleRetryFiles.push(file);
+          }
+          if (files.length === 1) {
+            createSnackbar({
+              type: 'error',
+              data: e.name,
+              message: e.message,
+              retryAction:
+                possibleRetryFiles.length > 0
+                  ? () => onDropHandler(possibleRetryFiles)
+                  : null,
+            });
+          } else {
+            errorFiles.push(e.file);
+          }
+        }
+      }
+      if (errorFiles.length > 0) {
+        createSnackbar({
+          type: 'error',
+          multiple: true,
+          data: errorFiles,
+          retryAction:
+            possibleRetryFiles.length > 0
+              ? () => onDropHandler(possibleRetryFiles)
+              : null,
         });
-      });
+      }
     },
-    [insertElement, uploadFile]
+    [insertElement, uploadFile, createSnackbar]
   );
 
   return (

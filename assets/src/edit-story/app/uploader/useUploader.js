@@ -42,6 +42,8 @@ function useUploader(refreshLibrary = true) {
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
+  const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
+
   const isValidType = useCallback(
     ({ type }) => {
       return allowedMimeTypes.includes(type);
@@ -59,11 +61,22 @@ function useUploader(refreshLibrary = true) {
   const uploadFile = (file) => {
     // TODO Add permission check here, see Gutenberg's userCan function.
     if (!fileSizeCheck(file)) {
-      throw new Error('File size error');
+      const SizeError = new Error('File size error');
+      SizeError.name = 'SizeError';
+      SizeError.file = file.name;
+      SizeError.message = `Your file is ${bytesToMB(
+        file.size
+      )}MB and the upload limit is ${bytesToMB(
+        maxUpload
+      )}MB. Please resize and try again!`;
+      throw SizeError;
     }
 
     if (!isValidType(file)) {
-      throw new Error('File type error');
+      const ValidError = new Error('File size error');
+      ValidError.name = 'ValidError';
+      ValidError.file = file.name;
+      throw ValidError;
     }
 
     const additionalData = {

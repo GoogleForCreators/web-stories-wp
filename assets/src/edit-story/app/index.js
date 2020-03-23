@@ -40,6 +40,7 @@ import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -55,12 +56,14 @@ function App({ config }) {
                   <MediaProvider>
                     <TransformProvider>
                       <DropTargetsProvider>
-                        <GlobalStyle />
-                        <DefaultMoveableGlobalStyle />
-                        <CropMoveableGlobalStyle />
-                        <ModalGlobalStyle />
-                        <KeyboardOnlyOutlines />
-                        <Layout />
+                        <SnackbarProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <KeyboardOnlyOutlines />
+                          <Layout />
+                        </SnackbarProvider>
                       </DropTargetsProvider>
                     </TransformProvider>
                   </MediaProvider>
@@ -89,4 +92,5 @@ export {
   useConfig,
   useFont,
   useMedia,
+  useSnackbar,
 };

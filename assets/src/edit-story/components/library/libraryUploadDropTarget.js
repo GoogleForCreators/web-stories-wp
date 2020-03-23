@@ -34,16 +34,53 @@ import {
   UploadDropTargetMessageOverlay,
 } from '../uploadDropTarget';
 import { useUploader } from '../../app/uploader';
+import { useSnackbar } from '../../app/snackbar';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
   const { uploadFile } = useUploader();
+  const { createSnackbar } = useSnackbar();
   const onDropHandler = useCallback(
-    (files) => {
-      files.forEach(uploadFile);
+    async (files) => {
+      const errorFiles = [];
+      const possibleRetryFiles = [];
+      for (const file of files) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await uploadFile(file);
+        } catch (e) {
+          if (e.name !== 'SizeError' && e.name !== 'ValidError') {
+            possibleRetryFiles.push(file);
+          }
+          if (files.length === 1) {
+            createSnackbar({
+              type: 'error',
+              data: e.name,
+              message: e.message,
+              retryAction:
+                possibleRetryFiles.length > 0
+                  ? () => onDropHandler(possibleRetryFiles)
+                  : null,
+            });
+          } else {
+            errorFiles.push(e.file);
+          }
+        }
+      }
+      if (errorFiles.length > 0) {
+        createSnackbar({
+          type: 'error',
+          multiple: true,
+          data: errorFiles,
+          retryAction:
+            possibleRetryFiles.length > 0
+              ? () => onDropHandler(possibleRetryFiles)
+              : null,
+        });
+      }
     },
-    [uploadFile]
+    [uploadFile, createSnackbar]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

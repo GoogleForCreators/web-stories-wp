@@ -26,6 +26,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { useStory } from '../../app';
 import { useUploader } from '../../app/uploader';
+import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import { getDefinitionForType } from '../../elements';
 
@@ -41,6 +42,7 @@ function useCanvasSelectionCopyPaste(container) {
   } = useStory();
 
   const { uploadFile, isValidType } = useUploader();
+  const { createSnackbar } = useSnackbar();
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -102,7 +104,7 @@ function useCanvasSelectionCopyPaste(container) {
   );
 
   const pasteHandler = useCallback(
-    (evt) => {
+    async (evt) => {
       const { clipboardData } = evt;
 
       try {
@@ -143,17 +145,34 @@ function useCanvasSelectionCopyPaste(container) {
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
+        const errorFiles = [];
+        const possibleRetryFiles = [];
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           if (isValidType(item)) {
-            uploadFile(item.getAsFile());
+            try {
+              // eslint-disable-next-line no-await-in-loop
+              await uploadFile(item.getAsFile());
+            } catch (e) {
+              if (e.name !== 'SizeError' && e.name !== 'ValidError') {
+                possibleRetryFiles.push(item.getAsFile());
+              }
+              errorFiles.push(e.file);
+            }
           }
+        }
+        if (errorFiles.length > 0) {
+          createSnackbar({
+            type: 'error',
+            multiple: true,
+            data: errorFiles,
+          });
         }
       } catch (e) {
         // Ignore.
       }
     },
-    [addElement, currentPage, isValidType, uploadFile]
+    [addElement, currentPage, isValidType, uploadFile, createSnackbar]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
