@@ -18,6 +18,12 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -64,16 +70,19 @@ function useUploader(refreshLibrary = true) {
       const SizeError = new Error('File size error');
       SizeError.name = 'SizeError';
       SizeError.file = file.name;
-      SizeError.message = `Your file is ${bytesToMB(
-        file.size
-      )}MB and the upload limit is ${bytesToMB(
-        maxUpload
-      )}MB. Please resize and try again!`;
+      SizeError.message = sprintf(
+        __(
+          'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
+          'web-stories'
+        ),
+        bytesToMB(file.size),
+        bytesToMB(maxUpload)
+      );
       throw SizeError;
     }
 
     if (!isValidType(file)) {
-      const ValidError = new Error('File size error');
+      const ValidError = new Error('File type error');
       ValidError.name = 'ValidError';
       ValidError.file = file.name;
       throw ValidError;

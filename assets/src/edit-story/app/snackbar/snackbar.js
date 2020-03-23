@@ -20,6 +20,17 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../config';
+
 const Container = styled.div`
   display: flex;
 `;
@@ -48,10 +59,6 @@ const Content = styled.div`
   flex-grow: 1;
 `;
 
-const BoldSpan = styled.span`
-  font-weight: bold;
-`;
-
 const List = styled.ul`
   list-style: disc;
   margin-left: 20px;
@@ -72,29 +79,49 @@ const ActionButton = styled.button`
   border: 0;
   cursor: pointer;
   padding: 16px;
+  text-transform: capitalize;
 `;
 
 function Snackbar({ notification, position }) {
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
+  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+
   const notificationMessage = () => {
     if (notification.type === 'error') {
       if (notification.data === 'ValidError') {
         return (
           <Content>
-            {'Please choose only '}
-            <BoldSpan>{'jpg, jpeg, png, svg, gif'}</BoldSpan>
-            {' or '}
-            <BoldSpan>{'webp'}</BoldSpan>
-            {' to upload'}
+            {createInterpolateElement(
+              sprintf(
+                __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+                allowedMimeTypes.join(', ')
+              ),
+              {
+                b: <b />,
+              }
+            )}
           </Content>
         );
       } else if (notification.multiple) {
         return (
           <Content>
-            {'Please choose only '}
-            <BoldSpan>{'jpg, jpeg, png, svg, gif'}</BoldSpan>
-            {' or '}
-            <BoldSpan>{'webp'}</BoldSpan>
-            {' to upload. The following file failed to uploaded:'}
+            {createInterpolateElement(
+              sprintf(
+                __(
+                  'Please choose only <b>%s</b> to upload.  The following file failed to uploaded:',
+                  'web-stories'
+                ),
+                allowedMimeTypes.join(', ')
+              ),
+              {
+                b: <b />,
+              }
+            )}
             <List>
               {notification.data.map((item) => (
                 <ListItem key={item}>{item}</ListItem>
@@ -113,7 +140,7 @@ function Snackbar({ notification, position }) {
         {notificationMessage()}
         {notification.retryAction && (
           <ActionButton onClick={notification.retryAction}>
-            {'RETRY'}
+            {__('Retry', 'web-stories')}
           </ActionButton>
         )}
       </Main>
