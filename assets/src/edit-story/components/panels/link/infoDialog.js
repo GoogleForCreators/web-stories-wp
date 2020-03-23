@@ -27,14 +27,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as TwoTapInfo } from './two-tap-link.svg';
-import { ReactComponent as OneTapInfo } from './one-tap-link.svg';
+import { useConfig } from '../../../app/config';
 
-const TwoTapFigure = styled(TwoTapInfo)`
+const TwoTapFigure = styled.img`
   min-width: 249px;
 `;
 
-const OneTapFigure = styled(OneTapInfo)`
+const OneTapFigure = styled.img`
   min-width: 249px;
 `;
 
@@ -60,6 +59,8 @@ const InfoText = styled.div`
 `;
 
 function LinkInfoDialog() {
+  const { pluginDir } = useConfig();
+
   return (
     <>
       <span>
@@ -74,7 +75,7 @@ function LinkInfoDialog() {
       </span>
       <InfoPaneContainer>
         <InfoPane>
-          <TwoTapFigure />
+          <TwoTapFigure src={`${pluginDir}assets/images/two-tap-link.png`} />
           <InfoText>
             <b>{__('2-Tap link', 'web-stories')}</b>
             <span>
@@ -86,7 +87,7 @@ function LinkInfoDialog() {
           </InfoText>
         </InfoPane>
         <InfoPane>
-          <OneTapFigure />
+          <OneTapFigure src={`${pluginDir}assets/images/one-tap-link.png`} />
           <InfoText style={{ minWidth: 220 }}>
             <b>{__('1-Tap link', 'web-stories')}</b>
             <span>
