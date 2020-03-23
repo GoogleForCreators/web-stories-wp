@@ -56,7 +56,7 @@ function SnackbarProvider({ children, animationTimeout, position }) {
   const create = (notification) => {
     notification.key = uuidv4();
     if (typeof notification.timeout === 'undefined') {
-      notification.timeout = 300000;
+      notification.timeout = 3000;
     }
     setNotifications([...notifications, notification]);
     removeNotification(notification);
