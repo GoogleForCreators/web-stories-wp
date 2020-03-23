@@ -64,7 +64,7 @@ const ChildContainer = styled.div`
   }
 
   &.react-snackbar-alert__snackbar-container-exit {
-    opacity; 1;
+    opacity: 1;
     transform: scaleY(1);
   }
 
