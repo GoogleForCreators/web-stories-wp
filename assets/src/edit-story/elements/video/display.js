@@ -79,16 +79,24 @@ function VideoDisplay({
 
   const videoRef = useRef();
   const isElementSelected = selectedElementIds.includes(id);
+  const noElementsSelected = !selectedElementIds.length;
 
   useEffect(() => {
-    if (isPlaying && !isElementSelected && videoRef) {
+    if (isPlaying && videoRef && (!isElementSelected || noElementsSelected)) {
       updateElementById({
         elementId: id,
         properties: { isPlaying: false },
       });
       videoRef.current.currentTime = 0;
     }
-  }, [isPlaying, isElementSelected, videoRef, updateElementById, id]);
+  }, [
+    isPlaying,
+    isElementSelected,
+    noElementsSelected,
+    videoRef,
+    updateElementById,
+    id,
+  ]);
 
   useEffect(() => {
     const ref = videoRef.current;
