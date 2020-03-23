@@ -17,39 +17,50 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect, useContext, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
-import LayerContext from './context';
+import useLiveRegion from '../../utils/useLiveRegion';
+import Context from './context';
 
-function useLayerReordering(layer) {
-  const { type, id: elementId, position: currentPosition } = layer;
+const REORDER_MESSAGE = __(
+  /* translators: d: new position. */
+  'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
+  'web-stories'
+);
 
-  const isBackground = type === 'background';
+const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
+  display: flex;
+`;
 
+function Reorderable({ children, onPositionChange = () => {}, ...props }) {
+  const [isReordering, setIsReordering] = useState(false);
+  const [currentSeparator, setCurrentSeparator] = useState(null);
+  const [currentPosition, setCurrentPosition] = useState(null);
   const [dragTarget, setDragTarget] = useState(null);
-  const {
-    state: { currentSeparator },
-    actions: { setIsReordering, setCurrentSeparator },
-  } = useContext(LayerContext);
 
-  const {
-    actions: { arrangeElement, setSelectedElementsById },
-  } = useStory();
+  const speak = useLiveRegion('assertive');
 
   const handleStartReordering = useCallback(
-    (evt) => {
+    ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
       // Only allow reordering with non-modified click on non-background element.
-      // Modified (shift+ or meta+) clicks are for selection and handled in `useLayerSelection`.
-      if (!isBackground && !evt.shiftKey && !evt.metaKey) {
-        setSelectedElementsById({ elementIds: [elementId] });
+      // Modified (shift+ or meta+) clicks are for selection.
+      if (!evt.shiftKey && !evt.metaKey) {
+        onStartReordering();
+        setCurrentPosition(currentPos);
         setDragTarget(evt.target);
       }
     },
-    [isBackground, elementId, setSelectedElementsById]
+    []
   );
 
   const separator = useRef(null);
@@ -68,7 +79,7 @@ function useLayerReordering(layer) {
         const newPosition = separator.current;
         const position =
           newPosition > currentPosition ? newPosition - 1 : newPosition;
-        arrangeElement({ elementId, position });
+        onPositionChange(currentPosition, position);
       }
       setDragTarget(null);
     };
@@ -99,13 +110,50 @@ function useLayerReordering(layer) {
   }, [
     dragTarget,
     currentPosition,
-    elementId,
     setCurrentSeparator,
     setIsReordering,
-    arrangeElement,
+    onPositionChange,
   ]);
 
-  return { handleStartReordering };
+  useEffect(() => {
+    if (isReordering && currentSeparator) {
+      const position = children.length - currentSeparator;
+      const message = sprintf(REORDER_MESSAGE, position);
+      speak(message);
+    }
+  }, [
+    isReordering,
+    currentSeparator,
+    children.length,
+    onPositionChange,
+    speak,
+  ]);
+
+  const state = {
+    state: {
+      isReordering,
+      currentSeparator,
+    },
+    actions: {
+      setCurrentSeparator,
+      setIsReordering,
+      handleStartReordering,
+    },
+  };
+
+  return (
+    <Context.Provider value={state}>
+      <ReorderableContainer {...props}>{children}</ReorderableContainer>
+    </Context.Provider>
+  );
 }
 
-export default useLayerReordering;
+Reorderable.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onPositionChange: PropTypes.func,
+};
+
+export default Reorderable;

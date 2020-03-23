@@ -17,34 +17,6 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { createContext } from 'react';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../../types';
-import Context from './context';
-import useLayers from './useLayers';
-
-function LayerProvider({ children }) {
-  const layers = useLayers();
-  const [currentSeparator, setCurrentSeparator] = useState(null);
-
-  const state = {
-    state: {
-      layers,
-      currentSeparator,
-    },
-    actions: {
-      setCurrentSeparator,
-    },
-  };
-
-  return <Context.Provider value={state}>{children}</Context.Provider>;
-}
-
-LayerProvider.propTypes = {
-  children: StoryPropTypes.children,
-};
-
-export default LayerProvider;
+export default createContext({ state: {}, actions: {} });
