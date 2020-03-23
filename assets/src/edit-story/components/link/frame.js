@@ -37,12 +37,13 @@ const Hint = styled.div`
   font-size: 14px;
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  margin-top: -68px;
+  margin-top: -52px;
   display: flex;
   justify-content: center;
   flex-direction: row;
   max-width: 200px;
   pointer-events: all;
+  padding: 2px 6px;
 `;
 
 const Tooltip = styled.div`
@@ -129,14 +130,14 @@ const TooltipContainer = styled.div`
   pointer-events: none;
 `;
 
-function WithLink({ element, showTooltip, children, ...rest }) {
+function WithLink({ element, active, dragging, children, ...rest }) {
   const link = getLinkFromElement(element);
 
-  if (!link) {
+  if (!link || dragging) {
     return children;
   }
 
-  if (!showTooltip) {
+  if (!active && !dragging) {
     return (
       <Wrapper {...rest}>
         <LinkIcon />
@@ -167,7 +168,8 @@ function WithLink({ element, showTooltip, children, ...rest }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  showTooltip: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
+  dragging: PropTypes.bool.isRequired,
   children: StoryPropTypes.children.isRequired,
 };
 
