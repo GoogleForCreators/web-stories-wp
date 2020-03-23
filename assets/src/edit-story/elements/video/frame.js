@@ -15,13 +15,67 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useState } from 'react';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaFrame from '../media/frame';
+import { elementFillContent } from '../shared';
+import { useStory } from '../../app/story';
+import { ReactComponent as PlayIcon } from '../../icons/play.svg';
+import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
+
+const Play = styled(PlayIcon)`
+  width: 48px;
+  height: 48px;
+`;
+const Pause = styled(PauseIcon)`
+  width: 48px;
+  height: 48px;
+`;
+
+const Wrapper = styled.div`
+  ${elementFillContent}
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+`;
 
 function VideoFrame({ element }) {
-  return <MediaFrame element={element} />;
+  const { id, isPlaying } = element;
+  const [hovered, setHovered] = useState(false);
+
+  const {
+    actions: { updateElementById },
+  } = useStory();
+
+  const handlePlayPause = () => {
+    updateElementById({ elementId: id, properties: { isPlaying: !isPlaying } });
+  };
+
+  return (
+    <Wrapper
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+    >
+      <MediaFrame element={element} />
+      {hovered && (
+        <ButtonWrapper onClick={handlePlayPause}>
+          {isPlaying ? <Pause /> : <Play />}
+        </ButtonWrapper>
+      )}
+    </Wrapper>
+  );
 }
 
 VideoFrame.propTypes = {

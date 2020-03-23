@@ -26,7 +26,7 @@ import { useState, useRef, useMemo } from 'react';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { ReactComponent as Play } from './play.svg';
+import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
   width: 100%;
