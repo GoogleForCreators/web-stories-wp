@@ -19,12 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 /**
  * WordPress dependencies
@@ -36,18 +30,20 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row } from '../form';
+import { Media, Row } from '../../form';
 import {
   createLink,
   inferLinkType,
   getLinkFromElement,
   LinkType,
-} from '../link';
-import { useAPI } from '../../app/api';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
-import { ReactComponent as Info } from '../../icons/info.svg';
-import { SimplePanel } from './panel';
-import { Note, ExpandedTextInput } from './shared';
+} from '../../link';
+import { useAPI } from '../../../app/api';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
+import { ReactComponent as Info } from '../../../icons/info.svg';
+import { SimplePanel } from '../panel';
+import { Note, ExpandedTextInput } from '../shared';
+import Dialog from '../../dialog';
+import LinkInfoDialog from './infoDialog';
 
 const BrandIconText = styled.span`
   margin-left: 12px;
@@ -154,10 +150,10 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSetProperties, populateMetadata, inferredLinkType, state.url]);
 
-  // Instructional modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = useCallback(() => setIsModalOpen(true), []);
-  const closeModal = useCallback(() => setIsModalOpen(false), []);
+  // Informational dialog
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+  const openDialog = useCallback(() => setInfoDialogOpen(true), []);
+  const closeDialog = useCallback(() => setInfoDialogOpen(false), []);
 
   return (
     <SimplePanel
@@ -166,7 +162,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       onSubmit={(evt) => handleSubmit(evt)}
     >
       <Row>
-        <ActionableNote onClick={() => openModal()}>
+        <ActionableNote onClick={() => openDialog()}>
           {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
           <InfoIcon />
         </ActionableNote>
@@ -210,24 +206,14 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         </Row>
       )}
       <Dialog
-        open={isModalOpen}
-        onClose={closeModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        open={infoDialogOpen}
+        onClose={closeDialog}
+        title={__('How to apply a link', 'web-stories')}
+        buttons={[
+          { text: __('Back', 'web-stories'), action: () => closeDialog() },
+        ]}
       >
-        <DialogTitle id="alert-dialog-title">
-          {__('How to apply a link', 'web-stories')}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {__('This is how you insert a link', 'web-stories')}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeModal} color="primary">
-            {__('Back', 'web-stories')}
-          </Button>
-        </DialogActions>
+        <LinkInfoDialog />
       </Dialog>
     </SimplePanel>
   );

@@ -20,7 +20,6 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.7",
     "@wordpress/api-fetch": "^3.11.0",
     "@wordpress/components": "^9.2.3",
     "@wordpress/i18n": "^3.9.0",

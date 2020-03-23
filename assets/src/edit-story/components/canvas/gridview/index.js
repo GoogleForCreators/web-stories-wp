@@ -48,6 +48,7 @@ const Wrapper = styled.div`
   justify-content: center;
   justify-items: center;
   align-items: center;
+  pointer-events: visible;
 `;
 
 const RangeInputWrapper = styled.div`
