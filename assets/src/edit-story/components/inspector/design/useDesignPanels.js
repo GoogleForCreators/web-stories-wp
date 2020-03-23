@@ -25,7 +25,6 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
 import useHandlers from '../../../utils/useHandlers';
-import { MULTIPLE_VALUE } from '../../form';
 import updateProperties from './updateProperties';
 
 function useDesignPanels() {
@@ -44,22 +43,8 @@ function useDesignPanels() {
         properties: (currentProperties) => {
           const update = updateProperties(
             currentProperties,
-            newPropertiesOrUpdater,
-            /* commitValues */ true
+            newPropertiesOrUpdater
           );
-          // QQQQQ: remove? or move to updateProperties()
-          Object.entries(update).forEach(([key, value]) => {
-            if (value === MULTIPLE_VALUE) {
-              throw new Error(`multiple value: ${key}`);
-            }
-            if (value && typeof value === 'object' && !Array.isArray(value)) {
-              Object.entries(value).forEach(([k, v]) => {
-                if (v === MULTIPLE_VALUE) {
-                  throw new Error(`multiple value: ${key}.${k}`);
-                }
-              });
-            }
-          });
           return update;
         },
       });

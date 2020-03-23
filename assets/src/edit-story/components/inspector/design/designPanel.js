@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -45,6 +45,7 @@ function DesignPanel({
   registerSubmitHandler,
   ...rest
 }) {
+  const formRef = useRef(null);
   const [presubmitHandlers, registerPresubmitHandler] = useHandlers();
 
   const formContext = useMemo(
@@ -66,6 +67,7 @@ function DesignPanel({
 
   const internalSubmit = useCallback(
     (updates) => {
+      console.log('QQQQ: submit attempt: ', updates);
       if (Object.keys(updates).length === 0) {
         return;
       }
@@ -75,8 +77,7 @@ function DesignPanel({
         selectedElements.forEach((element) => {
           const precommitUpdate = updateProperties(
             element,
-            updates[element.id],
-            /* commitValues */ true
+            updates[element.id]
           );
           let commitUpdate = precommitUpdate;
           presubmitHandlers.forEach((handler) => {
@@ -93,18 +94,17 @@ function DesignPanel({
 
       console.log('QQQQ: submit: ', updates, commitUpdates);
       onSetProperties((element) => commitUpdates[element.id]);
-
-      // Reset.
-      setElementUpdates({});
     },
     [presubmitHandlers, selectedElements, onSetProperties]
   );
 
-  const submit = registerSubmitHandler(
+  const onSubmit = registerSubmitHandler(
     useCallback(
       (evt) => {
         if (evt) {
           evt.preventDefault();
+          // Reset.
+          setElementUpdates({});
         }
         internalSubmit(elementUpdates);
       },
@@ -112,27 +112,36 @@ function DesignPanel({
     )
   );
 
+  const submit = useCallback(() => {
+    // The `setTimeout()` below only depends on the `ref` and thus save from
+    // dismount issues.
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => {
+      const form = formRef.current;
+      if (form) {
+        form.dispatchEvent(new window.Event('submit'));
+      }
+    });
+  }, []);
+
   const pushUpdate = useCallback(
     (update, submitArg = false) => {
-      console.log('QQQQ: pushUpdate: ', update);
-      const newUpdates = {};
+      console.log('QQQQ: pushUpdate: ', update, submitArg);
       setElementUpdates((prevUpdates) => {
+        const newUpdates = {};
         selectedElements.forEach((element) => {
           const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
-          const newUpdate = updateProperties(
-            prevUpdatedElement,
-            update,
-            /* commitValues */ true
-          );
+          const newUpdate = updateProperties(prevUpdatedElement, update);
           newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
         });
+        console.log('QQQQ: pushUpdate.result: ', newUpdates);
         return newUpdates;
       });
       if (submitArg) {
-        internalSubmit(newUpdates);
+        submit();
       }
     },
-    [selectedElements, internalSubmit]
+    [selectedElements, submit]
   );
 
   const pushUpdateForObject = useCallback(
@@ -149,7 +158,7 @@ function DesignPanel({
         return {
           [propertyName]: {
             ...prevObject,
-            ...updateProperties(prevObject, update, /* commitValues */ true),
+            ...updateProperties(prevObject, update),
           },
         };
       }, submitArg);
@@ -159,12 +168,11 @@ function DesignPanel({
 
   const Panel = panelType;
   return (
-    <Form onSubmit={submit}>
+    <Form ref={formRef} onSubmit={onSubmit}>
       <AutoSubmitButton />
       <FormContext.Provider value={formContext}>
         <Panel
           selectedElements={updatedElements}
-          onSetProperties={onSetProperties}
           pushUpdate={pushUpdate}
           pushUpdateForObject={pushUpdateForObject}
           submit={submit}

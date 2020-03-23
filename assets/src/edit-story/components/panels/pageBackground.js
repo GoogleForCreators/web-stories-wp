@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -39,19 +39,14 @@ function PageBackgroundPanel() {
     actions: { updateCurrentPageProperties },
   } = useStory();
   const theme = useTheme();
-  const defaultColor = useMemo(
-    () => createSolidFromString(theme.colors.fg.v1),
-    [theme.colors.fg.v1]
-  );
-  const currentBackground = useMemo(
-    () => currentPage?.backgroundColor || defaultColor,
-    [currentPage, defaultColor]
-  );
-  const [color, setColor] = useState(currentBackground);
-  useEffect(() => setColor(currentBackground), [currentBackground]);
+  const currentBackground = useMemo(() => {
+    if (currentPage?.backgroundColor) {
+      return currentPage?.backgroundColor;
+    }
+    return createSolidFromString(theme.colors.fg.v1);
+  }, [currentPage, theme.colors.fg.v1]);
   const handleChange = useCallback(
     (value) => {
-      setColor(value);
       updateCurrentPageProperties({ properties: { backgroundColor: value } });
     },
     [updateCurrentPageProperties]
@@ -61,7 +56,7 @@ function PageBackgroundPanel() {
       <Color
         hasGradient
         hasOpacity={false}
-        value={color}
+        value={currentBackground}
         onChange={handleChange}
         label={__('Current page color', 'web-stories')}
       />

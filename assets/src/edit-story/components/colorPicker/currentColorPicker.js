@@ -114,7 +114,7 @@ const CurrentAlphaWrapper = styled.div`
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
-  const hexValue = hex.substr(1);
+  const hexValue = hex !== 'transparent' ? hex.substr(1) : hex;
 
   const handleFormatHex = useCallback((v) => `#${v}`, []);
 

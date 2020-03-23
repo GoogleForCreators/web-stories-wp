@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -57,21 +57,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     getFontWeight,
     fontFamily,
   ]);
-
-  // Backfill some of the font parameters.
-  // @todo: Find a better place to do backfill, closer to the insertion
-  // time or maybe display logic.
-  useEffect(() => {
-    pushUpdate(
-      ({ fontFallback: prevFontFallback, fontFamily: prevFontFamily }) => {
-        if (prevFontFallback) {
-          return null;
-        }
-        return { fontFallback: getFontFallback(prevFontFamily) || '' };
-      },
-      true
-    );
-  }, [getFontFallback, pushUpdate]);
 
   return (
     <>

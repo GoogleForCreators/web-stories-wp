@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,49 +28,30 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Row } from '../../form';
-import { getCommonValue } from '../utils';
+import { useCommonColorValue } from '../utils';
 
-// QQQQQ
-function ColorControls({ selectedElements, onSetProperties }) {
-  const color = getCommonValue(selectedElements, 'color');
-  console.log('QQQQ: ColorControls: ', color);
-  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-
-  const [state, setState] = useState({
-    backgroundColor,
-    color,
-  });
-  useEffect(() => {
-    setState({
-      backgroundColor,
-      color,
-    });
-  }, [color, backgroundColor]);
-
-  const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
-
-  useEffect(() => {
-    //QQQQ
-    // updateProperties();
-  }, [state.backgroundColor, state.color, updateProperties]);
+function ColorControls({ selectedElements, pushUpdate }) {
+  const color = useCommonColorValue(selectedElements, 'color');
+  const backgroundColor = useCommonColorValue(
+    selectedElements,
+    'backgroundColor'
+  );
 
   return (
     <>
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
-          value={state.color}
-          onChange={(value) => setState({ ...state, color: value })}
+          value={color}
+          onChange={(value) => pushUpdate({ color: value }, true)}
         />
       </Row>
       <Row>
         <Label>{__('Textbox', 'web-stories')}</Label>
         <Color
           hasGradient
-          value={state.backgroundColor}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
+          value={backgroundColor}
+          onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
         />
       </Row>
@@ -81,7 +61,7 @@ function ColorControls({ selectedElements, onSetProperties }) {
 
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default ColorControls;

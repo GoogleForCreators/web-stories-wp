@@ -17,3 +17,4 @@
 export { default as getCommonValue } from './getCommonValue';
 export { default as getCommonObjectValue } from './getCommonObjectValue';
 export { default as useCommonObjectValue } from './useCommonObjectValue';
+export { default as useCommonColorValue } from './useCommonColorValue';
