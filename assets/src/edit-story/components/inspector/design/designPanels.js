@@ -21,13 +21,18 @@ import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
 
 function DesignPanels() {
-  const { panels, createSubmitHandlerForPanel, panelProperties } = useDesignPanels();
+  const {
+    panels,
+    createSubmitHandlerForPanel,
+    panelProperties,
+  } = useDesignPanels();
   return panels.map(({ Panel, type }) => (
     <DesignPanel
       key={type}
       panelType={Panel}
       registerSubmitHandler={createSubmitHandlerForPanel(type)}
-      {...panelProperties} />
+      {...panelProperties}
+    />
   ));
 }
 

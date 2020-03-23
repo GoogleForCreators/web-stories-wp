@@ -46,7 +46,6 @@ export const _default = () => {
     <DropDown
       ariaLabel={__('Font style', 'web-stories')}
       options={fontStyles}
-      isMultiple={fontStyle === ''}
       value={fontStyle}
       onChange={(value) => setFontStyle(value)}
     />

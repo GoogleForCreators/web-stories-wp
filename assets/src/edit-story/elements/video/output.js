@@ -21,7 +21,7 @@ import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
 
 function VideoOutput({ element, box }) {
-  const { resource, loop } = element;
+  const { poster, resource, loop } = element;
 
   const sourceProps = {
     type: resource.mimeType,
@@ -29,7 +29,7 @@ function VideoOutput({ element, box }) {
   };
   const props = {
     autoPlay: 'autoplay',
-    poster: resource.poster,
+    poster: poster || resource.poster,
     artwork: resource.poster,
     title: resource.title,
     alt: resource.alt,

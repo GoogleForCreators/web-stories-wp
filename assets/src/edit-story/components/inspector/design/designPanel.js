@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -66,44 +66,55 @@ function DesignPanel({
 
   const internalSubmit = useCallback(
     (updates) => {
-      if (Object.keys(updates).length > 0) {
-        const commitUpdates = updates;
-        if (presubmitHandlers.length > 0) {
-          selectedElements.forEach((element) => {
-            const precommitUpdate = updateProperties(
-              element,
-              updates[element.id],
-              /* commitValues */ true
-            );
-            let commitUpdate = precommitUpdate;
-            presubmitHandlers.forEach((handler) => {
-              const handlerUpdate = handler({ ...element, ...commitUpdate });
-              commitUpdate = { ...commitUpdate, ...handlerUpdate };
-            });
-            commitUpdates[element.id] = commitUpdate;
-          });
-        }
-
-        onSetProperties((element) => commitUpdates[element.id]);
-        // Reset.
-        setElementUpdates({});
+      if (Object.keys(updates).length === 0) {
+        return;
       }
+
+      const commitUpdates = updates;
+      if (presubmitHandlers.length > 0) {
+        selectedElements.forEach((element) => {
+          const precommitUpdate = updateProperties(
+            element,
+            updates[element.id],
+            /* commitValues */ true
+          );
+          let commitUpdate = precommitUpdate;
+          presubmitHandlers.forEach((handler) => {
+            const handlerUpdate = handler(
+              { ...element, ...commitUpdate },
+              precommitUpdate,
+              element
+            );
+            commitUpdate = { ...commitUpdate, ...handlerUpdate };
+          });
+          commitUpdates[element.id] = commitUpdate;
+        });
+      }
+
+      console.log('QQQQ: submit: ', updates, commitUpdates);
+      onSetProperties((element) => commitUpdates[element.id]);
+
+      // Reset.
+      setElementUpdates({});
     },
     [presubmitHandlers, selectedElements, onSetProperties]
   );
 
-  const submit = registerSubmitHandler(useCallback(
-    (evt) => {
-      if (evt) {
-        evt.preventDefault();
-      }
-      internalSubmit(elementUpdates);
-    },
-    [internalSubmit, elementUpdates]
-  ));
+  const submit = registerSubmitHandler(
+    useCallback(
+      (evt) => {
+        if (evt) {
+          evt.preventDefault();
+        }
+        internalSubmit(elementUpdates);
+      },
+      [internalSubmit, elementUpdates]
+    )
+  );
 
   const pushUpdate = useCallback(
     (update, submitArg = false) => {
+      console.log('QQQQ: pushUpdate: ', update);
       const newUpdates = {};
       setElementUpdates((prevUpdates) => {
         selectedElements.forEach((element) => {
@@ -111,7 +122,7 @@ function DesignPanel({
           const newUpdate = updateProperties(
             prevUpdatedElement,
             update,
-            /* commitValues */ false
+            /* commitValues */ true
           );
           newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
         });
@@ -124,6 +135,28 @@ function DesignPanel({
     [selectedElements, internalSubmit]
   );
 
+  const pushUpdateForObject = useCallback(
+    (propertyName, update, defaultObject, submitArg = false) => {
+      console.log(
+        'QQQQ: pushUpdateForObject: ',
+        propertyName,
+        update,
+        defaultObject,
+        submitArg
+      );
+      pushUpdate((prevUpdatedElement) => {
+        const prevObject = prevUpdatedElement[propertyName] || defaultObject;
+        return {
+          [propertyName]: {
+            ...prevObject,
+            ...updateProperties(prevObject, update, /* commitValues */ true),
+          },
+        };
+      }, submitArg);
+    },
+    [pushUpdate]
+  );
+
   const Panel = panelType;
   return (
     <Form onSubmit={submit}>
@@ -133,6 +166,7 @@ function DesignPanel({
           selectedElements={updatedElements}
           onSetProperties={onSetProperties}
           pushUpdate={pushUpdate}
+          pushUpdateForObject={pushUpdateForObject}
           submit={submit}
           {...rest}
         />

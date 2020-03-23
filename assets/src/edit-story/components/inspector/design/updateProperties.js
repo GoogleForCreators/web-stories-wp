@@ -31,7 +31,7 @@ import { MULTIPLE_VALUE } from '../../form';
 function updateProperties(
   currentProperties,
   newPropertiesOrUpdater,
-  commitValues
+  commitValues // QQQQ: always true
 ) {
   const newProperties =
     typeof newPropertiesOrUpdater === 'function'
@@ -53,10 +53,9 @@ function updateProperties(
     return {};
   }
 
-  const properties = Object.fromEntries(
+  return Object.fromEntries(
     updatedKeys.map((key) => [key, newProperties[key]])
   );
-  return properties;
 }
 
 export default updateProperties;

@@ -33,16 +33,21 @@ getCommonValue( [ { a: 1 }, { a: '1' } ], 'a' );  // returns: MULTIPLE_VALUE
  *
  * @param {Array<Object>} list List of objects
  * @param {string|function(Object):any} propertyOrFunc Property to check on all objects.
+ * @param {any} def The default value.
  * @return {any} Returns common value or empty string if not similar
  */
-function getCommonValue(list, propertyOrFunc) {
+function getCommonValue(list, propertyOrFunc, def = undefined) {
   const func =
     typeof propertyOrFunc === 'function'
       ? propertyOrFunc
       : (item) => item[propertyOrFunc];
-  const first = func(list[0]);
-  const allMatch = list.every((el) => func(el) === first);
+  const first = ifDef(func(list[0]), def);
+  const allMatch = list.every((el) => ifDef(func(el), def) === first);
   return allMatch ? first : MULTIPLE_VALUE;
+}
+
+function ifDef(value, def) {
+  return value === undefined ? def : value;
 }
 
 export default getCommonValue;

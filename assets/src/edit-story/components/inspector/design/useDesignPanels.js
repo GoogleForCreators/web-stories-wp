@@ -24,8 +24,9 @@ import { useCallback, useEffect, useMemo } from 'react';
  */
 import { useStory } from '../../../app';
 import { getPanels } from '../../panels';
-import updateProperties from './updateProperties';
 import useHandlers from '../../../utils/useHandlers';
+import { MULTIPLE_VALUE } from '../../form';
+import updateProperties from './updateProperties';
 
 function useDesignPanels() {
   const {
@@ -40,23 +41,41 @@ function useDesignPanels() {
     (newPropertiesOrUpdater) => {
       updateElementsById({
         elementIds: selectedElementIds,
-        properties: (currentProperties) =>
-          updateProperties(
+        properties: (currentProperties) => {
+          const update = updateProperties(
             currentProperties,
             newPropertiesOrUpdater,
             /* commitValues */ true
-          ),
+          );
+          // QQQQQ: remove? or move to updateProperties()
+          Object.entries(update).forEach(([key, value]) => {
+            if (value === MULTIPLE_VALUE) {
+              throw new Error(`multiple value: ${key}`);
+            }
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
+              Object.entries(value).forEach(([k, v]) => {
+                if (v === MULTIPLE_VALUE) {
+                  throw new Error(`multiple value: ${key}.${k}`);
+                }
+              });
+            }
+          });
+          return update;
+        },
       });
     },
     [selectedElementIds, updateElementsById]
   );
 
-  const createSubmitHandlerForPanel = useCallback((panelId) =>
-    (submit) => {
-      submitHandlers.forEach(handler => handler(onSetProperties, panelId, submit));
+  const createSubmitHandlerForPanel = useCallback(
+    (panelId) => (submit) => {
+      submitHandlers.forEach((handler) =>
+        handler(onSetProperties, panelId, submit)
+      );
       return submit;
-    }
-  , [onSetProperties]);
+    },
+    [onSetProperties, submitHandlers]
+  );
 
   useEffect(() => {
     const submits = {};
@@ -68,9 +87,9 @@ function useDesignPanels() {
     const unregister = registerSubmitHandler(handler);
     return () => {
       unregister();
-      Object.values(submits).forEach(submit => submit());
+      Object.values(submits).forEach((submit) => submit());
     };
-  }, [onSetProperties]);
+  }, [onSetProperties, registerSubmitHandler]);
 
   return {
     panels,

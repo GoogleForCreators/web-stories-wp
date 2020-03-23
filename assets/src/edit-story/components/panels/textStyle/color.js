@@ -29,10 +29,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Row } from '../../form';
-import getCommonValue from '../utils/getCommonValue';
+import { getCommonValue } from '../utils';
 
+// QQQQQ
 function ColorControls({ selectedElements, onSetProperties }) {
   const color = getCommonValue(selectedElements, 'color');
+  console.log('QQQQ: ColorControls: ', color);
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
 
   const [state, setState] = useState({
@@ -51,7 +53,8 @@ function ColorControls({ selectedElements, onSetProperties }) {
   }, [onSetProperties, state]);
 
   useEffect(() => {
-    updateProperties();
+    //QQQQ
+    // updateProperties();
   }, [state.backgroundColor, state.color, updateProperties]);
 
   return (
@@ -59,7 +62,6 @@ function ColorControls({ selectedElements, onSetProperties }) {
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
-          isMultiple={'' === color}
           value={state.color}
           onChange={(value) => setState({ ...state, color: value })}
         />
@@ -69,7 +71,6 @@ function ColorControls({ selectedElements, onSetProperties }) {
         <Color
           hasGradient
           value={state.backgroundColor}
-          isMultiple={backgroundColor === ''}
           onChange={(value) => setState({ ...state, backgroundColor: value })}
           label={__('Background color', 'web-stories')}
         />

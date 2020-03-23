@@ -15,29 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useMemo } from 'react';
+
+/**
  * Internal dependencies
  */
-import getCommonValue from './getCommonValue';
+import getCommonObjectValue from './getCommonObjectValue';
 
-// @todo Test.
 /**
- * Get the common value object for `property` for all objects in `list`, based on the property names
- * specified in the `properties` array. If common value is not found, `defaultValue` is assigned instead.
+ * Memoizes the value returned by the `getCommonObjectValue`.
  *
  * @param {Array.<Object>} list  List of objects
  * @param {string} property Property to check on all objects
  * @param {Object} defaultValue Default object when an element is missing it.
  * @return {Object} Found common object values or default values.
  */
-function getCommonObjectValue(list, property, defaultValue) {
-  const commonValue = {};
-  const propertyObjects = list.map(
-    (element) => element[property] || defaultValue
+function useCommonObjectValue(list, property, defaultValue) {
+  const commonValue = getCommonObjectValue(list, property, defaultValue);
+  const parts = Object.keys(defaultValue).map((prop) => commonValue[prop]);
+  return useMemo(
+    () => commonValue,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    parts
   );
-  Object.keys(defaultValue).forEach((prop) => {
-    commonValue[prop] = getCommonValue(propertyObjects, prop);
-  });
-  return commonValue;
 }
 
-export default getCommonObjectValue;
+export default useCommonObjectValue;

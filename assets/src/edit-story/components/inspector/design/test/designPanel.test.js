@@ -29,6 +29,8 @@ import { MULTIPLE_VALUE, usePresubmitHandler } from '../../../form';
 describe('DesignPanel', () => {
   let element1, element2;
   let presubmitHandler1, presubmitHandler2;
+  let registerSubmitHandler;
+  let submitHandler;
   let onSetProperties;
   let formContext;
   let lastProps;
@@ -56,6 +58,10 @@ describe('DesignPanel', () => {
     formContext = null;
     presubmitHandler1 = jest.fn(({ x }) => ({ x: x + 1 }));
     presubmitHandler2 = jest.fn(({ y }) => ({ y: y + 1 }));
+    registerSubmitHandler = (handler) => {
+      submitHandler = handler;
+      return handler;
+    };
   });
 
   function CustomPanel(props) {
@@ -76,6 +82,7 @@ describe('DesignPanel', () => {
           panelType={CustomPanel}
           selectedElements={selectedElements}
           onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
         />
       );
     });
@@ -143,6 +150,32 @@ describe('DesignPanel', () => {
         y: element1.y + 1,
       });
     });
+
+    it('should submit updates and run presubmits on exit', () => {
+      const { pushUpdate } = lastProps;
+
+      // First update.
+      act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE }));
+      const {
+        selectedElements: [updatedElementA],
+      } = lastProps;
+      expect(updatedElementA).toStrictEqual({
+        ...element1,
+        x: 12,
+        y: MULTIPLE_VALUE,
+      });
+
+      // Submit on exit.
+      act(() => submitHandler());
+      expect(presubmitHandler1).toHaveBeenCalledWith(expect.anything());
+      expect(presubmitHandler2).toHaveBeenCalledWith(expect.anything());
+      expect(onSetProperties).toHaveBeenCalledWith(expect.anything());
+      const func = onSetProperties.mock.calls[0][0];
+      expect(func(element1)).toStrictEqual({
+        x: 12 + 1,
+        y: element1.y + 1,
+      });
+    });
   });
 
   describe('multiple elements', () => {
@@ -155,6 +188,7 @@ describe('DesignPanel', () => {
           panelType={CustomPanel}
           selectedElements={selectedElements}
           onSetProperties={onSetProperties}
+          registerSubmitHandler={registerSubmitHandler}
         />
       );
     });

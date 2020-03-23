@@ -36,8 +36,7 @@ function StylePanel(props) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler((properties) => {
     const { width, height: oldHeight, rotationAngle, x, y } = properties;
-    const newProperties = { ...properties };
-    const newHeight = dataPixels(calculateTextHeight(newProperties, width));
+    const newHeight = dataPixels(calculateTextHeight(properties, width));
     const [dx, dy] = calcRotatedResizeOffset(
       rotationAngle,
       0,

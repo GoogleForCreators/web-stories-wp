@@ -19,7 +19,6 @@
  */
 import { createContext } from 'react';
 
-// QQQQQ: replace all isMultiple in the inputs.
 export default createContext({
   isMultiple: false,
   registerPresubmitHandler: () => {},

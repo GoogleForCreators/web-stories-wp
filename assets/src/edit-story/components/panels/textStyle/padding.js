@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,10 +30,11 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Label, Numeric, Row, Toggle } from '../../form';
-import { dataPixels } from '../../../units';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
-import getCommonValue from '../utils/getCommonValue';
+import { useCommonObjectValue } from '../utils';
+
+const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -44,44 +45,31 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function PaddingControls({ selectedElements, onSetProperties }) {
-  const padding = getCommonValue(selectedElements, 'padding') ?? '';
+function PaddingControls({ selectedElements, pushUpdateForObject }) {
+  const padding = useCommonObjectValue(
+    selectedElements,
+    'padding',
+    DEFAULT_PADDING
+  );
 
-  const [state, setState] = useState({
-    padding,
-  });
   const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
-  useEffect(() => {
-    setState({
-      padding,
-    });
-  }, [padding]);
-  const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
-
-  useEffect(() => {
-    // Don't update the values when input is empty.
-    if (state.padding.vertical !== '' && state.padding.horizontal !== '') {
-      updateProperties();
-    }
-  }, [state.padding, updateProperties]);
 
   const handleChange = useCallback(
-    (property) => (value) => {
-      const unchangedProperty =
-        'horizontal' === property ? 'vertical' : 'horizontal';
-      const newPadding = {
-        [property]:
-          isNaN(value) || '' === value ? '' : dataPixels(parseInt(value)),
-      };
-      newPadding[unchangedProperty] =
-        typeof newPadding[property] === 'number' && lockPaddingRatio
-          ? dataPixels(newPadding[property])
-          : padding[unchangedProperty];
-      setState({ ...state, padding: newPadding });
+    (newPadding) => {
+      let update = newPadding;
+      if (lockPaddingRatio) {
+        const commonPadding =
+          newPadding.horizontal !== undefined
+            ? newPadding.horizontal
+            : newPadding.vertical;
+        update = {
+          horizontal: commonPadding,
+          vertical: commonPadding,
+        };
+      }
+      pushUpdateForObject('padding', update, DEFAULT_PADDING);
     },
-    [lockPaddingRatio, padding, state]
+    [pushUpdateForObject, lockPaddingRatio]
   );
 
   return (
@@ -89,22 +77,21 @@ function PaddingControls({ selectedElements, onSetProperties }) {
       <Label>{__('Padding', 'web-stories')}</Label>
       <BoxedNumeric
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
-        value={state.padding.horizontal}
-        onChange={handleChange('horizontal')}
+        value={padding.horizontal}
+        onChange={(value) => handleChange({ horizontal: value })}
       />
       <Space />
       <Toggle
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
-        isMultiple={false}
         value={lockPaddingRatio}
         onChange={setLockPaddingRatio}
       />
       <Space />
       <BoxedNumeric
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
-        value={state.padding.vertical}
-        onChange={handleChange('vertical')}
+        value={padding.vertical}
+        onChange={(value) => handleChange({ vertical: value })}
       />
     </Row>
   );
@@ -112,7 +99,7 @@ function PaddingControls({ selectedElements, onSetProperties }) {
 
 PaddingControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
 };
 
 export default PaddingControls;

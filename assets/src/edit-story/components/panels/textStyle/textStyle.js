@@ -80,12 +80,12 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <Space />
         <ExpandedNumeric
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={letterSpacing ? letterSpacing * 100 : 0}
+          value={letterSpacing ? Math.round(letterSpacing * 100) : 0}
           suffix={<HorizontalOffset />}
           symbol="%"
           onChange={(value) =>
             pushUpdate({
-              letterSpacing: typeof value === 'number' ? value / 100 : 0,
+              letterSpacing: typeof value === 'number' ? value / 100 : value,
             })
           }
         />

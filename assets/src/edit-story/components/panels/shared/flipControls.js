@@ -31,17 +31,13 @@ function FlipControls({ value, onChange }) {
     <>
       <Toggle
         icon={<FlipHorizontal />}
-        value={value.horizontal}
-        onChange={(horizontal) => {
-          onChange({ ...value, horizontal });
-        }}
+        value={value.horizontal === true}
+        onChange={(horizontal) => onChange({ ...value, horizontal })}
       />
       <Toggle
         icon={<FlipVertical />}
-        value={value.vertical}
-        onChange={(vertical) => {
-          onChange({ ...value, vertical });
-        }}
+        value={value.vertical === true}
+        onChange={(vertical) => onChange({ ...value, vertical })}
       />
     </>
   );

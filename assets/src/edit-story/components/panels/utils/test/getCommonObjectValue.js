@@ -36,7 +36,7 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const obj = getCommonObjectValue(elements, 'foo', ['a', 'b'], false);
+    const obj = getCommonObjectValue(elements, 'foo', { a: false, b: false });
     expect(obj.a).toStrictEqual(matchingValue);
   });
 
@@ -56,9 +56,8 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const defaultValue = false;
-    const obj = getCommonObjectValue(elements, 'foo', ['a', 'b'], defaultValue);
-    expect(obj.b).toStrictEqual(defaultValue);
+    const obj = getCommonObjectValue(elements, 'foo', { a: false, b: false });
+    expect(obj.b).toStrictEqual(false);
   });
 
   it('should only return defined properties', () => {
@@ -79,8 +78,7 @@ describe('getCommonObjectValue', () => {
         },
       },
     ];
-    const defaultValue = false;
-    const obj = getCommonObjectValue(elements, 'foo', ['b', 'c'], defaultValue);
+    const obj = getCommonObjectValue(elements, 'foo', { b: false, c: false });
     expect(obj.a).toBeUndefined();
     expect(obj.b).toBeDefined();
     expect(obj.c).toBeDefined();

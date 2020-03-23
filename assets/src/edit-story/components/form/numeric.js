@@ -30,8 +30,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Input, MULTIPLE_VALUE } from '../form';
-import useFormContext from './useFormContext';
+import Input from './input';
+import MULTIPLE_VALUE from './multipleValue';
 
 const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
@@ -74,9 +74,8 @@ function Numeric({
   disabled,
   ...rest
 }) {
-  const { isMultiple } = useFormContext();
-  const placeholder =
-    isMultiple && value === MULTIPLE_VALUE ? __('multiple', 'web-stories') : '';
+  const isMultiple = value === MULTIPLE_VALUE;
+  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [focused, setFocus] = useState(false);
   const [dot, setDot] = useState(false);
 
@@ -94,7 +93,7 @@ function Numeric({
         suffix={suffix}
         label={label}
         value={
-          value === MULTIPLE_VALUE
+          isMultiple
             ? ''
             : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
