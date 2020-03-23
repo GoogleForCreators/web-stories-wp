@@ -23,7 +23,7 @@ import styled from 'styled-components';
 const StyledGridItem = styled.div`
   width: ${({ theme }) => theme.grid.desktop.itemWidth};
   height: ${({ theme }) => theme.grid.desktop.itemHeight};
-  background-color: #d9dbdd;
+  background-color: ${({ theme }) => theme.colors.placeholder};
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: ${({ theme }) => theme.grid.tablet.itemWidth};
