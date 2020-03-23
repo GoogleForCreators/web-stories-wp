@@ -40,6 +40,8 @@ use WP_REST_Response;
  * Class Stories_Controller
  */
 class Stories_Controller extends WP_REST_Posts_Controller {
+
+	const PUBLISHER_SETTINGS_OPTION = 'web_stories_publisher_settings';
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
@@ -132,7 +134,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			// If publisher logo is set, let's assign that.
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
-				set_theme_mod( 'custom_logo', $publisher_logo_id );
+				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
+				$publisher_logo_settings           = get_option( self::PUBLISHER_SETTINGS_OPTION, [] );
+				$publisher_logo_settings['active'] = $publisher_logo_id;
+				update_option( self::PUBLISHER_SETTINGS_OPTION, $publisher_logo_settings, false );
 			}
 		}
 		return rest_ensure_response( $response );

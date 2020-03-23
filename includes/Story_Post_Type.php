@@ -684,6 +684,44 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
+	 *
+	 * @param {int} $image_id Attachment ID.
+	 *
+	 * @return string|false Either the URL or false if error.
+	 */
+	private static function get_valid_publisher_image( $image_id ) {
+		$logo_image_url = false;
+
+		// Get metadata for finding a square image.
+		$metadata = wp_get_attachment_metadata( $image_id );
+		if ( empty( $metadata ) ) {
+			return $logo_image_url;
+		}
+		// First lets check if the image is square by default.
+		$fullsize_img = wp_get_attachment_image_src( $image_id, 'full', false );
+		if ( $metadata['width'] === $metadata['height'] ) {
+			return $fullsize_img[0];
+		}
+
+		if ( empty( $metadata['sizes'] ) ) {
+			return $logo_image_url;
+		}
+
+		// Loop through other size to find a square image.
+		foreach ( $metadata['sizes'] as $size ) {
+			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
+				$logo_img = wp_get_attachment_image_src( $image_id, $size, false );
+				return $logo_img[0];
+			}
+		}
+
+		// If a square image was not found, return the full size nevertheless,
+		// the editor should take care of warning about incorrect size.
+		return $fullsize_img[0];
+	}
+
+	/**
 	 * Get the publisher logo.
 	 *
 	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
@@ -694,31 +732,31 @@ class Story_Post_Type {
 	public static function get_publisher_logo() {
 		$logo_image_url = null;
 
-		// This should be square, at least 96px in width/height. The 512 is used because the site icon would have this size generated.
-		$logo_width  = 512;
-		$logo_height = 512;
+		$publisher_logo_settings = get_option( 'web_stories_publisher_settings', [] );
+		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
+		if ( $has_publisher_logo ) {
+			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
+			$logo_image_url    = self::get_valid_publisher_image( $publisher_logo_id );
+		} else {
+			// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
+			// Currently, it's marked as required but that's not actually enforced.
 
-		// Use the Custom Logo if set, but only if it is square.
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		if ( has_custom_logo() && $custom_logo_id ) {
-			$custom_logo_img = wp_get_attachment_image_src( $custom_logo_id, [ $logo_width, $logo_height ], false );
-			if ( $custom_logo_img && ( $custom_logo_img[2] === $custom_logo_img[1] ) ) {
-				$logo_image_url = $custom_logo_img[0];
+			// Use the Custom Logo if set, but only if it is square.
+			$custom_logo_id = get_theme_mod( 'custom_logo' );
+			if ( has_custom_logo() && $custom_logo_id ) {
+				$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
 			}
-		}
 
-		// Try Site Icon, though it is not ideal for non-Story because it should be square.
-		$site_icon_id = get_option( 'site_icon' );
-		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$site_icon_src = wp_get_attachment_image_src( $site_icon_id, [ $logo_width, $logo_height ], false );
-			if ( ! empty( $site_icon_src ) ) {
-				$logo_image_url = $site_icon_src[0];
+			// Try Site Icon, though it is not ideal for non-Story because it should be square.
+			$site_icon_id = get_option( 'site_icon' );
+			if ( empty( $logo_image_url ) && $site_icon_id ) {
+				$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
 			}
-		}
 
-		// Fallback to serving the WordPress logo.
-		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+			// Fallback to serving the WordPress logo.
+			if ( empty( $logo_image_url ) ) {
+				$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+			}
 		}
 
 		/**
