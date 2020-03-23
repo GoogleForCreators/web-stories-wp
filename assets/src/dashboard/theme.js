@@ -122,6 +122,13 @@ const theme = {
       weight: '500',
       letterSpacing: '0.01em',
     },
+    typeaheadOptions: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '400',
+      letterSpacing: '0.01em',
+    },
   },
   grid: {
     desktop: {
