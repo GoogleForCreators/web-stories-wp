@@ -145,10 +145,6 @@ const TypeaheadInput = ({
 
   useFocusOut(searchRef, handleFocusOut);
 
-  const handleInputClick = () => {
-    setShowMenu(!showMenu);
-  };
-
   const handleInputChange = (item) => {
     setInputValue(item.label);
     onChange(item.value);
@@ -181,15 +177,18 @@ const TypeaheadInput = ({
           </IconContainer>
           <label aria-label={ariaLabel} htmlFor={inputId} />
           <StyledInput
+            type="text"
             id={inputId}
             disabled={disabled}
             isOpen={menuIsOpen}
             value={inputValue}
             error={error}
-            onChange={({ target }) =>
-              handleInputChange({ label: target.value, value: target.value })
-            }
-            onClick={handleInputClick}
+            onFocus={() => setShowMenu(true)}
+            onBlur={() => setShowMenu(false)}
+            onChange={({ target }) => {
+              handleInputChange({ label: target.value, value: target.value });
+            }}
+            onClick={() => setShowMenu(!showMenu)}
             placeholder={placeholder}
           />
           {inputValue.length > 0 && !Boolean(menuIsOpen) && (
