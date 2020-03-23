@@ -17,25 +17,19 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import BackgroundDisplayPanel from '../backgroundDisplay.js';
+import { renderPanel } from './_utils';
 
 function setupPanel(isFullbleedBackground = undefined) {
   const selectedElements = [{ isFullbleedBackground }];
-  const pushUpdate = jest.fn();
-  const { getByText } = render(
-    <ThemeProvider theme={theme}>
-      <BackgroundDisplayPanel
-        pushUpdate={pushUpdate}
-        selectedElements={selectedElements}
-      />
-    </ThemeProvider>
+  const { getByText, pushUpdate } = renderPanel(
+    BackgroundDisplayPanel,
+    selectedElements
   );
 
   const onLabelEl = getByText('Fit to device');

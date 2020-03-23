@@ -43,7 +43,8 @@ function useDesignPanels() {
         properties: (currentProperties) => {
           const update = updateProperties(
             currentProperties,
-            newPropertiesOrUpdater
+            newPropertiesOrUpdater,
+            /* commitValues */ true
           );
           return update;
         },

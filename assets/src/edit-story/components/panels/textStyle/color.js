@@ -42,6 +42,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
+          data-testid="text.color"
           value={color}
           onChange={(value) => pushUpdate({ color: value }, true)}
         />
@@ -49,6 +50,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
       <Row>
         <Label>{__('Textbox', 'web-stories')}</Label>
         <Color
+          data-testid="text.backgroundColor"
           hasGradient
           value={backgroundColor}
           onChange={(value) => pushUpdate({ backgroundColor: value }, true)}

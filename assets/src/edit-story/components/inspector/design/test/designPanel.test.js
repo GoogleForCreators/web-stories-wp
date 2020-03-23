@@ -44,6 +44,7 @@ describe('DesignPanel', () => {
       width: 111,
       height: 121,
       rotationAngle: 0,
+      z: 17,
     };
     element2 = {
       id: '2',
@@ -100,13 +101,14 @@ describe('DesignPanel', () => {
       const { pushUpdate } = lastProps;
 
       // First update.
-      act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE }));
+      act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE, z: '' }));
       const {
         selectedElements: [updatedElementA],
       } = lastProps;
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
+        z: '',
       });
 
       // Second update.
@@ -118,6 +120,7 @@ describe('DesignPanel', () => {
         ...element1,
         x: 12,
         y: 14,
+        z: '',
       });
 
       const any = expect.anything();
@@ -130,13 +133,14 @@ describe('DesignPanel', () => {
       const { pushUpdate } = lastProps;
 
       // First update.
-      act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE }));
+      act(() => pushUpdate({ x: 12, y: MULTIPLE_VALUE, z: '' }));
       const {
         selectedElements: [updatedElementA],
       } = lastProps;
       expect(updatedElementA).toStrictEqual({
         ...element1,
         x: 12,
+        z: '',
       });
 
       // Submit.

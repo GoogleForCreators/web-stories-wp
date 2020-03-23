@@ -24,9 +24,14 @@ import { MULTIPLE_VALUE } from '../../form';
  * @param {Object|function(Object):Object} newPropertiesOrUpdater Either a map
  * of the updated properties or a function that will return a map of the updated
  * properties.
+ * @param {boolean} commitValues Commit values.
  * @return {Object} The updated properties.
  */
-function updateProperties(currentProperties, newPropertiesOrUpdater) {
+function updateProperties(
+  currentProperties,
+  newPropertiesOrUpdater,
+  commitValues
+) {
   const newProperties =
     typeof newPropertiesOrUpdater === 'function'
       ? newPropertiesOrUpdater(currentProperties)
@@ -35,10 +40,17 @@ function updateProperties(currentProperties, newPropertiesOrUpdater) {
     return {};
   }
 
-  // Filter out empty properties ("multiple" values specifically).
-  const updatedKeys = Object.keys(newProperties).filter(
+  let updatedKeys = Object.keys(newProperties);
+  // Always filter out "multi" values since they can be easily recalculated at
+  // any time.
+  updatedKeys = updatedKeys.filter(
     (key) => newProperties[key] !== MULTIPLE_VALUE
   );
+  // Only filter out the empty values at the commit time since an empty value
+  // is a valid intermediary value.
+  if (commitValues) {
+    updatedKeys = updatedKeys.filter((key) => newProperties[key] !== '');
+  }
   if (updatedKeys.length === 0) {
     // Of course abort if no keys have a value
     return {};

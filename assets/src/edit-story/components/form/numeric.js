@@ -33,7 +33,6 @@ import { __ } from '@wordpress/i18n';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
-// QQQQ: int-only?
 const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`
@@ -70,6 +69,7 @@ function Numeric({
   label,
   symbol,
   value,
+  float,
   flexBasis,
   ariaLabel,
   disabled,
@@ -104,10 +104,12 @@ function Numeric({
         onChange={(evt) => {
           const newValue = evt.target.value;
           if (newValue === '') {
-            onChange(MULTIPLE_VALUE, evt);
+            onChange('', evt);
           } else {
-            setDot(newValue[newValue.length - 1] === DECIMAL_POINT);
-            const valueAsNumber = parseFloat(newValue);
+            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
+            const valueAsNumber = float
+              ? parseFloat(newValue)
+              : parseInt(newValue);
             if (!isNaN(valueAsNumber)) {
               onChange(valueAsNumber, evt);
             }
@@ -142,6 +144,7 @@ Numeric.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  float: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
@@ -150,6 +153,7 @@ Numeric.defaultProps = {
   symbol: '',
   flexBasis: 110,
   textCenter: false,
+  float: false,
   ariaLabel: __('Standard input', 'web-stories'),
 };
 

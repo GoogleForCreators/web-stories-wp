@@ -63,6 +63,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       {fonts && (
         <Row>
           <DropDown
+            data-testid="font"
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
             value={fontFamily}
@@ -83,7 +84,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                 defaultWeight = fontWeightsArr[0];
               }
               const newFontWeight =
-                fontWeightsArr && fontWeightsArr.includes(fontWeight.toString())
+                fontWeightsArr && fontWeightsArr.includes(String(fontWeight))
                   ? fontWeight
                   : defaultWeight;
               pushUpdate(
@@ -102,6 +103,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         {fontWeights && (
           <>
             <DropDown
+              data-testid="font.weight"
               ariaLabel={__('Font weight', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
@@ -113,6 +115,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           </>
         )}
         <BoxedNumeric
+          data-testid="font.size"
           ariaLabel={__('Font size', 'web-stories')}
           value={fontSize}
           max={PAGE_HEIGHT}

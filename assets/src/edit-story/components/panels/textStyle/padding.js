@@ -76,12 +76,14 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
       <BoxedNumeric
+        data-testid="padding.horizontal"
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={padding.horizontal}
         onChange={(value) => handleChange({ horizontal: value })}
       />
       <Space />
       <Toggle
+        data-testid="padding.lock"
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={lockPaddingRatio}
@@ -89,6 +91,7 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
       />
       <Space />
       <BoxedNumeric
+        data-testid="padding.vertical"
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={padding.vertical}
         onChange={(value) => handleChange({ vertical: value })}

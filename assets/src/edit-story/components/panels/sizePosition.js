@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -47,8 +47,13 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+function isNum(v) {
+  return typeof v === 'number' && !isNaN(v);
+}
+
 function SizePositionPanel({
   selectedElements,
+  submittedSelectedElements,
   pushUpdate,
   pushUpdateForObject,
 }) {
@@ -58,7 +63,11 @@ function SizePositionPanel({
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
 
-  const origRatio = useRef(width / height).current;
+  const origRatio = useMemo(() => {
+    const origWidth = getCommonValue(submittedSelectedElements, 'width');
+    const origHeight = getCommonValue(submittedSelectedElements, 'height');
+    return origWidth / origHeight;
+  }, [submittedSelectedElements]);
   const [lockRatio, setLockRatio] = useState(true);
 
   const {
@@ -134,24 +143,28 @@ function SizePositionPanel({
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
+          data-testid="width"
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
           onChange={(value) => {
             const newWidth = value;
+            let newHeight = height;
+            if (lockRatio) {
+              if (newWidth === '') {
+                newHeight = '';
+              } else if (isNum(newWidth / origRatio)) {
+                newHeight = dataPixels(newWidth / origRatio);
+              }
+            }
             pushUpdate({
               width: newWidth,
-              height:
-                !isNaN(height) &&
-                !isNaN(newWidth) &&
-                lockRatio &&
-                !isNaN(origRatio)
-                  ? dataPixels(newWidth / origRatio)
-                  : height,
+              height: newHeight,
             });
           }}
           disabled={isFill}
         />
         <Toggle
+          data-testid="lockRatio"
           icon={<Locked />}
           uncheckedIcon={<Unlocked />}
           value={lockRatio}
@@ -159,19 +172,22 @@ function SizePositionPanel({
           disabled={isFill}
         />
         <BoxedNumeric
+          data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
           onChange={(value) => {
             const newHeight = value;
+            let newWidth = width;
+            if (lockRatio) {
+              if (newHeight === '') {
+                newWidth = '';
+              } else if (isNum(newHeight * origRatio)) {
+                newWidth = dataPixels(newHeight * origRatio);
+              }
+            }
             pushUpdate({
               height: newHeight,
-              width:
-                !isNaN(width) &&
-                !isNaN(newHeight) &&
-                lockRatio &&
-                !isNaN(origRatio)
-                  ? dataPixels(newHeight * origRatio)
-                  : width,
+              width: newWidth,
             });
           }}
           disabled={isFill}
@@ -208,6 +224,7 @@ function SizePositionPanel({
 
 SizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
+  submittedSelectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
 };

@@ -41,7 +41,6 @@ describe('Panels/VideoAccessibility', () => {
     const { getByLabelText } = renderVideoAccessibility([
       { resource: { posterId: 0, poster: '' } },
     ]);
-
     const element = getByLabelText('Select as video poster');
     expect(element).toBeDefined();
   });
@@ -50,7 +49,6 @@ describe('Panels/VideoAccessibility', () => {
     const { getByLabelText, pushUpdate } = renderVideoAccessibility([
       { resource: { posterId: 0, poster: '' } },
     ]);
-
     const element = getByLabelText('Select as video poster');
     fireEvent.click(element);
     expect(pushUpdate).toHaveBeenCalledTimes(1);

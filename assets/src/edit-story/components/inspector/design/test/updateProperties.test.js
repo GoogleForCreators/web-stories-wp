@@ -54,7 +54,20 @@ describe('updateProperties', () => {
 
   it('should remove "multi" values', () => {
     expect(
-      updateProperties(element, { x: MULTIPLE_VALUE, y: 1 }, true)
+      updateProperties(element, { x: MULTIPLE_VALUE, y: 1 })
     ).toStrictEqual({ y: 1 });
+  });
+
+  it('should keep intermediary "empty" values', () => {
+    expect(updateProperties(element, { x: '', y: 1 })).toStrictEqual({
+      x: '',
+      y: 1,
+    });
+  });
+
+  it('should remove final "empty" values', () => {
+    expect(updateProperties(element, { x: '', y: 1 }, true)).toStrictEqual({
+      y: 1,
+    });
   });
 });

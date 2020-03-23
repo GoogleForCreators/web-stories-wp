@@ -67,7 +67,6 @@ function DesignPanel({
 
   const internalSubmit = useCallback(
     (updates) => {
-      console.log('QQQQ: submit attempt: ', updates);
       if (Object.keys(updates).length === 0) {
         return;
       }
@@ -77,7 +76,8 @@ function DesignPanel({
         selectedElements.forEach((element) => {
           const precommitUpdate = updateProperties(
             element,
-            updates[element.id]
+            updates[element.id],
+            /* commitValues */ true
           );
           let commitUpdate = precommitUpdate;
           presubmitHandlers.forEach((handler) => {
@@ -92,7 +92,6 @@ function DesignPanel({
         });
       }
 
-      console.log('QQQQ: submit: ', updates, commitUpdates);
       onSetProperties((element) => commitUpdates[element.id]);
     },
     [presubmitHandlers, selectedElements, onSetProperties]
@@ -126,15 +125,13 @@ function DesignPanel({
 
   const pushUpdate = useCallback(
     (update, submitArg = false) => {
-      console.log('QQQQ: pushUpdate: ', update, submitArg);
       setElementUpdates((prevUpdates) => {
         const newUpdates = {};
         selectedElements.forEach((element) => {
           const prevUpdatedElement = { ...element, ...prevUpdates[element.id] };
-          const newUpdate = updateProperties(prevUpdatedElement, update);
+          const newUpdate = updateProperties(prevUpdatedElement, update, false);
           newUpdates[element.id] = { ...prevUpdates[element.id], ...newUpdate };
         });
-        console.log('QQQQ: pushUpdate.result: ', newUpdates);
         return newUpdates;
       });
       if (submitArg) {
@@ -146,19 +143,12 @@ function DesignPanel({
 
   const pushUpdateForObject = useCallback(
     (propertyName, update, defaultObject, submitArg = false) => {
-      console.log(
-        'QQQQ: pushUpdateForObject: ',
-        propertyName,
-        update,
-        defaultObject,
-        submitArg
-      );
       pushUpdate((prevUpdatedElement) => {
         const prevObject = prevUpdatedElement[propertyName] || defaultObject;
         return {
           [propertyName]: {
             ...prevObject,
-            ...updateProperties(prevObject, update),
+            ...updateProperties(prevObject, update, false),
           },
         };
       }, submitArg);
@@ -173,6 +163,7 @@ function DesignPanel({
       <FormContext.Provider value={formContext}>
         <Panel
           selectedElements={updatedElements}
+          submittedSelectedElements={selectedElements}
           pushUpdate={pushUpdate}
           pushUpdateForObject={pushUpdateForObject}
           submit={submit}

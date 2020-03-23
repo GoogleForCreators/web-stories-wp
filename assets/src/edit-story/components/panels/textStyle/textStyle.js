@@ -72,13 +72,16 @@ function StylePanel({ selectedElements, pushUpdate }) {
     <>
       <Row>
         <ExpandedNumeric
+          data-testid="text.lineHeight"
           ariaLabel={__('Line-height', 'web-stories')}
+          float={true}
           value={lineHeight || 0}
           suffix={<VerticalOffset />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
         />
         <Space />
         <ExpandedNumeric
+          data-testid="text.letterSpacing"
           ariaLabel={__('Letter-spacing', 'web-stories')}
           value={letterSpacing ? Math.round(letterSpacing * 100) : 0}
           suffix={<HorizontalOffset />}
