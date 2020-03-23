@@ -94,7 +94,7 @@ function OutputPage({ page }) {
           ))}
         </div>
       </amp-story-grid-layer>
-      {ctaElements.length && (
+      {ctaElements.length ? (
         <amp-story-cta-layer>
           <div
             className="page-cta-area"
@@ -105,7 +105,7 @@ function OutputPage({ page }) {
             ))}
           </div>
         </amp-story-cta-layer>
-      )}
+      ) : null}
     </amp-story-page>
   );
 }
