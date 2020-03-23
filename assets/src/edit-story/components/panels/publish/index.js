@@ -35,8 +35,8 @@ import useInspector from '../../inspector/useInspector';
 import { useStory } from '../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../../keyboard';
+import useFocusOut from '../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime } from './utils';
-import useOutSideClickHandler from './useOutsideClickHandler';
 
 const LabelWrapper = styled.div`
   width: 106px;
@@ -115,9 +115,10 @@ function PublishPanel() {
     [showDatePicker]
   );
 
-  useOutSideClickHandler([dateTimePickerNode, dateFieldNode], () =>
-    setShowDatePicker(false)
-  );
+  useFocusOut(dateTimePickerNode, () => setShowDatePicker(false), [
+    showDatePicker,
+  ]);
+
   const handleDateChange = useCallback(
     (value, close = false) => {
       if (close && showDatePicker) {
@@ -168,7 +169,10 @@ function PublishPanel() {
           aria-expanded={showDatePicker}
           onClick={(e) => {
             e.preventDefault();
-            setShowDatePicker(!showDatePicker);
+            if (!showDatePicker) {
+              // Handle only opening the datepicker since onFocusOut deals with closing.
+              setShowDatePicker(true);
+            }
           }}
           ref={dateFieldNode}
         >
