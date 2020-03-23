@@ -14,20 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Infer element type from mime type of its resource
- *
- * @param {string} mimeType Mime type.
- * @return {string} Element type.
- */
-const getTypeFromMime = (mimeType) => {
-  if (mimeType.match('image.*')) {
-    return 'image';
-  } else if (mimeType.match('video.*')) {
-    return 'video';
-  }
-
-  throw new Error('File type error');
-};
-
-export default getTypeFromMime;
+export { default } from './useUploadMedia';

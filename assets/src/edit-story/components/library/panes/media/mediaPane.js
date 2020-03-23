@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -39,6 +39,7 @@ import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import {
+  getTypeFromMime,
   getResourceFromMediaPicker,
   getResourceFromAttachment,
 } from '../../../../app/media/utils';
@@ -167,9 +168,12 @@ function MediaPane(props) {
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = (filter) => () => {
-    setMediaType({ mediaType: filter });
-  };
+  const onFilter = useCallback(
+    (filter) => () => {
+      setMediaType({ mediaType: filter });
+    },
+    [setMediaType]
+  );
 
   /**
    * Insert element such image, video and audio into the editor.
@@ -192,13 +196,24 @@ function MediaPane(props) {
     return n % 2 === 0;
   };
 
-  const resources = media
-    .filter(
-      ({ mimeType }) =>
-        allowedImageMimeTypes.includes(mimeType) ||
-        allowedVideoMimeTypes.includes(mimeType)
-    )
-    .map(getResourceFromAttachment);
+  const filterResource = useCallback(
+    ({ mimeType, oWidth, oHeight }) => {
+      const allowedMimeTypes = [
+        ...allowedImageMimeTypes,
+        ...allowedVideoMimeTypes,
+      ];
+      const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
+      const filterByMediaType = mediaType
+        ? mediaType === getTypeFromMime(mimeType)
+        : true;
+      const filterByValidMedia = oWidth && oHeight;
+
+      return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
+    },
+    [allowedImageMimeTypes, allowedVideoMimeTypes, mediaType]
+  );
+
+  const resources = media.filter(filterResource).map(getResourceFromAttachment);
 
   const refContainer = useRef();
   const refContainerFooter = useRef();

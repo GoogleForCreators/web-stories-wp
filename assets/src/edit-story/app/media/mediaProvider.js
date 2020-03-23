@@ -24,19 +24,14 @@ import { useEffect, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI, useConfig } from '../';
-import { useUploader } from '../uploader';
-import {
-  getResourceFromLocalFile,
-  getResourceFromUploadAPI,
-  getResourceFromAttachment,
-} from '../../app/media/utils';
+
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
+import useUploadMedia from './useUploadMedia';
 import Context from './context';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
-  const { uploadFile } = useUploader();
   const {
     processing,
     processed,
@@ -48,9 +43,9 @@ function MediaProvider({ children }) {
   const {
     fetchMediaStart,
     fetchMediaSuccess,
-    setMedia,
     fetchMediaError,
     resetFilters,
+    setMedia,
     setMediaType,
     setSearchTerm,
     setNextPage,
@@ -58,7 +53,14 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
   } = actions;
-
+  const { uploadMediaFromLibrary, uploadMediaFromWorkspace } = useUploadMedia({
+    media,
+    pagingNum,
+    searchTerm,
+    fetchMediaStart,
+    setMedia,
+    fetchMediaError,
+  });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
     setProcessing,
@@ -99,101 +101,6 @@ function MediaProvider({ children }) {
     ]
   );
 
-  const resetMedia = useCallback(
-    ({ pagingNum: p = 1 } = {}) => {
-      fetchMediaStart({ pagingNum: p });
-      getMedia({ mediaType, searchTerm, pagingNum: p })
-        .then(({ data }) => {
-          setMedia({
-            media: data,
-          });
-        })
-        .catch(fetchMediaError);
-    },
-    [
-      setMedia,
-      fetchMediaError,
-      fetchMediaStart,
-      getMedia,
-      mediaType,
-      searchTerm,
-    ]
-  );
-
-  const uploadMediaFromLibrary = useCallback(
-    async (files) => {
-      try {
-        const localMedia = await Promise.all(
-          files.map(getResourceFromLocalFile).reverse()
-        );
-        const filesUploading = files.map((file) => uploadFile(file));
-        setMedia({
-          media: [...localMedia, ...media],
-        });
-        await Promise.all(filesUploading);
-
-        // To avoid race conditions updating media library, a new request is necessary
-        resetMedia({ pagingNum });
-      } catch (e) {
-        fetchMediaError(e);
-      }
-    },
-    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
-  );
-
-  const uploadMediaFromWorkspace = useCallback(
-    async (files, { insertElement, updateElementById }) => {
-      try {
-        const filesOnCanvas = await Promise.all(
-          files
-            .map(async (file) => {
-              const resource = await getResourceFromLocalFile(file);
-              const element = insertElement(resource.type, {
-                resource: getResourceFromAttachment(resource),
-              });
-
-              return {
-                resource,
-                element,
-                file,
-              };
-            })
-            .reverse()
-        );
-
-        setMedia({
-          media: [...filesOnCanvas.map(({ resource }) => resource), ...media],
-        });
-
-        await Promise.all(
-          filesOnCanvas.map(async ({ element, file }) => {
-            const uploadedFile = await uploadFile(file);
-            const resource = getResourceFromUploadAPI(uploadedFile);
-
-            updateElementById({
-              elementId: element.elementId,
-              properties: {
-                resource: {
-                  ...resource,
-                  poster: resource.poster,
-                },
-                type: element.resource.type,
-              },
-            });
-
-            return resource;
-          })
-        );
-
-        // To avoid race conditions updating media library, a new request is necessary
-        resetMedia({ pagingNum });
-      } catch (e) {
-        fetchMediaError(e);
-      }
-    },
-    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
-  );
-
   const resetWithFetch = useCallback(() => {
     resetFilters();
     if (!mediaType && !searchTerm && pagingNum === 1) {
@@ -221,9 +128,9 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    ({ mimeType, posterId, id, src }) => {
+    ({ mimeType, posterId, id, src, videoId }) => {
       const process = async () => {
-        if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+        if (allowedVideoMimeTypes.includes(mimeType) && !posterId && videoId) {
           await uploadVideoPoster(id, src);
         }
       };

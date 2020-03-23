@@ -21,92 +21,107 @@ import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 /**
- * Generates a virtual image to pick metadata resource
+ * Get image dimensions from an image
  *
- * @param {Object} image File object
- * @return {Promise} Resource object
+ * @param {Image} Image source
+ * @return {Promise} Image dimensions object
  */
 
-const getImageResource = (image) => {
-  const reader = new window.FileReader();
-
-  return new Promise((resolve, reject) => {
-    reader.onload = function(e) {
-      const src = e.target.result;
-      const img = new window.Image();
-
-      img.onload = function() {
-        const oWidth = img.naturalWidth;
-        const oHeight = img.naturalHeight;
-
-        resolve({
-          type: 'image',
-          src,
-          oWidth,
-          oHeight,
-          mimeType: image.type,
-          poster: '',
-          local: true,
-        });
-      };
-
-      img.src = src;
-    };
-
-    reader.onerror = reject;
-
-    reader.readAsDataURL(image);
-  });
-};
-
-/**
- * Generates a virtual video to pick metadata resource
- *
- * @param {Object} video File object
- * @return {Promise} Resource object
- */
-
-const getVideoResource = (video) => {
+const createFileReader = (file, onload) => {
   const reader = new window.FileReader();
 
   return new Promise((resolve, reject) => {
     reader.onload = async () => {
-      const src = window.URL.createObjectURL(
-        new window.Blob([reader.result], { type: video.type })
-      );
-      const poster = window.URL.createObjectURL(
-        await getFirstFrameOfVideo(src)
-      );
-      const img = new window.Image();
-
-      img.onload = function() {
-        const oWidth = img.naturalWidth;
-        const oHeight = img.naturalHeight;
-
-        resolve({
-          type: 'video',
-          src,
-          oWidth,
-          oHeight,
-          mimeType: video.type,
-          poster,
-          local: true,
-        });
-      };
-
-      img.src = poster;
+      await onload({ reader, resolve });
     };
 
     reader.onerror = reject;
 
-    reader.readAsArrayBuffer(video);
+    reader.readAsArrayBuffer(file);
+  });
+};
+
+/**
+ * Get image dimensions from an image
+ *
+ * @param {Image} Image source
+ * @return {Promise} Image dimensions object
+ */
+
+const getImageDimensions = (src) => {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+
+    img.onload = () => {
+      resolve({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+    };
+
+    img.onerror = reject;
+
+    img.src = src;
+  });
+};
+
+/**
+ * Generates a image resource object from a local File object
+ *
+ * @param {File} image File object
+ * @return {Promise} Local image resource object
+ */
+
+const getImageResource = (image) => {
+  return createFileReader(image, async ({ reader, resolve }) => {
+    const src = window.URL.createObjectURL(
+      new window.Blob([reader.result], { type: image.type })
+    );
+    const { width: oWidth, height: oHeight } = await getImageDimensions(src);
+
+    resolve({
+      type: 'image',
+      src,
+      oWidth,
+      oHeight,
+      mimeType: image.type,
+      local: true,
+    });
+  });
+};
+
+/**
+ * Generates a video resource object from a local File object
+ *
+ * @param {File} video File object
+ * @return {Promise} Local video resource object
+ */
+
+const getVideoResource = (video) => {
+  return createFileReader(video, async ({ reader, resolve }) => {
+    const mimeType = video.type;
+    const src = window.URL.createObjectURL(
+      new window.Blob([reader.result], { type: mimeType })
+    );
+    const poster = window.URL.createObjectURL(await getFirstFrameOfVideo(src));
+    const { width: oWidth, height: oHeight } = await getImageDimensions(poster);
+
+    resolve({
+      type: 'video',
+      src,
+      oWidth,
+      oHeight,
+      mimeType,
+      poster,
+      local: true,
+    });
   });
 };
 
 /**
  * Generates a resource object from a local File object
  *
- * @param {Object} file File object
+ * @param {File} file File object
  * @return {Object} Resource object
  */
 export const getResourceFromLocalFile = (file) => {
@@ -114,9 +129,11 @@ export const getResourceFromLocalFile = (file) => {
 
   if (type === 'image') {
     return getImageResource(file);
+  } else if (type === 'video') {
+    return getVideoResource(file);
   }
 
-  return getVideoResource(file);
+  return null;
 };
 
 export default getResourceFromLocalFile;

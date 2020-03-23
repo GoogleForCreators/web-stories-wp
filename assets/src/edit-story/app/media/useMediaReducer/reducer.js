@@ -94,6 +94,7 @@ function reducer(state, { type, payload }) {
       if (mediaType === state.mediaType) return state;
       return {
         ...INITIAL_STATE,
+        media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
         processing: [...state.processing],
         processed: [...state.processed],
         searchTerm: state.searchTerm,

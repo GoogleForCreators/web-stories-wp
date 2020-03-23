@@ -54,13 +54,22 @@ function CanvasUploadDropTarget({ children }) {
   } = useMedia();
   const insertElement = useInsertElement();
   const {
-    actions: { updateElementById },
+    actions: { updateElementById, deleteElementById },
   } = useStory();
   const onDropHandler = useCallback(
     (files) => {
-      uploadMediaFromWorkspace(files, { insertElement, updateElementById });
+      uploadMediaFromWorkspace(files, {
+        insertElement,
+        updateElementById,
+        deleteElementById,
+      });
     },
-    [uploadMediaFromWorkspace, insertElement, updateElementById]
+    [
+      uploadMediaFromWorkspace,
+      insertElement,
+      updateElementById,
+      deleteElementById,
+    ]
   );
 
   return (
