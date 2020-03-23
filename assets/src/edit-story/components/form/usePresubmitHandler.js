@@ -17,31 +17,25 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
-import Panel from './panel';
-import PanelTitle from './shared/title';
-import PanelContent from './shared/content';
+import useFormContext from './useFormContext';
 
-function SimplePanel({ children, name, title }) {
-  return (
-    <Panel name={name}>
-      <PanelTitle>{title}</PanelTitle>
-      <PanelContent>{children}</PanelContent>
-    </Panel>
+/**
+ * @param {Function} handler The handler function with three arguments: the new
+ * element state, the element's updated properties, and the old element state.
+ * @param {Array|undefined} deps The handler dependencies. See `useCallback`.
+ */
+function usePresubmitHandler(handler, deps = undefined) {
+  const { registerPresubmitHandler } = useFormContext();
+  useEffect(
+    () => registerPresubmitHandler(handler),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [registerPresubmitHandler].concat(deps || [])
   );
 }
 
-SimplePanel.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-export default SimplePanel;
+export default usePresubmitHandler;

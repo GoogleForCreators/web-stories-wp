@@ -17,31 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { createContext } from 'react';
 
-/**
- * Internal dependencies
- */
-import Panel from './panel';
-import PanelTitle from './shared/title';
-import PanelContent from './shared/content';
-
-function SimplePanel({ children, name, title }) {
-  return (
-    <Panel name={name}>
-      <PanelTitle>{title}</PanelTitle>
-      <PanelContent>{children}</PanelContent>
-    </Panel>
-  );
-}
-
-SimplePanel.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-export default SimplePanel;
+export default createContext({
+  isMultiple: false,
+  registerPresubmitHandler: () => {},
+});

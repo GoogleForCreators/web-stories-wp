@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-function removeUnsetValues(map) {
-  const result = {};
-  for (const k in map) {
-    if (map[k] !== '') {
-      result[k] = map[k];
-    }
-  }
-  return result;
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useFormContext() {
+  return useContext(Context);
 }
 
-export default removeUnsetValues;
+export default useFormContext;

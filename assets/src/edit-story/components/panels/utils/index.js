@@ -14,24 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import MULTIPLE_VALUE from '../multipleValue';
-
-function getPreviewOpacity(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
-    return null;
-  }
-  const isSolidPattern = pattern.type === 'solid' || !pattern.type;
-  if (!isSolidPattern) {
-    const { alpha = 1 } = pattern;
-    return alpha * 100;
-  }
-  const {
-    color: { a = 1 },
-  } = pattern;
-  return Math.round(a * 100);
-}
-
-export default getPreviewOpacity;
+export { default as getCommonValue } from './getCommonValue';
+export { default as getCommonObjectValue } from './getCommonObjectValue';
+export { default as useCommonObjectValue } from './useCommonObjectValue';
+export { default as useCommonColorValue } from './useCommonColorValue';
