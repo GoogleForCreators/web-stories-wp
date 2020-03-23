@@ -14,14 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { ANIMATION_TYPE } from '../constants';
-import getBounceConfig from './bounce';
-import getSpinConfig from './spin';
-
-export default {
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
-};
+export { default as ConfigProvider } from './configProvider';
+export { default as useConfig } from './useConfig';

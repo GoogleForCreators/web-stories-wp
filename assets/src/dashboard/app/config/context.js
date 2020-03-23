@@ -15,13 +15,8 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { ANIMATION_TYPE } from '../constants';
-import getBounceConfig from './bounce';
-import getSpinConfig from './spin';
+import { createContext } from 'react';
 
-export default {
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
-};
+export default createContext({ api: {} });

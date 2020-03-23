@@ -15,13 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import { ANIMATION_TYPE } from '../constants';
-import getBounceConfig from './bounce';
-import getSpinConfig from './spin';
+import Context from './context';
 
-export default {
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
-};
+function useConfig() {
+  return useContext(Context);
+}
+
+export default useConfig;

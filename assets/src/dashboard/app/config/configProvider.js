@@ -15,13 +15,25 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import { ANIMATION_TYPE } from '../constants';
-import getBounceConfig from './bounce';
-import getSpinConfig from './spin';
+import Context from './context';
 
-export default {
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
+function ConfigProvider({ config, children }) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
+}
+
+ConfigProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  config: PropTypes.object.isRequired,
 };
+
+export default ConfigProvider;

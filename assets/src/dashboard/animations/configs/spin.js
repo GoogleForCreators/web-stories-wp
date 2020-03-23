@@ -17,11 +17,24 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPE } from '../constants';
-import getBounceConfig from './bounce';
-import getSpinConfig from './spin';
+import { SPIN_TYPE } from '../constants';
 
-export default {
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
-};
+export default function (type) {
+  const frames = {
+    [SPIN_TYPE.CLOCKWISE]: {
+      transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
+    },
+    [SPIN_TYPE.COUNTER_CLOCKWISE]: {
+      transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
+    },
+    [SPIN_TYPE.PING_PONG]: {
+      transform: ['rotateZ(-45deg)', 'rotateZ(40deg)'],
+    },
+  };
+
+  const keyframes = frames[type] || frames[SPIN_TYPE.CLOCKWISE];
+
+  return {
+    keyframes,
+  };
+}

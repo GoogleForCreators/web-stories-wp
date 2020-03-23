@@ -46,6 +46,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
     '<rootDir>/assets/src/edit-story/**/*.js',
+    '<rootDir>/assets/src/dashboard/**/*.js',
     '!**/test/**',
     '!**/stories/**',
   ],
