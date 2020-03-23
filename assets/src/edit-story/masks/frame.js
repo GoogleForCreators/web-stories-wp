@@ -43,12 +43,13 @@ const DropTargetSVG = styled.svg`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: ${({ active }) => (active ? 1 : -1)};
 `;
 
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: 0;
+  opacity: ${({ active }) => (active ? 0.3 : 0)};
 `;
 
 function WithDropTarget({ element, children, hover }) {
@@ -81,11 +82,9 @@ function WithDropTarget({ element, children, hover }) {
         width="100%"
         height="100%"
         preserveAspectRatio="none"
-        style={{
-          // Fixes issue where the outline prevents double-clicks from
-          // reaching the frame:
-          zIndex: activeDropTargetId === element.id ? 1 : -1,
-        }}
+        // Fixes issue where the outline prevents double-clicks from
+        // reaching the frame through zIndex
+        active={activeDropTargetId === element.id}
       >
         {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
@@ -115,9 +114,7 @@ function WithDropTarget({ element, children, hover }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          style={{
-            opacity: activeDropTargetId === element.id ? 0.3 : 0,
-          }}
+          active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
     </>

@@ -54,6 +54,7 @@ const BackgroundOverlay = styled.div`
 const ReplacementContainer = styled.div`
   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
+  opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
 function DisplayElement({ element }) {
@@ -116,9 +117,7 @@ function DisplayElement({ element }) {
         }}
       >
         <Display element={element} box={box} />
-        <ReplacementContainer
-          style={{ opacity: Boolean(replacementElement) ? 1 : 0 }}
-        >
+        <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
           {replacementElement && (
             <Replacement element={replacementElement} box={box} />
           )}
