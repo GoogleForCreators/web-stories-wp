@@ -30,7 +30,8 @@ const SCROLL_DISTANCE = 5;
 
 function LayerProvider({ children }) {
   const layers = useLayers();
-  const [scrollRatio, setScrollRatio] = useState(null);
+  const [hasScrollAbove, setHasScrollAbove] = useState(false);
+  const [hasScrollBelow, setHasScrollBelow] = useState(false);
   const [isReordering, setIsReordering] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(0);
   const [currentSeparator, setCurrentSeparator] = useState(null);
@@ -41,14 +42,18 @@ function LayerProvider({ children }) {
     []
   );
 
-  const updateScrollRatio = useCallback(() => {
+  const updateScrollMarkers = useCallback(() => {
     const node = scrollTarget.current;
-    if (!node) return;
+    if (!node) {
+      return;
+    }
     const possibleScroll = node.scrollHeight - node.clientHeight;
     if (possibleScroll <= 0) {
-      setScrollRatio(null);
+      setHasScrollAbove(false);
+      setHasScrollBelow(false);
     } else {
-      setScrollRatio(node.scrollTop / possibleScroll);
+      setHasScrollAbove(node.scrollTop > 0);
+      setHasScrollBelow(node.scrollTop < possibleScroll);
     }
   }, []);
 
@@ -56,8 +61,8 @@ function LayerProvider({ children }) {
     setScrollDirection,
   ]);
 
-  const canScrollUp = isReordering && scrollRatio > 0;
-  const canScrollDown = isReordering && scrollRatio < 1;
+  const canScrollUp = isReordering && hasScrollAbove;
+  const canScrollDown = isReordering && hasScrollBelow;
 
   useEffect(() => {
     const isNotScrolling = scrollDirection === 0;
@@ -65,23 +70,26 @@ function LayerProvider({ children }) {
     const isScrollingDown = canScrollDown && scrollDirection > 0;
     const isScrollingAnywhere = isScrollingUp || isScrollingDown;
     if (isNotScrolling || !isScrollingAnywhere) {
-      return;
+      return undefined;
     }
 
-    scrollTarget.current.scrollTop += scrollDirection * SCROLL_DISTANCE;
-    updateScrollRatio();
-  }, [
-    scrollDirection,
-    updateScrollRatio,
-    canScrollUp,
-    canScrollDown,
-    // scrollRatio is explicitly included here to make this effect re-render
-    // on every frame while there is still changes to be made to scroll ratio!
-    scrollRatio,
-  ]);
+    let mounted = true;
+    const update = () => {
+      scrollTarget.current.scrollTop += scrollDirection * SCROLL_DISTANCE;
+      updateScrollMarkers();
+      if (mounted) {
+        window.requestAnimationFrame(update);
+      }
+    };
+    update();
 
-  // Update scroll ratio whenever isReordering changes (to true really, but no harm)
-  useEffect(() => updateScrollRatio(), [isReordering, updateScrollRatio]);
+    return () => {
+      mounted = false;
+    };
+  }, [scrollDirection, updateScrollMarkers, canScrollUp, canScrollDown]);
+
+  // Update scroll markers whenever isReordering changes (to true really, but no harm)
+  useEffect(() => updateScrollMarkers(), [isReordering, updateScrollMarkers]);
 
   const state = {
     state: {

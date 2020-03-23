@@ -29,6 +29,7 @@ import panelContext from '../context';
 
 const Form = styled.form`
   padding: ${({ padding }) => padding || '10px 20px'};
+  overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? rgba(theme.colors.fg.v1, 0.07) : 'transparent'};
   ${({ hasBorder, theme }) =>
