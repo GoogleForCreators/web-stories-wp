@@ -47,7 +47,7 @@ const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const PAGE = 'page';
-const ELEMENT_ALIGNMENT = 'element_alignment';
+const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {

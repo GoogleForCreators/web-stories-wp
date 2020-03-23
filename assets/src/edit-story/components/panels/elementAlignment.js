@@ -128,8 +128,8 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
     [selectedElements]
   );
 
-  const isJustifyEnabled = isFill || selectedElements.length < 2;
-  const isDistributionEnabled = isFill || selectedElements.length < 3;
+  const isJustifyDisabled = isFill || selectedElements.length < 2;
+  const isDistributionDisabled = isFill || selectedElements.length < 3;
 
   const handleAlignLeft = () => {
     onSetProperties((properties) => {
@@ -298,14 +298,14 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   return (
     <ElementRow>
       <IconButton
-        disabled={isDistributionEnabled}
+        disabled={isDistributionDisabled}
         onClick={handleHorizontalDistribution}
         aria-label={__('Horizontal Distribution', 'web-stories')}
       >
         <HorizontalDistribute />
       </IconButton>
       <IconButton
-        disabled={isDistributionEnabled}
+        disabled={isDistributionDisabled}
         onClick={handleVerticalDistribution}
         aria-label={__('Vertical Distribution', 'web-stories')}
       >
@@ -313,42 +313,42 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       </IconButton>
       <SeparateBorder />
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignLeft}
         aria-label={__('Justify Left', 'web-stories')}
       >
         <AlignLeft />
       </IconButton>
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignCenter}
         aria-label={__('Justify Center', 'web-stories')}
       >
         <AlignCenter />
       </IconButton>
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignRight}
         aria-label={__('Justify Right', 'web-stories')}
       >
         <AlignRight />
       </IconButton>
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignTop}
         aria-label={__('Justify Top', 'web-stories')}
       >
         <AlignTop />
       </IconButton>
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignMiddle}
         aria-label={__('Justify Middle', 'web-stories')}
       >
         <AlignMiddle />
       </IconButton>
       <IconButton
-        disabled={isJustifyEnabled}
+        disabled={isJustifyDisabled}
         onClick={handleAlignBottom}
         aria-label={__('Justify Bottom', 'web-stories')}
       >
