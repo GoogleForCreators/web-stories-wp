@@ -24,12 +24,6 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
-
-/**
- * Internal dependencies
- */
-import { useConfig } from '../config';
 
 const Container = styled.div`
   display: flex;
@@ -83,54 +77,20 @@ const ActionButton = styled.button`
 `;
 
 function Snackbar({ notification, position }) {
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-  } = useConfig();
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-
   const notificationMessage = () => {
-    if (notification.type === 'error') {
-      if (notification.data === 'ValidError') {
-        return (
-          <Content>
-            {createInterpolateElement(
-              sprintf(
-                __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-                allowedMimeTypes.join(', ')
-              ),
-              {
-                b: <b />,
-              }
-            )}
-          </Content>
-        );
-      } else if (notification.multiple) {
-        return (
-          <Content>
-            {createInterpolateElement(
-              sprintf(
-                __(
-                  'Please choose only <b>%s</b> to upload.  The following file failed to uploaded:',
-                  'web-stories'
-                ),
-                allowedMimeTypes.join(', ')
-              ),
-              {
-                b: <b />,
-              }
-            )}
-            <List>
-              {notification.data.map((item) => (
-                <ListItem key={item}>{item}</ListItem>
-              ))}
-            </List>
-          </Content>
-        );
-      }
-      return <Content>{notification.message}</Content>;
+    if (notification.multiple) {
+      return (
+        <Content>
+          {notification.message}
+          <List>
+            {notification.list.map((item) => (
+              <ListItem key={item}>
+                {sprintf(__('%s', 'web-stories'), item)}
+              </ListItem>
+            ))}
+          </List>
+        </Content>
+      );
     }
     return <Content>{notification.message}</Content>;
   };

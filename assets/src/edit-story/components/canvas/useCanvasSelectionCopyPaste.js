@@ -22,6 +22,11 @@ import { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../app';
@@ -41,7 +46,12 @@ function useCanvasSelectionCopyPaste(container) {
     actions: { addElement, deleteSelectedElements },
   } = useStory();
 
-  const { uploadFile, isValidType } = useUploader();
+  const {
+    uploadFile,
+    isValidType,
+    validErrorMessage,
+    sizeErrorMessage,
+  } = useUploader();
   const { createSnackbar } = useSnackbar();
 
   const copyCutHandler = useCallback(
@@ -145,8 +155,10 @@ function useCanvasSelectionCopyPaste(container) {
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
-        const errorFiles = [];
         const possibleRetryFiles = [];
+        const sizeErrorFiles = [];
+        const validErrorFiles = [];
+        const otherErrorFiles = [];
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           if (isValidType(item)) {
@@ -156,23 +168,63 @@ function useCanvasSelectionCopyPaste(container) {
             } catch (e) {
               if (e.name !== 'SizeError' && e.name !== 'ValidError') {
                 possibleRetryFiles.push(item.getAsFile());
+                e.message = __(
+                  'Sorry, file has failed to upload',
+                  'web-stories'
+                );
+                e.file = item.getAsFile().name;
               }
-              errorFiles.push(e.file);
+              switch (e.name) {
+                case 'SizeError':
+                  sizeErrorFiles.push(e);
+                  break;
+                case 'ValidError':
+                  validErrorFiles.push(e);
+                  break;
+                default:
+                  otherErrorFiles.push(e);
+                  break;
+              }
             }
           }
         }
-        if (errorFiles.length > 0) {
+        const createSnackbarWithList = ({ message, list }) => {
+          if (list.length === 0) return;
           createSnackbar({
             type: 'error',
+            message,
             multiple: true,
-            data: errorFiles,
+            list,
           });
-        }
+        };
+
+        createSnackbarWithList({
+          message: __('Sorry, files has failed to upload', 'web-stories'),
+          list: otherErrorFiles.map((e) => e.file),
+        });
+
+        createSnackbarWithList({
+          message: sizeErrorMessage,
+          list: sizeErrorFiles.map((e) => e.file),
+        });
+
+        createSnackbarWithList({
+          message: validErrorMessage,
+          list: validErrorFiles.map((e) => e.file),
+        });
       } catch (e) {
         // Ignore.
       }
     },
-    [addElement, currentPage, isValidType, uploadFile, createSnackbar]
+    [
+      addElement,
+      currentPage,
+      isValidType,
+      uploadFile,
+      createSnackbar,
+      validErrorMessage,
+      sizeErrorMessage,
+    ]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);

@@ -23,6 +23,7 @@ import { useCallback } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -64,25 +65,54 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
+  const validErrorMessage = createInterpolateElement(
+    sprintf(
+      __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+      allowedMimeTypes.join(', ')
+    ),
+    {
+      b: <b />,
+    }
+  );
+
+  const sizeErrorMessage = sprintf(
+    __(
+      'Your files is larger than the upload limit. The upload limit is %sMB. Please resize and try again!',
+      'web-stories'
+    ),
+    bytesToMB(maxUpload)
+  );
+
   const uploadFile = (file) => {
     // TODO Add permission check here, see Gutenberg's userCan function.
     if (!fileSizeCheck(file)) {
-      const SizeError = new Error('File size error');
+      const SizeError = new Error(
+        sprintf(
+          __(
+            'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
+            'web-stories'
+          ),
+          bytesToMB(file.size),
+          bytesToMB(maxUpload)
+        )
+      );
       SizeError.name = 'SizeError';
       SizeError.file = file.name;
-      SizeError.message = sprintf(
-        __(
-          'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
-          'web-stories'
-        ),
-        bytesToMB(file.size),
-        bytesToMB(maxUpload)
-      );
       throw SizeError;
     }
 
     if (!isValidType(file)) {
-      const ValidError = new Error('File type error');
+      const ValidError = new Error(
+        createInterpolateElement(
+          sprintf(
+            __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+            allowedMimeTypes.join(', ')
+          ),
+          {
+            b: <b />,
+          }
+        )
+      );
       ValidError.name = 'ValidError';
       ValidError.file = file.name;
       throw ValidError;
@@ -102,6 +132,8 @@ function useUploader(refreshLibrary = true) {
   return {
     uploadFile,
     isValidType,
+    validErrorMessage,
+    sizeErrorMessage,
   };
 }
 
