@@ -46,6 +46,7 @@ import {
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
+  draftMarkupToContent,
   getFilteredState,
   getHandleKeyCommand,
   getSelectionForAll,
@@ -90,6 +91,7 @@ const TextBox = styled.div`
 function TextEdit({
   element: {
     id,
+    bold,
     content,
     color,
     backgroundColor,
@@ -103,11 +105,12 @@ function TextEdit({
     opacity,
     padding,
     textAlign,
+    textDecoration,
   },
   box: { x, y, height, rotationAngle },
 }) {
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
     color,
@@ -121,7 +124,11 @@ function TextEdit({
     letterSpacing,
     lineHeight,
     opacity,
-    padding,
+    padding: {
+      horizontal: dataToEditorX(padding.horizontal),
+      vertical: dataToEditorY(padding.vertical),
+    },
+    textDecoration,
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
@@ -144,7 +151,9 @@ function TextEdit({
   const initialState = useMemo(() => {
     const contentWithBreaks = (content || '')
       .split('\n')
-      .map((s) => `<p>${s}</p>`)
+      .map((s) => {
+        return `<p>${draftMarkupToContent(s, bold)}</p>`;
+      })
       .join('');
     let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
     if (clearContent) {
@@ -162,7 +171,7 @@ function TextEdit({
       state = EditorState.forceSelection(state, selection);
     }
     return state;
-  }, [content, clearContent, selectAll, offset]);
+  }, [content, clearContent, selectAll, offset, bold]);
   const [editorState, setEditorState] = useState(initialState);
   const editorHeightRef = useRef(0);
 

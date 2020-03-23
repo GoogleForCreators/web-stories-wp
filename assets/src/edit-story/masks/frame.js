@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -52,22 +52,30 @@ const DropTargetPath = styled.path`
   opacity: 0;
 `;
 
-function WithDropTarget({ element, children }) {
+function WithDropTarget({ element, children, hover }) {
   const pathRef = useRef(null);
+  const indicatorRef = useRef(null);
 
   const {
-    actions: { registerDropTarget },
+    state: { draggingResource },
+    actions: { isDropSource, registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
-  const { id } = element;
+  const { id, resource } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
-  }, [id, pathRef, registerDropTarget]);
+    return () => {
+      unregisterDropTarget(id);
+    };
+  }, [id, registerDropTarget, unregisterDropTarget]);
 
   useTransformHandler(element.id, (transform) => {
     const target = pathRef.current;
+    if (!target) {
+      return;
+    }
     target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
   });
 
@@ -79,22 +87,40 @@ function WithDropTarget({ element, children }) {
     <>
       {children}
       <DropTargetSVG
-        viewBox="0 0 1 1"
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
       >
+        {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          ref={pathRef}
+          ref={indicatorRef}
           vectorEffect="non-scaling-stroke"
-          strokeWidth="32"
+          strokeWidth="4"
           fill="none"
           stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          style={
+            (hover && !draggingResource) ||
+            (Boolean(draggingResource) &&
+              isDropSource(draggingResource.type) &&
+              draggingResource !== resource)
+              ? { opacity: 1 }
+              : {}
+          }
+        />
+        {/** Drop target shown when an element is in the drop target area  */}
+        <DropTargetPath
+          ref={pathRef}
+          vectorEffect="non-scaling-stroke"
+          strokeWidth="48"
+          fill="none"
+          stroke="#0063F9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d={mask?.path}
         />
       </DropTargetSVG>
     </>
@@ -104,9 +130,12 @@ function WithDropTarget({ element, children }) {
 WithDropTarget.propTypes = {
   element: StoryPropTypes.element,
   children: StoryPropTypes.children.isRequired,
+  hover: PropTypes.bool,
 };
 
 export default function WithMask({ element, fill, style, children, ...rest }) {
+  const [hover, setHover] = useState(false);
+
   const mask = getElementMask(element);
   if (!mask?.type) {
     return (
@@ -135,15 +164,23 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         clipPath: `url(#${maskId})`,
       }}
       {...rest}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>
       </svg>
-      <WithDropTarget element={element}>{children}</WithDropTarget>
+      <WithDropTarget element={element} hover={hover}>
+        {children}
+      </WithDropTarget>
     </div>
   );
 }

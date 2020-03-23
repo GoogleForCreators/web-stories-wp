@@ -33,6 +33,8 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
+import { useStory } from '../../app';
+import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -41,10 +43,21 @@ const Wrapper = styled.div`
 	contain: layout paint;
 `;
 
+const BackgroundOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`;
+
 function DisplayElement({ element }) {
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { currentPage },
+  } = useStory();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -56,7 +69,7 @@ function DisplayElement({ element }) {
       }
     : null;
 
-  const { id, opacity, type } = element;
+  const { id, opacity, type, isBackground } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.type) || {};
@@ -80,7 +93,7 @@ function DisplayElement({ element }) {
         target.style.height = `${resize[1]}px`;
       }
       if (typeof dropTargets?.hover !== 'undefined') {
-        target.style.opacity = dropTargets.hover ? 0.6 : 1;
+        target.style.opacity = dropTargets.hover ? 0 : 1;
       }
       if (typeof dropTargets?.replacement !== 'undefined') {
         setReplacement(dropTargets.replacement || null);
@@ -103,6 +116,11 @@ function DisplayElement({ element }) {
           <Replacement element={replacementElement} box={box} />
         )}
       </WithMask>
+      {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
+        <BackgroundOverlay
+          style={generateOverlayStyles(currentPage.backgroundOverlay)}
+        />
+      )}
     </Wrapper>
   );
 }

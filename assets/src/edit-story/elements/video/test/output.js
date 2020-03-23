@@ -33,6 +33,7 @@ describe('Video output', () => {
         height: 1920,
         width: 1080,
         rotationAngle: 0,
+        loop: true,
         resource: {
           type: 'video',
           mimeType: 'video/mp4',

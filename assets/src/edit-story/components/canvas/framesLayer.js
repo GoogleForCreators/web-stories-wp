@@ -21,10 +21,17 @@ import styled from 'styled-components';
 import { useRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
+import { prettifyShortcut } from '../keyboard';
+import { LinkGuidelines } from '../link';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
@@ -37,10 +44,31 @@ const FramesPageArea = withOverlay(
   })``
 );
 
+const FrameSidebar = styled.div`
+  position: absolute;
+  left: -200px;
+  width: 200px;
+  z-index: 1;
+  pointer-events: none;
+`;
+
+const Hint = styled.div`
+  padding: 12px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: 24px;
+  text-align: right;
+`;
+
 function FramesLayer() {
   const {
     state: { currentPage },
   } = useStory();
+  const {
+    state: { draggingResource },
+    actions: { isDropSource },
+  } = useDropTargets();
 
   const ref = useRef(null);
   useCanvasKeys(ref);
@@ -60,6 +88,21 @@ function FramesLayer() {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
         <Selection />
+        {Boolean(draggingResource) && isDropSource(draggingResource.type) && (
+          <FrameSidebar>
+            <Hint>
+              {sprintf(
+                /* translators: %s: keyboard shortcut. */
+                __(
+                  'Drop targets are outlined in blue. Use %s to disable snapping.',
+                  'web-stories'
+                ),
+                prettifyShortcut('mod')
+              )}
+            </Hint>
+          </FrameSidebar>
+        )}
+        <LinkGuidelines />
       </FramesPageArea>
     </Layer>
   );

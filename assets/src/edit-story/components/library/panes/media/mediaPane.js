@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -32,10 +33,11 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
+import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, Title, SearchInput, Header } from '../../common';
-import Dropzone from '../../dropzone';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import paneId from './paneId';
 import {
   getResourceFromMediaPicker,
@@ -44,9 +46,12 @@ import {
 import MediaElement from './mediaElement';
 
 const Container = styled.div`
+  grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
+  overflow: auto;
+  padding: 15px 1em 0 1em;
 `;
 
 const Column = styled.div``;
@@ -54,12 +59,13 @@ const Column = styled.div``;
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 16px;
+  padding: 1em;
 `;
 
 const FilterButtons = styled.div`
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   padding: 18px 0;
-  margin: 10px 0 15px;
+  margin: 10px 0 0 0;
 `;
 
 const FilterButton = styled.button`
@@ -74,18 +80,47 @@ const FilterButton = styled.button`
   text-transform: uppercase;
 `;
 
+const Padding = styled.div`
+  grid-area: header;
+  padding: 1em 1em 0 1em;
+`;
+
+const StyledPane = styled(Pane)`
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+`;
+
+const Inner = styled.div`
+  height: 100%;
+  display: grid;
+  grid:
+    'header   ' auto
+    'infinitescroll' 1fr
+    / 1fr;
+`;
+
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
   { filter: 'video', name: __('Video', 'web-stories') },
 ];
 
-const DEFAULT_WIDTH = 150;
+// By default, the element should be 50% of the page.
+const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: { media, isMediaLoading, isMediaLoaded, mediaType, searchTerm },
-    actions: { resetFilters, setMediaType, setSearchTerm, uploadVideoFrame },
+    state: {
+      hasMore,
+      media,
+      isMediaLoading,
+      isMediaLoaded,
+      mediaType,
+      searchTerm,
+    },
+    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
   } = useMedia();
 
   const {
@@ -99,7 +134,7 @@ function MediaPane(props) {
     actions: { insertElement },
   } = useLibrary();
 
-  const onClose = resetFilters;
+  const onClose = resetWithFetch;
 
   /**
    * Callback of select in media picker to insert media element.
@@ -108,11 +143,7 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    const oRatio =
-      resource.width && resource.height ? resource.width / resource.height : 1;
-    const height = DEFAULT_WIDTH / oRatio;
-
-    insertMediaElement(resource, DEFAULT_WIDTH, height);
+    insertMediaElement(resource);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -142,26 +173,11 @@ function MediaPane(props) {
    * Insert element such image, video and audio into the editor.
    *
    * @param {Object} resource Resource object
-   * @param {number} width Width that element is inserted into editor.
-   * @param {number} height Height that element is inserted into editor.
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (resource, width, height) => {
-    const element = insertElement(resource.type, {
-      resource,
-      width,
-      height,
-      x: 5,
-      y: 5,
-      rotationAngle: 0,
-    });
-
-    // Generate video poster if one not set.
-    if (resource.type === 'video' && resource.videoId && !resource.posterId) {
-      uploadVideoFrame(resource.videoId, resource.src, element.id);
-    }
-
-    return element;
+  const insertMediaElement = (resource) => {
+    const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
+    return insertElement(resource.type, { resource, width });
   };
 
   /**
@@ -182,49 +198,70 @@ function MediaPane(props) {
     )
     .map((attachment) => getResourceFromAttachment(attachment));
 
+  const refContainer = useRef();
+  const refContainerFooter = useRef();
+
+  useIntersectionEffect(
+    refContainerFooter,
+    {
+      root: refContainer,
+      rootMargin: '0px 0px 300px 0px',
+    },
+    (entry) => {
+      if (!isMediaLoaded || isMediaLoading) return;
+      if (!hasMore) return;
+      if (!entry.isIntersecting) return;
+
+      setNextPage();
+    },
+    [hasMore, isMediaLoading, isMediaLoaded]
+  );
+
   return (
-    <Pane id={paneId} {...props}>
-      <Dropzone>
-        <Header>
-          <Title>
-            {__('Media', 'web-stories')}
-            {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-          </Title>
-          <MainButton onClick={openMediaPicker}>
-            {__('Upload', 'web-stories')}
-          </MainButton>
-        </Header>
+    <StyledPane id={paneId} {...props}>
+      <Inner>
+        <Padding>
+          <Header>
+            <Title>
+              {__('Media', 'web-stories')}
+              {(!isMediaLoaded || isMediaLoading) && <Spinner />}
+            </Title>
+            <MainButton onClick={openMediaPicker}>
+              {__('Upload', 'web-stories')}
+            </MainButton>
+          </Header>
 
-        <SearchInput
-          value={searchTerm}
-          placeholder={__('Search media...', 'web-stories')}
-          onChange={onSearch}
-        />
+          <SearchInput
+            value={searchTerm}
+            placeholder={__('Search media...', 'web-stories')}
+            onChange={onSearch}
+          />
 
-        <FilterButtons>
-          {FILTERS.map(({ filter, name }, index) => (
-            <FilterButton
-              key={index}
-              active={filter === mediaType}
-              onClick={onFilter(filter)}
-            >
-              {name}
-            </FilterButton>
-          ))}
-        </FilterButtons>
+          <FilterButtons>
+            {FILTERS.map(({ filter, name }, index) => (
+              <FilterButton
+                key={index}
+                active={filter === mediaType}
+                onClick={onFilter(filter)}
+              >
+                {name}
+              </FilterButton>
+            ))}
+          </FilterButtons>
+        </Padding>
 
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container>
+          <Container ref={refContainer}>
             <Column>
               {resources
                 .filter((_, index) => isEven(index))
-                .map((resource) => (
+                .map((resource, i) => (
                   <MediaElement
                     resource={resource}
-                    key={resource.src}
-                    width={DEFAULT_WIDTH}
+                    key={i}
+                    width={PREVIEW_SIZE}
                     onInsert={insertMediaElement}
                   />
                 ))}
@@ -232,19 +269,20 @@ function MediaPane(props) {
             <Column>
               {resources
                 .filter((_, index) => !isEven(index))
-                .map((resource) => (
+                .map((resource, i) => (
                   <MediaElement
                     resource={resource}
-                    key={resource.src}
-                    width={DEFAULT_WIDTH}
+                    key={i}
+                    width={PREVIEW_SIZE}
                     onInsert={insertMediaElement}
                   />
                 ))}
             </Column>
+            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
           </Container>
         )}
-      </Dropzone>
-    </Pane>
+      </Inner>
+    </StyledPane>
   );
 }
 

@@ -18,45 +18,42 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { rgba } from 'polished';
-import { debounce } from 'throttle-debounce';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { TextInput, Media, Row } from '../form';
-import { createLink } from '../link';
+import { useDebouncedCallback } from 'use-debounce';
+import { Media, Row } from '../form';
+import {
+  createLink,
+  inferLinkType,
+  getLinkFromElement,
+  LinkType,
+} from '../link';
+import { useAPI } from '../../app/api';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
-
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const ExpandedTextInput = styled(BoxedTextInput)`
-  flex-grow: 1;
-`;
-
-const Note = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: 16px;
-`;
+import { Note, ExpandedTextInput } from './shared';
 
 function LinkPanel({ selectedElements, onSetProperties }) {
-  const link = getCommonValue(selectedElements, 'link') || null;
-  const isFill = getCommonValue(selectedElements, 'isFill');
+  const selectedElement = selectedElements[0];
+  const { isFill } = selectedElement;
+  const link = getLinkFromElement(selectedElement);
+  const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
+    selectedElement,
+  ]);
 
-  const [state, setState] = useState({ link: createLink() });
+  const [state, setState] = useState({
+    ...(link || createLink({ type: inferredLinkType })),
+  });
+
+  const [fetchingMetadata, setFetchingMetadata] = useState(false);
   useEffect(() => {
     setState({ ...link });
   }, [link]);
@@ -64,10 +61,12 @@ function LinkPanel({ selectedElements, onSetProperties }) {
   const handleChange = useCallback(
     (property) => (value) =>
       setState((originalState) => ({
-        ...originalState,
+        ...(originalState && originalState?.type
+          ? originalState
+          : createLink({ type: inferredLinkType })),
         [property]: value,
       })),
-    [setState]
+    [setState, inferredLinkType]
   );
   const handleChangeIcon = useCallback(
     (image) => {
@@ -78,11 +77,11 @@ function LinkPanel({ selectedElements, onSetProperties }) {
       }));
       onSetProperties({ link: { ...state, icon } });
     },
-    [onSetProperties, state]
+    [state, onSetProperties]
   );
   const handleSubmit = useCallback(
     (evt) => {
-      onSetProperties({ link: state?.url ? state : null });
+      onSetProperties({ link: state?.url ? { ...state } : null });
       if (evt) {
         evt.preventDefault();
       }
@@ -90,21 +89,42 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     [state, onSetProperties]
   );
 
+  const {
+    actions: { getLinkMetadata },
+  } = useAPI();
+
   const canLink = selectedElements.length === 1 && !isFill;
-  const populateMetadata = useCallback(
-    debounce(300, async (/** url */) => {
-      // TODO(wassgha): Implement getting the page metadata
-    })
-  );
+
+  const [populateMetadata] = useDebouncedCallback((url) => {
+    const urlWithProtocol = withProtocol(url);
+    if (!isValidUrl(urlWithProtocol)) {
+      return;
+    }
+    setFetchingMetadata(true);
+    getLinkMetadata(urlWithProtocol)
+      .then(({ title, image }) => {
+        setState((originalState) => ({
+          ...originalState,
+          url: urlWithProtocol,
+          desc: title ? title : originalState.desc,
+          icon: image
+            ? toAbsoluteUrl(urlWithProtocol, image)
+            : originalState.icon,
+        }));
+      })
+      .finally(() => {
+        setFetchingMetadata(false);
+      });
+  }, 1200);
 
   useEffect(() => {
-    if (state?.url) {
-      populateMetadata(state?.url);
-    } else if (state.url === '' || state.desc || state.icon) {
-      setState({ url: null, desc: null, icon: null });
+    if (state.url === '') {
+      setState({ url: null, desc: null, icon: null, type: inferredLinkType });
       onSetProperties({ link: null });
+    } else if (state.url) {
+      populateMetadata(state?.url);
     }
-  }, [onSetProperties, populateMetadata, state]);
+  }, [onSetProperties, populateMetadata, inferredLinkType, state.url, state]);
 
   return (
     <SimplePanel
@@ -128,7 +148,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         />
       </Row>
 
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -138,8 +158,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
           />
         </Row>
       )}
-      {/** TODO(@wassgha): Replace with image upload component */}
-      {Boolean(state.url) && (
+      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
         <Row spaceBetween={false}>
           <Media
             value={state?.icon}
@@ -148,6 +167,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
             size={60}
+            loading={fetchingMetadata}
             circle
           />
           <span>{__('Optional brand icon', 'web-stories')}</span>

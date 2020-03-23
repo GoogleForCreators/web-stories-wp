@@ -19,18 +19,20 @@
  */
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch) => () => {
-  dispatch({ type: types.FETCH_MEDIA_START });
+export const fetchMediaStart = (dispatch) => ({ pagingNum }) => {
+  dispatch({ type: types.FETCH_MEDIA_START, payload: { pagingNum } });
 };
 
 export const fetchMediaSuccess = (dispatch) => ({
   media,
   mediaType,
   searchTerm,
+  pagingNum,
+  totalPages,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm },
+    payload: { media, mediaType, searchTerm, pagingNum, totalPages },
   });
 };
 
@@ -48,4 +50,27 @@ export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
 
 export const setMediaType = (dispatch) => ({ mediaType }) => {
   dispatch({ type: types.SET_MEDIA_TYPE, payload: { mediaType } });
+};
+
+export const setNextPage = (dispatch) => () => {
+  dispatch({ type: types.SET_NEXT_PAGE });
+};
+
+export const setProcessing = (dispatch) => ({ videoId }) => {
+  dispatch({ type: types.ADD_PROCESSING, payload: { videoId } });
+};
+
+export const removeProcessing = (dispatch) => ({ videoId }) => {
+  dispatch({ type: types.REMOVE_PROCESSING, payload: { videoId } });
+};
+
+export const updateMediaElement = (dispatch) => ({
+  videoId,
+  posterId,
+  poster,
+}) => {
+  dispatch({
+    type: types.UPDATE_MEDIA_ELEMENT,
+    payload: { videoId, posterId, poster },
+  });
 };

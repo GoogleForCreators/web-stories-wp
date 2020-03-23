@@ -18,6 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { OverlayType } from './utils/backgroundOverlay';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -96,6 +100,7 @@ StoryPropTypes.page = PropTypes.shape({
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundElementId: PropTypes.string,
   backgroundColor: PatternPropType,
+  backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
@@ -179,8 +184,12 @@ StoryPropTypes.elements.text = PropTypes.shape({
   fontStyle: PropTypes.string,
   letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   lineHeight: PropTypes.number,
-  padding: PropTypes.number,
+  padding: PropTypes.shape({
+    horizontal: PropTypes.number,
+    vertical: PropTypes.number,
+  }),
   textAlign: PropTypes.string,
+  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({

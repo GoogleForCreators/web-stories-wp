@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, fonts, users, statuses },
+    api: { stories, media, fonts, link, users, statuses },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -105,10 +105,14 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm }) => {
+    ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, { per_page: perPage });
+      apiPath = addQueryArgs(apiPath, {
+        context: 'edit',
+        per_page: perPage,
+        page: pagingNum,
+      });
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -118,30 +122,40 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath }).then((data) =>
-        data.map(
-          ({
-            id,
-            guid: { rendered: src },
-            media_details: {
-              width: oWidth,
-              height: oHeight,
-              length_formatted: lengthFormatted,
-            },
-            mime_type: mimeType,
-            featured_media: posterId,
-            featured_media_src: poster,
-          }) => ({
-            id,
-            posterId,
-            poster,
-            src,
-            oWidth,
-            oHeight,
-            mimeType,
-            lengthFormatted,
-          })
-        )
+      return apiFetch({ path: apiPath, parse: false }).then(
+        async (response) => {
+          const jsonArray = await response.json();
+          const data = jsonArray.map(
+            ({
+              id,
+              guid: { rendered: src },
+              media_details: {
+                width: oWidth,
+                height: oHeight,
+                length_formatted: lengthFormatted,
+              },
+              title: { raw: title },
+              description: { raw: description },
+              mime_type: mimeType,
+              featured_media: posterId,
+              featured_media_src: poster,
+              alt_text: alt,
+            }) => ({
+              id,
+              posterId,
+              poster,
+              src,
+              oWidth,
+              oHeight,
+              mimeType,
+              lengthFormatted,
+              alt: alt ? alt : description,
+              title,
+            })
+          );
+
+          return { data, headers: response.headers };
+        }
       );
     },
     [media]
@@ -190,6 +204,23 @@ function APIProvider({ children }) {
     [media]
   );
 
+  /**
+   * Gets metadata (title, favicon, etc.) from
+   * a provided URL.
+   *
+   * @param  {number} url
+   * @return {Promise} Result promise
+   */
+  const getLinkMetadata = useCallback(
+    (url) => {
+      const path = addQueryArgs(link, { url });
+      return apiFetch({
+        path,
+      });
+    },
+    [link]
+  );
+
   const getAllFonts = useCallback(
     ({}) => {
       return apiFetch({ path: fonts }).then((data) =>
@@ -215,6 +246,7 @@ function APIProvider({ children }) {
     actions: {
       getStoryById,
       getMedia,
+      getLinkMetadata,
       saveStoryById,
       deleteStoryById,
       getAllFonts,

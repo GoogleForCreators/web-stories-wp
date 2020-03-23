@@ -34,6 +34,24 @@ const MarkSpan = styled.span`
   align-items: center;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Label = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  margin-top: 8px;
+`;
+
 const ContainerLabel = styled.label`
   display: flex;
   position: relative;
@@ -57,8 +75,8 @@ const ContainerLabel = styled.label`
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};
-    width: ${({ IconWidth }) => IconWidth}px;
-    height: ${({ IconHeight }) => IconHeight}px;
+    width: ${({ iconWidth }) => iconWidth}px;
+    height: ${({ iconHeight }) => iconHeight}px;
   }
 `;
 
@@ -68,29 +86,29 @@ function ToggleButton({
   icon,
   uncheckedIcon,
   onChange,
-  boxed,
-  expand,
-  IconWidth,
-  IconHeight,
+  iconWidth,
+  iconHeight,
+  label,
   ...rest
 }) {
   return (
-    <ContainerLabel
-      expand={expand}
-      boxed={boxed}
-      disabled={disabled}
-      value={value}
-      IconWidth={IconWidth}
-      IconHeight={IconHeight}
-    >
-      <CheckBoxInput
-        checked={value}
-        onChange={() => onChange(!value)}
+    <Container>
+      <ContainerLabel
         disabled={disabled}
-        {...rest}
-      />
-      <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
-    </ContainerLabel>
+        value={value}
+        iconWidth={iconWidth}
+        iconHeight={iconHeight}
+      >
+        <CheckBoxInput
+          checked={value}
+          onChange={() => onChange(!value)}
+          disabled={disabled}
+          {...rest}
+        />
+        <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
+      </ContainerLabel>
+      {Boolean(label) && <Label>{label}</Label>}
+    </Container>
   );
 }
 
@@ -99,21 +117,21 @@ ToggleButton.propTypes = {
   onChange: PropTypes.func.isRequired,
   icon: PropTypes.node,
   uncheckedIcon: PropTypes.node,
+  label: PropTypes.string,
   disabled: PropTypes.bool,
-  boxed: PropTypes.bool,
-  expand: PropTypes.bool,
-  IconHeight: PropTypes.number,
-  IconWidth: PropTypes.number,
+  iconHeight: PropTypes.number,
+  iconWidth: PropTypes.number,
 };
 
 ToggleButton.defaultProps = {
   icon: null,
   uncheckedIcon: null,
+  label: null,
   disabled: false,
   boxed: false,
   expand: false,
-  IconWidth: 14,
-  IconHeight: 9,
+  iconWidth: 14,
+  iconHeight: 9,
 };
 
 export default ToggleButton;

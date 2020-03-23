@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -49,13 +49,14 @@ const Wrapper = styled.div`
 	&:focus,
 	&:active,
 	&:hover {
-		outline: 1px solid ${({ theme }) => theme.colors.selection};
+		outline: ${({ theme, hasMask }) =>
+      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
 `;
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame } = getDefinitionForType(type);
+  const { Frame, isMaskable } = getDefinitionForType(type);
   const elementRef = useRef();
 
   const {
@@ -67,6 +68,9 @@ function FrameElement({ element }) {
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { activeDropTargetId },
+  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
@@ -92,10 +96,12 @@ function FrameElement({ element }) {
       }}
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
+      hasMask={isMaskable}
     >
       <WithLink
         element={element}
-        showTooltip={selectedElementIds.length === 1 && isSelected}
+        active={selectedElementIds.length === 1 && isSelected}
+        dragging={Boolean(activeDropTargetId)}
       >
         <WithMask element={element} fill={true}>
           {Frame ? (

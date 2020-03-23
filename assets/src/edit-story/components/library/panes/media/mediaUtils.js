@@ -41,6 +41,8 @@ export const getResourceFromAttachment = (attachment) => {
     posterId,
     poster,
     lengthFormatted,
+    title,
+    alt,
   } = attachment;
 
   return {
@@ -53,6 +55,8 @@ export const getResourceFromAttachment = (attachment) => {
     poster,
     videoId,
     lengthFormatted,
+    title,
+    alt,
   };
 };
 
@@ -72,6 +76,8 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
+    title,
+    alt,
   } = mediaPickerEl;
   return {
     type: getTypeFromMime(mimeType),
@@ -82,5 +88,33 @@ export const getResourceFromMediaPicker = (mediaPickerEl) => {
     posterId,
     poster,
     videoId,
+    title,
+    alt,
+  };
+};
+
+/**
+ * Generates a resource object from the upload API response object
+ *
+ * @param {Object} file The uploaded file payload.
+ * @return {Object} Resource object.
+ */
+export const getResourceFromUploadAPI = (file) => {
+  const {
+    guid: { rendered: src },
+    mime_type: mimeType,
+    media_details: { width, height },
+    id: videoId,
+    featured_media: posterId,
+    featured_media_src: poster,
+  } = file;
+  const type = getTypeFromMime(mimeType);
+  return {
+    type,
+    src,
+    width,
+    height,
+    mimeType,
+    ...(type === 'video' ? { posterId, poster, videoId } : {}),
   };
 };
