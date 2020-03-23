@@ -23,16 +23,17 @@ import { rgba } from 'polished';
 
 const SectionContainer = styled.div`
   position: relative;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  margin-top: 28px;
+  margin-bottom: 28px;
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
 `;
 const SectionTitle = styled.h2`
   color: ${({ theme }) => theme.colors.fg.v1};
   margin: 0;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: normal;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  font-weight: 500;
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   margin-bottom: 16px;
 `;
 
