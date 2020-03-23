@@ -40,17 +40,15 @@ import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
 import { SimplePanel } from './panel';
 import { Note, ExpandedTextInput } from './shared';
-import { getCommonValue, useCommonObjectValue } from './utils';
 
 const DEFAULT_LINK = createLink({ url: null, icon: null, desc: null });
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
-  const inferredLinkType = useMemo(
-    () => inferLinkType(selectedElement),
-    [selectedElement]
-  );
+  const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
+    selectedElement,
+  ]);
   const link = useMemo(
     () => getLinkFromElement(selectedElement) || DEFAULT_LINK,
     [selectedElement]
@@ -105,7 +103,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           type: inferredLinkType,
         },
         DEFAULT_LINK,
-        submit);
+        submit
+      );
     },
     [populateMetadata, pushUpdateForObject, inferredLinkType]
   );
@@ -118,10 +117,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   return (
-    <SimplePanel
-      name="link"
-      title={__('Link', 'web-stories')}
-    >
+    <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
         <Note>
           {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}

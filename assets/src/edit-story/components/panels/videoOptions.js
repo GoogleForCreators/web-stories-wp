@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * WordPress dependencies
  */
@@ -28,22 +28,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { Switch } from '../form';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
+import { getCommonValue } from './utils';
 
-function VideoOptionsPanel({ selectedElements, onSetProperties }) {
+function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const loop = getCommonValue(selectedElements, 'loop');
-  const [state, setState] = useState({ loop });
-  useEffect(() => {
-    setState({ loop });
-  }, [loop]);
-
-  const handleChange = (value) => {
-    const newState = {
-      loop: value,
-    };
-    onSetProperties(newState);
-    setState({ ...state, ...newState });
-  };
 
   return (
     <SimplePanel
@@ -51,10 +39,10 @@ function VideoOptionsPanel({ selectedElements, onSetProperties }) {
       title={__('Video settings', 'web-stories')}
     >
       <Switch
-        value={state.loop}
+        value={loop}
         onLabel={__('Loop', 'web-stories')}
         offLabel={__('Play once', 'web-stories')}
-        onChange={handleChange}
+        onChange={(value) => pushUpdate({ loop: value }, true)}
       />
     </SimplePanel>
   );
@@ -62,7 +50,7 @@ function VideoOptionsPanel({ selectedElements, onSetProperties }) {
 
 VideoOptionsPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default VideoOptionsPanel;

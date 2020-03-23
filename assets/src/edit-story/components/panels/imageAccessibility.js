@@ -32,28 +32,26 @@ import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 
-const DEFAULT_RESOURCE_ALT = { alt: null };
+const DEFAULT_RESOURCE = { alt: null };
 
 function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
-  const resourceAlt = useCommonObjectValue(
+  const resource = useCommonObjectValue(
     selectedElements,
     'resource',
-    DEFAULT_RESOURCE_ALT
-  ).alt;
-  const elementAlt = getCommonValue(selectedElements, 'alt');
-  const alt = elementAlt || resourceAlt;
+    DEFAULT_RESOURCE
+  );
+  const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
 
   return (
     <SimplePanel
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
-      onSubmit={handleSubmit}
     >
       <Row>
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
-          onChange={alt => pushUpdate({alt})}
+          onChange={(value) => pushUpdate({ alt: value })}
           clear
         />
       </Row>

@@ -62,7 +62,12 @@ function VideoDisplay({
   );
   return (
     <Element>
-      <Video poster={poster || resource.poster} style={style} {...videoProps} loop={loop}>
+      <Video
+        poster={poster || resource.poster}
+        style={style}
+        {...videoProps}
+        loop={loop}
+      >
         <source src={resource.src} type={resource.mimeType} />
       </Video>
     </Element>

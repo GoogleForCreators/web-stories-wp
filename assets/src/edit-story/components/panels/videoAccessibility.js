@@ -45,14 +45,17 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const title = getCommonValue(selectedElements, 'title') || resource.title;
   const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
 
-  const handleChangePoster = useCallback((image) => {
-    pushUpdate(
-      {
-        poster: image.sizes?.medium?.url || image.url,
-      },
-      true
-    );
-  }, [pushUpdate]);
+  const handleChangePoster = useCallback(
+    (image) => {
+      pushUpdate(
+        {
+          poster: image.sizes?.medium?.url || image.url,
+        },
+        true
+      );
+    },
+    [pushUpdate]
+  );
 
   return (
     <SimplePanel
@@ -72,7 +75,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         <ExpandedTextInput
           placeholder={__('Title', 'web-stories')}
           value={title || ''}
-          onChange={value => pushUpdate({title: value})}
+          onChange={(value) => pushUpdate({ title: value })}
           clear
         />
       </Row>
@@ -80,7 +83,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
-          onChange={value => pushUpdate({alt: value})}
+          onChange={(value) => pushUpdate({ alt: value })}
           clear
         />
       </Row>
