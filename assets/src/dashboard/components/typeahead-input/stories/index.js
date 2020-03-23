@@ -54,17 +54,17 @@ export const _default = () => {
         action(`input changed ${inputValue}`)(inputValue);
       }}
       error={text('error')}
+      maxItemsVisible={number('maxItemsVisible', 7)}
       value={value}
-      placeholder={text('placeholder', 'search something!')}
+      placeholder={text('placeholder', 'Search Stories')}
       ariaLabel={text('ariaLabel', 'my search for seasonings')}
-      displayResultQuantity={number('displayResultQuantity')}
       disabled={boolean('disabled')}
     />
   );
 };
 
 export const _filterLoadedSearchItems = () => {
-  const [value, setValue] = useState('Cucumbers');
+  const [value, setValue] = useState('Sports');
   return (
     <TypeaheadInput
       inputId={'demo-search-component'}
@@ -78,9 +78,9 @@ export const _filterLoadedSearchItems = () => {
       }}
       error={text('error')}
       value={value}
-      placeholder={text('placeholder', 'search something!')}
+      maxItemsVisible={number('maxItemsVisible')}
+      placeholder={text('placeholder', 'Search Stories')}
       ariaLabel={text('ariaLabel', 'my search for seasonings')}
-      displayResultQuantity={number('displayResultQuantity')}
       disabled={boolean('disabled')}
     />
   );

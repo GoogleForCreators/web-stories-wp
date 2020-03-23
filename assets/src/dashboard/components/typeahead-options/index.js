@@ -34,20 +34,18 @@ export const DROPDOWN_MENU_DIRECTIONS = {
 };
 
 export const Menu = styled.ul`
+  width: 100%;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 0;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow: hidden;
   padding: 0;
-  position: absolute;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
-    isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
+    isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -10px, 0)'};
   z-index: ${Z_INDEX.POPOVER_MENU};
 `;
 Menu.propTypes = {
@@ -55,7 +53,7 @@ Menu.propTypes = {
 };
 
 export const MenuItem = styled.li`
-  padding: 14px 16px;
+  padding: 14px 16px 14px 48px;
   background: ${({ isHovering, theme }) =>
     isHovering ? theme.colors.gray50 : 'none'};
   color: ${({ theme }) => theme.colors.gray700};
@@ -80,7 +78,13 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const TypeaheadOptions = ({ className, isOpen, items, onSelect }) => {
+const TypeaheadOptions = ({
+  className,
+  isOpen,
+  items,
+  maxItemsVisible = 5,
+  onSelect,
+}) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -150,7 +154,7 @@ const TypeaheadOptions = ({ className, isOpen, items, onSelect }) => {
 
   return (
     <Menu className={className} isOpen={isOpen}>
-      {items.map((item, index) => {
+      {items.slice(0, maxItemsVisible).map((item, index) => {
         return renderMenuItem(item, index);
       })}
     </Menu>
@@ -164,7 +168,7 @@ TypeaheadOptions.propTypes = {
       label: PropTypes.string,
     })
   ).isRequired,
-
+  maxItemsVisible: PropTypes.number,
   className: PropTypes.string,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,

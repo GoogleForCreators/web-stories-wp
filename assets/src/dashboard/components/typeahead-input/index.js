@@ -26,31 +26,95 @@ import { useState, useRef, useCallback, useMemo } from 'react';
  */
 import useFocusOut from '../../utils/useFocusOut';
 import { TypeaheadOptions } from '../';
+import { ReactComponent as SearchIcon } from '../../icons/search.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 
 const SearchContainer = styled.div`
+  width: 272px;
   position: static;
+  display: flex;
+  flex-direction: column;
+  border-radius: ${({ theme, isOpen }) =>
+    isOpen ? theme.border.expandedTypeaheadRadius : 'none'};
+  border: none;
+  box-shadow: ${({ theme, isOpen }) =>
+    isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
 `;
+SearchContainer.propTypes = {
+  isOpen: PropTypes.bool,
+};
 
-export const StyledInput = styled.input`
-  position: static;
+const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 48px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 19px;
+  border-radius: ${({ theme, isOpen }) =>
+    isOpen ? 'none' : theme.border.typeaheadRadius};
+  border: none;
+  border-bottom: ${({ theme, isOpen }) =>
+    isOpen && `1px solid ${theme.colors.gray50}`};
+  color: ${({ theme }) => theme.colors.gray500};
+  background-color: ${({ theme, isOpen }) =>
+    isOpen ? theme.colors.white : theme.colors.gray25};
+`;
+InputContainer.propTypes = {
+  isOpen: PropTypes.bool,
+};
 
-  & .search-dropdown-input {
-    ${({ isOpen }) =>
-      isOpen
-        ? `
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-     `
-        : ''}
+const StyledInput = styled.input`
+  align-self: center;
+  border: none;
+  background-color: transparent;
+  text-overflow: ellipsis;
+  padding: 0 11.95px;
+  margin: auto 0;
+  height: 100%;
+  font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
+  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size};
+  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing};
+  font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
+  color: ${({ theme }) => theme.colors.gray500};
+
+  &:disabled {
+    cursor: default;
   }
 `;
 
-const TypeaheadOptionsWrapper = styled(TypeaheadOptions)`
-  ${({ hasError }) => hasError && 'margin-top: -2.4rem;'}
+const IconContainer = styled.span`
+  margin: auto 0;
+  width: 17.05px;
+  height: 17.05px;
 `;
-TypeaheadOptionsWrapper.propTypes = {
-  hasError: PropTypes.bool,
-};
+
+const ClearInputButton = styled.button`
+  align-self: flex-end;
+  border: none;
+  background-color: transparent;
+  margin: auto 19px auto auto;
+  width: 13.18px;
+  height: 13.18px;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.gray600};
+`;
+
+// TODO, get proper error specs from Sam
+const Error = styled.span`
+  margin: 8px 18px;
+  text-align: right;
+  display: block;
+  color: ${({ theme }) => theme.colors.danger};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  font-weight: ${({ theme }) => theme.fonts.body2.weight};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+`;
 
 const TypeaheadInput = ({
   inputId,
@@ -59,6 +123,7 @@ const TypeaheadInput = ({
   disabled,
   error,
   onChange,
+  maxItemsVisible = 5,
   placeholder,
   value,
   ariaLabel,
@@ -66,7 +131,7 @@ const TypeaheadInput = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value);
 
   const menuIsOpen = useMemo(() => {
     return showMenu && items.length > 0 && !Boolean(error);
@@ -103,28 +168,46 @@ const TypeaheadInput = ({
   };
 
   return (
-    <SearchContainer ref={searchRef} className={className} {...rest}>
+    <SearchContainer
+      ref={searchRef}
+      className={className}
+      {...rest}
+      isOpen={menuIsOpen}
+    >
       <form autoComplete="off">
-        <label aria-label={ariaLabel} htmlFor={inputId} />
-        <StyledInput
-          id={inputId}
-          disabled={disabled}
-          isOpen={menuIsOpen}
-          value={inputValue}
-          error={error}
-          onChange={({ target }) =>
-            handleInputChange({ label: target.value, value: target.value })
-          }
-          onClick={handleInputClick}
-          placeholder={placeholder}
-          inputClassName="search-dropdown-input"
-        />
-        <button onClick={handleInputClear}>{'x'}</button>
-        <span>{Boolean(error) && error}</span>
+        <InputContainer isOpen={menuIsOpen}>
+          <IconContainer>
+            <SearchIcon />
+          </IconContainer>
+          <label aria-label={ariaLabel} htmlFor={inputId} />
+          <StyledInput
+            id={inputId}
+            disabled={disabled}
+            isOpen={menuIsOpen}
+            value={inputValue}
+            error={error}
+            onChange={({ target }) =>
+              handleInputChange({ label: target.value, value: target.value })
+            }
+            onClick={handleInputClick}
+            placeholder={placeholder}
+          />
+          {inputValue.length > 0 && !Boolean(menuIsOpen) && (
+            <ClearInputButton
+              onClick={handleInputClear}
+              ariaLabel={'Clear Input'}
+            >
+              <CloseIcon />
+            </ClearInputButton>
+          )}
+        </InputContainer>
+
+        {Boolean(error) && <Error>{error}</Error>}
 
         <TypeaheadOptions
           isOpen={menuIsOpen}
           items={items}
+          maxItemsVisible={maxItemsVisible}
           onSelect={items && handleMenuItemSelect}
         />
       </form>
@@ -145,6 +228,7 @@ TypeaheadInput.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
+  maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   value: PropTypes.string,

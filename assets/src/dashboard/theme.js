@@ -59,9 +59,15 @@ const theme = {
   },
   border: {
     buttonRadius: '100px',
+    typeaheadRadius: '100px',
+    expandedTypeaheadRadius: '8px',
   },
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
+  },
+  boxShadow: {
+    expandedTypeahead:
+      '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
   },
   fonts: {
     heading1: {
@@ -77,7 +83,7 @@ const theme = {
       letterSpacing: '0.00625em',
     },
     body2: {
-      family: 'Roboto',
+      family: "'Google Sans', Sans Serif",
       size: '14px',
       lineHeight: '16px',
       letterSpacing: '0.0142em',
@@ -116,6 +122,13 @@ const theme = {
       letterSpacing: '0.01em',
     },
     dropdown: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
+    typeaheadInput: {
       family: "'Google Sans', Sans Serif",
       size: '14px',
       lineHeight: '20px',
