@@ -50,7 +50,6 @@ function StatusPanel() {
 
   const {
     state: {
-      meta: { isSaving },
       story: { status, password },
       capabilities,
     },
@@ -62,11 +61,25 @@ function StatusPanel() {
     loadUsers();
   });
 
-  const passwordProtected = 'protected';
-  const visibilityOptions = statuses.filter(({ value }) =>
-    ['draft', 'publish', 'private'].includes(value)
-  );
+  const visibilityOptions = [
+    {
+      value: 'draft',
+      name: __('Draft', 'web-stories'),
+      helper: __('Visible to just me', 'web-stories'),
+    },
+    {
+      value: 'publish',
+      name: __('Public', 'web-stories'),
+      helper: __('Visible to everyone', 'web-stories'),
+    },
+    {
+      value: 'private',
+      name: __('Private', 'web-stories'),
+      helper: __('Visible to site admins & editors only', 'web-stories'),
+    },
+  ];
 
+  const passwordProtected = 'protected';
   // @todo Add this back once we have FE implementation, too.
   /*visibilityOptions.push({
     name: __('Password Protected', 'web-stories'),
@@ -89,7 +102,6 @@ function StatusPanel() {
     return value && value.length <= 20;
   };
 
-  // @todo Design details.
   const handleChangeVisibility = useCallback(
     (evt) => {
       evt.preventDefault();
@@ -140,7 +152,6 @@ function StatusPanel() {
               options={visibilityOptions}
               onChange={handleChangeVisibility}
               value={getStatusValue(status)}
-              disabled={isSaving}
             />
           </Row>
           {passwordProtected === status && (

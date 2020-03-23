@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 const RadioButton = styled.div`
   min-height: 30px;
@@ -28,12 +29,6 @@ const RadioButton = styled.div`
 const Radio = styled.input`
   opacity: 0;
   position: absolute;
-  &:checked + label:before {
-    border-color: #1a73e8;
-  }
-  &:checked + label:after {
-    transform: scale(1);
-  }
   :focus + label {
     outline: -webkit-focus-ring-color auto 5px;
   }
@@ -41,11 +36,12 @@ const Radio = styled.input`
 
 const RADIO_SIZE = 20;
 const DOT_SIZE = 10;
+const TEXT_OFFSET = 30;
 
 const Label = styled.label`
   display: inline-block;
   position: relative;
-  padding: 0 30px;
+  padding: 0 ${TEXT_OFFSET}px;
   margin-bottom: 0;
   cursor: pointer;
   vertical-align: bottom;
@@ -54,8 +50,6 @@ const Label = styled.label`
     position: absolute;
     content: '';
     border-radius: 50%;
-    transition: all 0.3s ease;
-    transition-property: transform, border-color;
   }
   &:before {
     left: 0;
@@ -63,6 +57,11 @@ const Label = styled.label`
     width: ${RADIO_SIZE}px;
     height: ${RADIO_SIZE}px;
     border: 2px solid ${({ theme }) => theme.colors.mg.v2};
+    ${({ isActive }) =>
+      isActive &&
+      css`
+        border-color: #1a73e8;
+      `}
   }
   &:after {
     top: 5px;
@@ -71,13 +70,25 @@ const Label = styled.label`
     height: ${DOT_SIZE}px;
     transform: scale(0);
     background-color: ${({ theme }) => theme.colors.radio};
+    ${({ isActive }) =>
+      isActive &&
+      css`
+        transform: scale(1);
+      `}
   }
 `;
 
-function RadioGroup({ onChange, value: selectedValue, options, isSaving }) {
+const Helper = styled.div`
+  margin-left: ${TEXT_OFFSET}px;
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  font-size: 12px;
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+`;
+
+function RadioGroup({ onChange, value: selectedValue, options }) {
   return (
     <div>
-      {options.map(({ value, name }) => (
+      {options.map(({ value, name, helper }) => (
         <RadioButton key={`radio-${value}`}>
           <Radio
             id={`radio-${value}`}
@@ -85,10 +96,16 @@ function RadioGroup({ onChange, value: selectedValue, options, isSaving }) {
             value={value}
             type="radio"
             checked={value === selectedValue}
-            disabled={isSaving}
           />
-          <Label htmlFor={`radio-${value}`}>{name}</Label>
-          {/* @todo Add helper Text here */}
+          {name && (
+            <Label
+              isActive={value === selectedValue}
+              htmlFor={`radio-${value}`}
+            >
+              {name}
+            </Label>
+          )}
+          {helper && <Helper>{helper}</Helper>}
         </RadioButton>
       ))}
     </div>
@@ -99,7 +116,6 @@ RadioGroup.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  isSaving: PropTypes.bool,
 };
 
 export default RadioGroup;
