@@ -67,7 +67,8 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   svg {
     width: 28px;
     height: 28px;
-    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+    color: ${({ theme, lightMode }) =>
+      lightMode ? theme.colors.fg.v1 : rgba(theme.colors.fg.v1, 0.3)};
   }
 `;
 

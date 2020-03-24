@@ -50,7 +50,7 @@ const MediaWrapper = styled.div`
   flex-basis: 134px;
 `;
 
-const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
+const StyledButton = styled.button`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
@@ -62,13 +62,11 @@ const BoxedText = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   flex: 1;
   padding: 2px;
   border-radius: 4px;
-  :focus {
-    outline: -webkit-focus-ring-color auto 5px;
-  }
+  border-color: transparent;
 `;
 
 const DateWrapper = styled.div`
-  padding: 5px 0 5px 2px;
+  padding: 5px 5px 5px 2px;
 `;
 
 const Date = styled.span`
@@ -161,7 +159,7 @@ function PublishPanel() {
     <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
       <Row>
         <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
-        <BoxedText
+        <StyledButton
           aria-pressed={showDatePicker}
           aria-haspopup={true}
           aria-expanded={showDatePicker}
@@ -179,7 +177,7 @@ function PublishPanel() {
             <Time>{getReadableTime(date)}</Time>
           </DateWrapper>
           <StyledToggleIcon />
-        </BoxedText>
+        </StyledButton>
         {showDatePicker && (
           <DateTimeWrapper>
             {/* @todo get the actual value for is12Hour */}
