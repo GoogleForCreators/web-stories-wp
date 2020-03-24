@@ -36,19 +36,19 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
 import { draftMarkupToContent, generateFontFamily } from './util';
 
-const Original = styled.p`
+const HighlightElement = styled.p`
   margin: 0;
-`;
-
-const HighlightElement = styled.span`
 	${elementFillContent}
 	${elementWithFont}
-	${elementWithBackgroundColor}
 	${elementWithStyle}
-  border-radius: 3px;
-  box-decoration-break: clone;
-  position: relative;
-    ${elementWithFontColor}
+  ${elementWithFontColor}
+
+  span {
+    ${elementWithBackgroundColor}
+    border-radius: 3px;
+    box-decoration-break: clone;
+    position: relative;
+  }
 `;
 
 const FillElement = styled.p`
@@ -121,15 +121,13 @@ function TextDisplay({
 
   if (backgroundType === 'highlight') {
     return (
-      <Original>
-        <HighlightElement
-          ref={ref}
+      <HighlightElement ref={ref} {...props}>
+        <span
           dangerouslySetInnerHTML={{
             __html: draftMarkupToContent(content, bold),
           }}
-          {...props}
         />
-      </Original>
+      </HighlightElement>
     );
   }
 
