@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import * as backgroundElement from './background';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -51,11 +50,6 @@ export const elementTypes = [
     type: 'page',
     defaultAttributes: { elements: [] },
     name: __('Page', 'web-stories'),
-  },
-  {
-    type: 'background',
-    name: __('Background', 'web-stories'),
-    ...backgroundElement,
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
