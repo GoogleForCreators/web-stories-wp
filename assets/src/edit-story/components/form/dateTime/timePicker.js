@@ -15,7 +15,10 @@ import styled, { css } from 'styled-components';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 
-const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+/**
+ * Internal dependencies
+ */
+import { TIMEZONELESS_FORMAT } from '../../../constants';
 
 const DateTimeWrapper = styled.div`
   margin-bottom: 1em;

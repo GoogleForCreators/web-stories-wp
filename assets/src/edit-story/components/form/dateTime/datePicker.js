@@ -20,8 +20,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { useConfig } from '../../../app';
-
-const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+import { TIMEZONELESS_FORMAT } from '../../../constants';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
