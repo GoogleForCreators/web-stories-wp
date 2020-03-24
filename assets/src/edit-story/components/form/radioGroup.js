@@ -17,58 +17,37 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as Selected } from '../../icons/radio-selected.svg';
+import { ReactComponent as UnSelected } from '../../icons/radio.svg';
 
 const RadioButton = styled.div`
   min-height: 30px;
   margin: 10px 0;
 `;
 
-const RADIO_SIZE = 20;
-const DOT_SIZE = 10;
+const RADIO_SIZE = 24;
 const TEXT_OFFSET = 30;
 
 const Label = styled.label`
-  display: inline-block;
+  display: flex;
   position: relative;
-  padding: 0 ${TEXT_OFFSET}px;
   margin-bottom: 0;
   cursor: pointer;
-  vertical-align: bottom;
-  &:before,
-  &:after {
-    position: absolute;
-    content: '';
-    border-radius: 50%;
-  }
-  &:before {
-    left: 0;
-    top: 0;
+  svg {
     width: ${RADIO_SIZE}px;
     height: ${RADIO_SIZE}px;
-    border: 2px solid ${({ theme }) => theme.colors.mg.v2};
-    ${({ isActive }) =>
-      isActive &&
-      css`
-        border-color: #1a73e8;
-      `}
-  }
-  &:after {
-    top: 5px;
-    left: 5px;
-    width: ${DOT_SIZE}px;
-    height: ${DOT_SIZE}px;
-    transform: scale(0);
-    background-color: ${({ theme }) => theme.colors.radio};
-    ${({ isActive }) =>
-      isActive &&
-      css`
-        transform: scale(1);
-      `}
+    margin-right: ${TEXT_OFFSET - RADIO_SIZE}px;
   }
 `;
+
+const Name = styled.span``;
 
 const Radio = styled.input`
   opacity: 0;
@@ -102,7 +81,8 @@ function RadioGroup({ onChange, value: selectedValue, options }) {
               isActive={value === selectedValue}
               htmlFor={`radio-${value}`}
             >
-              {name}
+              {value === selectedValue ? <Selected /> : <UnSelected />}
+              <Name>{name}</Name>
             </Label>
           )}
           {helper && <Helper>{helper}</Helper>}
