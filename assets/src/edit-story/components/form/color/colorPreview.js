@@ -36,25 +36,40 @@ import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
 
-const Preview = styled(ColorBox).attrs({
-  as: 'button',
-  type: 'button',
-})`
+const Preview = styled(ColorBox)`
   display: flex;
   width: 122px;
-  cursor: pointer;
   padding: 0;
   border: 0;
+  cursor: pointer;
 `;
 
-const VisualPreview = styled.div`
+const VisualPreview = styled.div.attrs(({ isEditable }) => ({
+  as: isEditable ? 'button' : 'div',
+}))`
+  flex-shrink: 0;
   width: 32px;
   height: 32px;
+  border: 0;
+  padding: 0;
+  background: transparent;
 `;
 
 const TextualPreview = styled.div`
-  padding-left: 10px;
-  text-align: center;
+  padding: 0 0 0 10px;
+  text-align: left;
+  flex-grow: 1;
+  font-size: 15px;
+  line-height: 32px;
+  height: 32px;
+`;
+
+const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
+  background: transparent;
+  color: inherit;
+  border: 0;
+  margin: 0;
+  cursor: text;
 `;
 
 function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
@@ -62,7 +77,6 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
   value = isMultiple ? '' : value;
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
-  const fullLabel = `${label}: ${previewText}`;
 
   const {
     actions: { showColorPickerAt, hideSidebar },
@@ -88,11 +102,37 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
     hasOpacity,
   ]);
 
+  const isEditable = !value.type || value.type === 'solid';
+
+  const buttonProps = {
+    as: 'button',
+    onClick: handleOpenEditing,
+    'aria-label': label,
+  };
+
+  const handleInputChange = () => {};
+
   // Always hide color picker on unmount - note the double arrows
   useEffect(() => () => hideSidebar(), [hideSidebar]);
 
+  if (isEditable) {
+    // If editable, only the visual preview component is a button
+    // And the text is an input field
+    return (
+      <Preview ref={ref}>
+        <VisualPreview role="status" style={previewStyle} {...buttonProps} />
+        <TextualInput
+          aria-label={label}
+          value={previewText}
+          onChange={handleInputChange}
+        />
+      </Preview>
+    );
+  }
+
+  // If not editable, the whole component is a button
   return (
-    <Preview ref={ref} onClick={handleOpenEditing} aria-label={fullLabel}>
+    <Preview ref={ref} {...buttonProps}>
       <VisualPreview role="status" style={previewStyle} />
       <TextualPreview>
         {isMultiple
