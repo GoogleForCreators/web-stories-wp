@@ -36,7 +36,7 @@ const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
 function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
   // Background can only have one selected element.
-  const flip = selectedElements[0].flip || DEFAULT_FLIP;
+  const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
   const {
     actions: { setBackgroundElement },
