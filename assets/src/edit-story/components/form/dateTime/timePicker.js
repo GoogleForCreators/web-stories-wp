@@ -22,6 +22,7 @@ import { TIMEZONELESS_FORMAT } from '../../../constants';
 
 const DateTimeWrapper = styled.div`
   margin-bottom: 1em;
+  padding-left: 20px;
 `;
 
 const Fieldset = styled.fieldset`
@@ -57,7 +58,7 @@ const NumberInput = styled.input`
   padding: 2px;
   margin-right: 4px;
   text-align: center;
-  width: ${({ width }) => width}px;
+  width: ${({ width }) => (width ? width : 35)}px;
 `;
 
 const SelectInput = styled.select`
@@ -68,7 +69,7 @@ const SelectInput = styled.select`
   box-shadow: none;
   border-radius: 3px;
   padding: 3px 24px 3px 8px;
-  min-height: 28px;
+  min-height: 30px;
   max-width: 25rem;
   vertical-align: middle;
   appearance: none;
@@ -96,7 +97,7 @@ const Button = styled.button`
   transition: box-shadow 0.1s linear;
   padding: 0 10px;
   line-height: 2;
-  height: 28px;
+  height: 30px;
   border-radius: 3px;
   white-space: nowrap;
   border-width: 1px;
@@ -254,7 +255,6 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
           min={1}
           onChange={onChangeEvent('day')}
           onBlur={updateDay}
-          width={35}
         />
       </div>
     );
