@@ -97,7 +97,7 @@ describe('StatusPanel', () => {
 
   it('should update the story when clicking on status', () => {
     const { getByText, updateStory } = setupPanel();
-    const publishOption = getByText('Public');
+    const publishOption = getByText(/Public/i).closest('label');
     fireEvent.click(publishOption);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {

@@ -34,7 +34,7 @@ import { MULTIPLE_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
-jest.mock('../../dropDown');
+jest.mock('../../form/dropDown');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };

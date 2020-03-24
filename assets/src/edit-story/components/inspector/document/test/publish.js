@@ -28,7 +28,11 @@ import InspectorContext from '../../../inspector/context';
 import theme from '../../../../theme';
 import PublishPanel from '../publish';
 
-function setupPanel() {
+function setupPanel(
+  capabilities = {
+    hasAssignAuthorAction: true,
+  }
+) {
   const updateStory = jest.fn();
   const storyContextValue = {
     state: {
@@ -39,9 +43,7 @@ function setupPanel() {
         featuredMediaUrl: '',
         publisherLogoUrl: '',
       },
-      capabilities: {
-        hasAssignAuthorAction: true,
-      },
+      capabilities,
     },
     actions: { updateStory },
   };
@@ -50,7 +52,7 @@ function setupPanel() {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
   };
-  const { getByText, getByRole } = render(
+  const { getByText, getByRole, queryByText } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
@@ -62,6 +64,7 @@ function setupPanel() {
   return {
     getByText,
     getByRole,
+    queryByText,
   };
 }
 
@@ -79,6 +82,14 @@ describe('PublishPanel', () => {
     const { getByText } = setupPanel();
     const element = getByText('Author');
     expect(element).toBeDefined();
+  });
+
+  it('should not display Author field without correct permissions', () => {
+    const { queryByText } = setupPanel({
+      hasAssignAuthorAction: false,
+    });
+    const element = queryByText('Author');
+    expect(element).toBeNull();
   });
 
   it('should open Date picker when clicking on date', () => {
