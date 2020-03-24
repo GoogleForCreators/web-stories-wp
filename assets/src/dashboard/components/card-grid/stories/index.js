@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import CardGrid from '../';
-import CardGridItem from '../../card-grid-item';
+import CardGridItem, { CardPreviewArea, CardTitle } from '../../card-grid-item';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
@@ -28,15 +28,78 @@ export default {
 export const _default = () => {
   return (
     <CardGrid>
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
+      <CardGridItem>
+        <CardPreviewArea
+          onOpenInEditorClick={() => {}}
+          onPreviewClick={() => {}}
+          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+        />
+        <CardTitle title="Story Title" modifiedDate="12 days" />
+      </CardGridItem>
     </CardGrid>
   );
 };

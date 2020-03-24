@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import CardGridItem from '../';
+import CardGridItem, { CardPreviewArea, CardTitle } from '../';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
@@ -25,5 +25,14 @@ export default {
 };
 
 export const _default = () => {
-  return <CardGridItem />;
+  return (
+    <CardGridItem>
+      <CardPreviewArea
+        onOpenInEditorClick={() => {}}
+        onPreviewClick={() => {}}
+        previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+      />
+      <CardTitle title="Story Title" modifiedDate="12 days" />
+    </CardGridItem>
+  );
 };
