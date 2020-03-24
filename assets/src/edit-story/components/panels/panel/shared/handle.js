@@ -54,7 +54,13 @@ const Bar = styled.div`
   opacity: 0.1;
 `;
 
-function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
+function DragHandle({
+  height,
+  minHeight,
+  maxHeight,
+  handleHeightChange,
+  handleDoubleClick,
+}) {
   const handle = useRef();
   useDragHandlers(handle, handleHeightChange);
   useKeyboardHandlers(handle, handleHeightChange);
@@ -67,6 +73,7 @@ function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
       aria-valuenow={height}
       aria-valuemin={minHeight}
       aria-valuemax={maxHeight}
+      onDoubleClick={handleDoubleClick}
     >
       <Bar>{__('Set panel height', 'web-stories')}</Bar>
     </Handle>
@@ -75,6 +82,7 @@ function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
 
 DragHandle.propTypes = {
   handleHeightChange: PropTypes.func.isRequired,
+  handleDoubleClick: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   minHeight: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,

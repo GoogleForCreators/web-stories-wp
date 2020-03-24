@@ -107,7 +107,7 @@ function Title({
 }) {
   const {
     state: { isCollapsed, height, panelContentId },
-    actions: { collapse, expand, setHeight },
+    actions: { collapse, expand, setHeight, resetHeight },
   } = useContext(panelContext);
   const {
     state: { inspectorContentHeight },
@@ -140,6 +140,7 @@ function Title({
           minHeight={0}
           maxHeight={maxHeight}
           handleHeightChange={handleHeightChange}
+          handleDoubleClick={resetHeight}
         />
       )}
       <HeaderButton

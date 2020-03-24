@@ -64,6 +64,10 @@ function Panel({ initialHeight, name, children }) {
     [setManuallyChanged, setHeight]
   );
 
+  const resetHeight = useCallback(() => {
+    setManuallyChanged(false);
+  }, []);
+
   const panelContentId = `panel-${name}-${uuidv4()}`;
 
   const contextValue = {
@@ -76,6 +80,7 @@ function Panel({ initialHeight, name, children }) {
       setHeight: manuallySetHeight,
       collapse,
       expand,
+      resetHeight,
     },
   };
 
