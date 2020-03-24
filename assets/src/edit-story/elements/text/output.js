@@ -61,30 +61,30 @@ function TextOutput({
     textDecoration,
     whiteSpace: 'pre-wrap',
     ...generatePatternStyles(backgroundColor),
+    ...generatePatternStyles(color, 'color'),
   };
 
   const highlightStyle = {
     ...fillStyle,
-    fontSize: undefined,
+    margin: 0,
+    backgroundColor: undefined,
+  };
+
+  const highlightTextStyle = {
+    ...generatePatternStyles(backgroundColor),
     /* stylelint-disable */
     WebkitBoxDecorationBreak: 'clone',
     /* stylelint-enable */
     boxDecorationBreak: 'clone',
     borderRadius: '3px',
     position: 'relative',
-    ...generatePatternStyles(color, 'color'),
-  };
-
-  const originalStyle = {
-    margin: 0,
-    fontSize: `${dataToEditorY(fontSize, 100)}%`,
   };
 
   if (backgroundType === 'highlight') {
     return (
-      <p style={originalStyle}>
+      <p style={highlightStyle}>
         <span
-          style={highlightStyle}
+          style={highlightTextStyle}
           dangerouslySetInnerHTML={{
             __html: draftMarkupToContent(content, bold),
           }}
@@ -97,9 +97,7 @@ function TextOutput({
     <p
       className="fill"
       style={fillStyle}
-      dangerouslySetInnerHTML={{
-        __html: draftMarkupToContent(content, bold),
-      }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
     />
   );
 }

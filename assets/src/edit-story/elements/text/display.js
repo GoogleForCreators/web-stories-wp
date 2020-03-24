@@ -37,11 +37,11 @@ import { useTransformHandler } from '../../components/transform';
 import { draftMarkupToContent, generateFontFamily } from './util';
 
 const HighlightElement = styled.p`
-  margin: 0;
 	${elementFillContent}
 	${elementWithFont}
 	${elementWithStyle}
   ${elementWithFontColor}
+  margin: 0;
 
   span {
     ${elementWithBackgroundColor}
