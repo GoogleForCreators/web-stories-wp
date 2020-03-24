@@ -107,18 +107,25 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
 
   useEffect(() => setHexInputValue(previewText), [previewText]);
 
-  const isEditable = !value.type || value.type === 'solid';
+  const colorType = value?.type;
+  const isEditable =
+    !isMultiple &&
+    Boolean(previewText) &&
+    (!colorType || colorType === 'solid');
+
+  const editLabel = __('Edit', 'web-stories');
+  const inputLabel = __('Enter', 'web-stories');
 
   const buttonProps = {
     as: 'button',
     type: 'button', // avoid submitting forms
     onClick: handleOpenEditing,
-    'aria-label': label,
+    'aria-label': `${editLabel}: ${label}`,
   };
 
   const handleInputChange = useCallback(
     (evt) => {
-      const raw = evt.target.value;
+      const raw = evt.target.value.trim();
       // Strip initial '#' (might very well be pasted in)
       const val = raw.charAt(0) === '#' ? raw.substr(1) : raw;
       setHexInputValue(val);
@@ -156,7 +163,7 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
       <Preview ref={ref}>
         <VisualPreview role="status" style={previewStyle} {...buttonProps} />
         <TextualInput
-          aria-label={label}
+          aria-label={`${inputLabel}: ${label}`}
           value={hexInputValue}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
@@ -180,7 +187,7 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
 }
 
 ColorPreview.propTypes = {
-  value: PatternPropType,
+  value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
@@ -191,6 +198,7 @@ ColorPreview.defaultProps = {
   hasGradient: false,
   hasOpacity: true,
   label: null,
+  value: null,
 };
 
 export default ColorPreview;
