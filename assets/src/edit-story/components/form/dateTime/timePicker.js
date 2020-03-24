@@ -55,10 +55,15 @@ const inputCSS = css`
 
 const NumberInput = styled.input`
   ${inputCSS}
-  padding: 2px;
+  padding: 0;
   margin-right: 4px;
   text-align: center;
   width: ${({ width }) => (width ? width : 35)}px;
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
 `;
 
 const SelectInput = styled.select`
