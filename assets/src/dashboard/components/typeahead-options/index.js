@@ -52,7 +52,7 @@ Menu.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const MenuItem = styled.li`
+const MenuItem = styled.li`
   padding: 14px 16px 14px 48px;
   background: ${({ isHovering, theme }) =>
     isHovering ? theme.colors.gray50 : 'none'};
@@ -78,13 +78,7 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const TypeaheadOptions = ({
-  className,
-  isOpen,
-  items,
-  maxItemsVisible = 5,
-  onSelect,
-}) => {
+const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -153,7 +147,7 @@ const TypeaheadOptions = ({
   };
 
   return (
-    <Menu className={className} isOpen={isOpen}>
+    <Menu isOpen={isOpen}>
       {items.slice(0, maxItemsVisible).map((item, index) => {
         return renderMenuItem(item, index);
       })}
@@ -169,7 +163,6 @@ TypeaheadOptions.propTypes = {
     })
   ).isRequired,
   maxItemsVisible: PropTypes.number,
-  className: PropTypes.string,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
 };

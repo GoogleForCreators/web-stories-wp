@@ -23,8 +23,8 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import TypeaheadInput from '..';
-import getTypeaheadOptions from '../../typeahead-options/utils/getTypeaheadOptions';
+import TypeaheadInput from '../';
+import { getTypeaheadOptions } from '../../index';
 
 export default {
   title: 'Dashboard/Components/TypeaheadInput',

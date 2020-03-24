@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, number } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -49,8 +49,8 @@ export const _default = () => (
   <TypeaheadOptionsWrapper>
     <TypeaheadOptions
       items={demoItems}
-      dividers={boolean('dividers')}
       isOpen={boolean('isOpen', true)}
+      maxItemsVisible={number('maxItemsVisible')}
       onSelect={(item) => {
         action(`clicked on dropdown item ${item.value}`)(item);
       }}

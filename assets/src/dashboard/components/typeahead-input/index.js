@@ -19,15 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../utils/useFocusOut';
-import { TypeaheadOptions } from '../';
 import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import useFocusOut from '../../utils/useFocusOut';
+import { TypeaheadOptions } from '../';
 
 const SearchContainer = styled.div`
   width: 272px;
@@ -116,12 +116,11 @@ const TypeaheadInput = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-
   const [inputValue, setInputValue] = useState(value);
 
   const menuIsOpen = useMemo(() => {
-    return showMenu && items.length > 0;
-  }, [items, showMenu]);
+    return showMenu && items.length > 0 && inputValue;
+  }, [items, showMenu, inputValue]);
 
   const searchRef = useRef();
 
@@ -145,7 +144,7 @@ const TypeaheadInput = ({
   };
 
   const handleInputClear = () => {
-    handleInputChange({ label: '', value: false });
+    handleInputChange({ label: '', value: '' });
     setShowMenu(false);
   };
 
@@ -156,43 +155,41 @@ const TypeaheadInput = ({
       {...rest}
       isOpen={menuIsOpen}
     >
-      <form autoComplete="off">
-        <InputContainer isOpen={menuIsOpen}>
-          <IconContainer>
-            <SearchIcon />
-          </IconContainer>
-          <label aria-label={ariaLabel} htmlFor={inputId} />
-          <StyledInput
-            type="text"
-            id={inputId}
-            disabled={disabled}
-            isOpen={menuIsOpen}
-            value={inputValue}
-            onFocus={() => setShowMenu(true)}
-            onBlur={() => setShowMenu(false)}
-            onChange={({ target }) => {
-              handleInputChange({ label: target.value, value: target.value });
-            }}
-            onClick={() => setShowMenu(!showMenu)}
-            placeholder={placeholder}
-          />
-          {inputValue.length > 0 && !Boolean(menuIsOpen) && (
-            <ClearInputButton
-              onClick={handleInputClear}
-              aria-label={'Clear Input'}
-            >
-              <CloseIcon />
-            </ClearInputButton>
-          )}
-        </InputContainer>
-
-        <TypeaheadOptions
+      <InputContainer isOpen={menuIsOpen}>
+        <IconContainer>
+          <SearchIcon />
+        </IconContainer>
+        <label aria-label={ariaLabel} htmlFor={inputId} />
+        <StyledInput
+          autoComplete="off"
+          type="text"
+          id={inputId}
+          name={inputId}
+          disabled={disabled}
           isOpen={menuIsOpen}
-          items={items}
-          maxItemsVisible={maxItemsVisible}
-          onSelect={items && handleMenuItemSelect}
+          value={inputValue}
+          onFocus={() => setShowMenu(true)}
+          onChange={({ target }) => {
+            handleInputChange({ label: target.value, value: target.value });
+          }}
+          placeholder={placeholder}
         />
-      </form>
+        {inputValue.length > 0 && !Boolean(menuIsOpen) && (
+          <ClearInputButton
+            onClick={handleInputClear}
+            aria-label={'Clear Input'}
+          >
+            <CloseIcon />
+          </ClearInputButton>
+        )}
+      </InputContainer>
+
+      <TypeaheadOptions
+        isOpen={menuIsOpen}
+        items={items}
+        maxItemsVisible={maxItemsVisible}
+        onSelect={items && handleMenuItemSelect}
+      />
     </SearchContainer>
   );
 };
