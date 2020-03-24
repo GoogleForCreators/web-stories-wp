@@ -89,7 +89,7 @@ function StatusPanel() {
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
   const handleChangePassword = useCallback(
     (value) => {
-      if (value.length <= 20) {
+      if (isValidPassword(value)) {
         updateStory({
           properties: { password: value },
         });
@@ -103,9 +103,7 @@ function StatusPanel() {
   };
 
   const handleChangeVisibility = useCallback(
-    (evt) => {
-      evt.preventDefault();
-      const value = evt.target.value;
+    (value) => {
       // If password protected but no password, do nothing.
       if (value === passwordProtected && !isValidPassword(password)) {
         return;

@@ -170,7 +170,7 @@ function DropDown({
   onChange,
   disabled,
   ariaLabel,
-  lightMode,
+  lightMode = false,
 }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();

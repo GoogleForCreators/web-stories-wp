@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -68,19 +69,21 @@ const Helper = styled.div`
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {
+  const radioGroupId = uuidv4();
   return (
     <div>
       {options.map(({ value, name, helper }) => (
-        <RadioButton key={`radio-${value}`}>
+        <RadioButton key={value}>
           <Radio
-            onChange={onChange}
+            onChange={(evt) => onChange(evt.target.value, evt)}
             value={value}
             type="radio"
             checked={value === selectedValue}
+            aria-labelledby={`label-${name}-${radioGroupId}`}
           />
           <Label isActive={value === selectedValue}>
             {value === selectedValue ? <Selected /> : <UnSelected />}
-            <Name>{name}</Name>
+            <Name id={`label-${name}-${radioGroupId}`}>{name}</Name>
           </Label>
           {helper && <Helper>{helper}</Helper>}
         </RadioButton>

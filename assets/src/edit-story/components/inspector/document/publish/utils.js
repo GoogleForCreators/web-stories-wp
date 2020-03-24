@@ -42,7 +42,7 @@ export function is12Hour(timeFormat) {
   if (!timeFormat) {
     return true;
   }
-  return /a(?!\\)/i.test(
+  return /a(?!\\)/.test(
     timeFormat
       .toLowerCase() // Test only for the lower case "a".
       .replace(/\\\\/g, '') // Replace "//" with empty strings.
