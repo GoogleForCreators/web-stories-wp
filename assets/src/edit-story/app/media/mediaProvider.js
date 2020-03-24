@@ -53,7 +53,7 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
   } = actions;
-  const { uploadMediaFromLibrary, uploadMediaFromWorkspace } = useUploadMedia({
+  const { uploadMedia } = useUploadMedia({
     media,
     pagingNum,
     searchTerm,
@@ -160,8 +160,7 @@ function MediaProvider({ children }) {
       setSearchTerm,
       fetchMedia,
       resetFilters,
-      uploadMediaFromLibrary,
-      uploadMediaFromWorkspace,
+      uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
     },

@@ -39,13 +39,13 @@ const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
   const {
-    actions: { uploadMediaFromLibrary },
+    actions: { uploadMedia },
   } = useMedia();
   const onDropHandler = useCallback(
     (files) => {
-      uploadMediaFromLibrary(files);
+      uploadMedia(files);
     },
-    [uploadMediaFromLibrary]
+    [uploadMedia]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

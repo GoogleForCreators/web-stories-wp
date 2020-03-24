@@ -32,7 +32,7 @@ const createFileReader = (file, onload) => {
 
   return new Promise((resolve, reject) => {
     reader.onload = async () => {
-      await onload({ reader, resolve });
+      await onload({ reader, resolve, reject });
     };
 
     reader.onerror = reject;
@@ -73,20 +73,24 @@ const getImageDimensions = (src) => {
  */
 
 const getImageResource = (image) => {
-  return createFileReader(image, async ({ reader, resolve }) => {
-    const src = window.URL.createObjectURL(
-      new window.Blob([reader.result], { type: image.type })
-    );
-    const { width: oWidth, height: oHeight } = await getImageDimensions(src);
+  return createFileReader(image, async ({ reader, resolve, reject }) => {
+    try {
+      const src = window.URL.createObjectURL(
+        new window.Blob([reader.result], { type: image.type })
+      );
+      const { width: oWidth, height: oHeight } = await getImageDimensions(src);
 
-    resolve({
-      type: 'image',
-      src,
-      oWidth,
-      oHeight,
-      mimeType: image.type,
-      local: true,
-    });
+      resolve({
+        type: 'image',
+        src,
+        oWidth,
+        oHeight,
+        mimeType: image.type,
+        local: true,
+      });
+    } catch (e) {
+      reject(e);
+    }
   });
 };
 
@@ -98,23 +102,31 @@ const getImageResource = (image) => {
  */
 
 const getVideoResource = (video) => {
-  return createFileReader(video, async ({ reader, resolve }) => {
-    const mimeType = video.type;
-    const src = window.URL.createObjectURL(
-      new window.Blob([reader.result], { type: mimeType })
-    );
-    const poster = window.URL.createObjectURL(await getFirstFrameOfVideo(src));
-    const { width: oWidth, height: oHeight } = await getImageDimensions(poster);
+  return createFileReader(video, async ({ reader, resolve, reject }) => {
+    try {
+      const mimeType = video.type;
+      const src = window.URL.createObjectURL(
+        new window.Blob([reader.result], { type: mimeType })
+      );
+      const poster = window.URL.createObjectURL(
+        await getFirstFrameOfVideo(src)
+      );
+      const { width: oWidth, height: oHeight } = await getImageDimensions(
+        poster
+      );
 
-    resolve({
-      type: 'video',
-      src,
-      oWidth,
-      oHeight,
-      mimeType,
-      poster,
-      local: true,
-    });
+      resolve({
+        type: 'video',
+        src,
+        oWidth,
+        oHeight,
+        mimeType,
+        poster,
+        local: true,
+      });
+    } catch (e) {
+      reject(e);
+    }
   });
 };
 
@@ -122,7 +134,7 @@ const getVideoResource = (video) => {
  * Generates a resource object from a local File object
  *
  * @param {File} file File object
- * @return {Object} Resource object
+ * @return {Object|null} Resource object
  */
 export const getResourceFromLocalFile = (file) => {
   const type = getTypeFromMime(file.type);

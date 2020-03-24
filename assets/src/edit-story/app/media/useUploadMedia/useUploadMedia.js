@@ -98,37 +98,36 @@ function useUploadMedia({
             })
             .reverse()
         );
+        const uploadFileOnCanvas = async ({ element, file }) => {
+          try {
+            const uploadedFile = await uploadFile(file);
+
+            const resource = getResourceFromUploadAPI(uploadedFile);
+
+            updateElementById({
+              elementId: element.elementId,
+              properties: {
+                resource,
+                type: element.resource.type,
+              },
+            });
+
+            return resource;
+          } catch (e) {
+            deleteElementById({ elementId: element.id });
+            setMedia({
+              media: media.filter(({ id }) => element.resource.id !== id),
+            });
+            fetchMediaError(e);
+            throw new Error('Error uploading a file.');
+          }
+        };
 
         setMedia({
           media: [...filesOnCanvas.map(({ resource }) => resource), ...media],
         });
 
-        await Promise.all(
-          filesOnCanvas.map(async ({ element, file }) => {
-            try {
-              const uploadedFile = await uploadFile(file);
-
-              const resource = getResourceFromUploadAPI(uploadedFile);
-
-              updateElementById({
-                elementId: element.elementId,
-                properties: {
-                  resource,
-                  type: element.resource.type,
-                },
-              });
-
-              return resource;
-            } catch (e) {
-              deleteElementById({ elementId: element.id });
-              setMedia({
-                media: media.filter(({ id }) => element.resource.id !== id),
-              });
-              fetchMediaError(e);
-              throw new Error('Error uploading a file.');
-            }
-          })
-        );
+        await Promise.all(filesOnCanvas.map(uploadFileOnCanvas));
 
         // To avoid race conditions updating media library, a new request is necessary
         resetMedia({ pagingNum });
@@ -140,9 +139,23 @@ function useUploadMedia({
     [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
   );
 
+  const uploadMedia = useCallback(
+    (files, { insertElement, updateElementById, deleteElementById } = {}) => {
+      if (insertElement && updateElementById && deleteElementById) {
+        return uploadMediaFromWorkspace(files, {
+          insertElement,
+          updateElementById,
+          deleteElementById,
+        });
+      }
+
+      return uploadMediaFromLibrary(files);
+    },
+    [uploadMediaFromWorkspace, uploadMediaFromLibrary]
+  );
+
   return {
-    uploadMediaFromLibrary,
-    uploadMediaFromWorkspace,
+    uploadMedia,
   };
 }
 

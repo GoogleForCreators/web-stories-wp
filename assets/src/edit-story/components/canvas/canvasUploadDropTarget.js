@@ -50,7 +50,7 @@ const PageAreaCover = styled(PageArea)`
 
 function CanvasUploadDropTarget({ children }) {
   const {
-    actions: { uploadMediaFromWorkspace },
+    actions: { uploadMedia },
   } = useMedia();
   const insertElement = useInsertElement();
   const {
@@ -58,18 +58,13 @@ function CanvasUploadDropTarget({ children }) {
   } = useStory();
   const onDropHandler = useCallback(
     (files) => {
-      uploadMediaFromWorkspace(files, {
+      uploadMedia(files, {
         insertElement,
         updateElementById,
         deleteElementById,
       });
     },
-    [
-      uploadMediaFromWorkspace,
-      insertElement,
-      updateElementById,
-      deleteElementById,
-    ]
+    [uploadMedia, insertElement, updateElementById, deleteElementById]
   );
 
   return (

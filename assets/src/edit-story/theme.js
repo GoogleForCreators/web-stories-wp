@@ -74,6 +74,10 @@ const theme = {
     success: { v0: '#14FF00' },
     grayout: 'rgba(0, 0, 0, 0.5)',
     whiteout: 'rgba(255, 255, 255, 0.5)',
+    loading: {
+      primary: '#4285f4',
+      secondary: '#15d8fd',
+    },
     t: {
       bg: '#000000CC',
       fg: '#FFFFFFCC',
