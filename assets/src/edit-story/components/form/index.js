@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { default as MULTIPLE_VALUE } from './multipleValue';
 export { default as Button } from './button';
 export { default as Color } from './color';
 export { default as Input } from './input';
@@ -26,6 +27,7 @@ export { default as Switch } from './switch';
 export { default as TextInput } from './text';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
+export { default as usePresubmitHandler } from './usePresubmitHandler';
 export { default as DropDown } from './dropDown';
 export { default as DateTime } from './dateTime';
 export { default as HelperText } from './helperText';

@@ -21,19 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-/**
- * Internal dependencies
- */
-import { ReactComponent as Magnify } from './magnify.svg';
-
-const Icon = styled(Magnify)`
-  position: absolute;
-  fill: ${({ theme }) => theme.colors.mg.v2};
-  left: 10px;
-  width: 20px;
-  height: 20px;
-`;
-
 const SearchField = styled.div`
   position: relative;
   display: flex;
@@ -42,23 +29,24 @@ const SearchField = styled.div`
 
 const Search = styled.input.attrs({ type: 'text' })`
   width: 100%;
-  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)} !important;
-  border: none !important;
-  color: ${({ theme }) => theme.colors.mg.v2} !important;
-  padding: 4px 12px 4px 36px !important;
+  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.3)};
+  border: none;
+  border-radius: 4px;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  padding: 8px 16px 8px 16px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.mg.v2};
+    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
   }
 `;
 
 export default function SearchInput({ value, placeholder, onChange }) {
   return (
     <SearchField>
-      <Icon icon="search" />
       <Search value={value} placeholder={placeholder} onChange={onChange} />
     </SearchField>
   );

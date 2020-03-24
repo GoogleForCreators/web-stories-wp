@@ -19,18 +19,18 @@
  */
 import styled from 'styled-components';
 import { useRef } from 'react';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import { prettifyShortcut } from '../keyboard';
 import { LinkGuidelines } from '../link';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
@@ -48,17 +48,22 @@ const FrameSidebar = styled.div`
   position: absolute;
   left: -200px;
   width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   z-index: 1;
   pointer-events: none;
 `;
 
 const Hint = styled.div`
   padding: 12px;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: 24px;
   text-align: right;
+  background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
 
 function FramesLayer() {
@@ -66,7 +71,7 @@ function FramesLayer() {
     state: { currentPage },
   } = useStory();
   const {
-    state: { draggingResource },
+    state: { draggingResource, dropTargets },
     actions: { isDropSource },
   } = useDropTargets();
 
@@ -88,20 +93,15 @@ function FramesLayer() {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
         <Selection />
-        {Boolean(draggingResource) && isDropSource(draggingResource.type) && (
-          <FrameSidebar>
-            <Hint>
-              {sprintf(
-                /* translators: %s: keyboard shortcut. */
-                __(
-                  'Drop targets are outlined in blue. Use %s to disable snapping.',
-                  'web-stories'
-                ),
-                prettifyShortcut('mod')
-              )}
-            </Hint>
-          </FrameSidebar>
-        )}
+        {Boolean(draggingResource) &&
+          isDropSource(draggingResource.type) &&
+          Object.keys(dropTargets).length > 0 && (
+            <FrameSidebar>
+              <Hint>
+                {__('Drop targets are outlined in blue.', 'web-stories')}
+              </Hint>
+            </FrameSidebar>
+          )}
         <LinkGuidelines />
       </FramesPageArea>
     </Layer>

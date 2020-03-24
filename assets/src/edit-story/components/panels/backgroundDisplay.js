@@ -30,14 +30,8 @@ import { __ } from '@wordpress/i18n';
 import { Switch } from '../form';
 import { SimplePanel } from './panel';
 
-function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
+function BackgroundDisplayPanel({ selectedElements, pushUpdate }) {
   const { isFullbleedBackground } = selectedElements[0];
-
-  const handleChange = (value) => {
-    onSetProperties({
-      isFullbleedBackground: value,
-    });
-  };
 
   return (
     <SimplePanel
@@ -55,7 +49,7 @@ function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
         value={isFullbleedBackground !== false}
         onLabel={__('Fit to device', 'web-stories')}
         offLabel={__('Do not format', 'web-stories')}
-        onChange={handleChange}
+        onChange={(value) => pushUpdate({ isFullbleedBackground: value }, true)}
       />
     </SimplePanel>
   );
@@ -63,7 +57,7 @@ function BackgroundDisplayPanel({ selectedElements, onSetProperties }) {
 
 BackgroundDisplayPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default BackgroundDisplayPanel;

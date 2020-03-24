@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
-import getCommonValue from '../utils/getCommonValue';
+import { getCommonValue } from '../utils';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -43,58 +43,29 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-function FontControls({ selectedElements, onSetProperties }) {
+function FontControls({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
-  const fontWeights = getCommonValue(selectedElements, 'fontWeights');
-  const fontFallback = getCommonValue(selectedElements, 'fontFallback');
+
   const {
     state: { fonts },
     actions: { getFontWeight, getFontFallback },
   } = useFont();
-
-  const [state, setState] = useState({
+  const fontWeights = useMemo(() => getFontWeight(fontFamily), [
+    getFontWeight,
     fontFamily,
-    fontSize,
-    fontWeight,
-    fontFallback,
-    fontWeights,
-  });
+  ]);
 
-  useEffect(() => {
-    const currentFontWeights = getFontWeight(fontFamily);
-    const currentFontFallback = getFontFallback(fontFamily);
-    setState({
-      fontFamily,
-      fontSize,
-      fontWeight,
-      fontWeights: currentFontWeights,
-      fontFallback: currentFontFallback,
-    });
-  }, [getFontWeight, fontFamily, getFontFallback, fontSize, fontWeight]);
-
-  const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
-
-  useEffect(() => {
-    updateProperties();
-  }, [state.fontFamily, state.fontSize, state.fontWeight, updateProperties]);
-
-  const handleNumberChange = useCallback(
-    (property) => (value) =>
-      setState({ ...state, [property]: parseInt(value) }),
-    [setState, state]
-  );
   return (
     <>
       {fonts && (
         <Row>
           <DropDown
+            data-testid="font"
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
-            value={state.fontFamily}
+            value={fontFamily}
             onChange={(value) => {
               const currentFontWeights = getFontWeight(value);
               const currentFontFallback = getFontFallback(value);
@@ -112,42 +83,44 @@ function FontControls({ selectedElements, onSetProperties }) {
                 defaultWeight = fontWeightsArr[0];
               }
               const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.includes(state.fontWeight.toString())
-                  ? state.fontWeight
+                fontWeightsArr && fontWeightsArr.includes(String(fontWeight))
+                  ? fontWeight
                   : defaultWeight;
-
-              setState({
-                ...state,
-                fontFamily: value,
-                fontWeight: parseInt(newFontWeight),
-                fontWeights: currentFontWeights,
-                fontFallback: currentFontFallback,
-              });
+              pushUpdate(
+                {
+                  fontFamily: value,
+                  fontWeight: parseInt(newFontWeight),
+                  fontFallback: currentFontFallback,
+                },
+                true
+              );
             }}
           />
         </Row>
       )}
       <Row>
-        {state.fontWeights && (
+        {fontWeights && (
           <>
             <DropDown
+              data-testid="font.weight"
               ariaLabel={__('Font weight', 'web-stories')}
-              options={state.fontWeights}
-              value={state.fontWeight}
-              onChange={handleNumberChange('fontWeight')}
+              options={fontWeights}
+              value={fontWeight}
+              onChange={(value) =>
+                pushUpdate({ fontWeight: parseInt(value) }, true)
+              }
             />
             <Space />
           </>
         )}
         <BoxedNumeric
+          data-testid="font.size"
           ariaLabel={__('Font size', 'web-stories')}
-          value={state.fontSize}
-          isMultiple={fontSize === ''}
+          value={fontSize}
           max={PAGE_HEIGHT}
           flexBasis={58}
           textCenter
-          onChange={handleNumberChange('fontSize')}
+          onChange={(value) => pushUpdate({ fontSize: value })}
         />
       </Row>
     </>
@@ -156,7 +129,7 @@ function FontControls({ selectedElements, onSetProperties }) {
 
 FontControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default FontControls;
