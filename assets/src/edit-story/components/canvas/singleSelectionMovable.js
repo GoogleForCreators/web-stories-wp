@@ -30,6 +30,7 @@ import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -128,22 +129,34 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
    *
    * @param {Object} target Target element.
    */
-  const resetMoveable = (target) => {
-    frame.direction = [0, 0];
-    frame.translate = [0, 0];
-    frame.resize = [0, 0];
-    frame.updates = null;
-    pushTransform(selectedElement.id, null);
-    // Inline start resetting has to be done very carefully here to avoid
-    // conflicts with stylesheets. See #3951.
-    target.style.transform = '';
-    target.style.width = '';
-    target.style.height = '';
-    setIsResizingFromCorner(true);
-    if (moveable.current) {
-      moveable.current.updateRect();
-    }
-  };
+  const resetMoveable = useBatchingCallback(
+    (target) => {
+      frame.direction = [0, 0];
+      frame.translate = [0, 0];
+      frame.resize = [0, 0];
+      frame.updates = null;
+      pushTransform(selectedElement.id, null);
+      // Inline start resetting has to be done very carefully here to avoid
+      // conflicts with stylesheets. See #3951.
+      target.style.transform = '';
+      target.style.width = '';
+      target.style.height = '';
+      setIsResizingFromCorner(true);
+      if (moveable.current) {
+        moveable.current.updateRect();
+      }
+    },
+    [frame, pushTransform, setIsResizingFromCorner, selectedElement.id]
+  );
+
+  const resetDragging = useBatchingCallback(
+    (target) => {
+      setIsDragging(false);
+      setDraggingResource(null);
+      resetMoveable(target);
+    },
+    [setIsDragging, setDraggingResource, resetMoveable]
+  );
 
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
@@ -193,9 +206,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             await handleDrop(selectedElement.resource, selectedElement.id);
           }
         }
-        setIsDragging(false);
-        setDraggingResource(null);
-        resetMoveable(target);
+        resetDragging(target);
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
         setOrigin(['%', '%']);
