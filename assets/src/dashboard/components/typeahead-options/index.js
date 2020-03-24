@@ -46,7 +46,7 @@ export const Menu = styled.ul`
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -10px, 0)'};
-  z-index: ${Z_INDEX.POPOVER_MENU};
+  z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
 `;
 Menu.propTypes = {
   isOpen: PropTypes.bool,

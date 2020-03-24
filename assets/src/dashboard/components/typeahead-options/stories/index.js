@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import TypeaheadOptions from '..';
+import TypeaheadOptions from '../';
 
 const demoItems = [
   { value: '1', label: 'one' },
@@ -41,13 +41,12 @@ export default {
   title: 'Dashboard/Components/TypeaheadOptions',
   component: TypeaheadOptions,
 };
-const PopoverWrapper = styled.div`
+const TypeaheadOptionsWrapper = styled.div`
   width: 200px;
-  position: relative;
 `;
 
 export const _default = () => (
-  <PopoverWrapper>
+  <TypeaheadOptionsWrapper>
     <TypeaheadOptions
       items={demoItems}
       dividers={boolean('dividers')}
@@ -56,5 +55,5 @@ export const _default = () => (
         action(`clicked on dropdown item ${item.value}`)(item);
       }}
     />
-  </PopoverWrapper>
+  </TypeaheadOptionsWrapper>
 );

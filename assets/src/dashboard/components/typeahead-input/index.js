@@ -214,4 +214,5 @@ TypeaheadInput.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
 };
+
 export default TypeaheadInput;

@@ -31,4 +31,5 @@ export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
   POPOVER_MENU: 10,
+  TYPEAHEAD_OPTIONS: 10,
 };

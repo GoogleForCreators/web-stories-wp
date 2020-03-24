@@ -22,9 +22,6 @@ import memoize from 'lodash/memoize'; // only lodash/memoize is added to package
 
 const getTypeaheadOptions = memoize(
   (items, inputValue) => {
-    if (!Boolean(inputValue)) {
-      return [];
-    }
     return items.filter((item) => {
       const lowerInputValue = inputValue.toLowerCase();
 
