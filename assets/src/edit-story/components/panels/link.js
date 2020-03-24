@@ -50,7 +50,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const DEFAULT_LINK = createLink({ url: null, icon: null, desc: null });
   const link = useMemo(
     () => getLinkFromElement(selectedElement) || DEFAULT_LINK,
-    [selectedElement]
+    [selectedElement, DEFAULT_LINK]
   );
   const canLink = selectedElements.length === 1 && !isFill;
 
@@ -105,7 +105,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType]
+    [populateMetadata, pushUpdateForObject, inferredLinkType, DEFAULT_LINK]
   );
 
   const handleChangeIcon = useCallback(
