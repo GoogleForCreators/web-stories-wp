@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -64,13 +65,14 @@ function LinkInfoDialog() {
   return (
     <>
       <span>
-        {__('Select any element ', 'web-stories')}
-        <b>
-          {__('(excluding a background or fullbleed element)', 'web-stories')}
-        </b>
-        {__(
-          ' and enter a web address. Drag your element around to convert between a 2 tap and 1 tap link.',
-          'web-stories'
+        {createInterpolateElement(
+          __(
+            'Select any element <b>(excluding a background or fullbleed element)</b>  and enter a web address. Drag your element around to convert between a 2 tap and 1 tap link.',
+            'web-stories'
+          ),
+          {
+            b: <b />,
+          }
         )}
       </span>
       <InfoPaneContainer>
