@@ -22,7 +22,7 @@ import { TIMEZONELESS_FORMAT } from '../../../constants';
 
 const DateTimeWrapper = styled.div`
   margin-bottom: 1em;
-  padding-left: 20px;
+  padding: 0 20px;
 `;
 
 const Fieldset = styled.fieldset`
@@ -128,8 +128,11 @@ const Button = styled.button`
 	`}
 `;
 
+const InputGroup = styled.div`
+  flex-basis: 96px;
+`;
+
 const AMButton = styled(Button)`
-  margin-left: 8px;
   margin-right: -1px;
   border-radius: 3px 0 0 3px;
 `;
@@ -139,7 +142,7 @@ const PMButton = styled(Button)`
   border-radius: 0 3px 3px 0;
 `;
 
-function TimePicker({ currentTime, onChange, is12Hour }) {
+function DateTimePicker({ currentTime, onChange, is12Hour }) {
   const selectedTime = currentTime ? moment(currentTime) : moment();
   const [state, setState] = useState({
     day: selectedTime.format('DD'),
@@ -303,24 +306,22 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
         <Legend>{__('Date', 'web-stories')}</Legend>
         <InputRow>
           {renderDayMonthFormat(is12Hour)}
-          <div>
-            <NumberInput
-              aria-label={__('Year', 'web-stories')}
-              type="number"
-              step={1}
-              value={state.year}
-              onChange={onChangeEvent('year')}
-              onBlur={updateYear}
-              width={55}
-            />
-          </div>
+          <NumberInput
+            aria-label={__('Year', 'web-stories')}
+            type="number"
+            step={1}
+            value={state.year}
+            onChange={onChangeEvent('year')}
+            onBlur={updateYear}
+            width={55}
+          />
         </InputRow>
       </Fieldset>
 
       <Fieldset>
         <Legend>{__('Time', 'web-stories')}</Legend>
         <InputRow>
-          <div>
+          <InputGroup>
             <NumberInput
               aria-label={__('Hours', 'web-stories')}
               type="number"
@@ -341,9 +342,9 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               onChange={onChangeMinutes}
               onBlur={updateMinutes}
             />
-          </div>
+          </InputGroup>
           {is12Hour && (
-            <div>
+            <InputGroup>
               <AMButton
                 type="button"
                 isToggled={state.am === 'AM'}
@@ -358,7 +359,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               >
                 {__('PM', 'web-stories')}
               </PMButton>
-            </div>
+            </InputGroup>
           )}
         </InputRow>
       </Fieldset>
@@ -366,10 +367,10 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   );
 }
 
-TimePicker.propTypes = {
+DateTimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   currentTime: PropTypes.string,
   is12Hour: PropTypes.bool,
 };
 
-export default TimePicker;
+export default DateTimePicker;

@@ -103,7 +103,7 @@ function PublishPanel() {
   } = useStory();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const dateTimePickerNode = useRef();
+  const dateTimeNode = useRef();
   const dateFieldNode = useRef();
 
   useKeyDownEffect(
@@ -115,9 +115,7 @@ function PublishPanel() {
     [showDatePicker]
   );
 
-  useFocusOut(dateTimePickerNode, () => setShowDatePicker(false), [
-    showDatePicker,
-  ]);
+  useFocusOut(dateTimeNode, () => setShowDatePicker(false), [showDatePicker]);
 
   const handleDateChange = useCallback(
     (value, close = false) => {
@@ -189,7 +187,7 @@ function PublishPanel() {
               value={date}
               onChange={handleDateChange}
               is12Hour={true}
-              forwardedRef={dateTimePickerNode}
+              forwardedRef={dateTimeNode}
             />
           </DateTimeWrapper>
         )}

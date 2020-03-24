@@ -12,7 +12,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import TimePicker from './timePicker';
+import DateTimePicker from './dateTimePicker';
 import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
@@ -27,20 +27,24 @@ const DateTimeWrapper = styled.div`
   padding: 4px;
 `;
 
-function DateTimePicker({ value, onChange, is12Hour = true, forwardedRef }) {
+function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
   return (
     <DateTimeWrapper ref={forwardedRef}>
-      <TimePicker currentTime={value} onChange={onChange} is12Hour={is12Hour} />
+      <DateTimePicker
+        currentTime={value}
+        onChange={onChange}
+        is12Hour={is12Hour}
+      />
       <DatePicker currentDate={value} onChange={onChange} />
     </DateTimeWrapper>
   );
 }
 
-DateTimePicker.propTypes = {
+DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,
 };
 
-export default DateTimePicker;
+export default DateTime;
