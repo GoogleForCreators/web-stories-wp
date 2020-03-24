@@ -28,10 +28,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput, HelperText, Button, RadioGroup } from '../form';
-import { useStory } from '../../app/story';
-import useInspector from '../inspector/useInspector';
-import { SimplePanel } from './panel';
+import { Row, TextInput, HelperText, Button, RadioGroup } from '../../form';
+import { useStory } from '../../../app/story';
+import useInspector from '../useInspector';
+import { SimplePanel } from '../../panels/panel';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;

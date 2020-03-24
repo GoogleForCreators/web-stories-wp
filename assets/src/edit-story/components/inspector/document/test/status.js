@@ -22,9 +22,9 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import StoryContext from '../../../app/story/context';
-import InspectorContext from '../../inspector/context';
-import theme from '../../../theme';
+import StoryContext from '../../../../app/story/context';
+import InspectorContext from '../../../inspector/context';
+import theme from '../../../../theme';
 import StatusPanel from '../status';
 
 function setupPanel(

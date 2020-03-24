@@ -28,9 +28,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput, HelperText } from '../form';
-import { useStory } from '../../app/story';
-import { SimplePanel } from './panel';
+import { Row, TextInput, HelperText } from '../../form';
+import { useStory } from '../../../app/story';
+import { SimplePanel } from '../../panels/panel';
 
 const Permalink = styled.a`
   color: ${({ theme }) => theme.colors.link};

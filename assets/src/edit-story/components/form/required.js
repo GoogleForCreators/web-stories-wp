@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -33,8 +34,9 @@ const RequiredWrapper = styled.div`
 
 const Text = styled.span`
   font-size: 12px;
+  line-height: 14px;
   font-style: italic;
-  color: ${({ theme }) => theme.colors.required};
+  color: ${({ theme }) => rgba(theme.colors.required, 0.55)};
 `;
 
 function Required() {

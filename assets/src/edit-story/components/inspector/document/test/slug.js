@@ -22,8 +22,8 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import StoryContext from '../../../app/story/context';
-import theme from '../../../theme';
+import StoryContext from '../../../../app/story/context';
+import theme from '../../../../theme';
 import SlugPanel from '../slug';
 
 function setupPanel() {

@@ -29,13 +29,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, DateTime, Label, Media, Required } from '../../form';
-import { SimplePanel } from '../panel';
-import useInspector from '../../inspector/useInspector';
-import { useStory } from '../../../app/story';
-import { ReactComponent as ToggleIcon } from '../../../icons/dropdown.svg';
-import { useKeyDownEffect } from '../../keyboard';
-import useFocusOut from '../../../utils/useFocusOut';
+import { Row, DropDown, DateTime, Label, Media, Required } from '../../../form';
+import { SimplePanel } from '../../../panels/panel';
+import useInspector from '../../../inspector/useInspector';
+import { useStory } from '../../../../app/story';
+import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
+import { useKeyDownEffect } from '../../../keyboard';
+import useFocusOut from '../../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime } from './utils';
 
 const LabelWrapper = styled.div`

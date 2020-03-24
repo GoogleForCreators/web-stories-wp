@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
-import { PublishPanel, SlugPanel, StatusPanel } from '../../panels';
+import PublishPanel from './publish';
+import SlugPanel from './slug';
+import StatusPanel from './status';
 
 function DocumentInspector() {
   return (
