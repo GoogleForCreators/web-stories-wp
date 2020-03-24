@@ -29,9 +29,9 @@ import CustomCSS from './styles';
 import { OutputPage } from './';
 
 function OutputStory({
-  story: { publisherLogoUrl, featuredMediaUrl, link, title },
+  story: { featuredMediaUrl, link, title },
   pages,
-  metadata: { publisher, fallbackPoster },
+  metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   return (
@@ -56,7 +56,7 @@ function OutputStory({
         <amp-story
           standalone="standalone"
           publisher={publisher.name}
-          publisher-logo-src={publisherLogoUrl}
+          publisher-logo-src={logoPlaceholder}
           title={title}
           poster-portrait-src={featuredMediaUrl || fallbackPoster}
         >
@@ -77,6 +77,7 @@ OutputStory.propTypes = {
       name: PropTypes.string.isRequired,
     }),
     fallbackPoster: PropTypes.string.isRequired,
+    logoPlaceholder: PropTypes.string,
   }).isRequired,
 };
 

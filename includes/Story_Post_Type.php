@@ -63,6 +63,13 @@ class Story_Post_Type {
 	const REWRITE_SLUG = 'stories';
 
 	/**
+	 * Publisher logo placeholder for static content output which will be replaced server-side.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGO_PLACEHOLDER = '[PUBLISHER_LOGO]';
+
+	/**
 	 * Registers the post type to store URLs with validation errors.
 	 *
 	 * @todo refactor
@@ -324,8 +331,9 @@ class Story_Post_Type {
 						'link'     => '/web-stories/v1/link',
 					],
 					'metadata'         => [
-						'publisher'      => self::get_publisher_data(),
-						'fallbackPoster' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+						'publisher'       => self::get_publisher_data(),
+						'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+						'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 					],
 				],
 			]

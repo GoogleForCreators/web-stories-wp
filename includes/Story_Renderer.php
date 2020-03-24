@@ -114,6 +114,17 @@ class Story_Renderer {
 	}
 
 	/**
+	 * Replaces the placeholder of publisher logo in the content.
+	 *
+	 * @param string $content Original markup.
+	 * @return string Filtered markup.
+	 */
+	protected function add_publisher_logo( $content ) {
+		$publisher_logo = Story_Post_Type::get_publisher_logo();
+		return str_replace( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $publisher_logo, $content );
+	}
+
+	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
 	 *
 	 * @param string $content Story markup.
@@ -326,6 +337,7 @@ class Story_Renderer {
 		$markup = $this->maybe_add_analytics( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->add_poster_images( $markup );
+		$markup = $this->add_publisher_logo( $markup );
 		$markup = $this->replace_body_start_tag( $markup );
 		$markup = $this->replace_body_end_tag( $markup );
 		return $markup;
