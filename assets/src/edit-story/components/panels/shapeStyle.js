@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -35,31 +34,14 @@ import getCommonValue from './utils/getCommonValue';
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
 
-  const [state, setState] = useState({
-    backgroundColor,
-  });
-  useEffect(() => {
-    setState({
-      backgroundColor,
-    });
-  }, [backgroundColor]);
-
-  const updateProperties = useCallback(() => {
-    pushUpdate(state, true);
-  }, [pushUpdate, state]);
-
-  useEffect(() => {
-    updateProperties();
-  }, [state.backgroundColor, updateProperties]);
-
   return (
     <SimplePanel name="style" title={__('Style', 'web-stories')}>
       <Row>
         <Color
           hasGradient
-          value={state.backgroundColor}
+          value={backgroundColor}
           isMultiple={backgroundColor === ''}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
+          onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
         />
       </Row>
