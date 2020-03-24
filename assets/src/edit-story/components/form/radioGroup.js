@@ -26,14 +26,6 @@ const RadioButton = styled.div`
   margin: 10px 0;
 `;
 
-const Radio = styled.input`
-  opacity: 0;
-  position: absolute;
-  :focus + label {
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-`;
-
 const RADIO_SIZE = 20;
 const DOT_SIZE = 10;
 const TEXT_OFFSET = 30;
@@ -75,6 +67,14 @@ const Label = styled.label`
       css`
         transform: scale(1);
       `}
+  }
+`;
+
+const Radio = styled.input`
+  opacity: 0;
+  position: absolute;
+  :focus + ${Label} {
+    outline: -webkit-focus-ring-color auto 5px;
   }
 `;
 
