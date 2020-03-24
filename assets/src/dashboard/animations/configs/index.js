@@ -18,8 +18,10 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPE } from '../constants';
-import BounceConfig from './bounce';
+import getBounceConfig from './bounce';
+import getSpinConfig from './spin';
 
 export default {
-  [ANIMATION_TYPE.Bounce]: BounceConfig,
+  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPE.SPIN]: getSpinConfig,
 };

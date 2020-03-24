@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-function removeUnsetValues(map) {
-  const result = {};
-  for (const k in map) {
-    if (map[k] !== '') {
-      result[k] = map[k];
-    }
-  }
-  return result;
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function ConfigProvider({ config, children }) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
 }
 
-export default removeUnsetValues;
+ConfigProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  config: PropTypes.object.isRequired,
+};
+
+export default ConfigProvider;

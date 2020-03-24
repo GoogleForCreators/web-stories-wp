@@ -32,7 +32,7 @@ import { Row, Color } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
 
-function ShapeStylePanel({ selectedElements, onSetProperties }) {
+function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
 
   const [state, setState] = useState({
@@ -45,8 +45,8 @@ function ShapeStylePanel({ selectedElements, onSetProperties }) {
   }, [backgroundColor]);
 
   const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
+    pushUpdate(state, true);
+  }, [pushUpdate, state]);
 
   useEffect(() => {
     updateProperties();
@@ -69,7 +69,7 @@ function ShapeStylePanel({ selectedElements, onSetProperties }) {
 
 ShapeStylePanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default ShapeStylePanel;

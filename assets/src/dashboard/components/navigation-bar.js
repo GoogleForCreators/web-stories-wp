@@ -27,9 +27,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useRouteHistory } from '../app/router';
+import { useConfig, useRouteHistory } from '../app';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES, NEW_STORY_URL } from '../constants';
+import { BUTTON_TYPES } from '../constants';
 import Button from './button';
 import Dropdown from './dropdown';
 
@@ -82,6 +82,10 @@ const LinksContainer = styled.div`
   }
 `;
 
+const NewStoryLink = styled(Button)`
+  margin-left: 40px;
+`;
+
 const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
   {
@@ -93,6 +97,7 @@ const paths = [
 
 function NavigationBar() {
   const { state, actions } = useRouteHistory();
+  const { newStoryURL } = useConfig();
   return (
     <Nav>
       <WebStoriesLogo />
@@ -115,12 +120,13 @@ function NavigationBar() {
             {path.label}
           </Link>
         ))}
-        <Button
+        <NewStoryLink
+          forwardedAs="a"
           type={BUTTON_TYPES.CTA}
-          onClick={() => (window.location.href = NEW_STORY_URL)}
+          href={newStoryURL}
         >
           {__('Create Story', 'web-stories')}
-        </Button>
+        </NewStoryLink>
       </LinksContainer>
     </Nav>
   );

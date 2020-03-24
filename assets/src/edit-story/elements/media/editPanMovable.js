@@ -49,10 +49,12 @@ function EditPanMovable({
 
   const update = () => {
     const [tx, ty] = translateRef.current;
-    fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
-      ''}`;
-    croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${transformFlip ??
-      ''}`;
+    fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${
+      transformFlip ?? ''
+    }`;
+    croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${
+      transformFlip ?? ''
+    }`;
   };
 
   // Refresh moveables to ensure that the selection rect is always correct.

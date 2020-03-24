@@ -23,13 +23,14 @@ import { useRef } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
+import { prettifyShortcut } from '../keyboard';
 import { LinkGuidelines } from '../link';
 import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
@@ -90,9 +91,13 @@ function FramesLayer() {
         {Boolean(draggingResource) && isDropSource(draggingResource.type) && (
           <FrameSidebar>
             <Hint>
-              {__(
-                'Drop targets are outlined in blue. Use ⌘ to disable snapping.',
-                'web-stories'
+              {sprintf(
+                /* translators: %s: keyboard shortcut. */
+                __(
+                  'Drop targets are outlined in blue. Use %s to disable snapping.',
+                  'web-stories'
+                ),
+                prettifyShortcut('mod')
               )}
             </Hint>
           </FrameSidebar>
