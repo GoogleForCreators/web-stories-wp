@@ -111,6 +111,7 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
 
   const buttonProps = {
     as: 'button',
+    type: 'button', // avoid submitting forms
     onClick: handleOpenEditing,
     'aria-label': label,
   };
