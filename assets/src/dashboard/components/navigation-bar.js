@@ -29,7 +29,7 @@ import styled from 'styled-components';
  */
 import { useConfig, useRouteHistory } from '../app';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES } from '../constants';
+import { BUTTON_TYPES, DROPDOWN_TYPES } from '../constants';
 import Button from './button';
 import Dropdown from './dropdown';
 
@@ -103,10 +103,10 @@ function NavigationBar() {
       <WebStoriesLogo />
       <DropdownContainer>
         <Dropdown
-          transparent
           ariaLabel="Dashboard Navigation"
           items={paths}
           value={state.currentPath}
+          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
           onChange={(path) => actions.push(path.value)}
         />
       </DropdownContainer>

@@ -22,12 +22,43 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ViewHeader } from '../../../components';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { useState } from 'react';
+import { ViewHeader, FloatingTab } from '../../../components';
+
+const FilterContainer = styled.div`
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #eee;
+`;
+
+const storiesFilter = [
+  { label: 'All Stories', value: 'all-stories ' },
+  { label: 'Drafts', value: 'drafts' },
+  { label: 'Active Stories', value: 'active-stories ' },
+  { label: 'My Templates', value: 'my-templates ' },
+];
 
 function MyStories() {
+  const [currentFilter, setFilter] = useState(storiesFilter[0].value);
   return (
     <div>
       <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+      <FilterContainer>
+        {storiesFilter.map((filter) => (
+          <FloatingTab
+            key={filter.value}
+            onClick={(_, value) => setFilter(value)}
+            name="all-stories"
+            value={filter.value}
+            isSelected={currentFilter === filter.value}
+          >
+            {filter.label}
+          </FloatingTab>
+        ))}
+      </FilterContainer>
     </div>
   );
 }

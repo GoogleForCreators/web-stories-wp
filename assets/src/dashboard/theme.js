@@ -20,6 +20,11 @@
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { useContext } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { DROPDOWN_TYPES } from './constants';
+
 export const GlobalStyle = createGlobalStyle`
 	*,
 	*::after,
@@ -62,12 +67,35 @@ const theme = {
     typeaheadRadius: '100px',
     expandedTypeaheadRadius: '8px',
   },
+  dropdown: {
+    [DROPDOWN_TYPES.PANEL]: {
+      background: '#f6f6f6',
+      borderRadius: '40px',
+      border: '1px solid #eee',
+      arrowColor: '#2979ff',
+    },
+    [DROPDOWN_TYPES.MENU]: {
+      background: '#f6f6f6',
+      borderRadius: '4px',
+      border: 'none',
+      arrowColor: '#848d96',
+    },
+    [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
+      background: 'transparent',
+      borderRadius: 0,
+      border: 'none',
+      arrowColor: '#2979ff',
+    },
+  },
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
   },
   boxShadow: {
     expandedTypeahead:
       '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
+  },
+  floatingTab: {
+    shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
   fonts: {
     heading1: {

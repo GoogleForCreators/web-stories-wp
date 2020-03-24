@@ -20,6 +20,12 @@ export const BUTTON_TYPES = {
   SECONDARY: 'secondary',
 };
 
+export const DROPDOWN_TYPES = {
+  TRANSPARENT_MENU: 'transparentMenu',
+  MENU: 'menu',
+  PANEL: 'panel',
+};
+
 export const KEYS = {
   ENTER: 'Enter',
   UP: 'ArrowUp',
