@@ -72,18 +72,18 @@ function RadioGroup({ onChange, value: selectedValue, options }) {
   const radioGroupId = uuidv4();
   return (
     <div>
-      {options.map(({ value, name, helper }) => (
+      {options.map(({ value, name, helper }, i) => (
         <RadioButton key={value}>
           <Radio
             onChange={(evt) => onChange(evt.target.value, evt)}
             value={value}
             type="radio"
             checked={value === selectedValue}
-            aria-labelledby={`label-${name}-${radioGroupId}`}
+            aria-labelledby={`${i}-${radioGroupId}`}
           />
           <Label isActive={value === selectedValue}>
             {value === selectedValue ? <Selected /> : <UnSelected />}
-            <Name id={`label-${name}-${radioGroupId}`}>{name}</Name>
+            <Name id={`${i}-${radioGroupId}`}>{name}</Name>
           </Label>
           {helper && <Helper>{helper}</Helper>}
         </RadioButton>
