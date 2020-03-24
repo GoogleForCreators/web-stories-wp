@@ -27,7 +27,8 @@ import { rgba } from 'polished';
 import { ReactComponent as Selected } from '../../icons/radio-selected.svg';
 import { ReactComponent as UnSelected } from '../../icons/radio.svg';
 
-const RadioButton = styled.div`
+const RadioButton = styled.label`
+  display: block;
   min-height: 30px;
   margin: 10px 0;
 `;
@@ -35,7 +36,7 @@ const RadioButton = styled.div`
 const RADIO_SIZE = 24;
 const TEXT_OFFSET = 30;
 
-const Label = styled.label`
+const Label = styled.span`
   display: flex;
   position: relative;
   margin-bottom: 0;
@@ -70,21 +71,15 @@ function RadioGroup({ onChange, value: selectedValue, options }) {
       {options.map(({ value, name, helper }) => (
         <RadioButton key={`radio-${value}`}>
           <Radio
-            id={`radio-${value}`}
             onChange={onChange}
             value={value}
             type="radio"
             checked={value === selectedValue}
           />
-          {name && (
-            <Label
-              isActive={value === selectedValue}
-              htmlFor={`radio-${value}`}
-            >
-              {value === selectedValue ? <Selected /> : <UnSelected />}
-              <Name>{name}</Name>
-            </Label>
-          )}
+          <Label isActive={value === selectedValue}>
+            {value === selectedValue ? <Selected /> : <UnSelected />}
+            <Name>{name}</Name>
+          </Label>
           {helper && <Helper>{helper}</Helper>}
         </RadioButton>
       ))}
