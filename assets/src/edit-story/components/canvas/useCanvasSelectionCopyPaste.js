@@ -193,7 +193,6 @@ function useCanvasSelectionCopyPaste(container) {
           createSnackbar({
             type: 'error',
             message,
-            multiple: true,
             list,
           });
         };
