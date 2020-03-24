@@ -30,12 +30,12 @@ import useLayers from './useLayers';
 
 function LayerPanel() {
   const layers = useLayers();
+  const numLayersVisible = layers?.length
+    ? Math.max(layers.length, DEFAULT_LAYERS_VISIBLE)
+    : DEFAULT_LAYERS_VISIBLE;
 
   return (
-    <Panel
-      name="layers"
-      initialHeight={(layers?.length || DEFAULT_LAYERS_VISIBLE) * LAYER_HEIGHT}
-    >
+    <Panel name="layers" initialHeight={numLayersVisible * LAYER_HEIGHT}>
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
       </PanelTitle>
