@@ -686,7 +686,7 @@ class Story_Post_Type {
 	/**
 	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
 	 *
-	 * @param {int} $image_id Attachment ID.
+	 * @param integer $image_id Attachment ID.
 	 *
 	 * @return string|false Either the URL or false if error.
 	 */
@@ -737,26 +737,26 @@ class Story_Post_Type {
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
 			$logo_image_url    = self::get_valid_publisher_image( $publisher_logo_id );
-		} else {
-			// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
-			// Currently, it's marked as required but that's not actually enforced.
+		}
 
-			// Use the Custom Logo if set, but only if it is square.
-			$custom_logo_id = get_theme_mod( 'custom_logo' );
-			if ( has_custom_logo() && $custom_logo_id ) {
-				$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
-			}
+		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
+		// Currently, it's marked as required but that's not actually enforced.
 
-			// Try Site Icon, though it is not ideal for non-Story because it should be square.
-			$site_icon_id = get_option( 'site_icon' );
-			if ( empty( $logo_image_url ) && $site_icon_id ) {
-				$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
-			}
+		// Finding fallback image.
+		$custom_logo_id = get_theme_mod( 'custom_logo' );
+		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
+			$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
+		}
 
-			// Fallback to serving the WordPress logo.
-			if ( empty( $logo_image_url ) ) {
-				$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-			}
+		// Try Site Icon, though it is not ideal for non-Story because it should be square.
+		$site_icon_id = get_option( 'site_icon' );
+		if ( empty( $logo_image_url ) && $site_icon_id ) {
+			$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
+		}
+
+		// Fallback to serving the WordPress logo.
+		if ( empty( $logo_image_url ) ) {
+			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 		}
 
 		/**
