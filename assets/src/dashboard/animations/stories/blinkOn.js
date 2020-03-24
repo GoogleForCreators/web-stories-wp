@@ -76,9 +76,11 @@ export const _default = () => {
           <WithAnimation
             key={id}
             id={`anim-${id}`}
-            style={{
+            containerStyle={{
               width: '50px',
               height: '50px',
+            }}
+            animationStyle={{
               ...getInitialStyleFromKeyframes(keyframes),
             }}
           >
