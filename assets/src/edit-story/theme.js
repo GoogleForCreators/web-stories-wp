@@ -75,8 +75,8 @@ const theme = {
     grayout: 'rgba(0, 0, 0, 0.5)',
     whiteout: 'rgba(255, 255, 255, 0.5)',
     loading: {
-      primary: '#4285f4',
-      secondary: '#15d8fd',
+      primary: '#4285F4',
+      secondary: '#15D8FD',
     },
     t: {
       bg: '#000000CC',
