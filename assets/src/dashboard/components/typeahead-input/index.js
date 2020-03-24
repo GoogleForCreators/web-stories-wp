@@ -103,25 +103,11 @@ const ClearInputButton = styled.button`
   color: ${({ theme }) => theme.colors.gray600};
 `;
 
-// TODO, get proper error specs from Sam
-const Error = styled.span`
-  margin: 8px 18px;
-  text-align: right;
-  display: block;
-  color: ${({ theme }) => theme.colors.danger};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  font-weight: ${({ theme }) => theme.fonts.body2.weight};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-`;
-
 const TypeaheadInput = ({
   inputId,
   items,
   className,
   disabled,
-  error,
   onChange,
   maxItemsVisible = 5,
   placeholder,
@@ -134,8 +120,8 @@ const TypeaheadInput = ({
   const [inputValue, setInputValue] = useState(value);
 
   const menuIsOpen = useMemo(() => {
-    return showMenu && items.length > 0 && !Boolean(error);
-  }, [items, showMenu, error]);
+    return showMenu && items.length > 0;
+  }, [items, showMenu]);
 
   const searchRef = useRef();
 
@@ -182,7 +168,6 @@ const TypeaheadInput = ({
             disabled={disabled}
             isOpen={menuIsOpen}
             value={inputValue}
-            error={error}
             onFocus={() => setShowMenu(true)}
             onBlur={() => setShowMenu(false)}
             onChange={({ target }) => {
@@ -200,8 +185,6 @@ const TypeaheadInput = ({
             </ClearInputButton>
           )}
         </InputContainer>
-
-        {Boolean(error) && <Error>{error}</Error>}
 
         <TypeaheadOptions
           isOpen={menuIsOpen}
@@ -226,7 +209,6 @@ TypeaheadInput.propTypes = {
   ariaLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  error: PropTypes.string,
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

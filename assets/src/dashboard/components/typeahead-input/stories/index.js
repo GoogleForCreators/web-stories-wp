@@ -53,7 +53,6 @@ export const _default = () => {
         }
         action(`input changed ${inputValue}`)(inputValue);
       }}
-      error={text('error')}
       maxItemsVisible={number('maxItemsVisible', 7)}
       value={value}
       placeholder={text('placeholder', 'Search Stories')}
@@ -76,7 +75,6 @@ export const _filterLoadedSearchItems = () => {
         action(`input changed ${inputValue}`)(inputValue);
         setValue(inputValue);
       }}
-      error={text('error')}
       value={value}
       maxItemsVisible={number('maxItemsVisible')}
       placeholder={text('placeholder', 'Search Stories')}
