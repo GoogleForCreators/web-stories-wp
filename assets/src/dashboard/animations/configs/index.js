@@ -20,10 +20,12 @@
 import { ANIMATION_TYPE } from '../constants';
 import getBlinkOnConfig from './blinkOn';
 import getBounceConfig from './bounce';
+import getRevealConfig from './reveal';
 import getSpinConfig from './spin';
 
 export default {
   [ANIMATION_TYPE.BLINK_ON]: getBlinkOnConfig,
   [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPE.REVEAL]: getRevealConfig,
   [ANIMATION_TYPE.SPIN]: getSpinConfig,
 };

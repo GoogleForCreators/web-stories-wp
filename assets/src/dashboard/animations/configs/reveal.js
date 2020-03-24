@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-export const ANIMATION_TYPE = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  REVEAL: 'reveal',
-  SPIN: 'spin',
-};
-
-export const SPIN_TYPE = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
+export default function () {
+  return {
+    fill: 'forwards',
+    keyframes: {
+      transform: ['translateY(100%)', 'translateY(0%)'],
+    },
+  };
+}

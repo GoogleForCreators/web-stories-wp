@@ -90,9 +90,12 @@ const Spin = ({ name, color, keyframes, animationConfig, animatorConfig }) => {
         </h1>
         <WithAnimation
           id="anim-spin"
-          style={{
+          animationType={name}
+          containerStyle={{
             width: '50px',
             height: '50px',
+          }}
+          animationStyle={{
             ...getInitialStyleFromKeyframes(keyframes),
           }}
         >

@@ -19,9 +19,26 @@
  */
 import PropTypes from 'prop-types';
 
-function WithAnimation({ id, style, children }) {
-  return (
-    <div id={id} style={style}>
+/**
+ * Internal dependencies
+ */
+import { ANIMATION_TYPE } from '../constants';
+
+function WithAnimation({
+  id,
+  animationType,
+  animationStyle,
+  containerStyle,
+  children,
+}) {
+  return animationType === ANIMATION_TYPE.REVEAL ? (
+    <div style={{ overflow: 'hidden', ...containerStyle }}>
+      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
+        {children}
+      </div>
+    </div>
+  ) : (
+    <div id={id} style={{ ...containerStyle, ...animationStyle }}>
       {children}
     </div>
   );
@@ -29,11 +46,18 @@ function WithAnimation({ id, style, children }) {
 
 WithAnimation.propTypes = {
   id: PropTypes.string,
-  style: PropTypes.object,
+  animationType: PropTypes.string.isRequired,
+  animationStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+};
+
+WithAnimation.defaultProps = {
+  animationStyle: {},
+  containerStyle: {},
 };
 
 export default WithAnimation;

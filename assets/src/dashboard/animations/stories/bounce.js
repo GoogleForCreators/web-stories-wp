@@ -45,10 +45,13 @@ export const _default = () => {
         {label}
       </button>
       <WithAnimation
-        id={`anim-solo`}
-        style={{
+        id="anim-solo"
+        animationType={name}
+        containerStyle={{
           width: '50px',
           height: '50px',
+        }}
+        animationStyle={{
           ...getInitialStyleFromKeyframes(keyframes),
         }}
       >
@@ -98,10 +101,13 @@ export const Cascading = () => {
           <WithAnimation
             id={`anim-${id}`}
             key={index}
-            style={{
+            animationType={name}
+            containerStyle={{
               width,
               height: '50px',
               marginBottom: '10px',
+            }}
+            animationStyle={{
               ...getInitialStyleFromKeyframes(keyframes),
             }}
           >
