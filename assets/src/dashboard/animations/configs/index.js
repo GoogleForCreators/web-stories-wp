@@ -13,3 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import { ANIMATION_TYPE } from '../constants';
+import getBounceConfig from './bounce';
+import getSpinConfig from './spin';
+
+export default {
+  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPE.SPIN]: getSpinConfig,
+};

@@ -63,7 +63,6 @@ export default function WithMask({
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
-          clipPath: `url(#${maskId})`,
         }}
         {...rest}
       >
@@ -83,12 +82,18 @@ export default function WithMask({
         ...(fill ? FILL_STYLE : {}),
         ...style,
         clipPath: `url(#${maskId})`,
+        // stylelint-disable-next-line property-no-vendor-prefix
+        webkitClipPath: `url(#${maskId})`,
       }}
       {...rest}
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>

@@ -19,7 +19,6 @@
  */
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -34,7 +33,7 @@ import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
 import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
-import { MainButton, Title, SearchInput, Header } from '../../common';
+import { MainButton, SearchInput } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
@@ -52,7 +51,7 @@ const Container = styled.div`
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
-  padding: 15px 1em 0 1em;
+  padding: 1em 1.5em 0 1.5em;
 `;
 
 const Column = styled.div`
@@ -65,10 +64,13 @@ const Message = styled.div`
   padding: 1em;
 `;
 
+const FilterArea = styled.div`
+  display: flex;
+  margin-top: 30px;
+`;
+
 const FilterButtons = styled.div`
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  padding: 18px 0;
-  margin: 10px 0 0 0;
+  flex: 1 1 auto;
 `;
 
 const FilterButton = styled.button`
@@ -78,14 +80,15 @@ const FilterButton = styled.button`
   margin: 0 18px 0 0;
   color: ${({ theme, active }) =>
     active ? theme.colors.fg.v1 : theme.colors.mg.v1};
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-  font-size: 13px;
-  text-transform: uppercase;
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
 `;
 
 const Padding = styled.div`
   grid-area: header;
-  padding: 1em 1em 0 1em;
+  padding: 1.5em 1.5em 0 1.5em;
 `;
 
 const StyledPane = styled(Pane)`
@@ -238,33 +241,29 @@ function MediaPane(props) {
     <StyledPane id={paneId} {...props}>
       <Inner>
         <Padding>
-          <Header>
-            <Title>
-              {__('Media', 'web-stories')}
-              {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-            </Title>
-            <MainButton onClick={openMediaPicker}>
-              {__('Upload', 'web-stories')}
-            </MainButton>
-          </Header>
+          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
 
           <SearchInput
             value={searchTerm}
-            placeholder={__('Search media...', 'web-stories')}
+            placeholder={__('Search', 'web-stories')}
             onChange={onSearch}
           />
-
-          <FilterButtons>
-            {FILTERS.map(({ filter, name }, index) => (
-              <FilterButton
-                key={index}
-                active={filter === mediaType}
-                onClick={onFilter(filter)}
-              >
-                {name}
-              </FilterButton>
-            ))}
-          </FilterButtons>
+          <FilterArea>
+            <FilterButtons>
+              {FILTERS.map(({ filter, name }, index) => (
+                <FilterButton
+                  key={index}
+                  active={filter === mediaType}
+                  onClick={onFilter(filter)}
+                >
+                  {name}
+                </FilterButton>
+              ))}
+            </FilterButtons>
+            <MainButton onClick={openMediaPicker}>
+              {__('Upload', 'web-stories')}
+            </MainButton>
+          </FilterArea>
         </Padding>
 
         {isMediaLoaded && !media.length ? (

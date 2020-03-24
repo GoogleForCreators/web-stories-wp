@@ -32,13 +32,13 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
 import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
 import { useMediaPicker } from '../mediaPicker';
+import MULTIPLE_VALUE from './multipleValue';
 
 const Container = styled.div`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   height: ${({ size }) => (size ? `${size}px` : '148px')};
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
   border: none;
-  margin-right: 12px;
   position: relative;
   cursor: pointer;
 
@@ -142,6 +142,7 @@ function MediaInput({
   loading,
   ...rest
 }) {
+  const isMultiple = value === MULTIPLE_VALUE;
   const openMediaPicker = useMediaPicker({
     title,
     buttonInsertText,
@@ -158,7 +159,7 @@ function MediaInput({
       onClick={openMediaPicker}
       {...rest}
     >
-      {value ? (
+      {value && !isMultiple ? (
         <Img src={value} circle={circle} />
       ) : (
         <DefaultImage size={size} />
@@ -175,7 +176,6 @@ MediaInput.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
@@ -191,7 +191,6 @@ MediaInput.propTypes = {
 MediaInput.defaultProps = {
   className: null,
   disabled: false,
-  isMultiple: false,
   symbol: '',
   flexBasis: 100,
   textCenter: false,

@@ -54,6 +54,8 @@ const theme = {
     action: '#47A0F4',
     danger: '#FF0000',
     selection: '#44aaff',
+    // todo
+    placeholder: '#d9dbdd',
   },
   border: {
     buttonRadius: '100px',
@@ -105,6 +107,62 @@ const theme = {
       size: '14px',
       lineHeight: '20px',
       letterSpacing: '0.01em',
+    },
+    popoverMenu: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '400',
+      letterSpacing: '0.01em',
+    },
+    dropdown: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
+  },
+  grid: {
+    desktop: {
+      columns: 5,
+      gap: '25px',
+      itemWidth: '221px',
+      itemHeight: '453px',
+      fr: '1fr',
+    },
+    tablet: {
+      columns: 5,
+      gap: '22px',
+      itemWidth: '189px',
+      itemHeight: '395px',
+      fr: '1fr',
+    },
+    mobile: {
+      columns: 4,
+      gap: '20px',
+      itemWidth: '162px',
+      itemHeight: '347px',
+      fr: '1fr',
+    },
+    min: {
+      columns: 3,
+      gap: '24px',
+      itemWidth: '185px',
+      itemHeight: '395px',
+      fr: '1fr',
+    },
+  },
+  breakpoint: {
+    desktop: 'screen and (max-width: 1280px)',
+    tablet: 'screen and (max-width: 1120px)',
+    mobile: 'screen and (max-width: 800px)',
+    min: 'screen and (max-width: 684px)',
+    raw: {
+      desktop: 1280,
+      tablet: 1120,
+      mobile: 800,
+      min: 684,
     },
   },
 };

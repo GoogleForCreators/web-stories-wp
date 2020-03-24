@@ -30,7 +30,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Input } from '../form';
+import Input from './input';
+import MULTIPLE_VALUE from './multipleValue';
+
+const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`
   width: 100%;
@@ -63,17 +66,19 @@ function Numeric({
   onChange,
   prefix,
   suffix,
-  isMultiple,
   label,
   symbol,
   value,
+  float,
   flexBasis,
   ariaLabel,
   disabled,
   ...rest
 }) {
+  const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [focused, setFocus] = useState(false);
+  const [dot, setDot] = useState(false);
 
   return (
     <Container
@@ -88,11 +93,28 @@ function Numeric({
         prefix={prefix}
         suffix={suffix}
         label={label}
-        value={`${value}${!focused ? symbol : ''}`}
+        value={
+          isMultiple
+            ? ''
+            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+        }
         aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
-        onChange={(evt) => onChange(evt.target.value, evt)}
+        onChange={(evt) => {
+          const newValue = evt.target.value;
+          if (newValue === '') {
+            onChange('', evt);
+          } else {
+            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
+            const valueAsNumber = float
+              ? parseFloat(newValue)
+              : parseInt(newValue);
+            if (!isNaN(valueAsNumber)) {
+              onChange(valueAsNumber, evt);
+            }
+          }
+        }}
         onBlur={(evt) => {
           if (evt.target.form) {
             evt.target.form.dispatchEvent(new window.Event('submit'));
@@ -113,7 +135,6 @@ Numeric.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   prefix: PropTypes.any,
@@ -123,15 +144,16 @@ Numeric.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  float: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
   className: null,
   disabled: false,
-  isMultiple: false,
   symbol: '',
-  flexBasis: 100,
+  flexBasis: 110,
   textCenter: false,
+  float: false,
   ariaLabel: __('Standard input', 'web-stories'),
 };
 

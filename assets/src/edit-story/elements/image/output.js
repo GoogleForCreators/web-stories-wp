@@ -28,6 +28,7 @@ function ImageOutput({ element, box }) {
   const props = {
     layout: 'fill',
     src: resource.src,
+    alt: element.alt || resource.alt,
   };
   return (
     <MediaOutput box={box} element={element}>

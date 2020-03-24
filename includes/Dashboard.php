@@ -122,6 +122,27 @@ class Dashboard {
 
 		wp_set_script_translations( self::SCRIPT_HANDLE, 'web-stories' );
 
+		$new_story_url = admin_url(
+			add_query_arg(
+				[
+					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				],
+				'post-new.php'
+			) 
+		);
+
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesDashboardSettings',
+			[
+				'id'     => 'web-stories-dashboard',
+				'config' => [
+					'isRTL'       => is_rtl(),
+					'newStoryURL' => $new_story_url,
+				],
+			]
+		);
+
 		wp_register_style(
 			'google-sans-font',
 			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b',
@@ -136,7 +157,7 @@ class Dashboard {
 			$version
 		);
 
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349
+		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
 		wp_styles()->registered['wp-admin']->deps = array_diff(
 			wp_styles()->registered['wp-admin']->deps,
 			[ 'forms' ]
