@@ -63,9 +63,17 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
           publisher_logo_url: publisherLogoUrl,
+          permalink_template: permalinkTemplate,
           password,
         } = post;
 
+        const [prefix, suffix] = permalinkTemplate.split(
+          /%(?:postname|pagename)%/
+        );
+        const permalinkConfig = {
+          prefix,
+          suffix,
+        };
         const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
         // First clear history completely.
@@ -83,6 +91,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           link,
           featuredMedia,
           featuredMediaUrl,
+          permalinkConfig,
           publisherLogoUrl,
           password,
         };

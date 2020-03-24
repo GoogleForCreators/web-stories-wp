@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
+import cleanForSlug from '../../../utils/cleanForSlug';
 
 const Permalink = styled.a`
   color: ${({ theme }) => theme.colors.link};
@@ -48,27 +49,35 @@ const BoxedTextInput = styled(TextInput)`
 function SlugPanel() {
   const {
     state: {
-      story: { slug, link },
+      story: { slug, link, permalinkConfig },
     },
     actions: { updateStory },
   } = useStory();
   const handleChangeValue = useCallback(
-    (prop) => (value) => updateStory({ properties: { [prop]: value } }),
+    (value) => {
+      updateStory({
+        properties: { slug: cleanForSlug(value) },
+      });
+    },
     [updateStory]
   );
+
+  const displayLink = slug
+    ? permalinkConfig.prefix + slug + permalinkConfig.suffix
+    : link;
   return (
     <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
       <Row>
         <BoxedTextInput
           label={__('URL Slug', 'web-stories')}
           value={slug}
-          onChange={handleChangeValue('slug')}
+          onChange={handleChangeValue}
           placeholder={__('Enter slug', 'web-stories')}
         />
       </Row>
       <HelperText>
         <Permalink rel="noopener noreferrer" target="_blank" href={link}>
-          {link}
+          {displayLink}
         </Permalink>
       </HelperText>
     </SimplePanel>
