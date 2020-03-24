@@ -20,6 +20,7 @@
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { draftMarkupToContent, generateFontFamily } from './util';
 
 /**
@@ -48,6 +49,10 @@ function TextOutput({
   const horizontalPadding = dataToEditorX(padding.horizontal, width);
   // The padding % is taken based on width, thus using X and width for vertical, too.
   const verticalPadding = dataToEditorX(padding.vertical, width);
+  const bgColor =
+    backgroundType !== BACKGROUND_TEXT_MODE.NONE
+      ? generatePatternStyles(backgroundColor)
+      : undefined;
 
   const fillStyle = {
     fontSize: `${dataToEditorY(fontSize, 100)}%`,
@@ -60,7 +65,7 @@ function TextOutput({
     textAlign: textAlign ? textAlign : null,
     textDecoration,
     whiteSpace: 'pre-wrap',
-    ...generatePatternStyles(backgroundColor),
+    ...bgColor,
     ...generatePatternStyles(color, 'color'),
   };
 
@@ -71,7 +76,7 @@ function TextOutput({
   };
 
   const highlightTextStyle = {
-    ...generatePatternStyles(backgroundColor),
+    ...bgColor,
     /* stylelint-disable */
     WebkitBoxDecorationBreak: 'clone',
     /* stylelint-enable */
@@ -80,7 +85,7 @@ function TextOutput({
     position: 'relative',
   };
 
-  if (backgroundType === 'highlight') {
+  if (backgroundType === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <p style={highlightStyle}>
         <span

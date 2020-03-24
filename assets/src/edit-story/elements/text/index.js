@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
@@ -30,7 +31,7 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundType: 'fill',
+  backgroundType: BACKGROUND_TEXT_MODE.NONE,
   bold: false,
   fontFamily: 'Arial',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],

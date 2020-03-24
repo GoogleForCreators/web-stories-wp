@@ -33,6 +33,7 @@ import {
   elementWithStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
 import { draftMarkupToContent, generateFontFamily } from './util';
 
@@ -88,7 +89,10 @@ function TextDisplay({
 
   const props = {
     color,
-    backgroundColor,
+    backgroundColor:
+      backgroundType !== BACKGROUND_TEXT_MODE.NONE
+        ? backgroundColor
+        : undefined,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontFallback,
     fontStyle,
@@ -119,7 +123,7 @@ function TextDisplay({
       : '';
   });
 
-  if (backgroundType === 'highlight') {
+  if (backgroundType === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <HighlightElement ref={ref} {...props}>
         <span

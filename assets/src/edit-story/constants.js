@@ -55,3 +55,9 @@ export const Z_INDEX_CANVAS = {
   MOVABLE: 10,
   FLOAT_PANEL: 11,
 };
+
+export const BACKGROUND_TEXT_MODE = {
+  NONE: 'NONE',
+  FILL: 'FILL',
+  HIGHLIGHT: 'HIGHLIGHT',
+};
