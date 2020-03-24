@@ -23,7 +23,7 @@ import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
 export default {
-  title: 'Dashboard/Animations/Blink On',
+  title: 'Dashboard/Animations/BlinkOn',
 };
 
 export const _default = () => {
