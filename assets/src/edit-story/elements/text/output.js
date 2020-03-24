@@ -66,8 +66,9 @@ function TextOutput({
   const highlightStyle = {
     ...fillStyle,
     fontSize: undefined,
-    /* stylelint-disable-next-line property-no-vendor-prefix */
-    webkitBoxDecorationBreak: 'clone',
+    /* stylelint-disable */
+    WebkitBoxDecorationBreak: 'clone',
+    /* stylelint-enable */
     boxDecorationBreak: 'clone',
     borderRadius: '3px',
     position: 'relative',
