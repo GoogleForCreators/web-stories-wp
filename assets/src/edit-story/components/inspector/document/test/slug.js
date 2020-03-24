@@ -32,7 +32,14 @@ function setupPanel() {
 
   const storyContextValue = {
     state: {
-      story: { slug: 'foo', link: 'https://example.com/foo' },
+      story: {
+        slug: 'foo',
+        link: 'https://example.com',
+        permalinkConfig: {
+          prefix: 'https://example.com/',
+          suffix: '',
+        },
+      },
     },
     actions: { updateStory, deleteStory },
   };
