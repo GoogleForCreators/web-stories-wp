@@ -29,10 +29,10 @@ function VideoOutput({ element, box }) {
   };
   const props = {
     autoPlay: 'autoplay',
-    poster: resource.poster,
-    artwork: resource.poster,
-    title: resource.title,
-    alt: resource.alt,
+    poster: element.poster || resource.poster,
+    artwork: element.poster || resource.poster,
+    title: element.title || resource.title,
+    alt: element.alt || resource.alt,
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
   };

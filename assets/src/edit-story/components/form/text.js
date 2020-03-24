@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as Close } from '../../icons/close_icon.svg';
+import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
 const StyledInput = styled(Input)`
@@ -83,16 +84,18 @@ function TextInput({
   className,
   onBlur,
   onChange,
-  isMultiple,
   label,
   value,
   flexBasis,
   ariaLabel,
   disabled,
   clear,
+  placeholder,
   ...rest
 }) {
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+  const isMultiple = value === MULTIPLE_VALUE;
+  value = isMultiple ? '' : value;
+  placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
 
   return (
     <Container
@@ -103,7 +106,7 @@ function TextInput({
       <StyledInput
         placeholder={placeholder}
         label={label}
-        value={`${value}`}
+        value={value}
         aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
@@ -140,7 +143,6 @@ TextInput.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
@@ -148,16 +150,17 @@ TextInput.propTypes = {
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 TextInput.defaultProps = {
   className: null,
   disabled: false,
-  isMultiple: false,
   flexBasis: 100,
   textCenter: false,
   clear: false,
   ariaLabel: __('Standard input', 'web-stories'),
+  placeholder: null,
 };
 
 export default TextInput;

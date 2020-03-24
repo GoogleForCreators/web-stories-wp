@@ -32,6 +32,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Label from './label';
 import Group from './group';
+import MULTIPLE_VALUE from './multipleValue';
 
 const Input = styled.input`
   color: ${({ theme }) => theme.colors.mg.v1};
@@ -46,12 +47,13 @@ function InputGroup({
   type,
   label,
   value,
-  isMultiple,
   onChange,
   postfix,
   disabled,
   ...rest
 }) {
+  const isMultiple = value === MULTIPLE_VALUE;
+  value = isMultiple ? '' : value;
   const placeholder = isMultiple ? __('( multiple )', 'web-stories') : '';
   const isCheckbox = type === 'checkbox';
   return (
@@ -80,7 +82,6 @@ InputGroup.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   postfix: PropTypes.string,
   disabled: PropTypes.bool,
@@ -90,7 +91,6 @@ InputGroup.defaultProps = {
   type: 'number',
   postfix: '',
   disabled: false,
-  isMultiple: false,
 };
 
 export default InputGroup;
