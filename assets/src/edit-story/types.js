@@ -99,7 +99,6 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundElementId: PropTypes.string,
-  backgroundColor: PatternPropType,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 

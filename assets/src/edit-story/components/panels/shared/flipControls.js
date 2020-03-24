@@ -36,12 +36,14 @@ function FlipControls({ value, onChange }) {
     <>
       <Toggle
         title={__('Flip horizontally', 'web-stories')}
+        aria-label={__('Flip horizontally', 'web-stories')}
         icon={<FlipHorizontal />}
         value={value.horizontal === true}
         onChange={(horizontal) => onChange({ ...value, horizontal })}
       />
       <Toggle
         title={__('Flip vertically', 'web-stories')}
+        aria-label={__('Flip vertically', 'web-stories')}
         icon={<FlipVertical />}
         value={value.vertical === true}
         onChange={(vertical) => onChange({ ...value, vertical })}
