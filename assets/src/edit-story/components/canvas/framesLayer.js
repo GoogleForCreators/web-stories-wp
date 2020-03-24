@@ -95,7 +95,7 @@ function FramesLayer() {
         <Selection />
         {Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
-          Object.keys(dropTargets).length && (
+          Object.keys(dropTargets).length > 0 && (
             <FrameSidebar>
               <Hint>
                 {__('Drop targets are outlined in blue.', 'web-stories')}
