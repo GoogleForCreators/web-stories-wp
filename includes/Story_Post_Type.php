@@ -701,7 +701,7 @@ class Story_Post_Type {
 		// First lets check if the image is square by default.
 		$fullsize_img = wp_get_attachment_image_src( $image_id, 'full', false );
 		if ( $metadata['width'] === $metadata['height'] ) {
-			return $fullsize_img[0];
+			return array_shift( $fullsize_img );
 		}
 
 		if ( empty( $metadata['sizes'] ) ) {
@@ -712,13 +712,13 @@ class Story_Post_Type {
 		foreach ( $metadata['sizes'] as $size ) {
 			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
 				$logo_img = wp_get_attachment_image_src( $image_id, $size, false );
-				return $logo_img[0];
+				return array_shift( $logo_img );
 			}
 		}
 
 		// If a square image was not found, return the full size nevertheless,
 		// the editor should take care of warning about incorrect size.
-		return $fullsize_img[0];
+		return array_shift( $fullsize_img );
 	}
 
 	/**
