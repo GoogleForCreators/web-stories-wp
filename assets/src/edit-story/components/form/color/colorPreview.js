@@ -19,7 +19,8 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
+import { parseToRgb } from 'polished';
 
 /**
  * WordPress dependencies
@@ -102,6 +103,10 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
     hasOpacity,
   ]);
 
+  const [hexInputValue, setHexInputValue] = useState('');
+
+  useEffect(() => setHexInputValue(previewText), [previewText]);
+
   const isEditable = !value.type || value.type === 'solid';
 
   const buttonProps = {
@@ -110,7 +115,35 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
     'aria-label': label,
   };
 
-  const handleInputChange = () => {};
+  const handleInputChange = useCallback(
+    (evt) => {
+      const raw = evt.target.value;
+      // Strip initial '#' (might very well be pasted in)
+      const val = raw.charAt(0) === '#' ? raw.substr(1) : raw;
+      setHexInputValue(val);
+      const hasNonHex = /[^0-9a-f]/i.test(val);
+      const hasValidLength = val.length === 6;
+      if (hasNonHex || !hasValidLength) {
+        // Invalid color hex, just allow it for now
+        // but don't pass it upstream
+        return;
+      }
+
+      // Update actual color, which will in turn update hex input from value
+      const { red: r, green: g, blue: b } = parseToRgb(`#${val}`);
+      // Keep same opacity as before though
+      const {
+        color: { a },
+      } = value;
+      onChange({ color: { r, g, b, a } });
+    },
+    [value, onChange]
+  );
+
+  // Reset to last known "valid" color on blur
+  const handleInputBlur = useCallback(() => setHexInputValue(previewText), [
+    previewText,
+  ]);
 
   // Always hide color picker on unmount - note the double arrows
   useEffect(() => () => hideSidebar(), [hideSidebar]);
@@ -123,8 +156,9 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
         <VisualPreview role="status" style={previewStyle} {...buttonProps} />
         <TextualInput
           aria-label={label}
-          value={previewText}
+          value={hexInputValue}
           onChange={handleInputChange}
+          onBlur={handleInputBlur}
         />
       </Preview>
     );
