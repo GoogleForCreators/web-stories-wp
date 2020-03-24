@@ -31,9 +31,23 @@ export function getReadableDate(date, is12Hours = true) {
   )}/${displayDate.format('YYYY')}`;
 }
 
-export function getReadableTime(date) {
+export function getReadableTime(date, is12Hours = true) {
   const displayTime = date ? moment(date) : moment();
-  return `${displayTime.format('hh')}:${displayTime.format(
-    'mm'
-  )}${displayTime.format('A')}`;
+  const hourFormat = is12Hours ? 'hh' : 'HH';
+  const am = is12Hours ? displayTime.format('A') : '';
+  return `${displayTime.format(hourFormat)}:${displayTime.format('mm')}${am}`;
+}
+
+export function is12Hour(timeFormat) {
+  if (!timeFormat) {
+    return true;
+  }
+  return /a(?!\\)/i.test(
+    timeFormat
+      .toLowerCase() // Test only for the lower case "a".
+      .replace(/\\\\/g, '') // Replace "//" with empty strings.
+      .split('')
+      .reverse()
+      .join('') // Reverse the string and test for "a" not followed by a slash.
+  );
 }

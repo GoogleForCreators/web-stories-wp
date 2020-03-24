@@ -36,7 +36,8 @@ import { useStory } from '../../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { getReadableDate, getReadableTime } from './utils';
+import { useConfig } from '../../../../app/config';
+import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const LabelWrapper = styled.div`
   width: 106px;
@@ -75,6 +76,8 @@ const Date = styled.span`
 
 const Time = styled.span`
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
+  display: inline-block;
+  width: 60px;
 `;
 
 const DateTimeWrapper = styled.div`
@@ -99,6 +102,8 @@ function PublishPanel() {
     },
     actions: { updateStory },
   } = useStory();
+
+  const { timeFormat } = useConfig();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimeNode = useRef();
@@ -150,6 +155,7 @@ function PublishPanel() {
   );
 
   const authorLabel = __('Author', 'web-stories');
+  const use12HourFormat = is12Hour(timeFormat);
   return (
     <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
       <Row>
@@ -168,18 +174,17 @@ function PublishPanel() {
           ref={dateFieldNode}
         >
           <DateWrapper>
-            <Date>{getReadableDate(date)}</Date>{' '}
-            <Time>{getReadableTime(date)}</Time>
+            <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
+            <Time>{getReadableTime(date, use12HourFormat)}</Time>
           </DateWrapper>
           <StyledToggleIcon />
         </StyledButton>
         {showDatePicker && (
           <DateTimeWrapper>
-            {/* @todo get the actual value for is12Hour */}
             <DateTime
               value={date}
               onChange={handleDateChange}
-              is12Hour={true}
+              is12Hour={use12HourFormat}
               forwardedRef={dateTimeNode}
             />
           </DateTimeWrapper>
