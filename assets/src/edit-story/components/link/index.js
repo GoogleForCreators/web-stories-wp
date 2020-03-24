@@ -39,9 +39,7 @@ export function inferLinkType(selectedElement) {
 
 export function createLink({
   url = '',
-  // @todo: Why does it fail with LinkType.TWO_TAP?
-  // See https://travis-ci.com/github/google/web-stories-wp/jobs/301424456
-  type = 2,
+  type = LinkType.TWO_TAP,
   ...rest
 } = {}) {
   return {
