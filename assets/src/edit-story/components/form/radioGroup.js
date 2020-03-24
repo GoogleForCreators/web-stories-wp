@@ -48,7 +48,9 @@ const Label = styled.span`
   }
 `;
 
-const Name = styled.span``;
+const Name = styled.span`
+  line-height: 24px;
+`;
 
 const Radio = styled.input`
   opacity: 0;
