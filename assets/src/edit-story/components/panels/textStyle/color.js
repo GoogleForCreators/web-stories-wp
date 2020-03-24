@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Row, ToggleButton } from '../../form';
-import { useCommonColorValue } from '../utils';
+import { useCommonColorValue, getCommonValue } from '../utils';
 import { ReactComponent as FillIcon } from '../../../icons/fill_icon.svg';
 import { ReactComponent as HighlightIcon } from '../../../icons/highlight_icon.svg';
 
@@ -43,10 +43,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
     selectedElements,
     'backgroundColor'
   );
-  const backgroundType = useCommonColorValue(
-    selectedElements,
-    'backgroundType'
-  );
+  const backgroundType = getCommonValue(selectedElements, 'backgroundType');
 
   return (
     <>
@@ -55,7 +52,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <Color
           data-testid="text.color"
           value={color}
-          onChange={(value) => pushUpdate({ color: value }, true)}
+          onChange={(value) =>
+            pushUpdate(
+              {
+                color: value,
+              },
+              true
+            )
+          }
         />
       </Row>
       <Row>
@@ -64,7 +68,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
           data-testid="text.backgroundColor"
           hasGradient
           value={backgroundColor}
-          onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
+          onChange={(value) =>
+            pushUpdate(
+              {
+                backgroundColor: value,
+              },
+              true
+            )
+          }
           label={__('Background color', 'web-stories')}
         />
       </Row>
@@ -74,10 +85,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
           <ToggleButton
             icon={<FillIcon width={32} height={32} />}
             value={backgroundType === 'fill'}
-            isMultiple={false}
             label={__('Fill', 'web-stories')}
             onChange={(value) =>
-              pushUpdate({ backgroundType: value ? 'fill' : '' }, true)
+              pushUpdate(
+                {
+                  backgroundType: value ? 'fill' : '',
+                },
+                true
+              )
             }
           />
           <Space flex="0 0 10px" />
@@ -85,9 +100,13 @@ function ColorControls({ selectedElements, pushUpdate }) {
             icon={<HighlightIcon width={32} height={32} />}
             label={__('Highlight', 'web-stories')}
             value={backgroundType === 'highlight'}
-            isMultiple={false}
             onChange={(value) =>
-              pushUpdate({ backgroundType: value ? 'highlight' : '' }, true)
+              pushUpdate(
+                {
+                  backgroundType: value ? 'highlight' : '',
+                },
+                true
+              )
             }
           />
           <Space flex="2" />
