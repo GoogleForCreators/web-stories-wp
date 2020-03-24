@@ -40,27 +40,15 @@ const Original = styled.p`
   margin: 0;
 `;
 
-const Clone = styled.p`
-  margin: 0;
-  transform: translateY(-100%);
-
-  span {
-    background: transparent;
-    ${elementWithFontColor}
-  }
-`;
-
 const HighlightElement = styled.span`
 	${elementFillContent}
 	${elementWithFont}
 	${elementWithBackgroundColor}
 	${elementWithStyle}
   border-radius: 3px;
-  /* stylelint-disable-next-line property-no-vendor-prefix */
-  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   position: relative;
-  color: transparent;
+    ${elementWithFontColor}
 `;
 
 const FillElement = styled.p`
@@ -133,26 +121,15 @@ function TextDisplay({
 
   if (backgroundType === 'highlight') {
     return (
-      <>
-        <Original>
-          <HighlightElement
-            ref={ref}
-            dangerouslySetInnerHTML={{
-              __html: draftMarkupToContent(content, bold),
-            }}
-            {...props}
-          />
-        </Original>
-        <Clone {...props}>
-          <HighlightElement
-            ref={ref}
-            dangerouslySetInnerHTML={{
-              __html: draftMarkupToContent(content, bold),
-            }}
-            {...props}
-          />
-        </Clone>
-      </>
+      <Original>
+        <HighlightElement
+          ref={ref}
+          dangerouslySetInnerHTML={{
+            __html: draftMarkupToContent(content, bold),
+          }}
+          {...props}
+        />
+      </Original>
     );
   }
 

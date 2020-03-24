@@ -61,7 +61,6 @@ function TextOutput({
     textDecoration,
     whiteSpace: 'pre-wrap',
     ...generatePatternStyles(backgroundColor),
-    ...generatePatternStyles(color, 'color'),
   };
 
   const highlightStyle = {
@@ -72,7 +71,7 @@ function TextOutput({
     boxDecorationBreak: 'clone',
     borderRadius: '3px',
     position: 'relative',
-    color: 'transparent',
+    ...generatePatternStyles(color, 'color'),
   };
 
   const originalStyle = {
@@ -80,35 +79,16 @@ function TextOutput({
     fontSize: `${dataToEditorY(fontSize, 100)}%`,
   };
 
-  const cloneStyle = {
-    ...originalStyle,
-    transform: 'translateY(-100%)',
-  };
-
   if (backgroundType === 'highlight') {
     return (
-      <>
-        <p style={originalStyle}>
-          <span
-            style={highlightStyle}
-            dangerouslySetInnerHTML={{
-              __html: draftMarkupToContent(content, bold),
-            }}
-          />
-        </p>
-        <p style={cloneStyle}>
-          <span
-            style={{
-              ...highlightStyle,
-              backgroundColor: 'transparent',
-              ...generatePatternStyles(color, 'color'),
-            }}
-            dangerouslySetInnerHTML={{
-              __html: draftMarkupToContent(content, bold),
-            }}
-          />
-        </p>
-      </>
+      <p style={originalStyle}>
+        <span
+          style={highlightStyle}
+          dangerouslySetInnerHTML={{
+            __html: draftMarkupToContent(content, bold),
+          }}
+        />
+      </p>
     );
   }
 
