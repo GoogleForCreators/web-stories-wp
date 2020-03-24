@@ -19,6 +19,7 @@
  */
 import { useState } from 'react';
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 
 /**
  * Internal dependencies
@@ -49,6 +50,24 @@ const ButtonWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
+
+  opacity: 0;
+  &.button-enter {
+    opacity: 0;
+  }
+  &.button-enter-active,
+  &.button-enter-done {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  &.button-exit {
+    opacity: 1;
+  }
+  &.button-exit-active,
+  &.button-exit-done {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
 `;
 
 function VideoFrame({ element }) {
@@ -69,11 +88,11 @@ function VideoFrame({ element }) {
       onPointerLeave={() => setHovered(false)}
     >
       <MediaFrame element={element} />
-      {hovered && (
-        <ButtonWrapper onClick={handlePlayPause}>
+      <CSSTransition in={hovered} classNames="button" timeout={200}>
+        <ButtonWrapper key="wrapper" onClick={handlePlayPause}>
           {isPlaying ? <Pause /> : <Play />}
         </ButtonWrapper>
-      )}
+      </CSSTransition>
     </Wrapper>
   );
 }
