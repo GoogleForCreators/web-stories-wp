@@ -111,7 +111,7 @@ const TypeaheadInput = ({
   onChange,
   maxItemsVisible = 5,
   placeholder,
-  value,
+  value = '',
   ariaLabel,
   ...rest
 }) => {
@@ -179,7 +179,7 @@ const TypeaheadInput = ({
           {inputValue.length > 0 && !Boolean(menuIsOpen) && (
             <ClearInputButton
               onClick={handleInputClear}
-              ariaLabel={'Clear Input'}
+              aria-label={'Clear Input'}
             >
               <CloseIcon />
             </ClearInputButton>
@@ -202,7 +202,7 @@ TypeaheadInput.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
     })
   ).isRequired,
 
