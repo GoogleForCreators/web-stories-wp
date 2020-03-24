@@ -48,6 +48,38 @@ describe('defaultBackground', () => {
     expect(bgEl.isBackground).toStrictEqual(true);
   });
 
+  it('should maintain background color when migrating', () => {
+    const migrated = defaultBackground({
+      _test: 'story',
+      pages: [
+        {
+          _test: 'page1',
+          backgroundColor: { color: { r: 255, g: 0, b: 0, a: 0.5 } },
+          elements: [
+            {
+              _test: 'element1',
+              type: 'text',
+              padding: 10,
+            },
+            {
+              _test: 'element2',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+    });
+    const page = migrated.pages[0];
+    const bgEl = page.elements[0];
+    expect(page.backgroundElementId).not.toBeNull();
+    expect(page.backgroundElementId).toStrictEqual(bgEl.id);
+    expect(bgEl.type).toStrictEqual('shape');
+    expect(bgEl.isBackground).toStrictEqual(true);
+    expect(bgEl.backgroundColor).toStrictEqual({
+      color: { r: 255, g: 0, b: 0, a: 0.5 },
+    });
+  });
+
   it('should not add a background to elements that already have it', () => {
     expect(
       defaultBackground({
