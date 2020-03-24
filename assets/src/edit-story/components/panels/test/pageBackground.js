@@ -42,7 +42,7 @@ function setupPanel(backgroundColor = null) {
       </StoryContext.Provider>
     </ThemeProvider>
   );
-  const element = getByLabelText(/Current page color/);
+  const element = getByLabelText(/edit: current page color/i);
   return {
     element,
     updateCurrentPageProperties,
