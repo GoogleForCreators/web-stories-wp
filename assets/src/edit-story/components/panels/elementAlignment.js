@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import WithTooltip from '../tooltip';
 import { ReactComponent as AlignBottom } from '../../icons/align_bottom.svg';
 import { ReactComponent as AlignTop } from '../../icons/align_top.svg';
 import { ReactComponent as AlignCenter } from '../../icons/align_center.svg';
@@ -47,7 +48,7 @@ import getBoundRect, {
 const ElementRow = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.bg.v9};
@@ -88,7 +89,7 @@ const SeparateBorder = styled.div`
   margin-right: 4px;
 `;
 
-function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
+function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const boundRect = getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
 
@@ -128,11 +129,11 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
     [selectedElements]
   );
 
-  const isJustifyDisabled = isFill || selectedElements.length < 2;
-  const isDistributionDisabled = isFill || selectedElements.length < 3;
+  const isAlignEnabled = !isFill && selectedElements.length > 1;
+  const isDistributionEnabled = !isFill && selectedElements.length > 2;
 
-  const handleAlignLeft = () => {
-    onSetProperties((properties) => {
+  const handleAlign = (direction) => {
+    pushUpdate((properties) => {
       const { x, y, width, height, rotationAngle } = properties;
       let offsetX = 0;
       if (rotationAngle) {
@@ -146,14 +147,17 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
         offsetX = (frameWidth - width) / 2;
       }
       return {
-        x: boundRect.startX + offsetX,
+        x:
+          direction === 'left'
+            ? boundRect.startX + offsetX
+            : boundRect.endX - width - offsetX,
       };
     });
   };
 
   const handleAlignCenter = () => {
     const centerX = (boundRect.endX + boundRect.startX) / 2;
-    onSetProperties((properties) => {
+    pushUpdate((properties) => {
       const { width } = properties;
       return {
         x: centerX - width / 2,
@@ -161,28 +165,8 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
     });
   };
 
-  const handleAlignRight = () => {
-    onSetProperties((properties) => {
-      const { x, y, width, height, rotationAngle } = properties;
-      let offsetX = 0;
-      if (rotationAngle) {
-        const { width: frameWidth } = calcRotatedObjectPositionAndSize(
-          rotationAngle,
-          x,
-          y,
-          width,
-          height
-        );
-        offsetX = (frameWidth - width) / 2;
-      }
-      return {
-        x: boundRect.endX - width - offsetX,
-      };
-    });
-  };
-
   const handleAlignTop = () => {
-    onSetProperties((properties) => {
+    pushUpdate((properties) => {
       const { x, y, width, height, rotationAngle } = properties;
       let offsetY = 0;
       if (rotationAngle) {
@@ -203,7 +187,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
 
   const handleAlignMiddle = () => {
     const centerY = (boundRect.endY + boundRect.startY) / 2;
-    onSetProperties((properties) => {
+    pushUpdate((properties) => {
       const { height } = properties;
       return {
         y: centerY - height / 2,
@@ -212,7 +196,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
   };
 
   const handleAlignBottom = () => {
-    onSetProperties((properties) => {
+    pushUpdate((properties) => {
       const { x, y, width, height, rotationAngle } = properties;
       let offsetY = 0;
       if (rotationAngle) {
@@ -260,7 +244,7 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       }
       offsetX += frameWidth + commonSpaceWidth;
     });
-    onSetProperties(({ id }) => updatedX[id]);
+    pushUpdate(({ id }) => updatedX[id]);
   };
 
   const handleVerticalDistribution = () => {
@@ -292,75 +276,91 @@ function ElementAlignmentPanel({ selectedElements, onSetProperties }) {
       }
       offsetY += frameHeight + commonSpaceHeight;
     });
-    onSetProperties(({ id }) => updatedY[id]);
+    pushUpdate(({ id }) => updatedY[id]);
   };
 
   return (
     <ElementRow>
-      <IconButton
-        disabled={isDistributionDisabled}
-        onClick={handleHorizontalDistribution}
-        aria-label={__('Horizontal Distribution', 'web-stories')}
-      >
-        <HorizontalDistribute />
-      </IconButton>
-      <IconButton
-        disabled={isDistributionDisabled}
-        onClick={handleVerticalDistribution}
-        aria-label={__('Vertical Distribution', 'web-stories')}
-      >
-        <VerticalDistribute />
-      </IconButton>
+      <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
+        <IconButton
+          disabled={!isDistributionEnabled}
+          onClick={handleHorizontalDistribution}
+          aria-label={__('Horizontal Distribution', 'web-stories')}
+        >
+          <HorizontalDistribute />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Distribute vertically', 'web-stories')}>
+        <IconButton
+          disabled={!isDistributionEnabled}
+          onClick={handleVerticalDistribution}
+          aria-label={__('Vertical Distribution', 'web-stories')}
+        >
+          <VerticalDistribute />
+        </IconButton>
+      </WithTooltip>
       <SeparateBorder />
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignLeft}
-        aria-label={__('Justify Left', 'web-stories')}
-      >
-        <AlignLeft />
-      </IconButton>
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignCenter}
-        aria-label={__('Justify Center', 'web-stories')}
-      >
-        <AlignCenter />
-      </IconButton>
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignRight}
-        aria-label={__('Justify Right', 'web-stories')}
-      >
-        <AlignRight />
-      </IconButton>
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignTop}
-        aria-label={__('Justify Top', 'web-stories')}
-      >
-        <AlignTop />
-      </IconButton>
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignMiddle}
-        aria-label={__('Justify Middle', 'web-stories')}
-      >
-        <AlignMiddle />
-      </IconButton>
-      <IconButton
-        disabled={isJustifyDisabled}
-        onClick={handleAlignBottom}
-        aria-label={__('Justify Bottom', 'web-stories')}
-      >
-        <AlignBottom />
-      </IconButton>
+      <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={() => handleAlign('left')}
+          aria-label={__('Justify Left', 'web-stories')}
+        >
+          <AlignLeft />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={handleAlignCenter}
+          aria-label={__('Justify Center', 'web-stories')}
+        >
+          <AlignCenter />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={() => handleAlign('right')}
+          aria-label={__('Justify Right', 'web-stories')}
+        >
+          <AlignRight />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Align top', 'web-stories')}>
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={handleAlignTop}
+          aria-label={__('Justify Top', 'web-stories')}
+        >
+          <AlignTop />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Align vertical center', 'web-stories')}>
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={handleAlignMiddle}
+          aria-label={__('Justify Middle', 'web-stories')}
+        >
+          <AlignMiddle />
+        </IconButton>
+      </WithTooltip>
+      <WithTooltip title={__('Align bottom', 'web-stories')}>
+        <IconButton
+          disabled={!isAlignEnabled}
+          onClick={handleAlignBottom}
+          aria-label={__('Justify Bottom', 'web-stories')}
+        >
+          <AlignBottom />
+        </IconButton>
+      </WithTooltip>
     </ElementRow>
   );
 }
 
 ElementAlignmentPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default ElementAlignmentPanel;
