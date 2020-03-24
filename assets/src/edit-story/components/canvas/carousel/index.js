@@ -121,7 +121,9 @@ const List = styled(Area).attrs({
   }
 `;
 
-const Li = styled.li`
+const Li = styled.li.attrs({
+  role: 'option',
+})`
   margin: 0 10px 0 0;
   &:last-of-type {
     margin: 0;
@@ -250,7 +252,11 @@ function Carousel() {
             aria-label={__('Scroll Backward', 'web-stories')}
           />
         </NavArea>
-        <List ref={listRef} hasHorizontalOverflow={hasHorizontalOverflow}>
+        <List
+          ref={listRef}
+          hasHorizontalOverflow={hasHorizontalOverflow}
+          aria-label={__('Pages List', 'web-stories')}
+        >
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 

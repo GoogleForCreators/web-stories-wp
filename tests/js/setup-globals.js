@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-window.ampStoriesEditSettings = {};
+window.webStoriesEditorSettings = {};
+window.webStoriesDashboardSettings = {};
 
 global.wp = {
   media: {

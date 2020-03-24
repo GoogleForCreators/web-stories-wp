@@ -62,7 +62,7 @@ const Colors = styled.div`
   flex-wrap: wrap;
   overflow: auto;
 
-  ${Color}:nth-child(6n) {
+  ${Color}:nth-child (6n) {
     margin-right: 0;
   }
 `;

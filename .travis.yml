@@ -39,6 +39,7 @@ env:
     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 install:
+  - set -e
   - |
     if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
@@ -56,8 +57,10 @@ install:
       export PATH="$HOME:$PATH"
       wp package install git@github.com:wp-cli/dist-archive-command.git
     fi
+  - set +e
 
 before_script:
+  - set -e
   - |
     if [ "$LINT" = "1" ]; then
       composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
@@ -71,8 +74,10 @@ before_script:
     if [ "$COVERAGE" != "1" ]; then
       phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
     fi
+  - set +e
 
 script:
+  - set -e
   - |
     if [ "$LINT" = "1" ]; then
       composer --no-interaction validate --no-check-all
@@ -109,9 +114,10 @@ script:
     if [ "$E2E" = "1" ]; then
       npm run build:js
       npm run env:start
-      npm run env:e2e:ci
+      npm run test:e2e:ci
       npm run env:stop
     fi
+  - set +e
 
 jobs:
   fast_finish: true
@@ -155,7 +161,7 @@ jobs:
       name: Deploy Storybook / Playground
       env: DEPLOY_PLUGIN=1
       before_deploy:
-        - npm run build-storybook
+        - npm run build:storybook
       deploy:
         - provider: pages
           edge: true

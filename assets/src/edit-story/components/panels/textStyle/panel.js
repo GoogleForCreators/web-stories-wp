@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -32,67 +26,41 @@ import { dataPixels } from '../../../units';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import { SimplePanel } from '../panel';
+import { usePresubmitHandler } from '../../form';
 import TextStyleControls from './textStyle';
 import ColorControls from './color';
 import PaddingControls from './padding';
 import FontControls from './font';
 
-function StylePanel({ selectedElements, onSetProperties }) {
+function StylePanel(props) {
   // Update size and position if relevant values have changed.
-  const handleSubmit = useCallback(
-    (evt) => {
-      onSetProperties((properties) => {
-        const { width, height: oldHeight, rotationAngle, x, y } = properties;
-        const newProperties = { ...properties };
-        const newHeight = dataPixels(calculateTextHeight(newProperties, width));
-        const [dx, dy] = calcRotatedResizeOffset(
-          rotationAngle,
-          0,
-          0,
-          0,
-          newHeight - oldHeight
-        );
-        return {
-          height: newHeight,
-          x: dataPixels(x + dx),
-          y: dataPixels(y + dy),
-        };
-      });
-      if (evt) {
-        evt.preventDefault();
-      }
-    },
-    [onSetProperties]
-  );
+  usePresubmitHandler((properties) => {
+    const { width, height: oldHeight, rotationAngle, x, y } = properties;
+    const newHeight = dataPixels(calculateTextHeight(properties, width));
+    const [dx, dy] = calcRotatedResizeOffset(
+      rotationAngle,
+      0,
+      0,
+      0,
+      newHeight - oldHeight
+    );
+    return {
+      height: newHeight,
+      x: dataPixels(x + dx),
+      y: dataPixels(y + dy),
+    };
+  }, []);
+
   return (
-    <SimplePanel
-      name="style"
-      title={__('Style', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
-      <FontControls
-        selectedElements={selectedElements}
-        onSetProperties={onSetProperties}
-      />
-      <TextStyleControls
-        selectedElements={selectedElements}
-        onSetProperties={onSetProperties}
-      />
-      <ColorControls
-        selectedElements={selectedElements}
-        onSetProperties={onSetProperties}
-      />
-      <PaddingControls
-        selectedElements={selectedElements}
-        onSetProperties={onSetProperties}
-      />
+    <SimplePanel name="style" title={__('Style', 'web-stories')}>
+      <FontControls {...props} />
+      <TextStyleControls {...props} />
+      <ColorControls {...props} />
+      <PaddingControls {...props} />
     </SimplePanel>
   );
 }
 
-StylePanel.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
-};
+StylePanel.propTypes = {};
 
 export default StylePanel;

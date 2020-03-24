@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Color, Label, Row, ToggleButton } from '../../form';
-import getCommonValue from '../utils/getCommonValue';
+import { useCommonColorValue } from '../utils';
 import { ReactComponent as FillIcon } from '../../../icons/fill_icon.svg';
 import { ReactComponent as HighlightIcon } from '../../../icons/highlight_icon.svg';
 
@@ -38,54 +37,34 @@ const Space = styled.div`
   flex: ${({ flex }) => flex};
 `;
 
-function ColorControls({ selectedElements, onSetProperties }) {
-  const color = getCommonValue(selectedElements, 'color');
-  const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const backgroundType = getCommonValue(selectedElements, 'backgroundType');
-
-  const [state, setState] = useState({
-    backgroundType,
-    backgroundColor,
-    color,
-  });
-  useEffect(() => {
-    setState({
-      backgroundType,
-      backgroundColor,
-      color,
-    });
-  }, [color, backgroundColor, backgroundType]);
-
-  const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
-
-  useEffect(() => {
-    updateProperties();
-  }, [
-    state.backgroundType,
-    state.backgroundColor,
-    state.color,
-    updateProperties,
-  ]);
+function ColorControls({ selectedElements, pushUpdate }) {
+  const color = useCommonColorValue(selectedElements, 'color');
+  const backgroundColor = useCommonColorValue(
+    selectedElements,
+    'backgroundColor'
+  );
+  const backgroundType = useCommonColorValue(
+    selectedElements,
+    'backgroundType'
+  );
 
   return (
     <>
       <Row>
         <Label>{__('Text', 'web-stories')}</Label>
         <Color
-          isMultiple={'' === color}
-          value={state.color}
-          onChange={(value) => setState({ ...state, color: value })}
+          data-testid="text.color"
+          value={color}
+          onChange={(value) => pushUpdate({ color: value }, true)}
         />
       </Row>
       <Row>
         <Label>{__('Textbox', 'web-stories')}</Label>
         <Color
+          data-testid="text.backgroundColor"
           hasGradient
-          value={state.backgroundColor}
-          isMultiple={backgroundColor === ''}
-          onChange={(value) => setState({ ...state, backgroundColor: value })}
+          value={backgroundColor}
+          onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
         />
       </Row>
@@ -94,21 +73,21 @@ function ColorControls({ selectedElements, onSetProperties }) {
           <Space flex="1" />
           <ToggleButton
             icon={<FillIcon width={32} height={32} />}
-            value={state.backgroundType === 'fill'}
+            value={backgroundType === 'fill'}
             isMultiple={false}
             label={__('Fill', 'web-stories')}
             onChange={(value) =>
-              setState({ ...state, backgroundType: value ? 'fill' : '' })
+              pushUpdate({ backgroundType: value ? 'fill' : '' }, true)
             }
           />
           <Space flex="0 0 10px" />
           <ToggleButton
             icon={<HighlightIcon width={32} height={32} />}
             label={__('Highlight', 'web-stories')}
-            value={state.backgroundType === 'highlight'}
+            value={backgroundType === 'highlight'}
             isMultiple={false}
             onChange={(value) =>
-              setState({ ...state, backgroundType: value ? 'highlight' : '' })
+              pushUpdate({ backgroundType: value ? 'highlight' : '' }, true)
             }
           />
           <Space flex="2" />
@@ -120,7 +99,7 @@ function ColorControls({ selectedElements, onSetProperties }) {
 
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default ColorControls;

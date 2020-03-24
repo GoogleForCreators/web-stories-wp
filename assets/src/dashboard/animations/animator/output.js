@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-function removeUnsetValues(map) {
-  const result = {};
-  for (const k in map) {
-    if (map[k] !== '') {
-      result[k] = map[k];
-    }
-  }
-  return result;
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+function WithAnimation({ id, style, children }) {
+  return (
+    <div id={id} style={style}>
+      {children}
+    </div>
+  );
 }
 
-export default removeUnsetValues;
+WithAnimation.propTypes = {
+  id: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
+
+export default WithAnimation;

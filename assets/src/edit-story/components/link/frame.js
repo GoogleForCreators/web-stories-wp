@@ -37,12 +37,13 @@ const Hint = styled.div`
   font-size: 14px;
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  margin-top: -68px;
+  margin-top: -52px;
   display: flex;
   justify-content: center;
   flex-direction: row;
   max-width: 200px;
   pointer-events: all;
+  padding: 2px 6px;
 `;
 
 const Tooltip = styled.div`
@@ -115,10 +116,6 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-const Wrapper = styled.div`
-  position: relative;
-`;
-
 const TooltipContainer = styled.div`
   position: absolute;
   width: 100%;
@@ -129,45 +126,40 @@ const TooltipContainer = styled.div`
   pointer-events: none;
 `;
 
-function WithLink({ element, showTooltip, children, ...rest }) {
+function WithLink({ element, active, dragging, children }) {
   const link = getLinkFromElement(element);
 
-  if (!link) {
-    return children;
-  }
-
-  if (!showTooltip) {
-    return (
-      <Wrapper {...rest}>
-        <LinkIcon />
-        {children}
-      </Wrapper>
-    );
-  }
-
   return (
-    <Wrapper {...rest}>
-      <TooltipContainer>
-        {link.type === LinkType.ONE_TAP ? (
-          <Hint>{link.url}</Hint>
-        ) : (
-          <Tooltip>
-            <BrandIcon src={link.icon} />
-            <LinkDesc>{link.desc || link.url}</LinkDesc>
-            <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
-              <LinkOutIcon />
-            </LinkOut>
-          </Tooltip>
-        )}
-      </TooltipContainer>
+    <>
       {children}
-    </Wrapper>
+      {link && !active && !dragging && <LinkIcon />}
+      {link && active && !dragging && (
+        <TooltipContainer>
+          {link.type === LinkType.ONE_TAP ? (
+            <Hint>{link.url}</Hint>
+          ) : (
+            <Tooltip>
+              <BrandIcon src={link.icon} />
+              <LinkDesc>{link.desc || link.url}</LinkDesc>
+              <LinkOut
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkOutIcon />
+              </LinkOut>
+            </Tooltip>
+          )}
+        </TooltipContainer>
+      )}
+    </>
   );
 }
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  showTooltip: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
+  dragging: PropTypes.bool.isRequired,
   children: StoryPropTypes.children.isRequired,
 };
 

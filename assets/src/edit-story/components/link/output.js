@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import { withProtocol } from '../../utils/url';
 import { getLinkFromElement } from './index';
 
 function WithLink({ element, children, ...rest }) {
@@ -25,9 +26,10 @@ function WithLink({ element, children, ...rest }) {
   if (!link) {
     return children;
   }
+  const urlWithProtocol = withProtocol(link.url);
   return (
     <a
-      href={link.url}
+      href={urlWithProtocol}
       data-tooltip-icon={link.icon}
       data-tooltip-text={link.desc}
       {...rest}
