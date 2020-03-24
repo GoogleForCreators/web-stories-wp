@@ -43,7 +43,7 @@ function setupPanel() {
     },
     actions: { updateStory, deleteStory },
   };
-  const { getByText, queryByText } = render(
+  const { getByText } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <SlugPanel />
@@ -52,7 +52,6 @@ function setupPanel() {
   );
   return {
     getByText,
-    queryByText,
     updateStory,
   };
 }

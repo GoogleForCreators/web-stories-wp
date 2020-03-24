@@ -75,6 +75,7 @@ function setupPanel(
     getByText,
     queryByText,
     updateStory,
+    deleteStory,
   };
 }
 
@@ -105,5 +106,15 @@ describe('StatusPanel', () => {
         password: '',
       },
     });
+  });
+
+  it('should trigger deleting the story when clicking on delete button', () => {
+    const { deleteStory, queryByText } = setupPanel();
+
+    const deleteButton = queryByText('Move to trash');
+    expect(deleteButton).toBeDefined();
+
+    fireEvent.click(deleteButton);
+    expect(deleteStory).toHaveBeenCalledTimes(1);
   });
 });
