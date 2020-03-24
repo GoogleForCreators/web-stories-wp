@@ -45,9 +45,7 @@ const Preview = styled(ColorBox)`
   cursor: pointer;
 `;
 
-const VisualPreview = styled.div.attrs(({ isEditable }) => ({
-  as: isEditable ? 'button' : 'div',
-}))`
+const VisualPreview = styled.div`
   flex-shrink: 0;
   width: 32px;
   height: 32px;

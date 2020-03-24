@@ -163,6 +163,30 @@ describe('<ColorPreview />', () => {
     });
   });
 
+  it('should invoke callback correctly if multiple', () => {
+    const onChange = jest.fn();
+    const onClose = jest.fn();
+    const { button, showColorPickerAt, hideSidebar } = arrange(
+      <ColorPreview
+        onChange={onChange}
+        value={MULTIPLE_VALUE}
+        hasGradient
+        onClose={onClose}
+        label="Color"
+      />
+    );
+
+    fireEvent.click(button);
+
+    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
+      color: null,
+      onChange,
+      hasGradient: true,
+      hasOpacity: true,
+      onClose: hideSidebar,
+    });
+  });
+
   it('should invoke onChange when inputting valid hex', () => {
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
@@ -186,5 +210,20 @@ describe('<ColorPreview />', () => {
     fireEvent.change(input, { target: { value: '#0000FF' } });
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255));
+  });
+
+  it('should revert to last known value when blurring invalid input', () => {
+    const onChange = jest.fn();
+    const value = createSolid(255, 0, 0);
+    const { input } = arrange(
+      <ColorPreview onChange={onChange} value={value} label="Color" />
+    );
+
+    // Only 5 digits can't be valid
+    fireEvent.change(input, { target: { value: '0FF00' } });
+    fireEvent.blur(input);
+    expect(onChange).not.toHaveBeenCalled();
+
+    expect(input).toHaveValue('FF0000');
   });
 });
