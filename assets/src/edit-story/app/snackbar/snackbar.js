@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 const Container = styled.div`
   display: flex;
@@ -77,23 +77,18 @@ const ActionButton = styled.button`
 `;
 
 function Snackbar({ notification, position }) {
-  const notificationMessage = () => {
-    if (notification.multiple) {
-      return (
-        <Content>
-          {notification.message}
-          <List>
-            {notification.list.map((item) => (
-              <ListItem key={item}>
-                {sprintf(__('%s', 'web-stories'), item)}
-              </ListItem>
-            ))}
-          </List>
-        </Content>
-      );
-    }
-    return <Content>{notification.message}</Content>;
-  };
+  const notificationMessage = () => (
+    <Content>
+      {notification.message}
+      {notification.list && notification.list.length > 0 && (
+        <List>
+          {notification.list.map((item) => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      )}
+    </Content>
+  );
   return (
     <Container positon={position}>
       <Main position={position}>

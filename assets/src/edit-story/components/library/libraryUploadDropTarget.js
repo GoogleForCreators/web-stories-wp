@@ -89,7 +89,6 @@ function LibraryUploadDropTarget({ children }) {
           createSnackbar({
             type: 'error',
             message,
-            multiple: true,
             list,
             retryAction:
               retryList.length > 0 ? () => onDropHandler(retryList) : null,
