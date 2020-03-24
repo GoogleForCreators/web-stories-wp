@@ -78,7 +78,7 @@ const Pane = styled.section.attrs(({ isActive }) => ({
   'aria-expanded': isActive,
   hidden: !isActive,
 }))`
-  padding: 1em;
+  padding: 1.5em;
 `;
 
 function getPaneId(tab) {

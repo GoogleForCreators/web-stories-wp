@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,57 +31,41 @@ import { __ } from '@wordpress/i18n';
 import { Media, Row } from '../form';
 import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
-import getCommonObjectValue from './utils/getCommonObjectValue';
-import getCommonValue from './utils/getCommonValue';
+import { getCommonValue, useCommonObjectValue } from './utils';
 
-function VideoAccessibilityPanel({ selectedElements, onSetProperties }) {
-  const resource = getCommonValue(selectedElements, 'resource');
-  const { posterId, poster, title, alt } = getCommonObjectValue(
+const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
+
+function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
+  const resource = useCommonObjectValue(
     selectedElements,
     'resource',
-    ['posterId', 'poster', 'title', 'alt'],
-    false
+    DEFAULT_RESOURCE
   );
-  const [state, setState] = useState({ posterId, poster, title, alt });
-  useEffect(() => {
-    setState({ posterId, poster, title, alt });
-  }, [posterId, poster, title, alt]);
+  const poster = getCommonValue(selectedElements, 'poster') || resource.poster;
+  const title = getCommonValue(selectedElements, 'title') || resource.title;
+  const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
 
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
-
-  const handleChangeImage = (image) => {
-    const newState = {
-      posterId: image.id,
-      poster: image.sizes?.medium?.url || image.url,
-    };
-    setState({ ...state, ...newState });
-    onSetProperties({ resource: { ...resource, ...newState } });
-  };
-
-  const handleChange = useCallback(
-    (property) => (value) => {
-      const newState = {
-        [property]: value,
-      };
-      setState({ ...state, ...newState });
-      onSetProperties({ resource: { ...resource, ...newState } });
+  const handleChangePoster = useCallback(
+    (image) => {
+      pushUpdate(
+        {
+          poster: image.sizes?.medium?.url || image.url,
+        },
+        true
+      );
     },
-    [state, onSetProperties, resource]
+    [pushUpdate]
   );
 
   return (
     <SimplePanel
       name="videoAccessibility"
       title={__('Accessibility', 'web-stories')}
-      onSubmit={handleSubmit}
     >
       <Row>
         <Media
-          value={state.poster}
-          onChange={handleChangeImage}
+          value={poster}
+          onChange={handleChangePoster}
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
@@ -90,16 +74,16 @@ function VideoAccessibilityPanel({ selectedElements, onSetProperties }) {
       <Row>
         <ExpandedTextInput
           placeholder={__('Title', 'web-stories')}
-          value={state.title || ''}
-          onChange={handleChange('title')}
+          value={title || ''}
+          onChange={(value) => pushUpdate({ title: value })}
           clear
         />
       </Row>
       <Row>
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
-          value={state.alt || ''}
-          onChange={handleChange('alt')}
+          value={alt || ''}
+          onChange={(value) => pushUpdate({ alt: value })}
           clear
         />
       </Row>
@@ -112,7 +96,7 @@ function VideoAccessibilityPanel({ selectedElements, onSetProperties }) {
 
 VideoAccessibilityPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default VideoAccessibilityPanel;

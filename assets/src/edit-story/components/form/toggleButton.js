@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
+/**
+ * Internal dependencies
+ */
+import MULTIPLE_VALUE from './multipleValue';
+
 const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
   position: absolute;
   opacity: 0;
@@ -91,6 +96,7 @@ function ToggleButton({
   label,
   ...rest
 }) {
+  value = value === MULTIPLE_VALUE ? '' : value;
   return (
     <Container>
       <ContainerLabel
