@@ -90,6 +90,7 @@ const IconContainer = styled.span`
   margin: auto 0;
   width: 17.05px;
   height: 17.05px;
+  color: ${({ theme }) => theme.colors.gray300};
 `;
 
 const ClearInputButton = styled.button`
@@ -118,8 +119,8 @@ const TypeaheadInput = ({
   const [showMenu, setShowMenu] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
-  const menuIsOpen = useMemo(() => {
-    return showMenu && items.length > 0 && inputValue;
+  const isMenuOpen = useMemo(() => {
+    return showMenu && items.length > 0 && inputValue.length > 0;
   }, [items, showMenu, inputValue]);
 
   const searchRef = useRef();
@@ -153,9 +154,9 @@ const TypeaheadInput = ({
       ref={searchRef}
       className={className}
       {...rest}
-      isOpen={menuIsOpen}
+      isOpen={isMenuOpen}
     >
-      <InputContainer isOpen={menuIsOpen}>
+      <InputContainer isOpen={isMenuOpen}>
         <IconContainer>
           <SearchIcon />
         </IconContainer>
@@ -166,7 +167,7 @@ const TypeaheadInput = ({
           id={inputId}
           name={inputId}
           disabled={disabled}
-          isOpen={menuIsOpen}
+          isOpen={isMenuOpen}
           value={inputValue}
           onFocus={() => setShowMenu(true)}
           onChange={({ target }) => {
@@ -174,7 +175,7 @@ const TypeaheadInput = ({
           }}
           placeholder={placeholder}
         />
-        {inputValue.length > 0 && !Boolean(menuIsOpen) && (
+        {inputValue.length > 0 && !Boolean(isMenuOpen) && (
           <ClearInputButton
             onClick={handleInputClear}
             aria-label={'Clear Input'}
@@ -185,7 +186,7 @@ const TypeaheadInput = ({
       </InputContainer>
 
       <TypeaheadOptions
-        isOpen={menuIsOpen}
+        isOpen={isMenuOpen}
         items={items}
         maxItemsVisible={maxItemsVisible}
         onSelect={items && handleMenuItemSelect}
