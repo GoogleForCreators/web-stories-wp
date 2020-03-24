@@ -26,10 +26,11 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import PopoverMenu, { Menu } from '../popover-menu';
+import PopoverMenu from '../popover-menu';
 import { DROPDOWN_TYPES } from '../../constants';
+import PopoverPanel from '../popover-panel';
 
-const DropdownContainer = styled.div`
+export const DropdownContainer = styled.div`
   position: static;
 `;
 
@@ -40,7 +41,8 @@ const Label = styled.label`
 
 export const InnerDropdown = styled.button`
   align-items: center;
-  background-color: ${({ theme, type }) => theme.dropdown[type].background};
+  background-color: ${({ theme, type, isOpen }) =>
+    theme.dropdown[type][isOpen ? 'activeBackground' : 'background']};
   border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius};
   border: ${({ theme, type }) => theme.dropdown[type].border};
   color: ${({ theme }) => theme.colors.gray600};
@@ -56,6 +58,11 @@ export const InnerDropdown = styled.button`
   line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight};
   padding: 10px 16px;
   width: 100%;
+
+  &:hover {
+    background-color: ${({ theme, type }) =>
+      theme.dropdown[type].activeBackground};
+  }
 
   &:disabled {
     color: ${({ theme }) => theme.colors.gray400};
@@ -147,9 +154,13 @@ const Dropdown = ({
       </Label>
 
       {type === DROPDOWN_TYPES.PANEL ? (
-        <Menu isOpen={showMenu}>
-          {children({ closeMenu: () => setShowMenu(false), showMenu })}
-        </Menu>
+        <PopoverPanel
+          isOpen={showMenu}
+          title={currentLabel}
+          onClose={() => setShowMenu(false)}
+        >
+          {children}
+        </PopoverPanel>
       ) : (
         <PopoverMenu
           isOpen={showMenu}
@@ -175,7 +186,7 @@ Dropdown.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(Object.values(DROPDOWN_TYPES)),
-  children: PropTypes.func,
+  children: PropTypes.node,
 };
 
 Dropdown.defaultProps = {

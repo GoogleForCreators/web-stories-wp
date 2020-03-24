@@ -69,19 +69,22 @@ const theme = {
   },
   dropdown: {
     [DROPDOWN_TYPES.PANEL]: {
-      background: '#f6f6f6',
+      background: 'transparent',
+      activeBackground: '#f6f6f6',
       borderRadius: '40px',
       border: '1px solid #eee',
       arrowColor: '#2979ff',
     },
     [DROPDOWN_TYPES.MENU]: {
       background: '#f6f6f6',
+      activeBackground: '#f6f6f6',
       borderRadius: '4px',
       border: 'none',
       arrowColor: '#848d96',
     },
     [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
+      activeBackground: 'transparent',
       borderRadius: 0,
       border: 'none',
       arrowColor: '#2979ff',
@@ -103,6 +106,13 @@ const theme = {
       size: '38px',
       lineHeight: '53px',
       letterSpacing: '-0.005em',
+    },
+    heading3: {
+      family: 'Google Sans',
+      size: '20px',
+      lineHeight: '28px',
+      letterSpacing: '-.01em',
+      weight: 500,
     },
     body1: {
       family: 'Roboto',

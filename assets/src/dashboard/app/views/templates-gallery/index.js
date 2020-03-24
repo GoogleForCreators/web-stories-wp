@@ -27,66 +27,46 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown, ViewHeader } from '../../../components';
+import { Dropdown, ViewHeader, DropdownContainer } from '../../../components';
 import { DROPDOWN_TYPES } from '../../../constants';
 
-const DropdownContainer = styled.div`
+const ExploreFiltersContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: 1px solid #eee;
   flex-direction: row;
   display: flex;
+
+  ${DropdownContainer} {
+    margin-right: 15px;
+  }
 `;
 
 function TemplatesGallery() {
   return (
     <div>
       <ViewHeader>{__('Explore Templates', 'web-stories')}</ViewHeader>
-      <DropdownContainer>
+      <ExploreFiltersContainer>
         <Dropdown
           ariaLabel="Category Dropdown"
           type={DROPDOWN_TYPES.PANEL}
           placeholder={__('Category', 'web-stories')}
-        >
-          {({ closeMenu }) => (
-            <div>
-              <button onClick={closeMenu}>Close</button>
-            </div>
-          )}
-        </Dropdown>
+        />
         <Dropdown
           ariaLabel="Category Dropdown"
           type={DROPDOWN_TYPES.PANEL}
           placeholder={__('Style', 'web-stories')}
-        >
-          {({ closeMenu }) => (
-            <div>
-              <button onClick={closeMenu}>Close</button>
-            </div>
-          )}
-        </Dropdown>
+        />
         <Dropdown
           ariaLabel="Category Dropdown"
           type={DROPDOWN_TYPES.PANEL}
           placeholder={__('Color', 'web-stories')}
-        >
-          {({ closeMenu }) => (
-            <div>
-              <button onClick={closeMenu}>Close</button>
-            </div>
-          )}
-        </Dropdown>
+        />
         <Dropdown
           ariaLabel="Category Dropdown"
           type={DROPDOWN_TYPES.PANEL}
           placeholder={__('Layout Type', 'web-stories')}
-        >
-          {({ closeMenu }) => (
-            <div>
-              <button onClick={closeMenu}>Close</button>
-            </div>
-          )}
-        </Dropdown>
-      </DropdownContainer>
+        />
+      </ExploreFiltersContainer>
     </div>
   );
 }

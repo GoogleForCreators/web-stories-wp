@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-export { default as NavigationBar } from './navigation-bar';
-export { default as Button } from './button';
-export { default as PopoverMenu } from './popover-menu';
-export { default as TypeaheadInput } from './typeahead-input';
-export { default as TypeaheadOptions } from './typeahead-options';
-export { default as Dropdown, DropdownContainer } from './dropdown';
-export { Pill, FloatingTab } from './pill';
-export { ViewHeader } from './typography';
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { boolean, text } from '@storybook/addon-knobs';
+
+/**
+ * Internal dependencies
+ */
+import PopoverPanel from '../';
+
+export default {
+  title: 'Dashboard/Components/PopoverPanel',
+  component: PopoverPanel,
+};
+export const _default = () => (
+  <PopoverPanel
+    isOpen={boolean('isOpen', true)}
+    title={'Hi'}
+    onClose={action('Close button selected')}
+  >
+    <div>{text('children', 'Popover Panel Content')}</div>
+  </PopoverPanel>
+);
