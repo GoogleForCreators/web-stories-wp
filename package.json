@@ -110,7 +110,7 @@
     "stylelint-processor-styled-components": "^1.10.0",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^2.3.5",
-    "webpack": "^4.42.0",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpackbar": "^4.0.0"
   },
