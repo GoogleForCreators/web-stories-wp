@@ -102,6 +102,7 @@ const ClearInputButton = styled.button`
   height: 13.18px;
   padding: 0;
   color: ${({ theme }) => theme.colors.gray600};
+  cursor: pointer;
 `;
 
 const TypeaheadInput = ({
