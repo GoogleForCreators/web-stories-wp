@@ -332,7 +332,7 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
-            <DateTimeSeparator aria-hidden="true">{':'}</DateTimeSeparator>
+            <DateTimeSeparator>{':'}</DateTimeSeparator>
             <NumberInput
               aria-label={__('Minutes', 'web-stories')}
               type="number"

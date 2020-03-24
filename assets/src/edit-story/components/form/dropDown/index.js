@@ -51,10 +51,8 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  background-color: ${({ theme, isDocumentPanel }) =>
-    isDocumentPanel
-      ? rgba(theme.colors.fg.v1, 0.1)
-      : rgba(theme.colors.bg.v0, 0.3)};
+  background-color: ${({ theme, lightMode }) =>
+    lightMode ? rgba(theme.colors.fg.v1, 0.1) : rgba(theme.colors.bg.v0, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -171,7 +169,7 @@ function DropDown({
   onChange,
   disabled,
   ariaLabel,
-  isDocumentPanel,
+  lightMode,
 }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
@@ -331,7 +329,7 @@ function DropDown({
         disabled={disabled}
         ref={DropDown.selectRef}
         aria-disabled={disabled}
-        isDocumentPanel={isDocumentPanel}
+        lightMode={lightMode}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) ||
@@ -375,7 +373,7 @@ DropDown.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
-  isDocumentPanel: PropTypes.bool,
+  lightMode: PropTypes.bool,
 };
 
 DropDown.defaultProps = {

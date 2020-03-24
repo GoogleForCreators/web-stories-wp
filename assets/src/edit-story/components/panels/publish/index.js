@@ -201,7 +201,7 @@ function PublishPanel() {
             value={author}
             disabled={isSaving}
             onChange={handleChangeValue('author')}
-            isDocumentPanel={true}
+            lightMode={true}
           />
         </Row>
       )}
