@@ -156,7 +156,7 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
-          <Actions color={currentColor} onClose={onClose} />
+          <Actions color={currentColor} />
         </Body>
       </Container>
     </CSSTransition>

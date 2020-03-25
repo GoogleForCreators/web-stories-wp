@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
+import { PatternPropType } from '../../types';
 
 const ActionsWrapper = styled.div`
   position: absolute;
@@ -35,7 +36,7 @@ const ActionsWrapper = styled.div`
 
 const AddColorPreset = styled.button``;
 
-function Actions({ color, onClose }) {
+function Actions({ color }) {
   const {
     state: {
       story: { colorPresets },
@@ -46,11 +47,10 @@ function Actions({ color, onClose }) {
   const handleAddColorPreset = useCallback(() => {
     updateStory({
       properties: {
-        colorPresets: [...colorPresets, color],
+        colorPresets: [...colorPresets, { color }],
       },
     });
-    onClose();
-  }, [color, colorPresets, onClose, updateStory]);
+  }, [color, colorPresets, updateStory]);
   return (
     <ActionsWrapper>
       <AddColorPreset onClick={handleAddColorPreset}>
@@ -59,5 +59,9 @@ function Actions({ color, onClose }) {
     </ActionsWrapper>
   );
 }
+
+Actions.propTypes = {
+  color: PatternPropType,
+};
 
 export default Actions;

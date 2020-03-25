@@ -40,6 +40,9 @@ use WP_REST_Response;
  * Class Stories_Controller
  */
 class Stories_Controller extends WP_REST_Posts_Controller {
+
+	const COLOR_PRESETS_OPTION = 'web_stories_color_presets';
+
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
@@ -99,6 +102,11 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
+		if ( in_array( 'color_presets', $fields, true ) ) {
+			$color_presets         = get_option( self::COLOR_PRESETS_OPTION, [] );
+			$data['color_presets'] = is_array( $color_presets ) ? $color_presets : [];
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -120,6 +128,24 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		 * @param WP_REST_Request $request Request object.
 		 */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
+	}
+
+	/**
+	 * Updates a single post.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+		$response = parent::update_item( $request );
+		if ( ! is_wp_error( $response ) ) {
+			// If color presets are set.
+			$color_presets = $request->get_param( 'color_presets' );
+			if ( is_array( $color_presets ) ) {
+				update_option( self::COLOR_PRESETS_OPTION, $color_presets );
+			}
+		}
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -155,6 +181,13 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'context'     => [ 'view', 'edit', 'embed' ],
 			'readonly'    => true,
 			'default'     => '',
+		];
+
+		$schema['properties']['color_presets'] = [
+			'description' => __( 'Color presets used by all stories', 'web-stories' ),
+			'type'        => 'array',
+			'context'     => [ 'view', 'edit' ],
+			'default'     => [],
 		];
 
 		$this->schema = $schema;

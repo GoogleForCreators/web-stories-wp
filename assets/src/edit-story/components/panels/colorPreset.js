@@ -115,12 +115,13 @@ function ColorPresetPanel() {
       {colorPresets && (
         <PanelContent isPrimary>
           <Colors>
-            {colorPresets.map((value, i) => {
-              const { color } = generatePatternStyles(
-                { color: value },
-                'color'
+            {colorPresets.map((color, i) => {
+              return (
+                <Color
+                  key={`color-${i}`}
+                  {...generatePatternStyles(color, 'color')}
+                />
               );
-              return <Color key={`color-${i}`} color={color} />;
             })}
           </Colors>
         </PanelContent>

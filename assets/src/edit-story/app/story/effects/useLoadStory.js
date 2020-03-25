@@ -63,6 +63,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
           poster_portrait_url: posterPortraitUrl,
+          color_presets: colorPresets,
           password,
         } = post;
 
@@ -85,7 +86,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featuredMediaUrl,
           posterPortraitUrl,
           password,
-          colorPresets: [],
+          colorPresets,
         };
 
         // If there are no pages, create empty page.

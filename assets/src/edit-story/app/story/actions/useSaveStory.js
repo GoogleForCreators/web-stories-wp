@@ -87,6 +87,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       excerpt,
       featuredMedia,
       password,
+      colorPresets,
     } = story;
 
     const content = getStoryMarkup(story, pages, metadata);
@@ -103,6 +104,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       excerpt,
       featuredMedia,
       password,
+      colorPresets,
     })
       .then((post) => {
         const {
