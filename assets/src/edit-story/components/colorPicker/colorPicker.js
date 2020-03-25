@@ -38,7 +38,6 @@ import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
 import useColor from './useColor';
-import Actions from './actions';
 
 const CONTAINER_PADDING = 15;
 
@@ -74,7 +73,14 @@ const Body = styled.div`
   padding: ${CONTAINER_PADDING}px;
 `;
 
-function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
+function ColorPicker({
+  color,
+  hasGradient,
+  hasOpacity,
+  onChange,
+  onClose,
+  addActions,
+}) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
     actions: {
@@ -156,7 +162,7 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
-          <Actions color={currentColor} />
+          {addActions && addActions(currentColor)}
         </Body>
       </Container>
     </CSSTransition>
@@ -169,6 +175,7 @@ ColorPicker.propTypes = {
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
+  addActions: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 };
 
 ColorPicker.defaultProps = {
@@ -177,6 +184,7 @@ ColorPicker.defaultProps = {
   onClose: /* istanbul ignore next */ () => {},
   hasGradient: false,
   hasOpacity: true,
+  addActions: false,
 };
 
 export default ColorPicker;

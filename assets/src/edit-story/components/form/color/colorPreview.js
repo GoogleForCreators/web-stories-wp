@@ -32,6 +32,7 @@ import { __, _x } from '@wordpress/i18n';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
+import getColorPickerActions from '../../../utils/getColorPickerActions';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
@@ -77,6 +78,7 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
+      addActions: getColorPickerActions,
     });
   }, [
     showColorPickerAt,

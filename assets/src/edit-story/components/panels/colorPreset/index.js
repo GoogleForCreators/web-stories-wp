@@ -29,14 +29,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Add } from '../../icons/add_page.svg';
-import { ReactComponent as Edit } from '../../icons/edit_pencil.svg';
-import { ReactComponent as Remove } from '../../icons/remove.svg';
-import { useSidebar } from '../sidebar';
-import { useStory } from '../../app/story';
-import generatePatternStyles from '../../utils/generatePatternStyles';
-import { getDefinitionForType } from '../../elements';
-import { Panel, PanelTitle, PanelContent } from './panel';
+import { ReactComponent as Add } from '../../../icons/add_page.svg';
+import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
+import { ReactComponent as Remove } from '../../../icons/remove.svg';
+import { useSidebar } from '../../sidebar';
+import { useStory } from '../../../app/story';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
+import { getDefinitionForType } from '../../../elements';
+import getColorPickerActions from '../../../utils/getColorPickerActions';
+import { Panel, PanelTitle, PanelContent } from './../panel';
 
 const buttonCSS = css`
   background: transparent;
@@ -143,6 +144,7 @@ function ColorPresetPanel() {
         hasGradient: true,
         hasOpacity: true,
         onClose: hideSidebar,
+        addActions: getColorPickerActions,
       });
     },
     [showColorPickerAt, hideSidebar]
