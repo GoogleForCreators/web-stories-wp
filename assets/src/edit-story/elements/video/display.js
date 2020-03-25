@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -40,6 +41,7 @@ const Video = styled.video`
 `;
 
 function VideoDisplay({
+  previewMode,
   box: { width, height },
   element: { id, resource, isBackground, scale, focalX, focalY, loop },
 }) {
@@ -62,20 +64,31 @@ function VideoDisplay({
   );
   return (
     <Element>
-      <Video
-        id={`video-${id}`}
-        poster={resource.poster}
-        style={style}
-        {...videoProps}
-        loop={loop}
-      >
-        <source src={resource.src} type={resource.mimeType} />
-      </Video>
+      {previewMode ? (
+        <img
+          src={resource.poster}
+          alt={resource.title}
+          width={videoProps.width}
+          height={videoProps.height}
+        />
+      ) : (
+        <Video
+          id={`video-${id}`}
+          poster={resource.poster}
+          style={style}
+          {...videoProps}
+          loop={loop}
+          preload="metadata"
+        >
+          <source src={resource.src} type={resource.mimeType} />
+        </Video>
+      )}
     </Element>
   );
 }
 
 VideoDisplay.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
 };

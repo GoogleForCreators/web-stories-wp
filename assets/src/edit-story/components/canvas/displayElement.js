@@ -23,6 +23,7 @@ import { useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -51,7 +52,7 @@ const BackgroundOverlay = styled.div`
   left: 0;
 `;
 
-function DisplayElement({ element }) {
+function DisplayElement({ element, previewMode }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -111,7 +112,7 @@ function DisplayElement({ element }) {
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={element} box={box} />
+        <Display element={element} previewMode={previewMode} box={box} />
         {replacementElement && (
           <Replacement element={replacementElement} box={box} />
         )}
@@ -126,6 +127,7 @@ function DisplayElement({ element }) {
 }
 
 DisplayElement.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
 };
 

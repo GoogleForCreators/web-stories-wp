@@ -187,6 +187,7 @@ const MediaElement = ({
         width={width}
         height={height}
         dragging={dragging}
+        preload="metadata"
         {...dropTargetsBindings}
       >
         <source src={src} type={mimeType} />
