@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const PILL_TYPES = {
   CHECKBOX: 'checkbox',
@@ -53,11 +53,10 @@ const FloatingTabLabel = styled(PillLabel)`
   background-color: transparent;
   padding: 10px 24px;
   border: none;
-  ${({ isSelected }) =>
-    isSelected &&
-    css`
-      box-shadow: ${({ theme }) => theme.floatingTab.shadow};
-    `}
+  ${({ isSelected, theme }) =>
+    isSelected && {
+      boxShadow: theme.floatingTab.shadow,
+    }}
 `;
 
 const PillInput = styled.input`
