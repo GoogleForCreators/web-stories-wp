@@ -71,6 +71,7 @@ function useUploader(refreshLibrary = true) {
       const sizeError = new Error();
       sizeError.name = 'SizeError';
       sizeError.file = file.name;
+
       /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
       sizeError.message = sprintf(
         __(
@@ -85,6 +86,7 @@ function useUploader(refreshLibrary = true) {
 
     if (!isValidType(file)) {
       const validError = new Error();
+
       /* translators: %s is a list of allowed file extensions. */
       validError.message = createInterpolateElement(
         sprintf(
