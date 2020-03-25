@@ -64,14 +64,23 @@ const EditModeButton = styled.div`
 
 const ExitEditMode = styled.button``;
 
-const Color = styled.div`
+const colorCSS = css`
   display: inline-block;
-  background: ${({ color }) => color};
   width: 30px;
   height: 30px;
   border-radius: 15px;
   margin-right: 12px;
   border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+`;
+
+const BackgroundColor = styled.div`
+  ${colorCSS}
+  background: ${({ backgroundColor }) => backgroundColor};
+`;
+
+const TextColor = styled.div`
+  ${colorCSS}
+  color: ${({ color }) => color};
 `;
 
 const Colors = styled.div`
@@ -80,7 +89,8 @@ const Colors = styled.div`
   flex-wrap: wrap;
   overflow: auto;
 
-  ${Color}:nth-child (6n) {
+  ${BackgroundColor}:nth-child (6n),
+  ${TextColor}:nth-child (6n) {
     margin-right: 0;
   }
 `;
@@ -100,6 +110,7 @@ function ColorPresetPanel() {
   const {
     state: {
       selectedElementIds,
+      selectedElements,
       story: { colorPresets },
     },
     actions: { updateStory, updateElementsById },
@@ -112,12 +123,13 @@ function ColorPresetPanel() {
   const {
     actions: { showColorPickerAt, hideSidebar },
   } = useSidebar();
+
   const openColorPicker = useCallback(
     (evt) => {
       evt.preventDefault();
       showColorPickerAt(ref.current, {
         onChange: () => null,
-        hasGradient: false, // @todo Allow this, too?
+        hasGradient: true,
         hasOpacity: true,
         onClose: hideSidebar,
       });
@@ -137,7 +149,7 @@ function ColorPresetPanel() {
     [colorPresets, updateStory]
   );
 
-  const handleApplyColor = useCallback(
+  const handleApplyBackgroundColor = useCallback(
     (color) => () => {
       if (!isEditMode) {
         updateElementsById({
@@ -156,6 +168,22 @@ function ColorPresetPanel() {
       }
     },
     [isEditMode, selectedElementIds, updateElementsById]
+  );
+
+  const isText =
+    selectedElements.length > 0 &&
+    selectedElements.every(({ type }) => 'text' === type);
+
+  const handleApplyTextColor = useCallback(
+    (color) => () => {
+      if (!isEditMode && isText) {
+        updateElementsById({
+          elementIds: selectedElementIds,
+          properties: { color },
+        });
+      }
+    },
+    [isEditMode, isText, selectedElementIds, updateElementsById]
   );
 
   return (
@@ -184,19 +212,33 @@ function ColorPresetPanel() {
       {colorPresets && (
         <PanelContent isPrimary>
           <Colors>
-            {colorPresets.map((color, i) => {
+            {colorPresets.map((color) => {
               return (
-                <Color
-                  key={`color-${i}`}
-                  {...generatePatternStyles(color, 'color')}
-                  onClick={handleApplyColor(color)}
-                >
-                  {isEditMode && (
-                    <RemoveColor onClick={handleDeleteColor(color)}>
-                      {__('X', 'web-stories')}
-                    </RemoveColor>
+                <>
+                  <BackgroundColor
+                    {...generatePatternStyles(color)}
+                    onClick={handleApplyBackgroundColor(color)}
+                  >
+                    {isEditMode && (
+                      <RemoveColor onClick={handleDeleteColor(color)}>
+                        {__('X', 'web-stories')}
+                      </RemoveColor>
+                    )}
+                  </BackgroundColor>
+                  {isText && (
+                    <TextColor
+                      {...generatePatternStyles(color, 'color')}
+                      onClick={handleApplyTextColor(color)}
+                    >
+                      {isEditMode && (
+                        <RemoveColor onClick={handleDeleteColor(color)}>
+                          {__('X', 'web-stories')}
+                        </RemoveColor>
+                      )}
+                      {!isEditMode && __('A', 'web-stories')}
+                    </TextColor>
                   )}
-                </Color>
+                </>
               );
             })}
           </Colors>
