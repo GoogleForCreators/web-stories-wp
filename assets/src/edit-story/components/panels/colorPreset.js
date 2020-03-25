@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ReactComponent as Add } from '../../icons/add_page.svg';
 import { ReactComponent as Edit } from '../../icons/edit_pencil.svg';
+import { ReactComponent as Remove } from '../../icons/remove.svg';
 import { useSidebar } from '../sidebar';
 import { useStory } from '../../app/story';
 import generatePatternStyles from '../../utils/generatePatternStyles';
@@ -71,15 +72,31 @@ const colorCSS = css`
   border-radius: 15px;
   margin-right: 12px;
   border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+  padding: 0;
+  svg {
+    width: 18px;
+    height: 28px;
+  }
 `;
 
-const BackgroundColor = styled.div`
+const textCSS = css`
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+`;
+
+const BackgroundColor = styled.button`
+  ${textCSS}
   ${colorCSS}
+  color: ${({ theme }) => theme.colors.fg.v1};
   background: ${({ backgroundColor }) => backgroundColor};
 `;
 
-const TextColor = styled.div`
+const TextColor = styled.button`
   ${colorCSS}
+  background: none;
+  border-color: transparent;
+  ${textCSS}
   color: ${({ color }) => color};
 `;
 
@@ -95,17 +112,6 @@ const Colors = styled.div`
   }
 `;
 
-// @todo Actual style :)
-const RemoveColor = styled.button`
-  width: 15px;
-  height: 15px;
-  background-color: black;
-  color: white;
-`;
-
-{
-  /* TODO: <Panel /> should be refactored for a better accessibility, "secondaryAction" should be a <button /> */
-}
 function ColorPresetPanel() {
   const {
     state: {
@@ -138,7 +144,7 @@ function ColorPresetPanel() {
   );
 
   const handleDeleteColor = useCallback(
-    (toDelete) => () => {
+    (toDelete) => {
       const colors = colorPresets.filter((color) => color !== toDelete);
       updateStory({
         properties: {
@@ -150,24 +156,22 @@ function ColorPresetPanel() {
   );
 
   const handleApplyBackgroundColor = useCallback(
-    (color) => () => {
-      if (!isEditMode) {
-        updateElementsById({
-          elementIds: selectedElementIds,
-          properties: (currentProperties) => {
-            const { type } = currentProperties;
-            // @todo Is this necessary?
-            const { isMedia } = getDefinitionForType(type);
-            return isMedia
-              ? {}
-              : {
-                  backgroundColor: color,
-                };
-          },
-        });
-      }
+    (color) => {
+      updateElementsById({
+        elementIds: selectedElementIds,
+        properties: (currentProperties) => {
+          const { type } = currentProperties;
+          // @todo Is this necessary?
+          const { isMedia } = getDefinitionForType(type);
+          return isMedia
+            ? {}
+            : {
+                backgroundColor: color,
+              };
+        },
+      });
     },
-    [isEditMode, selectedElementIds, updateElementsById]
+    [selectedElementIds, updateElementsById]
   );
 
   const isText =
@@ -176,37 +180,36 @@ function ColorPresetPanel() {
 
   const handleApplyTextColor = useCallback(
     (color) => () => {
-      if (!isEditMode && isText) {
+      if (isText) {
         updateElementsById({
           elementIds: selectedElementIds,
           properties: { color },
         });
       }
     },
-    [isEditMode, isText, selectedElementIds, updateElementsById]
+    [isText, selectedElementIds, updateElementsById]
   );
+
+  const getSecondaryActions = () => {
+    return !isEditMode ? (
+      <>
+        <EditModeButton onClick={() => setIsEditMode(true)}>
+          <Edit />
+        </EditModeButton>
+        <AddColorPresetButton ref={ref} onClick={openColorPicker}>
+          <Add />
+        </AddColorPresetButton>
+      </>
+    ) : (
+      <ExitEditMode onClick={() => setIsEditMode(false)}>
+        {__('Exit', 'web-stories')}
+      </ExitEditMode>
+    );
+  };
 
   return (
     <Panel name="colorpreset">
-      <PanelTitle
-        isPrimary
-        secondaryAction={
-          !isEditMode ? (
-            <>
-              <EditModeButton onClick={() => setIsEditMode(true)}>
-                <Edit />
-              </EditModeButton>
-              <AddColorPresetButton ref={ref} onClick={openColorPicker}>
-                <Add />
-              </AddColorPresetButton>
-            </>
-          ) : (
-            <ExitEditMode onClick={() => setIsEditMode(false)}>
-              {__('Exit', 'web-stories')}
-            </ExitEditMode>
-          )
-        }
-      >
+      <PanelTitle isPrimary secondaryAction={getSecondaryActions()}>
         {__('Color presets', 'web-stories')}
       </PanelTitle>
       {colorPresets && (
@@ -217,25 +220,23 @@ function ColorPresetPanel() {
                 <>
                   <BackgroundColor
                     {...generatePatternStyles(color)}
-                    onClick={handleApplyBackgroundColor(color)}
+                    onClick={() => {
+                      if (isEditMode) {
+                        handleDeleteColor(color);
+                      } else {
+                        handleApplyBackgroundColor(color);
+                      }
+                    }}
                   >
-                    {isEditMode && (
-                      <RemoveColor onClick={handleDeleteColor(color)}>
-                        {__('X', 'web-stories')}
-                      </RemoveColor>
-                    )}
+                    {isEditMode && <Remove />}
+                    {isText && __('A', 'web-stories')}
                   </BackgroundColor>
-                  {isText && (
+                  {isText && !isEditMode && (
                     <TextColor
                       {...generatePatternStyles(color, 'color')}
                       onClick={handleApplyTextColor(color)}
                     >
-                      {isEditMode && (
-                        <RemoveColor onClick={handleDeleteColor(color)}>
-                          {__('X', 'web-stories')}
-                        </RemoveColor>
-                      )}
-                      {!isEditMode && __('A', 'web-stories')}
+                      {__('A', 'web-stories')}
                     </TextColor>
                   )}
                 </>
