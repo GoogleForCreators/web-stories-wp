@@ -61,12 +61,6 @@ function CanvasUploadDropTarget({ children }) {
             insertElement(resource.type, { resource });
           })
           .catch((e) => {
-            if (e.name !== 'SizeError' && e.name !== 'ValidError') {
-              e.message = __(
-                'Sorry, files have failed to upload',
-                'web-stories'
-              );
-            }
             showSnackbar({
               message: e.message,
             });
