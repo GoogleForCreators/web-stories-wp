@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useCallback, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,6 +30,9 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as Add } from '../../icons/add_page.svg';
+import { useSidebar } from '../sidebar';
+import { useStory } from '../../app/story';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { Panel, PanelTitle, PanelContent } from './panel';
 
 const AddColorPresetButton = styled.div`
@@ -71,29 +75,56 @@ const Colors = styled.div`
   /* TODO: <Panel /> should be refactored for a better accessibility, "secondaryAction" should be a <button /> */
 }
 function ColorPresetPanel() {
+  const {
+    state: {
+      story: { colorPresets },
+    },
+  } = useStory();
+
+  const ref = useRef();
+
+  const {
+    actions: { showColorPickerAt, hideSidebar },
+  } = useSidebar();
+  const openColorPicker = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      showColorPickerAt(ref.current, {
+        onChange: () => null,
+        hasGradient: false, // @todo Allow this, too?
+        hasOpacity: true,
+        onClose: hideSidebar,
+      });
+    },
+    [showColorPickerAt, hideSidebar]
+  );
+
   return (
     <Panel name="colorpreset">
       {/* TODO: Add "Add color preset action" */}
       <PanelTitle
         isPrimary
         secondaryAction={
-          <AddColorPresetButton onClick={() => null}>
+          <AddColorPresetButton ref={ref} onClick={openColorPicker}>
             <Add />
           </AddColorPresetButton>
         }
       >
         {__('Color presets', 'web-stories')}
       </PanelTitle>
-      <PanelContent isPrimary>
-        <Colors>
-          <Color color="#B4D3D8" />
-          <Color color="#6F8F9F" />
-          <Color color="#324F66" />
-          <Color color="#312834" />
-          <Color color="#B578B0" />
-          <Color color="#AF54A8" />
-        </Colors>
-      </PanelContent>
+      {colorPresets && (
+        <PanelContent isPrimary>
+          <Colors>
+            {colorPresets.map((value, i) => {
+              const { color } = generatePatternStyles(
+                { color: value },
+                'color'
+              );
+              return <Color key={`color-${i}`} color={color} />;
+            })}
+          </Colors>
+        </PanelContent>
+      )}
     </Panel>
   );
 }

@@ -85,6 +85,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featuredMediaUrl,
           posterPortraitUrl,
           password,
+          colorPresets: [],
         };
 
         // If there are no pages, create empty page.

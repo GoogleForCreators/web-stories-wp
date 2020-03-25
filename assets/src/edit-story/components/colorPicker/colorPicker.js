@@ -38,6 +38,7 @@ import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
 import useColor from './useColor';
+import Actions from './actions';
 
 const CONTAINER_PADDING = 15;
 
@@ -155,6 +156,7 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
+          <Actions color={currentColor} onClose={onClose} />
         </Body>
       </Container>
     </CSSTransition>
