@@ -27,7 +27,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown, ViewHeader, DropdownContainer } from '../../../components';
+import { Dropdown, ViewHeader } from '../../../components';
+import { DropdownContainer } from '../../../components/dropdown';
 import { DROPDOWN_TYPES } from '../../../constants';
 
 const ExploreFiltersContainer = styled.div`
