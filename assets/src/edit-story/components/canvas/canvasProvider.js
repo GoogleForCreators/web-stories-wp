@@ -77,7 +77,9 @@ function CanvasProvider({ children }) {
         setSelectedElementsById({ elementIds: [elId] });
       }
       evt.currentTarget.focus();
-      evt.stopPropagation();
+      if (currentPage?.backgroundElementId !== elId) {
+        evt.stopPropagation();
+      }
 
       if ('mousedown' === evt.type) {
         evt.persist();
@@ -94,6 +96,7 @@ function CanvasProvider({ children }) {
     },
     [
       editingElement,
+      currentPage,
       clearEditing,
       toggleElementInSelection,
       setSelectedElementsById,

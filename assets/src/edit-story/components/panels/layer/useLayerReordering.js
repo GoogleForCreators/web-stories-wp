@@ -26,9 +26,7 @@ import { useStory } from '../../../app';
 import LayerContext from './context';
 
 function useLayerReordering(layer) {
-  const { type, id: elementId, position: currentPosition } = layer;
-
-  const isBackground = type === 'background';
+  const { id: elementId, position: currentPosition } = layer;
 
   const [dragTarget, setDragTarget] = useState(null);
   const {
@@ -37,8 +35,11 @@ function useLayerReordering(layer) {
   } = useContext(LayerContext);
 
   const {
+    state: { currentPage },
     actions: { arrangeElement, setSelectedElementsById },
   } = useStory();
+
+  const isBackground = currentPage.backgroundElementId === elementId;
 
   const handleStartReordering = useCallback(
     (evt) => {

@@ -15,6 +15,7 @@
  */
 
 export const ANIMATION_TYPE = {
+  BLINK_ON: 'blink-on',
   BOUNCE: 'bounce',
   SPIN: 'spin',
 };
