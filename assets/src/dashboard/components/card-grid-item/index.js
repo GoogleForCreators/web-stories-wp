@@ -46,6 +46,6 @@ const CardGridItem = ({ children, ...rest }) => {
 };
 
 CardGridItem.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 export default CardGridItem;

@@ -46,12 +46,13 @@ function AnimatorOutput({ id, animation, config, trigger }) {
 
 const AnimationConfigPropTypes = PropTypes.shape({
   selector: PropTypes.string.isRequired,
+  animation: PropTypes.string,
   ...GeneralAnimationPropTypes,
 });
 
 AnimatorOutput.propTypes = {
   id: PropTypes.string.isRequired,
-  animation: PropTypes.string.isRequired,
+  animation: PropTypes.string,
   config: PropTypes.oneOfType([
     AnimationConfigPropTypes,
     PropTypes.arrayOf(AnimationConfigPropTypes),

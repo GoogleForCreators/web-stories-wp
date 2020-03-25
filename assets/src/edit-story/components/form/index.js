@@ -17,9 +17,7 @@
 export { default as MULTIPLE_VALUE } from './multipleValue';
 export { default as Button } from './button';
 export { default as Color } from './color';
-export { default as Group } from './group';
 export { default as Input } from './input';
-export { default as InputGroup } from './inputGroup';
 export { default as Label } from './label';
 export { default as Media } from './media';
 export { default as Numeric } from './numeric';
@@ -30,3 +28,8 @@ export { default as TextInput } from './text';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
+export { default as DropDown } from './dropDown';
+export { default as DateTime } from './dateTime';
+export { default as HelperText } from './helperText';
+export { default as Required } from './required';
+export { default as RadioGroup } from './radioGroup';
