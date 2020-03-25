@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import ColorPickerActions from '../components/panels/colorPreset/colorPickerActions';
+import ColorPresetActions from '../components/panels/colorPreset/colorPresetActions';
 
 function getColorPickerActions(color) {
-  return <ColorPickerActions color={color} />;
+  return <ColorPresetActions color={color} />;
 }
 
 export default getColorPickerActions;

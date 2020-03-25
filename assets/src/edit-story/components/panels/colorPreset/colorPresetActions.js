@@ -41,7 +41,7 @@ const ActionsWrapper = styled.div`
 
 const AddColorPreset = styled.button``;
 
-function ColorPickerActions({ color }) {
+function ColorPresetActions({ color }) {
   const {
     state: {
       story: { colorPresets },
@@ -65,8 +65,8 @@ function ColorPickerActions({ color }) {
   );
 }
 
-ColorPickerActions.propTypes = {
+ColorPresetActions.propTypes = {
   color: PatternPropType,
 };
 
-export default ColorPickerActions;
+export default ColorPresetActions;
