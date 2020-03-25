@@ -65,9 +65,11 @@ class Story_Post_Type {
 	/**
 	 * Publisher logo placeholder for static content output which will be replaced server-side.
 	 *
+	 * Uses a fallback logo to always create valid AMP in FE.
+	 *
 	 * @var string
 	 */
-	const PUBLISHER_LOGO_PLACEHOLDER = '[PUBLISHER_LOGO]';
+	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 
 	/**
 	 * Registers the post type to store URLs with validation errors.
@@ -743,7 +745,7 @@ class Story_Post_Type {
 	public static function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( 'web_stories_publisher_settings', [] );
+		$publisher_logo_settings = get_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [] );
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );

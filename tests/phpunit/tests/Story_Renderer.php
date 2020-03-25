@@ -221,12 +221,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/REST_API/attachment.jpg', 0 );
-		add_option( Stories_Controller::PUBLISHER_SETTINGS_OPTION, [ 'active' => $attachment_id ] );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		add_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [ 'active' => $attachment_id ] );
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
-		delete_option( Stories_Controller::PUBLISHER_SETTINGS_OPTION );
+		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $rendered );
