@@ -142,8 +142,9 @@ function Title({
           handleHeightChange={handleHeightChange}
         />
       )}
+      {/* @TODO REMOVE `true`, FOR TESTING ONLY!!! */}
       <HeaderButton
-        onClick={isCollapsed ? expand : collapse}
+        onClick={true || isCollapsed ? expand : collapse}
         aria-label={titleLabel}
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}

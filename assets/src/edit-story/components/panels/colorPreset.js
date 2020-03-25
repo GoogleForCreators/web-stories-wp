@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,25 +30,38 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as Add } from '../../icons/add_page.svg';
+import { ReactComponent as Edit } from '../../icons/edit_pencil.svg';
 import { useSidebar } from '../sidebar';
 import { useStory } from '../../app/story';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { Panel, PanelTitle, PanelContent } from './panel';
 
-const AddColorPresetButton = styled.div`
+const buttonCSS = css`
   background: transparent;
   width: 28px;
   height: 26px;
   border: 0;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
-  margin-right: 9px;
   cursor: pointer;
-
+`;
+const AddColorPresetButton = styled.div`
+  ${buttonCSS}
+  margin-right: 9px;
   svg {
     width: 26px;
     height: 28px;
   }
 `;
+
+const EditModeButton = styled.div`
+  ${buttonCSS}
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const ExitEditMode = styled.button``;
 
 const Color = styled.div`
   display: inline-block;
@@ -71,6 +84,14 @@ const Colors = styled.div`
   }
 `;
 
+// @todo Actual style :)
+const RemoveColor = styled.button`
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  color: white;
+`;
+
 {
   /* TODO: <Panel /> should be refactored for a better accessibility, "secondaryAction" should be a <button /> */
 }
@@ -79,7 +100,10 @@ function ColorPresetPanel() {
     state: {
       story: { colorPresets },
     },
+    actions: { updateStory },
   } = useStory();
+
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const ref = useRef();
 
@@ -99,15 +123,37 @@ function ColorPresetPanel() {
     [showColorPickerAt, hideSidebar]
   );
 
+  const handleDeleteColor = useCallback(
+    (toDelete) => () => {
+      const colors = colorPresets.filter((color) => color !== toDelete);
+      updateStory({
+        properties: {
+          colorPresets: colors,
+        },
+      });
+    },
+    [colorPresets, updateStory]
+  );
+
   return (
     <Panel name="colorpreset">
-      {/* TODO: Add "Add color preset action" */}
       <PanelTitle
         isPrimary
         secondaryAction={
-          <AddColorPresetButton ref={ref} onClick={openColorPicker}>
-            <Add />
-          </AddColorPresetButton>
+          !isEditMode ? (
+            <>
+              <EditModeButton onClick={() => setIsEditMode(true)}>
+                <Edit />
+              </EditModeButton>
+              <AddColorPresetButton ref={ref} onClick={openColorPicker}>
+                <Add />
+              </AddColorPresetButton>
+            </>
+          ) : (
+            <ExitEditMode onClick={() => setIsEditMode(false)}>
+              {__('Exit', 'web-stories')}
+            </ExitEditMode>
+          )
         }
       >
         {__('Color presets', 'web-stories')}
@@ -120,7 +166,13 @@ function ColorPresetPanel() {
                 <Color
                   key={`color-${i}`}
                   {...generatePatternStyles(color, 'color')}
-                />
+                >
+                  {isEditMode && (
+                    <RemoveColor onClick={handleDeleteColor(color)}>
+                      {__('X', 'web-stories')}
+                    </RemoveColor>
+                  )}
+                </Color>
               );
             })}
           </Colors>
