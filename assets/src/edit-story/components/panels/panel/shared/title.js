@@ -104,7 +104,7 @@ function Title({
   isSecondary,
   secondaryAction,
   isResizable,
-  displayCollapse = true,
+  canCollapse = true,
 }) {
   const {
     state: { isCollapsed, height, panelContentId },
@@ -152,7 +152,7 @@ function Title({
         <Heading>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
-          {displayCollapse && (
+          {canCollapse && (
             <Collapse isCollapsed={isCollapsed}>
               <Arrow />
             </Collapse>
@@ -175,7 +175,7 @@ Title.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  displayCollapse: PropTypes.bool,
+  canCollapse: PropTypes.bool,
 };
 
 Title.defaultProps = {

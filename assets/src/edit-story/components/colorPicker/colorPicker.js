@@ -175,7 +175,7 @@ ColorPicker.propTypes = {
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
-  addActions: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  addActions: PropTypes.func,
 };
 
 ColorPicker.defaultProps = {

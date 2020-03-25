@@ -229,7 +229,7 @@ function ColorPresetPanel() {
       <PanelTitle
         isPrimary
         secondaryAction={getSecondaryActions()}
-        displayCollapse={!isEditMode}
+        canCollapse={!isEditMode}
       >
         {__('Color presets', 'web-stories')}
       </PanelTitle>

@@ -122,6 +122,7 @@ describe('<ColorPreview />', () => {
     fireEvent.click(button);
 
     expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
+      addActions: expect.any(Function),
       color: value,
       onChange,
       hasGradient: true,
