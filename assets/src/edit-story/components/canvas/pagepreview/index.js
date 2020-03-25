@@ -92,7 +92,7 @@ function PagePreview({ index, forwardedRef, ...props }) {
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.func,
+  forwardedRef: PropTypes.object,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
