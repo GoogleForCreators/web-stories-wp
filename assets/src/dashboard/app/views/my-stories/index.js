@@ -29,7 +29,7 @@ import { useState } from 'react';
  * Internal dependencies
  */
 import { ViewHeader, FloatingTab } from '../../../components';
-import { storiesFilter } from '../../../constants';
+import { storiesFilters } from '../../../constants';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
@@ -37,12 +37,12 @@ const FilterContainer = styled.div`
 `;
 
 function MyStories() {
-  const [currentFilter, setFilter] = useState(storiesFilter[0].value);
+  const [currentFilter, setFilter] = useState(storiesFilters[0].value);
   return (
     <div>
       <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
       <FilterContainer>
-        {storiesFilter.map((filter) => (
+        {storiesFilters.map((filter) => (
           <FloatingTab
             key={filter.value}
             onClick={(_, value) => setFilter(value)}

@@ -72,20 +72,20 @@ const PanelHeader = styled.h3`
   margin: 0 10px;
 `;
 
-function PopoverPanel(props) {
+function PopoverPanel({ isOpen, onClose, title, children }) {
   return (
-    <Panel isOpen={props.isOpen}>
+    <Panel isOpen={isOpen}>
       <TitleBar>
         <CloseButton
           data-testid="popover-close-btn"
           aria-label="Close Button"
-          onClick={props.onClose}
+          onClick={onClose}
         >
           <CloseIcon width={13} height={13} />
         </CloseButton>
-        <PanelHeader>{props.title}</PanelHeader>
+        <PanelHeader>{title}</PanelHeader>
       </TitleBar>
-      {props.isOpen && props.children}
+      {isOpen && children}
     </Panel>
   );
 }

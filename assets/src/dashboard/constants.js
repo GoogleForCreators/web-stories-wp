@@ -55,7 +55,7 @@ export const paths = [
   { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
-export const storiesFilter = [
+export const storiesFilters = [
   { label: 'All Stories', value: 'all-stories ' },
   { label: 'Drafts', value: 'drafts' },
   { label: 'Active Stories', value: 'active-stories ' },
