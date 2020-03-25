@@ -20,6 +20,10 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -79,7 +83,6 @@ function VideoFrame({ element }) {
     state: { selectedElementIds },
   } = useStory();
   const isElementSelected = selectedElementIds.includes(id);
-  const noElementsSelected = !selectedElementIds.length;
 
   const onPointerEnter = () => {
     // Sync UI for auto-play on insert.
@@ -91,21 +94,19 @@ function VideoFrame({ element }) {
   };
 
   useEffect(() => {
-    if ((!isElementSelected || noElementsSelected) && videoNode) {
+    if (!isElementSelected && videoNode) {
       videoNode.pause();
       videoNode.currentTime = 0;
       setIsPlaying(false);
     }
-  }, [isElementSelected, noElementsSelected, videoNode]);
+  }, [isElementSelected, videoNode]);
 
   const handlePlayPause = () => {
     if (isPlaying) {
       videoNode.pause();
       setIsPlaying(false);
     } else {
-      videoNode.play().then(() => {
-        setIsPlaying(true);
-      });
+      videoNode.play().then(() => setIsPlaying(true));
     }
   };
 
@@ -122,6 +123,10 @@ function VideoFrame({ element }) {
     return () => videoNode.removeEventListener('ended', onVideoEnd);
   }, [videoNode]);
 
+  const buttonTitle = isPlaying
+    ? __('Click to pause', 'web-stories')
+    : __('Click to play', 'web-stories');
+
   return (
     <Wrapper
       onPointerEnter={onPointerEnter}
@@ -129,7 +134,12 @@ function VideoFrame({ element }) {
     >
       <MediaFrame element={element} />
       <CSSTransition in={hovering} classNames="button" timeout={200}>
-        <ButtonWrapper key="wrapper" onClick={handlePlayPause}>
+        <ButtonWrapper
+          title={buttonTitle}
+          aria-pressed={isPlaying}
+          key="wrapper"
+          onClick={handlePlayPause}
+        >
           {isPlaying ? <Pause /> : <Play />}
         </ButtonWrapper>
       </CSSTransition>
