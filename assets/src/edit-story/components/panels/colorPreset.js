@@ -34,6 +34,7 @@ import { ReactComponent as Edit } from '../../icons/edit_pencil.svg';
 import { useSidebar } from '../sidebar';
 import { useStory } from '../../app/story';
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import { getDefinitionForType } from '../../elements';
 import { Panel, PanelTitle, PanelContent } from './panel';
 
 const buttonCSS = css`
@@ -98,9 +99,10 @@ const RemoveColor = styled.button`
 function ColorPresetPanel() {
   const {
     state: {
+      selectedElementIds,
       story: { colorPresets },
     },
-    actions: { updateStory },
+    actions: { updateStory, updateElementsById },
   } = useStory();
 
   const [isEditMode, setIsEditMode] = useState(false);
@@ -135,6 +137,27 @@ function ColorPresetPanel() {
     [colorPresets, updateStory]
   );
 
+  const handleApplyColor = useCallback(
+    (color) => () => {
+      if (!isEditMode) {
+        updateElementsById({
+          elementIds: selectedElementIds,
+          properties: (currentProperties) => {
+            const { type } = currentProperties;
+            // @todo Is this necessary?
+            const { isMedia } = getDefinitionForType(type);
+            return isMedia
+              ? {}
+              : {
+                  backgroundColor: color,
+                };
+          },
+        });
+      }
+    },
+    [isEditMode, selectedElementIds, updateElementsById]
+  );
+
   return (
     <Panel name="colorpreset">
       <PanelTitle
@@ -166,6 +189,7 @@ function ColorPresetPanel() {
                 <Color
                   key={`color-${i}`}
                   {...generatePatternStyles(color, 'color')}
+                  onClick={handleApplyColor(color)}
                 >
                   {isEditMode && (
                     <RemoveColor onClick={handleDeleteColor(color)}>
