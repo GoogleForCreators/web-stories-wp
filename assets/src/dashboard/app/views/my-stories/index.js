@@ -20,26 +20,21 @@
 import { __ } from '@wordpress/i18n';
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import styled from 'styled-components';
 import { useState } from 'react';
+
+/**
+ * Internal dependencies
+ */
 import { ViewHeader, FloatingTab } from '../../../components';
+import { storiesFilter } from '../../../constants';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 `;
-
-const storiesFilter = [
-  { label: 'All Stories', value: 'all-stories ' },
-  { label: 'Drafts', value: 'drafts' },
-  { label: 'Active Stories', value: 'active-stories ' },
-  { label: 'My Templates', value: 'my-templates ' },
-];
 
 function MyStories() {
   const [currentFilter, setFilter] = useState(storiesFilter[0].value);

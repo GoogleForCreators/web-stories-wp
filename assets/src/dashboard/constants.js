@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
@@ -40,3 +45,19 @@ export const Z_INDEX = {
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
 };
+
+export const paths = [
+  { value: '/', label: __('My Stories', 'web-stories') },
+  {
+    value: '/templates-gallery',
+    label: __('Templates Gallery', 'web-stories'),
+  },
+  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
+];
+
+export const storiesFilter = [
+  { label: 'All Stories', value: 'all-stories ' },
+  { label: 'Drafts', value: 'drafts' },
+  { label: 'Active Stories', value: 'active-stories ' },
+  { label: 'My Templates', value: 'my-templates ' },
+];
