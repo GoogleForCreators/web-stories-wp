@@ -23,7 +23,7 @@ import { rgba } from 'polished';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { _x } from '@wordpress/i18n';
 
 const RequiredWrapper = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const Text = styled.span`
 function Required() {
   return (
     <RequiredWrapper>
-      <Text>{__('required', 'web-stories')}</Text>
+      <Text>{_x('required', 'required form input', 'web-stories')}</Text>
     </RequiredWrapper>
   );
 }
