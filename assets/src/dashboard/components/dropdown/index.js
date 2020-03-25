@@ -51,7 +51,7 @@ export const InnerDropdown = styled.button`
   font-family: ${({ theme }) => theme.fonts.dropdown.family};
   font-size: ${({ theme }) => theme.fonts.dropdown.size};
   font-weight: ${({ theme }) => theme.fonts.dropdown.weight};
-  height: 40px;
+  height: ${({ theme, type }) => theme.dropdown[type].height};
   margin: 0;
   justify-content: space-between;
   letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing};

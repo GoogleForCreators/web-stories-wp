@@ -76,6 +76,7 @@ const theme = {
       borderRadius: '40px',
       border: `1px solid ${colors.gray50}`,
       arrowColor: colors.bluePrimary,
+      height: '48px',
     },
     [DROPDOWN_TYPES.MENU]: {
       background: colors.gray25,
@@ -83,6 +84,7 @@ const theme = {
       borderRadius: '4px',
       border: 'none',
       arrowColor: colors.gray300,
+      height: '40px',
     },
     [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
@@ -90,6 +92,7 @@ const theme = {
       borderRadius: 0,
       border: 'none',
       arrowColor: colors.bluePrimary,
+      height: '40px',
     },
   },
   text: {
