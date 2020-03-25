@@ -118,7 +118,7 @@ function DisplayElement({ element, previewMode }) {
         }}
       >
         <Display element={element} previewMode={previewMode} box={box} />
-        {previewMode && (
+        {!previewMode && (
           <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
             {replacementElement && (
               <Replacement element={replacementElement} box={box} />
