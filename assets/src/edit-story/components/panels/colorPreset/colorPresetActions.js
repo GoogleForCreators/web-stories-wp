@@ -19,6 +19,7 @@
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -37,9 +38,18 @@ const ActionsWrapper = styled.div`
   left: 0;
   bottom: 0;
   text-align: center;
+  border-top: 1px solid rgba(229, 229, 229, 0.2);
 `;
 
-const AddColorPreset = styled.button``;
+const AddColorPreset = styled.button`
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => rgba(theme.colors.fg.v7, 0.84)};
+  cursor: pointer;
+  padding: 0;
+  line-height: 18px;
+  font-size: 13px;
+`;
 
 function ColorPresetActions({ color }) {
   const {

@@ -48,6 +48,7 @@ const buttonCSS = css`
   cursor: pointer;
   padding: 0;
 `;
+
 const AddColorPresetButton = styled.button`
   ${buttonCSS}
   svg {
@@ -76,7 +77,6 @@ const colorCSS = css`
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  margin-right: 12px;
   border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
   padding: 0;
   svg {
@@ -111,11 +111,11 @@ const Colors = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   overflow: auto;
+`;
 
-  ${BackgroundColor}:nth-child (6n),
-  ${TextColor}:nth-child (6n) {
-    margin-right: 0;
-  }
+const ButtonWrapper = styled.div`
+  flex-basis: 16%;
+  height: 35px;
 `;
 
 function ColorPresetPanel() {
@@ -239,26 +239,30 @@ function ColorPresetPanel() {
             {colorPresets.map((color) => {
               return (
                 <>
-                  <BackgroundColor
-                    {...generatePatternStyles(color)}
-                    onClick={() => {
-                      if (isEditMode) {
-                        handleDeleteColor(color);
-                      } else {
-                        handleApplyBackgroundColor(color);
-                      }
-                    }}
-                  >
-                    {isEditMode && <Remove />}
-                    {isText && __('A', 'web-stories')}
-                  </BackgroundColor>
-                  {isText && !isEditMode && (
-                    <TextColor
-                      {...generatePatternStyles(color, 'color')}
-                      onClick={handleApplyTextColor(color)}
+                  <ButtonWrapper>
+                    <BackgroundColor
+                      {...generatePatternStyles(color)}
+                      onClick={() => {
+                        if (isEditMode) {
+                          handleDeleteColor(color);
+                        } else {
+                          handleApplyBackgroundColor(color);
+                        }
+                      }}
                     >
-                      {__('A', 'web-stories')}
-                    </TextColor>
+                      {isEditMode && <Remove />}
+                      {isText && __('A', 'web-stories')}
+                    </BackgroundColor>
+                  </ButtonWrapper>
+                  {isText && !isEditMode && (
+                    <ButtonWrapper>
+                      <TextColor
+                        {...generatePatternStyles(color, 'color')}
+                        onClick={handleApplyTextColor(color)}
+                      >
+                        {__('A', 'web-stories')}
+                      </TextColor>
+                    </ButtonWrapper>
                   )}
                 </>
               );
