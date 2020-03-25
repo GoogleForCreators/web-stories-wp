@@ -77,7 +77,6 @@ const ButtonWrapper = styled.div`
 function VideoFrame({ element }) {
   const { id } = element;
   const [hovering, setHovering] = useState(false);
-  const videoNode = document.getElementById(`video-${id}`);
   const [isPlaying, setIsPlaying] = useState(false);
   const {
     state: { selectedElementIds },
@@ -86,6 +85,7 @@ function VideoFrame({ element }) {
 
   const onPointerEnter = () => {
     // Sync UI for auto-play on insert.
+    const videoNode = document.getElementById(`video-${id}`);
     const currentlyPlaying = videoNode && !videoNode.paused;
     if (currentlyPlaying && !isPlaying) {
       setIsPlaying(true);
@@ -94,14 +94,16 @@ function VideoFrame({ element }) {
   };
 
   useEffect(() => {
+    const videoNode = document.getElementById(`video-${id}`);
     if (!isElementSelected && videoNode) {
       videoNode.pause();
       videoNode.currentTime = 0;
       setIsPlaying(false);
     }
-  }, [isElementSelected, videoNode]);
+  }, [id, isElementSelected]);
 
   const handlePlayPause = () => {
+    const videoNode = document.getElementById(`video-${id}`);
     if (isPlaying) {
       videoNode.pause();
       setIsPlaying(false);
@@ -111,6 +113,7 @@ function VideoFrame({ element }) {
   };
 
   useEffect(() => {
+    const videoNode = document.getElementById(`video-${id}`);
     if (!videoNode) {
       return undefined;
     }
@@ -121,7 +124,7 @@ function VideoFrame({ element }) {
     };
     videoNode.addEventListener('ended', onVideoEnd);
     return () => videoNode.removeEventListener('ended', onVideoEnd);
-  }, [videoNode]);
+  }, [id]);
 
   const buttonTitle = isPlaying
     ? __('Click to pause', 'web-stories')
