@@ -67,8 +67,8 @@ const StyledButton = styled.button`
 `;
 
 const DateWrapper = styled.div`
-  padding: 5px 5px 5px 2px;
-  width: 85%;
+  padding: 5px 0px 5px 2px;
+  width: 100%;
   text-align: left;
 `;
 
