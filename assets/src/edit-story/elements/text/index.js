@@ -31,7 +31,7 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundType: BACKGROUND_TEXT_MODE.NONE,
+  backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
   bold: false,
   fontFamily: 'Arial',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],

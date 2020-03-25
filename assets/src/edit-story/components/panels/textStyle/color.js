@@ -53,7 +53,10 @@ function ColorControls({ selectedElements, pushUpdate }) {
     selectedElements,
     'backgroundColor'
   );
-  const backgroundType = getCommonValue(selectedElements, 'backgroundType');
+  const backgroundTextMode = getCommonValue(
+    selectedElements,
+    'backgroundTextMode'
+  );
 
   return (
     <>
@@ -93,12 +96,13 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <FillLabel>{__('Fill', 'web-stories')}</FillLabel>
         <ToggleButton
           icon={<FilledIcon width={32} height={32} />} // TODO(beto): This icon should be replaced as soon as we have it on Figma
-          value={backgroundType === BACKGROUND_TEXT_MODE.NONE}
+          value={backgroundTextMode === BACKGROUND_TEXT_MODE.NONE}
           label={__('None', 'web-stories')}
           onChange={(value) =>
+            value &&
             pushUpdate(
               {
-                backgroundType: value ? BACKGROUND_TEXT_MODE.NONE : '',
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
               },
               true
             )
@@ -107,12 +111,13 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <Space flex="0 0 15px" />
         <ToggleButton
           icon={<FilledIcon width={32} height={32} />}
-          value={backgroundType === BACKGROUND_TEXT_MODE.FILL}
+          value={backgroundTextMode === BACKGROUND_TEXT_MODE.FILL}
           label={__('Fill', 'web-stories')}
           onChange={(value) =>
+            value &&
             pushUpdate(
               {
-                backgroundType: value ? BACKGROUND_TEXT_MODE.FILL : '',
+                backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
               },
               true
             )
@@ -122,11 +127,12 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <ToggleButton
           icon={<HighlightedIcon width={32} height={32} />}
           label={__('Highlight', 'web-stories')}
-          value={backgroundType === BACKGROUND_TEXT_MODE.HIGHLIGHT}
+          value={backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT}
           onChange={(value) =>
+            value &&
             pushUpdate(
               {
-                backgroundType: value ? BACKGROUND_TEXT_MODE.HIGHLIGHT : '',
+                backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
               },
               true
             )

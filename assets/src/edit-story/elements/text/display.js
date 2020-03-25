@@ -68,7 +68,7 @@ function TextDisplay({
     content,
     color,
     backgroundColor,
-    backgroundType,
+    backgroundTextMode,
     fontFamily,
     fontFallback,
     fontSize,
@@ -90,7 +90,7 @@ function TextDisplay({
   const props = {
     color,
     backgroundColor:
-      backgroundType !== BACKGROUND_TEXT_MODE.NONE
+      backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
         ? backgroundColor
         : undefined,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
@@ -123,7 +123,7 @@ function TextDisplay({
       : '';
   });
 
-  if (backgroundType === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <HighlightElement ref={ref} {...props}>
         <span

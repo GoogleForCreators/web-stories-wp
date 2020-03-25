@@ -31,7 +31,7 @@ function TextOutput({
     bold,
     content,
     color,
-    backgroundType,
+    backgroundTextMode,
     backgroundColor,
     fontFamily,
     fontFallback,
@@ -50,7 +50,7 @@ function TextOutput({
   // The padding % is taken based on width, thus using X and width for vertical, too.
   const verticalPadding = dataToEditorX(padding.vertical, width);
   const bgColor =
-    backgroundType !== BACKGROUND_TEXT_MODE.NONE
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
@@ -85,9 +85,9 @@ function TextOutput({
     position: 'relative',
   };
 
-  if (backgroundType === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
-      <p style={highlightStyle}>
+      <p className="fill" style={highlightStyle}>
         <span
           style={highlightTextStyle}
           dangerouslySetInnerHTML={{
