@@ -37,31 +37,33 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
+const colors = {
+  gray900: '#1A1D1F',
+  gray800: '#2C3033',
+  gray700: '#3F454A',
+  gray600: '#4F575F',
+  gray500: '#606B74',
+  gray400: '#6D7A85',
+  gray300: '#848D96',
+  gray200: '#9AA1A9',
+  gray100: '#B8BCBF',
+  gray75: '#D9DBDD',
+  gray50: '#EEEEEE',
+  // gray25: '#F7F7F7', gray25 is duplicated, it looks like F6F6 wins out in the docs, keeping this here for now for reference.
+  gray25: '#F6F6F6',
+  white: '#fff',
+  bluePrimary: '#2979FF',
+  blueLight: '#EAF2FF',
+  // taken from edit-stories
+  action: '#47A0F4',
+  danger: '#FF0000',
+  selection: '#44aaff',
+  // todo
+  placeholder: '#d9dbdd',
+};
+
 const theme = {
-  colors: {
-    gray900: '#1A1D1F',
-    gray800: '#2C3033',
-    gray700: '#3F454A',
-    gray600: '#4F575F',
-    gray500: '#606B74',
-    gray400: '#6D7A85',
-    gray300: '#848D96',
-    gray200: '#9AA1A9',
-    gray100: '#B8BCBF',
-    gray75: '#D9DBDD',
-    gray50: '#EEEEEE',
-    // gray25: '#F7F7F7', gray25 is duplicated, it looks like F6F6 wins out in the docs, keeping this here for now for reference.
-    gray25: '#F6F6F6',
-    white: '#fff',
-    bluePrimary: '#2979FF',
-    blueLight: '#EAF2FF',
-    // taken from edit-stories
-    action: '#47A0F4',
-    danger: '#FF0000',
-    selection: '#44aaff',
-    // todo
-    placeholder: '#d9dbdd',
-  },
+  colors,
   border: {
     buttonRadius: '100px',
     typeaheadRadius: '100px',
@@ -70,24 +72,24 @@ const theme = {
   dropdown: {
     [DROPDOWN_TYPES.PANEL]: {
       background: 'transparent',
-      activeBackground: '#f6f6f6',
+      activeBackground: colors.gray25,
       borderRadius: '40px',
-      border: '1px solid #eee',
-      arrowColor: '#2979ff',
+      border: `1px solid ${colors.gray50}`,
+      arrowColor: colors.bluePrimary,
     },
     [DROPDOWN_TYPES.MENU]: {
-      background: '#f6f6f6',
-      activeBackground: '#f6f6f6',
+      background: colors.gray25,
+      activeBackground: colors.gray25,
       borderRadius: '4px',
       border: 'none',
-      arrowColor: '#848d96',
+      arrowColor: colors.gray300,
     },
     [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
       activeBackground: 'transparent',
       borderRadius: 0,
       border: 'none',
-      arrowColor: '#2979ff',
+      arrowColor: colors.bluePrimary,
     },
   },
   text: {
