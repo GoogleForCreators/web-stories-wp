@@ -243,25 +243,23 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   };
 
   const handleHorizontalDistribution = () => {
-    updatedSelectedElementsWithFrame.sort(
+    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+    sortedElementsWithFrame.sort(
       (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
     );
     const commonSpaceWidth = dataPixels(
       (boundRect.width -
-        updatedSelectedElementsWithFrame.reduce(
+        sortedElementsWithFrame.reduce(
           (sum, element) => sum + element.frameWidth,
           0
         )) /
-        (updatedSelectedElementsWithFrame.length - 1)
+        (sortedElementsWithFrame.length - 1)
     );
     const updatedX = {};
     let offsetX = 0;
-    updatedSelectedElementsWithFrame.forEach((element, index) => {
+    sortedElementsWithFrame.forEach((element, index) => {
       const { id, x, width, frameWidth } = element;
-      if (
-        index === 0 ||
-        index === updatedSelectedElementsWithFrame.length - 1
-      ) {
+      if (index === 0 || index === sortedElementsWithFrame.length - 1) {
         updatedX[id] = { x };
         offsetX = x;
       } else {
@@ -275,25 +273,23 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   };
 
   const handleVerticalDistribution = () => {
-    updatedSelectedElementsWithFrame.sort(
+    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+    sortedElementsWithFrame.sort(
       (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
     );
     const commonSpaceHeight = dataPixels(
       (boundRect.height -
-        updatedSelectedElementsWithFrame.reduce(
+        sortedElementsWithFrame.reduce(
           (sum, element) => sum + element.frameHeight,
           0
         )) /
-        (updatedSelectedElementsWithFrame.length - 1)
+        (sortedElementsWithFrame.length - 1)
     );
     const updatedY = {};
     let offsetY = 0;
-    updatedSelectedElementsWithFrame.forEach((element, index) => {
+    sortedElementsWithFrame.forEach((element, index) => {
       const { id, y, height, frameHeight } = element;
-      if (
-        index === 0 ||
-        index === updatedSelectedElementsWithFrame.length - 1
-      ) {
+      if (index === 0 || index === sortedElementsWithFrame.length - 1) {
         updatedY[id] = { y };
         offsetY = y;
       } else {
