@@ -86,10 +86,10 @@ function useUploader(refreshLibrary = true) {
   const uploadFile = (file) => {
     // TODO Add permission check here, see Gutenberg's userCan function.
     if (!fileSizeCheck(file)) {
-      const SizeError = new Error();
-      SizeError.name = 'SizeError';
-      SizeError.file = file.name;
-      SizeError.message = sprintf(
+      const sizeError = new Error();
+      sizeError.name = 'SizeError';
+      sizeError.file = file.name;
+      sizeError.message = sprintf(
         __(
           'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
           'web-stories'
@@ -97,12 +97,12 @@ function useUploader(refreshLibrary = true) {
         bytesToMB(file.size),
         bytesToMB(maxUpload)
       );
-      throw SizeError;
+      throw sizeError;
     }
 
     if (!isValidType(file)) {
-      const ValidError = new Error();
-      ValidError.message = createInterpolateElement(
+      const validError = new Error();
+      validError.message = createInterpolateElement(
         sprintf(
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
           allowedMimeTypes.join(', ')
@@ -111,9 +111,9 @@ function useUploader(refreshLibrary = true) {
           b: <b />,
         }
       );
-      ValidError.name = 'ValidError';
-      ValidError.file = file.name;
-      throw ValidError;
+      validError.name = 'ValidError';
+      validError.file = file.name;
+      throw validError;
     }
 
     const additionalData = {

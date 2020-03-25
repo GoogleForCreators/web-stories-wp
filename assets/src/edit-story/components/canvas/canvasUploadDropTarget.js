@@ -49,91 +49,31 @@ const PageAreaCover = styled(PageArea)`
 `;
 
 function CanvasUploadDropTarget({ children }) {
-  const { uploadFile, sizeErrorMessage, validErrorMessage } = useUploader();
+  const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
-    async (files) => {
-      const possibleRetryFiles = [];
-      const sizeErrorFiles = [];
-      const validErrorFiles = [];
-      const otherErrorFiles = [];
-      const isMultiple = files.length > 1;
-      for (const file of files) {
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          const res = await uploadFile(file);
-          const resource = getResourceFromUploadAPI(res);
-          insertElement(resource.type, { resource });
-        } catch (e) {
-          if (e.name !== 'SizeError' && e.name !== 'ValidError') {
-            possibleRetryFiles.push(file);
-            e.message = __('Sorry, file has failed to upload', 'web-stories');
-            e.file = file.name;
-          }
-          if (!isMultiple) {
-            showSnackbar({
-              type: 'error',
-              data: e.name,
-              message: e.message,
-              retryAction:
-                possibleRetryFiles.length > 0
-                  ? () => onDropHandler(possibleRetryFiles)
-                  : null,
-            });
-          } else {
-            switch (e.name) {
-              case 'SizeError':
-                sizeErrorFiles.push(e);
-                break;
-              case 'ValidError':
-                validErrorFiles.push(e);
-                break;
-              default:
-                otherErrorFiles.push(e);
-                break;
+    (files) => {
+      files.forEach((file) => {
+        uploadFile(file)
+          .then((res) => {
+            const resource = getResourceFromUploadAPI(res);
+            insertElement(resource.type, { resource });
+          })
+          .catch((e) => {
+            if (e.name !== 'SizeError' && e.name !== 'ValidError') {
+              e.message = __(
+                'Sorry, files have failed to upload',
+                'web-stories'
+              );
             }
-          }
-        }
-      }
-      if (isMultiple) {
-        const showSnackbarWithList = ({ message, list, retryList }) => {
-          if (list.length === 0) return;
-          showSnackbar({
-            type: 'error',
-            message,
-            list,
-            retryAction:
-              retryList.length > 0 ? () => onDropHandler(retryList) : null,
+            showSnackbar({
+              message: e.message,
+            });
           });
-        };
-
-        showSnackbarWithList({
-          message: __('Sorry, files has failed to upload', 'web-stories'),
-          list: otherErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-
-        showSnackbarWithList({
-          message: sizeErrorMessage,
-          list: sizeErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-
-        showSnackbarWithList({
-          message: validErrorMessage,
-          list: validErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-      }
+      });
     },
-    [
-      insertElement,
-      uploadFile,
-      showSnackbar,
-      sizeErrorMessage,
-      validErrorMessage,
-    ]
+    [insertElement, showSnackbar, uploadFile]
   );
 
   return (

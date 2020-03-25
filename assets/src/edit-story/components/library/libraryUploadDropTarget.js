@@ -39,82 +39,24 @@ import { useSnackbar } from '../../app/snackbar';
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const { uploadFile, validErrorMessage, sizeErrorMessage } = useUploader();
+  const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
   const onDropHandler = useCallback(
-    async (files) => {
-      const possibleRetryFiles = [];
-      const sizeErrorFiles = [];
-      const validErrorFiles = [];
-      const otherErrorFiles = [];
-      const isMultiple = files.length > 1;
-      for (const file of files) {
+    (files) => {
+      files.forEach((file) => {
         try {
-          // eslint-disable-next-line no-await-in-loop
-          await uploadFile(file);
+          uploadFile(file);
         } catch (e) {
           if (e.name !== 'SizeError' && e.name !== 'ValidError') {
-            possibleRetryFiles.push(file);
-            e.message = __('Sorry, file has failed to upload', 'web-stories');
-            e.file = file.name;
+            e.message = __('Sorry, files have failed to upload', 'web-stories');
           }
-          if (!isMultiple) {
-            showSnackbar({
-              type: 'error',
-              data: e.name,
-              message: e.message,
-              retryAction:
-                possibleRetryFiles.length > 0
-                  ? () => onDropHandler(possibleRetryFiles)
-                  : null,
-            });
-          } else {
-            switch (e.name) {
-              case 'SizeError':
-                sizeErrorFiles.push(e);
-                break;
-              case 'ValidError':
-                validErrorFiles.push(e);
-                break;
-              default:
-                otherErrorFiles.push(e);
-                break;
-            }
-          }
-        }
-      }
-      if (isMultiple) {
-        const showSnackbarWithList = ({ message, list, retryList }) => {
-          if (list.length === 0) return;
           showSnackbar({
-            type: 'error',
-            message,
-            list,
-            retryAction:
-              retryList.length > 0 ? () => onDropHandler(retryList) : null,
+            message: e.message,
           });
-        };
-
-        showSnackbarWithList({
-          message: __('Sorry, files has failed to upload', 'web-stories'),
-          list: otherErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-
-        showSnackbarWithList({
-          message: sizeErrorMessage,
-          list: sizeErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-
-        showSnackbarWithList({
-          message: validErrorMessage,
-          list: validErrorFiles.map((e) => e.file),
-          retryList: possibleRetryFiles,
-        });
-      }
+        }
+      });
     },
-    [uploadFile, showSnackbar, validErrorMessage, sizeErrorMessage]
+    [showSnackbar, uploadFile]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

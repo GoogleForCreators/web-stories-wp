@@ -46,12 +46,7 @@ function useCanvasSelectionCopyPaste(container) {
     actions: { addElement, deleteSelectedElements },
   } = useStory();
 
-  const {
-    uploadFile,
-    isValidType,
-    validErrorMessage,
-    sizeErrorMessage,
-  } = useUploader();
+  const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
 
   const copyCutHandler = useCallback(
@@ -114,7 +109,7 @@ function useCanvasSelectionCopyPaste(container) {
   );
 
   const pasteHandler = useCallback(
-    async (evt) => {
+    (evt) => {
       const { clipboardData } = evt;
 
       try {
@@ -155,75 +150,29 @@ function useCanvasSelectionCopyPaste(container) {
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
-        const possibleRetryFiles = [];
-        const sizeErrorFiles = [];
-        const validErrorFiles = [];
-        const otherErrorFiles = [];
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           if (isValidType(item)) {
             try {
-              // eslint-disable-next-line no-await-in-loop
-              await uploadFile(item.getAsFile());
+              uploadFile(item.getAsFile());
             } catch (e) {
               if (e.name !== 'SizeError' && e.name !== 'ValidError') {
-                possibleRetryFiles.push(item.getAsFile());
                 e.message = __(
-                  'Sorry, file has failed to upload',
+                  'Sorry, files have failed to upload',
                   'web-stories'
                 );
-                e.file = item.getAsFile().name;
               }
-              switch (e.name) {
-                case 'SizeError':
-                  sizeErrorFiles.push(e);
-                  break;
-                case 'ValidError':
-                  validErrorFiles.push(e);
-                  break;
-                default:
-                  otherErrorFiles.push(e);
-                  break;
-              }
+              showSnackbar({
+                message: e.message,
+              });
             }
           }
         }
-        const showSnackbarWithList = ({ message, list }) => {
-          if (list.length === 0) return;
-          showSnackbar({
-            type: 'error',
-            message,
-            list,
-          });
-        };
-
-        showSnackbarWithList({
-          message: __('Sorry, files has failed to upload', 'web-stories'),
-          list: otherErrorFiles.map((e) => e.file),
-        });
-
-        showSnackbarWithList({
-          message: sizeErrorMessage,
-          list: sizeErrorFiles.map((e) => e.file),
-        });
-
-        showSnackbarWithList({
-          message: validErrorMessage,
-          list: validErrorFiles.map((e) => e.file),
-        });
       } catch (e) {
         // Ignore.
       }
     },
-    [
-      addElement,
-      currentPage,
-      isValidType,
-      uploadFile,
-      showSnackbar,
-      validErrorMessage,
-      sizeErrorMessage,
-    ]
+    [addElement, currentPage, isValidType, showSnackbar, uploadFile]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
