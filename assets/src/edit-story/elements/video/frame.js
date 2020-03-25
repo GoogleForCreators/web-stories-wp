@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 /**
@@ -82,10 +82,14 @@ function VideoFrame({ element }) {
     state: { selectedElementIds },
   } = useStory();
   const isElementSelected = selectedElementIds.includes(id);
+  const getVideoNode = useCallback(
+    () => document.getElementById(`video-${id}`),
+    [id]
+  );
 
   const onPointerEnter = () => {
     // Sync UI for auto-play on insert.
-    const videoNode = document.getElementById(`video-${id}`);
+    const videoNode = getVideoNode();
     const currentlyPlaying = videoNode && !videoNode.paused;
     if (currentlyPlaying && !isPlaying) {
       setIsPlaying(true);
@@ -94,16 +98,22 @@ function VideoFrame({ element }) {
   };
 
   useEffect(() => {
-    const videoNode = document.getElementById(`video-${id}`);
+    const videoNode = getVideoNode();
     if (!isElementSelected && videoNode) {
       videoNode.pause();
       videoNode.currentTime = 0;
       setIsPlaying(false);
     }
-  }, [id, isElementSelected]);
+    const syncTimer = setTimeout(() => {
+      if (isElementSelected && videoNode && !videoNode.paused) {
+        setIsPlaying(true);
+      }
+    }, 0);
+    return () => clearTimeout(syncTimer);
+  }, [getVideoNode, id, isElementSelected]);
 
   const handlePlayPause = () => {
-    const videoNode = document.getElementById(`video-${id}`);
+    const videoNode = getVideoNode();
     if (!videoNode) return;
 
     if (isPlaying) {
@@ -115,7 +125,7 @@ function VideoFrame({ element }) {
   };
 
   useEffect(() => {
-    const videoNode = document.getElementById(`video-${id}`);
+    const videoNode = getVideoNode();
     if (!videoNode) {
       return undefined;
     }
@@ -126,7 +136,7 @@ function VideoFrame({ element }) {
     };
     videoNode.addEventListener('ended', onVideoEnd);
     return () => videoNode.removeEventListener('ended', onVideoEnd);
-  }, [id]);
+  }, [getVideoNode, id]);
 
   const buttonTitle = isPlaying
     ? __('Click to pause', 'web-stories')
