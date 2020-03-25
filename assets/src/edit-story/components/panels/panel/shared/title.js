@@ -104,6 +104,7 @@ function Title({
   isSecondary,
   secondaryAction,
   isResizable,
+  displayCollapse = true,
 }) {
   const {
     state: { isCollapsed, height, panelContentId },
@@ -142,9 +143,8 @@ function Title({
           handleHeightChange={handleHeightChange}
         />
       )}
-      {/* @TODO REMOVE `true`, FOR TESTING ONLY!!! */}
       <HeaderButton
-        onClick={true || isCollapsed ? expand : collapse}
+        onClick={isCollapsed ? expand : collapse}
         aria-label={titleLabel}
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
@@ -152,9 +152,11 @@ function Title({
         <Heading>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
-          <Collapse isCollapsed={isCollapsed}>
-            <Arrow />
-          </Collapse>
+          {displayCollapse && (
+            <Collapse isCollapsed={isCollapsed}>
+              <Arrow />
+            </Collapse>
+          )}
         </HeaderActions>
       </HeaderButton>
     </Header>
@@ -173,12 +175,14 @@ Title.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  displayCollapse: PropTypes.bool,
 };
 
 Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
+  displayCollapse: true,
 };
 
 export default Title;

@@ -40,30 +40,35 @@ import { Panel, PanelTitle, PanelContent } from './panel';
 
 const buttonCSS = css`
   background: transparent;
-  width: 28px;
-  height: 26px;
-  border: 0;
+  width: 30px;
+  height: 28px;
+  border: none;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
   cursor: pointer;
+  padding: 0;
 `;
-const AddColorPresetButton = styled.div`
+const AddColorPresetButton = styled.button`
   ${buttonCSS}
-  margin-right: 9px;
   svg {
     width: 26px;
     height: 28px;
   }
 `;
 
-const EditModeButton = styled.div`
+const EditModeButton = styled.button`
   ${buttonCSS}
   svg {
     width: 16px;
-    height: 16px;
+    height: 20px;
   }
 `;
 
-const ExitEditMode = styled.button``;
+const ExitEditMode = styled.button`
+  ${buttonCSS}
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-size: 12px;
+  line-height: 14px;
+`;
 
 const colorCSS = css`
   display: inline-block;
@@ -132,7 +137,7 @@ function ColorPresetPanel() {
 
   const openColorPicker = useCallback(
     (evt) => {
-      evt.preventDefault();
+      evt.stopPropagation();
       showColorPickerAt(ref.current, {
         onChange: () => null,
         hasGradient: true,
@@ -193,7 +198,12 @@ function ColorPresetPanel() {
   const getSecondaryActions = () => {
     return !isEditMode ? (
       <>
-        <EditModeButton onClick={() => setIsEditMode(true)}>
+        <EditModeButton
+          onClick={(evt) => {
+            evt.stopPropagation();
+            setIsEditMode(true);
+          }}
+        >
           <Edit />
         </EditModeButton>
         <AddColorPresetButton ref={ref} onClick={openColorPicker}>
@@ -201,7 +211,12 @@ function ColorPresetPanel() {
         </AddColorPresetButton>
       </>
     ) : (
-      <ExitEditMode onClick={() => setIsEditMode(false)}>
+      <ExitEditMode
+        onClick={(evt) => {
+          evt.stopPropagation();
+          setIsEditMode(false);
+        }}
+      >
         {__('Exit', 'web-stories')}
       </ExitEditMode>
     );
@@ -209,7 +224,11 @@ function ColorPresetPanel() {
 
   return (
     <Panel name="colorpreset">
-      <PanelTitle isPrimary secondaryAction={getSecondaryActions()}>
+      <PanelTitle
+        isPrimary
+        secondaryAction={getSecondaryActions()}
+        displayCollapse={!isEditMode}
+      >
         {__('Color presets', 'web-stories')}
       </PanelTitle>
       {colorPresets && (
