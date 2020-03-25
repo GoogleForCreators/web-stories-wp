@@ -65,11 +65,13 @@ const EditModeButton = styled.button`
   }
 `;
 
-const ExitEditMode = styled.button`
+const ExitEditMode = styled.a`
   ${buttonCSS}
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 12px;
   line-height: 14px;
+  padding: 7px;
+  height: initial;
 `;
 
 const colorCSS = css`
@@ -95,7 +97,8 @@ const BackgroundColor = styled.button`
   ${textCSS}
   ${colorCSS}
   color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ backgroundColor }) => backgroundColor};
+  background: ${({ backgroundColor, backgroundImage }) =>
+    backgroundColor ? backgroundColor : backgroundImage};
 `;
 
 const TextColor = styled.button`
@@ -236,7 +239,10 @@ function ColorPresetPanel() {
       {colorPresets && (
         <PanelContent isPrimary>
           <Colors>
-            {colorPresets.map((color) => {
+            {colorPresets.map((value) => {
+              const { color } = value;
+              const isSolid =
+                'solid' === color.type || undefined === color.type;
               return (
                 <>
                   <ButtonWrapper>
@@ -244,7 +250,7 @@ function ColorPresetPanel() {
                       {...generatePatternStyles(color)}
                       onClick={() => {
                         if (isEditMode) {
-                          handleDeleteColor(color);
+                          handleDeleteColor(value);
                         } else {
                           handleApplyBackgroundColor(color);
                         }
@@ -254,7 +260,7 @@ function ColorPresetPanel() {
                       {isText && __('A', 'web-stories')}
                     </BackgroundColor>
                   </ButtonWrapper>
-                  {isText && !isEditMode && (
+                  {isText && !isEditMode && isSolid && (
                     <ButtonWrapper>
                       <TextColor
                         {...generatePatternStyles(color, 'color')}

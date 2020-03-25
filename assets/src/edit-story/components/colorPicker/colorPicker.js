@@ -162,7 +162,7 @@ function ColorPicker({
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
-          {addActions && addActions(currentColor)}
+          {addActions && addActions(generatedColor)}
         </Body>
       </Container>
     </CSSTransition>
@@ -184,7 +184,7 @@ ColorPicker.defaultProps = {
   onClose: /* istanbul ignore next */ () => {},
   hasGradient: false,
   hasOpacity: true,
-  addActions: false,
+  addActions: null,
 };
 
 export default ColorPicker;
