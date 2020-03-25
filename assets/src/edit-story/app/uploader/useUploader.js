@@ -65,26 +65,6 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
-  /* translators: %s is a list of allowed file extensions. */
-  const validErrorMessage = createInterpolateElement(
-    sprintf(
-      __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-      allowedMimeTypes.join(', ')
-    ),
-    {
-      b: <b />,
-    }
-  );
-
-  /* translators: %s is the upload file limit in MB */
-  const sizeErrorMessage = sprintf(
-    __(
-      'Your files is larger than the upload limit. The upload limit is %sMB. Please resize and try again!',
-      'web-stories'
-    ),
-    bytesToMB(maxUpload)
-  );
-
   const uploadFile = (file) => {
     // TODO Add permission check here, see Gutenberg's userCan function.
     if (!fileSizeCheck(file)) {
@@ -134,8 +114,6 @@ function useUploader(refreshLibrary = true) {
   return {
     uploadFile,
     isValidType,
-    validErrorMessage,
-    sizeErrorMessage,
   };
 }
 
