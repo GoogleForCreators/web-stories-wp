@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -69,7 +70,7 @@ const Helper = styled.div`
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {
-  const radioGroupId = uuidv4();
+  const radioGroupId = useMemo(() => uuidv4(), []);
   return (
     <div>
       {options.map(({ value, name, helper }, i) => (
@@ -79,11 +80,11 @@ function RadioGroup({ onChange, value: selectedValue, options }) {
             value={value}
             type="radio"
             checked={value === selectedValue}
-            aria-labelledby={`${i}-${radioGroupId}`}
+            aria-labelledby={`radio-${i}-${radioGroupId}`}
           />
           <Label isActive={value === selectedValue}>
             {value === selectedValue ? <Selected /> : <UnSelected />}
-            <Name id={`${i}-${radioGroupId}`}>{name}</Name>
+            <Name id={`radio-${i}-${radioGroupId}`}>{name}</Name>
           </Label>
           {helper && <Helper>{helper}</Helper>}
         </RadioButton>

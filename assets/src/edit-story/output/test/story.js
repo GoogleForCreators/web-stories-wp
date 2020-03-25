@@ -53,6 +53,7 @@ describe('Story output', () => {
           logo: 'https://example.com/logo.png',
         },
         fallbackPoster: 'https://example.com/logo.png',
+        logoPlaceholder: 'https://example.com/logo.png',
       },
     };
 
@@ -83,6 +84,7 @@ describe('Story output', () => {
           logo: 'https://example.com/logo.png',
         },
         fallbackPoster: 'https://example.com/logo.png',
+        logoPlaceholder: 'https://example.com/logo.png',
       },
     };
 
