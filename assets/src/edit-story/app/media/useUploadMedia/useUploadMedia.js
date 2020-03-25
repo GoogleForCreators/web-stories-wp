@@ -83,7 +83,7 @@ function useUploadMedia({
             }
             resetMedia({ pagingNum });
           } catch (e) {
-            onUploadFailure({ element });
+            if (onUploadFailure) onUploadFailure({ element });
 
             setMedia({
               media: media.filter(({ id }) => element.resource.id !== id),
@@ -91,14 +91,14 @@ function useUploadMedia({
 
             fetchMediaError(e);
 
-            throw new Error(__('Error trying upload a file.', 'web-stories'));
+            throw new Error(__('Error uploading a file.', 'web-stories'));
           }
         } catch (e) {
           setMedia({ media });
 
           fetchMediaError(e);
 
-          throw new Error(__('Error trying upload a file.', 'web-stories'));
+          throw new Error(__('Error trying to upload a file.', 'web-stories'));
         }
       });
     },
