@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import CardGrid from '../';
-import CardGridItem, { CardPreviewArea, CardTitle } from '../../card-grid-item';
+import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
@@ -29,74 +29,74 @@ export const _default = () => {
   return (
     <CardGrid>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
       <CardGridItem>
-        <CardPreviewArea
+        <CardPreviewContainer
           onOpenInEditorClick={() => {}}
           onPreviewClick={() => {}}
-          previewSource={'http://placehold.jp/99ccff/003366/225x400.png'}
+          previewSource={'http://placeimg.com/225/400/nature'}
         />
         <CardTitle title="Story Title" modifiedDate="12 days" />
       </CardGridItem>
