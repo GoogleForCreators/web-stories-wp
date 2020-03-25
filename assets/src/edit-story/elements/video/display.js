@@ -40,6 +40,13 @@ const Video = styled.video`
   ${videoWithScale}
 `;
 
+const Image = styled.img`
+  position: absolute;
+  max-width: initial;
+  max-height: initial;
+  ${videoWithScale}
+`;
+
 function VideoDisplay({
   previewMode,
   box: { width, height },
@@ -65,11 +72,11 @@ function VideoDisplay({
   return (
     <Element>
       {previewMode ? (
-        <img
+        <Image
           src={poster || resource.poster}
           alt={resource.title}
-          width={videoProps.width}
-          height={videoProps.height}
+          style={style}
+          {...videoProps}
         />
       ) : (
         <Video

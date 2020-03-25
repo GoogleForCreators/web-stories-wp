@@ -118,11 +118,13 @@ function DisplayElement({ element, previewMode }) {
         }}
       >
         <Display element={element} previewMode={previewMode} box={box} />
-        <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
-          {replacementElement && (
-            <Replacement element={replacementElement} box={box} />
-          )}
-        </ReplacementContainer>
+        {previewMode && (
+          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+            {replacementElement && (
+              <Replacement element={replacementElement} box={box} />
+            )}
+          </ReplacementContainer>
+        )}
       </WithMask>
       {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
         <BackgroundOverlay
