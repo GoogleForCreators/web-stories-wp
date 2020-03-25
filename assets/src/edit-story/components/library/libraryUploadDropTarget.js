@@ -40,7 +40,7 @@ const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
   const { uploadFile, validErrorMessage, sizeErrorMessage } = useUploader();
-  const { createSnackbar } = useSnackbar();
+  const { showSnackbar } = useSnackbar();
   const onDropHandler = useCallback(
     async (files) => {
       const possibleRetryFiles = [];
@@ -59,7 +59,7 @@ function LibraryUploadDropTarget({ children }) {
             e.file = file.name;
           }
           if (!isMultiple) {
-            createSnackbar({
+            showSnackbar({
               type: 'error',
               data: e.name,
               message: e.message,
@@ -84,9 +84,9 @@ function LibraryUploadDropTarget({ children }) {
         }
       }
       if (isMultiple) {
-        const createSnackbarWithList = ({ message, list, retryList }) => {
+        const showSnackbarWithList = ({ message, list, retryList }) => {
           if (list.length === 0) return;
-          createSnackbar({
+          showSnackbar({
             type: 'error',
             message,
             list,
@@ -95,26 +95,26 @@ function LibraryUploadDropTarget({ children }) {
           });
         };
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: __('Sorry, files has failed to upload', 'web-stories'),
           list: otherErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: sizeErrorMessage,
           list: sizeErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: validErrorMessage,
           list: validErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
         });
       }
     },
-    [uploadFile, createSnackbar, validErrorMessage, sizeErrorMessage]
+    [uploadFile, showSnackbar, validErrorMessage, sizeErrorMessage]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

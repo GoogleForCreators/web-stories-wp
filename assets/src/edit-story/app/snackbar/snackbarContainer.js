@@ -26,8 +26,8 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
  */
 import Snackbar from './snackbar';
 
-function getLeft(position) {
-  switch (position) {
+function getLeft(place) {
+  switch (place) {
     case 'top':
     case 'bottom':
       return 'calc(50% - 10em)';
@@ -44,10 +44,9 @@ function getLeft(position) {
 
 const Container = styled.div`
   position: fixed;
-  top: ${({ position }) => (position.indexOf('top') === 0 ? 0 : 'inherit')};
-  bottom: ${({ position }) =>
-    position.indexOf('bottom') === 0 ? 0 : 'inherit'};
-  left: ${({ position }) => getLeft(position)};
+  top: ${({ place }) => (place.indexOf('top') === 0 ? 0 : 'inherit')};
+  bottom: ${({ place }) => (place.indexOf('bottom') === 0 ? 0 : 'inherit')};
+  left: ${({ place }) => getLeft(place)};
   z-index: 10000;
 `;
 
@@ -60,7 +59,8 @@ const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-enter-active {
     opacity: 1;
     transform: scaleY(1);
-    transition: all ${({ animationTimeout }) => animationTimeout}ms;
+    transition: 300ms ease-out;
+    transition-property: opacity, transform;
   }
 
   &.react-snackbar-alert__snackbar-container-exit {
@@ -71,7 +71,8 @@ const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-exit-active {
     opacity: 0;
     transform: scaleY(0.1);
-    transition: all ${({ animationTimeout }) => animationTimeout}ms;
+    transition: 300ms ease-out;
+    transition-property: opacity, transform;
   }
 `;
 
@@ -79,35 +80,28 @@ function SnackbarContainer({
   component: Component,
   notifications,
   onRemove,
-  position,
-  animationTimeout,
+  place,
 }) {
   const orderednotifications =
-    position.indexOf('top') === 0
-      ? [...notifications].reverse()
-      : notifications;
+    place.indexOf('top') === 0 ? [...notifications].reverse() : notifications;
   return (
-    <Container position={position}>
+    <Container place={place}>
       <TransitionGroup>
         {orderednotifications.map((notification) => (
           <CSSTransition
             in
             appear={true}
             key={notification.key}
-            timeout={notification.animationTimeout || animationTimeout}
+            timeout={300}
             classNames="react-snackbar-alert__snackbar-container"
           >
-            <ChildContainer
-              animationTimeout={
-                notification.animationTimeout || animationTimeout
-              }
-            >
+            <ChildContainer>
               <Component
                 timeout={notification.timeout}
                 onDismiss={() => onRemove(notification)}
                 notification={notification}
                 data={notification.data}
-                position={position}
+                place={place}
               />
             </ChildContainer>
           </CSSTransition>
@@ -118,11 +112,10 @@ function SnackbarContainer({
 }
 
 SnackbarContainer.propTypes = {
-  animationTimeout: PropTypes.number,
   component: PropTypes.elementType,
   notifications: PropTypes.array,
   onRemove: PropTypes.func.isRequired,
-  position: PropTypes.oneOf([
+  place: PropTypes.oneOf([
     'top',
     'bottom',
     'top-left',
@@ -135,7 +128,6 @@ SnackbarContainer.propTypes = {
 SnackbarContainer.defaultProps = {
   component: Snackbar,
   position: 'bottom',
-  animationTimeout: 250,
 };
 
 export default SnackbarContainer;

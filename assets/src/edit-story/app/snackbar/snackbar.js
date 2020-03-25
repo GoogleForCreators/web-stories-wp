@@ -39,10 +39,9 @@ const Main = styled.div`
   justify-content: center;
   align-items: baseline;
   padding: 0;
-  margin-bottom: ${({ position }) =>
-    position.indexOf('bottom') === 0 ? '0.5em' : 0};
-  margin-top: ${({ position }) =>
-    position.indexOf('top') === 0 ? '0.5em' : 0};
+  margin-bottom: ${({ place }) =>
+    place.indexOf('bottom') === 0 ? '0.5em' : 0};
+  margin-top: ${({ place }) => (place.indexOf('top') === 0 ? '0.5em' : 0)};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   flex-direction: row;
@@ -76,40 +75,35 @@ const ActionButton = styled.button`
   text-transform: capitalize;
 `;
 
-function Snackbar({ notification, position }) {
-  const notificationMessage = () => (
-    <Content>
-      {notification.message}
-      {notification.list && notification.list.length > 0 && (
-        <List>
-          {notification.list.map((item) => (
-            <ListItem key={item}>{item}</ListItem>
-          ))}
-        </List>
-      )}
-    </Content>
-  );
-  return (
-    <Container positon={position}>
-      <Main position={position}>
-        {notificationMessage()}
-        {notification.retryAction && (
-          <ActionButton onClick={notification.retryAction}>
-            {__('Retry', 'web-stories')}
-          </ActionButton>
+const Snackbar = ({ notification, place }) => (
+  <Container place={place}>
+    <Main place={place}>
+      <Content>
+        {notification.message}
+        {notification.list && notification.list.length > 0 && (
+          <List>
+            {notification.list.map((item) => (
+              <ListItem key={item}>{item}</ListItem>
+            ))}
+          </List>
         )}
-      </Main>
-    </Container>
-  );
-}
+      </Content>
+      {notification.retryAction && (
+        <ActionButton onClick={notification.retryAction}>
+          {__('Retry', 'web-stories')}
+        </ActionButton>
+      )}
+    </Main>
+  </Container>
+);
 
 Snackbar.propTypes = {
   notification: PropTypes.object,
-  position: PropTypes.string,
+  place: PropTypes.string,
 };
 
 Snackbar.defaultProps = {
-  position: 'bottom',
+  place: 'bottom-left',
 };
 
 export default Snackbar;

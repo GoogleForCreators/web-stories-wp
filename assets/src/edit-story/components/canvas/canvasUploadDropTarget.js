@@ -50,7 +50,7 @@ const PageAreaCover = styled(PageArea)`
 
 function CanvasUploadDropTarget({ children }) {
   const { uploadFile, sizeErrorMessage, validErrorMessage } = useUploader();
-  const { createSnackbar } = useSnackbar();
+  const { showSnackbar } = useSnackbar();
   const insertElement = useInsertElement();
   const onDropHandler = useCallback(
     async (files) => {
@@ -72,7 +72,7 @@ function CanvasUploadDropTarget({ children }) {
             e.file = file.name;
           }
           if (!isMultiple) {
-            createSnackbar({
+            showSnackbar({
               type: 'error',
               data: e.name,
               message: e.message,
@@ -97,9 +97,9 @@ function CanvasUploadDropTarget({ children }) {
         }
       }
       if (isMultiple) {
-        const createSnackbarWithList = ({ message, list, retryList }) => {
+        const showSnackbarWithList = ({ message, list, retryList }) => {
           if (list.length === 0) return;
-          createSnackbar({
+          showSnackbar({
             type: 'error',
             message,
             list,
@@ -108,19 +108,19 @@ function CanvasUploadDropTarget({ children }) {
           });
         };
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: __('Sorry, files has failed to upload', 'web-stories'),
           list: otherErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: sizeErrorMessage,
           list: sizeErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: validErrorMessage,
           list: validErrorFiles.map((e) => e.file),
           retryList: possibleRetryFiles,
@@ -130,7 +130,7 @@ function CanvasUploadDropTarget({ children }) {
     [
       insertElement,
       uploadFile,
-      createSnackbar,
+      showSnackbar,
       sizeErrorMessage,
       validErrorMessage,
     ]

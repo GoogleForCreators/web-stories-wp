@@ -52,7 +52,7 @@ function useCanvasSelectionCopyPaste(container) {
     validErrorMessage,
     sizeErrorMessage,
   } = useUploader();
-  const { createSnackbar } = useSnackbar();
+  const { showSnackbar } = useSnackbar();
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -188,26 +188,26 @@ function useCanvasSelectionCopyPaste(container) {
             }
           }
         }
-        const createSnackbarWithList = ({ message, list }) => {
+        const showSnackbarWithList = ({ message, list }) => {
           if (list.length === 0) return;
-          createSnackbar({
+          showSnackbar({
             type: 'error',
             message,
             list,
           });
         };
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: __('Sorry, files has failed to upload', 'web-stories'),
           list: otherErrorFiles.map((e) => e.file),
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: sizeErrorMessage,
           list: sizeErrorFiles.map((e) => e.file),
         });
 
-        createSnackbarWithList({
+        showSnackbarWithList({
           message: validErrorMessage,
           list: validErrorFiles.map((e) => e.file),
         });
@@ -220,7 +220,7 @@ function useCanvasSelectionCopyPaste(container) {
       currentPage,
       isValidType,
       uploadFile,
-      createSnackbar,
+      showSnackbar,
       validErrorMessage,
       sizeErrorMessage,
     ]

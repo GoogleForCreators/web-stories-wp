@@ -25,9 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import Context from './context';
-import SnackContainer from './snackbarContainer';
+import SnackbarContainer from './snackbarContainer';
 
-function SnackbarProvider({ children, animationTimeout, position }) {
+function SnackbarProvider({ children, place }) {
   const [notifications, setNotifications] = useState([]);
 
   SnackbarProvider.timeouts = {};
@@ -55,24 +55,21 @@ function SnackbarProvider({ children, animationTimeout, position }) {
 
   const create = (notification) => {
     notification.key = uuidv4();
-    if (typeof notification.timeout === 'undefined') {
-      notification.timeout = 5000;
-    }
+    notification.timeout = notification.timeout || 5000;
     setNotifications([...notifications, notification]);
     removeNotification(notification);
   };
 
   const state = {
-    createSnackbar: create,
+    showSnackbar: create,
   };
 
   return (
     <Context.Provider value={state}>
-      <SnackContainer
+      <SnackbarContainer
         onRemove={remove}
         notifications={notifications}
-        animationTimeout={animationTimeout}
-        position={position}
+        place={place}
       />
       {children}
     </Context.Provider>
@@ -80,8 +77,7 @@ function SnackbarProvider({ children, animationTimeout, position }) {
 }
 
 SnackbarProvider.propTypes = {
-  animationTimeout: PropTypes.number,
-  position: PropTypes.string,
+  place: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -89,8 +85,7 @@ SnackbarProvider.propTypes = {
 };
 
 SnackbarProvider.defaultProps = {
-  animationTimeout: 250,
-  position: 'bottom-left',
+  place: 'bottom-left',
 };
 
 export default SnackbarProvider;
