@@ -35,34 +35,26 @@ getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width:
  * @return {Object} Returns outer frame of all list objects
  */
 function getBoundRect(list) {
-  const firstElementProperties = list[0].rotationAngle
-    ? calcRotatedObjectPositionAndSize(
-        list[0].rotationAngle,
-        list[0].x,
-        list[0].y,
-        list[0].width,
-        list[0].height
-      )
-    : list[0];
-  let startX = firstElementProperties.x;
-  let startY = firstElementProperties.y;
-  let endX = startX + firstElementProperties.width;
-  let endY = startY + firstElementProperties.height;
+  const updatedList = list.map((el) =>
+    calcRotatedObjectPositionAndSize(
+      el.rotationAngle,
+      el.x,
+      el.y,
+      el.width,
+      el.height
+    )
+  );
+  const firstElement = updatedList[0];
+  let startX = firstElement.x;
+  let startY = firstElement.y;
+  let endX = startX + firstElement.width;
+  let endY = startY + firstElement.height;
 
-  list.forEach((el) => {
-    const elementProperties = el.rotationAngle
-      ? calcRotatedObjectPositionAndSize(
-          el.rotationAngle,
-          el.x,
-          el.y,
-          el.width,
-          el.height
-        )
-      : el;
-    startX = Math.min(elementProperties.x, startX);
-    startY = Math.min(elementProperties.y, startY);
-    endX = Math.max(elementProperties.x + elementProperties.width, endX);
-    endY = Math.max(elementProperties.y + elementProperties.height, endY);
+  updatedList.slice(1).forEach((el) => {
+    startX = Math.min(el.x, startX);
+    startY = Math.min(el.y, startY);
+    endX = Math.max(el.x + el.width, endX);
+    endY = Math.max(el.y + el.height, endY);
   });
   return {
     startX,
@@ -75,6 +67,7 @@ function getBoundRect(list) {
 }
 
 export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
+  if (!angle || angle === 0) return { x, y, width, height };
   /// variables
   const centerX = x + width * 0.5;
   const centerY = y + height * 0.5;
