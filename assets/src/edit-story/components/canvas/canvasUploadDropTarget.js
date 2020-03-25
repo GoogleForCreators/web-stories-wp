@@ -56,17 +56,47 @@ function CanvasUploadDropTarget({ children }) {
   const {
     actions: { updateElementById, deleteElementById },
   } = useStory();
+
+  const onLocalFile = useCallback(
+    ({ resource }) => {
+      const element = insertElement(resource.type, {
+        resource,
+      });
+
+      return element;
+    },
+    [insertElement]
+  );
+  const onUploadedFile = useCallback(
+    ({ resource, element }) => {
+      updateElementById({
+        elementId: element.elementId,
+        properties: {
+          resource,
+          type: element.resource.type,
+        },
+      });
+    },
+    [updateElementById]
+  );
+
+  const onUploadFailure = useCallback(
+    ({ element }) => {
+      deleteElementById({ elementId: element.id });
+    },
+    [deleteElementById]
+  );
+
   const onDropHandler = useCallback(
     (files) => {
       uploadMedia(files, {
-        insertElement,
-        updateElementById,
-        deleteElementById,
+        onLocalFile,
+        onUploadedFile,
+        onUploadFailure,
       });
     },
-    [uploadMedia, insertElement, updateElementById, deleteElementById]
+    [uploadMedia, onLocalFile, onUploadedFile, onUploadFailure]
   );
-
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}

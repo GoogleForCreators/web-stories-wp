@@ -20,6 +20,11 @@
 import { useCallback } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useUploader } from '../../uploader';
@@ -27,7 +32,6 @@ import { useAPI } from '../../api';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
-  getResourceFromAttachment,
 } from '../../../app/media/utils';
 
 function useUploadMedia({
@@ -57,101 +61,48 @@ function useUploadMedia({
     [setMedia, fetchMediaError, fetchMediaStart, getMedia, searchTerm]
   );
 
-  const uploadMediaFromLibrary = useCallback(
-    async (files) => {
-      try {
-        const localMedia = await Promise.all(
-          files.map(getResourceFromLocalFile).reverse()
-        );
-        const filesUploading = files.map((file) => uploadFile(file));
-        setMedia({
-          media: [...localMedia, ...media],
-        });
-        await Promise.all(filesUploading);
+  const uploadMedia = useCallback(
+    (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      files.reverse().forEach(async (file) => {
+        try {
+          let element;
+          const resource = await getResourceFromLocalFile(file);
 
-        // To avoid race conditions updating media library, a new request is necessary
-        resetMedia({ pagingNum });
-      } catch (e) {
-        setMedia({ media });
-        fetchMediaError(e);
-      }
-    },
-    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
-  );
+          if (onLocalFile) element = onLocalFile({ resource });
 
-  const uploadMediaFromWorkspace = useCallback(
-    async (files, { insertElement, updateElementById, deleteElementById }) => {
-      try {
-        const filesOnCanvas = await Promise.all(
-          files
-            .map(async (file) => {
-              const resource = await getResourceFromLocalFile(file);
-              const element = insertElement(resource.type, {
-                resource: getResourceFromAttachment(resource),
-              });
+          setMedia({ media: [resource, ...media] });
 
-              return {
-                resource,
-                element,
-                file,
-              };
-            })
-            .reverse()
-        );
-        const uploadFileOnCanvas = async ({ element, file }) => {
           try {
             const uploadedFile = await uploadFile(file);
 
-            const resource = getResourceFromUploadAPI(uploadedFile);
-
-            updateElementById({
-              elementId: element.elementId,
-              properties: {
-                resource,
-                type: element.resource.type,
-              },
-            });
-
-            return resource;
+            if (onUploadedFile) {
+              onUploadedFile({
+                resource: getResourceFromUploadAPI(uploadedFile),
+                element,
+              });
+            }
+            resetMedia({ pagingNum });
           } catch (e) {
-            deleteElementById({ elementId: element.id });
+            onUploadFailure({ element });
+
             setMedia({
               media: media.filter(({ id }) => element.resource.id !== id),
             });
+
             fetchMediaError(e);
-            throw new Error('Error uploading a file.');
+
+            throw new Error(__('Error trying upload a file.', 'web-stories'));
           }
-        };
+        } catch (e) {
+          setMedia({ media });
 
-        setMedia({
-          media: [...filesOnCanvas.map(({ resource }) => resource), ...media],
-        });
+          fetchMediaError(e);
 
-        await Promise.all(filesOnCanvas.map(uploadFileOnCanvas));
-
-        // To avoid race conditions updating media library, a new request is necessary
-        resetMedia({ pagingNum });
-      } catch (e) {
-        setMedia({ media });
-        fetchMediaError(e);
-      }
+          throw new Error(__('Error trying upload a file.', 'web-stories'));
+        }
+      });
     },
-    [resetMedia, setMedia, fetchMediaError, uploadFile, media, pagingNum]
-  );
-
-  const uploadMedia = useCallback(
-    (files, { insertElement, updateElementById, deleteElementById } = {}) => {
-      if (insertElement && updateElementById && deleteElementById) {
-        return uploadMediaFromWorkspace(files, {
-          insertElement,
-          updateElementById,
-          deleteElementById,
-        });
-      }
-
-      return uploadMediaFromLibrary(files);
-    },
-    [uploadMediaFromWorkspace, uploadMediaFromLibrary]
+    [setMedia, uploadFile, resetMedia, fetchMediaError, media, pagingNum]
   );
 
   return {
