@@ -29,7 +29,7 @@ import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
-import ElementAlignmentPanel from './elementAlignment';
+import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';

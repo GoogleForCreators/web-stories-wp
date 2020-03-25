@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useRef, useCallback, useState } from 'react';
+import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -30,22 +30,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import WithTooltip from '../tooltip';
-import { useConfig } from '../../app';
-import { useKeyDownEffect } from '../keyboard';
-import { ReactComponent as AlignBottom } from '../../icons/align_bottom.svg';
-import { ReactComponent as AlignTop } from '../../icons/align_top.svg';
-import { ReactComponent as AlignCenter } from '../../icons/align_center.svg';
-import { ReactComponent as AlignMiddle } from '../../icons/align_middle.svg';
-import { ReactComponent as AlignLeft } from '../../icons/align_left.svg';
-import { ReactComponent as AlignRight } from '../../icons/align_right.svg';
-import { ReactComponent as HorizontalDistribute } from '../../icons/horizontal_distribute.svg';
-import { ReactComponent as VerticalDistribute } from '../../icons/vertical_distribute.svg';
-import { dataPixels } from '../../units/dimensions';
-import getCommonValue from './utils/getCommonValue';
+import WithTooltip from '../../tooltip';
+import { useConfig } from '../../../app';
+import { useKeyDownEffect } from '../../keyboard';
+import { ReactComponent as AlignBottom } from '../../../icons/align_bottom.svg';
+import { ReactComponent as AlignTop } from '../../../icons/align_top.svg';
+import { ReactComponent as AlignCenter } from '../../../icons/align_center.svg';
+import { ReactComponent as AlignMiddle } from '../../../icons/align_middle.svg';
+import { ReactComponent as AlignLeft } from '../../../icons/align_left.svg';
+import { ReactComponent as AlignRight } from '../../../icons/align_right.svg';
+import { ReactComponent as HorizontalDistribute } from '../../../icons/horizontal_distribute.svg';
+import { ReactComponent as VerticalDistribute } from '../../../icons/vertical_distribute.svg';
+import getCommonValue from '../utils/getCommonValue';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
-} from './utils/getBoundRect';
+} from '../utils/getBoundRect';
+import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
   display: flex;
@@ -143,6 +143,19 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [selectedElements]
   );
 
+  const {
+    setUpdatedSelectedElementsWithFrame,
+    handleAlign,
+    handleAlignCenter,
+    handleAlignMiddle,
+    handleHorizontalDistribution,
+    handleVerticalDistribution,
+  } = useAlignment();
+  useEffect(
+    () => setUpdatedSelectedElementsWithFrame(updatedSelectedElementsWithFrame),
+    [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
+  );
+
   const isAlignEnabled = !isFill && selectedElements.length > 1;
   const isDistributionEnabled = !isFill && selectedElements.length > 2;
 
@@ -190,124 +203,12 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     []
   );
 
-  const handleAlign = (direction) => {
-    pushUpdate((properties) => {
-      const { id } = properties;
-      let offset = 0;
-      const {
-        width,
-        height,
-        frameWidth,
-        frameHeight,
-      } = updatedSelectedElementsWithFrame.find((item) => item.id === id);
-      offset =
-        direction === 'left' || direction === 'right'
-          ? (frameWidth - width) / 2
-          : (frameHeight - height) / 2;
-
-      if (direction === 'left' || direction === 'right') {
-        return {
-          x:
-            direction === 'left'
-              ? boundRect.startX + offset
-              : boundRect.endX - width - offset,
-        };
-      }
-      return {
-        y:
-          direction === 'top'
-            ? boundRect.startY + offset
-            : boundRect.endY - height - offset,
-      };
-    });
-  };
-
-  const handleAlignCenter = () => {
-    const centerX = (boundRect.endX + boundRect.startX) / 2;
-    pushUpdate((properties) => {
-      const { width } = properties;
-      return {
-        x: centerX - width / 2,
-      };
-    });
-  };
-
-  const handleAlignMiddle = () => {
-    const centerY = (boundRect.endY + boundRect.startY) / 2;
-    pushUpdate((properties) => {
-      const { height } = properties;
-      return {
-        y: centerY - height / 2,
-      };
-    });
-  };
-
-  const handleHorizontalDistribution = () => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
-    sortedElementsWithFrame.sort(
-      (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
-    );
-    const commonSpaceWidth = dataPixels(
-      (boundRect.width -
-        sortedElementsWithFrame.reduce(
-          (sum, element) => sum + element.frameWidth,
-          0
-        )) /
-        (sortedElementsWithFrame.length - 1)
-    );
-    const updatedX = {};
-    let offsetX = 0;
-    sortedElementsWithFrame.forEach((element, index) => {
-      const { id, x, width, frameWidth } = element;
-      if (index === 0 || index === sortedElementsWithFrame.length - 1) {
-        updatedX[id] = { x };
-        offsetX = x;
-      } else {
-        updatedX[id] = {
-          x: offsetX + (frameWidth - width) / 2,
-        };
-      }
-      offsetX += frameWidth + commonSpaceWidth;
-    });
-    pushUpdate(({ id }) => updatedX[id]);
-  };
-
-  const handleVerticalDistribution = () => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
-    sortedElementsWithFrame.sort(
-      (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
-    );
-    const commonSpaceHeight = dataPixels(
-      (boundRect.height -
-        sortedElementsWithFrame.reduce(
-          (sum, element) => sum + element.frameHeight,
-          0
-        )) /
-        (sortedElementsWithFrame.length - 1)
-    );
-    const updatedY = {};
-    let offsetY = 0;
-    sortedElementsWithFrame.forEach((element, index) => {
-      const { id, y, height, frameHeight } = element;
-      if (index === 0 || index === sortedElementsWithFrame.length - 1) {
-        updatedY[id] = { y };
-        offsetY = y;
-      } else {
-        updatedY[id] = {
-          y: offsetY + (frameHeight - height) / 2,
-        };
-      }
-      offsetY += frameHeight + commonSpaceHeight;
-    });
-    pushUpdate(({ id }) => updatedY[id]);
-  };
-
   return (
     <ElementRow ref={ref}>
       <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
         <IconButton
           disabled={!isDistributionEnabled}
-          onClick={handleHorizontalDistribution}
+          onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}
           aria-label={__('Horizontal Distribution', 'web-stories')}
           id={alignmentButtonIds[0]}
           onFocus={() => setCurrentButton(alignmentButtonIds[0])}
@@ -318,7 +219,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Distribute vertically', 'web-stories')}>
         <IconButton
           disabled={!isDistributionEnabled}
-          onClick={handleVerticalDistribution}
+          onClick={() => handleVerticalDistribution(boundRect, pushUpdate)}
           aria-label={__('Vertical Distribution', 'web-stories')}
           id={alignmentButtonIds[1]}
           onFocus={() => setCurrentButton(alignmentButtonIds[1])}
@@ -330,7 +231,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={() => handleAlign('left')}
+          onClick={() => handleAlign('left', boundRect, pushUpdate)}
           aria-label={__('Justify Left', 'web-stories')}
           id={alignmentButtonIds[2]}
           onFocus={() => setCurrentButton(alignmentButtonIds[2])}
@@ -341,7 +242,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={handleAlignCenter}
+          onClick={() => handleAlignCenter(boundRect, pushUpdate)}
           aria-label={__('Justify Center', 'web-stories')}
           id={alignmentButtonIds[3]}
           onFocus={() => setCurrentButton(alignmentButtonIds[3])}
@@ -352,7 +253,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={() => handleAlign('right')}
+          onClick={() => handleAlign('right', boundRect, pushUpdate)}
           aria-label={__('Justify Right', 'web-stories')}
           id={alignmentButtonIds[4]}
           onFocus={() => setCurrentButton(alignmentButtonIds[4])}
@@ -363,7 +264,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align top', 'web-stories')}>
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={() => handleAlign('top')}
+          onClick={() => handleAlign('top', boundRect, pushUpdate)}
           aria-label={__('Justify Top', 'web-stories')}
           id={alignmentButtonIds[5]}
           onFocus={() => setCurrentButton(alignmentButtonIds[5])}
@@ -374,7 +275,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align vertical center', 'web-stories')}>
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={handleAlignMiddle}
+          onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
           aria-label={__('Justify Middle', 'web-stories')}
           id={alignmentButtonIds[6]}
           onFocus={() => setCurrentButton(alignmentButtonIds[6])}
@@ -385,7 +286,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <WithTooltip title={__('Align bottom', 'web-stories')}>
         <IconButton
           disabled={!isAlignEnabled}
-          onClick={() => handleAlign('bottom')}
+          onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
           aria-label={__('Justify Bottom', 'web-stories')}
           id={alignmentButtonIds[7]}
           onFocus={() => setCurrentButton(alignmentButtonIds[7])}
