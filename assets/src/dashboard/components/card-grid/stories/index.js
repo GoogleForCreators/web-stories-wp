@@ -25,81 +25,19 @@ export default {
   component: CardGrid,
 };
 
+const StorybookGridItem = (
+  <CardGridItem>
+    <CardPreviewContainer
+      onOpenInEditorClick={() => {}}
+      onPreviewClick={() => {}}
+      previewSource={'http://placeimg.com/225/400/nature'}
+    />
+    <CardTitle title="Story Title" modifiedDate="12 days" />
+  </CardGridItem>
+);
+
+const itemArray = new Array(12).fill(StorybookGridItem);
+
 export const _default = () => {
-  return (
-    <CardGrid>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-      <CardGridItem>
-        <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        />
-        <CardTitle title="Story Title" modifiedDate="12 days" />
-      </CardGridItem>
-    </CardGrid>
-  );
+  return <CardGrid>{itemArray.map((gridItem) => gridItem)}</CardGrid>;
 };
