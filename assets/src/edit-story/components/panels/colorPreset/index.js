@@ -36,7 +36,7 @@ import { useSidebar } from '../../sidebar';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { getDefinitionForType } from '../../../elements';
-import getColorPickerActions from '../../../utils/getColorPickerActions';
+import getColorPickerActions from '../utils/getColorPickerActions';
 import { Panel, PanelTitle, PanelContent } from './../panel';
 
 const buttonCSS = css`

@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Color, Label, Row } from '../../form';
 import { useCommonColorValue } from '../utils';
+import getColorPickerActions from '../utils/getColorPickerActions';
 
 function ColorControls({ selectedElements, pushUpdate }) {
   const color = useCommonColorValue(selectedElements, 'color');
@@ -45,6 +46,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           data-testid="text.color"
           value={color}
           onChange={(value) => pushUpdate({ color: value }, true)}
+          colorPickerActions={getColorPickerActions}
         />
       </Row>
       <Row>
@@ -55,6 +57,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           value={backgroundColor}
           onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
+          colorPickerActions={getColorPickerActions}
         />
       </Row>
     </>

@@ -32,7 +32,6 @@ import { __, _x } from '@wordpress/i18n';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
-import getColorPickerActions from '../../../utils/getColorPickerActions';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
@@ -58,7 +57,14 @@ const TextualPreview = styled.div`
   text-align: center;
 `;
 
-function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
+function ColorPreview({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  value,
+  label,
+  colorPickerActions,
+}) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   const previewStyle = getPreviewStyle(value);
@@ -78,16 +84,17 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
-      addActions: getColorPickerActions,
+      addActions: colorPickerActions,
     });
   }, [
     showColorPickerAt,
-    hideSidebar,
     isMultiple,
     value,
     onChange,
     hasGradient,
     hasOpacity,
+    hideSidebar,
+    colorPickerActions,
   ]);
 
   // Always hide color picker on unmount - note the double arrows
@@ -112,6 +119,7 @@ ColorPreview.propTypes = {
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+  colorPickerActions: PropTypes.func,
 };
 
 ColorPreview.defaultProps = {
