@@ -70,10 +70,14 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
         );
-        const permalinkConfig = {
-          prefix,
-          suffix,
-        };
+        // If either of these is undefined, the placeholder was not found in settings.
+        const foundSettings = prefix !== undefined && suffix !== undefined;
+        const permalinkConfig = foundSettings
+          ? {
+              prefix,
+              suffix,
+            }
+          : null;
         const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
         // First clear history completely.

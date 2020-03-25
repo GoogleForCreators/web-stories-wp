@@ -62,9 +62,10 @@ function SlugPanel() {
     [updateStory]
   );
 
-  const displayLink = slug
-    ? permalinkConfig.prefix + slug + permalinkConfig.suffix
-    : link;
+  const displayLink =
+    slug && permalinkConfig
+      ? permalinkConfig.prefix + slug + permalinkConfig.suffix
+      : link;
   return (
     <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
       <Row>
