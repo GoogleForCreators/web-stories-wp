@@ -20,5 +20,4 @@ export { default as PopoverMenu } from './popover-menu';
 export { default as Dropdown } from './dropdown';
 export { default as TypeaheadInput } from './typeahead-input';
 export { default as TypeaheadOptions } from './typeahead-options';
-export { getTypeaheadOptions } from './typeahead-options/utils';
 export { ViewHeader } from './typography';

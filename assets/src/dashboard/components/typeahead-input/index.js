@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -115,6 +120,7 @@ const TypeaheadInput = ({
   placeholder,
   value = '',
   ariaLabel,
+  isFiltering,
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -123,6 +129,20 @@ const TypeaheadInput = ({
   const isMenuOpen = useMemo(() => {
     return showMenu && items.length > 0 && inputValue.length > 0;
   }, [items, showMenu, inputValue]);
+
+  const filteredItems = useMemo(() => {
+    if (!Boolean(isFiltering)) {
+      return items;
+    }
+    return items.filter((item) => {
+      const lowerInputValue = inputValue.toLowerCase();
+
+      return (
+        item.label.toLowerCase().includes(lowerInputValue) ||
+        item.value.toLowerCase().includes(lowerInputValue)
+      );
+    });
+  }, [items, inputValue, isFiltering]);
 
   const searchRef = useRef();
 
@@ -179,7 +199,7 @@ const TypeaheadInput = ({
         {inputValue.length > 0 && !Boolean(isMenuOpen) && (
           <ClearInputButton
             onClick={handleInputClear}
-            aria-label={'Clear Input'}
+            aria-label={__('Clear Input', 'web-stories')}
           >
             <CloseIcon />
           </ClearInputButton>
@@ -188,9 +208,9 @@ const TypeaheadInput = ({
 
       <TypeaheadOptions
         isOpen={isMenuOpen}
-        items={items}
+        items={filteredItems}
         maxItemsVisible={maxItemsVisible}
-        onSelect={items && handleMenuItemSelect}
+        onSelect={filteredItems && handleMenuItemSelect}
       />
     </SearchContainer>
   );
@@ -208,6 +228,7 @@ TypeaheadInput.propTypes = {
   ariaLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  isFiltering: PropTypes.bool,
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

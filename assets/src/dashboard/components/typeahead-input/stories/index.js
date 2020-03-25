@@ -24,7 +24,6 @@ import { useState } from 'react';
  * Internal dependencies
  */
 import TypeaheadInput from '../';
-import { getTypeaheadOptions } from '../../index';
 
 export default {
   title: 'Dashboard/Components/TypeaheadInput',
@@ -67,7 +66,8 @@ export const _filterLoadedSearchItems = () => {
   return (
     <TypeaheadInput
       inputId={'demo-search-component'}
-      items={getTypeaheadOptions(items, value)}
+      items={items}
+      isFiltering={true}
       onChange={(inputValue) => {
         if (!inputValue) {
           setValue('');
