@@ -186,6 +186,9 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		$schema['properties']['color_presets'] = [
 			'description' => __( 'Color presets used by all stories', 'web-stories' ),
 			'type'        => 'array',
+			'items'       => [
+				'type' => 'object',
+			],
 			'context'     => [ 'view', 'edit' ],
 			'default'     => [],
 		];
