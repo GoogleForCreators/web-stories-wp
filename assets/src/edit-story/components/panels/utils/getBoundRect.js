@@ -19,6 +19,21 @@
  */
 import { dataPixels } from '../../../units/dimensions';
 
+/**
+ * Get the outer frame values for all objects in `list`, 
+returns { startX, startY, endX, endY, width, height };
+ 
+Example usage:
+```
+getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width: 100, height: 50 } ] );
+// returns { startX: 10, startY: 10, endX: 130, endY: 70, width: 120, height: 60 };
+getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width: 100, height: 50, rotationAngle: 45 } ] );
+// returns { startX: 10, startY: -8, endX: 133, endY: 98, width: 123, height: 106 };
+```
+ *
+ * @param {Array<Object>} list List of elements with size and position properties
+ * @return {Object} Returns outer frame of all list objects
+ */
 function getBoundRect(list) {
   const firstElementProperties = list[0].rotationAngle
     ? calcRotatedObjectPositionAndSize(
