@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,49 +30,28 @@ import { __ } from '@wordpress/i18n';
 import { Row } from '../form';
 import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
-import getCommonObjectValue from './utils/getCommonObjectValue';
-import getCommonValue from './utils/getCommonValue';
+import { getCommonValue, useCommonObjectValue } from './utils';
 
-function ImageAccessibilityPanel({ selectedElements, onSetProperties }) {
-  const resource = getCommonValue(selectedElements, 'resource');
-  const { alt } = getCommonObjectValue(
+const DEFAULT_RESOURCE = { alt: null };
+
+function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
+  const resource = useCommonObjectValue(
     selectedElements,
     'resource',
-    ['alt'],
-    false
+    DEFAULT_RESOURCE
   );
-  const [state, setState] = useState({ alt });
-  useEffect(() => {
-    setState({ alt });
-  }, [alt]);
-
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
-
-  const handleChange = useCallback(
-    (property) => (value) => {
-      const newState = {
-        [property]: value,
-      };
-      setState({ ...state, ...newState });
-      onSetProperties({ resource: { ...resource, ...newState } });
-    },
-    [state, onSetProperties, resource]
-  );
+  const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
 
   return (
     <SimplePanel
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
-      onSubmit={handleSubmit}
     >
       <Row>
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
-          value={state.alt || ''}
-          onChange={handleChange('alt')}
+          value={alt || ''}
+          onChange={(value) => pushUpdate({ alt: value })}
           clear
         />
       </Row>
@@ -86,7 +64,7 @@ function ImageAccessibilityPanel({ selectedElements, onSetProperties }) {
 
 ImageAccessibilityPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default ImageAccessibilityPanel;

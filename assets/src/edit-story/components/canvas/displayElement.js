@@ -42,6 +42,7 @@ const Wrapper = styled.div`
 	${elementWithSize}
 	${elementWithRotation}
 	contain: layout paint;
+  transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
 const BackgroundOverlay = styled.div`
@@ -50,6 +51,11 @@ const BackgroundOverlay = styled.div`
   height: 100%;
   top: 0;
   left: 0;
+`;
+const ReplacementContainer = styled.div`
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
+  pointer-events: none;
+  opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
 function DisplayElement({ element, previewMode }) {
@@ -85,7 +91,6 @@ function DisplayElement({ element, previewMode }) {
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      target.style.opacity = 1;
     } else {
       const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
@@ -113,9 +118,11 @@ function DisplayElement({ element, previewMode }) {
         }}
       >
         <Display element={element} previewMode={previewMode} box={box} />
-        {replacementElement && (
-          <Replacement element={replacementElement} box={box} />
-        )}
+        <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+          {replacementElement && (
+            <Replacement element={replacementElement} box={box} />
+          )}
+        </ReplacementContainer>
       </WithMask>
       {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
         <BackgroundOverlay

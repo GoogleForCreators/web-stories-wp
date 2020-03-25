@@ -90,7 +90,6 @@ const Spin = ({ name, color, keyframes, animationConfig, animatorConfig }) => {
         </h1>
         <WithAnimation
           id="anim-spin"
-          animation={name}
           style={{
             width: '50px',
             height: '50px',
@@ -125,7 +124,6 @@ export const _default = () => {
       animatorConfig={[
         {
           selector: `#anim-spin`,
-          animation: name,
           duration: 8000,
           iterations: 'infinity',
         },
@@ -149,7 +147,6 @@ export const defaultCounterClockwise = () => {
       animatorConfig={[
         {
           selector: `#anim-spin`,
-          animation: name,
           duration: 8000,
           iterations: 'infinity',
         },
@@ -171,14 +168,12 @@ export const fastToSlowClockwise = () => {
       animatorConfig={[
         {
           selector: `#anim-spin`,
-          animation: name,
           delay: 2000,
           duration: 8000,
           iterations: 'infinity',
         },
         {
           selector: `#anim-spin`,
-          animation: name,
           duration: 2000,
           easing: 'cubic-bezier(0.02, 0.49, 0.46, 0.84)',
         },
@@ -202,14 +197,12 @@ export const fastToSlowCounterClockwise = () => {
       animatorConfig={[
         {
           selector: `#anim-spin`,
-          animation: name,
           delay: 2000,
           duration: 8000,
           iterations: 'infinity',
         },
         {
           selector: `#anim-spin`,
-          animation: name,
           duration: 2000,
           easing: 'cubic-bezier(0.02, 0.49, 0.46, 0.84)',
         },
@@ -233,7 +226,6 @@ export const pingPongSpin = () => {
       animatorConfig={[
         {
           selector: `#anim-spin`,
-          animation: name,
           duration: 2000,
           iterations: 'infinity',
           direction: 'alternate',

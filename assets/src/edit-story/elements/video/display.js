@@ -43,7 +43,7 @@ const Video = styled.video`
 function VideoDisplay({
   previewMode,
   box: { width, height },
-  element: { id, resource, isBackground, scale, focalX, focalY, loop },
+  element: { id, poster, resource, isBackground, scale, focalX, focalY, loop },
 }) {
   let style = {};
   if (isBackground) {
@@ -66,7 +66,7 @@ function VideoDisplay({
     <Element>
       {previewMode ? (
         <img
-          src={resource.poster}
+          src={poster || resource.poster}
           alt={resource.title}
           width={videoProps.width}
           height={videoProps.height}
@@ -74,7 +74,7 @@ function VideoDisplay({
       ) : (
         <Video
           id={`video-${id}`}
-          poster={resource.poster}
+          poster={poster || resource.poster}
           style={style}
           {...videoProps}
           loop={loop}
