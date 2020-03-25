@@ -138,7 +138,7 @@ const getVideoResource = (video) => {
  * Generates a resource object from a local File object
  *
  * @param {File} file File object
- * @return {Object|null} Resource object
+ * @return {Promise<Object>|null} Resource object
  */
 export const getResourceFromLocalFile = (file) => {
   const type = getTypeFromMime(file.type);
