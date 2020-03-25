@@ -18,12 +18,12 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
@@ -42,11 +42,10 @@ const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
-const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
+const SHAPE_STYLE = 'shapeStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
-const PAGE = 'page';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
@@ -56,7 +55,7 @@ export const PanelTypes = {
   BACKGROUND_DISPLAY,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
-  STYLE,
+  SHAPE_STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
@@ -74,10 +73,7 @@ function intersect(a, b) {
 
 export function getPanels(elements) {
   if (elements.length === 0) {
-    return [
-      { type: PAGE, Panel: PageBackgroundPanel },
-      { type: NO_SELECTION, Panel: NoSelectionPanel },
-    ];
+    return [{ type: NO_SELECTION, Panel: NoSelectionPanel }];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
@@ -85,14 +81,15 @@ export function getPanels(elements) {
   // Only display background panel in case of background element.
   if (isBackground) {
     const panels = [
-      { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
       { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video / image , display accessibility panel, too.
-    if ('video' === elements[0].type) {
+    if ('shape' === elements[0].type) {
+      panels.unshift({ type: SHAPE_STYLE, Panel: ShapeStylePanel });
+    } else if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({
         type: VIDEO_ACCESSIBILITY,
@@ -132,6 +129,8 @@ export function getPanels(elements) {
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
+        case SHAPE_STYLE:
+          return { type, Panel: ShapeStylePanel };
         case VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
         case VIDEO_ACCESSIBILITY:

@@ -19,6 +19,7 @@
  */
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import createSolidFromString from '../../utils/createSolidFromString';
 export { default as Display } from './display';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
@@ -26,7 +27,7 @@ export { default as LayerIcon } from './icon';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: '#ffffff',
+  backgroundColor: createSolidFromString('#ffffff'),
   isFill: false,
 };
 
@@ -51,4 +52,5 @@ export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
+  PanelTypes.SHAPE_STYLE,
 ];
