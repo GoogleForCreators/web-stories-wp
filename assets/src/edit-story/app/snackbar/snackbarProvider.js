@@ -54,9 +54,14 @@ function SnackbarProvider({ children, place }) {
   };
 
   const create = (notification) => {
-    notification.key = uuidv4();
-    notification.timeout = notification.timeout || 5000;
-    setNotifications([...notifications, notification]);
+    setNotifications([
+      ...notifications,
+      {
+        key: uuidv4(),
+        timeout: notification.timeout || 5000,
+        ...notification,
+      },
+    ]);
     removeNotification(notification);
   };
 
