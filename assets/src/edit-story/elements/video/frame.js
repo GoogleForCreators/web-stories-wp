@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
@@ -71,24 +71,64 @@ const ButtonWrapper = styled.div`
 `;
 
 function VideoFrame({ element }) {
-  const { id, isPlaying } = element;
-  const [hovered, setHovered] = useState(false);
-
+  const { id } = element;
+  const [hovering, setHovering] = useState(false);
+  const videoNode = document.getElementById(`video-${id}`);
+  const [isPlaying, setIsPlaying] = useState(false);
   const {
-    actions: { updateElementById },
+    state: { selectedElementIds },
   } = useStory();
+  const isElementSelected = selectedElementIds.includes(id);
+  const noElementsSelected = !selectedElementIds.length;
+
+  const onPointerEnter = () => {
+    // Sync UI for auto-play on insert.
+    const currentlyPlaying = videoNode && !videoNode.paused;
+    if (currentlyPlaying && !isPlaying) {
+      setIsPlaying(true);
+    }
+    setHovering(true);
+  };
+
+  useEffect(() => {
+    if ((!isElementSelected || noElementsSelected) && videoNode) {
+      videoNode.pause();
+      videoNode.currentTime = 0;
+      setIsPlaying(false);
+    }
+  }, [isElementSelected, noElementsSelected, videoNode]);
 
   const handlePlayPause = () => {
-    updateElementById({ elementId: id, properties: { isPlaying: !isPlaying } });
+    if (isPlaying) {
+      videoNode.pause();
+      setIsPlaying(false);
+    } else {
+      videoNode.play().then(() => {
+        setIsPlaying(true);
+      });
+    }
   };
+
+  useEffect(() => {
+    if (!videoNode) {
+      return undefined;
+    }
+
+    const onVideoEnd = () => {
+      videoNode.currentTime = 0;
+      setIsPlaying(false);
+    };
+    videoNode.addEventListener('ended', onVideoEnd);
+    return () => videoNode.removeEventListener('ended', onVideoEnd);
+  }, [videoNode]);
 
   return (
     <Wrapper
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={() => setHovering(false)}
     >
       <MediaFrame element={element} />
-      <CSSTransition in={hovered} classNames="button" timeout={200}>
+      <CSSTransition in={hovering} classNames="button" timeout={200}>
         <ButtonWrapper key="wrapper" onClick={handlePlayPause}>
           {isPlaying ? <Pause /> : <Play />}
         </ButtonWrapper>

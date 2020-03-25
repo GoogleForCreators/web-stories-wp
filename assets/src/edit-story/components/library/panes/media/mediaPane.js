@@ -177,8 +177,7 @@ function MediaPane(props) {
    */
   const insertMediaElement = (resource) => {
     const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
-    const isPlaying = resource.type === 'video';
-    return insertElement(resource.type, { resource, width, isPlaying });
+    return insertElement(resource.type, { resource, width });
   };
 
   /**

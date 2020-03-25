@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -26,7 +25,6 @@ import styled from 'styled-components';
 import { elementFillContent } from '../shared';
 import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
-import { useStory } from '../../app/story';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Element = styled.div`
@@ -43,16 +41,7 @@ const Video = styled.video`
 
 function VideoDisplay({
   box: { width, height },
-  element: {
-    id,
-    resource,
-    isBackground,
-    scale,
-    focalX,
-    focalY,
-    loop,
-    isPlaying,
-  },
+  element: { id, resource, isBackground, scale, focalX, focalY, loop },
 }) {
   let style = {};
   if (isBackground) {
@@ -63,11 +52,6 @@ function VideoDisplay({
     };
   }
 
-  const {
-    state: { selectedElementIds },
-    actions: { updateElementById },
-  } = useStory();
-
   const videoProps = getMediaSizePositionProps(
     resource,
     width,
@@ -76,58 +60,10 @@ function VideoDisplay({
     focalX,
     focalY
   );
-
-  const videoRef = useRef();
-  const isElementSelected = selectedElementIds.includes(id);
-  const noElementsSelected = !selectedElementIds.length;
-
-  useEffect(() => {
-    if (isPlaying && videoRef && (!isElementSelected || noElementsSelected)) {
-      updateElementById({
-        elementId: id,
-        properties: { isPlaying: false },
-      });
-      videoRef.current.currentTime = 0;
-    }
-  }, [
-    isPlaying,
-    isElementSelected,
-    noElementsSelected,
-    videoRef,
-    updateElementById,
-    id,
-  ]);
-
-  useEffect(() => {
-    const ref = videoRef.current;
-    const handler = () => {
-      updateElementById({
-        elementId: id,
-        properties: { isPlaying: false },
-      });
-      videoRef.current.currentTime = 0;
-    };
-    ref.addEventListener('ended', handler);
-    return () => ref.removeEventListener('ended', handler);
-  }, [id, updateElementById]);
-
-  useEffect(() => {
-    if (isPlaying) {
-      videoRef.current.play().catch(() => {
-        updateElementById({
-          elementId: id,
-          properties: { isPlaying: false },
-        });
-      });
-    } else {
-      videoRef.current.pause();
-    }
-  }, [id, videoRef, isPlaying, updateElementById]);
-
   return (
     <Element>
       <Video
-        ref={videoRef}
+        id={`video-${id}`}
         poster={resource.poster}
         style={style}
         {...videoProps}
