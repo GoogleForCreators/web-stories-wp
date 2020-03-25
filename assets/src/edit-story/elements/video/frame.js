@@ -48,7 +48,7 @@ const Wrapper = styled.div`
   ${elementFillContent}
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -104,6 +104,8 @@ function VideoFrame({ element }) {
 
   const handlePlayPause = () => {
     const videoNode = document.getElementById(`video-${id}`);
+    if (!videoNode) return;
+
     if (isPlaying) {
       videoNode.pause();
       setIsPlaying(false);
