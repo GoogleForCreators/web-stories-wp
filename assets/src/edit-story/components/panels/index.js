@@ -29,6 +29,7 @@ import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
+import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
@@ -45,9 +46,11 @@ const TEXT_STYLE = 'textStyle';
 const SHAPE_STYLE = 'shapeStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
+const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
+  ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
   BACKGROUND_OVERLAY,
@@ -134,6 +137,8 @@ export function getPanels(elements) {
           return { type, Panel: VideoAccessibilityPanel };
         case IMAGE_ACCESSIBILITY:
           return { type, Panel: ImageAccessibilityPanel };
+        case ELEMENT_ALIGNMENT:
+          return { type, Panel: ElementAlignmentPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }
