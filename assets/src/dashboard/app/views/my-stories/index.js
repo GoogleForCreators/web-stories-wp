@@ -31,7 +31,7 @@ import { ViewHeader, FloatingTab } from '../../../components';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 `;
 
 const storiesFilter = [

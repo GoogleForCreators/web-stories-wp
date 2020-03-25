@@ -41,7 +41,7 @@ export const Panel = styled.div`
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
-  z-index: ${Z_INDEX.POPOVER_MENU};
+  z-index: ${Z_INDEX.POPOVER_PANEL};
 `;
 
 Panel.propTypes = {

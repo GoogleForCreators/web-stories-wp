@@ -102,6 +102,9 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  subNavigationBar: {
+    border: `1px solid ${colors.gray50}`,
+  },
   fonts: {
     heading1: {
       family: 'Google Sans',
