@@ -60,11 +60,13 @@ function ColorPresetActions({ color }) {
   } = useStory();
 
   const handleAddColorPreset = useCallback(() => {
-    updateStory({
-      properties: {
-        colorPresets: [...colorPresets, { color }],
-      },
-    });
+    if (color) {
+      updateStory({
+        properties: {
+          colorPresets: [...colorPresets, { color }],
+        },
+      });
+    }
   }, [color, colorPresets, updateStory]);
   return (
     <ActionsWrapper>
