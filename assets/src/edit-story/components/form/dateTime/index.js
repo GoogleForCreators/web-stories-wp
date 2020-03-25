@@ -17,8 +17,8 @@ import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
   position: absolute;
-  top: 30px;
-  left: -255px;
+  top: 0;
+  left: -15px;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
   background-color: ${({ theme }) => theme.colors.fg.v1};

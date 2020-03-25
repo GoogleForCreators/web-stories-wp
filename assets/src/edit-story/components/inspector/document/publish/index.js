@@ -68,6 +68,8 @@ const StyledButton = styled.button`
 
 const DateWrapper = styled.div`
   padding: 5px 5px 5px 2px;
+  width: 85%;
+  text-align: left;
 `;
 
 const Date = styled.span`
@@ -77,16 +79,16 @@ const Date = styled.span`
 const Time = styled.span`
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
   display: inline-block;
-  width: 60px;
 `;
 
 const DateTimeWrapper = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 const StyledToggleIcon = styled(ToggleIcon)`
   height: 26px;
-  flex: 1;
+  min-width: 25px;
 `;
 
 function PublishPanel() {
@@ -179,17 +181,17 @@ function PublishPanel() {
           </DateWrapper>
           <StyledToggleIcon />
         </StyledButton>
-        {showDatePicker && (
-          <DateTimeWrapper>
-            <DateTime
-              value={date}
-              onChange={handleDateChange}
-              is12Hour={use12HourFormat}
-              forwardedRef={dateTimeNode}
-            />
-          </DateTimeWrapper>
-        )}
       </Row>
+      {showDatePicker && (
+        <DateTimeWrapper>
+          <DateTime
+            value={date}
+            onChange={handleDateChange}
+            is12Hour={use12HourFormat}
+            forwardedRef={dateTimeNode}
+          />
+        </DateTimeWrapper>
+      )}
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
           <FieldLabel>{authorLabel}</FieldLabel>
