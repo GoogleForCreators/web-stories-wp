@@ -65,6 +65,7 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
+  /* translators: %s is a list of allowed file extensions. */
   const validErrorMessage = createInterpolateElement(
     sprintf(
       __('Please choose only <b>%s</b> to upload.', 'web-stories'),
@@ -75,6 +76,7 @@ function useUploader(refreshLibrary = true) {
     }
   );
 
+  /* translators: %s is the upload file limit in MB */
   const sizeErrorMessage = sprintf(
     __(
       'Your files is larger than the upload limit. The upload limit is %sMB. Please resize and try again!',
@@ -89,6 +91,7 @@ function useUploader(refreshLibrary = true) {
       const sizeError = new Error();
       sizeError.name = 'SizeError';
       sizeError.file = file.name;
+      /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
       sizeError.message = sprintf(
         __(
           'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
@@ -102,6 +105,7 @@ function useUploader(refreshLibrary = true) {
 
     if (!isValidType(file)) {
       const validError = new Error();
+      /* translators: %s is a list of allowed file extensions. */
       validError.message = createInterpolateElement(
         sprintf(
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
