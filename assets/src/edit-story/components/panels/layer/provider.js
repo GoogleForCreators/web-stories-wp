@@ -22,6 +22,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
+import useBatchingCallback from '../../../utils/useBatchingCallback';
 import StoryPropTypes from '../../../types';
 import Context from './context';
 import useLayers from './useLayers';
@@ -42,7 +43,7 @@ function LayerProvider({ children }) {
     []
   );
 
-  const updateScrollMarkers = useCallback(() => {
+  const updateScrollMarkers = useBatchingCallback(() => {
     const node = scrollTarget.current;
     if (!node) {
       return;
@@ -57,9 +58,13 @@ function LayerProvider({ children }) {
     }
   }, []);
 
-  const stopScroll = useCallback(() => setScrollDirection(0), [
-    setScrollDirection,
-  ]);
+  const startScroll = useCallback(
+    (dir) => {
+      setScrollDirection(dir);
+      return () => setScrollDirection(0);
+    },
+    [setScrollDirection]
+  );
 
   const canScrollUp = isReordering && hasScrollAbove;
   const canScrollDown = isReordering && hasScrollBelow;
@@ -103,8 +108,7 @@ function LayerProvider({ children }) {
       setIsReordering,
       setCurrentSeparator,
       setScrollTarget,
-      startScroll: setScrollDirection,
-      stopScroll,
+      startScroll,
     },
   };
 

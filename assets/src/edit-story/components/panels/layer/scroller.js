@@ -44,7 +44,7 @@ const Wrapper = styled.div`
 
 function LayerScroller({ direction }) {
   const {
-    actions: { startScroll, stopScroll },
+    actions: { startScroll },
   } = useContext(LayerContext);
   const [isHovering, setIsHovering] = useState(false);
   const handlePointerEnter = useCallback(() => setIsHovering(true), []);
@@ -54,9 +54,8 @@ function LayerScroller({ direction }) {
       return undefined;
     }
 
-    startScroll(direction);
-    return stopScroll;
-  }, [direction, startScroll, stopScroll, isHovering]);
+    return startScroll(direction);
+  }, [direction, startScroll, isHovering]);
   return (
     <Wrapper
       isTop={direction === -1}
