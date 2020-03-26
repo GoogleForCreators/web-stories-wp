@@ -45,6 +45,7 @@ function InspectorProvider({ children }) {
   const [statuses, setStatuses] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
+  const tabRef = useRef(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
   const [isStatusesLoading, setIsStatusesLoading] = useState(false);
@@ -58,17 +59,19 @@ function InspectorProvider({ children }) {
   );
 
   useEffect(() => {
-    if (selectedElementIds.length > 0 && tab === DOCUMENT) {
+    tabRef.current = tab;
+  }, [tab]);
+
+  useEffect(() => {
+    if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
       setTab(DESIGN);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedElementIds]);
 
   useEffect(() => {
-    if (tab === DOCUMENT) {
+    if (tabRef.current === DOCUMENT) {
       setTab(DESIGN);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const loadStatuses = useCallback(() => {
