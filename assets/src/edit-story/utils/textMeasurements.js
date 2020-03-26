@@ -113,14 +113,5 @@ function changed(node, element) {
   if (!node.firstElementChild || !lastElement) {
     return true;
   }
-  return !shallowEquals(lastElement, element);
-}
-
-function shallowEquals(o1, o2) {
-  const keys1 = Object.keys(o1);
-  const keys2 = Object.keys(o2);
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-  return keys1.every((k) => o1[k] === o2[k]);
+  return lastElement !== element;
 }

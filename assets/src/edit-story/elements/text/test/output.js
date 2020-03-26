@@ -80,15 +80,17 @@ describe('TextOutput', () => {
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('Content');
     expect(output.className).toBe('fill');
-    expect(output.style.whiteSpace).toBe('pre-wrap');
-    expect(output.style.padding).toBe('0% 0%');
-    expect(output.style.margin).toBe('0px');
-    expect(output.style.color).toBe('rgba(255, 255, 255, 0.5)');
-    expect(output.style.backgroundColor).toBe('rgba(255, 0, 0, 0.3)');
-    expect(output.style.fontSize).toBe('0.83333%');
-    expect(output.style.letterSpacing).toBe('1.3em');
-    expect(output.style.textAlign).toBe('left');
-    expect(output.style.textDecoration).toBe('none');
+    expect(output.style).toMatchObject({
+      whiteSpace: 'pre-wrap',
+      padding: '0% 0%',
+      margin: '0px',
+      color: 'rgba(255, 255, 255, 0.5)',
+      backgroundColor: 'rgba(255, 0, 0, 0.3)',
+      fontSize: '0.83333%',
+      letterSpacing: '1.3em',
+      textAlign: 'left',
+      textDecoration: 'none',
+    });
   });
 
   it('should apply <strong> tags if bold', () => {

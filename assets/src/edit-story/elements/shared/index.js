@@ -66,10 +66,12 @@ export const elementWithFont = css`
   font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
+/**
+ * See generateParagraphTextStyle for the full set of properties.
+ */
 export const elementWithTextParagraphStyle = css`
   margin: ${({ margin }) => margin || 0};
-  padding: ${({ padding }) =>
-    padding ? `${padding.vertical}px ${padding.horizontal}px` : '0'};
+  padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
   letter-spacing: ${({ letterSpacing }) => letterSpacing};
   text-align: ${({ textAlign }) => textAlign};

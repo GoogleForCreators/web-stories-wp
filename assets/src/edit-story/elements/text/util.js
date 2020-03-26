@@ -55,10 +55,9 @@ export function generateParagraphTextStyle(
     letterSpacing: `${typeof letterSpacing === 'number' ? letterSpacing : 0}em`,
     textAlign,
     textDecoration,
-    padding: {
-      horizontal: dataToStyleX(padding?.horizontal || 0),
-      vertical: dataToStyleY(padding?.vertical || 0),
-    },
+    padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
+      padding?.horizontal || 0
+    )}px`,
   };
 }
 
