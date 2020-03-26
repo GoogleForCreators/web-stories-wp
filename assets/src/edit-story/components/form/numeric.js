@@ -143,7 +143,7 @@ Numeric.propTypes = {
   symbol: PropTypes.string,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   float: PropTypes.bool,
 };
 
@@ -154,7 +154,6 @@ Numeric.defaultProps = {
   flexBasis: 110,
   textCenter: false,
   float: false,
-  ariaLabel: __('Standard input', 'web-stories'),
 };
 
 export default Numeric;
