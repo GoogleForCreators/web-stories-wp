@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import { PAGE_WIDTH } from '../../../../constants';
 import createSolid from '../../../../utils/createSolid';
 import { dataFontEm } from '../../../../units';
-import { Section, MainButton, Title, Header } from '../../common';
+import { Section, MainButton, Title, SearchInput, Header } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
@@ -78,6 +78,11 @@ function TextPane(props) {
           {__('Add Text', 'web-stories')}
         </MainButton>
       </Header>
+      <SearchInput
+        value={''}
+        placeholder={__('Search text...', 'web-stories')}
+        onChange={() => {}}
+      />
       <Section title={__('Presets', 'web-stories')}>
         {PRESETS.map((preset) => (
           <FontPreview

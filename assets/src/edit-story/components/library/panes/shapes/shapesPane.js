@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { MASKS } from '../../../../masks';
 import useLibrary from '../../useLibrary';
 import createSolid from '../../../../utils/createSolid';
-import { Section, Title, Header } from '../../common';
+import { Section, Title, SearchInput, Header } from '../../common';
 import { Pane } from '../shared';
 import { PAGE_WIDTH } from '../../../../constants';
 import paneId from './paneId';
@@ -63,6 +63,11 @@ function ShapesPane(props) {
       <Header>
         <Title>{__('Shapes', 'web-stories')}</Title>
       </Header>
+      <SearchInput
+        value={''}
+        placeholder={__('Search shapes...', 'web-stories')}
+        onChange={() => {}}
+      />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
           {/** Basic masks */}
