@@ -18,13 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../app/api';
 import useResizeEffect from '../../utils/useResizeEffect';
+import { useStory } from '../../app/story';
 import Context from './context';
 
 const DESIGN = 'design';
@@ -35,6 +36,10 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAllStatuses, getAllUsers },
   } = useAPI();
+  const {
+    state: { selectedElementIds, currentPage },
+  } = useStory();
+
   const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
   const [statuses, setStatuses] = useState([]);
@@ -51,6 +56,20 @@ function InspectorProvider({ children }) {
   useResizeEffect(inspectorContentRef, ({ height }) =>
     setInspectorContentHeight(height)
   );
+
+  useEffect(() => {
+    if (selectedElementIds.length > 0 && tab === DOCUMENT) {
+      setTab(DESIGN);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedElementIds]);
+
+  useEffect(() => {
+    if (tab === DOCUMENT) {
+      setTab(DESIGN);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   const loadStatuses = useCallback(() => {
     if (!isStatusesLoading && statuses.length === 0) {
