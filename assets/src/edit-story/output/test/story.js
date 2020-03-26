@@ -36,6 +36,7 @@ describe('Story output', () => {
         publisherLogoUrl: 'https://example.com/logo.png',
         password: '123',
         link: 'https://example.com/story',
+        autoAdvance: false,
       },
       pages: [
         {
@@ -76,6 +77,7 @@ describe('Story output', () => {
         publisherLogoUrl: 'https://example.com/logo.png',
         password: '123',
         link: 'https://example.com/story',
+        autoAdvance: false,
       },
       pages: [],
       metadata: {

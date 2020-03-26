@@ -17,20 +17,19 @@
 /**
  * Internal dependencies
  */
-import PublishPanel from './publish';
-import SlugPanel from './slug';
-import StatusPanel from './status';
-import PageAdvancement from './pageAdvancement';
+import { getDefinitionForType } from '../../elements';
 
-function DocumentInspector() {
-  return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <SlugPanel />
-      <PageAdvancement />
-    </>
-  );
+function getLongestMediaElement(elements) {
+  return elements
+    .filter(({ type }) => {
+      const { isMedia } = getDefinitionForType(type);
+      return isMedia;
+    })
+    .reduce((longest, element) => {
+      return longest?.resource?.length > element?.resource?.length
+        ? longest
+        : element;
+    }, undefined);
 }
 
-export default DocumentInspector;
+export default getLongestMediaElement;

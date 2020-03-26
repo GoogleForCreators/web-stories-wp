@@ -83,6 +83,12 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         // First clear history completely.
         clearHistory();
 
+        // If there are no pages, create empty page.
+        const storyData =
+          storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
+        const pages =
+          storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
+
         // Set story-global variables.
         const story = {
           title,
@@ -98,15 +104,9 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
+          autoAdvance: storyData?.autoAdvance,
+          defaultPageDuration: storyData?.defaultPageDuration,
         };
-
-        // If there are no pages, create empty page.
-        const storyData =
-          storyDataRaw && migrate(storyDataRaw, storyDataRaw.version || 0);
-        const pages =
-          storyData && storyData.pages && storyData.pages.length > 0
-            ? storyData.pages
-            : [createPage()];
 
         const hasPublishAction = getPerm(post, 'wp:action-publish');
         const hasAssignAuthorAction = getPerm(post, 'wp:action-assign-author');

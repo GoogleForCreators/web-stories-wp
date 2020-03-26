@@ -67,6 +67,8 @@ function APIProvider({ children }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     }) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
@@ -80,7 +82,12 @@ function APIProvider({ children }) {
           modified,
           content,
           excerpt,
-          story_data: { version: DATA_VERSION, pages },
+          story_data: {
+            version: DATA_VERSION,
+            pages,
+            autoAdvance,
+            defaultPageDuration,
+          },
           featured_media: featuredMedia,
           publisher_logo: publisherLogo,
         },
@@ -134,6 +141,7 @@ function APIProvider({ children }) {
               media_details: {
                 width: oWidth,
                 height: oHeight,
+                length,
                 length_formatted: lengthFormatted,
               },
               title: { raw: title },
@@ -150,6 +158,7 @@ function APIProvider({ children }) {
               oWidth,
               oHeight,
               mimeType,
+              length,
               lengthFormatted,
               alt: alt ? alt : description,
               title,

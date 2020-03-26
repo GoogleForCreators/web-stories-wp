@@ -28,6 +28,63 @@ describe('Page output', () => {
         id: '123',
         elements: [],
       },
+      autoAdvance: true,
+      defaultPageDuration: 11,
+    };
+
+    await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+  });
+
+  it('should produce valid AMP output with manual page advancement', async () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      page: {
+        id: '123',
+        elements: [],
+      },
+      autoAdvance: false,
+    };
+
+    await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+  });
+
+  // see https://github.com/google/web-stories-wp/issues/536
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should produce valid AMP output with media elements', async () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      page: {
+        id: '123',
+        elements: [
+          {
+            id: '123',
+            type: 'video',
+            mimeType: 'video/mp4',
+            scale: 1,
+            origRatio: 9 / 16,
+            x: 50,
+            y: 100,
+            height: 1920,
+            width: 1080,
+            rotationAngle: 0,
+            loop: true,
+            resource: {
+              type: 'video',
+              mimeType: 'video/mp4',
+              videoId: 123,
+              src: 'https://example.com/image.png',
+              poster: 'https://example.com/poster.png',
+              height: 1920,
+              width: 1080,
+              length: 99,
+            },
+          },
+        ],
+      },
+      autoAdvance: true,
+      defaultPageDuration: 11,
     };
 
     await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
