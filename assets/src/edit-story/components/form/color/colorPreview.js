@@ -69,6 +69,7 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   border: 0;
   margin: 0;
   cursor: text;
+  overflow: auto;
 `;
 
 function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
