@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { Color, Label, Row, ToggleButton } from '../../form';
 import { useCommonColorValue, getCommonValue } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
+import { ReactComponent as NoneIcon } from '../../../icons/fill_none_icon.svg';
 import { ReactComponent as FilledIcon } from '../../../icons/fill_filled_icon.svg';
 import { ReactComponent as HighlightedIcon } from '../../../icons/fill_highlighted_icon.svg';
 
@@ -41,6 +42,15 @@ const FillRow = styled(Row)`
 
 const FillLabel = styled(Label)`
   flex-basis: 45px;
+  line-height: 32px;
+`;
+
+const FillToggleButton = styled(ToggleButton)`
+  flex: 1 1 32px;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const Space = styled.div`
@@ -75,27 +85,10 @@ function ColorControls({ selectedElements, pushUpdate }) {
           }
         />
       </Row>
-      <Row>
-        <Label>{__('Textbox', 'web-stories')}</Label>
-        <Color
-          data-testid="text.backgroundColor"
-          hasGradient
-          value={backgroundColor}
-          onChange={(value) =>
-            pushUpdate(
-              {
-                backgroundColor: value,
-              },
-              true
-            )
-          }
-          label={__('Background color', 'web-stories')}
-        />
-      </Row>
       <FillRow>
         <FillLabel>{__('Fill', 'web-stories')}</FillLabel>
-        <ToggleButton
-          icon={<FilledIcon width={32} height={32} />} // TODO(beto): This icon should be replaced as soon as we have it on Figma
+        <FillToggleButton
+          icon={<NoneIcon />}
           value={backgroundTextMode === BACKGROUND_TEXT_MODE.NONE}
           label={__('None', 'web-stories')}
           onChange={(value) =>
@@ -108,9 +101,8 @@ function ColorControls({ selectedElements, pushUpdate }) {
             )
           }
         />
-        <Space flex="0 0 15px" />
-        <ToggleButton
-          icon={<FilledIcon width={32} height={32} />}
+        <FillToggleButton
+          icon={<FilledIcon />}
           value={backgroundTextMode === BACKGROUND_TEXT_MODE.FILL}
           label={__('Fill', 'web-stories')}
           onChange={(value) =>
@@ -123,9 +115,8 @@ function ColorControls({ selectedElements, pushUpdate }) {
             )
           }
         />
-        <Space flex="0 0 15px" />
-        <ToggleButton
-          icon={<HighlightedIcon width={32} height={32} />}
+        <FillToggleButton
+          icon={<HighlightedIcon />}
           label={__('Highlight', 'web-stories')}
           value={backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT}
           onChange={(value) =>
@@ -140,6 +131,25 @@ function ColorControls({ selectedElements, pushUpdate }) {
         />
         <Space flex="2" />
       </FillRow>
+      {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
+        <Row>
+          <Label>{__('Textbox', 'web-stories')}</Label>
+          <Color
+            data-testid="text.backgroundColor"
+            hasGradient
+            value={backgroundColor}
+            onChange={(value) =>
+              pushUpdate(
+                {
+                  backgroundColor: value,
+                },
+                true
+              )
+            }
+            label={__('Background color', 'web-stories')}
+          />
+        </Row>
+      )}
     </>
   );
 }

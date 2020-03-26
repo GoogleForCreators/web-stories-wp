@@ -72,10 +72,29 @@ function TextOutput({
   const highlightStyle = {
     ...fillStyle,
     margin: 0,
-    backgroundColor: undefined,
+    padding: 0,
+    background: 'none',
+    // Disable reason: style lint can't figure out an interpolated calc
+    // stylelint-disable function-calc-no-invalid
+    lineHeight: `calc(
+      1em
+        ${`${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
+        ${`${padding.vertical > 0 ? ' + ' : ' - '}${
+          2 * dataToEditorY(padding.vertical, 16)
+        }em`}
+    )`,
+    // stylelint-enable function-calc-no-invalid
   };
 
-  const highlightTextStyle = {
+  const marginStyle = {
+    display: 'inline-block',
+    margin: `${verticalPadding}% ${horizontalPadding + 4}%`,
+    position: 'relative',
+    left: `-${horizontalPadding + 4}%`,
+    top: '1px',
+  };
+
+  const textStyle = {
     ...bgColor,
     /* stylelint-disable */
     WebkitBoxDecorationBreak: 'clone',
@@ -83,18 +102,43 @@ function TextOutput({
     boxDecorationBreak: 'clone',
     borderRadius: '3px',
     position: 'relative',
+    padding: padding ? `${verticalPadding}% ${horizontalPadding}%` : '0',
+  };
+
+  const backgroundTextStyle = {
+    ...textStyle,
+    color: 'transparent',
+  };
+
+  const foregroundTextStyle = {
+    ...textStyle,
+    background: 'none',
   };
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
-      <p className="fill" style={highlightStyle}>
-        <span
-          style={highlightTextStyle}
-          dangerouslySetInnerHTML={{
-            __html: draftMarkupToContent(content, bold),
-          }}
-        />
-      </p>
+      <>
+        <p className="fill original" style={highlightStyle}>
+          <span style={marginStyle}>
+            <span
+              style={backgroundTextStyle}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </span>
+        </p>
+        <p className="fill clone" style={highlightStyle}>
+          <span style={marginStyle}>
+            <span
+              style={foregroundTextStyle}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </span>
+        </p>
+      </>
     );
   }
 

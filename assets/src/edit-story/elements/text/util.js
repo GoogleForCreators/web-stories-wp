@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { css } from 'styled-components';
 import { RichUtils, SelectionState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
@@ -106,3 +107,16 @@ export const draftMarkupToContent = (content, bold) => {
   }
   return content;
 };
+
+export const highlightLineheight = css`
+  /* Disable reason: style lint can't figure out an interpolated calc */
+  /* stylelint-disable function-calc-no-invalid */
+  line-height: calc(
+    1em
+      ${({ lineHeight }) =>
+        `${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
+      ${({ padding: { vertical } }) =>
+        `${vertical > 0 ? ' + ' : ' - '}${2 * Math.abs(vertical)}px`}
+  );
+  /* stylelint-enable function-calc-no-invalid */
+`;

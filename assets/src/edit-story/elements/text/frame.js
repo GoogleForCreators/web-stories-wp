@@ -28,17 +28,24 @@ import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWi
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import { useUnits } from '../../units';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { elementFillContent, elementWithFont } from '../shared';
 import StoryPropTypes from '../../types';
-import { generateFontFamily } from './util';
+import { generateFontFamily, highlightLineheight } from './util';
 
 const Element = styled.p`
   margin: 0;
   ${elementFillContent}
   ${elementWithFont}
 
-	opacity: 0;
+  opacity: 0;
   user-select: none;
+`;
+
+const HighlightSpan = styled.span`
+  ${highlightLineheight}
+  border-radius: 3px;
+  box-decoration-break: clone;
 `;
 
 function TextFrame({
@@ -50,11 +57,14 @@ function TextFrame({
     fontSize,
     fontWeight,
     fontStyle,
+    lineHeight,
+    backgroundTextMode,
+    padding,
   },
   wrapperRef,
 }) {
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorX, dataToEditorY },
   } = useUnits();
   const props = {
     fontFamily: generateFontFamily(fontFamily, fontFallback),
@@ -62,6 +72,11 @@ function TextFrame({
     fontStyle,
     fontSize: dataToEditorY(fontSize),
     fontWeight,
+    lineHeight,
+    padding: {
+      horizontal: dataToEditorX(padding.horizontal),
+      vertical: dataToEditorY(padding.vertical),
+    },
   };
   const {
     state: { selectedElementIds },
@@ -138,6 +153,17 @@ function TextFrame({
       element.removeEventListener('mouseup', handleMouseUp);
     };
   }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
+
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    return (
+      <Element ref={elementRef} {...props}>
+        <HighlightSpan
+          {...props}
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      </Element>
+    );
+  }
 
   return (
     <Element

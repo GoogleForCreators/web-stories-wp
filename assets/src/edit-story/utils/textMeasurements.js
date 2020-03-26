@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT } from '../constants';
+import { PAGE_HEIGHT, BACKGROUND_TEXT_MODE } from '../constants';
 
 let measurerNode = null;
 
@@ -49,6 +49,7 @@ export function calculateFitTextFontSize(element, width, height) {
 }
 
 function getOrCreateMeasurer({
+  backgroundTextMode,
   content,
   fontFamily,
   fontStyle,
@@ -78,13 +79,31 @@ function getOrCreateMeasurer({
     fontStyle,
     fontWeight,
     fontSize: `${fontSize}px`,
-    lineHeight: lineHeight || 'normal',
+    lineHeight: getLineHeight({ lineHeight, backgroundTextMode, padding }),
     letterSpacing: letterSpacing ? letterSpacing + 'em' : '0',
     textAlign,
     padding: padding ? `${padding.vertical}px ${padding.horizontal}px` : '0px',
   });
   measurerNode.innerHTML = content;
   return measurerNode;
+}
+
+function getLineHeight({
+  lineHeight,
+  backgroundTextMode,
+  padding: { vertical },
+}) {
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    return `calc(
+      1em
+        ${`${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
+        ${`${vertical > 0 ? ' + ' : ' - '}${2 * Math.abs(vertical)}px`}
+    )`;
+  }
+  if (lineHeight) {
+    return lineHeight;
+  }
+  return 'normal';
 }
 
 function setStyles(node, styles) {
