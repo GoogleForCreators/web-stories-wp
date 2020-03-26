@@ -44,6 +44,8 @@ const MEASURER_PROPS = {
   }),
 };
 
+const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
+
 let measurerNode = null;
 
 export function calculateTextHeight(element, width) {
@@ -81,11 +83,14 @@ function getOrCreateMeasurer(element) {
     document.body.appendChild(measurerNode);
   }
   // Very unfortunately `ReactDOM.render()` is not synchoronous. Thus, we
-  // have to use `renderToStaticMarkup()` markup instead.
-  measurerNode.innerHTML = renderToStaticMarkup(
-    <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
-    measurerNode
-  );
+  // have to use `renderToStaticMarkup()` markup instead and do manual
+  // diffing.
+  if (changed(measurerNode, element)) {
+    measurerNode.innerHTML = renderToStaticMarkup(
+      <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
+      measurerNode
+    );
+  }
   return measurerNode.firstElementChild;
 }
 
@@ -100,4 +105,22 @@ function setStyles(node, styles) {
       }
     }
   }
+}
+
+function changed(node, element) {
+  const lastElement = node[LAST_ELEMENT];
+  node[LAST_ELEMENT] = element;
+  if (!node.firstElementChild || !lastElement) {
+    return true;
+  }
+  return !shallowEquals(lastElement, element);
+}
+
+function shallowEquals(o1, o2) {
+  const keys1 = Object.keys(o1);
+  const keys2 = Object.keys(o2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  return keys1.every((k) => o1[k] === o2[k]);
 }
