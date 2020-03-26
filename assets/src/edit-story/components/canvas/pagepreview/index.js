@@ -81,7 +81,11 @@ function PagePreview({ index, forwardedRef, ...props }) {
         <Page {...props} ref={forwardedRef}>
           <PreviewWrapper>
             {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement key={id} element={{ id, ...rest }} />
+              <DisplayElement
+                key={id}
+                previewMode={true}
+                element={{ id, ...rest }}
+              />
             ))}
           </PreviewWrapper>
         </Page>
