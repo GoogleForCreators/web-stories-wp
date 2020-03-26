@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -79,6 +79,13 @@ function Numeric({
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [focused, setFocus] = useState(false);
   const [dot, setDot] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    if (focused && ref.current) {
+      ref.current.select();
+    }
+  }, [focused]);
 
   return (
     <Container
@@ -89,6 +96,7 @@ function Numeric({
       {label}
       {prefix}
       <StyledInput
+        ref={ref}
         placeholder={placeholder}
         prefix={prefix}
         suffix={suffix}
