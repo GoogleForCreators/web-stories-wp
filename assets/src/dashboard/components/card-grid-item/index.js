@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledGridItem = styled.div`
+const CardGridItem = styled.div`
   width: ${({ theme }) => theme.grid.desktop.itemWidth};
   height: ${({ theme }) => theme.grid.desktop.itemHeight};
   display: flex;
@@ -41,14 +40,6 @@ const StyledGridItem = styled.div`
     height: ${({ theme }) => theme.grid.min.itemHeight};
   }
 `;
-
-const CardGridItem = ({ children, ...rest }) => (
-  <StyledGridItem {...rest}>{children}</StyledGridItem>
-);
-
-CardGridItem.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CardGridItem;
 export { default as CardPreviewContainer } from './card-preview';
