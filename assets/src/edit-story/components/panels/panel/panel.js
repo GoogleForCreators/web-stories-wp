@@ -27,6 +27,8 @@ import { useState, useCallback, useEffect } from 'react';
  */
 import panelContext from './context';
 
+export const PANEL_COLLAPSED_THRESHOLD = 10;
+
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -34,17 +36,26 @@ const Wrapper = styled.section`
 
 function Panel({ initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
-  const collapse = useCallback(() => setIsCollapsed(true), []);
-  const expand = useCallback(() => {
-    setIsCollapsed(false);
-    setHeight(initialHeight);
-  }, [initialHeight]);
+  const collapse = useCallback(() => {
+    setIsCollapsed(true);
+    setHeight(0);
+  }, []);
+  const expand = useCallback(
+    (restoreHeight = true) => {
+      setIsCollapsed(false);
+      if (restoreHeight) {
+        setHeight(expandToHeight);
+      }
+    },
+    [expandToHeight]
+  );
 
   useEffect(() => {
-    if (height === 0 && isCollapsed === false) {
+    if (height <= PANEL_COLLAPSED_THRESHOLD && isCollapsed === false) {
       collapse();
     }
   }, [collapse, height, isCollapsed]);
@@ -54,14 +65,18 @@ function Panel({ initialHeight, name, children }) {
       return;
     }
     setHeight(initialHeight);
+    setExpandToHeight(initialHeight);
   }, [manuallyChanged, initialHeight]);
 
   const manuallySetHeight = useCallback(
     (h) => {
       setManuallyChanged(true);
       setHeight(h);
+      if (isCollapsed && h(height) > PANEL_COLLAPSED_THRESHOLD) {
+        expand(false);
+      }
     },
-    [setManuallyChanged, setHeight]
+    [setManuallyChanged, setHeight, height, expand, isCollapsed]
   );
 
   const resetHeight = useCallback(() => {
@@ -78,6 +93,7 @@ function Panel({ initialHeight, name, children }) {
     },
     actions: {
       setHeight: manuallySetHeight,
+      setExpandToHeight,
       collapse,
       expand,
       resetHeight,

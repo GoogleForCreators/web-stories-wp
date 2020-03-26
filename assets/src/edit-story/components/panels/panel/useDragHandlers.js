@@ -19,7 +19,7 @@
  */
 import { useRef, useState, useCallback, useLayoutEffect } from 'react';
 
-function useDragHandlers(handle, handleHeightChange) {
+function useDragHandlers(handle, onDrag, onDragEnd) {
   const lastPosition = useRef();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -29,18 +29,22 @@ function useDragHandlers(handle, handleHeightChange) {
   const handlePointerMove = useCallback(
     (evt) => {
       const delta = lastPosition.current - evt.pageY;
-      handleHeightChange(delta);
+      onDrag(delta);
       lastPosition.current = evt.pageY;
     },
-    [handleHeightChange]
+    [onDrag]
   );
 
   // On pointer up, set dragging as false
   // - will cause useLayoutEffect to unregister listeners.
-  const handlePointerUp = useCallback((evt) => {
-    evt.target.releasePointerCapture(evt.pointerId);
-    setIsDragging(false);
-  }, []);
+  const handlePointerUp = useCallback(
+    (evt) => {
+      evt.target.releasePointerCapture(evt.pointerId);
+      setIsDragging(false);
+      onDragEnd();
+    },
+    [onDragEnd]
+  );
 
   // On pointer down, set dragging as true
   // - will cause useLayoutEffect to register listeners.

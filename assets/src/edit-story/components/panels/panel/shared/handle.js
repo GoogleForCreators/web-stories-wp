@@ -43,6 +43,7 @@ const Handle = styled.div`
   justify-content: center;
   align-items: center;
   cursor: row-resize;
+  user-select: none;
 `;
 
 const Bar = styled.div.attrs({
@@ -59,10 +60,11 @@ function DragHandle({
   minHeight,
   maxHeight,
   handleHeightChange,
+  handleExpandToHeightChange,
   handleDoubleClick,
 }) {
   const handle = useRef();
-  useDragHandlers(handle, handleHeightChange);
+  useDragHandlers(handle, handleHeightChange, handleExpandToHeightChange);
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
@@ -81,6 +83,7 @@ function DragHandle({
 
 DragHandle.propTypes = {
   handleHeightChange: PropTypes.func.isRequired,
+  handleExpandToHeightChange: PropTypes.func.isRequired,
   handleDoubleClick: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   minHeight: PropTypes.number.isRequired,
