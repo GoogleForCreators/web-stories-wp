@@ -18,7 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -29,11 +30,10 @@ import {
   ReorderableItem,
 } from '../../reorderable';
 import { useStory } from '../../../app';
-import Layer from './layer';
 import { LAYER_HEIGHT } from './constants';
-import LayerContext from './context';
+import Layer from './layer';
 
-const LayerList = styled(Reorderable)`
+const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
   flex-direction: column;
   width: 100%;
   align-items: stretch;
@@ -45,11 +45,7 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
-function LayerPanel() {
-  const {
-    state: { layers },
-  } = useContext(LayerContext);
-
+function LayerPanel({ layers }) {
   const {
     actions: { arrangeElement, setSelectedElementsById },
   } = useStory();
@@ -86,5 +82,9 @@ function LayerPanel() {
     </LayerList>
   );
 }
+
+LayerPanel.propTypes = {
+  layers: PropTypes.array.isRequired,
+};
 
 export default LayerPanel;

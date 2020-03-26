@@ -152,7 +152,7 @@ Reorderable.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  onPositionChange: PropTypes.func,
+  onPositionChange: PropTypes.func.isRequired,
 };
 
 export default Reorderable;

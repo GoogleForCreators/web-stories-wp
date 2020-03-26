@@ -135,7 +135,6 @@ function Layer({ layer }) {
             {__('Background (locked)', 'web-stories')}
           </BackgroundDescription>
         )}
-        {layer.position}
       </LayerDescription>
     </LayerButton>
   );

@@ -23,9 +23,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Panel, PanelTitle, PanelContent } from '../panel';
-import { LAYER_HEIGHT, DEFAULT_LAYERS_VISIBLE } from './constants';
+import { DEFAULT_LAYERS_VISIBLE, LAYER_HEIGHT } from './constants';
 import LayerList from './layerList';
-import LayerProvider from './provider';
 import useLayers from './useLayers';
 
 function LayerPanel() {
@@ -41,9 +40,7 @@ function LayerPanel() {
       </PanelTitle>
 
       <PanelContent isSecondary isScrollable padding={'0'}>
-        <LayerProvider>
-          <LayerList />
-        </LayerProvider>
+        <LayerList layers={layers} />
       </PanelContent>
     </Panel>
   );

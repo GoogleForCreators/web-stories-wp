@@ -56,13 +56,10 @@ function Panel({ initialHeight, name, children }) {
     setHeight(initialHeight);
   }, [manuallyChanged, initialHeight]);
 
-  const manuallySetHeight = useCallback(
-    (h) => {
-      setManuallyChanged(true);
-      setHeight(h);
-    },
-    [setManuallyChanged, setHeight]
-  );
+  const manuallySetHeight = (h) => {
+    setManuallyChanged(true);
+    setHeight(h);
+  };
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
 
