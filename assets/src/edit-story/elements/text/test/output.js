@@ -24,6 +24,15 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import TextOutput from '../output';
 
+function renderViaString(...args) {
+  // Render an element via string to test that Output templates do not use
+  // forbidden dependencies.
+  const html = renderToStaticMarkup(...args);
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.firstElementChild;
+}
+
 describe('TextOutput', () => {
   it('should return HTML Output based on the params', () => {
     const element = {
@@ -62,16 +71,26 @@ describe('TextOutput', () => {
       box: { width: 1080 },
     };
 
-    const output = renderToStaticMarkup(
+    const output = renderViaString(
       <TextOutput
         element={element}
         box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
       />
     );
-    expect(output).toStrictEqual(
-      '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)">Content</p>'
-    );
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('Content');
+    expect(output.className).toBe('fill');
+    expect(output.style.whiteSpace).toBe('pre-wrap');
+    expect(output.style.padding).toBe('0% 0%');
+    expect(output.style.margin).toBe('0px');
+    expect(output.style.color).toBe('rgba(255, 255, 255, 0.5)');
+    expect(output.style.backgroundColor).toBe('rgba(255, 0, 0, 0.3)');
+    expect(output.style.fontSize).toBe('0.83333%');
+    expect(output.style.letterSpacing).toBe('1.3em');
+    expect(output.style.textAlign).toBe('left');
+    expect(output.style.textDecoration).toBe('none');
   });
+
   it('should apply <strong> tags if bold', () => {
     const element = {
       id: '123',
@@ -109,16 +128,15 @@ describe('TextOutput', () => {
       bold: true,
     };
 
-    const output = renderToStaticMarkup(
+    const output = renderViaString(
       <TextOutput
         element={element}
         box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
       />
     );
-    expect(output).toStrictEqual(
-      '<p class="fill" style="font-size:0.83333%;letter-spacing:1.3em;padding:0% 0%;text-align:left;text-decoration:none;white-space:pre-wrap;background-color:rgba(255,0,0,0.3);color:rgba(255,255,255,0.5)"><strong>Content</strong></p>'
-    );
+    expect(output.innerHTML).toBe('<strong>Content</strong>');
   });
+
   it('should produce valid AMP output', async () => {
     const props = {
       element: {
