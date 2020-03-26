@@ -157,16 +157,22 @@ StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
-StoryPropTypes.elements.image = PropTypes.shape({
+StoryPropTypes.elements.media = PropTypes.shape({
   ...StoryElementPropTypes,
-  resource: StoryPropTypes.imageResource,
   scale: PropTypes.number.isRequired,
   focalX: PropTypes.number,
   focalY: PropTypes.number,
 });
 
+StoryPropTypes.elements.image = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryPropTypes.elements.media,
+  resource: StoryPropTypes.imageResource,
+});
+
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
+  ...StoryPropTypes.elements.media,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
   loop: PropTypes.bool,

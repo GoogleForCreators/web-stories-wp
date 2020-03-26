@@ -46,7 +46,7 @@ function MediaFrame({ element: { id } }) {
 }
 
 MediaFrame.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+  element: StoryPropTypes.elements.media.isRequired,
 };
 
 export default MediaFrame;

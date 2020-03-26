@@ -19,19 +19,15 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
 import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
+import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from './util';
-
-const Element = styled.div`
-  ${elementFillContent}
-  overflow: hidden;
-`;
 
 const Video = styled.video`
   position: absolute;
@@ -47,11 +43,18 @@ const Image = styled.img`
   ${videoWithScale}
 `;
 
-function VideoDisplay({
-  previewMode,
-  box: { width, height },
-  element: { id, poster, resource, isBackground, scale, focalX, focalY, loop },
-}) {
+function VideoDisplay({ previewMode, box: { width, height }, element }) {
+  const {
+    id,
+    poster,
+    resource,
+    isBackground,
+    scale,
+    focalX,
+    focalY,
+    loop,
+  } = element;
+  const ref = useRef();
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -70,13 +73,14 @@ function VideoDisplay({
     focalY
   );
   return (
-    <Element>
+    <MediaDisplay element={element} mediaRef={ref}>
       {previewMode ? (
         <Image
           src={poster || resource.poster}
           alt={resource.title}
           style={style}
           {...videoProps}
+          ref={ref}
         />
       ) : (
         <Video
@@ -86,11 +90,12 @@ function VideoDisplay({
           {...videoProps}
           loop={loop}
           preload="metadata"
+          ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />
         </Video>
       )}
-    </Element>
+    </MediaDisplay>
   );
 }
 
