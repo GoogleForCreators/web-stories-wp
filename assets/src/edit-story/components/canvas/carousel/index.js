@@ -35,7 +35,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
-  Text as TextButton,
+  Plain,
 } from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
@@ -76,7 +76,7 @@ const NavArea = styled(Area)`
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
-const TextButtonStyled = styled(TextButton)`
+const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
   &:hover {
@@ -342,9 +342,9 @@ function Carousel() {
         }}
       >
         <GridViewContainer>
-          <TextButtonStyled onClick={() => closeModal()}>
+          <PlainStyled onClick={() => closeModal()}>
             {__('Back', 'web-stories')}
-          </TextButtonStyled>
+          </PlainStyled>
           <GridView />
         </GridViewContainer>
       </Modal>

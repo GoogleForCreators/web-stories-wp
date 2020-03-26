@@ -46,6 +46,7 @@ import { Note, ExpandedTextInput } from '../shared';
 import Dialog from '../../dialog';
 import theme from '../../../theme';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { Plain } from '../../button';
 import LinkInfoDialog from './infoDialog';
 
 const BrandIconText = styled.span`
@@ -205,12 +206,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         open={infoDialogOpen}
         onClose={closeDialog}
         title={__('How to apply a link', 'web-stories')}
-        buttons={[
-          {
-            text: __('OK, GOT IT', 'web-stories'),
-            action: () => closeDialog(),
-          },
-        ]}
+        actions={
+          <Plain onClick={() => closeDialog()}>
+            {__('OK, GOT IT', 'web-stories')}
+          </Plain>
+        }
         style={{
           overlay: {
             background: rgba(theme.colors.bg.v11, 0.6),

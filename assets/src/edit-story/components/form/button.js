@@ -26,25 +26,21 @@ const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
   border: none;
   border-radius: 4px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ size = 14 }) => `${size}px`};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: ${({ size = 14 }) => `${(size - 2) / 2}px ${size}px`};
+  padding: 6px 14px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   user-select: none;
-  cursor: pointer;
   ${({ fullWidth }) =>
     fullWidth &&
     `
       flex: 1;
       width: 100%;
     `}
-
-  &:hover {
-    background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
-  }
 `;
 
 export default Button;

@@ -25,7 +25,6 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import Modal from '../modal';
-import { Text as TextButton } from '../button';
 
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
@@ -80,7 +79,7 @@ const DialogActions = styled.div`
 function Dialog({
   children,
   title,
-  buttons = [],
+  actions,
   open,
   onClose,
   contentLabel,
@@ -91,15 +90,7 @@ function Dialog({
       <DialogBox>
         {Boolean(title) && <DialogTitle>{title}</DialogTitle>}
         <DialogContent>{children}</DialogContent>
-        {Boolean(buttons.length) && (
-          <DialogActions>
-            {buttons.map((button, index) => (
-              <TextButton key={index} onClick={button.action}>
-                {button.text}
-              </TextButton>
-            ))}
-          </DialogActions>
-        )}
+        {Boolean(actions) && <DialogActions>{actions}</DialogActions>}
       </DialogBox>
     </Modal>
   );
@@ -110,7 +101,10 @@ Dialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   contentLabel: PropTypes.string,
-  buttons: PropTypes.array,
+  actions: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

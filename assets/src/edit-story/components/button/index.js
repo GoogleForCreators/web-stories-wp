@@ -106,7 +106,7 @@ export const Outline = styled(Base)`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-export const Text = styled(Base)`
+export const Plain = styled(Base)`
   color: ${({ theme }) => theme.colors.action};
   border: none;
   transition: background-color 0.6s ease;
