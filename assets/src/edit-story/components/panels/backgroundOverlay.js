@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -27,8 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row } from '../form';
-import ToggleButton from '../form/toggleButton';
+import { Row, ToggleButton } from '../form';
 import { useStory } from '../../app';
 import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
 import { SimplePanel } from './panel';
@@ -38,13 +37,14 @@ function BackgroundOverlayPanel() {
     state: { currentPage },
     actions: { updateCurrentPageProperties },
   } = useStory();
-  const [overlay, setOverlay] = useState(
-    currentPage.backgroundOverlay || OverlayType.NONE
-  );
+  const overlay = currentPage.backgroundOverlay || OverlayType.NONE;
 
-  useEffect(() => {
-    updateCurrentPageProperties({ properties: { backgroundOverlay: overlay } });
-  }, [updateCurrentPageProperties, overlay]);
+  const updateOverlay = useCallback(
+    (value) => {
+      updateCurrentPageProperties({ properties: { backgroundOverlay: value } });
+    },
+    [updateCurrentPageProperties]
+  );
 
   return (
     <SimplePanel name="backgroundOverlay" title={__('Overlay', 'web-stories')}>
@@ -57,8 +57,7 @@ function BackgroundOverlayPanel() {
               icon={icon}
               label={label}
               value={overlay === type}
-              isMultiple={false}
-              onChange={() => setOverlay(type)}
+              onChange={() => updateOverlay(type)}
               iconWidth={22}
               iconHeight={16}
             />

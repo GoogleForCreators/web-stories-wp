@@ -122,12 +122,14 @@ class Dashboard {
 
 		wp_set_script_translations( self::SCRIPT_HANDLE, 'web-stories' );
 
-		$new_story_url = admin_url( add_query_arg(
-			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
-			],
-			'post-new.php'
-		) );
+		$new_story_url = admin_url(
+			add_query_arg(
+				[
+					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				],
+				'post-new.php'
+			)
+		);
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

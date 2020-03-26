@@ -28,6 +28,7 @@ import SidebarContext from '../../../sidebar/context';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
+import MULTIPLE_VALUE from '../../multipleValue';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
@@ -85,7 +86,7 @@ describe('<ColorPreview />', () => {
     });
 
     const { button } = arrange(
-      <ColorPreview onChange={() => {}} isMultiple label="Color" />
+      <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
 
     expect(button).toHaveTextContent('Multiple');

@@ -17,52 +17,51 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import LayerStyle from '../layerStyle';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderPanel } from './_utils';
 
 describe('Panels/LayerStyle', () => {
-  it('should render <LayerStyle /> panel', () => {
-    const { getByText } = arrange(
-      <LayerStyle
-        selectedElements={[{ opacity: 100 }]}
-        onSetProperties={() => null}
-      />
-    );
+  function renderLayerStyle(...args) {
+    return renderPanel(LayerStyle, ...args);
+  }
 
+  it('should render <LayerStyle /> panel', () => {
+    const { getByText } = renderLayerStyle([{ opacity: 100 }]);
     const element = getByText('Layer');
     expect(element).toBeDefined();
   });
 
   it('should set opacity to 100 if not set', () => {
-    const { getByText } = arrange(
-      <LayerStyle selectedElements={[{}]} onSetProperties={() => null} />
-    );
-
+    const { getByText } = renderLayerStyle([{}]);
     const element = getByText('Opacity');
     const input = element.getElementsByTagName('input')[0];
     expect(input.value).toStrictEqual('100%');
   });
 
   it('should set opacity to 100 if set to 0', () => {
-    const { getByText } = arrange(
-      <LayerStyle
-        selectedElements={[{ opacity: 0 }]}
-        onSetProperties={() => null}
-      />
-    );
-
+    const { getByText } = renderLayerStyle([{ opacity: 0 }]);
     const element = getByText('Opacity');
     const input = element.getElementsByTagName('input')[0];
     expect(input.value).toStrictEqual('100%');
+  });
+
+  it('should set opacity to 49 if set to 49', () => {
+    const { getByText } = renderLayerStyle([{ opacity: 49 }]);
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    expect(input.value).toStrictEqual('49%');
+  });
+
+  it('should update opacity value on change', () => {
+    const { getByText, pushUpdate } = renderLayerStyle([{ opacity: 49 }]);
+    const element = getByText('Opacity');
+    const input = element.getElementsByTagName('input')[0];
+    fireEvent.change(input, { target: { value: '23' } });
+    expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 });
   });
 });
