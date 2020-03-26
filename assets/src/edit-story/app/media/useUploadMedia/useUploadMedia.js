@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,85 +28,90 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useUploader } from '../../uploader';
-import { useAPI } from '../../api';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
 } from '../../../app/media/utils';
 
-function useUploadMedia({
-  media,
-  pagingNum,
-  searchTerm,
-  fetchMediaStart,
-  setMedia,
-  fetchMediaError,
-}) {
+function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
-  const {
-    actions: { getMedia },
-  } = useAPI();
-
-  const resetMedia = useCallback(
-    ({ pagingNum: p = 1 } = {}) => {
-      fetchMediaStart({ pagingNum: p });
-      getMedia({ searchTerm, pagingNum: p })
-        .then(({ data }) => {
-          setMedia({
-            media: data,
-          });
-        })
-        .catch(fetchMediaError);
-    },
-    [setMedia, fetchMediaError, fetchMediaStart, getMedia, searchTerm]
-  );
+  const [isUploading, setIsUploading] = useState(false);
 
   const uploadMedia = useCallback(
-    (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
-      files.reverse().forEach(async (file) => {
-        try {
-          let element;
-          const resource = await getResourceFromLocalFile(file);
+    async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      let localFiles;
+      try {
+        setIsUploading(true);
 
-          if (onLocalFile) element = onLocalFile({ resource });
+        localFiles = await Promise.all(
+          files.reverse().map(async (file) => ({
+            resource: await getResourceFromLocalFile(file),
+            file,
+          }))
+        );
 
-          setMedia({ media: [resource, ...media] });
-
-          try {
-            const uploadedFile = await uploadFile(file);
-
-            if (onUploadedFile) {
-              onUploadedFile({
-                resource: getResourceFromUploadAPI(uploadedFile),
-                element,
-              });
-            }
-            resetMedia({ pagingNum });
-          } catch (e) {
-            if (onUploadFailure) onUploadFailure({ element });
-
-            setMedia({
-              media: media.filter(({ id }) => element.resource.id !== id),
-            });
-
-            fetchMediaError(e);
-
-            throw new Error(__('Error uploading a file.', 'web-stories'));
-          }
-        } catch (e) {
-          setMedia({ media });
-
-          fetchMediaError(e);
-
-          throw new Error(__('Error trying to upload a file.', 'web-stories'));
+        if (onLocalFile) {
+          localFiles = localFiles.map(({ resource, file }) => ({
+            resource,
+            file,
+            element: onLocalFile({ resource }),
+          }));
         }
-      });
+
+        setMedia({
+          media: [...localFiles.map(({ resource }) => resource), ...media],
+        });
+      } catch (e) {
+        setMedia({ media });
+
+        setIsUploading(false);
+
+        throw new Error(__('Error trying to upload a file.', 'web-stories'));
+      }
+
+      try {
+        const uploadingFiles = await Promise.all(
+          localFiles.map(async (localFile) => ({
+            ...localFile,
+            fileUploaded: await uploadFile(localFile.file),
+          }))
+        );
+
+        setIsUploading(false);
+
+        if (onUploadedFile) {
+          uploadingFiles.forEach(({ element, fileUploaded }) => {
+            onUploadedFile({
+              resource: getResourceFromUploadAPI(fileUploaded),
+              element,
+            });
+          });
+        }
+
+        fetchMedia({ pagingNum }, setMedia);
+      } catch (e) {
+        localFiles.forEach(({ element }) => {
+          if (element) {
+            if (onUploadFailure) onUploadFailure({ element });
+            setMedia({
+              media: media.filter(
+                ({ id }) => element && element.resource.id !== id
+              ),
+            });
+          }
+        });
+
+        setIsUploading(false);
+
+        throw new Error(__('Error uploading a file.', 'web-stories'));
+      }
     },
-    [setMedia, uploadFile, resetMedia, fetchMediaError, media, pagingNum]
+    [setMedia, uploadFile, fetchMedia, media, pagingNum]
   );
 
   return {
     uploadMedia,
+    isUploading,
   };
 }
 

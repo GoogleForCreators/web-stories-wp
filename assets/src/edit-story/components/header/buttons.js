@@ -30,7 +30,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory } from '../../app';
+import { useStory, useMedia } from '../../app';
 import { Outline, Primary } from '../button';
 
 const ButtonList = styled.nav`
@@ -124,6 +124,9 @@ function Update() {
     },
     actions: { saveStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
   let text;
 
@@ -138,7 +141,7 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving}>
+        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
           {text}
         </Outline>
       );
