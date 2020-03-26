@@ -67,7 +67,7 @@ function LinkInfoDialog() {
       <span>
         {createInterpolateElement(
           __(
-            'Select any element <b>(excluding a background or fullbleed element)</b>  and enter a web address. Drag your element around to convert between a 2 tap and 1 tap link.',
+            'Select any element <b>(excluding a background or fullbleed element)</b>  and enter a web address. Drag your element around to convert between a 2-tap and 1-tap link.',
             'web-stories'
           ),
           {
@@ -82,7 +82,7 @@ function LinkInfoDialog() {
             <b>{__('2-Tap link', 'web-stories')}</b>
             <span>
               {__(
-                'A 2 tap link opens up a tooltip containing a button that links out to your web address. 2 tap links must be found inside the green box.',
+                'A 2-tap link opens up a tooltip containing a button that links out to your web address. 2-tap links must be found inside the green box.',
                 'web-stories'
               )}
             </span>
@@ -94,7 +94,7 @@ function LinkInfoDialog() {
             <b>{__('1-Tap link', 'web-stories')}</b>
             <span>
               {__(
-                '1 tap links only require a single tap to link out to your web address but must be found inside the green box at the bottom of the page. You can have as many 1 tap link inside the box as you want but we recommend 1-2 at most.',
+                '1-tap links only require a single tap to link out to your web address but must be found inside the green box at the bottom of the page. You can have as many 1-tap link inside the box as you want but we recommend 1-2 at most.',
                 'web-stories'
               )}
             </span>

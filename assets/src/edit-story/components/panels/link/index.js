@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -43,6 +44,7 @@ import { ReactComponent as Info } from '../../../icons/info.svg';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import Dialog from '../../dialog';
+import theme from '../../../theme';
 import LinkInfoDialog from './infoDialog';
 
 const BrandIconText = styled.span`
@@ -163,7 +165,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     >
       <Row>
         <ActionableNote onClick={() => openDialog()}>
-          {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
+          {__('Enter an address to apply a 1 or 2-tap link', 'web-stories')}
           <InfoIcon />
         </ActionableNote>
       </Row>
@@ -210,8 +212,16 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         onClose={closeDialog}
         title={__('How to apply a link', 'web-stories')}
         buttons={[
-          { text: __('Back', 'web-stories'), action: () => closeDialog() },
+          {
+            text: __('OK, GOT IT', 'web-stories'),
+            action: () => closeDialog(),
+          },
         ]}
+        style={{
+          overlay: {
+            background: rgba(theme.colors.bg.v11, 0.6),
+          },
+        }}
       >
         <LinkInfoDialog />
       </Dialog>
