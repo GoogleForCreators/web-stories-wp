@@ -34,7 +34,7 @@ const Wrapper = styled.section`
   flex-direction: column;
 `;
 
-function Panel({ initialHeight, name, children }) {
+function Panel({ resizeable, initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
@@ -42,41 +42,50 @@ function Panel({ initialHeight, name, children }) {
 
   const collapse = useCallback(() => {
     setIsCollapsed(true);
-    setHeight(0);
-  }, []);
+    if (resizeable) {
+      setHeight(0);
+    }
+  }, [resizeable]);
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
-      if (restoreHeight) {
+      if (restoreHeight && resizeable) {
         setHeight(expandToHeight);
       }
     },
-    [expandToHeight]
+    [resizeable, expandToHeight]
   );
 
   useEffect(() => {
-    if (height <= PANEL_COLLAPSED_THRESHOLD && isCollapsed === false) {
+    if (
+      resizeable &&
+      height <= PANEL_COLLAPSED_THRESHOLD &&
+      isCollapsed === false
+    ) {
       collapse();
     }
-  }, [collapse, height, isCollapsed]);
+  }, [collapse, height, resizeable, isCollapsed]);
 
   useEffect(() => {
-    if (manuallyChanged) {
+    if (manuallyChanged || !resizeable) {
       return;
     }
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
-  }, [manuallyChanged, initialHeight]);
+  }, [manuallyChanged, initialHeight, resizeable]);
 
   const manuallySetHeight = useCallback(
     (h) => {
+      if (!resizeable) {
+        return;
+      }
       setManuallyChanged(true);
       setHeight(h);
       if (isCollapsed && h(height) > PANEL_COLLAPSED_THRESHOLD) {
         expand(false);
       }
     },
-    [setManuallyChanged, setHeight, height, expand, isCollapsed]
+    [setManuallyChanged, setHeight, height, expand, resizeable, isCollapsed]
   );
 
   const resetHeight = useCallback(() => {
@@ -88,6 +97,7 @@ function Panel({ initialHeight, name, children }) {
   const contextValue = {
     state: {
       height,
+      resizeable,
       isCollapsed,
       panelContentId,
     },
@@ -116,6 +126,7 @@ Panel.propTypes = {
   ]).isRequired,
   name: PropTypes.string.isRequired,
   initialHeight: PropTypes.number,
+  resizeable: PropTypes.bool,
 };
 
 Panel.defaultProps = {

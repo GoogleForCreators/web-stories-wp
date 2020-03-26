@@ -37,11 +37,11 @@ const Container = styled.div`
 
 function Content({ children, ...rest }) {
   const {
-    state: { isCollapsed, height, panelContentId },
+    state: { isCollapsed, height, resizeable, panelContentId },
   } = useContext(panelContext);
 
   const formStyle = {
-    height: height === null ? 'auto' : `${height}px`,
+    height: resizeable ? `${height}px` : 'auto',
   };
 
   return (

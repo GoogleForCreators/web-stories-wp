@@ -108,7 +108,7 @@ function Title({
   isResizable,
 }) {
   const {
-    state: { isCollapsed, height, panelContentId },
+    state: { isCollapsed, height, resizeable, panelContentId },
     actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
   } = useContext(panelContext);
   const {
@@ -120,17 +120,19 @@ function Title({
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
-      setHeight((value) =>
-        Math.max(0, Math.min(maxHeight, value + deltaHeight))
-      ),
-    [setHeight, maxHeight]
+      resizeable
+        ? setHeight((value) =>
+            Math.max(0, Math.min(maxHeight, value + deltaHeight))
+          )
+        : null,
+    [resizeable, setHeight, maxHeight]
   );
 
   const handleExpandToHeightChange = useCallback(() => {
-    if (height >= PANEL_COLLAPSED_THRESHOLD) {
+    if (resizeable && height >= PANEL_COLLAPSED_THRESHOLD) {
       setExpandToHeight(height);
     }
-  }, [setExpandToHeight, height]);
+  }, [setExpandToHeight, height, resizeable]);
 
   const titleLabel = isCollapsed
     ? __('Expand panel', 'web-stories')

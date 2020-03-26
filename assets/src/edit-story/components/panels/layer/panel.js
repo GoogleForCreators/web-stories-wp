@@ -35,7 +35,11 @@ function LayerPanel() {
     : DEFAULT_LAYERS_VISIBLE;
 
   return (
-    <Panel name="layers" initialHeight={numLayersVisible * LAYER_HEIGHT}>
+    <Panel
+      name="layers"
+      initialHeight={numLayersVisible * LAYER_HEIGHT}
+      resizeable
+    >
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
       </PanelTitle>
