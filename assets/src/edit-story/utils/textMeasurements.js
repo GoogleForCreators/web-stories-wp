@@ -95,9 +95,8 @@ function getLineHeight({
 }) {
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return `calc(
-      1em
-        ${`${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
-        ${`${vertical > 0 ? ' + ' : ' - '}${2 * Math.abs(vertical)}px`}
+      ${lineHeight}em
+      ${`${vertical > 0 ? ' + ' : ' - '}${2 * Math.abs(vertical)}px`}
     )`;
   }
   if (lineHeight) {
