@@ -32,13 +32,13 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
 import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
 import { useMediaPicker } from '../mediaPicker';
+import MULTIPLE_VALUE from './multipleValue';
 
 const Container = styled.div`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   height: ${({ size }) => (size ? `${size}px` : '148px')};
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
   border: none;
-  margin-right: 12px;
   position: relative;
   cursor: pointer;
 
@@ -82,6 +82,50 @@ const Img = styled.img`
   ${({ circle }) => circle && 'border-radius: 50%;'}
 `;
 
+const LoadingDots = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  &:after {
+    pointer-events: none;
+    color: ${({ theme }) => theme.colors.fg.v1};
+    content: '.';
+    font-weight: bold;
+    animation: dots 1s steps(5, end) infinite;
+    margin-left: -12px;
+  }
+
+  @keyframes dots {
+    0%,
+    20% {
+      color: transparent;
+      text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
+    }
+    40% {
+      color: white;
+      text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
+    }
+    60% {
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
+        12px 0 0 transparent;
+    }
+    80%,
+    100% {
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
+        12px 0 0 ${({ theme }) => theme.colors.fg.v1};
+    }
+  }
+`;
+
 function MediaInput({
   className,
   onBlur,
@@ -95,8 +139,10 @@ function MediaInput({
   disabled,
   circle,
   size,
+  loading,
   ...rest
 }) {
+  const isMultiple = value === MULTIPLE_VALUE;
   const openMediaPicker = useMediaPicker({
     title,
     buttonInsertText,
@@ -110,14 +156,14 @@ function MediaInput({
       disabled={disabled}
       circle={circle}
       size={size}
-      onClick={openMediaPicker}
       {...rest}
     >
-      {value ? (
+      {value && !isMultiple ? (
         <Img src={value} circle={circle} />
       ) : (
         <DefaultImage size={size} />
       )}
+      {loading && <LoadingDots />}
       <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
         <EditIcon />
       </EditBtn>
@@ -129,7 +175,6 @@ MediaInput.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any,
-  isMultiple: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
@@ -139,12 +184,12 @@ MediaInput.propTypes = {
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 MediaInput.defaultProps = {
   className: null,
   disabled: false,
-  isMultiple: false,
   symbol: '',
   flexBasis: 100,
   textCenter: false,

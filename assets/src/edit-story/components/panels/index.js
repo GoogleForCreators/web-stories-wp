@@ -18,40 +18,51 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
-import PageBackgroundPanel from './pageBackground';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
+import BackgroundOverlayPanel from './backgroundOverlay';
+import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
-import VideoPosterPanel from './videoPoster';
+import VideoAccessibilityPanel from './videoAccessibility';
 import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
+import ElementAlignmentPanel from './alignment';
+import VideoOptionsPanel from './videoOptions';
 export { default as LayerPanel } from './layer';
 export { default as ColorPresetPanel } from './colorPreset';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
+const BACKGROUND_OVERLAY = 'backgroundOverlay';
+const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const TEXT = 'text';
 const SIZE_POSITION = 'sizePosition';
-const STYLE = 'style';
 const TEXT_STYLE = 'textStyle';
-const VIDEO_POSTER = 'videoPoster';
-const PAGE = 'page';
+const SHAPE_STYLE = 'shapeStyle';
+const VIDEO_OPTIONS = 'videoOptions';
+const VIDEO_ACCESSIBILITY = 'videoAccessibility';
+const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
+  ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
+  BACKGROUND_OVERLAY,
   SIZE_POSITION,
-  STYLE,
+  SHAPE_STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
   LINK,
-  VIDEO_POSTER,
+  VIDEO_OPTIONS,
+  IMAGE_ACCESSIBILITY,
+  VIDEO_ACCESSIBILITY,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -62,10 +73,7 @@ function intersect(a, b) {
 
 export function getPanels(elements) {
   if (elements.length === 0) {
-    return [
-      { type: PAGE, Panel: PageBackgroundPanel },
-      { type: NO_SELECTION, Panel: NoSelectionPanel },
-    ];
+    return [{ type: NO_SELECTION, Panel: NoSelectionPanel }];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
@@ -73,14 +81,25 @@ export function getPanels(elements) {
   // Only display background panel in case of background element.
   if (isBackground) {
     const panels = [
-      { type: PAGE, Panel: PageBackgroundPanel },
       { type: BACKGROUND_SIZE_POSITION, Panel: BackgroundSizePositionPanel },
       { type: LAYER_STYLE, Panel: LayerStylePanel },
+      { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
       { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
-    // If the selected element's type is video, display poster panel, too.
-    if ('video' === elements[0].type) {
-      panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
+    // If the selected element's type is video / image , display accessibility panel, too.
+    if ('shape' === elements[0].type) {
+      panels.unshift({ type: SHAPE_STYLE, Panel: ShapeStylePanel });
+    } else if ('video' === elements[0].type) {
+      panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
+      panels.push({
+        type: VIDEO_ACCESSIBILITY,
+        Panel: VideoAccessibilityPanel,
+      });
+    } else if ('image' === elements[0].type) {
+      panels.push({
+        type: IMAGE_ACCESSIBILITY,
+        Panel: ImageAccessibilityPanel,
+      });
     }
     return panels;
   }
@@ -101,14 +120,25 @@ export function getPanels(elements) {
         case BACKGROUND_DISPLAY:
           // Only display when isBackground.
           return null;
+        case BACKGROUND_OVERLAY:
+          // Only display when isBackground.
+          return null;
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
         case LINK:
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };
-        case VIDEO_POSTER:
-          return { type, Panel: VideoPosterPanel };
+        case SHAPE_STYLE:
+          return { type, Panel: ShapeStylePanel };
+        case VIDEO_OPTIONS:
+          return { type, Panel: VideoOptionsPanel };
+        case VIDEO_ACCESSIBILITY:
+          return { type, Panel: VideoAccessibilityPanel };
+        case IMAGE_ACCESSIBILITY:
+          return { type, Panel: ImageAccessibilityPanel };
+        case ELEMENT_ALIGNMENT:
+          return { type, Panel: ElementAlignmentPanel };
         default:
           throw new Error(`Unknown panel: ${type}`);
       }

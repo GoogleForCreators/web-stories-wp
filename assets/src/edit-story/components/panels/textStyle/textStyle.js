@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -40,7 +39,7 @@ import { ReactComponent as MiddleAlign } from '../../../icons/middle_align.svg';
 import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
-import getCommonValue from '../utils/getCommonValue';
+import { getCommonValue } from '../utils';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -61,7 +60,7 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function StylePanel({ selectedElements, onSetProperties }) {
+function StylePanel({ selectedElements, pushUpdate }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
@@ -69,62 +68,27 @@ function StylePanel({ selectedElements, onSetProperties }) {
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
   const bold = getCommonValue(selectedElements, 'bold');
 
-  const [state, setState] = useState({
-    bold,
-    fontStyle,
-    textDecoration,
-    textAlign,
-    letterSpacing,
-    lineHeight,
-  });
-  useEffect(() => {
-    setState({
-      bold,
-      textAlign,
-      letterSpacing,
-      lineHeight,
-      fontStyle,
-      textDecoration,
-    });
-  }, [bold, textAlign, letterSpacing, lineHeight, fontStyle, textDecoration]);
-
-  const updateProperties = useCallback(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state]);
-
-  useEffect(() => {
-    updateProperties();
-  }, [
-    state.textAlign,
-    state.bold,
-    state.fontStyle,
-    state.textDecoration,
-    updateProperties,
-  ]);
-
   return (
     <>
       <Row>
         <ExpandedNumeric
+          data-testid="text.lineHeight"
           ariaLabel={__('Line-height', 'web-stories')}
-          value={state.lineHeight || 0}
+          float={true}
+          value={lineHeight || 0}
           suffix={<VerticalOffset />}
-          isMultiple={lineHeight === ''}
-          onChange={(value) =>
-            setState({ ...state, lineHeight: parseFloat(value) })
-          }
+          onChange={(value) => pushUpdate({ lineHeight: value })}
         />
         <Space />
         <ExpandedNumeric
+          data-testid="text.letterSpacing"
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={state.letterSpacing ? state.letterSpacing * 100 : 0}
+          value={letterSpacing ? Math.round(letterSpacing * 100) : 0}
           suffix={<HorizontalOffset />}
           symbol="%"
-          isMultiple={letterSpacing === ''}
           onChange={(value) =>
-            setState({
-              ...state,
-              letterSpacing: parseInt(value) ? parseInt(value) / 100 : 0,
+            pushUpdate({
+              letterSpacing: typeof value === 'number' ? value / 100 : value,
             })
           }
         />
@@ -132,62 +96,55 @@ function StylePanel({ selectedElements, onSetProperties }) {
       <Row>
         <ToggleButton
           icon={<LeftAlign />}
-          value={state.textAlign === 'left'}
-          isMultiple={false}
+          value={textAlign === 'left'}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'left' : '' })
+            pushUpdate({ textAlign: value ? 'left' : '' }, true)
           }
         />
         <ToggleButton
           icon={<CenterAlign />}
-          value={state.textAlign === 'center'}
-          isMultiple={false}
+          value={textAlign === 'center'}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'center' : '' })
+            pushUpdate({ textAlign: value ? 'center' : '' }, true)
           }
         />
         <ToggleButton
           icon={<RightAlign />}
-          value={state.textAlign === 'right'}
-          isMultiple={false}
+          value={textAlign === 'right'}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'right' : '' })
+            pushUpdate({ textAlign: value ? 'right' : '' }, true)
           }
         />
         <ToggleButton
           icon={<MiddleAlign />}
-          value={state.textAlign === 'justify'}
-          isMultiple={false}
+          value={textAlign === 'justify'}
           onChange={(value) =>
-            setState({ ...state, textAlign: value ? 'justify' : '' })
+            pushUpdate({ textAlign: value ? 'justify' : '' }, true)
           }
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={state.bold || false}
-          isMultiple={false}
-          IconWidth={9}
-          IconHeight={10}
-          onChange={(value) => setState({ ...state, bold: value })}
+          value={bold === true}
+          iconWidth={9}
+          iconHeight={10}
+          onChange={(value) => pushUpdate({ bold: value }, true)}
         />
         <ToggleButton
           icon={<ItalicIcon />}
-          value={state.fontStyle === 'italic'}
-          isMultiple={false}
-          IconWidth={10}
-          IconHeight={10}
+          value={fontStyle === 'italic'}
+          iconWidth={10}
+          iconHeight={10}
           onChange={(value) =>
-            setState({ ...state, fontStyle: value ? 'italic' : 'normal' })
+            pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true)
           }
         />
         <ToggleButton
           icon={<UnderlineIcon />}
-          value={state.textDecoration === 'underline'}
-          isMultiple={false}
-          IconWidth={8}
-          IconHeight={21}
+          value={textDecoration === 'underline'}
+          iconWidth={8}
+          iconHeight={21}
           onChange={(value) =>
-            setState({ ...state, textDecoration: value ? 'underline' : 'none' })
+            pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true)
           }
         />
       </Row>
@@ -197,7 +154,7 @@ function StylePanel({ selectedElements, onSetProperties }) {
 
 StylePanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default StylePanel;

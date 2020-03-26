@@ -39,7 +39,7 @@ export const defaultAttributes = {
   color: '#000000',
   letterSpacing: 0,
   lineHeight: 1.3,
-  textAlign: 'none',
+  textAlign: 'initial',
   textDecoration: 'none',
   padding: {
     vertical: 0,
@@ -62,6 +62,7 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,

@@ -28,6 +28,7 @@ module.exports = {
     '<rootDir>/tests/js/setup-globals',
     '<rootDir>/tests/js/setup-mocks',
     'jest-canvas-mock',
+    'core-js',
   ],
   testMatch: [
     '**/__tests__/**/*.[jt]s',
@@ -46,6 +47,7 @@ module.exports = {
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
     '<rootDir>/assets/src/edit-story/**/*.js',
+    '<rootDir>/assets/src/dashboard/**/*.js',
     '!**/test/**',
     '!**/stories/**',
   ],

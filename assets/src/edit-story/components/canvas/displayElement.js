@@ -23,6 +23,7 @@ import { useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -33,18 +34,37 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
+import { useStory } from '../../app';
+import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
 	contain: layout paint;
+  transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
-function DisplayElement({ element }) {
+const BackgroundOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+`;
+const ReplacementContainer = styled.div`
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
+  pointer-events: none;
+  opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
+`;
+
+function DisplayElement({ element, previewMode }) {
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { currentPage },
+  } = useStory();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -56,7 +76,7 @@ function DisplayElement({ element }) {
       }
     : null;
 
-  const { id, opacity, type } = element;
+  const { id, opacity, type, isBackground } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.type) || {};
@@ -71,7 +91,6 @@ function DisplayElement({ element }) {
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      target.style.opacity = 1;
     } else {
       const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
@@ -98,16 +117,26 @@ function DisplayElement({ element }) {
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={element} box={box} />
-        {replacementElement && (
-          <Replacement element={replacementElement} box={box} />
+        <Display element={element} previewMode={previewMode} box={box} />
+        {!previewMode && (
+          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+            {replacementElement && (
+              <Replacement element={replacementElement} box={box} />
+            )}
+          </ReplacementContainer>
         )}
       </WithMask>
+      {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
+        <BackgroundOverlay
+          style={generateOverlayStyles(currentPage.backgroundOverlay)}
+        />
+      )}
     </Wrapper>
   );
 }
 
 DisplayElement.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
 };
 

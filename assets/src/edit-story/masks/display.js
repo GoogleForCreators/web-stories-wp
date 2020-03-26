@@ -70,7 +70,7 @@ export default function WithMask({
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}`;
+  const maskId = `mask-${mask.type}-${element.id}-display`;
 
   return (
     <div
@@ -83,7 +83,11 @@ export default function WithMask({
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>

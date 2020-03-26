@@ -31,12 +31,14 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
+import MULTIPLE_VALUE from '../multipleValue';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
 
 const Preview = styled(ColorBox).attrs({
   as: 'button',
+  type: 'button',
 })`
   display: flex;
   width: 122px;
@@ -55,15 +57,10 @@ const TextualPreview = styled.div`
   text-align: center;
 `;
 
-function ColorPreview({
-  onChange,
-  hasGradient,
-  hasOpacity,
-  isMultiple,
-  value,
-  label,
-}) {
-  const previewStyle = getPreviewStyle(isMultiple ? null : value);
+function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
+  const isMultiple = value === MULTIPLE_VALUE;
+  value = isMultiple ? '' : value;
+  const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
   const fullLabel = `${label}: ${previewText}`;
 
@@ -75,7 +72,7 @@ function ColorPreview({
 
   const handleOpenEditing = useCallback(() => {
     showColorPickerAt(ref.current, {
-      color: value,
+      color: isMultiple ? null : value,
       onChange,
       hasGradient,
       hasOpacity,
@@ -84,6 +81,7 @@ function ColorPreview({
   }, [
     showColorPickerAt,
     hideSidebar,
+    isMultiple,
     value,
     onChange,
     hasGradient,
@@ -108,7 +106,6 @@ function ColorPreview({
 
 ColorPreview.propTypes = {
   value: PatternPropType,
-  isMultiple: PropTypes.bool,
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
@@ -116,7 +113,6 @@ ColorPreview.propTypes = {
 };
 
 ColorPreview.defaultProps = {
-  isMultiple: false,
   hasGradient: false,
   hasOpacity: true,
   label: null,

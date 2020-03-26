@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import MULTIPLE_VALUE from '../multipleValue';
+
 function getPreviewOpacity(pattern) {
-  if (!pattern) {
+  if (!pattern || pattern === MULTIPLE_VALUE) {
     return null;
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;

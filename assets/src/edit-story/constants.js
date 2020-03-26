@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+export const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
 export const CANVAS_MIN_WIDTH = 480;
@@ -39,6 +41,10 @@ export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 // @todo Confirm real min-max font sizes.
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
+
+// See constraints at
+// https://amp.dev/documentation/components/amp-story-cta-layer/#constraints
+export const CTA_ZONE_PERCENT = 0.2; /** Bottom 20% */
 
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',

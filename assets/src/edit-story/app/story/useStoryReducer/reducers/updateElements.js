@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { ELEMENT_RESERVED_PROPERTIES } from '../types';
+import { LinkType } from '../../../../components/link';
 import { intersect, objectWithout } from './utils';
 
 /**
@@ -76,6 +77,10 @@ function updateElements(
     );
     if (Object.keys(allowedProperties).length === 0) {
       return element;
+    }
+    // One-tap links aren't allowed on the cover page
+    if (allowedProperties?.link?.type === LinkType.ONE_TAP && pageIndex === 0) {
+      allowedProperties.link.type = LinkType.TWO_TAP;
     }
     return { ...element, ...allowedProperties };
   });

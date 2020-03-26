@@ -49,3 +49,9 @@ body.edit-story #edit-story .components-spinner {
   float: none;
   margin: 0 11px;
 }
+
+/* Copied from forms.css in WordPress, avoids issues with "Collapse menu" button */
+
+button {
+  font-size: inherit;
+}

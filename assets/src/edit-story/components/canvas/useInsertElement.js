@@ -36,7 +36,7 @@ function useInsertElement() {
     state: { currentPage },
   } = useStory();
   const {
-    actions: { uploadVideoFrame },
+    actions: { uploadVideoPoster },
   } = useMedia();
 
   /**
@@ -50,10 +50,10 @@ function useInsertElement() {
 
       // Generate video poster if one not set.
       if (type === 'video' && videoId && !posterId) {
-        uploadVideoFrame(videoId, src, elementId);
+        uploadVideoPoster(videoId, src, elementId, resource);
       }
     },
-    [uploadVideoFrame]
+    [uploadVideoPoster]
   );
 
   /**
@@ -73,6 +73,15 @@ function useInsertElement() {
       }
       if (resource) {
         backfillResource(resource, elementId);
+      }
+      // Auto-play on insert.
+      if (type === 'video') {
+        setTimeout(() => {
+          const videoEl = document.getElementById(`video-${elementId}`);
+          if (videoEl) {
+            videoEl.play();
+          }
+        }, 0);
       }
       return element;
     },

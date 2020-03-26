@@ -20,7 +20,9 @@ function CustomStyles() {
       amp-custom=""
       dangerouslySetInnerHTML={{
         __html: `
-              .page-background-area, .page-safe-area {
+              .page-background-area,
+              .page-background-overlay-area,
+              .page-safe-area {
                 position: absolute;
                 overflow: hidden;
                 margin: auto;

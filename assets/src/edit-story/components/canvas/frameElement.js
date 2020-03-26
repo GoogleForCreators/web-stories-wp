@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -63,17 +63,21 @@ function FrameElement({ element }) {
     actions: { setNodeForElement, handleSelectElement },
   } = useCanvas();
   const {
-    state: { selectedElementIds },
+    state: { selectedElementIds, currentPage },
   } = useStory();
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { activeDropTargetId },
+  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
+  const isBackground = currentPage?.backgroundElementId === id;
 
   return (
     <Wrapper
@@ -84,7 +88,9 @@ function FrameElement({ element }) {
         if (!isSelected) {
           handleSelectElement(id, evt);
         }
-        evt.stopPropagation();
+        if (!isBackground) {
+          evt.stopPropagation();
+        }
       }}
       onFocus={(evt) => {
         if (!isSelected) {
@@ -97,7 +103,8 @@ function FrameElement({ element }) {
     >
       <WithLink
         element={element}
-        showTooltip={selectedElementIds.length === 1 && isSelected}
+        active={selectedElementIds.length === 1 && isSelected}
+        dragging={Boolean(activeDropTargetId)}
       >
         <WithMask element={element} fill={true}>
           {Frame ? (
