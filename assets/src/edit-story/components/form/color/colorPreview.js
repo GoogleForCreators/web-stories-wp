@@ -124,9 +124,8 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
 
   const handleInputChange = useCallback(
     (evt) => {
-      const raw = evt.target.value.trim();
-      // Strip initial '#' (might very well be pasted in)
-      const val = raw.charAt(0) === '#' ? raw.substr(1) : raw;
+      // Trim and strip initial '#' (might very well be pasted in)
+      const val = evt.target.value.trim().replace(/^#/, '');
       setHexInputValue(val);
       const hasNonHex = /[^0-9a-f]/i.test(val);
       const hasValidLength = val.length === 6;
