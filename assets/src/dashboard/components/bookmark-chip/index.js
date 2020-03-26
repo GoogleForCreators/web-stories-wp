@@ -46,16 +46,16 @@ const chipSize = {
 };
 
 const ChipContainer = styled.button`
-  box-shadow: ${({ theme }) => theme.chip.shadow};
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.gray500};
+  border: 1px solid none;
   border-radius: ${({ theme }) => theme.border.buttonRadius};
-  border: 1px solid transparent;
-  height: ${({ chipType }) => chipSize[chipType].container};
-  width: ${({ chipType }) => chipSize[chipType].container};
+  box-shadow: ${({ theme }) => theme.chip.shadow};
+  color: ${({ theme }) => theme.colors.gray500};
   cursor: pointer;
   display: flex;
-  align-items: center;
+  height: ${({ chipType }) => chipSize[chipType].container};
+  width: ${({ chipType }) => chipSize[chipType].container};
 
   &:focus,
   &:active,
@@ -68,20 +68,20 @@ const ChipContainer = styled.button`
   }
 
   &:disabled {
-    opacity: 0.5;
     color: ${({ theme }) => theme.colors.gray500};
+    opacity: 0.5;
     pointer-events: none;
   }
 
   & > svg {
     margin: auto;
-    width: ${({ chipType }) => chipSize[chipType].icon.width};
     height: ${({ chipType }) => chipSize[chipType].icon.height};
+    width: ${({ chipType }) => chipSize[chipType].icon.width};
   }
 `;
 
 ChipContainer.propTypes = {
-  isSmall: PropTypes.bool,
+  chipType: PropTypes.oneOf(Object.values(CHIP_TYPES)),
 };
 
 const BookmarkChip = ({
