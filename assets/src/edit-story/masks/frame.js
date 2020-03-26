@@ -26,7 +26,6 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
-import { useTransformHandler } from '../components/transform';
 import { getElementMask } from './';
 
 const FILL_STYLE = {
@@ -44,20 +43,20 @@ const DropTargetSVG = styled.svg`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: ${({ active }) => (active ? 1 : -1)};
 `;
 
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: 0;
+  opacity: ${({ active }) => (active ? 0.3 : 0)};
 `;
 
 function WithDropTarget({ element, children, hover }) {
   const pathRef = useRef(null);
-  const indicatorRef = useRef(null);
 
   const {
-    state: { draggingResource },
+    state: { draggingResource, activeDropTargetId },
     actions: { isDropSource, registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
@@ -71,14 +70,6 @@ function WithDropTarget({ element, children, hover }) {
     };
   }, [id, registerDropTarget, unregisterDropTarget]);
 
-  useTransformHandler(element.id, (transform) => {
-    const target = pathRef.current;
-    if (!target) {
-      return;
-    }
-    target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
-  });
-
   if (!mask) {
     return children;
   }
@@ -91,10 +82,12 @@ function WithDropTarget({ element, children, hover }) {
         width="100%"
         height="100%"
         preserveAspectRatio="none"
+        // Fixes issue where the outline prevents double-clicks from
+        // reaching the frame through zIndex
+        active={activeDropTargetId === element.id}
       >
         {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          ref={indicatorRef}
           vectorEffect="non-scaling-stroke"
           strokeWidth="4"
           fill="none"
@@ -121,6 +114,7 @@ function WithDropTarget({ element, children, hover }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
+          active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
     </>
@@ -154,7 +148,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}`;
+  const maskId = `mask-${mask.type}-${element.id}-frame`;
 
   return (
     <div

@@ -49,6 +49,16 @@ PillLabel.propTypes = {
   isSelected: PropTypes.bool,
 };
 
+const FloatingTabLabel = styled(PillLabel)`
+  background-color: transparent;
+  padding: 10px 24px;
+  border: none;
+  ${({ isSelected, theme }) =>
+    isSelected && {
+      boxShadow: theme.floatingTab.shadow,
+    }}
+`;
+
 const PillInput = styled.input`
   opacity: 0;
   width: 0;
@@ -63,21 +73,23 @@ const Pill = ({
   isSelected,
   name,
   onClick,
+  floatingTab,
   value,
   ...rest
 }) => {
+  const Label = floatingTab ? FloatingTabLabel : PillLabel;
   return (
-    <PillLabel isSelected={isSelected}>
+    <Label isSelected={isSelected}>
       <PillInput
         type={inputType}
         name={name}
-        onClick={(e) => onClick(e, value)}
+        onChange={(e) => onClick(e, value)}
         value={value}
         checked={isSelected}
         {...rest}
       />
       {children}
-    </PillLabel>
+    </Label>
   );
 };
 
@@ -88,6 +100,10 @@ Pill.propTypes = {
   value: PropTypes.string.isRequired,
   inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
   isSelected: PropTypes.bool,
+  floatingTab: PropTypes.bool,
 };
 
-export default Pill;
+const FloatingTab = (props) => <Pill floatingTab {...props} />;
+FloatingTab.propTypes = Pill.propTypes;
+
+export { Pill, FloatingTab };

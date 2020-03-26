@@ -27,11 +27,11 @@ function updateForResizeEvent(element, direction, newWidth, newHeight) {
   const isResizingWidth = direction[0] !== 0;
   const isResizingHeight = direction[1] !== 0;
 
-  // Diagonal resizing w/keep ratio.
-  if (isResizingWidth && isResizingHeight) {
+  // Vertical or diagonal resizing w/keep ratio.
+  if (isResizingHeight) {
     return {
       fontSize: dataPixels(
-        calculateFitTextFontSize(element, newWidth, newHeight)
+        calculateFitTextFontSize(element, newWidth || element.width, newHeight)
       ),
     };
   }
