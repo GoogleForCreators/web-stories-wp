@@ -26,7 +26,7 @@ function useFocusCanvas() {
       window.document.dispatchEvent(evt);
     });
   }, []);
-  return focusCanvas();
+  return focusCanvas;
 }
 
 export default useFocusCanvas;
