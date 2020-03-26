@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
 function useFocusCanvas() {
-  const focusCanvas = () => {
+  const focusCanvas = useCallback(() => {
     setTimeout(() => {
       const evt = new window.FocusEvent('focusout');
       window.document.dispatchEvent(evt);
     });
-  };
+  }, []);
   return focusCanvas();
 }
 
