@@ -78,6 +78,9 @@ function Publish() {
     },
     actions: { updateStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
   const hasFutureDate = Date.now() < Date.parse(date);
 
@@ -90,7 +93,7 @@ function Publish() {
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving}>
+    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
@@ -103,6 +106,9 @@ function SwitchToDraft() {
     },
     actions: { updateStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
   const handleUnPublish = useCallback(
     () => updateStory({ properties: { status: 'draft' } }),
@@ -110,7 +116,7 @@ function SwitchToDraft() {
   );
 
   return (
-    <Outline onClick={handleUnPublish} isDisabled={isSaving}>
+    <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
       {__('Switch to Draft', 'web-stories')}
     </Outline>
   );
@@ -148,7 +154,7 @@ function Update() {
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving}>
+    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
