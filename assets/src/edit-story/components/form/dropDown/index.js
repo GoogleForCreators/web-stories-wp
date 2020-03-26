@@ -95,7 +95,7 @@ const DropDownListContainer = styled.div`
   float: left;
   min-width: 160px;
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const DropDownList = styled.ul.attrs({ role: 'listbox' })`
