@@ -57,6 +57,8 @@ const EditControls = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-items: space-between;
+  padding: 0 16px;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     height: ${({ theme }) => theme.grid.tablet.imageHeight};
@@ -74,17 +76,20 @@ const EditControls = styled.div`
   }
 `;
 
+const PreviewContainer = styled.div`
+  display: flex;
+  margin: auto auto 0;
+`;
+
 const PreviewButton = styled(Button)`
   font-size: 22px;
   align-self: center;
-  flex-grow: 1;
   line-height: 31px;
 `;
 
-const CtaButton = styled(Button)`
-  width: calc(100% - 32px);
-  height: 40px;
-  margin-bottom: 25px;
+const CtaContainer = styled.div`
+  display: flex;
+  margin: auto auto 25px;
 `;
 
 // TODO modify to handle other types of grid items, not just own stories
@@ -101,20 +106,21 @@ const CardPreviewContainer = ({
       {displayEditControls && (
         <EditControls>
           {onPreviewClick && (
-            <PreviewButton
-              type={BUTTON_TYPES.SECONDARY}
-              onClick={onPreviewClick}
-            >
-              {__('Preview', 'web-stories')}
-            </PreviewButton>
+            <PreviewContainer>
+              <PreviewButton
+                type={BUTTON_TYPES.SECONDARY}
+                onClick={onPreviewClick}
+              >
+                {__('Preview', 'web-stories')}
+              </PreviewButton>
+            </PreviewContainer>
           )}
           {onOpenInEditorClick && (
-            <CtaButton
-              type={BUTTON_TYPES.PRIMARY}
-              onClick={onOpenInEditorClick}
-            >
-              {__('Open in editor', 'web-stories')}
-            </CtaButton>
+            <CtaContainer>
+              <Button type={BUTTON_TYPES.PRIMARY} onClick={onOpenInEditorClick}>
+                {__('Open in editor', 'web-stories')}
+              </Button>
+            </CtaContainer>
           )}
         </EditControls>
       )}

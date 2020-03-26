@@ -39,5 +39,11 @@ const StorybookGridItem = (
 const itemArray = new Array(12).fill(StorybookGridItem);
 
 export const _default = () => {
-  return <CardGrid>{itemArray.map((gridItem) => gridItem)}</CardGrid>;
+  return (
+    <CardGrid>
+      {itemArray.map((gridItem, index) => (
+        <div key={index}>{gridItem}</div>
+      ))}
+    </CardGrid>
+  );
 };
