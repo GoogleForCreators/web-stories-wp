@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -105,18 +105,14 @@ const SwitchSpan = styled.span`
 `;
 
 function Switch({ value, disabled, onChange, onLabel, offLabel }) {
-  const [flag, setFlag] = useState(value);
-
-  useEffect(() => {
-    setFlag(value);
-  }, [value, setFlag]);
-
-  const handleChange = (checked) => {
-    setFlag(checked);
-    if (onChange) {
-      onChange(checked);
-    }
-  };
+  const handleChange = useCallback(
+    (checked) => {
+      if (onChange) {
+        onChange(checked);
+      }
+    },
+    [onChange]
+  );
 
   return (
     <SwitchContainer>
@@ -125,7 +121,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
         <RadioButton
           disabled={disabled}
           onChange={() => handleChange(true)}
-          checked={flag}
+          checked={value}
           value="on"
         />
       </Label>
@@ -134,11 +130,11 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
         <RadioButton
           disabled={disabled}
           onChange={() => handleChange(false)}
-          checked={!flag}
+          checked={!value}
           value="off"
         />
       </Label>
-      <SwitchSpan hasOffset={!flag} />
+      <SwitchSpan hasOffset={!value} />
     </SwitchContainer>
   );
 }

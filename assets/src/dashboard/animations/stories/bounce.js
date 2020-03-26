@@ -15,16 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { number } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
 import { ANIMATION_TYPE } from '../constants';
-import AnimationConfigs from '../configs';
+import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
 export default {
@@ -32,19 +27,18 @@ export default {
 };
 
 export const _default = () => {
-  const { keyframes, ...config } = AnimationConfigs[ANIMATION_TYPE.Bounce];
-  const name = ANIMATION_TYPE.Bounce;
+  const name = ANIMATION_TYPE.BOUNCE;
+  const { keyframes, ...config } = getAnimationConfigs[name]();
   const label = 'Animate';
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <AnimationOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-solo`}
         animation={name}
         config={{
           selector: `#anim-solo`,
-          animation: name,
         }}
       />
       <button style={{ marginBottom: '10px' }} on={`tap:${name}-solo.restart`}>
@@ -52,7 +46,6 @@ export const _default = () => {
       </button>
       <WithAnimation
         id={`anim-solo`}
-        animation={name}
         style={{
           width: '50px',
           height: '50px',
@@ -63,12 +56,13 @@ export const _default = () => {
           style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
         />
       </WithAnimation>
-    </>
+    </div>
   );
 };
 
 export const Cascading = () => {
-  const { keyframes, ...config } = AnimationConfigs[ANIMATION_TYPE.Bounce];
+  const name = ANIMATION_TYPE.BOUNCE;
+  const { keyframes, ...config } = getAnimationConfigs[name]();
   const elementConfigs = [
     { id: 'e1', color: 'red', width: '50px' },
     { id: 'e2', color: 'orange', width: '100px' },
@@ -76,20 +70,18 @@ export const Cascading = () => {
     { id: 'e4', color: 'green', width: '150px' },
   ];
 
-  const name = ANIMATION_TYPE.Bounce;
-  const increment = number('Delay (ms)', 200);
+  const increment = 200;
   const delay = 100;
   const label = 'Animate';
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <AnimationOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-group`}
         animation={name}
         config={elementConfigs.map(({ id }, index) => ({
           selector: `#anim-${id}`,
-          animation: name,
           delay: delay + increment * index,
         }))}
       />
@@ -106,7 +98,6 @@ export const Cascading = () => {
           <WithAnimation
             id={`anim-${id}`}
             key={index}
-            animation={name}
             style={{
               width,
               height: '50px',
@@ -120,6 +111,6 @@ export const Cascading = () => {
           </WithAnimation>
         ))}
       </div>
-    </>
+    </div>
   );
 };

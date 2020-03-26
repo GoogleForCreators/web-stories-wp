@@ -27,9 +27,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useRouteHistory } from '../app/router';
+import { useConfig, useRouteHistory } from '../app';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES, NEW_STORY_URL } from '../constants';
+import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../constants';
 import Button from './button';
 import Dropdown from './dropdown';
 
@@ -82,26 +82,22 @@ const LinksContainer = styled.div`
   }
 `;
 
-const paths = [
-  { value: '/', label: __('My Stories', 'web-stories') },
-  {
-    value: '/templates-gallery',
-    label: __('Templates Gallery', 'web-stories'),
-  },
-  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
-];
+const NewStoryLink = styled(Button)`
+  margin-left: 40px;
+`;
 
 function NavigationBar() {
   const { state, actions } = useRouteHistory();
+  const { newStoryURL } = useConfig();
   return (
     <Nav>
       <WebStoriesLogo />
       <DropdownContainer>
         <Dropdown
-          transparent
           ariaLabel="Dashboard Navigation"
           items={paths}
           value={state.currentPath}
+          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
           onChange={(path) => actions.push(path.value)}
         />
       </DropdownContainer>
@@ -115,12 +111,13 @@ function NavigationBar() {
             {path.label}
           </Link>
         ))}
-        <Button
+        <NewStoryLink
+          forwardedAs="a"
           type={BUTTON_TYPES.CTA}
-          onClick={() => (window.location.href = NEW_STORY_URL)}
+          href={newStoryURL}
         >
           {__('Create Story', 'web-stories')}
-        </Button>
+        </NewStoryLink>
       </LinksContainer>
     </Nav>
   );

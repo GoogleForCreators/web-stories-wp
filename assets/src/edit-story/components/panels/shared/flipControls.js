@@ -35,20 +35,18 @@ function FlipControls({ value, onChange }) {
   return (
     <>
       <Toggle
-        icon={<FlipHorizontal />}
-        value={value.horizontal}
-        onChange={(horizontal) => {
-          onChange({ ...value, horizontal });
-        }}
+        title={__('Flip horizontally', 'web-stories')}
         aria-label={__('Flip horizontally', 'web-stories')}
+        icon={<FlipHorizontal />}
+        value={value.horizontal === true}
+        onChange={(horizontal) => onChange({ ...value, horizontal })}
       />
       <Toggle
-        icon={<FlipVertical />}
-        value={value.vertical}
-        onChange={(vertical) => {
-          onChange({ ...value, vertical });
-        }}
+        title={__('Flip vertically', 'web-stories')}
         aria-label={__('Flip vertically', 'web-stories')}
+        icon={<FlipVertical />}
+        value={value.vertical === true}
+        onChange={(vertical) => onChange({ ...value, vertical })}
       />
     </>
   );
