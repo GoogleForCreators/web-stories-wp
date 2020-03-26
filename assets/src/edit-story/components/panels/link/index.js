@@ -208,7 +208,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         title={__('How to apply a link', 'web-stories')}
         actions={
           <Plain onClick={() => closeDialog()}>
-            {__('OK, GOT IT', 'web-stories')}
+            {__('Ok, got it', 'web-stories')}
           </Plain>
         }
         style={{
