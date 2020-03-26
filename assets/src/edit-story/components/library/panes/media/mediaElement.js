@@ -27,7 +27,7 @@ import { useState, useRef, useMemo } from 'react';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { ReactComponent as Play } from './play.svg';
+import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
   width: 100%;
@@ -246,6 +246,7 @@ const MediaElement = ({
           width={width}
           height={height}
           dragging={dragging}
+          preload="metadata"
           {...dropTargetsBindings}
         >
           <source src={src} type={mimeType} />

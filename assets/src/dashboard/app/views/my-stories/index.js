@@ -20,14 +20,40 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { useState } from 'react';
+
+/**
  * Internal dependencies
  */
-import { ViewHeader } from '../../../components';
+import { ViewHeader, FloatingTab } from '../../../components';
+import { storiesFilters } from '../../../constants';
+
+const FilterContainer = styled.div`
+  padding: 0 20px 20px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+`;
 
 function MyStories() {
+  const [currentFilter, setFilter] = useState(storiesFilters[0].value);
   return (
     <div>
       <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+      <FilterContainer>
+        {storiesFilters.map((filter) => (
+          <FloatingTab
+            key={filter.value}
+            onClick={(_, value) => setFilter(value)}
+            name="all-stories"
+            value={filter.value}
+            isSelected={currentFilter === filter.value}
+          >
+            {filter.label}
+          </FloatingTab>
+        ))}
+      </FilterContainer>
     </div>
   );
 }

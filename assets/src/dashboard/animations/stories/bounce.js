@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { number } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
@@ -44,7 +39,6 @@ export const _default = () => {
         animation={name}
         config={{
           selector: `#anim-solo`,
-          animation: name,
         }}
       />
       <button style={{ marginBottom: '10px' }} on={`tap:${name}-solo.restart`}>
@@ -52,7 +46,6 @@ export const _default = () => {
       </button>
       <WithAnimation
         id={`anim-solo`}
-        animation={name}
         style={{
           width: '50px',
           height: '50px',
@@ -77,7 +70,7 @@ export const Cascading = () => {
     { id: 'e4', color: 'green', width: '150px' },
   ];
 
-  const increment = number('Delay (ms)', 200);
+  const increment = 200;
   const delay = 100;
   const label = 'Animate';
 
@@ -89,7 +82,6 @@ export const Cascading = () => {
         animation={name}
         config={elementConfigs.map(({ id }, index) => ({
           selector: `#anim-${id}`,
-          animation: name,
           delay: delay + increment * index,
         }))}
       />
@@ -106,7 +98,6 @@ export const Cascading = () => {
           <WithAnimation
             id={`anim-${id}`}
             key={index}
-            animation={name}
             style={{
               width,
               height: '50px',

@@ -14,26 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-const LayerBackground = styled.span`
-  opacity: 0.5;
-`;
-
-function BackgroundLayerContent() {
-  return (
-    <LayerBackground>
-      {__('Background (locked)', 'web-stories')}
-    </LayerBackground>
-  );
-}
-
-export default BackgroundLayerContent;
+export { default } from './alignment';

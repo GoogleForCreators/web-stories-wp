@@ -25,8 +25,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import createSolid from '../../../utils/createSolid';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
@@ -58,14 +56,17 @@ const Page = styled.button`
     `}
 `;
 
-const DEFAULT_COLOR = createSolid(255, 255, 255);
-
-const PreviewWrapper = styled.div.attrs(({ backgroundColor }) => ({
-  style: generatePatternStyles(backgroundColor || DEFAULT_COLOR),
-}))`
+const PreviewWrapper = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  background-color: white;
+  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
+    linear-gradient(-45deg, #999999 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #999999 75%),
+    linear-gradient(-45deg, transparent 75%, #999999 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
 function PagePreview({ index, forwardedRef, ...props }) {
@@ -78,9 +79,13 @@ function PagePreview({ index, forwardedRef, ...props }) {
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page {...props} ref={forwardedRef}>
-          <PreviewWrapper backgroundColor={page.backgroundColor}>
+          <PreviewWrapper>
             {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement key={id} element={{ id, ...rest }} />
+              <DisplayElement
+                key={id}
+                previewMode={true}
+                element={{ id, ...rest }}
+              />
             ))}
           </PreviewWrapper>
         </Page>
@@ -91,7 +96,7 @@ function PagePreview({ index, forwardedRef, ...props }) {
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.func,
+  forwardedRef: PropTypes.object,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };

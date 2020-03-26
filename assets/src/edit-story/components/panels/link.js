@@ -38,6 +38,7 @@ import {
 } from '../link';
 import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import { SimplePanel } from './panel';
 import { Note, ExpandedTextInput } from './shared';
 
@@ -47,10 +48,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
     selectedElement,
   ]);
-  const DEFAULT_LINK = createLink({ url: null, icon: null, desc: null });
+  const defaultLink = useMemo(
+    () => createLink({ url: null, icon: null, desc: null }),
+    []
+  );
   const link = useMemo(
-    () => getLinkFromElement(selectedElement) || DEFAULT_LINK,
-    [selectedElement, DEFAULT_LINK]
+    () => getLinkFromElement(selectedElement) || defaultLink,
+    [selectedElement, defaultLink]
   );
   const canLink = selectedElements.length === 1 && !isFill;
 
@@ -60,6 +64,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     actions: { getLinkMetadata },
   } = useAPI();
 
+  const updateLinkFromMetadataApi = useBatchingCallback(
+    ({ url, title, icon }) =>
+      pushUpdateForObject(
+        'link',
+        (prev) => ({
+          url,
+          desc: title ? title : prev.desc,
+          icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
+        }),
+        defaultLink,
+        true
+      ),
+    [pushUpdateForObject, defaultLink]
+  );
+
   const [populateMetadata] = useDebouncedCallback((url) => {
     const urlWithProtocol = withProtocol(url);
     if (!isValidUrl(urlWithProtocol)) {
@@ -68,16 +87,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
-        pushUpdateForObject(
-          'link',
-          (prev) => ({
-            url: urlWithProtocol,
-            desc: title ? title : prev.desc,
-            icon: image ? toAbsoluteUrl(urlWithProtocol, image) : prev.icon,
-          }),
-          DEFAULT_LINK,
-          true
-        );
+        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
       })
       .catch((reason) => {
         if (reason?.code === 'rest_invalid_url') {
@@ -101,11 +111,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           ...properties,
           type: inferredLinkType,
         },
-        DEFAULT_LINK,
+        defaultLink,
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType, DEFAULT_LINK]
+    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
   );
 
   const handleChangeIcon = useCallback(

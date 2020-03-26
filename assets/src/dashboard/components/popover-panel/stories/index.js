@@ -15,18 +15,26 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { action } from '@storybook/addon-actions';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from './icon.svg';
+import PopoverPanel from '../';
 
-function BackgroundIcon() {
-  const alt = __('Background element', 'web-stories');
-  return <Icon aria-label={alt} />;
-}
-
-export default BackgroundIcon;
+export default {
+  title: 'Dashboard/Components/PopoverPanel',
+  component: PopoverPanel,
+};
+export const _default = () => (
+  <PopoverPanel
+    isOpen={boolean('isOpen', true)}
+    title={'Hi'}
+    onClose={action('Close button selected')}
+  >
+    <div>{text('children', 'Popover Panel Content')}</div>
+  </PopoverPanel>
+);

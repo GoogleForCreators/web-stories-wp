@@ -66,6 +66,7 @@ function APIProvider({ children }) {
       excerpt,
       featuredMedia,
       password,
+      publisherLogo,
     }) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
@@ -81,6 +82,7 @@ function APIProvider({ children }) {
           excerpt,
           story_data: { version: DATA_VERSION, pages },
           featured_media: featuredMedia,
+          publisher_logo: publisherLogo,
         },
         method: 'POST',
       });

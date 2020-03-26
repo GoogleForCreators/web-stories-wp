@@ -18,13 +18,33 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
-const Group = styled.label`
-  color: ${({ theme }) => theme.colors.mg.v1};
+/**
+ * WordPress dependencies
+ */
+import { _x } from '@wordpress/i18n';
+
+const RequiredWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 5px;
-  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
 `;
 
-export default Group;
+const Text = styled.span`
+  font-size: 12px;
+  line-height: 14px;
+  font-style: italic;
+  color: ${({ theme }) => rgba(theme.colors.required, 0.55)};
+`;
+
+function Required() {
+  return (
+    <RequiredWrapper>
+      <Text>{_x('required', 'required form input', 'web-stories')}</Text>
+    </RequiredWrapper>
+  );
+}
+
+export default Required;
