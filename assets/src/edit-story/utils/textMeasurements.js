@@ -15,9 +15,34 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
  * Internal dependencies
  */
 import { PAGE_HEIGHT } from '../constants';
+import { TextOutputWithUnits } from '../elements/text/output';
+
+const MEASURER_STYLES = {
+  boxSizing: 'border-box',
+  visibility: 'hidden',
+  position: 'fixed',
+  contain: 'layout paint',
+  top: '-9999px',
+  left: '-9999px',
+  zIndex: -1,
+};
+
+const MEASURER_PROPS = {
+  dataToStyleX: (x) => `${x}px`,
+  dataToStyleY: (y) => `${y}px`,
+  paddingToStyle: (padding) => ({
+    horizontal: `${padding?.horizontal || 0}px`,
+    vertical: `${padding?.vertical || 0}px`,
+  }),
+};
 
 let measurerNode = null;
 
@@ -48,43 +73,20 @@ export function calculateFitTextFontSize(element, width, height) {
   return minFontSize;
 }
 
-function getOrCreateMeasurer({
-  content,
-  fontFamily,
-  fontStyle,
-  fontWeight,
-  fontSize,
-  lineHeight,
-  letterSpacing,
-  textAlign,
-  padding,
-}) {
+function getOrCreateMeasurer(element) {
   if (!measurerNode) {
     measurerNode = document.createElement('div');
     measurerNode.id = '__web-stories-text-measurer';
-    setStyles(measurerNode, {
-      visibility: 'hidden',
-      position: 'fixed',
-      contain: 'layout paint',
-      top: '-9999px',
-      left: '-9999px',
-      zIndex: -1,
-    });
+    setStyles(measurerNode, MEASURER_STYLES);
     document.body.appendChild(measurerNode);
   }
-  setStyles(measurerNode, {
-    whiteSpace: 'pre-wrap',
-    fontFamily,
-    fontStyle,
-    fontWeight,
-    fontSize: `${fontSize}px`,
-    lineHeight: lineHeight || 'normal',
-    letterSpacing: letterSpacing ? letterSpacing + 'em' : '0',
-    textAlign,
-    padding: padding ? `${padding.vertical}px ${padding.horizontal}px` : '0px',
-  });
-  measurerNode.innerHTML = content;
-  return measurerNode;
+  // Very unfortunately `ReactDOM.render()` is not synchoronous. Thus, we
+  // have to use `renderToStaticMarkup()` markup instead.
+  measurerNode.innerHTML = renderToStaticMarkup(
+    <TextOutputWithUnits element={element} {...MEASURER_PROPS} />,
+    measurerNode
+  );
+  return measurerNode.firstElementChild;
 }
 
 function setStyles(node, styles) {

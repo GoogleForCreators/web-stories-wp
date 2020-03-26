@@ -66,12 +66,12 @@ export const elementWithFont = css`
   font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
-export const elementWithStyle = css`
+export const elementWithTextParagraphStyle = css`
+  margin: ${({ margin }) => margin || 0};
   padding: ${({ padding }) =>
     padding ? `${padding.vertical}px ${padding.horizontal}px` : '0'};
   line-height: ${({ lineHeight }) => lineHeight};
-  letter-spacing: ${({ letterSpacing }) =>
-    letterSpacing ? letterSpacing + 'em' : null};
+  letter-spacing: ${({ letterSpacing }) => letterSpacing};
   text-align: ${({ textAlign }) => textAlign};
   text-decoration: ${({ textDecoration }) => textDecoration};
 `;
