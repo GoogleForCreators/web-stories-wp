@@ -84,7 +84,7 @@ const DropDownTitle = styled.span`
 
 const DropDownListWrapper = styled.div``;
 
-const DropDownList = styled.ul.attrs({ role: 'listbox' })`
+const DropDownListContainer = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
@@ -94,6 +94,11 @@ const DropDownList = styled.ul.attrs({ role: 'listbox' })`
   flex-wrap: wrap;
   float: left;
   min-width: 160px;
+  max-height: 500px;
+  overflow-y: scroll;
+`;
+
+const DropDownList = styled.ul.attrs({ role: 'listbox' })`
   width: 100%;
   padding: 5px 0;
   margin: 2px 0 0;
@@ -340,26 +345,28 @@ function DropDown({
       </DropDownSelect>
       <DropDownListWrapper>
         {isOpen ? (
-          <DropDownList
-            aria-multiselectable={false}
-            aria-required={false}
-            aria-activedescendant={activeItem ? activeItem.value : ''}
-            aria-labelledby={ariaLabel}
-          >
-            {options.map(({ name, value: optValue }) => {
-              return (
-                <DropDownItem
-                  id={`dropDown-${optValue}`}
-                  aria-selected={activeItem && activeItem.value === optValue}
-                  key={optValue}
-                  onClick={() => handleItemClick(optValue)}
-                  ref={setOptionRef}
-                >
-                  {name}
-                </DropDownItem>
-              );
-            })}
-          </DropDownList>
+          <DropDownListContainer>
+            <DropDownList
+              aria-multiselectable={false}
+              aria-required={false}
+              aria-activedescendant={activeItem ? activeItem.value : ''}
+              aria-labelledby={ariaLabel}
+            >
+              {options.map(({ name, value: optValue }) => {
+                return (
+                  <DropDownItem
+                    id={`dropDown-${optValue}`}
+                    aria-selected={activeItem && activeItem.value === optValue}
+                    key={optValue}
+                    onClick={() => handleItemClick(optValue)}
+                    ref={setOptionRef}
+                  >
+                    {name}
+                  </DropDownItem>
+                );
+              })}
+            </DropDownList>
+          </DropDownListContainer>
         ) : (
           [clearOptionsRefs(), null]
         )}
