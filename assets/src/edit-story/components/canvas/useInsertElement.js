@@ -83,6 +83,11 @@ function useInsertElement() {
           }
         }, 0);
       }
+      // When done, send fake focusout event to document to force focus to new element
+      setTimeout(() => {
+        const evt = new window.FocusEvent('focusout');
+        window.document.dispatchEvent(evt);
+      }, 1);
       return element;
     },
     [addElement, setBackgroundElement, currentPage, backfillResource]
