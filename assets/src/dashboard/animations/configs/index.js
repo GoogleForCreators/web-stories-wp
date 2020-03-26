@@ -20,10 +20,12 @@
 import { ANIMATION_TYPE } from '../constants';
 import getBlinkOnConfig from './blinkOn';
 import getBounceConfig from './bounce';
+import getFloatOnConfig from './floatOn';
 import getSpinConfig from './spin';
 
 export default {
   [ANIMATION_TYPE.BLINK_ON]: getBlinkOnConfig,
   [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPE.FLOAT_ON]: getFloatOnConfig,
   [ANIMATION_TYPE.SPIN]: getSpinConfig,
 };
