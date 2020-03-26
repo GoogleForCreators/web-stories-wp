@@ -74,6 +74,15 @@ function useInsertElement() {
       if (resource) {
         backfillResource(resource, elementId);
       }
+      // Auto-play on insert.
+      if (type === 'video') {
+        setTimeout(() => {
+          const videoEl = document.getElementById(`video-${elementId}`);
+          if (videoEl) {
+            videoEl.play();
+          }
+        }, 0);
+      }
       return element;
     },
     [addElement, setBackgroundElement, currentPage, backfillResource]

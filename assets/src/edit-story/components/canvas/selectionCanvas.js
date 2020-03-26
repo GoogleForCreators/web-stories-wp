@@ -57,6 +57,7 @@ const Lasso = styled.div`
 function SelectionCanvas({ children }) {
   const {
     actions: { clearSelection },
+    state: { selectedElements },
   } = useStory();
   const {
     state: { pageContainer },
@@ -98,8 +99,10 @@ function SelectionCanvas({ children }) {
   };
 
   const onMouseDown = (evt) => {
-    clearSelection();
-    clearEditing();
+    if (selectedElements.length) {
+      clearSelection();
+      clearEditing();
+    }
 
     const overlay = overlayRef.current;
     let offsetX = 0,

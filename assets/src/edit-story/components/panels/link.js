@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -38,62 +38,46 @@ import {
 } from '../link';
 import { useAPI } from '../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import { SimplePanel } from './panel';
 import { Note, ExpandedTextInput } from './shared';
 
-function LinkPanel({ selectedElements, onSetProperties }) {
+function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
-  const link = getLinkFromElement(selectedElement);
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
     selectedElement,
   ]);
-
-  const [state, setState] = useState({
-    ...(link || createLink({ type: inferredLinkType })),
-  });
+  const defaultLink = useMemo(
+    () => createLink({ url: null, icon: null, desc: null }),
+    []
+  );
+  const link = useMemo(
+    () => getLinkFromElement(selectedElement) || defaultLink,
+    [selectedElement, defaultLink]
+  );
+  const canLink = selectedElements.length === 1 && !isFill;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
-  useEffect(() => {
-    setState({ ...link });
-  }, [link]);
-
-  const handleChange = useCallback(
-    (property) => (value) =>
-      setState((originalState) => ({
-        ...(originalState && originalState?.type
-          ? originalState
-          : createLink({ type: inferredLinkType })),
-        [property]: value,
-      })),
-    [setState, inferredLinkType]
-  );
-  const handleChangeIcon = useCallback(
-    (image) => {
-      const icon = image.sizes?.medium?.url || image.url;
-      setState((originalState) => ({
-        ...originalState,
-        icon,
-      }));
-      onSetProperties({ link: { ...state, icon } });
-    },
-    [state, onSetProperties]
-  );
-  const handleSubmit = useCallback(
-    (evt) => {
-      onSetProperties({ link: state?.url ? { ...state } : null });
-      if (evt) {
-        evt.preventDefault();
-      }
-    },
-    [state, onSetProperties]
-  );
 
   const {
     actions: { getLinkMetadata },
   } = useAPI();
 
-  const canLink = selectedElements.length === 1 && !isFill;
+  const updateLinkFromMetadataApi = useBatchingCallback(
+    ({ url, title, icon }) =>
+      pushUpdateForObject(
+        'link',
+        (prev) => ({
+          url,
+          desc: title ? title : prev.desc,
+          icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
+        }),
+        defaultLink,
+        true
+      ),
+    [pushUpdateForObject, defaultLink]
+  );
 
   const [populateMetadata] = useDebouncedCallback((url) => {
     const urlWithProtocol = withProtocol(url);
@@ -103,35 +87,46 @@ function LinkPanel({ selectedElements, onSetProperties }) {
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
-        setState((originalState) => ({
-          ...originalState,
-          url: urlWithProtocol,
-          desc: title ? title : originalState.desc,
-          icon: image
-            ? toAbsoluteUrl(urlWithProtocol, image)
-            : originalState.icon,
-        }));
+        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
+      })
+      .catch((reason) => {
+        if (reason?.code === 'rest_invalid_url') {
+          return;
+        }
+        throw reason;
       })
       .finally(() => {
         setFetchingMetadata(false);
       });
   }, 1200);
 
-  useEffect(() => {
-    if (state.url === '') {
-      setState({ url: null, desc: null, icon: null, type: inferredLinkType });
-      onSetProperties({ link: null });
-    } else if (state.url) {
-      populateMetadata(state?.url);
-    }
-  }, [onSetProperties, populateMetadata, inferredLinkType, state.url, state]);
+  const handleChange = useCallback(
+    (properties, submit) => {
+      if (properties.url) {
+        populateMetadata(properties.url);
+      }
+      return pushUpdateForObject(
+        'link',
+        {
+          ...properties,
+          type: inferredLinkType,
+        },
+        defaultLink,
+        submit
+      );
+    },
+    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
+  );
+
+  const handleChangeIcon = useCallback(
+    (image) => {
+      handleChange({ icon: image.sizes?.medium?.url || image.url }, true);
+    },
+    [handleChange]
+  );
 
   return (
-    <SimplePanel
-      name="link"
-      title={__('Link', 'web-stories')}
-      onSubmit={(evt) => handleSubmit(evt)}
-    >
+    <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
         <Note>
           {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
@@ -142,26 +137,26 @@ function LinkPanel({ selectedElements, onSetProperties }) {
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
           disabled={!canLink}
-          onChange={handleChange('url')}
-          value={state.url || ''}
+          onChange={(value) => handleChange({ url: value })}
+          value={link.url || ''}
           clear
         />
       </Row>
 
-      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
+      {Boolean(link.url) && link.type === LinkType.TWO_TAP && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
             disabled={!canLink}
-            onChange={handleChange('desc')}
-            value={state.desc || ''}
+            onChange={(value) => handleChange({ desc: value })}
+            value={link.desc || ''}
           />
         </Row>
       )}
-      {Boolean(state.url) && state.type === LinkType.TWO_TAP && (
+      {Boolean(link.url) && link.type === LinkType.TWO_TAP && (
         <Row spaceBetween={false}>
           <Media
-            value={state?.icon}
+            value={link.icon || ''}
             onChange={handleChangeIcon}
             title={__('Select as link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
@@ -179,7 +174,7 @@ function LinkPanel({ selectedElements, onSetProperties }) {
 
 LinkPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
 };
 
 export default LinkPanel;

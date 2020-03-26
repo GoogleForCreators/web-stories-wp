@@ -26,19 +26,16 @@ import getCommonValue from './getCommonValue';
  *
  * @param {Array.<Object>} list  List of objects
  * @param {string} property Property to check on all objects
- * @param {Array} properties List of properties to match.
- * @param {any} defaultValue Default value to assign to property.
+ * @param {Object} defaultValue Default object when an element is missing it.
  * @return {Object} Found common object values or default values.
  */
-function getCommonObjectValue(list, property, properties, defaultValue) {
+function getCommonObjectValue(list, property, defaultValue) {
   const commonValue = {};
-  properties.forEach((prop) => {
-    const propertyList = list.map((element) => element[property]);
-    const foundMatch = getCommonValue(
-      propertyList || { [prop]: defaultValue },
-      prop
-    );
-    commonValue[prop] = '' !== foundMatch ? foundMatch : defaultValue;
+  const propertyObjects = list.map(
+    (element) => element[property] || defaultValue
+  );
+  Object.keys(defaultValue).forEach((prop) => {
+    commonValue[prop] = getCommonValue(propertyObjects, prop);
   });
   return commonValue;
 }

@@ -79,9 +79,9 @@ function getOrCreateMeasurer({
     fontWeight,
     fontSize: `${fontSize}px`,
     lineHeight: lineHeight || 'normal',
-    letterSpacing: `${letterSpacing ? letterSpacing + 'em' : null}`,
+    letterSpacing: letterSpacing ? letterSpacing + 'em' : '0',
     textAlign,
-    padding: `${padding ? padding : '0'}%`,
+    padding: padding ? `${padding.vertical}px ${padding.horizontal}px` : '0px',
   });
   measurerNode.innerHTML = content;
   return measurerNode;
