@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../../constants';
+import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
 import createSolid from '../../../../utils/createSolid';
 import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
@@ -91,6 +91,8 @@ function TextPane(props) {
               insertElement('text', {
                 content: __('Text', 'web-stories'),
                 color: createSolid(0, 0, 0),
+                backgroundColor: createSolid(196, 196, 196),
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
                 ...preset,
               })
