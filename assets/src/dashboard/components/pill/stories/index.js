@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Pill from '../';
+import { Pill, FloatingTab } from '../';
 
 export default {
   title: 'Dashboard/Components/Pill',
@@ -91,6 +91,27 @@ export const _default = () => {
           >
             <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
           </Pill>
+        );
+      })}
+    </DemoFieldSet>
+  );
+};
+
+export const _floatingTabs = () => {
+  return (
+    <DemoFieldSet>
+      {categoryDemoData.map(({ icon, label, selected, value }, index) => {
+        return (
+          <FloatingTab
+            key={value + index}
+            inputType="checkbox"
+            name="demo_checkbox"
+            onClick={action('on click selected')}
+            value={value}
+            isSelected={boolean(`isSelected: ${index}`, selected)}
+          >
+            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
+          </FloatingTab>
         );
       })}
     </DemoFieldSet>

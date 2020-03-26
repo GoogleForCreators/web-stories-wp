@@ -49,7 +49,6 @@ function Reorderable({ children, onPositionChange = () => {}, ...props }) {
   const [dragTarget, setDragTarget] = useState(null);
 
   const speak = useLiveRegion('assertive');
-
   const handleStartReordering = useCallback(
     ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
       // Only allow reordering with non-modified click on non-background element.

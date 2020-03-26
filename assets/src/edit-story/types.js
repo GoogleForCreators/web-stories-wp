@@ -99,7 +99,6 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundElementId: PropTypes.string,
-  backgroundColor: PatternPropType,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
@@ -169,6 +168,7 @@ StoryPropTypes.elements.image = PropTypes.shape({
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
   resource: StoryPropTypes.videoResource,
+  poster: PropTypes.string,
   loop: PropTypes.bool,
 });
 
@@ -182,7 +182,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
   fontStyle: PropTypes.string,
-  letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
   padding: PropTypes.shape({
     horizontal: PropTypes.number,

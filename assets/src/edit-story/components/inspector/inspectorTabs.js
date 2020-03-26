@@ -30,17 +30,28 @@ import { __ } from '@wordpress/i18n';
 import { getTabId } from './utils';
 import useInspector from './useInspector';
 
-const Tabs = styled.div`
+const TABS_HEIGHT = 40;
+
+const Tabs = styled.ul.attrs({
+  role: 'tablist',
+  'aria-orientation': 'horizontal',
+})`
   background-color: ${({ theme }) => theme.colors.bg.v4};
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 100%;
+  height: ${TABS_HEIGHT}px;
   margin: 0;
+  padding: 0;
+  list-style: none;
 `;
 
-const Tab = styled.button.attrs({ role: 'tab' })`
-  height: 100%;
+const Tab = styled.li.attrs(({ isActive }) => ({
+  tabIndex: isActive ? 0 : -1,
+  role: 'tab',
+  'aria-selected': isActive,
+}))`
+  height: ${TABS_HEIGHT}px;
   text-align: center;
   cursor: pointer;
   border: none;
@@ -49,7 +60,7 @@ const Tab = styled.button.attrs({ role: 'tab' })`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
+  line-height: ${TABS_HEIGHT}px;
   font-weight: ${({ theme }) => theme.fonts.tab.weight};
   word-break: break-word;
   opacity: 0.84;

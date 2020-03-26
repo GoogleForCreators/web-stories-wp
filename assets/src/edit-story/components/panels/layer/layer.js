@@ -15,16 +15,26 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as Locked } from '../../../icons/lock.svg';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
+import { useStory } from '../../../app';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -79,9 +89,27 @@ const LayerDescription = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
+const LockedIcon = styled(Locked)`
+  height: 18px !important;
+  width: 18px !important;
+`;
+
+const BackgroundDescription = styled.div`
+  opacity: 0.5;
+`;
+
+const LayerContentContainer = styled.div`
+  margin-right: 8px;
+`;
+
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
+  const {
+    state: { currentPage },
+  } = useStory();
+  const isBackground = currentPage.backgroundElementId === layer.id;
+  const showPreview = !isBackground || layer.type !== 'shape';
 
   return (
     <LayerButton
@@ -90,10 +118,23 @@ function Layer({ layer }) {
       onClick={handleClick}
     >
       <LayerIconWrapper>
-        <LayerIcon />
+        {isBackground ? (
+          <LockedIcon aria-label={__('Background element', 'web-stories')} />
+        ) : (
+          <LayerIcon />
+        )}
       </LayerIconWrapper>
       <LayerDescription>
-        <LayerContent element={layer} />
+        {showPreview && (
+          <LayerContentContainer>
+            <LayerContent element={layer} />
+          </LayerContentContainer>
+        )}
+        {isBackground && (
+          <BackgroundDescription>
+            {__('Background (locked)', 'web-stories')}
+          </BackgroundDescription>
+        )}
       </LayerDescription>
     </LayerButton>
   );

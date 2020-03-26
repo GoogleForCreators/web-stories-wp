@@ -23,6 +23,7 @@ import { useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -41,6 +42,7 @@ const Wrapper = styled.div`
 	${elementWithSize}
 	${elementWithRotation}
 	contain: layout paint;
+  transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
 const BackgroundOverlay = styled.div`
@@ -50,8 +52,13 @@ const BackgroundOverlay = styled.div`
   top: 0;
   left: 0;
 `;
+const ReplacementContainer = styled.div`
+  transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
+  pointer-events: none;
+  opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
+`;
 
-function DisplayElement({ element }) {
+function DisplayElement({ element, previewMode }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -84,7 +91,6 @@ function DisplayElement({ element }) {
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      target.style.opacity = 1;
     } else {
       const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
@@ -111,9 +117,13 @@ function DisplayElement({ element }) {
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={element} box={box} />
-        {replacementElement && (
-          <Replacement element={replacementElement} box={box} />
+        <Display element={element} previewMode={previewMode} box={box} />
+        {!previewMode && (
+          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+            {replacementElement && (
+              <Replacement element={replacementElement} box={box} />
+            )}
+          </ReplacementContainer>
         )}
       </WithMask>
       {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
@@ -126,6 +136,7 @@ function DisplayElement({ element }) {
 }
 
 DisplayElement.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
 };
 
