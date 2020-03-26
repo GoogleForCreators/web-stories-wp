@@ -53,11 +53,10 @@ const HighlightElement = styled.p`
 
 const MarginedElement = styled.span`
   display: inline-block;
-  margin: ${({ padding: { vertical, horizontal } }) =>
-    `${vertical}px ${horizontal + 4}px`};
   position: relative;
+  top: 0;
+  margin: ${({ padding: { horizontal } }) => `0 ${horizontal + 4}px`};
   left: ${({ padding: { horizontal } }) => `-${horizontal + 4}px`};
-  top: 1px;
 `;
 
 const Span = styled.span`

@@ -112,9 +112,7 @@ export const highlightLineheight = css`
   /* Disable reason: style lint can't figure out an interpolated calc */
   /* stylelint-disable function-calc-no-invalid */
   line-height: calc(
-    1em
-      ${({ lineHeight }) =>
-        `${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
+    ${({ lineHeight }) => `${lineHeight}em`}
       ${({ padding: { vertical } }) =>
         `${vertical > 0 ? ' + ' : ' - '}${2 * Math.abs(vertical)}px`}
   );

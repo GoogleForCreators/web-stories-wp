@@ -77,8 +77,7 @@ function TextOutput({
     // Disable reason: style lint can't figure out an interpolated calc
     // stylelint-disable function-calc-no-invalid
     lineHeight: `calc(
-      1em
-        ${`${lineHeight > 0 ? ' + ' : ' - '}${Math.abs(lineHeight)}em`}
+        ${lineHeight}em
         ${`${padding.vertical > 0 ? ' + ' : ' - '}${
           2 * dataToEditorY(padding.vertical, 16)
         }em`}
