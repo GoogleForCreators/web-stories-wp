@@ -31,6 +31,8 @@ import { useUploader } from '../../uploader';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
+  getResourceFromAttachment,
+  getAttachmentFromResource,
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
@@ -45,21 +47,31 @@ function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
-            resource: await getResourceFromLocalFile(file),
+            attachement: getAttachmentFromResource(
+              await getResourceFromLocalFile(file)
+            ),
             file,
           }))
         );
 
         if (onLocalFile) {
-          localFiles = localFiles.map(({ resource, file }) => ({
-            resource,
-            file,
-            element: onLocalFile({ resource }),
-          }));
+          localFiles = localFiles.map(({ attachement, file }) => {
+            const resource = getResourceFromAttachment(attachement);
+            return {
+              attachement,
+              file,
+              element: onLocalFile({
+                resource,
+              }),
+            };
+          });
         }
 
         setMedia({
-          media: [...localFiles.map(({ resource }) => resource), ...media],
+          media: [
+            ...localFiles.map(({ attachement }) => attachement),
+            ...media,
+          ],
         });
       } catch (e) {
         setMedia({ media });

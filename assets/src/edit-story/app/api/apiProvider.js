@@ -31,6 +31,7 @@ import apiFetch from '@wordpress/api-fetch';
 import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../';
+import getAttachmentFromResource from '../media/utils/getAttachmentFromResource';
 import Context from './context';
 
 function APIProvider({ children }) {
@@ -142,18 +143,20 @@ function APIProvider({ children }) {
               featured_media: posterId,
               featured_media_src: poster,
               alt_text: alt,
-            }) => ({
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
-              mimeType,
-              lengthFormatted,
-              alt: alt ? alt : description,
-              title,
-            })
+            }) =>
+              getAttachmentFromResource({
+                id,
+                posterId,
+                poster,
+                src,
+                oWidth,
+                oHeight,
+                mimeType,
+                lengthFormatted,
+                alt: alt ? alt : description,
+                title,
+                local: false,
+              })
           );
 
           return { data, headers: response.headers };

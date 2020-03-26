@@ -85,8 +85,6 @@ const getImageResource = (image) => {
         src,
         oWidth,
         oHeight,
-        width: oWidth,
-        height: oHeight,
         mimeType: image.type,
         local: true,
       });
@@ -122,8 +120,6 @@ const getVideoResource = (video) => {
         src,
         oWidth,
         oHeight,
-        width: oWidth,
-        height: oHeight,
         mimeType,
         poster,
         local: true,
