@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,12 +29,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Color, Label, Row, ToggleButton } from '../../form';
-import { useCommonColorValue, getCommonValue } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { ReactComponent as NoneIcon } from '../../../icons/fill_none_icon.svg';
 import { ReactComponent as FilledIcon } from '../../../icons/fill_filled_icon.svg';
 import { ReactComponent as HighlightedIcon } from '../../../icons/fill_highlighted_icon.svg';
+import { Color, Label, Row, ToggleButton } from '../../form';
+import { useKeyDownEffect } from '../../keyboard';
+import { useCommonColorValue, getCommonValue } from '../utils';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
@@ -57,6 +59,24 @@ const Space = styled.div`
   flex: ${({ flex }) => flex};
 `;
 
+const BUTTONS = [
+  {
+    mode: BACKGROUND_TEXT_MODE.NONE,
+    label: __('None', 'web-stories'),
+    Icon: NoneIcon,
+  },
+  {
+    mode: BACKGROUND_TEXT_MODE.FILL,
+    label: __('Fill', 'web-stories'),
+    Icon: FilledIcon,
+  },
+  {
+    mode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+    label: __('Highlight', 'web-stories'),
+    Icon: HighlightedIcon,
+  },
+];
+
 function ColorControls({ selectedElements, pushUpdate }) {
   const color = useCommonColorValue(selectedElements, 'color');
   const backgroundColor = useCommonColorValue(
@@ -66,6 +86,23 @@ function ColorControls({ selectedElements, pushUpdate }) {
   const backgroundTextMode = getCommonValue(
     selectedElements,
     'backgroundTextMode'
+  );
+  const fillRow = useRef();
+
+  useKeyDownEffect(
+    fillRow,
+    ['left', 'right'],
+    ({ key }) => {
+      const current = BUTTONS.findIndex(
+        ({ mode }) => mode === backgroundTextMode
+      );
+      const next = current + (key === 'ArrowRight' ? 1 : -1);
+      if (next < 0 || next > BUTTONS.length - 1) {
+        return;
+      }
+      pushUpdate({ backgroundTextMode: BUTTONS[next].mode }, true);
+    },
+    [backgroundTextMode]
   );
 
   return (
@@ -85,50 +122,25 @@ function ColorControls({ selectedElements, pushUpdate }) {
           }
         />
       </Row>
-      <FillRow>
+      <FillRow ref={fillRow}>
         <FillLabel>{__('Fill', 'web-stories')}</FillLabel>
-        <FillToggleButton
-          icon={<NoneIcon />}
-          value={backgroundTextMode === BACKGROUND_TEXT_MODE.NONE}
-          label={__('None', 'web-stories')}
-          onChange={(value) =>
-            value &&
-            pushUpdate(
-              {
-                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-              },
-              true
-            )
-          }
-        />
-        <FillToggleButton
-          icon={<FilledIcon />}
-          value={backgroundTextMode === BACKGROUND_TEXT_MODE.FILL}
-          label={__('Fill', 'web-stories')}
-          onChange={(value) =>
-            value &&
-            pushUpdate(
-              {
-                backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-              },
-              true
-            )
-          }
-        />
-        <FillToggleButton
-          icon={<HighlightedIcon />}
-          label={__('Highlight', 'web-stories')}
-          value={backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT}
-          onChange={(value) =>
-            value &&
-            pushUpdate(
-              {
-                backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
-              },
-              true
-            )
-          }
-        />
+        {BUTTONS.map(({ mode, label, Icon }) => (
+          <FillToggleButton
+            key={mode}
+            icon={<Icon />}
+            value={backgroundTextMode === mode}
+            label={label}
+            onChange={(value) =>
+              value &&
+              pushUpdate(
+                {
+                  backgroundTextMode: mode,
+                },
+                true
+              )
+            }
+          />
+        ))}
         <Space flex="2" />
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
