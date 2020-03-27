@@ -28,7 +28,7 @@ import paneId from './paneId';
 function AnimationPane(props) {
   return (
     <Pane id={paneId} {...props}>
-      {__('Still empty', 'web-stories')}
+      {__('Coming soon', 'web-stories')}
     </Pane>
   );
 }

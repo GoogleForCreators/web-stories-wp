@@ -29,8 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import DropDown from '../../dropDown';
-import { Numeric, Row } from '../../form';
+import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
