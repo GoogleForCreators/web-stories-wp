@@ -122,7 +122,6 @@ const MediaElement = ({
     width: originalWidth,
     height: originalHeight,
     local,
-    id,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -174,7 +173,7 @@ const MediaElement = ({
     return (
       <Container>
         <Image
-          key={id}
+          key={src}
           src={src}
           ref={mediaElement}
           width={width}
@@ -220,7 +219,7 @@ const MediaElement = ({
       onClick={onClick}
     >
       <Video
-        key={id}
+        key={src}
         ref={mediaElement}
         poster={poster}
         width={width}
