@@ -54,14 +54,14 @@ function MediaProvider({ children }) {
     updateMediaElement,
   } = actions;
   const fetchMedia = useCallback(
-    ({ pagingNum: p = 1 } = {}, callback) => {
+    ({ pagingNum: p = 1, mediaType: currentMediaType } = {}, callback) => {
       fetchMediaStart({ pagingNum: p });
-      getMedia({ mediaType, searchTerm, pagingNum: p })
+      getMedia({ mediaType: currentMediaType, searchTerm, pagingNum: p })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
           callback({
             media: data,
-            mediaType,
+            mediaType: currentMediaType,
             searchTerm,
             pagingNum: p,
             totalPages,
@@ -69,7 +69,7 @@ function MediaProvider({ children }) {
         })
         .catch(fetchMediaError);
     },
-    [fetchMediaError, fetchMediaStart, getMedia, mediaType, searchTerm]
+    [fetchMediaError, fetchMediaStart, getMedia, searchTerm]
   );
   const { uploadMedia, isUploading } = useUploadMedia({
     media,
@@ -94,7 +94,7 @@ function MediaProvider({ children }) {
   const resetWithFetch = useCallback(() => {
     resetFilters();
     if (!mediaType && !searchTerm && pagingNum === 1) {
-      fetchMedia({}, fetchMediaSuccess);
+      fetchMedia({ mediaType }, fetchMediaSuccess);
     }
   }, [
     fetchMedia,
@@ -106,7 +106,7 @@ function MediaProvider({ children }) {
   ]);
 
   useEffect(() => {
-    fetchMedia({ pagingNum }, fetchMediaSuccess);
+    fetchMedia({ pagingNum, mediaType }, fetchMediaSuccess);
   }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
   const uploadVideoPoster = useCallback(

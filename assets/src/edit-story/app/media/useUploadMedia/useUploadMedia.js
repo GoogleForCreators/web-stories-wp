@@ -35,7 +35,7 @@ import {
   getAttachmentFromResource,
 } from '../../../app/media/utils';
 
-function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
+function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -99,7 +99,7 @@ function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
           });
         }
 
-        fetchMedia({ pagingNum }, setMedia);
+        fetchMedia({ pagingNum, mediaType }, setMedia);
       } catch (e) {
         localFiles.forEach(({ element }) => {
           if (element) {
@@ -117,7 +117,7 @@ function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
         throw new Error(__('Error uploading a file.', 'web-stories'));
       }
     },
-    [setMedia, uploadFile, fetchMedia, media, pagingNum]
+    [setMedia, uploadFile, fetchMedia, media, pagingNum, mediaType]
   );
 
   return {
