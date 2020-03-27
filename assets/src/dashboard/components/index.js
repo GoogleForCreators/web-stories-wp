@@ -15,6 +15,7 @@
  */
 
 export { default as NavigationBar } from './navigation-bar';
+export { default as BookmarkChip } from './bookmark-chip';
 export { default as Button } from './button';
 export { default as PopoverMenu } from './popover-menu';
 export { default as Dropdown } from './dropdown';
