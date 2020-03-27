@@ -77,7 +77,6 @@ InputContainer.propTypes = {
 };
 
 const ControlVisibilityContainer = styled.div`
-  visibility: 'visible';
   flex-grow: 1;
   display: flex;
   justify-content: flex-start;
