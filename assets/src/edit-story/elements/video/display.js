@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useMedia } from '../../app/media';
 import { elementFillContent } from '../shared';
 import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
@@ -61,8 +62,16 @@ function VideoDisplay({
     };
   }
 
+  const {
+    state: { media },
+  } = useMedia();
+
+  const originalResource =
+    media.find((item) => item.id === (resource.videoId || resource.posterid)) ||
+    resource;
+
   const videoProps = getMediaSizePositionProps(
-    resource,
+    originalResource,
     width,
     height,
     scale,
@@ -73,21 +82,21 @@ function VideoDisplay({
     <Element>
       {previewMode ? (
         <Image
-          src={poster || resource.poster}
-          alt={resource.title}
+          src={poster || originalResource.poster}
+          alt={originalResource.title}
           style={style}
           {...videoProps}
         />
       ) : (
         <Video
           id={`video-${id}`}
-          poster={poster || resource.poster}
+          poster={poster || originalResource.poster}
           style={style}
           {...videoProps}
           loop={loop}
           preload="metadata"
         >
-          <source src={resource.src} type={resource.mimeType} />
+          <source src={originalResource.src} type={originalResource.mimeType} />
         </Video>
       )}
     </Element>
