@@ -90,7 +90,10 @@ function Panel({ resizeable, initialHeight, name, children }) {
 
   const resetHeight = useCallback(() => {
     setManuallyChanged(false);
-  }, []);
+    if (isCollapsed) {
+      expand(true);
+    }
+  }, [expand, isCollapsed]);
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
 

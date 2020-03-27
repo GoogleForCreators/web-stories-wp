@@ -31,7 +31,7 @@ import useLayers from './useLayers';
 function LayerPanel() {
   const layers = useLayers();
   const numLayersVisible = layers?.length
-    ? Math.max(layers.length, DEFAULT_LAYERS_VISIBLE)
+    ? Math.min(layers.length, DEFAULT_LAYERS_VISIBLE)
     : DEFAULT_LAYERS_VISIBLE;
 
   return (
