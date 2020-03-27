@@ -32,16 +32,6 @@ const styledTiles = css`
   width: 100%;
   object-fit: contain;
   transition: 0.2s transform, 0.15s opacity;
-  ${({ dragging }) =>
-    dragging
-      ? `
-    transform: scale(0);
-    opacity: 0;
-  `
-      : `
-    transform: scale(1);
-    opacity: 1;
-  `}
 `;
 
 const Image = styled.img`
@@ -100,7 +90,6 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [dragging, setDragging] = useState(false);
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -113,7 +102,6 @@ const MediaElement = ({
     () => ({
       draggable: 'true',
       onDragStart: (e) => {
-        setDragging(true);
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -132,7 +120,6 @@ const MediaElement = ({
       },
       onDragEnd: (e) => {
         e.preventDefault();
-        setDragging(false);
         setDraggingResource(null);
         handleDrop(resource);
       },
@@ -152,7 +139,6 @@ const MediaElement = ({
         height={height}
         loading={'lazy'}
         onClick={onClick}
-        dragging={dragging}
         {...dropTargetsBindings}
       />
     );
@@ -186,7 +172,6 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        dragging={dragging}
         preload="metadata"
         {...dropTargetsBindings}
       >

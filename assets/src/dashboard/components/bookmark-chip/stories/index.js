@@ -17,33 +17,38 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
-import { useCallback, useState } from 'react';
+import { action } from '@storybook/addon-actions';
+import { boolean, text, select } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { Primary } from '../../button';
-import Modal from '../';
+import BookmarkChip from '../';
+import { CHIP_TYPES } from '../../../constants';
 
 export default {
-  title: 'Components/Modal',
-  component: Primary,
+  title: 'Dashboard/Components/BookmarkChip',
+  component: BookmarkChip,
 };
 
 export const _default = () => {
-  const contentLabel = text('Content Label', 'Modal Content');
-
-  const [open, setOpen] = useState(false);
-  const openModal = useCallback(() => setOpen(true), [setOpen]);
-  const closeModal = useCallback(() => setOpen(false), [setOpen]);
-
   return (
-    <>
-      <Primary onClick={openModal}>{'Open Modal'}</Primary>
-      <Modal open={open} onClose={closeModal} contentLabel={contentLabel}>
-        {'Content goes here'}
-      </Modal>
-    </>
+    <BookmarkChip
+      isBookmarked={boolean('isBookmarked')}
+      aria-label={text(
+        'aria-label',
+        'the label of my bookmark chip i want used for aria'
+      )}
+      disabled={boolean('disabled')}
+      onClick={action('clicked')}
+      chipType={select(
+        'chipType',
+        {
+          small: CHIP_TYPES.SMALL,
+          standard: CHIP_TYPES.STANDARD,
+        },
+        'standard'
+      )}
+    />
   );
 };
