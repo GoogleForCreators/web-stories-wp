@@ -240,9 +240,30 @@ function APIProvider({ children }) {
     return apiFetch({ path });
   }, [statuses]);
 
-  const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
-  }, [users]);
+  const getUsersByPage = useCallback(
+    (pagingNum = 1) => {
+      let apiPath = users;
+      const perPage = 100;
+      apiPath = addQueryArgs(apiPath, {
+        per_page: perPage,
+        page: pagingNum,
+      });
+      return apiFetch({ path: apiPath });
+    },
+    [users]
+  );
+
+  const getAllUsers = useCallback(
+    (pagingNum = 1, result = []) => {
+      return getUsersByPage(pagingNum).then((response) => {
+        if (response.length === 100) {
+          return getAllUsers(pagingNum + 1, result.concat(response));
+        }
+        return result.concat(response);
+      });
+    },
+    [getUsersByPage]
+  );
 
   const state = {
     actions: {
