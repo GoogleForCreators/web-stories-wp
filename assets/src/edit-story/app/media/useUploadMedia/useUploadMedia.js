@@ -66,7 +66,6 @@ function useUploadMedia({ media, pagingNum, fetchMedia, setMedia }) {
             };
           });
         }
-
         setMedia({
           media: [
             ...localFiles.map(({ attachement }) => attachement),

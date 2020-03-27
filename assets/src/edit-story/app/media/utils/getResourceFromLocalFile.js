@@ -78,13 +78,13 @@ const getImageResource = (image) => {
       const src = window.URL.createObjectURL(
         new window.Blob([reader.result], { type: image.type })
       );
-      const { width: oWidth, height: oHeight } = await getImageDimensions(src);
+      const { width, height } = await getImageDimensions(src);
 
       resolve({
         type: 'image',
         src,
-        oWidth,
-        oHeight,
+        width,
+        height,
         mimeType: image.type,
         local: true,
       });
@@ -111,15 +111,13 @@ const getVideoResource = (video) => {
       const poster = window.URL.createObjectURL(
         await getFirstFrameOfVideo(src)
       );
-      const { width: oWidth, height: oHeight } = await getImageDimensions(
-        poster
-      );
+      const { width, height } = await getImageDimensions(poster);
 
       resolve({
         type: 'video',
         src,
-        oWidth,
-        oHeight,
+        width,
+        height,
         mimeType,
         poster,
         local: true,
