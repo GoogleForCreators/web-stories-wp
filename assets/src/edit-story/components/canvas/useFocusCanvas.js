@@ -17,24 +17,16 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import { useCallback } from 'react';
 
-const ColorBox = styled.div`
-  height: 32px;
-  width: 122px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)} !important;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)} !important;
-  border-radius: 4px;
-  overflow: hidden;
-  align-items: center;
+function useFocusCanvas() {
+  const focusCanvas = useCallback(() => {
+    setTimeout(() => {
+      const evt = new window.FocusEvent('focusout');
+      window.document.dispatchEvent(evt);
+    });
+  }, []);
+  return focusCanvas;
+}
 
-  &:focus,
-  & input:focus {
-    outline: none;
-    background: ${({ theme }) => theme.colors.fg.v1};
-    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.55)};
-  }
-`;
-
-export default ColorBox;
+export default useFocusCanvas;
