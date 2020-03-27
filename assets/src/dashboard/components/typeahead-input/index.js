@@ -44,8 +44,14 @@ const SearchContainer = styled.div`
   border: none;
   box-shadow: ${({ theme, isOpen }) =>
     isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
+    transition: width 0.2s ease-in-out;
+  }
 `;
 SearchContainer.propTypes = {
+  isExpanded: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
@@ -55,9 +61,8 @@ const InputContainer = styled.div`
   flex-direction: row;
   width: 100%;
   height: 48px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 19px;
+  padding: 16px;
+  align-items: center;
   border-radius: ${({ theme, isOpen }) =>
     isOpen ? 'none' : theme.border.typeaheadRadius};
   border: none;
@@ -71,14 +76,31 @@ InputContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
+const ControlVisibilityContainer = styled.div`
+  visibility: 'visible';
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    visibility: ${({ isExpanded }) => (isExpanded ? 'visible' : 'hidden')};
+    opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
+    transition: opacity 0.2s ease-in-out;
+  }
+`;
+ControlVisibilityContainer.propTypes = {
+  isExpanded: PropTypes.bool,
+};
+
 const StyledInput = styled.input`
   align-self: center;
   border: none;
   background-color: transparent;
   text-overflow: ellipsis;
-  padding: 0 11.95px;
+  padding: 0 12px;
   margin: auto 0;
   height: 100%;
+  flex-grow: 1;
   font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
   font-size: ${({ theme }) => theme.fonts.typeaheadInput.size};
   line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight};
@@ -91,20 +113,29 @@ const StyledInput = styled.input`
   }
 `;
 
-const IconContainer = styled.span`
-  margin: auto 0;
-  width: 17.05px;
-  height: 17.05px;
+const SearchButton = styled.button`
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.gray300};
+  & > svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    color: ${({ theme }) => theme.colors.gray500};
+  }
 `;
 
 const ClearInputButton = styled.button`
   align-self: flex-end;
   border: none;
   background-color: transparent;
-  margin: auto 19px auto auto;
-  width: 13.18px;
-  height: 13.18px;
+  margin: auto 0;
+  width: 14px;
+  height: 14px;
   padding: 0;
   color: ${({ theme }) => theme.colors.gray600};
   cursor: pointer;
@@ -124,11 +155,19 @@ const TypeaheadInput = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [menuFocused, setMenuFocused] = useState(false);
+
   const [inputValue, setInputValue] = useState(value);
+
+  const searchRef = useRef();
 
   const isMenuOpen = useMemo(() => {
     return showMenu && items.length > 0 && inputValue.length > 0;
   }, [items, showMenu, inputValue]);
+
+  const isInputExpanded = useMemo(() => {
+    return menuFocused || inputValue.length > 0;
+  }, [menuFocused, inputValue]);
 
   const filteredItems = useMemo(() => {
     if (!Boolean(isFiltering)) {
@@ -144,10 +183,9 @@ const TypeaheadInput = ({
     });
   }, [items, inputValue, isFiltering]);
 
-  const searchRef = useRef();
-
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
+    setMenuFocused(false);
   }, []);
 
   useFocusOut(searchRef, handleFocusOut);
@@ -168,6 +206,7 @@ const TypeaheadInput = ({
   const handleInputClear = () => {
     handleInputChange({ label: '', value: '' });
     setShowMenu(false);
+    setMenuFocused(false);
   };
 
   return (
@@ -176,42 +215,51 @@ const TypeaheadInput = ({
       className={className}
       {...rest}
       isOpen={isMenuOpen}
+      isExpanded={isInputExpanded}
     >
-      <InputContainer isOpen={isMenuOpen}>
-        <IconContainer>
+      <InputContainer isOpen={isMenuOpen} isExpanded={isInputExpanded}>
+        <SearchButton
+          onClick={() => setMenuFocused(true)}
+          aria-label={`Go to ${ariaLabel}`}
+        >
           <SearchIcon />
-        </IconContainer>
-        <label aria-label={ariaLabel} htmlFor={inputId} />
-        <StyledInput
-          autoComplete="off"
-          type="text"
-          id={inputId}
-          name={inputId}
-          disabled={disabled}
-          isOpen={isMenuOpen}
-          value={inputValue}
-          onFocus={() => setShowMenu(true)}
-          onChange={({ target }) => {
-            handleInputChange({ label: target.value, value: target.value });
-          }}
-          placeholder={placeholder}
-        />
-        {inputValue.length > 0 && !Boolean(isMenuOpen) && (
-          <ClearInputButton
-            onClick={handleInputClear}
-            aria-label={__('Clear Input', 'web-stories')}
-          >
-            <CloseIcon />
-          </ClearInputButton>
-        )}
+        </SearchButton>
+
+        <ControlVisibilityContainer isExpanded={isInputExpanded}>
+          <label aria-label={ariaLabel} htmlFor={inputId} />
+          <StyledInput
+            autoComplete="off"
+            type="text"
+            id={inputId}
+            name={inputId}
+            disabled={disabled}
+            isOpen={isMenuOpen}
+            value={inputValue}
+            onFocus={() => setShowMenu(true)}
+            onChange={({ target }) => {
+              handleInputChange({ label: target.value, value: target.value });
+            }}
+            placeholder={placeholder}
+          />
+          {inputValue.length > 0 && !Boolean(isMenuOpen) && (
+            <ClearInputButton
+              onClick={handleInputClear}
+              aria-label={__('Clear Input', 'web-stories')}
+            >
+              <CloseIcon />
+            </ClearInputButton>
+          )}
+        </ControlVisibilityContainer>
       </InputContainer>
 
-      <TypeaheadOptions
-        isOpen={isMenuOpen}
-        items={filteredItems}
-        maxItemsVisible={maxItemsVisible}
-        onSelect={filteredItems && handleMenuItemSelect}
-      />
+      {isMenuOpen && (
+        <TypeaheadOptions
+          isOpen={isMenuOpen}
+          items={filteredItems}
+          maxItemsVisible={maxItemsVisible}
+          onSelect={filteredItems && handleMenuItemSelect}
+        />
+      )}
     </SearchContainer>
   );
 };
