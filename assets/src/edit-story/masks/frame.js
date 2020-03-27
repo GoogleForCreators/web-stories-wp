@@ -129,9 +129,10 @@ WithDropTarget.propTypes = {
 
 export default function WithMask({ element, fill, style, children, ...rest }) {
   const [hover, setHover] = useState(false);
+  const { isBackground } = element;
 
   const mask = getElementMask(element);
-  if (!mask?.type) {
+  if (!mask?.type || isBackground) {
     return (
       <div
         style={{
