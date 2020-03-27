@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -30,39 +30,34 @@ import SnackbarContainer from './snackbarContainer';
 function SnackbarProvider({ children, place }) {
   const [notifications, setNotifications] = useState([]);
 
-  SnackbarProvider.timeouts = {};
-  SnackbarProvider.startTimes = {};
+  const timeouts = useRef({});
 
   const remove = (notification) => {
-    clearTimeout(SnackbarProvider.timeouts[notification.key]);
+    clearTimeout(timeouts.current[notification.key]);
     setNotifications((currentNotifications) => {
       return currentNotifications.filter(
         (item) => item.key !== notification.key
       );
     });
 
-    delete SnackbarProvider.timeouts[notification.key];
-    delete SnackbarProvider.startTimes[notification.key];
+    delete timeouts.current[notification.key];
   };
 
   const removeNotification = (notification) => {
-    SnackbarProvider.startTimes[notification.key] = Date.now();
     const timeout = setTimeout(() => {
       remove(notification);
     }, notification.timeout);
-    SnackbarProvider.timeouts[notification.key] = timeout;
+    timeouts.current[notification.key] = timeout;
   };
 
   const create = (notification) => {
-    setNotifications([
-      ...notifications,
-      {
-        key: uuidv4(),
-        timeout: notification.timeout || 5000,
-        ...notification,
-      },
-    ]);
-    removeNotification(notification);
+    const newNotification = {
+      key: uuidv4(),
+      timeout: notification.timeout || 5000,
+      ...notification,
+    };
+    setNotifications([...notifications, newNotification]);
+    removeNotification(newNotification);
   };
 
   const state = {

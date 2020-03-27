@@ -71,6 +71,7 @@ function useUploader(refreshLibrary = true) {
       const sizeError = new Error();
       sizeError.name = 'SizeError';
       sizeError.file = file.name;
+      sizeError.isUserError = true;
 
       /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
       sizeError.message = sprintf(
@@ -86,6 +87,9 @@ function useUploader(refreshLibrary = true) {
 
     if (!isValidType(file)) {
       const validError = new Error();
+      validError.isUserError = true;
+      validError.name = 'ValidError';
+      validError.file = file.name;
 
       /* translators: %s is a list of allowed file extensions. */
       validError.message = createInterpolateElement(
@@ -97,8 +101,6 @@ function useUploader(refreshLibrary = true) {
           b: <b />,
         }
       );
-      validError.name = 'ValidError';
-      validError.file = file.name;
       throw validError;
     }
 

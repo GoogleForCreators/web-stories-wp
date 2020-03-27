@@ -22,6 +22,11 @@ import { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../app';
@@ -151,6 +156,12 @@ function useCanvasSelectionCopyPaste(container) {
             try {
               uploadFile(item.getAsFile());
             } catch (e) {
+              if (!e.isUserError) {
+                e.message = __(
+                  'Sorry, files has failed to upload',
+                  'web-stories'
+                );
+              }
               showSnackbar({
                 message: e.message,
               });
