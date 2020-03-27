@@ -242,6 +242,7 @@ const TypeaheadInput = ({
           />
           {inputValue.length > 0 && !Boolean(isMenuOpen) && (
             <ClearInputButton
+              data-testid="clear-search"
               onClick={handleInputClear}
               aria-label={__('Clear Input', 'web-stories')}
             >
