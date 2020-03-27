@@ -31,13 +31,19 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 /**
- * Prevents externalizing React, ReactDOM, and ReactDOMServer.
+ * Prevents externalizing certain packages.
  *
  * @param {string} request Requested module
- * @return {(string|undefined)} Script global
+ * @return {(string|undefined|boolean)} Script global
  */
 function requestToExternal(request) {
-  if (['react', 'react-dom', 'react-dom/server'].includes(request)) {
+  const packages = [
+    'react',
+    'react-dom',
+    'react-dom/server',
+    '@wordpress/element',
+  ];
+  if (packages.includes(request)) {
     return false;
   }
 

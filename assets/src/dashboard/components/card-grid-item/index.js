@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledGridItem = styled.div`
+const CardGridItem = styled.div`
   width: ${({ theme }) => theme.grid.desktop.itemWidth};
   height: ${({ theme }) => theme.grid.desktop.itemHeight};
-  background-color: ${({ theme }) => theme.colors.placeholder};
+  display: flex;
+  flex-direction: column;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: ${({ theme }) => theme.grid.tablet.itemWidth};
@@ -41,11 +41,6 @@ const StyledGridItem = styled.div`
   }
 `;
 
-const CardGridItem = ({ children, ...rest }) => {
-  return <StyledGridItem {...rest}>{children}</StyledGridItem>;
-};
-
-CardGridItem.propTypes = {
-  children: PropTypes.node,
-};
 export default CardGridItem;
+export { default as CardPreviewContainer } from './card-preview';
+export { default as CardTitle } from './card-title';
