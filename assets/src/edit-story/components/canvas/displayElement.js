@@ -23,6 +23,7 @@ import { useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -57,7 +58,7 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element }) {
+function DisplayElement({ element, previewMode }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -107,7 +108,7 @@ function DisplayElement({ element }) {
   });
 
   return (
-    <Wrapper ref={wrapperRef} {...box}>
+    <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <WithMask
         element={element}
         fill={true}
@@ -116,12 +117,14 @@ function DisplayElement({ element }) {
           opacity: opacity ? opacity / 100 : null,
         }}
       >
-        <Display element={element} box={box} />
-        <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
-          {replacementElement && (
-            <Replacement element={replacementElement} box={box} />
-          )}
-        </ReplacementContainer>
+        <Display element={element} previewMode={previewMode} box={box} />
+        {!previewMode && (
+          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+            {replacementElement && (
+              <Replacement element={replacementElement} box={box} />
+            )}
+          </ReplacementContainer>
+        )}
       </WithMask>
       {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
         <BackgroundOverlay
@@ -133,6 +136,7 @@ function DisplayElement({ element }) {
 }
 
 DisplayElement.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
 };
 

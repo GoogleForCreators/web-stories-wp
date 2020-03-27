@@ -18,6 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,17 +31,42 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row } from '../form';
+import { Media, Row } from '../../form';
 import {
   createLink,
   inferLinkType,
   getLinkFromElement,
   LinkType,
-} from '../link';
-import { useAPI } from '../../app/api';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
-import { SimplePanel } from './panel';
-import { Note, ExpandedTextInput } from './shared';
+} from '../../link';
+import { useAPI } from '../../../app/api';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
+import { ReactComponent as Info } from '../../../icons/info.svg';
+import { SimplePanel } from '../panel';
+import { Note, ExpandedTextInput } from '../shared';
+import Dialog from '../../dialog';
+import theme from '../../../theme';
+import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { Plain } from '../../button';
+import LinkInfoDialog from './infoDialog';
+
+const BrandIconText = styled.span`
+  margin-left: 12px;
+`;
+
+const ActionableNote = styled(Note)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+`;
+
+const InfoIcon = styled(Info)`
+  width: 13px;
+  height: 13px;
+  margin-top: -2px;
+  margin-left: 2px;
+  justify-self: flex-end;
+`;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const selectedElement = selectedElements[0];
@@ -47,10 +74,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
     selectedElement,
   ]);
-  const DEFAULT_LINK = createLink({ url: null, icon: null, desc: null });
+  const defaultLink = useMemo(
+    () => createLink({ url: null, icon: null, desc: null }),
+    []
+  );
   const link = useMemo(
-    () => getLinkFromElement(selectedElement) || DEFAULT_LINK,
-    [selectedElement, DEFAULT_LINK]
+    () => getLinkFromElement(selectedElement) || defaultLink,
+    [selectedElement, defaultLink]
   );
   const canLink = selectedElements.length === 1 && !isFill;
 
@@ -60,6 +90,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     actions: { getLinkMetadata },
   } = useAPI();
 
+  const updateLinkFromMetadataApi = useBatchingCallback(
+    ({ url, title, icon }) =>
+      pushUpdateForObject(
+        'link',
+        (prev) => ({
+          url,
+          desc: title ? title : prev.desc,
+          icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
+        }),
+        defaultLink,
+        true
+      ),
+    [pushUpdateForObject, defaultLink]
+  );
+
   const [populateMetadata] = useDebouncedCallback((url) => {
     const urlWithProtocol = withProtocol(url);
     if (!isValidUrl(urlWithProtocol)) {
@@ -68,16 +113,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
-        pushUpdateForObject(
-          'link',
-          (prev) => ({
-            url: urlWithProtocol,
-            desc: title ? title : prev.desc,
-            icon: image ? toAbsoluteUrl(urlWithProtocol, image) : prev.icon,
-          }),
-          DEFAULT_LINK,
-          true
-        );
+        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
       })
       .catch((reason) => {
         if (reason?.code === 'rest_invalid_url') {
@@ -101,11 +137,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           ...properties,
           type: inferredLinkType,
         },
-        DEFAULT_LINK,
+        defaultLink,
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType, DEFAULT_LINK]
+    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
   );
 
   const handleChangeIcon = useCallback(
@@ -115,12 +151,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
+  // Informational dialog
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+  const openDialog = useCallback(() => setInfoDialogOpen(true), []);
+  const closeDialog = useCallback(() => setInfoDialogOpen(false), []);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
-        <Note>
-          {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
-        </Note>
+        <ActionableNote onClick={() => openDialog()}>
+          {__('Enter an address to apply a 1 or 2-tap link', 'web-stories')}
+          <InfoIcon />
+        </ActionableNote>
       </Row>
 
       <Row>
@@ -155,9 +197,28 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             loading={fetchingMetadata}
             circle
           />
-          <span>{__('Optional brand icon', 'web-stories')}</span>
+          <BrandIconText>
+            {__('Optional brand icon', 'web-stories')}
+          </BrandIconText>
         </Row>
       )}
+      <Dialog
+        open={infoDialogOpen}
+        onClose={closeDialog}
+        title={__('How to apply a link', 'web-stories')}
+        actions={
+          <Plain onClick={() => closeDialog()}>
+            {__('Ok, got it', 'web-stories')}
+          </Plain>
+        }
+        style={{
+          overlay: {
+            background: rgba(theme.colors.bg.v11, 0.6),
+          },
+        }}
+      >
+        <LinkInfoDialog />
+      </Dialog>
     </SimplePanel>
   );
 }

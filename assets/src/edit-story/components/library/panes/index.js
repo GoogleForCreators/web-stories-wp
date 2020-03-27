@@ -18,18 +18,16 @@
  * Internal dependencies
  */
 import { AnimationTab, AnimationPane } from './animation';
-import { ElementsTab, ElementsPane } from './elements';
 import { MediaTab, MediaPane } from './media';
 import { ShapesTab, ShapesPane } from './shapes';
 import { TextTab, TextPane } from './text';
 import { Tabs } from './shared';
 
-function getPanes({ ANIMATION, ELEMENTS, MEDIA, SHAPES, TEXT }) {
+function getPanes({ ANIMATION, MEDIA, SHAPES, TEXT }) {
   // Order here is important, as it denotes the actual visual order of elements.
   return [
     { Tab: MediaTab, Pane: MediaPane, id: MEDIA },
     { Tab: TextTab, Pane: TextPane, id: TEXT },
-    { Tab: ElementsTab, Pane: ElementsPane, id: ELEMENTS },
     { Tab: ShapesTab, Pane: ShapesPane, id: SHAPES },
     { Tab: AnimationTab, Pane: AnimationPane, id: ANIMATION },
   ];
