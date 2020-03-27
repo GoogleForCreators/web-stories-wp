@@ -243,7 +243,7 @@ function APIProvider({ children }) {
   const getUsersByPage = useCallback(
     (pagingNum = 1) => {
       let apiPath = users;
-      const perPage = 10;
+      const perPage = 100;
       apiPath = addQueryArgs(apiPath, {
         per_page: perPage,
         page: pagingNum,
