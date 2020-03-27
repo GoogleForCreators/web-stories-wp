@@ -32,16 +32,6 @@ import { ReactComponent as Play } from '../../../../icons/play.svg';
 const styledTiles = css`
   width: 100%;
   transition: 0.2s transform, 0.15s opacity;
-  ${({ dragging }) =>
-    dragging
-      ? `
-    transform: scale(0);
-    opacity: 0;
-  `
-      : `
-    transform: scale(1);
-    opacity: 1;
-  `}
 `;
 
 const Image = styled.img`
@@ -58,11 +48,6 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Media = styled.div`
-  width: 100%;
-  position: relative;
-  margin-bottom: 10px;
-`;
 const PlayIcon = styled(Play)`
   height: 24px;
   position: absolute;
@@ -146,7 +131,6 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [dragging, setDragging] = useState(false);
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -159,7 +143,6 @@ const MediaElement = ({
     () => ({
       draggable: 'true',
       onDragStart: (e) => {
-        setDragging(true);
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -178,7 +161,6 @@ const MediaElement = ({
       },
       onDragEnd: (e) => {
         e.preventDefault();
-        setDragging(false);
         setDraggingResource(null);
         handleDrop(resource);
       },
@@ -199,7 +181,6 @@ const MediaElement = ({
           height={height}
           loading={'lazy'}
           onClick={onClick}
-          dragging={dragging}
           {...dropTargetsBindings}
         />
         {local && (
@@ -233,27 +214,24 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container>
-      <Media
-        onPointerEnter={pointerEnter}
-        onPointerLeave={pointerLeave}
-        onClick={onClick}
+    <Container
+      onPointerEnter={pointerEnter}
+      onPointerLeave={pointerLeave}
+      onClick={onClick}
+    >
+      <Video
+        key={id}
+        ref={mediaElement}
+        poster={poster}
+        width={width}
+        height={height}
+        preload="metadata"
+        {...dropTargetsBindings}
       >
-        <Video
-          key={id}
-          ref={mediaElement}
-          poster={poster}
-          width={width}
-          height={height}
-          dragging={dragging}
-          preload="metadata"
-          {...dropTargetsBindings}
-        >
-          <source src={src} type={mimeType} />
-        </Video>
-        {showVideoDetail && <PlayIcon />}
-        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
-      </Media>
+        <source src={src} type={mimeType} />
+      </Video>
+      {showVideoDetail && <PlayIcon />}
+      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       {local && (
         <CSSTransition
           in

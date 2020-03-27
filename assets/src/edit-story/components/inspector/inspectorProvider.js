@@ -18,13 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../app/api';
 import useResizeEffect from '../../utils/useResizeEffect';
+import { useStory } from '../../app/story';
 import Context from './context';
 
 const DESIGN = 'design';
@@ -35,11 +36,16 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAllStatuses, getAllUsers },
   } = useAPI();
+  const {
+    state: { selectedElementIds, currentPage },
+  } = useStory();
+
   const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
   const [statuses, setStatuses] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
+  const tabRef = useRef(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
   const [isStatusesLoading, setIsStatusesLoading] = useState(false);
@@ -51,6 +57,22 @@ function InspectorProvider({ children }) {
   useResizeEffect(inspectorContentRef, ({ height }) =>
     setInspectorContentHeight(height)
   );
+
+  useEffect(() => {
+    tabRef.current = tab;
+  }, [tab]);
+
+  useEffect(() => {
+    if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
+      setTab(DESIGN);
+    }
+  }, [selectedElementIds]);
+
+  useEffect(() => {
+    if (tabRef.current === DOCUMENT) {
+      setTab(DESIGN);
+    }
+  }, [currentPage]);
 
   const loadStatuses = useCallback(() => {
     if (!isStatusesLoading && statuses.length === 0) {

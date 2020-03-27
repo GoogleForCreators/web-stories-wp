@@ -23,7 +23,6 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -241,8 +240,6 @@ function MediaPane(props) {
     <StyledPane id={paneId} {...props}>
       <Inner>
         <Padding>
-          {(!isMediaLoaded || isMediaLoading) && <Spinner />}
-
           <SearchInput
             value={searchTerm}
             placeholder={__('Search', 'web-stories')}
