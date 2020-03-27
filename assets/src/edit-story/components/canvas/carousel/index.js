@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import { useLayoutEffect, useRef, useState, useCallback } from 'react';
 
 /**
@@ -34,6 +35,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
+  Plain,
 } from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
@@ -73,6 +75,14 @@ const NavArea = styled(Area)`
 `;
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
+
+const PlainStyled = styled(Plain)`
+  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  &:hover {
+    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.25)};
+  }
+`;
 
 const MenuIconsWrapper = styled.div`
   ${({ isCompact }) =>
@@ -128,6 +138,12 @@ const Li = styled.li.attrs({
   &:last-of-type {
     margin: 0;
   }
+`;
+
+const GridViewContainer = styled.div`
+  flex: 1;
+  margin: 70px 170px 70px 170px;
+  pointer-events: all;
 `;
 
 function calculatePageThumbSize(carouselSize) {
@@ -313,16 +329,25 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
-      {isGridViewOpen && (
-        <Modal
-          isOpen={isGridViewOpen}
-          onRequestClose={closeModal}
-          contentLabel={__('Grid View', 'web-stories')}
-          closeButtonLabel={__('Back', 'web-stories')}
-        >
+      <Modal
+        open={isGridViewOpen}
+        onClose={closeModal}
+        contentLabel={__('Grid View', 'web-stories')}
+        overlayStyles={{
+          alignItems: 'flex-start',
+        }}
+        contentStyles={{
+          pointerEvents: 'none',
+          flex: 1,
+        }}
+      >
+        <GridViewContainer>
+          <PlainStyled onClick={() => closeModal()}>
+            {__('Back', 'web-stories')}
+          </PlainStyled>
           <GridView />
-        </Modal>
-      )}
+        </GridViewContainer>
+      </Modal>
     </DropZoneProvider>
   );
 }
