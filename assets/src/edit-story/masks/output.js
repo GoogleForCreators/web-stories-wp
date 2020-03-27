@@ -83,7 +83,7 @@ export default function WithMask({
         ...style,
         clipPath: `url(#${maskId})`,
         // stylelint-disable-next-line property-no-vendor-prefix
-        webkitClipPath: `url(#${maskId})`,
+        WebkitClipPath: `url(#${maskId})`,
       }}
       {...rest}
     >
