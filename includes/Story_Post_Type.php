@@ -397,6 +397,7 @@ class Story_Post_Type {
 				'image/jpeg',
 				'image/jpg',
 				'image/gif',
+				'image/svg',
 			],
 			'audio' => [], // todo: support audio uploads.
 			'video' => [
@@ -424,7 +425,6 @@ class Story_Post_Type {
 			// Only add currently supported mime types.
 			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], wp_get_mime_types() ) );
 		}
-
 		return $allowed_mime_types;
 	}
 

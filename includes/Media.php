@@ -106,7 +106,7 @@ class Media {
 
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
-		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+		add_filter( 'mime_types', [ __CLASS__, 'mime_types' ] );
 	}
 
 	/**
@@ -233,8 +233,8 @@ class Media {
 	 *
 	 * @return string[]
 	 */
-	public static function upload_mimes( array $mime_types ) {
-		$mime_types['svg'] = 'image/svg+xml';
+	public static function mime_types( array $mime_types ) {
+		$mime_types['svg'] = 'image/svg';
 		return $mime_types;
 	}
 }
