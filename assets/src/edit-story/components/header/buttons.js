@@ -30,6 +30,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
+import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { useStory } from '../../app';
 import { Outline, Primary } from '../button';
 
@@ -74,17 +75,20 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
-      story: { date },
+      story: { date, storyId },
     },
     actions: { updateStory },
   } = useStory();
 
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
 
-  const handlePublish = useCallback(
-    () => updateStory({ properties: { status: 'publish' } }),
-    [updateStory]
-  );
+  const handlePublish = useCallback(() => {
+    updateStory({ properties: { status: 'publish' } });
+    if (storyId) {
+      refreshPostEditURL(storyId);
+    }
+  }, [refreshPostEditURL, storyId, updateStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')

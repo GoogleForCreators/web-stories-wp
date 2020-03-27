@@ -85,6 +85,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
 
         // Set story-global variables.
         const story = {
+          storyId,
           title,
           status: statusFormat,
           author,
