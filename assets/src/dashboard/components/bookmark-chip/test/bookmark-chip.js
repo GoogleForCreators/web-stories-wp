@@ -32,9 +32,23 @@ const wrapper = (children) => {
 };
 
 describe('BookmarkChip', () => {
-  it('should render a bookmark chip', () => {
+  it('should render a <BookmarkChip />', () => {
     const { getByRole } = wrapper(<BookmarkChip />);
 
     expect(getByRole('button')).toBeDefined();
+  });
+
+  it('should render `not-bookmarked` when `isBookmarked` is false', () => {
+    const { queryByTestId } = wrapper(<BookmarkChip />);
+
+    expect(queryByTestId('not-bookmarked')).toBeDefined();
+    expect(queryByTestId('is-bookmarked')).toBeNull();
+  });
+
+  it('should render `is-bookmarked` when `isBookmarked` is true', () => {
+    const { queryByTestId } = wrapper(<BookmarkChip isBookmarked={true} />);
+
+    expect(queryByTestId('is-bookmarked')).toBeDefined();
+    expect(queryByTestId('not-bookmarked')).toBeNull();
   });
 });

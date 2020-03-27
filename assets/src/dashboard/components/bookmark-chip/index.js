@@ -91,7 +91,11 @@ const BookmarkChip = ({
 }) => {
   return (
     <ChipContainer isBookmarked={isBookmarked} chipType={chipType} {...rest}>
-      {isBookmarked ? <BookmarkFill /> : <BookmarkOutline />}
+      {isBookmarked ? (
+        <BookmarkFill data-testid={'is-bookmarked'} />
+      ) : (
+        <BookmarkOutline data-testid={'not-bookmarked'} />
+      )}
     </ChipContainer>
   );
 };
