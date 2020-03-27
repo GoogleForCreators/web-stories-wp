@@ -34,8 +34,7 @@ const Img = styled.img`
 `;
 
 function ImageDisplay({ element, box }) {
-  const { resource } = element;
-  const { scale, focalX, focalY } = element;
+  const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
   const ref = useRef();
 
