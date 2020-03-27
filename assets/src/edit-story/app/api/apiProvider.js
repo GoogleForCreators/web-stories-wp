@@ -248,18 +248,34 @@ function APIProvider({ children }) {
         per_page: perPage,
         page: pagingNum,
       });
-      return apiFetch({ path: apiPath });
+      return apiFetch({ path: apiPath, parse: false }).then(
+        async (response) => {
+          const jsonArray = await response.json();
+
+          return { data: jsonArray, headers: response.headers };
+        }
+      );
     },
     [users]
   );
 
   const getAllUsers = useCallback(
-    (pagingNum = 1, result = []) => {
-      return getUsersByPage(pagingNum).then((response) => {
-        if (response.length === 100) {
-          return getAllUsers(pagingNum + 1, result.concat(response));
+    (pagingNum = 1) => {
+      return getUsersByPage(pagingNum).then(({ data, headers }) => {
+        const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+        if (totalPages <= 1) return data;
+        const promises = [];
+        for (let i = 2; i <= totalPages; i++) {
+          promises.push(getUsersByPage(i));
         }
-        return result.concat(response);
+        return Promise.all(promises).then((response) => {
+          return data.concat(
+            response.reduce(
+              (resultArray, result) => resultArray.concat(result.data),
+              []
+            )
+          );
+        });
       });
     },
     [getUsersByPage]
