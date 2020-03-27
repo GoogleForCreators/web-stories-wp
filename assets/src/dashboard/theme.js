@@ -174,6 +174,17 @@ const theme = {
       weight: '500',
       letterSpacing: '0.01em',
     },
+    storyGridItem: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
+    storyGridItemSub: {
+      family: 'Roboto',
+      weight: 'normal',
+    },
     typeaheadInput: {
       family: "'Google Sans', Sans Serif",
       size: '14px',
@@ -195,6 +206,7 @@ const theme = {
       gap: '25px',
       itemWidth: '221px',
       itemHeight: '453px',
+      imageHeight: '393px',
       fr: '1fr',
     },
     tablet: {
@@ -202,6 +214,7 @@ const theme = {
       gap: '22px',
       itemWidth: '189px',
       itemHeight: '395px',
+      imageHeight: '335px',
       fr: '1fr',
     },
     mobile: {
@@ -209,6 +222,7 @@ const theme = {
       gap: '20px',
       itemWidth: '162px',
       itemHeight: '347px',
+      imageHeight: '287px',
       fr: '1fr',
     },
     min: {
@@ -216,6 +230,7 @@ const theme = {
       gap: '24px',
       itemWidth: '185px',
       itemHeight: '395px',
+      imageHeight: '335px',
       fr: '1fr',
     },
   },

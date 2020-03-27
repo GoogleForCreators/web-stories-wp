@@ -324,6 +324,7 @@ class Story_Post_Type {
 					'storyId'          => $story_id,
 					'previewLink'      => get_preview_post_link( $story_id ),
 					'maxUpload'        => $max_upload_size,
+					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',

@@ -24,6 +24,7 @@ const Note = styled.span`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;
+  flex: 1;
 `;
 
 export default Note;

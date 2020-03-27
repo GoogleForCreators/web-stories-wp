@@ -15,22 +15,18 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { useCallback } from 'react';
 
-/**
- * Internal dependencies
- */
-import { Pane } from '../shared';
-import paneId from './paneId';
-
-function AnimationPane(props) {
-  return (
-    <Pane id={paneId} {...props}>
-      {__('Coming soon', 'web-stories')}
-    </Pane>
-  );
+function useFocusCanvas() {
+  const focusCanvas = useCallback(() => {
+    setTimeout(() => {
+      const evt = new window.FocusEvent('focusout');
+      window.document.dispatchEvent(evt);
+    });
+  }, []);
+  return focusCanvas;
 }
 
-export default AnimationPane;
+export default useFocusCanvas;

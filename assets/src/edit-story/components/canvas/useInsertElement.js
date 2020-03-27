@@ -24,6 +24,7 @@ import { useCallback } from 'react';
  */
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
+import useFocusCanvas from '../../components/canvas/useFocusCanvas';
 import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
@@ -56,6 +57,8 @@ function useInsertElement() {
     [uploadVideoPoster]
   );
 
+  const focusCanvas = useFocusCanvas();
+
   /**
    * @param {string} type The element's type.
    * @param {Object} props The element's initial properties.
@@ -83,9 +86,16 @@ function useInsertElement() {
           }
         }, 0);
       }
+      focusCanvas();
       return element;
     },
-    [addElement, setBackgroundElement, currentPage, backfillResource]
+    [
+      addElement,
+      setBackgroundElement,
+      currentPage,
+      backfillResource,
+      focusCanvas,
+    ]
   );
 
   return insertElement;
