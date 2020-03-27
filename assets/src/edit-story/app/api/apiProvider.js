@@ -243,7 +243,7 @@ function APIProvider({ children }) {
   const getUsersByPage = useCallback(
     (pagingNum = 1) => {
       let apiPath = users;
-      const perPage = 100;
+      const perPage = 10;
       apiPath = addQueryArgs(apiPath, {
         per_page: perPage,
         page: pagingNum,
@@ -252,7 +252,7 @@ function APIProvider({ children }) {
         async (response) => {
           const jsonArray = await response.json();
 
-          return { data: jsonArray, headers: response.headers };
+          return { data: jsonArray, headers: response.headers, pagingNum };
         }
       );
     },
@@ -269,6 +269,7 @@ function APIProvider({ children }) {
           promises.push(getUsersByPage(i));
         }
         return Promise.all(promises).then((response) => {
+          response.sort((a, b) => a.pagingNum - b.pagingNum);
           return data.concat(
             response.reduce(
               (resultArray, result) => resultArray.concat(result.data),
