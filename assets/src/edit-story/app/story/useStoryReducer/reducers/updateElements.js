@@ -51,8 +51,11 @@ function updateElements(
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const oldPage = state.pages[pageIndex];
-
-  if (elementIds === null && videoId !== null) {
+  if (
+    (elementIds === null || elementIds === undefined) &&
+    videoId !== null &&
+    videoId !== undefined
+  ) {
     idsToUpdate = oldPage.elements.filter(
       ({ resource }) => resource && resource.videoId === videoId
     );
