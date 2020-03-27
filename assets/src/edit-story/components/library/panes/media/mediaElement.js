@@ -82,7 +82,7 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
-  const { src, type, width: originalWidth, height: originalHeight } = resource;
+  const { src, type, width: originalWidth, height: originalHeight, sizes } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -130,10 +130,20 @@ const MediaElement = ({
   const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
+    let imageSrc = src;
+    if(sizes){
+      if(sizes.web_stories_thumbnail){
+        imageSrc = sizes.web_stories_thumbnail.source_url;
+      } else if(sizes.large ){
+        imageSrc = sizes.large.source_url;
+      } else if(sizes.full){
+        imageSrc = sizes.full.source_url;
+      }
+    }
     return (
       <Image
         key={src}
-        src={src}
+        src={imageSrc}
         ref={mediaElement}
         width={width}
         height={height}

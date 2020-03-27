@@ -43,6 +43,7 @@ export const getResourceFromAttachment = (attachment) => {
     lengthFormatted,
     title,
     alt,
+    sizes,
   } = attachment;
 
   return {
@@ -57,6 +58,7 @@ export const getResourceFromAttachment = (attachment) => {
     lengthFormatted,
     title,
     alt,
+    sizes,
   };
 };
 

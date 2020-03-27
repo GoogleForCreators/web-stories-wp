@@ -135,6 +135,7 @@ function APIProvider({ children }) {
                 width: oWidth,
                 height: oHeight,
                 length_formatted: lengthFormatted,
+                sizes
               },
               title: { raw: title },
               description: { raw: description },
@@ -153,9 +154,9 @@ function APIProvider({ children }) {
               lengthFormatted,
               alt: alt ? alt : description,
               title,
+              sizes,
             })
           );
-
           return { data, headers: response.headers };
         }
       );
