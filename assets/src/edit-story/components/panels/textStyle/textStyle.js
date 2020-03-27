@@ -83,7 +83,11 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <ExpandedNumeric
           data-testid="text.letterSpacing"
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={letterSpacing ? Math.round(letterSpacing * 100) : 0}
+          value={
+            typeof letterSpacing === 'number'
+              ? Math.round(letterSpacing * 100)
+              : 0
+          }
           suffix={<HorizontalOffset />}
           symbol="%"
           onChange={(value) =>
