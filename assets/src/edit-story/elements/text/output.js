@@ -15,82 +15,86 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { draftMarkupToContent, generateFontFamily } from './util';
+import {
+  draftMarkupToContent,
+  generateParagraphTextStyle,
+  getHighlightLineheight,
+} from './util';
 
 /**
- * Returns AMP HTML for saving into post content for displaying in the FE.
+ * Renders DOM for the text output based on the provided unit converters.
  */
-function TextOutput({
+export function TextOutputWithUnits({
   element: {
     bold,
     content,
     color,
-    backgroundTextMode,
     backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    letterSpacing,
-    lineHeight,
+    backgroundTextMode,
     padding,
-    textAlign,
-    textDecoration,
+    ...rest
   },
-  box: { width },
+  dataToStyleX,
+  dataToStyleY,
+  className,
 }) {
-  const horizontalPadding = dataToEditorX(padding.horizontal, width);
-  // The padding % is taken based on width, thus using X and width for vertical, too.
-  const verticalPadding = dataToEditorX(padding.vertical, width);
+  const { width } = rest;
+  const paddingStyles = {
+    vertical: `${(100 * padding.vertical) / width}%`,
+    horizontal: `${(100 * padding.horizontal) / width}%`,
+  };
+  const fillStyle = {
+    ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY),
+    ...generatePatternStyles(backgroundColor),
+    ...generatePatternStyles(color, 'color'),
+    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+  };
+
   const bgColor =
     backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
-  const fillStyle = {
-    fontSize: `${dataToEditorY(fontSize, 100)}%`,
-    fontStyle: fontStyle ? fontStyle : null,
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontWeight: fontWeight ? fontWeight : null,
-    lineHeight,
-    letterSpacing: letterSpacing ? letterSpacing + 'em' : '0',
-    padding: padding ? `${verticalPadding}% ${horizontalPadding}%` : '0',
-    textAlign: textAlign ? textAlign : null,
-    textDecoration,
-    whiteSpace: 'pre-wrap',
-    ...bgColor,
-    ...generatePatternStyles(color, 'color'),
-  };
+  const lineHeight = getHighlightLineheight(
+    rest.lineHeight,
+    padding.vertical / 64, // I can't really explain why 64 works here, it just does.
+    'em'
+  );
 
   const highlightStyle = {
     ...fillStyle,
     margin: 0,
     padding: 0,
     background: 'none',
-    // Disable reason: style lint can't figure out an interpolated calc
-    // stylelint-disable function-calc-no-invalid
-    lineHeight: `calc(
-        ${lineHeight}em
-        ${`${padding.vertical > 0 ? ' + ' : ' - '}${
-          2 * dataToEditorY(padding.vertical, 16)
-        }em`}
-    )`,
-    // stylelint-enable function-calc-no-invalid
+    lineHeight,
+  };
+
+  const highlightCloneStyle = {
+    ...highlightStyle,
+    position: 'absolute',
+    top: 0,
   };
 
   const marginStyle = {
     display: 'inline-block',
-    margin: `${verticalPadding}% ${horizontalPadding + 4}%`,
     position: 'relative',
-    left: `-${horizontalPadding + 4}%`,
-    top: '1px',
+    // Disable reason: style lint can't figure out an interpolated calc
+    // stylelint-disable function-calc-no-invalid
+    margin: `0 calc(${paddingStyles.horizontal} + ${dataToStyleX(10)})`,
+    left: `calc(-${paddingStyles.horizontal} - ${dataToStyleX(10)})`,
+    // stylelint-enable function-calc-no-invalid
+    top: '0',
   };
 
   const textStyle = {
@@ -101,7 +105,7 @@ function TextOutput({
     boxDecorationBreak: 'clone',
     borderRadius: '3px',
     position: 'relative',
-    padding: padding ? `${verticalPadding}% ${horizontalPadding}%` : '0',
+    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
 
   const backgroundTextStyle = {
@@ -117,7 +121,7 @@ function TextOutput({
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
-        <p className="fill original" style={highlightStyle}>
+        <p className={className} style={highlightStyle}>
           <span style={marginStyle}>
             <span
               style={backgroundTextStyle}
@@ -127,7 +131,7 @@ function TextOutput({
             />
           </span>
         </p>
-        <p className="fill clone" style={highlightStyle}>
+        <p className={className} style={highlightCloneStyle}>
           <span style={marginStyle}>
             <span
               style={foregroundTextStyle}
@@ -143,16 +147,36 @@ function TextOutput({
 
   return (
     <p
-      className="fill"
+      className={className}
       style={fillStyle}
       dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
     />
   );
 }
 
+TextOutputWithUnits.propTypes = {
+  element: StoryPropTypes.elements.text.isRequired,
+  dataToStyleX: PropTypes.func.isRequired,
+  dataToStyleY: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+/**
+ * Returns AMP HTML for saving into post content for displaying in the FE.
+ */
+function TextOutput({ element }) {
+  return (
+    <TextOutputWithUnits
+      element={element}
+      className="fill"
+      dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
+      dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
+    />
+  );
+}
+
 TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
-  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextOutput;

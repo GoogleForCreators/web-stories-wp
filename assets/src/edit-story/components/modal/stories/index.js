@@ -33,21 +33,15 @@ export default {
 
 export const _default = () => {
   const contentLabel = text('Content Label', 'Modal Content');
-  const closeButtonLabel = text('Close Button Label', 'Back');
 
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = useCallback(() => setIsOpen(true), [setIsOpen]);
-  const closeModal = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const [open, setOpen] = useState(false);
+  const openModal = useCallback(() => setOpen(true), [setOpen]);
+  const closeModal = useCallback(() => setOpen(false), [setOpen]);
 
   return (
     <>
       <Primary onClick={openModal}>{'Open Modal'}</Primary>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel={contentLabel}
-        closeButtonLabel={closeButtonLabel}
-      >
+      <Modal open={open} onClose={closeModal} contentLabel={contentLabel}>
         {'Content goes here'}
       </Modal>
     </>

@@ -18,25 +18,32 @@
  * Internal dependencies
  */
 import CardGrid from '../';
-import CardGridItem from '../../card-grid-item';
+import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
   component: CardGrid,
 };
 
+const StorybookGridItem = (
+  <CardGridItem>
+    <CardPreviewContainer
+      onOpenInEditorClick={() => {}}
+      onPreviewClick={() => {}}
+      previewSource={'http://placeimg.com/225/400/nature'}
+    />
+    <CardTitle title="Story Title" modifiedDate="12 days" />
+  </CardGridItem>
+);
+
+const itemArray = new Array(12).fill(StorybookGridItem);
+
 export const _default = () => {
   return (
     <CardGrid>
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
-      <CardGridItem />
+      {itemArray.map((gridItem, index) => (
+        <div key={index}>{gridItem}</div>
+      ))}
     </CardGrid>
   );
 };

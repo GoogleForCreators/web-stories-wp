@@ -30,7 +30,7 @@ function useLayers() {
 
   const layers = currentPage.elements.map((layer, index) => ({
     ...layer,
-    position: index - 1,
+    position: index,
   }));
   layers.reverse();
   return layers;

@@ -41,7 +41,7 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithFontColor,
-  elementWithStyle,
+  elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
@@ -51,6 +51,7 @@ import {
   getHandleKeyCommand,
   getSelectionForAll,
   getSelectionForOffset,
+  generateParagraphTextStyle,
 } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -77,7 +78,7 @@ const Wrapper = styled.div`
 // it can be used for height measurement.
 const TextBox = styled.div`
 	${elementWithFont}
-	${elementWithStyle}
+	${elementWithTextParagraphStyle}
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
 
@@ -89,46 +90,17 @@ const TextBox = styled.div`
 `;
 
 function TextEdit({
-  element: {
-    id,
-    bold,
-    content,
-    color,
-    backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    letterSpacing,
-    lineHeight,
-    opacity,
-    padding,
-    textAlign,
-    textDecoration,
-  },
+  element: { id, bold, content, color, backgroundColor, opacity, ...rest },
   box: { x, y, height, rotationAngle },
 }) {
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
+    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     color,
     backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-    textAlign,
-    letterSpacing,
-    lineHeight,
     opacity,
-    padding: {
-      horizontal: dataToEditorX(padding.horizontal),
-      vertical: dataToEditorY(padding.vertical),
-    },
-    textDecoration,
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
@@ -249,6 +221,7 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
   }, [editorState]);
 
+  const { fontFamily } = rest;
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);

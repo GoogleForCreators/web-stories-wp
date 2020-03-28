@@ -108,7 +108,7 @@ function DisplayElement({ element, previewMode }) {
   });
 
   return (
-    <Wrapper ref={wrapperRef} {...box}>
+    <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <WithMask
         element={element}
         fill={true}
