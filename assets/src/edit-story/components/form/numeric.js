@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -77,15 +78,10 @@ function Numeric({
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
-  const [focused, setFocus] = useState(false);
   const [dot, setDot] = useState(false);
   const ref = useRef();
 
-  useEffect(() => {
-    if (focused && ref.current) {
-      ref.current.select();
-    }
-  }, [focused]);
+  const { isFocused, handleFocusIn, handleFocusOut } = useFocusAndSelect(ref);
 
   return (
     <Container
@@ -104,7 +100,7 @@ function Numeric({
         value={
           isMultiple
             ? ''
-            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+            : `${value}${dot ? DECIMAL_POINT : ''}${isFocused ? '' : symbol}`
         }
         aria-label={ariaLabel}
         disabled={disabled}
@@ -130,9 +126,9 @@ function Numeric({
           if (onBlur) {
             onBlur();
           }
-          setFocus(false);
+          handleFocusOut();
         }}
-        onFocus={() => setFocus(true)}
+        onFocus={handleFocusIn}
       />
       {suffix}
     </Container>
