@@ -82,7 +82,6 @@ const ControlVisibilityContainer = styled.div`
   justify-content: flex-start;
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    visibility: ${({ isExpanded }) => (isExpanded ? 'visible' : 'hidden')};
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
     transition: opacity 0.2s ease-in-out;
   }
@@ -159,6 +158,7 @@ const TypeaheadInput = ({
   const [inputValue, setInputValue] = useState(value);
 
   const searchRef = useRef();
+  const inputRef = useRef();
 
   const isMenuOpen = useMemo(() => {
     return showMenu && items.length > 0 && inputValue.length > 0;
@@ -216,9 +216,12 @@ const TypeaheadInput = ({
       isOpen={isMenuOpen}
       isExpanded={isInputExpanded}
     >
-      <InputContainer isOpen={isMenuOpen} isExpanded={isInputExpanded}>
+      <InputContainer isOpen={isMenuOpen}>
         <SearchButton
-          onClick={() => setMenuFocused(true)}
+          onClick={() => {
+            setMenuFocused(true);
+            inputRef.current.focus();
+          }}
           aria-label={`Go to ${ariaLabel}`}
         >
           <SearchIcon />
@@ -227,12 +230,12 @@ const TypeaheadInput = ({
         <ControlVisibilityContainer isExpanded={isInputExpanded}>
           <label aria-label={ariaLabel} htmlFor={inputId} />
           <StyledInput
+            ref={inputRef}
             autoComplete="off"
             type="text"
             id={inputId}
             name={inputId}
             disabled={disabled}
-            isOpen={isMenuOpen}
             value={inputValue}
             onFocus={() => setShowMenu(true)}
             onChange={({ target }) => {
@@ -240,7 +243,7 @@ const TypeaheadInput = ({
             }}
             placeholder={placeholder}
           />
-          {inputValue.length > 0 && !Boolean(isMenuOpen) && (
+          {inputValue.length > 0 && !isMenuOpen && (
             <ClearInputButton
               data-testid="clear-search"
               onClick={handleInputClear}
