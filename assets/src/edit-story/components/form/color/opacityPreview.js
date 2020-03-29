@@ -52,7 +52,7 @@ function OpacityPreview({ value, onChange }) {
   const [inputValue, setInputValue] = useState('');
   const ref = useRef();
 
-  const { isFocused, handleFocusOut, handleFocusIn } = useFocusAndSelect(ref);
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
   // Allow any input, but only persist non-NaN values up-chain
   const handleChange = useCallback(
@@ -71,12 +71,6 @@ function OpacityPreview({ value, onChange }) {
     [value]
   );
 
-  // However on blur, restore to last persisted value
-  const handleBlur = useCallback(() => {
-    handleFocusOut();
-    updateFromValue();
-  }, [handleFocusOut, updateFromValue]);
-
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
   return (
@@ -85,10 +79,13 @@ function OpacityPreview({ value, onChange }) {
       type="text"
       aria-label={__('Opacity', 'web-stories')}
       isVisible={hasPreviewText}
-      onBlur={handleBlur}
-      onFocus={handleFocusIn}
+      onBlur={() => {
+        handleBlur();
+        updateFromValue();
+      }}
+      onFocus={handleFocus}
       onChange={handleChange}
-      value={`${inputValue}${isFocused ? '' : postfix}`}
+      value={`${inputValue}${focused ? '' : postfix}`}
     />
   );
 }

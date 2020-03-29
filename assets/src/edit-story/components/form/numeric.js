@@ -81,7 +81,7 @@ function Numeric({
   const [dot, setDot] = useState(false);
   const ref = useRef();
 
-  const { isFocused, handleFocusIn, handleFocusOut } = useFocusAndSelect(ref);
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
   return (
     <Container
@@ -100,7 +100,7 @@ function Numeric({
         value={
           isMultiple
             ? ''
-            : `${value}${dot ? DECIMAL_POINT : ''}${isFocused ? '' : symbol}`
+            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
         aria-label={ariaLabel}
         disabled={disabled}
@@ -126,9 +126,9 @@ function Numeric({
           if (onBlur) {
             onBlur();
           }
-          handleFocusOut();
+          handleBlur();
         }}
-        onFocus={handleFocusIn}
+        onFocus={handleFocus}
       />
       {suffix}
     </Container>

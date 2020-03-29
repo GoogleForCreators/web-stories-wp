@@ -20,21 +20,21 @@
 import { useEffect, useState, useCallback } from 'react';
 
 function useFocusAndSelect(ref) {
-  const [isFocused, setIsFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
 
-  const handleFocusIn = useCallback(() => setIsFocused(true), []);
-  const handleFocusOut = useCallback(() => setIsFocused(false), []);
+  const handleFocus = useCallback(() => setFocused(true), []);
+  const handleBlur = useCallback(() => setFocused(false), []);
 
   useEffect(() => {
-    if (isFocused && ref.current) {
+    if (focused && ref.current) {
       ref.current.select();
     }
-  }, [isFocused, ref]);
+  }, [focused, ref]);
 
   return {
-    isFocused,
-    handleFocusIn,
-    handleFocusOut,
+    focused,
+    handleFocus,
+    handleBlur,
   };
 }
 
