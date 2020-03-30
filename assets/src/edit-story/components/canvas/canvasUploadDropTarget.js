@@ -70,7 +70,7 @@ function CanvasUploadDropTarget({ children }) {
   const onUploadedFile = useCallback(
     ({ resource, element }) => {
       updateElementById({
-        elementId: element.elementId,
+        elementId: element.id,
         properties: {
           resource,
           type: element.resource.type,
