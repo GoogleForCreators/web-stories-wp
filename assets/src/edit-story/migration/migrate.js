@@ -26,6 +26,7 @@ import setOpacity from './migrations/v0005_setOpacity';
 import colorToPattern from './migrations/v0006_colorToPattern';
 import setFlip from './migrations/v0007_setFlip';
 import paddingToObject from './migrations/v0008_paddingToObject';
+import defaultBackground from './migrations/v0009_defaultBackground';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -36,6 +37,7 @@ const MIGRATIONS = {
   6: [colorToPattern],
   7: [setFlip],
   8: [paddingToObject],
+  9: [defaultBackground],
 };
 
 export const DATA_VERSION = Math.max.apply(
