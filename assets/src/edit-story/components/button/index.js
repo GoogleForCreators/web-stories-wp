@@ -19,6 +19,7 @@
  */
 import { forwardRef } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -103,6 +104,22 @@ export const Secondary = styled(Base)`
 export const Outline = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
   color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+export const Plain = styled(Base)`
+  color: ${({ theme }) => theme.colors.action};
+  border: none;
+  transition: background-color 0.6s ease;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 4px 14px;
+  height: auto;
+  font-weight: 500;
+  font-size: 16px;
+
+  &:hover {
+    background-color: ${({ theme }) => rgba(theme.colors.action, 0.15)};
+  }
 `;
 
 export const LeftArrow = (props) => (

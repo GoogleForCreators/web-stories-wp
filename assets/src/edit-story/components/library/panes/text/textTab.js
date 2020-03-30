@@ -39,7 +39,7 @@ import { ReactComponent as TextAddIcon } from './text_add.svg';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
-const DEFAULT_FONT_SIZE = dataFontEm(2);
+const DEFAULT_FONT_SIZE = dataFontEm(1.5);
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
@@ -82,10 +82,8 @@ function TextTab(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-
-    // @todo: Needs product definition
     insertElement('text', {
-      content: __('Double-click to edit...', 'web-stories'),
+      content: __('Text...', 'web-stories'),
       color: createSolid(0, 0, 0),
       fontSize: DEFAULT_FONT_SIZE,
       width: DEFAULT_ELEMENT_WIDTH,

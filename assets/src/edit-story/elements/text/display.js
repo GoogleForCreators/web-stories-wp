@@ -30,39 +30,22 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithFontColor,
-  elementWithStyle,
+  elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { draftMarkupToContent, generateFontFamily } from './util';
+import { draftMarkupToContent, generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
-	margin: 0;
 	${elementFillContent}
 	${elementWithFont}
 	${elementWithBackgroundColor}
 	${elementWithFontColor}
-	${elementWithStyle}
+	${elementWithTextParagraphStyle}
 `;
 
 function TextDisplay({
-  element: {
-    id,
-    bold,
-    content,
-    color,
-    backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    letterSpacing,
-    lineHeight,
-    padding,
-    textAlign,
-    textDecoration,
-  },
+  element: { id, bold, content, color, backgroundColor, ...rest },
 }) {
   const ref = useRef(null);
 
@@ -73,24 +56,13 @@ function TextDisplay({
   const props = {
     color,
     backgroundColor,
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-    letterSpacing,
-    lineHeight,
-    padding: {
-      horizontal: dataToEditorX(padding.horizontal),
-      vertical: dataToEditorY(padding.vertical),
-    },
-    textAlign,
-    textDecoration,
+    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
   };
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
+  const { fontFamily } = rest;
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);
