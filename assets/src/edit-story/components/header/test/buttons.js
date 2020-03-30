@@ -27,13 +27,13 @@ import StoryContext from '../../../app/story/context';
 import Buttons from '../buttons';
 import theme from '../../../theme';
 
-function setupButtons(status = 'draft', date = null) {
+function setupButtons(extraStoryProps) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
     state: {
       meta: { isSaving: false },
-      story: { status, storyId: 123, date },
+      story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
     },
     actions: { updateStory },
   };
@@ -67,7 +67,7 @@ describe('buttons', () => {
   });
 
   it('should display Switch to draft button when published', () => {
-    const { getByText, updateStory } = setupButtons('publish');
+    const { getByText, updateStory } = setupButtons({ status: 'publish' });
     const draftButton = getByText('Switch to Draft');
 
     expect(draftButton).toBeDefined();
@@ -77,10 +77,10 @@ describe('buttons', () => {
 
   it('should display Schedule button when future date is set', () => {
     // Note that this test will fail in year 9999.
-    const { getByText, updateStory } = setupButtons(
-      'draft',
-      '9999-01-01T20:20:20'
-    );
+    const { getByText, updateStory } = setupButtons({
+      status: 'draft',
+      date: '9999-01-01T20:20:20',
+    });
     const scheduleButton = getByText('Schedule');
 
     expect(scheduleButton).toBeDefined();
