@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -36,11 +36,12 @@ import { MainButton, SearchInput } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
-import paneId from './paneId';
 import {
+  getTypeFromMime,
   getResourceFromMediaPicker,
   getResourceFromAttachment,
-} from './mediaUtils';
+} from '../../../../app/media/utils';
+import paneId from './paneId';
 import MediaElement from './mediaElement';
 
 const Container = styled.div`
@@ -52,7 +53,9 @@ const Container = styled.div`
   padding: 1em 1.5em 0 1.5em;
 `;
 
-const Column = styled.div``;
+const Column = styled.div`
+  position: relative;
+`;
 
 const Message = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -167,9 +170,12 @@ function MediaPane(props) {
    *
    * @param {string} filter Value that is passed to rest api to filter.
    */
-  const onFilter = (filter) => () => {
-    setMediaType({ mediaType: filter });
-  };
+  const onFilter = useCallback(
+    (filter) => () => {
+      setMediaType({ mediaType: filter });
+    },
+    [setMediaType]
+  );
 
   /**
    * Insert element such image, video and audio into the editor.
@@ -192,13 +198,24 @@ function MediaPane(props) {
     return n % 2 === 0;
   };
 
-  const resources = media
-    .filter(
-      ({ mimeType }) =>
-        allowedImageMimeTypes.includes(mimeType) ||
-        allowedVideoMimeTypes.includes(mimeType)
-    )
-    .map((attachment) => getResourceFromAttachment(attachment));
+  const filterResource = useCallback(
+    ({ mimeType, oWidth, oHeight }) => {
+      const allowedMimeTypes = [
+        ...allowedImageMimeTypes,
+        ...allowedVideoMimeTypes,
+      ];
+      const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
+      const filterByMediaType = mediaType
+        ? mediaType === getTypeFromMime(mimeType)
+        : true;
+      const filterByValidMedia = oWidth && oHeight;
+
+      return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
+    },
+    [allowedImageMimeTypes, allowedVideoMimeTypes, mediaType]
+  );
+
+  const resources = media.filter(filterResource).map(getResourceFromAttachment);
 
   const refContainer = useRef();
   const refContainerFooter = useRef();
