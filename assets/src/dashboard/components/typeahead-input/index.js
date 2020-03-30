@@ -182,6 +182,10 @@ const TypeaheadInput = ({
     });
   }, [items, inputValue, isFiltering]);
 
+  const focusInput = useCallback(() => {
+    inputRef.current.focus();
+  }, [inputRef]);
+
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
     setMenuFocused(false);
@@ -189,10 +193,13 @@ const TypeaheadInput = ({
 
   useFocusOut(searchRef, handleFocusOut);
 
-  const handleInputChange = (item) => {
-    setInputValue(item.label);
-    onChange(item.value);
-  };
+  const handleInputChange = useCallback(
+    (item) => {
+      setInputValue(item.label);
+      onChange(item.value);
+    },
+    [onChange, setInputValue]
+  );
 
   const handleMenuItemSelect = (item) => {
     if (!item.value) {
@@ -220,7 +227,7 @@ const TypeaheadInput = ({
         <SearchButton
           onClick={() => {
             setMenuFocused(true);
-            inputRef.current.focus();
+            focusInput();
           }}
           aria-label={`Go to ${ariaLabel}`}
         >
