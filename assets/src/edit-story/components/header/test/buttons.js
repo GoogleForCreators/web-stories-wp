@@ -27,17 +27,17 @@ import StoryContext from '../../../app/story/context';
 import Buttons from '../buttons';
 import theme from '../../../theme';
 
-function setupButtons(extraStoryProps) {
+function setupButtons(extraStoryProps, extraMetaProps) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
     state: {
-      meta: { isSaving: false },
+      meta: { isSaving: false, ...extraMetaProps },
       story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
     },
     actions: { updateStory },
   };
-  const { getByText } = render(
+  const { getByText, container } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <Buttons />
@@ -45,12 +45,15 @@ function setupButtons(extraStoryProps) {
     </ThemeProvider>
   );
   return {
+    container,
     getByText,
     updateStory,
   };
 }
 
 describe('buttons', () => {
+  const FUTURE_DATE = '9999-01-01T20:20:20';
+
   it('should display Publish button when in draft mode', () => {
     const { getByText } = setupButtons();
     const publishButton = getByText('Publish');
@@ -76,15 +79,31 @@ describe('buttons', () => {
   });
 
   it('should display Schedule button when future date is set', () => {
-    // Note that this test will fail in year 9999.
     const { getByText, updateStory } = setupButtons({
       status: 'draft',
-      date: '9999-01-01T20:20:20',
+      date: FUTURE_DATE,
     });
     const scheduleButton = getByText('Schedule');
 
     expect(scheduleButton).toBeDefined();
     fireEvent.click(scheduleButton);
     expect(updateStory).toHaveBeenCalledTimes(1);
+  });
+
+  it('should display Schedule button with future status', () => {
+    const { getByText } = setupButtons({
+      status: 'future',
+      date: FUTURE_DATE,
+    });
+    const scheduleButton = getByText('Schedule');
+
+    expect(scheduleButton).toBeDefined();
+  });
+
+  it('should display Spinner while the story is updating', () => {
+    const { container } = setupButtons({}, { isSaving: true });
+    const spinner = container.querySelector('span');
+    // @todo This test is relying on Gutenberg component's class list and should be replaced as soon as we have a custom spinner.
+    expect(spinner.classList.contains('components-spinner')).toBe(true);
   });
 });

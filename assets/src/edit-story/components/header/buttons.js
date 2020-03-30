@@ -156,9 +156,10 @@ function Update() {
 
 function Loading() {
   const {
-    state: { isSaving },
+    state: {
+      meta: { isSaving },
+    },
   } = useStory();
-
   return isSaving ? <Spinner /> : <Space />;
 }
 
