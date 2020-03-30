@@ -110,6 +110,7 @@ class Media {
 		add_filter( 'upload_mimes', [ __CLASS__, 'mime_types' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
 		add_filter( 'wp_check_filetype_and_ext', [ __CLASS__, 'wp_check_filetype_and_ext' ], 10, 4 );
 		add_filter( 'image_downsize', [ __CLASS__, 'image_downsize' ], 10, 3 );
+		add_filter( 'wp_get_attachment_metadata', [ __CLASS__, 'wp_get_attachment_metadata' ], 10, 2 );
 	}
 
 	/**
@@ -239,6 +240,7 @@ class Media {
 	public static function mime_types( array $mime_types ) {
 		$mime_types['svg']  = 'image/svg+xml';
 		$mime_types['svgz'] = 'image/svg+xml';
+		$mime_types['_svg'] = 'image/svg';
 		return $mime_types;
 	}
 
@@ -273,6 +275,25 @@ class Media {
 	}
 
 	/**
+	 * Force height and width on SVGs
+	 *
+	 * @param  array $data    Meta data Array.
+	 * @param  int   $post_id Attachment ID.
+	 * @return array         Filtered metadata.
+	 */
+	public static function wp_get_attachment_metadata( $data, $post_id ) {
+		$type = get_post_mime_type( $post_id );
+		if ( 'image/svg+xml' !== $type ) {
+			return $data;
+		}
+		$data = [
+			'width'  => 300,
+			'height' => 300,
+		];
+		return $data;
+	}
+
+	/**
 	 * Force SVG to have a height and width.
 	 *
 	 * @param false|array  $check Check value of filter.
@@ -297,7 +318,7 @@ class Media {
 			array_unshift( $img, $img_url );
 			return $img;
 		}
-		// Default to 50 x 50.
-		return [ $img_url, 50, 50 ];
+		// Default to 300 x 300.
+		return $check;
 	}
 }

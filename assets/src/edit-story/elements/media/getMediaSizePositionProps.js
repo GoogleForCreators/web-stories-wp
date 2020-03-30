@@ -40,8 +40,10 @@ function getMediaSizePositionProps(
   focalX = typeof focalX === 'number' ? focalX : 50;
   focalY = typeof focalY === 'number' ? focalY : 50;
   const mediaWidth = (oRatio <= ratio ? width : height * oRatio) * scale * 0.01;
-  const mediaHeight =
-    (oRatio <= ratio ? width / oRatio : height) * scale * 0.01;
+  let mediaHeight = (oRatio <= ratio ? width / oRatio : height) * scale * 0.01;
+  if ('image/svg+xml' === resource.mimeType) {
+    mediaHeight = 'auto';
+  }
   const offsetX = Math.max(
     0,
     Math.min(mediaWidth * focalX * 0.01 - width * 0.5, mediaWidth - width)

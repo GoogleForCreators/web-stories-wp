@@ -57,7 +57,7 @@ class Media extends \WP_UnitTestCase {
 	 * Test image_downsize()
 	 */
 	public function test_image_downsize() {
-		$attachment_id  = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => '../data/unlock.svg',
 				'post_parent'    => 0,
@@ -76,7 +76,7 @@ class Media extends \WP_UnitTestCase {
 	 * Test image_downsize()
 	 */
 	public function test_image_downsize_no_size() {
-		$attachment_id  = self::factory()->attachment->create_object(
+		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => '../data/unlock.svg',
 				'post_parent'    => 0,
@@ -87,7 +87,7 @@ class Media extends \WP_UnitTestCase {
 
 		$actual = \Google\Web_Stories\Media::image_downsize( false, $attachment_id, 'thumbnail' );
 		$this->assertEquals( wp_get_attachment_url( $attachment_id ), $actual[0] );
-		$this->assertEquals( 50, $actual[1] );
-		$this->assertEquals( 50, $actual[2] );
+		$this->assertEquals( 300, $actual[1] );
+		$this->assertEquals( 300, $actual[2] );
 	}
 }

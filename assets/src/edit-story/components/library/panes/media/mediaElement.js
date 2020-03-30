@@ -122,6 +122,7 @@ const MediaElement = ({
     width: originalWidth,
     height: originalHeight,
     local,
+    mimeType,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -170,6 +171,7 @@ const MediaElement = ({
   const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
+    const disaplayHeight = 'image/svg+xml' === mimeType ? 'auto' : height;
     return (
       <Container>
         <Image
@@ -177,7 +179,7 @@ const MediaElement = ({
           src={src}
           ref={mediaElement}
           width={width}
-          height={height}
+          height={disaplayHeight}
           loading={'lazy'}
           onClick={onClick}
           {...dropTargetsBindings}
@@ -211,7 +213,7 @@ const MediaElement = ({
     }
   };
 
-  const { lengthFormatted, poster, mimeType } = resource;
+  const { lengthFormatted, poster } = resource;
   return (
     <Container
       onPointerEnter={pointerEnter}
