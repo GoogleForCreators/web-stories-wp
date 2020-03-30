@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import dataPixelTo440 from '../v0009_dataPixelTo440';
+import dataPixelTo440 from '../v0010_dataPixelTo440';
 
 describe('dataPixelTo440', () => {
   it('should convert all pixel props', () => {
