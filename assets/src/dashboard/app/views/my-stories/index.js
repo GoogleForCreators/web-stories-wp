@@ -56,15 +56,15 @@ function MyStories() {
     <div>
       <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
       <FilterContainer>
-        {STORY_STATUSES.map((currentStatus) => (
+        {STORY_STATUSES.map((storyStatus) => (
           <FloatingTab
-            key={currentStatus.value}
+            key={storyStatus.value}
             onClick={(_, value) => setStatus(value)}
             name="all-stories"
-            value={currentStatus.value}
-            isSelected={status === currentStatus.value}
+            value={storyStatus.value}
+            isSelected={status === storyStatus.value}
           >
-            {currentStatus.label}
+            {storyStatus.label}
           </FloatingTab>
         ))}
       </FilterContainer>
