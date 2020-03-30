@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useCallback, useMemo } from 'react';
+import { createContext, useCallback, useMemo, useState } from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
 
@@ -46,6 +46,7 @@ export function reshapeStoryObject({ id, title, modified, status }) {
 
 export default function ApiProvider({ children }) {
   const { api } = useConfig();
+  const [stories, setStories] = useState([]);
 
   const fetchStories = useCallback(
     async ({ status = STORY_STATUSES[0].value }) => {
@@ -57,7 +58,7 @@ export default function ApiProvider({ children }) {
         const serverStoryResponse = await apiFetch({
           path,
         });
-        return serverStoryResponse.map(reshapeStoryObject);
+        setStories(serverStoryResponse.map(reshapeStoryObject));
       } catch (err) {
         return [];
       }
@@ -67,10 +68,10 @@ export default function ApiProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      state: {},
+      state: { stories },
       actions: { fetchStories },
     }),
-    [fetchStories]
+    [stories, fetchStories]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { NavigationBar } from '../components';
-import ApiProvider from './api/api-provider';
+import ApiProvider from './api/apiProvider';
 import { useRouteHistory, Route, RouterProvider } from './router';
 import { useConfig, ConfigProvider } from './config';
 import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';

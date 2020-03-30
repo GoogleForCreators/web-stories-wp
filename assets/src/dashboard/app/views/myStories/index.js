@@ -36,7 +36,7 @@ import {
   CardTitle,
 } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
-import { ApiContext } from '../../api/api-provider';
+import { ApiContext } from '../../api/apiProvider';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
@@ -45,12 +45,14 @@ const FilterContainer = styled.div`
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
-  const { actions } = useContext(ApiContext);
-  const [stories, setStories] = useState([]);
+  const {
+    actions: { fetchStories },
+    state: { stories },
+  } = useContext(ApiContext);
 
   useEffect(() => {
-    actions.fetchStories({ status }).then(setStories);
-  }, [actions, status]);
+    fetchStories({ status });
+  }, [fetchStories, status]);
 
   return (
     <div>
