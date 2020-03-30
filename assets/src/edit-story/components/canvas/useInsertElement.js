@@ -33,8 +33,7 @@ const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
   const {
-    actions: { addElement, setBackgroundElement },
-    state: { currentPage },
+    actions: { addElement },
   } = useStory();
   const {
     actions: { uploadVideoPoster },
@@ -68,12 +67,6 @@ function useInsertElement() {
       const element = createElementForCanvas(type, props);
       const { id: elementId, resource } = element;
       addElement({ element });
-      if (
-        isMedia(type) &&
-        !currentPage.elements.some(({ type: elType }) => isMedia(elType))
-      ) {
-        setBackgroundElement({ elementId });
-      }
       if (resource) {
         backfillResource(resource, elementId);
       }
@@ -89,13 +82,7 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [
-      addElement,
-      setBackgroundElement,
-      currentPage,
-      backfillResource,
-      focusCanvas,
-    ]
+    [addElement, backfillResource, focusCanvas]
   );
 
   return insertElement;
@@ -201,15 +188,6 @@ function createElementForCanvas(
  */
 function isNum(value) {
   return typeof value === 'number';
-}
-
-/**
- * @param {string} type The resource type.
- * @return {boolean} Whether this is a media element.
- */
-function isMedia(type) {
-  const { isMedia: media } = getDefinitionForType(type);
-  return media;
 }
 
 export default useInsertElement;
