@@ -107,6 +107,9 @@ class Media {
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_filter( 'mime_types', [ __CLASS__, 'mime_types' ] );
+		add_filter( 'upload_mimes', [ __CLASS__, 'mime_types' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+		add_filter( 'wp_check_filetype_and_ext', [ __CLASS__, 'wp_check_filetype_and_ext' ], 10, 4 );
+		add_filter( 'image_downsize', [ __CLASS__, 'image_downsize' ], 10, 3 );
 	}
 
 	/**
@@ -234,7 +237,60 @@ class Media {
 	 * @return string[]
 	 */
 	public static function mime_types( array $mime_types ) {
-		$mime_types['svg'] = 'image/svg';
+		$mime_types['svg']  = 'image/svg+xml';
+		$mime_types['svgz'] = 'image/svg+xml';
 		return $mime_types;
+	}
+
+	/**
+	 * Filter wp_check_filetype_and_ext to allow SVGs.
+	 *
+	 * @param array  $checked File data array containing 'ext', 'type', and 'proper_filename' keys.
+	 * @param string $file                      Full path to the file.
+	 * @param string $filename                  The name of the file (may differ from $file due to
+	 *                                          $file being in a tmp directory).
+	 * @param array  $mimes                     Key is the file extension with value as the mime type.
+	 * @return Array           [description]
+	 */
+	public static function wp_check_filetype_and_ext( $checked, $file, $filename, $mimes ) {
+		if ( ! $checked['type'] ) {
+
+				$check_filetype  = wp_check_filetype( $filename, $mimes );
+				$ext             = $check_filetype['ext'];
+				$type            = $check_filetype['type'];
+				$proper_filename = $filename;
+
+			if ( $type && 0 === strpos( $type, 'image/' ) && 'svg' !== $ext ) {
+					$ext  = false;
+					$type = false;
+			}
+
+			$checked = compact( 'ext', 'type', 'proper_filename' );
+		}
+
+		return $checked;
+	}
+
+	/**
+	 * Force SVG to have a height and width.
+	 *
+	 * @param  bool        $check Check value of filter.
+	 * @param  int         $id    Attachment ID.
+	 * @param  Array|Strng $size  Size of image as string or array.
+	 * @return Array        Array with image url, width and height.
+	 */
+	public static function image_downsize( $check, $id, $size ) {
+		$type = get_post_mime_type( $id );
+		if ( 'image/svg+xml' !== $type ) {
+			return $check;
+		}
+		$img_url = wp_get_attachment_url( $id );
+		if ( is_array( $size ) ) {
+			$img = $size;
+			array_unshift( $img, $img_url );
+			return $img;
+		}
+		// Default to 50 x 50.
+		return [ $img_url, 50, 50 ];
 	}
 }

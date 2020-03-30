@@ -398,6 +398,7 @@ class Story_Post_Type {
 				'image/jpg',
 				'image/gif',
 				'image/svg',
+				'image/svg+xml',
 			],
 			'audio' => [], // todo: support audio uploads.
 			'video' => [
