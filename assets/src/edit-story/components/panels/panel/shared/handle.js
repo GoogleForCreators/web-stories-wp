@@ -43,6 +43,7 @@ const Handle = styled.div`
   justify-content: center;
   align-items: center;
   cursor: row-resize;
+  user-select: none;
 `;
 
 const Bar = styled.div.attrs({
@@ -54,13 +55,20 @@ const Bar = styled.div.attrs({
   border-radius: 2px;
 `;
 
-function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
+function DragHandle({
+  height,
+  minHeight,
+  maxHeight,
+  handleHeightChange,
+  handleExpandToHeightChange,
+  handleDoubleClick,
+}) {
   const handle = useRef();
-  useDragHandlers(handle, handleHeightChange);
+  useDragHandlers(handle, handleHeightChange, handleExpandToHeightChange);
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle ref={handle}>
+    <Handle ref={handle} onDoubleClick={handleDoubleClick}>
       <Bar
         role="slider"
         aria-orientation="vertical"
@@ -75,6 +83,8 @@ function DragHandle({ height, minHeight, maxHeight, handleHeightChange }) {
 
 DragHandle.propTypes = {
   handleHeightChange: PropTypes.func.isRequired,
+  handleExpandToHeightChange: PropTypes.func.isRequired,
+  handleDoubleClick: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   minHeight: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,

@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
+import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
@@ -59,6 +60,7 @@ const Header = styled.h2`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  user-select: none;
 `;
 
 const HeaderButton = styled.button.attrs({ type: 'button' })`
@@ -106,8 +108,8 @@ function Title({
   isResizable,
 }) {
   const {
-    state: { isCollapsed, height, panelContentId },
-    actions: { collapse, expand, setHeight },
+    state: { isCollapsed, height, resizeable, panelContentId },
+    actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
   } = useContext(panelContext);
   const {
     state: { inspectorContentHeight },
@@ -118,11 +120,19 @@ function Title({
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>
-      setHeight((value) =>
-        Math.max(0, Math.min(maxHeight, value + deltaHeight))
-      ),
-    [setHeight, maxHeight]
+      resizeable
+        ? setHeight((value) =>
+            Math.max(0, Math.min(maxHeight, value + deltaHeight))
+          )
+        : null,
+    [resizeable, setHeight, maxHeight]
   );
+
+  const handleExpandToHeightChange = useCallback(() => {
+    if (resizeable && height >= PANEL_COLLAPSED_THRESHOLD) {
+      setExpandToHeight(height);
+    }
+  }, [setExpandToHeight, height, resizeable]);
 
   const titleLabel = isCollapsed
     ? __('Expand panel', 'web-stories')
@@ -134,12 +144,14 @@ function Title({
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
     >
-      {isResizable && !isCollapsed && (
+      {isResizable && (
         <DragHandle
           height={height}
           minHeight={0}
           maxHeight={maxHeight}
           handleHeightChange={handleHeightChange}
+          handleExpandToHeightChange={handleExpandToHeightChange}
+          handleDoubleClick={resetHeight}
         />
       )}
       <HeaderButton
