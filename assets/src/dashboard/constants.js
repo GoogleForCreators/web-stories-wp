@@ -25,6 +25,11 @@ export const BUTTON_TYPES = {
   SECONDARY: 'secondary',
 };
 
+export const CHIP_TYPES = {
+  STANDARD: 'standard',
+  SMALL: 'small',
+};
+
 export const DROPDOWN_TYPES = {
   TRANSPARENT_MENU: 'transparentMenu',
   MENU: 'menu',
