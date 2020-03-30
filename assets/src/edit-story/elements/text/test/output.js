@@ -86,7 +86,7 @@ describe('TextOutput', () => {
       margin: '0px',
       color: 'rgba(255, 255, 255, 0.5)',
       backgroundColor: 'rgba(255, 0, 0, 0.3)',
-      fontSize: '0.83333%',
+      fontSize: '2.42424%',
       letterSpacing: '1.3em',
       textAlign: 'left',
       textDecoration: 'none',
