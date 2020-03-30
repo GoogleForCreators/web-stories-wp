@@ -44,27 +44,17 @@ import { intersect, objectWithout } from './utils';
  */
 function updateElements(
   state,
-  { videoId, elementIds, properties: propertiesOrUpdater }
+  { elementIds, properties: propertiesOrUpdater }
 ) {
-  let idsToUpdate = elementIds === null ? state.selection : elementIds;
+  const idsToUpdate = elementIds === null ? state.selection : elementIds;
+
+  if (idsToUpdate.length === 0) {
+    return state;
+  }
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const oldPage = state.pages[pageIndex];
-  if (
-    (elementIds === null || elementIds === undefined) &&
-    videoId !== null &&
-    videoId !== undefined
-  ) {
-    idsToUpdate = oldPage.elements.filter(
-      ({ resource }) => resource && resource.videoId === videoId
-    );
-    idsToUpdate = idsToUpdate.map(({ id }) => id);
-  }
-  if (!idsToUpdate || idsToUpdate.length === 0) {
-    return state;
-  }
-
   const pageElementIds = oldPage.elements.map(({ id }) => id);
 
   // Nothing to update?
