@@ -106,4 +106,28 @@ describe('buttons', () => {
     // @todo This test is relying on Gutenberg component's class list and should be replaced as soon as we have a custom spinner.
     expect(spinner.classList.contains('components-spinner')).toBe(true);
   });
+
+  it('should open preview when clicking on Preview', () => {
+    const { getByText } = setupButtons({ link: 'https://example.com' });
+    const previewButton = getByText('Preview');
+
+    expect(previewButton).toBeDefined();
+
+    const mockedOpen = jest.fn();
+    const originalWindow = { ...window };
+    const windowSpy = jest.spyOn(global, 'window', 'get');
+    windowSpy.mockImplementation(() => ({
+      ...originalWindow,
+      open: mockedOpen,
+    }));
+
+    fireEvent.click(previewButton);
+
+    expect(mockedOpen).toHaveBeenCalledWith(
+      'https://example.com/?preview=true',
+      'story-preview'
+    );
+
+    windowSpy.mockRestore();
+  });
 });
