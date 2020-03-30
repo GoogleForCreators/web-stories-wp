@@ -20,11 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
 const Container = styled.div`
   display: flex;
 `;
@@ -88,9 +83,9 @@ const Snackbar = ({ notification, place }) => (
           </List>
         )}
       </Content>
-      {notification.retryAction && (
-        <ActionButton onClick={notification.retryAction}>
-          {__('Retry', 'web-stories')}
+      {notification.buttonCallback && (
+        <ActionButton onClick={notification.buttonCallback}>
+          {notification.buttonlabel}
         </ActionButton>
       )}
     </Main>
