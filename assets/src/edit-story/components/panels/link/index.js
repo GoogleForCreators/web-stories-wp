@@ -46,6 +46,7 @@ import Dialog from '../../dialog';
 import theme from '../../../theme';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { Plain } from '../../button';
+import { useCanvas } from '../../canvas';
 import LinkInfoDialog from './dialogContent';
 
 const BrandIconText = styled.span`
@@ -53,6 +54,10 @@ const BrandIconText = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
+  const {
+    actions: { clearEditing },
+  } = useCanvas();
+
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
@@ -112,6 +117,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChange = useCallback(
     (properties, submit) => {
+      clearEditing();
+
       if (properties.url) {
         populateMetadata(properties.url);
       }
@@ -125,7 +132,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
+    [
+      clearEditing,
+      pushUpdateForObject,
+      inferredLinkType,
+      defaultLink,
+      populateMetadata,
+    ]
   );
 
   const handleChangeIcon = useCallback(
