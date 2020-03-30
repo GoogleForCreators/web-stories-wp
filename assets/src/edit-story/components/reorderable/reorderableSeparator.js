@@ -19,18 +19,14 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useContext, useCallback } from 'react';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { LAYER_HEIGHT } from './constants';
-import LayerContext from './context';
+import useReorderable from './useReorderable';
 
 const Wrapper = styled.div`
-  height: ${LAYER_HEIGHT}px;
-  margin: -${LAYER_HEIGHT / 2}px 0;
-  padding: ${LAYER_HEIGHT / 2}px 0;
   opacity: 0;
   position: relative;
   z-index: 1;
@@ -47,22 +43,28 @@ const Line = styled.div`
   width: 100%;
 `;
 
-function LayerSeparator({ position }) {
+function ReorderableSeparator({ position, ...props }) {
   const {
     actions: { setCurrentSeparator },
-  } = useContext(LayerContext);
+    state: { isReordering },
+  } = useReorderable();
   const handlePointerEnter = useCallback(() => {
     setCurrentSeparator(position);
   }, [setCurrentSeparator, position]);
+
+  if (!isReordering) {
+    return null;
+  }
+
   return (
-    <Wrapper onPointerEnter={handlePointerEnter}>
+    <Wrapper onPointerEnter={handlePointerEnter} {...props}>
       <Line />
     </Wrapper>
   );
 }
 
-LayerSeparator.propTypes = {
+ReorderableSeparator.propTypes = {
   position: PropTypes.number.isRequired,
 };
 
-export default LayerSeparator;
+export default ReorderableSeparator;
