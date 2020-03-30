@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-export const FETCH_MEDIA_START = 'FETCH_MEDIA_START';
-export const FETCH_MEDIA_SUCCESS = 'FETCH_MEDIA_SUCCESS';
-export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
-export const RESET_FILTERS = 'RESET_FILTERS';
-export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
-export const SET_MEDIA_TYPE = 'SET_MEDIA_TYPE';
-export const SET_NEXT_PAGE = 'SET_NEXT_PAGE';
-export const SET_MEDIA = 'SET_MEDIA';
-export const REMOVE_PROCESSING = 'REMOVE_PROCESSING';
-export const ADD_PROCESSING = 'ADD_PROCESSING';
-export const UPDATE_MEDIA_ELEMENT = 'UPDATE_MEDIA_ELEMENT';
+/**
+ * Infer element type from mime type of its resource
+ *
+ * @param {string} mimeType Mime type.
+ * @return {string} Element type.
+ */
+const getTypeFromMime = (mimeType) => {
+  if (mimeType.match('image.*')) {
+    return 'image';
+  } else if (mimeType.match('video.*')) {
+    return 'video';
+  }
+
+  throw new Error('File type error');
+};
+
+export default getTypeFromMime;

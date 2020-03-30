@@ -24,8 +24,10 @@ import { useEffect, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI, useConfig } from '../';
+
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
+import useUploadMedia from './useUploadMedia';
 import Context from './context';
 
 function MediaProvider({ children }) {
@@ -43,6 +45,7 @@ function MediaProvider({ children }) {
     fetchMediaSuccess,
     fetchMediaError,
     resetFilters,
+    setMedia,
     setMediaType,
     setSearchTerm,
     setNextPage,
@@ -50,7 +53,30 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
   } = actions;
-
+  const fetchMedia = useCallback(
+    ({ pagingNum: p = 1, mediaType: currentMediaType } = {}, callback) => {
+      fetchMediaStart({ pagingNum: p });
+      getMedia({ mediaType: currentMediaType, searchTerm, pagingNum: p })
+        .then(({ data, headers }) => {
+          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          callback({
+            media: data,
+            mediaType: currentMediaType,
+            searchTerm,
+            pagingNum: p,
+            totalPages,
+          });
+        })
+        .catch(fetchMediaError);
+    },
+    [fetchMediaError, fetchMediaStart, getMedia, searchTerm]
+  );
+  const { uploadMedia, isUploading } = useUploadMedia({
+    media,
+    pagingNum,
+    setMedia,
+    fetchMedia,
+  });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
     setProcessing,
@@ -65,42 +91,23 @@ function MediaProvider({ children }) {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
 
-  const fetchMedia = useCallback(
-    ({ pagingNum: p = 1 } = {}) => {
-      fetchMediaStart({ pagingNum: p });
-      getMedia({ mediaType, searchTerm, pagingNum: p })
-        .then(({ data, headers }) => {
-          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
-          fetchMediaSuccess({
-            media: data,
-            mediaType,
-            searchTerm,
-            pagingNum: p,
-            totalPages,
-          });
-        })
-        .catch(fetchMediaError);
-    },
-    [
-      fetchMediaError,
-      fetchMediaStart,
-      fetchMediaSuccess,
-      getMedia,
-      mediaType,
-      searchTerm,
-    ]
-  );
-
   const resetWithFetch = useCallback(() => {
     resetFilters();
     if (!mediaType && !searchTerm && pagingNum === 1) {
-      fetchMedia();
+      fetchMedia({ mediaType }, fetchMediaSuccess);
     }
-  }, [fetchMedia, mediaType, pagingNum, resetFilters, searchTerm]);
+  }, [
+    fetchMedia,
+    fetchMediaSuccess,
+    mediaType,
+    pagingNum,
+    resetFilters,
+    searchTerm,
+  ]);
 
   useEffect(() => {
-    fetchMedia({ pagingNum });
-  }, [fetchMedia, mediaType, pagingNum, searchTerm]);
+    fetchMedia({ pagingNum, mediaType }, fetchMediaSuccess);
+  }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
   const uploadVideoPoster = useCallback(
     (videoId, src, elementId = 0) => {
@@ -118,9 +125,9 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    ({ mimeType, posterId, id, src }) => {
+    ({ mimeType, posterId, id, src, videoId }) => {
       const process = async () => {
-        if (allowedVideoMimeTypes.includes(mimeType) && !posterId) {
+        if (allowedVideoMimeTypes.includes(mimeType) && !posterId && videoId) {
           await uploadVideoPoster(id, src);
         }
       };
@@ -143,13 +150,14 @@ function MediaProvider({ children }) {
   useEffect(generatePoster, [media.length, mediaType, searchTerm]);
 
   const context = {
-    state,
+    state: { ...state, isUploading },
     actions: {
       setNextPage,
       setMediaType,
       setSearchTerm,
       fetchMedia,
       resetFilters,
+      uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
     },
