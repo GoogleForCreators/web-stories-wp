@@ -259,28 +259,25 @@ function APIProvider({ children }) {
     [users]
   );
 
-  const getAllUsers = useCallback(
-    (pagingNum = 1) => {
-      return getUsersByPage(pagingNum).then(({ data, headers }) => {
-        const totalPages = parseInt(headers.get('X-WP-TotalPages'));
-        if (totalPages <= 1) return data;
-        const promises = [];
-        for (let i = 2; i <= totalPages; i++) {
-          promises.push(getUsersByPage(i));
-        }
-        return Promise.all(promises).then((response) => {
-          response.sort((a, b) => a.pagingNum - b.pagingNum);
-          return data.concat(
-            response.reduce(
-              (resultArray, result) => resultArray.concat(result.data),
-              []
-            )
-          );
-        });
+  const getAllUsers = useCallback(() => {
+    return getUsersByPage().then(({ data, headers }) => {
+      const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+      if (totalPages <= 1) return data;
+      const promises = [];
+      for (let i = 2; i <= totalPages; i++) {
+        promises.push(getUsersByPage(i));
+      }
+      return Promise.all(promises).then((response) => {
+        response.sort((a, b) => a.pagingNum - b.pagingNum);
+        return data.concat(
+          response.reduce(
+            (resultArray, result) => resultArray.concat(result.data),
+            []
+          )
+        );
       });
-    },
-    [getUsersByPage]
-  );
+    });
+  }, [getUsersByPage]);
 
   const state = {
     actions: {
