@@ -319,6 +319,6 @@ class Media {
 			return $img;
 		}
 		// Default to 300 x 300.
-		return $check;
+		return [ $img_url, 300, 300 ];
 	}
 }
