@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -42,110 +42,114 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-function Reorderable({ children, onPositionChange = () => {}, ...props }) {
-  const [isReordering, setIsReordering] = useState(false);
-  const [currentSeparator, setCurrentSeparator] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState(null);
-  const [dragTarget, setDragTarget] = useState(null);
+const Reorderable = React.forwardRef(
+  ({ children, onPositionChange = () => {}, ...props }, forwardedRef) => {
+    const [isReordering, setIsReordering] = useState(false);
+    const [currentSeparator, setCurrentSeparator] = useState(null);
+    const [currentPosition, setCurrentPosition] = useState(null);
+    const [dragTarget, setDragTarget] = useState(null);
 
-  const speak = useLiveRegion('assertive');
-  const handleStartReordering = useCallback(
-    ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
-      // Only allow reordering with non-modified click on non-background element.
-      // Modified (shift+ or meta+) clicks are for selection.
-      if (!evt.shiftKey && !evt.metaKey) {
-        onStartReordering();
-        setCurrentPosition(currentPos);
-        setDragTarget(evt.target);
+    const speak = useLiveRegion('assertive');
+    const handleStartReordering = useCallback(
+      ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
+        // Only allow reordering with non-modified click on non-background element.
+        // Modified (shift+ or meta+) clicks are for selection.
+        if (!evt.shiftKey && !evt.metaKey) {
+          onStartReordering();
+          setCurrentPosition(currentPos);
+          setDragTarget(evt.target);
+        }
+      },
+      []
+    );
+
+    const separator = useRef(null);
+    useEffect(() => {
+      separator.current = currentSeparator;
+    }, [currentSeparator]);
+
+    useEffect(() => {
+      if (!dragTarget) {
+        return undefined;
       }
-    },
-    []
-  );
 
-  const separator = useRef(null);
-  useEffect(() => {
-    separator.current = currentSeparator;
-  }, [currentSeparator]);
-
-  useEffect(() => {
-    if (!dragTarget) {
-      return undefined;
-    }
-
-    const onRelease = (evt) => {
-      evt.preventDefault();
-      if (separator.current !== null) {
-        const newPosition = separator.current;
-        const position =
-          newPosition > currentPosition ? newPosition - 1 : newPosition;
-        onPositionChange(currentPosition, position);
-      }
-      setDragTarget(null);
-    };
-
-    // only mark as reordering when starting to drag
-    const onMove = () => setIsReordering(true);
-
-    // abort on esc
-    // TODO: rewrite to useKeyDown() once either is merged.
-    const onAbort = (evt) => {
-      if (evt.key === 'Escape') {
+      const onRelease = (evt) => {
+        evt.preventDefault();
+        if (separator.current !== null) {
+          const newPosition = separator.current;
+          const position =
+            newPosition > currentPosition ? newPosition - 1 : newPosition;
+          onPositionChange(currentPosition, position);
+        }
         setDragTarget(null);
-        evt.stopPropagation();
-      }
-    };
+      };
 
-    dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
-    dragTarget.ownerDocument.addEventListener('keydown', onAbort, true);
-    dragTarget.addEventListener('pointermove', onMove);
+      // only mark as reordering when starting to drag
+      const onMove = () => setIsReordering(true);
 
-    return () => {
-      setCurrentSeparator(null);
-      setIsReordering(false);
-      dragTarget.removeEventListener('pointermove', onMove);
-      dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
-      dragTarget.ownerDocument.removeEventListener('keydown', onAbort, true);
-    };
-  }, [
-    dragTarget,
-    currentPosition,
-    setCurrentSeparator,
-    setIsReordering,
-    onPositionChange,
-  ]);
+      // abort on esc
+      // TODO: rewrite to useKeyDown() once either is merged.
+      const onAbort = (evt) => {
+        if (evt.key === 'Escape') {
+          setDragTarget(null);
+          evt.stopPropagation();
+        }
+      };
 
-  useEffect(() => {
-    if (isReordering && currentSeparator) {
-      const position = children.length - currentSeparator;
-      const message = sprintf(REORDER_MESSAGE, position);
-      speak(message);
-    }
-  }, [
-    isReordering,
-    currentSeparator,
-    children.length,
-    onPositionChange,
-    speak,
-  ]);
+      dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
+      dragTarget.ownerDocument.addEventListener('keydown', onAbort, true);
+      dragTarget.addEventListener('pointermove', onMove);
 
-  const state = {
-    state: {
-      isReordering,
-      currentSeparator,
-    },
-    actions: {
+      return () => {
+        setCurrentSeparator(null);
+        setIsReordering(false);
+        dragTarget.removeEventListener('pointermove', onMove);
+        dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
+        dragTarget.ownerDocument.removeEventListener('keydown', onAbort, true);
+      };
+    }, [
+      dragTarget,
+      currentPosition,
       setCurrentSeparator,
       setIsReordering,
-      handleStartReordering,
-    },
-  };
+      onPositionChange,
+    ]);
 
-  return (
-    <Context.Provider value={state}>
-      <ReorderableContainer {...props}>{children}</ReorderableContainer>
-    </Context.Provider>
-  );
-}
+    useEffect(() => {
+      if (isReordering && currentSeparator) {
+        const position = children.length - currentSeparator;
+        const message = sprintf(REORDER_MESSAGE, position);
+        speak(message);
+      }
+    }, [
+      isReordering,
+      currentSeparator,
+      children.length,
+      onPositionChange,
+      speak,
+    ]);
+
+    const state = {
+      state: {
+        isReordering,
+        currentSeparator,
+      },
+      actions: {
+        setCurrentSeparator,
+        setIsReordering,
+        handleStartReordering,
+      },
+    };
+
+    return (
+      <Context.Provider value={state}>
+        <ReorderableContainer {...props} ref={forwardedRef}>
+          {children}
+        </ReorderableContainer>
+      </Context.Provider>
+    );
+  }
+);
 
 Reorderable.propTypes = {
   children: PropTypes.oneOfType([

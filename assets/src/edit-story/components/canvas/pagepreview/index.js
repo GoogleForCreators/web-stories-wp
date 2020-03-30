@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 /**
  * Internal dependencies
@@ -69,7 +70,7 @@ const PreviewWrapper = styled.div`
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
-function PagePreview({ index, forwardedRef, ...props }) {
+const PagePreview = React.forwardRef(({ index, ...props }, forwardedRef) => {
   const {
     state: { pages },
   } = useStory();
@@ -92,11 +93,10 @@ function PagePreview({ index, forwardedRef, ...props }) {
       </TransformProvider>
     </UnitsProvider>
   );
-}
+});
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.object,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };

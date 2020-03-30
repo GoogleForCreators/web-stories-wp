@@ -30,9 +30,9 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
 import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
+import PagePreview from '../pagepreview';
 
 const PAGE_WIDTH = 90;
 const PAGE_HEIGHT = 160;
@@ -169,7 +169,7 @@ function GridView() {
           const isCurrentPage = index === currentPageIndex;
 
           return (
-            <DraggablePage
+            <PagePreview
               key={index}
               ariaLabel={
                 isCurrentPage
@@ -180,7 +180,7 @@ function GridView() {
                   : sprintf(__('Page %s', 'web-stories'), index + 1)
               }
               isActive={isCurrentPage}
-              pageIndex={index}
+              index={index}
               width={zoomLevel * PAGE_WIDTH}
               height={zoomLevel * PAGE_HEIGHT}
               dragIndicatorOffset={GRID_GAP / 2}

@@ -37,15 +37,19 @@ import {
   Keyboard as KeyboardShortcutsButton,
   Plain,
 } from '../../button';
+import {
+  Reorderable,
+  ReorderableSeparator,
+  ReorderableItem,
+} from '../../reorderable';
 import Modal from '../../modal';
 import GridView from '../gridview';
-import DraggablePage from '../draggablePage';
+import PagePreview from '../pagepreview';
 import useResizeEffect from '../../../utils/useResizeEffect';
 import {
   COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
-import DropZoneProvider from '../../dropzone/dropZoneProvider';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
@@ -104,10 +108,10 @@ const OverflowButtons = styled.div`
   }
 `;
 
-const List = styled(Area).attrs({
+const PageList = styled(Reorderable).attrs({
   area: 'carousel',
-  as: 'ul',
   role: 'listbox',
+  'aria-orientation': 'horizontal',
 })`
   flex-direction: row;
   align-items: center;
@@ -131,9 +135,19 @@ const List = styled(Area).attrs({
   }
 `;
 
-const Li = styled.li.attrs({
-  role: 'option',
-})`
+const PageSeparator = styled(ReorderableSeparator)`
+  margin: 6px -18px -3px -8px;
+  padding: 3px 10px;
+  & > div {
+    height: 100%;
+    width: 6px;
+    margin: 0px;
+  }
+`;
+
+const ItemContainer = styled.div.attrs({ role: 'option' })`
+  display: flex;
+  flex-direction: row;
   margin: 0 10px 0 0;
   &:last-of-type {
     margin: 0;
@@ -160,7 +174,7 @@ function calculatePageThumbSize(carouselSize) {
 function Carousel() {
   const {
     state: { pages, currentPageIndex, currentPageId },
-    actions: { setCurrentPage },
+    actions: { setCurrentPage, arrangePage },
   } = useStory();
   const { isRTL } = useConfig();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
@@ -248,7 +262,7 @@ function Carousel() {
   const PrevButton = isRTL ? RightArrow : LeftArrow;
   const NextButton = isRTL ? LeftArrow : RightArrow;
 
-  const Item = isCompact ? CompactIndicator : DraggablePage;
+  const Page = isCompact ? CompactIndicator : PagePreview;
   const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
     carouselSize
   );
@@ -257,7 +271,7 @@ function Carousel() {
     : CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
   return (
-    <DropZoneProvider>
+    <>
       <Wrapper>
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -268,40 +282,48 @@ function Carousel() {
             aria-label={__('Scroll Backward', 'web-stories')}
           />
         </NavArea>
-        <List
+        <PageList
           ref={listRef}
           hasHorizontalOverflow={hasHorizontalOverflow}
           aria-label={__('Pages List', 'web-stories')}
+          onPositionChange={(oldPos, newPos) => {
+            const pageId = pages[oldPos].id;
+            arrangePage({ pageId, position: newPos });
+            setCurrentPage({ pageId });
+          }}
         >
+          <PageSeparator position={0} />
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <Li key={index}>
-                <Item
-                  onClick={handleClickPage(page)}
-                  dragIndicatorOffset={2}
-                  role="option"
-                  ariaLabel={
-                    isCurrentPage
-                      ? sprintf(
-                          __('Page %s (current page)', 'web-stories'),
-                          index + 1
-                        )
-                      : sprintf(__('Go to page %s', 'web-stories'), index + 1)
-                  }
-                  isActive={isCurrentPage}
-                  pageIndex={index}
-                  ref={(el) => {
-                    pageRefs.current[page.id] = el;
-                  }}
-                  width={pageThumbWidth}
-                  height={pageThumbHeight}
-                />
-              </Li>
+              <ItemContainer key={page.id}>
+                <ReorderableItem position={index}>
+                  <Page
+                    onClick={handleClickPage(page)}
+                    role="option"
+                    ariaLabel={
+                      isCurrentPage
+                        ? sprintf(
+                            __('Page %s (current page)', 'web-stories'),
+                            index + 1
+                          )
+                        : sprintf(__('Go to page %s', 'web-stories'), index + 1)
+                    }
+                    isActive={isCurrentPage}
+                    index={index}
+                    ref={(el) => {
+                      pageRefs.current[page.id] = el;
+                    }}
+                    width={pageThumbWidth}
+                    height={pageThumbHeight}
+                  />
+                </ReorderableItem>
+                <PageSeparator position={index + 1} />
+              </ItemContainer>
             );
           })}
-        </List>
+        </PageList>
         <NavArea area="next-navigation" marginBottom={arrowsBottomMargin}>
           <NextButton
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
@@ -348,7 +370,7 @@ function Carousel() {
           <GridView />
         </GridViewContainer>
       </Modal>
-    </DropZoneProvider>
+    </>
   );
 }
 
