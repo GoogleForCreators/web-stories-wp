@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Story_Post_Type;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -43,6 +43,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 	const COLOR_PRESETS_OPTION = 'web_stories_color_presets';
 
+	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
@@ -96,10 +97,8 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
-		if ( in_array( 'poster_portrait_url', $fields, true ) ) {
-			$poster_images               = Media::get_story_meta_images( $post );
-			$image                       = $poster_images['poster-portrait'];
-			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
+		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
+			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
 		}
 
 		if ( in_array( 'color_presets', $fields, true ) ) {
@@ -139,6 +138,15 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	public function update_item( $request ) {
 		$response = parent::update_item( $request );
 		if ( ! is_wp_error( $response ) ) {
+			// If publisher logo is set, let's assign that.
+			$publisher_logo_id = $request->get_param( 'publisher_logo' );
+			if ( $publisher_logo_id ) {
+				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
+				$publisher_logo_settings           = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings['active'] = $publisher_logo_id;
+				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+			}
+
 			// If color presets are set.
 			$color_presets = $request->get_param( 'color_presets' );
 			if ( is_array( $color_presets ) ) {
@@ -166,7 +174,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		];
 
 		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL to enqueue the image', 'web-stories' ),
+			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
 			'type'        => 'string',
 			'format'      => 'uri',
 			'context'     => [ 'view', 'edit', 'embed' ],
@@ -174,12 +182,11 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'default'     => '',
 		];
 
-		$schema['properties']['poster_portrait_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
+		$schema['properties']['publisher_logo_url'] = [
+			'description' => __( 'Publisher logo URL.', 'web-stories' ),
 			'type'        => 'string',
+			'context'     => [ 'views', 'edit' ],
 			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
 			'default'     => '',
 		];
 

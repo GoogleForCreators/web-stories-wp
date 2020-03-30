@@ -17,6 +17,9 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Story_Post_Type;
+
 class Story_Renderer extends \WP_UnitTestCase {
 	protected static $user;
 
@@ -165,6 +168,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		$renderer            = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
 		$actual_with_options = $renderer->render();
+		delete_option( $option );
 
 		$this->assertContains( '<amp-analytics', $actual_with_options );
 		$this->assertContains( '"gtag_id":"123foo"', $actual_with_options );
@@ -198,8 +202,33 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
 		$actual   = $renderer->render();
 
+		delete_option( $option );
+
 		$this->assertNotContains( '<amp-analytics', $actual );
 		$this->assertNotContains( '"gtag_id":"123foo"', $actual );
 		$this->assertNotContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
+	}
+
+	/**
+	 * Tests that publisher logo is correctly replaced.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
+	 */
+	public function test_add_publisher_logo() {
+		$post_with_publisher_logo = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER . '"></amp-story></body></html>',
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		add_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [ 'active' => $attachment_id ] );
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
+		$rendered = $renderer->render();
+
+		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
+
+		$this->assertContains( 'attachment', $rendered );
+		$this->assertNotContains( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $rendered );
 	}
 }

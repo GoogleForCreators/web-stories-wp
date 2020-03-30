@@ -33,6 +33,7 @@ describe('Story output', () => {
         modified: '123',
         excerpt: '123',
         featuredMedia: 123,
+        publisherLogoUrl: 'https://example.com/logo.png',
         password: '123',
         link: 'https://example.com/story',
       },
@@ -52,6 +53,7 @@ describe('Story output', () => {
           logo: 'https://example.com/logo.png',
         },
         fallbackPoster: 'https://example.com/logo.png',
+        logoPlaceholder: 'https://example.com/logo.png',
       },
     };
 
@@ -71,6 +73,7 @@ describe('Story output', () => {
         modified: '123',
         excerpt: '123',
         featuredMedia: 123,
+        publisherLogoUrl: 'https://example.com/logo.png',
         password: '123',
         link: 'https://example.com/story',
       },
@@ -81,6 +84,7 @@ describe('Story output', () => {
           logo: 'https://example.com/logo.png',
         },
         fallbackPoster: 'https://example.com/logo.png',
+        logoPlaceholder: 'https://example.com/logo.png',
       },
     };
 

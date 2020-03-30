@@ -40,7 +40,8 @@ export const Menu = styled.ul`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
+  min-width: 210px;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow: hidden;
   padding: 0;
@@ -80,7 +81,13 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const PopoverMenu = ({ className, isOpen, items, onSelect }) => {
+const PopoverMenu = ({
+  className,
+  isOpen,
+  items,
+  onSelect,
+  framelessButton,
+}) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -149,7 +156,11 @@ const PopoverMenu = ({ className, isOpen, items, onSelect }) => {
   };
 
   return (
-    <Menu className={className} isOpen={isOpen}>
+    <Menu
+      className={className}
+      isOpen={isOpen}
+      framelessButton={framelessButton}
+    >
       {items.map((item, index) => {
         return renderMenuItem(item, index);
       })}
@@ -168,6 +179,7 @@ PopoverMenu.propTypes = {
   className: PropTypes.string,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
+  framelessButton: PropTypes.bool,
 };
 
 export default PopoverMenu;

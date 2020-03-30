@@ -87,6 +87,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       excerpt,
       featuredMedia,
       password,
+      publisherLogo,
       colorPresets,
     } = story;
 
@@ -104,6 +105,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       excerpt,
       featuredMedia,
       password,
+      publisherLogo,
       colorPresets,
     })
       .then((post) => {
@@ -111,7 +113,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           status: newStatus,
           slug: newSlug,
           link,
-          poster_portrait_url: posterPortraitUrl,
+          featured_media_url: featuredMediaUrl,
         } = post;
 
         updateStory({
@@ -119,7 +121,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             status: newStatus,
             slug: newSlug,
             link,
-            posterPortraitUrl,
+            featuredMediaUrl,
           },
         });
         refreshPostEditURL(storyId);

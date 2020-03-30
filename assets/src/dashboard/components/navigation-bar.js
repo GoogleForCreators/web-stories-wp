@@ -29,7 +29,7 @@ import styled from 'styled-components';
  */
 import { useConfig, useRouteHistory } from '../app';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES } from '../constants';
+import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../constants';
 import Button from './button';
 import Dropdown from './dropdown';
 
@@ -86,15 +86,6 @@ const NewStoryLink = styled(Button)`
   margin-left: 40px;
 `;
 
-const paths = [
-  { value: '/', label: __('My Stories', 'web-stories') },
-  {
-    value: '/templates-gallery',
-    label: __('Templates Gallery', 'web-stories'),
-  },
-  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
-];
-
 function NavigationBar() {
   const { state, actions } = useRouteHistory();
   const { newStoryURL } = useConfig();
@@ -103,10 +94,10 @@ function NavigationBar() {
       <WebStoriesLogo />
       <DropdownContainer>
         <Dropdown
-          transparent
           ariaLabel="Dashboard Navigation"
           items={paths}
           value={state.currentPath}
+          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
           onChange={(path) => actions.push(path.value)}
         />
       </DropdownContainer>

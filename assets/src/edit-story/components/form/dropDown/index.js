@@ -31,9 +31,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
-import { useKeyDownEffect } from '../keyboard';
-import useFocusOut from '../../utils/useFocusOut';
+import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import { useKeyDownEffect } from '../../keyboard';
+import useFocusOut from '../../../utils/useFocusOut';
 
 const DropDownContainer = styled.div`
   width: 100px;
@@ -51,7 +51,8 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  background-color: ${({ theme, lightMode }) =>
+    lightMode ? rgba(theme.colors.fg.v1, 0.1) : rgba(theme.colors.bg.v0, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -66,7 +67,8 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   svg {
     width: 28px;
     height: 28px;
-    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+    color: ${({ theme, lightMode }) =>
+      lightMode ? theme.colors.fg.v1 : rgba(theme.colors.fg.v1, 0.3)};
   }
 `;
 
@@ -162,7 +164,14 @@ const availableKeysForSearch = [
   '0',
 ];
 
-function DropDown({ options, value, onChange, disabled, ariaLabel }) {
+function DropDown({
+  options,
+  value,
+  onChange,
+  disabled,
+  ariaLabel,
+  lightMode = false,
+}) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
   DropDown.arrayOfOptionsRefs = [];
@@ -321,6 +330,7 @@ function DropDown({ options, value, onChange, disabled, ariaLabel }) {
         disabled={disabled}
         ref={DropDown.selectRef}
         aria-disabled={disabled}
+        lightMode={lightMode}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) ||
@@ -364,6 +374,7 @@ DropDown.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  lightMode: PropTypes.bool,
 };
 
 DropDown.defaultProps = {

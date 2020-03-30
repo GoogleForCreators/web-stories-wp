@@ -37,7 +37,7 @@ function arrange(props = {}) {
       <Color label="Color" onChange={onChange} {...props} />
     </ThemeProvider>
   );
-  const colorPreview = queryByLabelText(/Color/);
+  const colorPreview = queryByLabelText(/Edit: Color/);
   const opacityInput = queryByLabelText(/Opacity/);
   return {
     colorPreview,

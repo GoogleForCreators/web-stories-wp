@@ -62,11 +62,23 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           story_data: storyDataRaw,
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
-          poster_portrait_url: posterPortraitUrl,
+          publisher_logo_url: publisherLogoUrl,
+          permalink_template: permalinkTemplate,
           color_presets: colorPresets,
           password,
         } = post;
 
+        const [prefix, suffix] = permalinkTemplate.split(
+          /%(?:postname|pagename)%/
+        );
+        // If either of these is undefined, the placeholder was not found in settings.
+        const foundSettings = prefix !== undefined && suffix !== undefined;
+        const permalinkConfig = foundSettings
+          ? {
+              prefix,
+              suffix,
+            }
+          : null;
         const statusFormat = status === 'auto-draft' ? 'draft' : status;
 
         // First clear history completely.
@@ -84,7 +96,8 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           link,
           featuredMedia,
           featuredMediaUrl,
-          posterPortraitUrl,
+          permalinkConfig,
+          publisherLogoUrl,
           password,
           colorPresets,
         };

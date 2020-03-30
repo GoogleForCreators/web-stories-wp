@@ -27,14 +27,14 @@ import TextStyle from '../textStyle';
 import FontContext from '../../../app/font/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
-import DropDown from '../../dropDown';
+import DropDown from '../../form/dropDown';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
-jest.mock('../../dropDown');
+jest.mock('../../form/dropDown');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };

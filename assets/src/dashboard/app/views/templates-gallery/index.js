@@ -20,14 +20,54 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { ViewHeader } from '../../../components';
+import { Dropdown, ViewHeader } from '../../../components';
+import { DropdownContainer } from '../../../components/dropdown';
+import { DROPDOWN_TYPES } from '../../../constants';
+
+const ExploreFiltersContainer = styled.div`
+  padding: 0 20px 20px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  flex-direction: row;
+  display: flex;
+
+  ${DropdownContainer} {
+    margin-right: 15px;
+  }
+`;
 
 function TemplatesGallery() {
   return (
     <div>
       <ViewHeader>{__('Explore Templates', 'web-stories')}</ViewHeader>
+      <ExploreFiltersContainer>
+        <Dropdown
+          ariaLabel="Category Dropdown"
+          type={DROPDOWN_TYPES.PANEL}
+          placeholder={__('Category', 'web-stories')}
+        />
+        <Dropdown
+          ariaLabel="Category Dropdown"
+          type={DROPDOWN_TYPES.PANEL}
+          placeholder={__('Style', 'web-stories')}
+        />
+        <Dropdown
+          ariaLabel="Category Dropdown"
+          type={DROPDOWN_TYPES.PANEL}
+          placeholder={__('Color', 'web-stories')}
+        />
+        <Dropdown
+          ariaLabel="Category Dropdown"
+          type={DROPDOWN_TYPES.PANEL}
+          placeholder={__('Layout Type', 'web-stories')}
+        />
+      </ExploreFiltersContainer>
     </div>
   );
 }

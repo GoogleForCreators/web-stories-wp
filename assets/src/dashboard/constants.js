@@ -14,10 +14,26 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
+};
+
+export const CHIP_TYPES = {
+  STANDARD: 'standard',
+  SMALL: 'small',
+};
+
+export const DROPDOWN_TYPES = {
+  TRANSPARENT_MENU: 'transparentMenu',
+  MENU: 'menu',
+  PANEL: 'panel',
 };
 
 export const KEYS = {
@@ -31,4 +47,22 @@ export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
   POPOVER_MENU: 10,
+  TYPEAHEAD_OPTIONS: 10,
+  POPOVER_PANEL: 10,
 };
+
+export const paths = [
+  { value: '/', label: __('My Stories', 'web-stories') },
+  {
+    value: '/templates-gallery',
+    label: __('Templates Gallery', 'web-stories'),
+  },
+  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
+];
+
+export const storiesFilters = [
+  { label: 'All Stories', value: 'all-stories ' },
+  { label: 'Drafts', value: 'drafts' },
+  { label: 'Active Stories', value: 'active-stories ' },
+  { label: 'My Templates', value: 'my-templates ' },
+];

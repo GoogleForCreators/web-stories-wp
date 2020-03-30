@@ -28,6 +28,7 @@ module.exports = {
     '<rootDir>/tests/js/setup-globals',
     '<rootDir>/tests/js/setup-mocks',
     'jest-canvas-mock',
+    'core-js',
   ],
   testMatch: [
     '**/__tests__/**/*.[jt]s',

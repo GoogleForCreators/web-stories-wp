@@ -24,6 +24,7 @@ import { useCallback } from 'react';
  */
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
+import useFocusCanvas from '../../components/canvas/useFocusCanvas';
 import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
@@ -32,8 +33,7 @@ const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
   const {
-    actions: { addElement, setBackgroundElement },
-    state: { currentPage },
+    actions: { addElement },
   } = useStory();
   const {
     actions: { uploadVideoPoster },
@@ -56,6 +56,8 @@ function useInsertElement() {
     [uploadVideoPoster]
   );
 
+  const focusCanvas = useFocusCanvas();
+
   /**
    * @param {string} type The element's type.
    * @param {Object} props The element's initial properties.
@@ -65,18 +67,22 @@ function useInsertElement() {
       const element = createElementForCanvas(type, props);
       const { id: elementId, resource } = element;
       addElement({ element });
-      if (
-        isMedia(type) &&
-        !currentPage.elements.some(({ type: elType }) => isMedia(elType))
-      ) {
-        setBackgroundElement({ elementId });
-      }
       if (resource) {
         backfillResource(resource, elementId);
       }
+      // Auto-play on insert.
+      if (type === 'video') {
+        setTimeout(() => {
+          const videoEl = document.getElementById(`video-${elementId}`);
+          if (videoEl) {
+            videoEl.play();
+          }
+        }, 0);
+      }
+      focusCanvas();
       return element;
     },
-    [addElement, setBackgroundElement, currentPage, backfillResource]
+    [addElement, backfillResource, focusCanvas]
   );
 
   return insertElement;
@@ -182,15 +188,6 @@ function createElementForCanvas(
  */
 function isNum(value) {
   return typeof value === 'number';
-}
-
-/**
- * @param {string} type The resource type.
- * @return {boolean} Whether this is a media element.
- */
-function isMedia(type) {
-  const { isMedia: media } = getDefinitionForType(type);
-  return media;
 }
 
 export default useInsertElement;

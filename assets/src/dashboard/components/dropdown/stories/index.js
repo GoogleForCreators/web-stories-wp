@@ -26,6 +26,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Dropdown from '../';
+import { DROPDOWN_TYPES } from '../../../constants';
 
 const demoItems = [
   { value: '1', label: 'one' },
@@ -64,8 +65,52 @@ export const _default = () => {
           action(`clicked on dropdown item ${item.value}`)(item);
           setValue(item.value);
         }}
-        transparent={boolean('transparent')}
       />
+      <FillerContainer />
+    </DropdownWrapper>
+  );
+};
+
+export const _transparent = () => {
+  const [value, setValue] = useState();
+
+  return (
+    <DropdownWrapper>
+      <Dropdown
+        ariaLabel={text('ariaLabel', 'my dropdown description')}
+        items={demoItems}
+        disabled={boolean('disabled')}
+        value={value}
+        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+        placeholder={text('placeholder', 'Select Value')}
+        onChange={(item) => {
+          action(`clicked on dropdown item ${item.value}`)(item);
+          setValue(item.value);
+        }}
+      />
+      <FillerContainer />
+    </DropdownWrapper>
+  );
+};
+
+export const _panel = () => {
+  return (
+    <DropdownWrapper>
+      <Dropdown
+        ariaLabel={text('ariaLabel', 'my dropdown description')}
+        disabled={boolean('disabled')}
+        type={DROPDOWN_TYPES.PANEL}
+        placeholder={text('placeholder', 'Select Value')}
+      >
+        {({ closeMenu }) => (
+          <div>
+            <button onClick={closeMenu}>
+              {text('closeButtonLabel', 'Close')}
+            </button>
+            <h1>{text('panelTitle', 'Panel Content')}</h1>
+          </div>
+        )}
+      </Dropdown>
       <FillerContainer />
     </DropdownWrapper>
   );

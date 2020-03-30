@@ -29,9 +29,9 @@ import CustomCSS from './styles';
 import { OutputPage } from './';
 
 function OutputStory({
-  story,
+  story: { featuredMediaUrl, link, title },
   pages,
-  metadata: { publisher, fallbackPoster },
+  metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   return (
@@ -49,16 +49,16 @@ function OutputStory({
         <CustomCSS />
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
-        <link rel="canonical" href={story.link} />
+        <link rel="canonical" href={link} />
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
         <amp-story
           standalone="standalone"
           publisher={publisher.name}
-          publisher-logo-src={publisher.logo}
-          title={story.title}
-          poster-portrait-src={story.posterPortraitUrl || fallbackPoster}
+          publisher-logo-src={logoPlaceholder}
+          title={title}
+          poster-portrait-src={featuredMediaUrl || fallbackPoster}
         >
           {pages.map((page) => (
             <OutputPage key={page.id} page={page} />
@@ -75,9 +75,9 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      logo: PropTypes.string.isRequired,
     }),
     fallbackPoster: PropTypes.string.isRequired,
+    logoPlaceholder: PropTypes.string,
   }).isRequired,
 };
 

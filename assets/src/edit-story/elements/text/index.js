@@ -62,6 +62,7 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,
