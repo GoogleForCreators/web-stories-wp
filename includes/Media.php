@@ -56,7 +56,7 @@ class Media {
 	 *
 	 * @var string
 	 */
-	const STORY_THUMBNAIL = 'web_stories_thumbnail';
+	const STORY_THUMBNAIL_IMAGE_SIZE = 'web_stories_thumbnail';
 
 	/**
 	 * The large dimension of the AMP Story poster images.
@@ -107,7 +107,7 @@ class Media {
 		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_SMALL_IMAGE_DIMENSION, true );
 
-		add_image_size( self::STORY_THUMBNAIL, 150, 9999, false );
+		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
 
 		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
 
