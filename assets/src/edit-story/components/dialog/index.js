@@ -62,10 +62,10 @@ const DialogContent = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.6)};
 
   b {
-    color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.68)};
+    color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.7)};
   }
 `;
 const DialogActions = styled.div`
