@@ -60,9 +60,9 @@ export const paths = [
   { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
-export const storiesFilters = [
-  { label: 'All Stories', value: 'all-stories ' },
-  { label: 'Drafts', value: 'drafts' },
-  { label: 'Active Stories', value: 'active-stories ' },
-  { label: 'My Templates', value: 'my-templates ' },
+export const STORY_STATUSES = [
+  { label: 'All Stories', value: 'publish,draft' },
+  { label: 'Drafts', value: 'draft' },
+  { label: 'Active Stories', value: 'publish' },
+  { label: 'My Templates', value: 'template ' },
 ];

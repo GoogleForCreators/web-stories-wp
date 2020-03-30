@@ -23,13 +23,20 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { ViewHeader, FloatingTab } from '../../../components';
-import { storiesFilters } from '../../../constants';
+import {
+  ViewHeader,
+  FloatingTab,
+  CardGrid,
+  CardGridItem,
+  CardTitle,
+} from '../../../components';
+import { STORY_STATUSES } from '../../../constants';
+import { ApiContext } from '../../api/api-provider';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
@@ -37,23 +44,40 @@ const FilterContainer = styled.div`
 `;
 
 function MyStories() {
-  const [currentFilter, setFilter] = useState(storiesFilters[0].value);
+  const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const { actions } = useContext(ApiContext);
+  const [stories, setStories] = useState([]);
+
+  useEffect(() => {
+    actions.fetchStories({ status }).then(setStories);
+  }, [actions, status]);
+
   return (
     <div>
       <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
       <FilterContainer>
-        {storiesFilters.map((filter) => (
+        {STORY_STATUSES.map((currentStatus) => (
           <FloatingTab
-            key={filter.value}
-            onClick={(_, value) => setFilter(value)}
+            key={currentStatus.value}
+            onClick={(_, value) => setStatus(value)}
             name="all-stories"
-            value={filter.value}
-            isSelected={currentFilter === filter.value}
+            value={currentStatus.value}
+            isSelected={status === currentStatus.value}
           >
-            {filter.label}
+            {currentStatus.label}
           </FloatingTab>
         ))}
       </FilterContainer>
+      <CardGrid>
+        {stories.map((story) => (
+          <CardGridItem key={story.id}>
+            <CardTitle
+              title={story.title}
+              modifiedDate={story.modified.startOf('day').fromNow()}
+            />
+          </CardGridItem>
+        ))}
+      </CardGrid>
     </div>
   );
 }
