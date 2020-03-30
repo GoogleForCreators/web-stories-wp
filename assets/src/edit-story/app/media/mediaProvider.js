@@ -53,6 +53,9 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
   } = actions;
+  const {
+    actions: { getMedia },
+  } = useAPI();
   const fetchMedia = useCallback(
     ({ pagingNum: p = 1, mediaType: currentMediaType } = {}, callback) => {
       fetchMediaStart({ pagingNum: p });
@@ -84,9 +87,6 @@ function MediaProvider({ children }) {
     processing,
     processed,
   });
-  const {
-    actions: { getMedia },
-  } = useAPI();
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
