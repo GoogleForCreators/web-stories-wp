@@ -58,7 +58,9 @@ export default function ApiProvider({ children }) {
         const serverStoryResponse = await apiFetch({
           path,
         });
-        setStories(serverStoryResponse.map(reshapeStoryObject));
+        const reshapedStories = serverStoryResponse.map(reshapeStoryObject);
+        setStories(reshapedStories);
+        return reshapedStories;
       } catch (err) {
         return [];
       }
