@@ -23,13 +23,14 @@ import { rgba } from 'polished';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../app/config';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 
 const DialogSection = styled.div`
   padding: 0px 16px;
@@ -80,9 +81,13 @@ function BackgroundDisplayDialogContent() {
   return (
     <>
       <Row>
-        {__(
-          'Your story is created at one aspect ratio (1080 x 1920). When published, users will view your stories using phones with aspect ratios that may differ widely.',
-          'web-stories'
+        {sprintf(
+          /* translators: %s: page width x height */
+          __(
+            'Your story is created at one aspect ratio (%s). When published, users will view your stories using phones with aspect ratios that may differ widely.',
+            'web-stories'
+          ),
+          `${PAGE_WIDTH} x ${PAGE_HEIGHT}`
         )}
       </Row>
 
@@ -101,7 +106,8 @@ function BackgroundDisplayDialogContent() {
           </p>
           <p>
             {__(
-              'Use this option if resizing the background image is not an issue.'
+              'Use this option if resizing the background image is not an issue.',
+              'web-stories'
             )}
           </p>
         </DialogSection>
@@ -126,7 +132,8 @@ function BackgroundDisplayDialogContent() {
           </p>
           <p>
             {__(
-              'Use this option if you need elements to be precisely aligned to the background.'
+              'Use this option if you need elements to be precisely aligned to the background.',
+              'web-stories'
             )}
           </p>
         </DialogSection>
