@@ -107,7 +107,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             featuredMediaUrl,
           },
         });
-        refreshPostEditURL(storyId);
+        refreshPostEditURL();
       })
       .catch(() => {
         // TODO Display error message to user as save as failed.

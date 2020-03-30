@@ -85,9 +85,8 @@ function Publish() {
 
   const handlePublish = useCallback(() => {
     updateStory({ properties: { status: 'publish' } });
-    // Note that story ID exists for new posts as well, even if not saved.
-    refreshPostEditURL(storyId);
-  }, [refreshPostEditURL, storyId, updateStory]);
+    refreshPostEditURL();
+  }, [refreshPostEditURL, updateStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
