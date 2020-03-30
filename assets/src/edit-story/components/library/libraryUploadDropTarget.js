@@ -33,17 +33,19 @@ import {
   UploadDropTargetScreen,
   UploadDropTargetMessageOverlay,
 } from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
+import { useMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadMedia },
+  } = useMedia();
   const onDropHandler = useCallback(
     (files) => {
-      files.forEach(uploadFile);
+      uploadMedia(files);
     },
-    [uploadFile]
+    [uploadMedia]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>

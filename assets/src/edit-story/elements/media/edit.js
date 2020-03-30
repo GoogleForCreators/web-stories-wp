@@ -202,7 +202,7 @@ function MediaEdit({ element, box }) {
 }
 
 MediaEdit.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+  element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
 };
 

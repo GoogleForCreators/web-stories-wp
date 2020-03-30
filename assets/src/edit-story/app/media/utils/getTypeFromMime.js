@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-export const ANIMATION_TYPE = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  FLIP: 'flip',
-  FLOAT_ON: 'floatOn',
-  SPIN: 'spin',
+/**
+ * Infer element type from mime type of its resource
+ *
+ * @param {string} mimeType Mime type.
+ * @return {string} Element type.
+ */
+const getTypeFromMime = (mimeType) => {
+  if (mimeType.match('image.*')) {
+    return 'image';
+  } else if (mimeType.match('video.*')) {
+    return 'video';
+  }
+
+  throw new Error('File type error');
 };
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
-export const DIRECTION = {
-  TOP_TO_BOTTOM: 'topToBottom',
-  BOTTOM_TO_TOP: 'bottomToTop',
-  LEFT_TO_RIGHT: 'leftToRight',
-  RIGHT_TO_LEFT: 'rightToLeft',
-};
-
-export const AXIS = {
-  X: 'x',
-  Y: 'y',
-};
+export default getTypeFromMime;

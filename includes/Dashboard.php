@@ -128,7 +128,7 @@ class Dashboard {
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			)
+			) 
 		);
 
 		wp_localize_script(
