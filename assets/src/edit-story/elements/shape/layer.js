@@ -18,6 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useMemo } from 'react';
+
 /**
  * Internal dependencies
  */
@@ -38,22 +40,43 @@ const ShapePreview = styled.div`
   margin-right: 8px;
 `;
 
-const Path = styled.path`
+const ShapeSVG = styled.svg`
+  ${({ isTooBright }) =>
+    isTooBright &&
+    `
+    /* Using filter rather than box-shadow to correctly follow
+     * outlines in semi-transparent images like gif and png.
+     */
+    filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
+  `}
+`;
+
+const ShapePath = styled.path`
   ${elementWithFillColor}
 `;
 
 function ShapeLayerContent({ element: { mask, backgroundColor } }) {
   const maskDef = getMaskByType(mask.type);
+
+  const isTooBright = useMemo(() => {
+    const darkestDimension = Math.max.apply(
+      null,
+      Object.values(backgroundColor?.color || {})
+    );
+    return darkestDimension >= 230;
+  }, [backgroundColor]);
+
   return (
     <Container>
-      <ShapePreview alt={maskDef.name} backgroundColor={backgroundColor}>
-        <svg
+      <ShapePreview alt={maskDef.name}>
+        <ShapeSVG
           viewBox={`0 0 1 ${1 / maskDef.ratio}`}
           width={20 * maskDef.ratio}
           height={20}
+          isTooBright={isTooBright}
         >
-          <Path d={maskDef.path} fill={backgroundColor} />
-        </svg>
+          <ShapePath d={maskDef.path} fill={backgroundColor} />
+        </ShapeSVG>
       </ShapePreview>
       {maskDef.name}
     </Container>
