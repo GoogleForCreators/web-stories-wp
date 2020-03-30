@@ -158,7 +158,7 @@ function useCanvasSelectionCopyPaste(container) {
             } catch (e) {
               if (!e.isUserError) {
                 e.message = __(
-                  'Sorry, files has failed to upload',
+                  'Sorry, file has failed to upload',
                   'web-stories'
                 );
               }

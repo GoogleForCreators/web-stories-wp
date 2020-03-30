@@ -48,7 +48,7 @@ function LibraryUploadDropTarget({ children }) {
           uploadFile(file);
         } catch (e) {
           if (!e.isUserError) {
-            e.message = __('Sorry, files has failed to upload', 'web-stories');
+            e.message = __('Sorry, file has failed to upload', 'web-stories');
           }
           showSnackbar({
             message: e.message,
