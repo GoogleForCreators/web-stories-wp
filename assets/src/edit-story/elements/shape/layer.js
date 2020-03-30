@@ -15,12 +15,53 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { getMaskByType } from '../../masks';
+import { elementWithFillColor } from '../shared';
+import StoryPropTypes from '../../types';
 
-function ShapeLayerContent() {
-  return __('Shape', 'web-stories');
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const ShapePreview = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-right: 8px;
+`;
+
+const Path = styled.path`
+  ${elementWithFillColor}
+`;
+
+function ShapeLayerContent({ element: { mask, backgroundColor } }) {
+  const maskDef = getMaskByType(mask.type);
+  return (
+    <Container>
+      <ShapePreview alt={maskDef.name} backgroundColor={backgroundColor}>
+        <svg
+          viewBox={`0 0 1 ${1 / maskDef.ratio}`}
+          width={20 * maskDef.ratio}
+          height={20}
+        >
+          <Path d={maskDef.path} fill={backgroundColor} />
+        </svg>
+      </ShapePreview>
+      {maskDef.name}
+    </Container>
+  );
 }
+
+ShapeLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
 
 export default ShapeLayerContent;
