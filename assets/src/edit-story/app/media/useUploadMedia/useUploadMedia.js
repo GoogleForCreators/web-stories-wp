@@ -30,9 +30,6 @@ import { __ } from '@wordpress/i18n';
 import { useUploader } from '../../uploader';
 import {
   getResourceFromLocalFile,
-  getResourceFromUploadAPI,
-  getResourceFromAttachment,
-  getAttachmentFromResource,
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
@@ -47,28 +44,21 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
-            attachement: getAttachmentFromResource(
-              await getResourceFromLocalFile(file)
-            ),
+            resource: await getResourceFromLocalFile(file),
             file,
           }))
         );
 
         if (onLocalFile) {
-          localFiles = localFiles.map(({ attachement, file }) => {
-            const resource = getResourceFromAttachment(attachement);
-            return {
-              attachement,
-              file,
-              element: onLocalFile({
-                resource,
-              }),
-            };
+          localFiles = localFiles.map(({ resource, file }) => {
+            // QQQQ: remove element here?
+            const element = onLocalFile({ resource });
+            return { resource, file, element };
           });
         }
         setMedia({
           media: [
-            ...localFiles.map(({ attachement }) => attachement),
+            ...localFiles.map(({ resource }) => resource),
             ...media,
           ],
         });
@@ -84,16 +74,16 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         const uploadingFiles = await Promise.all(
           localFiles.map(async (localFile) => ({
             ...localFile,
-            fileUploaded: await uploadFile(localFile.file),
+            resource: await uploadFile(localFile.file),
           }))
         );
 
         setIsUploading(false);
 
         if (onUploadedFile) {
-          uploadingFiles.forEach(({ element, fileUploaded }) => {
+          uploadingFiles.forEach(({ element, resource }) => {
             onUploadedFile({
-              resource: getResourceFromUploadAPI(fileUploaded),
+              resource,
               element,
             });
           });
@@ -103,10 +93,13 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       } catch (e) {
         localFiles.forEach(({ element }) => {
           if (element) {
-            if (onUploadFailure) onUploadFailure({ element });
+            if (onUploadFailure) {
+              onUploadFailure({ element });
+            }
+            // Remove failed "local" resource.
             setMedia({
               media: media.filter(
-                ({ id }) => element && element.resource.id !== id
+                (resource) => resource !== element.resource
               ),
             });
           }

@@ -24,6 +24,11 @@ import { useEffect } from 'react';
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import {createResource} from '../../app/media/utils';
+
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
@@ -49,12 +54,11 @@ export default function useMediaPicker({
       },
       multiple,
     });
-    let attachment;
 
     // When an image is selected, run a callback.
     fileFrame.on('select', () => {
-      attachment = fileFrame.state().get('selection').first().toJSON();
-      onSelect(attachment);
+      const attachment = fileFrame.state().get('selection').first().toJSON();
+      onSelect(toResource(attachment));
     });
 
     if (onClose) {
@@ -69,3 +73,34 @@ export default function useMediaPicker({
 
   return openMediaPicker;
 }
+
+/**
+ * Generates a resource object from a WordPress media picker object.
+ *
+ * @param {Object} mediaPickerEl WP Media Picker object
+ * @return {Object} Resource object
+ */
+function toResource({
+  mime: mimeType,
+  src,
+  url,
+  width,
+  height,
+  id: videoId,
+  featured_media: posterId,
+  featured_media_src: poster,
+  title,
+  alt,
+}) {
+  return createResource({
+    mimeType,
+    src: url || src,
+    width,
+    height,
+    poster,
+    posterId,
+    videoId,
+    title,
+    alt,
+  });
+};

@@ -32,6 +32,7 @@ import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../';
 import Context from './context';
+import {createResource} from '../media/utils';
 
 function APIProvider({ children }) {
   const {
@@ -127,9 +128,11 @@ function APIProvider({ children }) {
       return apiFetch({ path: apiPath, parse: false }).then(
         async (response) => {
           const jsonArray = await response.json();
+          // QQQQQQ: downstream.
+          // Convert WP attachment object to Resource type.
           const data = jsonArray.map(
             ({
-              id,
+              id: videoId,
               guid: { rendered: src },
               media_details: {
                 width: oWidth,
@@ -142,16 +145,16 @@ function APIProvider({ children }) {
               featured_media: posterId,
               featured_media_src: poster,
               alt_text: alt,
-            }) => ({
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
+            }) => createResource({
               mimeType,
+              src,
+              width: oWidth,
+              height: oHeight,
+              poster,
+              posterId,
+              videoId,
               lengthFormatted,
-              alt: alt ? alt : description,
+              alt: alt || description,
               title,
               local: false,
             })

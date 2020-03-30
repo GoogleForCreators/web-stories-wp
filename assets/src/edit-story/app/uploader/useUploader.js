@@ -24,6 +24,7 @@ import { useCallback } from 'react';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import { useMedia } from '../media';
+import {createResource} from '../media/utils';
 
 function useUploader(refreshLibrary = true) {
   const {
@@ -56,6 +57,7 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
+  // QQQQ: downstream.
   const uploadFile = (file) => {
     // TODO Add permission check here, see Gutenberg's userCan function.
     if (!fileSizeCheck(file)) {
@@ -74,7 +76,24 @@ function useUploader(refreshLibrary = true) {
     if (refreshLibrary) {
       promise.finally(resetWithFetch);
     }
-    return promise;
+    return promise.then(({
+      guid: { rendered: src },
+      mime_type: mimeType,
+      media_details: { width, height, length_formatted: lengthFormatted },
+      id: videoId,
+      featured_media: posterId,
+      featured_media_src: poster,
+    }) => createResource({
+      mimeType,
+      src,
+      width,
+      height,
+      lengthFormatted,
+      poster,
+      posterId,
+      videoId,
+      local: false,
+    }));
   };
 
   return {

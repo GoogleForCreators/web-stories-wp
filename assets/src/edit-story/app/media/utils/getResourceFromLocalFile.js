@@ -26,7 +26,6 @@ import getFirstFrameOfVideo from './getFirstFrameOfVideo';
  * @param {Image} Image source
  * @return {Promise} Image dimensions object
  */
-
 const createFileReader = (file, onload) => {
   const reader = new window.FileReader();
 
@@ -134,15 +133,14 @@ const getVideoResource = (video) => {
  * @param {File} file File object
  * @return {Promise<Object>|null} Resource object
  */
-export const getResourceFromLocalFile = (file) => {
+const getResourceFromLocalFile = (file) => {
   const type = getTypeFromMime(file.type);
-
   if (type === 'image') {
     return getImageResource(file);
-  } else if (type === 'video') {
+  }
+  if (type === 'video') {
     return getVideoResource(file);
   }
-
   return null;
 };
 

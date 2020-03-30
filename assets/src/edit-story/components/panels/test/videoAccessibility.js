@@ -27,7 +27,7 @@ import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
-    const image = { url: 'media1' };
+    const image = { src: 'media1' };
     onSelect(image);
   },
 }));

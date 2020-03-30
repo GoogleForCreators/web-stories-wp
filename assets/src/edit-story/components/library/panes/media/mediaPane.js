@@ -38,8 +38,6 @@ import { Pane } from '../shared';
 import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import {
   getTypeFromMime,
-  getResourceFromMediaPicker,
-  getResourceFromAttachment,
 } from '../../../../app/media/utils';
 import paneId from './paneId';
 import MediaElement from './mediaElement';
@@ -141,18 +139,8 @@ function MediaPane(props) {
 
   const onClose = resetWithFetch;
 
-  /**
-   * Callback of select in media picker to insert media element.
-   *
-   * @param {Object} mediaPickerEl Object coming from backbone media picker.
-   */
-  const onSelect = (mediaPickerEl) => {
-    const resource = getResourceFromMediaPicker(mediaPickerEl);
-    insertMediaElement(resource);
-  };
-
   const openMediaPicker = useMediaPicker({
-    onSelect,
+    insertMediaElement,
     onClose,
   });
 
@@ -199,7 +187,7 @@ function MediaPane(props) {
   };
 
   const filterResource = useCallback(
-    ({ mimeType, oWidth, oHeight }) => {
+    ({ mimeType, width, height }) => {
       const allowedMimeTypes = [
         ...allowedImageMimeTypes,
         ...allowedVideoMimeTypes,
@@ -208,14 +196,14 @@ function MediaPane(props) {
       const filterByMediaType = mediaType
         ? mediaType === getTypeFromMime(mimeType)
         : true;
-      const filterByValidMedia = oWidth && oHeight;
+      const filterByValidMedia = width && height;
 
       return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
     },
     [allowedImageMimeTypes, allowedVideoMimeTypes, mediaType]
   );
 
-  const resources = media.filter(filterResource).map(getResourceFromAttachment);
+  const resources = media.filter(filterResource);
 
   const refContainer = useRef();
   const refContainerFooter = useRef();
