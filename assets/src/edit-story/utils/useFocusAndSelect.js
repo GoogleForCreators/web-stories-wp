@@ -15,25 +15,27 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useStory } from '../../../app';
+import { useEffect, useState, useCallback } from 'react';
 
-function useLayers() {
-  const {
-    state: { currentPage },
-  } = useStory();
+function useFocusAndSelect(ref) {
+  const [focused, setFocused] = useState(false);
 
-  if (!currentPage) {
-    return [];
-  }
+  const handleFocus = useCallback(() => setFocused(true), []);
+  const handleBlur = useCallback(() => setFocused(false), []);
 
-  const layers = currentPage.elements.map((layer, index) => ({
-    ...layer,
-    position: index,
-  }));
-  layers.reverse();
-  return layers;
+  useEffect(() => {
+    if (focused && ref.current) {
+      ref.current.select();
+    }
+  }, [focused, ref]);
+
+  return {
+    focused,
+    handleFocus,
+    handleBlur,
+  };
 }
 
-export default useLayers;
+export default useFocusAndSelect;

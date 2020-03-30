@@ -48,7 +48,7 @@ export default function WithMask({
   ...rest
 }) {
   const mask = getElementMask(element);
-  const { flip } = element;
+  const { flip, isBackground } = element;
 
   const transformFlip = getTransformFlip(flip);
   if (transformFlip) {
@@ -57,7 +57,7 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type) {
+  if (!mask?.type || isBackground) {
     return (
       <div
         style={{
