@@ -41,14 +41,6 @@ const ShapePreview = styled.div`
   width: ${({ width = 20 }) => width}px;
   height: ${({ height = 20 }) => height}px;
   margin-right: 8px;
-  ${({ isTooBright }) =>
-    isTooBright &&
-    `
-      /* Using filter rather than box-shadow to correctly follow
-      * outlines in semi-transparent images like gif and png.
-      */
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    `}
 `;
 
 const ShapePreviewContainer = styled.div`
@@ -56,7 +48,7 @@ const ShapePreviewContainer = styled.div`
     isTooBright &&
     `
       /* Using filter rather than box-shadow to correctly follow
-      * outlines in semi-transparent images like gif and png.
+      * outlines of shapes.
       */
       filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
     `}
