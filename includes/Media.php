@@ -250,7 +250,8 @@ class Media {
 	 * @param string $filename                  The name of the file (may differ from $file due to
 	 *                                          $file being in a tmp directory).
 	 * @param array  $mimes                     Key is the file extension with value as the mime type.
-	 * @return Array           [description]
+	 * @return array Values for the extension, MIME, and either a corrected filename or false
+	 *               if original $filename is valid.
 	 */
 	public static function wp_check_filetype_and_ext( $checked, $file, $filename, $mimes ) {
 		if ( ! $checked['type'] ) {
