@@ -41,7 +41,7 @@ use WP_REST_Response;
  */
 class Stories_Controller extends WP_REST_Posts_Controller {
 
-	const COLOR_PRESETS_OPTION = 'web_stories_color_presets';
+	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
@@ -102,7 +102,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( in_array( 'color_presets', $fields, true ) ) {
-			$color_presets         = get_option( self::COLOR_PRESETS_OPTION, [] );
+			$color_presets         = get_option( self::STYLE_PRESETS_OPTION, [] );
 			$data['color_presets'] = is_array( $color_presets ) ? $color_presets : [];
 		}
 
@@ -150,7 +150,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			// If color presets are set.
 			$color_presets = $request->get_param( 'color_presets' );
 			if ( is_array( $color_presets ) ) {
-				update_option( self::COLOR_PRESETS_OPTION, $color_presets );
+				update_option( self::STYLE_PRESETS_OPTION, $color_presets );
 			}
 		}
 		return rest_ensure_response( $response );

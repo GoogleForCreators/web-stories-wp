@@ -188,6 +188,26 @@ function ColorPresetPanel() {
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => 'text' === type);
 
+  const handleAddColorPreset = useCallback(() => {
+    let addedColorPresets = [];
+    if (isText) {
+      addedColorPresets = selectedElements.map(({ color }) => color);
+    } else {
+      addedColorPresets = selectedElements
+        .map(({ backgroundColor }) => {
+          return backgroundColor ? backgroundColor : null;
+        })
+        .filter((color) => color);
+    }
+    if (addedColorPresets.length > 0) {
+      updateStory({
+        properties: {
+          colorPresets: [...colorPresets, ...addedColorPresets],
+        },
+      });
+    }
+  }, [isText, colorPresets, selectedElements, updateStory]);
+
   const handleApplyTextColor = useCallback(
     (color) => () => {
       if (isText) {
@@ -211,7 +231,7 @@ function ColorPresetPanel() {
         >
           <Edit />
         </EditModeButton>
-        <AddColorPresetButton ref={ref} onClick={openColorPicker}>
+        <AddColorPresetButton ref={ref} onClick={handleAddColorPreset}>
           <Add />
         </AddColorPresetButton>
       </>
@@ -239,8 +259,7 @@ function ColorPresetPanel() {
       {colorPresets && (
         <PanelContent isPrimary>
           <Colors>
-            {colorPresets.map((value) => {
-              const { color } = value;
+            {colorPresets.map((color) => {
               const isSolid =
                 'solid' === color.type || undefined === color.type;
               return (
@@ -250,7 +269,7 @@ function ColorPresetPanel() {
                       {...generatePatternStyles(color)}
                       onClick={() => {
                         if (isEditMode) {
-                          handleDeleteColor(value);
+                          handleDeleteColor(color);
                         } else {
                           handleApplyBackgroundColor(color);
                         }
