@@ -61,8 +61,8 @@ export const paths = [
 ];
 
 export const STORY_STATUSES = [
-  { label: 'All Stories', value: 'publish,draft' },
-  { label: 'Drafts', value: 'draft' },
-  { label: 'Active Stories', value: 'publish' },
-  { label: 'My Templates', value: 'template ' },
+  { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
+  { label: __('Drafts', 'web-stories'), value: 'draft' },
+  { label: __('Active Stories', 'web-stories'), value: 'publish' },
+  { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
