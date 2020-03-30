@@ -24,6 +24,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
  * Internal dependencies
  */
 import addQueryArgs from '../../../utils/addQueryArgs';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
@@ -58,6 +59,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { metadata } = useConfig();
   const [isSaving, setIsSaving] = useState(false);
 
+  usePreventWindowUnload(isSaving);
+
   /**
    * Refresh page to edit url.
    *
@@ -89,7 +92,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       password,
       publisherLogo,
     } = story;
-
     const content = getStoryMarkup(story, pages, metadata);
     saveStoryById({
       storyId,

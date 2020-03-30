@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useGlobalKeyDownEffect } from '../../components/keyboard';
+import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
@@ -36,11 +37,14 @@ function HistoryProvider({ children, size }) {
     undo,
     redo,
   } = useHistoryReducer(size);
+  const canUndo = offset < historyLength - 1;
+
+  usePreventWindowUnload(canUndo);
 
   const state = {
     state: {
       replayState,
-      canUndo: offset < historyLength - 1,
+      canUndo,
       canRedo: offset > 0,
     },
     actions: {
