@@ -23,9 +23,8 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
+import TypeaheadInput from '..';
 import theme from '../../../theme';
-
-import TypeaheadInput from '../';
 
 const wrapper = (children) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
