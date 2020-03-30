@@ -176,6 +176,7 @@ function DropDown({
   disabled,
   ariaLabel,
   lightMode = false,
+  placeholder,
 }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
@@ -338,8 +339,7 @@ function DropDown({
         lightMode={lightMode}
       >
         <DropDownTitle>
-          {(activeItem && activeItem.name) ||
-            __('Select an Option', 'web-stories')}
+          {(activeItem && activeItem.name) || placeholder}
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
@@ -382,13 +382,16 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
   ariaLabel: __('DropDown', 'web-stories'),
   value: '',
+  onChange: () => {},
   options: [],
+  placeholder: __('Select an Option', 'web-stories'),
 };
 
 export default DropDown;
