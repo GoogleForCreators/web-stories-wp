@@ -27,6 +27,7 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { NavigationBar } from '../components';
+import ApiProvider from './api/apiProvider';
 import { useRouteHistory, Route, RouterProvider } from './router';
 import { useConfig, ConfigProvider } from './config';
 import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
@@ -37,17 +38,19 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
-          <RouterProvider>
-            <GlobalStyle />
-            <KeyboardOnlyOutline />
-            <NavigationBar />
-            <Route exact path="/" component={<MyStoriesView />} />
-            <Route
-              path="/templates-gallery"
-              component={<TemplatesGalleryView />}
-            />
-            <Route path="/my-bookmarks" component={<MyBookmarksView />} />
-          </RouterProvider>
+          <ApiProvider>
+            <RouterProvider>
+              <GlobalStyle />
+              <KeyboardOnlyOutline />
+              <NavigationBar />
+              <Route exact path="/" component={<MyStoriesView />} />
+              <Route
+                path="/templates-gallery"
+                component={<TemplatesGalleryView />}
+              />
+              <Route path="/my-bookmarks" component={<MyBookmarksView />} />
+            </RouterProvider>
+          </ApiProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>

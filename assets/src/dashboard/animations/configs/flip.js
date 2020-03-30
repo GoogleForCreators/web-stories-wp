@@ -17,24 +17,35 @@
 /**
  * Internal dependencies
  */
-import { ROTATION } from '../constants';
+import { ROTATION, AXIS } from '../constants';
 
-export default function (type) {
+export default function (config = {}) {
+  const { axis, rotation } = config;
   const frames = {
     [ROTATION.CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
+      [AXIS.X]: {
+        transform: ['rotateX(90deg)', 'rotateX(0deg)'],
+      },
+      [AXIS.Y]: {
+        transform: ['rotateY(90deg)', 'rotateY(0deg)'],
+      },
     },
     [ROTATION.COUNTER_CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
-    },
-    [ROTATION.PING_PONG]: {
-      transform: ['rotateZ(-45deg)', 'rotateZ(40deg)'],
+      [AXIS.X]: {
+        transform: ['rotateX(-90deg)', 'rotateX(0deg)'],
+      },
+      [AXIS.Y]: {
+        transform: ['rotateY(-90deg)', 'rotateY(0deg)'],
+      },
     },
   };
 
-  const keyframes = frames[type] || frames[ROTATION.CLOCKWISE];
+  const keyframes =
+    (frames[rotation] && frames[rotation][axis]) ||
+    frames[ROTATION.CLOCKWISE][AXIS.Y];
 
   return {
+    fill: 'forwards',
     keyframes,
   };
 }
