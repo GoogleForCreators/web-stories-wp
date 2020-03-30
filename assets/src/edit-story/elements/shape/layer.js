@@ -24,8 +24,11 @@ import { useMemo } from 'react';
  * Internal dependencies
  */
 import { getMaskByType } from '../../masks';
-import { elementWithFillColor } from '../shared';
+import { elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
+import getBrightnessFromPattern from '../../utils/getBrightnessFromPattern';
+
+const TOO_BRIGHT = 0.5;
 
 const Container = styled.div`
   display: flex;
@@ -34,50 +37,64 @@ const Container = styled.div`
 `;
 
 const ShapePreview = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
+  ${elementWithBackgroundColor}
+  width: ${({ width = 20 }) => width}px;
+  height: ${({ height = 20 }) => height}px;
   margin-right: 8px;
-`;
-
-const ShapeSVG = styled.svg`
   ${({ isTooBright }) =>
     isTooBright &&
     `
-    /* Using filter rather than box-shadow to correctly follow
-     * outlines in semi-transparent images like gif and png.
-     */
-    filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
-  `}
+      /* Using filter rather than box-shadow to correctly follow
+      * outlines in semi-transparent images like gif and png.
+      */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    `}
 `;
 
-const ShapePath = styled.path`
-  ${elementWithFillColor}
+const ShapePreviewContainer = styled.div`
+  ${({ isTooBright }) =>
+    isTooBright &&
+    `
+      /* Using filter rather than box-shadow to correctly follow
+      * outlines in semi-transparent images like gif and png.
+      */
+      filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
+    `}
 `;
 
-function ShapeLayerContent({ element: { mask, backgroundColor } }) {
+function ShapeLayerContent({ element: { id, mask, backgroundColor } }) {
   const maskDef = getMaskByType(mask.type);
 
   const isTooBright = useMemo(() => {
-    const darkestDimension = Math.max.apply(
-      null,
-      Object.values(backgroundColor?.color || {})
-    );
-    return darkestDimension >= 230;
+    return getBrightnessFromPattern(backgroundColor) >= TOO_BRIGHT;
   }, [backgroundColor]);
+
+  const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
 
   return (
     <Container>
-      <ShapePreview alt={maskDef.name}>
-        <ShapeSVG
-          viewBox={`0 0 1 ${1 / maskDef.ratio}`}
+      <ShapePreviewContainer isTooBright={isTooBright}>
+        <ShapePreview
+          style={{
+            clipPath: `url(#${maskId})`,
+          }}
           width={20 * maskDef.ratio}
-          height={20}
-          isTooBright={isTooBright}
+          backgroundColor={backgroundColor}
         >
-          <ShapePath d={maskDef.path} fill={backgroundColor} />
-        </ShapeSVG>
-      </ShapePreview>
+          <svg width={0} height={0}>
+            <defs>
+              <clipPath
+                id={maskId}
+                transform={`scale(1 ${maskDef.ratio})`}
+                clipPathUnits="objectBoundingBox"
+              >
+                <path d={maskDef.path} />
+              </clipPath>
+            </defs>
+          </svg>
+        </ShapePreview>
+      </ShapePreviewContainer>
+
       {maskDef.name}
     </Container>
   );

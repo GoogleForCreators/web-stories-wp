@@ -54,10 +54,6 @@ export const elementWithBackgroundColor = css`
     convertToCSS(generatePatternStyles(backgroundColor))};
 `;
 
-export const elementWithFillColor = css`
-  ${({ fill }) => convertToCSS(generatePatternStyles(fill, 'fill'))};
-`;
-
 export const elementWithFontColor = css`
   ${({ color }) => convertToCSS(generatePatternStyles(color, 'color'))};
 `;
