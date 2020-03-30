@@ -103,13 +103,13 @@ function MediaProvider({ children }) {
   }, [fetchMedia, mediaType, pagingNum, searchTerm]);
 
   const uploadVideoPoster = useCallback(
-    (videoId, src) => {
+    (videoId, src, elementId = 0) => {
       const process = async () => {
         if (processed.includes(videoId) || processing.includes(videoId)) {
           return;
         }
         setProcessing({ videoId });
-        await uploadVideoFrame(videoId, src);
+        await uploadVideoFrame(videoId, src, elementId);
         removeProcessing({ videoId });
       };
       process();

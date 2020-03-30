@@ -24,7 +24,6 @@ import { useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useMedia } from '../../app/media';
 import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
@@ -65,16 +64,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     };
   }
 
-  const {
-    state: { media },
-  } = useMedia();
-
-  const originalResource =
-    media.find((item) => item.id === (resource.videoId || resource.posterid)) ||
-    resource;
-
   const videoProps = getMediaSizePositionProps(
-    originalResource,
+    resource,
     width,
     height,
     scale,
@@ -85,8 +76,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     <MediaDisplay element={element} mediaRef={ref}>
       {previewMode ? (
         <Image
-          src={poster || originalResource.poster}
-          alt={originalResource.title}
+          src={poster || resource.poster}
+          alt={resource.title}
           style={style}
           {...videoProps}
           ref={ref}
@@ -94,14 +85,14 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       ) : (
         <Video
           id={`video-${id}`}
-          poster={poster || originalResource.poster}
+          poster={poster || resource.poster}
           style={style}
           {...videoProps}
           loop={loop}
           preload="metadata"
           ref={ref}
         >
-          <source src={originalResource.src} type={originalResource.mimeType} />
+          <source src={resource.src} type={resource.mimeType} />
         </Video>
       )}
     </MediaDisplay>
