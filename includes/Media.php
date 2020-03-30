@@ -274,10 +274,13 @@ class Media {
 	/**
 	 * Force SVG to have a height and width.
 	 *
-	 * @param  bool        $check Check value of filter.
-	 * @param  int         $id    Attachment ID.
-	 * @param  Array|Strng $size  Size of image as string or array.
-	 * @return Array        Array with image url, width and height.
+	 * @param  bool         $check Check value of filter.
+	 * @param int          $id   Attachment ID for image.
+	 * @param array|string $size Optional. Image size to scale to. Accepts any valid image size,
+	 *                           or an array of width and height values in pixels (in that order).
+	 *                           Default 'medium'.
+	 * @return false|array Array containing the image URL, width, height, and boolean for whether
+	 *                     the image is an intermediate size. False on failure.
 	 */
 	public static function image_downsize( $check, $id, $size ) {
 		$type = get_post_mime_type( $id );
