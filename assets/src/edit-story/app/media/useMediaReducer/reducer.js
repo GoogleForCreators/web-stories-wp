@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint complexity: ["error", { "max": 30 }] */
+
 /**
  * Internal dependencies
  */
@@ -92,6 +94,7 @@ function reducer(state, { type, payload }) {
       if (mediaType === state.mediaType) return state;
       return {
         ...INITIAL_STATE,
+        media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
         processing: [...state.processing],
         processed: [...state.processed],
         searchTerm: state.searchTerm,
@@ -103,6 +106,15 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         pagingNum: state.pagingNum + 1,
+      };
+    }
+
+    case types.SET_MEDIA: {
+      const { media } = payload;
+
+      return {
+        ...state,
+        media,
       };
     }
 

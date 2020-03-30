@@ -54,10 +54,10 @@ function App({ config }) {
             <HistoryProvider size={50}>
               <StoryProvider storyId={storyId}>
                 <FontProvider>
-                  <MediaProvider>
-                    <TransformProvider>
-                      <DropTargetsProvider>
-                        <SnackbarProvider>
+                  <SnackbarProvider>
+                    <MediaProvider>
+                      <TransformProvider>
+                        <DropTargetsProvider>
                           <GlobalStyle />
                           <DefaultMoveableGlobalStyle />
                           <CropMoveableGlobalStyle />
@@ -65,10 +65,10 @@ function App({ config }) {
                           <CalendarGlobalStyle />
                           <KeyboardOnlyOutlines />
                           <Layout />
-                        </SnackbarProvider>
-                      </DropTargetsProvider>
-                    </TransformProvider>
-                  </MediaProvider>
+                        </DropTargetsProvider>
+                      </TransformProvider>
+                    </MediaProvider>
+                  </SnackbarProvider>
                 </FontProvider>
               </StoryProvider>
             </HistoryProvider>

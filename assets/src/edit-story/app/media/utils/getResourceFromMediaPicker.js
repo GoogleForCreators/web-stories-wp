@@ -17,24 +17,36 @@
 /**
  * Internal dependencies
  */
-import { ROTATION } from '../constants';
+import getTypeFromMime from './getTypeFromMime';
 
-export default function (type) {
-  const frames = {
-    [ROTATION.CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
-    },
-    [ROTATION.COUNTER_CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
-    },
-    [ROTATION.PING_PONG]: {
-      transform: ['rotateZ(-45deg)', 'rotateZ(40deg)'],
-    },
-  };
+/**
+ * Generates a resource object from a WordPress media picker object
+ *
+ * @param {Object} mediaPickerEl WP Media Picker object
+ * @return {Object} Resource object
+ */
 
-  const keyframes = frames[type] || frames[ROTATION.CLOCKWISE];
-
+const getResourceFromMediaPicker = (mediaPickerEl) => {
+  const {
+    src,
+    url,
+    mime: mimeType,
+    width,
+    height,
+    id: videoId,
+    featured_media: posterId,
+    featured_media_src: poster,
+  } = mediaPickerEl;
   return {
-    keyframes,
+    type: getTypeFromMime(mimeType),
+    src: url || src,
+    width,
+    height,
+    mimeType,
+    posterId,
+    poster,
+    videoId,
   };
-}
+};
+
+export default getResourceFromMediaPicker;

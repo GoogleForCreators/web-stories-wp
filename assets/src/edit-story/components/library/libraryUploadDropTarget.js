@@ -33,30 +33,19 @@ import {
   UploadDropTargetScreen,
   UploadDropTargetMessageOverlay,
 } from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
-import { useSnackbar } from '../../app/snackbar';
+import { useMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
-  const { showSnackbar } = useSnackbar();
+  const {
+    actions: { uploadMedia },
+  } = useMedia();
   const onDropHandler = useCallback(
     (files) => {
-      files.forEach((file) => {
-        try {
-          uploadFile(file);
-        } catch (e) {
-          if (!e.isUserError) {
-            e.message = __('Sorry, file has failed to upload', 'web-stories');
-          }
-          showSnackbar({
-            message: e.message,
-          });
-        }
-      });
+      uploadMedia(files);
     },
-    [showSnackbar, uploadFile]
+    [uploadMedia]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
