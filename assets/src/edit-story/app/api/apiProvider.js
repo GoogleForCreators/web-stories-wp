@@ -148,7 +148,7 @@ function APIProvider({ children }) {
               poster,
               src,
               oWidth,
-              oHeight
+              oHeight,
               mimeType,
               lengthFormatted,
               alt: alt ? alt : description,
