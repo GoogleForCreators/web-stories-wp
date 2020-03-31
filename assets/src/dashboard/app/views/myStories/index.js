@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -36,22 +36,47 @@ import {
   CardTitle,
   CardPreviewContainer,
   ListBar,
+  TypeaheadInput,
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 
+const PageHeading = styled.div``;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 `;
 
 function MyStories() {
-  const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const {
     actions: { fetchStories },
     state: { stories },
   } = useContext(ApiContext);
+
+  const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const [typeaheadValue, setTypeaheadValue] = useState('');
+  const [filteredStories, setFilteredStories] = useState([]);
+  const [displayStories, setDisplayStories] = useState(stories);
+
+  useMemo(() => {
+    if (typeaheadValue.length > 0) {
+      return setDisplayStories(filteredStories);
+    }
+    return setDisplayStories(stories);
+  }, [stories, filteredStories, typeaheadValue]);
+
+  const filterStories = useCallback(() => {
+    const filterResults = stories.filter((story) => {
+      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
+
+      return (
+        story.title.toLowerCase().includes(lowerTypeaheadValue) ||
+        story.id.toString().toLowerCase().includes(lowerTypeaheadValue)
+      );
+    });
+    setFilteredStories(filterResults);
+  }, [stories, typeaheadValue, setFilteredStories]);
 
   useEffect(() => {
     fetchStories({ status });
@@ -65,9 +90,42 @@ function MyStories() {
     }
   }, [viewStyle]);
 
+  const onTypeaheadInputChange = useCallback(
+    (val) => {
+      setTypeaheadValue(val);
+      filterStories(val);
+    },
+    [filterStories]
+  );
+
+  const typeaheadMenuOptions = useMemo(() => {
+    return displayStories.map((displayStory) => {
+      return {
+        label: displayStory.title,
+        value: displayStory.id,
+        metadata: [
+          displayStory.title,
+          displayStory.id.toString(),
+          displayStory.status,
+        ],
+      };
+    });
+  }, [displayStories]);
+
   return (
     <div>
-      <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+      <PageHeading>
+        <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+        <TypeaheadInput
+          inputId="my-stories-search"
+          items={typeaheadMenuOptions}
+          onChange={onTypeaheadInputChange}
+          value={typeaheadValue}
+          placeholder={__('Search Stories', 'web-stories')}
+          ariaLabel={__('Search Stories', 'web-stories')}
+        />
+      </PageHeading>
+
       <FilterContainer>
         {STORY_STATUSES.map((storyStatus) => (
           <FloatingTab
@@ -82,12 +140,12 @@ function MyStories() {
         ))}
       </FilterContainer>
       <ListBar
-        label={`${stories.length} ${__('total Stories', 'web-stories')}`}
+        label={`${displayStories.length} ${__('total Stories', 'web-stories')}`}
         layoutStyle={viewStyle}
         onPress={handleViewStyleBarButtonSelected}
       />
       <StoryGrid>
-        {stories.map((story) => (
+        {displayStories.map((story) => (
           <CardGridItem key={story.id}>
             <CardPreviewContainer
               onOpenInEditorClick={() => {}}

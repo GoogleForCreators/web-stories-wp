@@ -290,7 +290,11 @@ TypeaheadInput.propTypes = {
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
 };
 
 export default TypeaheadInput;
