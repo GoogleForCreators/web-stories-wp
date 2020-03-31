@@ -31,12 +31,14 @@ import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
 import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
+import StylePresetPanel from './colorPreset';
 export { default as LayerPanel } from './layer';
-export { default as ColorPresetPanel } from './colorPreset';
+export { default as StylePresetPanel } from './colorPreset';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
+const STYLE_PRESETS = 'stylePresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
@@ -50,6 +52,7 @@ const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
+  STYLE_PRESETS, // Display Style presets as the first panel for elements.
   ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_DISPLAY,
@@ -101,6 +104,8 @@ export function getPanels(elements) {
         Panel: ImageAccessibilityPanel,
       });
     }
+    // Always display Style presets as the first panel for background.
+    panels.unshift({ type: STYLE_PRESETS, Panel: StylePresetPanel });
     return panels;
   }
 
@@ -113,8 +118,10 @@ export function getPanels(elements) {
     .map((type) => {
       switch (type) {
         case BACKGROUND_SIZE_POSITION:
-          // Only display when isBackround.
+          // Only display when isBackground.
           return null;
+        case STYLE_PRESETS:
+          return { type, Panel: StylePresetPanel };
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
         case BACKGROUND_DISPLAY:

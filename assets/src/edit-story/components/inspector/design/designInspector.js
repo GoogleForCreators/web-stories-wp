@@ -45,7 +45,6 @@ function DesignInspector() {
   return (
     <Wrapper>
       <TopPanels>
-        <ColorPresetPanel />
         <DesignPanels />
       </TopPanels>
       <BottomPanels>

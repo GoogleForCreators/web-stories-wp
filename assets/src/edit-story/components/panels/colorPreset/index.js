@@ -32,11 +32,9 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
 import { ReactComponent as Remove } from '../../../icons/remove.svg';
-import { useSidebar } from '../../sidebar';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { getDefinitionForType } from '../../../elements';
-import getColorPickerActions from '../utils/getColorPickerActions';
 import { Panel, PanelTitle, PanelContent } from './../panel';
 
 const buttonCSS = css`
@@ -134,24 +132,6 @@ function ColorPresetPanel() {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const ref = useRef();
-
-  const {
-    actions: { showColorPickerAt, hideSidebar },
-  } = useSidebar();
-
-  const openColorPicker = useCallback(
-    (evt) => {
-      evt.stopPropagation();
-      showColorPickerAt(ref.current, {
-        onChange: () => null,
-        hasGradient: true,
-        hasOpacity: true,
-        onClose: hideSidebar,
-        addActions: getColorPickerActions,
-      });
-    },
-    [showColorPickerAt, hideSidebar]
-  );
 
   const handleDeleteColor = useCallback(
     (toDelete) => {
