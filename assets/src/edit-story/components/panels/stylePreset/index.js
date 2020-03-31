@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -47,7 +47,10 @@ const buttonCSS = css`
   padding: 0;
 `;
 
-const AddColorPresetButton = styled.button`
+// Since the whole wrapper title is already a button, can't use button directly here.
+const AddColorPresetButton = styled.div.attrs({
+  role: 'button',
+})`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -55,8 +58,11 @@ const AddColorPresetButton = styled.button`
   }
 `;
 
-const EditModeButton = styled.button`
+const EditModeButton = styled.div.attrs({
+  role: 'button',
+})`
   ${buttonCSS}
+  height: 20px;
   svg {
     width: 16px;
     height: 20px;
@@ -85,7 +91,7 @@ const colorCSS = css`
   }
 `;
 
-const BackgroundColor = styled.button`
+const Color = styled.button`
   ${colorCSS}
   background: ${({ backgroundColor, backgroundImage }) =>
     backgroundColor ? backgroundColor : backgroundImage};
@@ -124,8 +130,6 @@ function StylePresetPanel() {
   const { colors, textColors } = stylePresets;
 
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const ref = useRef();
 
   const isText =
     selectedElements.length > 0 &&
@@ -211,6 +215,13 @@ function StylePresetPanel() {
     : __('Colors', 'web-stories');
   const hasColorPresets = colorPresets.length > 0;
 
+  useEffect(() => {
+    // If there are no colors left, exit edit mode.
+    if (isEditMode && !hasColorPresets) {
+      setIsEditMode(false);
+    }
+  }, [hasColorPresets, isEditMode]);
+
   const getSecondaryActions = () => {
     return !isEditMode ? (
       <>
@@ -220,11 +231,15 @@ function StylePresetPanel() {
               evt.stopPropagation();
               setIsEditMode(true);
             }}
+            aria-label={__('Enter preset edit mode', 'web-stories')}
           >
             <Edit />
           </EditModeButton>
         )}
-        <AddColorPresetButton ref={ref} onClick={handleAddColorPreset}>
+        <AddColorPresetButton
+          onClick={handleAddColorPreset}
+          aria-label={__('Add preset', 'web-stories')}
+        >
           <Add />
         </AddColorPresetButton>
       </>
@@ -234,6 +249,7 @@ function StylePresetPanel() {
           evt.stopPropagation();
           setIsEditMode(false);
         }}
+        aria-label={__('Exit preset edit mode', 'web-stories')}
       >
         {__('Exit', 'web-stories')}
       </ExitEditMode>
@@ -256,7 +272,7 @@ function StylePresetPanel() {
             {colorPresets.map((color, i) => {
               return (
                 <ButtonWrapper key={`color-${i}`}>
-                  <BackgroundColor
+                  <Color
                     {...generatePatternStyles(color)}
                     onClick={() => {
                       if (isEditMode) {
@@ -265,9 +281,14 @@ function StylePresetPanel() {
                         handleApplyColor(color);
                       }
                     }}
+                    aria-label={
+                      isEditMode
+                        ? __('Delete preset', 'web-stories')
+                        : __('Apply preset', 'web-stories')
+                    }
                   >
                     {isEditMode && <Remove />}
-                  </BackgroundColor>
+                  </Color>
                 </ButtonWrapper>
               );
             })}
