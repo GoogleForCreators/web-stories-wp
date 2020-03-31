@@ -54,20 +54,31 @@ const AddColorPreset = styled.button`
 function ColorPresetActions({ color }) {
   const {
     state: {
+      selectedElements,
       story: { colorPresets },
     },
     actions: { updateStory },
   } = useStory();
 
+  const { colors, textColors } = colorPresets;
+
+  const isText =
+    selectedElements.length > 0 &&
+    selectedElements.every(({ type }) => 'text' === type);
+
   const handleAddColorPreset = useCallback(() => {
     if (color) {
       updateStory({
         properties: {
-          colorPresets: [...colorPresets, { color }],
+          colorPresets: {
+            ...colorPresets,
+            colors: isText ? colors : [...colors, color],
+            textColors: !isText ? textColors : [...textColors, color],
+          },
         },
       });
     }
-  }, [color, colorPresets, updateStory]);
+  }, [color, colorPresets, colors, isText, textColors, updateStory]);
   return (
     <ActionsWrapper>
       <AddColorPreset onClick={handleAddColorPreset}>

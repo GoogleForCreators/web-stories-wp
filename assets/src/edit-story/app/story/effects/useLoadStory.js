@@ -84,6 +84,14 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         // First clear history completely.
         clearHistory();
 
+        // Initialize color presets, if missing.
+        if (!colorPresets.colors) {
+          colorPresets.colors = [];
+        }
+        if (!colorPresets.textColors) {
+          colorPresets.textColors = [];
+        }
+
         // Set story-global variables.
         const story = {
           title,

@@ -43,6 +43,15 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
+	/**
+	 * Default style presets to pass if not set.
+	 */
+	const EMPTY_STYLE_PRESETS = [
+		'colors'     => [],
+		'textColors' => [],
+		'styles'     => [],
+	];
+
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
@@ -102,8 +111,8 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( in_array( 'color_presets', $fields, true ) ) {
-			$color_presets         = get_option( self::STYLE_PRESETS_OPTION, [] );
-			$data['color_presets'] = is_array( $color_presets ) ? $color_presets : [];
+			$color_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
+			$data['color_presets'] = is_array( $color_presets ) ? $color_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -192,12 +201,8 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 		$schema['properties']['color_presets'] = [
 			'description' => __( 'Color presets used by all stories', 'web-stories' ),
-			'type'        => 'array',
-			'items'       => [
-				'type' => 'object',
-			],
+			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
-			'default'     => [],
 		];
 
 		$this->schema = $schema;

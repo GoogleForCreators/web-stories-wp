@@ -85,26 +85,11 @@ const colorCSS = css`
   }
 `;
 
-const textCSS = css`
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-`;
-
 const BackgroundColor = styled.button`
-  ${textCSS}
   ${colorCSS}
   color: ${({ theme }) => theme.colors.fg.v1};
   background: ${({ backgroundColor, backgroundImage }) =>
     backgroundColor ? backgroundColor : backgroundImage};
-`;
-
-const TextColor = styled.button`
-  ${colorCSS}
-  background: none;
-  border-color: transparent;
-  ${textCSS}
-  color: ${({ color }) => color};
 `;
 
 const Colors = styled.div`
@@ -124,7 +109,9 @@ function ColorPresetPanel() {
     state: {
       selectedElementIds,
       selectedElements,
-      story: { colorPresets },
+      story: {
+        colorPresets: { colors, textColors },
+      },
     },
     actions: { updateStory, updateElementsById },
   } = useStory();
@@ -133,67 +120,72 @@ function ColorPresetPanel() {
 
   const ref = useRef();
 
-  const handleDeleteColor = useCallback(
-    (toDelete) => {
-      const colors = colorPresets.filter((color) => color !== toDelete);
-      updateStory({
-        properties: {
-          colorPresets: colors,
-        },
-      });
-    },
-    [colorPresets, updateStory]
-  );
-
-  const handleApplyBackgroundColor = useCallback(
-    (color) => {
-      updateElementsById({
-        elementIds: selectedElementIds,
-        properties: (currentProperties) => {
-          const { type } = currentProperties;
-          // @todo Is this necessary?
-          const { isMedia } = getDefinitionForType(type);
-          return isMedia
-            ? {}
-            : {
-                backgroundColor: color,
-              };
-        },
-      });
-    },
-    [selectedElementIds, updateElementsById]
-  );
-
   const isText =
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => 'text' === type);
 
+  const handleDeleteColor = useCallback(
+    (toDelete) => {
+      updateStory({
+        properties: {
+          colorPresets: {
+            colors: isText
+              ? colors
+              : colors.filter((color) => color !== toDelete),
+            textColors: !isText
+              ? textColors
+              : textColors.filter((color) => color !== toDelete),
+          },
+        },
+      });
+    },
+    [colors, isText, textColors, updateStory]
+  );
+
   const handleAddColorPreset = useCallback(() => {
-    let addedColorPresets = [];
+    let addedColors = [];
+    let addedTextColors = [];
     if (isText) {
-      addedColorPresets = selectedElements.map(({ color }) => color);
+      addedTextColors = selectedElements.map(({ color }) => color);
     } else {
-      addedColorPresets = selectedElements
+      addedColors = selectedElements
         .map(({ backgroundColor }) => {
           return backgroundColor ? backgroundColor : null;
         })
         .filter((color) => color);
     }
-    if (addedColorPresets.length > 0) {
+    if (addedColors.length > 0 || addedTextColors.length > 0) {
       updateStory({
         properties: {
-          colorPresets: [...colorPresets, ...addedColorPresets],
+          colorPresets: {
+            colors: [...colors, ...addedColors],
+            textColors: [...textColors, ...addedTextColors],
+          },
         },
       });
     }
-  }, [isText, colorPresets, selectedElements, updateStory]);
+  }, [isText, selectedElements, updateStory, colors, textColors]);
 
-  const handleApplyTextColor = useCallback(
-    (color) => () => {
+  const handleApplyColor = useCallback(
+    (color) => {
       if (isText) {
         updateElementsById({
           elementIds: selectedElementIds,
           properties: { color },
+        });
+      } else {
+        updateElementsById({
+          elementIds: selectedElementIds,
+          properties: (currentProperties) => {
+            const { type } = currentProperties;
+            // @todo Is this necessary?
+            const { isMedia } = getDefinitionForType(type);
+            return isMedia
+              ? {}
+              : {
+                  backgroundColor: color,
+                };
+          },
         });
       }
     },
@@ -227,6 +219,8 @@ function ColorPresetPanel() {
     );
   };
 
+  const colorPresets = isText ? textColors : colors;
+
   return (
     <Panel name="colorpreset">
       <PanelTitle
@@ -239,37 +233,22 @@ function ColorPresetPanel() {
       {colorPresets && (
         <PanelContent isPrimary>
           <Colors>
-            {colorPresets.map((color) => {
-              const isSolid =
-                'solid' === color.type || undefined === color.type;
+            {colorPresets.map((color, i) => {
               return (
-                <>
-                  <ButtonWrapper>
-                    <BackgroundColor
-                      {...generatePatternStyles(color)}
-                      onClick={() => {
-                        if (isEditMode) {
-                          handleDeleteColor(color);
-                        } else {
-                          handleApplyBackgroundColor(color);
-                        }
-                      }}
-                    >
-                      {isEditMode && <Remove />}
-                      {isText && __('A', 'web-stories')}
-                    </BackgroundColor>
-                  </ButtonWrapper>
-                  {isText && !isEditMode && isSolid && (
-                    <ButtonWrapper>
-                      <TextColor
-                        {...generatePatternStyles(color, 'color')}
-                        onClick={handleApplyTextColor(color)}
-                      >
-                        {__('A', 'web-stories')}
-                      </TextColor>
-                    </ButtonWrapper>
-                  )}
-                </>
+                <ButtonWrapper key={`color-${i}`}>
+                  <BackgroundColor
+                    {...generatePatternStyles(color)}
+                    onClick={() => {
+                      if (isEditMode) {
+                        handleDeleteColor(color);
+                      } else {
+                        handleApplyColor(color);
+                      }
+                    }}
+                  >
+                    {isEditMode && <Remove />}
+                  </BackgroundColor>
+                </ButtonWrapper>
               );
             })}
           </Colors>
