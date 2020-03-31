@@ -135,7 +135,7 @@ function APIProvider({ children }) {
                 width: oWidth,
                 height: oHeight,
                 length_formatted: lengthFormatted,
-                sizes
+                sizes,
               },
               title: { raw: title },
               description: { raw: description },

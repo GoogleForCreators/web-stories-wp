@@ -82,7 +82,13 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
-  const { src, type, width: originalWidth, height: originalHeight, sizes } = resource;
+  const {
+    src,
+    type,
+    width: originalWidth,
+    height: originalHeight,
+    sizes,
+  } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -131,13 +137,14 @@ const MediaElement = ({
 
   if (type === 'image') {
     let imageSrc = src;
-    if(sizes){
-      if(sizes.web_stories_thumbnail){
-        imageSrc = sizes.web_stories_thumbnail.source_url;
-      } else if(sizes.large ){
-        imageSrc = sizes.large.source_url;
-      } else if(sizes.full){
-        imageSrc = sizes.full.source_url;
+    if (sizes) {
+      const { web_stories_thumbnail: webStoriesThumbnail, large, full } = sizes;
+      if (webStoriesThumbnail && webStoriesThumbnail.source_url) {
+        imageSrc = webStoriesThumbnail.source_url;
+      } else if (large && large.source_url) {
+        imageSrc = large.source_url;
+      } else if (full && full.source_url) {
+        imageSrc = full.source_url;
       }
     }
     return (
