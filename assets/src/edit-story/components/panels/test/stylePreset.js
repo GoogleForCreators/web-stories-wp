@@ -24,17 +24,17 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
-import ColorPreset from '../colorPreset';
+import StylePreset from '../stylePreset';
 
 function arrange(children = null) {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 }
 
-describe('Panels/ColorPreset', () => {
-  it('should render <ColorPreset /> panel', () => {
-    const { getByText } = arrange(<ColorPreset />);
+describe('Panels/StylePreset', () => {
+  it('should render <StylePreset /> panel', () => {
+    const { getByText } = arrange(<StylePreset />);
 
-    const element = getByText('Color presets');
+    const element = getByText('Style presets');
 
     expect(element).toBeDefined();
   });

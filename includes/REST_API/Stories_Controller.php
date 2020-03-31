@@ -110,9 +110,9 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
 		}
 
-		if ( in_array( 'color_presets', $fields, true ) ) {
-			$color_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
-			$data['color_presets'] = is_array( $color_presets ) ? $color_presets : self::EMPTY_STYLE_PRESETS;
+		if ( in_array( 'style_presets', $fields, true ) ) {
+			$style_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
+			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -156,10 +156,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
 			}
 
-			// If color presets are set.
-			$color_presets = $request->get_param( 'color_presets' );
-			if ( is_array( $color_presets ) ) {
-				update_option( self::STYLE_PRESETS_OPTION, $color_presets );
+			// If style presets are set.
+			$style_presets = $request->get_param( 'style_presets' );
+			if ( is_array( $style_presets ) ) {
+				update_option( self::STYLE_PRESETS_OPTION, $style_presets );
 			}
 		}
 		return rest_ensure_response( $response );
@@ -199,8 +199,8 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'default'     => '',
 		];
 
-		$schema['properties']['color_presets'] = [
-			'description' => __( 'Color presets used by all stories', 'web-stories' ),
+		$schema['properties']['style_presets'] = [
+			'description' => __( 'Style presets used by all stories', 'web-stories' ),
 			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
 		];
