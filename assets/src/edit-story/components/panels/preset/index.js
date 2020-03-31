@@ -109,12 +109,12 @@ function ColorPresetPanel() {
     state: {
       selectedElementIds,
       selectedElements,
-      story: {
-        colorPresets: { colors, textColors },
-      },
+      story: { stylePresets },
     },
     actions: { updateStory, updateElementsById },
   } = useStory();
+
+  const { colors, textColors } = stylePresets;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -128,7 +128,8 @@ function ColorPresetPanel() {
     (toDelete) => {
       updateStory({
         properties: {
-          colorPresets: {
+          stylePresets: {
+            ...stylePresets,
             colors: isText
               ? colors
               : colors.filter((color) => color !== toDelete),
@@ -139,7 +140,7 @@ function ColorPresetPanel() {
         },
       });
     },
-    [colors, isText, textColors, updateStory]
+    [colors, isText, stylePresets, textColors, updateStory]
   );
 
   const handleAddColorPreset = useCallback(() => {
@@ -157,14 +158,15 @@ function ColorPresetPanel() {
     if (addedColors.length > 0 || addedTextColors.length > 0) {
       updateStory({
         properties: {
-          colorPresets: {
+          stylePresets: {
+            ...stylePresets,
             colors: [...colors, ...addedColors],
             textColors: [...textColors, ...addedTextColors],
           },
         },
       });
     }
-  }, [isText, selectedElements, updateStory, colors, textColors]);
+  }, [isText, selectedElements, updateStory, stylePresets, colors, textColors]);
 
   const handleApplyColor = useCallback(
     (color) => {

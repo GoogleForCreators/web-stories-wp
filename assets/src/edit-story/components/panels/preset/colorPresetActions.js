@@ -55,12 +55,12 @@ function ColorPresetActions({ color }) {
   const {
     state: {
       selectedElements,
-      story: { colorPresets },
+      story: { stylePresets },
     },
     actions: { updateStory },
   } = useStory();
 
-  const { colors, textColors } = colorPresets;
+  const { colors, textColors } = stylePresets;
 
   const isText =
     selectedElements.length > 0 &&
@@ -70,15 +70,15 @@ function ColorPresetActions({ color }) {
     if (color) {
       updateStory({
         properties: {
-          colorPresets: {
-            ...colorPresets,
+          stylePresets: {
+            ...stylePresets,
             colors: isText ? colors : [...colors, color],
             textColors: !isText ? textColors : [...textColors, color],
           },
         },
       });
     }
-  }, [color, colorPresets, colors, isText, textColors, updateStory]);
+  }, [color, stylePresets, colors, isText, textColors, updateStory]);
   return (
     <ActionsWrapper>
       <AddColorPreset onClick={handleAddColorPreset}>

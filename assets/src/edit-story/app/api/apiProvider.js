@@ -66,7 +66,7 @@ function APIProvider({ children }) {
       excerpt,
       featuredMedia,
       password,
-      colorPresets,
+      stylePresets,
       publisherLogo,
     }) => {
       return apiFetch({
@@ -83,7 +83,7 @@ function APIProvider({ children }) {
           excerpt,
           story_data: { version: DATA_VERSION, pages },
           featured_media: featuredMedia,
-          color_presets: colorPresets,
+          style_presets: stylePresets,
           publisher_logo: publisherLogo,
         },
         method: 'POST',

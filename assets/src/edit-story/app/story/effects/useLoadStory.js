@@ -64,7 +64,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featured_media_url: featuredMediaUrl,
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
-          color_presets: colorPresets,
+          style_presets: stylePresets,
           password,
         } = post;
 
@@ -85,11 +85,11 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         clearHistory();
 
         // Initialize color presets, if missing.
-        if (!colorPresets.colors) {
-          colorPresets.colors = [];
+        if (!stylePresets.colors) {
+          stylePresets.colors = [];
         }
-        if (!colorPresets.textColors) {
-          colorPresets.textColors = [];
+        if (!stylePresets.textColors) {
+          stylePresets.textColors = [];
         }
 
         // Set story-global variables.
@@ -107,7 +107,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
-          colorPresets,
+          stylePresets,
         };
 
         // If there are no pages, create empty page.
