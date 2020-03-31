@@ -24,19 +24,51 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
-import StylePreset from '../stylePreset';
+import StylePresetPanel from '../stylePreset';
+import StoryContext from '../../../app/story/context';
 
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+function setupPanel(extraStateProps) {
+  const updateStory = jest.fn();
+  const updateElementsById = jest.fn();
+
+  const textElement = {
+    id: '1',
+    type: 'text',
+    x: 111,
+    y: 112,
+    width: 211,
+    height: 221,
+    rotationAngle: 1,
+  };
+  const storyContextValue = {
+    state: {
+      selectedElementIds: ['1'],
+      selectedElements: [textElement],
+      story: {
+        stylePresets: { colors: [], textColors: [] },
+      },
+      ...extraStateProps,
+    },
+    actions: { updateStory, updateElementsById },
+  };
+  const { getByText } = render(
+    <ThemeProvider theme={theme}>
+      <StoryContext.Provider value={storyContextValue}>
+        <StylePresetPanel />
+      </StoryContext.Provider>
+    </ThemeProvider>
+  );
+  return {
+    getByText,
+    updateStory,
+    updateElementsById,
+  };
 }
 
 describe('Panels/StylePreset', () => {
-  it('should render <StylePreset /> panel', () => {
-    const { getByText } = arrange(<StylePreset />);
-
+  it('should render <StylePresetPanel /> panel', () => {
+    const { getByText } = setupPanel();
     const element = getByText('Style presets');
-
     expect(element).toBeDefined();
   });
-  // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/279
 });
