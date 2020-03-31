@@ -22,9 +22,9 @@ import getTypeFromMime from './getTypeFromMime';
 /**
  * Resource object.
  *
- * @todo: Try to remove posterId (poster should be enough) and videoId (src)
+ * TODO: Try to remove posterId (poster should be enough) and videoId (src)
  * should be enough.
- * @todo: We should just get the non-formatted numeric length. Formatting can
+ * TODO: We should just get the non-formatted numeric length. Formatting can
  * be done client-side.
  *
  * @typedef {Resource} Resource
@@ -38,6 +38,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {string|null} poster The poster URL for the "video" type.
  * @property {string|null} posterId The system poster ID.
  * @property {string|null} videoId The system video ID.
+ * @property {number|null} length The length for the "video" type.
  * @property {string|null} lengthFormatted The formatted length for the "video"
  * type.
  * @property {string|null} title The user-readable title for the resource.
@@ -62,6 +63,7 @@ function createResource({
   poster,
   posterId,
   videoId,
+  length,
   lengthFormatted,
   title,
   alt,
@@ -76,6 +78,7 @@ function createResource({
     poster,
     posterId,
     videoId,
+    length,
     lengthFormatted,
     title,
     alt,
