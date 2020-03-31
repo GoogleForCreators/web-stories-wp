@@ -76,7 +76,7 @@ function MyStories() {
   // so all necessary data is already in context
   const filterStories = useCallback(() => {
     const filterResults = stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
+      const lowerTypeaheadValue = typeaheadValue.toString().toLowerCase();
 
       return (
         story.title.toLowerCase().includes(lowerTypeaheadValue) ||
@@ -99,10 +99,13 @@ function MyStories() {
   }, [viewStyle]);
 
   // controls setting typeaheadValue, this triggers setting displayStories
+  // TODO update typeahead to return the object of the selection
   const onTypeaheadInputChange = useCallback((val) => {
     setTypeaheadValue(val);
   }, []);
 
+  // structures stories for potential filtering based on stories from context and gives them the keys the input expects.
+  // metadata is to handle the custom filter parameters within myStories
   const typeaheadMenuOptions = useMemo(() => {
     return displayStories.map((displayStory) => {
       return {
@@ -126,8 +129,8 @@ function MyStories() {
           items={typeaheadMenuOptions}
           onChange={(val) => {
             onTypeaheadInputChange(val);
-            filterStories(val);
           }}
+          onKeyUp={filterStories()}
           value={typeaheadValue}
           placeholder={__('Search Stories', 'web-stories')}
           ariaLabel={__('Search Stories', 'web-stories')}
