@@ -59,6 +59,11 @@ function MyStories() {
   const [filteredStories, setFilteredStories] = useState([]);
   const [displayStories, setDisplayStories] = useState(stories);
 
+  useEffect(() => {
+    fetchStories({ status });
+  }, [fetchStories, status]);
+
+  // Set display stories depending on if filtering
   useMemo(() => {
     if (typeaheadValue.length > 0) {
       return setDisplayStories(filteredStories);
@@ -66,6 +71,9 @@ function MyStories() {
     return setDisplayStories(stories);
   }, [stories, filteredStories, typeaheadValue]);
 
+  // Actually filter the stories, occurs from onTypeaheadInputChange.
+  // Only ever filtering from the page query (my stories, templates, bookmarks)
+  // so all necessary data is already in context
   const filterStories = useCallback(() => {
     const filterResults = stories.filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toLowerCase();
@@ -90,13 +98,10 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const onTypeaheadInputChange = useCallback(
-    (val) => {
-      setTypeaheadValue(val);
-      filterStories(val);
-    },
-    [filterStories]
-  );
+  // controls setting typeaheadValue, this triggers setting displayStories
+  const onTypeaheadInputChange = useCallback((val) => {
+    setTypeaheadValue(val);
+  }, []);
 
   const typeaheadMenuOptions = useMemo(() => {
     return displayStories.map((displayStory) => {
@@ -119,7 +124,10 @@ function MyStories() {
         <TypeaheadInput
           inputId="my-stories-search"
           items={typeaheadMenuOptions}
-          onChange={onTypeaheadInputChange}
+          onChange={(val) => {
+            onTypeaheadInputChange(val);
+            filterStories(val);
+          }}
           value={typeaheadValue}
           placeholder={__('Search Stories', 'web-stories')}
           ariaLabel={__('Search Stories', 'web-stories')}

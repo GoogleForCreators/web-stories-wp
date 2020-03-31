@@ -177,7 +177,7 @@ const TypeaheadInput = ({
 
       return (
         item.label.toLowerCase().includes(lowerInputValue) ||
-        item.value.toLowerCase().includes(lowerInputValue)
+        item.value.toString().toLowerCase().includes(lowerInputValue)
       );
     });
   }, [items, inputValue, isFiltering]);
