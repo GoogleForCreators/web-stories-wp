@@ -47,7 +47,7 @@ const SearchContainer = styled.div`
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
-    transition: width 0.2s ease-in-out;
+    transition: width 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 SearchContainer.propTypes = {
@@ -83,7 +83,7 @@ const ControlVisibilityContainer = styled.div`
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 ControlVisibilityContainer.propTypes = {
