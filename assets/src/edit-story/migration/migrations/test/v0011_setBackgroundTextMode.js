@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import setBackgroundTextMode from '../v0010_setBackgroundTextMode';
+import setBackgroundTextMode from '../v0011_setBackgroundTextMode';
 
 describe('setBackgroundTextMode', () => {
   it('should set flip if not set', () => {
