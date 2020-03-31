@@ -48,6 +48,9 @@ const Space = styled.div`
   width: 6px;
 `;
 
+const isTitleValid = (rawTitle) =>
+  rawTitle !== __('Auto Draft', 'web-stories') && rawTitle !== '';
+
 function PreviewButton() {
   const {
     state: {
@@ -74,7 +77,7 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
-      story: { date },
+      story: { date, title },
     },
     actions: { updateStory },
   } = useStory();
@@ -93,7 +96,10 @@ function Publish() {
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
+    <Primary
+      onClick={handlePublish}
+      isDisabled={isSaving || isUploading || !isTitleValid(title)}
+    >
       {text}
     </Primary>
   );
@@ -126,7 +132,7 @@ function Update() {
   const {
     state: {
       meta: { isSaving },
-      story: { status },
+      story: { title, status },
     },
     actions: { saveStory },
   } = useStory();
@@ -147,7 +153,10 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
+        <Outline
+          onClick={saveStory}
+          isDisabled={isSaving || isUploading || !isTitleValid(title)}
+        >
           {text}
         </Outline>
       );
