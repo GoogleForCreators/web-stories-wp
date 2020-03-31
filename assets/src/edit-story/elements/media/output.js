@@ -60,7 +60,7 @@ function MediaOutput({
 }
 
 MediaOutput.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+  element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
   children: PropTypes.node.isRequired,
 };

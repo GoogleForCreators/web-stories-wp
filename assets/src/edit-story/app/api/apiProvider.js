@@ -162,6 +162,7 @@ function APIProvider({ children }) {
               lengthFormatted,
               alt: alt ? alt : description,
               title,
+              local: false,
             })
           );
 
@@ -188,6 +189,8 @@ function APIProvider({ children }) {
       Object.entries(additionalData).forEach(([key, value]) =>
         data.append(key, value)
       );
+
+      // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
       return apiFetch({
         path: media,
         body: data,

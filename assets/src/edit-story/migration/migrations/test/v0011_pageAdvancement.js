@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import pageAdvancement from '../v0009_pageAdvancement';
+import pageAdvancement from '../v0011_pageAdvancement';
 
 describe('pageAdvancement', () => {
   it('should add page advancement properties', () => {

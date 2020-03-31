@@ -82,7 +82,7 @@ const LinksContainer = styled.div`
   }
 `;
 
-const NewStoryLink = styled(Button)`
+const NewStoryLink = styled(Button).attrs({ onClick: () => {} })`
   margin-left: 40px;
 `;
 
