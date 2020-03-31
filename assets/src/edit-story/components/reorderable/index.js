@@ -16,6 +16,5 @@
 
 export { default as Reorderable } from './reorderable';
 export { default as ReorderableItem } from './reorderableItem';
-export { default as ReorderableScroller } from './reorderableScroller';
 export { default as ReorderableSeparator } from './reorderableSeparator';
 export { default as useReorderable } from './useReorderable';

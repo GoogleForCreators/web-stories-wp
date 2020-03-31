@@ -28,10 +28,22 @@ import ReorderableContext from './context';
 
 const Wrapper = styled.div`
   z-index: 2;
+  opacity: 0;
   position: sticky;
+  height: ${({ size }) => size}px;
+  ${({ direction, size }) =>
+    direction === -1
+      ? `
+    top: 0px;
+    margin-bottom: -${size}px
+    `
+      : `
+    bottom: 0px;
+    margin-top: -${size}px;
+  `}
 `;
 
-function ReorderableScroller({ className, direction }) {
+function ReorderableScroller({ direction, size }) {
   const {
     state: { canScrollDown, canScrollUp },
     actions: { startScroll },
@@ -66,7 +78,8 @@ function ReorderableScroller({ className, direction }) {
 
   return (
     <Wrapper
-      className={className}
+      size={size}
+      direction={direction}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
     />
@@ -75,7 +88,7 @@ function ReorderableScroller({ className, direction }) {
 
 ReorderableScroller.propTypes = {
   direction: PropTypes.number.isRequired,
-  className: PropTypes.string,
+  size: PropTypes.number.isRequired,
 };
 
 export default ReorderableScroller;

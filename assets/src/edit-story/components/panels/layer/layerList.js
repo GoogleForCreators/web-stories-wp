@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
 import {
   Reorderable,
   ReorderableSeparator,
-  ReorderableScroller,
   ReorderableItem,
 } from '../../reorderable';
 import { useStory } from '../../../app';
@@ -45,18 +44,6 @@ const LayerSeparator = styled(ReorderableSeparator)`
   height: ${LAYER_HEIGHT}px;
   margin: -${LAYER_HEIGHT / 2}px 0;
   padding: ${LAYER_HEIGHT / 2}px 0;
-`;
-
-const LayerScroller = styled(ReorderableScroller)`
-  height: ${LAYER_HEIGHT}px;
-  ${({ direction }) =>
-    direction === -1
-      ? `
-    top: 0px;
-    margin-bottom: -${LAYER_HEIGHT}px`
-      : `
-    bottom: 0px;
-    margin-top: -${LAYER_HEIGHT}px;`}
 `;
 
 function LayerPanel({ layers }) {
@@ -78,9 +65,8 @@ function LayerPanel({ layers }) {
           position: newPos,
         })
       }
+      getItemSize={() => LAYER_HEIGHT}
     >
-      <LayerScroller direction={-1} />
-
       {layers.map((layer) => (
         <Fragment key={layer.id}>
           <LayerSeparator position={layer.position + 1} />
@@ -95,8 +81,6 @@ function LayerPanel({ layers }) {
           </ReorderableItem>
         </Fragment>
       ))}
-
-      <LayerScroller direction={1} />
     </LayerList>
   );
 }

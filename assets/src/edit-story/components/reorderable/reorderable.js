@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Context from './context';
+import ReorderableScroller from './reorderableScroller';
 import useScroll from './useScroll';
 import useReordering from './useReordering';
 
@@ -31,7 +32,12 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-function Reorderable({ children, onPositionChange = () => {}, ...props }) {
+function Reorderable({
+  children,
+  onPositionChange = () => {},
+  getItemSize = () => 10,
+  ...props
+}) {
   const {
     isReordering,
     currentSeparator,
@@ -65,7 +71,11 @@ function Reorderable({ children, onPositionChange = () => {}, ...props }) {
   return (
     <Context.Provider value={state}>
       <ReorderableContainer ref={setScrollTarget} {...props}>
+        <ReorderableScroller direction={-1} size={getItemSize()} />
+
         {children}
+
+        <ReorderableScroller direction={1} size={getItemSize()} />
       </ReorderableContainer>
     </Context.Provider>
   );
@@ -77,6 +87,7 @@ Reorderable.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onPositionChange: PropTypes.func.isRequired,
+  getItemSize: PropTypes.func.isRequired,
 };
 
 export default Reorderable;
