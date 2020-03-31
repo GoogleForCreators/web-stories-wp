@@ -28,15 +28,21 @@ function reducePage({ elements, ...rest }) {
   };
 }
 
-function updateElement({ backgroundTextMode, ...rest }) {
-  const { backgroundColor } = rest;
-  const hasBackgroundColor =
-    backgroundColor && backgroundColor !== 'transparent';
+function updateElement(props) {
+  const { type } = props;
 
-  return {
-    backgroundTextMode: hasBackgroundColor ? 'FILL' : 'NONE',
-    ...rest,
-  };
+  if (type === 'text') {
+    const { backgroundColor } = props;
+    const hasBackgroundColor =
+      backgroundColor && backgroundColor !== 'transparent';
+
+    return {
+      backgroundTextMode: hasBackgroundColor ? 'FILL' : 'NONE',
+      ...props,
+    };
+  }
+
+  return props;
 }
 
 export default setBackgroundTextMode;

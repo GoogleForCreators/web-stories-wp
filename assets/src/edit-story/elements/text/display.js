@@ -55,7 +55,6 @@ const HighlightElement = styled.p`
 const HIGHLIGHT_MARGIN_BUFFER = 10;
 
 const MarginedElement = styled.span`
-  display: inline-block;
   position: relative;
   top: 0;
   margin: ${({ horizontalPadding, horizontalBuffer }) =>
@@ -145,7 +144,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-        <HighlightElement ref={ref} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
               {...props}

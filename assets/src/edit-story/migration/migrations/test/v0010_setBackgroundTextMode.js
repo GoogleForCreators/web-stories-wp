@@ -30,14 +30,21 @@ describe('setBackgroundTextMode', () => {
             elements: [
               {
                 _test: 'element1',
+                type: 'text',
                 backgroundColor: '#000',
               },
               {
                 _test: 'element2',
+                type: 'text',
                 backgroundColor: 'transparent',
               },
               {
                 _test: 'element3',
+                type: 'text',
+              },
+              {
+                _test: 'element4',
+                type: 'image',
               },
             ],
           },
@@ -57,15 +64,22 @@ describe('setBackgroundTextMode', () => {
               _test: 'element1',
               backgroundColor: '#000',
               backgroundTextMode: 'FILL',
+              type: 'text',
             },
             {
               _test: 'element2',
               backgroundColor: 'transparent',
               backgroundTextMode: 'NONE',
+              type: 'text',
             },
             {
               _test: 'element3',
               backgroundTextMode: 'NONE',
+              type: 'text',
+            },
+            {
+              _test: 'element4',
+              type: 'image',
             },
           ],
         },

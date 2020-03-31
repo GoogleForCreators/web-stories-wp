@@ -51,8 +51,8 @@ export function TextOutputWithUnits({
 }) {
   const { width } = rest;
   const paddingStyles = {
-    vertical: `${(100 * padding.vertical) / width}%`,
-    horizontal: `${(100 * padding.horizontal) / width}%`,
+    vertical: `${(padding.vertical / width) * 100}%`,
+    horizontal: `${(padding.horizontal / width) * 100}%`,
   };
   const fillStyle = {
     ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY),
@@ -131,7 +131,7 @@ export function TextOutputWithUnits({
             />
           </span>
         </p>
-        <p className={className} style={highlightCloneStyle}>
+        <p className={className} style={highlightCloneStyle} aria-hidden="true">
           <span style={marginStyle}>
             <span
               style={foregroundTextStyle}
