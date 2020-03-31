@@ -135,9 +135,15 @@ function StylePresetPanel() {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const isText =
-    selectedElements.length > 0 &&
-    selectedElements.every(({ type }) => 'text' === type);
+  const isType = (elType) => {
+    return (
+      selectedElements.length > 0 &&
+      selectedElements.every(({ type }) => elType === type)
+    );
+  };
+
+  const isText = isType('text');
+  const isShape = isType('shape');
 
   const handleDeleteColor = useCallback(
     (toDelete) => {
@@ -225,6 +231,11 @@ function StylePresetPanel() {
       setIsEditMode(false);
     }
   }, [hasColorPresets, isEditMode]);
+
+  // @todo This is temporary until the presets haven't been implemented fully with multi-selection.
+  if (!isText && !isShape && selectedElements.length > 1) {
+    return null;
+  }
 
   const getSecondaryActions = () => {
     return !isEditMode ? (

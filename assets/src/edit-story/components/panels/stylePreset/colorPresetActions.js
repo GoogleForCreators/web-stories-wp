@@ -62,6 +62,7 @@ function ColorPresetActions({ color }) {
 
   const { colors, textColors } = stylePresets;
 
+  // @todo This will change with the missing multi-selection handling.
   const isText =
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => 'text' === type);

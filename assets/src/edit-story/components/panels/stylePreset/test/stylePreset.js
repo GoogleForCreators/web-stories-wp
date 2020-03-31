@@ -23,9 +23,9 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
-import StylePresetPanel from '../stylePreset';
-import StoryContext from '../../../app/story/context';
+import theme from '../../../../theme';
+import StylePresetPanel from '../index';
+import StoryContext from '../../../../app/story/context';
 
 function setupPanel(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
@@ -203,4 +203,5 @@ describe('Panels/StylePreset', () => {
       },
     });
   });
+  // @TODO More tests to be added once the feature is complete.
 });
