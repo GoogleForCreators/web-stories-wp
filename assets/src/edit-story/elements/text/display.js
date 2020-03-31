@@ -145,7 +145,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-        <HighlightElement ref={ref} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
               {...props}
