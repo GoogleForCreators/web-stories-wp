@@ -41,6 +41,7 @@ export default function WithMask({
   children,
   box,
   applyFlip = true,
+  previewMode = false,
   ...rest
 }) {
   const mask = getElementMask(element);
@@ -70,7 +71,9 @@ export default function WithMask({
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}-display`;
+  const maskId = `mask-${mask.type}-${element.id}-display${
+    previewMode ? '-preview' : ''
+  }`;
 
   return (
     <div
@@ -104,4 +107,5 @@ WithMask.propTypes = {
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,
   box: StoryPropTypes.box.isRequired,
+  previewMode: PropTypes.bool,
 };

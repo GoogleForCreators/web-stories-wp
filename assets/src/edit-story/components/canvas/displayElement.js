@@ -116,6 +116,7 @@ function DisplayElement({ element, previewMode }) {
         style={{
           opacity: opacity ? opacity / 100 : null,
         }}
+        previewMode={previewMode}
       >
         <Display element={element} previewMode={previewMode} box={box} />
         {!previewMode && (
