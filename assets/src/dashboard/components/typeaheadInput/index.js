@@ -109,7 +109,14 @@ const StyledInput = styled.input`
   &:disabled {
     cursor: default;
   }
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: ${({ isExpanded }) => (isExpanded ? '100%' : '0')};
+  }
 `;
+StyledInput.propTypes = {
+  isExpanded: PropTypes.bool,
+};
 
 const SearchButton = styled.button`
   margin: 0;
@@ -237,6 +244,7 @@ const TypeaheadInput = ({
         <ControlVisibilityContainer isExpanded={isInputExpanded}>
           <label aria-label={ariaLabel} htmlFor={inputId} />
           <StyledInput
+            isExpanded={isInputExpanded}
             ref={inputRef}
             autoComplete="off"
             type="text"

@@ -36,12 +36,23 @@ import {
   CardTitle,
   CardPreviewContainer,
   ListBar,
-  TypeaheadInput,
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
+import MyStoriesSearch from './myStoriesSearch';
 
-const PageHeading = styled.div``;
+const PageHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const SearchContainer = styled.div`
+  position: absolute;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+`;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
@@ -56,26 +67,13 @@ function MyStories() {
 
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [filteredStories, setFilteredStories] = useState([]);
-  const [displayStories, setDisplayStories] = useState(stories);
 
   useEffect(() => {
     fetchStories({ status });
   }, [fetchStories, status]);
 
-  // Set display stories depending on if filtering
-  useMemo(() => {
-    if (typeaheadValue.length > 0) {
-      return setDisplayStories(filteredStories);
-    }
-    return setDisplayStories(stories);
-  }, [stories, filteredStories, typeaheadValue]);
-
-  // Actually filter the stories, occurs from onTypeaheadInputChange.
-  // Only ever filtering from the page query (my stories, templates, bookmarks)
-  // so all necessary data is already in context
-  const filterStories = useCallback(() => {
-    const filterResults = stories.filter((story) => {
+  const filteredStories = useMemo(() => {
+    return stories.filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toString().toLowerCase();
 
       return (
@@ -83,8 +81,7 @@ function MyStories() {
         story.id.toString().toLowerCase().includes(lowerTypeaheadValue)
       );
     });
-    setFilteredStories(filterResults);
-  }, [stories, typeaheadValue, setFilteredStories]);
+  }, [stories, typeaheadValue]);
 
   useEffect(() => {
     fetchStories({ status });
@@ -104,37 +101,17 @@ function MyStories() {
     setTypeaheadValue(val);
   }, []);
 
-  // structures stories for potential filtering based on stories from context and gives them the keys the input expects.
-  // metadata is to handle the custom filter parameters within myStories
-  const typeaheadMenuOptions = useMemo(() => {
-    return displayStories.map((displayStory) => {
-      return {
-        label: displayStory.title,
-        value: displayStory.id,
-        metadata: [
-          displayStory.title,
-          displayStory.id.toString(),
-          displayStory.status,
-        ],
-      };
-    });
-  }, [displayStories]);
-
   return (
-    <div>
+    <>
       <PageHeading>
         <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
-        <TypeaheadInput
-          inputId="my-stories-search"
-          items={typeaheadMenuOptions}
-          onChange={(val) => {
-            onTypeaheadInputChange(val);
-          }}
-          onKeyUp={filterStories()}
-          value={typeaheadValue}
-          placeholder={__('Search Stories', 'web-stories')}
-          ariaLabel={__('Search Stories', 'web-stories')}
-        />
+        <SearchContainer>
+          <MyStoriesSearch
+            currentValue={typeaheadValue}
+            filteredStories={filteredStories}
+            handleChange={onTypeaheadInputChange}
+          />
+        </SearchContainer>
       </PageHeading>
 
       <FilterContainer>
@@ -151,12 +128,15 @@ function MyStories() {
         ))}
       </FilterContainer>
       <ListBar
-        label={`${displayStories.length} ${__('total Stories', 'web-stories')}`}
+        label={`${filteredStories.length} ${__(
+          'total Stories',
+          'web-stories'
+        )}`}
         layoutStyle={viewStyle}
         onPress={handleViewStyleBarButtonSelected}
       />
       <StoryGrid>
-        {displayStories.map((story) => (
+        {filteredStories.map((story) => (
           <CardGridItem key={story.id}>
             <CardPreviewContainer
               onOpenInEditorClick={() => {}}
@@ -170,7 +150,7 @@ function MyStories() {
           </CardGridItem>
         ))}
       </StoryGrid>
-    </div>
+    </>
   );
 }
 
