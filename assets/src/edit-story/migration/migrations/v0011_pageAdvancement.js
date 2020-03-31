@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import PublishPanel from './publish';
-import SlugPanel from './slug';
-import StatusPanel from './status';
-import PageAdvancement from './pageAdvancement';
-
-function DocumentInspector() {
-  return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <SlugPanel />
-      <PageAdvancement />
-    </>
-  );
+function pageAdvancement({ autoAdvance, defaultPageDuration, ...rest }) {
+  return {
+    autoAdvance: typeof autoAdvance !== 'undefined' ? autoAdvance : true,
+    defaultPageDuration:
+      typeof defaultPageDuration === 'number' ? defaultPageDuration : 7,
+    ...rest,
+  };
 }
 
-export default DocumentInspector;
+export default pageAdvancement;

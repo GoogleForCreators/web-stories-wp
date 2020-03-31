@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
@@ -22,8 +27,9 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import { LinkType } from '../components/link';
 import OutputElement from './element';
+import getLongestMediaElement from './utils/getLongestMediaElement';
 
-function OutputPage({ page }) {
+function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, elements, backgroundElementId, backgroundOverlay } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
@@ -70,8 +76,17 @@ function OutputPage({ page }) {
       element.id !== backgroundElementId &&
       element.link?.type === LinkType.ONE_TAP
   );
+  const longestMediaElement = getLongestMediaElement(elements);
+
   return (
-    <amp-story-page id={id}>
+    <amp-story-page
+      id={id}
+      auto-advance-after={
+        autoAdvance
+          ? longestMediaElement?.id || `${defaultPageDuration}s`
+          : undefined
+      }
+    >
       <amp-story-grid-layer template="vertical">
         <div className="page-background-area" style={backgroundStyles}>
           {backgroundFullbleedElements.map((element) => (
@@ -113,6 +128,8 @@ function OutputPage({ page }) {
 
 OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  autoAdvance: PropTypes.bool.isRequired,
+  defaultPageDuration: PropTypes.number,
 };
 
 export default OutputPage;
