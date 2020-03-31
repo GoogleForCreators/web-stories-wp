@@ -24,26 +24,19 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent } from '../shared';
-import { useTransformHandler } from '../../components/transform';
-import { mediaWithScale, getMediaWithScaleCss } from '../media/util';
+import { mediaWithScale } from '../media/util';
 import { getMediaSizePositionProps } from '../media';
-
-const Element = styled.div`
-  ${elementFillContent}
-  overflow: hidden;
-`;
+import MediaDisplay from '../media/display';
 
 const Img = styled.img`
   position: absolute;
   ${mediaWithScale}
 `;
 
-function ImageDisplay({
-  element: { id, resource, scale, focalX, focalY },
-  box: { width, height },
-}) {
-  const imageRef = useRef(null);
+function ImageDisplay({ element, box }) {
+  const { resource, scale, focalX, focalY } = element;
+  const { width, height } = box;
+  const ref = useRef();
 
   const imgProps = getMediaSizePositionProps(
     resource,
@@ -54,35 +47,16 @@ function ImageDisplay({
     focalY
   );
 
-  useTransformHandler(id, (transform) => {
-    const target = imageRef.current;
-    if (transform === null) {
-      target.style.transform = '';
-    } else {
-      const { resize } = transform;
-      if (resize && resize[0] !== 0 && resize[1] !== 0) {
-        const newImgProps = getMediaSizePositionProps(
-          resource,
-          resize[0],
-          resize[1],
-          scale,
-          focalX,
-          focalY
-        );
-        target.style.cssText = getMediaWithScaleCss(newImgProps);
-      }
-    }
-  });
   return (
-    <Element>
+    <MediaDisplay element={element} mediaRef={ref}>
       <Img
-        ref={imageRef}
+        ref={ref}
         draggable={false}
         src={resource.src}
         alt={resource.alt}
         {...imgProps}
       />
-    </Element>
+    </MediaDisplay>
   );
 }
 

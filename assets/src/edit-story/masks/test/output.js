@@ -15,9 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
  * Internal dependencies
  */
 import WithMask from '../output';
+import { MaskTypes } from '../index';
 
 describe('WithMask', () => {
   it('should produce valid AMP output when no mask is set', async () => {
@@ -39,6 +45,84 @@ describe('WithMask', () => {
         <p>{'Hello World'}</p>
       </WithMask>
     ).toBeValidAMPStoryElement();
+  });
+
+  it('should not add mask for background element', async () => {
+    const props = {
+      element: {
+        id: '123',
+        isBackground: true,
+        type: 'image',
+        mimeType: 'image/png',
+        scale: 1,
+        origRatio: 9 / 16,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
+        mask: {
+          type: MaskTypes.HEART,
+          fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          style: {},
+        },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    const content = renderToStaticMarkup(
+      <WithMask {...props}>
+        <p>{'Hello World'}</p>
+      </WithMask>
+    );
+
+    await expect(content).not.toContain(MaskTypes.HEART);
+  });
+
+  it('should add mask for shaped image element', async () => {
+    const props = {
+      element: {
+        id: '123',
+        isBackground: false,
+        type: 'image',
+        mimeType: 'image/png',
+        scale: 1,
+        origRatio: 9 / 16,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
+        mask: {
+          type: MaskTypes.HEART,
+          fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          style: {},
+        },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    const content = renderToStaticMarkup(
+      <WithMask {...props}>
+        <p>{'Hello World'}</p>
+      </WithMask>
+    );
+
+    await expect(content).toContain(MaskTypes.HEART);
   });
 
   // eslint-disable-next-line jest/no-disabled-tests

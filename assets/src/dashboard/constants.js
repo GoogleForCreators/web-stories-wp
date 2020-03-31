@@ -25,6 +25,11 @@ export const BUTTON_TYPES = {
   SECONDARY: 'secondary',
 };
 
+export const CHIP_TYPES = {
+  STANDARD: 'standard',
+  SMALL: 'small',
+};
+
 export const DROPDOWN_TYPES = {
   TRANSPARENT_MENU: 'transparentMenu',
   MENU: 'menu',
@@ -55,9 +60,9 @@ export const paths = [
   { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
-export const storiesFilters = [
-  { label: 'All Stories', value: 'all-stories ' },
-  { label: 'Drafts', value: 'drafts' },
-  { label: 'Active Stories', value: 'active-stories ' },
-  { label: 'My Templates', value: 'my-templates ' },
+export const STORY_STATUSES = [
+  { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
+  { label: __('Drafts', 'web-stories'), value: 'draft' },
+  { label: __('Active Stories', 'web-stories'), value: 'publish' },
+  { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];

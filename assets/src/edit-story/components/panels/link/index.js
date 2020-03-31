@@ -18,6 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,20 +31,33 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row } from '../form';
+import { Media, Row } from '../../form';
 import {
   createLink,
   inferLinkType,
   getLinkFromElement,
   LinkType,
-} from '../link';
-import { useAPI } from '../../app/api';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../utils/url';
-import useBatchingCallback from '../../utils/useBatchingCallback';
-import { SimplePanel } from './panel';
-import { Note, ExpandedTextInput } from './shared';
+} from '../../link';
+import { useAPI } from '../../../app/api';
+import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
+import { SimplePanel } from '../panel';
+import { Note, ExpandedTextInput } from '../shared';
+import Dialog from '../../dialog';
+import theme from '../../../theme';
+import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { Plain } from '../../button';
+import { useCanvas } from '../../canvas';
+import LinkInfoDialog from './dialogContent';
+
+const BrandIconText = styled.span`
+  margin-left: 12px;
+`;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
+  const {
+    actions: { clearEditing },
+  } = useCanvas();
+
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
@@ -102,6 +117,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChange = useCallback(
     (properties, submit) => {
+      clearEditing();
+
       if (properties.url) {
         populateMetadata(properties.url);
       }
@@ -115,7 +132,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
+    [
+      clearEditing,
+      pushUpdateForObject,
+      inferredLinkType,
+      defaultLink,
+      populateMetadata,
+    ]
   );
 
   const handleChangeIcon = useCallback(
@@ -125,11 +148,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
+  // Informational dialog
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+  const openDialog = useCallback(() => setInfoDialogOpen(true), []);
+  const closeDialog = useCallback(() => setInfoDialogOpen(false), []);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
-        <Note>
-          {__('Enter an address to apply a 1 or 2 tap link', 'web-stories')}
+        <Note onClick={() => openDialog()}>
+          {__('Type an address to apply a 1 or 2-tap link', 'web-stories')}
         </Note>
       </Row>
 
@@ -165,9 +193,28 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             loading={fetchingMetadata}
             circle
           />
-          <span>{__('Optional brand icon', 'web-stories')}</span>
+          <BrandIconText>
+            {__('Optional brand icon', 'web-stories')}
+          </BrandIconText>
         </Row>
       )}
+      <Dialog
+        open={infoDialogOpen}
+        onClose={closeDialog}
+        title={__('How to apply a link', 'web-stories')}
+        actions={
+          <Plain onClick={() => closeDialog()}>
+            {__('Ok, got it', 'web-stories')}
+          </Plain>
+        }
+        style={{
+          overlay: {
+            background: rgba(theme.colors.bg.v11, 0.6),
+          },
+        }}
+      >
+        <LinkInfoDialog />
+      </Dialog>
     </SimplePanel>
   );
 }

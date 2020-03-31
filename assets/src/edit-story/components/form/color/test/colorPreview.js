@@ -24,6 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../../theme';
+import createSolid from '../../../../utils/createSolid';
 import SidebarContext from '../../../sidebar/context';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
@@ -40,15 +41,17 @@ function arrange(children = null) {
       hideSidebar: jest.fn(),
     },
   };
-  const { getByRole, getByLabelText } = render(
+  const { getByRole, getByLabelText, queryByLabelText } = render(
     <SidebarContext.Provider value={sidebarContextValue}>
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </SidebarContext.Provider>
   );
-  const button = getByLabelText(/Color/);
+  const button = getByLabelText(/edit/i);
+  const input = queryByLabelText(/enter/i);
   const swatch = getByRole('status');
   return {
     button,
+    input,
     swatch,
     ...sidebarContextValue.actions,
   };
@@ -68,13 +71,41 @@ describe('<ColorPreview />', () => {
   });
 
   it('should render correct style and text', () => {
-    const { button, swatch } = arrange(
-      <ColorPreview onChange={() => {}} label="Color" />
+    const { button, swatch, input } = arrange(
+      <ColorPreview
+        onChange={() => {}}
+        value={createSolid(255, 0, 0)}
+        label="Color"
+      />
     );
 
     expect(button).toBeDefined();
-    expect(button).toHaveAttribute('aria-label', 'Color: FF0000');
-    expect(button).toHaveTextContent('FF0000');
+    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+
+    expect(input).toHaveValue('FF0000');
+
+    expect(swatch).toBeDefined();
+    expect(swatch).toHaveStyle('background-color: red');
+  });
+
+  it('should render one big button if gradient', () => {
+    getPreviewTextMock.mockImplementation(() => {
+      return 'Radial';
+    });
+
+    const { button, swatch, input } = arrange(
+      <ColorPreview
+        onChange={() => {}}
+        value={{ type: 'radial' }}
+        label="Color"
+      />
+    );
+
+    expect(button).toBeDefined();
+    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+    expect(button).toHaveTextContent('Radial');
+
+    expect(input).toBeNull();
 
     expect(swatch).toBeDefined();
     expect(swatch).toHaveStyle('background-color: red');
@@ -93,15 +124,17 @@ describe('<ColorPreview />', () => {
   });
 
   it('should render none if applicable', () => {
-    getPreviewTextMock.mockImplementationOnce(() => {
+    getPreviewTextMock.mockImplementation(() => {
       return null;
     });
 
-    const { button } = arrange(
-      <ColorPreview onChange={() => {}} label="Color" />
+    const { button, input } = arrange(
+      <ColorPreview onChange={() => {}} value={null} label="Color" />
     );
 
     expect(button).toHaveTextContent('None');
+
+    expect(input).toBeNull();
   });
 
   it('should invoke callback with proper arguments when clicked', () => {
@@ -128,5 +161,69 @@ describe('<ColorPreview />', () => {
       hasOpacity: false,
       onClose: hideSidebar,
     });
+  });
+
+  it('should invoke callback correctly if multiple', () => {
+    const onChange = jest.fn();
+    const onClose = jest.fn();
+    const { button, showColorPickerAt, hideSidebar } = arrange(
+      <ColorPreview
+        onChange={onChange}
+        value={MULTIPLE_VALUE}
+        hasGradient
+        onClose={onClose}
+        label="Color"
+      />
+    );
+
+    fireEvent.click(button);
+
+    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
+      color: null,
+      onChange,
+      hasGradient: true,
+      hasOpacity: true,
+      onClose: hideSidebar,
+    });
+  });
+
+  it('should invoke onChange when inputting valid hex', () => {
+    const onChange = jest.fn();
+    const value = createSolid(255, 0, 0);
+    const { input } = arrange(
+      <ColorPreview onChange={onChange} value={value} label="Color" />
+    );
+
+    // Only 5 digits can't be valid
+    fireEvent.change(input, { target: { value: '0FF00' } });
+    expect(onChange).not.toHaveBeenCalled();
+
+    // Non-hex can't be valid
+    fireEvent.change(input, { target: { value: 'COFFEE' } });
+    expect(onChange).not.toHaveBeenCalled();
+
+    // Exactly 6 hex digits is good
+    fireEvent.change(input, { target: { value: '00FF00' } });
+    expect(onChange).toHaveBeenCalledWith(createSolid(0, 255, 0));
+
+    // Also validate that it'll ignore the first #
+    fireEvent.change(input, { target: { value: '#0000FF' } });
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255));
+  });
+
+  it('should revert to last known value when blurring invalid input', () => {
+    const onChange = jest.fn();
+    const value = createSolid(255, 0, 0);
+    const { input } = arrange(
+      <ColorPreview onChange={onChange} value={value} label="Color" />
+    );
+
+    // Only 5 digits can't be valid
+    fireEvent.change(input, { target: { value: '0FF00' } });
+    fireEvent.blur(input);
+    expect(onChange).not.toHaveBeenCalled();
+
+    expect(input).toHaveValue('FF0000');
   });
 });

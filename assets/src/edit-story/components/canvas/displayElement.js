@@ -108,7 +108,7 @@ function DisplayElement({ element, previewMode }) {
   });
 
   return (
-    <Wrapper ref={wrapperRef} {...box}>
+    <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <WithMask
         element={element}
         fill={true}
@@ -116,6 +116,7 @@ function DisplayElement({ element, previewMode }) {
         style={{
           opacity: opacity ? opacity / 100 : null,
         }}
+        previewMode={previewMode}
       >
         <Display element={element} previewMode={previewMode} box={box} />
         {!previewMode && (

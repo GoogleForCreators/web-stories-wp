@@ -18,77 +18,91 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment, useContext, useEffect } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import useLiveRegion from '../../../utils/useLiveRegion';
+import {
+  Reorderable,
+  ReorderableSeparator,
+  ReorderableScroller,
+  ReorderableItem,
+} from '../../reorderable';
+import { useStory } from '../../../app';
+import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
-import LayerContext from './context';
-import LayerSeparator from './separator';
-import LayerScroller from './scroller';
 
-const REORDER_MESSAGE = __(
-  /* translators: d: new layer position. */
-  'Reordering layers. Press Escape to abort. Release mouse to drop in position %d.',
-  'web-stories'
-);
-
-const LayerList = styled.div.attrs({ role: 'listbox' })`
-  display: flex;
+const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
   flex-direction: column;
   width: 100%;
   align-items: stretch;
   user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
 `;
 
-function LayerPanel() {
+const LayerSeparator = styled(ReorderableSeparator)`
+  height: ${LAYER_HEIGHT}px;
+  margin: -${LAYER_HEIGHT / 2}px 0;
+  padding: ${LAYER_HEIGHT / 2}px 0;
+`;
+
+const LayerScroller = styled(ReorderableScroller)`
+  height: ${LAYER_HEIGHT}px;
+  ${({ direction }) =>
+    direction === -1
+      ? `
+    top: 0px;
+    margin-bottom: -${LAYER_HEIGHT}px`
+      : `
+    bottom: 0px;
+    margin-top: -${LAYER_HEIGHT}px;`}
+`;
+
+function LayerPanel({ layers }) {
   const {
-    state: {
-      layers,
-      isReordering,
-      currentSeparator,
-      canScrollUp,
-      canScrollDown,
-    },
-    actions: { setScrollTarget },
-  } = useContext(LayerContext);
-  const speak = useLiveRegion('assertive');
+    actions: { arrangeElement, setSelectedElementsById },
+  } = useStory();
 
   const numLayers = layers && layers.length;
-
-  useEffect(() => {
-    if (isReordering && currentSeparator) {
-      const position = numLayers - currentSeparator;
-      const message = sprintf(REORDER_MESSAGE, position);
-      speak(message);
-    }
-  }, [isReordering, currentSeparator, numLayers, speak]);
 
   if (!numLayers) {
     return null;
   }
 
   return (
-    <LayerList ref={setScrollTarget} hasUserSelect={!isReordering}>
-      {canScrollUp && <LayerScroller direction={-1} />}
+    <LayerList
+      onPositionChange={(oldPos, newPos) =>
+        arrangeElement({
+          elementId: layers.find((layer) => layer.position === oldPos).id,
+          position: newPos,
+        })
+      }
+    >
+      <LayerScroller direction={-1} />
 
       {layers.map((layer) => (
         <Fragment key={layer.id}>
-          {isReordering && <LayerSeparator position={layer.position + 1} />}
-          <Layer layer={layer} />
+          <LayerSeparator position={layer.position + 1} />
+          <ReorderableItem
+            position={layer.position}
+            onStartReordering={() =>
+              setSelectedElementsById({ elementIds: [layer.id] })
+            }
+            disabled={layer.type === 'background'}
+          >
+            <Layer layer={layer} />
+          </ReorderableItem>
         </Fragment>
       ))}
 
-      {canScrollDown && <LayerScroller direction={1} />}
+      <LayerScroller direction={1} />
     </LayerList>
   );
 }
+
+LayerPanel.propTypes = {
+  layers: PropTypes.array.isRequired,
+};
 
 export default LayerPanel;

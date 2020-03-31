@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useState, useRef, useMemo } from 'react';
@@ -30,18 +31,7 @@ import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
   width: 100%;
-  object-fit: contain;
   transition: 0.2s transform, 0.15s opacity;
-  ${({ dragging }) =>
-    dragging
-      ? `
-    transform: scale(0);
-    opacity: 0;
-  `
-      : `
-    transform: scale(1);
-    opacity: 1;
-  `}
 `;
 
 const Image = styled.img`
@@ -54,10 +44,10 @@ const Video = styled.video`
 `;
 
 const Container = styled.div`
-  width: 100%;
   position: relative;
-  margin-bottom: 10px;
+  display: flex;
 `;
+
 const PlayIcon = styled(Play)`
   height: 24px;
   position: absolute;
@@ -77,6 +67,40 @@ const Duration = styled.div`
   padding: 2px 8px;
   border-radius: 8px;
 `;
+
+const gradientAnimation = keyframes`
+    0% { background-position:0% 50% }
+    50% { background-position:100% 50% }
+    100% { background-position:0% 50% }
+`;
+
+const UploadingIndicator = styled.div`
+  height: 4px;
+  background: linear-gradient(
+    270deg,
+    ${({ theme }) => theme.colors.loading.primary} 15%,
+    ${({ theme }) => theme.colors.loading.secondary} 50%,
+    ${({ theme }) => theme.colors.loading.primary} 85%
+  );
+  background-size: 400% 400%;
+  position: absolute;
+  bottom: 10px;
+
+  animation: ${gradientAnimation} 4s ease infinite;
+
+  &.uploading-indicator {
+    &.appear {
+      width: 0;
+    }
+
+    &.appear-done {
+      width: 100%;
+      transition: 1s ease-out;
+      transition-property: width;
+    }
+  }
+`;
+
 /**
  * Get a formatted element for different media types.
  *
@@ -92,7 +116,13 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
-  const { src, type, width: originalWidth, height: originalHeight } = resource;
+  const {
+    src,
+    type,
+    width: originalWidth,
+    height: originalHeight,
+    local,
+  } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -100,7 +130,6 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [dragging, setDragging] = useState(false);
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -113,7 +142,6 @@ const MediaElement = ({
     () => ({
       draggable: 'true',
       onDragStart: (e) => {
-        setDragging(true);
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -132,7 +160,6 @@ const MediaElement = ({
       },
       onDragEnd: (e) => {
         e.preventDefault();
-        setDragging(false);
         setDraggingResource(null);
         handleDrop(resource);
       },
@@ -144,17 +171,28 @@ const MediaElement = ({
 
   if (type === 'image') {
     return (
-      <Image
-        key={src}
-        src={src}
-        ref={mediaElement}
-        width={width}
-        height={height}
-        loading={'lazy'}
-        onClick={onClick}
-        dragging={dragging}
-        {...dropTargetsBindings}
-      />
+      <Container>
+        <Image
+          key={src}
+          src={src}
+          ref={mediaElement}
+          width={width}
+          height={height}
+          loading={'lazy'}
+          onClick={onClick}
+          {...dropTargetsBindings}
+        />
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+      </Container>
     );
   }
 
@@ -186,7 +224,6 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        dragging={dragging}
         preload="metadata"
         {...dropTargetsBindings}
       >
@@ -194,6 +231,16 @@ const MediaElement = ({
       </Video>
       {showVideoDetail && <PlayIcon />}
       {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      {local && (
+        <CSSTransition
+          in
+          appear={true}
+          timeout={0}
+          className="uploading-indicator"
+        >
+          <UploadingIndicator />
+        </CSSTransition>
+      )}
     </Container>
   );
 };

@@ -35,10 +35,11 @@ import {
   UploadDropTargetMessageOverlay,
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
-import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
+import { useMedia } from '../../app/media';
+import { useStory } from '../../app/story';
+import useInsertElement from '../canvas/useInsertElement';
+
 import { Layer as CanvasLayer, PageArea } from './layout';
-import useInsertElement from './useInsertElement';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
@@ -48,20 +49,54 @@ const PageAreaCover = styled(PageArea)`
 `;
 
 function CanvasUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadMedia },
+  } = useMedia();
   const insertElement = useInsertElement();
-  const onDropHandler = useCallback(
-    (files) => {
-      files.forEach((file) => {
-        uploadFile(file).then((res) => {
-          const resource = getResourceFromUploadAPI(res);
-          insertElement(resource.type, { resource });
-        });
+  const {
+    actions: { updateElementById, deleteElementById },
+  } = useStory();
+
+  const onLocalFile = useCallback(
+    ({ resource }) => {
+      const element = insertElement(resource.type, {
+        resource,
+      });
+
+      return element;
+    },
+    [insertElement]
+  );
+  const onUploadedFile = useCallback(
+    ({ resource, element }) => {
+      updateElementById({
+        elementId: element.id,
+        properties: {
+          resource,
+          type: element.resource.type,
+        },
       });
     },
-    [insertElement, uploadFile]
+    [updateElementById]
   );
 
+  const onUploadFailure = useCallback(
+    ({ element }) => {
+      deleteElementById({ elementId: element.id });
+    },
+    [deleteElementById]
+  );
+
+  const onDropHandler = useCallback(
+    (files) => {
+      uploadMedia(files, {
+        onLocalFile,
+        onUploadedFile,
+        onUploadFailure,
+      });
+    },
+    [uploadMedia, onLocalFile, onUploadedFile, onUploadFailure]
+  );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
