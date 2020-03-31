@@ -55,6 +55,7 @@ function MultiSelectionMovable({ selectedElements }) {
 
   const [isDragging, setIsDragging] = useState(false);
   const [canSnap, setCanSnap] = useState(true);
+  const [throttleRotation, setThrottleRotation] = useState(false);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -67,6 +68,14 @@ function MultiSelectionMovable({ selectedElements }) {
   // ⌘ key disables snapping
   useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
   useGlobalKeyUpEffect('meta', () => setCanSnap(true), [setCanSnap]);
+
+  // ⇧ key rotates the element 30 degrees at a time
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true), [
+    setThrottleRotation,
+  ]);
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false), [
+    setThrottleRotation,
+  ]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
@@ -211,6 +220,7 @@ function MultiSelectionMovable({ selectedElements }) {
       onRotateGroupEnd={({ targets }) => {
         onGroupEventEnd({ targets, isRotate: true });
       }}
+      throttleRotate={throttleRotation ? 30 : 0}
       onResizeGroupStart={({ events }) => {
         events.forEach((ev, i) => {
           const frame = frames[i];
