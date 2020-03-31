@@ -39,6 +39,7 @@ import {
   LinkType,
 } from '../../link';
 import { useAPI } from '../../../app/api';
+import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
@@ -78,6 +79,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -99,15 +101,33 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     if (!isValidUrl(urlWithProtocol)) {
       return;
     }
+    const invalidLinkMessage = __('This is an invalid link!', 'web-stories');
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
+        if (title && image) {
+          return updateLinkFromMetadataApi({
+            url: urlWithProtocol,
+            title,
+            icon: image,
+          });
+        }
+
+        // This is necessary since the API is returning empty image/title fields sometimes.
+        const invalidLinkError = new Error(invalidLinkMessage);
+        invalidLinkError.code = 'invalid_url';
+        throw invalidLinkError;
       })
       .catch((reason) => {
-        if (reason?.code === 'rest_invalid_url') {
-          return;
+        if (
+          reason?.code === 'rest_invalid_url' ||
+          reason?.code === 'invalid_url'
+        ) {
+          showSnackbar({
+            message: invalidLinkMessage,
+          });
         }
+
         throw reason;
       })
       .finally(() => {
