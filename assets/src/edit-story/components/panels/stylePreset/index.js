@@ -87,7 +87,6 @@ const colorCSS = css`
 
 const BackgroundColor = styled.button`
   ${colorCSS}
-  color: ${({ theme }) => theme.colors.fg.v1};
   background: ${({ backgroundColor, backgroundImage }) =>
     backgroundColor ? backgroundColor : backgroundImage};
 `;
@@ -102,6 +101,14 @@ const Colors = styled.div`
 const ButtonWrapper = styled.div`
   flex-basis: 16%;
   height: 35px;
+`;
+
+const ColorGroupLabel = styled.div`
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-size: 10px;
+  line-height: 12px;
+  text-transform: uppercase;
+  padding: 6px 0;
 `;
 
 function StylePresetPanel() {
@@ -143,30 +150,34 @@ function StylePresetPanel() {
     [colors, isText, stylePresets, textColors, updateStory]
   );
 
-  const handleAddColorPreset = useCallback(() => {
-    let addedColors = [];
-    let addedTextColors = [];
-    if (isText) {
-      addedTextColors = selectedElements.map(({ color }) => color);
-    } else {
-      addedColors = selectedElements
-        .map(({ backgroundColor }) => {
-          return backgroundColor ? backgroundColor : null;
-        })
-        .filter((color) => color);
-    }
-    if (addedColors.length > 0 || addedTextColors.length > 0) {
-      updateStory({
-        properties: {
-          stylePresets: {
-            ...stylePresets,
-            colors: [...colors, ...addedColors],
-            textColors: [...textColors, ...addedTextColors],
+  const handleAddColorPreset = useCallback(
+    (evt) => {
+      evt.stopPropagation();
+      let addedColors = [];
+      let addedTextColors = [];
+      if (isText) {
+        addedTextColors = selectedElements.map(({ color }) => color);
+      } else {
+        addedColors = selectedElements
+          .map(({ backgroundColor }) => {
+            return backgroundColor ? backgroundColor : null;
+          })
+          .filter((color) => color);
+      }
+      if (addedColors.length > 0 || addedTextColors.length > 0) {
+        updateStory({
+          properties: {
+            stylePresets: {
+              ...stylePresets,
+              colors: [...colors, ...addedColors],
+              textColors: [...textColors, ...addedTextColors],
+            },
           },
-        },
-      });
-    }
-  }, [isText, selectedElements, updateStory, stylePresets, colors, textColors]);
+        });
+      }
+    },
+    [isText, selectedElements, updateStory, stylePresets, colors, textColors]
+  );
 
   const handleApplyColor = useCallback(
     (color) => {
@@ -194,17 +205,25 @@ function StylePresetPanel() {
     [isText, selectedElementIds, updateElementsById]
   );
 
+  const colorPresets = isText ? textColors : colors;
+  const groupLabel = isText
+    ? __('Text colors', 'web-stories')
+    : __('Colors', 'web-stories');
+  const hasColorPresets = colorPresets.length > 0;
+
   const getSecondaryActions = () => {
     return !isEditMode ? (
       <>
-        <EditModeButton
-          onClick={(evt) => {
-            evt.stopPropagation();
-            setIsEditMode(true);
-          }}
-        >
-          <Edit />
-        </EditModeButton>
+        {hasColorPresets && (
+          <EditModeButton
+            onClick={(evt) => {
+              evt.stopPropagation();
+              setIsEditMode(true);
+            }}
+          >
+            <Edit />
+          </EditModeButton>
+        )}
         <AddColorPresetButton ref={ref} onClick={handleAddColorPreset}>
           <Add />
         </AddColorPresetButton>
@@ -221,19 +240,18 @@ function StylePresetPanel() {
     );
   };
 
-  const colorPresets = isText ? textColors : colors;
-
   return (
     <Panel name="stylepreset">
       <PanelTitle
         isPrimary
         secondaryAction={getSecondaryActions()}
-        canCollapse={!isEditMode}
+        canCollapse={!isEditMode && hasColorPresets}
       >
         {__('Style presets', 'web-stories')}
       </PanelTitle>
-      {colorPresets && (
+      {hasColorPresets && (
         <PanelContent isPrimary>
+          <ColorGroupLabel>{groupLabel}</ColorGroupLabel>
           <Colors>
             {colorPresets.map((color, i) => {
               return (

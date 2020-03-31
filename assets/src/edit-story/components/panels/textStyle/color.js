@@ -57,7 +57,6 @@ function ColorControls({ selectedElements, pushUpdate }) {
           value={backgroundColor}
           onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
-          colorPickerActions={getColorPickerActions}
         />
       </Row>
     </>
