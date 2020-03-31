@@ -43,6 +43,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   const [snapDisabled, setSnapDisabled] = useState(false);
+  const [throttleRotation, setThrottleRotation] = useState(false);
 
   const {
     actions: { updateSelectedElements },
@@ -100,10 +101,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   });
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true), [
-    setSnapDisabled,
-  ]);
-  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false), [setSnapDisabled]);
+  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true));
+  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false));
+
+  // ⇧ key rotates the element 30 degrees at a time
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
 
   const box = getBox(selectedElement);
   const frame = {
@@ -284,6 +287,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         updateSelectedElements({ properties });
         resetMoveable(target);
       }}
+      throttleRotate={throttleRotation ? 30 : 0}
       origin={false}
       pinchable={true}
       keepRatio={isResizingFromCorner}
