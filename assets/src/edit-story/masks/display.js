@@ -80,7 +80,7 @@ export default function WithMask({
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        clipPath: `url(#${maskId})`,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
     >

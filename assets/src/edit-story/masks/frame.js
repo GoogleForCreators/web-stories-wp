@@ -156,7 +156,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        clipPath: `url(#${maskId})`,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
       onPointerOver={() => setHover(true)}
