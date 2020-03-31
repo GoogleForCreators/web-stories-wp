@@ -86,13 +86,13 @@ function ShapesPane(props) {
                     },
                   });
                 }}
-                alt={mask.name}
               >
                 <svg
                   viewBox={`0 0 1 ${1 / mask.ratio}`}
                   width={PREVIEW_SIZE * mask.ratio}
                   height={PREVIEW_SIZE}
                 >
+                  <title>{mask.name}</title>
                   <Path d={mask.path} />
                 </svg>
               </ShapePreview>
