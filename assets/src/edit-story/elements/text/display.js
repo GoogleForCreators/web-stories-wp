@@ -111,9 +111,9 @@ function TextDisplay({
     color,
     backgroundColor,
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalPadding: dataToEditorX(rest.padding.horizontal),
     horizontalBuffer: dataToEditorX(HIGHLIGHT_MARGIN_BUFFER),
-    verticalPadding: dataToEditorX(rest.padding.vertical),
+    horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
+    verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
   const {
     actions: { maybeEnqueueFontStyle },
