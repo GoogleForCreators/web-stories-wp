@@ -280,36 +280,38 @@ function StylePresetPanel() {
       >
         {__('Style presets', 'web-stories')}
       </PanelTitle>
-      {hasColorPresets && (
-        <PanelContent isPrimary>
-          <ColorGroupLabel>{groupLabel}</ColorGroupLabel>
-          <Colors>
-            {colorPresets.map((color, i) => {
-              return (
-                <ButtonWrapper key={`color-${i}`}>
-                  <Color
-                    {...generatePatternStyles(color)}
-                    onClick={() => {
-                      if (isEditMode) {
-                        handleDeleteColor(color);
-                      } else {
-                        handleApplyColor(color);
+      <PanelContent isPrimary padding={hasColorPresets ? null : '0'}>
+        {hasColorPresets && (
+          <>
+            <ColorGroupLabel>{groupLabel}</ColorGroupLabel>
+            <Colors>
+              {colorPresets.map((color, i) => {
+                return (
+                  <ButtonWrapper key={`color-${i}`}>
+                    <Color
+                      {...generatePatternStyles(color)}
+                      onClick={() => {
+                        if (isEditMode) {
+                          handleDeleteColor(color);
+                        } else {
+                          handleApplyColor(color);
+                        }
+                      }}
+                      aria-label={
+                        isEditMode
+                          ? __('Delete preset', 'web-stories')
+                          : __('Apply preset', 'web-stories')
                       }
-                    }}
-                    aria-label={
-                      isEditMode
-                        ? __('Delete preset', 'web-stories')
-                        : __('Apply preset', 'web-stories')
-                    }
-                  >
-                    {isEditMode && <Remove />}
-                  </Color>
-                </ButtonWrapper>
-              );
-            })}
-          </Colors>
-        </PanelContent>
-      )}
+                    >
+                      {isEditMode && <Remove />}
+                    </Color>
+                  </ButtonWrapper>
+                );
+              })}
+            </Colors>
+          </>
+        )}
+      </PanelContent>
     </Panel>
   );
 }
