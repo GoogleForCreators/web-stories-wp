@@ -37,7 +37,8 @@ import MULTIPLE_VALUE from './multipleValue';
 const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`
-  width: 100%;
+  flex: 1 1 auto;
+  width: 0;
   border: none;
   padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
@@ -91,47 +92,45 @@ function Numeric({
     >
       {label}
       {prefix}
-      <div>
-        <StyledInput
-          ref={ref}
-          placeholder={placeholder}
-          prefix={prefix}
-          suffix={suffix}
-          label={label}
-          value={
-            isMultiple
-              ? ''
-              : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+      <StyledInput
+        ref={ref}
+        placeholder={placeholder}
+        prefix={prefix}
+        suffix={suffix}
+        label={label}
+        value={
+          isMultiple
+            ? ''
+            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+        }
+        aria-label={ariaLabel}
+        disabled={disabled}
+        {...rest}
+        onChange={(evt) => {
+          const newValue = evt.target.value;
+          if (newValue === '') {
+            onChange('', evt);
+          } else {
+            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
+            const valueAsNumber = float
+              ? parseFloat(newValue)
+              : parseInt(newValue);
+            if (!isNaN(valueAsNumber)) {
+              onChange(valueAsNumber, evt);
+            }
           }
-          aria-label={ariaLabel}
-          disabled={disabled}
-          {...rest}
-          onChange={(evt) => {
-            const newValue = evt.target.value;
-            if (newValue === '') {
-              onChange('', evt);
-            } else {
-              setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
-              const valueAsNumber = float
-                ? parseFloat(newValue)
-                : parseInt(newValue);
-              if (!isNaN(valueAsNumber)) {
-                onChange(valueAsNumber, evt);
-              }
-            }
-          }}
-          onBlur={(evt) => {
-            if (evt.target.form) {
-              evt.target.form.dispatchEvent(new window.Event('submit'));
-            }
-            if (onBlur) {
-              onBlur();
-            }
-            handleBlur();
-          }}
-          onFocus={handleFocus}
-        />
-      </div>
+        }}
+        onBlur={(evt) => {
+          if (evt.target.form) {
+            evt.target.form.dispatchEvent(new window.Event('submit'));
+          }
+          if (onBlur) {
+            onBlur();
+          }
+          handleBlur();
+        }}
+        onFocus={handleFocus}
+      />
       {suffix}
     </Container>
   );
