@@ -21,11 +21,17 @@ import { useCallback, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
+import { useSnackbar } from '../../snackbar';
 import OutputStory from '../../../output/story';
 
 /**
@@ -56,6 +62,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     actions: { saveStoryById },
   } = useAPI();
   const { metadata } = useConfig();
+  const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
 
   /**
@@ -75,8 +82,11 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     );
   }, []);
 
+  const titleFormatted = useCallback((rawTitle) => {
+    return rawTitle === __('Auto Draft', 'web-stories') ? '' : rawTitle;
+  }, []);
+
   const saveStory = useCallback(() => {
-    setIsSaving(true);
     const {
       title,
       status,
@@ -90,6 +100,16 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       publisherLogo,
     } = story;
 
+    const formattedTitle = titleFormatted(title);
+
+    if (!formattedTitle || formattedTitle === '') {
+      showSnackbar({
+        message: __('Title is required to save story', 'web-stories'),
+      });
+      return;
+    }
+
+    setIsSaving(true);
     const content = getStoryMarkup(story, pages, metadata);
     saveStoryById({
       storyId,
@@ -132,10 +152,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       });
   }, [
     story,
+    titleFormatted,
     pages,
     metadata,
     saveStoryById,
     storyId,
+    showSnackbar,
     updateStory,
     refreshPostEditURL,
   ]);
