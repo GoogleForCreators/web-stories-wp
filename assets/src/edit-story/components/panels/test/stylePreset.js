@@ -67,6 +67,15 @@ function setupPanel(extraStylePresets, extraStateProps) {
 }
 
 describe('Panels/StylePreset', () => {
+  const EDIT_BUTTON_LABEL = 'Edit presets';
+  const TEST_COLOR = {
+    color: {
+      r: 1,
+      g: 1,
+      b: 1,
+    },
+  };
+
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText('Style presets');
@@ -78,24 +87,16 @@ describe('Panels/StylePreset', () => {
     const addButton = queryByLabelText('Add preset');
     expect(addButton).toBeDefined();
 
-    const editButton = queryByLabelText('Edit presets');
+    const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
     expect(editButton).toBeNull();
   });
 
   it('should have functional Edit button if relevant presets exist', () => {
     const extraStylePresets = {
-      textColors: [
-        {
-          color: {
-            r: 1,
-            g: 1,
-            b: 1,
-          },
-        },
-      ],
+      textColors: [TEST_COLOR],
     };
     const { getByLabelText } = setupPanel(extraStylePresets);
-    const editButton = getByLabelText('Edit presets');
+    const editButton = getByLabelText(EDIT_BUTTON_LABEL);
     expect(editButton).toBeDefined();
 
     fireEvent.click(editButton);
@@ -105,15 +106,7 @@ describe('Panels/StylePreset', () => {
 
   it('should display correct label for Text colors', () => {
     const extraStylePresets = {
-      textColors: [
-        {
-          color: {
-            r: 1,
-            g: 1,
-            b: 1,
-          },
-        },
-      ],
+      textColors: [TEST_COLOR],
     };
     const { getByText } = setupPanel(extraStylePresets);
     const groupLabel = getByText('Text colors');
@@ -122,15 +115,7 @@ describe('Panels/StylePreset', () => {
 
   it('should display correct label for Colors', () => {
     const extraStylePresets = {
-      colors: [
-        {
-          color: {
-            r: 1,
-            g: 1,
-            b: 1,
-          },
-        },
-      ],
+      colors: [TEST_COLOR],
     };
     const extraStateProps = {
       selectedElements: [
@@ -149,5 +134,73 @@ describe('Panels/StylePreset', () => {
 
     const textColorGroupLabel = queryByText('Text colors');
     expect(textColorGroupLabel).toBeNull();
+  });
+
+  it('should allow deleting the relevant preset', () => {
+    const extraStylePresets = {
+      textColors: [TEST_COLOR],
+      colors: [TEST_COLOR],
+    };
+    const { getByLabelText, updateStory } = setupPanel(extraStylePresets);
+    const editButton = getByLabelText(EDIT_BUTTON_LABEL);
+    fireEvent.click(editButton);
+
+    const deletePreset = getByLabelText('Delete preset');
+    expect(deletePreset).toBeDefined();
+
+    fireEvent.click(deletePreset);
+    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(updateStory).toHaveBeenCalledWith({
+      properties: { stylePresets: { colors: [TEST_COLOR], textColors: [] } },
+    });
+  });
+
+  it('should allow applying presets for shapes', () => {
+    const extraStylePresets = {
+      colors: [TEST_COLOR],
+    };
+    const extraStateProps = {
+      selectedElements: [
+        {
+          id: '1',
+          type: 'shape',
+        },
+      ],
+    };
+    const { getByLabelText, updateElementsById } = setupPanel(
+      extraStylePresets,
+      extraStateProps
+    );
+
+    const applyPreset = getByLabelText('Apply preset');
+    expect(applyPreset).toBeDefined();
+
+    fireEvent.click(applyPreset);
+    expect(updateElementsById).toHaveBeenCalledTimes(1);
+    expect(updateElementsById).toHaveBeenCalledWith({
+      elementIds: ['1'],
+      properties: expect.any(Function),
+    });
+  });
+
+  it('should allow applying presets for text', () => {
+    const extraStylePresets = {
+      textColors: [TEST_COLOR],
+    };
+    const { getByLabelText, updateElementsById } = setupPanel(
+      extraStylePresets
+    );
+
+    const applyPreset = getByLabelText('Apply preset');
+    expect(applyPreset).toBeDefined();
+
+    fireEvent.click(applyPreset);
+    expect(updateElementsById).toHaveBeenCalledTimes(1);
+    expect(updateElementsById).toHaveBeenCalledWith({
+      elementIds: ['1'],
+      properties: {
+        color: TEST_COLOR,
+      },
+    });
   });
 });
