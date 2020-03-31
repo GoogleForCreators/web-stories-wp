@@ -101,18 +101,12 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   });
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true), [
-    setSnapDisabled,
-  ]);
-  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false), [setSnapDisabled]);
+  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true));
+  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false));
 
   // ⇧ key rotates the element 30 degrees at a time
-  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true), [
-    setThrottleRotation,
-  ]);
-  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false), [
-    setThrottleRotation,
-  ]);
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
 
   const box = getBox(selectedElement);
   const frame = {

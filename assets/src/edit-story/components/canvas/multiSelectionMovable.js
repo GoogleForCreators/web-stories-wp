@@ -66,16 +66,12 @@ function MultiSelectionMovable({ selectedElements }) {
   }, [selectedElements, moveable, nodesById]);
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
-  useGlobalKeyUpEffect('meta', () => setCanSnap(true), [setCanSnap]);
+  useGlobalKeyDownEffect('meta', () => setCanSnap(false));
+  useGlobalKeyUpEffect('meta', () => setCanSnap(true));
 
   // ⇧ key rotates the element 30 degrees at a time
-  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true), [
-    setThrottleRotation,
-  ]);
-  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false), [
-    setThrottleRotation,
-  ]);
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
