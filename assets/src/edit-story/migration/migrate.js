@@ -28,7 +28,8 @@ import setFlip from './migrations/v0007_setFlip';
 import paddingToObject from './migrations/v0008_paddingToObject';
 import defaultBackground from './migrations/v0009_defaultBackground';
 import dataPixelTo440 from './migrations/v0010_dataPixelTo440';
-import setBackgroundTextMode from './migrations/v0011_setBackgroundTextMode';
+import pageAdvancement from './migrations/v0011_pageAdvancement';
+import setBackgroundTextMode from './migrations/v0012_setBackgroundTextMode';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -41,7 +42,8 @@ const MIGRATIONS = {
   8: [paddingToObject],
   9: [defaultBackground],
   10: [dataPixelTo440],
-  11: [setBackgroundTextMode],
+  11: [pageAdvancement],
+  12: [setBackgroundTextMode],
 };
 
 export const DATA_VERSION = Math.max.apply(
