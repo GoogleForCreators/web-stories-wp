@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -27,31 +27,29 @@ import theme from '../../../theme';
 import StylePresetPanel from '../stylePreset';
 import StoryContext from '../../../app/story/context';
 
-function setupPanel(extraStateProps) {
+function setupPanel(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
   const updateElementsById = jest.fn();
 
   const textElement = {
     id: '1',
     type: 'text',
-    x: 111,
-    y: 112,
-    width: 211,
-    height: 221,
-    rotationAngle: 1,
   };
   const storyContextValue = {
     state: {
       selectedElementIds: ['1'],
       selectedElements: [textElement],
-      story: {
-        stylePresets: { colors: [], textColors: [] },
-      },
       ...extraStateProps,
+      story: {
+        stylePresets: {
+          ...{ colors: [], textColors: [] },
+          ...extraStylePresets,
+        },
+      },
     },
     actions: { updateStory, updateElementsById },
   };
-  const { getByText } = render(
+  const { getByText, queryByLabelText, getByLabelText, queryByText } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <StylePresetPanel />
@@ -60,6 +58,9 @@ function setupPanel(extraStateProps) {
   );
   return {
     getByText,
+    queryByText,
+    getByLabelText,
+    queryByLabelText,
     updateStory,
     updateElementsById,
   };
@@ -70,5 +71,83 @@ describe('Panels/StylePreset', () => {
     const { getByText } = setupPanel();
     const element = getByText('Style presets');
     expect(element).toBeDefined();
+  });
+
+  it('should display only Add button if no presets exist', () => {
+    const { queryByLabelText } = setupPanel();
+    const addButton = queryByLabelText('Add preset');
+    expect(addButton).toBeDefined();
+
+    const editButton = queryByLabelText('Edit presets');
+    expect(editButton).toBeNull();
+  });
+
+  it('should have functional Edit button if relevant presets exist', () => {
+    const extraStylePresets = {
+      textColors: [
+        {
+          color: {
+            r: 1,
+            g: 1,
+            b: 1,
+          },
+        },
+      ],
+    };
+    const { getByLabelText } = setupPanel(extraStylePresets);
+    const editButton = getByLabelText('Edit presets');
+    expect(editButton).toBeDefined();
+
+    fireEvent.click(editButton);
+    const exitEditModeButton = getByLabelText('Exit edit mode');
+    expect(exitEditModeButton).toBeDefined();
+  });
+
+  it('should display correct label for Text colors', () => {
+    const extraStylePresets = {
+      textColors: [
+        {
+          color: {
+            r: 1,
+            g: 1,
+            b: 1,
+          },
+        },
+      ],
+    };
+    const { getByText } = setupPanel(extraStylePresets);
+    const groupLabel = getByText('Text colors');
+    expect(groupLabel).toBeDefined();
+  });
+
+  it('should display correct label for Colors', () => {
+    const extraStylePresets = {
+      colors: [
+        {
+          color: {
+            r: 1,
+            g: 1,
+            b: 1,
+          },
+        },
+      ],
+    };
+    const extraStateProps = {
+      selectedElements: [
+        {
+          id: '1',
+          type: 'shape',
+        },
+      ],
+    };
+    const { getByText, queryByText } = setupPanel(
+      extraStylePresets,
+      extraStateProps
+    );
+    const groupLabel = getByText('Colors');
+    expect(groupLabel).toBeDefined();
+
+    const textColorGroupLabel = queryByText('Text colors');
+    expect(textColorGroupLabel).toBeNull();
   });
 });

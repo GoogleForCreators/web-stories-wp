@@ -235,7 +235,7 @@ function StylePresetPanel() {
               evt.stopPropagation();
               setIsEditMode(true);
             }}
-            aria-label={__('Enter preset edit mode', 'web-stories')}
+            aria-label={__('Edit presets', 'web-stories')}
           >
             <Edit />
           </EditModeButton>
@@ -253,7 +253,7 @@ function StylePresetPanel() {
           evt.stopPropagation();
           setIsEditMode(false);
         }}
-        aria-label={__('Exit preset edit mode', 'web-stories')}
+        aria-label={__('Exit edit mode', 'web-stories')}
       >
         {__('Exit', 'web-stories')}
       </ExitEditMode>
