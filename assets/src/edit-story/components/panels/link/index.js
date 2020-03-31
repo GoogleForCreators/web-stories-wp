@@ -25,7 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { useCallback, useMemo, useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -101,7 +101,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     if (!isValidUrl(urlWithProtocol)) {
       return;
     }
-    const invalidLinkMessage = __('This is an invalid link!', 'web-stories');
+    const invalidLinkMessage = __(
+      'The following is not a valid link: %s',
+      'web-stories'
+    );
+
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
@@ -124,7 +128,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           reason?.code === 'invalid_url'
         ) {
           showSnackbar({
-            message: invalidLinkMessage,
+            message: sprintf(invalidLinkMessage, url),
           });
         }
 
