@@ -14,24 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import { Tab } from '../shared';
-import { ReactComponent as ShapesIcon } from '../../../../icons/shapes.svg';
-import paneId from './paneId';
-
-function ShapesTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <ShapesIcon aria-label={__('Shapes library', 'web-stories')} />
-    </Tab>
-  );
-}
-
-export default ShapesTab;
+export { default as SnackbarProvider } from './snackbarProvider';
+export { default as useSnackbar } from './useSnackbar';

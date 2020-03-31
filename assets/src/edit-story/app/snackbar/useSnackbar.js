@@ -15,23 +15,17 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Tab } from '../shared';
-import { ReactComponent as ShapesIcon } from '../../../../icons/shapes.svg';
-import paneId from './paneId';
+import Context from './context';
 
-function ShapesTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <ShapesIcon aria-label={__('Shapes library', 'web-stories')} />
-    </Tab>
-  );
+function useSnackbar() {
+  return useContext(Context);
 }
 
-export default ShapesTab;
+export default useSnackbar;
