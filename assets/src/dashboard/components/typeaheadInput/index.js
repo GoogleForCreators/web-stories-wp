@@ -29,10 +29,10 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { TypeaheadOptions } from '..';
 import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import useFocusOut from '../../utils/useFocusOut';
+import TypeaheadOptions from '../typeahead-options';
 
 const SearchContainer = styled.div`
   width: 272px;
