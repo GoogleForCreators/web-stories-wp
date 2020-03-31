@@ -28,9 +28,9 @@ function OutputPage({ page }) {
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
     width: `calc(100 * var(--story-page-vw))`, // 100vw
-    height: `calc(100 * ${PAGE_HEIGHT / PAGE_WIDTH} * var(--story-page-vw))`, // 16/9 * 100vw
+    height: `calc(100 * ${PAGE_HEIGHT / PAGE_WIDTH} * var(--story-page-vw))`, // W/H * 100vw
     maxHeight: `calc(100 * var(--story-page-vh))`, // 100vh
-    maxWidth: `calc(100 * ${PAGE_WIDTH / PAGE_HEIGHT} * var(--story-page-vh))`, // 9/16 * 100vh
+    maxWidth: `calc(100 * ${PAGE_WIDTH / PAGE_HEIGHT} * var(--story-page-vh))`, // H/W * 100vh
     // todo@: this expression uses CSS `min()`, which is still very sparsely supported.
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${
       PAGE_HEIGHT / PAGE_WIDTH
