@@ -25,7 +25,7 @@ import createResource from './createResource';
  * Create a local resource object.
  *
  * @param {Object} properties The resource properties.
- * @return {Object} The local resource object.
+ * @return {import('./createResource').Resource} The local resource object.
  */
 const createLocalResource = (properties) => {
   return createResource({ ...properties, local: true });
@@ -70,7 +70,7 @@ const getImageDimensions = (src) => {
  * Generates a image resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object>} Local image resource object.
+ * @return {Promise<import('./createResource').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
   const mimeType = file.type;
@@ -92,7 +92,7 @@ const getImageResource = async (file) => {
  * Generates a video resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object>} Local video resource object.
+ * @return {Promise<import('./createResource').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
   const mimeType = file.type;
@@ -117,7 +117,7 @@ const getVideoResource = async (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object>|null} Resource object.
+ * @return {Promise<import('./createResource').Resource>|null} Resource object.
  */
 const getResourceFromLocalFile = (file) => {
   const type = getTypeFromMime(file.type);

@@ -23,7 +23,7 @@ import createResource from './createResource';
  * Generates a resource object from the upload API response object
  *
  * @param {Object} file The uploaded file payload.
- * @return {Object} Resource object.
+ * @return {import('./createResource').Resource} Resource object.
  */
 function getResourceFromUploadAPI(file) {
   const {

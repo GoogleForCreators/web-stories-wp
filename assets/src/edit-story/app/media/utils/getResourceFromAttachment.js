@@ -22,8 +22,8 @@ import createResource from './createResource';
 /**
  * Generates a resource object from a WordPress attachment.
  *
- * @param {Object} attachment WP Attachment object
- * @return {Object} Resource object
+ * @param {Object} attachment WP Attachment object.
+ * @return {import('./createResource').Resource} Resource object.
  */
 function getResourceFromAttachment(attachment) {
   const {

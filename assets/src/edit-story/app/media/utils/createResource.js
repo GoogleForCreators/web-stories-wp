@@ -24,8 +24,6 @@ import getTypeFromMime from './getTypeFromMime';
  *
  * TODO: Try to remove posterId (poster should be enough) and videoId (src)
  * should be enough.
- * TODO: We should just get the non-formatted numeric length. Formatting can
- * be done client-side.
  *
  * @typedef {Resource} Resource
  * @property {string|undefined} type Resource type. Currently only "image" and
@@ -51,8 +49,8 @@ import getTypeFromMime from './getTypeFromMime';
 /**
  * Creates a resource object.
  *
- * @param {Object} attachment WP Attachment object
- * @return {Object} Resource object
+ * @param {Object} attachment WP Attachment object.
+ * @return {Resource} Resource object.
  */
 function createResource({
   type,

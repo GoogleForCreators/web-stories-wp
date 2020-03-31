@@ -20,10 +20,10 @@
 import createResource from './createResource';
 
 /**
- * Generates a resource object from a WordPress media picker object
+ * Generates a resource object from a WordPress media picker object.
  *
- * @param {Object} mediaPickerEl WP Media Picker object
- * @return {Object} Resource object
+ * @param {Object} mediaPickerEl WP Media Picker object.
+ * @return {import('./createResource').Resource} Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
