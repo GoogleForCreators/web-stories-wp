@@ -43,7 +43,7 @@ function VisibleImage({ ...attrs }) {
   const [isTooBright, setIsTooBright] = useState(false);
 
   const handleBrightness = useCallback((averageColor) => {
-    const darkestDimension = Math.max.apply(null, averageColor);
+    const darkestDimension = Math.min.apply(null, averageColor);
     setIsTooBright(darkestDimension >= TOO_BRIGHT);
   }, []);
 

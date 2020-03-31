@@ -123,6 +123,7 @@ function generatePatternStyles(pattern = null, property = 'background') {
   if (!['solid', 'radial', 'linear', 'conic'].includes(type)) {
     throw new Error(`Unknown pattern type: '${type}'`);
   }
+
   // Gradients are only possible for backgrounds
   if (!isBackground && type !== 'solid') {
     throw new Error(
