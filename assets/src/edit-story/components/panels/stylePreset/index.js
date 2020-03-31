@@ -37,6 +37,8 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { getDefinitionForType } from '../../../elements';
 import { Panel, PanelTitle, PanelContent } from './../panel';
 
+const COLOR_HEIGHT = 35;
+
 const buttonCSS = css`
   background: transparent;
   width: 30px;
@@ -101,12 +103,13 @@ const Colors = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  overflow: auto;
+  max-height: ${6 * COLOR_HEIGHT + 5}px;
+  overflow-y: scroll;
 `;
 
 const ButtonWrapper = styled.div`
   flex-basis: 16%;
-  height: 35px;
+  height: ${COLOR_HEIGHT}px;
 `;
 
 const ColorGroupLabel = styled.div`
