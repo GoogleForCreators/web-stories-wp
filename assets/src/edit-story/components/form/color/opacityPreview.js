@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -30,6 +30,7 @@ import { _x, __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
+import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 import ColorBox from './colorBox';
@@ -49,9 +50,9 @@ function OpacityPreview({ value, onChange }) {
   const hasPreviewText = Boolean(getPreviewText(value));
   const postfix = _x('%', 'Percentage', 'web-stories');
   const [inputValue, setInputValue] = useState('');
-  const [hasPostfix, setHasPostfix] = useState(true);
-  const enablePostfix = useCallback(() => setHasPostfix(true), []);
-  const disablePostfix = useCallback(() => setHasPostfix(false), []);
+  const ref = useRef();
+
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
   // Allow any input, but only persist non-NaN values up-chain
   const handleChange = useCallback(
@@ -70,23 +71,21 @@ function OpacityPreview({ value, onChange }) {
     [value]
   );
 
-  // However on blur, restore to last persisted value
-  const handleBlur = useCallback(() => {
-    enablePostfix();
-    updateFromValue();
-  }, [enablePostfix, updateFromValue]);
-
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
   return (
     <Input
+      ref={ref}
       type="text"
       aria-label={__('Opacity', 'web-stories')}
       isVisible={hasPreviewText}
-      onBlur={handleBlur}
-      onFocus={disablePostfix}
+      onBlur={() => {
+        handleBlur();
+        updateFromValue();
+      }}
+      onFocus={handleFocus}
       onChange={handleChange}
-      value={hasPostfix ? `${inputValue}${postfix}` : inputValue}
+      value={`${inputValue}${focused ? '' : postfix}`}
     />
   );
 }

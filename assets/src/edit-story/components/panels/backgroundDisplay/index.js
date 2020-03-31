@@ -18,6 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useState, useCallback } from 'react';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -27,30 +29,58 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Switch } from '../form';
-import { SimplePanel } from './panel';
+import { Switch, Row } from '../../form';
+import { SimplePanel } from '../panel';
+import { Note } from '../shared';
+import Dialog from '../../dialog';
+import { Plain } from '../../button';
+import theme from '../../../theme';
+import BackgroundDisplayDialogContent from './dialogContent';
 
 function BackgroundDisplayPanel({ selectedElements, pushUpdate }) {
   const { isFullbleedBackground } = selectedElements[0];
+
+  // Informational dialog
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+  const openDialog = useCallback(() => setInfoDialogOpen(true), []);
+  const closeDialog = useCallback(() => setInfoDialogOpen(false), []);
 
   return (
     <SimplePanel
       name="backgroundDisplay"
       title={__('Background Display Options', 'web-stories')}
     >
-      <p>
-        {/* todo: re-consider wording; add help dialog */
-        __(
-          'How I want my story displayed on devices with a different aspect ratio?',
-          'web-stories'
-        )}
-      </p>
+      <Row>
+        <Note onClick={() => openDialog()}>
+          {__(
+            'How I want my story displayed on devices with a different aspect ratio?',
+            'web-stories'
+          )}
+        </Note>
+      </Row>
       <Switch
         value={isFullbleedBackground !== false}
         onLabel={__('Fit to device', 'web-stories')}
         offLabel={__('Do not format', 'web-stories')}
         onChange={(value) => pushUpdate({ isFullbleedBackground: value }, true)}
       />
+      <Dialog
+        open={infoDialogOpen}
+        onClose={closeDialog}
+        title={__('Background Fill Behvaior', 'web-stories')}
+        actions={
+          <Plain onClick={() => closeDialog()}>
+            {__('Ok, got it', 'web-stories')}
+          </Plain>
+        }
+        style={{
+          overlay: {
+            background: rgba(theme.colors.bg.v11, 0.6),
+          },
+        }}
+      >
+        <BackgroundDisplayDialogContent />
+      </Dialog>
     </SimplePanel>
   );
 }

@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from './icon.svg';
+import { ReactComponent as Icon } from '../../icons/video.svg';
 
 function VideoIcon() {
   const alt = __('Video element', 'web-stories');
