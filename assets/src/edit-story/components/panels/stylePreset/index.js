@@ -104,7 +104,7 @@ const ButtonWrapper = styled.div`
   height: 35px;
 `;
 
-function ColorPresetPanel() {
+function StylePresetPanel() {
   const {
     state: {
       selectedElementIds,
@@ -224,13 +224,13 @@ function ColorPresetPanel() {
   const colorPresets = isText ? textColors : colors;
 
   return (
-    <Panel name="colorpreset">
+    <Panel name="stylepreset">
       <PanelTitle
         isPrimary
         secondaryAction={getSecondaryActions()}
         canCollapse={!isEditMode}
       >
-        {__('Color presets', 'web-stories')}
+        {__('Style presets', 'web-stories')}
       </PanelTitle>
       {colorPresets && (
         <PanelContent isPrimary>
@@ -260,4 +260,4 @@ function ColorPresetPanel() {
   );
 }
 
-export default ColorPresetPanel;
+export default StylePresetPanel;
