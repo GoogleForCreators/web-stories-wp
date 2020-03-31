@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask } from './';
+import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -53,7 +53,7 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type || isBackground) {
+  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
