@@ -91,45 +91,47 @@ function Numeric({
     >
       {label}
       {prefix}
-      <StyledInput
-        ref={ref}
-        placeholder={placeholder}
-        prefix={prefix}
-        suffix={suffix}
-        label={label}
-        value={
-          isMultiple
-            ? ''
-            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
-        }
-        aria-label={ariaLabel}
-        disabled={disabled}
-        {...rest}
-        onChange={(evt) => {
-          const newValue = evt.target.value;
-          if (newValue === '') {
-            onChange('', evt);
-          } else {
-            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
-            const valueAsNumber = float
-              ? parseFloat(newValue)
-              : parseInt(newValue);
-            if (!isNaN(valueAsNumber)) {
-              onChange(valueAsNumber, evt);
+      <div>
+        <StyledInput
+          ref={ref}
+          placeholder={placeholder}
+          prefix={prefix}
+          suffix={suffix}
+          label={label}
+          value={
+            isMultiple
+              ? ''
+              : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+          }
+          aria-label={ariaLabel}
+          disabled={disabled}
+          {...rest}
+          onChange={(evt) => {
+            const newValue = evt.target.value;
+            if (newValue === '') {
+              onChange('', evt);
+            } else {
+              setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
+              const valueAsNumber = float
+                ? parseFloat(newValue)
+                : parseInt(newValue);
+              if (!isNaN(valueAsNumber)) {
+                onChange(valueAsNumber, evt);
+              }
             }
-          }
-        }}
-        onBlur={(evt) => {
-          if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
-          }
-          if (onBlur) {
-            onBlur();
-          }
-          handleBlur();
-        }}
-        onFocus={handleFocus}
-      />
+          }}
+          onBlur={(evt) => {
+            if (evt.target.form) {
+              evt.target.form.dispatchEvent(new window.Event('submit'));
+            }
+            if (onBlur) {
+              onBlur();
+            }
+            handleBlur();
+          }}
+          onFocus={handleFocus}
+        />
+      </div>
       {suffix}
     </Container>
   );
