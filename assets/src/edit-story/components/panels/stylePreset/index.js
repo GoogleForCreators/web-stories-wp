@@ -99,6 +99,7 @@ const Color = styled.button`
     backgroundColor ? backgroundColor : backgroundImage};
 `;
 
+// For max-height: Display 5 extra pixels to show there are more colors.
 const Colors = styled.div`
   display: flex;
   flex-direction: row;
