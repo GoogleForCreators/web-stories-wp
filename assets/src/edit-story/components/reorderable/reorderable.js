@@ -18,180 +18,34 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../utils/useBatchingCallback';
-import useLiveRegion from '../../utils/useLiveRegion';
 import Context from './context';
-
-const REORDER_MESSAGE = __(
-  /* translators: d: new position. */
-  'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
-  'web-stories'
-);
+import useScroll from './useScroll';
+import useReordering from './useReordering';
 
 const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-const SCROLL_DISTANCE = 5;
-
 function Reorderable({ children, onPositionChange = () => {}, ...props }) {
-  const [isReordering, setIsReordering] = useState(false);
-  const [currentSeparator, setCurrentSeparator] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState(null);
-  const [dragTarget, setDragTarget] = useState(null);
-  const [hasScrollAbove, setHasScrollAbove] = useState(false);
-  const [hasScrollBelow, setHasScrollBelow] = useState(false);
-  const [scrollDirection, setScrollDirection] = useState(0);
-  const scrollTarget = useRef(null);
-
-  const setScrollTarget = useCallback(
-    (node) => (scrollTarget.current = node.parentElement),
-    []
-  );
-
-  const updateScrollMarkers = useBatchingCallback(() => {
-    const node = scrollTarget.current;
-    if (!node) {
-      return;
-    }
-    const possibleScroll = node.scrollHeight - node.clientHeight;
-    if (possibleScroll <= 0) {
-      setHasScrollAbove(false);
-      setHasScrollBelow(false);
-    } else {
-      setHasScrollAbove(node.scrollTop > 0);
-      setHasScrollBelow(node.scrollTop < possibleScroll);
-    }
-  }, []);
-
-  const startScroll = useCallback(
-    (dir) => {
-      setScrollDirection(dir);
-      return () => setScrollDirection(0);
-    },
-    [setScrollDirection]
-  );
-
-  const canScrollUp = isReordering && hasScrollAbove;
-  const canScrollDown = isReordering && hasScrollBelow;
-
-  useEffect(() => {
-    const isNotScrolling = scrollDirection === 0;
-    const isScrollingUp = canScrollUp && scrollDirection < 0;
-    const isScrollingDown = canScrollDown && scrollDirection > 0;
-    const isScrollingAnywhere = isScrollingUp || isScrollingDown;
-    if (isNotScrolling || !isScrollingAnywhere) {
-      return undefined;
-    }
-
-    let mounted = true;
-    const update = () => {
-      scrollTarget.current.scrollTop += scrollDirection * SCROLL_DISTANCE;
-      updateScrollMarkers();
-      if (mounted) {
-        window.requestAnimationFrame(update);
-      }
-    };
-    update();
-
-    return () => {
-      mounted = false;
-    };
-  }, [scrollDirection, updateScrollMarkers, canScrollUp, canScrollDown]);
-
-  // Update scroll markers whenever isReordering changes (to true really, but no harm)
-  useEffect(() => updateScrollMarkers(), [isReordering, updateScrollMarkers]);
-
-  const speak = useLiveRegion('assertive');
-  const handleStartReordering = useCallback(
-    ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
-      // Only allow reordering with non-modified click on non-background element.
-      // Modified (shift+ or meta+) clicks are for selection.
-      if (!evt.shiftKey && !evt.metaKey) {
-        onStartReordering();
-        setCurrentPosition(currentPos);
-        setDragTarget(evt.target);
-      }
-    },
-    []
-  );
-
-  const separator = useRef(null);
-  useEffect(() => {
-    separator.current = currentSeparator;
-  }, [currentSeparator]);
-
-  useEffect(() => {
-    if (!dragTarget) {
-      return undefined;
-    }
-
-    const onRelease = (evt) => {
-      evt.preventDefault();
-      if (separator.current !== null) {
-        const newPosition = separator.current;
-        const position =
-          newPosition > currentPosition ? newPosition - 1 : newPosition;
-        onPositionChange(currentPosition, position);
-      }
-      setDragTarget(null);
-    };
-
-    // only mark as reordering when starting to drag
-    const onMove = () => setIsReordering(true);
-
-    // abort on esc
-    // TODO: rewrite to useKeyDown() once either is merged.
-    const onAbort = (evt) => {
-      if (evt.key === 'Escape') {
-        setDragTarget(null);
-        evt.stopPropagation();
-      }
-    };
-
-    dragTarget.ownerDocument.addEventListener('pointerup', onRelease);
-    dragTarget.ownerDocument.addEventListener('keydown', onAbort, true);
-    dragTarget.addEventListener('pointermove', onMove);
-
-    return () => {
-      setCurrentSeparator(null);
-      setIsReordering(false);
-      dragTarget.removeEventListener('pointermove', onMove);
-      dragTarget.ownerDocument.removeEventListener('pointerup', onRelease);
-      dragTarget.ownerDocument.removeEventListener('keydown', onAbort, true);
-    };
-  }, [
-    dragTarget,
-    currentPosition,
-    setCurrentSeparator,
-    setIsReordering,
-    onPositionChange,
-  ]);
-
-  useEffect(() => {
-    if (isReordering && currentSeparator) {
-      const position = children.length - currentSeparator;
-      const message = sprintf(REORDER_MESSAGE, position);
-      speak(message);
-    }
-  }, [
+  const {
     isReordering,
     currentSeparator,
-    children.length,
-    onPositionChange,
-    speak,
-  ]);
+    setCurrentSeparator,
+    setIsReordering,
+    handleStartReordering,
+  } = useReordering(onPositionChange, children.length);
+
+  const {
+    setScrollTarget,
+    startScroll,
+    canScrollUp,
+    canScrollDown,
+  } = useScroll(isReordering);
 
   const state = {
     state: {
