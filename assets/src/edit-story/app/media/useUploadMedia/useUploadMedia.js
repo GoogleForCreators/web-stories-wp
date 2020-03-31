@@ -22,12 +22,15 @@ import { useCallback, useState } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../uploader';
+import { useSnackbar } from '../../snackbar';
+import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
@@ -37,6 +40,14 @@ import {
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
+  const { showSnackbar } = useSnackbar();
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
+  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   const [isUploading, setIsUploading] = useState(false);
 
   const uploadMedia = useCallback(
@@ -76,8 +87,18 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         setMedia({ media });
 
         setIsUploading(false);
-
-        throw new Error(__('Error trying to upload a file.', 'web-stories'));
+        showSnackbar({
+          message: createInterpolateElement(
+            sprintf(
+              __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+              allowedMimeTypes.join(', ')
+            ),
+            {
+              b: <b />,
+            }
+          ),
+        });
+        return;
       }
 
       try {
@@ -98,9 +119,11 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             });
           });
         }
-
         fetchMedia({ pagingNum, mediaType }, setMedia);
       } catch (e) {
+        showSnackbar({
+          message: e.message,
+        });
         localFiles.forEach(({ element }) => {
           if (element) {
             if (onUploadFailure) onUploadFailure({ element });
@@ -113,11 +136,18 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         });
 
         setIsUploading(false);
-
-        throw new Error(__('Error uploading a file.', 'web-stories'));
       }
     },
-    [setMedia, uploadFile, fetchMedia, media, pagingNum, mediaType]
+    [
+      setMedia,
+      media,
+      showSnackbar,
+      allowedMimeTypes,
+      fetchMedia,
+      pagingNum,
+      mediaType,
+      uploadFile,
+    ]
   );
 
   return {
