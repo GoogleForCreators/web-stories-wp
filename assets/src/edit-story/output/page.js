@@ -78,14 +78,14 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   );
   const longestMediaElement = getLongestMediaElement(elements);
 
+  const autoAdvanceAfter = longestMediaElement?.id
+    ? `el-${longestMediaElement?.id}`
+    : `${defaultPageDuration}s`;
+
   return (
     <amp-story-page
       id={id}
-      auto-advance-after={
-        autoAdvance
-          ? longestMediaElement?.id || `${defaultPageDuration}s`
-          : undefined
-      }
+      auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
       <amp-story-grid-layer template="vertical">
         <div className="page-background-area" style={backgroundStyles}>
