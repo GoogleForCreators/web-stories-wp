@@ -52,10 +52,9 @@ const HighlightElement = styled.p`
   padding: 0;
 `;
 
-const HIGHLIGHT_MARGIN_BUFFER = 10;
-
 const MarginedElement = styled.span`
   position: relative;
+  display: inline-block;
   top: 0;
   margin: ${({ horizontalPadding, horizontalBuffer }) =>
     `0 ${horizontalPadding + horizontalBuffer}px`};
@@ -103,6 +102,9 @@ function TextDisplay({
   const ref = useRef(null);
 
   const {
+    state: {
+      pageSize: { width: pageWidth },
+    },
     actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
@@ -110,7 +112,7 @@ function TextDisplay({
     color,
     backgroundColor,
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalBuffer: dataToEditorX(HIGHLIGHT_MARGIN_BUFFER),
+    horizontalBuffer: 0.01 * pageWidth,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };

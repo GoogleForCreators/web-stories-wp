@@ -33,6 +33,13 @@ const MEASURER_STYLES = {
   top: '-9999px',
   left: '-9999px',
   zIndex: -1,
+  ...(false && {
+    // For debugging purposes - this will show the output render on screen
+    visibility: 'visible',
+    top: '99px',
+    left: '99px',
+    zIndex: 10000,
+  }),
 };
 
 const MEASURER_PROPS = {

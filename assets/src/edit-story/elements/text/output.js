@@ -66,9 +66,12 @@ export function TextOutputWithUnits({
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
+  const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
+  const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
+
   const lineHeight = getHighlightLineheight(
     rest.lineHeight,
-    padding.vertical / 64, // I can't really explain why 64 works here, it just does.
+    unitlessPaddingVertical / unitlessFontSize,
     'em'
   );
 
@@ -91,8 +94,8 @@ export function TextOutputWithUnits({
     position: 'relative',
     // Disable reason: style lint can't figure out an interpolated calc
     // stylelint-disable function-calc-no-invalid
-    margin: `0 calc(${paddingStyles.horizontal} + ${dataToStyleX(10)})`,
-    left: `calc(-${paddingStyles.horizontal} - ${dataToStyleX(10)})`,
+    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
+    left: `calc(-${paddingStyles.horizontal} - 2%)`,
     // stylelint-enable function-calc-no-invalid
     top: '0',
   };
