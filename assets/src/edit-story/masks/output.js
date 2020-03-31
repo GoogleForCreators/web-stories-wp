@@ -84,8 +84,9 @@ export default function WithMask({
         ...(!isBackground
           ? {
               clipPath: `url(#${maskId})`,
-              // stylelint-disable-next-line property-no-vendor-prefix
+              /* stylelint-disable */
               WebkitClipPath: `url(#${maskId})`,
+              /* stylelint-enable */
             }
           : {}),
       }}

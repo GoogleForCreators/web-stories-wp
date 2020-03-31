@@ -47,8 +47,18 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+const StyledToggle = styled(Toggle)`
+  + span {
+    margin: 0 10px;
+  }
+`;
+
 function isNum(v) {
   return typeof v === 'number' && !isNaN(v);
+}
+
+function formatRotationAngleField(v) {
+  return v >= 360 ? 360 : v;
 }
 
 function SizePositionPanel({
@@ -163,7 +173,7 @@ function SizePositionPanel({
           }}
           disabled={isFill}
         />
-        <Toggle
+        <StyledToggle
           data-testid="lockRatio"
           icon={<Locked />}
           uncheckedIcon={<Unlocked />}
@@ -199,7 +209,9 @@ function SizePositionPanel({
           suffix={__('Rotate', 'web-stories')}
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
-          onChange={(value) => pushUpdate({ rotationAngle: value })}
+          onChange={(value) =>
+            pushUpdate({ rotationAngle: formatRotationAngleField(value) })
+          }
           disabled={isFill}
         />
         {canFlip && (
