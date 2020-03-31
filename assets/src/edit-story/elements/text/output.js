@@ -47,15 +47,19 @@ export function TextOutputWithUnits({
   },
   dataToStyleX,
   dataToStyleY,
+  dataToFontSizeY,
   className,
 }) {
+  if (!dataToFontSizeY) {
+    dataToFontSizeY = dataToStyleY;
+  }
   const { width } = rest;
   const paddingStyles = {
     vertical: `${(padding.vertical / width) * 100}%`,
     horizontal: `${(padding.horizontal / width) * 100}%`,
   };
   const fillStyle = {
-    ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY),
+    ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY, dataToFontSizeY),
     ...generatePatternStyles(backgroundColor),
     ...generatePatternStyles(color, 'color'),
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
@@ -161,6 +165,7 @@ TextOutputWithUnits.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
+  dataToFontSizeY: PropTypes.func,
   className: PropTypes.string,
 };
 
@@ -174,6 +179,7 @@ function TextOutput({ element }) {
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
+      dataToFontSizeY={(y) => `${dataToEditorY(y, 100) / 10}em`}
     />
   );
 }
