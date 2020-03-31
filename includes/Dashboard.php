@@ -122,13 +122,14 @@ class Dashboard {
 
 		wp_set_script_translations( self::SCRIPT_HANDLE, 'web-stories' );
 
+		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			)
+			) 
 		);
 
 		wp_localize_script(
@@ -139,6 +140,9 @@ class Dashboard {
 				'config' => [
 					'isRTL'       => is_rtl(),
 					'newStoryURL' => $new_story_url,
+					'api'         => [
+						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+					],
 				],
 			]
 		);

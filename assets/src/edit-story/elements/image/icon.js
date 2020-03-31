@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from '../shared/icon_media.svg';
+import { ReactComponent as Icon } from '../../icons/media.svg';
 
 function ImageIcon() {
   const alt = __('Image element', 'web-stories');

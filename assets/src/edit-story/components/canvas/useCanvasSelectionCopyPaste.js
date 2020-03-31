@@ -22,10 +22,16 @@ import { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../app';
 import { useUploader } from '../../app/uploader';
+import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import { getDefinitionForType } from '../../elements';
 
@@ -41,6 +47,7 @@ function useCanvasSelectionCopyPaste(container) {
   } = useStory();
 
   const { uploadFile, isValidType } = useUploader();
+  const { showSnackbar } = useSnackbar();
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -146,14 +153,26 @@ function useCanvasSelectionCopyPaste(container) {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           if (isValidType(item)) {
-            uploadFile(item.getAsFile());
+            try {
+              uploadFile(item.getAsFile());
+            } catch (e) {
+              if (!e.isUserError) {
+                e.message = __(
+                  'Sorry, file has failed to upload',
+                  'web-stories'
+                );
+              }
+              showSnackbar({
+                message: e.message,
+              });
+            }
           }
         }
       } catch (e) {
         // Ignore.
       }
     },
-    [addElement, currentPage, isValidType, uploadFile]
+    [addElement, currentPage, isValidType, showSnackbar, uploadFile]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);

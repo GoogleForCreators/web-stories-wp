@@ -26,7 +26,7 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
-import { getElementMask } from './';
+import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -129,9 +129,10 @@ WithDropTarget.propTypes = {
 
 export default function WithMask({ element, fill, style, children, ...rest }) {
   const [hover, setHover] = useState(false);
+  const { isBackground } = element;
 
   const mask = getElementMask(element);
-  if (!mask?.type) {
+  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
@@ -155,7 +156,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        clipPath: `url(#${maskId})`,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
       onPointerOver={() => setHover(true)}

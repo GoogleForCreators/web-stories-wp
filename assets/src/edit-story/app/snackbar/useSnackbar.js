@@ -17,37 +17,15 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
 import Context from './context';
-import useLayers from './useLayers';
 
-function LayerProvider({ children }) {
-  const layers = useLayers();
-  const [isReordering, setIsReordering] = useState(false);
-  const [currentSeparator, setCurrentSeparator] = useState(null);
-
-  const state = {
-    state: {
-      layers,
-      isReordering,
-      currentSeparator,
-    },
-    actions: {
-      setIsReordering,
-      setCurrentSeparator,
-    },
-  };
-
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+function useSnackbar() {
+  return useContext(Context);
 }
 
-LayerProvider.propTypes = {
-  children: StoryPropTypes.children,
-};
-
-export default LayerProvider;
+export default useSnackbar;
