@@ -34,6 +34,11 @@ const queryByAutoAdvanceAfter = makeSingleQuery(
   (c, value) => `Found multiple elements with the attribute value: ${value}`
 );
 
+const queryById = makeSingleQuery(
+  (container, id) => queryAllByAttribute('id', container, id),
+  (c, id) => `Found multiple elements with the ID: ${id}`
+);
+
 describe('Page output', () => {
   it('should use default value for auto-advance-after', async () => {
     const props = {
@@ -71,13 +76,13 @@ describe('Page output', () => {
 
   it('should use video element ID for auto-advance-after', async () => {
     const props = {
-      id: '123',
+      id: 'foo',
       backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
       page: {
-        id: '123',
+        id: 'bar',
         elements: [
           {
-            id: 'abc123',
+            id: 'baz',
             type: 'video',
             mimeType: 'video/mp4',
             scale: 1,
@@ -98,7 +103,6 @@ describe('Page output', () => {
               width: 1080,
               length: 99,
             },
-            box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
           },
         ],
       },
@@ -107,8 +111,9 @@ describe('Page output', () => {
     };
 
     const { container } = render(<PageOutput {...props} />);
+    await expect(queryById(container, 'el-baz')).toBeInTheDocument();
     await expect(
-      queryByAutoAdvanceAfter(container, 'abc123')
+      queryByAutoAdvanceAfter(container, 'el-baz')
     ).toBeInTheDocument();
   });
 
