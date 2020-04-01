@@ -57,8 +57,8 @@ function isNum(v) {
   return typeof v === 'number' && !isNaN(v);
 }
 
-function formatRotationAngleField(v) {
-  return v >= 360 ? 360 : v;
+function formatRotationAngleNumber(v) {
+  return v > 360 ? v % 360 : v;
 }
 
 function SizePositionPanel({
@@ -210,7 +210,11 @@ function SizePositionPanel({
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
           onChange={(value) =>
-            pushUpdate({ rotationAngle: formatRotationAngleField(value) })
+            pushUpdate({
+              rotationAngle: isNum(value)
+                ? formatRotationAngleNumber(value)
+                : value,
+            })
           }
           disabled={isFill}
         />
