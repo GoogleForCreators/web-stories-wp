@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
+export { default as createResource } from './createResource';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
-export { default as getAttachmentFromResource } from './getAttachmentFromResource';
 export { default as getResourceFromAttachment } from './getResourceFromAttachment';
 export { default as getResourceFromLocalFile } from './getResourceFromLocalFile';
 export { default as getResourceFromMediaPicker } from './getResourceFromMediaPicker';

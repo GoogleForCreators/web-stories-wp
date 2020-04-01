@@ -82,8 +82,8 @@ export default function WithMask({
         ...(fill ? FILL_STYLE : {}),
         ...style,
         clipPath: `url(#${maskId})`,
-        // stylelint-disable-next-line property-no-vendor-prefix
-        webkitClipPath: `url(#${maskId})`,
+        // stylelint-disable-next-line
+        WebkitClipPath: `url(#${maskId})`,
       }}
       {...rest}
     >

@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useLayoutEffect, useRef, useState, useCallback } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -44,16 +44,20 @@ import {
 } from '../../reorderable';
 import Modal from '../../modal';
 import GridView from '../gridview';
-import PagePreview from '../pagepreview';
+import PagePreview, {
+  THUMB_FRAME_HEIGHT,
+  THUMB_FRAME_WIDTH,
+} from '../pagepreview';
 import useResizeEffect from '../../../utils/useResizeEffect';
 import {
   COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
-
 const SCROLLBAR_HEIGHT = 8;
 
 const Wrapper = styled.div`
@@ -161,14 +165,14 @@ const GridViewContainer = styled.div`
 `;
 
 function calculatePageThumbSize(carouselSize) {
-  const aspectRatio = 9 / 16;
+  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
   const availableHeight =
     carouselSize.height -
     CAROUSEL_VERTICAL_PADDING * 2 -
     CAROUSEL_BOTTOM_SCROLL_MARGIN;
-  const height = availableHeight;
-  const width = availableHeight * aspectRatio;
-  return [width, height];
+  const pageHeight = availableHeight - THUMB_FRAME_HEIGHT;
+  const pageWidth = pageHeight * aspectRatio;
+  return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
 
 function Carousel() {
@@ -263,8 +267,9 @@ function Carousel() {
   const NextButton = isRTL ? LeftArrow : RightArrow;
 
   const Page = isCompact ? CompactIndicator : PagePreview;
-  const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
-    carouselSize
+  const [pageThumbWidth, pageThumbHeight] = useMemo(
+    () => calculatePageThumbSize(carouselSize),
+    [carouselSize]
   );
   const arrowsBottomMargin = isCompact
     ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_HEIGHT
