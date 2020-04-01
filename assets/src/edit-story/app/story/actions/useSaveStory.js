@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import { useHistory } from '../../history';
@@ -71,78 +72,63 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
-  const saveStory = useCallback(() => {
-    setIsSaving(true);
-    const {
-      title,
-      status,
-      author,
-      date,
-      modified,
-      slug,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    } = story;
-    const content = getStoryMarkup(story, pages, metadata);
-    saveStoryById({
-      storyId,
-      title,
-      status,
-      pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    })
-      .then((post) => {
-        const {
-          status: newStatus,
-          slug: newSlug,
-          link,
-          featured_media_url: featuredMediaUrl,
-        } = post;
+  const saveStory = useCallback(
+    (props) => {
+      setIsSaving(true);
+      const propsToSave = objectPick(story, [
+        'title',
+        'status',
+        'author',
+        'date',
+        'modified',
+        'slug',
+        'excerpt',
+        'featuredMedia',
+        'password',
+        'publisherLogo',
+        'autoAdvance',
+        'defaultPageDuration',
+      ]);
+      const content = getStoryMarkup(story, pages, metadata);
+      saveStoryById({
+        storyId,
+        content,
+        pages,
+        ...propsToSave,
+        ...props,
+      })
+        .then((post) => {
+          const properties = {
+            ...objectPick(post, ['status', 'slug', 'link']),
+            featuredMediaUrl: post.featured_media_url,
+          };
+          updateStory({ properties });
 
-        updateStory({
-          properties: {
-            status: newStatus,
-            slug: newSlug,
-            link,
-            featuredMediaUrl,
-          },
+          refreshPostEditURL();
+
+          setHasChangedSinceLastSave(false);
+        })
+        .catch(() => {
+          showSnackbar({
+            message: __('Failed to save the story', 'web-stories'),
+          });
+        })
+        .finally(() => {
+          setIsSaving(false);
         });
-        refreshPostEditURL();
-        setHasChangedSinceLastSave(false);
-      })
-      .catch(() => {
-        showSnackbar({
-          message: __('Failed to save the story', 'web-stories'),
-        });
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  }, [
-    story,
-    pages,
-    metadata,
-    saveStoryById,
-    storyId,
-    updateStory,
-    refreshPostEditURL,
-    showSnackbar,
-    setHasChangedSinceLastSave,
-  ]);
+    },
+    [
+      story,
+      pages,
+      metadata,
+      saveStoryById,
+      storyId,
+      updateStory,
+      refreshPostEditURL,
+      showSnackbar,
+      setHasChangedSinceLastSave,
+    ]
+  );
 
   return { saveStory, isSaving };
 }
