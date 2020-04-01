@@ -47,18 +47,16 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-const StyledToggle = styled(Toggle)`
-  + span {
-    margin: 0 10px;
-  }
+const StyledLocked = styled(Locked)`
+  margin: 0 10px;
+`;
+
+const StyledUnlocked = styled(Unlocked)`
+  margin: 0 10px;
 `;
 
 function isNum(v) {
   return typeof v === 'number' && !isNaN(v);
-}
-
-function formatRotationAngleNumber(v) {
-  return v > 360 ? v % 360 : v;
 }
 
 function SizePositionPanel({
@@ -173,10 +171,10 @@ function SizePositionPanel({
           }}
           disabled={isFill}
         />
-        <StyledToggle
+        <Toggle
           data-testid="lockRatio"
-          icon={<Locked />}
-          uncheckedIcon={<Unlocked />}
+          icon={<StyledLocked />}
+          uncheckedIcon={<StyledUnlocked />}
           value={lockRatio}
           onChange={setLockRatio}
           disabled={isFill}
@@ -211,9 +209,7 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) =>
             pushUpdate({
-              rotationAngle: isNum(value)
-                ? formatRotationAngleNumber(value)
-                : value,
+              rotationAngle: isNum(value) ? value % 360 : value,
             })
           }
           disabled={isFill}
