@@ -24,7 +24,7 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Movable from '../movable';
-import { useStory } from '../../app/story';
+import { useStory, useDropTargets } from '../../app';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
@@ -52,6 +52,9 @@ function MultiSelectionMovable({ selectedElements }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+  const {
+    state: { draggingResource },
+  } = useDropTargets();
 
   const [isDragging, setIsDragging] = useState(false);
   const [canSnap, setCanSnap] = useState(true);
@@ -176,15 +179,17 @@ function MultiSelectionMovable({ selectedElements }) {
     resetMoveable();
   };
 
+  const hideHandles = isDragging || Boolean(draggingResource);
+
   return (
     <Movable
-      className={`default-movable ${isDragging ? 'dragging' : ''}`}
+      className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
       draggable={true}
-      resizable={!isDragging}
-      rotatable={!isDragging}
+      resizable={!hideHandles}
+      rotatable={!hideHandles}
       onDragGroup={({ events }) => {
         events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
@@ -194,7 +199,9 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onDragGroupStart={({ events }) => {
-        setIsDragging(true);
+        if (!isDragging) {
+          setIsDragging(true);
+        }
         onGroupEventStart({ events, isDrag: true });
       }}
       onDragGroupEnd={({ targets }) => {

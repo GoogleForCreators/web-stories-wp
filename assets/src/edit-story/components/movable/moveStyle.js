@@ -69,8 +69,8 @@ export const GlobalStyle = createGlobalStyle`
 		height: 16px;
 	}
 
-	.default-movable.dragging .moveable-line.moveable-rotation-line,
-	.default-movable.dragging .moveable-line.moveable-direction {
+	.default-movable.hide-handles .moveable-line.moveable-rotation-line,
+	.default-movable.hide-handles .moveable-line.moveable-direction {
 		display: none;
 	}
 `;
