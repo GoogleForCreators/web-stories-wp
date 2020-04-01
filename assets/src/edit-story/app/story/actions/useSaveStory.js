@@ -75,70 +75,73 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     );
   }, []);
 
-  const saveStory = useCallback(() => {
-    setIsSaving(true);
-    const {
-      title,
-      status,
-      author,
-      date,
-      modified,
-      slug,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-    } = story;
+  const saveStory = useCallback(
+    (props) => {
+      setIsSaving(true);
+      const {
+        title,
+        status,
+        author,
+        date,
+        modified,
+        slug,
+        excerpt,
+        featuredMedia,
+        password,
+        publisherLogo,
+      } = story;
 
-    const content = getStoryMarkup(story, pages, metadata);
-    saveStoryById({
-      storyId,
-      title,
-      status,
-      pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-    })
-      .then((post) => {
-        const {
-          status: newStatus,
-          slug: newSlug,
-          link,
-          featured_media_url: featuredMediaUrl,
-        } = post;
-
-        updateStory({
-          properties: {
+      const content = getStoryMarkup(story, pages, metadata);
+      saveStoryById({
+        storyId,
+        title,
+        status: props?.status ? props.status : status,
+        pages,
+        author,
+        slug,
+        date,
+        modified,
+        content,
+        excerpt,
+        featuredMedia,
+        password,
+        publisherLogo,
+      })
+        .then((post) => {
+          const {
             status: newStatus,
             slug: newSlug,
             link,
-            featuredMediaUrl,
-          },
+            featured_media_url: featuredMediaUrl,
+          } = post;
+
+          updateStory({
+            properties: {
+              status: newStatus,
+              slug: newSlug,
+              link,
+              featuredMediaUrl,
+            },
+          });
+          refreshPostEditURL(storyId);
+        })
+        .catch(() => {
+          // TODO Display error message to user as save as failed.
+        })
+        .finally(() => {
+          setIsSaving(false);
         });
-        refreshPostEditURL(storyId);
-      })
-      .catch(() => {
-        // TODO Display error message to user as save as failed.
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  }, [
-    story,
-    pages,
-    metadata,
-    saveStoryById,
-    storyId,
-    updateStory,
-    refreshPostEditURL,
-  ]);
+    },
+    [
+      story,
+      pages,
+      metadata,
+      saveStoryById,
+      storyId,
+      updateStory,
+      refreshPostEditURL,
+    ]
+  );
 
   return { saveStory, isSaving };
 }
