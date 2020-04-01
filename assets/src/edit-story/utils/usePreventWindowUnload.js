@@ -40,8 +40,6 @@ function usePreventWindowUnload(condition = false) {
   useEffect(() => {
     if (condition) {
       window.addEventListener('beforeunload', beforeUnloadListener);
-    } else {
-      window.removeEventListener('beforeunload', beforeUnloadListener);
     }
 
     return () => {
