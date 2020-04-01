@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -39,7 +39,20 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
+import MyStoriesSearch from './myStoriesSearch';
 
+const PageHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 20px;
+`;
+
+const SearchContainer = styled.div`
+  position: absolute;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+`;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
@@ -47,7 +60,9 @@ const FilterContainer = styled.div`
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+
   const {
     actions: { fetchStories },
     state: { stories },
@@ -56,6 +71,20 @@ function MyStories() {
   useEffect(() => {
     fetchStories({ status });
   }, [fetchStories, status]);
+
+  const filteredStories = useMemo(() => {
+    return stories.filter((story) => {
+      const lowerTypeaheadValue = typeaheadValue
+        .toString()
+        .toLowerCase()
+        .trim();
+
+      return (
+        story.title.toLowerCase().includes(lowerTypeaheadValue) ||
+        story.id.toString().toLowerCase().includes(lowerTypeaheadValue)
+      );
+    });
+  }, [stories, typeaheadValue]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -66,8 +95,18 @@ function MyStories() {
   }, [viewStyle]);
 
   return (
-    <div>
-      <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+    <>
+      <PageHeading>
+        <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
+        <SearchContainer>
+          <MyStoriesSearch
+            currentValue={typeaheadValue}
+            filteredStories={filteredStories}
+            handleChange={setTypeaheadValue}
+          />
+        </SearchContainer>
+      </PageHeading>
+
       <FilterContainer>
         {STORY_STATUSES.map((storyStatus) => (
           <FloatingTab
@@ -82,12 +121,15 @@ function MyStories() {
         ))}
       </FilterContainer>
       <ListBar
-        label={`${stories.length} ${__('total Stories', 'web-stories')}`}
+        label={`${filteredStories.length} ${__(
+          'total Stories',
+          'web-stories'
+        )}`}
         layoutStyle={viewStyle}
         onPress={handleViewStyleBarButtonSelected}
       />
       <StoryGrid>
-        {stories.map((story) => (
+        {filteredStories.map((story) => (
           <CardGridItem key={story.id}>
             <CardPreviewContainer
               onOpenInEditorClick={() => {}}
@@ -101,7 +143,7 @@ function MyStories() {
           </CardGridItem>
         ))}
       </StoryGrid>
-    </div>
+    </>
   );
 }
 
