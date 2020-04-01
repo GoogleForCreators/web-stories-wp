@@ -37,12 +37,17 @@ import PagePreview, {
   THUMB_FRAME_HEIGHT,
   THUMB_FRAME_WIDTH,
 } from '../pagepreview';
+import {
+  Reorderable,
+  ReorderableSeparator,
+  ReorderableItem,
+} from '../../reorderable';
 
 const PREVIEW_WIDTH = 90;
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
 const GRID_GAP = 20;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Reorderable)`
   position: relative;
   display: grid;
   grid-template-columns: ${({ scale }) =>
@@ -98,6 +103,24 @@ const Rectangle = styled.button`
 
 const Space = styled.div`
   flex: 0 0 20px;
+`;
+
+const PageSeparator = styled(ReorderableSeparator)`
+  margin-left: ${({ isFirst, width }) =>
+    isFirst ? `calc(-${width}px - 12px)` : `calc(-${width}px + 8px)`};
+  margin-right: ${({ isFirst, width }) =>
+    isFirst ? `calc(-${width}px + 8px)` : `calc(-${width}px - 12px)`};
+  padding-left: ${({ width }) => width}px;
+  padding-right: ${({ width }) => width}px;
+  & > div {
+    height: ${({ height }) => height}px;
+    width: 4px;
+  }
+`;
+
+const PagePreviewContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 function ThumbnailSizeControl({ value, onChange }) {
@@ -163,33 +186,62 @@ ThumbnailSizeControl.propTypes = {
 function GridView() {
   const {
     state: { pages, currentPageIndex },
+    actions: { setCurrentPage, arrangePage },
   } = useStory();
   const [zoomLevel, setZoomLevel] = useState(2);
+
+  const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
+  const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
 
   return (
     <>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
-      <Wrapper scale={zoomLevel}>
+      <Wrapper
+        scale={zoomLevel}
+        aria-label={__('Pages List', 'web-stories')}
+        onPositionChange={(oldPos, newPos) => {
+          const pageId = pages[oldPos].id;
+          arrangePage({ pageId, position: newPos });
+          setCurrentPage({ pageId });
+        }}
+      >
         {pages.map((page, index) => {
           const isCurrentPage = index === currentPageIndex;
 
           return (
-            <PagePreview
-              key={index}
-              ariaLabel={
-                isCurrentPage
-                  ? sprintf(
-                      __('Page %s (current page)', 'web-stories'),
-                      index + 1
-                    )
-                  : sprintf(__('Page %s', 'web-stories'), index + 1)
-              }
-              isActive={isCurrentPage}
-              index={index}
-              width={zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH}
-              height={zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT}
-              dragIndicatorOffset={GRID_GAP / 2}
-            />
+            <PagePreviewContainer key={`page-${index}`}>
+              {index === 0 && (
+                <PageSeparator
+                  position={0}
+                  width={width / 2}
+                  height={height}
+                  isFirst
+                />
+              )}
+              <ReorderableItem position={index}>
+                <PagePreview
+                  key={index}
+                  ariaLabel={
+                    isCurrentPage
+                      ? sprintf(
+                          __('Page %s (current page)', 'web-stories'),
+                          index + 1
+                        )
+                      : sprintf(__('Page %s', 'web-stories'), index + 1)
+                  }
+                  isActive={isCurrentPage}
+                  index={index}
+                  width={width}
+                  height={height}
+                  dragIndicatorOffset={GRID_GAP / 2}
+                />
+              </ReorderableItem>
+              <PageSeparator
+                position={index + 1}
+                width={width / 2}
+                height={height}
+              />
+            </PagePreviewContainer>
           );
         })}
       </Wrapper>

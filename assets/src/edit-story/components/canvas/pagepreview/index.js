@@ -30,8 +30,8 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-const THUMB_INDICATOR_HEIGHT = 6;
-const THUMB_INDICATOR_GAP = 4;
+export const THUMB_INDICATOR_HEIGHT = 6;
+export const THUMB_INDICATOR_GAP = 4;
 
 export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
 export const THUMB_FRAME_WIDTH = 0;

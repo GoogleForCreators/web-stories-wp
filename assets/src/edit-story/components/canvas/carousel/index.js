@@ -45,6 +45,7 @@ import {
 import Modal from '../../modal';
 import GridView from '../gridview';
 import PagePreview, {
+  THUMB_INDICATOR_GAP,
   THUMB_FRAME_HEIGHT,
   THUMB_FRAME_WIDTH,
 } from '../pagepreview';
@@ -140,12 +141,14 @@ const PageList = styled(Reorderable).attrs({
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
-  margin: 6px -18px -3px -8px;
-  padding: 3px 10px;
+  margin-left: ${({ width }) => 3 - 10 - width}px;
+  margin-right: ${({ width }) => 3 - width}px;
+  padding-left: ${({ width }) => width}px;
+  padding-right: ${({ width }) => width}px;
+  padding-top: ${THUMB_INDICATOR_GAP * 2}px;
   & > div {
-    height: 100%;
-    width: 6px;
-    margin: 0px;
+    height: ${({ height }) => height - THUMB_INDICATOR_GAP * 2}px;
+    width: 4px;
   }
 `;
 
@@ -153,6 +156,7 @@ const ItemContainer = styled.div.attrs({ role: 'option' })`
   display: flex;
   flex-direction: row;
   margin: 0 10px 0 0;
+  z-index: 1;
   &:last-of-type {
     margin: 0;
   }
@@ -275,6 +279,18 @@ function Carousel() {
     ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_HEIGHT
     : CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
+  const rearrangePages = useCallback(
+    (oldPos, newPos) => {
+      if (isCompact) {
+        return;
+      }
+      const pageId = pages[oldPos].id;
+      arrangePage({ pageId, position: newPos });
+      setCurrentPage({ pageId });
+    },
+    [pages, isCompact, arrangePage, setCurrentPage]
+  );
+
   return (
     <>
       <Wrapper>
@@ -291,41 +307,50 @@ function Carousel() {
           ref={listRef}
           hasHorizontalOverflow={hasHorizontalOverflow}
           aria-label={__('Pages List', 'web-stories')}
-          onPositionChange={(oldPos, newPos) => {
-            const pageId = pages[oldPos].id;
-            arrangePage({ pageId, position: newPos });
-            setCurrentPage({ pageId });
-          }}
+          onPositionChange={rearrangePages}
         >
-          <PageSeparator position={0} />
+          <PageSeparator
+            position={0}
+            width={pageThumbWidth / 2}
+            height={pageThumbHeight}
+          />
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <ItemContainer key={page.id}>
-                <ReorderableItem position={index}>
-                  <Page
-                    onClick={handleClickPage(page)}
-                    role="option"
-                    ariaLabel={
-                      isCurrentPage
-                        ? sprintf(
-                            __('Page %s (current page)', 'web-stories'),
-                            index + 1
-                          )
-                        : sprintf(__('Go to page %s', 'web-stories'), index + 1)
-                    }
-                    isActive={isCurrentPage}
-                    index={index}
-                    ref={(el) => {
-                      pageRefs.current[page.id] = el;
-                    }}
-                    width={pageThumbWidth}
-                    height={pageThumbHeight}
-                  />
-                </ReorderableItem>
-                <PageSeparator position={index + 1} />
-              </ItemContainer>
+              <>
+                <ItemContainer key={page.id}>
+                  <ReorderableItem position={index}>
+                    <Page
+                      onClick={handleClickPage(page)}
+                      role="option"
+                      ariaLabel={
+                        isCurrentPage
+                          ? sprintf(
+                              __('Page %s (current page)', 'web-stories'),
+                              index + 1
+                            )
+                          : sprintf(
+                              __('Go to page %s', 'web-stories'),
+                              index + 1
+                            )
+                      }
+                      isActive={isCurrentPage}
+                      index={index}
+                      ref={(el) => {
+                        pageRefs.current[page.id] = el;
+                      }}
+                      width={pageThumbWidth}
+                      height={pageThumbHeight}
+                    />
+                  </ReorderableItem>
+                </ItemContainer>
+                <PageSeparator
+                  position={index + 1}
+                  width={pageThumbWidth / 2}
+                  height={pageThumbHeight}
+                />
+              </>
             );
           })}
         </PageList>

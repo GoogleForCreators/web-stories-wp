@@ -65,7 +65,6 @@ function LayerPanel({ layers }) {
           position: newPos,
         })
       }
-      getItemSize={() => LAYER_HEIGHT}
     >
       {layers.map((layer) => (
         <Fragment key={layer.id}>

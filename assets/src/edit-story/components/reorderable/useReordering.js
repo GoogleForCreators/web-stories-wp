@@ -119,7 +119,6 @@ function useReordering(onPositionChange, numChildren) {
     isReordering,
     currentSeparator,
     setCurrentSeparator,
-    setIsReordering,
     handleStartReordering,
   };
 }

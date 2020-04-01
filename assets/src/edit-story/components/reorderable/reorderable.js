@@ -25,8 +25,6 @@ import React from 'react';
  * Internal dependencies
  */
 import Context from './context';
-import ReorderableScroller from './reorderableScroller';
-import useScroll from './useScroll';
 import useReordering from './useReordering';
 
 const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
@@ -34,46 +32,29 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
 `;
 
 const Reorderable = React.forwardRef(
-  (
-    { children, onPositionChange = () => {}, getItemSize = () => 10, ...props },
-    forwardedRef
-  ) => {
+  ({ children, onPositionChange = () => {}, ...props }, forwardedRef) => {
     const {
       isReordering,
       currentSeparator,
       setCurrentSeparator,
-      setIsReordering,
       handleStartReordering,
     } = useReordering(onPositionChange, children.length);
-
-    const { startScroll, canScrollUp, canScrollDown } = useScroll(
-      forwardedRef,
-      isReordering
-    );
 
     const state = {
       state: {
         isReordering,
         currentSeparator,
-        canScrollUp,
-        canScrollDown,
       },
       actions: {
         setCurrentSeparator,
-        setIsReordering,
         handleStartReordering,
-        startScroll,
       },
     };
 
     return (
       <Context.Provider value={state}>
         <ReorderableContainer ref={forwardedRef} {...props}>
-          <ReorderableScroller direction={-1} size={getItemSize()} />
-
           {children}
-
-          <ReorderableScroller direction={1} size={getItemSize()} />
         </ReorderableContainer>
       </Context.Provider>
     );
@@ -86,7 +67,6 @@ Reorderable.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onPositionChange: PropTypes.func.isRequired,
-  getItemSize: PropTypes.func.isRequired,
 };
 
 export default Reorderable;
