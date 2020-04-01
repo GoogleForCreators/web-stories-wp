@@ -220,44 +220,9 @@ function APIProvider({ children }) {
     return apiFetch({ path });
   }, [statuses]);
 
-  const getUsersByPage = useCallback(
-    (pagingNum = 1) => {
-      let apiPath = users;
-      const perPage = 100;
-      apiPath = addQueryArgs(apiPath, {
-        per_page: perPage,
-        page: pagingNum,
-      });
-      return apiFetch({ path: apiPath, parse: false }).then(
-        async (response) => {
-          const jsonArray = await response.json();
-
-          return { data: jsonArray, headers: response.headers, pagingNum };
-        }
-      );
-    },
-    [users]
-  );
-
   const getAllUsers = useCallback(() => {
-    return getUsersByPage().then(({ data, headers }) => {
-      const totalPages = parseInt(headers.get('X-WP-TotalPages'));
-      if (totalPages <= 1) return data;
-      const promises = [];
-      for (let i = 2; i <= totalPages; i++) {
-        promises.push(getUsersByPage(i));
-      }
-      return Promise.all(promises).then((response) => {
-        response.sort((a, b) => a.pagingNum - b.pagingNum);
-        return data.concat(
-          response.reduce(
-            (resultArray, result) => resultArray.concat(result.data),
-            []
-          )
-        );
-      });
-    });
-  }, [getUsersByPage]);
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
+  }, [users]);
 
   const state = {
     actions: {
