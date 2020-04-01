@@ -113,7 +113,9 @@ function TextInput({
         onChange={(evt) => onChange(evt.target.value, evt)}
         onBlur={(evt) => {
           if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
+            evt.target.form.dispatchEvent(
+              new window.Event('submit', { cancelable: true })
+            );
           }
           if (onBlur) {
             onBlur();
@@ -125,7 +127,9 @@ function TextInput({
           onClick={(evt) => {
             onChange('');
             if (evt.target.form) {
-              evt.target.form.dispatchEvent(new window.Event('submit'));
+              evt.target.form.dispatchEvent(
+                new window.Event('submit', { cancelable: true })
+              );
             }
             if (onBlur) {
               onBlur();

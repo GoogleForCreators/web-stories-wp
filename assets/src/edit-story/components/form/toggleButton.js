@@ -94,11 +94,12 @@ function ToggleButton({
   iconWidth,
   iconHeight,
   label,
+  className,
   ...rest
 }) {
   value = value === MULTIPLE_VALUE ? '' : value;
   return (
-    <Container>
+    <Container className={className}>
       <ContainerLabel
         disabled={disabled}
         value={value}
@@ -127,6 +128,7 @@ ToggleButton.propTypes = {
   disabled: PropTypes.bool,
   iconHeight: PropTypes.number,
   iconWidth: PropTypes.number,
+  className: PropTypes.string,
 };
 
 ToggleButton.defaultProps = {

@@ -31,6 +31,7 @@ import { useCallback } from 'react';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia } from '../../app';
+import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 
 const ButtonList = styled.nav`
@@ -47,6 +48,9 @@ const List = styled.div`
 const Space = styled.div`
   width: 6px;
 `;
+
+const isTitleValid = (rawTitle) =>
+  rawTitle !== __('Auto Draft', 'web-stories') && rawTitle !== '';
 
 function PreviewButton() {
   const {
@@ -74,7 +78,7 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
-      story: { date },
+      story: { date, title, storyId },
     },
     actions: { updateStory },
   } = useStory();
@@ -82,18 +86,22 @@ function Publish() {
     state: { isUploading },
   } = useMedia();
 
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
 
-  const handlePublish = useCallback(
-    () => updateStory({ properties: { status: 'publish' } }),
-    [updateStory]
-  );
+  const handlePublish = useCallback(() => {
+    updateStory({ properties: { status: 'publish' } });
+    refreshPostEditURL();
+  }, [refreshPostEditURL, updateStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
+    <Primary
+      onClick={handlePublish}
+      isDisabled={isSaving || isUploading || !isTitleValid(title)}
+    >
       {text}
     </Primary>
   );
@@ -126,7 +134,7 @@ function Update() {
   const {
     state: {
       meta: { isSaving },
-      story: { status },
+      story: { title, status },
     },
     actions: { saveStory },
   } = useStory();
@@ -147,7 +155,10 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
+        <Outline
+          onClick={saveStory}
+          isDisabled={isSaving || isUploading || !isTitleValid(title)}
+        >
           {text}
         </Outline>
       );
@@ -162,9 +173,10 @@ function Update() {
 
 function Loading() {
   const {
-    state: { isSaving },
+    state: {
+      meta: { isSaving },
+    },
   } = useStory();
-
   return isSaving ? <Spinner /> : <Space />;
 }
 

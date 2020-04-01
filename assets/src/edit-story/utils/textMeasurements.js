@@ -33,15 +33,18 @@ const MEASURER_STYLES = {
   top: '-9999px',
   left: '-9999px',
   zIndex: -1,
+  ...(false && {
+    // For debugging purposes - this will show the output render on screen
+    visibility: 'visible',
+    top: '99px',
+    left: '99px',
+    zIndex: 10000,
+  }),
 };
 
 const MEASURER_PROPS = {
   dataToStyleX: (x) => `${x}px`,
   dataToStyleY: (y) => `${y}px`,
-  paddingToStyle: (padding) => ({
-    horizontal: `${padding?.horizontal || 0}px`,
-    vertical: `${padding?.vertical || 0}px`,
-  }),
 };
 
 const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
