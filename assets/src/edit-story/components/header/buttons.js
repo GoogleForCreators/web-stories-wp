@@ -134,7 +134,7 @@ function Update() {
   const {
     state: {
       meta: { isSaving },
-      story: { title, status },
+      story: { status },
     },
     actions: { saveStory },
   } = useStory();
@@ -155,10 +155,7 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline
-          onClick={saveStory}
-          isDisabled={isSaving || isUploading || !isTitleValid(title)}
-        >
+        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
           {text}
         </Outline>
       );
