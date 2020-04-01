@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -77,6 +77,11 @@ function DropTargetsProvider({ children }) {
     return DROP_TARGET_ALLOWED_TYPES.includes(type);
   };
 
+  const activeDropTarget = useMemo(
+    () => currentPage?.elements.find((el) => el.id === activeDropTargetId),
+    [activeDropTargetId, currentPage]
+  );
+
   /**
    * Dragging elements
    */
@@ -128,9 +133,24 @@ function DropTargetsProvider({ children }) {
       if (!activeDropTargetId || activeDropTargetId === selfId) {
         return;
       }
+
+      const {
+        scale = 100,
+        focalX = 50,
+        focalY = 50,
+        isFill = false,
+      } = activeDropTarget;
+
       updateElementById({
         elementId: activeDropTargetId,
-        properties: { resource, type: resource.type },
+        properties: {
+          resource,
+          type: resource.type,
+          scale,
+          focalX,
+          focalY,
+          isFill,
+        },
       });
 
       // Reset styles on visisble elements
@@ -156,6 +176,7 @@ function DropTargetsProvider({ children }) {
       setActiveDropTargetId(null);
     },
     [
+      activeDropTarget,
       activeDropTargetId,
       currentPage,
       dropTargets,
