@@ -37,7 +37,7 @@ import {
   CardPreviewContainer,
   ListBar,
 } from '../../../components';
-import { LIST_STATE, STORY_STATUSES } from '../../../constants';
+import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 
 const FilterContainer = styled.div`
@@ -47,7 +47,7 @@ const FilterContainer = styled.div`
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
-  const [listState, setListState] = useState(LIST_STATE.GRID);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const {
     actions: { fetchStories },
     state: { stories },
@@ -57,13 +57,13 @@ function MyStories() {
     fetchStories({ status });
   }, [fetchStories, status]);
 
-  const handleListBarButtonSelected = useCallback(() => {
-    if (listState === LIST_STATE.LIST) {
-      setListState(LIST_STATE.GRID);
+  const handleViewStyleBarButtonSelected = useCallback(() => {
+    if (viewStyle === VIEW_STYLE.LIST) {
+      setViewStyle(VIEW_STYLE.GRID);
     } else {
-      setListState(LIST_STATE.LIST);
+      setViewStyle(VIEW_STYLE.LIST);
     }
-  }, [listState]);
+  }, [viewStyle]);
 
   return (
     <div>
@@ -83,8 +83,8 @@ function MyStories() {
       </FilterContainer>
       <ListBar
         label={`${stories.length} ${__('total Stories', 'web-stories')}`}
-        state={listState}
-        onPress={handleListBarButtonSelected}
+        layoutStyle={viewStyle}
+        onPress={handleViewStyleBarButtonSelected}
       />
       <StoryGrid>
         {stories.map((story) => (

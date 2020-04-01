@@ -24,7 +24,7 @@ export { default as TypeaheadOptions } from './typeahead-options';
 export { Pill, FloatingTab } from './pill';
 export { ViewHeader } from './typography';
 export { default as CardGrid, StoryGrid } from './cardGrid';
-export { default as ListBar } from './listBar';
+export { default as ListBar } from './viewStyleBar';
 export {
   default as CardGridItem,
   CardPreviewContainer,

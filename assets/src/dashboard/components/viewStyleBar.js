@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -26,7 +31,7 @@ import styled from 'styled-components';
 
 import { ReactComponent as GridSVG } from '../icons/grid.svg';
 import { ReactComponent as ListSVG } from '../icons/list.svg';
-import { LIST_STATE } from '../constants';
+import { VIEW_STYLE, VIEW_STYLE_ICON_METRICS } from '../constants';
 
 const Container = styled.div`
   display: flex;
@@ -48,14 +53,14 @@ const ToggleButton = styled.button`
   }
 `;
 
-const ListIcon = styled(ListSVG).attrs({ width: 17, height: 14 })`
+const ListIcon = styled(ListSVG).attrs(VIEW_STYLE_ICON_METRICS)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
-const GridIcon = styled(GridSVG).attrs({ width: 17, height: 14 })`
+const GridIcon = styled(GridSVG).attrs(VIEW_STYLE_ICON_METRICS)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;
@@ -71,20 +76,26 @@ const Label = styled.span`
   margin-left: 20px;
 `;
 
-export default function ListBar({ onPress, label, state }) {
+export default function ViewStyleBar({ onPress, label, layoutStyle }) {
   return (
     <Container>
-      <ToggleButton onClick={onPress}>
-        {state === LIST_STATE.GRID && <ListIcon />}
-        {state === LIST_STATE.LIST && <GridIcon />}
+      <ToggleButton
+        aria-label={__(
+          'Toggle between showing stories as a grid or list.',
+          'web-stories'
+        )}
+        onClick={onPress}
+      >
+        {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
+        {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
       </ToggleButton>
       <Label>{label}</Label>
     </Container>
   );
 }
 
-ListBar.propTypes = {
+ViewStyleBar.propTypes = {
   onPress: PropTypes.func,
   label: PropTypes.string.isRequired,
-  state: PropTypes.oneOf([LIST_STATE.GRID, LIST_STATE.LIST]).isRequired,
+  layoutStyle: PropTypes.oneOf([VIEW_STYLE.GRID, VIEW_STYLE.LIST]).isRequired,
 };
