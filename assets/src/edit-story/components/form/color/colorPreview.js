@@ -33,6 +33,7 @@ import { __, _x } from '@wordpress/i18n';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
+import ColorPicker from '../../colorPicker';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
@@ -79,28 +80,25 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
   const previewText = getPreviewText(value);
 
   const {
-    actions: { showColorPickerAt, hideSidebar },
+    actions: { showSidebarAt, hideSidebar },
   } = useSidebar();
 
   const ref = useRef();
 
-  const handleOpenEditing = useCallback(() => {
-    showColorPickerAt(ref.current, {
+  const displayColorPicker = useCallback(() => {
+    const props = {
       color: isMultiple ? null : value,
       onChange,
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
-    });
-  }, [
-    showColorPickerAt,
-    hideSidebar,
-    isMultiple,
-    value,
-    onChange,
-    hasGradient,
-    hasOpacity,
-  ]);
+    };
+    return <ColorPicker {...props} />;
+  }, [hasGradient, hasOpacity, hideSidebar, isMultiple, onChange, value]);
+
+  const handleOpenEditing = useCallback(() => {
+    showSidebarAt(ref.current, displayColorPicker);
+  }, [showSidebarAt, displayColorPicker]);
 
   const [hexInputValue, setHexInputValue] = useState('');
 

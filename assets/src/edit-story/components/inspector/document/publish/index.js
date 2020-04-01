@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, Label, Media, Required } from '../../../form';
+import { Row, DropDown, Label, Media, Required, DateTime } from '../../../form';
 import { SimplePanel } from '../../../panels/panel';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
@@ -101,7 +101,7 @@ function PublishPanel() {
   } = useStory();
 
   const {
-    actions: { showCalendarAt, hideSidebar },
+    actions: { showSidebarAt, hideSidebar },
     state: { hasSidebar },
   } = useSidebar();
 
@@ -133,14 +133,20 @@ function PublishPanel() {
   );
 
   const use12HourFormat = is12Hour(timeFormat);
-  const handleOpenCalendar = useCallback(() => {
-    showCalendarAt(dateFieldNode.current, {
+
+  const displayCalendar = useCallback(() => {
+    const props = {
       value: date,
       onChange: handleDateChange,
       is12Hour: use12HourFormat,
       onClose: hideSidebar,
-    });
-  }, [showCalendarAt, date, handleDateChange, use12HourFormat, hideSidebar]);
+    };
+    return <DateTime {...props} />;
+  }, [date, handleDateChange, hideSidebar, use12HourFormat]);
+
+  const handleOpenCalendar = useCallback(() => {
+    showSidebarAt(dateFieldNode.current, displayCalendar);
+  }, [showSidebarAt, displayCalendar]);
 
   const handleChangeCover = useCallback(
     (image) =>

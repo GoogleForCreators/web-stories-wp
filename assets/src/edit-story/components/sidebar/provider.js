@@ -24,8 +24,6 @@ import { useState, useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import ColorPicker from '../../components/colorPicker';
-import DateTime from '../form/dateTime';
 import { WorkspaceLayout, CanvasArea } from '../workspace/layout';
 import Context from './context';
 
@@ -48,36 +46,22 @@ const SidebarContent = styled.div`
   top: ${({ top }) => `${top}px`};
 `;
 
-const TYPE_COLORPICKER = 'colorpicker';
-const TYPE_CALENDAR = 'calendar';
-
 function SidebarProvider({ children }) {
   const [sidebarState, setSidebarState] = useState(null);
 
   const hasSidebar = sidebarState !== null;
   const offset = hasSidebar && sidebarState.offset;
-  const type = hasSidebar && sidebarState.type;
-  const props = hasSidebar && sidebarState.props;
 
   const ref = useRef();
 
-  const showSidebarAt = useCallback((sidebarType, node, sidebarProps) => {
+  const showSidebarAt = useCallback((node, displayContent) => {
     const sidebarOffset =
       node.getBoundingClientRect().y - ref.current.getBoundingClientRect().y;
     setSidebarState({
-      type: sidebarType,
       offset: sidebarOffset,
-      props: sidebarProps,
+      displayContent,
     });
   }, []);
-
-  const showColorPickerAt = (node, colorProps) => {
-    showSidebarAt(TYPE_COLORPICKER, node, colorProps);
-  };
-
-  const showCalendarAt = (node, calendarProps) => {
-    showSidebarAt(TYPE_CALENDAR, node, calendarProps);
-  };
 
   const hideSidebar = useCallback(() => {
     setSidebarState(null);
@@ -88,8 +72,7 @@ function SidebarProvider({ children }) {
       hasSidebar,
     },
     actions: {
-      showColorPickerAt,
-      showCalendarAt,
+      showSidebarAt,
       hideSidebar,
     },
   };
@@ -100,8 +83,7 @@ function SidebarProvider({ children }) {
         <Sidebar ref={ref}>
           {hasSidebar && (
             <SidebarContent top={offset}>
-              {type === TYPE_COLORPICKER && <ColorPicker {...props} />}
-              {type === TYPE_CALENDAR && <DateTime {...props} />}
+              {sidebarState.displayContent && sidebarState.displayContent()}
             </SidebarContent>
           )}
         </Sidebar>
