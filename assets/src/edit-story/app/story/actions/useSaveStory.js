@@ -33,7 +33,6 @@ import { useConfig } from '../../config';
 import { useSnackbar } from '../../snackbar';
 import OutputStory from '../../../output/story';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useSnackbar } from '../../snackbar';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
