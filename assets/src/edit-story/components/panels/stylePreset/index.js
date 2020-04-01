@@ -51,6 +51,7 @@ const buttonCSS = css`
 `;
 
 // Since the whole wrapper title is already a button, can't use button directly here.
+// @todo Use custom title instead to use buttons directly.
 const AddColorPresetButton = styled.div.attrs({
   role: 'button',
 })`
