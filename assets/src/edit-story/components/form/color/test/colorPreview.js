@@ -37,7 +37,7 @@ jest.mock('../getPreviewText', () => jest.fn());
 function arrange(children = null) {
   const sidebarContextValue = {
     actions: {
-      showColorPickerAt: jest.fn(),
+      showSidebarAt: jest.fn(),
       hideSidebar: jest.fn(),
     },
   };
@@ -141,7 +141,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { a: 1 };
-    const { button, showColorPickerAt, hideSidebar } = arrange(
+    const { button, showSidebarAt } = arrange(
       <ColorPreview
         onChange={onChange}
         value={value}
@@ -154,37 +154,10 @@ describe('<ColorPreview />', () => {
 
     fireEvent.click(button);
 
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: value,
-      onChange,
-      hasGradient: true,
-      hasOpacity: false,
-      onClose: hideSidebar,
-    });
-  });
-
-  it('should invoke callback correctly if multiple', () => {
-    const onChange = jest.fn();
-    const onClose = jest.fn();
-    const { button, showColorPickerAt, hideSidebar } = arrange(
-      <ColorPreview
-        onChange={onChange}
-        value={MULTIPLE_VALUE}
-        hasGradient
-        onClose={onClose}
-        label="Color"
-      />
+    expect(showSidebarAt).toHaveBeenCalledWith(
+      expect.any(Object),
+      expect.any(Function)
     );
-
-    fireEvent.click(button);
-
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: null,
-      onChange,
-      hasGradient: true,
-      hasOpacity: true,
-      onClose: hideSidebar,
-    });
   });
 
   it('should invoke onChange when inputting valid hex', () => {

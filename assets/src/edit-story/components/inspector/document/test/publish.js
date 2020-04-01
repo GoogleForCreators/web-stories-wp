@@ -27,6 +27,7 @@ import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
 import theme from '../../../../theme';
 import PublishPanel from '../publish';
+import SidebarContext from '../../../sidebar/context';
 
 function setupPanel(
   capabilities = {
@@ -52,19 +53,32 @@ function setupPanel(
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
   };
-  const { getByText, getByRole, queryByText } = render(
+
+  const showSidebarAt = jest.fn();
+  const sidebarContextValue = {
+    state: {
+      hasSidebar: false,
+    },
+    actions: {
+      showSidebarAt,
+      hideSidebar: jest.fn(),
+    },
+  };
+  const { getByText, queryByText } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
-          <PublishPanel />
+          <SidebarContext.Provider value={sidebarContextValue}>
+            <PublishPanel />
+          </SidebarContext.Provider>
         </InspectorContext.Provider>
       </StoryContext.Provider>
     </ThemeProvider>
   );
   return {
     getByText,
-    getByRole,
     queryByText,
+    showSidebarAt,
   };
 }
 
@@ -92,12 +106,14 @@ describe('PublishPanel', () => {
     expect(element).toBeNull();
   });
 
-  it('should open Date picker when clicking on date', () => {
-    const { getByText, getByRole } = setupPanel();
+  it('should open sidebar when clicking on the date field', () => {
+    const { getByText, showSidebarAt } = setupPanel();
     const element = getByText('01/01/2020');
 
     fireEvent.click(element);
-    const calendar = getByRole('application');
-    expect(calendar).toBeDefined();
+    expect(showSidebarAt).toHaveBeenCalledWith(
+      expect.any(Object),
+      expect.any(Function)
+    );
   });
 });
