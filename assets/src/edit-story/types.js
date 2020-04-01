@@ -158,32 +158,36 @@ const StoryElementPropTypes = {
   opacity: PropTypes.number,
 };
 
+const StoryMediaPropTypes = {
+  scale: PropTypes.number.isRequired,
+  focalX: PropTypes.number,
+  focalY: PropTypes.number,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
 
 StoryPropTypes.elements = {};
 
-StoryPropTypes.elements.media = PropTypes.shape({
-  ...StoryElementPropTypes,
-  scale: PropTypes.number.isRequired,
-  focalX: PropTypes.number,
-  focalY: PropTypes.number,
-});
-
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
-  ...StoryPropTypes.elements.media,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.imageResource,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
-  ...StoryPropTypes.elements.media,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
   loop: PropTypes.bool,
 });
+
+StoryPropTypes.elements.media = PropTypes.oneOfType([
+  StoryPropTypes.elements.image,
+  StoryPropTypes.elements.video,
+]);
 
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
