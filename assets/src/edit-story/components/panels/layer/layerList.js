@@ -37,6 +37,7 @@ const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
   flex-direction: column;
   width: 100%;
   align-items: stretch;
+  user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
 `;
 
 const LayerSeparator = styled(ReorderableSeparator)`
@@ -64,6 +65,7 @@ function LayerPanel({ layers }) {
           position: newPos,
         })
       }
+      getItemSize={() => LAYER_HEIGHT}
     >
       {layers.map((layer) => (
         <Fragment key={layer.id}>

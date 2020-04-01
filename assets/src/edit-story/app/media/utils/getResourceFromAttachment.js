@@ -17,40 +17,41 @@
 /**
  * Internal dependencies
  */
-import getTypeFromMime from './getTypeFromMime';
+import createResource from './createResource';
 
 /**
- * Generates a resource object from a WordPress attachment
+ * Generates a resource object from a WordPress attachment.
  *
- * @param {Object} attachment WP Attachment object
- * @return {Object} Resource object
+ * @param {Object} attachment WP Attachment object.
+ * @return {import('./createResource').Resource} Resource object.
  */
-export const getResourceFromAttachment = (attachment) => {
+function getResourceFromAttachment(attachment) {
   const {
-    src,
-    url,
-    mimeType,
-    oWidth,
-    oHeight,
     id: videoId,
-    posterId,
-    poster,
-    lengthFormatted,
-    local,
+    guid: { rendered: src },
+    media_details: { width, height, length, length_formatted: lengthFormatted, sizes },
+    title: { raw: title },
+    description: { raw: description },
+    mime_type: mimeType,
+    featured_media: posterId,
+    featured_media_src: poster,
+    alt_text: alt,
   } = attachment;
-
-  return {
-    type: getTypeFromMime(mimeType),
-    src: url || src,
-    width: oWidth,
-    height: oHeight,
+  return createResource({
     mimeType,
-    posterId,
+    src,
+    width,
+    height,
     poster,
+    posterId,
     videoId,
+    length,
     lengthFormatted,
-    local,
-  };
-};
+    alt: alt || description,
+    title,
+    sizes,
+    local: false,
+  });
+}
 
 export default getResourceFromAttachment;

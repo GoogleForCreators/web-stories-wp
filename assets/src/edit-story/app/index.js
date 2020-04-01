@@ -52,9 +52,9 @@ function App({ config }) {
         <ConfigProvider config={config}>
           <APIProvider>
             <HistoryProvider size={50}>
-              <StoryProvider storyId={storyId}>
-                <FontProvider>
-                  <SnackbarProvider>
+              <SnackbarProvider>
+                <StoryProvider storyId={storyId}>
+                  <FontProvider>
                     <MediaProvider>
                       <TransformProvider>
                         <DropTargetsProvider>
@@ -68,9 +68,9 @@ function App({ config }) {
                         </DropTargetsProvider>
                       </TransformProvider>
                     </MediaProvider>
-                  </SnackbarProvider>
-                </FontProvider>
-              </StoryProvider>
+                  </FontProvider>
+                </StoryProvider>
+              </SnackbarProvider>
             </HistoryProvider>
           </APIProvider>
         </ConfigProvider>

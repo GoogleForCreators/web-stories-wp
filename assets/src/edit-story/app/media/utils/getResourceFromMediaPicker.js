@@ -17,15 +17,14 @@
 /**
  * Internal dependencies
  */
-import getTypeFromMime from './getTypeFromMime';
+import createResource from './createResource';
 
 /**
- * Generates a resource object from a WordPress media picker object
+ * Generates a resource object from a WordPress media picker object.
  *
- * @param {Object} mediaPickerEl WP Media Picker object
- * @return {Object} Resource object
+ * @param {Object} mediaPickerEl WP Media Picker object.
+ * @return {import('./createResource').Resource} Resource object.
  */
-
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
     src,
@@ -36,17 +35,18 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
+    sizes,
   } = mediaPickerEl;
-  return {
-    type: getTypeFromMime(mimeType),
+  return createResource({
+    mimeType,
     src: url || src,
     width,
     height,
-    mimeType,
-    posterId,
     poster,
+    posterId,
     videoId,
-  };
+    sizes,
+  });
 };
 
 export default getResourceFromMediaPicker;

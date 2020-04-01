@@ -34,8 +34,6 @@ import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
-  getResourceFromAttachment,
-  getAttachmentFromResource,
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
@@ -58,28 +56,22 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
-            attachement: getAttachmentFromResource(
-              await getResourceFromLocalFile(file)
-            ),
+            localResource: await getResourceFromLocalFile(file),
             file,
           }))
         );
 
         if (onLocalFile) {
-          localFiles = localFiles.map(({ attachement, file }) => {
-            const resource = getResourceFromAttachment(attachement);
-            return {
-              attachement,
-              file,
-              element: onLocalFile({
-                resource,
-              }),
-            };
+          localFiles = localFiles.map(({ localResource, file }) => {
+            // @todo: Remove `element` here when the `updateResource` API
+            // lands.
+            const element = onLocalFile({ resource: localResource });
+            return { localResource, file, element };
           });
         }
         setMedia({
           media: [
-            ...localFiles.map(({ attachement }) => attachement),
+            ...localFiles.map(({ localResource }) => localResource),
             ...media,
           ],
         });
@@ -124,15 +116,13 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         showSnackbar({
           message: e.message,
         });
-        localFiles.forEach(({ element }) => {
-          if (element) {
-            if (onUploadFailure) onUploadFailure({ element });
-            setMedia({
-              media: media.filter(
-                ({ id }) => element && element.resource.id !== id
-              ),
-            });
+        localFiles.forEach(({ localResource, element }) => {
+          if (onUploadFailure) {
+            onUploadFailure({ element });
           }
+          setMedia({
+            media: media.filter((resource) => resource !== localResource),
+          });
         });
 
         setIsUploading(false);

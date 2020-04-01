@@ -17,35 +17,35 @@
 /**
  * Internal dependencies
  */
-import getTypeFromMime from './getTypeFromMime';
+import createResource from './createResource';
 
 /**
  * Generates a resource object from the upload API response object
  *
  * @param {Object} file The uploaded file payload.
- * @return {Object} Resource object.
+ * @return {import('./createResource').Resource} Resource object.
  */
-export const getResourceFromUploadAPI = (file) => {
+function getResourceFromUploadAPI(file) {
   const {
+    id: videoId,
     guid: { rendered: src },
     mime_type: mimeType,
-    media_details: { width, height, length_formatted: lengthFormatted },
-    id: videoId,
+    media_details: { width, height, length, length_formatted: lengthFormatted, sizes },
     featured_media: posterId,
     featured_media_src: poster,
   } = file;
-  const type = getTypeFromMime(mimeType);
-  return {
-    type,
+  return createResource({
+    mimeType,
     src,
     width,
     height,
-    mimeType,
+    length,
     lengthFormatted,
-    oWidth: width,
-    oHeight: height,
-    ...(type === 'video' ? { posterId, poster, videoId } : {}),
-  };
-};
+    poster,
+    posterId,
+    videoId,
+    sizes,
+  });
+}
 
 export default getResourceFromUploadAPI;
