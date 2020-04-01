@@ -44,6 +44,7 @@ import getTypeFromMime from './getTypeFromMime';
  * resource.
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
+ * @property {Object} Object of image sizes.
  */
 
 /**

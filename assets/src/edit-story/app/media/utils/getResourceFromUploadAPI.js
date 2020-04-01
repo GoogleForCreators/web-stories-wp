@@ -30,7 +30,13 @@ function getResourceFromUploadAPI(file) {
     id: videoId,
     guid: { rendered: src },
     mime_type: mimeType,
-    media_details: { width, height, length, length_formatted: lengthFormatted, sizes },
+    media_details: {
+      width,
+      height,
+      length,
+      length_formatted: lengthFormatted,
+      sizes,
+    },
     featured_media: posterId,
     featured_media_src: poster,
   } = file;
