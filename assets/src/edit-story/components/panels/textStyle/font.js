@@ -73,6 +73,8 @@ function FontControls({ selectedElements, pushUpdate }) {
                 ({ value: weight }) => weight
               );
 
+              // Find the nearest font weight from the available font weight list
+              // If no fontweightsArr available then will return undefined
               const newFontWeight =
                 fontWeightsArr &&
                 fontWeightsArr.reduce((a, b) =>
