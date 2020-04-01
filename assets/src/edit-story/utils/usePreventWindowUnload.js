@@ -39,12 +39,10 @@ export const beforeUnloadListener = (event) => {
 function usePreventWindowUnload(condition = false) {
   useEffect(() => {
     if (condition) {
-      window.addEventListener('beforeunload', beforeUnloadListener);
+      return window.addEventListener('beforeunload', beforeUnloadListener);
     }
 
-    return () => {
-      window.removeEventListener('beforeunload', beforeUnloadListener);
-    };
+    return window.removeEventListener('beforeunload', beforeUnloadListener);
   }, [condition]);
 }
 
