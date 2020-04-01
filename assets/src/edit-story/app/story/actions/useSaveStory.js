@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
@@ -68,57 +69,35 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(
-    (currentStatus) => {
+    (props) => {
       setIsSaving(true);
-      const {
-        title,
-        status,
-        author,
-        date,
-        modified,
-        slug,
-        excerpt,
-        featuredMedia,
-        password,
-        publisherLogo,
-        autoAdvance,
-        defaultPageDuration,
-      } = story;
-
+      const propsToSave = objectPick(story, [
+        'title',
+        'status',
+        'author',
+        'date',
+        'modified',
+        'slug',
+        'excerpt',
+        'featuredMedia',
+        'password',
+        'publisherLogo',
+        'autoAdvance',
+        'defaultPageDuration',
+      ]);
       const content = getStoryMarkup(story, pages, metadata);
       saveStoryById({
         storyId,
-        title,
-        status: currentStatus ? currentStatus : status,
-        pages,
-        author,
-        slug,
-        date,
-        modified,
         content,
-        excerpt,
-        featuredMedia,
-        password,
-        publisherLogo,
-        autoAdvance,
-        defaultPageDuration,
+        ...propsToSave,
+        ...props,
       })
         .then((post) => {
-          const {
-            status: newStatus,
-            slug: newSlug,
-            link,
-            featured_media_url: featuredMediaUrl,
-          } = post;
-
-          updateStory({
-            properties: {
-              status: newStatus,
-              slug: newSlug,
-              link,
-              featuredMediaUrl,
-            },
-          });
+          const properties = {
+            ...objectPick(post, ['status', 'slug', 'link']),
+            featuredMediaUrl: post.featured_media_url,
+          };
+          updateStory({ properties });
 
           refreshPostEditURL();
         })

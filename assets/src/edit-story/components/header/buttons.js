@@ -87,7 +87,7 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
-    saveStory('publish');
+    saveStory({ status: 'publish' });
     refreshPostEditURL();
   }, [refreshPostEditURL, saveStory]);
 
@@ -112,7 +112,9 @@ function SwitchToDraft() {
     state: { isUploading },
   } = useMedia();
 
-  const handleUnPublish = useCallback(() => saveStory('draft'), [saveStory]);
+  const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
+    saveStory,
+  ]);
 
   return (
     <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
@@ -146,7 +148,7 @@ function Update() {
       text = __('Save draft', 'web-stories');
       return (
         <Outline
-          onClick={() => saveStory('draft')}
+          onClick={() => saveStory({ status: 'draft' })}
           isDisabled={isSaving || isUploading}
         >
           {text}
