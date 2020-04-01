@@ -44,6 +44,7 @@ import MyStoriesSearch from './myStoriesSearch';
 const PageHeading = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 40px 20px;
 `;
 
 const SearchContainer = styled.div`
@@ -51,7 +52,6 @@ const SearchContainer = styled.div`
   right: 20px;
   display: flex;
   justify-content: flex-end;
-  margin-top: 40px;
 `;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;

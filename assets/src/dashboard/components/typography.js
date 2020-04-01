@@ -25,5 +25,4 @@ export const ViewHeader = styled.h1`
   line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
   font-weight: bold;
-  margin: 40px 20px;
 `;
