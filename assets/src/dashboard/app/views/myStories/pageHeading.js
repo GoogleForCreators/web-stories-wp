@@ -31,7 +31,7 @@ import PropTypes from 'prop-types';
 import { ViewHeader } from '../../../components';
 import MyStoriesSearch from './myStoriesSearch';
 
-const PageHeading = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 40px 20px;
@@ -51,10 +51,11 @@ const SearchContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const MyStoriesPageHeading = ({
-  typeaheadValue = '',
-  handleTypeaheadChange,
+const PageHeading = ({
+  defaultTitle,
   filteredStories = [],
+  handleTypeaheadChange,
+  typeaheadValue = '',
 }) => {
   const viewHeaderText =
     typeaheadValue.length > 0 ? (
@@ -62,11 +63,11 @@ const MyStoriesPageHeading = ({
         {__('Results for', 'web-stories')} {typeaheadValue}
       </>
     ) : (
-      __('My Stories', 'web-stories')
+      defaultTitle
     );
 
   return (
-    <PageHeading>
+    <Container>
       <ViewHeaderContainer>
         <ViewHeader>{viewHeaderText}</ViewHeader>
       </ViewHeaderContainer>
@@ -77,19 +78,20 @@ const MyStoriesPageHeading = ({
           handleChange={handleTypeaheadChange}
         />
       </SearchContainer>
-    </PageHeading>
+    </Container>
   );
 };
 
-MyStoriesPageHeading.propTypes = {
-  typeaheadValue: PropTypes.string,
-  handleTypeaheadChange: PropTypes.func,
+PageHeading.propTypes = {
+  defaultTitle: PropTypes.string.isRequired,
   filteredStories: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     })
   ),
+  handleTypeaheadChange: PropTypes.func,
+  typeaheadValue: PropTypes.string,
 };
 
-export default MyStoriesPageHeading;
+export default PageHeading;

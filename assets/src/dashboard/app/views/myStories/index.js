@@ -38,7 +38,7 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
-import MyStoriesPageHeading from './myStoriesPageHeading';
+import PageHeading from './pageHeading';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
@@ -77,9 +77,10 @@ function MyStories() {
 
   return (
     <>
-      <MyStoriesPageHeading
-        handleTypeaheadChange={setTypeaheadValue}
+      <PageHeading
+        defaultTitle={__('My Stories', 'web-stories')}
         filteredStories={filteredStories}
+        handleTypeaheadChange={setTypeaheadValue}
         typeaheadValue={typeaheadValue}
       />
 
