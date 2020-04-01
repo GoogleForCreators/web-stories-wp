@@ -29,7 +29,6 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
  * Internal dependencies
  */
 import {
-  ViewHeader,
   FloatingTab,
   StoryGrid,
   CardGridItem,
@@ -39,20 +38,8 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
-import MyStoriesSearch from './myStoriesSearch';
+import MyStoriesPageHeading from './myStoriesPageHeading';
 
-const PageHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 40px 20px;
-`;
-
-const SearchContainer = styled.div`
-  position: absolute;
-  right: 20px;
-  display: flex;
-  justify-content: flex-end;
-`;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
@@ -74,15 +61,9 @@ function MyStories() {
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue
-        .toString()
-        .toLowerCase()
-        .trim();
+      const lowerTypeaheadValue = typeaheadValue.toLowerCase().trim();
 
-      return (
-        story.title.toLowerCase().includes(lowerTypeaheadValue) ||
-        story.id.toString().toLowerCase().includes(lowerTypeaheadValue)
-      );
+      return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
 
@@ -96,16 +77,11 @@ function MyStories() {
 
   return (
     <>
-      <PageHeading>
-        <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
-        <SearchContainer>
-          <MyStoriesSearch
-            currentValue={typeaheadValue}
-            filteredStories={filteredStories}
-            handleChange={setTypeaheadValue}
-          />
-        </SearchContainer>
-      </PageHeading>
+      <MyStoriesPageHeading
+        handleTypeaheadChange={setTypeaheadValue}
+        filteredStories={filteredStories}
+        typeaheadValue={typeaheadValue}
+      />
 
       <FilterContainer>
         {STORY_STATUSES.map((storyStatus) => (

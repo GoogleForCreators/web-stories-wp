@@ -287,11 +287,7 @@ TypeaheadInput.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool,
-        PropTypes.number,
-      ]).isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
     })
   ).isRequired,
 
@@ -302,11 +298,7 @@ TypeaheadInput.propTypes = {
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.number,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default TypeaheadInput;
