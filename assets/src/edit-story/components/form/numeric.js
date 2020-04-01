@@ -121,7 +121,9 @@ function Numeric({
         }}
         onBlur={(evt) => {
           if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
+            evt.target.form.dispatchEvent(
+              new window.Event('submit', { cancelable: true })
+            );
           }
           if (onBlur) {
             onBlur();
