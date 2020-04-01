@@ -179,7 +179,7 @@ function TextOutput({ element }) {
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
-      dataToFontSizeY={(y) => `${dataToEditorY(y, 100) / 10}em`}
+      dataToFontSizeY={(y) => `${(dataToEditorY(y, 100) / 10).toFixed(6)}em`}
     />
   );
 }
