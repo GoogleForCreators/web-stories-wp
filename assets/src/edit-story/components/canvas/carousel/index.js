@@ -46,12 +46,11 @@ import {
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
 import DropZoneProvider from '../../dropzone/dropZoneProvider';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 import { THUMB_FRAME_HEIGHT, THUMB_FRAME_WIDTH } from '../pagepreview';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
-const SCROLLBAR_HEIGHT = 8;
 
 const Wrapper = styled.div`
   position: relative;
@@ -117,18 +116,21 @@ const List = styled(Area).attrs({
   overflow-x: scroll;
   overflow-y: hidden;
   margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
-  scrollbar-color: rgba(255, 255, 255, 0.54) transparent;
-  scrollbar-width: auto;
-  &::-webkit-scrollbar {
-    width: ${SCROLLBAR_HEIGHT}px;
-    height: ${SCROLLBAR_HEIGHT}px;
-  }
+
+  /*
+   * These overrides are an exception - generally scrollbars should all
+   * look the same. We do this only here because this scrollbar is always visible.
+   * /
+  scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+    ${({ theme }) => theme.colors.bg.v1} !important;
+
   &::-webkit-scrollbar-track {
-    background-color: transparent;
+    background: ${({ theme }) => theme.colors.bg.v1} !important;
   }
+
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.54);
-    border-radius: ${SCROLLBAR_HEIGHT * 2}px;
+    border: 2px solid ${({ theme }) => theme.colors.bg.v1} !important;
+    border-top-width: 3px !important;
   }
 `;
 
@@ -255,7 +257,7 @@ function Carousel() {
     [carouselSize]
   );
   const arrowsBottomMargin = isCompact
-    ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_HEIGHT
+    ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_WIDTH
     : CAROUSEL_BOTTOM_SCROLL_MARGIN;
 
   return (

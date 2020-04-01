@@ -29,6 +29,7 @@ import {
   LIBRARY_MIN_WIDTH,
   LIBRARY_MAX_WIDTH,
   INSPECTOR_MIN_WIDTH,
+  SCROLLBAR_WIDTH,
 } from '../../constants';
 
 const Editor = styled.div`
@@ -50,7 +51,8 @@ const Editor = styled.div`
   }
 
   *::-webkit-scrollbar {
-    width: 11px;
+    width: ${SCROLLBAR_WIDTH}px;
+    height: ${SCROLLBAR_WIDTH}px;
   }
 
   *::-webkit-scrollbar-track {
@@ -61,6 +63,7 @@ const Editor = styled.div`
     background-color: ${({ theme }) => theme.colors.bg.v10};
     border: 2px solid ${({ theme }) => theme.colors.bg.v3};
     border-left-width: 3px;
+    border-top-width: 3px;
     border-radius: 6px;
   }
 
