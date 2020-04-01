@@ -38,7 +38,7 @@ const Content = styled.div`
 `;
 
 export default {
-  title: 'Components/Tooltip',
+  title: 'Stories Editor/Components/Tooltip',
   component: WithTooltip,
 };
 
