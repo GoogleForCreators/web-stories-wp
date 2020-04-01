@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useCallback } from 'react';
 
 /**
  * Internal dependencies
