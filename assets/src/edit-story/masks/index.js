@@ -142,6 +142,10 @@ export function getElementMask({ type, mask }) {
   return getDefaultElementMask(type);
 }
 
+export function getMaskByType(type) {
+  return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
+}
+
 function getDefaultElementMask(type) {
   const { isMaskable } = getDefinitionForType(type);
   return isMaskable ? DEFAULT_MASK : null;

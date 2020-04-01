@@ -118,7 +118,7 @@ function DesignPanel({
     setTimeout(() => {
       const form = formRef.current;
       if (form) {
-        form.dispatchEvent(new window.Event('submit'));
+        form.dispatchEvent(new window.Event('submit', { cancelable: true }));
       }
     });
   }, []);

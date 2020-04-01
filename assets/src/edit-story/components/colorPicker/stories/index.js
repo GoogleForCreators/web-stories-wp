@@ -25,7 +25,7 @@ import { object } from '@storybook/addon-knobs';
 import ColorPicker from '../';
 
 export default {
-  title: 'Components/Color Picker',
+  title: 'Stories Editor/Components/Color Picker',
   component: ColorPicker,
 };
 

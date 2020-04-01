@@ -20,6 +20,7 @@
 import PublishPanel from './publish';
 import SlugPanel from './slug';
 import StatusPanel from './status';
+import PageAdvancement from './pageAdvancement';
 
 function DocumentInspector() {
   return (
@@ -27,6 +28,7 @@ function DocumentInspector() {
       <StatusPanel />
       <PublishPanel />
       <SlugPanel />
+      <PageAdvancement />
     </>
   );
 }

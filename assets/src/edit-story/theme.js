@@ -75,8 +75,13 @@ const theme = {
     required: '#FF9797',
     selection: '#44aaff',
     success: { v0: '#14FF00' },
+    textHighlight: '#EDFF7C',
     grayout: 'rgba(0, 0, 0, 0.5)',
     whiteout: 'rgba(255, 255, 255, 0.5)',
+    loading: {
+      primary: '#4285F4',
+      secondary: '#15D8FD',
+    },
     link: '#4285f4',
     t: {
       bg: '#000000CC',

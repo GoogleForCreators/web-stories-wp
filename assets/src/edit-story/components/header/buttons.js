@@ -18,20 +18,21 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Spinner } from '@wordpress/components';
-import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory } from '../../app';
+import { useStory, useMedia } from '../../app';
+import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
+import CircularProgress from '../circularProgress';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -74,23 +75,27 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
-      story: { date },
+      story: { date, storyId },
     },
     actions: { updateStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
 
-  const handlePublish = useCallback(
-    () => updateStory({ properties: { status: 'publish' } }),
-    [updateStory]
-  );
+  const handlePublish = useCallback(() => {
+    updateStory({ properties: { status: 'publish' } });
+    refreshPostEditURL();
+  }, [refreshPostEditURL, updateStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving}>
+    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
@@ -103,6 +108,9 @@ function SwitchToDraft() {
     },
     actions: { updateStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
   const handleUnPublish = useCallback(
     () => updateStory({ properties: { status: 'draft' } }),
@@ -110,7 +118,7 @@ function SwitchToDraft() {
   );
 
   return (
-    <Outline onClick={handleUnPublish} isDisabled={isSaving}>
+    <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
       {__('Switch to Draft', 'web-stories')}
     </Outline>
   );
@@ -124,6 +132,9 @@ function Update() {
     },
     actions: { saveStory },
   } = useStory();
+  const {
+    state: { isUploading },
+  } = useMedia();
 
   let text;
 
@@ -138,14 +149,14 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving}>
+        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
           {text}
         </Outline>
       );
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving}>
+    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
@@ -153,10 +164,16 @@ function Update() {
 
 function Loading() {
   const {
-    state: { isSaving },
+    state: {
+      meta: { isSaving },
+    },
   } = useStory();
-
-  return isSaving ? <Spinner /> : <Space />;
+  return (
+    <>
+      {isSaving && <CircularProgress size={30} />}
+      <Space />
+    </>
+  );
 }
 
 function Buttons() {
