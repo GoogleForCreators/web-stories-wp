@@ -68,7 +68,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(
-    (props) => {
+    (currentStatus) => {
       setIsSaving(true);
       const {
         title,
@@ -89,7 +89,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       saveStoryById({
         storyId,
         title,
-        status: props?.status ? props?.status : status,
+        status: currentStatus ? currentStatus : status,
         pages,
         author,
         slug,

@@ -28,14 +28,14 @@ import Buttons from '../buttons';
 import theme from '../../../theme';
 
 function setupButtons(extraStoryProps, extraMetaProps) {
-  const updateStory = jest.fn();
+  const saveStory = jest.fn();
 
   const storyContextValue = {
     state: {
       meta: { isSaving: false, ...extraMetaProps },
       story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
     },
-    actions: { updateStory },
+    actions: { saveStory },
   };
   const { getByText, container } = render(
     <ThemeProvider theme={theme}>
@@ -47,7 +47,7 @@ function setupButtons(extraStoryProps, extraMetaProps) {
   return {
     container,
     getByText,
-    updateStory,
+    saveStory,
   };
 }
 
@@ -61,25 +61,25 @@ describe('buttons', () => {
   });
 
   it('should update window location when publishing', () => {
-    const { getByText, updateStory } = setupButtons();
+    const { getByText, saveStory } = setupButtons();
     const publishButton = getByText('Publish');
 
     fireEvent.click(publishButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
     expect(window.location.href).toContain('post=123&action=edit');
   });
 
   it('should display Switch to draft button when published', () => {
-    const { getByText, updateStory } = setupButtons({ status: 'publish' });
+    const { getByText, saveStory } = setupButtons({ status: 'publish' });
     const draftButton = getByText('Switch to Draft');
 
     expect(draftButton).toBeDefined();
     fireEvent.click(draftButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
   it('should display Schedule button when future date is set', () => {
-    const { getByText, updateStory } = setupButtons({
+    const { getByText, saveStory } = setupButtons({
       status: 'draft',
       date: FUTURE_DATE,
     });
@@ -87,7 +87,7 @@ describe('buttons', () => {
 
     expect(scheduleButton).toBeDefined();
     fireEvent.click(scheduleButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
   it('should display Schedule button with future status', () => {
