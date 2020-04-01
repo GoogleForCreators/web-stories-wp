@@ -33,6 +33,7 @@ import getCommonValue from './utils/getCommonValue';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
+  const isBackground = getCommonValue(selectedElements, 'isBackground');
 
   return (
     <SimplePanel name="style" title={__('Style', 'web-stories')}>
@@ -43,6 +44,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
           isMultiple={backgroundColor === ''}
           onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
+          hasOpacity={!isBackground}
         />
       </Row>
     </SimplePanel>

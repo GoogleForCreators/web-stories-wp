@@ -18,6 +18,12 @@
         "ignoreTypes": ["overlay", "container"]
       }
     ],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": ["clip-path"]
+      }
+    ],
     "unit-no-unknown": [
       true,
       {

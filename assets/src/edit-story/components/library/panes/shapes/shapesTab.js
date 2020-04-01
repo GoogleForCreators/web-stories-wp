@@ -23,8 +23,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Tab } from '../shared';
+import { ReactComponent as ShapesIcon } from '../../../../icons/shapes.svg';
 import paneId from './paneId';
-import { ReactComponent as ShapesIcon } from './shapes.svg';
 
 function ShapesTab(props) {
   return (

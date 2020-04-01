@@ -40,7 +40,6 @@ import {
 } from '../../link';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
-import { ReactComponent as Info } from '../../../icons/info.svg';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import Dialog from '../../dialog';
@@ -48,25 +47,10 @@ import theme from '../../../theme';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { Plain } from '../../button';
 import { useCanvas } from '../../canvas';
-import LinkInfoDialog from './infoDialog';
+import LinkInfoDialog from './dialogContent';
 
 const BrandIconText = styled.span`
   margin-left: 12px;
-`;
-
-const ActionableNote = styled(Note)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
-const InfoIcon = styled(Info)`
-  width: 13px;
-  height: 13px;
-  margin-top: -2px;
-  margin-left: 2px;
-  justify-self: flex-end;
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
@@ -172,10 +156,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
-        <ActionableNote onClick={() => openDialog()}>
-          {__('Enter an address to apply a 1 or 2-tap link', 'web-stories')}
-          <InfoIcon />
-        </ActionableNote>
+        <Note onClick={() => openDialog()}>
+          {__('Type an address to apply a 1 or 2-tap link', 'web-stories')}
+        </Note>
       </Row>
 
       <Row>

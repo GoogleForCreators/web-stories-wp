@@ -25,11 +25,19 @@ function CustomStyles() {
               .page-safe-area {
                 position: absolute;
                 overflow: hidden;
-                margin: auto;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
+              }
+
+              .page-cta-area {
+                position: absolute;
+                overflow: hidden;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: calc(100 * var(--story-page-vh, 1vh));
               }
 
               .page-background-area img, .page-background-area video {

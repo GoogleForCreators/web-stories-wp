@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import BackgroundDisplayPanel from '../backgroundDisplay.js';
+import BackgroundDisplayPanel from '../backgroundDisplay';
 import { renderPanel } from './_utils';
 
 function setupPanel(isFullbleedBackground = undefined) {

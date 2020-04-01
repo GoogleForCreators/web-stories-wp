@@ -23,9 +23,8 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
+import TypeaheadInput from '..';
 import theme from '../../../theme';
-
-import TypeaheadInput from '../';
 
 const wrapper = (children) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
@@ -54,15 +53,12 @@ describe('TypeaheadInput', () => {
     );
 
     const Input = getByRole('textbox');
-    const Options = getByRole('list');
 
     expect(Input).toBeDefined();
-
-    expect(Options).toBeDefined();
   });
 
   it('should clear input value when button is clicked', () => {
-    const { getByRole } = wrapper(
+    const { getByRole, getByTestId } = wrapper(
       <TypeaheadInput
         inputId={'demo-search-component'}
         placeholder="placeholder text"
@@ -78,31 +74,10 @@ describe('TypeaheadInput', () => {
     const inputValue = Input.value;
     expect(inputValue).toContain('test');
 
-    const ClearButton = getByRole('button');
+    const ClearButton = getByTestId('clear-search');
 
     fireEvent.click(ClearButton);
     const inputValue2 = Input.value;
     expect(inputValue2).toBe('');
-  });
-
-  it('should on select of demoItems[1] update input value', () => {
-    const { getByRole, getByText } = wrapper(
-      <TypeaheadInput
-        inputId={'demo-search-component'}
-        placeholder="placeholder text"
-        ariaLabel="my typeahead input label"
-        value={''}
-        onChange={onClickMock}
-        items={demoItems}
-        isOpen
-      />
-    );
-
-    const Input = getByRole('textbox');
-    const Option2 = getByText(demoItems[1].label);
-    expect(Input).toBeDefined();
-    fireEvent.click(Option2);
-    const inputValue = Input.value;
-    expect(inputValue).toContain(demoItems[1].label);
   });
 });

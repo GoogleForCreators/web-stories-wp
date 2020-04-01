@@ -55,10 +55,7 @@ const CardTitle = ({ title, modifiedDate }) => (
   <StyledCardTitle>
     <StyledTitle>{title}</StyledTitle>
     <StyledDate>{`
-      ${__('Modified', 'web-stories')} ${modifiedDate} ${__(
-      'ago',
-      'web-stories'
-    )}`}</StyledDate>
+      ${__('Modified', 'web-stories')} ${modifiedDate} `}</StyledDate>
   </StyledCardTitle>
 );
 
