@@ -27,10 +27,10 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_WIDTH = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
 
-export const PAGE_WIDTH = 1080;
-export const PAGE_HEIGHT = 1920;
-export const DEFAULT_EDITOR_PAGE_WIDTH = 412;
-export const DEFAULT_EDITOR_PAGE_HEIGHT = 732;
+export const PAGE_WIDTH = 440;
+export const PAGE_HEIGHT = 660;
+export const DEFAULT_EDITOR_PAGE_WIDTH = PAGE_WIDTH;
+export const DEFAULT_EDITOR_PAGE_HEIGHT = PAGE_HEIGHT;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;

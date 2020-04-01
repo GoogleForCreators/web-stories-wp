@@ -58,6 +58,15 @@ const PRESETS = [
   },
 ];
 
+function getPresetById(id) {
+  for (let i = 0; i < PRESETS.length; i++) {
+    if (PRESETS[i].id === id) {
+      return PRESETS[i];
+    }
+  }
+  return null;
+}
+
 function TextPane(props) {
   const {
     actions: { insertElement },
@@ -70,31 +79,35 @@ function TextPane(props) {
         onChange={() => {}}
       />
 
-      <Section title={__('Presets', 'web-stories')}>
-        <MainButton
-          onClick={() =>
-            insertElement('text', {
-              content: __('Text', 'web-stories'),
-              color: createSolid(0, 0, 0),
-              width: DEFAULT_ELEMENT_WIDTH,
-            })
-          }
-        >
-          {__('Add Text', 'web-stories')}
-        </MainButton>
-
+      <Section
+        title={__('Presets', 'web-stories')}
+        titleTools={
+          <MainButton
+            onClick={() =>
+              insertElement('text', {
+                ...getPresetById('subheading'),
+                content: __('Text...', 'web-stories'),
+                color: createSolid(0, 0, 0),
+                width: DEFAULT_ELEMENT_WIDTH,
+              })
+            }
+          >
+            {__('Add new text', 'web-stories')}
+          </MainButton>
+        }
+      >
         {PRESETS.map((preset) => (
           <FontPreview
             key={`preset-${preset.id}`}
             {...preset}
             onClick={() =>
               insertElement('text', {
-                content: __('Text', 'web-stories'),
+                ...preset,
+                content: __('Text...', 'web-stories'),
                 color: createSolid(0, 0, 0),
                 backgroundColor: createSolid(196, 196, 196),
                 backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
-                ...preset,
               })
             }
           />

@@ -18,12 +18,47 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
-const Note = styled.span`
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as Info } from '../../../icons/info.svg';
+
+const NoteContainer = styled.span`
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;
+  flex: 1;
+  ${({ onClick }) => Boolean(onClick) && `cursor: pointer;`}
 `;
+
+const InfoIcon = styled(Info)`
+  min-width: 14px;
+  min-height: 14px;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: text-top;
+  margin-left: 4px;
+`;
+
+const Note = ({ onClick, children }) => {
+  return (
+    <NoteContainer onClick={onClick}>
+      {children}
+      {Boolean(onClick) && <InfoIcon />}
+    </NoteContainer>
+  );
+};
+
+Note.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  onClick: PropTypes.func,
+};
 
 export default Note;

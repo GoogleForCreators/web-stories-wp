@@ -36,7 +36,6 @@ import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import { useStory } from '../../../app';
 import useLayerSelection from './useLayerSelection';
-import useLayerReordering from './useLayerReordering';
 import { LAYER_HEIGHT } from './constants';
 
 const LayerButton = styled.button.attrs({
@@ -106,7 +105,6 @@ const LayerContentContainer = styled.div`
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const { handleStartReordering } = useLayerReordering(layer);
   const {
     state: { currentPage },
   } = useStory();
@@ -118,7 +116,6 @@ function Layer({ layer }) {
       id={`layer-${layer.id}`}
       isSelected={isSelected}
       onClick={handleClick}
-      onPointerDown={handleStartReordering}
     >
       <LayerIconWrapper>
         {isBackground ? (

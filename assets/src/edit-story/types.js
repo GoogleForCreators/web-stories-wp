@@ -65,6 +65,8 @@ StoryPropTypes.story = PropTypes.shape({
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
+  autoAdvance: PropTypes.bool,
+  defaultPageDuration: PropTypes.number,
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -105,21 +107,25 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
   videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([
@@ -152,6 +158,12 @@ const StoryElementPropTypes = {
   opacity: PropTypes.number,
 };
 
+const StoryMediaPropTypes = {
+  scale: PropTypes.number.isRequired,
+  focalX: PropTypes.number,
+  focalY: PropTypes.number,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
@@ -160,18 +172,22 @@ StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.imageResource,
-  scale: PropTypes.number.isRequired,
-  focalX: PropTypes.number,
-  focalY: PropTypes.number,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
   loop: PropTypes.bool,
 });
+
+StoryPropTypes.elements.media = PropTypes.oneOfType([
+  StoryPropTypes.elements.image,
+  StoryPropTypes.elements.video,
+]);
 
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,

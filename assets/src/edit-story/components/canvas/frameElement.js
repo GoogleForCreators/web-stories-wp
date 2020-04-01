@@ -54,6 +54,12 @@ const Wrapper = styled.div`
 	}
 `;
 
+const EmptyFrame = styled.div`
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`;
+
 function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable } = getDefinitionForType(type);
@@ -109,7 +115,9 @@ function FrameElement({ element }) {
         <WithMask element={element} fill={true}>
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
-          ) : null}
+          ) : (
+            <EmptyFrame />
+          )}
         </WithMask>
       </WithLink>
     </Wrapper>

@@ -33,17 +33,20 @@ import { useStory } from '../../../app/story';
 import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
 import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+import { THUMB_FRAME_HEIGHT, THUMB_FRAME_WIDTH } from '../pagepreview';
 
-const PAGE_WIDTH = 90;
-const PAGE_HEIGHT = 160;
-
+const PREVIEW_WIDTH = 90;
+const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
 const GRID_GAP = 20;
 
 const Wrapper = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: ${({ scale }) =>
-    `repeat(auto-fit, minmax(${scale * PAGE_WIDTH}px, max-content))`};
+    `repeat(auto-fit, minmax(${
+      scale * PREVIEW_WIDTH + THUMB_FRAME_WIDTH
+    }px, max-content))`};
   grid-gap: ${GRID_GAP}px;
   justify-content: center;
   justify-items: center;
@@ -181,8 +184,8 @@ function GridView() {
               }
               isActive={isCurrentPage}
               pageIndex={index}
-              width={zoomLevel * PAGE_WIDTH}
-              height={zoomLevel * PAGE_HEIGHT}
+              width={zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH}
+              height={zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT}
               dragIndicatorOffset={GRID_GAP / 2}
             />
           );

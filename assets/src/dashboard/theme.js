@@ -98,6 +98,9 @@ const theme = {
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
   },
+  chip: {
+    shadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
+  },
   boxShadow: {
     expandedTypeahead:
       '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
@@ -174,6 +177,17 @@ const theme = {
       weight: '500',
       letterSpacing: '0.01em',
     },
+    storyGridItem: {
+      family: "'Google Sans', Sans Serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
+    storyGridItemSub: {
+      family: 'Roboto',
+      weight: 'normal',
+    },
     typeaheadInput: {
       family: "'Google Sans', Sans Serif",
       size: '14px',
@@ -194,28 +208,32 @@ const theme = {
       columns: 5,
       gap: '25px',
       itemWidth: '221px',
-      itemHeight: '453px',
+      itemHeight: '391px',
+      imageHeight: '331px',
       fr: '1fr',
     },
     tablet: {
       columns: 5,
       gap: '22px',
       itemWidth: '189px',
-      itemHeight: '395px',
+      itemHeight: '324px',
+      imageHeight: '284px',
       fr: '1fr',
     },
     mobile: {
       columns: 4,
       gap: '20px',
       itemWidth: '162px',
-      itemHeight: '347px',
+      itemHeight: '303px',
+      imageHeight: '243px',
       fr: '1fr',
     },
     min: {
       columns: 3,
       gap: '24px',
       itemWidth: '185px',
-      itemHeight: '395px',
+      itemHeight: '338px',
+      imageHeight: '278px',
       fr: '1fr',
     },
   },

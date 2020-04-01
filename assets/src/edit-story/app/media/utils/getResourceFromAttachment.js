@@ -1,0 +1,56 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Internal dependencies
+ */
+import createResource from './createResource';
+
+/**
+ * Generates a resource object from a WordPress attachment.
+ *
+ * @param {Object} attachment WP Attachment object.
+ * @return {import('./createResource').Resource} Resource object.
+ */
+function getResourceFromAttachment(attachment) {
+  const {
+    id: videoId,
+    guid: { rendered: src },
+    media_details: { width, height, length, length_formatted: lengthFormatted },
+    title: { raw: title },
+    description: { raw: description },
+    mime_type: mimeType,
+    featured_media: posterId,
+    featured_media_src: poster,
+    alt_text: alt,
+  } = attachment;
+  return createResource({
+    mimeType,
+    src,
+    width,
+    height,
+    poster,
+    posterId,
+    videoId,
+    length,
+    lengthFormatted,
+    alt: alt || description,
+    title,
+    local: false,
+  });
+}
+
+export default getResourceFromAttachment;

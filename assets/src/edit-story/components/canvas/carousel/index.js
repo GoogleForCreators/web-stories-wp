@@ -18,7 +18,8 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useLayoutEffect, useRef, useState, useCallback } from 'react';
+import { rgba } from 'polished';
+import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -34,6 +35,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
+  Plain,
 } from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
@@ -44,10 +46,11 @@ import {
   CAROUSEL_VERTICAL_PADDING,
 } from '../layout';
 import DropZoneProvider from '../../dropzone/dropZoneProvider';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+import { THUMB_FRAME_HEIGHT, THUMB_FRAME_WIDTH } from '../pagepreview';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
-
 const SCROLLBAR_HEIGHT = 8;
 
 const Wrapper = styled.div`
@@ -73,6 +76,14 @@ const NavArea = styled(Area)`
 `;
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
+
+const PlainStyled = styled(Plain)`
+  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  &:hover {
+    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.25)};
+  }
+`;
 
 const MenuIconsWrapper = styled.div`
   ${({ isCompact }) =>
@@ -130,15 +141,21 @@ const Li = styled.li.attrs({
   }
 `;
 
+const GridViewContainer = styled.div`
+  flex: 1;
+  margin: 70px 170px 70px 170px;
+  pointer-events: all;
+`;
+
 function calculatePageThumbSize(carouselSize) {
-  const aspectRatio = 9 / 16;
+  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
   const availableHeight =
     carouselSize.height -
     CAROUSEL_VERTICAL_PADDING * 2 -
     CAROUSEL_BOTTOM_SCROLL_MARGIN;
-  const height = availableHeight;
-  const width = availableHeight * aspectRatio;
-  return [width, height];
+  const pageHeight = availableHeight - THUMB_FRAME_HEIGHT;
+  const pageWidth = pageHeight * aspectRatio;
+  return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
 
 function Carousel() {
@@ -233,8 +250,9 @@ function Carousel() {
   const NextButton = isRTL ? LeftArrow : RightArrow;
 
   const Item = isCompact ? CompactIndicator : DraggablePage;
-  const [pageThumbWidth, pageThumbHeight] = calculatePageThumbSize(
-    carouselSize
+  const [pageThumbWidth, pageThumbHeight] = useMemo(
+    () => calculatePageThumbSize(carouselSize),
+    [carouselSize]
   );
   const arrowsBottomMargin = isCompact
     ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_HEIGHT
@@ -313,16 +331,25 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
-      {isGridViewOpen && (
-        <Modal
-          isOpen={isGridViewOpen}
-          onRequestClose={closeModal}
-          contentLabel={__('Grid View', 'web-stories')}
-          closeButtonLabel={__('Back', 'web-stories')}
-        >
+      <Modal
+        open={isGridViewOpen}
+        onClose={closeModal}
+        contentLabel={__('Grid View', 'web-stories')}
+        overlayStyles={{
+          alignItems: 'flex-start',
+        }}
+        contentStyles={{
+          pointerEvents: 'none',
+          flex: 1,
+        }}
+      >
+        <GridViewContainer>
+          <PlainStyled onClick={() => closeModal()}>
+            {__('Back', 'web-stories')}
+          </PlainStyled>
           <GridView />
-        </Modal>
-      )}
+        </GridViewContainer>
+      </Modal>
     </DropZoneProvider>
   );
 }

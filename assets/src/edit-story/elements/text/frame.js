@@ -28,41 +28,28 @@ import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWi
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import { useUnits } from '../../units';
-import { elementFillContent, elementWithFont } from '../shared';
+import {
+  elementFillContent,
+  elementWithFont,
+  elementWithTextParagraphStyle,
+} from '../shared';
 import StoryPropTypes from '../../types';
-import { generateFontFamily } from './util';
+import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
-  margin: 0;
   ${elementFillContent}
   ${elementWithFont}
+  ${elementWithTextParagraphStyle}
 
   opacity: 0;
   user-select: none;
 `;
 
-function TextFrame({
-  element: {
-    id,
-    content,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-  },
-  wrapperRef,
-}) {
+function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorX, dataToEditorY },
   } = useUnits();
-  const props = {
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-  };
+  const props = generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY);
   const {
     state: { selectedElementIds },
   } = useStory();
@@ -113,7 +100,7 @@ function TextFrame({
     const handleMouseUp = (evt) => {
       const timingDifference = window.performance.now() - clickTime;
 
-      if (timingDifference > 300) {
+      if (timingDifference > 150) {
         // Only short clicks count.
         return;
       }

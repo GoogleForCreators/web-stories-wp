@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -34,12 +34,11 @@ function DropTargetsProvider({ children }) {
   const [draggingResource, setDraggingResource] = useState(null);
   const [dropTargets, setDropTargets] = useState({});
   const [activeDropTargetId, setActiveDropTargetId] = useState(null);
-  const tempWorkaroundTimer = useRef(null);
   const {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { deleteSelectedElements, updateElementById },
+    actions: { deleteElementById, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -77,6 +76,11 @@ function DropTargetsProvider({ children }) {
   const isDropTarget = (type) => {
     return DROP_TARGET_ALLOWED_TYPES.includes(type);
   };
+
+  const activeDropTarget = useMemo(
+    () => currentPage?.elements.find((el) => el.id === activeDropTargetId),
+    [activeDropTargetId, currentPage]
+  );
 
   /**
    * Dragging elements
@@ -123,61 +127,64 @@ function DropTargetsProvider({ children }) {
   const handleDrop = useCallback(
     (resource, selfId = null) => {
       if (!isDropSource(resource?.type)) {
-        return Promise.resolve();
+        return;
       }
 
-      if (activeDropTargetId && activeDropTargetId !== selfId) {
-        updateElementById({
-          elementId: activeDropTargetId,
-          properties: { resource, type: resource.type },
-        });
+      if (!activeDropTargetId || activeDropTargetId === selfId) {
+        return;
+      }
 
-        // Reset styles on visisble elements
-        (currentPage?.elements || [])
-          .filter(
-            ({ id }) =>
-              !(id in Object.keys(dropTargets)) &&
-              id !== selfId &&
-              id !== activeDropTargetId
-          )
-          .forEach((el) => {
-            pushTransform(el.id, {
-              dropTargets: {
-                active: false,
-                replacement: null,
-              },
-            });
+      const {
+        scale = 100,
+        focalX = 50,
+        focalY = 50,
+        isFill = false,
+      } = activeDropTarget;
+
+      updateElementById({
+        elementId: activeDropTargetId,
+        properties: {
+          resource,
+          type: resource.type,
+          scale,
+          focalX,
+          focalY,
+          isFill,
+        },
+      });
+
+      // Reset styles on visisble elements
+      (currentPage?.elements || [])
+        .filter(
+          ({ id }) =>
+            !(id in Object.keys(dropTargets)) &&
+            id !== selfId &&
+            id !== activeDropTargetId
+        )
+        .forEach((el) => {
+          pushTransform(el.id, {
+            dropTargets: {
+              active: false,
+              replacement: null,
+            },
           });
-
-        // TODO(wassgha): once https://github.com/daybrush/moveable/issues/197
-        // is resolved, go back to using deleteElementById({ elementId: selfId });
-        // and remove setTimeout hack
-        return new Promise((resolve) => {
-          tempWorkaroundTimer.current = setTimeout(() => {
-            if (selfId) {
-              deleteSelectedElements();
-            }
-            setActiveDropTargetId(null);
-            resolve();
-          }, 5);
         });
-      }
 
-      return Promise.resolve();
+      if (selfId) {
+        deleteElementById({ elementId: selfId });
+      }
+      setActiveDropTargetId(null);
     },
     [
+      activeDropTarget,
       activeDropTargetId,
       currentPage,
       dropTargets,
-      deleteSelectedElements,
+      deleteElementById,
       pushTransform,
       updateElementById,
     ]
   );
-
-  useEffect(() => {
-    return () => clearTimeout(tempWorkaroundTimer.current);
-  }, []);
 
   const state = {
     state: {

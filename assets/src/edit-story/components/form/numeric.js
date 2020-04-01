@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -77,8 +78,10 @@ function Numeric({
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
-  const [focused, setFocus] = useState(false);
   const [dot, setDot] = useState(false);
+  const ref = useRef();
+
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
   return (
     <Container
@@ -89,6 +92,7 @@ function Numeric({
       {label}
       {prefix}
       <StyledInput
+        ref={ref}
         placeholder={placeholder}
         prefix={prefix}
         suffix={suffix}
@@ -117,14 +121,16 @@ function Numeric({
         }}
         onBlur={(evt) => {
           if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
+            evt.target.form.dispatchEvent(
+              new window.Event('submit', { cancelable: true })
+            );
           }
           if (onBlur) {
             onBlur();
           }
-          setFocus(false);
+          handleBlur();
         }}
-        onFocus={() => setFocus(true)}
+        onFocus={handleFocus}
       />
       {suffix}
     </Container>

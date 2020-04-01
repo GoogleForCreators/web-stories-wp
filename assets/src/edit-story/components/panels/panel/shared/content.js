@@ -29,6 +29,7 @@ import panelContext from '../context';
 
 const Container = styled.div`
   padding: ${({ padding }) => padding || '10px 20px'};
+  overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? rgba(theme.colors.fg.v1, 0.07) : 'transparent'};
   ${({ hasBorder, theme }) =>
@@ -37,11 +38,11 @@ const Container = styled.div`
 
 function Content({ children, ...rest }) {
   const {
-    state: { isCollapsed, height, panelContentId },
+    state: { isCollapsed, height, resizeable, panelContentId },
   } = useContext(panelContext);
 
   const formStyle = {
-    height: height === null ? 'auto' : `${height}px`,
+    height: resizeable ? `${height}px` : 'auto',
   };
 
   return (

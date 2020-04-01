@@ -73,6 +73,10 @@ function DisplayElement({ element, previewMode }) {
         ...element,
         type: replacement.type,
         resource: replacement,
+        scale: element.scale || 100,
+        focalX: element.focalX || 50,
+        focalY: element.focalY || 50,
+        isFill: element.isFill || false,
       }
     : null;
 
@@ -108,7 +112,7 @@ function DisplayElement({ element, previewMode }) {
   });
 
   return (
-    <Wrapper ref={wrapperRef} {...box}>
+    <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <WithMask
         element={element}
         fill={true}
@@ -116,6 +120,7 @@ function DisplayElement({ element, previewMode }) {
         style={{
           opacity: opacity ? opacity / 100 : null,
         }}
+        previewMode={previewMode}
       >
         <Display element={element} previewMode={previewMode} box={box} />
         {!previewMode && (

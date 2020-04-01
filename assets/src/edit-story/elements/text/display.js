@@ -30,38 +30,41 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithFontColor,
-  elementWithStyle,
+  elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
 import {
   draftMarkupToContent,
-  generateFontFamily,
-  highlightLineheight,
+  getHighlightLineheight,
+  generateParagraphTextStyle,
 } from './util';
 
 const HighlightElement = styled.p`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithFontColor}
-  ${elementWithStyle}
-  ${highlightLineheight}
+  ${elementWithTextParagraphStyle}
+  line-height: ${({ lineHeight, verticalPadding }) =>
+    getHighlightLineheight(lineHeight, verticalPadding)};
   margin: 0;
   padding: 0;
 `;
 
 const MarginedElement = styled.span`
-  display: inline-block;
   position: relative;
+  display: inline-block;
   top: 0;
-  margin: ${({ padding: { horizontal } }) => `0 ${horizontal + 4}px`};
-  left: ${({ padding: { horizontal } }) => `-${horizontal + 4}px`};
+  margin: ${({ horizontalPadding, horizontalBuffer }) =>
+    `0 ${horizontalPadding + horizontalBuffer}px`};
+  left: ${({ horizontalPadding, horizontalBuffer }) =>
+    `-${horizontalPadding + horizontalBuffer}px`};
 `;
 
 const Span = styled.span`
   ${elementWithBackgroundColor}
-  ${elementWithStyle}
+  ${elementWithTextParagraphStyle}
 
   border-radius: 3px;
   box-decoration-break: clone;
@@ -82,7 +85,7 @@ const FillElement = styled.p`
   ${elementWithFont}
   ${elementWithBackgroundColor}
   ${elementWithFontColor}
-  ${elementWithStyle}
+  ${elementWithTextParagraphStyle}
 `;
 
 function TextDisplay({
@@ -93,48 +96,31 @@ function TextDisplay({
     color,
     backgroundColor,
     backgroundTextMode,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    letterSpacing,
-    lineHeight,
-    padding,
-    textAlign,
-    textDecoration,
+    ...rest
   },
 }) {
   const ref = useRef(null);
 
   const {
+    state: {
+      pageSize: { width: pageWidth },
+    },
     actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
   const props = {
     color,
-    backgroundColor:
-      backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
-        ? backgroundColor
-        : undefined,
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-    letterSpacing,
-    lineHeight,
-    padding: {
-      horizontal: dataToEditorX(padding.horizontal),
-      vertical: dataToEditorY(padding.vertical),
-    },
-    textAlign,
-    textDecoration,
+    backgroundColor,
+    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
+    horizontalBuffer: 0.01 * pageWidth,
+    horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
+    verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
+  const { fontFamily } = rest;
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);
@@ -160,7 +146,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-        <HighlightElement ref={ref} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
               {...props}
