@@ -151,7 +151,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     showSnackbar,
     updateStory,
     refreshPostEditURL,
-    showSnackbar,
   ]);
 
   return { saveStory, isSaving };
