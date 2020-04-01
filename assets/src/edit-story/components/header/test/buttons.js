@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, getByRole } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -100,11 +100,9 @@ describe('buttons', () => {
     expect(scheduleButton).toBeDefined();
   });
 
-  it('should display Spinner while the story is updating', () => {
+  it('should display loading indicator while the story is updating', () => {
     const { container } = setupButtons({}, { isSaving: true });
-    const spinner = container.querySelector('span');
-    // @todo This test is relying on Gutenberg component's class list and should be replaced as soon as we have a custom spinner.
-    expect(spinner.classList.contains('components-spinner')).toBe(true);
+    expect(getByRole(container, 'progressbar')).toBeInTheDocument();
   });
 
   it('should open preview when clicking on Preview', () => {

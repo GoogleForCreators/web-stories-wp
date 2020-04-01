@@ -23,7 +23,6 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Spinner } from '@wordpress/components';
 import { useCallback } from 'react';
 
 /**
@@ -33,6 +32,7 @@ import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
+import CircularProgress from '../circularProgress';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -168,7 +168,12 @@ function Loading() {
       meta: { isSaving },
     },
   } = useStory();
-  return isSaving ? <Spinner /> : <Space />;
+  return (
+    <>
+      {isSaving && <CircularProgress size={30} />}
+      <Space />
+    </>
+  );
 }
 
 function Buttons() {
