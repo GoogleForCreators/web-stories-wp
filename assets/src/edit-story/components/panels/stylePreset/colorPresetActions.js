@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import { PatternPropType } from '../../../types';
+import { findMatchingColor } from './utils';
 
 const ActionsWrapper = styled.div`
   position: absolute;
@@ -69,6 +70,12 @@ function ColorPresetActions({ color }) {
 
   const handleAddColorPreset = useCallback(() => {
     if (color) {
+      // If match found, don't add.
+      // @todo UX improvement: notify the user/mark the existing color?
+      if (findMatchingColor(color, stylePresets, isText)) {
+        return;
+      }
+
       updateStory({
         properties: {
           stylePresets: {

@@ -36,6 +36,7 @@ import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { getDefinitionForType } from '../../../elements';
 import { Panel, PanelTitle, PanelContent } from './../panel';
+import { findMatchingColor } from './utils';
 
 const COLOR_HEIGHT = 35;
 
@@ -170,13 +171,17 @@ function StylePresetPanel() {
       let addedColors = [];
       let addedTextColors = [];
       if (isText) {
-        addedTextColors = selectedElements.map(({ color }) => color);
+        addedTextColors = selectedElements
+          .map(({ color }) => color)
+          .filter((color) => !findMatchingColor(color, stylePresets, true));
       } else {
         addedColors = selectedElements
           .map(({ backgroundColor }) => {
             return backgroundColor ? backgroundColor : null;
           })
-          .filter((color) => color);
+          .filter(
+            (color) => color && !findMatchingColor(color, stylePresets, false)
+          );
       }
       if (addedColors.length > 0 || addedTextColors.length > 0) {
         updateStory({
