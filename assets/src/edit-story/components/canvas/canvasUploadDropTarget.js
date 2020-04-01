@@ -59,14 +59,12 @@ function CanvasUploadDropTarget({ children }) {
 
   const onLocalFile = useCallback(
     ({ resource }) => {
-      const element = insertElement(resource.type, {
-        resource,
-      });
-
+      const element = insertElement(resource.type, { resource });
       return element;
     },
     [insertElement]
   );
+
   const onUploadedFile = useCallback(
     ({ resource, element }) => {
       updateElementById({

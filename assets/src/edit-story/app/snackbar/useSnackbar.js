@@ -14,30 +14,18 @@
  * limitations under the License.
  */
 
-const getAttachmentFromResource = ({
-  id,
-  posterId,
-  poster,
-  src,
-  width,
-  height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-}) => ({
-  id,
-  posterId,
-  poster,
-  src,
-  oWidth: width,
-  oHeight: height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-});
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
 
-export default getAttachmentFromResource;
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useSnackbar() {
+  return useContext(Context);
+}
+
+export default useSnackbar;
