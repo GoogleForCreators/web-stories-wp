@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -38,8 +39,24 @@ function HistoryProvider({ children, size }) {
     redo,
   } = useHistoryReducer(size);
   const canUndo = offset < historyLength - 1;
+  const changesSinceLastSave = useRef(0);
+  const [hasChangedSinceLastSave, setHasChangedSinceLastSave] = useState(false);
 
-  usePreventWindowUnload(canUndo);
+  usePreventWindowUnload(hasChangedSinceLastSave);
+
+  useEffect(() => {
+    if (
+      historyLength > 0 &&
+      changesSinceLastSave.current !== historyLength - 1
+    ) {
+      changesSinceLastSave.current = historyLength;
+      setHasChangedSinceLastSave(true);
+    }
+    if (historyLength <= 0) {
+      changesSinceLastSave.current = 0;
+      setHasChangedSinceLastSave(false);
+    }
+  }, [setHasChangedSinceLastSave, historyLength]);
 
   const state = {
     state: {
@@ -52,6 +69,7 @@ function HistoryProvider({ children, size }) {
       clearHistory,
       undo,
       redo,
+      setHasChangedSinceLastSave,
     },
   };
 

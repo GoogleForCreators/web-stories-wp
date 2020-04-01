@@ -26,7 +26,7 @@ import { useEffect } from 'react';
  * @param {Event} event beforeunload Event object
  */
 
-export const beforeUnloadListener = (event) => {
+const beforeUnloadListener = (event) => {
   event.preventDefault();
   event.returnValue = '';
 };

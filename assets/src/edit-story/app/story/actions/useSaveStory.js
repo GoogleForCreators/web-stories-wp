@@ -30,10 +30,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
+import { useHistory } from '../../history';
 import OutputStory from '../../../output/story';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
-import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -62,11 +62,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
+  const {
+    actions: { setHasChangedSinceLastSave },
+  } = useHistory();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
-
-  usePreventWindowUnload(isSaving);
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
@@ -121,6 +122,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           },
         });
         refreshPostEditURL();
+        setHasChangedSinceLastSave(false);
       })
       .catch(() => {
         showSnackbar({
@@ -139,6 +141,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     updateStory,
     refreshPostEditURL,
     showSnackbar,
+    setHasChangedSinceLastSave,
   ]);
 
   return { saveStory, isSaving };

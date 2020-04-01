@@ -22,9 +22,7 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import usePreventWindowUnload, {
-  beforeUnloadListener,
-} from '../usePreventWindowUnload';
+import usePreventWindowUnload from '../usePreventWindowUnload';
 
 describe('usePreventWindowUnload', () => {
   it('should register beforeunload listener', () => {
@@ -33,7 +31,7 @@ describe('usePreventWindowUnload', () => {
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'beforeunload',
-      beforeUnloadListener
+      expect.any(Function)
     );
   });
 
@@ -43,7 +41,7 @@ describe('usePreventWindowUnload', () => {
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'beforeunload',
-      beforeUnloadListener
+      expect.any(Function)
     );
   });
 });
