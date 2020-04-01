@@ -29,14 +29,18 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-export const PAGE_THUMB_INDICATOR_HEIGHT = 6;
+const THUMB_INDICATOR_HEIGHT = 6;
+const THUMB_INDICATOR_GAP = 4;
+
+export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
+export const THUMB_FRAME_WIDTH = 0;
 
 const Page = styled.button`
   display: block;
   cursor: pointer;
-  padding: 4px 0 0 0;
+  padding: ${THUMB_INDICATOR_GAP}px 0 0 0;
   border: 0;
-  border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
+  border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
@@ -50,7 +54,7 @@ const Page = styled.button`
     css`
       &:hover,
       &:focus {
-        border-top: ${PAGE_THUMB_INDICATOR_HEIGHT}px solid
+        border-top: ${THUMB_INDICATOR_HEIGHT}px solid
           ${rgba(theme.colors.selection, 0.3)};
       }
     `}
@@ -74,7 +78,9 @@ function PagePreview({ index, forwardedRef, ...props }) {
     state: { pages },
   } = useStory();
   const page = pages[index];
-  const { width, height } = props;
+  const { width: thumbWidth, height: thumbHeight } = props;
+  const width = thumbWidth - THUMB_FRAME_WIDTH;
+  const height = thumbHeight - THUMB_FRAME_HEIGHT;
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>

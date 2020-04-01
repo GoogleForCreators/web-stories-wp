@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask, MaskTypes } from '.';
+import { getElementMask } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -57,7 +57,7 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
+  if (!mask?.type || isBackground) {
     return (
       <div
         style={{
@@ -81,14 +81,9 @@ export default function WithMask({
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        ...(!isBackground
-          ? {
-              clipPath: `url(#${maskId})`,
-              /* stylelint-disable */
-              WebkitClipPath: `url(#${maskId})`,
-              /* stylelint-enable */
-            }
-          : {}),
+        clipPath: `url(#${maskId})`,
+        // stylelint-disable-next-line
+        WebkitClipPath: `url(#${maskId})`,
       }}
       {...rest}
     >
