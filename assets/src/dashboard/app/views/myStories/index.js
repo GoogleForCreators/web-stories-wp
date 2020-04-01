@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -31,11 +31,13 @@ import { useContext, useEffect, useState } from 'react';
 import {
   ViewHeader,
   FloatingTab,
-  CardGrid,
+  StoryGrid,
   CardGridItem,
   CardTitle,
+  CardPreviewContainer,
+  ListBar,
 } from '../../../components';
-import { STORY_STATUSES } from '../../../constants';
+import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 
 const FilterContainer = styled.div`
@@ -45,6 +47,7 @@ const FilterContainer = styled.div`
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const {
     actions: { fetchStories },
     state: { stories },
@@ -53,6 +56,14 @@ function MyStories() {
   useEffect(() => {
     fetchStories({ status });
   }, [fetchStories, status]);
+
+  const handleViewStyleBarButtonSelected = useCallback(() => {
+    if (viewStyle === VIEW_STYLE.LIST) {
+      setViewStyle(VIEW_STYLE.GRID);
+    } else {
+      setViewStyle(VIEW_STYLE.LIST);
+    }
+  }, [viewStyle]);
 
   return (
     <div>
@@ -70,16 +81,26 @@ function MyStories() {
           </FloatingTab>
         ))}
       </FilterContainer>
-      <CardGrid>
+      <ListBar
+        label={`${stories.length} ${__('total Stories', 'web-stories')}`}
+        layoutStyle={viewStyle}
+        onPress={handleViewStyleBarButtonSelected}
+      />
+      <StoryGrid>
         {stories.map((story) => (
           <CardGridItem key={story.id}>
+            <CardPreviewContainer
+              onOpenInEditorClick={() => {}}
+              onPreviewClick={() => {}}
+              previewSource={'http://placeimg.com/225/400/nature'}
+            />
             <CardTitle
               title={story.title}
               modifiedDate={story.modified.startOf('day').fromNow()}
             />
           </CardGridItem>
         ))}
-      </CardGrid>
+      </StoryGrid>
     </div>
   );
 }
