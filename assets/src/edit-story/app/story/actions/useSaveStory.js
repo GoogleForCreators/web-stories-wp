@@ -28,10 +28,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
+import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 
 /**
@@ -65,22 +65,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
 
-  /**
-   * Refresh page to edit url.
-   *
-   * @param {number} postId Current story id.
-   */
-  const refreshPostEditURL = useCallback((postId) => {
-    const getPostEditURL = addQueryArgs('post.php', {
-      post: postId,
-      action: 'edit',
-    });
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      getPostEditURL
-    );
-  }, []);
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(() => {
     setIsSaving(true);
@@ -133,7 +118,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             featuredMediaUrl,
           },
         });
-        refreshPostEditURL(storyId);
+        refreshPostEditURL();
       })
       .catch(() => {
         showSnackbar({

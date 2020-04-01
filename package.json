@@ -50,7 +50,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.0.0",
+    "@ampproject/toolbox-optimizer": "^2.1.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -61,7 +61,8 @@
     "@storybook/addon-docs": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-storysource": "^5.3.18",
-    "@storybook/addon-viewport": "^5.3.17",
+    "@storybook/addon-viewport": "^5.3.18",
+    "@storybook/client-api": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@testing-library/dom": "^7.2.0",
     "@testing-library/jest-dom": "^5.3.0",
@@ -91,7 +92,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-testing-library": "^3.0.1",
+    "eslint-plugin-testing-library": "^3.0.2",
     "eslint-utils": "^2.0.0",
     "husky": "^4.2.3",
     "jest-canvas-mock": "^2.2.0",

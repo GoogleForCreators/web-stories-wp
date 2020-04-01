@@ -15,21 +15,33 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { SimplePanel } from '../../panels/panel';
+import addQueryArgs from './addQueryArgs';
 
-function PrepublishInspector() {
-  return (
-    <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
-      {__('Coming soon', 'web-stories')}
-    </SimplePanel>
-  );
+/**
+ * Update page URL in browser.
+ *
+ * @param {number} postId Current story id.
+ */
+function useRefreshPostEditURL(postId) {
+  const refreshPostEditURL = useCallback(() => {
+    const getPostEditURL = addQueryArgs('post.php', {
+      post: postId,
+      action: 'edit',
+    });
+    window.history.replaceState(
+      { id: postId },
+      'Post ' + postId,
+      getPostEditURL
+    );
+  }, [postId]);
+  return refreshPostEditURL;
 }
 
-export default PrepublishInspector;
+export default useRefreshPostEditURL;
