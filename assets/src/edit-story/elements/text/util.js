@@ -24,12 +24,15 @@ import { filterEditorState } from 'draftjs-filters';
  * @param {Object} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
+ * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
+ * y-unit CSS.
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
   element,
   dataToStyleX,
-  dataToStyleY
+  dataToStyleY,
+  dataToFontSizeY = dataToStyleY
 ) {
   const {
     fontFamily,
@@ -48,7 +51,7 @@ export function generateParagraphTextStyle(
     margin: 0,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontFallback,
-    fontSize: dataToStyleY(fontSize),
+    fontSize: dataToFontSizeY(fontSize),
     fontStyle,
     fontWeight,
     lineHeight,

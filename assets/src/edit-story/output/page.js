@@ -29,10 +29,13 @@ import { LinkType } from '../components/link';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
+const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
+
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, elements, backgroundElementId, backgroundOverlay } = page;
   // Aspect-ratio constraints.
   const aspectRatioStyles = {
+    margin: 'auto',
     width: `calc(100 * var(--story-page-vw))`, // 100vw
     height: `calc(100 * ${PAGE_HEIGHT / PAGE_WIDTH} * var(--story-page-vw))`, // W/H * 100vw
     maxHeight: `calc(100 * var(--story-page-vh))`, // 100vh
@@ -41,10 +44,6 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${
       PAGE_HEIGHT / PAGE_WIDTH
     }))`,
-  };
-  const ctaContainerStyles = {
-    position: 'absolute',
-    bottom: 0,
   };
   const backgroundStyles = {
     backgroundColor: 'white',
@@ -87,41 +86,54 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      <amp-story-grid-layer template="vertical">
-        <div className="page-background-area" style={backgroundStyles}>
-          {backgroundFullbleedElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} />
-          ))}
-        </div>
-        <div className="page-safe-area" style={{ ...aspectRatioStyles }}>
-          {backgroundNonFullbleedElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} />
-          ))}
-        </div>
-        {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
+      {backgroundFullbleedElements.length > 0 && (
+        <amp-story-grid-layer template="vertical">
+          <div className="page-background-area" style={backgroundStyles}>
+            {backgroundFullbleedElements.map((element) => (
+              <OutputElement key={'el-' + element.id} element={element} />
+            ))}
+          </div>
+        </amp-story-grid-layer>
+      )}
+
+      {backgroundNonFullbleedElements.length > 0 && (
+        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+          <div className="page-safe-area">
+            {backgroundNonFullbleedElements.map((element) => (
+              <OutputElement key={'el-' + element.id} element={element} />
+            ))}
+          </div>
+        </amp-story-grid-layer>
+      )}
+
+      {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
+        <amp-story-grid-layer template="vertical">
           <div
             className="page-background-overlay-area"
             style={{ ...backgroundOverlayStyles }}
           />
-        )}
-        <div className="page-safe-area" style={aspectRatioStyles}>
+        </amp-story-grid-layer>
+      )}
+
+      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+        <div className="page-safe-area">
           {regularElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />
           ))}
         </div>
       </amp-story-grid-layer>
-      {ctaElements.length ? (
+
+      {ctaElements.length > 0 && (
         <amp-story-cta-layer>
-          <div
-            className="page-cta-area"
-            style={{ ...aspectRatioStyles, ...ctaContainerStyles }}
-          >
-            {ctaElements.map((element) => (
-              <OutputElement key={'el-' + element.id} element={element} />
-            ))}
+          <div className="page-cta-area">
+            <div className="page-safe-area" style={aspectRatioStyles}>
+              {ctaElements.map((element) => (
+                <OutputElement key={'el-' + element.id} element={element} />
+              ))}
+            </div>
           </div>
         </amp-story-cta-layer>
-      ) : null}
+      )}
     </amp-story-page>
   );
 }
