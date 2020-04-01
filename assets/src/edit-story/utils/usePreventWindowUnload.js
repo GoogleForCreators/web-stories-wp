@@ -23,7 +23,7 @@ import { useEffect } from 'react';
  * This control the listener register flow.
  * It should be declared outside of the hook to avoid recreate different references of the registered handler in order to make posible remove it later from multiple contexts.
  *
- * @param {Object} event beforeunload Event object
+ * @param {Event} event beforeunload Event object
  */
 
 export const beforeUnloadListener = (event) => {
