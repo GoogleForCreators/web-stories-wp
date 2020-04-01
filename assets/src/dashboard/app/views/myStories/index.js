@@ -91,10 +91,6 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const handleTypeaheadInputChange = useCallback((val) => {
-    setTypeaheadValue(val);
-  }, []);
-
   return (
     <>
       <PageHeading>
@@ -103,7 +99,7 @@ function MyStories() {
           <MyStoriesSearch
             currentValue={typeaheadValue}
             filteredStories={filteredStories}
-            handleChange={handleTypeaheadInputChange}
+            handleChange={setTypeaheadValue}
           />
         </SearchContainer>
       </PageHeading>

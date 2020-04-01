@@ -58,11 +58,15 @@ export default function MyStoriesSearch({
 
 MyStoriesSearch.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  currentValue: PropTypes.string,
+  currentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   filteredStories: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+      label: PropTypes.string,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+        PropTypes.number,
+      ]),
     })
   ),
 };
