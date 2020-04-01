@@ -89,6 +89,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       saveStoryById({
         storyId,
         content,
+        pages,
         ...propsToSave,
         ...props,
       })
