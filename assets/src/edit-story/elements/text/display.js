@@ -33,23 +33,78 @@ import {
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
-import { draftMarkupToContent, generateParagraphTextStyle } from './util';
+import {
+  draftMarkupToContent,
+  getHighlightLineheight,
+  generateParagraphTextStyle,
+} from './util';
 
-const Element = styled.p`
-	${elementFillContent}
-	${elementWithFont}
-	${elementWithBackgroundColor}
-	${elementWithFontColor}
-	${elementWithTextParagraphStyle}
+const HighlightElement = styled.p`
+  ${elementFillContent}
+  ${elementWithFont}
+  ${elementWithFontColor}
+  ${elementWithTextParagraphStyle}
+  line-height: ${({ lineHeight, verticalPadding }) =>
+    getHighlightLineheight(lineHeight, verticalPadding)};
+  margin: 0;
+  padding: 0;
+`;
+
+const MarginedElement = styled.span`
+  position: relative;
+  display: inline-block;
+  top: 0;
+  margin: ${({ horizontalPadding, horizontalBuffer }) =>
+    `0 ${horizontalPadding + horizontalBuffer}px`};
+  left: ${({ horizontalPadding, horizontalBuffer }) =>
+    `-${horizontalPadding + horizontalBuffer}px`};
+`;
+
+const Span = styled.span`
+  ${elementWithBackgroundColor}
+  ${elementWithTextParagraphStyle}
+
+  border-radius: 3px;
+  box-decoration-break: clone;
+  position: relative;
+`;
+
+const BackgroundSpan = styled(Span)`
+  color: transparent;
+`;
+
+const ForegroundSpan = styled(Span)`
+  background: none;
+`;
+
+const FillElement = styled.p`
+  margin: 0;
+  ${elementFillContent}
+  ${elementWithFont}
+  ${elementWithBackgroundColor}
+  ${elementWithFontColor}
+  ${elementWithTextParagraphStyle}
 `;
 
 function TextDisplay({
-  element: { id, bold, content, color, backgroundColor, ...rest },
+  element: {
+    id,
+    bold,
+    content,
+    color,
+    backgroundColor,
+    backgroundTextMode,
+    ...rest
+  },
 }) {
   const ref = useRef(null);
 
   const {
+    state: {
+      pageSize: { width: pageWidth },
+    },
     actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
@@ -57,6 +112,9 @@ function TextDisplay({
     color,
     backgroundColor,
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
+    horizontalBuffer: 0.01 * pageWidth,
+    horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
+    verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
   const {
     actions: { maybeEnqueueFontStyle },
@@ -75,10 +133,39 @@ function TextDisplay({
       : '';
   });
 
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    return (
+      <>
+        <HighlightElement ref={ref} {...props}>
+          <MarginedElement {...props}>
+            <BackgroundSpan
+              {...props}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </MarginedElement>
+        </HighlightElement>
+        <HighlightElement {...props}>
+          <MarginedElement {...props}>
+            <ForegroundSpan
+              {...props}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </MarginedElement>
+        </HighlightElement>
+      </>
+    );
+  }
+
   return (
-    <Element
+    <FillElement
       ref={ref}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{
+        __html: draftMarkupToContent(content, bold),
+      }}
       {...props}
     />
   );

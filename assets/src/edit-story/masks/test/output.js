@@ -125,6 +125,7 @@ describe('WithMask', () => {
     await expect(content).toContain(MaskTypes.HEART);
   });
 
+  // see https://github.com/google/web-stories-wp/issues/536
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should produce valid AMP output', async () => {
     const props = {
