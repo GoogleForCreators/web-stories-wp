@@ -67,6 +67,8 @@ function APIProvider({ children }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     }) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
@@ -80,7 +82,12 @@ function APIProvider({ children }) {
           modified,
           content,
           excerpt,
-          story_data: { version: DATA_VERSION, pages },
+          story_data: {
+            version: DATA_VERSION,
+            pages,
+            autoAdvance,
+            defaultPageDuration,
+          },
           featured_media: featuredMedia,
           publisher_logo: publisherLogo,
         },
@@ -127,37 +134,7 @@ function APIProvider({ children }) {
       return apiFetch({ path: apiPath, parse: false }).then(
         async (response) => {
           const jsonArray = await response.json();
-          const data = jsonArray.map(
-            ({
-              id,
-              guid: { rendered: src },
-              media_details: {
-                width: oWidth,
-                height: oHeight,
-                length_formatted: lengthFormatted,
-              },
-              title: { raw: title },
-              description: { raw: description },
-              mime_type: mimeType,
-              featured_media: posterId,
-              featured_media_src: poster,
-              alt_text: alt,
-            }) => ({
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
-              mimeType,
-              lengthFormatted,
-              alt: alt ? alt : description,
-              title,
-              local: false,
-            })
-          );
-
-          return { data, headers: response.headers };
+          return { data: jsonArray, headers: response.headers };
         }
       );
     },

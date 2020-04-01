@@ -44,8 +44,6 @@ export const Menu = styled.ul`
   overflow: hidden;
   padding: 0;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  transform: ${({ isOpen }) =>
-    isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -10px, 0)'};
   z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
 `;
 Menu.propTypes = {
@@ -53,7 +51,7 @@ Menu.propTypes = {
 };
 
 const MenuItem = styled.li`
-  padding: 14px 16px 14px 48px;
+  padding: 14px 16px 14px 44px;
   background: ${({ isHovering, theme }) =>
     isHovering ? theme.colors.gray50 : 'none'};
   color: ${({ theme }) => theme.colors.gray700};

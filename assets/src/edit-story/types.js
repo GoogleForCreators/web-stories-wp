@@ -64,6 +64,8 @@ StoryPropTypes.story = PropTypes.shape({
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
+  autoAdvance: PropTypes.bool.isRequired,
+  defaultPageDuration: PropTypes.number,
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -104,21 +106,25 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
   videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([

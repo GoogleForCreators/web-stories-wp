@@ -14,30 +14,13 @@
  * limitations under the License.
  */
 
-const getAttachmentFromResource = ({
-  id,
-  posterId,
-  poster,
-  src,
-  width,
-  height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-}) => ({
-  id,
-  posterId,
-  poster,
-  src,
-  oWidth: width,
-  oHeight: height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-});
+function pageAdvancement({ autoAdvance, defaultPageDuration, ...rest }) {
+  return {
+    autoAdvance: typeof autoAdvance !== 'undefined' ? autoAdvance : true,
+    defaultPageDuration:
+      typeof defaultPageDuration === 'number' ? defaultPageDuration : 7,
+    ...rest,
+  };
+}
 
-export default getAttachmentFromResource;
+export default pageAdvancement;

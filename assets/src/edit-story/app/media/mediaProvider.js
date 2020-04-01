@@ -24,11 +24,11 @@ import { useEffect, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI, useConfig } from '../';
-
 import useUploadVideoFrame from './utils/useUploadVideoFrame';
 import useMediaReducer from './useMediaReducer';
 import useUploadMedia from './useUploadMedia';
 import Context from './context';
+import { getResourceFromAttachment } from './utils';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
@@ -53,14 +53,18 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
   } = actions;
+  const {
+    actions: { getMedia },
+  } = useAPI();
   const fetchMedia = useCallback(
     ({ pagingNum: p = 1, mediaType: currentMediaType } = {}, callback) => {
       fetchMediaStart({ pagingNum: p });
       getMedia({ mediaType: currentMediaType, searchTerm, pagingNum: p })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          const mediaArray = data.map(getResourceFromAttachment);
           callback({
-            media: data,
+            media: mediaArray,
             mediaType: currentMediaType,
             searchTerm,
             pagingNum: p,
@@ -84,9 +88,6 @@ function MediaProvider({ children }) {
     processing,
     processed,
   });
-  const {
-    actions: { getMedia },
-  } = useAPI();
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
