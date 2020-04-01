@@ -162,15 +162,13 @@ function createElementForCanvas(
 
   const element = createNewElement(type, {
     ...attrs,
-    ...(resource
-      ? {
-          resource: {
-            ...resource,
-            width,
-            height,
-          },
-        }
-      : {}),
+    ...(Boolean(resource) && {
+      resource: {
+        ...resource,
+        width,
+        height,
+      },
+    }),
     x,
     y,
     width,
