@@ -38,6 +38,32 @@ const Editor = styled.div`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   background-color: ${({ theme }) => theme.colors.bg.v1};
 
+  /*
+   * Custom dark scrollbars for Chromium & Firefox.
+   * Scoped to <Editor> to make sure we don't mess with WP dialogs
+   * like the Backbone Media Gallery dialog.
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+      ${({ theme }) => theme.colors.bg.v3};
+  }
+
+  *::-webkit-scrollbar {
+    width: 11px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.bg.v3};
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.bg.v10};
+    border: 2px solid ${({ theme }) => theme.colors.bg.v3};
+    border-left-width: 3px;
+    border-radius: 6px;
+  }
+
   position: relative;
   height: 100%;
   width: 100%;
