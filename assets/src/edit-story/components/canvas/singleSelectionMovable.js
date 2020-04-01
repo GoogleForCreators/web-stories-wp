@@ -308,7 +308,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }
       elementGuidelines={canSnap && actionsEnabled ? otherNodes : []}
       snapGap={canSnap}
-      isDisplaySnapDigit={true}
+      isDisplaySnapDigit={false}
     />
   );
 }
