@@ -108,11 +108,10 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
         return;
       }
 
-      const distanceMoved = Math.max(
-        Math.abs(evt.clientX - clickCoordinates.x),
-        Math.abs(evt.clientY - clickCoordinates.y)
-      );
-      if (timingDifference > 300 || distanceMoved > 1) {
+      const distanceMoved =
+        Math.abs(evt.clientX - clickCoordinates.x) +
+        Math.abs(evt.clientY - clickCoordinates.y);
+      if (timingDifference > 300 || distanceMoved > 4) {
         // Only enter edit mode in case of short clicks and (almost) without moving.
         return;
       }
