@@ -21,14 +21,11 @@ import { ELEMENT_RESERVED_PROPERTIES } from '../types';
 import { objectWithout } from './utils';
 
 /**
- * Update elements by the given list of ids with the given properties.
- * If given list of ids is `null`, update all currently selected elements.
+ * Update elements by the given videoId with the given properties.
  *
- * Elements will be updated only on the current page.
+ * Elements will be updated through all pages with correct videoId.
  *
- * If an element id does not correspond do an element on the current page, id is ignored.
- *
- * If an empty list or a list of only unknown ids is given, state is unchanged.
+ * If an empty videoId or a no matches with videoId, state is unchanged.
  *
  * If given set of properties is empty, state is unchanged.
  *
@@ -36,7 +33,7 @@ import { objectWithout } from './utils';
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {Array.<string>} payload.elementIds List of elements to update
+ * @param {string} payload.videoId videoId to update all elements with this videoId
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
