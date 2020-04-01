@@ -34,12 +34,13 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { uploadFile } = useUploader(false);
   const { storyId } = useConfig();
   const {
-    state: { currentPage },
-    actions: { updateElementById },
+    actions: { updateVideoElementsByVideoId },
   } = useStory();
   const setProperties = useCallback(
-    (elementId, properties) => updateElementById({ elementId, properties }),
-    [updateElementById]
+    (videoId, properties) => {
+      updateVideoElementsByVideoId({ videoId, properties });
+    },
+    [updateVideoElementsByVideoId]
   );
 
   const processData = async (videoId, src) => {
@@ -55,18 +56,13 @@ function useUploadVideoFrame({ updateMediaElement }) {
         featured_media: posterId,
         post: storyId,
       });
-      currentPage.elements.forEach((element) => {
-        if (
-          element &&
-          element.resource &&
-          element.resource.videoId === videoId
-        ) {
-          const newState = {
-            resource: { ...element.resource, posterId, poster },
-          };
-          setProperties(element.id, newState);
-        }
-      });
+      const newState = {
+        resource: ({ resource, ...rest }) => ({
+          ...rest,
+          resource: { ...resource, posterId, poster },
+        }),
+      };
+      setProperties(videoId, newState);
       updateMediaElement({ videoId, posterId, poster });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
