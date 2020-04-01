@@ -59,14 +59,14 @@ const FilterContainer = styled.div`
 `;
 
 function MyStories() {
+  const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+
   const {
     actions: { fetchStories },
     state: { stories },
   } = useContext(ApiContext);
-
-  const [status, setStatus] = useState(STORY_STATUSES[0].value);
-  const [typeaheadValue, setTypeaheadValue] = useState('');
 
   useEffect(() => {
     fetchStories({ status });
@@ -83,10 +83,6 @@ function MyStories() {
     });
   }, [stories, typeaheadValue]);
 
-  useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
-
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
       setViewStyle(VIEW_STYLE.GRID);
@@ -95,9 +91,7 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  // controls setting typeaheadValue, this triggers setting displayStories
-  // TODO update typeahead to return the object of the selection
-  const onTypeaheadInputChange = useCallback((val) => {
+  const handleTypeaheadInputChange = useCallback((val) => {
     setTypeaheadValue(val);
   }, []);
 
@@ -109,7 +103,7 @@ function MyStories() {
           <MyStoriesSearch
             currentValue={typeaheadValue}
             filteredStories={filteredStories}
-            handleChange={onTypeaheadInputChange}
+            handleChange={handleTypeaheadInputChange}
           />
         </SearchContainer>
       </PageHeading>
