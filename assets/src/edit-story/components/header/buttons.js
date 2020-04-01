@@ -77,7 +77,7 @@ function Publish() {
       meta: { isSaving },
       story: { date, storyId },
     },
-    actions: { updateStory },
+    actions: { saveStory },
   } = useStory();
   const {
     state: { isUploading },
@@ -87,9 +87,9 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
-    updateStory({ properties: { status: 'publish' } });
+    saveStory({ status: 'publish' });
     refreshPostEditURL();
-  }, [refreshPostEditURL, updateStory]);
+  }, [refreshPostEditURL, saveStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -106,16 +106,15 @@ function SwitchToDraft() {
     state: {
       meta: { isSaving },
     },
-    actions: { updateStory },
+    actions: { saveStory },
   } = useStory();
   const {
     state: { isUploading },
   } = useMedia();
 
-  const handleUnPublish = useCallback(
-    () => updateStory({ properties: { status: 'draft' } }),
-    [updateStory]
-  );
+  const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
+    saveStory,
+  ]);
 
   return (
     <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
@@ -137,7 +136,6 @@ function Update() {
   } = useMedia();
 
   let text;
-
   switch (status) {
     case 'publish':
     case 'private':
@@ -149,7 +147,10 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
+        <Outline
+          onClick={() => saveStory({ status: 'draft' })}
+          isDisabled={isSaving || isUploading}
+        >
           {text}
         </Outline>
       );

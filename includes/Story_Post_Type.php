@@ -498,6 +498,10 @@ class Story_Post_Type {
 
 		if ( $post_story_data_pages ) {
 			foreach ( $post_story_data_pages as $page ) {
+				if ( ! isset( $page['elements'] ) ) {
+					continue;
+				}
+
 				foreach ( $page['elements'] as $element ) {
 					if ( ! isset( $element['fontFamily'] ) ) {
 						continue;
