@@ -73,19 +73,14 @@ function FontControls({ selectedElements, pushUpdate }) {
                 ({ value: weight }) => weight
               );
 
-              // The default weight is 400 or empty if there are none available.
-              let defaultWeight = fontWeightsArr?.length ? 400 : '';
-              // If the font doesn't have 400 as an option, let's take the first available option.
-              if (
-                fontWeightsArr?.length &&
-                !fontWeightsArr.includes(defaultWeight.toString())
-              ) {
-                defaultWeight = fontWeightsArr[0];
-              }
               const newFontWeight =
-                fontWeightsArr && fontWeightsArr.includes(String(fontWeight))
-                  ? fontWeight
-                  : defaultWeight;
+                fontWeightsArr &&
+                fontWeightsArr.reduce((a, b) =>
+                  Math.abs(parseInt(b) - fontWeight) <
+                  Math.abs(parseInt(a) - fontWeight)
+                    ? b
+                    : a
+                );
               pushUpdate(
                 {
                   fontFamily: value,
