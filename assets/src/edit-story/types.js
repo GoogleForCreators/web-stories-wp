@@ -65,7 +65,7 @@ StoryPropTypes.story = PropTypes.shape({
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
-  autoAdvance: PropTypes.bool.isRequired,
+  autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
 

@@ -140,7 +140,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
 OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  autoAdvance: PropTypes.bool.isRequired,
+  autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 };
 
