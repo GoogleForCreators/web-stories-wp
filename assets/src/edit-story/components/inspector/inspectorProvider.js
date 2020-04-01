@@ -117,6 +117,7 @@ function InspectorProvider({ children }) {
       users,
       statuses,
       inspectorContentHeight,
+      isUsersLoading,
     },
     actions: {
       setTab,
