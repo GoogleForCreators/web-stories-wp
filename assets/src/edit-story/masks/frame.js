@@ -91,7 +91,7 @@ function WithDropTarget({ element, children, hover }) {
           vectorEffect="non-scaling-stroke"
           strokeWidth="4"
           fill="none"
-          stroke="#0063F9AA"
+          stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
