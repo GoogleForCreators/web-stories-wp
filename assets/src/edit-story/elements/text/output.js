@@ -59,7 +59,12 @@ export function TextOutputWithUnits({
     horizontal: `${(padding.horizontal / width) * 100}%`,
   };
   const fillStyle = {
-    ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY, dataToFontSizeY),
+    ...generateParagraphTextStyle(
+      rest,
+      dataToStyleX,
+      dataToStyleY,
+      dataToFontSizeY
+    ),
     ...generatePatternStyles(backgroundColor),
     ...generatePatternStyles(color, 'color'),
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
