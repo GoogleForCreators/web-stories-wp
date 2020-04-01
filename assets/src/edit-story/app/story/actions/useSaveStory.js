@@ -21,13 +21,19 @@ import { useCallback, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import addQueryArgs from '../../../utils/addQueryArgs';
-import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
+import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
+import { useSnackbar } from '../../snackbar';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -57,26 +63,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     actions: { saveStoryById },
   } = useAPI();
   const { metadata } = useConfig();
+  const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
 
   usePreventWindowUnload(isSaving);
 
-  /**
-   * Refresh page to edit url.
-   *
-   * @param {number} postId Current story id.
-   */
-  const refreshPostEditURL = useCallback((postId) => {
-    const getPostEditURL = addQueryArgs('post.php', {
-      post: postId,
-      action: 'edit',
-    });
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      getPostEditURL
-    );
-  }, []);
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(() => {
     setIsSaving(true);
@@ -91,6 +83,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     } = story;
     const content = getStoryMarkup(story, pages, metadata);
     saveStoryById({
@@ -107,6 +101,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     })
       .then((post) => {
         const {
@@ -124,10 +120,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             featuredMediaUrl,
           },
         });
-        refreshPostEditURL(storyId);
+        refreshPostEditURL();
       })
       .catch(() => {
-        // TODO Display error message to user as save as failed.
+        showSnackbar({
+          message: __('Failed to save the story', 'web-stories'),
+        });
       })
       .finally(() => {
         setIsSaving(false);
@@ -140,6 +138,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     storyId,
     updateStory,
     refreshPostEditURL,
+    showSnackbar,
   ]);
 
   return { saveStory, isSaving };

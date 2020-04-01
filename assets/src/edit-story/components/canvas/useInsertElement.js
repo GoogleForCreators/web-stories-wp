@@ -98,7 +98,20 @@ function useInsertElement() {
  */
 function createElementForCanvas(
   type,
-  { resource, x, y, width, height, rotationAngle, mask, ...rest }
+  {
+    resource,
+    x,
+    y,
+    width,
+    height,
+    mask,
+    rotationAngle = 0,
+    scale = 100,
+    focalX = 50,
+    focalY = 50,
+    isFill = false,
+    ...rest
+  }
 ) {
   const {
     defaultAttributes,
@@ -162,16 +175,23 @@ function createElementForCanvas(
 
   const element = createNewElement(type, {
     ...attrs,
-    resource: {
-      ...resource,
-      width,
-      height,
-    },
+    ...(Boolean(resource) && {
+      resource: {
+        ...resource,
+        width,
+        height,
+        alt: resource.alt || '',
+      },
+    }),
     x,
     y,
     width,
     height,
-    rotationAngle: rotationAngle || 0,
+    rotationAngle,
+    scale,
+    focalX,
+    focalY,
+    isFill,
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,

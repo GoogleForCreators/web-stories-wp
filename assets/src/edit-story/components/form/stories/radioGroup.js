@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import RadioGroup from '../radioGroup';
 
 export default {
-  title: 'Components/Form/RadioGroup',
+  title: 'Stories Editor/Components/Form/RadioGroup',
   component: RadioGroup,
   parameters: {
     backgrounds: [

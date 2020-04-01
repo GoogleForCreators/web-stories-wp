@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const GridContainer = styled.div`
+const CardGrid = styled.div`
   display: grid;
   max-width: ${({ theme }) => `${theme.breakpoint.raw.desktop}px`};
   grid-template-columns: ${({ theme }) =>
@@ -50,12 +50,14 @@ const GridContainer = styled.div`
   }
 `;
 
-const CardGrid = ({ children, ...rest }) => {
-  return <GridContainer {...rest}>{children}</GridContainer>;
-};
-
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export const StoryGrid = styled(CardGrid)`
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  margin: 20px;
+`;
 
 export default CardGrid;

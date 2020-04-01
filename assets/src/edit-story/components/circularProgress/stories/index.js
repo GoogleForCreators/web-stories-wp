@@ -14,30 +14,24 @@
  * limitations under the License.
  */
 
-const getAttachmentFromResource = ({
-  id,
-  posterId,
-  poster,
-  src,
-  width,
-  height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-}) => ({
-  id,
-  posterId,
-  poster,
-  src,
-  oWidth: width,
-  oHeight: height,
-  mimeType,
-  lengthFormatted,
-  alt,
-  title,
-  local,
-});
+/**
+ * External dependencies
+ */
+import { number } from '@storybook/addon-knobs';
 
-export default getAttachmentFromResource;
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../';
+
+export default {
+  title: 'Components/Circular Progress',
+  component: CircularProgress,
+};
+
+export const _default = () => {
+  const size = number('Size', 24);
+  const thickness = number('Thickness', 2);
+
+  return <CircularProgress size={size} thickness={thickness} />;
+};

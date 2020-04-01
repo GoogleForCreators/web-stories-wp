@@ -25,29 +25,142 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
-import { draftMarkupToContent, generateParagraphTextStyle } from './util';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
+import {
+  draftMarkupToContent,
+  generateParagraphTextStyle,
+  getHighlightLineheight,
+} from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
  */
 export function TextOutputWithUnits({
-  element: { bold, content, color, backgroundColor, padding, ...rest },
+  element: {
+    bold,
+    content,
+    color,
+    backgroundColor,
+    backgroundTextMode,
+    padding,
+    ...rest
+  },
   dataToStyleX,
   dataToStyleY,
-  paddingToStyle,
+  dataToFontSizeY,
   className,
 }) {
-  const paddingStyles = paddingToStyle(padding);
-  const style = {
-    ...generateParagraphTextStyle(rest, dataToStyleX, dataToStyleY),
+  if (!dataToFontSizeY) {
+    dataToFontSizeY = dataToStyleY;
+  }
+  const { width } = rest;
+  const paddingStyles = {
+    vertical: `${(padding.vertical / width) * 100}%`,
+    horizontal: `${(padding.horizontal / width) * 100}%`,
+  };
+  const fillStyle = {
+    ...generateParagraphTextStyle(
+      rest,
+      dataToStyleX,
+      dataToStyleY,
+      dataToFontSizeY
+    ),
     ...generatePatternStyles(backgroundColor),
     ...generatePatternStyles(color, 'color'),
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
+
+  const bgColor =
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
+      ? generatePatternStyles(backgroundColor)
+      : undefined;
+
+  const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
+  const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
+
+  const lineHeight = getHighlightLineheight(
+    rest.lineHeight,
+    unitlessPaddingVertical / unitlessFontSize,
+    'em'
+  );
+
+  const highlightStyle = {
+    ...fillStyle,
+    margin: 0,
+    padding: 0,
+    background: 'none',
+    lineHeight,
+  };
+
+  const highlightCloneStyle = {
+    ...highlightStyle,
+    position: 'absolute',
+    top: 0,
+  };
+
+  const marginStyle = {
+    display: 'inline-block',
+    position: 'relative',
+    // Disable reason: style lint can't figure out an interpolated calc
+    // stylelint-disable function-calc-no-invalid
+    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
+    left: `calc(-${paddingStyles.horizontal} - 2%)`,
+    // stylelint-enable function-calc-no-invalid
+    top: '0',
+  };
+
+  const textStyle = {
+    ...bgColor,
+    /* stylelint-disable */
+    WebkitBoxDecorationBreak: 'clone',
+    /* stylelint-enable */
+    boxDecorationBreak: 'clone',
+    borderRadius: '3px',
+    position: 'relative',
+    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+  };
+
+  const backgroundTextStyle = {
+    ...textStyle,
+    color: 'transparent',
+  };
+
+  const foregroundTextStyle = {
+    ...textStyle,
+    background: 'none',
+  };
+
+  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    return (
+      <>
+        <p className={className} style={highlightStyle}>
+          <span style={marginStyle}>
+            <span
+              style={backgroundTextStyle}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </span>
+        </p>
+        <p className={className} style={highlightCloneStyle} aria-hidden="true">
+          <span style={marginStyle}>
+            <span
+              style={foregroundTextStyle}
+              dangerouslySetInnerHTML={{
+                __html: draftMarkupToContent(content, bold),
+              }}
+            />
+          </span>
+        </p>
+      </>
+    );
+  }
+
   return (
     <p
       className={className}
-      style={style}
+      style={fillStyle}
       dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
     />
   );
@@ -57,35 +170,27 @@ TextOutputWithUnits.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
-  paddingToStyle: PropTypes.func.isRequired,
+  dataToFontSizeY: PropTypes.func,
   className: PropTypes.string,
 };
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
-function TextOutput({ element, box: { width } }) {
+function TextOutput({ element }) {
   return (
     <TextOutputWithUnits
       element={element}
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
-      paddingToStyle={(padding) => ({
-        // The padding % is calculated based on the element's width, not
-        // the page's container.
-        horizontal: `${dataToEditorX(padding?.horizontal || 0, width)}%`,
-        // The padding % in CSS is calculated based on width, thus we have to
-        // use the width for the vertical padding too.
-        vertical: `${dataToEditorX(padding?.vertical || 0, width)}%`,
-      })}
+      dataToFontSizeY={(y) => `${(dataToEditorY(y, 100) / 10).toFixed(6)}em`}
     />
   );
 }
 
 TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
-  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextOutput;

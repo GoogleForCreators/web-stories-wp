@@ -43,6 +43,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
   const [snapDisabled, setSnapDisabled] = useState(false);
+  const [throttleRotation, setThrottleRotation] = useState(false);
 
   const {
     actions: { updateSelectedElements },
@@ -60,8 +61,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    state: { activeDropTargetId },
-    actions: { handleDrag, handleDrop, setDraggingResource },
+    state: { activeDropTargetId, draggingResource },
+    actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
   } = useDropTargets();
 
   const otherNodes = Object.values(
@@ -78,32 +79,36 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   }, [pushEvent]);
 
   useEffect(() => {
-    if (moveable.current) {
-      // If we have persistent event then let's use that, ensuring the targets match.
-      if (
-        latestEvent.current &&
-        targetEl.contains(latestEvent.current.target) &&
-        actionsEnabled
-      ) {
-        moveable.current.moveable.dragStart(latestEvent.current);
-      }
-      moveable.current.updateRect();
+    if (!moveable.current) {
+      return;
     }
+    // If we have persistent event then let's use that, ensuring the targets match.
+    if (
+      latestEvent.current &&
+      targetEl.contains(latestEvent.current.target) &&
+      actionsEnabled
+    ) {
+      moveable.current.moveable.dragStart(latestEvent.current);
+    }
+    moveable.current.updateRect();
   }, [targetEl, moveable, actionsEnabled]);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
   useEffect(() => {
-    if (moveable.current) {
-      moveable.current.updateRect();
+    if (!moveable.current) {
+      return;
     }
+    moveable.current.updateRect();
   });
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true), [
-    setSnapDisabled,
-  ]);
-  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false), [setSnapDisabled]);
+  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true));
+  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false));
+
+  // ⇧ key rotates the element 30 degrees at a time
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
 
   const box = getBox(selectedElement);
   const frame = {
@@ -158,29 +163,33 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     [setIsDragging, setDraggingResource, resetMoveable]
   );
 
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
-    selectedElement.type
-  );
+  const {
+    resizeRules = {},
+    updateForResizeEvent,
+    isMaskable,
+  } = getDefinitionForType(selectedElement.type);
 
-  const canSnap = !isDragging || (isDragging && !activeDropTargetId);
+  const canSnap =
+    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
+  const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
   return (
     <Movable
-      className={`default-movable ${isDragging ? 'dragging' : ''}`}
+      className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
       zIndex={0}
       ref={moveable}
       target={targetEl}
       draggable={actionsEnabled}
-      resizable={actionsEnabled && !isDragging}
-      rotatable={actionsEnabled && !isDragging}
+      resizable={actionsEnabled && !hideHandles}
+      rotatable={actionsEnabled && !hideHandles}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
-        if (!isDragging) {
-          setIsDragging(true);
+        setIsDragging(true);
+        if (isDropSource(selectedElement.type)) {
           setDraggingResource(selectedElement.resource);
         }
         frame.translate = beforeTranslate;
         setTransformStyle(target);
-        if (selectedElement.resource) {
+        if (isDropSource(selectedElement.type)) {
           handleDrag(
             selectedElement.resource,
             clientX,
@@ -193,7 +202,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       onDragStart={({ set }) => {
         set(frame.translate);
       }}
-      onDragEnd={async ({ target }) => {
+      onDragEnd={({ target }) => {
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {
@@ -202,8 +211,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             y: selectedElement.y + editorToDataY(deltaY),
           };
           updateSelectedElements({ properties });
-          if (selectedElement.resource) {
-            await handleDrop(selectedElement.resource, selectedElement.id);
+          if (isDropSource(selectedElement.type)) {
+            handleDrop(selectedElement.resource, selectedElement.id);
           }
         }
         resetDragging(target);
@@ -284,27 +293,22 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         updateSelectedElements({ properties });
         resetMoveable(target);
       }}
+      throttleRotate={throttleRotation ? 30 : 0}
       origin={false}
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={canSnap && !snapDisabled}
-      snapCenter={canSnap && !snapDisabled}
+      snappable={canSnap}
+      snapCenter={canSnap}
       horizontalGuidelines={
-        canSnap && !snapDisabled && actionsEnabled
-          ? [0, canvasHeight / 2, canvasHeight]
-          : []
+        canSnap && actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
       }
       verticalGuidelines={
-        canSnap && !snapDisabled && actionsEnabled
-          ? [0, canvasWidth / 2, canvasWidth]
-          : []
+        canSnap && actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
       }
-      elementGuidelines={
-        canSnap && !snapDisabled && actionsEnabled ? otherNodes : []
-      }
-      snapGap={canSnap && !snapDisabled}
-      isDisplaySnapDigit={true}
+      elementGuidelines={canSnap && actionsEnabled ? otherNodes : []}
+      snapGap={canSnap}
+      isDisplaySnapDigit={false}
     />
   );
 }
