@@ -25,6 +25,7 @@ import { useState, useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import ColorPicker from '../../components/colorPicker';
+import DateTime from '../form/dateTime';
 import { WorkspaceLayout, CanvasArea } from '../workspace/layout';
 import Context from './context';
 
@@ -48,6 +49,7 @@ const SidebarContent = styled.div`
 `;
 
 const TYPE_COLORPICKER = 'colorpicker';
+const TYPE_CALENDAR = 'calendar';
 
 function SidebarProvider({ children }) {
   const [sidebarState, setSidebarState] = useState(null);
@@ -59,15 +61,23 @@ function SidebarProvider({ children }) {
 
   const ref = useRef();
 
-  const showColorPickerAt = useCallback((node, colorProps) => {
-    const colorOffset =
+  const showSidebarAt = useCallback((sidebarType, node, sidebarProps) => {
+    const sidebarOffset =
       node.getBoundingClientRect().y - ref.current.getBoundingClientRect().y;
     setSidebarState({
-      type: TYPE_COLORPICKER,
-      offset: colorOffset,
-      props: colorProps,
+      type: sidebarType,
+      offset: sidebarOffset,
+      props: sidebarProps,
     });
   }, []);
+
+  const showColorPickerAt = (node, colorProps) => {
+    showSidebarAt(TYPE_COLORPICKER, node, colorProps);
+  };
+
+  const showCalendarAt = (node, calendarProps) => {
+    showSidebarAt(TYPE_CALENDAR, node, calendarProps);
+  };
 
   const hideSidebar = useCallback(() => {
     setSidebarState(null);
@@ -79,6 +89,7 @@ function SidebarProvider({ children }) {
     },
     actions: {
       showColorPickerAt,
+      showCalendarAt,
       hideSidebar,
     },
   };
@@ -90,6 +101,7 @@ function SidebarProvider({ children }) {
           {hasSidebar && (
             <SidebarContent top={offset}>
               {type === TYPE_COLORPICKER && <ColorPicker {...props} />}
+              {type === TYPE_CALENDAR && <DateTime {...props} />}
             </SidebarContent>
           )}
         </Sidebar>
