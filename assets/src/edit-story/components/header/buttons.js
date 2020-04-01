@@ -31,6 +31,7 @@ import { useCallback } from 'react';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia } from '../../app';
+import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 
 const ButtonList = styled.nav`
@@ -77,7 +78,7 @@ function Publish() {
   const {
     state: {
       meta: { isSaving },
-      story: { date, title },
+      story: { date, title, storyId },
     },
     actions: { updateStory },
   } = useStory();
@@ -85,12 +86,13 @@ function Publish() {
     state: { isUploading },
   } = useMedia();
 
+  const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
 
-  const handlePublish = useCallback(
-    () => updateStory({ properties: { status: 'publish' } }),
-    [updateStory]
-  );
+  const handlePublish = useCallback(() => {
+    updateStory({ properties: { status: 'publish' } });
+    refreshPostEditURL();
+  }, [refreshPostEditURL, updateStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -171,9 +173,10 @@ function Update() {
 
 function Loading() {
   const {
-    state: { isSaving },
+    state: {
+      meta: { isSaving },
+    },
   } = useStory();
-
   return isSaving ? <Spinner /> : <Space />;
 }
 

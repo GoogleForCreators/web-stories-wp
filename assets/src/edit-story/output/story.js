@@ -23,13 +23,13 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import getUsedAmpExtensions from './getUsedAmpExtensions';
-import Boilerplate from './ampBoilerplate';
-import CustomCSS from './styles';
+import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
+import Boilerplate from './utils/ampBoilerplate';
+import CustomCSS from './utils/styles';
 import { OutputPage } from './';
 
 function OutputStory({
-  story: { featuredMediaUrl, link, title },
+  story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
   pages,
   metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
@@ -61,7 +61,12 @@ function OutputStory({
           poster-portrait-src={featuredMediaUrl || fallbackPoster}
         >
           {pages.map((page) => (
-            <OutputPage key={page.id} page={page} />
+            <OutputPage
+              key={page.id}
+              page={page}
+              autoAdvance={autoAdvance}
+              defaultPageDuration={defaultPageDuration}
+            />
           ))}
         </amp-story>
       </body>
