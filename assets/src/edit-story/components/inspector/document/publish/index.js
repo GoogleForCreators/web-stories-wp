@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -29,14 +29,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, DateTime, Label, Media, Required } from '../../../form';
+import { Row, DropDown, Label, Media, Required } from '../../../form';
 import { SimplePanel } from '../../../panels/panel';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../../../keyboard';
-import useFocusOut from '../../../../utils/useFocusOut';
 import { useConfig } from '../../../../app/config';
+import { useSidebar } from '../../../sidebar';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const LabelWrapper = styled.div`
@@ -81,11 +81,6 @@ const Time = styled.span`
   display: inline-block;
 `;
 
-const DateTimeWrapper = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
 const StyledToggleIcon = styled(ToggleIcon)`
   height: 26px;
   min-width: 25px;
@@ -105,27 +100,47 @@ function PublishPanel() {
     actions: { updateStory },
   } = useStory();
 
+  const {
+    actions: { showCalendarAt, hideSidebar },
+    state: { hasSidebar },
+  } = useSidebar();
+
   const { timeFormat } = useConfig();
 
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const dateTimeNode = useRef();
   const dateFieldNode = useRef();
 
-  useKeyDownEffect(dateFieldNode, { key: ['space', 'enter'] }, () => {
-    setShowDatePicker((val) => !val);
-  });
-
-  useFocusOut(dateTimeNode, () => setShowDatePicker(false), [showDatePicker]);
+  useKeyDownEffect(
+    dateFieldNode,
+    { key: ['space', 'enter'] },
+    () => {
+      if (hasSidebar) {
+        hideSidebar();
+      } else {
+        handleOpenCalendar();
+      }
+    },
+    [hasSidebar]
+  );
 
   const handleDateChange = useCallback(
     (value, close = false) => {
-      if (close && showDatePicker) {
-        setShowDatePicker(false);
+      if (close) {
+        hideSidebar();
       }
       updateStory({ properties: { date: value } });
     },
-    [showDatePicker, updateStory]
+    [hideSidebar, updateStory]
   );
+
+  const use12HourFormat = is12Hour(timeFormat);
+  const handleOpenCalendar = useCallback(() => {
+    showCalendarAt(dateFieldNode.current, {
+      value: date,
+      onChange: handleDateChange,
+      is12Hour: use12HourFormat,
+      onClose: hideSidebar,
+    });
+  }, [showCalendarAt, date, handleDateChange, use12HourFormat, hideSidebar]);
 
   const handleChangeCover = useCallback(
     (image) =>
@@ -157,20 +172,19 @@ function PublishPanel() {
   );
 
   const authorLabel = __('Author', 'web-stories');
-  const use12HourFormat = is12Hour(timeFormat);
   return (
     <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
       <Row>
         <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
         <StyledButton
-          aria-pressed={showDatePicker}
+          aria-pressed={hasSidebar}
           aria-haspopup={true}
-          aria-expanded={showDatePicker}
+          aria-expanded={hasSidebar}
           onClick={(e) => {
             e.preventDefault();
-            if (!showDatePicker) {
+            if (!hasSidebar) {
               // Handle only opening the datepicker since onFocusOut deals with closing.
-              setShowDatePicker(true);
+              handleOpenCalendar();
             }
           }}
           ref={dateFieldNode}
@@ -182,16 +196,6 @@ function PublishPanel() {
           <StyledToggleIcon />
         </StyledButton>
       </Row>
-      {showDatePicker && (
-        <DateTimeWrapper>
-          <DateTime
-            value={date}
-            onChange={handleDateChange}
-            is12Hour={use12HourFormat}
-            forwardedRef={dateTimeNode}
-          />
-        </DateTimeWrapper>
-      )}
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
           <FieldLabel>{authorLabel}</FieldLabel>

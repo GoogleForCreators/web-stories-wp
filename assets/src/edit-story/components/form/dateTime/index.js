@@ -8,28 +8,26 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import useFocusOut from '../../../utils/useFocusOut';
 import DateTimePicker from './dateTimePicker';
 import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: -15px;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
   background-color: ${({ theme }) => theme.colors.fg.v1};
-  z-index: 1;
-  width: 270px;
-  padding: 4px;
 `;
 
-function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
+function DateTime({ value, onChange, is12Hour = true, onClose }) {
+  const containerRef = useRef();
+  useFocusOut(containerRef, onClose);
   return (
-    <DateTimeWrapper ref={forwardedRef}>
+    <DateTimeWrapper ref={containerRef}>
       <DateTimePicker
         currentTime={value}
         onChange={onChange}
@@ -44,7 +42,7 @@ DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
-  forwardedRef: PropTypes.object,
+  onClose: PropTypes.func,
 };
 
 export default DateTime;
