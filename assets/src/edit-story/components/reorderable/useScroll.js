@@ -33,7 +33,7 @@ function useScroll(isReordering) {
   const scrollTarget = useRef(null);
 
   const setScrollTarget = useCallback(
-    (node) => (scrollTarget.current = node.parentElement),
+    (node) => node && (scrollTarget.current = node.parentElement),
     []
   );
 
