@@ -32,7 +32,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import TypeaheadOptions from '../typeahead-options';
+import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
   width: 272px;
@@ -184,7 +184,7 @@ const TypeaheadInput = ({
 
       return (
         item.label.toLowerCase().includes(lowerInputValue) ||
-        item.value.toString().toLowerCase().includes(lowerInputValue)
+        item.value.toLowerCase().includes(lowerInputValue)
       );
     });
   }, [items, inputValue, isFiltering]);
@@ -298,11 +298,7 @@ TypeaheadInput.propTypes = {
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.number,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default TypeaheadInput;
