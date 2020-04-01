@@ -25,7 +25,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { useCallback, useMemo, useState } from 'react';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -101,38 +101,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     if (!isValidUrl(urlWithProtocol)) {
       return;
     }
-    const invalidLinkMessage = __(
-      'The following is not a valid link: %s',
-      'web-stories'
-    );
 
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
-        if (title && image) {
-          return updateLinkFromMetadataApi({
-            url: urlWithProtocol,
-            title,
-            icon: image,
-          });
-        }
-
-        // This is necessary since the API is returning empty image/title fields sometimes.
-        const invalidLinkError = new Error(invalidLinkMessage);
-        invalidLinkError.code = 'invalid_url';
-        throw invalidLinkError;
+        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
       })
-      .catch((reason) => {
-        if (
-          reason?.code === 'rest_invalid_url' ||
-          reason?.code === 'invalid_url'
-        ) {
-          showSnackbar({
-            message: sprintf(invalidLinkMessage, url),
-          });
-        }
-
-        throw reason;
+      .catch(() => {
+        showSnackbar({
+          message: __('This is an invalid link.', 'web-stories'),
+        });
       })
       .finally(() => {
         setFetchingMetadata(false);
