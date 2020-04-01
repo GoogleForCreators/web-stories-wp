@@ -66,3 +66,8 @@ export const STORY_STATUSES = [
   { label: __('Active Stories', 'web-stories'), value: 'publish' },
   { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
+
+export const LIST_STATE = {
+  GRID: 'grid',
+  LIST: 'LIST',
+};
