@@ -147,3 +147,15 @@ export const draftMarkupToContent = (content, bold) => {
   }
   return content;
 };
+
+export const getHighlightLineheight = function (
+  lineHeight,
+  verticalPadding,
+  unit = 'px'
+) {
+  return `calc(
+    ${lineHeight}em
+    ${verticalPadding > 0 ? '+' : '-'}
+    ${2 * Math.abs(verticalPadding)}${unit}
+  )`;
+};

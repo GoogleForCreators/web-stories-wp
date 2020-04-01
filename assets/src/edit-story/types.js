@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { OverlayType } from './utils/backgroundOverlay';
+import { BACKGROUND_TEXT_MODE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -188,6 +189,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
   color: PatternPropType.isRequired,
+  backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
