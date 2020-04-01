@@ -56,12 +56,14 @@ function useUploadVideoFrame({ updateMediaElement }) {
         featured_media: posterId,
         post: storyId,
       });
-      const newState = {
-        resource: ({ resource, ...rest }) => ({
-          ...rest,
-          resource: { ...resource, posterId, poster },
-        }),
-      };
+      const newState = ({ resource, ...rest }) => ({
+        ...rest,
+        resource: {
+          ...resource,
+          posterId,
+          poster,
+        },
+      });
       setProperties(videoId, newState);
       updateMediaElement({ videoId, posterId, poster });
     } catch (err) {
