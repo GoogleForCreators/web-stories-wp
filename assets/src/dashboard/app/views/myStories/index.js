@@ -74,7 +74,10 @@ function MyStories() {
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toString().toLowerCase();
+      const lowerTypeaheadValue = typeaheadValue
+        .toString()
+        .toLowerCase()
+        .trim();
 
       return (
         story.title.toLowerCase().includes(lowerTypeaheadValue) ||

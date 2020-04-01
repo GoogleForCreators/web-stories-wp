@@ -180,7 +180,7 @@ const TypeaheadInput = ({
       return items;
     }
     return items.filter((item) => {
-      const lowerInputValue = inputValue.toLowerCase();
+      const lowerInputValue = inputValue.toLowerCase().trim();
 
       return (
         item.label.toLowerCase().includes(lowerInputValue) ||
