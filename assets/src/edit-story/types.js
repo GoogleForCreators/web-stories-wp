@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { OverlayType } from './utils/backgroundOverlay';
+import { BACKGROUND_TEXT_MODE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -64,6 +65,8 @@ StoryPropTypes.story = PropTypes.shape({
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
+  autoAdvance: PropTypes.bool.isRequired,
+  defaultPageDuration: PropTypes.number,
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -104,21 +107,25 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
   videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([
@@ -182,6 +189,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
   color: PatternPropType.isRequired,
+  backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,

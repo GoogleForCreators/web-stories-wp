@@ -21,12 +21,18 @@ import { useCallback, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import addQueryArgs from '../../../utils/addQueryArgs';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
+import { useSnackbar } from '../../snackbar';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -56,6 +62,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     actions: { saveStoryById },
   } = useAPI();
   const { metadata } = useConfig();
+  const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
 
   /**
@@ -88,6 +95,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     } = story;
 
     const content = getStoryMarkup(story, pages, metadata);
@@ -105,6 +114,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       featuredMedia,
       password,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     })
       .then((post) => {
         const {
@@ -125,7 +136,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         refreshPostEditURL(storyId);
       })
       .catch(() => {
-        // TODO Display error message to user as save as failed.
+        showSnackbar({
+          message: __('Failed to save the story', 'web-stories'),
+        });
       })
       .finally(() => {
         setIsSaving(false);
@@ -138,6 +151,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     storyId,
     updateStory,
     refreshPostEditURL,
+    showSnackbar,
   ]);
 
   return { saveStory, isSaving };

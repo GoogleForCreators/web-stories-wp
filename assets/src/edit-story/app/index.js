@@ -41,6 +41,7 @@ import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
+import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -51,23 +52,25 @@ function App({ config }) {
         <ConfigProvider config={config}>
           <APIProvider>
             <HistoryProvider size={50}>
-              <StoryProvider storyId={storyId}>
-                <FontProvider>
-                  <MediaProvider>
-                    <TransformProvider>
-                      <DropTargetsProvider>
-                        <GlobalStyle />
-                        <DefaultMoveableGlobalStyle />
-                        <CropMoveableGlobalStyle />
-                        <ModalGlobalStyle />
-                        <CalendarGlobalStyle />
-                        <KeyboardOnlyOutlines />
-                        <Layout />
-                      </DropTargetsProvider>
-                    </TransformProvider>
-                  </MediaProvider>
-                </FontProvider>
-              </StoryProvider>
+              <SnackbarProvider>
+                <StoryProvider storyId={storyId}>
+                  <FontProvider>
+                    <MediaProvider>
+                      <TransformProvider>
+                        <DropTargetsProvider>
+                          <GlobalStyle />
+                          <DefaultMoveableGlobalStyle />
+                          <CropMoveableGlobalStyle />
+                          <ModalGlobalStyle />
+                          <CalendarGlobalStyle />
+                          <KeyboardOnlyOutlines />
+                          <Layout />
+                        </DropTargetsProvider>
+                      </TransformProvider>
+                    </MediaProvider>
+                  </FontProvider>
+                </StoryProvider>
+              </SnackbarProvider>
             </HistoryProvider>
           </APIProvider>
         </ConfigProvider>
@@ -91,4 +94,5 @@ export {
   useConfig,
   useFont,
   useMedia,
+  useSnackbar,
 };

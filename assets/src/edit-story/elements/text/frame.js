@@ -41,7 +41,7 @@ const Element = styled.p`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
 
-	opacity: 0;
+  opacity: 0;
   user-select: none;
 `;
 
