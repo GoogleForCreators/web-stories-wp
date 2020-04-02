@@ -97,8 +97,7 @@ const colorCSS = css`
 
 const Color = styled.button`
   ${colorCSS}
-  background: ${({ backgroundColor, backgroundImage }) =>
-    backgroundColor ? backgroundColor : backgroundImage};
+  ${({ color }) => generatePatternStyles(color)}
 `;
 
 // For max-height: Display 5 extra pixels to show there are more colors.
@@ -301,7 +300,7 @@ function StylePresetPanel() {
               {colorPresets.map((color, i) => (
                 <ButtonWrapper key={`color-${i}`}>
                   <Color
-                    {...generatePatternStyles(color)}
+                    color={color}
                     onClick={() => {
                       if (isEditMode) {
                         handleDeleteColor(color);
