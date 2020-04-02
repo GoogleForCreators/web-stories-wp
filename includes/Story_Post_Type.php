@@ -157,25 +157,6 @@ class Story_Post_Type {
 			1
 		);
 
-		add_filter(
-			'the_content',
-			static function ( $content ) {
-				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_all_filters( 'the_content' );
-
-					$post = get_post();
-
-					if ( $post instanceof WP_Post ) {
-						$renderer = new Story_Renderer( $post );
-						return $renderer->render();
-					}
-				}
-
-				return $content;
-			},
-			0
-		);
-
 		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
 
 		// @todo Check if there's something to skip in the new version.
