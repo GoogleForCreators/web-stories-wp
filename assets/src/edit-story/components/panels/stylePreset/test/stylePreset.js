@@ -42,7 +42,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
       ...extraStateProps,
       story: {
         stylePresets: {
-          ...{ colors: [], textColors: [] },
+          ...{ fillColors: [], textColors: [] },
           ...extraStylePresets,
         },
       },
@@ -139,7 +139,7 @@ describe('Panels/StylePreset', () => {
   it('should allow deleting the relevant preset', () => {
     const extraStylePresets = {
       textColors: [TEST_COLOR],
-      colors: [TEST_COLOR],
+      fillColors: [TEST_COLOR],
     };
     const { getByLabelText, updateStory } = setupPanel(extraStylePresets);
     const editButton = getByLabelText(EDIT_BUTTON_LABEL);
@@ -151,7 +151,9 @@ describe('Panels/StylePreset', () => {
     fireEvent.click(deletePreset);
     expect(updateStory).toHaveBeenCalledTimes(1);
     expect(updateStory).toHaveBeenCalledWith({
-      properties: { stylePresets: { colors: [TEST_COLOR], textColors: [] } },
+      properties: {
+        stylePresets: { fillColors: [TEST_COLOR], textColors: [] },
+      },
     });
   });
 

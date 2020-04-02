@@ -47,7 +47,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	 * Default style presets to pass if not set.
 	 */
 	const EMPTY_STYLE_PRESETS = [
-		'colors'     => [],
+		'fillColors' => [],
 		'textColors' => [],
 		'styles'     => [],
 	];

@@ -194,7 +194,6 @@ Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
-  displayCollapse: true,
 };
 
 export default Title;

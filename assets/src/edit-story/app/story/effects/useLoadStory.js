@@ -91,8 +91,8 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
         // Initialize color presets, if missing.
-        if (!stylePresets.colors) {
-          stylePresets.colors = [];
+        if (!stylePresets.fillColors) {
+          stylePresets.fillColors = [];
         }
         if (!stylePresets.textColors) {
           stylePresets.textColors = [];

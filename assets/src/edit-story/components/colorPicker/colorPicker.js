@@ -79,7 +79,7 @@ function ColorPicker({
   hasOpacity,
   onChange,
   onClose,
-  addActions,
+  renderFooter,
 }) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
@@ -162,7 +162,7 @@ function ColorPicker({
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
-          {addActions && addActions(generatedColor)}
+          {renderFooter && renderFooter(generatedColor)}
         </Body>
       </Container>
     </CSSTransition>
@@ -175,7 +175,7 @@ ColorPicker.propTypes = {
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
-  addActions: PropTypes.func,
+  renderFooter: PropTypes.func,
 };
 
 ColorPicker.defaultProps = {
@@ -184,7 +184,7 @@ ColorPicker.defaultProps = {
   onClose: /* istanbul ignore next */ () => {},
   hasGradient: false,
   hasOpacity: true,
-  addActions: null,
+  renderFooter: null,
 };
 
 export default ColorPicker;

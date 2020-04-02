@@ -24,18 +24,28 @@ describe('Panels/StylePreset/utils', () => {
     const stylePresets = {
       textColors: [
         {
-          r: 1,
-          g: 1,
-          b: 1,
+          color: {
+            r: 1,
+            g: 1,
+            b: 1,
+          },
         },
         {
-          r: 2,
-          g: 2,
-          b: 1,
+          color: {
+            r: 2,
+            g: 2,
+            b: 1,
+          },
         },
       ],
     };
-    const color = { g: 1, r: 1, b: 1 };
+    const color = {
+      color: {
+        r: 1,
+        g: 1,
+        b: 1,
+      },
+    };
     expect(findMatchingColor(color, stylePresets, true)).toStrictEqual(color);
   });
 
@@ -43,18 +53,28 @@ describe('Panels/StylePreset/utils', () => {
     const stylePresets = {
       textColors: [
         {
-          r: 1,
-          g: 2,
-          b: 3,
+          color: {
+            r: 1,
+            g: 2,
+            b: 3,
+          },
         },
         {
-          r: 2,
-          g: 2,
-          b: 1,
+          color: {
+            r: 2,
+            g: 2,
+            b: 1,
+          },
         },
       ],
     };
-    const color = { r: 1, g: 1, b: 1 };
+    const color = {
+      color: {
+        r: 1,
+        g: 1,
+        b: 1,
+      },
+    };
     expect(findMatchingColor(color, stylePresets, true)).not.toBeDefined();
   });
 });

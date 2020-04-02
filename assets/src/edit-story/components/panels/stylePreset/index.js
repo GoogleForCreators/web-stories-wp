@@ -133,7 +133,7 @@ function StylePresetPanel() {
     actions: { updateStory, updateElementsById },
   } = useStory();
 
-  const { colors, textColors } = stylePresets;
+  const { fillColors, textColors } = stylePresets;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -153,9 +153,9 @@ function StylePresetPanel() {
         properties: {
           stylePresets: {
             ...stylePresets,
-            colors: isText
-              ? colors
-              : colors.filter((color) => color !== toDelete),
+            fillColors: isText
+              ? fillColors
+              : fillColors.filter((color) => color !== toDelete),
             textColors: !isText
               ? textColors
               : textColors.filter((color) => color !== toDelete),
@@ -163,20 +163,20 @@ function StylePresetPanel() {
         },
       });
     },
-    [colors, isText, stylePresets, textColors, updateStory]
+    [fillColors, isText, stylePresets, textColors, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
-      let addedColors = [];
+      let addedFillColors = [];
       let addedTextColors = [];
       if (isText) {
         addedTextColors = selectedElements
           .map(({ color }) => color)
           .filter((color) => !findMatchingColor(color, stylePresets, true));
       } else {
-        addedColors = selectedElements
+        addedFillColors = selectedElements
           .map(({ backgroundColor }) => {
             return backgroundColor ? backgroundColor : null;
           })
@@ -184,19 +184,26 @@ function StylePresetPanel() {
             (color) => color && !findMatchingColor(color, stylePresets, false)
           );
       }
-      if (addedColors.length > 0 || addedTextColors.length > 0) {
+      if (addedFillColors.length > 0 || addedTextColors.length > 0) {
         updateStory({
           properties: {
             stylePresets: {
               ...stylePresets,
-              colors: [...colors, ...addedColors],
+              fillColors: [...fillColors, ...addedFillColors],
               textColors: [...textColors, ...addedTextColors],
             },
           },
         });
       }
     },
-    [isText, selectedElements, updateStory, stylePresets, colors, textColors]
+    [
+      isText,
+      selectedElements,
+      updateStory,
+      stylePresets,
+      fillColors,
+      textColors,
+    ]
   );
 
   const handleApplyColor = useCallback(
@@ -225,7 +232,7 @@ function StylePresetPanel() {
     [isText, selectedElementIds, updateElementsById]
   );
 
-  const colorPresets = isText ? textColors : colors;
+  const colorPresets = isText ? textColors : fillColors;
   const groupLabel = isText
     ? __('Text colors', 'web-stories')
     : __('Colors', 'web-stories');

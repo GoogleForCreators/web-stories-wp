@@ -61,7 +61,7 @@ function ColorPresetActions({ color }) {
     actions: { updateStory },
   } = useStory();
 
-  const { colors, textColors } = stylePresets;
+  const { fillColors, textColors } = stylePresets;
 
   // @todo This will change with the missing multi-selection handling.
   const isText =
@@ -80,13 +80,14 @@ function ColorPresetActions({ color }) {
         properties: {
           stylePresets: {
             ...stylePresets,
-            colors: isText ? colors : [...colors, color],
-            textColors: !isText ? textColors : [...textColors, color],
+            ...(isText
+              ? { textColors: [...textColors, color] }
+              : { fillColors: [...fillColors, color] }),
           },
         },
       });
     }
-  }, [color, stylePresets, colors, isText, textColors, updateStory]);
+  }, [color, stylePresets, fillColors, isText, textColors, updateStory]);
   return (
     <ActionsWrapper>
       <AddColorPreset onClick={handleAddColorPreset}>

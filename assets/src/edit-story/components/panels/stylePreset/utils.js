@@ -15,12 +15,18 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import deepEqual from 'deep-equal';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 
 export function findMatchingColor(color, stylePresets, isText) {
-  // Ensure that the color doesn't already exist.
-  const colorsToMatch = isText ? stylePresets.textColors : stylePresets.colors;
-  return colorsToMatch.find((value) => deepEqual(color, value, true));
+  const colorsToMatch = isText
+    ? stylePresets.textColors
+    : stylePresets.fillColors;
+  const patternType = isText ? 'color' : 'background';
+  return colorsToMatch.find((value) => {
+    const existing = generatePatternStyles(value, patternType);
+    const toAdd = generatePatternStyles(color, patternType);
+    return Object.keys(toAdd).every((key) => existing[key] === toAdd[key]);
+  });
 }

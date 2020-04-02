@@ -98,7 +98,7 @@ function ColorPreview({
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
-      addActions: colorPickerActions,
+      renderFooter: colorPickerActions,
     });
   }, [
     showColorPickerAt,
