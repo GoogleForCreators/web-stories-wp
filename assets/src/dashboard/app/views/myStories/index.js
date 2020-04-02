@@ -41,8 +41,8 @@ import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import DisplayElement from '../../../../edit-story/components/canvas/displayElement';
-import theme from '../../../theme';
 import FontProvider from '../../font/fontProvider';
+import useResizeEffect from '../../../utils/useResizeEffect';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
@@ -55,7 +55,7 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const [pageSize, _setPageSize] = useState({ width: 100, height: 150 });
+  const { pageSize } = useResizeEffect();
   const {
     actions: { fetchStories },
     state: { stories },
@@ -72,38 +72,6 @@ function MyStories() {
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
-
-  const setPageSize = useCallback(() => {
-    const { innerWidth } = window;
-
-    if (innerWidth <= theme.breakpoint.raw.min) {
-      _setPageSize({
-        width: theme.grid.min.itemWidth,
-        height: theme.grid.min.imageHeight,
-      });
-    } else if (innerWidth <= theme.breakpoint.raw.mobile) {
-      _setPageSize({
-        width: theme.grid.mobile.itemWidth,
-        height: theme.grid.mobile.imageHeight,
-      });
-    } else if (innerWidth <= theme.breakpoint.raw.tablet) {
-      _setPageSize({
-        width: theme.grid.tablet.itemWidth,
-        height: theme.grid.tablet.imageHeight,
-      });
-    } else {
-      _setPageSize({
-        width: theme.grid.desktop.itemWidth,
-        height: theme.grid.desktop.imageHeight,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = window.addEventListener('resize', setPageSize);
-    setPageSize();
-    return unsubscribe;
-  }, [setPageSize]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -127,7 +95,7 @@ function MyStories() {
   );
 
   return (
-    <FontProvider getAllFonts={getAllFonts}>
+    <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
           <PageHeading

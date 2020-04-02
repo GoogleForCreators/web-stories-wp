@@ -51,6 +51,8 @@ export const Z_INDEX = {
   POPOVER_PANEL: 10,
 };
 
+export const PAGE_RATIO = 3 / 2;
+
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
   {

@@ -62,13 +62,6 @@ function DisplayElement({ element, previewMode, page }) {
   const {
     actions: { getBox },
   } = useUnits();
-  let {
-    state: { currentPage },
-  } = useStory();
-
-  if (!currentPage) {
-    currentPage = page;
-  }
 
   const [replacement, setReplacement] = useState(null);
 
@@ -135,9 +128,9 @@ function DisplayElement({ element, previewMode, page }) {
           </ReplacementContainer>
         )}
       </WithMask>
-      {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
+      {Boolean(isBackground) && Boolean(page.backgroundOverlay) && (
         <BackgroundOverlay
-          style={generateOverlayStyles(currentPage.backgroundOverlay)}
+          style={generateOverlayStyles(page.backgroundOverlay)}
         />
       )}
     </Wrapper>
@@ -147,7 +140,7 @@ function DisplayElement({ element, previewMode, page }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
-  page: PropTypes.object,
+  page: StoryPropTypes.page,
 };
 
 export default DisplayElement;
