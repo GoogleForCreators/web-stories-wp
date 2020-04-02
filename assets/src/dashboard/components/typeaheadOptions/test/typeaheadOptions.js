@@ -24,7 +24,6 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../theme';
-
 import TypeaheadOptions from '../';
 
 const wrapper = (children) => {

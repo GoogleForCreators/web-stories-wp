@@ -32,7 +32,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import TypeaheadOptions from '../typeahead-options';
+import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
   width: 272px;
@@ -47,7 +47,7 @@ const SearchContainer = styled.div`
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
-    transition: width 0.2s ease-in-out;
+    transition: width 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 SearchContainer.propTypes = {
@@ -83,7 +83,7 @@ const ControlVisibilityContainer = styled.div`
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 ControlVisibilityContainer.propTypes = {
@@ -109,7 +109,14 @@ const StyledInput = styled.input`
   &:disabled {
     cursor: default;
   }
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    width: ${({ isExpanded }) => (isExpanded ? '100%' : '0')};
+  }
 `;
+StyledInput.propTypes = {
+  isExpanded: PropTypes.bool,
+};
 
 const SearchButton = styled.button`
   margin: 0;
@@ -173,7 +180,7 @@ const TypeaheadInput = ({
       return items;
     }
     return items.filter((item) => {
-      const lowerInputValue = inputValue.toLowerCase();
+      const lowerInputValue = inputValue.toLowerCase().trim();
 
       return (
         item.label.toLowerCase().includes(lowerInputValue) ||
@@ -237,6 +244,7 @@ const TypeaheadInput = ({
         <ControlVisibilityContainer isExpanded={isInputExpanded}>
           <label aria-label={ariaLabel} htmlFor={inputId} />
           <StyledInput
+            isExpanded={isInputExpanded}
             ref={inputRef}
             autoComplete="off"
             type="text"
@@ -279,7 +287,11 @@ TypeaheadInput.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool,
+        PropTypes.number,
+      ]).isRequired,
     })
   ).isRequired,
 
@@ -290,7 +302,11 @@ TypeaheadInput.propTypes = {
   maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
 };
 
 export default TypeaheadInput;

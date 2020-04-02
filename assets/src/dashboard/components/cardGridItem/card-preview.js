@@ -30,6 +30,7 @@ import styled from 'styled-components';
  */
 import { BUTTON_TYPES } from '../../constants';
 import { Button } from '../';
+import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 
 const PreviewImage = styled.img`
   object-fit: cover;
@@ -57,7 +58,7 @@ const EditControls = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-items: space-between;
+  justify-content: space-between;
   padding: 0 16px;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
@@ -92,6 +93,10 @@ const CtaContainer = styled.div`
   margin: auto auto 25px;
 `;
 
+const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
+  margin-right: 9px;
+`;
+
 // TODO modify to handle other types of grid items, not just own stories
 const CardPreviewContainer = ({
   onOpenInEditorClick,
@@ -111,6 +116,7 @@ const CardPreviewContainer = ({
                 type={BUTTON_TYPES.SECONDARY}
                 onClick={onPreviewClick}
               >
+                <PlayArrowIcon />
                 {__('Preview', 'web-stories')}
               </PreviewButton>
             </PreviewContainer>

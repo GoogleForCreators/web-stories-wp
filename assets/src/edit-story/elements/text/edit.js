@@ -118,7 +118,11 @@ function TextEdit({
         rest.lineHeight,
         dataToEditorX(rest.padding?.vertical || 0)
       ),
+      color: createSolid(0, 0, 0),
       backgroundColor: createSolid(255, 255, 255),
+    }),
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
+      backgroundColor: null,
     }),
   };
   const wrapperRef = useRef(null);

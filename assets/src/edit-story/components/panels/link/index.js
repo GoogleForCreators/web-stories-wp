@@ -39,6 +39,7 @@ import {
   LinkType,
 } from '../../link';
 import { useAPI } from '../../../app/api';
+import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
@@ -78,6 +79,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -99,16 +101,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     if (!isValidUrl(urlWithProtocol)) {
       return;
     }
+
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
         updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
       })
-      .catch((reason) => {
-        if (reason?.code === 'rest_invalid_url') {
-          return;
-        }
-        throw reason;
+      .catch(() => {
+        showSnackbar({
+          message: __('This is an invalid link.', 'web-stories'),
+        });
       })
       .finally(() => {
         setFetchingMetadata(false);

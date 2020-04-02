@@ -151,10 +151,6 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		// Subsequent requests is cached and so it should not cause a request.
-		rest_get_server()->dispatch( $request );
-		$this->assertEquals( 1, $this->request_count );
-
 		$this->assertEquals( 404, $response->get_status() );
 		$this->assertEquals( $data['code'], 'rest_invalid_url' );
 	}
