@@ -106,7 +106,7 @@ const Colors = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   max-height: ${6 * COLOR_HEIGHT + 5}px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const ButtonWrapper = styled.div`
