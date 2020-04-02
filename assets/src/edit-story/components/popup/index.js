@@ -19,7 +19,12 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { ADMIN_TOOLBAR_HEIGHT } from '../../constants';
 
 const DEFAULT_WIDTH = 270;
 const MAX_HEIGHT = 370;
@@ -35,18 +40,28 @@ const Container = styled.div`
 
 function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
   const [popupState, setPopupState] = useState(null);
+  const containerRef = useRef();
 
   useLayoutEffect(() => {
     function positionPopup() {
       const anchorRect = anchor.current.getBoundingClientRect();
       const bodyRect = document.body.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect() ?? {
+        height: MAX_HEIGHT,
+      };
 
       // Note: This displays the popup right under the node, currently no variations implemented.
       setPopupState({
         width,
         offset: {
           x: anchorRect.left - bodyRect.left - width + anchorRect.width,
-          y: anchorRect.top + anchorRect.height,
+          y: Math.max(
+            0,
+            Math.min(
+              bodyRect.height - containerRect.height + ADMIN_TOOLBAR_HEIGHT,
+              anchorRect.top + anchorRect.height
+            )
+          ),
         },
       });
     }
@@ -63,7 +78,7 @@ function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
 
   return popupState && isOpen
     ? createPortal(
-        <Container {...popupState.offset} width={width}>
+        <Container {...popupState.offset} ref={containerRef} width={width}>
           {children}
         </Container>,
         document.body
