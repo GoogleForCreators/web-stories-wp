@@ -131,6 +131,12 @@ function SizePositionPanel({
   );
 
   usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
+    const isRotationAngle = Boolean(newRotationAngle);
+
+    if (!isRotationAngle) {
+      return null;
+    }
+
     return { rotationAngle: newRotationAngle % 360 };
   }, []);
 
