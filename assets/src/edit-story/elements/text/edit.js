@@ -45,6 +45,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
+import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
@@ -199,9 +200,10 @@ function TextEdit({
     evt.stopPropagation();
   };
 
-  // Finally update content for element on unmount.
-  useEffect(
-    () => () => {
+  // Finally update content for element on focus out.
+  useFocusOut(
+    textBoxRef,
+    () => {
       const newState = lastKnownState.current;
       const newHeight = editorHeightRef.current;
       wrapperRef.current.style.height = '';
