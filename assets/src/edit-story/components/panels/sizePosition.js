@@ -214,11 +214,7 @@ function SizePositionPanel({
           suffix={__('Rotate', 'web-stories')}
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
-          onChange={(value) =>
-            pushUpdate({
-              rotationAngle: value,
-            })
-          }
+          onChange={(value) => pushUpdate({ rotationAngle: value })}
           disabled={isFill}
         />
         {canFlip && (
