@@ -22,12 +22,14 @@ import { useReducer, useCallback } from 'react';
 const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';
 const REPLAY = 'replay';
+const CHANGED = 'changed';
 
 const EMPTY_STATE = {
   entries: [],
   offset: 0,
   replayState: null,
   globalHistoryLength: 0,
+  isHistoryChanged: false,
 };
 
 const reducer = (size) => (state, { type, payload }) => {
@@ -56,14 +58,29 @@ const reducer = (size) => (state, { type, payload }) => {
       return {
         entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
         globalHistoryLength: state.globalHistoryLength + 1,
+        isHistoryChanged: true,
         offset: 0,
         replayState: null,
       };
 
     case REPLAY:
+      const historyChangedLengthOnUndo = state.globalHistoryLength - 1;
+      const historyChangedLengthOnRedo = state.globalHistoryLength + 1;
+      const newState = {
+        replayState: state.entries[payload],
+        globalHistoryLength:
+          payload < 0 ? historyChangedLengthOnRedo : historyChangedLengthOnUndo,
+      };
+
       return {
         ...state,
-        replayState: state.entries[payload],
+        ...newState,
+      };
+
+    case CHANGED:
+      return {
+        ...state,
+        isHistoryChanged: payload,
       };
 
     case CLEAR_HISTORY:
@@ -92,7 +109,13 @@ function useHistoryReducer(size) {
   // state.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const { entries, offset, replayState, globalHistoryLength } = state;
+  const {
+    entries,
+    offset,
+    replayState,
+    isHistoryChanged,
+    globalHistoryLength,
+  } = state;
   const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
@@ -136,12 +159,24 @@ function useHistoryReducer(size) {
     [dispatch]
   );
 
+  const setHistoryChangedState = useCallback(
+    (hasHistoryChanged) => {
+      return dispatch({
+        type: CHANGED,
+        payload: hasHistoryChanged,
+      });
+    },
+    [dispatch]
+  );
+
   return {
     replayState,
     appendToHistory,
     clearHistory,
+    setHistoryChangedState,
     offset,
     historyLength,
+    isHistoryChanged,
     globalHistoryLength,
     undo,
     redo,

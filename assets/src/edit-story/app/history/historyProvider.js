@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -33,43 +33,45 @@ function HistoryProvider({ children, size }) {
     replayState,
     appendToHistory,
     clearHistory,
+    setHistoryChangedState,
     offset,
+    isHistoryChanged,
     globalHistoryLength,
     historyLength,
     undo,
     redo,
   } = useHistoryReducer(size);
-  const canUndo = offset < historyLength - 1;
-  const changesSinceLastSave = useRef(0);
-  const [hasChangedSinceLastSave, setHasChangedSinceLastSave] = useState(false);
 
-  usePreventWindowUnload(hasChangedSinceLastSave);
+  usePreventWindowUnload(isHistoryChanged);
 
+  /**
+   * On each globalHistoryLength update, check if it has new records since the initial load
+   * If yes, update the history changed state to true
+   * If not, update the history changed state to false
+   */
   useEffect(() => {
-    if (
-      globalHistoryLength > 0 &&
-      changesSinceLastSave.current !== globalHistoryLength
-    ) {
-      changesSinceLastSave.current = globalHistoryLength;
-      setHasChangedSinceLastSave(true);
+    if (globalHistoryLength - 1 > 0) {
+      setHistoryChangedState(true);
     }
-    if (globalHistoryLength <= 0) {
-      setHasChangedSinceLastSave(false);
+
+    if (globalHistoryLength - 1 <= 0) {
+      setHistoryChangedState(false);
     }
-  }, [setHasChangedSinceLastSave, globalHistoryLength]);
+  }, [setHistoryChangedState, globalHistoryLength]);
 
   const state = {
     state: {
       replayState,
-      canUndo,
+      canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
+      globalHistoryLength,
     },
     actions: {
       appendToHistory,
+      setHistoryChangedState,
       clearHistory,
       undo,
       redo,
-      setHasChangedSinceLastSave,
     },
   };
 

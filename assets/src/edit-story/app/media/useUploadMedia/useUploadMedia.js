@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,6 +28,7 @@ import { __experimentalCreateInterpolateElement as createInterpolateElement } fr
 /**
  * Internal dependencies
  */
+import { useHistory } from '../../history';
 import { useUploader } from '../../uploader';
 import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
@@ -37,6 +38,10 @@ import {
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
+  const {
+    state: { globalHistoryLength },
+    actions: { setHistoryChangedState },
+  } = useHistory();
   const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
   const {
@@ -139,6 +144,16 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       uploadFile,
     ]
   );
+
+  // On each isUploading update, set a temporary history changed state to true/false, which will prevent leave the current page without confirmation
+  useEffect(() => {
+    setHistoryChangedState(isUploading);
+
+    // After set/unset temporary history changed state, check if a previous or new change in the history was created during the upload, if yes, it should be flagged
+    if (globalHistoryLength - 1 > 0) {
+      setHistoryChangedState(true);
+    }
+  }, [setHistoryChangedState, globalHistoryLength, isUploading]);
 
   return {
     uploadMedia,
