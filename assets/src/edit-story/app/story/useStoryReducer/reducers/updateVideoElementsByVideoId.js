@@ -17,8 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_RESERVED_PROPERTIES } from '../types';
-import { objectWithout } from './utils';
+import { updateElementWithUpdater } from './utils';
 
 /**
  * Update elements by the given videoId with the given properties.
@@ -43,21 +42,14 @@ function updateVideoElementsByVideoId(
   { videoId, properties: propertiesOrUpdater }
 ) {
   if (videoId === null) return state;
-  const updatedPages = state.pages.map((page) => {
+  const updatedPages = state.pages.map((page, pageIndex) => {
     const updatedElements = page.elements.map((element) => {
       if (element && element.resource && element.resource.videoId === videoId) {
-        const properties =
-          typeof propertiesOrUpdater === 'function'
-            ? propertiesOrUpdater(element)
-            : propertiesOrUpdater;
-        const allowedProperties = objectWithout(
-          properties,
-          ELEMENT_RESERVED_PROPERTIES
+        return updateElementWithUpdater(
+          element,
+          propertiesOrUpdater,
+          pageIndex
         );
-        if (Object.keys(allowedProperties).length === 0) {
-          return element;
-        }
-        return { ...element, ...allowedProperties };
       }
       return element;
     });

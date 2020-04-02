@@ -104,7 +104,7 @@ describe('updateVideoElementsByVideoId', () => {
     ]);
   });
 
-  it('should update all the elemtns with given videoId of element resource through all pages', () => {
+  it('should update all the elements with given videoId of element resource through all pages', () => {
     const { restore, updateVideoElementsByVideoId } = setupReducer();
 
     // Set an initial state.

@@ -56,8 +56,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         featured_media: posterId,
         post: storyId,
       });
-      const newState = ({ resource, ...rest }) => ({
-        ...rest,
+      const newState = ({ resource }) => ({
         resource: {
           ...resource,
           posterId,
