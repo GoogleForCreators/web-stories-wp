@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import { UploadDropTargetOverlay } from './overlay';
+import UploadDropTargetOverlay from './overlay';
 import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const Container = styled(UploadDropTargetOverlay)`
@@ -64,7 +64,7 @@ const Icon = styled(UploadIcon)`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function UploadDropTargetMessageOverlay({ message, ...rest }) {
+function UploadDropTargetMessage({ message, ...rest }) {
   const { allowedMimeTypes = {} } = useConfig();
   const allowedFileTypes = Object.keys(allowedMimeTypes).reduce(
     (acc, cur) => [...acc, ...allowedMimeTypes[cur]],
@@ -87,8 +87,8 @@ function UploadDropTargetMessageOverlay({ message, ...rest }) {
   );
 }
 
-UploadDropTargetMessageOverlay.propTypes = {
+UploadDropTargetMessage.propTypes = {
   message: PropTypes.string.isRequired,
 };
 
-export default UploadDropTargetMessageOverlay;
+export default UploadDropTargetMessage;
