@@ -39,7 +39,7 @@ const ActionsWrapper = styled.div`
   left: 0;
   bottom: 0;
   text-align: center;
-  border-top: 1px solid rgba(229, 229, 229, 0.2);
+  border-top: 1px solid ${({ theme }) => rgba(theme.colors.fg.v8, 0.2)};
 `;
 
 const AddColorPreset = styled.button`
