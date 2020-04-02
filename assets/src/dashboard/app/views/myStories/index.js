@@ -77,17 +77,16 @@ function MyStories() {
   }, [viewStyle]);
 
   const filteredStoriesCount = filteredStories.length;
-  const hasFilteredStories = filteredStoriesCount > 0;
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
     _n(
       '%s total story',
       '%s total stories',
-      filteredStories.length,
+      filteredStoriesCount,
       'web-stories'
     ),
-    filteredStories.length
+    filteredStoriesCount
   );
 
   return (
@@ -97,7 +96,6 @@ function MyStories() {
         filteredStories={filteredStories}
         handleTypeaheadChange={setTypeaheadValue}
         typeaheadValue={typeaheadValue}
-        isNoResultsText={!Boolean(hasFilteredStories)}
       />
 
       <FilterContainer>
@@ -113,7 +111,7 @@ function MyStories() {
           </FloatingTab>
         ))}
       </FilterContainer>
-      {hasFilteredStories ? (
+      {filteredStoriesCount > 0 ? (
         <>
           <ListBar
             label={listBarLabel}
