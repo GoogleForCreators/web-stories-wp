@@ -29,7 +29,7 @@ const EMPTY_STATE = {
   offset: 0,
   replayState: null,
   globalHistoryLength: 0,
-  isHistoryChanged: false,
+  hasHistoryChanged: false,
 };
 
 const reducer = (size) => (state, { type, payload }) => {
@@ -58,7 +58,7 @@ const reducer = (size) => (state, { type, payload }) => {
       return {
         entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
         globalHistoryLength: state.globalHistoryLength + 1,
-        isHistoryChanged: true,
+        hasHistoryChanged: true,
         offset: 0,
         replayState: null,
       };
@@ -80,7 +80,7 @@ const reducer = (size) => (state, { type, payload }) => {
     case CHANGED:
       return {
         ...state,
-        isHistoryChanged: payload,
+        hasHistoryChanged: payload,
       };
 
     case CLEAR_HISTORY:
@@ -113,7 +113,7 @@ function useHistoryReducer(size) {
     entries,
     offset,
     replayState,
-    isHistoryChanged,
+    hasHistoryChanged,
     globalHistoryLength,
   } = state;
   const historyLength = entries.length;
@@ -160,10 +160,10 @@ function useHistoryReducer(size) {
   );
 
   const setHistoryChangedState = useCallback(
-    (hasHistoryChanged) => {
+    (historyChangedState) => {
       return dispatch({
         type: CHANGED,
-        payload: hasHistoryChanged,
+        payload: historyChangedState,
       });
     },
     [dispatch]
@@ -176,7 +176,7 @@ function useHistoryReducer(size) {
     setHistoryChangedState,
     offset,
     historyLength,
-    isHistoryChanged,
+    hasHistoryChanged,
     globalHistoryLength,
     undo,
     redo,

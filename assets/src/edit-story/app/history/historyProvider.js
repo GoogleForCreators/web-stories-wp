@@ -35,14 +35,14 @@ function HistoryProvider({ children, size }) {
     clearHistory,
     setHistoryChangedState,
     offset,
-    isHistoryChanged,
+    hasHistoryChanged,
     globalHistoryLength,
     historyLength,
     undo,
     redo,
   } = useHistoryReducer(size);
 
-  usePreventWindowUnload(isHistoryChanged);
+  usePreventWindowUnload(hasHistoryChanged);
 
   /**
    * On each globalHistoryLength update, check if it has new records since the initial load
