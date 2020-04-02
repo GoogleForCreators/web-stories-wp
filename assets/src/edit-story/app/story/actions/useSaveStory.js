@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import OutputStory from '../../../output/story';
@@ -67,77 +68,60 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
-  const saveStory = useCallback(() => {
-    setIsSaving(true);
-    const {
-      title,
-      status,
-      author,
-      date,
-      modified,
-      slug,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    } = story;
+  const saveStory = useCallback(
+    (props) => {
+      setIsSaving(true);
+      const propsToSave = objectPick(story, [
+        'title',
+        'status',
+        'author',
+        'date',
+        'modified',
+        'slug',
+        'excerpt',
+        'featuredMedia',
+        'password',
+        'publisherLogo',
+        'autoAdvance',
+        'defaultPageDuration',
+      ]);
+      const content = getStoryMarkup(story, pages, metadata);
+      saveStoryById({
+        storyId,
+        content,
+        pages,
+        ...propsToSave,
+        ...props,
+      })
+        .then((post) => {
+          const properties = {
+            ...objectPick(post, ['status', 'slug', 'link']),
+            featuredMediaUrl: post.featured_media_url,
+          };
+          updateStory({ properties });
 
-    const content = getStoryMarkup(story, pages, metadata);
-    saveStoryById({
-      storyId,
-      title,
-      status,
+          refreshPostEditURL();
+        })
+        .catch(() => {
+          showSnackbar({
+            message: __('Failed to save the story', 'web-stories'),
+          });
+        })
+        .finally(() => {
+          setIsSaving(false);
+        });
+    },
+    [
+      story,
       pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    })
-      .then((post) => {
-        const {
-          status: newStatus,
-          slug: newSlug,
-          link,
-          featured_media_url: featuredMediaUrl,
-        } = post;
-
-        updateStory({
-          properties: {
-            status: newStatus,
-            slug: newSlug,
-            link,
-            featuredMediaUrl,
-          },
-        });
-        refreshPostEditURL();
-      })
-      .catch(() => {
-        showSnackbar({
-          message: __('Failed to save the story', 'web-stories'),
-        });
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  }, [
-    story,
-    pages,
-    metadata,
-    saveStoryById,
-    storyId,
-    updateStory,
-    refreshPostEditURL,
-    showSnackbar,
-  ]);
+      metadata,
+      saveStoryById,
+      storyId,
+      updateStory,
+      refreshPostEditURL,
+      showSnackbar,
+    ]
+  );
 
   return { saveStory, isSaving };
 }

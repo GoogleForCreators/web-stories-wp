@@ -93,7 +93,7 @@ const StyledToggleIcon = styled(ToggleIcon)`
 
 function PublishPanel() {
   const {
-    state: { users },
+    state: { users, isUsersLoading },
   } = useInspector();
 
   const {
@@ -195,14 +195,23 @@ function PublishPanel() {
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
           <FieldLabel>{authorLabel}</FieldLabel>
-          <DropDown
-            ariaLabel={authorLabel}
-            options={users}
-            value={author}
-            disabled={isSaving}
-            onChange={handleChangeValue('author')}
-            lightMode={true}
-          />
+          {isUsersLoading ? (
+            <DropDown
+              ariaLabel={authorLabel}
+              placeholder={__('Loading...', 'web-stories')}
+              disabled
+              lightMode={true}
+            />
+          ) : (
+            <DropDown
+              ariaLabel={authorLabel}
+              options={users}
+              value={author}
+              disabled={isSaving}
+              onChange={handleChangeValue('author')}
+              lightMode={true}
+            />
+          )}
         </Row>
       )}
       <Row>

@@ -221,7 +221,7 @@ function APIProvider({ children }) {
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
   const state = {
