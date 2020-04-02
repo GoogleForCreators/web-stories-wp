@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import { PatternPropType } from '../../../types';
+import { useKeyDownEffect } from '../../keyboard';
 import { findMatchingColor } from './utils';
 
 const ActionsWrapper = styled.div`
@@ -63,19 +64,19 @@ function ColorPresetActions({ color }) {
 
   const { fillColors, textColors } = stylePresets;
 
+  const linkRef = useRef();
+
   // @todo This will change with the missing multi-selection handling.
   const isText =
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => 'text' === type);
 
   const handleAddColorPreset = useCallback(
-    (evt) => {
-      // @todo Add color on keydown, too.
-      evt.preventDefault();
-      if (color) {
+    (toAdd) => {
+      if (toAdd) {
         // If match found, don't add.
         // @todo UX improvement: notify the user/mark the existing color?
-        if (findMatchingColor(color, stylePresets, isText)) {
+        if (findMatchingColor(toAdd, stylePresets, isText)) {
           return;
         }
 
@@ -84,19 +85,26 @@ function ColorPresetActions({ color }) {
             stylePresets: {
               ...stylePresets,
               ...(isText
-                ? { textColors: [...textColors, color] }
-                : { fillColors: [...fillColors, color] }),
+                ? { textColors: [...textColors, toAdd] }
+                : { fillColors: [...fillColors, toAdd] }),
             },
           },
         });
       }
     },
-    [color, stylePresets, fillColors, isText, textColors, updateStory]
+    [stylePresets, fillColors, isText, textColors, updateStory]
+  );
+
+  useKeyDownEffect(
+    linkRef,
+    { key: ['space', 'enter'] },
+    () => handleAddColorPreset(color),
+    [color]
   );
 
   return (
     <ActionsWrapper>
-      <AddColorPreset onClick={handleAddColorPreset}>
+      <AddColorPreset ref={linkRef} onClick={() => handleAddColorPreset(color)}>
         {__('+ Add to Color Preset', 'web-stories')}
       </AddColorPreset>
     </ActionsWrapper>
