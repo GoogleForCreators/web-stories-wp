@@ -68,26 +68,32 @@ function ColorPresetActions({ color }) {
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => 'text' === type);
 
-  const handleAddColorPreset = useCallback(() => {
-    if (color) {
-      // If match found, don't add.
-      // @todo UX improvement: notify the user/mark the existing color?
-      if (findMatchingColor(color, stylePresets, isText)) {
-        return;
-      }
+  const handleAddColorPreset = useCallback(
+    (evt) => {
+      // @todo Add color on keydown, too.
+      evt.preventDefault();
+      if (color) {
+        // If match found, don't add.
+        // @todo UX improvement: notify the user/mark the existing color?
+        if (findMatchingColor(color, stylePresets, isText)) {
+          return;
+        }
 
-      updateStory({
-        properties: {
-          stylePresets: {
-            ...stylePresets,
-            ...(isText
-              ? { textColors: [...textColors, color] }
-              : { fillColors: [...fillColors, color] }),
+        updateStory({
+          properties: {
+            stylePresets: {
+              ...stylePresets,
+              ...(isText
+                ? { textColors: [...textColors, color] }
+                : { fillColors: [...fillColors, color] }),
+            },
           },
-        },
-      });
-    }
-  }, [color, stylePresets, fillColors, isText, textColors, updateStory]);
+        });
+      }
+    },
+    [color, stylePresets, fillColors, isText, textColors, updateStory]
+  );
+
   return (
     <ActionsWrapper>
       <AddColorPreset onClick={handleAddColorPreset}>
