@@ -24,9 +24,9 @@ export function findMatchingColor(color, stylePresets, isText) {
     ? stylePresets.textColors
     : stylePresets.fillColors;
   const patternType = isText ? 'color' : 'background';
+  const toAdd = generatePatternStyles(color, patternType);
   return colorsToMatch.find((value) => {
     const existing = generatePatternStyles(value, patternType);
-    const toAdd = generatePatternStyles(color, patternType);
     return Object.keys(toAdd).every((key) => existing[key] === toAdd[key]);
   });
 }
