@@ -53,16 +53,25 @@ export default function ApiProvider({ children }) {
   const [stories, setStories] = useState([]);
 
   const fetchStories = useCallback(
-    async ({ status = STORY_STATUSES[0].value }) => {
+    async ({ status = STORY_STATUSES[0].value, searchTerm }) => {
       if (!api.stories) {
         return [];
       }
+      const perPage = '100'; // TODO set up pagination
+      const query = searchTerm
+        ? {
+            status,
+            search: `${searchTerm}`,
+            per_page: perPage,
+          }
+        : { status, per_page: perPage, context: 'edit' };
 
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
-          query: { status, context: 'edit' },
+          query,
         });
+
         const serverStoryResponse = await apiFetch({
           path,
         });
