@@ -40,9 +40,9 @@ import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import DisplayElement from '../../../../edit-story/components/canvas/displayElement';
 import FontProvider from '../../font/fontProvider';
 import useResizeEffect from '../../../utils/useResizeEffect';
+import PreviewPage from '../../../components/previewPage';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
@@ -124,7 +124,6 @@ function MyStories() {
                 layoutStyle={viewStyle}
                 onPress={handleViewStyleBarButtonSelected}
               />
-
               <StoryGrid>
                 {filteredStories.map((story) => (
                   <CardGridItem key={story.id}>
@@ -133,15 +132,7 @@ function MyStories() {
                       onPreviewClick={() => {}}
                       previewSource={'http://placeimg.com/225/400/nature'}
                     >
-                      {story.pages[0].elements.map(({ id, ...rest }) => {
-                        return (
-                          <DisplayElement
-                            key={id}
-                            page={story.pages[0]}
-                            element={{ id, ...rest }}
-                          />
-                        );
-                      })}
+                      <PreviewPage page={story.pages[0]} />
                     </CardPreviewContainer>
                     <CardTitle
                       title={story.title}
