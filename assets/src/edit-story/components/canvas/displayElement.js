@@ -58,13 +58,17 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element, previewMode }) {
+function DisplayElement({ element, previewMode, page }) {
   const {
     actions: { getBox },
   } = useUnits();
-  const {
+  let {
     state: { currentPage },
   } = useStory();
+
+  if (!currentPage) {
+    currentPage = page;
+  }
 
   const [replacement, setReplacement] = useState(null);
 
@@ -143,6 +147,7 @@ function DisplayElement({ element, previewMode }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  page: PropTypes.object,
 };
 
 export default DisplayElement;

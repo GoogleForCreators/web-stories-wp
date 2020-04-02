@@ -38,21 +38,26 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+import { FontProvider } from '../../../../edit-story/app/font';
+import DisplayElement from '../../../../edit-story/components/canvas/displayElement';
+import theme from '../../../theme';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  border-bottom: ${({ t }) => t.subNavigationBar.border};
 `;
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-
+  const [pageSize, _setPageSize] = useState({ width: 100, height: 150 });
   const {
-    actions: { fetchStories },
+    actions: { fetchStories, getAllFonts },
     state: { stories },
   } = useContext(ApiContext);
 
@@ -67,6 +72,38 @@ function MyStories() {
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
+
+  const setPageSize = useCallback(() => {
+    const { innerWidth } = window;
+
+    if (innerWidth <= theme.breakpoint.raw.min) {
+      _setPageSize({
+        width: theme.grid.min.itemWidth,
+        height: theme.grid.min.imageHeight,
+      });
+    } else if (innerWidth <= theme.breakpoint.raw.mobile) {
+      _setPageSize({
+        width: theme.grid.mobile.itemWidth,
+        height: theme.grid.mobile.imageHeight,
+      });
+    } else if (innerWidth <= theme.breakpoint.raw.tablet) {
+      _setPageSize({
+        width: theme.grid.tablet.itemWidth,
+        height: theme.grid.tablet.imageHeight,
+      });
+    } else {
+      _setPageSize({
+        width: theme.grid.desktop.itemWidth,
+        height: theme.grid.desktop.imageHeight,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = window.addEventListener('resize', setPageSize);
+    setPageSize();
+    return unsubscribe;
+  }, [setPageSize]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -90,55 +127,69 @@ function MyStories() {
   );
 
   return (
-    <>
-      <PageHeading
-        defaultTitle={__('My Stories', 'web-stories')}
-        filteredStories={filteredStories}
-        handleTypeaheadChange={setTypeaheadValue}
-        typeaheadValue={typeaheadValue}
-      />
-
-      <FilterContainer>
-        {STORY_STATUSES.map((storyStatus) => (
-          <FloatingTab
-            key={storyStatus.value}
-            onClick={(_, value) => setStatus(value)}
-            name="all-stories"
-            value={storyStatus.value}
-            isSelected={status === storyStatus.value}
-          >
-            {storyStatus.label}
-          </FloatingTab>
-        ))}
-      </FilterContainer>
-      {filteredStoriesCount > 0 ? (
-        <>
-          <ListBar
-            label={listBarLabel}
-            layoutStyle={viewStyle}
-            onPress={handleViewStyleBarButtonSelected}
+    <FontProvider getAllFonts={getAllFonts}>
+      <TransformProvider>
+        <UnitsProvider pageSize={pageSize}>
+          <PageHeading
+            defaultTitle={__('My Stories', 'web-stories')}
+            filteredStories={filteredStories}
+            handleTypeaheadChange={setTypeaheadValue}
+            typeaheadValue={typeaheadValue}
           />
 
-          <StoryGrid>
-            {filteredStories.map((story) => (
-              <CardGridItem key={story.id}>
-                <CardPreviewContainer
-                  onOpenInEditorClick={() => {}}
-                  onPreviewClick={() => {}}
-                  previewSource={'http://placeimg.com/225/400/nature'}
-                />
-                <CardTitle
-                  title={story.title}
-                  modifiedDate={story.modified.startOf('day').fromNow()}
-                />
-              </CardGridItem>
+          <FilterContainer>
+            {STORY_STATUSES.map((storyStatus) => (
+              <FloatingTab
+                key={storyStatus.value}
+                onClick={(_, value) => setStatus(value)}
+                name="all-stories"
+                value={storyStatus.value}
+                isSelected={status === storyStatus.value}
+              >
+                {storyStatus.label}
+              </FloatingTab>
             ))}
-          </StoryGrid>
-        </>
-      ) : (
-        <NoResults typeaheadValue={typeaheadValue} />
-      )}
-    </>
+          </FilterContainer>
+          {filteredStoriesCount > 0 ? (
+            <>
+              <ListBar
+                label={listBarLabel}
+                layoutStyle={viewStyle}
+                onPress={handleViewStyleBarButtonSelected}
+              />
+
+              <StoryGrid>
+                {filteredStories.map((story) => (
+                  <CardGridItem key={story.id}>
+                    <CardPreviewContainer
+                      onOpenInEditorClick={() => {}}
+                      onPreviewClick={() => {}}
+                      previewSource={'http://placeimg.com/225/400/nature'}
+                    >
+                      {story.pages[0].elements.map(({ id, ...rest }) => {
+                        return (
+                          <DisplayElement
+                            key={id}
+                            page={story.pages[0]}
+                            element={{ id, ...rest }}
+                          />
+                        );
+                      })}
+                    </CardPreviewContainer>
+                    <CardTitle
+                      title={story.title}
+                      modifiedDate={story.modified.startOf('day').fromNow()}
+                    />
+                  </CardGridItem>
+                ))}
+              </StoryGrid>
+            </>
+          ) : (
+            <NoResults typeaheadValue={typeaheadValue} />
+          )}
+        </UnitsProvider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 
