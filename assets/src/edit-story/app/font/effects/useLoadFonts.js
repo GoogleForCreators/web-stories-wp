@@ -33,7 +33,7 @@ function useLoadFonts({ fonts, setFonts }) {
     if (fonts.length === 0) {
       getAllFonts({}).then(setFonts);
     }
-  }, [getAllFonts, fonts, setFonts]);
+  }, [fonts, getAllFonts, setFonts]);
 }
 
 export default useLoadFonts;
