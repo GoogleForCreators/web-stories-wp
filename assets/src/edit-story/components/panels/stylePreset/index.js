@@ -283,6 +283,14 @@ function StylePresetPanel() {
     );
   };
 
+  const handleColorClick = (color) => {
+    if (isEditMode) {
+      handleDeleteColor(color);
+    } else {
+      handleApplyColor(color);
+    }
+  };
+
   return (
     <Panel name="stylepreset">
       <PanelTitle
@@ -302,10 +310,11 @@ function StylePresetPanel() {
                   <Color
                     color={color}
                     onClick={() => {
-                      if (isEditMode) {
-                        handleDeleteColor(color);
-                      } else {
-                        handleApplyColor(color);
+                      handleColorClick(color);
+                    }}
+                    onKeyDown={(evt) => {
+                      if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
+                        handleColorClick(color);
                       }
                     }}
                     aria-label={
