@@ -74,7 +74,7 @@ const PreviewWrapper = styled.div`
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
-const PagePreview = React.forwardRef(({ index, ...props }, forwardedRef) => {
+const PagePreview = ({ index, ...props }) => {
   const {
     state: { pages },
   } = useStory();
@@ -85,7 +85,7 @@ const PagePreview = React.forwardRef(({ index, ...props }, forwardedRef) => {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props} ref={forwardedRef}>
+        <Page {...props}>
           <PreviewWrapper>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
@@ -99,7 +99,7 @@ const PagePreview = React.forwardRef(({ index, ...props }, forwardedRef) => {
       </TransformProvider>
     </UnitsProvider>
   );
-});
+};
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,

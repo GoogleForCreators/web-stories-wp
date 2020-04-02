@@ -51,13 +51,16 @@ function ReorderableSeparator({ position, ...props }) {
     state: { isReordering },
   } = useReorderable();
   const handlePointerEnter = useCallback(() => {
+    if (!isReordering) {
+      return;
+    }
     setCurrentSeparator(position);
     separatorRef.current.scrollIntoView({
       inline: 'center',
       block: 'center',
       behavior: 'smooth',
     });
-  }, [setCurrentSeparator, position]);
+  }, [setCurrentSeparator, isReordering, position]);
 
   return (
     // Disable reason: This one does not need keyboard interactivity

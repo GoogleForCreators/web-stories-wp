@@ -141,10 +141,10 @@ const PageList = styled(Reorderable).attrs({
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
-  margin-left: ${({ width }) => 3 - 10 - width}px;
-  margin-right: ${({ width }) => 3 - width}px;
-  padding-left: ${({ width }) => width}px;
-  padding-right: ${({ width }) => width}px;
+  margin-left: -${({ width, margin }) => Math.ceil(width / 2 + margin) + margin / 4}px;
+  margin-right: -${({ width, margin }) => Math.ceil(width / 2 + margin / 2) - margin / 4}px;
+  padding-left: ${({ width, margin }) => Math.ceil((width + margin) / 2)}px;
+  padding-right: ${({ width, margin }) => Math.ceil((width + margin) / 2)}px;
   padding-top: ${THUMB_INDICATOR_GAP * 2}px;
   & > div {
     height: ${({ height }) => height - THUMB_INDICATOR_GAP * 2}px;
@@ -181,7 +181,7 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageIndex, currentPageId },
+    state: { pages, currentPageIndex },
     actions: { setCurrentPage, arrangePage },
   } = useStory();
   const { isRTL } = useConfig();
@@ -189,7 +189,6 @@ function Carousel() {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
-  const pageRefs = useRef([]);
 
   const [carouselSize, setCarouselSize] = useState({});
   const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
@@ -208,21 +207,6 @@ function Carousel() {
     },
     [pages.length]
   );
-
-  useLayoutEffect(() => {
-    if (hasHorizontalOverflow) {
-      const currentPageRef = pageRefs.current[currentPageId];
-
-      if (!currentPageRef || !currentPageRef.scrollIntoView) {
-        return;
-      }
-
-      currentPageRef.scrollIntoView({
-        inline: 'center',
-        behavior: 'smooth',
-      });
-    }
-  }, [currentPageId, hasHorizontalOverflow, pageRefs]);
 
   useLayoutEffect(() => {
     const listElement = listRef.current;
@@ -311,8 +295,9 @@ function Carousel() {
         >
           <PageSeparator
             position={0}
-            width={pageThumbWidth / 2}
+            width={pageThumbWidth}
             height={pageThumbHeight}
+            margin={10 /** px */}
           />
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
@@ -337,9 +322,6 @@ function Carousel() {
                       }
                       isActive={isCurrentPage}
                       index={index}
-                      ref={(el) => {
-                        pageRefs.current[page.id] = el;
-                      }}
                       width={pageThumbWidth}
                       height={pageThumbHeight}
                     />
@@ -347,8 +329,9 @@ function Carousel() {
                 </ItemContainer>
                 <PageSeparator
                   position={index + 1}
-                  width={pageThumbWidth / 2}
+                  width={pageThumbWidth}
                   height={pageThumbHeight}
+                  margin={10 /** px */}
                 />
               </>
             );
