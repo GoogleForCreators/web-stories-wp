@@ -77,6 +77,7 @@ function TextPane(props) {
         value={''}
         placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
+        disabled={true}
       />
 
       <Section
@@ -112,6 +113,7 @@ function TextPane(props) {
         ))}
       </Section>
       <Section title={__('Text Sets', 'web-stories')} />
+      {__('Coming soon.', 'web-stories')}
     </Pane>
   );
 }
