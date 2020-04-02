@@ -54,45 +54,6 @@ const PreviewPane = styled.div`
     height: ${({ theme }) => theme.grid.min.imageHeight}px;
     width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
-
-  .page-background-area,
-  .page-background-overlay-area,
-  .page-safe-area {
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .page-cta-area {
-    position: absolute;
-    overflow: hidden;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-  }
-
-  .page-background-area img,
-  .page-background-area video {
-    object-fit: cover;
-  }
-
-  .wrapper {
-    position: absolute;
-    overflow: hidden;
-  }
-
-  .fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-  }
 `;
 
 const EditControls = styled.div`
