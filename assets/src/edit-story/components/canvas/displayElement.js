@@ -34,7 +34,6 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
-import { useStory } from '../../app';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
