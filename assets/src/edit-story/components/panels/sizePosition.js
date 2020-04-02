@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback, useMemo, useState } from 'react';
 
 /**
@@ -47,12 +47,15 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-const StyledLocked = styled(Locked)`
+const withMargin = css`
   margin: 0 10px;
 `;
 
+const StyledLocked = styled(Locked)`
+  ${withMargin}
+`;
 const StyledUnlocked = styled(Unlocked)`
-  margin: 0 10px;
+  ${withMargin}
 `;
 
 function isNum(v) {
@@ -126,6 +129,10 @@ function SizePositionPanel({
     },
     [lockRatio]
   );
+
+  usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
+    return { rotationAngle: newRotationAngle % 360 };
+  }, []);
 
   const handleSetBackground = useCallback(() => {
     pushUpdate(
@@ -209,7 +216,7 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) =>
             pushUpdate({
-              rotationAngle: isNum(value) ? value % 360 : value,
+              rotationAngle: value,
             })
           }
           disabled={isFill}
