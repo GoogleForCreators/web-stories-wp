@@ -48,7 +48,7 @@ export default function MyStoriesSearch({
     <TypeaheadInput
       inputId="my-stories-search"
       items={typeaheadMenuOptions}
-      onChange={handleChange}
+      onChange={(val) => handleChange(val.trim())}
       value={currentValue}
       placeholder={__('Search Stories', 'web-stories')}
       ariaLabel={__('Search Stories', 'web-stories')}

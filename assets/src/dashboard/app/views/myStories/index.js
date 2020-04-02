@@ -39,6 +39,7 @@ import {
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import PageHeading from './pageHeading';
+import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
@@ -61,7 +62,7 @@ function MyStories() {
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase().trim();
+      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
 
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
@@ -74,6 +75,13 @@ function MyStories() {
       setViewStyle(VIEW_STYLE.LIST);
     }
   }, [viewStyle]);
+
+  const filteredStoriesCount = filteredStories.length;
+
+  const listBarLabel =
+    filteredStoriesCount === 1
+      ? __('total Story', 'web-stories')
+      : __('total Stories', 'web-stories');
 
   return (
     <>
@@ -97,29 +105,33 @@ function MyStories() {
           </FloatingTab>
         ))}
       </FilterContainer>
-      <ListBar
-        label={`${filteredStories.length} ${__(
-          'total Stories',
-          'web-stories'
-        )}`}
-        layoutStyle={viewStyle}
-        onPress={handleViewStyleBarButtonSelected}
-      />
-      <StoryGrid>
-        {filteredStories.map((story) => (
-          <CardGridItem key={story.id}>
-            <CardPreviewContainer
-              onOpenInEditorClick={() => {}}
-              onPreviewClick={() => {}}
-              previewSource={'http://placeimg.com/225/400/nature'}
-            />
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-            />
-          </CardGridItem>
-        ))}
-      </StoryGrid>
+      {filteredStoriesCount > 0 ? (
+        <>
+          <ListBar
+            label={`${filteredStories.length} ${listBarLabel}`}
+            layoutStyle={viewStyle}
+            onPress={handleViewStyleBarButtonSelected}
+          />
+
+          <StoryGrid>
+            {filteredStories.map((story) => (
+              <CardGridItem key={story.id}>
+                <CardPreviewContainer
+                  onOpenInEditorClick={() => {}}
+                  onPreviewClick={() => {}}
+                  previewSource={'http://placeimg.com/225/400/nature'}
+                />
+                <CardTitle
+                  title={story.title}
+                  modifiedDate={story.modified.startOf('day').fromNow()}
+                />
+              </CardGridItem>
+            ))}
+          </StoryGrid>
+        </>
+      ) : (
+        <NoResults typeaheadValue={typeaheadValue} />
+      )}
     </>
   );
 }

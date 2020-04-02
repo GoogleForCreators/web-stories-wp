@@ -126,10 +126,11 @@ const theme = {
       weight: 500,
     },
     body1: {
-      family: 'Roboto',
+      family: "'Google Sans', Sans Serif",
       size: '16px',
-      lineHeight: '24px',
-      letterSpacing: '0.00625em',
+      weight: 500,
+      lineHeight: '22px',
+      letterSpacing: '0.001em',
     },
     body2: {
       family: "'Google Sans', Sans Serif",
