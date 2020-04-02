@@ -115,7 +115,7 @@ describe('Panels/StylePreset', () => {
 
   it('should display correct label for Colors', () => {
     const extraStylePresets = {
-      colors: [TEST_COLOR],
+      fillColors: [TEST_COLOR],
     };
     const extraStateProps = {
       selectedElements: [
@@ -159,7 +159,7 @@ describe('Panels/StylePreset', () => {
 
   it('should allow applying presets for shapes', () => {
     const extraStylePresets = {
-      colors: [TEST_COLOR],
+      fillColors: [TEST_COLOR],
     };
     const extraStateProps = {
       selectedElements: [
