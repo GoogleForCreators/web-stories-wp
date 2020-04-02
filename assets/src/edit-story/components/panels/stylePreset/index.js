@@ -298,29 +298,27 @@ function StylePresetPanel() {
           <>
             <ColorGroupLabel>{groupLabel}</ColorGroupLabel>
             <Colors>
-              {colorPresets.map((color, i) => {
-                return (
-                  <ButtonWrapper key={`color-${i}`}>
-                    <Color
-                      {...generatePatternStyles(color)}
-                      onClick={() => {
-                        if (isEditMode) {
-                          handleDeleteColor(color);
-                        } else {
-                          handleApplyColor(color);
-                        }
-                      }}
-                      aria-label={
-                        isEditMode
-                          ? __('Delete preset', 'web-stories')
-                          : __('Apply preset', 'web-stories')
+              {colorPresets.map((color, i) => (
+                <ButtonWrapper key={`color-${i}`}>
+                  <Color
+                    {...generatePatternStyles(color)}
+                    onClick={() => {
+                      if (isEditMode) {
+                        handleDeleteColor(color);
+                      } else {
+                        handleApplyColor(color);
                       }
-                    >
-                      {isEditMode && <Remove />}
-                    </Color>
-                  </ButtonWrapper>
-                );
-              })}
+                    }}
+                    aria-label={
+                      isEditMode
+                        ? __('Delete preset', 'web-stories')
+                        : __('Apply preset', 'web-stories')
+                    }
+                  >
+                    {isEditMode && <Remove />}
+                  </Color>
+                </ButtonWrapper>
+              ))}
             </Colors>
           </>
         )}
