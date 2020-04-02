@@ -105,9 +105,9 @@ function PublishPanel() {
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimeNode = useRef();
-  const dateFieldNode = useRef();
+  const dateFieldRef = useRef();
 
-  useKeyDownEffect(dateFieldNode, { key: ['space', 'enter'] }, () => {
+  useKeyDownEffect(dateFieldRef, { key: ['space', 'enter'] }, () => {
     setShowDatePicker((val) => !val);
   });
 
@@ -169,7 +169,7 @@ function PublishPanel() {
               setShowDatePicker(true);
             }
           }}
-          ref={dateFieldNode}
+          ref={dateFieldRef}
         >
           <DateWrapper>
             <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
@@ -178,7 +178,7 @@ function PublishPanel() {
           <StyledToggleIcon />
         </StyledButton>
       </Row>
-      <Popup anchor={dateFieldNode} isOpen={showDatePicker}>
+      <Popup anchor={dateFieldRef} isOpen={showDatePicker}>
         <DateTime
           value={date}
           onChange={handleDateChange}
