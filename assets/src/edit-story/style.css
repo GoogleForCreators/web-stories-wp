@@ -39,6 +39,8 @@ body.edit-story #edit-story {
 body.edit-story .loading-message {
   color: #fff;
   text-align: center;
+  margin: 0;
+  padding: 0.67em 0;
 }
 
 body.edit-story #wpfooter {

@@ -110,7 +110,9 @@ function TextDisplay({
 
   const props = {
     color,
-    backgroundColor,
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
+      ? {}
+      : { backgroundColor }),
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     horizontalBuffer: 0.01 * pageWidth,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
