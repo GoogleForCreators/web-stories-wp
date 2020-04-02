@@ -56,10 +56,13 @@ const PageHeading = ({
   filteredStories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
+  isNoResultsText,
 }) => {
-  const viewHeaderText = typeaheadValue.length
-    ? sprintf(__('Results for "%s"', 'web-stories'), typeaheadValue)
-    : defaultTitle;
+  const resultsText = isNoResultsText
+    ? sprintf(__('No results for "%s"', 'web-stories'), typeaheadValue)
+    : sprintf(__('Results for "%s"', 'web-stories'), typeaheadValue);
+
+  const viewHeaderText = typeaheadValue.length ? resultsText : defaultTitle;
 
   return (
     <Container>
@@ -86,6 +89,7 @@ PageHeading.propTypes = {
     })
   ),
   handleTypeaheadChange: PropTypes.func,
+  isNoResultsText: PropTypes.bool,
   typeaheadValue: PropTypes.string,
 };
 

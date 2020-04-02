@@ -77,6 +77,7 @@ function MyStories() {
   }, [viewStyle]);
 
   const filteredStoriesCount = filteredStories.length;
+  const hasFilteredStories = filteredStoriesCount > 0;
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
@@ -96,6 +97,7 @@ function MyStories() {
         filteredStories={filteredStories}
         handleTypeaheadChange={setTypeaheadValue}
         typeaheadValue={typeaheadValue}
+        isNoResultsText={!Boolean(hasFilteredStories)}
       />
 
       <FilterContainer>
@@ -111,7 +113,7 @@ function MyStories() {
           </FloatingTab>
         ))}
       </FilterContainer>
-      {filteredStoriesCount > 0 ? (
+      {hasFilteredStories ? (
         <>
           <ListBar
             label={listBarLabel}
