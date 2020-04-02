@@ -40,15 +40,15 @@ import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import { FontProvider } from '../../../../edit-story/app/font';
 import DisplayElement from '../../../../edit-story/components/canvas/displayElement';
 import theme from '../../../theme';
+import FontProvider from '../../font/fontProvider';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: ${({ t }) => t.subNavigationBar.border};
+  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 `;
 
 function MyStories() {
@@ -57,7 +57,7 @@ function MyStories() {
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [pageSize, _setPageSize] = useState({ width: 100, height: 150 });
   const {
-    actions: { fetchStories, getAllFonts },
+    actions: { fetchStories },
     state: { stories },
   } = useContext(ApiContext);
 
@@ -136,7 +136,6 @@ function MyStories() {
             handleTypeaheadChange={setTypeaheadValue}
             typeaheadValue={typeaheadValue}
           />
-
           <FilterContainer>
             {STORY_STATUSES.map((storyStatus) => (
               <FloatingTab

@@ -75,24 +75,21 @@ export default function ApiProvider({ children }) {
     [api.stories]
   );
 
-  const getAllFonts = useCallback(
-    ({}) => {
-      return apiFetch({ path: api.fonts }).then((data) =>
-        data.map((font) => ({
-          value: font.name,
-          ...font,
-        }))
-      );
-    },
-    [api.fonts]
-  );
+  const getAllFonts = useCallback(() => {
+    return apiFetch({ path: api.fonts }).then((data) =>
+      data.map((font) => ({
+        value: font.name,
+        ...font,
+      }))
+    );
+  }, [api.fonts]);
 
   const value = useMemo(
     () => ({
       state: { stories },
       actions: { fetchStories, getAllFonts },
     }),
-    [stories, fetchStories]
+    [stories, fetchStories, getAllFonts]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

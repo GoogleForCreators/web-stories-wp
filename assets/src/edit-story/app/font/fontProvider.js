@@ -33,10 +33,10 @@ import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 
-function FontProvider({ children, getAllFonts }) {
+function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
 
-  useLoadFonts({ fonts, setFonts, getAllFonts });
+  useLoadFonts({ fonts, setFonts });
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -124,7 +124,6 @@ function FontProvider({ children, getAllFonts }) {
 }
 
 FontProvider.propTypes = {
-  getAllFonts: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

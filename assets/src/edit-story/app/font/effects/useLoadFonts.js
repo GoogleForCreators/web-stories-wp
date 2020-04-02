@@ -24,14 +24,16 @@ import { useEffect } from 'react';
  */
 import { useAPI } from '../../';
 
-function useLoadFonts({ fonts, setFonts, getAllFonts }) {
-  const { actions } = useAPI();
+function useLoadFonts({ fonts, setFonts }) {
+  const {
+    actions: { getAllFonts },
+  } = useAPI();
 
   useEffect(() => {
     if (fonts.length === 0) {
-      (actions.getAllFonts || getAllFonts)({}).then(setFonts);
+      getAllFonts({}).then(setFonts);
     }
-  }, [actions.getAllFonts, fonts, getAllFonts, setFonts]);
+  }, [getAllFonts, fonts, setFonts]);
 }
 
 export default useLoadFonts;
