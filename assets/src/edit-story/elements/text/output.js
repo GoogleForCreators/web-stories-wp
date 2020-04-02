@@ -65,7 +65,9 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...generatePatternStyles(backgroundColor),
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
+      ? {}
+      : generatePatternStyles(backgroundColor)),
     ...generatePatternStyles(color, 'color'),
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };

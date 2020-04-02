@@ -111,6 +111,7 @@ function TextDisplay({
   const props = {
     color,
     backgroundColor,
+    backgroundTextMode,
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     horizontalBuffer: 0.01 * pageWidth,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
