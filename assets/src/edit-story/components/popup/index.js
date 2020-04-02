@@ -33,7 +33,7 @@ const Container = styled.div`
   position: fixed;
   z-index: 2147483646;
   top: ${({ y }) => `${y}px`};
-  left: ${({ x }) => `${x}px`};
+  right: ${({ x }) => `${x}px`};
   width: ${({ width }) => width}px;
   max-height: ${MAX_HEIGHT}px;
 `;
@@ -51,10 +51,11 @@ function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
       };
 
       // Note: This displays the popup right under the node, currently no variations implemented.
+      // @todo Needs to display above the anchor instead if possible in case of not having room below!
       setPopupState({
         width,
         offset: {
-          x: anchorRect.left - bodyRect.left - width + anchorRect.width,
+          x: bodyRect.right - anchorRect.right,
           y: Math.max(
             0,
             Math.min(
