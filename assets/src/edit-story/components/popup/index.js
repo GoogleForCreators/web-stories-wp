@@ -19,37 +19,56 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { ADMIN_TOOLBAR_HEIGHT } from '../../constants';
+import { useLayoutEffect, useState } from 'react';
 
 const DEFAULT_WIDTH = 270;
+const MAX_HEIGHT = 370;
 
-const PopUp = styled.div`
-  position: absolute;
-  z-index: 999;
+const Container = styled.div`
+  position: fixed;
+  z-index: 2147483646;
   top: ${({ y }) => `${y}px`};
   left: ${({ x }) => `${x}px`};
   width: ${({ width }) => width}px;
+  max-height: ${MAX_HEIGHT}px;
 `;
 
-function Popup({ root, children, width = DEFAULT_WIDTH }) {
-  const nodeRect = root.getBoundingClientRect();
-  const bodyRect = document.body.getBoundingClientRect();
+function Popup({ anchor, children, width = DEFAULT_WIDTH, open }) {
+  const [popupState, setPopupState] = useState(null);
 
-  // Note: This displays the popup right under the node, currently no variations implemented.
-  const nodeOffset = {
-    x: nodeRect.left - bodyRect.left - width + nodeRect.width,
-    y: nodeRect.top - bodyRect.top + nodeRect.height + ADMIN_TOOLBAR_HEIGHT,
-  };
-  return createPortal(
-    <PopUp {...nodeOffset} width={width}>
-      {children}
-    </PopUp>,
-    document.body
-  );
+  useLayoutEffect(() => {
+    function positionPopup() {
+      const anchorRect = anchor.current.getBoundingClientRect();
+      const bodyRect = document.body.getBoundingClientRect();
+
+      // Note: This displays the popup right under the node, currently no variations implemented.
+      setPopupState({
+        width,
+        offset: {
+          x: anchorRect.left - bodyRect.left - width + anchorRect.width,
+          y: anchorRect.top + anchorRect.height,
+        },
+      });
+    }
+    positionPopup();
+
+    // Adjust the position when scrolling or resizing.
+    window.addEventListener('resize', positionPopup);
+    document.addEventListener('scroll', positionPopup, true);
+    return () => {
+      window.removeEventListener('resize', positionPopup);
+      document.removeEventListener('scroll', positionPopup, true);
+    };
+  }, [anchor, width]);
+
+  return popupState && open
+    ? createPortal(
+        <Container {...popupState.offset} width={width}>
+          {children}
+        </Container>,
+        document.body
+      )
+    : null;
 }
 
 export default Popup;

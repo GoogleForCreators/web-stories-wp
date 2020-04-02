@@ -178,16 +178,14 @@ function PublishPanel() {
           <StyledToggleIcon />
         </StyledButton>
       </Row>
-      {showDatePicker && (
-        <Popup root={dateFieldNode.current}>
-          <DateTime
-            value={date}
-            onChange={handleDateChange}
-            is12Hour={use12HourFormat}
-            forwardedRef={dateTimeNode}
-          />
-        </Popup>
-      )}
+      <Popup anchor={dateFieldNode} open={showDatePicker}>
+        <DateTime
+          value={date}
+          onChange={handleDateChange}
+          is12Hour={use12HourFormat}
+          forwardedRef={dateTimeNode}
+        />
+      </Popup>
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
           <FieldLabel>{authorLabel}</FieldLabel>
