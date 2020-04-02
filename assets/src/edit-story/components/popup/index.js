@@ -33,7 +33,7 @@ const Container = styled.div`
   max-height: ${MAX_HEIGHT}px;
 `;
 
-function Popup({ anchor, children, width = DEFAULT_WIDTH, open }) {
+function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
   const [popupState, setPopupState] = useState(null);
 
   useLayoutEffect(() => {
@@ -61,7 +61,7 @@ function Popup({ anchor, children, width = DEFAULT_WIDTH, open }) {
     };
   }, [anchor, width]);
 
-  return popupState && open
+  return popupState && isOpen
     ? createPortal(
         <Container {...popupState.offset} width={width}>
           {children}
