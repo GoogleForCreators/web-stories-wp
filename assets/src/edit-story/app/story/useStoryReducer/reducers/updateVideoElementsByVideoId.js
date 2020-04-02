@@ -44,7 +44,7 @@ function updateVideoElementsByVideoId(
   if (videoId === null) return state;
   const updatedPages = state.pages.map((page, pageIndex) => {
     const updatedElements = page.elements.map((element) => {
-      if (element && element.resource && element.resource.videoId === videoId) {
+      if (element.resource?.videoId === videoId) {
         return updateElementWithUpdater(
           element,
           propertiesOrUpdater,
