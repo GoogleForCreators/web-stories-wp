@@ -175,10 +175,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   return (
     <Movable
-      className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
+      className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
+        selectedElement.type === 'text' ? 'type-text' : ''
+      }`}
       zIndex={0}
       ref={moveable}
       target={targetEl}
+      edge={true}
       draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
