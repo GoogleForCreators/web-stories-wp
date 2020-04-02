@@ -34,21 +34,19 @@ function HistoryProvider({ children, size }) {
     appendToHistory,
     clearHistory,
     offset,
+    currrentHistoryLength,
     historyLength,
     undo,
     redo,
   } = useHistoryReducer(size);
-  const canUndo = offset < historyLength - 1;
+  const canUndo = offset < currrentHistoryLength - 1;
   const changesSinceLastSave = useRef(0);
   const [hasChangedSinceLastSave, setHasChangedSinceLastSave] = useState(false);
 
   usePreventWindowUnload(hasChangedSinceLastSave);
 
   useEffect(() => {
-    if (
-      historyLength > 0 &&
-      changesSinceLastSave.current !== historyLength - 1
-    ) {
+    if (historyLength > 0 && changesSinceLastSave.current !== historyLength) {
       changesSinceLastSave.current = historyLength;
       setHasChangedSinceLastSave(true);
     }
