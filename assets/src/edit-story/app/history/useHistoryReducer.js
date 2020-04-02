@@ -27,7 +27,7 @@ const EMPTY_STATE = {
   entries: [],
   offset: 0,
   replayState: null,
-  historyLength: 0,
+  globalHistoryLength: 0,
 };
 
 const reducer = (size) => (state, { type, payload }) => {
@@ -55,7 +55,7 @@ const reducer = (size) => (state, { type, payload }) => {
       // and clear `offset` and `replayState`.
       return {
         entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
-        historyLength: state.historyLength + 1,
+        globalHistoryLength: state.globalHistoryLength + 1,
         offset: 0,
         replayState: null,
       };
@@ -92,8 +92,8 @@ function useHistoryReducer(size) {
   // state.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const { entries, offset, replayState, historyLength } = state;
-  const currrentHistoryLength = entries.length;
+  const { entries, offset, replayState, globalHistoryLength } = state;
+  const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
   // It appears the only reason for deps here is to return boolean from this
@@ -101,14 +101,14 @@ function useHistoryReducer(size) {
   const replay = useCallback(
     (deltaOffset) => {
       const newOffset = offset + deltaOffset;
-      if (newOffset < 0 || newOffset > currrentHistoryLength - 1) {
+      if (newOffset < 0 || newOffset > historyLength - 1) {
         return false;
       }
 
       dispatch({ type: REPLAY, payload: newOffset });
       return true;
     },
-    [dispatch, offset, currrentHistoryLength]
+    [dispatch, offset, historyLength]
   );
 
   const undo = useCallback(
@@ -141,8 +141,8 @@ function useHistoryReducer(size) {
     appendToHistory,
     clearHistory,
     offset,
-    currrentHistoryLength,
     historyLength,
+    globalHistoryLength,
     undo,
     redo,
   };
