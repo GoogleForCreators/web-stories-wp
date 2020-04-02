@@ -27,7 +27,7 @@ function PreviewPage({ page }) {
 }
 
 PreviewPage.propTypes = {
-  page: StoryPropTypes.page,
+  page: StoryPropTypes.page.isRequired,
 };
 
 export default PreviewPage;

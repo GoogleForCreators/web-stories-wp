@@ -41,7 +41,7 @@ import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
-import useResizeEffect from '../../../utils/useResizeEffect';
+import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import PreviewPage from '../../../components/previewPage';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
@@ -55,7 +55,7 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const { pageSize } = useResizeEffect();
+  const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
     state: { stories },

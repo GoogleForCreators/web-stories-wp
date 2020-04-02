@@ -139,7 +139,7 @@ function DisplayElement({ element, previewMode, page }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
-  page: StoryPropTypes.page,
+  page: StoryPropTypes.page.isRequired,
 };
 
 export default DisplayElement;

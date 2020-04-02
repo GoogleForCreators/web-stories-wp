@@ -23,8 +23,11 @@ import { useCallback, useEffect, useState } from 'react';
 import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
 
-export default function useResizeEffect() {
-  const [pageSize, setPageSize] = useState({ width: 100, height: 150 });
+export default function usePagePreviewSize() {
+  const [pageSize, setPageSize] = useState({
+    width: 100,
+    height: PAGE_RATIO * 100,
+  });
   const handleWindowResize = useCallback(() => {
     const { innerWidth } = window;
     let itemWidth = 0;
@@ -46,9 +49,11 @@ export default function useResizeEffect() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = window.addEventListener('resize', handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
     handleWindowResize();
-    return unsubscribe;
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
   }, [handleWindowResize]);
 
   return { pageSize };

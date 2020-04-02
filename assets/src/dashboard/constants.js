@@ -18,6 +18,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../edit-story/constants';
 
 export const BUTTON_TYPES = {
   CTA: 'cta',
@@ -51,7 +52,7 @@ export const Z_INDEX = {
   POPOVER_PANEL: 10,
 };
 
-export const PAGE_RATIO = 3 / 2;
+export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
 
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
