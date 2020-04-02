@@ -18,12 +18,11 @@ import DatePicker from './datePicker';
 const DateTimeWrapper = styled.div`
   position: absolute;
   top: 0;
-  left: -15px;
+  left: 0;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
   background-color: ${({ theme }) => theme.colors.fg.v1};
-  z-index: 1;
-  width: 270px;
+  width: 100%;
   padding: 4px;
 `;
 

@@ -37,6 +37,7 @@ import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { useConfig } from '../../../../app/config';
+import Popup from '../../../popup';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const LabelWrapper = styled.div`
@@ -79,11 +80,6 @@ const Date = styled.span`
 const Time = styled.span`
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
   display: inline-block;
-`;
-
-const DateTimeWrapper = styled.div`
-  position: relative;
-  width: 100%;
 `;
 
 const StyledToggleIcon = styled(ToggleIcon)`
@@ -183,14 +179,14 @@ function PublishPanel() {
         </StyledButton>
       </Row>
       {showDatePicker && (
-        <DateTimeWrapper>
+        <Popup root={dateFieldNode.current}>
           <DateTime
             value={date}
             onChange={handleDateChange}
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
           />
-        </DateTimeWrapper>
+        </Popup>
       )}
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
