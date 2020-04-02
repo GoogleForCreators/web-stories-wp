@@ -31,8 +31,6 @@ the_post();
 $post = get_post();
 
 if ( $post instanceof WP_Post ) {
-	// TODO: Fix issue with AMP plugin.
-	ob_end_clean();
 	echo '<!DOCTYPE html>';
 	$renderer = new Story_Renderer( $post );
 	echo $renderer->render();

@@ -173,6 +173,19 @@ class Story_Post_Type {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
+
+		// @todo Improve AMP plugin ccompatibility, see https://github.com/google/web-stories-wp/issues/967
+		add_filter(
+			'amp_skip_post',
+			static function( $skipped, $post ) {
+				if ( 'web-story' === get_post_type( $post ) ) {
+					$skipped = true;
+				}
+				return $skipped;
+			},
+			PHP_INT_MAX,
+			2 
+		);
 	}
 
 	/**
