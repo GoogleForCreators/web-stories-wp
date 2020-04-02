@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -57,14 +57,9 @@ const PageHeading = ({
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
-  const viewHeaderText =
-    typeaheadValue.length > 0 ? (
-      <>
-        {__('Results for', 'web-stories')} {typeaheadValue}
-      </>
-    ) : (
-      defaultTitle
-    );
+  const viewHeaderText = typeaheadValue.length
+    ? sprintf(__('Results for "%s"', 'web-stories'), typeaheadValue)
+    : defaultTitle;
 
   return (
     <Container>

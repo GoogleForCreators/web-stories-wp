@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -78,10 +78,16 @@ function MyStories() {
 
   const filteredStoriesCount = filteredStories.length;
 
-  const listBarLabel =
-    filteredStoriesCount === 1
-      ? __('total Story', 'web-stories')
-      : __('total Stories', 'web-stories');
+  const listBarLabel = sprintf(
+    /* translators: %s: number of stories */
+    _n(
+      '%s total story',
+      '%s total stories',
+      filteredStories.length,
+      'web-stories'
+    ),
+    filteredStories.length
+  );
 
   return (
     <>
@@ -108,7 +114,7 @@ function MyStories() {
       {filteredStoriesCount > 0 ? (
         <>
           <ListBar
-            label={`${filteredStories.length} ${listBarLabel}`}
+            label={listBarLabel}
             layoutStyle={viewStyle}
             onPress={handleViewStyleBarButtonSelected}
           />

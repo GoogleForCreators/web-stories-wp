@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -37,10 +37,10 @@ const NoResultsText = styled.p`
 
 const NoResults = ({ typeaheadValue }) => (
   <NoResultsText>
-    {__("Sorry we couldn't find any results matching", 'web-stories')}{' '}
-    {__('"', 'web-stories')}
-    {typeaheadValue}
-    {__('"', 'web-stories')}
+    {sprintf(
+      __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
+      typeaheadValue
+    )}
   </NoResultsText>
 );
 
