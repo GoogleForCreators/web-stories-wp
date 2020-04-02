@@ -16,6 +16,7 @@
 
 export const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
+export const SCROLLBAR_WIDTH = 11;
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
 export const CANVAS_MIN_WIDTH = 480;

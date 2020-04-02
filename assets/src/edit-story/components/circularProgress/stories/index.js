@@ -14,29 +14,24 @@
  * limitations under the License.
  */
 
-export const ANIMATION_TYPES = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  FLIP: 'flip',
-  FLOAT_ON: 'floatOn',
-  MOVE: 'move',
-  SPIN: 'spin',
+/**
+ * External dependencies
+ */
+import { number } from '@storybook/addon-knobs';
+
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../';
+
+export default {
+  title: 'Components/Circular Progress',
+  component: CircularProgress,
 };
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
+export const _default = () => {
+  const size = number('Size', 24);
+  const thickness = number('Thickness', 2);
 
-export const DIRECTION = {
-  TOP_TO_BOTTOM: 'topToBottom',
-  BOTTOM_TO_TOP: 'bottomToTop',
-  LEFT_TO_RIGHT: 'leftToRight',
-  RIGHT_TO_LEFT: 'rightToLeft',
-};
-
-export const AXIS = {
-  X: 'x',
-  Y: 'y',
+  return <CircularProgress size={size} thickness={thickness} />;
 };

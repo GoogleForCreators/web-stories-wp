@@ -66,3 +66,10 @@ export const STORY_STATUSES = [
   { label: __('Active Stories', 'web-stories'), value: 'publish' },
   { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
+
+export const VIEW_STYLE = {
+  GRID: 'GRID',
+  LIST: 'LIST',
+};
+
+export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };

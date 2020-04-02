@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPE, ROTATION } from '../constants';
+import { ANIMATION_TYPES, ROTATION } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
@@ -112,7 +112,7 @@ Spin.propTypes = {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.SPIN;
+  const name = ANIMATION_TYPES.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name]();
 
   return (
@@ -133,7 +133,7 @@ export const _default = () => {
 };
 
 export const defaultCounterClockwise = () => {
-  const name = ANIMATION_TYPE.SPIN;
+  const name = ANIMATION_TYPES.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
     ROTATION.COUNTER_CLOCKWISE
   );
@@ -156,7 +156,7 @@ export const defaultCounterClockwise = () => {
 };
 
 export const fastToSlowClockwise = () => {
-  const name = ANIMATION_TYPE.SPIN;
+  const name = ANIMATION_TYPES.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name]();
 
   return (
@@ -183,7 +183,7 @@ export const fastToSlowClockwise = () => {
 };
 
 export const fastToSlowCounterClockwise = () => {
-  const name = ANIMATION_TYPE.SPIN;
+  const name = ANIMATION_TYPES.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
     ROTATION.COUNTER_CLOCKWISE
   );
@@ -212,7 +212,7 @@ export const fastToSlowCounterClockwise = () => {
 };
 
 export const pingPongSpin = () => {
-  const name = ANIMATION_TYPE.SPIN;
+  const name = ANIMATION_TYPES.SPIN;
   const { keyframes, ...config } = getAnimationConfigs[name](
     ROTATION.PING_PONG
   );

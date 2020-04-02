@@ -35,6 +35,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
+    sizes,
   } = mediaPickerEl;
   return createResource({
     mimeType,
@@ -44,6 +45,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     poster,
     posterId,
     videoId,
+    sizes,
   });
 };
 

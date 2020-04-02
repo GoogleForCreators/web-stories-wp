@@ -43,7 +43,7 @@ function MediaDisplay({
     const target = mediaRef.current;
     if (mediaRef.current) {
       if (transform === null) {
-        target.style.transform = '';
+        target.style.cssText = '';
       } else {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
