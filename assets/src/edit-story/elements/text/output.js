@@ -58,6 +58,12 @@ export function TextOutputWithUnits({
     vertical: `${(padding.vertical / width) * 100}%`,
     horizontal: `${(padding.horizontal / width) * 100}%`,
   };
+
+  const bgColor =
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
+      ? generatePatternStyles(backgroundColor)
+      : undefined;
+
   const fillStyle = {
     ...generateParagraphTextStyle(
       rest,
@@ -65,17 +71,10 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
-      ? {}
-      : generatePatternStyles(backgroundColor)),
     ...generatePatternStyles(color, 'color'),
+    ...bgColor,
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
-
-  const bgColor =
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
-      ? generatePatternStyles(backgroundColor)
-      : undefined;
 
   const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));

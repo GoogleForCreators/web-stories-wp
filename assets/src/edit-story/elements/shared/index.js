@@ -22,7 +22,6 @@ import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../constants';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
 
@@ -51,10 +50,8 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  ${({ backgroundColor, backgroundTextMode }) =>
-    backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
-      ? ''
-      : convertToCSS(generatePatternStyles(backgroundColor))};
+  ${({ backgroundColor }) =>
+    convertToCSS(generatePatternStyles(backgroundColor))};
 `;
 
 export const elementWithFontColor = css`
