@@ -39,7 +39,7 @@ function Popup({ root, children, width = DEFAULT_WIDTH }) {
   const nodeRect = root.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
 
-  // This displays the popup right under the node, currently no variations implemented.
+  // Note: This displays the popup right under the node, currently no variations implemented.
   const nodeOffset = {
     x: nodeRect.left - bodyRect.left - width + nodeRect.width,
     y: nodeRect.top - bodyRect.top + nodeRect.height + ADMIN_TOOLBAR_HEIGHT,
