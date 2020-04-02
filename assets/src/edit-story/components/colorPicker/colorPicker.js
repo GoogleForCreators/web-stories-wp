@@ -73,7 +73,14 @@ const Body = styled.div`
   padding: ${CONTAINER_PADDING}px;
 `;
 
-function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
+function ColorPicker({
+  color,
+  hasGradient,
+  hasOpacity,
+  onChange,
+  onClose,
+  renderFooter,
+}) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
     actions: {
@@ -155,6 +162,7 @@ function ColorPicker({ color, hasGradient, hasOpacity, onChange, onClose }) {
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
+          {renderFooter && renderFooter(generatedColor)}
         </Body>
       </Container>
     </CSSTransition>
@@ -167,6 +175,7 @@ ColorPicker.propTypes = {
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
+  renderFooter: PropTypes.func,
 };
 
 ColorPicker.defaultProps = {
@@ -175,6 +184,7 @@ ColorPicker.defaultProps = {
   onClose: /* istanbul ignore next */ () => {},
   hasGradient: false,
   hasOpacity: true,
+  renderFooter: null,
 };
 
 export default ColorPicker;
