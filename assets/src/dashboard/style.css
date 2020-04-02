@@ -26,7 +26,8 @@ body {
 }
 
 #screen-meta,
-#screen-meta-links {
+#screen-meta-links,
+#screen-meta-links ~ .notice {
   display: none;
 }
 
