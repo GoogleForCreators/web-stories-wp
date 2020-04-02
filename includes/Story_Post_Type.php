@@ -178,7 +178,7 @@ class Story_Post_Type {
 		add_filter(
 			'amp_skip_post',
 			static function( $skipped, $post ) {
-				if ( 'web-story' === get_post_type( $post ) ) {
+				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 					$skipped = true;
 				}
 				return $skipped;
