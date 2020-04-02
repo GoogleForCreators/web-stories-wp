@@ -8,6 +8,8 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
+use Google\Web_Stories\Story_Renderer;
+
 /**
  * Copyright 2020 Google LLC
  *
@@ -26,7 +28,10 @@
 
 the_post();
 
-?>
-<!DOCTYPE html>
-<?php
-the_content();
+$post = get_post();
+
+if ( $post instanceof WP_Post ) {
+	echo '<!DOCTYPE html>';
+	$renderer = new Story_Renderer( $post );
+	echo $renderer->render();
+}

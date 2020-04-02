@@ -157,25 +157,6 @@ class Story_Post_Type {
 			1
 		);
 
-		add_filter(
-			'the_content',
-			static function ( $content ) {
-				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_all_filters( 'the_content' );
-
-					$post = get_post();
-
-					if ( $post instanceof WP_Post ) {
-						$renderer = new Story_Renderer( $post );
-						return $renderer->render();
-					}
-				}
-
-				return $content;
-			},
-			0
-		);
-
 		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
 
 		// @todo Check if there's something to skip in the new version.
@@ -192,6 +173,19 @@ class Story_Post_Type {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
+
+		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+		add_filter(
+			'amp_skip_post',
+			static function( $skipped, $post ) {
+				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+					$skipped = true;
+				}
+				return $skipped;
+			},
+			PHP_INT_MAX,
+			2
+		);
 	}
 
 	/**
