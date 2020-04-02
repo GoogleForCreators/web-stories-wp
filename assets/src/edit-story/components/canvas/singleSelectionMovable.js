@@ -168,6 +168,11 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
+  // Will be moved to element definition, resizeRules.minWidth/minHeight?
+  const minWidth = dataToEditorY(20);
+  const minHeight = dataToEditorY(20);
+  const aspectRatio = selectedElement.width / selectedElement.height;
+
   return (
     <Movable
       className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
@@ -229,7 +234,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
       }}
       onResize={({ target, direction, width, height, drag }) => {
-        const newWidth = width;
+        let newWidth = width;
         let newHeight = height;
         let updates = null;
         if (updateForResizeEvent) {
@@ -243,6 +248,21 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (updates && updates.height) {
           newHeight = dataToEditorY(updates.height);
         }
+
+        if (isResizingFromCorner) {
+          if (newWidth < minWidth) {
+            newWidth = minWidth;
+            newHeight = newWidth / aspectRatio;
+          }
+          if (newHeight < minHeight) {
+            newHeight = minHeight;
+            newWidth = minHeight * aspectRatio;
+          }
+        } else {
+          newHeight = Math.max(newHeight, minHeight);
+          newWidth = Math.max(newWidth, minWidth);
+        }
+
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
         frame.direction = direction;
