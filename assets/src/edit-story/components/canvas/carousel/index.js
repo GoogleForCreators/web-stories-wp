@@ -120,7 +120,7 @@ const List = styled(Area).attrs({
   /*
    * These overrides are an exception - generally scrollbars should all
    * look the same. We do this only here because this scrollbar is always visible.
-   * /
+   */
   scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
     ${({ theme }) => theme.colors.bg.v1} !important;
 
