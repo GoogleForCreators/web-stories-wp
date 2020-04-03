@@ -72,6 +72,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY
   );
+  const { local } = resource;
+  const preload = ( local ) ? 'auto' : 'metadata';
   return (
     <MediaDisplay element={element} mediaRef={ref}>
       {previewMode ? (
@@ -89,7 +91,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           style={style}
           {...videoProps}
           loop={loop}
-          preload="metadata"
+          preload={preload}
           ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />
