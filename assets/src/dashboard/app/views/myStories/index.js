@@ -35,7 +35,7 @@ import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import StoryGrid from './storyGrid';
+import StoryGridView from './storyGridView';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
@@ -106,7 +106,7 @@ function MyStories() {
             layoutStyle={viewStyle}
             onPress={handleViewStyleBarButtonSelected}
           />
-          <StoryGrid filteredStories={filteredStories} />
+          <StoryGridView filteredStories={filteredStories} />
         </>
       );
     } else if (typeaheadValue.length > 0) {

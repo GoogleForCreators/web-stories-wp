@@ -18,16 +18,16 @@
  * Internal dependencies
  */
 import {
-  StoryGrid as _StoryGrid,
+  StoryGrid,
   CardGridItem,
   CardTitle,
   CardPreviewContainer,
   PreviewPage,
 } from '../../../components';
-import { storiesPropType } from '../../../propTypes';
+import { StoriesPropType } from '../../../types';
 
-const StoryGrid = ({ filteredStories }) => (
-  <_StoryGrid>
+const StoryGridView = ({ filteredStories }) => (
+  <StoryGrid>
     {filteredStories.map((story) => (
       <CardGridItem key={story.id}>
         <CardPreviewContainer
@@ -43,11 +43,11 @@ const StoryGrid = ({ filteredStories }) => (
         />
       </CardGridItem>
     ))}
-  </_StoryGrid>
+  </StoryGrid>
 );
 
-StoryGrid.propTypes = {
-  filteredStories: storiesPropType,
+StoryGridView.propTypes = {
+  filteredStories: StoriesPropType,
 };
 
-export default StoryGrid;
+export default StoryGridView;

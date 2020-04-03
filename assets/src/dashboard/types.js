@@ -18,17 +18,17 @@
  */
 import PropTypes from 'prop-types';
 
-export const pagePropType = PropTypes.shape({
-  type: PropTypes.string,
-  id: PropTypes.string,
-});
+/**
+ * Internal dependencies
+ */
+import StoryPropTypes from '../edit-story/types';
 
-export const storyPropType = PropTypes.shape({
+export const StoryPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(pagePropType),
+  pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,
 });
 
-export const storiesPropType = PropTypes.arrayOf(storyPropType);
+export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
