@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useLayoutEffect, useState, useRef } from 'react';
 
 const DEFAULT_WIDTH = 270;
-const MAX_HEIGHT = 100;
+const MAX_HEIGHT = 370;
 
 const Container = styled.div.attrs(({ x, y }) => ({
   style: { right: `${x}px`, top: `${y}px` },
@@ -31,6 +31,7 @@ const Container = styled.div.attrs(({ x, y }) => ({
   z-index: 2147483646;
   width: ${({ width }) => width}px;
   max-height: ${MAX_HEIGHT}px;
+  overflow: auto;
 `;
 
 function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
