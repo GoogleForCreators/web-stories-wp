@@ -237,6 +237,7 @@ const MediaElement = ({
         width={width}
         height={height}
         preload="metadata"
+        muted
         {...dropTargetsBindings}
       >
         <source src={src} type={mimeType} />
