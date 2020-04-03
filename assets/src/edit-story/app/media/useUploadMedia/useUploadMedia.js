@@ -39,7 +39,7 @@ import {
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const {
-    state: { globalHistoryLength },
+    state: { versionNumber },
     actions: { setHistoryChangedState },
   } = useHistory();
   const { uploadFile } = useUploader();
@@ -145,15 +145,15 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
     ]
   );
 
-  // On each isUploading update, set a temporary history changed state to true/false, which will prevent leave the current page without confirmation
+  // On each isUploading update, set a temporary hasHistoryChanged state to true/false, which will prevent leave the current page without confirmation
   useEffect(() => {
     setHistoryChangedState(isUploading);
 
-    // After set/unset temporary history changed state, check if a previous or new change in the history was created during the upload, if yes, it should be flagged
-    if (globalHistoryLength - 1 > 0) {
+    // After unset the temporary uploading hasHistoryChanged state, check if a previous or a new change in the history was created during the upload, if yes, hasHistoryChanged state should be  restored
+    if (versionNumber - 1 > 0 && !isUploading) {
       setHistoryChangedState(true);
     }
-  }, [setHistoryChangedState, globalHistoryLength, isUploading]);
+  }, [setHistoryChangedState, versionNumber, isUploading]);
 
   return {
     uploadMedia,

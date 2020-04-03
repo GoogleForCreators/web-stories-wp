@@ -33,38 +33,32 @@ function HistoryProvider({ children, size }) {
     replayState,
     appendToHistory,
     clearHistory,
-    setHistoryChangedState,
     offset,
-    hasHistoryChanged,
-    globalHistoryLength,
     historyLength,
     undo,
     redo,
+    versionNumber,
+    hasHistoryChanged,
+    setHistoryChangedState,
   } = useHistoryReducer(size);
 
+  /**
+   * hasHistoryChanged here allows to control an isolated, explicit and temporary scope of history changes, avoiding race conditions registering `beforeunload` event,
+   * once we should consider that our system update the versionNumber sometimes systematically without user intention (e.g. creating a new story, uploading files, etc)
+   * */
   usePreventWindowUnload(hasHistoryChanged);
 
-  /**
-   * On each globalHistoryLength update, check if it has new records since the initial load
-   * If yes, update the history changed state to true
-   * If not, update the history changed state to false
-   */
+  // On each versionNumber update, check if it has new records since the initial load or previous save and update the hasHistoryChanged state
   useEffect(() => {
-    if (globalHistoryLength - 1 > 0) {
-      setHistoryChangedState(true);
-    }
-
-    if (globalHistoryLength - 1 <= 0) {
-      setHistoryChangedState(false);
-    }
-  }, [setHistoryChangedState, globalHistoryLength]);
+    setHistoryChangedState(versionNumber - 1 > 0);
+  }, [setHistoryChangedState, versionNumber]);
 
   const state = {
     state: {
       replayState,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
-      globalHistoryLength,
+      versionNumber,
     },
     actions: {
       appendToHistory,
