@@ -27,7 +27,7 @@ import createResource from './createResource';
  */
 function getResourceFromAttachment(attachment) {
   const {
-    id: videoId,
+    id,
     guid: { rendered: src },
     media_details: {
       width,
@@ -50,7 +50,8 @@ function getResourceFromAttachment(attachment) {
     height,
     poster,
     posterId,
-    videoId,
+    id,
+    videoId: id,
     length,
     lengthFormatted,
     alt: alt || description,
