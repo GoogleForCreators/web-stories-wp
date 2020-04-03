@@ -102,13 +102,11 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
+const EditButton = styled(Button).attrs({ onClick: () => {} })``;
+
 // TODO modify to handle other types of grid items, not just own stories
-const CardPreviewContainer = ({
-  onOpenInEditorClick,
-  onPreviewClick,
-  children,
-}) => {
-  const displayEditControls = onPreviewClick || onOpenInEditorClick;
+const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
+  const displayEditControls = onPreviewClick || editUrl;
 
   return (
     <>
@@ -126,11 +124,11 @@ const CardPreviewContainer = ({
               </PreviewButton>
             </PreviewContainer>
           )}
-          {onOpenInEditorClick && (
+          {editUrl && (
             <CtaContainer>
-              <Button type={BUTTON_TYPES.PRIMARY} onClick={onOpenInEditorClick}>
+              <EditButton forwardedAs="a" href={editUrl}>
                 {__('Open in editor', 'web-stories')}
-              </Button>
+              </EditButton>
             </CtaContainer>
           )}
         </EditControls>
@@ -141,7 +139,7 @@ const CardPreviewContainer = ({
 
 CardPreviewContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  onOpenInEditorClick: PropTypes.func,
+  editUrl: PropTypes.string.isRequired,
   onPreviewClick: PropTypes.func,
 };
 
