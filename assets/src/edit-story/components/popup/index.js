@@ -19,10 +19,10 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
 
 const DEFAULT_WIDTH = 270;
-const MAX_HEIGHT = 370;
+const MAX_HEIGHT = 100;
 
 const Container = styled.div.attrs(({ x, y }) => ({
   style: { right: `${x}px`, top: `${y}px` },
@@ -35,9 +35,14 @@ const Container = styled.div.attrs(({ x, y }) => ({
 
 function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
   const [popupState, setPopupState] = useState(null);
+  const containerRef = useRef();
 
   useLayoutEffect(() => {
-    function positionPopup() {
+    function positionPopup(evt) {
+      // If scrolling within the popup, ignore.
+      if (evt && containerRef.current?.contains(evt.target)) {
+        return;
+      }
       const anchorRect = anchor.current.getBoundingClientRect();
       const bodyRect = document.body.getBoundingClientRect();
 
@@ -64,7 +69,7 @@ function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
 
   return popupState && isOpen
     ? createPortal(
-        <Container {...popupState.offset} width={width}>
+        <Container ref={containerRef} {...popupState.offset} width={width}>
           {children}
         </Container>,
         document.body
