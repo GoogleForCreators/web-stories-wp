@@ -28,6 +28,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { StoriesPropType } from '../../../types';
 import { ViewHeader } from '../../../components';
 import MyStoriesSearch from './myStoriesSearch';
 
@@ -82,12 +83,7 @@ const PageHeading = ({
 
 PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
-  filteredStories: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    })
-  ),
+  filteredStories: StoriesPropType,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };
