@@ -59,6 +59,15 @@ message MediaElement {
     // indicates bottom or right corner.
     optional int32 focal_x = 1002 [default = 50];
     optional int32 focal_y = 1003 [default = 50];
+
+    // The title override. See Resource.title.
+    optional string title = 1004;
+
+    // The alt override. See Resource.alt.
+    optional string alt = 1005;
+
+    // The poster override. See Resource.poster.
+    optional string poster = 1006;
   }
 }
 
