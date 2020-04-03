@@ -24,11 +24,11 @@ import { useLayoutEffect, useState } from 'react';
 const DEFAULT_WIDTH = 270;
 const MAX_HEIGHT = 370;
 
-const Container = styled.div`
+const Container = styled.div.attrs(({ x, y }) => ({
+  style: { right: `${x}px`, top: `${y}px` },
+}))`
   position: fixed;
   z-index: 2147483646;
-  top: ${({ y }) => `${y}px`};
-  right: ${({ x }) => `${x}px`};
   width: ${({ width }) => width}px;
   max-height: ${MAX_HEIGHT}px;
 `;
