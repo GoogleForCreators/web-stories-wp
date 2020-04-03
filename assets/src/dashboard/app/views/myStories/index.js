@@ -38,19 +38,24 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+import FontProvider from '../../font/fontProvider';
+import usePagePreviewSize from '../../../utils/usePagePreviewSize';
+import PreviewPage from '../../../components/previewPage';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 `;
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-
+  const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
     state: { stories },
@@ -90,55 +95,59 @@ function MyStories() {
   );
 
   return (
-    <>
-      <PageHeading
-        defaultTitle={__('My Stories', 'web-stories')}
-        filteredStories={filteredStories}
-        handleTypeaheadChange={setTypeaheadValue}
-        typeaheadValue={typeaheadValue}
-      />
-
-      <FilterContainer>
-        {STORY_STATUSES.map((storyStatus) => (
-          <FloatingTab
-            key={storyStatus.value}
-            onClick={(_, value) => setStatus(value)}
-            name="all-stories"
-            value={storyStatus.value}
-            isSelected={status === storyStatus.value}
-          >
-            {storyStatus.label}
-          </FloatingTab>
-        ))}
-      </FilterContainer>
-      {filteredStoriesCount > 0 ? (
-        <>
-          <ListBar
-            label={listBarLabel}
-            layoutStyle={viewStyle}
-            onPress={handleViewStyleBarButtonSelected}
+    <FontProvider>
+      <TransformProvider>
+        <UnitsProvider pageSize={pageSize}>
+          <PageHeading
+            defaultTitle={__('My Stories', 'web-stories')}
+            filteredStories={filteredStories}
+            handleTypeaheadChange={setTypeaheadValue}
+            typeaheadValue={typeaheadValue}
           />
-
-          <StoryGrid>
-            {filteredStories.map((story) => (
-              <CardGridItem key={story.id}>
-                <CardPreviewContainer
-                  onOpenInEditorClick={() => {}}
-                  onPreviewClick={() => {}}
-                  previewSource={'http://placeimg.com/225/400/nature'}
-                />
-                <CardTitle
-                  title={story.title}
-                  modifiedDate={story.modified.startOf('day').fromNow()}
-                />
-              </CardGridItem>
+          <FilterContainer>
+            {STORY_STATUSES.map((storyStatus) => (
+              <FloatingTab
+                key={storyStatus.value}
+                onClick={(_, value) => setStatus(value)}
+                name="all-stories"
+                value={storyStatus.value}
+                isSelected={status === storyStatus.value}
+              >
+                {storyStatus.label}
+              </FloatingTab>
             ))}
-          </StoryGrid>
-        </>
-      ) : (
-        <NoResults typeaheadValue={typeaheadValue} />
-      )}
-    </>
+          </FilterContainer>
+          {filteredStoriesCount > 0 ? (
+            <>
+              <ListBar
+                label={listBarLabel}
+                layoutStyle={viewStyle}
+                onPress={handleViewStyleBarButtonSelected}
+              />
+              <StoryGrid>
+                {filteredStories.map((story) => (
+                  <CardGridItem key={story.id}>
+                    <CardPreviewContainer
+                      onOpenInEditorClick={() => {}}
+                      onPreviewClick={() => {}}
+                      previewSource={'http://placeimg.com/225/400/nature'}
+                    >
+                      <PreviewPage page={story.pages[0]} />
+                    </CardPreviewContainer>
+                    <CardTitle
+                      title={story.title}
+                      modifiedDate={story.modified.startOf('day').fromNow()}
+                    />
+                  </CardGridItem>
+                ))}
+              </StoryGrid>
+            </>
+          ) : (
+            <NoResults typeaheadValue={typeaheadValue} />
+          )}
+        </UnitsProvider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 

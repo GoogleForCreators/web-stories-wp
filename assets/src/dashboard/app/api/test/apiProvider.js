@@ -51,6 +51,7 @@ describe('reshapeStoryObject', () => {
       categories: [],
       tags: [],
       featured_media_url: '',
+      story_data: { pages: [{ id: 0, elements: [] }] },
     };
 
     const reshapedObj = reshapeStoryObject(responseObj);
@@ -59,6 +60,7 @@ describe('reshapeStoryObject', () => {
       title: 'Carlos Draft',
       status: 'draft',
       modified: moment('2020-03-26T21:42:14'),
+      pages: [{ id: 0, elements: [] }],
     });
   });
 });
