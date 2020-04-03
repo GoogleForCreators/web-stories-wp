@@ -78,7 +78,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const longestMediaElement = getLongestMediaElement(elements);
 
   const autoAdvanceAfter = longestMediaElement?.id
-    ? `el-${longestMediaElement?.id}`
+    ? `el-${longestMediaElement?.id}-media`
     : `${defaultPageDuration}s`;
 
   return (

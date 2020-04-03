@@ -111,9 +111,10 @@ describe('Page output', () => {
     };
 
     const { container } = render(<PageOutput {...props} />);
-    await expect(queryById(container, 'el-baz')).toBeInTheDocument();
+    const video = queryById(container, 'el-baz-media');
+    await expect(video).toBeInTheDocument();
     await expect(
-      queryByAutoAdvanceAfter(container, 'el-baz')
+      queryByAutoAdvanceAfter(container, 'el-baz-media')
     ).toBeInTheDocument();
   });
 
