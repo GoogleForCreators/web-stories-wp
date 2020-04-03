@@ -28,21 +28,14 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  FloatingTab,
-  StoryGrid,
-  CardGridItem,
-  CardTitle,
-  CardPreviewContainer,
-  ListBar,
-} from '../../../components';
+import { FloatingTab, ListBar } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import PreviewPage from '../../../components/previewPage';
+import StoryGrid from './storyGrid';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
@@ -113,23 +106,7 @@ function MyStories() {
             layoutStyle={viewStyle}
             onPress={handleViewStyleBarButtonSelected}
           />
-          <StoryGrid>
-            {filteredStories.map((story) => (
-              <CardGridItem key={story.id}>
-                <CardPreviewContainer
-                  onOpenInEditorClick={() => {}}
-                  onPreviewClick={() => {}}
-                  previewSource={'http://placeimg.com/225/400/nature'}
-                >
-                  <PreviewPage page={story.pages[0]} />
-                </CardPreviewContainer>
-                <CardTitle
-                  title={story.title}
-                  modifiedDate={story.modified.startOf('day').fromNow()}
-                />
-              </CardGridItem>
-            ))}
-          </StoryGrid>
+          <StoryGrid filteredStories={filteredStories} />
         </>
       );
     } else if (typeaheadValue.length > 0) {
@@ -138,7 +115,7 @@ function MyStories() {
 
     return (
       <DefaultBodyText>
-        {__('No stories to display', 'web-stories')}
+        {__('Create a story to get started!', 'web-stories')}
       </DefaultBodyText>
     );
   }, [
