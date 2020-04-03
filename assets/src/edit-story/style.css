@@ -22,7 +22,7 @@
 
 #screen-meta,
 #screen-meta-links,
-#screen-meta-links ~ .notice {
+#screen-meta-links ~ :not(#edit-story):not(.clear) {
   display: none;
 }
 
