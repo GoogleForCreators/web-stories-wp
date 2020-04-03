@@ -1,0 +1,42 @@
+syntax = "proto2";
+package web_stories_editor;
+
+// A media resource.
+message Resource {
+  enum Type {
+    UNKNOWN = 0;
+    IMAGE = 1;
+    VIDEO = 2;
+  }
+
+  // The resource ID.
+  // TODO: currently this value is local to the editor's media system.
+  required string id = 1;
+
+  // The type of the resource.
+  required Type type = 2;
+
+  // The MIME type of the resource. E.g. "image/png".
+  required string mime_type = 3;
+
+  // The source URL of the resource.
+  required string src = 4;
+
+  // The title of the resource.
+  optional string title = 5;
+
+  // The "alt" text of the resource.
+  optional string alt = 6;
+
+  // The natural width of the resource in physical pixels.
+  optional int32 width = 7;
+
+  // The natural height of the resource in physical pixels.
+  optional int32 height = 8;
+
+  // The resource's poster. Used only for video.
+  optional string poster = 9;
+
+  // TODO: should this object include srcset-like subresources for the src and
+  // poster? Or should this be left to the media system to provide via APIs?
+}

@@ -9,3 +9,4 @@ node_modules
 /build
 /bin/local-env/data
 phpunit.xml
+/assets/proto/gen

@@ -1,0 +1,9 @@
+syntax = "proto2";
+package web_stories_editor;
+
+import "page.proto";
+
+// A story.
+message Story {
+  repeated Page page = 1;
+}
