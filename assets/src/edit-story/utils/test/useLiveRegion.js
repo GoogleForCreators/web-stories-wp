@@ -108,7 +108,7 @@ describe('useLiveRegion', () => {
   });
 
   it('should not add multiple containers', () => {
-    const { container } = renderHook(() => {
+    renderHook(() => {
       useLiveRegion();
       useLiveRegion();
     });
