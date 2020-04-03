@@ -721,7 +721,7 @@ class Story_Post_Type {
 		// Loop through other size to find a square image.
 		foreach ( $metadata['sizes'] as $size ) {
 			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
-				$logo_img = wp_get_attachment_image_src( $image_id, $size, false );
+				$logo_img = wp_get_attachment_image_src( $image_id, [ $size['width'], $size['height'] ], false );
 				if ( is_array( $logo_img ) ) {
 					return array_shift( $logo_img );
 				}
