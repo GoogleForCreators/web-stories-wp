@@ -32,11 +32,11 @@ import { ReactComponent as Play } from '../../../../icons/play.svg';
 const styledTiles = css`
   width: 100%;
   transition: 0.2s transform, 0.15s opacity;
+  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
   ${styledTiles}
-  margin-bottom: 10px;
 `;
 
 const Video = styled.video`
