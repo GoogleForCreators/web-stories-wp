@@ -126,9 +126,14 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    ({ mimeType, posterId, src, videoId }) => {
+    ({ mimeType, posterId, src, videoId, local }) => {
       const process = async () => {
-        if (allowedVideoMimeTypes.includes(mimeType) && !posterId && videoId) {
+        if (
+          allowedVideoMimeTypes.includes(mimeType) &&
+          !local &&
+          !posterId &&
+          videoId
+        ) {
           await uploadVideoPoster(videoId, src);
         }
       };
