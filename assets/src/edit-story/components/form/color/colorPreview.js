@@ -72,7 +72,14 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   overflow: auto;
 `;
 
-function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
+function ColorPreview({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  value,
+  label,
+  colorPickerActions,
+}) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   const previewStyle = getPreviewStyle(value);
@@ -91,15 +98,17 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
+      renderFooter: colorPickerActions,
     });
   }, [
     showColorPickerAt,
-    hideSidebar,
     isMultiple,
     value,
     onChange,
     hasGradient,
     hasOpacity,
+    hideSidebar,
+    colorPickerActions,
   ]);
 
   const [hexInputValue, setHexInputValue] = useState('');
@@ -190,6 +199,7 @@ ColorPreview.propTypes = {
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+  colorPickerActions: PropTypes.func,
 };
 
 ColorPreview.defaultProps = {

@@ -35,12 +35,19 @@ import { STORY_STATUSES } from '../../constants';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
-export function reshapeStoryObject({ id, title, modified, status }) {
+export function reshapeStoryObject({
+  id,
+  title,
+  modified,
+  status,
+  story_data: storyData,
+}) {
   return {
     id,
     status,
     title: title.rendered,
     modified: moment(modified),
+    pages: storyData.pages,
   };
 }
 
@@ -53,7 +60,7 @@ export default function ApiProvider({ children }) {
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
-          query: { status },
+          query: { status, context: 'edit' },
         });
         const serverStoryResponse = await apiFetch({
           path,
@@ -68,12 +75,21 @@ export default function ApiProvider({ children }) {
     [api.stories]
   );
 
+  const getAllFonts = useCallback(() => {
+    return apiFetch({ path: api.fonts }).then((data) =>
+      data.map((font) => ({
+        value: font.name,
+        ...font,
+      }))
+    );
+  }, [api.fonts]);
+
   const value = useMemo(
     () => ({
       state: { stories },
-      actions: { fetchStories },
+      actions: { fetchStories, getAllFonts },
     }),
-    [stories, fetchStories]
+    [stories, fetchStories, getAllFonts]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

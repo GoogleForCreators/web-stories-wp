@@ -129,7 +129,7 @@ class Dashboard {
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			) 
+			)
 		);
 
 		wp_localize_script(
@@ -142,6 +142,7 @@ class Dashboard {
 					'newStoryURL' => $new_story_url,
 					'api'         => [
 						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+						'fonts'   => '/web-stories/v1/fonts',
 					],
 				],
 			]

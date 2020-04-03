@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -29,7 +29,6 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
  * Internal dependencies
  */
 import {
-  ViewHeader,
   FloatingTab,
   StoryGrid,
   CardGridItem,
@@ -39,30 +38,24 @@ import {
 } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
-import MyStoriesSearch from './myStoriesSearch';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+import FontProvider from '../../font/fontProvider';
+import usePagePreviewSize from '../../../utils/usePagePreviewSize';
+import PreviewPage from '../../../components/previewPage';
+import PageHeading from './pageHeading';
+import NoResults from './noResults';
 
-const PageHeading = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 40px 20px;
-`;
-
-const SearchContainer = styled.div`
-  position: absolute;
-  right: 20px;
-  display: flex;
-  justify-content: flex-end;
-`;
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 `;
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-
+  const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
     state: { stories },
@@ -74,15 +67,9 @@ function MyStories() {
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue
-        .toString()
-        .toLowerCase()
-        .trim();
+      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
 
-      return (
-        story.title.toLowerCase().includes(lowerTypeaheadValue) ||
-        story.id.toString().toLowerCase().includes(lowerTypeaheadValue)
-      );
+      return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
 
@@ -94,56 +81,73 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  return (
-    <>
-      <PageHeading>
-        <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
-        <SearchContainer>
-          <MyStoriesSearch
-            currentValue={typeaheadValue}
-            filteredStories={filteredStories}
-            handleChange={setTypeaheadValue}
-          />
-        </SearchContainer>
-      </PageHeading>
+  const filteredStoriesCount = filteredStories.length;
 
-      <FilterContainer>
-        {STORY_STATUSES.map((storyStatus) => (
-          <FloatingTab
-            key={storyStatus.value}
-            onClick={(_, value) => setStatus(value)}
-            name="all-stories"
-            value={storyStatus.value}
-            isSelected={status === storyStatus.value}
-          >
-            {storyStatus.label}
-          </FloatingTab>
-        ))}
-      </FilterContainer>
-      <ListBar
-        label={`${filteredStories.length} ${__(
-          'total Stories',
-          'web-stories'
-        )}`}
-        layoutStyle={viewStyle}
-        onPress={handleViewStyleBarButtonSelected}
-      />
-      <StoryGrid>
-        {filteredStories.map((story) => (
-          <CardGridItem key={story.id}>
-            <CardPreviewContainer
-              onOpenInEditorClick={() => {}}
-              onPreviewClick={() => {}}
-              previewSource={'http://placeimg.com/225/400/nature'}
-            />
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-            />
-          </CardGridItem>
-        ))}
-      </StoryGrid>
-    </>
+  const listBarLabel = sprintf(
+    /* translators: %s: number of stories */
+    _n(
+      '%s total story',
+      '%s total stories',
+      filteredStoriesCount,
+      'web-stories'
+    ),
+    filteredStoriesCount
+  );
+
+  return (
+    <FontProvider>
+      <TransformProvider>
+        <UnitsProvider pageSize={pageSize}>
+          <PageHeading
+            defaultTitle={__('My Stories', 'web-stories')}
+            filteredStories={filteredStories}
+            handleTypeaheadChange={setTypeaheadValue}
+            typeaheadValue={typeaheadValue}
+          />
+          <FilterContainer>
+            {STORY_STATUSES.map((storyStatus) => (
+              <FloatingTab
+                key={storyStatus.value}
+                onClick={(_, value) => setStatus(value)}
+                name="all-stories"
+                value={storyStatus.value}
+                isSelected={status === storyStatus.value}
+              >
+                {storyStatus.label}
+              </FloatingTab>
+            ))}
+          </FilterContainer>
+          {filteredStoriesCount > 0 ? (
+            <>
+              <ListBar
+                label={listBarLabel}
+                layoutStyle={viewStyle}
+                onPress={handleViewStyleBarButtonSelected}
+              />
+              <StoryGrid>
+                {filteredStories.map((story) => (
+                  <CardGridItem key={story.id}>
+                    <CardPreviewContainer
+                      onOpenInEditorClick={() => {}}
+                      onPreviewClick={() => {}}
+                      previewSource={'http://placeimg.com/225/400/nature'}
+                    >
+                      <PreviewPage page={story.pages[0]} />
+                    </CardPreviewContainer>
+                    <CardTitle
+                      title={story.title}
+                      modifiedDate={story.modified.startOf('day').fromNow()}
+                    />
+                  </CardGridItem>
+                ))}
+              </StoryGrid>
+            </>
+          ) : (
+            <NoResults typeaheadValue={typeaheadValue} />
+          )}
+        </UnitsProvider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 

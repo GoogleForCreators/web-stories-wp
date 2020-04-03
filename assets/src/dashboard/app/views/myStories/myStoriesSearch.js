@@ -35,11 +35,11 @@ export default function MyStoriesSearch({
   filteredStories = [],
 }) {
   const typeaheadMenuOptions = useMemo(() => {
-    // add different option sets
+    // todo add different option sets, value and label won't always be the same
     return filteredStories.map((filteredStory) => {
       return {
         label: filteredStory.title,
-        value: filteredStory.id,
+        value: filteredStory.title,
       };
     });
   }, [filteredStories]);
@@ -48,7 +48,7 @@ export default function MyStoriesSearch({
     <TypeaheadInput
       inputId="my-stories-search"
       items={typeaheadMenuOptions}
-      onChange={handleChange}
+      onChange={(val) => handleChange(val.trim())}
       value={currentValue}
       placeholder={__('Search Stories', 'web-stories')}
       ariaLabel={__('Search Stories', 'web-stories')}
@@ -58,15 +58,11 @@ export default function MyStoriesSearch({
 
 MyStoriesSearch.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  currentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  currentValue: PropTypes.string,
   filteredStories: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool,
-        PropTypes.number,
-      ]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     })
   ),
 };

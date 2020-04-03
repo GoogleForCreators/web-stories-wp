@@ -15,15 +15,19 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import DisplayElement from '../../edit-story/components/canvas/displayElement';
+import StoryPropTypes from '../../edit-story/types';
 
-export const ViewHeader = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.heading1.family};
-  font-size: ${({ theme }) => theme.fonts.heading1.size};
-  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
-  font-weight: bold;
-  margin: 0;
-`;
+function PreviewPage({ page }) {
+  return page.elements.map(({ id, ...rest }) => (
+    <DisplayElement key={id} page={page} element={{ id, ...rest }} />
+  ));
+}
+
+PreviewPage.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+};
+
+export default PreviewPage;

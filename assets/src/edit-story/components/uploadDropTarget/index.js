@@ -15,6 +15,6 @@
  */
 
 export { default as UploadDropTarget } from './dropTarget';
-export { default as UploadDropTargetMessageOverlay } from './message';
-export { UploadDropTargetOverlay, UploadDropTargetScreen } from './overlay';
+export { default as UploadDropTargetMessage } from './message';
+export { default as UploadDropTargetOverlay } from './overlay';
 export { default as useUploadDropTarget } from './use';
