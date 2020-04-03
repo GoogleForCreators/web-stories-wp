@@ -144,4 +144,9 @@ OutputPage.propTypes = {
   defaultPageDuration: PropTypes.number,
 };
 
+OutputPage.defaultProps = {
+  autoAdvance: true,
+  defaultPageDuration: 7,
+};
+
 export default OutputPage;
