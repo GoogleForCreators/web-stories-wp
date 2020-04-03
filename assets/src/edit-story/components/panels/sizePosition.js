@@ -130,15 +130,12 @@ function SizePositionPanel({
     [lockRatio]
   );
 
-  usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
-    const isRotationAngle = Boolean(newRotationAngle);
-
-    if (!isRotationAngle) {
-      return null;
-    }
-
-    return { rotationAngle: newRotationAngle % 360 };
-  }, []);
+  usePresubmitHandler(
+    ({ rotationAngle: newRotationAngle }) => ({
+      rotationAngle: newRotationAngle % 360,
+    }),
+    []
+  );
 
   const handleSetBackground = useCallback(() => {
     pushUpdate(
