@@ -106,4 +106,15 @@ describe('useLiveRegion', () => {
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
     ).toHaveTextContent('Bar');
   });
+
+  it('should not add multiple containers', () => {
+    const { container } = renderHook(() => {
+      useLiveRegion();
+      useLiveRegion();
+    });
+
+    expect(
+      queryById(document.documentElement, 'web-stories-aria-live-region-polite')
+    ).toBeEmpty();
+  });
 });

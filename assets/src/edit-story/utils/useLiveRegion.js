@@ -30,8 +30,18 @@ function useLiveRegion(politeness = 'polite') {
   const elementRef = useRef();
 
   useEffect(() => {
+    const containerId = 'web-stories-aria-live-region-' + politeness;
+
+    const existingContainer = document.getElementById(containerId);
+
+    if (existingContainer) {
+      return () => {
+        elementRef.current = null;
+      };
+    }
+
     const container = document.createElement('div');
-    container.id = 'web-stories-aria-live-region-' + politeness;
+    container.id = containerId;
     container.className = 'web-stories-aria-live-region';
 
     container.setAttribute(
