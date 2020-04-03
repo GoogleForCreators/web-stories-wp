@@ -51,6 +51,16 @@ const FilterContainer = styled.div`
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 `;
 
+const DefaultBodyText = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-weight: ${({ theme }) => theme.fonts.body1.weight};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  color: ${({ theme }) => theme.colors.gray200};
+  margin: 40px 20px;
+`;
+
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
@@ -94,6 +104,52 @@ function MyStories() {
     filteredStoriesCount
   );
 
+  const BodyContent = useMemo(() => {
+    if (filteredStoriesCount > 0) {
+      return (
+        <>
+          <ListBar
+            label={listBarLabel}
+            layoutStyle={viewStyle}
+            onPress={handleViewStyleBarButtonSelected}
+          />
+          <StoryGrid>
+            {filteredStories.map((story) => (
+              <CardGridItem key={story.id}>
+                <CardPreviewContainer
+                  onOpenInEditorClick={() => {}}
+                  onPreviewClick={() => {}}
+                  previewSource={'http://placeimg.com/225/400/nature'}
+                >
+                  <PreviewPage page={story.pages[0]} />
+                </CardPreviewContainer>
+                <CardTitle
+                  title={story.title}
+                  modifiedDate={story.modified.startOf('day').fromNow()}
+                />
+              </CardGridItem>
+            ))}
+          </StoryGrid>
+        </>
+      );
+    } else if (typeaheadValue.length > 0) {
+      return <NoResults typeaheadValue={typeaheadValue} />;
+    }
+
+    return (
+      <DefaultBodyText>
+        {__('No stories to display', 'web-stories')}
+      </DefaultBodyText>
+    );
+  }, [
+    filteredStories,
+    filteredStoriesCount,
+    handleViewStyleBarButtonSelected,
+    listBarLabel,
+    typeaheadValue,
+    viewStyle,
+  ]);
+
   return (
     <FontProvider>
       <TransformProvider>
@@ -117,34 +173,8 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
-          {filteredStoriesCount > 0 ? (
-            <>
-              <ListBar
-                label={listBarLabel}
-                layoutStyle={viewStyle}
-                onPress={handleViewStyleBarButtonSelected}
-              />
-              <StoryGrid>
-                {filteredStories.map((story) => (
-                  <CardGridItem key={story.id}>
-                    <CardPreviewContainer
-                      onOpenInEditorClick={() => {}}
-                      onPreviewClick={() => {}}
-                      previewSource={'http://placeimg.com/225/400/nature'}
-                    >
-                      <PreviewPage page={story.pages[0]} />
-                    </CardPreviewContainer>
-                    <CardTitle
-                      title={story.title}
-                      modifiedDate={story.modified.startOf('day').fromNow()}
-                    />
-                  </CardGridItem>
-                ))}
-              </StoryGrid>
-            </>
-          ) : (
-            <NoResults typeaheadValue={typeaheadValue} />
-          )}
+
+          {BodyContent}
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>
