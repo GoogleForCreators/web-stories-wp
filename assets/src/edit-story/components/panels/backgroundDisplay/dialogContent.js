@@ -24,7 +24,7 @@ import { rgba } from 'polished';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
+import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
