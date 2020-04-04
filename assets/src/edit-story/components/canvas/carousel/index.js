@@ -45,7 +45,6 @@ import {
 import Modal from '../../modal';
 import GridView from '../gridview';
 import PagePreview, {
-  THUMB_INDICATOR_GAP,
   THUMB_FRAME_HEIGHT,
   THUMB_FRAME_WIDTH,
 } from '../pagepreview';
@@ -53,6 +52,8 @@ import useResizeEffect from '../../../utils/useResizeEffect';
 import {
   COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
+  COMPACT_THUMB_HEIGHT,
+  COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
@@ -143,22 +144,36 @@ const PageList = styled(Reorderable).attrs({
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
-  margin-left: -${({ width, margin }) => Math.ceil(width / 2 + margin) + margin / 4}px;
-  margin-right: -${({ width, margin }) => Math.ceil(width / 2 + margin / 2) - margin / 4}px;
-  padding-left: ${({ width, margin }) => Math.ceil((width + margin) / 2)}px;
-  padding-right: ${({ width, margin }) => Math.ceil((width + margin) / 2)}px;
-  padding-top: ${THUMB_INDICATOR_GAP * 2}px;
+  position: absolute;
+  bottom: 0;
+  left: ${({ width, margin }) => (width + margin) / 2}px;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  display: flex;
+  justify-content: center;
+
+  &:first-of-type {
+    left: -${({ width, margin }) => (width + margin) / 2}px;
+  }
+
   & > div {
-    height: ${({ height }) => height - THUMB_INDICATOR_GAP * 2}px;
+    height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
     width: 4px;
+    margin: 0px;
   }
 `;
 
-const ItemContainer = styled.div.attrs({ role: 'option' })`
+const ItemContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0 10px 0 0;
+  position: relative;
+`;
+
+const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
+  display: flex;
+  flex-direction: row;
   z-index: 1;
+  margin: 0 10px 0 0;
   &:last-of-type {
     margin: 0;
   }
@@ -192,7 +207,10 @@ function Carousel() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
 
-  const [carouselSize, setCarouselSize] = useState({});
+  const [carouselSize, setCarouselSize] = useState({
+    width: COMPACT_THUMB_WIDTH,
+    height: COMPACT_THUMB_HEIGHT,
+  });
   const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
 
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
@@ -209,6 +227,11 @@ function Carousel() {
     },
     [pages.length]
   );
+
+  useLayoutEffect(() => {
+    const rect = listRef.current.getBoundingClientRect();
+    setCarouselSize({ width: rect.width, height: rect.height });
+  }, []);
 
   useLayoutEffect(() => {
     const listElement = listRef.current;
@@ -295,47 +318,44 @@ function Carousel() {
           aria-label={__('Pages List', 'web-stories')}
           onPositionChange={rearrangePages}
         >
-          <PageSeparator
-            position={0}
-            width={pageThumbWidth}
-            height={pageThumbHeight}
-            margin={10 /** px */}
-          />
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <>
-                <ItemContainer key={page.id}>
-                  <ReorderableItem position={index}>
-                    <Page
-                      onClick={handleClickPage(page)}
-                      role="option"
-                      ariaLabel={
-                        isCurrentPage
-                          ? sprintf(
-                              __('Page %s (current page)', 'web-stories'),
-                              index + 1
-                            )
-                          : sprintf(
-                              __('Go to page %s', 'web-stories'),
-                              index + 1
-                            )
-                      }
-                      isActive={isCurrentPage}
-                      index={index}
-                      width={pageThumbWidth}
-                      height={pageThumbHeight}
-                    />
-                  </ReorderableItem>
-                </ItemContainer>
+              <ItemContainer key={page.id}>
+                {index === 0 && (
+                  <PageSeparator
+                    position={0}
+                    width={pageThumbWidth}
+                    height={pageThumbHeight}
+                    margin={10 /** px */}
+                  />
+                )}
+                <ReorderablePage position={index}>
+                  <Page
+                    onClick={handleClickPage(page)}
+                    role="option"
+                    ariaLabel={
+                      isCurrentPage
+                        ? sprintf(
+                            __('Page %s (current page)', 'web-stories'),
+                            index + 1
+                          )
+                        : sprintf(__('Go to page %s', 'web-stories'), index + 1)
+                    }
+                    isActive={isCurrentPage}
+                    index={index}
+                    width={pageThumbWidth}
+                    height={pageThumbHeight}
+                  />
+                </ReorderablePage>
                 <PageSeparator
                   position={index + 1}
                   width={pageThumbWidth}
                   height={pageThumbHeight}
                   margin={10 /** px */}
                 />
-              </>
+              </ItemContainer>
             );
           })}
         </PageList>

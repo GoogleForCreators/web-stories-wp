@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React from 'react';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -31,7 +31,7 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-const Reorderable = React.forwardRef(
+const Reorderable = forwardRef(
   ({ children, onPositionChange = () => {}, ...props }, forwardedRef) => {
     const {
       isReordering,

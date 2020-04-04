@@ -74,7 +74,7 @@ const PreviewWrapper = styled.div`
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
-const PagePreview = ({ index, ...props }) => {
+function PagePreview({ index, ...props }) {
   const {
     state: { pages },
   } = useStory();
@@ -99,7 +99,7 @@ const PagePreview = ({ index, ...props }) => {
       </TransformProvider>
     </UnitsProvider>
   );
-};
+}
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,

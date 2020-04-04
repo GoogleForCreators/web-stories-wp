@@ -113,7 +113,7 @@ function useReordering(onPositionChange, numChildren) {
       const message = sprintf(REORDER_MESSAGE, position);
       speak(message);
     }
-  }, [isReordering, currentSeparator, numChildren, onPositionChange, speak]);
+  }, [isReordering, currentSeparator, numChildren, speak]);
 
   return {
     isReordering,
