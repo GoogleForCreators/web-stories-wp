@@ -39,36 +39,26 @@ import {
   LinkType,
 } from '../../link';
 import { useAPI } from '../../../app/api';
+import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
-import { ReactComponent as Info } from '../../../icons/info.svg';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import Dialog from '../../dialog';
 import theme from '../../../theme';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { Plain } from '../../button';
-import LinkInfoDialog from './infoDialog';
+import { useCanvas } from '../../canvas';
+import LinkInfoDialog from './dialogContent';
 
 const BrandIconText = styled.span`
   margin-left: 12px;
 `;
 
-const ActionableNote = styled(Note)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
-const InfoIcon = styled(Info)`
-  width: 13px;
-  height: 13px;
-  margin-top: -2px;
-  margin-left: 2px;
-  justify-self: flex-end;
-`;
-
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
+  const {
+    actions: { clearEditing },
+  } = useCanvas();
+
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
   const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
@@ -89,6 +79,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -110,16 +101,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     if (!isValidUrl(urlWithProtocol)) {
       return;
     }
+
     setFetchingMetadata(true);
     getLinkMetadata(urlWithProtocol)
       .then(({ title, image }) => {
         updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
       })
-      .catch((reason) => {
-        if (reason?.code === 'rest_invalid_url') {
-          return;
-        }
-        throw reason;
+      .catch(() => {
+        showSnackbar({
+          message: __('This is an invalid link.', 'web-stories'),
+        });
       })
       .finally(() => {
         setFetchingMetadata(false);
@@ -128,6 +119,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChange = useCallback(
     (properties, submit) => {
+      clearEditing();
+
       if (properties.url) {
         populateMetadata(properties.url);
       }
@@ -141,7 +134,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         submit
       );
     },
-    [populateMetadata, pushUpdateForObject, inferredLinkType, defaultLink]
+    [
+      clearEditing,
+      pushUpdateForObject,
+      inferredLinkType,
+      defaultLink,
+      populateMetadata,
+    ]
   );
 
   const handleChangeIcon = useCallback(
@@ -159,10 +158,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
-        <ActionableNote onClick={() => openDialog()}>
-          {__('Enter an address to apply a 1 or 2-tap link', 'web-stories')}
-          <InfoIcon />
-        </ActionableNote>
+        <Note onClick={() => openDialog()}>
+          {__('Type an address to apply a 1 or 2-tap link', 'web-stories')}
+        </Note>
       </Row>
 
       <Row>

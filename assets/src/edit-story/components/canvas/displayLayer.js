@@ -57,7 +57,13 @@ function DisplayLayer() {
             if (editingElement === id) {
               return null;
             }
-            return <DisplayElement key={id} element={{ id, ...rest }} />;
+            return (
+              <DisplayElement
+                key={id}
+                element={{ id, ...rest }}
+                page={currentPage}
+              />
+            );
           })}
       </DisplayPageArea>
     </Layer>

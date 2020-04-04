@@ -38,6 +38,8 @@ const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
 const StyledInput = styled(Input)`
   width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
   border: none;
   padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
@@ -121,7 +123,9 @@ function Numeric({
         }}
         onBlur={(evt) => {
           if (evt.target.form) {
-            evt.target.form.dispatchEvent(new window.Event('submit'));
+            evt.target.form.dispatchEvent(
+              new window.Event('submit', { cancelable: true })
+            );
           }
           if (onBlur) {
             onBlur();

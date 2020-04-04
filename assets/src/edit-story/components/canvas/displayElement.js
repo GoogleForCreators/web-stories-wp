@@ -34,7 +34,6 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
-import { useStory } from '../../app';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
@@ -58,13 +57,10 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element, previewMode }) {
+function DisplayElement({ element, previewMode, page }) {
   const {
     actions: { getBox },
   } = useUnits();
-  const {
-    state: { currentPage },
-  } = useStory();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -73,6 +69,10 @@ function DisplayElement({ element, previewMode }) {
         ...element,
         type: replacement.type,
         resource: replacement,
+        scale: element.scale || 100,
+        focalX: element.focalX || 50,
+        focalY: element.focalY || 50,
+        isFill: element.isFill || false,
       }
     : null;
 
@@ -116,6 +116,7 @@ function DisplayElement({ element, previewMode }) {
         style={{
           opacity: opacity ? opacity / 100 : null,
         }}
+        previewMode={previewMode}
       >
         <Display element={element} previewMode={previewMode} box={box} />
         {!previewMode && (
@@ -126,9 +127,9 @@ function DisplayElement({ element, previewMode }) {
           </ReplacementContainer>
         )}
       </WithMask>
-      {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
+      {Boolean(isBackground) && Boolean(page.backgroundOverlay) && (
         <BackgroundOverlay
-          style={generateOverlayStyles(currentPage.backgroundOverlay)}
+          style={generateOverlayStyles(page.backgroundOverlay)}
         />
       )}
     </Wrapper>
@@ -138,6 +139,7 @@ function DisplayElement({ element, previewMode }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  page: StoryPropTypes.page.isRequired,
 };
 
 export default DisplayElement;

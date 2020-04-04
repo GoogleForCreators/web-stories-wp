@@ -143,7 +143,7 @@ function MediaEdit({ element, box }) {
         </FadedVideo>
       )}
       <CropBox ref={setCropBox}>
-        <WithMask element={element} fill={true} applyFlip={false}>
+        <WithMask element={element} fill={true} applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             <CropVideo {...cropMediaProps}>
@@ -202,7 +202,7 @@ function MediaEdit({ element, box }) {
 }
 
 MediaEdit.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+  element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
 };
 

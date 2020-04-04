@@ -28,7 +28,10 @@ export const GlobalStyle = createGlobalStyle`
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
-	.default-movable .moveable-direction.moveable-n {
+	.default-movable.type-text .moveable-direction.moveable-n, .default-movable.type-text .moveable-direction.moveable-s {
+		pointer-events: none;
+	}
+	.default-movable .moveable-control.moveable-n {
 		display: none !important;
 	}
 
@@ -69,8 +72,8 @@ export const GlobalStyle = createGlobalStyle`
 		height: 16px;
 	}
 
-	.default-movable.dragging .moveable-line.moveable-rotation-line,
-	.default-movable.dragging .moveable-line.moveable-direction {
+	.default-movable.hide-handles .moveable-line.moveable-rotation-line,
+	.default-movable.hide-handles .moveable-line.moveable-direction {
 		display: none;
 	}
 `;

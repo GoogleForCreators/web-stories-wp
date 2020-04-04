@@ -32,7 +32,7 @@ import {
 
 function NavLayer() {
   return (
-    <Layer pointerEvents="none">
+    <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>

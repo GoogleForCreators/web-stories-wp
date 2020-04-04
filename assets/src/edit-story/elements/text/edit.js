@@ -44,6 +44,8 @@ import {
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
+import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
   draftMarkupToContent,
@@ -52,6 +54,7 @@ import {
   getSelectionForAll,
   getSelectionForOffset,
   generateParagraphTextStyle,
+  getHighlightLineheight,
 } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -77,10 +80,10 @@ const Wrapper = styled.div`
 // of text height. This element has an unbounded height (bottom) so that
 // it can be used for height measurement.
 const TextBox = styled.div`
-	${elementWithFont}
-	${elementWithTextParagraphStyle}
-	${elementWithBackgroundColor}
-	${elementWithFontColor}
+  ${elementWithFont}
+  ${elementWithTextParagraphStyle}
+  ${elementWithBackgroundColor}
+  ${elementWithFontColor}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -90,7 +93,16 @@ const TextBox = styled.div`
 `;
 
 function TextEdit({
-  element: { id, bold, content, color, backgroundColor, opacity, ...rest },
+  element: {
+    id,
+    bold,
+    content,
+    color,
+    backgroundColor,
+    backgroundTextMode,
+    opacity,
+    ...rest
+  },
   box: { x, y, height, rotationAngle },
 }) {
   const {
@@ -101,6 +113,17 @@ function TextEdit({
     color,
     backgroundColor,
     opacity,
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
+      lineHeight: getHighlightLineheight(
+        rest.lineHeight,
+        dataToEditorX(rest.padding?.vertical || 0)
+      ),
+      color: createSolid(0, 0, 0),
+      backgroundColor: createSolid(255, 255, 255),
+    }),
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
+      backgroundColor: null,
+    }),
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);

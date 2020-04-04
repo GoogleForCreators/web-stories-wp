@@ -36,12 +36,12 @@ import { ReactComponent as PlayIcon } from '../../icons/play.svg';
 import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 
 const Play = styled(PlayIcon)`
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  height: 100%;
 `;
 const Pause = styled(PauseIcon)`
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  height: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -54,6 +54,8 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
 
   opacity: 0;
   &.button-enter {
@@ -74,7 +76,7 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
-function VideoFrame({ element }) {
+function VideoFrame({ element, box }) {
   const { id } = element;
   const [hovering, setHovering] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -142,6 +144,9 @@ function VideoFrame({ element }) {
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
 
+  const smallestDimension = Math.min(box.width, box.height);
+  const buttonSize = Math.max(Math.ceil(smallestDimension * 0.2), 24);
+
   return (
     <Wrapper
       onPointerEnter={onPointerEnter}
@@ -154,6 +159,7 @@ function VideoFrame({ element }) {
           aria-pressed={isPlaying}
           key="wrapper"
           onClick={handlePlayPause}
+          size={buttonSize}
         >
           {isPlaying ? <Pause /> : <Play />}
         </ButtonWrapper>
@@ -164,6 +170,7 @@ function VideoFrame({ element }) {
 
 VideoFrame.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default VideoFrame;

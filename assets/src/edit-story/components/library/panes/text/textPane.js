@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../../constants';
+import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
 import createSolid from '../../../../utils/createSolid';
 import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
@@ -38,23 +38,29 @@ const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
+    content: __('Heading', 'web-stories'),
     fontSize: dataFontEm(2),
-    fontWeight: 800,
-    fontFamily: 'Ubuntu',
+    fontWeight: 700,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
+    content: __('Subheading', 'web-stories'),
     fontSize: dataFontEm(1.5),
-    fontWeight: 500,
-    fontFamily: 'Ubuntu',
+    fontWeight: 600,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'body-text',
     title: __('Body text', 'web-stories'),
-    fontSize: dataFontEm(1),
-    fontWeight: 'normal',
-    fontFamily: 'Ubuntu',
+    content: __(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'web-stories'
+    ),
+    fontSize: dataFontEm(1.1),
+    fontWeight: 400,
+    fontFamily: 'Roboto',
   },
 ];
 
@@ -86,8 +92,10 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 ...getPresetById('subheading'),
-                content: __('Text...', 'web-stories'),
+                content: __('Fill in some text', 'web-stories'),
                 color: createSolid(0, 0, 0),
+                backgroundColor: createSolid(196, 196, 196),
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
@@ -103,8 +111,9 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 ...preset,
-                content: __('Text...', 'web-stories'),
                 color: createSolid(0, 0, 0),
+                backgroundColor: createSolid(196, 196, 196),
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }

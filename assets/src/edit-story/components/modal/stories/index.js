@@ -27,7 +27,7 @@ import { Primary } from '../../button';
 import Modal from '../';
 
 export default {
-  title: 'Components/Modal',
+  title: 'Stories Editor/Components/Modal',
   component: Primary,
 };
 

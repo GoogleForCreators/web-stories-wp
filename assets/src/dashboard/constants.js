@@ -19,6 +19,11 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../edit-story/constants';
+
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
@@ -51,6 +56,8 @@ export const Z_INDEX = {
   POPOVER_PANEL: 10,
 };
 
+export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
+
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
   {
@@ -60,9 +67,16 @@ export const paths = [
   { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
-export const storiesFilters = [
-  { label: 'All Stories', value: 'all-stories ' },
-  { label: 'Drafts', value: 'drafts' },
-  { label: 'Active Stories', value: 'active-stories ' },
-  { label: 'My Templates', value: 'my-templates ' },
+export const STORY_STATUSES = [
+  { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
+  { label: __('Drafts', 'web-stories'), value: 'draft' },
+  { label: __('Active Stories', 'web-stories'), value: 'publish' },
+  { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
+
+export const VIEW_STYLE = {
+  GRID: 'GRID',
+  LIST: 'LIST',
+};
+
+export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };

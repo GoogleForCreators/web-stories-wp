@@ -28,28 +28,25 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import {
-  UploadDropTarget,
-  UploadDropTargetScreen,
-  UploadDropTargetMessageOverlay,
-} from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
+import { UploadDropTarget, UploadDropTargetMessage } from '../uploadDropTarget';
+import { useMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadMedia },
+  } = useMedia();
   const onDropHandler = useCallback(
     (files) => {
-      files.forEach(uploadFile);
+      uploadMedia(files);
     },
-    [uploadFile]
+    [uploadMedia]
   );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
-      <UploadDropTargetScreen />
-      <UploadDropTargetMessageOverlay
+      <UploadDropTargetMessage
         id={MESSAGE_ID}
         message={__('Upload to media library', 'web-stories')}
       />

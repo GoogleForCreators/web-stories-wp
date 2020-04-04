@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useCallback } from 'react';
 
 /**
@@ -31,72 +30,85 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 import {
   UploadDropTarget,
-  UploadDropTargetScreen,
-  UploadDropTargetMessageOverlay,
+  UploadDropTargetMessage,
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
-import { useUploader } from '../../app/uploader';
-import { getResourceFromUploadAPI } from '../library/panes/media/mediaUtils';
+import { useMedia } from '../../app/media';
+import { useStory } from '../../app/story';
+import useInsertElement from '../canvas/useInsertElement';
+
 import { Layer as CanvasLayer, PageArea } from './layout';
-import useInsertElement from './useInsertElement';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
-const PageAreaCover = styled(PageArea)`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-  outline: 2px solid ${({ theme }) => theme.colors.selection};
-`;
-
 function CanvasUploadDropTarget({ children }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadMedia },
+  } = useMedia();
   const insertElement = useInsertElement();
-  const onDropHandler = useCallback(
-    (files) => {
-      files.forEach((file) => {
-        uploadFile(file).then((res) => {
-          const resource = getResourceFromUploadAPI(res);
-          insertElement(resource.type, { resource });
-        });
-      });
+  const {
+    actions: { updateElementById, deleteElementById },
+  } = useStory();
+
+  const onLocalFile = useCallback(
+    ({ resource }) => {
+      const element = insertElement(resource.type, { resource });
+      return element;
     },
-    [insertElement, uploadFile]
+    [insertElement]
   );
 
+  const onUploadedFile = useCallback(
+    ({ resource, element }) => {
+      updateElementById({
+        elementId: element.id,
+        properties: {
+          resource,
+          type: element.resource.type,
+        },
+      });
+    },
+    [updateElementById]
+  );
+
+  const onUploadFailure = useCallback(
+    ({ element }) => {
+      deleteElementById({ elementId: element.id });
+    },
+    [deleteElementById]
+  );
+
+  const onDropHandler = useCallback(
+    (files) => {
+      uploadMedia(files, {
+        onLocalFile,
+        onUploadedFile,
+        onUploadFailure,
+      });
+    },
+    [uploadMedia, onLocalFile, onUploadedFile, onUploadFailure]
+  );
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
-      <UploadCanvasOverlay>
-        <PageAreaCover />
-      </UploadCanvasOverlay>
-      <UploadDropTargetScreen />
-      <UploadCanvasOverlay>
-        <PageArea>
-          <UploadDropTargetMessageOverlay
-            id={MESSAGE_ID}
-            message={__(
-              'Upload to media library and add to the page.',
-              'web-stories'
-            )}
-          />
-        </PageArea>
-      </UploadCanvasOverlay>
+      <UploadDropTargetOverlay>
+        <CanvasLayer>
+          <PageArea>
+            <UploadDropTargetMessage
+              id={MESSAGE_ID}
+              message={__(
+                'Upload to media library and add to the page.',
+                'web-stories'
+              )}
+            />
+          </PageArea>
+        </CanvasLayer>
+      </UploadDropTargetOverlay>
     </UploadDropTarget>
   );
 }
 
 CanvasUploadDropTarget.propTypes = {
-  children: StoryPropTypes.children.isRequired,
-};
-
-function UploadCanvasOverlay({ children }) {
-  return (
-    <UploadDropTargetOverlay>
-      <CanvasLayer>{children}</CanvasLayer>
-    </UploadDropTargetOverlay>
-  );
-}
-
-UploadCanvasOverlay.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 

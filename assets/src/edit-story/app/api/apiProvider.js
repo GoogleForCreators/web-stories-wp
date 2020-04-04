@@ -66,7 +66,10 @@ function APIProvider({ children }) {
       excerpt,
       featuredMedia,
       password,
+      stylePresets,
       publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     }) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
@@ -80,8 +83,14 @@ function APIProvider({ children }) {
           modified,
           content,
           excerpt,
-          story_data: { version: DATA_VERSION, pages },
+          story_data: {
+            version: DATA_VERSION,
+            pages,
+            autoAdvance,
+            defaultPageDuration,
+          },
           featured_media: featuredMedia,
+          style_presets: stylePresets,
           publisher_logo: publisherLogo,
         },
         method: 'POST',
@@ -127,36 +136,7 @@ function APIProvider({ children }) {
       return apiFetch({ path: apiPath, parse: false }).then(
         async (response) => {
           const jsonArray = await response.json();
-          const data = jsonArray.map(
-            ({
-              id,
-              guid: { rendered: src },
-              media_details: {
-                width: oWidth,
-                height: oHeight,
-                length_formatted: lengthFormatted,
-              },
-              title: { raw: title },
-              description: { raw: description },
-              mime_type: mimeType,
-              featured_media: posterId,
-              featured_media_src: poster,
-              alt_text: alt,
-            }) => ({
-              id,
-              posterId,
-              poster,
-              src,
-              oWidth,
-              oHeight,
-              mimeType,
-              lengthFormatted,
-              alt: alt ? alt : description,
-              title,
-            })
-          );
-
-          return { data, headers: response.headers };
+          return { data: jsonArray, headers: response.headers };
         }
       );
     },
@@ -179,6 +159,8 @@ function APIProvider({ children }) {
       Object.entries(additionalData).forEach(([key, value]) =>
         data.append(key, value)
       );
+
+      // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
       return apiFetch({
         path: media,
         body: data,
@@ -241,7 +223,7 @@ function APIProvider({ children }) {
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
   const state = {
