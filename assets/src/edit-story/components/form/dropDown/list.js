@@ -37,7 +37,10 @@ const ListContainer = styled.div`
   width: 100%;
   min-width: 160px;
   max-height: 370px;
+  overflow-x: hidden;
+  overflow-y: auto;
   overscroll-behavior: none auto;
+  border-radius: 4px;
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -49,7 +52,6 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   list-style: none;
   background-color: ${({ theme }) => theme.colors.fg.v1};
   background-clip: padding-box;
-  border-radius: 4px;
   box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
 `;
 
@@ -72,44 +74,7 @@ const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 `;
 
-const availableKeysForSearch = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-];
+const availableKeysForSearch = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
 
 function DropDownList({
   handleCurrentValue,

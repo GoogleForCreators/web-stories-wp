@@ -21,6 +21,11 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { useLayoutEffect, useState, useRef } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { SCROLLBAR_WIDTH } from '../../constants';
+
 const DEFAULT_WIDTH = 270;
 const MAX_HEIGHT = 370;
 
@@ -32,6 +37,34 @@ const Container = styled.div.attrs(({ x, y }) => ({
   width: ${({ width }) => width}px;
   max-height: ${MAX_HEIGHT}px;
   overflow: auto;
+
+  /*
+   * Custom dark scrollbars for Chromium & Firefox.
+   * Scoped to <Editor> to make sure we don't mess with WP dialogs
+   * like the Backbone Media Gallery dialog.
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+      ${({ theme }) => theme.colors.bg.v3};
+  }
+
+  *::-webkit-scrollbar {
+    width: ${SCROLLBAR_WIDTH}px;
+    height: ${SCROLLBAR_WIDTH}px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.bg.v3};
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.bg.v10};
+    border: 2px solid ${({ theme }) => theme.colors.bg.v3};
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-radius: 6px;
+  }
 `;
 
 function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
