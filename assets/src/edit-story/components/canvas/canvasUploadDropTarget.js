@@ -79,7 +79,9 @@ function CanvasUploadDropTarget({ children }) {
           resource: updatedResource,
         },
       });
-      await uploadVideoPoster(resource.id, resource.src);
+      if (resource.type === 'video') {
+        await uploadVideoPoster(resource.id, resource.src);
+      }
     },
     [updateElementById, uploadVideoPoster]
   );
