@@ -15,23 +15,8 @@
  */
 
 module.exports = {
-  preset: 'jest-puppeteer',
-  transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
+  launch: {
+    headless: process.env.PUPPETEER_HEADLESS !== 'false',
+    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
   },
-  testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
-  testPathIgnorePatterns: [
-    '<rootDir>/.git',
-    '<rootDir>/node_modules',
-    '<rootDir>/build',
-    '<rootDir>/tests/e2e/specs/edit-story',
-  ],
-  transformIgnorePatterns: ['node_modules'],
-  setupFilesAfterEnv: [
-    '<rootDir>/config/bootstrap.js',
-    '@wordpress/jest-puppeteer-axe',
-    '@wordpress/jest-console',
-    'expect-puppeteer',
-  ],
-  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

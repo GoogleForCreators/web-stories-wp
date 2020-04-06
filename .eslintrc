@@ -146,6 +146,16 @@
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off"
       }
+    },
+    {
+      "files": ["**/*.md"],
+      "plugins": [
+        "markdown"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off"
+      }
     }
   ]
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, wait, act, fireEvent } from '@testing-library/react';
+import { render, waitFor, act, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -94,13 +94,13 @@ describe('<OpacityPreview />', () => {
 
     act(() => element.focus());
 
-    await wait(() => expect(element).toHaveFocus());
+    await waitFor(() => expect(element).toHaveFocus());
     expect(element).toHaveValue('100');
 
     document.body.tabIndex = 0; // Allow body to be focused
     act(() => document.body.focus());
 
-    await wait(() => expect(element).not.toHaveFocus());
+    await waitFor(() => expect(element).not.toHaveFocus());
     expect(element).toHaveValue('100%');
   });
 

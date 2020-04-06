@@ -16,6 +16,7 @@ tests
 .eslintrc
 .gitignore
 .imgbotconfig
+.markdownlint.json
 .markdownlintignore
 .npmrc
 .nvmrc

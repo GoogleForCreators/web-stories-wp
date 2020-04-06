@@ -26,8 +26,6 @@ const WebpackBar = require('webpackbar');
 /**
  * WordPress dependencies
  */
-const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 /**
@@ -50,16 +48,40 @@ function requestToExternal(request) {
   return undefined;
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+const mode = isProduction ? 'production' : 'development';
+
 const sharedConfig = {
+  mode,
+  devtool: !isProduction ? 'source-map' : undefined,
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
   module: {
-    ...defaultConfig.module,
     rules: [
-      ...defaultConfig.module.rules,
+      !isProduction && {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          require.resolve('thread-loader'),
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              // Babel uses a directory within local node_modules
+              // by default. Use the environment variable option
+              // to enable more persistent caching.
+              cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
+            },
+          },
+        ],
+      },
       {
         test: /\.svg$/,
         use: ['@svgr/webpack', 'url-loader'],
@@ -68,7 +90,7 @@ const sharedConfig = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
-    ],
+    ].filter(Boolean),
   },
   plugins: [
     new DependencyExtractionWebpackPlugin({
@@ -98,7 +120,6 @@ const sharedConfig = {
 };
 
 const storiesEditor = {
-  ...defaultConfig,
   ...sharedConfig,
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
@@ -126,7 +147,6 @@ const storiesEditor = {
 };
 
 const dashboard = {
-  ...defaultConfig,
   ...sharedConfig,
   entry: {
     'stories-dashboard': './assets/src/dashboard/index.js',
