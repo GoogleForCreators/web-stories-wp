@@ -19,13 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import ColorPicker from '../../components/colorPicker';
 import { WorkspaceLayout, CanvasArea } from '../workspace/layout';
+import { ADMIN_TOOLBAR_HEIGHT } from '../../constants';
 import Context from './context';
 
 const SidebarLayout = styled(WorkspaceLayout)`
@@ -58,16 +59,43 @@ function SidebarProvider({ children }) {
   const props = hasSidebar && sidebarState.props;
 
   const ref = useRef();
+  const contentRef = useRef();
 
   const showColorPickerAt = useCallback((node, colorProps) => {
     const colorOffset =
       node.getBoundingClientRect().y - ref.current.getBoundingClientRect().y;
     setSidebarState({
+      node,
       type: TYPE_COLORPICKER,
       offset: colorOffset,
       props: colorProps,
     });
   }, []);
+
+  useLayoutEffect(() => {
+    const positionColorPicker = () => {
+      const contentRect = contentRef.current.getBoundingClientRect();
+      const topOffset = Math.max(
+        0,
+        Math.min(
+          window.innerHeight - contentRect.height - ADMIN_TOOLBAR_HEIGHT,
+          sidebarState.node.getBoundingClientRect().y -
+            ref.current.getBoundingClientRect().y
+        )
+      );
+      contentRef.current.style.top = topOffset + 'px';
+    };
+
+    if (contentRef.current && sidebarState) {
+      // Adjust the position when scrolling.
+      document.addEventListener('scroll', positionColorPicker, true);
+      document.addEventListener('resize', positionColorPicker, true);
+    }
+    return () => {
+      document.removeEventListener('scroll', positionColorPicker, true);
+      document.addEventListener('resize', positionColorPicker, true);
+    };
+  }, [contentRef, sidebarState]);
 
   const hideSidebar = useCallback(() => {
     setSidebarState(null);
@@ -88,7 +116,7 @@ function SidebarProvider({ children }) {
       <SidebarLayout>
         <Sidebar ref={ref}>
           {hasSidebar && (
-            <SidebarContent top={offset}>
+            <SidebarContent ref={contentRef} top={offset}>
               {type === TYPE_COLORPICKER && <ColorPicker {...props} />}
             </SidebarContent>
           )}
