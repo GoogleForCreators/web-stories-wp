@@ -31,23 +31,24 @@ const beforeUnloadListener = (event, scope) => {
 };
 
 /**
- * This object below allow listeners registering by scope.
+ * This allow listeners registering by scope.
  * It should be declared outside of the hook to avoid recreate different references of the registered handler in order to make posible remove it later from multiple contexts.
  */
-
-const beforeUnloadListeners = {
-  history: (event) => beforeUnloadListener(event, 'history'),
-  upload: (event) => beforeUnloadListener(event, 'upload'),
+const beforeUnloadListeners = new Map();
+const setBeforeUnloadListenersById = (id) => {
+  beforeUnloadListeners.set(id, (event) => beforeUnloadListener(event, id));
 };
 
 function PreventWindowUnloadProvider() {
   const setPreventUnload = useCallback((id, value) => {
     if (value) {
       // Register beforeunload by scope
-      window.addEventListener('beforeunload', beforeUnloadListeners[id]);
+      if (!beforeUnloadListeners.has(id)) setBeforeUnloadListenersById(id);
+      window.addEventListener('beforeunload', beforeUnloadListeners.get(id));
     } else {
       // Unregister beforeunload by scope
-      window.removeEventListener('beforeunload', beforeUnloadListeners[id]);
+      window.removeEventListener('beforeunload', beforeUnloadListeners.get(id));
+      beforeUnloadListeners.delete(id);
     }
   }, []);
 
