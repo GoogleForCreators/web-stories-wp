@@ -33,7 +33,7 @@
     "mousetrap": "^1.6.5",
     "polished": "^3.5.1",
     "prop-types": "^15.7.2",
-    "query-string": "^6.11.1",
+    "query-string": "^6.12.0",
     "react": "^16.13.1",
     "react-color": "^2.18.0",
     "react-dates": "^21.8.0",
