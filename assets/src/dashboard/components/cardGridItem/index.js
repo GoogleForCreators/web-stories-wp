@@ -43,5 +43,5 @@ const CardGridItem = styled.div`
 `;
 
 export default CardGridItem;
-export { default as CardPreviewContainer } from './card-preview';
-export { default as CardTitle } from './card-title';
+export { default as CardPreviewContainer } from './cardPreview';
+export { default as CardTitle } from './cardTitle';

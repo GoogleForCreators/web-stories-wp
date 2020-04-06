@@ -28,8 +28,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { Button } from '../';
 import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 
 const PreviewPane = styled.div`
