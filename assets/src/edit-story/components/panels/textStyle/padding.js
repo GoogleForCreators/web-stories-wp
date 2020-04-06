@@ -52,7 +52,9 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_PADDING
   );
 
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(
+    padding.horizontal === padding.vertical
+  );
 
   const handleChange = useCallback(
     (newPadding) => {
