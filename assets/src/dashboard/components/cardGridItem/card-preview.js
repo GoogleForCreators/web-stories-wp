@@ -95,7 +95,7 @@ const PreviewButton = styled(Button)`
 
 const CtaContainer = styled.div`
   display: flex;
-  margin: auto auto 25px;
+  margin: auto auto 25%;
 `;
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
