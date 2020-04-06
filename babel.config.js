@@ -41,10 +41,7 @@ module.exports = function (api) {
         },
       ],
     ],
-    plugins: [
-      '@babel/plugin-proposal-object-rest-spread',
-      'babel-plugin-styled-components',
-    ],
+    plugins: ['babel-plugin-styled-components'],
     sourceMaps: true,
     env: {
       development: {
