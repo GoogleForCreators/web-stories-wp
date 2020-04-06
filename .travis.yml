@@ -66,11 +66,6 @@ before_script:
       composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
     fi
   - |
-    if [ "$ANALYSIS" = "1" ]; then
-      # phpstan only supports PHP 7.1+. Ignore version conflicts.
-      composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-    fi
-  - |
     if [ "$COVERAGE" != "1" ]; then
       phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
     fi
@@ -83,8 +78,6 @@ script:
       composer --no-interaction validate --no-check-all
       composer --no-interaction normalize --dry-run
       npm run lint:css
-      npm run lint:js
-      npm run lint:php
       npm run lint:md
     fi
   - |
@@ -107,10 +100,6 @@ script:
       fi
     fi
   - |
-    if [ "$ANALYSIS" = "1" ]; then
-      vendor/bin/phpstan analyze --memory-limit=256M
-    fi
-  - |
     if [ "$E2E" = "1" ]; then
       npm run build:js
       npm run env:start
@@ -123,12 +112,9 @@ jobs:
   fast_finish: true
   include:
     - stage: lint
-      name: Lint (PHP, JavaScript, CSS, Markdown, and configuration files)
+      name: Lint (JavaScript, CSS, Markdown, and configuration files)
       php: 7.4
       env: LINT=1
-    - name: Static Analysis (PHPStan)
-      php: 7.4
-      env: ANALYSIS=1
     - stage: test
       name: JavaScript unit tests
       php: 7.4

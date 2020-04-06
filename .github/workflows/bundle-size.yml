@@ -3,7 +3,8 @@ name: Compressed Size
 on: [pull_request]
 
 jobs:
-  build:
+  bundle-size:
+    name: Bundle size check
     runs-on: ubuntu-latest
 
     steps:
