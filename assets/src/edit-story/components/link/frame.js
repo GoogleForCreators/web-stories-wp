@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +28,7 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
+import Popup from '../popup';
 import { getLinkFromElement, LinkType } from './index';
 
 const Hint = styled.div`
@@ -37,7 +39,6 @@ const Hint = styled.div`
   font-size: 14px;
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  margin-top: -52px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -57,7 +58,6 @@ const Tooltip = styled.div`
   padding: 6px;
   border-radius: 6px;
   box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
-  margin-top: -68px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -96,9 +96,6 @@ const LinkOutIcon = styled(External)`
 `;
 
 const LinkIcon = styled(Link)`
-  position: absolute;
-  left: -24px;
-  top: 12px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -116,26 +113,18 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-const TooltipContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-`;
-
 function WithLink({ element, active, dragging, children }) {
   const link = getLinkFromElement(element);
+  const ref = useRef(null);
 
   return (
     <>
-      {children}
-      {link && !active && !dragging && <LinkIcon />}
-      {link && active && !dragging && (
-        <TooltipContainer>
-          {link.type === LinkType.ONE_TAP ? (
+      <div ref={ref}>{children}</div>
+      <Popup anchor={ref} isOpen={link && !dragging} placement={'top'}>
+        {link &&
+          !dragging &&
+          active &&
+          (link.type === LinkType.ONE_TAP ? (
             <Hint>{link.url}</Hint>
           ) : (
             <Tooltip>
@@ -149,9 +138,9 @@ function WithLink({ element, active, dragging, children }) {
                 <LinkOutIcon />
               </LinkOut>
             </Tooltip>
-          )}
-        </TooltipContainer>
-      )}
+          ))}
+        {link && !dragging && !active && <LinkIcon />}
+      </Popup>
     </>
   );
 }

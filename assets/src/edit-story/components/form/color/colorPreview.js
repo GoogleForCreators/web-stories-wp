@@ -31,8 +31,9 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
-import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
+import Popup from '../../popup';
+import ColorPicker from '../../colorPicker';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
@@ -85,33 +86,10 @@ function ColorPreview({
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
 
-  const {
-    actions: { showColorPickerAt, hideSidebar },
-  } = useSidebar();
-
   const ref = useRef();
 
-  const handleOpenEditing = useCallback(() => {
-    showColorPickerAt(ref.current, {
-      color: isMultiple ? null : value,
-      onChange,
-      hasGradient,
-      hasOpacity,
-      onClose: hideSidebar,
-      renderFooter: colorPickerActions,
-    });
-  }, [
-    showColorPickerAt,
-    isMultiple,
-    value,
-    onChange,
-    hasGradient,
-    hasOpacity,
-    hideSidebar,
-    colorPickerActions,
-  ]);
-
   const [hexInputValue, setHexInputValue] = useState('');
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   useEffect(() => setHexInputValue(previewText), [previewText]);
 
@@ -124,10 +102,12 @@ function ColorPreview({
   const editLabel = __('Edit', 'web-stories');
   const inputLabel = __('Enter', 'web-stories');
 
+  const togglePickerOpen = () => setPickerOpen((isOpen) => !isOpen);
+
   const buttonProps = {
     as: 'button',
     type: 'button', // avoid submitting forms
-    onClick: handleOpenEditing,
+    onClick: togglePickerOpen,
     'aria-label': `${editLabel}: ${label}`,
   };
 
@@ -161,7 +141,7 @@ function ColorPreview({
   ]);
 
   // Always hide color picker on unmount - note the double arrows
-  useEffect(() => () => hideSidebar(), [hideSidebar]);
+  useEffect(() => () => setPickerOpen(false), []);
 
   if (isEditable) {
     // If editable, only the visual preview component is a button
@@ -181,15 +161,31 @@ function ColorPreview({
 
   // If not editable, the whole component is a button
   return (
-    <Preview ref={ref} {...buttonProps}>
-      <VisualPreview role="status" style={previewStyle} />
-      <TextualPreview>
-        {isMultiple
-          ? __('Multiple', 'web-stories')
-          : previewText ||
-            _x('None', 'No color or gradient selected', 'web-stories')}
-      </TextualPreview>
-    </Preview>
+    <>
+      <Preview ref={ref} {...buttonProps}>
+        <VisualPreview role="status" style={previewStyle} />
+        <TextualPreview>
+          {isMultiple
+            ? __('Multiple', 'web-stories')
+            : previewText ||
+              _x('None', 'No color or gradient selected', 'web-stories')}
+        </TextualPreview>
+      </Preview>
+      <Popup anchor={ref} isOpen={pickerOpen}>
+        <ColorPicker
+          color={isMultiple ? null : value}
+          onChange={onChange}
+          hasGradient={hasGradient}
+          hasOpacity={hasOpacity}
+          onClose={(evt) => {
+            setPickerOpen(false);
+            evt.stopPropagation();
+            evt.preventDefault();
+          }}
+          renderFooter={colorPickerActions}
+        />
+      </Popup>
+    </>
   );
 }
 

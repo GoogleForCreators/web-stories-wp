@@ -20,13 +20,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useState } from 'react';
-import { Manager, Reference, Popper } from 'react-popper';
+import { useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { prettifyShortcut } from '../keyboard';
+import Popup from '../popup';
 
 const SPACING = 12;
 const PADDING = 4;
@@ -115,7 +115,6 @@ function WithTooltip({
   shortcut,
   arrow = true,
   placement = 'bottom',
-  strategy = 'fixed',
   children,
   onPointerEnter = () => {},
   onPointerLeave = () => {},
@@ -124,54 +123,39 @@ function WithTooltip({
   ...props
 }) {
   const [shown, setShown] = useState(false);
+  const ref = useRef(null);
 
   return (
-    <Manager>
-      <Reference>
-        {({ ref }) => (
-          <Wrapper
-            onPointerEnter={(e) => {
-              setShown(true);
-              onPointerEnter(e);
-            }}
-            onPointerLeave={(e) => {
-              setShown(false);
-              onPointerLeave(e);
-            }}
-            onFocus={(e) => {
-              setShown(true);
-              onFocus(e);
-            }}
-            onBlur={(e) => {
-              setShown(false);
-              onBlur(e);
-            }}
-            ref={ref}
-            {...props}
-          >
-            {children}
-          </Wrapper>
-        )}
-      </Reference>
-      <Popper placement={placement} strategy={strategy}>
-        {({ ref, style, arrowProps }) => (
-          <Tooltip
-            arrow={arrow}
-            placement={placement}
-            shown={shown}
-            ref={ref}
-            style={style}
-          >
-            {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
-            <TooltipArrow
-              placement={placement}
-              ref={arrowProps.ref}
-              style={arrowProps.style}
-            />
-          </Tooltip>
-        )}
-      </Popper>
-    </Manager>
+    <>
+      <Wrapper
+        onPointerEnter={(e) => {
+          setShown(true);
+          onPointerEnter(e);
+        }}
+        onPointerLeave={(e) => {
+          setShown(false);
+          onPointerLeave(e);
+        }}
+        onFocus={(e) => {
+          setShown(true);
+          onFocus(e);
+        }}
+        onBlur={(e) => {
+          setShown(false);
+          onBlur(e);
+        }}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Wrapper>
+      <Popup anchor={ref} placement={placement} isOpen={shown}>
+        <Tooltip arrow={arrow} placement={placement} shown={shown}>
+          {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
+          <TooltipArrow placement={placement} />
+        </Tooltip>
+      </Popup>
+    </>
   );
 }
 
@@ -180,7 +164,6 @@ WithTooltip.propTypes = {
   shortcut: PropTypes.string,
   arrow: PropTypes.bool,
   placement: PropTypes.string,
-  strategy: PropTypes.string,
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   onFocus: PropTypes.func,

@@ -21,7 +21,6 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { useLayoutEffect, useState, useRef } from 'react';
 
-const DEFAULT_WIDTH = 270;
 const MAX_HEIGHT = 370;
 
 const Container = styled.div.attrs(({ x, y }) => ({
@@ -29,12 +28,11 @@ const Container = styled.div.attrs(({ x, y }) => ({
 }))`
   position: fixed;
   z-index: 2147483646;
-  width: ${({ width }) => width}px;
+  ${({ width }) => width && `width: ${width}px;`}
   max-height: ${MAX_HEIGHT}px;
-  overflow: auto;
 `;
 
-function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
+function Popup({ anchor, children, width, isOpen }) {
   const [popupState, setPopupState] = useState(null);
   const containerRef = useRef();
 

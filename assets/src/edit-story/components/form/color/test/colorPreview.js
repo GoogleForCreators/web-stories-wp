@@ -25,7 +25,6 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../../../../theme';
 import createSolid from '../../../../utils/createSolid';
-import SidebarContext from '../../../sidebar/context';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
@@ -35,16 +34,8 @@ jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
 function arrange(children = null) {
-  const sidebarContextValue = {
-    actions: {
-      showColorPickerAt: jest.fn(),
-      hideSidebar: jest.fn(),
-    },
-  };
   const { getByRole, getByLabelText, queryByLabelText } = render(
-    <SidebarContext.Provider value={sidebarContextValue}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </SidebarContext.Provider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   );
   const button = getByLabelText(/edit/i);
   const input = queryByLabelText(/enter/i);
@@ -53,7 +44,6 @@ function arrange(children = null) {
     button,
     input,
     swatch,
-    ...sidebarContextValue.actions,
   };
 }
 
@@ -141,7 +131,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { a: 1 };
-    const { button, showColorPickerAt, hideSidebar } = arrange(
+    const { button, showColorPickerAt } = arrange(
       <ColorPreview
         onChange={onChange}
         value={value}
@@ -159,14 +149,13 @@ describe('<ColorPreview />', () => {
       onChange,
       hasGradient: true,
       hasOpacity: false,
-      onClose: hideSidebar,
     });
   });
 
   it('should invoke callback correctly if multiple', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
-    const { button, showColorPickerAt, hideSidebar } = arrange(
+    const { button, showColorPickerAt } = arrange(
       <ColorPreview
         onChange={onChange}
         value={MULTIPLE_VALUE}
@@ -183,7 +172,6 @@ describe('<ColorPreview />', () => {
       onChange,
       hasGradient: true,
       hasOpacity: true,
-      onClose: hideSidebar,
     });
   });
 
