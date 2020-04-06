@@ -21,39 +21,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState } from 'react';
+import { Manager, Reference, Popper } from 'react-popper';
 
 /**
  * Internal dependencies
  */
 import { prettifyShortcut } from '../keyboard';
 
-const HORIZONTAL_SPACING = 12;
-const VERTICAL_SPACING = 42;
+const SPACING = 12;
 const PADDING = 4;
 
 const Wrapper = styled.div`
   position: relative;
 `;
 
-const Container = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 1500;
-  pointer-events: none;
-  align-items: center;
-  justify-content: center;
-`;
-
-/**
- * To circumvent overflow: hidden; on the parent
- * container, we position the tooltip using
- * position: fixed; and offset using transforms
- */
 const Tooltip = styled.div`
-  position: fixed;
   background-color: ${({ theme }) => theme.colors.bg.v0};
   color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -70,84 +52,62 @@ const Tooltip = styled.div`
   white-space: nowrap;
   will-change: transform;
   transition: 0.4s opacity;
-  ${({ placement }) =>
-    placement === 'top'
-      ? `
-        transform: translateY(-${VERTICAL_SPACING}px);
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'bottom'
-      ? `
-        transform: translateY(${VERTICAL_SPACING}px);
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'left'
-      ? `
-        transform: translateX(-100%);
-        align-self: flex-start;
-        margin-left: -${HORIZONTAL_SPACING}px;
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'right'
-      ? `
-        transform: translateX(100%);
-        align-self: flex-end;
-        margin-left: ${HORIZONTAL_SPACING}px;
-      `
-      : ``}
-  opacity:  ${({ shown }) => (shown ? 1 : 0)};
+  opacity: ${({ shown }) => (shown ? 1 : 0)};
+  pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
+  z-index: 9999;
+  ${({ placement }) => {
+    switch (placement) {
+      case 'top':
+        return `margin-bottom: ${SPACING}px;`;
+      case 'bottom':
+        return `margin-top: ${SPACING}px;`;
+      case 'left':
+        return `margin-right: ${SPACING}px;`;
+      case 'right':
+        return `margin-left: ${SPACING}px;`;
+      default:
+        return ``;
+    }
+  }}
+`;
 
-  ${({ arrow, theme, placement }) =>
-    arrow &&
-    `&:after {
-      content: '';
-      position: absolute;
-      ${
-        placement === 'top'
-          ? `
-            bottom: -6px;
-            border-top: 6px solid ${theme.colors.bg.v0};
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-          `
-          : ``
-      }
-      ${
-        placement === 'bottom'
-          ? `
-            top: -6px;
-            border-bottom: 6px solid ${theme.colors.bg.v0};
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-          `
-          : ``
-      }
-      ${
-        placement === 'right'
-          ? `
-            left: -6px;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-right: 6px solid ${theme.colors.bg.v0};
-          `
-          : ``
-      }
-      ${
-        placement === 'left'
-          ? `
-            right: -6px;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-left: 6px solid ${theme.colors.bg.v0};
-          `
-          : ``
-      }
-
-      box-shadow: 0px 6px 10px ${rgba(theme.colors.bg.v0, 0.1)};
-    }`}
+const TooltipArrow = styled.div`
+  position: absolute;
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  ${({ placement, theme }) => {
+    switch (placement) {
+      case 'top':
+        return `
+          bottom: -6px;
+          border-top: 6px solid ${theme.colors.bg.v0};
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+        `;
+      case 'bottom':
+        return `
+          top: -6px;
+          border-bottom: 6px solid ${theme.colors.bg.v0};
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+        `;
+      case 'left':
+        return `
+          right: -6px;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
+          border-left: 6px solid ${theme.colors.bg.v0};
+        `;
+      case 'right':
+        return `
+          left: -6px;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
+          border-right: 6px solid ${theme.colors.bg.v0};
+        `;
+      default:
+        return ``;
+    }
+  }}
 `;
 
 function WithTooltip({
@@ -155,6 +115,7 @@ function WithTooltip({
   shortcut,
   arrow = true,
   placement = 'bottom',
+  strategy = 'fixed',
   children,
   onPointerEnter = () => {},
   onPointerLeave = () => {},
@@ -165,32 +126,52 @@ function WithTooltip({
   const [shown, setShown] = useState(false);
 
   return (
-    <Wrapper
-      {...props}
-      onPointerEnter={(e) => {
-        setShown(true);
-        onPointerEnter(e);
-      }}
-      onPointerLeave={(e) => {
-        setShown(false);
-        onPointerLeave(e);
-      }}
-      onFocus={(e) => {
-        setShown(true);
-        onFocus(e);
-      }}
-      onBlur={(e) => {
-        setShown(false);
-        onBlur(e);
-      }}
-    >
-      <Container placement={placement}>
-        <Tooltip arrow={arrow} placement={placement} shown={shown}>
-          {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
-        </Tooltip>
-      </Container>
-      {children}
-    </Wrapper>
+    <Manager>
+      <Reference>
+        {({ ref }) => (
+          <Wrapper
+            onPointerEnter={(e) => {
+              setShown(true);
+              onPointerEnter(e);
+            }}
+            onPointerLeave={(e) => {
+              setShown(false);
+              onPointerLeave(e);
+            }}
+            onFocus={(e) => {
+              setShown(true);
+              onFocus(e);
+            }}
+            onBlur={(e) => {
+              setShown(false);
+              onBlur(e);
+            }}
+            ref={ref}
+            {...props}
+          >
+            {children}
+          </Wrapper>
+        )}
+      </Reference>
+      <Popper placement={placement} strategy={strategy}>
+        {({ ref, style, arrowProps }) => (
+          <Tooltip
+            arrow={arrow}
+            placement={placement}
+            shown={shown}
+            ref={ref}
+            style={style}
+          >
+            {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
+            <TooltipArrow
+              placement={placement}
+              ref={arrowProps.ref}
+              style={arrowProps.style}
+            />
+          </Tooltip>
+        )}
+      </Popper>
+    </Manager>
   );
 }
 
@@ -199,6 +180,7 @@ WithTooltip.propTypes = {
   shortcut: PropTypes.string,
   arrow: PropTypes.bool,
   placement: PropTypes.string,
+  strategy: PropTypes.string,
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   onFocus: PropTypes.func,
