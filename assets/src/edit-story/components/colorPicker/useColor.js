@@ -30,7 +30,7 @@ const initialState = {
     r: 0,
     g: 0,
     b: 0,
-    a: 0,
+    a: 1,
   },
   currentStopIndex: 0,
   rotation: 0.5,

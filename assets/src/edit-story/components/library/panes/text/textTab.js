@@ -86,7 +86,6 @@ function TextTab(props) {
     insertElement('text', {
       content: __('Fill in some text', 'web-stories'),
       color: createSolid(0, 0, 0),
-      backgroundColor: createSolid(196, 196, 196),
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       fontSize: DEFAULT_FONT_SIZE,
       width: DEFAULT_ELEMENT_WIDTH,

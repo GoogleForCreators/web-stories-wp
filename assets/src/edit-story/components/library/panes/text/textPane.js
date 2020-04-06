@@ -94,7 +94,6 @@ function TextPane(props) {
                 ...getPresetById('subheading'),
                 content: __('Fill in some text', 'web-stories'),
                 color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
                 backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
@@ -112,7 +111,6 @@ function TextPane(props) {
               insertElement('text', {
                 ...preset,
                 color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
                 backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
