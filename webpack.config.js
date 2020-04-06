@@ -22,6 +22,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**
  * WordPress dependencies
@@ -94,6 +95,7 @@ const sharedConfig = {
     ].filter(Boolean),
   },
   plugins: [
+    process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
       requestToExternal,
@@ -101,7 +103,7 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-  ],
+  ].filter(Boolean),
   optimization: {
     minimizer: [
       new TerserPlugin({
