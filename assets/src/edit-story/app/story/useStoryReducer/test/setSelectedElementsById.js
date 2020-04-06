@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('setSelectedElementsById', () => {
@@ -101,6 +102,7 @@ describe('setSelectedElementsById', () => {
         {
           id: '111',
           backgroundElementId: 'e1',
+          backgroundOverlay: OverlayType.NONE,
           elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
         },
       ],

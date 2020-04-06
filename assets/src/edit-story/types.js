@@ -18,6 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { OverlayType } from './utils/backgroundOverlay';
+import { BACKGROUND_TEXT_MODE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -36,6 +41,7 @@ export const PatternPropType = PropTypes.shape({
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
+  alpha: PropTypes.number,
   center: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -59,6 +65,8 @@ StoryPropTypes.story = PropTypes.shape({
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.number.isRequired,
   password: PropTypes.string.isRequired,
+  autoAdvance: PropTypes.bool,
+  defaultPageDuration: PropTypes.number,
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -92,25 +100,32 @@ StoryPropTypes.children = PropTypes.oneOfType([
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
+  backgroundElementId: PropTypes.string,
+  backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  mimeType: PropTypes.string.isRequired,
   videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  alt: PropTypes.string,
+  title: PropTypes.string,
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([
@@ -143,6 +158,12 @@ const StoryElementPropTypes = {
   opacity: PropTypes.number,
 };
 
+const StoryMediaPropTypes = {
+  scale: PropTypes.number.isRequired,
+  focalX: PropTypes.number,
+  focalY: PropTypes.number,
+};
+
 StoryPropTypes.element = PropTypes.shape(StoryElementPropTypes);
 
 StoryPropTypes.layer = PropTypes.shape(StoryLayerPropTypes);
@@ -151,32 +172,42 @@ StoryPropTypes.elements = {};
 
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.imageResource,
-  scale: PropTypes.number.isRequired,
-  focalX: PropTypes.number,
-  focalY: PropTypes.number,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
+  poster: PropTypes.string,
   loop: PropTypes.bool,
 });
+
+StoryPropTypes.elements.media = PropTypes.oneOfType([
+  StoryPropTypes.elements.image,
+  StoryPropTypes.elements.video,
+]);
 
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
   color: PatternPropType.isRequired,
+  backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
   fontFamily: PropTypes.string,
   fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
   fontStyle: PropTypes.string,
-  letterSpacing: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
-  padding: PropTypes.number,
+  padding: PropTypes.shape({
+    horizontal: PropTypes.number,
+    vertical: PropTypes.number,
+  }),
   textAlign: PropTypes.string,
+  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({

@@ -14,7 +14,14 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignore": ["custom-elements"]
+        "ignore": ["custom-elements"],
+        "ignoreTypes": ["overlay", "container"]
+      }
+    ],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": ["clip-path"]
       }
     ],
     "unit-no-unknown": [

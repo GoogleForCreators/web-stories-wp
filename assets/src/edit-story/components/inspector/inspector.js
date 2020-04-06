@@ -17,13 +17,16 @@
 /**
  * Internal dependencies
  */
+import { UploadDropTarget } from '../uploadDropTarget';
 import InspectorProvider from './inspectorProvider';
 import InspectorLayout from './inspectorLayout';
 
 function Inspector() {
   return (
     <InspectorProvider>
-      <InspectorLayout />
+      <UploadDropTarget disabled>
+        <InspectorLayout />
+      </UploadDropTarget>
     </InspectorProvider>
   );
 }

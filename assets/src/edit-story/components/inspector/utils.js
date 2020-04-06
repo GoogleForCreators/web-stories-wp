@@ -21,5 +21,5 @@
  * @return {string} Formatted ID.
  */
 export const getTabId = (id) => {
-  return `${id}-tab`;
+  return `inspector-tab-${id}`;
 };

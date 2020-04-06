@@ -18,7 +18,10 @@
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
-export { default as objectWithout } from '../../../../utils/objectWithout';
+import { ELEMENT_RESERVED_PROPERTIES } from '../types';
+import { LinkType } from '../../../../components/link';
+import objectWithout from '../../../../utils/objectWithout';
+export { objectWithout };
 
 export function intersect(first, ...rest) {
   if (!first || !rest || rest.length === 0) {
@@ -78,4 +81,18 @@ export function getAbsolutePosition({
     default:
       return currentPosition;
   }
+}
+
+export function updateElementWithUpdater(element, properties, pageIndex) {
+  const updater =
+    typeof properties === 'function' ? properties(element) : properties;
+  const allowedProperties = objectWithout(updater, ELEMENT_RESERVED_PROPERTIES);
+  if (Object.keys(allowedProperties).length === 0) {
+    return element;
+  }
+  // One-tap links aren't allowed on the cover page
+  if (allowedProperties?.link?.type === LinkType.ONE_TAP && pageIndex === 0) {
+    allowedProperties.link.type = LinkType.TWO_TAP;
+  }
+  return { ...element, ...allowedProperties };
 }

@@ -17,25 +17,19 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
-import BackgroundDisplayPanel from '../backgroundDisplay.js';
+import BackgroundDisplayPanel from '../backgroundDisplay';
+import { renderPanel } from './_utils';
 
 function setupPanel(isFullbleedBackground = undefined) {
   const selectedElements = [{ isFullbleedBackground }];
-  const onSetProperties = jest.fn();
-  const { getByText } = render(
-    <ThemeProvider theme={theme}>
-      <BackgroundDisplayPanel
-        onSetProperties={onSetProperties}
-        selectedElements={selectedElements}
-      />
-    </ThemeProvider>
+  const { getByText, pushUpdate } = renderPanel(
+    BackgroundDisplayPanel,
+    selectedElements
   );
 
   const onLabelEl = getByText('Fit to device');
@@ -44,28 +38,34 @@ function setupPanel(isFullbleedBackground = undefined) {
   return {
     enable: () => fireEvent.click(onLabelEl),
     disable: () => fireEvent.click(offLabelEl),
-    onSetProperties,
+    pushUpdate,
   };
 }
 
 describe('BackgroundDisplayPanel', () => {
   it('should disable fullbleed', () => {
-    const { disable, onSetProperties } = setupPanel(true);
+    const { disable, pushUpdate } = setupPanel(true);
 
     disable();
 
-    expect(onSetProperties).toHaveBeenCalledWith({
-      isFullbleedBackground: false,
-    });
+    expect(pushUpdate).toHaveBeenCalledWith(
+      {
+        isFullbleedBackground: false,
+      },
+      true
+    );
   });
 
   it('should enable fullbleed', () => {
-    const { enable, onSetProperties } = setupPanel(false);
+    const { enable, pushUpdate } = setupPanel(false);
 
     enable();
 
-    expect(onSetProperties).toHaveBeenCalledWith({
-      isFullbleedBackground: true,
-    });
+    expect(pushUpdate).toHaveBeenCalledWith(
+      {
+        isFullbleedBackground: true,
+      },
+      true
+    );
   });
 });

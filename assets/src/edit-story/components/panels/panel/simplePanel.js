@@ -26,11 +26,11 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, title, onSubmit }) {
+function SimplePanel({ children, name, title }) {
   return (
     <Panel name={name}>
       <PanelTitle>{title}</PanelTitle>
-      <PanelContent onSubmit={onSubmit}>{children}</PanelContent>
+      <PanelContent>{children}</PanelContent>
     </Panel>
   );
 }
@@ -42,7 +42,6 @@ SimplePanel.propTypes = {
   ]).isRequired,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func,
 };
 
 export default SimplePanel;

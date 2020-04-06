@@ -44,11 +44,13 @@ export const Header = styled.div`
 export const MainButton = styled.button`
   cursor: pointer;
   background: transparent;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  padding: 4px;
-  font-weight: bold;
+  border: 0;
+  padding: 0;
+  text-align: right;
+  color: ${({ theme }) => theme.colors.fg.v7};
   flex: 1 0 0;
-  text-align: center;
-  border: 1px solid ${({ theme }) => theme.colors.mg.v1};
-  border-radius: 3px;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  font-weight: ${({ theme }) => theme.fonts.label.weight};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
 `;

@@ -19,4 +19,4 @@
  */
 import { getPaneId } from '../shared';
 
-export default getPaneId('elements');
+export default getPaneId('animation');

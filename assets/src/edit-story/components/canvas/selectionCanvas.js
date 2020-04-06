@@ -30,6 +30,8 @@ import InOverlay from '../overlay';
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 
+const LASSO_ACTIVE_THRESHOLD = 10;
+
 const LassoMode = {
   OFF: 0,
   ON: 1,
@@ -57,9 +59,10 @@ const Lasso = styled.div`
 function SelectionCanvas({ children }) {
   const {
     actions: { clearSelection },
+    state: { selectedElements, currentPage },
   } = useStory();
   const {
-    state: { pageContainer },
+    state: { pageContainer, isEditing, nodesById },
     actions: { clearEditing, selectIntersection },
   } = useCanvas();
   const {
@@ -98,9 +101,15 @@ function SelectionCanvas({ children }) {
   };
 
   const onMouseDown = (evt) => {
-    clearSelection();
-    clearEditing();
-
+    // Selecting the background element should be handeled at the frameElement level
+    if (!nodesById[currentPage.backgroundElementId].contains(evt.target)) {
+      if (selectedElements.length) {
+        clearSelection();
+      }
+      if (isEditing) {
+        clearEditing();
+      }
+    }
     const overlay = overlayRef.current;
     let offsetX = 0,
       offsetY = 0;
@@ -125,13 +134,17 @@ function SelectionCanvas({ children }) {
     if (lassoModeRef.current === LassoMode.OFF) {
       return;
     }
+    const [x1, y1] = startRef.current;
     const [offsetX, offsetY] = offsetRef.current;
     const x2 = evt.pageX - offsetX;
     const y2 = evt.pageY - offsetY;
     endRef.current[0] = x2;
     endRef.current[1] = y2;
-    lassoModeRef.current = LassoMode.ON;
     updateLasso();
+    // Ignore clicks and unintentional selections
+    if (Math.abs(x1 - x2) + Math.abs(y1 - y2) > LASSO_ACTIVE_THRESHOLD) {
+      lassoModeRef.current = LassoMode.ON;
+    }
   };
 
   const onMouseUp = () => {

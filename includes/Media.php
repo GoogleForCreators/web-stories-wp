@@ -52,6 +52,13 @@ class Media {
 	const STORY_SQUARE_IMAGE_SIZE = 'web-stories-poster-square';
 
 	/**
+	 * Name of size used in media library.
+	 *
+	 * @var string
+	 */
+	const STORY_THUMBNAIL_IMAGE_SIZE = 'web_stories_thumbnail';
+
+	/**
 	 * The large dimension of the AMP Story poster images.
 	 *
 	 * @var int
@@ -100,11 +107,15 @@ class Media {
 		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_SMALL_IMAGE_DIMENSION, true );
 
+		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
+
 		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
 
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
+
+		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
 	}
 
 	/**
@@ -221,5 +232,18 @@ class Media {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Filters the list of mime types and file extensions.
+	 *
+	 * @param string[] $mime_types Mime types keyed by the file extension regex
+	 *                             corresponding to those types.
+	 *
+	 * @return string[]
+	 */
+	public static function upload_mimes( array $mime_types ) {
+		$mime_types['svg'] = 'image/svg+xml';
+		return $mime_types;
 	}
 }

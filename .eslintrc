@@ -50,6 +50,9 @@
         "target": "./assets/src/edit-story/migration/migrations",
         "from": "./assets/src/edit-story",
         "except": [ "./migration/migrations" ]
+      }, {
+        "target": "./assets/src/edit-story",
+        "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
     "no-restricted-properties": "error",

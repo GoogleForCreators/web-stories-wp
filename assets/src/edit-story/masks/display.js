@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask } from './';
+import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -41,10 +41,11 @@ export default function WithMask({
   children,
   box,
   applyFlip = true,
+  previewMode = false,
   ...rest
 }) {
   const mask = getElementMask(element);
-  const { flip } = element;
+  const { flip, isBackground } = element;
 
   const transformFlip = getTransformFlip(flip);
   if (transformFlip && applyFlip) {
@@ -53,7 +54,7 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type) {
+  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
@@ -70,20 +71,26 @@ export default function WithMask({
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}`;
+  const maskId = `mask-${mask.type}-${element.id}-display${
+    previewMode ? '-preview' : ''
+  }`;
 
   return (
     <div
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        clipPath: `url(#${maskId})`,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>
@@ -100,4 +107,5 @@ WithMask.propTypes = {
   fill: PropTypes.bool,
   children: StoryPropTypes.children.isRequired,
   box: StoryPropTypes.box.isRequired,
+  previewMode: PropTypes.bool,
 };

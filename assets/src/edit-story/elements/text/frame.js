@@ -28,41 +28,28 @@ import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWi
 import { useStory } from '../../app';
 import { useCanvas } from '../../components/canvas';
 import { useUnits } from '../../units';
-import { elementFillContent, elementWithFont } from '../shared';
+import {
+  elementFillContent,
+  elementWithFont,
+  elementWithTextParagraphStyle,
+} from '../shared';
 import StoryPropTypes from '../../types';
-import { generateFontFamily } from './util';
+import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
-  margin: 0;
   ${elementFillContent}
   ${elementWithFont}
+  ${elementWithTextParagraphStyle}
 
-	opacity: 0;
+  opacity: 0;
   user-select: none;
 `;
 
-function TextFrame({
-  element: {
-    id,
-    content,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-  },
-  wrapperRef,
-}) {
+function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
   const {
-    actions: { dataToEditorY },
+    actions: { dataToEditorX, dataToEditorY },
   } = useUnits();
-  const props = {
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-  };
+  const props = generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY);
   const {
     state: { selectedElementIds },
   } = useStory();
@@ -85,6 +72,7 @@ function TextFrame({
     const element = elementRef.current;
 
     let clickTime = 0;
+    let clickCoordinates = null;
 
     const handleKeyDown = (evt) => {
       if (evt.metaKey || evt.altKey || evt.ctrlKey) {
@@ -106,15 +94,25 @@ function TextFrame({
       }
     };
 
-    const handleMouseDown = () => {
+    const handleMouseDown = (evt) => {
       clickTime = window.performance.now();
+      clickCoordinates = {
+        x: evt.clientX,
+        y: evt.clientY,
+      };
     };
 
     const handleMouseUp = (evt) => {
       const timingDifference = window.performance.now() - clickTime;
+      if (!clickCoordinates) {
+        return;
+      }
 
-      if (timingDifference > 300) {
-        // Only short clicks count.
+      const distanceMoved =
+        Math.abs(evt.clientX - clickCoordinates.x) +
+        Math.abs(evt.clientY - clickCoordinates.y);
+      if (timingDifference > 300 || distanceMoved > 4) {
+        // Only enter edit mode in case of short clicks and (almost) without moving.
         return;
       }
 

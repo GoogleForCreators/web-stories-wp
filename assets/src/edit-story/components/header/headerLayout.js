@@ -25,19 +25,19 @@ import styled from 'styled-components';
 import Buttons from './buttons';
 import Title from './title';
 
-const Background = styled.div`
+const Background = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
 
-const Head = styled.header`
+const Head = styled.div`
   flex: 1 1 auto;
   padding: 1em;
 `;
 
-const ButtonCell = styled.header`
+const ButtonCell = styled.div`
   grid-area: buttons;
 `;
 

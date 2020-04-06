@@ -17,51 +17,60 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import useStory from '../../../app/story/useStory';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
-import createSolidFromString from '../../../utils/createSolidFromString';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-const PAGE_THUMB_OUTLINE = 2;
+const THUMB_INDICATOR_HEIGHT = 6;
+const THUMB_INDICATOR_GAP = 4;
+
+export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
+export const THUMB_FRAME_WIDTH = 0;
 
 const Page = styled.button`
-  padding: 0;
-  margin: 0;
-  border: none;
-  outline: ${PAGE_THUMB_OUTLINE}px solid
+  display: block;
+  cursor: pointer;
+  padding: ${THUMB_INDICATOR_GAP}px 0 0 0;
+  border: 0;
+  border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
       isActive ? theme.colors.selection : theme.colors.bg.v1};
   height: ${({ height }) => height}px;
+  background-color: transparent;
   width: ${({ width }) => width}px;
-  ${({ backgroundColor, theme }) =>
-    convertToCSS(
-      generatePatternStyles(
-        backgroundColor || createSolidFromString(theme.colors.fg.v1)
-      )
-    )};
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
-
-  &:focus,
-  &:hover {
-    outline: ${PAGE_THUMB_OUTLINE}px solid
-      ${({ theme }) => theme.colors.selection};
-  }
+  outline: 0;
+  ${({ isActive, theme }) =>
+    !isActive &&
+    css`
+      &:hover,
+      &:focus {
+        border-top: ${THUMB_INDICATOR_HEIGHT}px solid
+          ${rgba(theme.colors.selection, 0.3)};
+      }
+    `}
 `;
 
 const PreviewWrapper = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  background-color: white;
+  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
+    linear-gradient(-45deg, #999999 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #999999 75%),
+    linear-gradient(-45deg, transparent 75%, #999999 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
 function PagePreview({ index, forwardedRef, ...props }) {
@@ -69,18 +78,21 @@ function PagePreview({ index, forwardedRef, ...props }) {
     state: { pages },
   } = useStory();
   const page = pages[index];
-  const { width, height } = props;
+  const { width: thumbWidth, height: thumbHeight } = props;
+  const width = thumbWidth - THUMB_FRAME_WIDTH;
+  const height = thumbHeight - THUMB_FRAME_HEIGHT;
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page
-          {...props}
-          backgroundColor={page.backgroundColor}
-          ref={forwardedRef}
-        >
+        <Page {...props} ref={forwardedRef}>
           <PreviewWrapper>
             {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement key={id} element={{ id, ...rest }} />
+              <DisplayElement
+                key={id}
+                previewMode={true}
+                element={{ id, ...rest }}
+                page={page}
+              />
             ))}
           </PreviewWrapper>
         </Page>
@@ -91,7 +103,7 @@ function PagePreview({ index, forwardedRef, ...props }) {
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.func,
+  forwardedRef: PropTypes.object,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };

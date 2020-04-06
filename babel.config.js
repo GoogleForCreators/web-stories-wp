@@ -19,7 +19,7 @@
  */
 const defaultConfig = require('@wordpress/babel-preset-default');
 
-module.exports = function(api) {
+module.exports = function (api) {
   const config = defaultConfig(api);
 
   return {

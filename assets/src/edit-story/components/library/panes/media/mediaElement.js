@@ -17,19 +17,22 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
+import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
+import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
   width: 100%;
-  border-radius: 10px;
+  transition: 0.2s transform, 0.15s opacity;
   margin-bottom: 10px;
-  object-fit: contain;
 `;
 
 const Image = styled.img`
@@ -38,6 +41,64 @@ const Image = styled.img`
 
 const Video = styled.video`
   ${styledTiles}
+`;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const PlayIcon = styled(Play)`
+  height: 24px;
+  position: absolute;
+  width: 24px;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+`;
+const Duration = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  font-family: ${({ theme }) => theme.fonts.duration.family};
+  font-size: ${({ theme }) => theme.fonts.duration.size};
+  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+  padding: 2px 8px;
+  border-radius: 8px;
+`;
+
+const gradientAnimation = keyframes`
+    0% { background-position:0% 50% }
+    50% { background-position:100% 50% }
+    100% { background-position:0% 50% }
+`;
+
+const UploadingIndicator = styled.div`
+  height: 4px;
+  background: linear-gradient(
+    270deg,
+    ${({ theme }) => theme.colors.loading.primary} 15%,
+    ${({ theme }) => theme.colors.loading.secondary} 50%,
+    ${({ theme }) => theme.colors.loading.primary} 85%
+  );
+  background-size: 400% 400%;
+  position: absolute;
+  bottom: 10px;
+
+  animation: ${gradientAnimation} 4s ease infinite;
+
+  &.uploading-indicator {
+    &.appear {
+      width: 0;
+    }
+
+    &.appear-done {
+      width: 100%;
+      transition: 1s ease-out;
+      transition-property: width;
+    }
+  }
 `;
 
 /**
@@ -55,54 +116,145 @@ const MediaElement = ({
   height: requestedHeight,
   onInsert,
 }) => {
+  const {
+    src,
+    type,
+    width: originalWidth,
+    height: originalHeight,
+    sizes,
+    local,
+  } = resource;
   const oRatio =
-    resource.width && resource.height ? resource.width / resource.height : 1;
+    originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
 
+  const mediaElement = useRef();
+  const [showVideoDetail, setShowVideoDetail] = useState(true);
+
   const {
-    actions: { handleDrag, handleDrop, isDropSource },
+    actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
-  const dropTargetsBindings = isDropSource(resource.type)
-    ? {
-        draggable: 'true',
-        onDrag: (e) => handleDrag(resource, e.clientX, e.clientY),
-        onDragEnd: () => handleDrop(resource),
-      }
-    : {};
+  const measureMediaElement = () =>
+    mediaElement?.current?.getBoundingClientRect();
 
-  if (resource.type === 'image') {
+  const dropTargetsBindings = useMemo(
+    () => ({
+      draggable: 'true',
+      onDragStart: (e) => {
+        setDraggingResource(resource);
+        const { x, y, width: w, height: h } = measureMediaElement();
+        const offsetX = e.clientX - x;
+        const offsetY = e.clientY - y;
+        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
+        e.dataTransfer.setData(
+          'resource/media',
+          JSON.stringify({
+            resource,
+            offset: { x: offsetX, y: offsetY, w, h },
+          })
+        );
+      },
+      onDrag: (e) => {
+        handleDrag(resource, e.clientX, e.clientY);
+      },
+      onDragEnd: (e) => {
+        e.preventDefault();
+        setDraggingResource(null);
+        handleDrop(resource);
+      },
+    }),
+    [setDraggingResource, resource, handleDrag, handleDrop]
+  );
+
+  const onClick = () => onInsert(resource, width, height);
+
+  if (type === 'image') {
+    let imageSrc = src;
+    if (sizes) {
+      const { web_stories_thumbnail: webStoriesThumbnail, large, full } = sizes;
+      if (webStoriesThumbnail && webStoriesThumbnail.source_url) {
+        imageSrc = webStoriesThumbnail.source_url;
+      } else if (large && large.source_url) {
+        imageSrc = large.source_url;
+      } else if (full && full.source_url) {
+        imageSrc = full.source_url;
+      }
+    }
     return (
-      <Image
-        key={resource.src}
-        src={resource.src}
-        width={width}
-        height={height}
-        loading={'lazy'}
-        onClick={() => onInsert(resource, width, height)}
-        {...dropTargetsBindings}
-      />
+      <Container>
+        <Image
+          key={src}
+          src={imageSrc}
+          ref={mediaElement}
+          width={width}
+          height={height}
+          loading={'lazy'}
+          onClick={onClick}
+          {...dropTargetsBindings}
+        />
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+      </Container>
     );
   }
 
+  const pointerEnter = () => {
+    setShowVideoDetail(false);
+    if (mediaElement.current) {
+      mediaElement.current.play();
+    }
+  };
+
+  const pointerLeave = () => {
+    setShowVideoDetail(true);
+    if (mediaElement.current) {
+      mediaElement.current.pause();
+      mediaElement.current.currentTime = 0;
+    }
+  };
+
+  const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Video
-      key={resource.src}
-      width={width}
-      height={height}
-      onClick={() => onInsert(resource, width, height)}
-      onPointerEnter={(evt) => {
-        evt.target.play();
-      }}
-      onPointerLeave={(evt) => {
-        evt.target.pause();
-        evt.target.currentTime = 0;
-      }}
-      {...dropTargetsBindings}
+    <Container
+      onPointerEnter={pointerEnter}
+      onPointerLeave={pointerLeave}
+      onClick={onClick}
     >
-      <source src={resource.src} type={resource.mimeType} />
-    </Video>
+      <Video
+        key={src}
+        ref={mediaElement}
+        poster={poster}
+        width={width}
+        height={height}
+        preload="metadata"
+        muted
+        {...dropTargetsBindings}
+      >
+        <source src={src} type={mimeType} />
+      </Video>
+      {showVideoDetail && <PlayIcon />}
+      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      {local && (
+        <CSSTransition
+          in
+          appear={true}
+          timeout={0}
+          className="uploading-indicator"
+        >
+          <UploadingIndicator />
+        </CSSTransition>
+      )}
+    </Container>
   );
 };
 

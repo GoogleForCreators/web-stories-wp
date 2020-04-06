@@ -17,12 +17,14 @@
 /**
  * Internal dependencies
  */
-import getFileName from '../../utils/getFileName';
 import StoryPropTypes from '../../types';
-import VisibleImage from '../shared/visibleImage';
+import VisibleImage from '../media/visibleImage';
 
-function ImageLayerContent({ element: { src } }) {
-  const alt = getFileName(src);
+function ImageLayerContent({
+  element: {
+    resource: { src, alt },
+  },
+}) {
   return <VisibleImage src={src} alt={alt} height="20" />;
 }
 

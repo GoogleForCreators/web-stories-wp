@@ -23,15 +23,15 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import getUsedAmpExtensions from './getUsedAmpExtensions';
-import Boilerplate from './ampBoilerplate';
-import CustomCSS from './styles';
+import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
+import Boilerplate from './utils/ampBoilerplate';
+import CustomCSS from './utils/styles';
 import { OutputPage } from './';
 
 function OutputStory({
-  story,
+  story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
   pages,
-  metadata: { publisher, fallbackPoster },
+  metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   return (
@@ -49,19 +49,24 @@ function OutputStory({
         <CustomCSS />
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
-        <link rel="canonical" href={story.link} />
+        <link rel="canonical" href={link} />
         <meta name="web-stories-replace-head-end" />
       </head>
       <body>
         <amp-story
           standalone="standalone"
           publisher={publisher.name}
-          publisher-logo-src={publisher.logo}
-          title={story.title}
-          poster-portrait-src={story.posterPortraitUrl || fallbackPoster}
+          publisher-logo-src={logoPlaceholder}
+          title={title}
+          poster-portrait-src={featuredMediaUrl || fallbackPoster}
         >
           {pages.map((page) => (
-            <OutputPage key={page.id} page={page} />
+            <OutputPage
+              key={page.id}
+              page={page}
+              autoAdvance={autoAdvance}
+              defaultPageDuration={defaultPageDuration}
+            />
           ))}
         </amp-story>
       </body>
@@ -75,9 +80,9 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      logo: PropTypes.string.isRequired,
     }),
     fallbackPoster: PropTypes.string.isRequired,
+    logoPlaceholder: PropTypes.string,
   }).isRequired,
 };
 

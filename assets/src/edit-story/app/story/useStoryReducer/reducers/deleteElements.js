@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { intersect } from './utils';
 
 /**
@@ -74,6 +75,7 @@ function deleteElements(state, { elementIds }) {
     idsToDelete.includes(oldPage.backgroundElementId)
   ) {
     newPage.backgroundElementId = null;
+    newPage.backgroundOverlay = OverlayType.NONE;
   }
 
   const newPages = [

@@ -38,13 +38,13 @@ const Content = styled.div`
 `;
 
 export default {
-  title: 'Components/Tooltip',
+  title: 'Stories Editor/Components/Tooltip',
   component: WithTooltip,
 };
 
 export const _default = () => {
   const title = text('Title', 'Example');
-  const shortcut = text('Shortcut', 'cmd+z');
+  const shortcut = text('Shortcut', 'mod+z');
 
   const placement = select(
     'Placement',

@@ -20,7 +20,10 @@
 import { ThemeProvider, StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-import KeyboardOnlyOutlines from '@moxy/react-keyboard-only-outlines';
+/**
+ * Internal dependencies
+ */
+import KeyboardOnlyOutlines from '../utils/keyboardOnlyOutline';
 
 /**
  * Internal dependencies
@@ -29,6 +32,7 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { GlobalStyle as CalendarGlobalStyle } from '../components/form/dateTime/calendarStyle';
 import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useTransform, TransformProvider } from '../components/transform';
 import { useHistory, HistoryProvider } from './history';
@@ -37,7 +41,7 @@ import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
-import { useSidebar, SidebarProvider } from './sidebar';
+import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 
 function App({ config }) {
@@ -48,25 +52,25 @@ function App({ config }) {
         <ConfigProvider config={config}>
           <APIProvider>
             <HistoryProvider size={50}>
-              <StoryProvider storyId={storyId}>
-                <FontProvider>
-                  <MediaProvider>
-                    <SidebarProvider>
+              <SnackbarProvider>
+                <StoryProvider storyId={storyId}>
+                  <FontProvider>
+                    <MediaProvider>
                       <TransformProvider>
                         <DropTargetsProvider>
                           <GlobalStyle />
                           <DefaultMoveableGlobalStyle />
                           <CropMoveableGlobalStyle />
                           <ModalGlobalStyle />
-                          <KeyboardOnlyOutlines>
-                            <Layout />
-                          </KeyboardOnlyOutlines>
+                          <CalendarGlobalStyle />
+                          <KeyboardOnlyOutlines />
+                          <Layout />
                         </DropTargetsProvider>
                       </TransformProvider>
-                    </SidebarProvider>
-                  </MediaProvider>
-                </FontProvider>
-              </StoryProvider>
+                    </MediaProvider>
+                  </FontProvider>
+                </StoryProvider>
+              </SnackbarProvider>
             </HistoryProvider>
           </APIProvider>
         </ConfigProvider>
@@ -90,5 +94,5 @@ export {
   useConfig,
   useFont,
   useMedia,
-  useSidebar,
+  useSnackbar,
 };

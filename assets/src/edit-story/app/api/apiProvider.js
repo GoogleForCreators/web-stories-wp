@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, fonts, users, statuses },
+    api: { stories, media, fonts, link, users, statuses },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -66,6 +66,10 @@ function APIProvider({ children }) {
       excerpt,
       featuredMedia,
       password,
+      stylePresets,
+      publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
     }) => {
       return apiFetch({
         path: `${stories}/${storyId}`,
@@ -79,8 +83,15 @@ function APIProvider({ children }) {
           modified,
           content,
           excerpt,
-          story_data: { version: DATA_VERSION, pages },
+          story_data: {
+            version: DATA_VERSION,
+            pages,
+            autoAdvance,
+            defaultPageDuration,
+          },
           featured_media: featuredMedia,
+          style_presets: stylePresets,
+          publisher_logo: publisherLogo,
         },
         method: 'POST',
       });
@@ -105,10 +116,14 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm }) => {
+    ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
       const perPage = 100;
-      apiPath = addQueryArgs(apiPath, { per_page: perPage });
+      apiPath = addQueryArgs(apiPath, {
+        context: 'edit',
+        per_page: perPage,
+        page: pagingNum,
+      });
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -118,25 +133,11 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath }).then((data) =>
-        data.map(
-          ({
-            id,
-            guid: { rendered: src },
-            media_details: { width: oWidth, height: oHeight },
-            mime_type: mimeType,
-            featured_media: posterId,
-            featured_media_src: poster,
-          }) => ({
-            id,
-            posterId,
-            poster,
-            src,
-            oWidth,
-            oHeight,
-            mimeType,
-          })
-        )
+      return apiFetch({ path: apiPath, parse: false }).then(
+        async (response) => {
+          const jsonArray = await response.json();
+          return { data: jsonArray, headers: response.headers };
+        }
       );
     },
     [media]
@@ -158,6 +159,8 @@ function APIProvider({ children }) {
       Object.entries(additionalData).forEach(([key, value]) =>
         data.append(key, value)
       );
+
+      // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
       return apiFetch({
         path: media,
         body: data,
@@ -185,6 +188,23 @@ function APIProvider({ children }) {
     [media]
   );
 
+  /**
+   * Gets metadata (title, favicon, etc.) from
+   * a provided URL.
+   *
+   * @param  {number} url
+   * @return {Promise} Result promise
+   */
+  const getLinkMetadata = useCallback(
+    (url) => {
+      const path = addQueryArgs(link, { url });
+      return apiFetch({
+        path,
+      });
+    },
+    [link]
+  );
+
   const getAllFonts = useCallback(
     ({}) => {
       return apiFetch({ path: fonts }).then((data) =>
@@ -203,13 +223,14 @@ function APIProvider({ children }) {
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
   const state = {
     actions: {
       getStoryById,
       getMedia,
+      getLinkMetadata,
       saveStoryById,
       deleteStoryById,
       getAllFonts,

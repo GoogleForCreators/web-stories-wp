@@ -21,32 +21,62 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-const SectionContainer = styled.div`
+const Container = styled.div`
   position: relative;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  margin-top: 28px;
+  margin-bottom: 28px;
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
 `;
-const SectionTitle = styled.h2`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  margin: 0;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: normal;
-  margin-bottom: 16px;
+
+const TitleAndTools = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: no-wrap;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 8px;
 `;
 
-export default function Section({ title, children }) {
+const Title = styled.h2`
+  flex: 1 1 auto;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  font-weight: 500;
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+`;
+
+const Tools = styled.div`
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: no-wrap;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+`;
+
+export default function Section({ title, titleTools, children }) {
   return (
-    <SectionContainer>
-      {title && <SectionTitle>{title}</SectionTitle>}
+    <Container>
+      {(title || titleTools) && (
+        <TitleAndTools>
+          {title && <Title>{title}</Title>}
+          {titleTools && <Tools>{titleTools}</Tools>}
+        </TitleAndTools>
+      )}
       {children}
-    </SectionContainer>
+    </Container>
   );
 }
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,
+  titleTools: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

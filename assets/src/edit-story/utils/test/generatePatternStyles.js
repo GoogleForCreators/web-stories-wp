@@ -110,6 +110,23 @@ describe('generatePatternStyles', () => {
           'linear-gradient(0.75turn, rgba(255,0,0,0) 0%, #f00 60%, #00f 100%)',
       });
     });
+
+    it('should be able to multiply a global alpha to stops', () => {
+      expect(
+        generatePatternStyles({
+          type: 'linear',
+          stops: [
+            { color: { r: 255, g: 0, b: 0, a: 0.5 }, position: 0 },
+            { color: { r: 255, g: 0, b: 0 }, position: 0.6 },
+            { color: { r: 0, g: 0, b: 255, a: 0 }, position: 1 },
+          ],
+          alpha: 0.7,
+        })
+      ).toStrictEqual({
+        backgroundImage:
+          'linear-gradient(0.5turn, rgba(255,0,0,0.35) 0%, rgba(255,0,0,0.7) 60%, rgba(0,0,255,0) 100%)',
+      });
+    });
   });
 
   describe('given a conic gradient', () => {
@@ -190,6 +207,23 @@ describe('generatePatternStyles', () => {
           'conic-gradient(from 0.25turn at 40% 60%, #f00 0turn, #00f 1turn)',
       });
     });
+
+    it('should be able to multiply a global alpha to stops', () => {
+      expect(
+        generatePatternStyles({
+          type: 'conic',
+          stops: [
+            { color: { r: 255, g: 0, b: 0, a: 0.5 }, position: 0 },
+            { color: { r: 255, g: 0, b: 0 }, position: 0.6 },
+            { color: { r: 0, g: 0, b: 255, a: 0 }, position: 1 },
+          ],
+          alpha: 0.7,
+        })
+      ).toStrictEqual({
+        backgroundImage:
+          'conic-gradient(rgba(255,0,0,0.35) 0turn, rgba(255,0,0,0.7) 0.6turn, rgba(0,0,255,0) 1turn)',
+      });
+    });
   });
 
   describe('given a radial gradient', () => {
@@ -268,6 +302,23 @@ describe('generatePatternStyles', () => {
       ).toStrictEqual({
         backgroundImage:
           'radial-gradient(ellipse 20% 45.68% at 40% 60%, #f00 0%, #00f 100%)',
+      });
+    });
+
+    it('should be able to multiply a global alpha to stops', () => {
+      expect(
+        generatePatternStyles({
+          type: 'radial',
+          stops: [
+            { color: { r: 255, g: 0, b: 0, a: 0.5 }, position: 0 },
+            { color: { r: 255, g: 0, b: 0 }, position: 0.6 },
+            { color: { r: 0, g: 0, b: 255, a: 0 }, position: 1 },
+          ],
+          alpha: 0.7,
+        })
+      ).toStrictEqual({
+        backgroundImage:
+          'radial-gradient(rgba(255,0,0,0.35) 0%, rgba(255,0,0,0.7) 60%, rgba(0,0,255,0) 100%)',
       });
     });
   });

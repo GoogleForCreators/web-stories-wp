@@ -23,14 +23,12 @@ import { rgba } from 'polished';
 import { useEffect } from 'react';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { useFont } from '../../../app';
+import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+
+const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
 
 const Preview = styled.div`
   position: relative;
@@ -45,25 +43,10 @@ const Preview = styled.div`
 
 const Text = styled.span`
   background: none;
-  font-size: ${({ fontSize }) => fontSize}px;
+  font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ theme }) => theme.colors.fg.v1};
-`;
-
-const RemoveButton = styled.span`
-  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
-  color: ${({ theme }) => theme.colors.bg.v4};
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  border-top-right-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: monospace;
 `;
 
 function FontPreview({ title, fontFamily, ...fontProps }) {
@@ -77,9 +60,6 @@ function FontPreview({ title, fontFamily, ...fontProps }) {
 
   return (
     <Preview>
-      <RemoveButton aria-label={__('Remove preset', 'web-stories')}>
-        {'-'}
-      </RemoveButton>
       <Text {...fontProps}>{title}</Text>
     </Preview>
   );

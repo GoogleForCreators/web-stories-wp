@@ -20,20 +20,31 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-const Button = styled.button`
+const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
   background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  border: none;
   border-radius: 4px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  font-size: ${({ size = 14 }) => `${size}px`};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: 4px 12px;
+  padding: ${({ size = 14 }) => `${(size - 2) / 2}px ${size}px`};
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  user-select: none;
+  cursor: pointer;
+  ${({ fullWidth }) =>
+    fullWidth &&
+    `
+      flex: 1;
+      width: 100%;
+    `}
+
+  &:hover {
+    background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
+  }
 `;
 
 export default Button;

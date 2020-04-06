@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { useEffect, useState, useCallback } from 'react';
+import styled, { css } from 'styled-components';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,53 +29,62 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Button, Row, Numeric } from '../form';
+import { Button, Row, Numeric, Toggle, usePresubmitHandler } from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
-import Toggle from '../form/toggle';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import WithTooltip from '../tooltip';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
+import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
-import getCommonObjectValue from './utils/getCommonObjectValue';
+
+const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
 `;
 
-function SizePositionPanel({ selectedElements, onSetProperties }) {
+const withMargin = css`
+  margin: 0 10px;
+`;
+
+const StyledLocked = styled(Locked)`
+  ${withMargin}
+`;
+const StyledUnlocked = styled(Unlocked)`
+  ${withMargin}
+`;
+
+function isNum(v) {
+  return typeof v === 'number' && !isNaN(v);
+}
+
+function SizePositionPanel({
+  selectedElements,
+  submittedSelectedElements,
+  pushUpdate,
+  pushUpdateForObject,
+}) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill');
+  const isFill = getCommonValue(selectedElements, 'isFill', false);
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
-  const flip = getCommonObjectValue(
-    selectedElements,
-    'flip',
-    ['horizontal', 'vertical'],
-    false
-  );
-  const [state, setState] = useState({
-    width,
-    height,
-    flip,
-    isFill,
-    rotationAngle,
-  });
+  const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
+
+  const origRatio = useMemo(() => {
+    const origWidth = getCommonValue(submittedSelectedElements, 'width');
+    const origHeight = getCommonValue(submittedSelectedElements, 'height');
+    return origWidth / origHeight;
+  }, [submittedSelectedElements]);
   const [lockRatio, setLockRatio] = useState(true);
 
   const {
     actions: { setBackgroundElement },
   } = useStory();
-
-  useEffect(() => {
-    setState({ width, height, flip, isFill, rotationAngle });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, isFill, rotationAngle, flip.horizontal, flip.vertical]);
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
@@ -84,74 +93,68 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
-  const updateProperties = useCallback(
-    (evt) => {
-      onSetProperties(
-        ({ width: oldWidth, height: oldHeight, type, flip: oldFlip }) => {
-          const { height: newHeight, width: newWidth } = state;
-          const update = {
-            ...state,
-            flip:
-              // Ensure flip change only if flip controls are actually visible (canFlip).
-              canFlip && getDefinitionForType(type).canFlip
-                ? state.flip
-                : oldFlip,
-          };
-          const hasHeightOrWidth = newHeight !== '' || newWidth !== '';
+  // Recalculate width/height if ratio locked.
+  usePresubmitHandler(
+    (
+      newElement,
+      { width: newWidth, height: newHeight },
+      { width: oldWidth, height: oldHeight }
+    ) => {
+      const { type } = newElement;
 
-          if (lockRatio && hasHeightOrWidth) {
-            const ratio = oldWidth / oldHeight;
-            if (newWidth === '') {
-              update.width = dataPixels(newHeight * ratio);
-            } else {
-              update.height = dataPixels(newWidth / ratio);
-            }
-          }
-          return update;
-        }
-      );
-      if (evt) {
-        evt.preventDefault();
-        evt.stopPropagation();
+      const isResizeWidth = Boolean(newWidth);
+      const isResizeHeight = Boolean(newHeight);
+      if (!isResizeWidth && !isResizeHeight) {
+        return null;
       }
+
+      // Use resize rules if available.
+      const { updateForResizeEvent } = getDefinitionForType(type);
+      if (updateForResizeEvent) {
+        const direction = [isResizeWidth ? 1 : 0, isResizeHeight ? 1 : 0];
+        return updateForResizeEvent(newElement, direction, newWidth, newHeight);
+      }
+
+      // Fallback to ratio.
+      if (lockRatio) {
+        const ratio = oldWidth / oldHeight;
+        if (!isResizeWidth) {
+          return { width: dataPixels(newHeight * ratio) };
+        }
+        if (!isResizeHeight) {
+          return { height: dataPixels(newWidth / ratio) };
+        }
+      }
+
+      return null;
     },
-    [canFlip, lockRatio, onSetProperties, state]
+    [lockRatio]
   );
 
-  useEffect(() => {
-    updateProperties();
-  }, [state.isFill, updateProperties]);
-
-  const handleNumberChange = useCallback(
-    (property) => (value) =>
-      setState((originalState) => ({
-        ...originalState,
-        [property]: isNaN(value) || value === '' ? '' : parseFloat(value),
-      })),
-    [setState]
+  usePresubmitHandler(
+    ({ rotationAngle: newRotationAngle }) => ({
+      rotationAngle: newRotationAngle % 360,
+    }),
+    []
   );
 
-  const handleSetBackground = () => {
-    const newState = {
-      ...state,
-      isBackground: true,
-      opacity: 100,
-      overlay: null,
-    };
-    setState(newState);
-    const backgroundId = selectedElements[0].id;
-    setBackgroundElement({ elementId: backgroundId });
-  };
+  const handleSetBackground = useCallback(() => {
+    pushUpdate(
+      {
+        isBackground: true,
+        opacity: 100,
+        overlay: null,
+      },
+      true
+    );
+    setBackgroundElement({ elementId: selectedElements[0].id });
+  }, [selectedElements, pushUpdate, setBackgroundElement]);
 
   return (
-    <SimplePanel
-      name="size"
-      title={__('Size & position', 'web-stories')}
-      onSubmit={updateProperties}
-    >
+    <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
         <Row expand>
-          <Button onClick={handleSetBackground}>
+          <Button onClick={handleSetBackground} fullWidth>
             {__('Set as background', 'web-stories')}
           </Button>
         </Row>
@@ -159,51 +162,53 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
+          data-testid="width"
           suffix={_x('W', 'The Width dimension', 'web-stories')}
-          value={state.width}
-          isMultiple={width === ''}
+          value={width}
           onChange={(value) => {
-            const ratio = width / height;
-            const newWidth =
-              isNaN(value) || value === '' ? '' : parseFloat(value);
-            setState({
-              ...state,
+            const newWidth = value;
+            let newHeight = height;
+            if (lockRatio) {
+              if (newWidth === '') {
+                newHeight = '';
+              } else if (isNum(newWidth / origRatio)) {
+                newHeight = dataPixels(newWidth / origRatio);
+              }
+            }
+            pushUpdate({
               width: newWidth,
-              height:
-                height !== '' && typeof newWidth === 'number' && lockRatio
-                  ? dataPixels(newWidth / ratio)
-                  : height,
+              height: newHeight,
             });
           }}
           disabled={isFill}
         />
         <WithTooltip title={__('Constrain proportions', 'web-stories')}>
           <Toggle
-            icon={<Locked />}
-            uncheckedIcon={<Unlocked />}
+            data-testid="lockRatio"
+            icon={<StyledLocked />}
+            uncheckedIcon={<StyledUnlocked />}
             value={lockRatio}
-            isMultiple={false}
-            onChange={(value) => {
-              setLockRatio(value);
-            }}
+            onChange={setLockRatio}
             disabled={isFill}
           />
         </WithTooltip>
         <BoxedNumeric
+          data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={state.height}
-          isMultiple={height === ''}
+          value={height}
           onChange={(value) => {
-            const ratio = width / height;
-            const newHeight =
-              isNaN(value) || value === '' ? '' : parseFloat(value);
-            setState({
-              ...state,
+            const newHeight = value;
+            let newWidth = width;
+            if (lockRatio) {
+              if (newHeight === '') {
+                newWidth = '';
+              } else if (isNum(newHeight * origRatio)) {
+                newWidth = dataPixels(newHeight * origRatio);
+              }
+            }
+            pushUpdate({
               height: newHeight,
-              width:
-                width !== '' && typeof newHeight === 'number' && lockRatio
-                  ? dataPixels(newHeight * ratio)
-                  : width,
+              width: newWidth,
             });
           }}
           disabled={isFill}
@@ -214,34 +219,24 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
         <BoxedNumeric
           suffix={__('Rotate', 'web-stories')}
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
-          value={state.rotationAngle}
-          isMultiple={rotationAngle === ''}
-          onChange={handleNumberChange('rotationAngle')}
+          value={rotationAngle}
+          onChange={(value) => pushUpdate({ rotationAngle: value })}
           disabled={isFill}
         />
         {canFlip && (
           <FlipControls
-            onChange={(value) => {
-              setState({
-                ...state,
-                flip: value,
-              });
-            }}
-            value={state.flip}
+            onChange={(value) =>
+              pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
+            }
+            value={flip}
           />
         )}
         {canFill && isSingleElement && (
           <WithTooltip title={__('Full bleed', 'web-stories')}>
             <Toggle
               icon={<Fullbleed />}
-              value={state.isFill}
-              isMultiple={false}
-              onChange={(value) => {
-                setState({
-                  ...state,
-                  isFill: value,
-                });
-              }}
+              value={isFill}
+              onChange={(value) => pushUpdate({ isFill: value }, true)}
             />
           </WithTooltip>
         )}
@@ -252,7 +247,9 @@ function SizePositionPanel({ selectedElements, onSetProperties }) {
 
 SizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  submittedSelectedElements: PropTypes.array.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
 };
 
 export default SizePositionPanel;

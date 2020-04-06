@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
+/**
+ * Internal dependencies
+ */
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
+
 const Tabs = styled.ul.attrs({
   role: 'tablist',
   'aria-orientation': 'horizontal',
@@ -54,7 +59,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
       isActive ? theme.colors.bg.v4 : rgba(theme.colors.bg.v0, 0.2)};
   }
 
-  &:focus {
+  ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: none;
     background: ${({ theme }) => theme.colors.action};
   }
@@ -73,7 +78,7 @@ const Pane = styled.section.attrs(({ isActive }) => ({
   'aria-expanded': isActive,
   hidden: !isActive,
 }))`
-  padding: 1em;
+  padding: 1.5em;
 `;
 
 function getPaneId(tab) {

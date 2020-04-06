@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Story_Post_Type;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -40,6 +40,19 @@ use WP_REST_Response;
  * Class Stories_Controller
  */
 class Stories_Controller extends WP_REST_Posts_Controller {
+
+	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
+
+	/**
+	 * Default style presets to pass if not set.
+	 */
+	const EMPTY_STYLE_PRESETS = [
+		'fillColors' => [],
+		'textColors' => [],
+		'styles'     => [],
+	];
+
+	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
@@ -93,10 +106,13 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
-		if ( in_array( 'poster_portrait_url', $fields, true ) ) {
-			$poster_images               = Media::get_story_meta_images( $post );
-			$image                       = $poster_images['poster-portrait'];
-			$data['poster_portrait_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
+		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
+			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
+		}
+
+		if ( in_array( 'style_presets', $fields, true ) ) {
+			$style_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
+			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -123,6 +139,33 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Updates a single post.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+		$response = parent::update_item( $request );
+		if ( ! is_wp_error( $response ) ) {
+			// If publisher logo is set, let's assign that.
+			$publisher_logo_id = $request->get_param( 'publisher_logo' );
+			if ( $publisher_logo_id ) {
+				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
+				$publisher_logo_settings           = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings['active'] = $publisher_logo_id;
+				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+			}
+
+			// If style presets are set.
+			$style_presets = $request->get_param( 'style_presets' );
+			if ( is_array( $style_presets ) ) {
+				update_option( self::STYLE_PRESETS_OPTION, $style_presets );
+			}
+		}
+		return rest_ensure_response( $response );
+	}
+
+	/**
 	 * Retrieves the attachment's schema, conforming to JSON Schema.
 	 *
 	 * @return array Item schema as an array.
@@ -140,7 +183,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		];
 
 		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL to enqueue the image', 'web-stories' ),
+			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
 			'type'        => 'string',
 			'format'      => 'uri',
 			'context'     => [ 'view', 'edit', 'embed' ],
@@ -148,13 +191,18 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'default'     => '',
 		];
 
-		$schema['properties']['poster_portrait_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
+		$schema['properties']['publisher_logo_url'] = [
+			'description' => __( 'Publisher logo URL.', 'web-stories' ),
 			'type'        => 'string',
+			'context'     => [ 'views', 'edit' ],
 			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
 			'default'     => '',
+		];
+
+		$schema['properties']['style_presets'] = [
+			'description' => __( 'Style presets used by all stories', 'web-stories' ),
+			'type'        => 'object',
+			'context'     => [ 'view', 'edit' ],
 		];
 
 		$this->schema = $schema;

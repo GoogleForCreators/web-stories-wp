@@ -38,20 +38,39 @@ import useCanvas from './useCanvas';
  */
 
 const MENU_HEIGHT = 48;
-const MIN_CAROUSEL_HEIGHT = 80;
 
-const MEDIUM_EDITOR_PAGE_WIDTH = 268;
-const MEDIUM_EDITOR_PAGE_HEIGHT = 476;
-const SMALL_EDITOR_PAGE_WIDTH = 223;
-const SMALL_EDITOR_PAGE_HEIGHT = 396;
+export const CAROUSEL_VERTICAL_PADDING = 24;
+export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
+
+export const COMPACT_THUMB_WIDTH = 72;
+export const COMPACT_THUMB_HEIGHT = 8;
+
+const MAX_CAROUSEL_THUMB_HEIGHT = 128;
+// @todo: UX needed for min thumb size
+export const MIN_CAROUSEL_THUMB_HEIGHT = MAX_CAROUSEL_THUMB_HEIGHT / 3;
+
+// Below this available height switch to Compact mode.
+export const COMPACT_CAROUSEL_BREAKPOINT =
+  MIN_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+
+const MIN_CAROUSEL_HEIGHT =
+  COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
+const MAX_CAROUSEL_HEIGHT =
+  MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+
+const LARGE_EDITOR_PAGE_SIZE = [
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+];
+const MEDIUM_EDITOR_PAGE_SIZE = [280, 420];
+const SMALL_EDITOR_PAGE_SIZE = [240, 360];
 const ALLOWED_PAGE_SIZES = [
-  [DEFAULT_EDITOR_PAGE_WIDTH, DEFAULT_EDITOR_PAGE_HEIGHT],
-  [MEDIUM_EDITOR_PAGE_WIDTH, MEDIUM_EDITOR_PAGE_HEIGHT],
-  [SMALL_EDITOR_PAGE_WIDTH, SMALL_EDITOR_PAGE_HEIGHT],
+  LARGE_EDITOR_PAGE_SIZE,
+  MEDIUM_EDITOR_PAGE_SIZE,
+  SMALL_EDITOR_PAGE_SIZE,
 ];
 
-// @todo: the menu and carousel heights are not correct until we make a var-size
-// page.
+// @todo: the menu height is not responsive
 const Layer = styled.div`
   ${pointerEventsCss}
 
@@ -64,11 +83,14 @@ const Layer = styled.div`
   display: grid;
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
+    '.         .         .         .         .       ' minmax(16px, 1fr)
     '.         prev      page      next      .       ' var(--page-height-px)
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' ${MIN_CAROUSEL_HEIGHT}px
+    'carousel  carousel  carousel  carousel  carousel' minmax(
+      ${MIN_CAROUSEL_HEIGHT}px,
+      ${MAX_CAROUSEL_HEIGHT}px
+    )
     / 1fr ${PAGE_NAV_WIDTH}px var(--page-width-px) ${PAGE_NAV_WIDTH}px 1fr;
 `;
 
@@ -103,7 +125,7 @@ const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'carousel',
-  overflowAllowed: false,
+  overflowAllowed: true,
 })``;
 
 /**

@@ -18,18 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { elementFillContent, getMediaSizePositionProps } from '../shared';
+import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
+import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from './util';
-
-const Element = styled.div`
-  ${elementFillContent}
-  overflow: hidden;
-`;
 
 const Video = styled.video`
   position: absolute;
@@ -38,10 +36,25 @@ const Video = styled.video`
   ${videoWithScale}
 `;
 
-function VideoDisplay({
-  box: { width, height },
-  element: { resource, isBackground, scale, focalX, focalY },
-}) {
+const Image = styled.img`
+  position: absolute;
+  max-width: initial;
+  max-height: initial;
+  ${videoWithScale}
+`;
+
+function VideoDisplay({ previewMode, box: { width, height }, element }) {
+  const {
+    id,
+    poster,
+    resource,
+    isBackground,
+    scale,
+    focalX,
+    focalY,
+    loop,
+  } = element;
+  const ref = useRef();
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -60,15 +73,34 @@ function VideoDisplay({
     focalY
   );
   return (
-    <Element>
-      <Video poster={resource.poster} style={style} {...videoProps}>
-        <source src={resource.src} type={resource.mimeType} />
-      </Video>
-    </Element>
+    <MediaDisplay element={element} mediaRef={ref}>
+      {previewMode ? (
+        <Image
+          src={poster || resource.poster}
+          alt={resource.title}
+          style={style}
+          {...videoProps}
+          ref={ref}
+        />
+      ) : (
+        <Video
+          id={`video-${id}`}
+          poster={poster || resource.poster}
+          style={style}
+          {...videoProps}
+          loop={loop}
+          preload="metadata"
+          ref={ref}
+        >
+          <source src={resource.src} type={resource.mimeType} />
+        </Video>
+      )}
+    </MediaDisplay>
   );
 }
 
 VideoDisplay.propTypes = {
+  previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
 };

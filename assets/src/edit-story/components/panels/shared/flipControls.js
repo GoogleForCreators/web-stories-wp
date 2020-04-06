@@ -37,20 +37,20 @@ function FlipControls({ value, onChange }) {
     <>
       <WithTooltip title={__('Flip horizontally', 'web-stories')}>
         <Toggle
+          title={__('Flip horizontally', 'web-stories')}
+          aria-label={__('Flip horizontally', 'web-stories')}
           icon={<FlipHorizontal />}
-          value={value.horizontal}
-          onChange={(horizontal) => {
-            onChange({ ...value, horizontal });
-          }}
+          value={value.horizontal === true}
+          onChange={(horizontal) => onChange({ ...value, horizontal })}
         />
       </WithTooltip>
       <WithTooltip title={__('Flip vertically', 'web-stories')}>
         <Toggle
+          title={__('Flip vertically', 'web-stories')}
+          aria-label={__('Flip vertically', 'web-stories')}
           icon={<FlipVertical />}
-          value={value.vertical}
-          onChange={(vertical) => {
-            onChange({ ...value, vertical });
-          }}
+          value={value.vertical === true}
+          onChange={(vertical) => onChange({ ...value, vertical })}
         />
       </WithTooltip>
     </>

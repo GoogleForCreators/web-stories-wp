@@ -121,7 +121,6 @@ export function useKeyUpEffect(
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
- * @param {string|undefined} mode
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
@@ -138,7 +137,6 @@ export function useGlobalKeyDownEffect(
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
- * @param {string|undefined} mode
  */
 export function useGlobalKeyUpEffect(
   keyNameOrSpec,
@@ -241,12 +239,34 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
   return false;
 }
 
+/**
+ * Prettifies keyboard shortcuts in a platform-agnostic way.
+ *
+ * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
+ * @return {string} Prettified keyboard shortcut.
+ */
 export function prettifyShortcut(shortcut) {
+  const { platform } = global.navigator;
+  const isMacOS =
+    platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+
+  const replacementKeyMap = {
+    alt: isMacOS ? '⌥' : 'Alt',
+    ctrl: isMacOS ? '^' : 'Ctrl',
+    mod: isMacOS ? '⌘' : 'Ctrl',
+    cmd: '⌘',
+    shift: isMacOS ? '⇧' : 'Shift',
+  };
+
+  const delimiter = isMacOS ? '' : '+';
+
   return shortcut
     .toLowerCase()
-    .replace('ctrl', '^')
-    .replace('cmd', '⌘')
-    .replace('shift', '⇧')
+    .replace('alt', replacementKeyMap.alt)
+    .replace('ctrl', replacementKeyMap.ctrl)
+    .replace('mod', replacementKeyMap.mod)
+    .replace('cmd', replacementKeyMap.cmd)
+    .replace('shift', replacementKeyMap.shift)
     .replace('left', '←')
     .replace('up', '↑')
     .replace('right', '→')
@@ -254,5 +274,5 @@ export function prettifyShortcut(shortcut) {
     .replace('delete', '⌫')
     .split('+')
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join('');
+    .join(delimiter);
 }

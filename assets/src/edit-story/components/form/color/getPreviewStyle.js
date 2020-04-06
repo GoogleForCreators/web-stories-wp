@@ -19,6 +19,7 @@
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import createSolid from '../../../utils/createSolid';
+import MULTIPLE_VALUE from '../multipleValue';
 
 export const transparentStyle = {
   backgroundImage:
@@ -27,12 +28,14 @@ export const transparentStyle = {
 };
 
 function getPreviewStyle(pattern) {
-  if (!pattern) {
+  if (!pattern || pattern === MULTIPLE_VALUE) {
     return transparentStyle;
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
-    return generatePatternStyles(pattern);
+    // Should filter out alpha component
+    const opaquePattern = { ...pattern, alpha: undefined };
+    return generatePatternStyles(opaquePattern);
   }
   const {
     color: { r, g, b, a },

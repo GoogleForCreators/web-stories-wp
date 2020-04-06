@@ -34,3 +34,6 @@ assets/src/edit-story/elements/image/editCropMovable.js           @miina
 assets/src/edit-story/elements/shared/editPanMovable.js           @miina
 assets/src/edit-story/components/canvas/singleSelectionMovable.js @miina
 assets/src/edit-story/components/canvas/multiSelectionMovable.js  @miina
+
+# Dashboard
+assets/src/dashboard/                                             @BrittanyIRL @carlos-kelly @mariano-formidable

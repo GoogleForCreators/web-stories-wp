@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import MULTIPLE_VALUE from '../multipleValue';
+
 function getPreviewOpacity(pattern) {
-  if (!pattern) {
+  if (!pattern || pattern === MULTIPLE_VALUE) {
     return null;
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
-    // TODO: Logic for extracting opacity from gradient pattern
-    return 100;
+    const { alpha = 1 } = pattern;
+    return alpha * 100;
   }
   const {
     color: { a = 1 },

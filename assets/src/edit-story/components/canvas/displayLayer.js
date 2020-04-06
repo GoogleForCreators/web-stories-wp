@@ -23,21 +23,21 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import generatePatternStyles from '../../utils/generatePatternStyles';
-import convertToCSS from '../../utils/convertToCSS';
-import createSolid from '../../utils/createSolid';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
-
-const DEFAULT_COLOR = createSolid(255, 255, 255);
 
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container',
   overflowAllowed: false,
 })`
-  ${({ backgroundColor }) =>
-    convertToCSS(generatePatternStyles(backgroundColor || DEFAULT_COLOR))};
+  background-color: white;
+  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
+    linear-gradient(-45deg, #999999 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #999999 75%),
+    linear-gradient(-45deg, transparent 75%, #999999 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 `;
 
 function DisplayLayer() {
@@ -51,16 +51,19 @@ function DisplayLayer() {
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea
-        backgroundColor={currentPage?.backgroundColor}
-        ref={setPageContainer}
-      >
+      <DisplayPageArea ref={setPageContainer}>
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             if (editingElement === id) {
               return null;
             }
-            return <DisplayElement key={id} element={{ id, ...rest }} />;
+            return (
+              <DisplayElement
+                key={id}
+                element={{ id, ...rest }}
+                page={currentPage}
+              />
+            );
           })}
       </DisplayPageArea>
     </Layer>

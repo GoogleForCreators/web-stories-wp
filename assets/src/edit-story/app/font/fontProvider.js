@@ -66,15 +66,15 @@ function FontProvider({ children }) {
   const getFontWeight = useCallback(
     (name) => {
       const fontWeightNames = {
-        100: __('Hairline', 'web-stories'),
-        200: __('Thin', 'web-stories'),
+        100: __('Thin', 'web-stories'),
+        200: __('Extra-light', 'web-stories'),
         300: __('Light', 'web-stories'),
-        400: __('Normal', 'web-stories'),
+        400: __('Regular', 'web-stories'),
         500: __('Medium', 'web-stories'),
-        600: __('Semi bold', 'web-stories'),
+        600: __('Semi-bold', 'web-stories'),
         700: __('Bold', 'web-stories'),
-        800: __('Extra bold', 'web-stories'),
-        900: __('Super bold', 'web-stories'),
+        800: __('Extra-bold', 'web-stories'),
+        900: __('Black', 'web-stories'),
       };
 
       const defaultFontWeights = [{ name: fontWeightNames[400], value: 400 }];

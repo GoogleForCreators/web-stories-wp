@@ -15,17 +15,52 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { StyleSheetManager, ThemeProvider } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
+import PropTypes from 'prop-types';
 
-function App() {
+/**
+ * Internal dependencies
+ */
+import theme, { GlobalStyle } from '../theme';
+import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
+import { NavigationBar } from '../components';
+import ApiProvider from './api/apiProvider';
+import { useRouteHistory, Route, RouterProvider } from './router';
+import { useConfig, ConfigProvider } from './config';
+import { MyStoriesView, TemplatesGalleryView, MyBookmarksView } from './views';
+
+function App({ config }) {
+  const { isRTL } = config;
   return (
-    <div>
-      <h1>{__('Dashboard', 'web-stories')}</h1>
-      <p>{__('Coming soon', 'web-stories')}</p>
-    </div>
+    <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+      <ThemeProvider theme={theme}>
+        <ConfigProvider config={config}>
+          <ApiProvider>
+            <RouterProvider>
+              <GlobalStyle />
+              <KeyboardOnlyOutline />
+              <NavigationBar />
+              <Route exact path="/" component={<MyStoriesView />} />
+              <Route
+                path="/templates-gallery"
+                component={<TemplatesGalleryView />}
+              />
+              <Route path="/my-bookmarks" component={<MyBookmarksView />} />
+            </RouterProvider>
+          </ApiProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </StyleSheetManager>
   );
 }
 
+App.propTypes = {
+  config: PropTypes.object.isRequired,
+};
+
 export default App;
+
+export { useConfig, useRouteHistory };

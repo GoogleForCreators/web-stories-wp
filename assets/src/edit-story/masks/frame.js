@@ -19,15 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
-import { useTransformHandler } from '../components/transform';
-import { getElementMask } from './';
+import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -44,32 +43,32 @@ const DropTargetSVG = styled.svg`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: ${({ active }) => (active ? 1 : -1)};
 `;
 
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: 0;
+  opacity: ${({ active }) => (active ? 0.3 : 0)};
 `;
 
-function WithDropTarget({ element, children }) {
+function WithDropTarget({ element, children, hover }) {
   const pathRef = useRef(null);
 
   const {
-    actions: { registerDropTarget },
+    state: { draggingResource, activeDropTargetId },
+    actions: { isDropSource, registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
-  const { id } = element;
+  const { id, resource } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
     registerDropTarget(id, pathRef.current);
-  }, [id, pathRef, registerDropTarget]);
-
-  useTransformHandler(element.id, (transform) => {
-    const target = pathRef.current;
-    target.style.opacity = transform?.dropTargets?.active ? 0.3 : 0;
-  });
+    return () => {
+      unregisterDropTarget(id);
+    };
+  }, [id, registerDropTarget, unregisterDropTarget]);
 
   if (!mask) {
     return children;
@@ -79,22 +78,43 @@ function WithDropTarget({ element, children }) {
     <>
       {children}
       <DropTargetSVG
-        viewBox="0 0 1 1"
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
         width="100%"
         height="100%"
         preserveAspectRatio="none"
+        // Fixes issue where the outline prevents double-clicks from
+        // reaching the frame through zIndex
+        active={activeDropTargetId === element.id}
       >
+        {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          ref={pathRef}
           vectorEffect="non-scaling-stroke"
-          strokeWidth="32"
+          strokeWidth="4"
           fill="none"
           stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
           d={mask?.path}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          style={
+            (hover && !draggingResource) ||
+            (Boolean(draggingResource) &&
+              isDropSource(draggingResource.type) &&
+              draggingResource !== resource)
+              ? { opacity: 1 }
+              : {}
+          }
+        />
+        {/** Drop target shown when an element is in the drop target area  */}
+        <DropTargetPath
+          ref={pathRef}
+          vectorEffect="non-scaling-stroke"
+          strokeWidth="48"
+          fill="none"
+          stroke="#0063F9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d={mask?.path}
+          active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
     </>
@@ -104,11 +124,15 @@ function WithDropTarget({ element, children }) {
 WithDropTarget.propTypes = {
   element: StoryPropTypes.element,
   children: StoryPropTypes.children.isRequired,
+  hover: PropTypes.bool,
 };
 
 export default function WithMask({ element, fill, style, children, ...rest }) {
+  const [hover, setHover] = useState(false);
+  const { isBackground } = element;
+
   const mask = getElementMask(element);
-  if (!mask?.type) {
+  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
@@ -125,25 +149,33 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
 
-  const maskId = `mask-${mask.type}-${element.id}`;
+  const maskId = `mask-${mask.type}-${element.id}-frame`;
 
   return (
     <div
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
-        clipPath: `url(#${maskId})`,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
     >
       <svg width={0} height={0}>
         <defs>
-          <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
             <path d={mask.path} />
           </clipPath>
         </defs>
       </svg>
-      <WithDropTarget element={element}>{children}</WithDropTarget>
+      <WithDropTarget element={element} hover={hover}>
+        {children}
+      </WithDropTarget>
     </div>
   );
 }

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -32,32 +32,27 @@ import useStory from '../../app/story/useStory';
 import { SimplePanel } from './panel';
 import FlipControls from './shared/flipControls';
 
-function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
+const DEFAULT_FLIP = { horizontal: false, vertical: false };
+
+function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
   // Background can only have one selected element.
-  const flip = selectedElements[0].flip;
-  const [state, setState] = useState({ flip });
+  const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
   const {
     actions: { setBackgroundElement },
   } = useStory();
 
-  useEffect(() => {
-    setState({ flip });
-  }, [flip]);
-
-  useEffect(() => {
-    onSetProperties(state);
-  }, [onSetProperties, state, state.flip]);
-
-  const handleClick = () => {
-    const newState = {
-      isBackground: false,
-      opacity: 100,
-      overlay: null,
-    };
+  const removeAsBackground = useCallback(() => {
+    pushUpdate(
+      {
+        isBackground: false,
+        opacity: 100,
+        overlay: null,
+      },
+      true
+    );
     setBackgroundElement({ elementId: null });
-    onSetProperties(newState);
-  };
+  }, [pushUpdate, setBackgroundElement]);
 
   return (
     <SimplePanel
@@ -65,14 +60,14 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
       title={__('Size & Position', 'web-stories')}
     >
       <Row expand={false}>
-        <Button onClick={handleClick}>
+        <Button onClick={removeAsBackground} fullWidth>
           {__('Remove as Background', 'web-stories')}
         </Button>
       </Row>
       <Row expand={false}>
         <FlipControls
-          onChange={(value) => setState({ ...state, flip: value })}
-          value={state.flip}
+          onChange={(value) => pushUpdate({ flip: value }, true)}
+          value={flip}
         />
       </Row>
     </SimplePanel>
@@ -81,7 +76,7 @@ function BackgroundSizePositionPanel({ selectedElements, onSetProperties }) {
 
 BackgroundSizePositionPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default BackgroundSizePositionPanel;

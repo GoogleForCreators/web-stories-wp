@@ -20,6 +20,49 @@
 import { RichUtils, SelectionState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
+/**
+ * @param {Object} element Text element properties.
+ * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
+ * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
+ * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
+ * y-unit CSS.
+ * @return {Object} The map of text style properties and values.
+ */
+export function generateParagraphTextStyle(
+  element,
+  dataToStyleX,
+  dataToStyleY,
+  dataToFontSizeY = dataToStyleY
+) {
+  const {
+    fontFamily,
+    fontFallback,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    lineHeight,
+    letterSpacing,
+    padding,
+    textAlign,
+    textDecoration,
+  } = element;
+  return {
+    whiteSpace: 'pre-wrap',
+    margin: 0,
+    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    fontSize: dataToFontSizeY(fontSize),
+    fontStyle,
+    fontWeight,
+    lineHeight,
+    letterSpacing: `${typeof letterSpacing === 'number' ? letterSpacing : 0}em`,
+    textAlign,
+    textDecoration,
+    padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
+      padding?.horizontal || 0
+    )}px`,
+  };
+}
+
 export function getSelectionForAll(content) {
   const firstBlock = content.getFirstBlock();
   const lastBlock = content.getLastBlock();
@@ -97,4 +140,24 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
     fontFamilyDisplay += `${fontFallback.join(`,`)}`;
   }
   return fontFamilyDisplay;
+};
+
+export const draftMarkupToContent = (content, bold) => {
+  // @todo This logic is temporary and will change with selecting part + marking bold/italic/underline.
+  if (bold) {
+    return `<strong>${content}</strong>`;
+  }
+  return content;
+};
+
+export const getHighlightLineheight = function (
+  lineHeight,
+  verticalPadding,
+  unit = 'px'
+) {
+  return `calc(
+    ${lineHeight}em
+    ${verticalPadding > 0 ? '+' : '-'}
+    ${2 * Math.abs(verticalPadding)}${unit}
+  )`;
 };

@@ -24,7 +24,7 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Movable from '../movable';
-import { useStory } from '../../app/story';
+import { useStory, useDropTargets } from '../../app';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
@@ -52,9 +52,13 @@ function MultiSelectionMovable({ selectedElements }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+  const {
+    state: { draggingResource },
+  } = useDropTargets();
 
   const [isDragging, setIsDragging] = useState(false);
   const [canSnap, setCanSnap] = useState(true);
+  const [throttleRotation, setThrottleRotation] = useState(false);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -65,8 +69,12 @@ function MultiSelectionMovable({ selectedElements }) {
   }, [selectedElements, moveable, nodesById]);
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setCanSnap(false), [setCanSnap]);
-  useGlobalKeyUpEffect('meta', () => setCanSnap(true), [setCanSnap]);
+  useGlobalKeyDownEffect('meta', () => setCanSnap(false));
+  useGlobalKeyUpEffect('meta', () => setCanSnap(true));
+
+  // ⇧ key rotates the element 30 degrees at a time
+  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
+  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
@@ -171,15 +179,17 @@ function MultiSelectionMovable({ selectedElements }) {
     resetMoveable();
   };
 
+  const hideHandles = isDragging || Boolean(draggingResource);
+
   return (
     <Movable
-      className="default-movable"
+      className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
       draggable={true}
-      resizable={!isDragging}
-      rotatable={!isDragging}
+      resizable={!hideHandles}
+      rotatable={!hideHandles}
       onDragGroup={({ events }) => {
         events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
@@ -189,7 +199,9 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onDragGroupStart={({ events }) => {
-        setIsDragging(true);
+        if (!isDragging) {
+          setIsDragging(true);
+        }
         onGroupEventStart({ events, isDrag: true });
       }}
       onDragGroupEnd={({ targets }) => {
@@ -211,6 +223,7 @@ function MultiSelectionMovable({ selectedElements }) {
       onRotateGroupEnd={({ targets }) => {
         onGroupEventEnd({ targets, isRotate: true });
       }}
+      throttleRotate={throttleRotation ? 30 : 0}
       onResizeGroupStart={({ events }) => {
         events.forEach((ev, i) => {
           const frame = frames[i];
@@ -259,6 +272,7 @@ function MultiSelectionMovable({ selectedElements }) {
       horizontalGuidelines={canSnap ? [0, canvasHeight / 2, canvasHeight] : []}
       verticalGuidelines={canSnap ? [0, canvasWidth / 2, canvasWidth] : []}
       elementGuidelines={otherNodes}
+      snapGap={canSnap}
       isDisplaySnapDigit={false}
     />
   );

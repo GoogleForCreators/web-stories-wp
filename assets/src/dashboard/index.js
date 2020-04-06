@@ -26,16 +26,24 @@ import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
 /**
- * Initializes the dashboard screen.
+ * Initializes the Web Stories dashboard screen.
+ *
+ * @param {string} id       ID of the root element to render the screen in.
+ * @param {Object} config   Story editor settings.
  */
-const initialize = () => {
-  const appElement = document.getElementById('web-stories-dashboard');
+const initialize = (id, config) => {
+  const appElement = document.getElementById(id);
 
-  render(<App />, appElement);
+  render(<App config={config} />, appElement);
+};
+
+const initializeWithConfig = () => {
+  const { id, config } = window.webStoriesDashboardSettings;
+  initialize(id, config);
 };
 
 if ('loading' === document.readyState) {
-  document.addEventListener('DOMContentLoaded', initialize);
+  document.addEventListener('DOMContentLoaded', initializeWithConfig);
 } else {
-  initialize();
+  initializeWithConfig();
 }

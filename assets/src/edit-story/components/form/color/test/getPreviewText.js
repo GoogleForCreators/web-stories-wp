@@ -42,6 +42,13 @@ describe('getPreviewText', () => {
     expect(result).toBe(expected);
   });
 
+  it('should return hex ignoring alpha for explicit non-transparent solid', () => {
+    const input = { ...createSolid(255, 0, 255, 0.3), type: 'solid' };
+    const result = getPreviewText(input);
+    const expected = 'FF00FF';
+    expect(result).toBe(expected);
+  });
+
   it('should return correct text for gradient', () => {
     const linearResult = getPreviewText({ type: 'linear' });
     expect(linearResult).toBe('Linear');

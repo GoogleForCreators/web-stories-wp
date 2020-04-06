@@ -29,13 +29,14 @@ function OutputElement({ element }) {
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
 
-  // Box is calculated based on the 100%:100% basis for width and height.
+  // Box is calculated based on the 100%:100% basis for width and height
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
   return (
     <WithMask
       element={element}
+      box={box}
       id={'el-' + id}
       className="wrapper"
       style={{
@@ -53,6 +54,9 @@ function OutputElement({ element }) {
           width: '100%',
           height: '100%',
           display: 'block',
+          position: 'absolute',
+          top: 0,
+          left: 0,
         }}
       >
         <Output element={element} box={box} />

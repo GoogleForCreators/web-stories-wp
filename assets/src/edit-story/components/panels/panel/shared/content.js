@@ -27,34 +27,33 @@ import { rgba } from 'polished';
  */
 import panelContext from '../context';
 
-const Form = styled.form`
+const Container = styled.div`
   padding: ${({ padding }) => padding || '10px 20px'};
+  overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? rgba(theme.colors.fg.v1, 0.07) : 'transparent'};
-  overflow: auto;
   ${({ hasBorder, theme }) =>
     hasBorder && `border-top: 1px solid ${theme.colors.bg.v9};`}
 `;
 
-function Content({ children, onSubmit, ...rest }) {
+function Content({ children, ...rest }) {
   const {
-    state: { isCollapsed, height, panelContentId },
+    state: { isCollapsed, height, resizeable, panelContentId },
   } = useContext(panelContext);
 
   const formStyle = {
-    height: height === null ? 'auto' : `${height}px`,
+    height: resizeable ? `${height}px` : 'auto',
   };
 
   return (
-    <Form
+    <Container
       style={formStyle}
-      onSubmit={onSubmit}
       {...rest}
       id={panelContentId}
       hidden={isCollapsed}
     >
       {children}
-    </Form>
+    </Container>
   );
 }
 
@@ -63,12 +62,11 @@ Content.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  onSubmit: PropTypes.func,
   isPrimary: PropTypes.bool,
 };
 
 Content.defaultProps = {
-  onSubmit: (evt) => evt.preventDefault(),
+  isPrimary: false,
 };
 
 export default Content;

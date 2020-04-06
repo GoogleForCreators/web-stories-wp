@@ -35,8 +35,12 @@ echo -e "then open $(action_format "$CURRENT_URL") to get started!"
 echo -e "\n\nAccess the above install using the following credentials:"
 echo -e "Default username: $(action_format "admin"), password: $(action_format "password")"
 
-if command -v open > /dev/null; then
-	open "$CURRENT_URL"
-elif command -v xdg-open > /dev/null; then
-	xdg-open "$CURRENT_URL"
+if [ -z "$CI" ]; then
+  if command -v xdg-open > /dev/null; then
+    xdg-open "$CURRENT_URL"
+  elif command -v open > /dev/null; then
+    open "$CURRENT_URL"
+  elif command -v xdg-open > /dev/null; then
+    xdg-open "$CURRENT_URL"
+  fi
 fi

@@ -38,9 +38,9 @@ function ColorInput({
   onChange,
   hasGradient,
   hasOpacity,
-  isMultiple,
   value,
   label,
+  colorPickerActions,
 }) {
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
@@ -52,9 +52,9 @@ function ColorInput({
         onChange={onChange}
         hasGradient={hasGradient}
         hasOpacity={hasOpacity}
-        isMultiple={isMultiple}
         value={value}
         label={label}
+        colorPickerActions={colorPickerActions}
       />
       {hasOpacity && (
         <OpacityPreview value={value} onChange={handleOpacityChange} />
@@ -65,16 +65,15 @@ function ColorInput({
 
 ColorInput.propTypes = {
   value: PatternPropType,
-  isMultiple: PropTypes.bool,
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+  colorPickerActions: PropTypes.func,
 };
 
 ColorInput.defaultProps = {
   value: null,
-  isMultiple: false,
   hasGradient: false,
   hasOpacity: true,
   opacity: null,

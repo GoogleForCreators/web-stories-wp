@@ -22,46 +22,56 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DEFAULT_EDITOR_PAGE_HEIGHT } from '../../../../constants';
+import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
 import createSolid from '../../../../utils/createSolid';
-import { editorToDataY } from '../../../../units/dimensions';
-import { Section, MainButton, Title, SearchInput, Header } from '../../common';
+import { dataFontEm } from '../../../../units';
+import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
 
+// By default, the element should be 50% of the page.
+const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+
 const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
-    fontSize: 48,
-    fontWeight: 800,
-    fontFamily: 'Ubuntu',
+    content: __('Heading', 'web-stories'),
+    fontSize: dataFontEm(2),
+    fontWeight: 700,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    fontSize: 32,
-    fontWeight: 500,
-    fontFamily: 'Ubuntu',
+    content: __('Subheading', 'web-stories'),
+    fontSize: dataFontEm(1.5),
+    fontWeight: 600,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'body-text',
     title: __('Body text', 'web-stories'),
-    fontSize: 16,
-    fontWeight: 'normal',
-    fontFamily: 'Ubuntu',
+    content: __(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'web-stories'
+    ),
+    fontSize: dataFontEm(1.1),
+    fontWeight: 400,
+    fontFamily: 'Roboto',
   },
 ];
 
-const DEFAULT_TEXT_TRANSFORM = {
-  width: 50,
-  height: 20,
-  x: 5,
-  y: 5,
-  rotationAngle: 0,
-};
+function getPresetById(id) {
+  for (let i = 0; i < PRESETS.length; i++) {
+    if (PRESETS[i].id === id) {
+      return PRESETS[i];
+    }
+  }
+  return null;
+}
 
 function TextPane(props) {
   const {
@@ -69,40 +79,42 @@ function TextPane(props) {
   } = useLibrary();
   return (
     <Pane id={paneId} {...props}>
-      <Header>
-        <Title>{__('Text', 'web-stories')}</Title>
-        <MainButton
-          onClick={() =>
-            insertElement('text', {
-              content: __('Text', 'web-stories'),
-              color: createSolid(0, 0, 0),
-              ...DEFAULT_TEXT_TRANSFORM,
-            })
-          }
-        >
-          {__('Add Text', 'web-stories')}
-        </MainButton>
-      </Header>
       <SearchInput
         value={''}
-        placeholder={__('Search text...', 'web-stories')}
+        placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
       />
-      <Section title={__('Presets', 'web-stories')}>
+
+      <Section
+        title={__('Presets', 'web-stories')}
+        titleTools={
+          <MainButton
+            onClick={() =>
+              insertElement('text', {
+                ...getPresetById('subheading'),
+                content: __('Fill in some text', 'web-stories'),
+                color: createSolid(0, 0, 0),
+                backgroundColor: createSolid(196, 196, 196),
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+                width: DEFAULT_ELEMENT_WIDTH,
+              })
+            }
+          >
+            {__('Add new text', 'web-stories')}
+          </MainButton>
+        }
+      >
         {PRESETS.map((preset) => (
           <FontPreview
             key={`preset-${preset.id}`}
             {...preset}
             onClick={() =>
               insertElement('text', {
-                content: __('Text', 'web-stories'),
-                color: createSolid(0, 0, 0),
-                ...DEFAULT_TEXT_TRANSFORM,
                 ...preset,
-                fontSize: editorToDataY(
-                  preset.fontSize,
-                  DEFAULT_EDITOR_PAGE_HEIGHT
-                ),
+                color: createSolid(0, 0, 0),
+                backgroundColor: createSolid(196, 196, 196),
+                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+                width: DEFAULT_ELEMENT_WIDTH,
               })
             }
           />

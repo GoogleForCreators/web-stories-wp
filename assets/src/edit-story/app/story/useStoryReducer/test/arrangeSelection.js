@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeSelection', () => {
@@ -65,6 +66,7 @@ function getInitialState(selection) {
     pages: [
       {
         backgroundElementId: null,
+        backgroundOverlay: OverlayType.NONE,
         id: '111',
         elements: [{ id: '123' }, { id: '234' }, { id: '345' }, { id: '456' }],
       },

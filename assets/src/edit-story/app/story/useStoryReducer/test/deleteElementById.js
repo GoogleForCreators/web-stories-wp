@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('deleteElementById', () => {
@@ -85,6 +86,7 @@ describe('deleteElementById', () => {
       pages: [
         {
           backgroundElementId: '123',
+          backgroundOverlay: OverlayType.NONE,
           id: '111',
           elements: [{ id: '123' }, { id: '456' }],
         },
@@ -98,7 +100,12 @@ describe('deleteElementById', () => {
     expect(result).toStrictEqual({
       ...initialState,
       pages: [
-        { backgroundElementId: null, id: '111', elements: [{ id: '456' }] },
+        {
+          backgroundElementId: null,
+          backgroundOverlay: OverlayType.NONE,
+          id: '111',
+          elements: [{ id: '456' }],
+        },
       ],
       selection: ['456'],
     });

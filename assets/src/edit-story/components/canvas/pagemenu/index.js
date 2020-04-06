@@ -177,7 +177,7 @@ function PageMenu() {
           <Space />
           <Divider />
           <Space />
-          <WithTooltip title={__('Undo', 'web-stories')} shortcut="cmd+z">
+          <WithTooltip title={__('Undo', 'web-stories')} shortcut="mod+z">
             <Icon
               disabled={!canUndo}
               onClick={handleUndo}
@@ -187,7 +187,7 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
           <Space />
-          <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+cmd+z">
+          <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+mod+z">
             <Icon
               disabled={!canRedo}
               onClick={handleRedo}

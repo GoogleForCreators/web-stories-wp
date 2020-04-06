@@ -34,7 +34,7 @@ import {
 } from '../';
 
 export default {
-  title: 'Components/Button',
+  title: 'Stories Editor/Components/Button',
   component: Primary,
 };
 

@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 export { default as Display } from './display';
@@ -30,15 +31,22 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  fontFamily: 'Arial',
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+  bold: false,
+  fontFamily: 'Roboto',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,
   fontSize: 36,
   fontStyle: 'normal',
   color: '#000000',
-  letterSpacing: 'normal',
+  letterSpacing: 0,
   lineHeight: 1.3,
   textAlign: 'initial',
+  textDecoration: 'none',
+  padding: {
+    vertical: 0,
+    horizontal: 0,
+  },
 };
 
 export const hasEditMode = true;
@@ -56,6 +64,8 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.STYLE_PRESETS,
+  PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,

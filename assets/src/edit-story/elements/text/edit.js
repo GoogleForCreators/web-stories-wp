@@ -41,15 +41,20 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithFontColor,
-  elementWithStyle,
+  elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
+import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
+  draftMarkupToContent,
   getFilteredState,
   getHandleKeyCommand,
   getSelectionForAll,
   getSelectionForOffset,
+  generateParagraphTextStyle,
+  getHighlightLineheight,
 } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -75,10 +80,10 @@ const Wrapper = styled.div`
 // of text height. This element has an unbounded height (bottom) so that
 // it can be used for height measurement.
 const TextBox = styled.div`
-	${elementWithFont}
-	${elementWithStyle}
-	${elementWithBackgroundColor}
-	${elementWithFontColor}
+  ${elementWithFont}
+  ${elementWithTextParagraphStyle}
+  ${elementWithBackgroundColor}
+  ${elementWithFontColor}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -90,38 +95,35 @@ const TextBox = styled.div`
 function TextEdit({
   element: {
     id,
+    bold,
     content,
     color,
     backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontWeight,
-    fontStyle,
-    letterSpacing,
-    lineHeight,
+    backgroundTextMode,
     opacity,
-    padding,
-    textAlign,
+    ...rest
   },
   box: { x, y, height, rotationAngle },
 }) {
   const {
-    actions: { dataToEditorY, editorToDataX, editorToDataY },
+    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
+    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     color,
     backgroundColor,
-    fontFamily,
-    fontFallback,
-    fontStyle,
-    fontSize: dataToEditorY(fontSize),
-    fontWeight,
-    textAlign,
-    letterSpacing,
-    lineHeight,
     opacity,
-    padding,
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
+      lineHeight: getHighlightLineheight(
+        rest.lineHeight,
+        dataToEditorX(rest.padding?.vertical || 0)
+      ),
+      color: createSolid(0, 0, 0),
+      backgroundColor: createSolid(255, 255, 255),
+    }),
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
+      backgroundColor: null,
+    }),
   };
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
@@ -144,7 +146,9 @@ function TextEdit({
   const initialState = useMemo(() => {
     const contentWithBreaks = (content || '')
       .split('\n')
-      .map((s) => `<p>${s}</p>`)
+      .map((s) => {
+        return `<p>${draftMarkupToContent(s, bold)}</p>`;
+      })
       .join('');
     let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
     if (clearContent) {
@@ -162,7 +166,7 @@ function TextEdit({
       state = EditorState.forceSelection(state, selection);
     }
     return state;
-  }, [content, clearContent, selectAll, offset]);
+  }, [content, clearContent, selectAll, offset, bold]);
   const [editorState, setEditorState] = useState(initialState);
   const editorHeightRef = useRef(0);
 
@@ -240,6 +244,7 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
   }, [editorState]);
 
+  const { fontFamily } = rest;
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);

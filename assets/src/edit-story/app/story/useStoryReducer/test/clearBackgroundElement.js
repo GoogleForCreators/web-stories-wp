@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('clearBackgroundElement', () => {
@@ -30,6 +31,7 @@ describe('clearBackgroundElement', () => {
           id: '111',
           elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
           backgroundElementId: '123',
+          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -41,6 +43,7 @@ describe('clearBackgroundElement', () => {
     expect(result.pages[0]).toStrictEqual({
       id: '111',
       backgroundElementId: null,
+      backgroundOverlay: OverlayType.NONE,
       elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
     });
   });

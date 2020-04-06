@@ -21,7 +21,8 @@
  */
 
 #screen-meta,
-#screen-meta-links {
+#screen-meta-links,
+#screen-meta-links ~ :not(#edit-story):not(.clear) {
   display: none;
 }
 
@@ -32,11 +33,15 @@ body.edit-story #wpbody-content {
 
 body.edit-story #edit-story {
   background-color: #191c28;
+  position: relative;
+  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
 }
 
 body.edit-story .loading-message {
   color: #fff;
   text-align: center;
+  margin: 0;
+  padding: 0.67em 0;
 }
 
 body.edit-story #wpfooter {
@@ -46,4 +51,10 @@ body.edit-story #wpfooter {
 body.edit-story #edit-story .components-spinner {
   float: none;
   margin: 0 11px;
+}
+
+/* Copied from forms.css in WordPress, avoids issues with "Collapse menu" button */
+
+button {
+  font-size: inherit;
 }

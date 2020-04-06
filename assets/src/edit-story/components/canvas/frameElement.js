@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory } from '../../app';
+import { useStory, useDropTargets } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -49,30 +49,41 @@ const Wrapper = styled.div`
 	&:focus,
 	&:active,
 	&:hover {
-		outline: 1px solid ${({ theme }) => theme.colors.selection};
+		outline: ${({ theme, hasMask }) =>
+      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
+`;
+
+const EmptyFrame = styled.div`
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 `;
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame } = getDefinitionForType(type);
+  const { Frame, isMaskable } = getDefinitionForType(type);
   const elementRef = useRef();
 
   const {
     actions: { setNodeForElement, handleSelectElement },
   } = useCanvas();
   const {
-    state: { selectedElementIds },
+    state: { selectedElementIds, currentPage },
   } = useStory();
   const {
     actions: { getBox },
   } = useUnits();
+  const {
+    state: { activeDropTargetId },
+  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
+  const isBackground = currentPage?.backgroundElementId === id;
 
   return (
     <Wrapper
@@ -83,7 +94,9 @@ function FrameElement({ element }) {
         if (!isSelected) {
           handleSelectElement(id, evt);
         }
-        evt.stopPropagation();
+        if (!isBackground) {
+          evt.stopPropagation();
+        }
       }}
       onFocus={(evt) => {
         if (!isSelected) {
@@ -92,14 +105,18 @@ function FrameElement({ element }) {
       }}
       tabIndex="0"
       aria-labelledby={`layer-${id}`}
+      hasMask={isMaskable}
     >
       <WithLink
         element={element}
-        showTooltip={selectedElementIds.length === 1 && isSelected}
+        active={selectedElementIds.length === 1 && isSelected}
+        dragging={Boolean(activeDropTargetId)}
       >
         <WithMask element={element} fill={true}>
-          {Frame && (
+          {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
+          ) : (
+            <EmptyFrame />
           )}
         </WithMask>
       </WithLink>

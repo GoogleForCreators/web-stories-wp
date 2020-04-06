@@ -31,6 +31,11 @@ import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
+import dashboardTheme, {
+  GlobalStyle as DashboardGlobalStyle,
+} from '../assets/src/dashboard/theme';
+import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
+
 // @todo: Find better way to mock these.
 const wp = {};
 window.wp = window.wp || wp;
@@ -59,11 +64,25 @@ addParameters({
 addDecorator(withA11y);
 addDecorator(withKnobs);
 
-addDecorator((story) => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    <CropMoveableGlobalStyle />
-    <ModalGlobalStyle />
-    {story()}
-  </ThemeProvider>
-));
+addDecorator((story, { id }) => {
+  const useDashboardTheme = id.startsWith('dashboard');
+
+  if (useDashboardTheme) {
+    return (
+      <ThemeProvider theme={dashboardTheme}>
+        <DashboardGlobalStyle />
+        <DashboardKeyboardOnlyOutline />
+        {story()}
+      </ThemeProvider>
+    );
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <CropMoveableGlobalStyle />
+      <ModalGlobalStyle />
+      {story()}
+    </ThemeProvider>
+  );
+});

@@ -17,36 +17,13 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
-export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
-export { default as getFocalFromOffset } from './getFocalFromOffset';
-export { default as EditPanMovable } from './editPanMovable';
-export { default as ScalePanel } from './scalePanel';
-
-export const CropBox = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
-    pointer-events: none;
-  }
-`;
 
 export const elementFillContent = css`
   position: absolute;
@@ -89,15 +66,17 @@ export const elementWithFont = css`
   font-weight: ${({ fontWeight }) => fontWeight};
 `;
 
-export const elementWithStyle = css`
-  padding: ${({ padding }) => (padding ? padding : '0')}%;
+/**
+ * See generateParagraphTextStyle for the full set of properties.
+ */
+export const elementWithTextParagraphStyle = css`
+  margin: ${({ margin }) => margin || 0};
+  padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
-  letter-spacing: ${({ letterSpacing }) =>
-    letterSpacing ? letterSpacing + 'em' : null};
+  letter-spacing: ${({ letterSpacing }) => letterSpacing};
   text-align: ${({ textAlign }) => textAlign};
+  text-decoration: ${({ textDecoration }) => textDecoration};
 `;
-
-export const MEDIA_MASK_OPACITY = 0.4;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
   opacity: 100,
@@ -105,6 +84,7 @@ export const SHARED_DEFAULT_ATTRIBUTES = {
     vertical: false,
     horizontal: false,
   },
+  rotationAngle: 0,
 };
 
 export const elementWithFlip = css`

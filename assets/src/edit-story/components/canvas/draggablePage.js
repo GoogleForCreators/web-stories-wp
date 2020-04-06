@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { forwardRef, useCallback } from 'react';
 
 /**
@@ -25,9 +26,6 @@ import { forwardRef, useCallback } from 'react';
 import DropZone from '../dropzone';
 import { useStory } from '../../app/story';
 import PagePreview from './pagepreview';
-
-// Disable reason: forwardRef render functions do not support propTypes
-/* eslint-disable react/prop-types */
 
 function DraggablePageWithRef(
   {
@@ -38,6 +36,7 @@ function DraggablePageWithRef(
     width,
     height,
     dragIndicatorOffset,
+    role,
   },
   ref
 ) {
@@ -62,13 +61,13 @@ function DraggablePageWithRef(
         type: 'page',
         index: pageIndex,
       };
-      evt.dataTransfer.setData('text', JSON.stringify(pageData));
+      evt.dataTransfer.setData('page', JSON.stringify(pageData));
     },
     [pageIndex]
   );
 
   const onDrop = (evt, { position }) => {
-    const droppedEl = JSON.parse(evt.dataTransfer.getData('text'));
+    const droppedEl = JSON.parse(evt.dataTransfer.getData('page'));
     if (!droppedEl || 'page' !== droppedEl.type) {
       return;
     }
@@ -94,6 +93,7 @@ function DraggablePageWithRef(
         onDragStart={onDragStart}
         isActive={isActive}
         aria-label={ariaLabel}
+        role={role}
         width={width}
         height={height}
         forwardedRef={ref}
@@ -104,6 +104,17 @@ function DraggablePageWithRef(
 
 const DraggablePage = forwardRef(DraggablePageWithRef);
 
-export default DraggablePage;
+DraggablePage.propTypes = {
+  pageIndex: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool,
+  ariaLabel: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  dragIndicatorOffset: PropTypes.number,
+  role: PropTypes.string,
+};
 
-/* eslint-enable react/prop-types */
+DraggablePageWithRef.propTypes = DraggablePage.propTypes;
+
+export default DraggablePage;

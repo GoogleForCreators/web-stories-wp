@@ -95,7 +95,7 @@ function useHistoryReducer(size) {
   const replay = useCallback(
     (deltaOffset) => {
       const newOffset = offset + deltaOffset;
-      if (newOffset < 0 || newOffset >= historyLength - 1) {
+      if (newOffset < 0 || newOffset > historyLength - 1) {
         return false;
       }
 

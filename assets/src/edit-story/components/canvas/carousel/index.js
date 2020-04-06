@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState, useCallback } from 'react';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
+import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,21 +34,28 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
+  Keyboard as KeyboardShortcutsButton,
+  Plain,
 } from '../../button';
 import Modal from '../../modal';
 import GridView from '../gridview';
 import DraggablePage from '../draggablePage';
 import useResizeEffect from '../../../utils/useResizeEffect';
+import {
+  COMPACT_CAROUSEL_BREAKPOINT,
+  CAROUSEL_VERTICAL_PADDING,
+} from '../layout';
+import DropZoneProvider from '../../dropzone/dropZoneProvider';
+import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
+import { THUMB_FRAME_HEIGHT, THUMB_FRAME_WIDTH } from '../pagepreview';
+import CompactIndicator from './compactIndicator';
 
-// @todo: Make responsive. Blocked on the header reimplementation and
-// responsive "page" size.
-const PAGE_THUMB_HEIGHT = 50;
-const PAGE_THUMB_WIDTH = (PAGE_THUMB_HEIGHT * 9) / 16;
+const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: 'prev-navigation carousel next-navigation' auto / 53px 1fr 53px;
+  grid: 'prev-navigation carousel next-navigation menu' auto / 53px 1fr 53px 53px;
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -60,22 +68,97 @@ const Area = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 16px 0 24px;
 `;
 
-const List = styled(Area)`
+const NavArea = styled(Area)`
+  margin-bottom: ${({ marginBottom }) => marginBottom}px;
+`;
+
+const MenuArea = styled(Area).attrs({ area: 'menu' })``;
+
+const PlainStyled = styled(Plain)`
+  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  &:hover {
+    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.25)};
+  }
+`;
+
+const MenuIconsWrapper = styled.div`
+  ${({ isCompact }) =>
+    isCompact
+      ? css`
+          margin-bottom: 16px;
+        `
+      : css`
+          position: absolute;
+          bottom: 44px;
+        `}
+`;
+
+const OverflowButtons = styled.div`
+  position: relative;
+  & > * {
+    position: absolute;
+    bottom: 10px;
+  }
+`;
+
+const List = styled(Area).attrs({
+  area: 'carousel',
+  as: 'ul',
+  role: 'listbox',
+})`
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: ${({ hasHorizontalOverflow }) =>
-    hasHorizontalOverflow ? 'scroll' : 'hidden'};
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
+
+  /*
+   * These overrides are an exception - generally scrollbars should all
+   * look the same. We do this only here because this scrollbar is always visible.
+   */
+  scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+    ${({ theme }) => theme.colors.bg.v1} !important;
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.bg.v1} !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid ${({ theme }) => theme.colors.bg.v1} !important;
+    border-top-width: 3px !important;
+  }
 `;
 
-const StyledGridViewButton = styled(GridViewButton)`
-  position: absolute;
-  bottom: 24px;
+const Li = styled.li.attrs({
+  role: 'option',
+})`
+  margin: 0 10px 0 0;
+  &:last-of-type {
+    margin: 0;
+  }
 `;
+
+const GridViewContainer = styled.div`
+  flex: 1;
+  margin: 70px 170px 70px 170px;
+  pointer-events: all;
+`;
+
+function calculatePageThumbSize(carouselSize) {
+  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
+  const availableHeight =
+    carouselSize.height -
+    CAROUSEL_VERTICAL_PADDING * 2 -
+    CAROUSEL_BOTTOM_SCROLL_MARGIN;
+  const pageHeight = availableHeight - THUMB_FRAME_HEIGHT;
+  const pageWidth = pageHeight * aspectRatio;
+  return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
+}
 
 function Carousel() {
   const {
@@ -89,20 +172,20 @@ function Carousel() {
   const listRef = useRef(null);
   const pageRefs = useRef([]);
 
-  const openModal = useCallback(() => setIsGridViewOpen(true), [
-    setIsGridViewOpen,
-  ]);
-  const closeModal = useCallback(() => setIsGridViewOpen(false), [
-    setIsGridViewOpen,
-  ]);
+  const [carouselSize, setCarouselSize] = useState({});
+  const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
+
+  const openModal = useCallback(() => setIsGridViewOpen(true), []);
+  const closeModal = useCallback(() => setIsGridViewOpen(false), []);
 
   useResizeEffect(
     listRef,
-    () => {
+    (currentCarouselSize) => {
       const { offsetWidth, scrollWidth, scrollLeft } = listRef.current;
       const max = scrollWidth - offsetWidth;
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
+      setCarouselSize(currentCarouselSize);
     },
     [pages.length]
   );
@@ -159,6 +242,7 @@ function Carousel() {
     [listRef, isRTL]
   );
 
+  const scrollByPx = carouselSize.width;
   const isAtBeginningOfList = isRTL
     ? 1 === scrollPercentage
     : 0 === scrollPercentage;
@@ -167,74 +251,108 @@ function Carousel() {
   const PrevButton = isRTL ? RightArrow : LeftArrow;
   const NextButton = isRTL ? LeftArrow : RightArrow;
 
+  const Item = isCompact ? CompactIndicator : DraggablePage;
+  const [pageThumbWidth, pageThumbHeight] = useMemo(
+    () => calculatePageThumbSize(carouselSize),
+    [carouselSize]
+  );
+  const arrowsBottomMargin = isCompact
+    ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_WIDTH
+    : CAROUSEL_BOTTOM_SCROLL_MARGIN;
+
   return (
-    <>
+    <DropZoneProvider>
       <Wrapper>
-        <Area area="prev-navigation">
+        <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
-            onClick={() => scrollBy(-2 * PAGE_THUMB_WIDTH)}
+            onClick={() => scrollBy(-scrollByPx)}
             width="24"
             height="24"
             aria-label={__('Scroll Backward', 'web-stories')}
           />
-        </Area>
+        </NavArea>
         <List
-          area="carousel"
           ref={listRef}
           hasHorizontalOverflow={hasHorizontalOverflow}
+          aria-label={__('Pages List', 'web-stories')}
         >
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
 
             return (
-              <DraggablePage
-                key={index}
-                onClick={handleClickPage(page)}
-                ariaLabel={
-                  isCurrentPage
-                    ? sprintf(
-                        __('Page %s (current page)', 'web-stories'),
-                        index + 1
-                      )
-                    : sprintf(__('Go to page %s', 'web-stories'), index + 1)
-                }
-                isActive={isCurrentPage}
-                pageIndex={index}
-                ref={(el) => {
-                  pageRefs.current[page.id] = el;
-                }}
-                width={PAGE_THUMB_WIDTH}
-                height={PAGE_THUMB_HEIGHT}
-              />
+              <Li key={index}>
+                <Item
+                  onClick={handleClickPage(page)}
+                  dragIndicatorOffset={2}
+                  role="option"
+                  ariaLabel={
+                    isCurrentPage
+                      ? sprintf(
+                          __('Page %s (current page)', 'web-stories'),
+                          index + 1
+                        )
+                      : sprintf(__('Go to page %s', 'web-stories'), index + 1)
+                  }
+                  isActive={isCurrentPage}
+                  pageIndex={index}
+                  ref={(el) => {
+                    pageRefs.current[page.id] = el;
+                  }}
+                  width={pageThumbWidth}
+                  height={pageThumbHeight}
+                />
+              </Li>
             );
           })}
         </List>
-        <Area area="next-navigation">
+        <NavArea area="next-navigation" marginBottom={arrowsBottomMargin}>
           <NextButton
             isHidden={!hasHorizontalOverflow || isAtEndOfList}
-            onClick={() => scrollBy(2 * PAGE_THUMB_WIDTH)}
+            onClick={() => scrollBy(scrollByPx)}
             width="24"
             height="24"
             aria-label={__('Scroll Forward', 'web-stories')}
           />
-          <StyledGridViewButton
-            width="24"
-            height="24"
-            onClick={openModal}
-            aria-label={__('Grid View', 'web-stories')}
-          />
-        </Area>
+        </NavArea>
+        <MenuArea>
+          <MenuIconsWrapper isCompact={isCompact}>
+            <OverflowButtons>
+              <KeyboardShortcutsButton
+                width="24"
+                height="24"
+                aria-label={__('Keyboard Shortcuts', 'web-stories')}
+              />
+            </OverflowButtons>
+            <GridViewButton
+              width="24"
+              height="24"
+              onClick={openModal}
+              aria-label={__('Grid View', 'web-stories')}
+            />
+          </MenuIconsWrapper>
+        </MenuArea>
       </Wrapper>
       <Modal
-        isOpen={isGridViewOpen}
-        onRequestClose={closeModal}
+        open={isGridViewOpen}
+        onClose={closeModal}
         contentLabel={__('Grid View', 'web-stories')}
-        closeButtonLabel={__('Back', 'web-stories')}
+        overlayStyles={{
+          alignItems: 'flex-start',
+        }}
+        contentStyles={{
+          pointerEvents: 'none',
+          flex: 1,
+        }}
       >
-        <GridView />
+        <GridViewContainer>
+          <PlainStyled onClick={() => closeModal()}>
+            {__('Back', 'web-stories')}
+          </PlainStyled>
+          <GridView />
+        </GridViewContainer>
       </Modal>
-    </>
+    </DropZoneProvider>
   );
 }
 

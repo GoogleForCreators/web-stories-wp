@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -31,45 +30,27 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { Row, Numeric } from '../form';
 import { SimplePanel } from './panel';
-import getCommonValue from './utils/getCommonValue';
+import { getCommonValue } from './utils';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
 `;
 
-function LayerStylePanel({ selectedElements, onSetProperties }) {
-  let opacity = getCommonValue(selectedElements, 'opacity');
-  if (!opacity) {
-    // Default opacity is always 100.
-    opacity = 100;
-  }
-  const [state, setState] = useState({ opacity });
+function defaultOpacity({ opacity }) {
+  return opacity || 100;
+}
 
-  useEffect(() => {
-    setState({ opacity });
-  }, [opacity]);
-  const handleSubmit = (evt) => {
-    onSetProperties(state);
-    evt.preventDefault();
-  };
+function LayerStylePanel({ selectedElements, pushUpdate }) {
+  const opacity = getCommonValue(selectedElements, defaultOpacity);
   return (
-    <SimplePanel
-      name="layerStyle"
-      title={__('Layer', 'web-stories')}
-      onSubmit={handleSubmit}
-    >
+    <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
       <Row expand={false} spaceBetween={true}>
         <BoxedNumeric
           suffix={__('Opacity', 'web-stories')}
           symbol={_x('%', 'Percentage', 'web-stories')}
-          value={state.opacity}
-          onChange={(value) =>
-            setState({
-              ...state,
-              opacity: isNaN(value) || value === '' ? '' : parseFloat(value),
-            })
-          }
+          value={opacity}
+          onChange={(value) => pushUpdate({ opacity: value })}
           min="1"
           max="100"
         />
@@ -80,7 +61,7 @@ function LayerStylePanel({ selectedElements, onSetProperties }) {
 
 LayerStylePanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  onSetProperties: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default LayerStylePanel;

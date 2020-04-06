@@ -31,9 +31,16 @@ import { __ } from '@wordpress/i18n';
 import createSolid from '../../../../utils/createSolid';
 import useLibrary from '../../useLibrary';
 import { Tab } from '../shared';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { dataFontEm } from '../../../../units';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
+
+// By default, the element span roughly the size of the text contained in it.
+// This is an approximation based on the sample text.
+const DEFAULT_ELEMENT_WIDTH = 160;
+const DEFAULT_FONT_SIZE = dataFontEm(1.5);
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
@@ -76,18 +83,13 @@ function TextTab(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-
-    // @todo: Needs product definition
     insertElement('text', {
-      content: __('Double-click to edit...', 'web-stories'),
+      content: __('Fill in some text', 'web-stories'),
       color: createSolid(0, 0, 0),
-      fontSize: 100,
-      backgroundColor: createSolid(255, 255, 255),
-      width: 300,
-      height: 100,
-      x: 50,
-      y: 20,
-      rotationAngle: 0,
+      backgroundColor: createSolid(196, 196, 196),
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+      fontSize: DEFAULT_FONT_SIZE,
+      width: DEFAULT_ELEMENT_WIDTH,
     });
   };
   const { isActive } = props;

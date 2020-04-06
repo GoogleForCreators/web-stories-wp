@@ -25,31 +25,14 @@ import { useCallback } from 'react';
 import { useStory } from '../../../app';
 
 function useLayerSelection(layer) {
-  const { type, id: elementId } = layer;
-
-  const isBackground = type === 'background';
-  const backgroundHasElement = Boolean(layer.inner);
-  const elementInnerId =
-    isBackground && backgroundHasElement ? layer.inner.id : null;
+  const { id: elementId } = layer;
 
   const {
     state: { currentPage, selectedElementIds },
-    actions: {
-      setSelectedElementsById,
-      toggleElementInSelection,
-      clearSelection,
-    },
+    actions: { setSelectedElementsById, toggleElementInSelection },
   } = useStory();
 
-  let isSelected;
-  if (isBackground) {
-    isSelected = backgroundHasElement
-      ? selectedElementIds.includes(layer.inner.id)
-      : selectedElementIds.length === 0;
-  } else {
-    isSelected = selectedElementIds.includes(elementId);
-  }
-
+  const isSelected = selectedElementIds.includes(elementId);
   const pageElementIds = currentPage.elements.map(({ id }) => id);
 
   const handleClick = useCallback(
@@ -58,14 +41,7 @@ function useLayerSelection(layer) {
 
       evt.preventDefault();
       evt.stopPropagation();
-      if (isBackground) {
-        // If background layer is clicked either select nothing or select only background element
-        if (backgroundHasElement) {
-          setSelectedElementsById({ elementIds: [elementInnerId] });
-        } else {
-          clearSelection();
-        }
-      } else if (evt.shiftKey && hasSelection) {
+      if (evt.shiftKey && hasSelection) {
         // Shift key pressed with any element selected:
         // select everything between this layer and the first selected layer
         const firstId = selectedElementIds[0];
@@ -92,11 +68,7 @@ function useLayerSelection(layer) {
       selectedElementIds,
       setSelectedElementsById,
       toggleElementInSelection,
-      clearSelection,
       elementId,
-      elementInnerId,
-      isBackground,
-      backgroundHasElement,
     ]
   );
 
