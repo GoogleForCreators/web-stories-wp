@@ -30,49 +30,55 @@ import styled from 'styled-components';
  */
 import { BUTTON_TYPES } from '../../constants';
 import { Button } from '../';
+import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 
-const PreviewImage = styled.img`
-  object-fit: cover;
+const PreviewPane = styled.div`
+  position: relative;
   border-radius: 8px;
-  width: 100%;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight};
+  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
+  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
+  overflow: hidden;
+  z-index: -1;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight};
+    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
+    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight};
+    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
+    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight};
+    height: ${({ theme }) => theme.grid.min.imageHeight}px;
+    width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
 `;
 
 const EditControls = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth};
-  height: ${({ theme }) => theme.grid.desktop.imageHeight};
+  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
+  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-items: space-between;
+  justify-content: space-between;
   padding: 0 16px;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight};
-    width: ${({ theme }) => theme.grid.tablet.itemWidth};
+    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
+    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight};
-    width: ${({ theme }) => theme.grid.mobile.itemWidth};
+    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
+    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight};
-    width: ${({ theme }) => theme.grid.min.itemWidth};
+    height: ${({ theme }) => theme.grid.min.imageHeight}px;
+    width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
 `;
 
@@ -92,17 +98,21 @@ const CtaContainer = styled.div`
   margin: auto auto 25px;
 `;
 
+const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
+  margin-right: 9px;
+`;
+
 // TODO modify to handle other types of grid items, not just own stories
 const CardPreviewContainer = ({
   onOpenInEditorClick,
   onPreviewClick,
-  previewSource,
+  children,
 }) => {
   const displayEditControls = onPreviewClick || onOpenInEditorClick;
 
   return (
     <>
-      <PreviewImage src={previewSource} alt="preview" />
+      <PreviewPane>{children}</PreviewPane>
       {displayEditControls && (
         <EditControls>
           {onPreviewClick && (
@@ -111,6 +121,7 @@ const CardPreviewContainer = ({
                 type={BUTTON_TYPES.SECONDARY}
                 onClick={onPreviewClick}
               >
+                <PlayArrowIcon />
                 {__('Preview', 'web-stories')}
               </PreviewButton>
             </PreviewContainer>
@@ -129,7 +140,7 @@ const CardPreviewContainer = ({
 };
 
 CardPreviewContainer.propTypes = {
-  previewSource: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   onOpenInEditorClick: PropTypes.func,
   onPreviewClick: PropTypes.func,
 };

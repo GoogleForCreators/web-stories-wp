@@ -17,34 +17,48 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
 import styled from 'styled-components';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
-import {
-  ViewHeader,
-  FloatingTab,
-  CardGrid,
-  CardGridItem,
-  CardTitle,
-} from '../../../components';
-import { STORY_STATUSES } from '../../../constants';
+import { FloatingTab, ListBar } from '../../../components';
+import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+import FontProvider from '../../font/fontProvider';
+import usePagePreviewSize from '../../../utils/usePagePreviewSize';
+import StoryGridView from './storyGridView';
+import PageHeading from './pageHeading';
+import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+`;
+
+const DefaultBodyText = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-weight: ${({ theme }) => theme.fonts.body1.weight};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  color: ${({ theme }) => theme.colors.gray200};
+  margin: 40px 20px;
 `;
 
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
+  const [typeaheadValue, setTypeaheadValue] = useState('');
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
     state: { stories },
@@ -54,33 +68,93 @@ function MyStories() {
     fetchStories({ status });
   }, [fetchStories, status]);
 
+  const filteredStories = useMemo(() => {
+    return stories.filter((story) => {
+      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
+
+      return story.title.toLowerCase().includes(lowerTypeaheadValue);
+    });
+  }, [stories, typeaheadValue]);
+
+  const handleViewStyleBarButtonSelected = useCallback(() => {
+    if (viewStyle === VIEW_STYLE.LIST) {
+      setViewStyle(VIEW_STYLE.GRID);
+    } else {
+      setViewStyle(VIEW_STYLE.LIST);
+    }
+  }, [viewStyle]);
+
+  const filteredStoriesCount = filteredStories.length;
+
+  const listBarLabel = sprintf(
+    /* translators: %s: number of stories */
+    _n(
+      '%s total story',
+      '%s total stories',
+      filteredStoriesCount,
+      'web-stories'
+    ),
+    filteredStoriesCount
+  );
+
+  const BodyContent = useMemo(() => {
+    if (filteredStoriesCount > 0) {
+      return (
+        <>
+          <ListBar
+            label={listBarLabel}
+            layoutStyle={viewStyle}
+            onPress={handleViewStyleBarButtonSelected}
+          />
+          <StoryGridView filteredStories={filteredStories} />
+        </>
+      );
+    } else if (typeaheadValue.length > 0) {
+      return <NoResults typeaheadValue={typeaheadValue} />;
+    }
+
+    return (
+      <DefaultBodyText>
+        {__('Create a story to get started!', 'web-stories')}
+      </DefaultBodyText>
+    );
+  }, [
+    filteredStories,
+    filteredStoriesCount,
+    handleViewStyleBarButtonSelected,
+    listBarLabel,
+    typeaheadValue,
+    viewStyle,
+  ]);
+
   return (
-    <div>
-      <ViewHeader>{__('My Stories', 'web-stories')}</ViewHeader>
-      <FilterContainer>
-        {STORY_STATUSES.map((storyStatus) => (
-          <FloatingTab
-            key={storyStatus.value}
-            onClick={(_, value) => setStatus(value)}
-            name="all-stories"
-            value={storyStatus.value}
-            isSelected={status === storyStatus.value}
-          >
-            {storyStatus.label}
-          </FloatingTab>
-        ))}
-      </FilterContainer>
-      <CardGrid>
-        {stories.map((story) => (
-          <CardGridItem key={story.id}>
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-            />
-          </CardGridItem>
-        ))}
-      </CardGrid>
-    </div>
+    <FontProvider>
+      <TransformProvider>
+        <UnitsProvider pageSize={pageSize}>
+          <PageHeading
+            defaultTitle={__('My Stories', 'web-stories')}
+            filteredStories={filteredStories}
+            handleTypeaheadChange={setTypeaheadValue}
+            typeaheadValue={typeaheadValue}
+          />
+          <FilterContainer>
+            {STORY_STATUSES.map((storyStatus) => (
+              <FloatingTab
+                key={storyStatus.value}
+                onClick={(_, value) => setStatus(value)}
+                name="all-stories"
+                value={storyStatus.value}
+                isSelected={status === storyStatus.value}
+              >
+                {storyStatus.label}
+              </FloatingTab>
+            ))}
+          </FilterContainer>
+
+          {BodyContent}
+        </UnitsProvider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 

@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { LayerPanel, ColorPresetPanel } from '../../panels';
+import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
@@ -45,7 +45,6 @@ function DesignInspector() {
   return (
     <Wrapper>
       <TopPanels>
-        <ColorPresetPanel />
         <DesignPanels />
       </TopPanels>
       <BottomPanels>

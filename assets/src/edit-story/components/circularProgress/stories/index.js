@@ -17,26 +17,21 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { number } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
-import ColorPreset from '../colorPreset';
+import CircularProgress from '../';
 
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+export default {
+  title: 'Components/Circular Progress',
+  component: CircularProgress,
+};
 
-describe('Panels/ColorPreset', () => {
-  it('should render <ColorPreset /> panel', () => {
-    const { getByText } = arrange(<ColorPreset />);
+export const _default = () => {
+  const size = number('Size', 24);
+  const thickness = number('Thickness', 2);
 
-    const element = getByText('Color presets');
-
-    expect(element).toBeDefined();
-  });
-  // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/279
-});
+  return <CircularProgress size={size} thickness={thickness} />;
+};

@@ -17,9 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_RESERVED_PROPERTIES } from '../types';
-import { LinkType } from '../../../../components/link';
-import { intersect, objectWithout } from './utils';
+import { updateElementWithUpdater, intersect } from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -67,22 +65,7 @@ function updateElements(
     if (!idsToUpdate.includes(element.id)) {
       return element;
     }
-    const properties =
-      typeof propertiesOrUpdater === 'function'
-        ? propertiesOrUpdater(element)
-        : propertiesOrUpdater;
-    const allowedProperties = objectWithout(
-      properties,
-      ELEMENT_RESERVED_PROPERTIES
-    );
-    if (Object.keys(allowedProperties).length === 0) {
-      return element;
-    }
-    // One-tap links aren't allowed on the cover page
-    if (allowedProperties?.link?.type === LinkType.ONE_TAP && pageIndex === 0) {
-      allowedProperties.link.type = LinkType.TWO_TAP;
-    }
-    return { ...element, ...allowedProperties };
+    return updateElementWithUpdater(element, propertiesOrUpdater, pageIndex);
   });
 
   const newPage = {

@@ -84,7 +84,7 @@ const DropDownTitle = styled.span`
 
 const DropDownListWrapper = styled.div``;
 
-const DropDownList = styled.ul.attrs({ role: 'listbox' })`
+const DropDownListContainer = styled.div`
   position: absolute;
   top: 100%;
   left: 0;
@@ -94,6 +94,11 @@ const DropDownList = styled.ul.attrs({ role: 'listbox' })`
   flex-wrap: wrap;
   float: left;
   min-width: 160px;
+  max-height: 500px;
+  overflow-y: auto;
+`;
+
+const DropDownList = styled.ul.attrs({ role: 'listbox' })`
   width: 100%;
   padding: 5px 0;
   margin: 2px 0 0;
@@ -171,6 +176,7 @@ function DropDown({
   disabled,
   ariaLabel,
   lightMode = false,
+  placeholder,
 }) {
   DropDown.wrapperRef = useRef(null);
   DropDown.selectRef = useRef();
@@ -333,33 +339,34 @@ function DropDown({
         lightMode={lightMode}
       >
         <DropDownTitle>
-          {(activeItem && activeItem.name) ||
-            __('Select an Option', 'web-stories')}
+          {(activeItem && activeItem.name) || placeholder}
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
       <DropDownListWrapper>
         {isOpen ? (
-          <DropDownList
-            aria-multiselectable={false}
-            aria-required={false}
-            aria-activedescendant={activeItem ? activeItem.value : ''}
-            aria-labelledby={ariaLabel}
-          >
-            {options.map(({ name, value: optValue }) => {
-              return (
-                <DropDownItem
-                  id={`dropDown-${optValue}`}
-                  aria-selected={activeItem && activeItem.value === optValue}
-                  key={optValue}
-                  onClick={() => handleItemClick(optValue)}
-                  ref={setOptionRef}
-                >
-                  {name}
-                </DropDownItem>
-              );
-            })}
-          </DropDownList>
+          <DropDownListContainer>
+            <DropDownList
+              aria-multiselectable={false}
+              aria-required={false}
+              aria-activedescendant={activeItem ? activeItem.value : ''}
+              aria-labelledby={ariaLabel}
+            >
+              {options.map(({ name, value: optValue }) => {
+                return (
+                  <DropDownItem
+                    id={`dropDown-${optValue}`}
+                    aria-selected={activeItem && activeItem.value === optValue}
+                    key={optValue}
+                    onClick={() => handleItemClick(optValue)}
+                    ref={setOptionRef}
+                  >
+                    {name}
+                  </DropDownItem>
+                );
+              })}
+            </DropDownList>
+          </DropDownListContainer>
         ) : (
           [clearOptionsRefs(), null]
         )}
@@ -375,13 +382,16 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
   ariaLabel: __('DropDown', 'web-stories'),
   value: '',
+  onChange: () => {},
   options: [],
+  placeholder: __('Select an Option', 'web-stories'),
 };
 
 export default DropDown;

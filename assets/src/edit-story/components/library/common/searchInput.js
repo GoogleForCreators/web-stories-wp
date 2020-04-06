@@ -44,10 +44,20 @@ const Search = styled.input.attrs({ type: 'text' })`
   }
 `;
 
-export default function SearchInput({ value, placeholder, onChange }) {
+export default function SearchInput({
+  value,
+  placeholder,
+  onChange,
+  disabled,
+}) {
   return (
     <SearchField>
-      <Search value={value} placeholder={placeholder} onChange={onChange} />
+      <Search
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        disabled={disabled}
+      />
     </SearchField>
   );
 }
@@ -56,4 +66,9 @@ SearchInput.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+SearchInput.defaultProps = {
+  disabled: false,
 };

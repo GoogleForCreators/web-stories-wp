@@ -66,6 +66,7 @@ function APIProvider({ children }) {
       excerpt,
       featuredMedia,
       password,
+      stylePresets,
       publisherLogo,
       autoAdvance,
       defaultPageDuration,
@@ -89,6 +90,7 @@ function APIProvider({ children }) {
             defaultPageDuration,
           },
           featured_media: featuredMedia,
+          style_presets: stylePresets,
           publisher_logo: publisherLogo,
         },
         method: 'POST',
@@ -221,7 +223,7 @@ function APIProvider({ children }) {
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
   const state = {

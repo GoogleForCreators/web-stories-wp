@@ -30,7 +30,7 @@ import { useState } from 'react';
 import DropDown from '../';
 
 export default {
-  title: 'Components/DropDown',
+  title: 'Stories Editor/Components/DropDown',
   component: DropDown,
 };
 

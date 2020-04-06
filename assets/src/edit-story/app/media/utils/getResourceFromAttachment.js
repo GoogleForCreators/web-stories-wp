@@ -29,7 +29,13 @@ function getResourceFromAttachment(attachment) {
   const {
     id: videoId,
     guid: { rendered: src },
-    media_details: { width, height, length, length_formatted: lengthFormatted },
+    media_details: {
+      width,
+      height,
+      length,
+      length_formatted: lengthFormatted,
+      sizes,
+    },
     title: { raw: title },
     description: { raw: description },
     mime_type: mimeType,
@@ -49,6 +55,7 @@ function getResourceFromAttachment(attachment) {
     lengthFormatted,
     alt: alt || description,
     title,
+    sizes,
     local: false,
   });
 }

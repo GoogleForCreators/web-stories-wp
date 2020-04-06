@@ -17,17 +17,19 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPE } from '../constants';
+import { ANIMATION_TYPES } from '../constants';
 import getBlinkOnConfig from './blinkOn';
 import getBounceConfig from './bounce';
 import getFlipConfig from './flip';
 import getFloatOnConfig from './floatOn';
+import getMoveConfig from './move';
 import getSpinConfig from './spin';
 
 export default {
-  [ANIMATION_TYPE.BLINK_ON]: getBlinkOnConfig,
-  [ANIMATION_TYPE.BOUNCE]: getBounceConfig,
-  [ANIMATION_TYPE.FLIP]: getFlipConfig,
-  [ANIMATION_TYPE.FLOAT_ON]: getFloatOnConfig,
-  [ANIMATION_TYPE.SPIN]: getSpinConfig,
+  [ANIMATION_TYPES.BLINK_ON]: getBlinkOnConfig,
+  [ANIMATION_TYPES.BOUNCE]: getBounceConfig,
+  [ANIMATION_TYPES.FLIP]: getFlipConfig,
+  [ANIMATION_TYPES.FLOAT_ON]: getFloatOnConfig,
+  [ANIMATION_TYPES.MOVE]: getMoveConfig,
+  [ANIMATION_TYPES.SPIN]: getSpinConfig,
 };

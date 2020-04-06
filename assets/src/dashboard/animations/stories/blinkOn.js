@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPE } from '../constants';
+import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
@@ -27,7 +27,7 @@ export default {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.BLINK_ON;
+  const name = ANIMATION_TYPES.BLINK_ON;
   const label = 'Animate';
 
   const elementConfigs = [

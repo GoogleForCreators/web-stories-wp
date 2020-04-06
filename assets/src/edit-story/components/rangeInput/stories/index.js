@@ -25,7 +25,7 @@ import { number } from '@storybook/addon-knobs';
 import RangeInput from '../';
 
 export default {
-  title: 'Components/RangeInput',
+  title: 'Stories Editor/Components/RangeInput',
   component: RangeInput,
   parameters: {
     backgrounds: [{ name: 'dark background', value: '#000', default: true }],
