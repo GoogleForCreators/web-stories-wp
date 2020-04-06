@@ -38,7 +38,6 @@ function HistoryProvider({ children, size }) {
     undo,
     redo,
     versionNumber,
-    setHistoryChangedState,
   } = useHistoryReducer(size);
 
   const setPreventUnload = usePreventWindowUnload();
@@ -52,11 +51,9 @@ function HistoryProvider({ children, size }) {
       replayState,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
-      versionNumber,
     },
     actions: {
       appendToHistory,
-      setHistoryChangedState,
       clearHistory,
       undo,
       redo,

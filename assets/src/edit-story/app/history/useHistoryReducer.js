@@ -61,13 +61,9 @@ const reducer = (size) => (state, { type, payload }) => {
       };
 
     case REPLAY:
-      const newState = {
-        replayState: state.entries[payload],
-      };
-
       return {
         ...state,
-        ...newState,
+        replayState: state.entries[payload],
       };
 
     case CLEAR_HISTORY:
