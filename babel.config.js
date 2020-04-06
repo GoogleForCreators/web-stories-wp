@@ -16,6 +16,7 @@
 
 module.exports = function (api) {
   const isTestEnvironment = api.env() === 'test';
+  const isProduction = api.env() === 'production';
 
   const targets = isTestEnvironment
     ? {
@@ -39,22 +40,17 @@ module.exports = function (api) {
         {
           // Not fully released yet, see https://github.com/facebook/react/pull/18299#issuecomment-603738136.
           //runtime: 'automatic',
+          development: !isProduction,
         },
       ],
     ],
-    plugins: ['babel-plugin-styled-components'],
+    plugins: [
+      '@wordpress/babel-plugin-import-jsx-pragma',
+      '@babel/plugin-transform-react-jsx',
+      'babel-plugin-styled-components',
+    ],
     sourceMaps: true,
     env: {
-      development: {
-        presets: [
-          [
-            '@babel/preset-react',
-            {
-              development: true,
-            },
-          ],
-        ],
-      },
       production: {
         plugins: ['transform-react-remove-prop-types'],
       },
