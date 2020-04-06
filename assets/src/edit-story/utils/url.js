@@ -25,7 +25,7 @@ export { isUri as isValidUrl } from 'valid-url';
  * @return {string} the url with the protocol prepended to it
  */
 export function withProtocol(url, protocol = 'http') {
-  return /^(?:f|ht)tps?\:\/\//.test(url) ? url : `${protocol}://${url}`;
+  return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
 }
 
 export function toAbsoluteUrl(base, path) {

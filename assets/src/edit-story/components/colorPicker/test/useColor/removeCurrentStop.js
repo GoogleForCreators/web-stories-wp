@@ -33,7 +33,7 @@ describe('useColor({ action:"removeCurrentStop" })', () => {
 
     load(pattern);
     const initial = selectStop(0);
-    const result = removeCurrentStop(-0.1);
+    const result = removeCurrentStop();
 
     expect(result).toStrictEqual(initial);
   });

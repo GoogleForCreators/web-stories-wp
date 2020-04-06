@@ -69,7 +69,7 @@ function useCanvasSelectionCopyPaste(container) {
         })),
       };
       const serializedPayload = JSON.stringify(payload).replace(
-        /\-\-/g,
+        /--/g,
         DOUBLE_DASH_ESCAPE
       );
 

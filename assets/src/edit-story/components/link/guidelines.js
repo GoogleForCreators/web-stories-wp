@@ -66,7 +66,7 @@ const Tip = styled.span`
   ${({ pos }) => (pos === 'top' ? `bottom: 8px;` : `top: 8px;`)}
 `;
 
-function LinkGuidelines({}) {
+function LinkGuidelines() {
   const [linkType, setLinkType] = useState(LinkType.TWO_TAP);
   const {
     state: { selectedElements, currentPageNumber },

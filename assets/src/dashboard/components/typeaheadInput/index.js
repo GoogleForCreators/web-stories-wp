@@ -176,7 +176,7 @@ const TypeaheadInput = ({
   }, [menuFocused, inputValue]);
 
   const filteredItems = useMemo(() => {
-    if (!Boolean(isFiltering)) {
+    if (!isFiltering) {
       return items;
     }
     return items.filter((item) => {
