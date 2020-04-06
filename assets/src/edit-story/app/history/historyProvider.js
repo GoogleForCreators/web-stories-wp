@@ -38,20 +38,14 @@ function HistoryProvider({ children, size }) {
     undo,
     redo,
     versionNumber,
-    hasHistoryChanged,
     setHistoryChangedState,
   } = useHistoryReducer(size);
 
-  /**
-   * hasHistoryChanged here allows to control an isolated, explicit and temporary scope of history changes, avoiding race conditions registering `beforeunload` event,
-   * once we should consider that our system update the versionNumber sometimes systematically without user intention (e.g. creating a new story, uploading files, etc)
-   * */
-  usePreventWindowUnload(hasHistoryChanged);
+  const setPreventUnload = usePreventWindowUnload();
 
-  // On each versionNumber update, check if it has new records since the initial load or previous save and update the hasHistoryChanged state
   useEffect(() => {
-    setHistoryChangedState(versionNumber - 1 > 0);
-  }, [setHistoryChangedState, versionNumber]);
+    setPreventUnload('history', versionNumber - 1 > 0);
+  }, [setPreventUnload, versionNumber]);
 
   const state = {
     state: {

@@ -31,10 +31,10 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import { useHistory } from '../../history';
 import OutputStory from '../../../output/story';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.
@@ -63,12 +63,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
-  const {
-    actions: { setHistoryChangedState },
-  } = useHistory();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
+  const setPreventUnload = usePreventWindowUnload();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
@@ -105,8 +103,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           updateStory({ properties });
 
           refreshPostEditURL();
-
-          setHistoryChangedState(false);
         })
         .catch(() => {
           showSnackbar({
@@ -115,6 +111,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         })
         .finally(() => {
           setIsSaving(false);
+          setPreventUnload('history', false);
         });
     },
     [
@@ -126,7 +123,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       updateStory,
       refreshPostEditURL,
       showSnackbar,
-      setHistoryChangedState,
+      setPreventUnload,
     ]
   );
 

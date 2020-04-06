@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,7 +28,6 @@ import { __experimentalCreateInterpolateElement as createInterpolateElement } fr
 /**
  * Internal dependencies
  */
-import { useHistory } from '../../history';
 import { useUploader } from '../../uploader';
 import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
@@ -36,12 +35,9 @@ import {
   getResourceFromLocalFile,
   getResourceFromUploadAPI,
 } from '../../../app/media/utils';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
-  const {
-    state: { versionNumber },
-    actions: { setHistoryChangedState },
-  } = useHistory();
   const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
   const {
@@ -52,12 +48,14 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   const [isUploading, setIsUploading] = useState(false);
+  const setPreventUnload = usePreventWindowUnload();
 
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
       let localFiles;
       try {
         setIsUploading(true);
+        setPreventUnload('upload', true);
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
@@ -131,6 +129,8 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         });
 
         setIsUploading(false);
+      } finally {
+        setPreventUnload('upload', false);
       }
     },
     [
@@ -142,18 +142,9 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       pagingNum,
       mediaType,
       uploadFile,
+      setPreventUnload,
     ]
   );
-
-  // On each isUploading update, set a temporary hasHistoryChanged state to true/false, which will prevent leave the current page without confirmation
-  useEffect(() => {
-    setHistoryChangedState(isUploading);
-
-    // After unset the temporary uploading hasHistoryChanged state, check if a previous or a new change in the history was created during the upload, if yes, hasHistoryChanged state should be  restored
-    if (versionNumber - 1 > 0 && !isUploading) {
-      setHistoryChangedState(true);
-    }
-  }, [setHistoryChangedState, versionNumber, isUploading]);
 
   return {
     uploadMedia,

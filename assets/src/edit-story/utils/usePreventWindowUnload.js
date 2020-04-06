@@ -17,33 +17,41 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 /**
- * This control the listener register flow.
- * It should be declared outside of the hook to avoid recreate different references of the registered handler in order to make posible remove it later from multiple contexts.
+ * This is a helper that to compliant the correct register/unregister system of `beforeunload` event
  *
  * @param {Event} event beforeunload Event object
  */
 
-const beforeUnloadListener = (event) => {
+const beforeUnloadListener = (event, scope) => {
   event.preventDefault();
-  event.returnValue = '';
+  event.returnValue = scope;
 };
 
 /**
- * Prevents window unloads without a confirmation prompt.
- *
- * @param {boolean} condition A condition that will control when register/unregister the listener to prevent window unload
+ * This object below allow listeners registering by scope.
+ * It should be declared outside of the hook to avoid recreate different references of the registered handler in order to make posible remove it later from multiple contexts.
  */
-function usePreventWindowUnload(condition = false) {
-  useEffect(() => {
-    if (condition) {
-      return window.addEventListener('beforeunload', beforeUnloadListener);
-    }
 
-    return window.removeEventListener('beforeunload', beforeUnloadListener);
-  }, [condition]);
+const beforeUnloadListeners = {
+  history: (event) => beforeUnloadListener(event, 'history'),
+  upload: (event) => beforeUnloadListener(event, 'upload'),
+};
+
+function PreventWindowUnloadProvider() {
+  const setPreventUnload = useCallback((id, value) => {
+    if (value) {
+      // Register beforeunload by scope
+      window.addEventListener('beforeunload', beforeUnloadListeners[id]);
+    } else {
+      // Unregister beforeunload by scope
+      window.removeEventListener('beforeunload', beforeUnloadListeners[id]);
+    }
+  }, []);
+
+  return setPreventUnload;
 }
 
-export default usePreventWindowUnload;
+export default PreventWindowUnloadProvider;

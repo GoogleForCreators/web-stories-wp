@@ -22,14 +22,12 @@ import { useReducer, useCallback } from 'react';
 const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';
 const REPLAY = 'replay';
-const CHANGED = 'changed';
 
 const EMPTY_STATE = {
   entries: [],
   offset: 0,
   replayState: null,
   versionNumber: 0,
-  hasHistoryChanged: false,
 };
 
 const reducer = (size) => (state, { type, payload }) => {
@@ -58,7 +56,6 @@ const reducer = (size) => (state, { type, payload }) => {
       return {
         entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
         versionNumber: state.versionNumber + 1,
-        hasHistoryChanged: true,
         offset: 0,
         replayState: null,
       };
@@ -71,12 +68,6 @@ const reducer = (size) => (state, { type, payload }) => {
       return {
         ...state,
         ...newState,
-      };
-
-    case CHANGED:
-      return {
-        ...state,
-        hasHistoryChanged: payload,
       };
 
     case CLEAR_HISTORY:
@@ -105,13 +96,7 @@ function useHistoryReducer(size) {
   // state.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const {
-    entries,
-    offset,
-    replayState,
-    hasHistoryChanged,
-    versionNumber,
-  } = state;
+  const { entries, offset, replayState, versionNumber } = state;
   const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
@@ -155,24 +140,12 @@ function useHistoryReducer(size) {
     [dispatch]
   );
 
-  const setHistoryChangedState = useCallback(
-    (historyChangedState) => {
-      return dispatch({
-        type: CHANGED,
-        payload: historyChangedState,
-      });
-    },
-    [dispatch]
-  );
-
   return {
     replayState,
     appendToHistory,
     clearHistory,
-    setHistoryChangedState,
     offset,
     historyLength,
-    hasHistoryChanged,
     versionNumber,
     undo,
     redo,

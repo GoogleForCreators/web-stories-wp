@@ -27,8 +27,10 @@ import usePreventWindowUnload from '../usePreventWindowUnload';
 describe('usePreventWindowUnload', () => {
   it('should register beforeunload listener', () => {
     jest.spyOn(window, 'addEventListener');
-    renderHook(() => usePreventWindowUnload(true));
-
+    renderHook(() => {
+      const setPreventUnload = usePreventWindowUnload();
+      setPreventUnload('history', true);
+    });
     expect(window.addEventListener).toHaveBeenCalledWith(
       'beforeunload',
       expect.any(Function)
@@ -37,7 +39,10 @@ describe('usePreventWindowUnload', () => {
 
   it('should unregister beforeunload listener', () => {
     jest.spyOn(window, 'removeEventListener');
-    renderHook(() => usePreventWindowUnload(false));
+    renderHook(() => {
+      const setPreventUnload = usePreventWindowUnload();
+      setPreventUnload('history', false);
+    });
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'beforeunload',
