@@ -28,7 +28,7 @@ export const _default = () => {
   return (
     <CardGridItem>
       <CardPreviewContainer
-        onOpenInEditorClick={() => {}}
+        editUrl={'https://www.google.com'}
         onPreviewClick={() => {}}
         previewSource={'http://placeimg.com/225/400/nature'}
       />

@@ -150,7 +150,6 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
-
           {BodyContent}
         </UnitsProvider>
       </TransformProvider>
