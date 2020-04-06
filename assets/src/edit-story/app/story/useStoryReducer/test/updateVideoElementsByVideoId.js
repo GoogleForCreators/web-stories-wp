@@ -19,9 +19,9 @@
  */
 import { setupReducer } from './_utils';
 
-describe('updateVideoElementsByVideoId', () => {
-  it('should update all the elemtns with given videoId of element resource through all pages with a function', () => {
-    const { restore, updateVideoElementsByVideoId } = setupReducer();
+describe('updateVideoElementsById', () => {
+  it('should update all the elemtns with given id of element resource through all pages with a function', () => {
+    const { restore, updateVideoElementsById } = setupReducer();
 
     // Set an initial state.
     restore({
@@ -29,24 +29,24 @@ describe('updateVideoElementsByVideoId', () => {
         {
           id: '111',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
-            { id: '789', resource: { type: 'image', videoId: '11' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
         {
           id: '222',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsByVideoId({
-      videoId: '10',
+    const result = updateVideoElementsById({
+      id: '10',
       properties: ({ resource, ...rest }) => ({
         ...rest,
         resource: { ...resource, posterId: '1', poster: '2' },
@@ -61,7 +61,7 @@ describe('updateVideoElementsByVideoId', () => {
             id: '123',
             resource: {
               type: 'video',
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -70,12 +70,12 @@ describe('updateVideoElementsByVideoId', () => {
             id: '456',
             resource: {
               type: 'image',
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
           },
-          { id: '789', resource: { type: 'image', videoId: '11' } },
+          { id: '789', resource: { type: 'image', id: '11' } },
         ],
       },
       {
@@ -85,7 +85,7 @@ describe('updateVideoElementsByVideoId', () => {
             id: '123',
             resource: {
               type: 'video',
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -94,7 +94,7 @@ describe('updateVideoElementsByVideoId', () => {
             id: '456',
             resource: {
               type: 'image',
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -104,8 +104,8 @@ describe('updateVideoElementsByVideoId', () => {
     ]);
   });
 
-  it('should update all the elements with given videoId of element resource through all pages', () => {
-    const { restore, updateVideoElementsByVideoId } = setupReducer();
+  it('should update all the elements with given id of element resource through all pages', () => {
+    const { restore, updateVideoElementsById } = setupReducer();
 
     // Set an initial state.
     restore({
@@ -113,26 +113,26 @@ describe('updateVideoElementsByVideoId', () => {
         {
           id: '111',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
-            { id: '789', resource: { type: 'image', videoId: '11' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
         {
           id: '222',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsByVideoId({
-      videoId: '10',
+    const result = updateVideoElementsById({
+      id: '10',
       properties: {
-        resource: { videoId: '10', posterId: '1', poster: '2' },
+        resource: { id: '10', posterId: '1', poster: '2' },
       },
     });
 
@@ -143,7 +143,7 @@ describe('updateVideoElementsByVideoId', () => {
           {
             id: '123',
             resource: {
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -151,12 +151,12 @@ describe('updateVideoElementsByVideoId', () => {
           {
             id: '456',
             resource: {
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
           },
-          { id: '789', resource: { type: 'image', videoId: '11' } },
+          { id: '789', resource: { type: 'image', id: '11' } },
         ],
       },
       {
@@ -165,7 +165,7 @@ describe('updateVideoElementsByVideoId', () => {
           {
             id: '123',
             resource: {
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -173,7 +173,7 @@ describe('updateVideoElementsByVideoId', () => {
           {
             id: '456',
             resource: {
-              videoId: '10',
+              id: '10',
               posterId: '1',
               poster: '2',
             },
@@ -183,8 +183,8 @@ describe('updateVideoElementsByVideoId', () => {
     ]);
   });
 
-  it('should do nothing is videoId not given', () => {
-    const { restore, updateVideoElementsByVideoId } = setupReducer();
+  it('should do nothing is id not given', () => {
+    const { restore, updateVideoElementsById } = setupReducer();
 
     // Set an initial state.
     const initialState = restore({
@@ -192,23 +192,23 @@ describe('updateVideoElementsByVideoId', () => {
         {
           id: '111',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
-            { id: '789', resource: { type: 'image', videoId: '11' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
         {
           id: '222',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsByVideoId({
+    const result = updateVideoElementsById({
       properties: ({ resource, ...rest }) => ({
         ...rest,
         resource: { ...resource, posterId: '1', poster: '2' },
@@ -218,8 +218,8 @@ describe('updateVideoElementsByVideoId', () => {
     expect(result).toStrictEqual(initialState);
   });
 
-  it('should do nothing if no elements with given videoId', () => {
-    const { restore, updateVideoElementsByVideoId } = setupReducer();
+  it('should do nothing if no elements with given id', () => {
+    const { restore, updateVideoElementsById } = setupReducer();
 
     // Set an initial state.
     const initialState = restore({
@@ -229,22 +229,22 @@ describe('updateVideoElementsByVideoId', () => {
           elements: [
             { id: '123', resource: { type: 'video' } },
             { id: '456' },
-            { id: '789', resource: { type: 'image', videoId: '11' } },
+            { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
         {
           id: '222',
           elements: [
-            { id: '123', resource: { type: 'video', videoId: '10' } },
-            { id: '456', resource: { type: 'image', videoId: '10' } },
+            { id: '123', resource: { type: 'video', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '10' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsByVideoId({
-      videoId: '12',
+    const result = updateVideoElementsById({
+      id: '12',
       properties: ({ resource, ...rest }) => ({
         ...rest,
         resource: { ...resource, posterId: '1', poster: '2' },

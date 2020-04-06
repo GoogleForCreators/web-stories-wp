@@ -34,16 +34,16 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { uploadFile } = useUploader(false);
   const { storyId } = useConfig();
   const {
-    actions: { updateVideoElementsByVideoId },
+    actions: { updateVideoElementsById },
   } = useStory();
   const setProperties = useCallback(
-    (videoId, properties) => {
-      updateVideoElementsByVideoId({ videoId, properties });
+    (id, properties) => {
+      updateVideoElementsById({ id, properties });
     },
-    [updateVideoElementsByVideoId]
+    [updateVideoElementsById]
   );
 
-  const processData = async (videoId, src) => {
+  const processData = async (id, src) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
       const { id: posterId, source_url: poster } = await uploadFile(obj);
@@ -52,7 +52,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
           web_stories_is_poster: true,
         },
       });
-      await updateMedia(videoId, {
+      await updateMedia(id, {
         featured_media: posterId,
         post: storyId,
       });
@@ -63,8 +63,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
           poster,
         },
       });
-      setProperties(videoId, newState);
-      updateMediaElement({ videoId, posterId, poster });
+      setProperties(id, newState);
+      updateMediaElement({ id, posterId, poster });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
     }

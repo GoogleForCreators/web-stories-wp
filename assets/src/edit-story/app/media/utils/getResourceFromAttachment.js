@@ -51,7 +51,6 @@ function getResourceFromAttachment(attachment) {
     poster,
     posterId,
     id,
-    videoId: id,
     length,
     lengthFormatted,
     alt: alt || description,

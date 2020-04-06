@@ -67,7 +67,7 @@ function CanvasUploadDropTarget({ children }) {
         'height',
         'length',
         'lengthFormatted',
-        'videoId',
+        'id',
       ]);
       const updatedResource = {
         ...element.resource,
@@ -79,7 +79,7 @@ function CanvasUploadDropTarget({ children }) {
           resource: updatedResource,
         },
       });
-      await uploadVideoPoster(resource.videoId, resource.src);
+      await uploadVideoPoster(resource.id, resource.src);
     },
     [updateElementById, uploadVideoPoster]
   );

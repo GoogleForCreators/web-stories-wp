@@ -20,11 +20,11 @@
 import { updateElementWithUpdater } from './utils';
 
 /**
- * Update elements by the given videoId with the given properties.
+ * Update video elements by the given id with the given properties.
  *
- * Elements will be updated through all pages with correct videoId.
+ * Elements will be updated through all pages with correct id.
  *
- * If an empty videoId or a no matches with videoId, state is unchanged.
+ * If an empty id or a no matches with id, state is unchanged.
  *
  * If given set of properties is empty, state is unchanged.
  *
@@ -32,19 +32,19 @@ import { updateElementWithUpdater } from './utils';
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {string} payload.videoId videoId to update all elements with this videoId
+ * @param {string|null} payload.id id to update all video elements with this id
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateVideoElementsByVideoId(
+function updateVideoElementsById(
   state,
-  { videoId, properties: propertiesOrUpdater }
+  { id, properties: propertiesOrUpdater }
 ) {
-  if (videoId === null) return state;
+  if (id === null) return state;
   const updatedPages = state.pages.map((page, pageIndex) => {
     const updatedElements = page.elements.map((element) => {
-      if (element.resource?.videoId === videoId) {
+      if (element.resource?.id === id) {
         return updateElementWithUpdater(
           element,
           propertiesOrUpdater,
@@ -65,4 +65,4 @@ function updateVideoElementsByVideoId(
   };
 }
 
-export default updateVideoElementsByVideoId;
+export default updateVideoElementsById;

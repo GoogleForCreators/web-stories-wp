@@ -111,14 +111,14 @@ function MediaProvider({ children }) {
   }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
   const uploadVideoPoster = useCallback(
-    (videoId, src) => {
+    (id, src) => {
       const process = async () => {
-        if (processed.includes(videoId) || processing.includes(videoId)) {
+        if (processed.includes(id) || processing.includes(id)) {
           return;
         }
-        setProcessing({ videoId });
-        await uploadVideoFrame(videoId, src);
-        removeProcessing({ videoId });
+        setProcessing({ id });
+        await uploadVideoFrame(id, src);
+        removeProcessing({ id });
       };
       process();
     },
@@ -126,13 +126,13 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    ({ mimeType, posterId, id, src, videoId, local }) => {
+    ({ mimeType, posterId, id, src, local }) => {
       const process = async () => {
         if (
           allowedVideoMimeTypes.includes(mimeType) &&
           !local &&
           !posterId &&
-          videoId
+          id
         ) {
           await uploadVideoPoster(id, src);
         }

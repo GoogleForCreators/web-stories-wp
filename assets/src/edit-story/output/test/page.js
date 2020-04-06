@@ -96,7 +96,7 @@ describe('Page output', () => {
             resource: {
               type: 'video',
               mimeType: 'video/mp4',
-              videoId: 123,
+              id: 123,
               src: 'https://example.com/image.png',
               poster: 'https://example.com/poster.png',
               height: 1920,
@@ -171,7 +171,7 @@ describe('Page output', () => {
               resource: {
                 type: 'video',
                 mimeType: 'video/mp4',
-                videoId: 123,
+                id: 123,
                 src: 'https://example.com/image.png',
                 poster: 'https://example.com/poster.png',
                 height: 1920,

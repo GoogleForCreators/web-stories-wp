@@ -46,11 +46,11 @@ function useInsertElement() {
    */
   const backfillResource = useCallback(
     (resource, elementId) => {
-      const { type, src, videoId, posterId } = resource;
+      const { type, src, id, posterId } = resource;
 
       // Generate video poster if one not set.
-      if (type === 'video' && videoId && !posterId) {
-        uploadVideoPoster(videoId, src, elementId, resource);
+      if (type === 'video' && id && !posterId) {
+        uploadVideoPoster(id, src, elementId, resource);
       }
     },
     [uploadVideoPoster]
