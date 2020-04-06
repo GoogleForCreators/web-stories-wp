@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
-import useFocusOut from '../../../utils/useFocusOut';
 import Popup from '../../popup';
 import DropDownList from './list';
 
@@ -89,7 +88,6 @@ function DropDown({
   lightMode = false,
   placeholder,
 }) {
-  const wrapperRef = useRef();
   const selectRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -119,9 +117,8 @@ function DropDown({
     [onChange]
   );
 
-  useFocusOut(wrapperRef, toggleOptions);
-
-  const handleSelectClick = () => {
+  const handleSelectClick = (e) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
   };
 
@@ -145,10 +142,9 @@ function DropDown({
       <Popup anchor={selectRef} isOpen={isOpen}>
         <DropDownList
           handleCurrentValue={handleCurrentValue}
-          activeItem={activeItem}
+          value={activeItem && activeItem.value}
           ariaLabel={ariaLabel}
           options={options}
-          forwardRef={wrapperRef}
           toggleOptions={toggleOptions}
         />
       </Popup>

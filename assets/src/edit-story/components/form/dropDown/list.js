@@ -27,15 +27,17 @@ import { useDebouncedCallback } from 'use-debounce';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
+import useFocusOut from '../../../utils/useFocusOut';
 
 const ListContainer = styled.div`
   float: right;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  width: 100%;
   min-width: 160px;
   max-height: 370px;
-  overflow-y: auto;
+  overscroll-behavior: none auto;
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -111,17 +113,16 @@ const availableKeysForSearch = [
 
 function DropDownList({
   handleCurrentValue,
-  activeItem,
+  value,
   ariaLabel,
   options,
-  forwardRef,
   toggleOptions,
 }) {
-  const wrapperRef = useRef();
+  const listContainerRef = useRef();
   const arrayOfOptionsRefs = [];
 
   const [searchValue, setSearchValue] = useState('');
-  const [focusedValue, setFocusedValue] = useState(activeItem);
+  const [focusedValue, setFocusedValue] = useState(value);
   const isNullOrUndefined = (item) => item === null || item === undefined;
   const focusedIndex = useMemo(
     () =>
@@ -179,21 +180,25 @@ function DropDownList({
     handleCurrentValue(focusedValue);
   }, [focusedValue, handleCurrentValue]);
 
-  useKeyDownEffect(wrapperRef, { key: 'esc' }, toggleOptions, [toggleOptions]);
+  useFocusOut(listContainerRef, toggleOptions);
+
+  useKeyDownEffect(listContainerRef, { key: 'esc' }, toggleOptions, [
+    toggleOptions,
+  ]);
   useKeyDownEffect(
-    wrapperRef,
+    listContainerRef,
     { key: ['up', 'down'], shift: true },
     handleUpDown,
     [handleUpDown]
   );
   useKeyDownEffect(
-    wrapperRef,
+    listContainerRef,
     { key: availableKeysForSearch, shift: true },
     handleKeyDown,
     [handleKeyDown]
   );
   useKeyDownEffect(
-    wrapperRef,
+    listContainerRef,
     { key: ['space', 'enter'], shift: true },
     handleEnter,
     [handleEnter]
@@ -217,19 +222,18 @@ function DropDownList({
   };
 
   return (
-    <ListContainer ref={forwardRef}>
+    <ListContainer ref={listContainerRef}>
       <List
-        ref={wrapperRef}
         aria-multiselectable={false}
         aria-required={false}
-        aria-activedescendant={activeItem ? activeItem.value : ''}
+        aria-activedescendant={value || ''}
         aria-labelledby={ariaLabel}
       >
         {options.map(({ name, value: optValue }) => {
           return (
             <Item
               id={`dropDown-${optValue}`}
-              aria-selected={activeItem && activeItem.value === optValue}
+              aria-selected={value === optValue}
               key={optValue}
               onClick={() => handleItemClick(optValue)}
               ref={setOptionRef}
@@ -246,10 +250,9 @@ function DropDownList({
 DropDownList.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
-  activeItem: PropTypes.object,
+  value: PropTypes.string,
   ariaLabel: PropTypes.string,
   options: PropTypes.array.isRequired,
-  forwardRef: PropTypes.object,
 };
 
 export default DropDownList;
