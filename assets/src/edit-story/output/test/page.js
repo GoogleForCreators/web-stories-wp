@@ -111,9 +111,25 @@ describe('Page output', () => {
     };
 
     const { container } = render(<PageOutput {...props} />);
-    await expect(queryById(container, 'el-baz')).toBeInTheDocument();
+    const video = queryById(container, 'el-baz-media');
+    await expect(video).toBeInTheDocument();
+    expect(video).toMatchInlineSnapshot(`
+      <amp-video
+        artwork="https://example.com/poster.png"
+        autoplay="autoplay"
+        id="el-baz-media"
+        layout="fill"
+        loop="loop"
+        poster="https://example.com/poster.png"
+      >
+        <source
+          src="https://example.com/image.png"
+          type="video/mp4"
+        />
+      </amp-video>
+    `);
     await expect(
-      queryByAutoAdvanceAfter(container, 'el-baz')
+      queryByAutoAdvanceAfter(container, 'el-baz-media')
     ).toBeInTheDocument();
   });
 

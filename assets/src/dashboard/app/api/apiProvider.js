@@ -35,24 +35,21 @@ import { STORY_STATUSES } from '../../constants';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
-export function reshapeStoryObject({
-  id,
-  title,
-  modified,
-  status,
-  story_data: storyData,
-}) {
-  return {
-    id,
-    status,
-    title: title.rendered,
-    modified: moment(modified),
-    pages: storyData.pages,
+export function reshapeStoryObject(editStoryURL) {
+  return function ({ id, title, modified, status, story_data: storyData }) {
+    return {
+      id,
+      status,
+      title: title.rendered,
+      modified: moment(modified),
+      pages: storyData.pages,
+      editStoryUrl: `${editStoryURL}&post=${id}`,
+    };
   };
 }
 
 export default function ApiProvider({ children }) {
-  const { api } = useConfig();
+  const { api, editStoryURL } = useConfig();
   const [stories, setStories] = useState([]);
 
   const fetchStories = useCallback(
@@ -65,14 +62,16 @@ export default function ApiProvider({ children }) {
         const serverStoryResponse = await apiFetch({
           path,
         });
-        const reshapedStories = serverStoryResponse.map(reshapeStoryObject);
+        const reshapedStories = serverStoryResponse.map(
+          reshapeStoryObject(editStoryURL)
+        );
         setStories(reshapedStories);
         return reshapedStories;
       } catch (err) {
         return [];
       }
     },
-    [api.stories]
+    [api.stories, editStoryURL]
   );
 
   const getAllFonts = useCallback(() => {

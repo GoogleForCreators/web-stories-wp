@@ -60,18 +60,18 @@ export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
 
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
-  {
-    value: '/templates-gallery',
-    label: __('Templates Gallery', 'web-stories'),
-  },
-  { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
+  // {
+  //   value: '/templates-gallery',
+  //   label: __('Templates Gallery', 'web-stories'),
+  // },
+  // { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
 ];
 
 export const STORY_STATUSES = [
   { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
   { label: __('Drafts', 'web-stories'), value: 'draft' },
   { label: __('Active Stories', 'web-stories'), value: 'publish' },
-  { label: __('My Templates', 'web-stories'), value: 'template ' },
+  // { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
 
 export const VIEW_STYLE = {
