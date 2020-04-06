@@ -124,13 +124,11 @@ const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
               </PreviewButton>
             </PreviewContainer>
           )}
-          {editUrl && (
-            <CtaContainer>
-              <EditButton forwardedAs="a" href={editUrl}>
-                {__('Open in editor', 'web-stories')}
-              </EditButton>
-            </CtaContainer>
-          )}
+          <CtaContainer>
+            <EditButton forwardedAs="a" href={editUrl}>
+              {__('Open in editor', 'web-stories')}
+            </EditButton>
+          </CtaContainer>
         </EditControls>
       )}
     </>
