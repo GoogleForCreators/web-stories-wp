@@ -132,15 +132,25 @@ class Dashboard {
 			)
 		);
 
+		$edit_story_url = admin_url(
+			add_query_arg(
+				[
+					'action' => 'edit',
+				],
+				'post.php'
+			)
+		);
+
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesDashboardSettings',
 			[
 				'id'     => 'web-stories-dashboard',
 				'config' => [
-					'isRTL'       => is_rtl(),
-					'newStoryURL' => $new_story_url,
-					'api'         => [
+					'isRTL'        => is_rtl(),
+					'newStoryURL'  => $new_story_url,
+					'editStoryURL' => $edit_story_url,
+					'api'          => [
 						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
 						'fonts'   => '/web-stories/v1/fonts',
 					],

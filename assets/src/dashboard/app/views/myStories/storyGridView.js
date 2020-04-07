@@ -31,7 +31,7 @@ const StoryGridView = ({ filteredStories }) => (
     {filteredStories.map((story) => (
       <CardGridItem key={story.id}>
         <CardPreviewContainer
-          onOpenInEditorClick={() => {}}
+          editUrl={story.editStoryUrl}
           onPreviewClick={() => {}}
           previewSource={'http://placeimg.com/225/400/nature'}
         >
