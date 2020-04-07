@@ -55,20 +55,6 @@ const Tooltip = styled.div`
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
   z-index: 9999;
-  ${({ placement }) => {
-    switch (placement) {
-      case 'top':
-        return `margin-bottom: ${SPACING}px;`;
-      case 'bottom':
-        return `margin-top: ${SPACING}px;`;
-      case 'left':
-        return `margin-right: ${SPACING}px;`;
-      case 'right':
-        return `margin-left: ${SPACING}px;`;
-      default:
-        return ``;
-    }
-  }}
 `;
 
 const TooltipArrow = styled.div`
@@ -77,6 +63,8 @@ const TooltipArrow = styled.div`
   ${({ placement, theme }) => {
     switch (placement) {
       case 'top':
+      case 'top-start':
+      case 'top-end':
         return `
           bottom: -6px;
           border-top: 6px solid ${theme.colors.bg.v0};
@@ -84,6 +72,8 @@ const TooltipArrow = styled.div`
           border-right: 6px solid transparent;
         `;
       case 'bottom':
+      case 'bottom-start':
+      case 'bottom-end':
         return `
           top: -6px;
           border-bottom: 6px solid ${theme.colors.bg.v0};
@@ -91,6 +81,8 @@ const TooltipArrow = styled.div`
           border-right: 6px solid transparent;
         `;
       case 'left':
+      case 'left-start':
+      case 'left-end':
         return `
           right: -6px;
           border-top: 6px solid transparent;
@@ -98,6 +90,8 @@ const TooltipArrow = styled.div`
           border-left: 6px solid ${theme.colors.bg.v0};
         `;
       case 'right':
+      case 'right-start':
+      case 'right-end':
         return `
           left: -6px;
           border-top: 6px solid transparent;
@@ -149,7 +143,21 @@ function WithTooltip({
       >
         {children}
       </Wrapper>
-      <Popup anchor={ref} placement={placement} isOpen={shown}>
+      <Popup
+        anchor={ref}
+        placement={placement}
+        spacing={{
+          x:
+            placement.startsWith('left') || placement.startsWith('right')
+              ? SPACING
+              : 0,
+          y:
+            placement.startsWith('top') || placement.startsWith('bottom')
+              ? SPACING
+              : 0,
+        }}
+        isOpen={shown}
+      >
         <Tooltip arrow={arrow} placement={placement} shown={shown}>
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           <TooltipArrow placement={placement} />

@@ -129,7 +129,7 @@ function WithLink({
         anchor={anchorRef}
         isOpen={link && !dragging && !hasTransforms}
         placement={active ? 'top' : 'left-start'}
-        spacing={{ x: active ? 0 : 20, y: active ? 58 : 0 }}
+        spacing={{ x: active ? 0 : 20, y: active ? 42 : 0 }}
       >
         {link &&
           !dragging &&

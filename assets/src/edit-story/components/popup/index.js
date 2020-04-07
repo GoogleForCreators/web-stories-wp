@@ -52,7 +52,14 @@ function getXTransforms(placement) {
 }
 
 function getYTransforms(placement) {
-  if (!placement.endsWith('-start') && !placement.endsWith('-end')) {
+  if (
+    placement.startsWith('top') ||
+    placement === 'right-end' ||
+    placement === 'left-end'
+  ) {
+    return `-100%`;
+  }
+  if (placement === 'right' || placement === 'left') {
     return `-50%`;
   }
   return null;
@@ -87,36 +94,38 @@ function getXOffset(placement, spacing = 0, anchorRect, bodyRect) {
       return bodyRect.left + anchorRect.left + anchorRect.width + spacing;
     case 'bottom':
     case 'top':
-    default:
       return bodyRect.left + anchorRect.left + anchorRect.width / 2;
+    default:
+      return 0;
   }
 }
 
-function getYOffset(placement, spacing = 0, anchorRect, bodyRect) {
+function getYOffset(placement, spacing = 0, anchorRect) {
   switch (placement) {
     case 'bottom':
     case 'bottom-start':
     case 'bottom-end':
     case 'left-end':
     case 'right-end':
-      return bodyRect.top + anchorRect.top + anchorRect.height + spacing;
+      return anchorRect.top + anchorRect.height + spacing;
     case 'top':
     case 'top-start':
     case 'top-end':
     case 'left-start':
     case 'right-start':
-      return bodyRect.top + anchorRect.top - spacing;
+      return anchorRect.top - spacing;
     case 'right':
     case 'left':
+      return anchorRect.top + anchorRect.height / 2;
     default:
-      return bodyRect.top + anchorRect.top + anchorRect.height / 2;
+      return 0;
   }
 }
 
 function getOffset(placement, spacing, anchorRect, bodyRect) {
   return {
     x: getXOffset(placement, spacing?.x, anchorRect, bodyRect),
-    y: getYOffset(placement, spacing?.y, anchorRect, bodyRect),
+    y: getYOffset(placement, spacing?.y, anchorRect),
   };
 }
 
@@ -127,7 +136,7 @@ function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
   const positionPopup = useCallback(
     (evt) => {
       // If scrolling within the popup, ignore.
-      if (evt && containerRef.current?.contains(evt.target)) {
+      if (evt && evt.target && containerRef.current?.contains(evt.target)) {
         return;
       }
       const anchorRect = anchor.current.getBoundingClientRect();
