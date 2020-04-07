@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -51,13 +50,13 @@ const InspectorBackground = styled.div`
 `;
 
 function InspectorLayout() {
-  const ref = useRef(null);
   const {
     actions: { setInspectorContentNode },
+    state: { inspectorRef },
   } = useInspector();
-  useEscapeToBlurEffect(ref);
+  useEscapeToBlurEffect(inspectorRef);
   return (
-    <Layout ref={ref}>
+    <Layout ref={inspectorRef}>
       <TabsArea>
         <InspectorTabs />
       </TabsArea>

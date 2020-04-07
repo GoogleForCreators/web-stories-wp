@@ -52,6 +52,7 @@ const ShapePreview = styled.div`
   flex: 0 0 25%;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const Path = styled.path`

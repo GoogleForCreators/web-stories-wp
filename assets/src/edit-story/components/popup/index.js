@@ -78,23 +78,32 @@ function getTransforms(placement) {
   };`;
 }
 
-function getXOffset(placement, spacing = 0, anchorRect, bodyRect) {
+function getXOffset(placement, spacing = 0, anchorRect, dockRect, bodyRect) {
   switch (placement) {
     case 'bottom-start':
     case 'top-start':
     case 'left':
     case 'left-start':
     case 'left-end':
-      return bodyRect.left + anchorRect.left - spacing;
+      return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
     case 'bottom-end':
     case 'top-end':
     case 'right':
     case 'right-start':
     case 'right-end':
-      return bodyRect.left + anchorRect.left + anchorRect.width + spacing;
+      return (
+        bodyRect.left +
+        (dockRect?.left || anchorRect.left) +
+        anchorRect.width +
+        spacing
+      );
     case 'bottom':
     case 'top':
-      return bodyRect.left + anchorRect.left + anchorRect.width / 2;
+      return (
+        bodyRect.left +
+        (dockRect?.left || anchorRect.left) +
+        anchorRect.width / 2
+      );
     default:
       return 0;
   }
@@ -122,11 +131,23 @@ function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
-function getOffset(placement, spacing, anchorRect, popupRect, bodyRect) {
+function getOffset(placement, spacing, anchor, dock, popup) {
+  const anchorRect = anchor.current.getBoundingClientRect();
+  const bodyRect = document.body.getBoundingClientRect();
+  const popupRect = popup.current?.getBoundingClientRect();
+  const dockRect = dock?.current?.getBoundingClientRect();
+
   const { height = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
+
   // Horizontal
-  const offsetX = getXOffset(placement, spacingH, anchorRect, bodyRect);
+  const offsetX = getXOffset(
+    placement,
+    spacingH,
+    anchorRect,
+    dockRect,
+    bodyRect
+  );
   const maxOffsetX = bodyRect.width - spacingH;
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
@@ -138,26 +159,29 @@ function getOffset(placement, spacing, anchorRect, popupRect, bodyRect) {
   };
 }
 
-function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
+function Popup({
+  anchor,
+  dock,
+  children,
+  placement = 'bottom',
+  spacing,
+  isOpen,
+}) {
   const [popupState, setPopupState] = useState(null);
-  const containerRef = useRef(null);
+  const popup = useRef(null);
 
   const positionPopup = useCallback(
     (evt) => {
       // If scrolling within the popup, ignore.
-      if (evt && evt.target && containerRef.current?.contains(evt.target)) {
+      if (evt && popup.current?.contains(evt.target)) {
         return;
       }
 
-      const anchorRect = anchor.current.getBoundingClientRect();
-      const bodyRect = document.body.getBoundingClientRect();
-      const popupRect = containerRef.current?.getBoundingClientRect();
-
       setPopupState({
-        offset: getOffset(placement, spacing, anchorRect, popupRect, bodyRect),
+        offset: getOffset(placement, spacing, anchor, dock, popup),
       });
     },
-    [containerRef, anchor, placement, spacing]
+    [popup, anchor, dock, placement, spacing]
   );
 
   useLayoutEffect(() => {
@@ -176,11 +200,7 @@ function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
 
   return popupState && isOpen
     ? createPortal(
-        <Container
-          ref={containerRef}
-          {...popupState.offset}
-          placement={placement}
-        >
+        <Container ref={popup} {...popupState.offset} placement={placement}>
           {children}
         </Container>,
         document.body

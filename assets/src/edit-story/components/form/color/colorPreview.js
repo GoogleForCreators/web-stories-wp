@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { parseToRgb } from 'polished';
 
 /**
@@ -34,6 +34,7 @@ import { PatternPropType } from '../../../types';
 import MULTIPLE_VALUE from '../multipleValue';
 import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
+import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
@@ -87,10 +88,13 @@ function ColorPreview({
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
 
-  const ref = useRef();
-
   const [hexInputValue, setHexInputValue] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
+  const previewRef = useRef(null);
+
+  const {
+    state: { inspectorRef },
+  } = useInspector();
 
   useEffect(() => setHexInputValue(previewText), [previewText]);
 
@@ -103,12 +107,10 @@ function ColorPreview({
   const editLabel = __('Edit', 'web-stories');
   const inputLabel = __('Enter', 'web-stories');
 
-  const togglePickerOpen = () => setPickerOpen(() => true);
-
   const buttonProps = {
     as: 'button',
     type: 'button', // avoid submitting forms
-    onClick: togglePickerOpen,
+    onClick: () => setPickerOpen(true),
     'aria-label': `${editLabel}: ${label}`,
   };
 
@@ -149,7 +151,7 @@ function ColorPreview({
       {isEditable ? (
         // If editable, only the visual preview component is a button
         // And the text is an input field
-        <Preview ref={ref}>
+        <Preview ref={previewRef}>
           <VisualPreview role="status" style={previewStyle} {...buttonProps} />
           <TextualInput
             aria-label={`${inputLabel}: ${label}`}
@@ -160,7 +162,7 @@ function ColorPreview({
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <Preview ref={ref} {...buttonProps}>
+        <Preview ref={previewRef} {...buttonProps}>
           <VisualPreview role="status" style={previewStyle} />
           <TextualPreview>
             {isMultiple
@@ -171,10 +173,11 @@ function ColorPreview({
         </Preview>
       )}
       <Popup
-        anchor={ref}
+        anchor={previewRef}
+        dock={inspectorRef}
         isOpen={pickerOpen}
         placement={'left-start'}
-        spacing={{ x: 60 }}
+        spacing={{ x: 20 }}
       >
         <ColorPicker
           color={isMultiple ? null : value}
