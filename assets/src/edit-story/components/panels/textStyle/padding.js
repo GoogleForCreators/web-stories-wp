@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -52,9 +52,11 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_PADDING
   );
 
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(
-    padding.horizontal === padding.vertical
-  );
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
+
+  useEffect(() => {
+    setLockPaddingRatio(padding.horizontal === padding.vertical);
+  }, [padding]);
 
   const handleChange = useCallback(
     (newPadding) => {
