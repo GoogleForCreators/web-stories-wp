@@ -42,6 +42,7 @@ const Container = styled.div`
   @media ${({ theme }) => theme.breakpoint.min} {
     display: block;
     margin-bottom: 60px;
+    margin-top: 20px;
   }
 `;
 

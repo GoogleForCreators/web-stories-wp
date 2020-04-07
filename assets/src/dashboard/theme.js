@@ -144,6 +144,7 @@ const theme = {
     tab: {
       family: 'Google Sans',
       size: '14px',
+      minSize: '12px',
       lineHeight: '20px',
       letterSpacing: '0.01em',
       weight: '500',
@@ -242,11 +243,13 @@ const theme = {
     tablet: 'screen and (max-width: 1120px)',
     mobile: 'screen and (max-width: 800px)',
     min: 'screen and (max-width: 684px)',
+    trueMobile: 'screen and (max-width: 440px)',
     raw: {
       desktop: 1280,
       tablet: 1120,
       mobile: 800,
       min: 684,
+      trueMobile: 440,
     },
   },
 };
