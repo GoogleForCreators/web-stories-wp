@@ -36,13 +36,12 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 40px 20px;
+  margin: ${({ theme }) => `40px ${theme.pageGutter.desktop}px`};
   max-width: 100%;
 
   @media ${({ theme }) => theme.breakpoint.min} {
     display: block;
-    margin-bottom: 60px;
-    margin-top: 20px;
+    margin: ${({ theme }) => `20px ${theme.pageGutter.min}px 60px`};
   }
 `;
 
@@ -60,11 +59,11 @@ const SearchContainer = styled.div`
   position: absolute;
   max-width: 35%;
   margin: auto 0;
-  right: 20px;
+  right: ${({ theme }) => `${theme.pageGutter.desktop}px`};
   display: flex;
   justify-content: flex-end;
   @media ${({ theme }) => theme.breakpoint.min} {
-    left: 20px;
+    left: ${({ theme }) => `${theme.pageGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }

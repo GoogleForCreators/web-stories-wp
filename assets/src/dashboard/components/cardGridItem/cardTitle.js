@@ -50,6 +50,13 @@ const StyledCardTitle = styled.div`
     height: ${({ theme }) =>
       `${theme.grid.min.itemHeight - theme.grid.min.imageHeight}px`};
   }
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    height: ${({ theme }) =>
+      `${
+        theme.grid.trueMobile.itemHeight - theme.grid.trueMobile.imageHeight
+      }px`};
+  }
 `;
 
 const StyledTitle = styled.p`

@@ -44,6 +44,12 @@ const CardGridItem = styled.div`
   @media ${({ theme }) => theme.breakpoint.min} {
     height: ${({ theme }) => `${theme.grid.min.itemHeight}px`};
     width: ${({ theme }) => `${theme.grid.min.itemWidth}px`};
+    margin: auto;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    height: ${({ theme }) => `${theme.grid.trueMobile.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.trueMobile.itemWidth}px`};
   }
 
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {

@@ -208,6 +208,10 @@ const theme = {
       letterSpacing: '0.01em',
     },
   },
+  pageGutter: {
+    desktop: 20,
+    min: 10,
+  },
   grid: {
     desktop: {
       gap: '25px',
@@ -235,6 +239,13 @@ const theme = {
       itemWidth: 185,
       itemHeight: 338,
       imageHeight: 278,
+      fr: '1fr',
+    },
+    trueMobile: {
+      gap: '16px',
+      itemWidth: 139,
+      itemHeight: 256,
+      imageHeight: 209,
       fr: '1fr',
     },
   },

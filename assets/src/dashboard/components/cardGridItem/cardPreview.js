@@ -54,6 +54,11 @@ const PreviewPane = styled.div`
     height: ${({ theme }) => theme.grid.min.imageHeight}px;
     width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    height: ${({ theme }) => theme.grid.trueMobile.imageHeight}px;
+    width: ${({ theme }) => theme.grid.trueMobile.itemWidth}px;
+  }
 `;
 
 const EditControls = styled.div`
@@ -64,7 +69,7 @@ const EditControls = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
@@ -79,6 +84,20 @@ const EditControls = styled.div`
   @media ${({ theme }) => theme.breakpoint.min} {
     height: ${({ theme }) => theme.grid.min.imageHeight}px;
     width: ${({ theme }) => theme.grid.min.itemWidth}px;
+
+    button,
+    a {
+      min-width: 120px;
+      max-width: 90%;
+      & > label {
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    height: ${({ theme }) => theme.grid.trueMobile.imageHeight}px;
+    width: ${({ theme }) => theme.grid.trueMobile.itemWidth}px;
   }
 `;
 

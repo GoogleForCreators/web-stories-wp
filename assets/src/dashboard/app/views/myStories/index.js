@@ -41,8 +41,12 @@ import NoResults from './noResults';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px 0;
-  margin: 0 20px;
+  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
+  }
 
   @media ${({ theme }) => theme.breakpoint.trueMobile} {
     & > label {
@@ -52,9 +56,16 @@ const FilterContainer = styled.div`
     }
   }
 `;
+const BodyWrapper = styled.div`
+  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
+  }
+`;
 
 const ListBarContainer = styled.div`
-  margin: 10px 0 0 20px;
+  margin-top: 10px;
 `;
 
 const DefaultBodyText = styled.p`
@@ -113,7 +124,7 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {
       return (
-        <>
+        <BodyWrapper>
           <ListBarContainer>
             <ListBar
               label={listBarLabel}
@@ -122,7 +133,7 @@ function MyStories() {
             />
           </ListBarContainer>
           <StoryGridView filteredStories={filteredStories} />
-        </>
+        </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;

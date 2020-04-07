@@ -45,6 +45,11 @@ const CardGrid = styled.div`
       `repeat(auto-fill, minmax(${theme.grid.min.itemWidth}px, ${theme.grid.min.fr}))`};
     grid-gap: ${({ theme }) => theme.grid.min.gap};
   }
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    grid-template-columns: ${({ theme }) => `repeat(2, ${theme.grid.min.fr})`};
+    grid-gap: ${({ theme }) => theme.grid.trueMobile.gap};
+  }
 `;
 
 CardGrid.propTypes = {
@@ -52,8 +57,11 @@ CardGrid.propTypes = {
 };
 
 export const StoryGrid = styled(CardGrid)`
-  margin: 20px;
-  width: calc(100% - 40px);
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+  }
 `;
 
 export default CardGrid;
