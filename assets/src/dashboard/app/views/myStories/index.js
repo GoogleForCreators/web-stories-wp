@@ -43,6 +43,14 @@ const FilterContainer = styled.div`
   padding: 0 20px 20px 0;
   margin: 0 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+
+  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+    & > label {
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 10px 0 0;
+    }
+  }
 `;
 
 const ListBarContainer = styled.div`
