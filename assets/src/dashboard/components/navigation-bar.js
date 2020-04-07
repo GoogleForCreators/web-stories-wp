@@ -68,10 +68,11 @@ const Nav = styled.nav`
   border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  padding: ${({ theme }) => `${theme.pageGutter.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.min} {
     flex-wrap: wrap;
+    padding: ${({ theme }) => `${theme.pageGutter.min}px`};
   }
 `;
 

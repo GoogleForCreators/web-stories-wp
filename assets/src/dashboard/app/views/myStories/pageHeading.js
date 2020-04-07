@@ -51,7 +51,7 @@ const ViewHeaderContainer = styled.div`
   overflow-wrap: break-word;
   @media ${({ theme }) => theme.breakpoint.min} {
     width: 100%;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
   }
 `;
 
