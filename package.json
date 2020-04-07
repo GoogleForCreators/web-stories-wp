@@ -20,7 +20,6 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "dependencies": {
-    "@popperjs/core": "^2.2.1",
     "@wordpress/api-fetch": "^3.12.0",
     "@wordpress/element": "^2.12.0",
     "@wordpress/i18n": "^3.10.0",

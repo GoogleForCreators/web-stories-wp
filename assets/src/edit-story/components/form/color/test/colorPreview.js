@@ -44,6 +44,7 @@ function arrange(children = null) {
     button,
     input,
     swatch,
+    queryByLabelText,
   };
 }
 
@@ -127,11 +128,11 @@ describe('<ColorPreview />', () => {
     expect(input).toBeNull();
   });
 
-  it('should invoke callback with proper arguments when clicked', () => {
+  it('should open the color picker when clicked', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { a: 1 };
-    const { button, showColorPickerAt } = arrange(
+    const { button, queryByLabelText } = arrange(
       <ColorPreview
         onChange={onChange}
         value={value}
@@ -144,18 +145,14 @@ describe('<ColorPreview />', () => {
 
     fireEvent.click(button);
 
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: value,
-      onChange,
-      hasGradient: true,
-      hasOpacity: false,
-    });
+    const previewButton = queryByLabelText(/solid pattern/i);
+    expect(previewButton).toBeDefined();
   });
 
-  it('should invoke callback correctly if multiple', () => {
+  it('should open the color picker when clicked if multiple', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
-    const { button, showColorPickerAt } = arrange(
+    const { button, queryByLabelText } = arrange(
       <ColorPreview
         onChange={onChange}
         value={MULTIPLE_VALUE}
@@ -167,12 +164,8 @@ describe('<ColorPreview />', () => {
 
     fireEvent.click(button);
 
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: null,
-      onChange,
-      hasGradient: true,
-      hasOpacity: true,
-    });
+    const previewButton = queryByLabelText(/solid pattern/i);
+    expect(previewButton).toBeDefined();
   });
 
   it('should invoke onChange when inputting valid hex', () => {
