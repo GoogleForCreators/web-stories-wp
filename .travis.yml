@@ -49,14 +49,6 @@ install:
     if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install --no-interaction
     fi
-  - |
-    if [ "$DEPLOY_PLUGIN" = "1" ]; then
-      curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-      chmod +x wp-cli.phar
-      mv wp-cli.phar $HOME/wp
-      export PATH="$HOME:$PATH"
-      wp package install git@github.com:wp-cli/dist-archive-command.git
-    fi
   - set +e
 
 before_script:
