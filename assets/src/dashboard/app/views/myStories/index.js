@@ -40,8 +40,13 @@ import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
 const FilterContainer = styled.div`
-  padding: 0 20px 20px;
+  padding: 0 20px 20px 0;
+  margin: 0 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+`;
+
+const ListBarContainer = styled.div`
+  margin: 10px 0 0 20px;
 `;
 
 const DefaultBodyText = styled.p`
@@ -101,11 +106,13 @@ function MyStories() {
     if (filteredStoriesCount > 0) {
       return (
         <>
-          <ListBar
-            label={listBarLabel}
-            layoutStyle={viewStyle}
-            onPress={handleViewStyleBarButtonSelected}
-          />
+          <ListBarContainer>
+            <ListBar
+              label={listBarLabel}
+              layoutStyle={viewStyle}
+              onPress={handleViewStyleBarButtonSelected}
+            />
+          </ListBarContainer>
           <StoryGridView filteredStories={filteredStories} />
         </>
       );
