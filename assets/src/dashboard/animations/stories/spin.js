@@ -93,8 +93,8 @@ const Spin = ({ name, color, keyframes, animationConfig, animatorConfig }) => {
           style={{
             width: '50px',
             height: '50px',
-            ...getInitialStyleFromKeyframes(keyframes),
           }}
+          animationStyle={getInitialStyleFromKeyframes(keyframes)}
         >
           <SimpleStar color={color} />
         </WithAnimation>
