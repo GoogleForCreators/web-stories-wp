@@ -66,7 +66,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
-  const bold = getCommonValue(selectedElements, 'bold');
+  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
 
   return (
     <>
@@ -128,10 +128,12 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={bold === true}
+          value={fontWeight === 700}
           iconWidth={9}
           iconHeight={10}
-          onChange={(value) => pushUpdate({ bold: value }, true)}
+          onChange={(value) => {
+            pushUpdate({ fontWeight: value ? 700 : 400 }, true);
+          }}
         />
         <ToggleButton
           icon={<ItalicIcon />}

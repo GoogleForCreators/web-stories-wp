@@ -35,11 +35,7 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
-import {
-  draftMarkupToContent,
-  getHighlightLineheight,
-  generateParagraphTextStyle,
-} from './util';
+import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
 const HighlightElement = styled.p`
   ${elementFillContent}
@@ -89,15 +85,7 @@ const FillElement = styled.p`
 `;
 
 function TextDisplay({
-  element: {
-    id,
-    bold,
-    content,
-    color,
-    backgroundColor,
-    backgroundTextMode,
-    ...rest
-  },
+  element: { id, content, color, backgroundColor, backgroundTextMode, ...rest },
 }) {
   const ref = useRef(null);
 
@@ -143,7 +131,7 @@ function TextDisplay({
             <BackgroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </MarginedElement>
@@ -153,7 +141,7 @@ function TextDisplay({
             <ForegroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </MarginedElement>
@@ -166,7 +154,7 @@ function TextDisplay({
     <FillElement
       ref={ref}
       dangerouslySetInnerHTML={{
-        __html: draftMarkupToContent(content, bold),
+        __html: content,
       }}
       {...props}
     />

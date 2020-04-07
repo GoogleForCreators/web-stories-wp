@@ -88,6 +88,15 @@ function FontProvider({ children }) {
             name: fontWeightNames[weight],
             value: weight,
           }));
+
+          // It avoid reset Font Weight Dropdown when Bold button is enabled and Font Family don't have a Bold variant.
+          if (
+            fontWeights.filter((fontWeight) => {
+              return fontWeight.value === '700';
+            }).length === 0
+          ) {
+            fontWeights = [...fontWeights, { name: 'Bold', value: '700' }];
+          }
         }
       }
       return fontWeights;

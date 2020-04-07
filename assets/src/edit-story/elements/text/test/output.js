@@ -93,7 +93,7 @@ describe('TextOutput', () => {
     });
   });
 
-  it('should apply <strong> tags if bold', () => {
+  it('should apply fontWeight bold', () => {
     const element = {
       id: '123',
       content: 'Content',
@@ -127,7 +127,7 @@ describe('TextOutput', () => {
         vertical: 0,
         horizontal: 0,
       },
-      bold: true,
+      fontWeight: 700,
     };
 
     const output = renderViaString(
@@ -136,7 +136,18 @@ describe('TextOutput', () => {
         box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
       />
     );
-    expect(output.innerHTML).toBe('<strong>Content</strong>');
+    expect(output.style).toMatchObject({
+      whiteSpace: 'pre-wrap',
+      padding: '0% 0%',
+      margin: '0px',
+      color: 'rgba(255, 255, 255, 0.5)',
+      backgroundColor: 'rgba(255, 0, 0, 0.3)',
+      fontSize: '0.242424em',
+      letterSpacing: '1.3em',
+      textAlign: 'left',
+      textDecoration: 'none',
+      fontWeight: '700',
+    });
   });
 
   it('should produce valid AMP output', async () => {

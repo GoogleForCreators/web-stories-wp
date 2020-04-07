@@ -48,7 +48,6 @@ import { BACKGROUND_TEXT_MODE } from '../../constants';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
-  draftMarkupToContent,
   getFilteredState,
   getHandleKeyCommand,
   getSelectionForAll,
@@ -95,7 +94,6 @@ const TextBox = styled.div`
 function TextEdit({
   element: {
     id,
-    bold,
     content,
     color,
     backgroundColor,
@@ -147,7 +145,7 @@ function TextEdit({
     const contentWithBreaks = (content || '')
       .split('\n')
       .map((s) => {
-        return `<p>${draftMarkupToContent(s, bold)}</p>`;
+        return `<p>${s}</p>`;
       })
       .join('');
     let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
@@ -166,7 +164,7 @@ function TextEdit({
       state = EditorState.forceSelection(state, selection);
     }
     return state;
-  }, [content, clearContent, selectAll, offset, bold]);
+  }, [content, clearContent, selectAll, offset]);
   const [editorState, setEditorState] = useState(initialState);
   const editorHeightRef = useRef(0);
 
