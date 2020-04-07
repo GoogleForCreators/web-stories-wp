@@ -146,14 +146,14 @@ const PageList = styled(Reorderable).attrs({
 const PageSeparator = styled(ReorderableSeparator)`
   position: absolute;
   bottom: 0;
-  left: ${({ width, margin }) => (width + margin) / 2}px;
-  width: ${({ width }) => width}px;
+  left: ${({ width }) => width / 2}px;
+  width: ${({ width, margin }) => width + margin}px;
   height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
   display: flex;
   justify-content: center;
 
   &:first-of-type {
-    left: -${({ width, margin }) => (width + margin) / 2}px;
+    left: -${({ width, margin }) => (width + 2 * margin) / 2}px;
   }
 
   & > div {
