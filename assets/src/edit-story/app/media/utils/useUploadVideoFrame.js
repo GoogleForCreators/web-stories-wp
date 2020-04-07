@@ -34,13 +34,13 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { uploadFile } = useUploader(false);
   const { storyId } = useConfig();
   const {
-    actions: { updateVideoElementsById },
+    actions: { updateElementsByResourceId },
   } = useStory();
   const setProperties = useCallback(
     (id, properties) => {
-      updateVideoElementsById({ id, properties });
+      updateElementsByResourceId({ id, properties });
     },
-    [updateVideoElementsById]
+    [updateElementsByResourceId]
   );
 
   const processData = async (id, src) => {

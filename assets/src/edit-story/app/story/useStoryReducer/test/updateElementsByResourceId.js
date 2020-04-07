@@ -19,9 +19,9 @@
  */
 import { setupReducer } from './_utils';
 
-describe('updateVideoElementsById', () => {
-  it('should update all the elemtns with given id of element resource through all pages with a function', () => {
-    const { restore, updateVideoElementsById } = setupReducer();
+describe('updateElementsByResourceId', () => {
+  it('should update all the elements with given id of element resource through all pages with a function', () => {
+    const { restore, updateElementsByResourceId } = setupReducer();
 
     // Set an initial state.
     restore({
@@ -30,7 +30,7 @@ describe('updateVideoElementsById', () => {
           id: '111',
           elements: [
             { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '456', resource: { type: 'video', id: '10' } },
             { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
@@ -38,14 +38,14 @@ describe('updateVideoElementsById', () => {
           id: '222',
           elements: [
             { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '11' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsById({
+    const result = updateElementsByResourceId({
       id: '10',
       properties: ({ resource, ...rest }) => ({
         ...rest,
@@ -69,7 +69,7 @@ describe('updateVideoElementsById', () => {
           {
             id: '456',
             resource: {
-              type: 'image',
+              type: 'video',
               id: '10',
               posterId: '1',
               poster: '2',
@@ -94,9 +94,7 @@ describe('updateVideoElementsById', () => {
             id: '456',
             resource: {
               type: 'image',
-              id: '10',
-              posterId: '1',
-              poster: '2',
+              id: '11',
             },
           },
         ],
@@ -105,7 +103,7 @@ describe('updateVideoElementsById', () => {
   });
 
   it('should update all the elements with given id of element resource through all pages', () => {
-    const { restore, updateVideoElementsById } = setupReducer();
+    const { restore, updateElementsByResourceId } = setupReducer();
 
     // Set an initial state.
     restore({
@@ -114,7 +112,7 @@ describe('updateVideoElementsById', () => {
           id: '111',
           elements: [
             { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '456', resource: { type: 'video', id: '10' } },
             { id: '789', resource: { type: 'image', id: '11' } },
           ],
         },
@@ -122,14 +120,14 @@ describe('updateVideoElementsById', () => {
           id: '222',
           elements: [
             { id: '123', resource: { type: 'video', id: '10' } },
-            { id: '456', resource: { type: 'image', id: '10' } },
+            { id: '456', resource: { type: 'image', id: '11' } },
           ],
         },
       ],
       current: '111',
     });
 
-    const result = updateVideoElementsById({
+    const result = updateElementsByResourceId({
       id: '10',
       properties: {
         resource: { id: '10', posterId: '1', poster: '2' },
@@ -173,9 +171,8 @@ describe('updateVideoElementsById', () => {
           {
             id: '456',
             resource: {
-              id: '10',
-              posterId: '1',
-              poster: '2',
+              id: '11',
+              type: 'image',
             },
           },
         ],
@@ -184,7 +181,7 @@ describe('updateVideoElementsById', () => {
   });
 
   it('should do nothing is id not given', () => {
-    const { restore, updateVideoElementsById } = setupReducer();
+    const { restore, updateElementsByResourceId } = setupReducer();
 
     // Set an initial state.
     const initialState = restore({
@@ -208,7 +205,7 @@ describe('updateVideoElementsById', () => {
       current: '111',
     });
 
-    const result = updateVideoElementsById({
+    const result = updateElementsByResourceId({
       properties: ({ resource, ...rest }) => ({
         ...rest,
         resource: { ...resource, posterId: '1', poster: '2' },
@@ -219,7 +216,7 @@ describe('updateVideoElementsById', () => {
   });
 
   it('should do nothing if no elements with given id', () => {
-    const { restore, updateVideoElementsById } = setupReducer();
+    const { restore, updateElementsByResourceId } = setupReducer();
 
     // Set an initial state.
     const initialState = restore({
@@ -243,7 +240,7 @@ describe('updateVideoElementsById', () => {
       current: '111',
     });
 
-    const result = updateVideoElementsById({
+    const result = updateElementsByResourceId({
       id: '12',
       properties: ({ resource, ...rest }) => ({
         ...rest,

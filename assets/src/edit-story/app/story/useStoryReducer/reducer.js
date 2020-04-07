@@ -54,8 +54,8 @@ function reducer(state, { type, payload }) {
       return reducers.updateElements(state, payload);
     }
 
-    case types.UPDATE_VIDEO_ELEMENTS_BY_ID: {
-      return reducers.updateVideoElementsById(state, payload);
+    case types.UPDATE_ELEMENTS_BY_RESOURCE_ID: {
+      return reducers.updateElementsByResourceId(state, payload);
     }
 
     case types.SET_BACKGROUND_ELEMENT: {

@@ -20,7 +20,7 @@
 import { updateElementWithUpdater } from './utils';
 
 /**
- * Update video elements by the given id with the given properties.
+ * Update elements by the given Resource id with the given properties.
  *
  * Elements will be updated through all pages with correct id.
  *
@@ -32,12 +32,12 @@ import { updateElementWithUpdater } from './utils';
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {string|null} payload.id id to update all video elements with this id
+ * @param {string|null} payload.id id Update all elements with this resource id
  * @param {Object|function(Object):Object} payload.properties Properties to set on all the given elements or
  * a function to calculate new values based on the current properties.
  * @return {Object} New state
  */
-function updateVideoElementsById(
+function updateElementsByResourceId(
   state,
   { id, properties: propertiesOrUpdater }
 ) {
@@ -65,4 +65,4 @@ function updateVideoElementsById(
   };
 }
 
-export default updateVideoElementsById;
+export default updateElementsByResourceId;

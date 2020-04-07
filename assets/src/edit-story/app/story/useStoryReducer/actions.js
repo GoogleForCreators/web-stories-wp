@@ -68,9 +68,9 @@ const updateElementsById = (dispatch) => ({ elementIds, properties }) =>
     payload: { elementIds, properties },
   });
 
-const updateVideoElementsById = (dispatch) => ({ id, properties }) =>
+const updateElementsByResourceId = (dispatch) => ({ id, properties }) =>
   dispatch({
-    type: types.UPDATE_VIDEO_ELEMENTS_BY_ID,
+    type: types.UPDATE_ELEMENTS_BY_RESOURCE_ID,
     payload: { id, properties },
   });
 
@@ -137,7 +137,7 @@ export const exposedActions = {
   deleteElementById,
   deleteSelectedElements,
   updateElementsById,
-  updateVideoElementsById,
+  updateElementsByResourceId,
   updateElementById,
   updateSelectedElements,
   setBackgroundElement,
