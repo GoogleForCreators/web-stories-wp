@@ -32,7 +32,7 @@ const StyledCardTitle = styled.div`
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
   padding-top: 12px;
-  width: 100%;
+  max-width: 80%;
   height: ${({ theme }) =>
     `${theme.grid.desktop.itemHeight - theme.grid.desktop.imageHeight}px`};
 
