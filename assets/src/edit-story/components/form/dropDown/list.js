@@ -34,7 +34,6 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 100%;
   min-width: 160px;
   max-height: 370px;
   overflow-x: hidden;
@@ -46,7 +45,7 @@ const ListContainer = styled.div`
 const List = styled.ul.attrs({ role: 'listbox' })`
   width: 100%;
   padding: 5px 0;
-  margin: 2px 0 0;
+  margin: 0;
   font-size: 14px;
   text-align: left;
   list-style: none;

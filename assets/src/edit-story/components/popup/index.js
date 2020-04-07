@@ -34,7 +34,7 @@ const Container = styled.div.attrs(({ x, y }) => ({
 }))`
   position: fixed;
   z-index: 2147483646;
-  width: ${({ width }) => width}px;
+  width: ${({ width }) => (width === 'auto' ? width : `${width}px`)};
   max-height: ${MAX_HEIGHT}px;
   overflow: auto;
 

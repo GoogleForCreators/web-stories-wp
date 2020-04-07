@@ -139,7 +139,7 @@ function DropDown({
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
-      <Popup anchor={selectRef} isOpen={isOpen}>
+      <Popup anchor={selectRef} isOpen={isOpen} width="auto">
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}
