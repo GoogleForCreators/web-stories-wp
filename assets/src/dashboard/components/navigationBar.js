@@ -44,7 +44,7 @@ const Link = styled.a`
   color: ${({ theme, active }) =>
     active ? theme.colors.gray900 : theme.colors.gray600};
 
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+  @media ${({ theme }) => theme.breakpoint.min} {
     margin-left: 20px;
     font-size: ${({ theme }) => theme.fonts.tab.minSize};
   }
@@ -53,11 +53,11 @@ const Link = styled.a`
 const DropdownContainer = styled.div`
   display: none;
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     display: flex;
   }
 
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+  @media ${({ theme }) => theme.breakpoint.min} {
     display: none;
   }
 `;
@@ -70,7 +70,7 @@ const Nav = styled.nav`
   flex-direction: row;
   padding: ${({ theme }) => `${theme.pageGutter.desktop}px`};
 
-  @media ${({ theme }) => theme.breakpoint.min} {
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
     padding: ${({ theme }) => `${theme.pageGutter.min}px`};
   }
@@ -88,11 +88,11 @@ const PageLinks = styled.div`
   margin-right: 40px;
   text-align: right;
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     display: none;
   }
 
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+  @media ${({ theme }) => theme.breakpoint.min} {
     justify-content: flex-end;
     display: ${({ pathCount = 0 }) => (pathCount > 1 ? 'flex' : 'none')};
     padding-right: 10px;

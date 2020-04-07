@@ -45,19 +45,19 @@ const PreviewPane = styled.div`
     width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
     height: ${({ theme }) => theme.grid.min.imageHeight}px;
     width: ${({ theme }) => theme.grid.min.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
-    height: ${({ theme }) => theme.grid.trueMobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.trueMobile.itemWidth}px;
   }
 `;
 
@@ -76,14 +76,14 @@ const EditControls = styled.div`
     width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight}px;
-    width: ${({ theme }) => theme.grid.min.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
 
     button,
     a {
@@ -95,9 +95,9 @@ const EditControls = styled.div`
     }
   }
 
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
-    height: ${({ theme }) => theme.grid.trueMobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.trueMobile.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.min} {
+    height: ${({ theme }) => theme.grid.min.imageHeight}px;
+    width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
 `;
 

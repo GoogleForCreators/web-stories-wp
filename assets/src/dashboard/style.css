@@ -43,7 +43,7 @@ body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   text-align: center;
 }
 
-body.web-story_page_dashboard #wpfooter {
+body.web-story_page_stories-dashboard #wpfooter {
   display: none;
 }
 

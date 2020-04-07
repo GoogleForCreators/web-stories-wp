@@ -41,21 +41,25 @@ const StyledCardTitle = styled.div`
       `${theme.grid.tablet.itemHeight - theme.grid.tablet.imageHeight}px`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     height: ${({ theme }) =>
-      `${theme.grid.mobile.itemHeight - theme.grid.mobile.imageHeight}px`};
+      `${
+        theme.grid.largeDisplayPhone.itemHeight -
+        theme.grid.largeDisplayPhone.imageHeight
+      }px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) =>
+      `${
+        theme.grid.smallDisplayPhone.itemHeight -
+        theme.grid.smallDisplayPhone.imageHeight
+      }px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
     height: ${({ theme }) =>
       `${theme.grid.min.itemHeight - theme.grid.min.imageHeight}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
-    height: ${({ theme }) =>
-      `${
-        theme.grid.trueMobile.itemHeight - theme.grid.trueMobile.imageHeight
-      }px`};
   }
 `;
 

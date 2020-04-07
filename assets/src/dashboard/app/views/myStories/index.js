@@ -44,11 +44,11 @@ const FilterContainer = styled.div`
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 
-  @media ${({ theme }) => theme.breakpoint.min} {
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.trueMobile} {
+  @media ${({ theme }) => theme.breakpoint.min} {
     & > label {
       border-radius: 0;
       box-shadow: none;
@@ -59,7 +59,7 @@ const FilterContainer = styled.div`
 const BodyWrapper = styled.div`
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
 
-  @media ${({ theme }) => theme.breakpoint.min} {
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
   }
 `;

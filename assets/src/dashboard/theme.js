@@ -227,21 +227,21 @@ const theme = {
       imageHeight: 284,
       fr: '1fr',
     },
-    mobile: {
+    largeDisplayPhone: {
       gap: '20px',
       itemWidth: 162,
       itemHeight: 303,
       imageHeight: 243,
       fr: '1fr',
     },
-    min: {
+    smallDisplayPhone: {
       gap: '24px',
       itemWidth: 185,
       itemHeight: 338,
       imageHeight: 278,
       fr: '1fr',
     },
-    trueMobile: {
+    min: {
       gap: '16px',
       itemWidth: 139,
       itemHeight: 256,
@@ -252,15 +252,15 @@ const theme = {
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',
-    mobile: 'screen and (max-width: 800px)',
-    min: 'screen and (max-width: 684px)',
-    trueMobile: 'screen and (max-width: 440px)',
+    largeDisplayPhone: 'screen and (max-width: 800px)',
+    smallDisplayPhone: 'screen and (max-width: 684px)',
+    min: 'screen and (max-width: 440px)',
     raw: {
       desktop: 1280,
       tablet: 1120,
-      mobile: 800,
-      min: 684,
-      trueMobile: 440,
+      largeDisplayPhone: 800,
+      smallDisplayPhone: 684,
+      min: 440,
     },
   },
 };
