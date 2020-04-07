@@ -54,6 +54,10 @@ export default function ApiProvider({ children }) {
 
   const fetchStories = useCallback(
     async ({ status = STORY_STATUSES[0].value }) => {
+      if (!api.stories) {
+        return [];
+      }
+
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
@@ -75,6 +79,10 @@ export default function ApiProvider({ children }) {
   );
 
   const getAllFonts = useCallback(() => {
+    if (!api.fonts) {
+      return Promise.resolve([]);
+    }
+
     return apiFetch({ path: api.fonts }).then((data) =>
       data.map((font) => ({
         value: font.name,
