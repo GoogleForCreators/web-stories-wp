@@ -44,6 +44,9 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
     if (clientX && clientY) {
       if (doc.caretPositionFromPoint) {
         range = document.caretPositionFromPoint(clientX, clientY);
+        if (range && range.offset) {
+          return range.offset;
+        }
       } else if (doc.caretRangeFromPoint) {
         range = document.caretRangeFromPoint(clientX, clientY);
       }
