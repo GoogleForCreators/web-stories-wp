@@ -122,16 +122,25 @@ function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
-function getOffset(placement, spacing, anchorRect, bodyRect) {
+function getOffset(placement, spacing, anchorRect, popupRect, bodyRect) {
+  const { height = 0 } = popupRect || {};
+  const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
+  // Horizontal
+  const offsetX = getXOffset(placement, spacingH, anchorRect, bodyRect);
+  const maxOffsetX = bodyRect.width - spacingH;
+  // Vertical
+  const offsetY = getYOffset(placement, spacingV, anchorRect);
+  const maxOffsetY = bodyRect.height - height - spacingV;
+  // Clamp values
   return {
-    x: getXOffset(placement, spacing?.x, anchorRect, bodyRect),
-    y: getYOffset(placement, spacing?.y, anchorRect),
+    x: Math.max(0, Math.min(offsetX, maxOffsetX)),
+    y: Math.max(0, Math.min(offsetY, maxOffsetY)),
   };
 }
 
 function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
   const [popupState, setPopupState] = useState(null);
-  const containerRef = useRef();
+  const containerRef = useRef(null);
 
   const positionPopup = useCallback(
     (evt) => {
@@ -139,14 +148,16 @@ function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
       if (evt && evt.target && containerRef.current?.contains(evt.target)) {
         return;
       }
+
       const anchorRect = anchor.current.getBoundingClientRect();
       const bodyRect = document.body.getBoundingClientRect();
+      const popupRect = containerRef.current?.getBoundingClientRect();
 
       setPopupState({
-        offset: getOffset(placement, spacing, anchorRect, bodyRect),
+        offset: getOffset(placement, spacing, anchorRect, popupRect, bodyRect),
       });
     },
-    [anchor, placement, spacing]
+    [containerRef, anchor, placement, spacing]
   );
 
   useLayoutEffect(() => {
