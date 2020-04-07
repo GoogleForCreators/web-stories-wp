@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -47,7 +48,7 @@ const Editor = styled.div`
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-      ${({ theme }) => theme.colors.bg.v3};
+      ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
   }
 
   *::-webkit-scrollbar {
@@ -56,15 +57,16 @@ const Editor = styled.div`
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v3};
+    background: ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+    border-radius: 6px;
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.bg.v10};
-    border: 2px solid ${({ theme }) => theme.colors.bg.v3};
-    border-left-width: 3px;
-    border-top-width: 3px;
+    width: 3px;
     border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: content-box;
   }
 
   position: relative;

@@ -53,6 +53,7 @@ const VisualPreview = styled.div`
   border: 0;
   padding: 0;
   background: transparent;
+  cursor: pointer;
 `;
 
 const TextualPreview = styled.div`
@@ -102,7 +103,7 @@ function ColorPreview({
   const editLabel = __('Edit', 'web-stories');
   const inputLabel = __('Enter', 'web-stories');
 
-  const togglePickerOpen = () => setPickerOpen((isOpen) => !isOpen);
+  const togglePickerOpen = () => setPickerOpen(() => true);
 
   const buttonProps = {
     as: 'button',
@@ -143,35 +144,38 @@ function ColorPreview({
   // Always hide color picker on unmount - note the double arrows
   useEffect(() => () => setPickerOpen(false), []);
 
-  if (isEditable) {
-    // If editable, only the visual preview component is a button
-    // And the text is an input field
-    return (
-      <Preview ref={ref}>
-        <VisualPreview role="status" style={previewStyle} {...buttonProps} />
-        <TextualInput
-          aria-label={`${inputLabel}: ${label}`}
-          value={hexInputValue}
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-        />
-      </Preview>
-    );
-  }
-
-  // If not editable, the whole component is a button
   return (
     <>
-      <Preview ref={ref} {...buttonProps}>
-        <VisualPreview role="status" style={previewStyle} />
-        <TextualPreview>
-          {isMultiple
-            ? __('Multiple', 'web-stories')
-            : previewText ||
-              _x('None', 'No color or gradient selected', 'web-stories')}
-        </TextualPreview>
-      </Preview>
-      <Popup anchor={ref} isOpen={pickerOpen}>
+      {isEditable ? (
+        // If editable, only the visual preview component is a button
+        // And the text is an input field
+        <Preview ref={ref}>
+          <VisualPreview role="status" style={previewStyle} {...buttonProps} />
+          <TextualInput
+            aria-label={`${inputLabel}: ${label}`}
+            value={hexInputValue}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+          />
+        </Preview>
+      ) : (
+        // If not editable, the whole component is a button
+        <Preview ref={ref} {...buttonProps}>
+          <VisualPreview role="status" style={previewStyle} />
+          <TextualPreview>
+            {isMultiple
+              ? __('Multiple', 'web-stories')
+              : previewText ||
+                _x('None', 'No color or gradient selected', 'web-stories')}
+          </TextualPreview>
+        </Preview>
+      )}
+      <Popup
+        anchor={ref}
+        isOpen={pickerOpen}
+        placement={'left-start'}
+        spacing={{ x: 60 }}
+      >
         <ColorPicker
           color={isMultiple ? null : value}
           onChange={onChange}

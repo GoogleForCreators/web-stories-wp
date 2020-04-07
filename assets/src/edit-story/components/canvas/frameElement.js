@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -34,6 +34,7 @@ import {
 import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../link/frame';
+import { useTransformHandler } from '../transform';
 import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
@@ -63,6 +64,7 @@ const EmptyFrame = styled.div`
 function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable } = getDefinitionForType(type);
+  const [hasTransforms, setHasTransforms] = useState(false);
   const elementRef = useRef();
 
   const {
@@ -85,32 +87,47 @@ function FrameElement({ element }) {
   const box = getBox(element);
   const isBackground = currentPage?.backgroundElementId === id;
 
+  useTransformHandler(id, (transform) => {
+    if (
+      transform &&
+      [transform.translate, transform.resize, transform.rotate].some(
+        (t) => typeof t !== 'undefined'
+      )
+    ) {
+      setHasTransforms(true);
+    } else {
+      setHasTransforms(false);
+    }
+  });
+
   return (
-    <Wrapper
-      ref={elementRef}
-      data-element-id={id}
-      {...box}
-      onMouseDown={(evt) => {
-        if (!isSelected) {
-          handleSelectElement(id, evt);
-        }
-        if (!isBackground) {
-          evt.stopPropagation();
-        }
-      }}
-      onFocus={(evt) => {
-        if (!isSelected) {
-          handleSelectElement(id, evt);
-        }
-      }}
-      tabIndex="0"
-      aria-labelledby={`layer-${id}`}
-      hasMask={isMaskable}
+    <WithLink
+      element={element}
+      active={selectedElementIds.length === 1 && isSelected}
+      dragging={Boolean(activeDropTargetId)}
+      hasTransforms={hasTransforms}
+      anchorRef={elementRef}
     >
-      <WithLink
-        element={element}
-        active={selectedElementIds.length === 1 && isSelected}
-        dragging={Boolean(activeDropTargetId)}
+      <Wrapper
+        ref={elementRef}
+        data-element-id={id}
+        {...box}
+        onMouseDown={(evt) => {
+          if (!isSelected) {
+            handleSelectElement(id, evt);
+          }
+          if (!isBackground) {
+            evt.stopPropagation();
+          }
+        }}
+        onFocus={(evt) => {
+          if (!isSelected) {
+            handleSelectElement(id, evt);
+          }
+        }}
+        tabIndex="0"
+        aria-labelledby={`layer-${id}`}
+        hasMask={isMaskable}
       >
         <WithMask element={element} fill={true}>
           {Frame ? (
@@ -119,8 +136,8 @@ function FrameElement({ element }) {
             <EmptyFrame />
           )}
         </WithMask>
-      </WithLink>
-    </Wrapper>
+      </Wrapper>
+    </WithLink>
   );
 }
 

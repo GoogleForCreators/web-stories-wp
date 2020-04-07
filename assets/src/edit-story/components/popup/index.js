@@ -19,25 +19,113 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { useLayoutEffect, useState, useRef } from 'react';
-
-const MAX_HEIGHT = 370;
+import {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 
 const Container = styled.div.attrs(({ x, y }) => ({
-  style: { right: `${x}px`, top: `${y}px` },
+  style: { left: `${x}px`, top: `${y}px` },
 }))`
   position: fixed;
   z-index: 2147483646;
-  ${({ width }) => width && `width: ${width}px;`}
-  max-height: ${MAX_HEIGHT}px;
+  ${({ placement }) => getTransforms(placement)}
 `;
 
-function Popup({ anchor, children, width, isOpen }) {
+function getXTransforms(placement) {
+  // left & right
+  if (placement.startsWith('left')) {
+    return `-100%`;
+  } else if (placement.startsWith('right')) {
+    return null;
+  }
+  // top & bottom
+  if (placement.endsWith('-start')) {
+    return null;
+  } else if (placement.endsWith('-end')) {
+    return `-100%`;
+  }
+  return `-50%`;
+}
+
+function getYTransforms(placement) {
+  if (!placement.endsWith('-start') && !placement.endsWith('-end')) {
+    return `-50%`;
+  }
+  return null;
+}
+
+// note that we cannot use percentage values for transforms, which
+// do not work correctly for rotated elements
+function getTransforms(placement) {
+  const xTransforms = getXTransforms(placement);
+  const yTransforms = getYTransforms(placement);
+  if (!xTransforms && !yTransforms) {
+    return '';
+  }
+  return `transform: ${xTransforms ? `translateX(${xTransforms})` : ``} ${
+    yTransforms ? `translateY(${yTransforms})` : ``
+  };`;
+}
+
+function getXOffset(placement, spacing = 0, anchorRect, bodyRect) {
+  switch (placement) {
+    case 'bottom-start':
+    case 'top-start':
+    case 'left':
+    case 'left-start':
+    case 'left-end':
+      return bodyRect.left + anchorRect.left - spacing;
+    case 'bottom-end':
+    case 'top-end':
+    case 'right':
+    case 'right-start':
+    case 'right-end':
+      return bodyRect.left + anchorRect.left + anchorRect.width + spacing;
+    case 'bottom':
+    case 'top':
+    default:
+      return bodyRect.left + anchorRect.left + anchorRect.width / 2;
+  }
+}
+
+function getYOffset(placement, spacing = 0, anchorRect, bodyRect) {
+  switch (placement) {
+    case 'bottom':
+    case 'bottom-start':
+    case 'bottom-end':
+    case 'left-end':
+    case 'right-end':
+      return bodyRect.top + anchorRect.top + anchorRect.height + spacing;
+    case 'top':
+    case 'top-start':
+    case 'top-end':
+    case 'left-start':
+    case 'right-start':
+      return bodyRect.top + anchorRect.top - spacing;
+    case 'right':
+    case 'left':
+    default:
+      return bodyRect.top + anchorRect.top + anchorRect.height / 2;
+  }
+}
+
+function getOffset(placement, spacing, anchorRect, bodyRect) {
+  return {
+    x: getXOffset(placement, spacing?.x, anchorRect, bodyRect),
+    y: getYOffset(placement, spacing?.y, anchorRect, bodyRect),
+  };
+}
+
+function Popup({ anchor, children, placement = 'bottom', spacing, isOpen }) {
   const [popupState, setPopupState] = useState(null);
   const containerRef = useRef();
 
-  useLayoutEffect(() => {
-    function positionPopup(evt) {
+  const positionPopup = useCallback(
+    (evt) => {
       // If scrolling within the popup, ignore.
       if (evt && containerRef.current?.contains(evt.target)) {
         return;
@@ -45,18 +133,14 @@ function Popup({ anchor, children, width, isOpen }) {
       const anchorRect = anchor.current.getBoundingClientRect();
       const bodyRect = document.body.getBoundingClientRect();
 
-      // Note: This displays the popup right under the node, currently no variations implemented.
-      // @todo Needs to display above the anchor instead if possible in case of not having room below!
       setPopupState({
-        width,
-        offset: {
-          x: bodyRect.right - anchorRect.right,
-          y: anchorRect.bottom,
-        },
+        offset: getOffset(placement, spacing, anchorRect, bodyRect),
       });
-    }
-    positionPopup();
+    },
+    [anchor, placement, spacing]
+  );
 
+  useLayoutEffect(() => {
     // Adjust the position when scrolling or resizing.
     window.addEventListener('resize', positionPopup);
     document.addEventListener('scroll', positionPopup, true);
@@ -64,11 +148,19 @@ function Popup({ anchor, children, width, isOpen }) {
       window.removeEventListener('resize', positionPopup);
       document.removeEventListener('scroll', positionPopup, true);
     };
-  }, [anchor, width]);
+  }, [positionPopup]);
+
+  useEffect(() => {
+    positionPopup();
+  }, [anchor, placement, positionPopup, spacing]);
 
   return popupState && isOpen
     ? createPortal(
-        <Container ref={containerRef} {...popupState.offset} width={width}>
+        <Container
+          ref={containerRef}
+          {...popupState.offset}
+          placement={placement}
+        >
           {children}
         </Container>,
         document.body

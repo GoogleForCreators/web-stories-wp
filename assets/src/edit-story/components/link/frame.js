@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -113,14 +112,25 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-function WithLink({ element, active, dragging, children }) {
+function WithLink({
+  element,
+  active,
+  dragging,
+  hasTransforms,
+  children,
+  anchorRef,
+}) {
   const link = getLinkFromElement(element);
-  const ref = useRef(null);
 
   return (
     <>
-      <div ref={ref}>{children}</div>
-      <Popup anchor={ref} isOpen={link && !dragging} placement={'top'}>
+      {children}
+      <Popup
+        anchor={anchorRef}
+        isOpen={link && !dragging && !hasTransforms}
+        placement={active ? 'top' : 'left-start'}
+        spacing={{ x: active ? 0 : 20, y: active ? 58 : 0 }}
+      >
         {link &&
           !dragging &&
           active &&
@@ -147,7 +157,9 @@ function WithLink({ element, active, dragging, children }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  anchorRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
+  hasTransforms: PropTypes.bool.isRequired,
   dragging: PropTypes.bool.isRequired,
   children: StoryPropTypes.children.isRequired,
 };
