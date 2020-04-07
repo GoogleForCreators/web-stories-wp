@@ -36,6 +36,7 @@ export const MoreVerticalButton = styled.button`
   padding: 0 8px;
   opacity: ${({ menuOpen }) => (menuOpen ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
+  cursor: pointer;
 `;
 
 MoreVerticalButton.propTypes = {
