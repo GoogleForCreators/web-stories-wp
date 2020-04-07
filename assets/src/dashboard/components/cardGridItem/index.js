@@ -19,6 +19,11 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { MoreVerticalButton } from './cardItemMenu';
+
 const CardGridItem = styled.div`
   margin: auto 0;
   height: ${({ theme }) => `${theme.grid.desktop.itemHeight}px`};
@@ -39,6 +44,10 @@ const CardGridItem = styled.div`
   @media ${({ theme }) => theme.breakpoint.min} {
     height: ${({ theme }) => `${theme.grid.min.itemHeight}px`};
     width: ${({ theme }) => `${theme.grid.min.itemWidth}px`};
+  }
+
+  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+    opacity: 1;
   }
 `;
 

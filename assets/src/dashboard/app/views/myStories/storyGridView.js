@@ -28,17 +28,10 @@ import {
   CardGridItem,
   CardTitle,
   CardItemMenu,
-  MoreVerticalButton,
   CardPreviewContainer,
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
-
-export const CardGridItemWithHover = styled(CardGridItem)`
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
-    opacity: 1;
-  }
-`;
 
 export const DetailRow = styled.div`
   display: flex;
@@ -50,7 +43,7 @@ const StoryGridView = ({ filteredStories }) => {
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
-        <CardGridItemWithHover key={story.id}>
+        <CardGridItem key={story.id}>
           <CardPreviewContainer
             editUrl={story.editStoryUrl}
             onPreviewClick={() => {}}
@@ -69,7 +62,7 @@ const StoryGridView = ({ filteredStories }) => {
               story={story}
             />
           </DetailRow>
-        </CardGridItemWithHover>
+        </CardGridItem>
       ))}
     </StoryGrid>
   );

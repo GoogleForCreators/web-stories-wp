@@ -31,10 +31,7 @@ import {
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import {
-  CardGridItemWithHover,
-  DetailRow,
-} from '../../../app/views/myStories/storyGridView';
+import { DetailRow } from '../../../app/views/myStories/storyGridView';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
@@ -63,7 +60,7 @@ export const _contextMenu = () => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   return (
     <Container>
-      <CardGridItemWithHover>
+      <CardGridItem>
         <CardPreviewContainer
           editUrl={'https://www.google.com'}
           onPreviewClick={() => {}}
@@ -82,7 +79,7 @@ export const _contextMenu = () => {
             story={{ id: 1, status: 'published', title: 'Sample Story' }}
           />
         </DetailRow>
-      </CardGridItemWithHover>
+      </CardGridItem>
     </Container>
   );
 };
