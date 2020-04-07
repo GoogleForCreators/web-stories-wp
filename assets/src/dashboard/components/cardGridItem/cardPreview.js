@@ -28,8 +28,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { Button } from '../';
 import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 
 const PreviewPane = styled.div`
@@ -95,7 +95,7 @@ const PreviewButton = styled(Button)`
 
 const CtaContainer = styled.div`
   display: flex;
-  margin: auto auto 25px;
+  margin: auto auto 25%;
 `;
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
