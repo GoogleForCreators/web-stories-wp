@@ -26,4 +26,9 @@ export const ViewHeader = styled.h1`
   letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
   font-weight: bold;
   margin: 0;
+  @media ${({ theme }) => theme.breakpoint.min} {
+    font-size: ${({ theme }) => theme.fonts.heading1.minSize};
+    line-height: ${({ theme }) => theme.fonts.heading1.minLineHeight};
+    letter-spacing: ${({ theme }) => theme.fonts.heading1.minLetterSpacing};
+  }
 `;

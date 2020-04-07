@@ -115,8 +115,11 @@ const theme = {
     heading1: {
       family: 'Google Sans',
       size: '38px',
+      minSize: '28px',
       lineHeight: '53px',
+      minLineHeight: '43px',
       letterSpacing: '-0.005em',
+      minLetterSpacing: '-0.01em',
     },
     heading3: {
       family: 'Google Sans',
