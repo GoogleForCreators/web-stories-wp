@@ -153,7 +153,7 @@ function MediaProvider({ children }) {
     }
   }, [media, processor]);
 
-  useEffect(generatePoster, [media.length, mediaType, searchTerm]);
+  useEffect(generatePoster, [media, mediaType, searchTerm]);
 
   const context = {
     state: { ...state, isUploading },
