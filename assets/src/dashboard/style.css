@@ -35,8 +35,9 @@ body.web-story_page_dashboard #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_dashboard #web-stories-dashboard {
-  overflow: hidden;
+body #web-stories-dashboard {
+  display: block;
+  overflow-x: scroll;
 }
 
 body.web-story_page_dashboard #web-stories-dashboard .loading-message {

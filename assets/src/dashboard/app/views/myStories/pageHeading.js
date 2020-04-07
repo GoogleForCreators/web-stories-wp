@@ -35,12 +35,24 @@ import MyStoriesSearch from './myStoriesSearch';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin: 40px 20px;
+  max-width: 100%;
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    display: block;
+    margin-bottom: 60px;
+  }
 `;
 
 const ViewHeaderContainer = styled.div`
   width: 60%;
   margin: auto 0;
+  overflow-wrap: break-word;
+  @media ${({ theme }) => theme.breakpoint.min} {
+    width: 100%;
+    padding-bottom: 20px;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -50,6 +62,11 @@ const SearchContainer = styled.div`
   right: 20px;
   display: flex;
   justify-content: flex-end;
+  @media ${({ theme }) => theme.breakpoint.min} {
+    left: 20px;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
 `;
 
 const PageHeading = ({
