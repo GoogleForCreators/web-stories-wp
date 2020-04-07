@@ -41,7 +41,7 @@ describe('<ColorPicker /> as it closes', () => {
       return promise;
     });
 
-    expect(onClose).toHaveBeenCalledWith();
+    expect(onClose).toHaveBeenCalled();
     await wait(() => expect(document.body).toHaveFocus());
   });
 

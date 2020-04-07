@@ -44,7 +44,6 @@ describe('Popup', () => {
 
     const popup = getByText('Hello World!');
     expect(popup).toBeDefined();
-    expect(popup).toHaveAttribute('width', '270');
   });
 
   it('should not render popup when isOpen set to false', () => {
