@@ -35,16 +35,15 @@ body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
-body #web-stories-dashboard {
-  display: block;
-  overflow-x: scroll;
+body.web-story_page_dashboard #web-stories-dashboard {
+  overflow: hidden;
 }
 
 body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   text-align: center;
 }
 
-body.web-story_page_stories-dashboard #wpfooter {
+body.web-story_page_dashboard #wpfooter {
   display: none;
 }
 
