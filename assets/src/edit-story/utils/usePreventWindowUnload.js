@@ -19,22 +19,24 @@
  */
 import { useCallback } from 'react';
 
+const beforeUnloadListeners = new Map();
+
 /**
  * This is a helper that to compliant the correct register/unregister system of `beforeunload` event
  *
  * @param {Event} event beforeunload Event object
+ * @param {string} id Identifier to register beforeunload Event in the onbeforeunload listener
  */
-
-const beforeUnloadListener = (event, scope) => {
+const beforeUnloadListener = (event, id) => {
   event.preventDefault();
-  event.returnValue = scope;
+  event.returnValue = id;
 };
 
 /**
- * This allow listeners registering by scope.
- * It should be declared outside of the hook to avoid recreate different references of the registered handler in order to make posible remove it later from multiple contexts.
+ * This register/unregister `beforeunload` events based on scope
+ *
+ * @param {string} id Identifier to register beforeunload Event for a specific scope in the Map of listeners
  */
-const beforeUnloadListeners = new Map();
 const setBeforeUnloadListenersById = (id) => {
   beforeUnloadListeners.set(id, (event) => beforeUnloadListener(event, id));
 };
