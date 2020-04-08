@@ -132,6 +132,15 @@ function getIgnoredFiles() {
   return ignoredFiles;
 }
 
+function createBuildDir() {
+  const buildPath = 'build/web-stories';
+
+  // Copy plugin folder to temporary location.
+  execSync(`mkdir -p ${buildPath}`, {
+    stdio: ['pipe', 'pipe', 'ignore'],
+  });
+}
+
 function copyFiles() {
   const ignoredFiles = getIgnoredFiles();
   const excludeList = ignoredFiles
@@ -169,6 +178,7 @@ function generateZipFile(filename) {
 }
 
 function bundlePlugin(target, copy) {
+  createBuildDir();
   copyFiles();
 
   if (copy) {
