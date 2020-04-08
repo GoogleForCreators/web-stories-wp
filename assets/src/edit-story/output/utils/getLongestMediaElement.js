@@ -19,6 +19,12 @@
  */
 import { getDefinitionForType } from '../../elements';
 
+/**
+ * Among all elements, returns the media element with the longest duration.
+ *
+ * @param {Object[]} elements List of elements.
+ * @return {Object|undefined} Found element, or undefined if there are no media elements.
+ */
 function getLongestMediaElement(elements) {
   return elements
     .filter(({ type }) => {
@@ -26,6 +32,10 @@ function getLongestMediaElement(elements) {
       return isMedia;
     })
     .reduce((longest, element) => {
+      if (!element?.resource?.length) {
+        return longest;
+      }
+
       return longest?.resource?.length > element?.resource?.length
         ? longest
         : element;
