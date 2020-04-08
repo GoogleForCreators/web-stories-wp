@@ -19,28 +19,39 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { MoreVerticalButton } from './cardItemMenu';
+
 const CardGridItem = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth};
-  height: ${({ theme }) => theme.grid.desktop.itemHeight};
+  margin: auto 0;
+  height: ${({ theme }) => `${theme.grid.desktop.itemHeight}px`};
+  width: ${({ theme }) => `${theme.grid.desktop.itemWidth}px`};
   display: flex;
   flex-direction: column;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    width: ${({ theme }) => theme.grid.tablet.itemWidth};
-    height: ${({ theme }) => theme.grid.tablet.itemHeight};
+    height: ${({ theme }) => `${theme.grid.tablet.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.tablet.itemWidth}px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: ${({ theme }) => theme.grid.mobile.itemWidth};
-    height: ${({ theme }) => theme.grid.mobile.itemHeight};
+    height: ${({ theme }) => `${theme.grid.mobile.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.mobile.itemWidth}px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    width: ${({ theme }) => theme.grid.min.itemWidth};
-    height: ${({ theme }) => theme.grid.min.itemHeight};
+    height: ${({ theme }) => `${theme.grid.min.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.min.itemWidth}px`};
+  }
+
+  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+    opacity: 1;
   }
 `;
 
 export default CardGridItem;
-export { default as CardPreviewContainer } from './card-preview';
-export { default as CardTitle } from './card-title';
+export { default as CardPreviewContainer } from './cardPreview';
+export { default as CardTitle } from './cardTitle';
+export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

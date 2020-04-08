@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { text } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
 import CardGrid from '../';
@@ -28,10 +33,11 @@ export default {
 const StorybookGridItem = (
   <CardGridItem>
     <CardPreviewContainer
-      onOpenInEditorClick={() => {}}
+      editUrl={'https://www.google.com'}
       onPreviewClick={() => {}}
-      previewSource={'http://placeimg.com/225/400/nature'}
-    />
+    >
+      <div> {text('Sample Story Content', 'Sample Story')}</div>
+    </CardPreviewContainer>
     <CardTitle title="Story Title" modifiedDate="12 days" />
   </CardGridItem>
 );

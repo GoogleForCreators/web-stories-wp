@@ -77,7 +77,17 @@ function EditLayerForElement({ element }) {
   ]);
 
   return (
-    <LayerWithGrayout ref={ref} grayout={editModeGrayout} pointerEvents="none">
+    <LayerWithGrayout
+      ref={ref}
+      grayout={editModeGrayout}
+      onClick={(evt) => {
+        if (evt.target !== ref.current) {
+          return;
+        }
+
+        clearEditing();
+      }}
+    >
       <EditPageArea>
         <EditElement element={element} />
       </EditPageArea>

@@ -111,8 +111,8 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
                   fontWeight: 600,
                   color,
                   textTransform: 'uppercase',
-                  ...getInitialStyleFromKeyframes(keyframes),
                 }}
+                animationStyle={getInitialStyleFromKeyframes(keyframes)}
               >
                 {text}
               </WithAnimation>
