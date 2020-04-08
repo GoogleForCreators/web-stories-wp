@@ -96,7 +96,7 @@ describe('Page output', () => {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              videoId: 123,
+              id: 123,
               src: 'https://example.com/image.png',
               poster: 'https://example.com/poster.png',
               height: 1920,
