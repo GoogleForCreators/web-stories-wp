@@ -27,7 +27,7 @@ import createResource from './createResource';
  */
 function getResourceFromUploadAPI(file) {
   const {
-    id: videoId,
+    id,
     guid: { rendered: src },
     mime_type: mimeType,
     media_details: {
@@ -57,7 +57,7 @@ function getResourceFromUploadAPI(file) {
     posterHeight,
     posterGenerated,
     posterId,
-    videoId,
+    id,
     sizes,
   });
 }

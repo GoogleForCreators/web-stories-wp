@@ -46,11 +46,11 @@ function useInsertElement() {
    */
   const backfillResource = useCallback(
     (resource) => {
-      const { type, src, videoId, posterId } = resource;
+      const { type, src, id, posterId } = resource;
 
       // Generate video poster if one not set.
-      if (type === 'video' && videoId && !posterId) {
-        uploadVideoPoster(videoId, src);
+      if (type === 'video' && id && !posterId) {
+        uploadVideoPoster(id, src);
       }
     },
     [uploadVideoPoster]
@@ -65,7 +65,7 @@ function useInsertElement() {
   const insertElement = useCallback(
     (type, props) => {
       const element = createElementForCanvas(type, props);
-      const { id: elementId, resource } = element;
+      const { id, resource } = element;
       addElement({ element });
       if (resource) {
         backfillResource(resource);
@@ -73,7 +73,7 @@ function useInsertElement() {
       // Auto-play on insert.
       if (type === 'video') {
         setTimeout(() => {
-          const videoEl = document.getElementById(`video-${elementId}`);
+          const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
             videoEl.play();
           }

@@ -22,8 +22,7 @@ import getTypeFromMime from './getTypeFromMime';
 /**
  * Resource object.
  *
- * TODO: Try to remove posterId (poster should be enough) and videoId (src)
- * should be enough.
+ * TODO: Try to remove posterId (poster should be enough?)
  *
  * @typedef {Resource} Resource
  * @property {string|undefined} type Resource type. Currently only "image" and
@@ -34,8 +33,8 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
  * @property {string|null} poster The poster URL for the "video" type.
- * @property {string|null} posterId The system poster ID.
- * @property {string|null} videoId The system video ID.
+ * @property {number|null} posterId The system poster ID.
+ * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
  * @property {string|null} lengthFormatted The formatted length for the "video"
  * type.
@@ -64,7 +63,7 @@ function createResource({
   posterHeight,
   posterGenerated,
   posterId,
-  videoId,
+  id,
   length,
   lengthFormatted,
   title,
@@ -83,7 +82,7 @@ function createResource({
     posterHeight,
     posterGenerated,
     posterId,
-    videoId,
+    id,
     length,
     lengthFormatted,
     title,

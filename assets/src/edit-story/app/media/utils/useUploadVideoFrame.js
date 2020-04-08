@@ -34,16 +34,16 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { uploadFile } = useUploader(false);
   const { storyId } = useConfig();
   const {
-    actions: { updateVideoElementsByVideoId },
+    actions: { updateElementsByResourceId },
   } = useStory();
   const setProperties = useCallback(
-    (videoId, properties) => {
-      updateVideoElementsByVideoId({ videoId, properties });
+    (id, properties) => {
+      updateElementsByResourceId({ id, properties });
     },
-    [updateVideoElementsByVideoId]
+    [updateElementsByResourceId]
   );
 
-  const processData = async (videoId, src) => {
+  const processData = async (id, src) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
       const {
@@ -56,7 +56,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
           web_stories_is_poster: true,
         },
       });
-      await updateMedia(videoId, {
+      await updateMedia(id, {
         featured_media: posterId,
         post: storyId,
       });
@@ -65,11 +65,13 @@ function useUploadVideoFrame({ updateMediaElement }) {
           ...resource,
           posterId,
           poster,
+          posterWidth,
+          posterHeight,
+          posterGenerated: true,
         },
       });
-      setProperties(videoId, newState);
       updateMediaElement({
-        videoId,
+        id,
         posterId,
         poster,
         posterWidth,

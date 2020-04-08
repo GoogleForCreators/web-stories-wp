@@ -32,7 +32,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     mime: mimeType,
     width,
     height,
-    id: videoId,
+    id,
     featured_media: posterId,
     featured_media_src: {
       src: poster,
@@ -52,7 +52,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     posterHeight,
     posterGenerated,
     posterId,
-    videoId,
+    id,
     sizes,
   });
 };

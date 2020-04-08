@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -42,10 +43,23 @@ const Link = styled.a`
   margin-left: 40px;
   color: ${({ theme, active }) =>
     active ? theme.colors.gray900 : theme.colors.gray600};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    margin-left: 20px;
+    font-size: ${({ theme }) => theme.fonts.tab.minSize};
+  }
 `;
 
 const DropdownContainer = styled.div`
   display: none;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    display: flex;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    display: none;
+  }
 `;
 
 const Nav = styled.nav`
@@ -54,37 +68,45 @@ const Nav = styled.nav`
   border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  padding: ${({ theme }) => `${theme.pageGutter.desktop}px`};
 
-  @media (max-width: 800px) {
-    ${Link} {
-      display: none;
-    }
-    ${DropdownContainer} {
-      display: block;
-    }
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    flex-wrap: wrap;
+    padding: ${({ theme }) => `${theme.pageGutter.min}px`};
   }
 `;
 
 const WebStoriesLogo = styled(WebStoriesLogoSVG)`
   width: 37px;
   height: 28px;
-  margin-right: 95px;
 `;
 
-const LinksContainer = styled.div`
-  align-items: center;
+const PageLinks = styled.div`
+  flex-grow: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-right: 40px;
+  text-align: right;
 
-  button {
-    margin-left: 40px;
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    display: none;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    justify-content: flex-end;
+    display: ${({ pathCount = 0 }) => (pathCount > 1 ? 'flex' : 'none')};
+    padding-right: 10px;
+    padding-top: 10px;
+    order: 3;
+    width: 100%;
+    margin-right: 0;
   }
 `;
+PageLinks.propTypes = {
+  pathCount: PropTypes.number,
+};
 
-const NewStoryLink = styled(Button).attrs({ onClick: () => {} })`
-  margin-left: 40px;
-`;
+const NewStoryLink = styled(Button).attrs({ onClick: () => {} })``;
 
 function NavigationBar() {
   const { state, actions } = useRouteHistory();
@@ -101,7 +123,7 @@ function NavigationBar() {
           onChange={(path) => actions.push(path.value)}
         />
       </DropdownContainer>
-      <LinksContainer>
+      <PageLinks pathCount={paths.length}>
         {paths.map((path) => (
           <Link
             active={path.value === state.currentPath}
@@ -111,14 +133,11 @@ function NavigationBar() {
             {path.label}
           </Link>
         ))}
-        <NewStoryLink
-          forwardedAs="a"
-          type={BUTTON_TYPES.CTA}
-          href={newStoryURL}
-        >
-          {__('Create Story', 'web-stories')}
-        </NewStoryLink>
-      </LinksContainer>
+      </PageLinks>
+
+      <NewStoryLink forwardedAs="a" type={BUTTON_TYPES.CTA} href={newStoryURL}>
+        {__('Create Story', 'web-stories')}
+      </NewStoryLink>
     </Nav>
   );
 }

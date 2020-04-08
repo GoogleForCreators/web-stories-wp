@@ -36,9 +36,15 @@ const CardGridItem = styled.div`
     width: ${({ theme }) => `${theme.grid.tablet.itemWidth}px`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => `${theme.grid.mobile.itemHeight}px`};
-    width: ${({ theme }) => `${theme.grid.mobile.itemWidth}px`};
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    height: ${({ theme }) => `${theme.grid.largeDisplayPhone.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.largeDisplayPhone.itemWidth}px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) => `${theme.grid.smallDisplayPhone.itemHeight}px`};
+    width: ${({ theme }) => `${theme.grid.smallDisplayPhone.itemWidth}px`};
+    margin: auto;
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {

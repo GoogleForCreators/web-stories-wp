@@ -35,21 +35,38 @@ import MyStoriesSearch from './myStoriesSearch';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 40px 20px;
+  flex-wrap: wrap;
+  margin: ${({ theme }) => `40px ${theme.pageGutter.desktop}px`};
+  max-width: 100%;
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    display: block;
+    margin: ${({ theme }) => `20px ${theme.pageGutter.min}px 60px`};
+  }
 `;
 
 const ViewHeaderContainer = styled.div`
   width: 60%;
   margin: auto 0;
+  overflow-wrap: break-word;
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    width: 100%;
+    padding-bottom: 5px;
+  }
 `;
 
 const SearchContainer = styled.div`
   position: absolute;
   max-width: 35%;
   margin: auto 0;
-  right: 20px;
+  right: ${({ theme }) => `${theme.pageGutter.desktop}px`};
   display: flex;
   justify-content: flex-end;
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    left: ${({ theme }) => `${theme.pageGutter.min}px`};
+    max-width: 100%;
+    justify-content: flex-start;
+  }
 `;
 
 const PageHeading = ({

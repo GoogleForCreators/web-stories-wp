@@ -56,32 +56,18 @@ export const setNextPage = (dispatch) => () => {
   dispatch({ type: types.SET_NEXT_PAGE });
 };
 
-export const setProcessing = (dispatch) => ({ videoId }) => {
-  dispatch({ type: types.ADD_PROCESSING, payload: { videoId } });
+export const setProcessing = (dispatch) => ({ id }) => {
+  dispatch({ type: types.ADD_PROCESSING, payload: { id } });
 };
 
-export const removeProcessing = (dispatch) => ({ videoId }) => {
-  dispatch({ type: types.REMOVE_PROCESSING, payload: { videoId } });
+export const removeProcessing = (dispatch) => ({ id }) => {
+  dispatch({ type: types.REMOVE_PROCESSING, payload: { id } });
 };
 
-export const updateMediaElement = (dispatch) => ({
-  videoId,
-  posterId,
-  poster,
-  posterWidth,
-  posterHeight,
-  posterGenerated,
-}) => {
+export const updateMediaElement = (dispatch) => ({ id, posterId, poster, posterWidth, posterHeight, posterGenerated,}) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
-    payload: {
-      videoId,
-      posterId,
-      poster,
-      posterWidth,
-      posterHeight,
-      posterGenerated,
-    },
+    payload: { id, posterId, poster, posterWidth, posterHeight, posterGenerated,}),
   });
 };
 
