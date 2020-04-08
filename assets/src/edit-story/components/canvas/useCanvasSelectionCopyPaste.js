@@ -34,6 +34,9 @@ import { useUploader } from '../../app/uploader';
 import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import { getDefinitionForType } from '../../elements';
+import createSolid from '../../utils/createSolid';
+import { BACKGROUND_TEXT_MODE, PAGE_WIDTH } from '../../constants';
+import useInsertElement from './useInsertElement';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -45,6 +48,8 @@ function useCanvasSelectionCopyPaste(container) {
     state: { currentPage, selectedElements },
     actions: { addElement, deleteSelectedElements },
   } = useStory();
+
+  const insertElement = useInsertElement();
 
   const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
@@ -117,8 +122,16 @@ function useCanvasSelectionCopyPaste(container) {
         if (html) {
           const template = document.createElement('template');
           template.innerHTML = html;
+          let copyingStoryElement = false;
+          let copiedContent = '';
           for (let n = template.content.firstChild; n; n = n.nextSibling) {
             if (n.nodeType !== /* COMMENT */ 8) {
+              if (copiedContent.length && n.tagName === 'P') {
+                copiedContent += ' ';
+              }
+              if (n.textContent.length) {
+                copiedContent += n.textContent;
+              }
               continue;
             }
             const payload = JSON.parse(
@@ -127,6 +140,7 @@ function useCanvasSelectionCopyPaste(container) {
             if (payload.sentinel !== 'story-elements') {
               continue;
             }
+            copyingStoryElement = true;
             payload.items.forEach(({ x, y, basedOn, ...rest }) => {
               currentPage.elements.forEach((element) => {
                 if (element.id === basedOn || element.basedOn === basedOn) {
@@ -144,6 +158,22 @@ function useCanvasSelectionCopyPaste(container) {
               addElement({ element });
             });
             evt.preventDefault();
+          }
+          // If we're not copying a Story element, assume copying text.
+          if (!copyingStoryElement && copiedContent.length) {
+            const props = {
+              type: 'text',
+              x: 0,
+              y: 0,
+              height: 100,
+              id: uuidv4(),
+              content: copiedContent,
+              color: createSolid(0, 0, 0),
+              backgroundColor: createSolid(196, 196, 196),
+              backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+              width: PAGE_WIDTH / 2,
+            };
+            insertElement('text', props);
           }
         }
         const { items } = clipboardData;
@@ -172,7 +202,14 @@ function useCanvasSelectionCopyPaste(container) {
         // Ignore.
       }
     },
-    [addElement, currentPage, isValidType, showSnackbar, uploadFile]
+    [
+      addElement,
+      currentPage,
+      insertElement,
+      isValidType,
+      showSnackbar,
+      uploadFile,
+    ]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
