@@ -64,10 +64,24 @@ export const removeProcessing = (dispatch) => ({ id }) => {
   dispatch({ type: types.REMOVE_PROCESSING, payload: { id } });
 };
 
-export const updateMediaElement = (dispatch) => ({ id, posterId, poster, posterWidth, posterHeight, posterGenerated,}) => {
+export const updateMediaElement = (dispatch) => ({
+  id,
+  posterId,
+  poster,
+  posterWidth,
+  posterHeight,
+  posterGenerated,
+}) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
-    payload: { id, posterId, poster, posterWidth, posterHeight, posterGenerated,}),
+    payload: {
+      id,
+      posterId,
+      poster,
+      posterWidth,
+      posterHeight,
+      posterGenerated,
+    },
   });
 };
 

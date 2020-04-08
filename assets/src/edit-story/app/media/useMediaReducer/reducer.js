@@ -145,7 +145,14 @@ function reducer(state, { type, payload }) {
     }
 
     case types.UPDATE_MEDIA_ELEMENT: {
-      const { id, posterId, poster, posterWidth, posterHeight, posterGenerated } = payload;
+      const {
+        id,
+        posterId,
+        poster,
+        posterWidth,
+        posterHeight,
+        posterGenerated,
+      } = payload;
 
       const mediaIndex = state.media.findIndex((media) => media.id === id);
       if (mediaIndex === -1) {

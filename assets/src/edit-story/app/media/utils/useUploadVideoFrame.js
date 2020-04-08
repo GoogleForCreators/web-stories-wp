@@ -70,6 +70,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
           posterGenerated: true,
         },
       });
+      setProperties(id, newState);
       updateMediaElement({
         id,
         posterId,
