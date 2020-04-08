@@ -15,14 +15,32 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { actions } from '@storybook/addon-actions';
+
+/**
  * Internal dependencies
  */
-import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
+import { useState } from 'react';
+import { text } from '@storybook/addon-knobs';
+import {
+  CardGridItem,
+  CardItemMenu,
+  CardPreviewContainer,
+  CardTitle,
+} from '../../';
+import { DetailRow } from '../../../app/views/myStories/storyGridView';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
   component: CardGridItem,
 };
+
+const Container = styled.div`
+  width: 250px;
+`;
 
 export const _default = () => {
   return (
@@ -30,9 +48,38 @@ export const _default = () => {
       <CardPreviewContainer
         editUrl={'https://www.google.com'}
         onPreviewClick={() => {}}
-        previewSource={'http://placeimg.com/225/400/nature'}
-      />
+      >
+        <div> {text('Sample Story Content', 'Sample Story')}</div>
+      </CardPreviewContainer>
       <CardTitle title="Story Title" modifiedDate="12 days" />
     </CardGridItem>
+  );
+};
+
+export const _contextMenu = () => {
+  const [contextMenuId, setContextMenuId] = useState(-1);
+  return (
+    <Container>
+      <CardGridItem>
+        <CardPreviewContainer
+          editUrl={'https://www.google.com'}
+          onPreviewClick={() => {}}
+        >
+          <div> {text('Sample Story Content', 'Sample Story')}</div>
+        </CardPreviewContainer>
+        <DetailRow>
+          <CardTitle title="Story Title" modifiedDate="12 days" />
+          <CardItemMenu
+            onMoreButtonSelected={setContextMenuId}
+            contextMenuId={contextMenuId}
+            onMenuItemSelected={(item) => {
+              actions('onClick', item.label);
+              setContextMenuId(-1);
+            }}
+            story={{ id: 1, status: 'published', title: 'Sample Story' }}
+          />
+        </DetailRow>
+      </CardGridItem>
+    </Container>
   );
 };

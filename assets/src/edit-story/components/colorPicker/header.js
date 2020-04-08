@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Close } from '../button';
 
-const CONTAINER_PADDING = 15;
+const CONTAINER_PADDING = 12;
 const HEADER_FOOTER_HEIGHT = 50;
 
 const Wrapper = styled.div`
