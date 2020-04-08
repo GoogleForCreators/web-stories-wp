@@ -132,7 +132,7 @@ const Dropdown = ({
   const currentLabel = useMemo(() => {
     const getCurrentLabel = () => {
       const grouping = [items.find((item) => item.value === value)];
-      return grouping[0].label;
+      return grouping[0]?.label;
     };
 
     return value ? getCurrentLabel() : placeholder;

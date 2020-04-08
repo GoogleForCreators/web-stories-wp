@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../edit-story/types';
+const ListBarContainer = styled.div`
+  margin-top: 10px;
+`;
 
-export const StoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  status: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
-});
-
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export default ListBarContainer;
