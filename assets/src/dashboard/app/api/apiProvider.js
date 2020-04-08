@@ -53,6 +53,7 @@ export function reshapeTemplateObject({ id, title, pages }) {
   return {
     id,
     title,
+    status: 'template',
     modified: moment('2020-04-07'),
     pages,
     editStoryUrl: '',
