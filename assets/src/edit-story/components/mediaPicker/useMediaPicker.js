@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useMedia } from '../../app/media';
+import useMedia from '../../app/media/useMedia';
 
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
