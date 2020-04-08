@@ -10,6 +10,6 @@
 
 ---
 
-<!-- Please reference the issue this PR addresses. -->
+<!-- Please reference the issue(s) this PR addresses. -->
 
-See #
+Fixes #
