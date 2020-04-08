@@ -138,7 +138,9 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
   let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
   if (fontFallback && fontFallback.length) {
     fontFamilyDisplay += fontFamily ? `,` : ``;
-    fontFamilyDisplay += `${fontFallback.join(`,`)}`;
+    fontFamilyDisplay += fontFallback
+      .map((fallback) => `"${fallback}"`)
+      .join(`,`);
   }
   return fontFamilyDisplay;
 };
