@@ -26,20 +26,38 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledCardTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
   font-size: ${({ theme }) => theme.fonts.storyGridItem.size};
   font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
+  padding-top: 12px;
   width: 100%;
+  height: ${({ theme }) =>
+    `${theme.grid.desktop.itemHeight - theme.grid.desktop.imageHeight}px`};
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    height: ${({ theme }) =>
+      `${theme.grid.tablet.itemHeight - theme.grid.tablet.imageHeight}px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    height: ${({ theme }) =>
+      `${theme.grid.mobile.itemHeight - theme.grid.mobile.imageHeight}px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    height: ${({ theme }) =>
+      `${theme.grid.min.itemHeight - theme.grid.min.imageHeight}px`};
+  }
 `;
 
 const StyledTitle = styled.p`
   color: ${({ theme }) => theme.colors.gray900};
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledDate = styled.p`

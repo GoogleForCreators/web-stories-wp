@@ -28,8 +28,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { Button } from '../';
 import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 
 const PreviewPane = styled.div`
@@ -95,20 +95,18 @@ const PreviewButton = styled(Button)`
 
 const CtaContainer = styled.div`
   display: flex;
-  margin: auto auto 25px;
+  margin: auto auto 25%;
 `;
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
+const EditButton = styled(Button).attrs({ onClick: () => {} })``;
+
 // TODO modify to handle other types of grid items, not just own stories
-const CardPreviewContainer = ({
-  onOpenInEditorClick,
-  onPreviewClick,
-  children,
-}) => {
-  const displayEditControls = onPreviewClick || onOpenInEditorClick;
+const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
+  const displayEditControls = onPreviewClick || editUrl;
 
   return (
     <>
@@ -126,13 +124,11 @@ const CardPreviewContainer = ({
               </PreviewButton>
             </PreviewContainer>
           )}
-          {onOpenInEditorClick && (
-            <CtaContainer>
-              <Button type={BUTTON_TYPES.PRIMARY} onClick={onOpenInEditorClick}>
-                {__('Open in editor', 'web-stories')}
-              </Button>
-            </CtaContainer>
-          )}
+          <CtaContainer>
+            <EditButton forwardedAs="a" href={editUrl}>
+              {__('Open in editor', 'web-stories')}
+            </EditButton>
+          </CtaContainer>
         </EditControls>
       )}
     </>
@@ -141,7 +137,7 @@ const CardPreviewContainer = ({
 
 CardPreviewContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  onOpenInEditorClick: PropTypes.func,
+  editUrl: PropTypes.string.isRequired,
   onPreviewClick: PropTypes.func,
 };
 

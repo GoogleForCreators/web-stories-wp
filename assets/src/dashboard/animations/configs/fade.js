@@ -14,31 +14,13 @@
  * limitations under the License.
  */
 
-export const ANIMATION_TYPES = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  FADE: 'fade',
-  FLIP: 'flip',
-  FLOAT_ON: 'floatOn',
-  MOVE: 'move',
-  SPIN: 'spin',
-  ZOOM: 'zoom',
-};
+export default function (config) {
+  const { from, to } = config;
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
-export const DIRECTION = {
-  TOP_TO_BOTTOM: 'topToBottom',
-  BOTTOM_TO_TOP: 'bottomToTop',
-  LEFT_TO_RIGHT: 'leftToRight',
-  RIGHT_TO_LEFT: 'rightToLeft',
-};
-
-export const AXIS = {
-  X: 'x',
-  Y: 'y',
-};
+  return {
+    fill: 'forwards',
+    keyframes: {
+      opacity: [from, to],
+    },
+  };
+}
