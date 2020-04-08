@@ -33,6 +33,7 @@ jobs:
 
       - name: Detect coding standard violations (PHPCS)
         run: vendor/bin/phpcs -q --report=checkstyle | cs2pr --graceful-warnings
+        continue-on-error: true
 
       - name: Static Analysis (PHPStan)
         # phpstan only supports PHP 7.1+. Ignore version conflicts.
