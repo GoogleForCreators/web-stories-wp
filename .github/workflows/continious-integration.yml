@@ -47,10 +47,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: Setup cache
         uses: pat-s/always-upload-cache@v1.1.4
