@@ -224,7 +224,6 @@ const MediaElement = ({
   };
 
   const { lengthFormatted, poster, mimeType } = resource;
-  const preload = poster && !local ? 'none' : 'metadata';
   return (
     <Container
       onPointerEnter={pointerEnter}
@@ -237,7 +236,7 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        preload={preload}
+        preload="none"
         muted
         {...dropTargetsBindings}
       >
