@@ -38,7 +38,11 @@ function getResourceFromUploadAPI(file) {
       sizes,
     },
     featured_media: posterId,
-    featured_media_src: poster,
+    featured_media_src: {
+      src: poster,
+      width: posterWidth,
+      height: posterHeight,
+    },
   } = file;
   return createResource({
     mimeType,
@@ -48,6 +52,8 @@ function getResourceFromUploadAPI(file) {
     length,
     lengthFormatted,
     poster,
+    posterWidth,
+    posterHeight,
     posterId,
     videoId,
     sizes,

@@ -40,7 +40,11 @@ function getResourceFromAttachment(attachment) {
     description: { raw: description },
     mime_type: mimeType,
     featured_media: posterId,
-    featured_media_src: poster,
+    featured_media_src: {
+      src: poster,
+      width: posterWidth,
+      height: posterHeight,
+    },
     alt_text: alt,
   } = attachment;
   return createResource({
@@ -49,6 +53,8 @@ function getResourceFromAttachment(attachment) {
     width,
     height,
     poster,
+    posterWidth,
+    posterHeight,
     posterId,
     videoId,
     length,

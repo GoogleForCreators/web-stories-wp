@@ -34,7 +34,11 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     height,
     id: videoId,
     featured_media: posterId,
-    featured_media_src: poster,
+    featured_media_src: {
+      src: poster,
+      width: posterWidth,
+      height: posterHeight,
+    },
     sizes,
   } = mediaPickerEl;
   return createResource({
@@ -43,6 +47,8 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     width,
     height,
     poster,
+    posterWidth,
+    posterHeight,
     posterId,
     videoId,
     sizes,

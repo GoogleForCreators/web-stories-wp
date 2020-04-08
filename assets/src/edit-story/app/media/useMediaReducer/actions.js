@@ -68,10 +68,12 @@ export const updateMediaElement = (dispatch) => ({
   videoId,
   posterId,
   poster,
+  posterWidth,
+  posterHeight,
 }) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
-    payload: { videoId, posterId, poster },
+    payload: { videoId, posterId, poster, posterWidth, posterHeight },
   });
 };
 
