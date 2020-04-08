@@ -28,27 +28,35 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  FloatingTab,
-  StoryGrid,
-  CardGridItem,
-  CardTitle,
-  CardPreviewContainer,
-  ListBar,
-} from '../../../components';
+import { FloatingTab, ListBar } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import PreviewPage from '../../../components/previewPage';
+import StoryGridView from './storyGridView';
 import PageHeading from './pageHeading';
 import NoResults from './noResults';
 
 const FilterContainer = styled.div`
-  padding: 0 20px 20px;
+  padding: 0 20px 20px 0;
+  margin: 0 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+`;
+
+const ListBarContainer = styled.div`
+  margin: 10px 0 0 20px;
+`;
+
+const DefaultBodyText = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-weight: ${({ theme }) => theme.fonts.body1.weight};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  color: ${({ theme }) => theme.colors.gray200};
+  margin: 40px 20px;
 `;
 
 function MyStories() {
@@ -94,6 +102,38 @@ function MyStories() {
     filteredStoriesCount
   );
 
+  const BodyContent = useMemo(() => {
+    if (filteredStoriesCount > 0) {
+      return (
+        <>
+          <ListBarContainer>
+            <ListBar
+              label={listBarLabel}
+              layoutStyle={viewStyle}
+              onPress={handleViewStyleBarButtonSelected}
+            />
+          </ListBarContainer>
+          <StoryGridView filteredStories={filteredStories} />
+        </>
+      );
+    } else if (typeaheadValue.length > 0) {
+      return <NoResults typeaheadValue={typeaheadValue} />;
+    }
+
+    return (
+      <DefaultBodyText>
+        {__('Create a story to get started!', 'web-stories')}
+      </DefaultBodyText>
+    );
+  }, [
+    filteredStories,
+    filteredStoriesCount,
+    handleViewStyleBarButtonSelected,
+    listBarLabel,
+    typeaheadValue,
+    viewStyle,
+  ]);
+
   return (
     <FontProvider>
       <TransformProvider>
@@ -117,34 +157,7 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
-          {filteredStoriesCount > 0 ? (
-            <>
-              <ListBar
-                label={listBarLabel}
-                layoutStyle={viewStyle}
-                onPress={handleViewStyleBarButtonSelected}
-              />
-              <StoryGrid>
-                {filteredStories.map((story) => (
-                  <CardGridItem key={story.id}>
-                    <CardPreviewContainer
-                      onOpenInEditorClick={() => {}}
-                      onPreviewClick={() => {}}
-                      previewSource={'http://placeimg.com/225/400/nature'}
-                    >
-                      <PreviewPage page={story.pages[0]} />
-                    </CardPreviewContainer>
-                    <CardTitle
-                      title={story.title}
-                      modifiedDate={story.modified.startOf('day').fromNow()}
-                    />
-                  </CardGridItem>
-                ))}
-              </StoryGrid>
-            </>
-          ) : (
-            <NoResults typeaheadValue={typeaheadValue} />
-          )}
+          {BodyContent}
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>

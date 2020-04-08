@@ -23,67 +23,63 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPES, DIRECTION } from '../constants';
+import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
 export default {
-  title: 'Dashboard/Animations/FloatOn',
+  title: 'Dashboard/Animations/Fade',
 };
 
-const FloatOn = ({ direction }) => {
-  const name = ANIMATION_TYPES.FLOAT_ON;
-  const { keyframes, ...config } = getAnimationConfigs[name](direction);
-
+const Fade = ({ from, to, color }) => {
+  const name = ANIMATION_TYPES.FADE;
   const label = 'Animate';
-  const text =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.';
+
+  const { keyframes, ...config } = getAnimationConfigs[name]({
+    from,
+    to,
+  });
 
   return (
     <div style={{ padding: '20px' }}>
       <AnimationOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
-        id={`${name}-anim`}
-        animation={name}
+        id={`${name}-fade`}
         config={{
           selector: `#anim`,
-          duration: 650,
-          easing: 'ease-out',
+          animation: name,
+          duration: 2000,
         }}
       />
-      <button on={`tap:${name}-anim.restart`}>{label}</button>
+      <button style={{ marginBottom: '10px' }} on={`tap:${name}-fade.restart`}>
+        {label}
+      </button>
       <WithAnimation
         id="anim"
         style={{
-          position: 'absolute',
-          top: '50px',
-          left: '100px',
           width: '200px',
+          height: '200px',
         }}
         animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
-        <div>{text}</div>
+        <div
+          style={{ width: '100%', height: '100%', backgroundColor: color }}
+        />
       </WithAnimation>
     </div>
   );
 };
 
-FloatOn.propTypes = {
-  direction: PropTypes.string,
+Fade.propTypes = {
+  from: PropTypes.number,
+  to: PropTypes.number,
+  color: PropTypes.string,
 };
 
 export const _default = () => {
-  return <FloatOn />;
+  return <Fade from={1} to={0} color="red" />;
 };
 
-export const TopToBottom = () => {
-  return <FloatOn direction={DIRECTION.TOP_TO_BOTTOM} />;
-};
-
-export const LeftToRight = () => {
-  return <FloatOn direction={DIRECTION.LEFT_TO_RIGHT} />;
-};
-
-export const RightToLeft = () => {
-  return <FloatOn direction={DIRECTION.RIGHT_TO_LEFT} />;
+export const FadeIn = () => {
+  return <Fade from={0} to={1} color="orange" />;
 };

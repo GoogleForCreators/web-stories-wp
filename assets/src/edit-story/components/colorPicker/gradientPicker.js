@@ -37,6 +37,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-right: -3px;
+  padding: 12px;
 `;
 
 const Button = styled.button`

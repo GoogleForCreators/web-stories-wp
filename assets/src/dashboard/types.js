@@ -13,32 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
-export const ANIMATION_TYPES = {
-  BLINK_ON: 'blinkOn',
-  BOUNCE: 'bounce',
-  FADE: 'fade',
-  FLIP: 'flip',
-  FLOAT_ON: 'floatOn',
-  MOVE: 'move',
-  SPIN: 'spin',
-  ZOOM: 'zoom',
-};
+/**
+ * Internal dependencies
+ */
+import StoryPropTypes from '../edit-story/types';
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
+export const StoryPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  modified: PropTypes.object,
+});
 
-export const DIRECTION = {
-  TOP_TO_BOTTOM: 'topToBottom',
-  BOTTOM_TO_TOP: 'bottomToTop',
-  LEFT_TO_RIGHT: 'leftToRight',
-  RIGHT_TO_LEFT: 'rightToLeft',
-};
-
-export const AXIS = {
-  X: 'x',
-  Y: 'y',
-};
+export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
