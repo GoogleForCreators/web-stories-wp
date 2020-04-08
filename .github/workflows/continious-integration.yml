@@ -148,7 +148,7 @@ jobs:
       - name: Bundle plugin
         run: |
           npm run build:plugin
-          npm run bundle-plugin build/web-stories.zip
+          npm run bundle-plugin web-stories.zip
 
       - name: Upload ZIP file
         uses: actions/upload-artifact@v1
