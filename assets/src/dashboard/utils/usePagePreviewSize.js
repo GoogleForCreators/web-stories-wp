@@ -32,10 +32,10 @@ export default function usePagePreviewSize() {
     const { innerWidth } = window;
     let itemWidth = 0;
 
-    if (innerWidth <= theme.breakpoint.raw.min) {
-      itemWidth = theme.grid.min.itemWidth;
-    } else if (innerWidth <= theme.breakpoint.raw.mobile) {
-      itemWidth = theme.grid.mobile.itemWidth;
+    if (innerWidth <= theme.breakpoint.raw.smallDisplayPhone) {
+      itemWidth = theme.grid.smallDisplayPhone.itemWidth;
+    } else if (innerWidth <= theme.breakpoint.raw.largeDisplayPhone) {
+      itemWidth = theme.grid.largeDisplayPhone.itemWidth;
     } else if (innerWidth <= theme.breakpoint.raw.tablet) {
       itemWidth = theme.grid.tablet.itemWidth;
     } else {

@@ -72,7 +72,6 @@ const Label = styled.span`
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   color: ${({ theme }) => theme.colors.gray500};
-  margin-left: 20px;
 `;
 
 export default function ViewStyleBar({ onPress, label, layoutStyle }) {
