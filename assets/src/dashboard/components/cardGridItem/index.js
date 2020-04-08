@@ -28,7 +28,7 @@ import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { MoreVerticalButton } from './cardItemMenu';
 
 const StyledCard = styled.div`
-  margin: auto 10px;
+  margin: auto 0;
   height: ${({ cardSize }) => `${cardSize.height + CARD_TITLE_AREA_HEIGHT}px`};
   width: ${({ cardSize }) => `${cardSize.width}px`};
   display: flex;
