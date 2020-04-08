@@ -30,12 +30,11 @@ const DashboardGrid = styled.div`
   width: 100%;
   align-content: space-between;
 
-  grid-template-columns: ${({ theme, columnWidth }) =>
-    `repeat(auto-fill, minmax(${columnWidth}px, ${theme.grid.desktop.fr}))`};
+  grid-template-columns: ${({ columnWidth }) =>
+    `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    grid-template-columns: ${({ theme }) =>
-      `repeat(2, ${theme.grid.smallDisplayPhone.fr})`};
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
