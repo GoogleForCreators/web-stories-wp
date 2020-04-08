@@ -25,7 +25,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import getFirstFrameOfVideo from './getFirstFrameOfVideo';
+import { preloadImage, getFirstFrameOfVideo } from './';
 
 function useUploadVideoFrame({ updateMediaElement }) {
   const {
@@ -60,6 +60,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         featured_media: posterId,
         post: storyId,
       });
+      await preloadImage(poster);
       const newState = ({ resource }) => ({
         resource: {
           ...resource,
