@@ -139,6 +139,34 @@ describe('TextOutput', () => {
     expect(output.innerHTML).toBe('<strong>Content</strong>');
   });
 
+  it('should wrap font-family into quotes', () => {
+    const element = {
+      id: '123',
+      content: 'Content',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 50,
+      fontFamily: 'Baloo Bhaina 2',
+      rotationAngle: 0,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 16,
+      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
+      />
+    );
+    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2"');
+  });
+
   it('should produce valid AMP output', async () => {
     const props = {
       element: {
