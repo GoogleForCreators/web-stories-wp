@@ -45,9 +45,14 @@ const PreviewPane = styled.div`
     width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
@@ -64,16 +69,30 @@ const EditControls = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
     width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight}px;
-    width: ${({ theme }) => theme.grid.mobile.itemWidth}px;
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
+    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
+
+    button,
+    a {
+      min-width: 120px;
+      max-width: 90%;
+      & > label {
+        font-size: 12px;
+      }
+    }
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {

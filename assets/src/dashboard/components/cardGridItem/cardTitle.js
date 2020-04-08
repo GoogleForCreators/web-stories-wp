@@ -32,7 +32,7 @@ const StyledCardTitle = styled.div`
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
   padding-top: 12px;
-  width: 100%;
+  max-width: 80%;
   height: ${({ theme }) =>
     `${theme.grid.desktop.itemHeight - theme.grid.desktop.imageHeight}px`};
 
@@ -41,9 +41,20 @@ const StyledCardTitle = styled.div`
       `${theme.grid.tablet.itemHeight - theme.grid.tablet.imageHeight}px`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     height: ${({ theme }) =>
-      `${theme.grid.mobile.itemHeight - theme.grid.mobile.imageHeight}px`};
+      `${
+        theme.grid.largeDisplayPhone.itemHeight -
+        theme.grid.largeDisplayPhone.imageHeight
+      }px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    height: ${({ theme }) =>
+      `${
+        theme.grid.smallDisplayPhone.itemHeight -
+        theme.grid.smallDisplayPhone.imageHeight
+      }px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {

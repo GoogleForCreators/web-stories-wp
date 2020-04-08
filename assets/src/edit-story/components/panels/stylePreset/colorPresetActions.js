@@ -35,20 +35,16 @@ import { useKeyDownEffect } from '../../keyboard';
 import { findMatchingColor } from './utils';
 
 const ActionsWrapper = styled.div`
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 0;
   text-align: center;
-  border-top: 1px solid ${({ theme }) => rgba(theme.colors.fg.v8, 0.2)};
+  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
 `;
 
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => rgba(theme.colors.fg.v7, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
   cursor: pointer;
-  padding: 0;
+  padding: 12px 0px;
   line-height: 18px;
   font-size: 13px;
 `;

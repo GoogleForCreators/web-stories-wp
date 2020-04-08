@@ -15,36 +15,59 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useState } from 'react';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import {
   StoryGrid,
   CardGridItem,
   CardTitle,
+  CardItemMenu,
   CardPreviewContainer,
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
 
-const StoryGridView = ({ filteredStories }) => (
-  <StoryGrid>
-    {filteredStories.map((story) => (
-      <CardGridItem key={story.id}>
-        <CardPreviewContainer
-          editUrl={story.editStoryUrl}
-          onPreviewClick={() => {}}
-          previewSource={'http://placeimg.com/225/400/nature'}
-        >
-          <PreviewPage page={story.pages[0]} />
-        </CardPreviewContainer>
-        <CardTitle
-          title={story.title}
-          modifiedDate={story.modified.startOf('day').fromNow()}
-        />
-      </CardGridItem>
-    ))}
-  </StoryGrid>
-);
+export const DetailRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const StoryGridView = ({ filteredStories }) => {
+  const [contextMenuId, setContextMenuId] = useState(-1);
+  return (
+    <StoryGrid>
+      {filteredStories.map((story) => (
+        <CardGridItem key={story.id}>
+          <CardPreviewContainer
+            editUrl={story.editStoryUrl}
+            onPreviewClick={() => {}}
+          >
+            <PreviewPage page={story.pages[0]} />
+          </CardPreviewContainer>
+          <DetailRow>
+            <CardTitle
+              title={story.title}
+              modifiedDate={story.modified.startOf('day').fromNow()}
+            />
+            <CardItemMenu
+              onMoreButtonSelected={setContextMenuId}
+              contextMenuId={contextMenuId}
+              onMenuItemSelected={() => setContextMenuId(-1)}
+              story={story}
+            />
+          </DetailRow>
+        </CardGridItem>
+      ))}
+    </StoryGrid>
+  );
+};
 
 StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
