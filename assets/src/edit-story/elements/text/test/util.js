@@ -27,8 +27,8 @@ describe('Text/util', () => {
     });
 
     it('should return correct string value for font family with fallbacks', () => {
-      const fallbackArray = ['foo', 'bar'];
-      const expected = '"Baloo Bhaina 2","foo","bar"';
+      const fallbackArray = ['foo', 'bar', 'sans-serif'];
+      const expected = '"Baloo Bhaina 2","foo","bar",sans-serif';
       expect(generateFontFamily('Baloo Bhaina 2', fallbackArray)).toStrictEqual(
         expected
       );

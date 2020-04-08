@@ -167,7 +167,7 @@ describe('TextOutput', () => {
     expect(output.style.fontFamily).toBe('"Baloo Bhaina 2"');
   });
 
-  it('should wrap font fallback into quotes', () => {
+  it('should display correct font fallback', () => {
     const element = {
       id: '123',
       content: 'Content',
@@ -177,7 +177,7 @@ describe('TextOutput', () => {
       width: 50,
       height: 50,
       fontFamily: 'Baloo Bhaina 2',
-      fontFallback: ['cursive'],
+      fontFallback: ['Roboto', 'cursive'],
       rotationAngle: 0,
       padding: {
         vertical: 0,
@@ -193,7 +193,7 @@ describe('TextOutput', () => {
         box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
       />
     );
-    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2","cursive"');
+    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2","Roboto",cursive');
   });
 
   it('should produce valid AMP output', async () => {

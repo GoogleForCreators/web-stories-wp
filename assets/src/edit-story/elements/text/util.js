@@ -134,12 +134,21 @@ export const getHandleKeyCommand = (setEditorState) => (
 };
 
 export const generateFontFamily = (fontFamily, fontFallback) => {
+  const genericFamilyKeywords = [
+    'cursive',
+    'fantasy',
+    'monospace',
+    'serif',
+    'sans-serif',
+  ];
   // Wrap into " since some fonts won't work without it.
   let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
   if (fontFallback && fontFallback.length) {
     fontFamilyDisplay += fontFamily ? `,` : ``;
     fontFamilyDisplay += fontFallback
-      .map((fallback) => `"${fallback}"`)
+      .map((fallback) =>
+        genericFamilyKeywords.includes(fallback) ? fallback : `"${fallback}"`
+      )
       .join(`,`);
   }
   return fontFamilyDisplay;
