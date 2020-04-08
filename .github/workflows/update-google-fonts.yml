@@ -21,14 +21,14 @@ jobs:
           node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: Setup cache
-          uses: pat-s/always-upload-cache@v1.1.4
-          with:
-            path: node_modules
-            key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.OS }}-npm-${{ env.cache-name }}-
-              ${{ runner.OS }}-npm-
-              ${{ runner.OS }}-
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
 
       - name: Install dependencies
         run: npm install
