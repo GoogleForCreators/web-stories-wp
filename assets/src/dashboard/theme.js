@@ -115,8 +115,11 @@ const theme = {
     heading1: {
       family: 'Google Sans',
       size: '38px',
+      minSize: '28px',
       lineHeight: '53px',
+      minLineHeight: '43px',
       letterSpacing: '-0.005em',
+      minLetterSpacing: '-0.01em',
     },
     heading3: {
       family: 'Google Sans',
@@ -141,6 +144,7 @@ const theme = {
     tab: {
       family: 'Google Sans',
       size: '14px',
+      minSize: '12px',
       lineHeight: '20px',
       letterSpacing: '0.01em',
       weight: '500',
@@ -204,6 +208,10 @@ const theme = {
       letterSpacing: '0.01em',
     },
   },
+  pageGutter: {
+    desktop: 20,
+    min: 10,
+  },
   grid: {
     desktop: {
       gap: '25px',
@@ -219,31 +227,40 @@ const theme = {
       imageHeight: 284,
       fr: '1fr',
     },
-    mobile: {
+    largeDisplayPhone: {
       gap: '20px',
       itemWidth: 162,
       itemHeight: 303,
       imageHeight: 243,
       fr: '1fr',
     },
-    min: {
+    smallDisplayPhone: {
       gap: '24px',
       itemWidth: 185,
       itemHeight: 338,
       imageHeight: 278,
       fr: '1fr',
     },
+    min: {
+      gap: '16px',
+      itemWidth: 139,
+      itemHeight: 256,
+      imageHeight: 209,
+      fr: '1fr',
+    },
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',
-    mobile: 'screen and (max-width: 800px)',
-    min: 'screen and (max-width: 684px)',
+    largeDisplayPhone: 'screen and (max-width: 800px)',
+    smallDisplayPhone: 'screen and (max-width: 684px)',
+    min: 'screen and (max-width: 440px)',
     raw: {
       desktop: 1280,
       tablet: 1120,
-      mobile: 800,
-      min: 684,
+      largeDisplayPhone: 800,
+      smallDisplayPhone: 684,
+      min: 440,
     },
   },
 };

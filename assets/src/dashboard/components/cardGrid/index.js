@@ -34,15 +34,21 @@ const CardGrid = styled.div`
       `repeat(auto-fill, minmax(${theme.grid.tablet.itemWidth}px, ${theme.grid.tablet.fr}))`};
     grid-gap: ${({ theme }) => theme.grid.tablet.gap};
   }
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     grid-template-columns: ${({ theme }) =>
-      `repeat(auto-fill, minmax(${theme.grid.mobile.itemWidth}px, ${theme.grid.mobile.fr}))`};
-    grid-gap: ${({ theme }) => theme.grid.mobile.gap};
+      `repeat(auto-fill, minmax(${theme.grid.largeDisplayPhone.itemWidth}px, ${theme.grid.largeDisplayPhone.fr}))`};
+    grid-gap: ${({ theme }) => theme.grid.largeDisplayPhone.gap};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    grid-template-columns: ${({ theme }) =>
+      `repeat(auto-fill, minmax(${theme.grid.smallDisplayPhone.itemWidth}px, ${theme.grid.smallDisplayPhone.fr}))`};
+    grid-gap: ${({ theme }) => theme.grid.smallDisplayPhone.gap};
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
     grid-template-columns: ${({ theme }) =>
-      `repeat(auto-fill, minmax(${theme.grid.min.itemWidth}px, ${theme.grid.min.fr}))`};
+      `repeat(2, ${theme.grid.smallDisplayPhone.fr})`};
     grid-gap: ${({ theme }) => theme.grid.min.gap};
   }
 `;
@@ -52,8 +58,11 @@ CardGrid.propTypes = {
 };
 
 export const StoryGrid = styled(CardGrid)`
-  margin: 20px;
-  width: calc(100% - 40px);
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+  }
 `;
 
 export default CardGrid;
