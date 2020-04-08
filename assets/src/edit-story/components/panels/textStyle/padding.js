@@ -29,10 +29,10 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Label, Numeric, Row, Toggle } from '../../form';
+import { Label, Numeric, Row, Toggle, MULTIPLE_VALUE } from '../../form';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
-import { useCommonObjectValue } from '../utils';
+import { useCommonObjectValue, getCommonValue } from '../utils';
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };
 
@@ -45,18 +45,27 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function PaddingControls({ selectedElements, pushUpdateForObject }) {
+function PaddingControls({
+  selectedElements,
+  pushUpdateForObject,
+  pushUpdate,
+}) {
   const padding = useCommonObjectValue(
     selectedElements,
     'padding',
     DEFAULT_PADDING
   );
+  const isPaddingLockOpen = getCommonValue(selectedElements, 'paddingLockOpen');
 
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(
+    isPaddingLockOpen === MULTIPLE_VALUE ? true : !isPaddingLockOpen
+  );
 
   useEffect(() => {
-    setLockPaddingRatio(padding.horizontal === padding.vertical);
-  }, [padding]);
+    setLockPaddingRatio(
+      isPaddingLockOpen === MULTIPLE_VALUE ? true : !isPaddingLockOpen
+    );
+  }, [isPaddingLockOpen]);
 
   const handleChange = useCallback(
     (newPadding) => {
@@ -91,7 +100,10 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={lockPaddingRatio}
-        onChange={setLockPaddingRatio}
+        onChange={() => {
+          pushUpdate({ paddingLockOpen: lockPaddingRatio });
+          setLockPaddingRatio(!lockPaddingRatio);
+        }}
       />
       <Space />
       <BoxedNumeric
@@ -107,6 +119,7 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
 PaddingControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default PaddingControls;
