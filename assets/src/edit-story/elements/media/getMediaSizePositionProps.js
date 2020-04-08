@@ -36,8 +36,9 @@ function getMediaSizePositionProps(
   const ratio = width / height;
   let oRatio =
     resource.width && resource.height ? resource.width / resource.height : 1;
-  if (resource.posterWidth && resource.posterHeight) {
-    oRatio = resource.posterWidth / resource.posterHeight;
+  const { posterGenerated, posterWidth, posterHeight } = resource;
+  if (posterGenerated && posterWidth && posterHeight) {
+    oRatio = posterWidth / posterHeight;
   }
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;

@@ -123,6 +123,7 @@ const MediaElement = ({
     height: originalHeight,
     posterWidth,
     posterHeight,
+    posterGenerated,
     sizes,
     local,
   } = resource;
@@ -130,7 +131,7 @@ const MediaElement = ({
   let oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
 
-  if (posterWidth && posterHeight) {
+  if (posterGenerated && posterWidth && posterHeight) {
     oRatio = posterWidth / posterHeight;
   }
   const width = requestedWidth || requestedHeight / oRatio;
