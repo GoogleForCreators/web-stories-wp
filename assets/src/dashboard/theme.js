@@ -206,7 +206,6 @@ const theme = {
   },
   grid: {
     desktop: {
-      columns: 5,
       gap: '25px',
       itemWidth: 221,
       itemHeight: 391,
@@ -214,7 +213,6 @@ const theme = {
       fr: '1fr',
     },
     tablet: {
-      columns: 5,
       gap: '22px',
       itemWidth: 189,
       itemHeight: 324,
@@ -222,7 +220,6 @@ const theme = {
       fr: '1fr',
     },
     mobile: {
-      columns: 4,
       gap: '20px',
       itemWidth: 162,
       itemHeight: 303,
@@ -230,7 +227,6 @@ const theme = {
       fr: '1fr',
     },
     min: {
-      columns: 3,
       gap: '24px',
       itemWidth: 185,
       itemHeight: 338,

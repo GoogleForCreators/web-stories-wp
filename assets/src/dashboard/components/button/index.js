@@ -82,7 +82,7 @@ const StyledChildren = styled.span`
   font-weight: ${({ theme }) => theme.fonts.button.weight};
   line-height: ${({ theme }) => theme.fonts.button.lineHeight};
   margin: auto;
-  padding: 10px 24px;
+  padding: 10px 12px;
   display: flex;
   justify-content: center;
   align-items: center;

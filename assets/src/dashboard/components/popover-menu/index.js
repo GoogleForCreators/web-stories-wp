@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -81,6 +81,12 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
+const Separator = styled.li`
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  width: 100%;
+`;
+
 const PopoverMenu = ({
   className,
   isOpen,
@@ -140,20 +146,27 @@ const PopoverMenu = ({
     setHoveredIndex(0);
   }, [items]);
 
-  const renderMenuItem = (item, index) => {
-    const itemIsDisabled = !item.value && item.value !== 0;
-    return (
-      <MenuItem
-        key={`${item.value}_${index}`}
-        isHovering={index === hoveredIndex}
-        onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
-        onMouseEnter={() => setHoveredIndex(index)}
-        isDisabled={itemIsDisabled}
-      >
-        <MenuItemContent>{item.label}</MenuItemContent>
-      </MenuItem>
-    );
-  };
+  const renderMenuItem = useCallback(
+    (item, index) => {
+      const itemIsDisabled = !item.value && item.value !== 0;
+      return (
+        <MenuItem
+          key={`${item.value}_${index}`}
+          isHovering={index === hoveredIndex}
+          onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
+          onMouseEnter={() => setHoveredIndex(index)}
+          isDisabled={itemIsDisabled}
+        >
+          <MenuItemContent>{item.label}</MenuItemContent>
+        </MenuItem>
+      );
+    },
+    [hoveredIndex, onSelect]
+  );
+
+  const renderSeparator = useCallback((index) => {
+    return <Separator key={`separator-${index}`} />;
+  }, []);
 
   return (
     <Menu
@@ -162,6 +175,9 @@ const PopoverMenu = ({
       framelessButton={framelessButton}
     >
       {items.map((item, index) => {
+        if (item.separator) {
+          return renderSeparator(index);
+        }
         return renderMenuItem(item, index);
       })}
     </Menu>

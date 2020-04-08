@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
+
 /**
  * Internal dependencies
  */
-import PropTypes from 'prop-types';
 import { ApiContext } from '../api/apiProvider';
 import Context from '../../../edit-story/app/font/context';
 import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFiles';
