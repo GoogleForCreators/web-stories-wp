@@ -31,7 +31,7 @@ import {
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import { DetailRow } from '../../../app/views/myStories/storyGridView';
+import { DetailRow } from '../../../app/views/shared/storyGridView';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
