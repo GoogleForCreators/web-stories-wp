@@ -59,7 +59,7 @@ jobs:
       - name: Bundle plugin
         run: |
           npm run build:plugin
-          npm run bundle-plugin
+          npm run bundle-plugin build/web-stories.zip
 
       - name: Get upload url
         run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
@@ -70,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_content_type: application/zip
-          asset_name: web-stories.zip
-          asset_path: build/web-stories.zip
           upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: /build/web-stories.zip
+          asset_name: web-stories.zip
+          asset_content_type: application/zip

@@ -153,13 +153,13 @@ function deleteExistingZipFiles() {
   });
 }
 
-function generateZipFile() {
+function generateZipFile(filename) {
   const pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
   const currentVersion = pluginFileContent
     .match(VERSION_CONSTANT_REGEX)[1]
     .trim();
 
-  const zipName = `web-stories-${currentVersion}.zip`;
+  const zipName = filename || `web-stories-${currentVersion}.zip`;
 
   // This ensures the folder in the final ZIP file is always named "web-stories".
   execSync(`zip -r ${zipName} web-stories`, {
@@ -168,7 +168,7 @@ function generateZipFile() {
   });
 }
 
-function bundlePlugin(copy) {
+function bundlePlugin(target, copy) {
   copyFiles();
 
   if (copy) {
@@ -176,7 +176,7 @@ function bundlePlugin(copy) {
   }
 
   deleteExistingZipFiles();
-  generateZipFile();
+  generateZipFile(target);
 }
 
 program
@@ -194,13 +194,14 @@ program
 program
   .command('bundle-plugin')
   .alias('bundle')
+  .arguments('[filename]')
   .option(
     '-c, --copy',
     'Only copy files to build/ folder without creating a ZIP file'
   )
   .description('Bundle Web Stories plugin as ZIP file')
-  .action(async ({ copy }) => {
-    await bundlePlugin(copy);
+  .action(async (filename, { copy }) => {
+    await bundlePlugin(filename, copy);
 
     console.log('Plugin successfully bundled!');
   });
