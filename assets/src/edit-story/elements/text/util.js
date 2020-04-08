@@ -134,7 +134,8 @@ export const getHandleKeyCommand = (setEditorState) => (
 };
 
 export const generateFontFamily = (fontFamily, fontFallback) => {
-  let fontFamilyDisplay = fontFamily ? `${fontFamily}` : null;
+  // Wrap into " since some fonts won't work without it.
+  let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
   if (fontFallback && fontFallback.length) {
     fontFamilyDisplay += fontFamily ? `,` : ``;
     fontFamilyDisplay += `${fontFallback.join(`,`)}`;
