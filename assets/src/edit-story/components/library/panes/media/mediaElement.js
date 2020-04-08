@@ -121,11 +121,18 @@ const MediaElement = ({
     type,
     width: originalWidth,
     height: originalHeight,
+    posterWidth,
+    posterHeight,
     sizes,
     local,
   } = resource;
-  const oRatio =
+
+  let oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
+
+  if (posterWidth && posterHeight) {
+    oRatio = posterWidth / posterHeight;
+  }
   const width = requestedWidth || requestedHeight / oRatio;
   const height = requestedHeight || width / oRatio;
 
@@ -236,7 +243,7 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        preload="metadata"
+        preload="none"
         muted
         {...dropTargetsBindings}
       >

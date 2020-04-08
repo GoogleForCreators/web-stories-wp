@@ -45,12 +45,12 @@ function useInsertElement() {
    * is complete.
    */
   const backfillResource = useCallback(
-    (resource, elementId) => {
+    (resource) => {
       const { type, src, videoId, posterId } = resource;
 
       // Generate video poster if one not set.
       if (type === 'video' && videoId && !posterId) {
-        uploadVideoPoster(videoId, src, elementId, resource);
+        uploadVideoPoster(videoId, src);
       }
     },
     [uploadVideoPoster]
@@ -68,7 +68,7 @@ function useInsertElement() {
       const { id: elementId, resource } = element;
       addElement({ element });
       if (resource) {
-        backfillResource(resource, elementId);
+        backfillResource(resource);
       }
       // Auto-play on insert.
       if (type === 'video') {

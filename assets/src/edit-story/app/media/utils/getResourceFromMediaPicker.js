@@ -38,6 +38,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       src: poster,
       width: posterWidth,
       height: posterHeight,
+      generated: posterGenerated,
     },
     sizes,
   } = mediaPickerEl;
@@ -49,6 +50,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     poster,
     posterWidth,
     posterHeight,
+    posterGenerated,
     posterId,
     videoId,
     sizes,

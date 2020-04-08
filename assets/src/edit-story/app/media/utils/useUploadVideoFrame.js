@@ -74,6 +74,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         poster,
         posterWidth,
         posterHeight,
+        posterGenerated: true,
       });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.

@@ -126,10 +126,10 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    ({ mimeType, posterId, id, src, videoId }) => {
+    ({ mimeType, posterId, src, videoId }) => {
       const process = async () => {
         if (allowedVideoMimeTypes.includes(mimeType) && !posterId && videoId) {
-          await uploadVideoPoster(id, src);
+          await uploadVideoPoster(videoId, src);
         }
       };
       process();
@@ -148,7 +148,7 @@ function MediaProvider({ children }) {
     }
   }, [media, processor]);
 
-  useEffect(generatePoster, [media.length, mediaType, searchTerm]);
+  useEffect(generatePoster, [media, mediaType, searchTerm]);
 
   const context = {
     state: { ...state, isUploading },

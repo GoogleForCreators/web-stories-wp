@@ -42,6 +42,7 @@ function getResourceFromUploadAPI(file) {
       src: poster,
       width: posterWidth,
       height: posterHeight,
+      generated: posterGenerated,
     },
   } = file;
   return createResource({
@@ -54,6 +55,7 @@ function getResourceFromUploadAPI(file) {
     poster,
     posterWidth,
     posterHeight,
+    posterGenerated,
     posterId,
     videoId,
     sizes,

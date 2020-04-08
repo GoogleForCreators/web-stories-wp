@@ -44,6 +44,7 @@ function getResourceFromAttachment(attachment) {
       src: poster,
       width: posterWidth,
       height: posterHeight,
+      generated: posterGenerated,
     },
     alt_text: alt,
   } = attachment;
@@ -55,6 +56,7 @@ function getResourceFromAttachment(attachment) {
     poster,
     posterWidth,
     posterHeight,
+    posterGenerated,
     posterId,
     videoId,
     length,
