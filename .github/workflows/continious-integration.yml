@@ -81,3 +81,16 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           report-json: "build/eslint_report.json"
+
+  bundle-size:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: preactjs/compressed-size-action@v1
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          pattern: '{assets/js/*.js,assets/css/*.css}'
+          # Todo: compare final plugin ZIP file size too.
+          build-script: 'build:js'
