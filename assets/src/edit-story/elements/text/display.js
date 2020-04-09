@@ -100,6 +100,7 @@ function TextDisplay({
   },
 }) {
   const ref = useRef(null);
+  const secondaryRef = useRef(null);
 
   const {
     state: {
@@ -133,6 +134,12 @@ function TextDisplay({
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
+    const secondaryTarget = secondaryRef.current;
+    if (secondaryTarget && secondaryTarget.ownerDocument) {
+      secondaryTarget.style.fontSize = updatedFontSize
+        ? `${dataToEditorY(updatedFontSize)}px`
+        : '';
+    }
   });
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
@@ -148,7 +155,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-        <HighlightElement {...props}>
+        <HighlightElement ref={secondaryRef} {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
               {...props}
