@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../edit-story/types';
+const BodyWrapper = styled.div`
+  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
 
-export const StoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
-  title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
-});
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
+  }
+`;
 
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export default BodyWrapper;

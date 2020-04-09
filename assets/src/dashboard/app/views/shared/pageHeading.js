@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  */
 import { StoriesPropType } from '../../../types';
 import { ViewHeader } from '../../../components';
-import MyStoriesSearch from './myStoriesSearch';
+import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
   display: flex;
@@ -71,6 +71,7 @@ const SearchContainer = styled.div`
 
 const PageHeading = ({
   defaultTitle,
+  searchPlaceholder,
   filteredStories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
@@ -88,7 +89,8 @@ const PageHeading = ({
         <ViewHeader>{viewHeaderText}</ViewHeader>
       </ViewHeaderContainer>
       <SearchContainer>
-        <MyStoriesSearch
+        <TypeaheadSearch
+          placeholder={searchPlaceholder}
           currentValue={typeaheadValue}
           filteredStories={filteredStories}
           handleChange={handleTypeaheadChange}
@@ -100,6 +102,7 @@ const PageHeading = ({
 
 PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
+  searchPlaceholder: PropTypes.string,
   filteredStories: StoriesPropType,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
