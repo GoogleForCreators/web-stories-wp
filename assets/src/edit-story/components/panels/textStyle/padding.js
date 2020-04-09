@@ -55,17 +55,17 @@ function PaddingControls({
     'padding',
     DEFAULT_PADDING
   );
-  const isPaddingLockOpen = getCommonValue(selectedElements, 'paddingLockOpen');
+  const isPaddingLock =
+    getCommonValue(selectedElements, 'lockPadding') === undefined ||
+    getCommonValue(selectedElements, 'lockPadding') === MULTIPLE_VALUE
+      ? true
+      : getCommonValue(selectedElements, 'lockPadding');
 
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(
-    isPaddingLockOpen === MULTIPLE_VALUE ? true : !isPaddingLockOpen
-  );
+  const [lockPaddingRatio, setLockPaddingRatio] = useState(isPaddingLock);
 
   useEffect(() => {
-    setLockPaddingRatio(
-      isPaddingLockOpen === MULTIPLE_VALUE ? true : !isPaddingLockOpen
-    );
-  }, [isPaddingLockOpen]);
+    setLockPaddingRatio(isPaddingLock);
+  }, [isPaddingLock]);
 
   const handleChange = useCallback(
     (newPadding) => {
@@ -101,7 +101,7 @@ function PaddingControls({
         uncheckedIcon={<Unlocked />}
         value={lockPaddingRatio}
         onChange={() => {
-          pushUpdate({ paddingLockOpen: lockPaddingRatio });
+          pushUpdate({ lockPadding: !lockPaddingRatio });
           setLockPaddingRatio(!lockPaddingRatio);
         }}
       />
