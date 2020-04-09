@@ -43,15 +43,13 @@ function addPage(state, { page, position }) {
   );
   const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
-  const { id, elements, backgroundElementId } = page;
+  const { id, elements } = page;
 
   // Ensure new page has elements array and background element.
   const newPage = {
-    ...page,
-    backgroundElementId: backgroundElementId
-      ? backgroundElementId
-      : elements[0].id,
+    backgroundElementId: elements[0].id,
     backgroundOverlay: OverlayType.NONE,
+    ...page,
   };
 
   return {
