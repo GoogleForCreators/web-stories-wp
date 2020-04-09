@@ -67,6 +67,7 @@ function EditLayer({}) {
 
 function EditLayerForElement({ element }) {
   const ref = useRef(null);
+  const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
   const {
@@ -82,14 +83,12 @@ function EditLayerForElement({ element }) {
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
       onClick={(evt) => {
-        if (evt.target !== ref.current) {
-          return;
+        if (evt.target === ref.current || evt.target === pageAreaRef.current) {
+          clearEditing();
         }
-
-        clearEditing();
       }}
     >
-      <EditPageArea>
+      <EditPageArea ref={pageAreaRef}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>
