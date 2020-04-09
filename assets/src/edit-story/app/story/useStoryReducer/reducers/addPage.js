@@ -15,15 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-/**
  * Internal dependencies
  */
 import { OverlayType } from '../../../../utils/backgroundOverlay';
-import { DEFAULT_BACKGROUND_ELEMENT } from '../../../../constants';
 import { isInsideRange } from './utils';
 
 /**
@@ -49,18 +43,14 @@ function addPage(state, { page, position }) {
   );
   const insertionPoint = isWithinBounds ? position : currentPageIndex + 1;
 
-  const { id } = page;
+  const { id, elements, backgroundElementId } = page;
 
   // Ensure new page has elements array and background element.
-  const backgroundElementId = uuidv4();
-  const defaultBackgroundElement = {
-    ...DEFAULT_BACKGROUND_ELEMENT,
-    id: backgroundElementId,
-  };
   const newPage = {
     ...page,
-    elements: [...page.elements, defaultBackgroundElement],
-    backgroundElementId,
+    backgroundElementId: backgroundElementId
+      ? backgroundElementId
+      : elements[0].id,
     backgroundOverlay: OverlayType.NONE,
   };
 
