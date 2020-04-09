@@ -25,15 +25,14 @@ describe('addPage', () => {
     const { addPage } = setupReducer();
 
     const result = addPage({ page: { id: '123' } });
+    const addedPage = result.pages[0];
 
-    expect(result.pages).toStrictEqual([
-      {
-        id: '123',
-        elements: [],
-        backgroundElementId: null,
-        backgroundOverlay: OverlayType.NONE,
-      },
-    ]);
+    expect(addedPage.id).toStrictEqual(123);
+    expect(addedPage.backgroundOverlay).toStrictEqual(OverlayType.NONE);
+    expect(addedPage.backgroundElementId).toStrictEqual(
+      addedPage.elements[0].id
+    );
+    expect(addedPage.elements).toHaveLength(1);
   });
 
   it('should make the new page current', () => {
