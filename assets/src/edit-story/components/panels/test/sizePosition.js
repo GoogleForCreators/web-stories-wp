@@ -43,6 +43,7 @@ describe('Panels/SizePosition', () => {
       height: 80,
       isFill: false,
       rotationAngle: 0,
+      lockAspectRatio: true,
     };
     defaultImage = {
       ...defaultElement,
