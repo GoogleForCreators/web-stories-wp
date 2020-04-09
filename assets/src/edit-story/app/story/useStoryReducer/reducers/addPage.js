@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { OverlayType } from '../../../../utils/backgroundOverlay';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { isInsideRange } from './utils';
 
 /**
@@ -58,10 +59,10 @@ function addPage(state, { page, position }) {
     elements: [
       {
         type: 'shape',
-        x: 100,
-        y: 100,
-        width: 150,
-        height: 150,
+        x: PAGE_WIDTH / 4,
+        y: PAGE_HEIGHT / 4,
+        width: PAGE_WIDTH / 3,
+        height: PAGE_HEIGHT / 3,
         rotationAngle: 0,
         mask: {
           type: 'rectangle',
