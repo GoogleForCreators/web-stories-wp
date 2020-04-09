@@ -107,6 +107,7 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -117,11 +118,11 @@ StoryPropTypes.imageResource = PropTypes.shape({
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
   alt: PropTypes.string,

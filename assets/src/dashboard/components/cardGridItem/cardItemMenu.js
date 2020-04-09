@@ -34,6 +34,7 @@ export const MoreVerticalButton = styled.button`
   border: none;
   background: transparent;
   padding: 0 8px;
+  margin: 12px 0;
   opacity: ${({ menuOpen }) => (menuOpen ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
@@ -45,6 +46,9 @@ MoreVerticalButton.propTypes = {
 
 const MenuContainer = styled.div`
   position: relative;
+  align-self: flex-start;
+  text-align: right;
+  flex-grow: 1;
   margin-top: 12px;
 
   .grid-story-popover-menu {

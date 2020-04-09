@@ -33,6 +33,12 @@ describe('getLongestMediaElement', () => {
     });
   });
 
+  it('should ignore images', () => {
+    const elements = [{ type: 'image' }];
+
+    expect(getLongestMediaElement(elements)).toBeUndefined();
+  });
+
   it('should return undefined if there are no elements', () => {
     const elements = [];
 

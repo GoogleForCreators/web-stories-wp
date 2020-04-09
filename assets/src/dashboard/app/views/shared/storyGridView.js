@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import {
-  StoryGrid,
+  CardGrid,
   CardGridItem,
   CardTitle,
   CardItemMenu,
@@ -36,6 +36,15 @@ import { StoriesPropType } from '../../../types';
 export const DetailRow = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+`;
+
+const StoryGrid = styled(CardGrid)`
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+  }
 `;
 
 const StoryGridView = ({ filteredStories }) => {
