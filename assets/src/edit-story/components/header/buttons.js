@@ -103,7 +103,7 @@ function PreviewButton() {
     // DO NOT SUBMIT: what if the status is no longer draft?
     saveStory({ status: 'draft' }).then(() => {
       let previewOpened = false;
-      if (popup) {
+      if (popup && !popup.closed) {
         try {
           popup.location.replace(previewLink);
           previewOpened = true;
