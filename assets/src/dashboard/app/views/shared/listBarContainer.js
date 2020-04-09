@@ -19,16 +19,8 @@
  */
 import styled from 'styled-components';
 
-export const ViewHeader = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.heading1.family};
-  font-size: ${({ theme }) => theme.fonts.heading1.size};
-  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
-  font-weight: bold;
-  margin: 0;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    font-size: ${({ theme }) => theme.fonts.heading1.minSize};
-    line-height: ${({ theme }) => theme.fonts.heading1.minLineHeight};
-    letter-spacing: ${({ theme }) => theme.fonts.heading1.minLetterSpacing};
-  }
+const ListBarContainer = styled.div`
+  margin-top: 10px;
 `;
+
+export default ListBarContainer;

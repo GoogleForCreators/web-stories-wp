@@ -13,22 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../edit-story/types';
-
-export const StoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
-  title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
-});
-
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export { default as BodyWrapper } from './bodyWrapper';
+export { default as ListBarContainer } from './listBarContainer';
+export { default as NoResults } from './noResults';
+export { default as PageHeading } from './pageHeading';
+export { default as StoryGridView } from './storyGridView';
+export { default as TypeaheadSearch } from './typeaheadSearch';

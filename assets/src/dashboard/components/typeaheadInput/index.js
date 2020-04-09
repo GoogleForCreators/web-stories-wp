@@ -45,7 +45,7 @@ const SearchContainer = styled.div`
   box-shadow: ${({ theme, isOpen }) =>
     isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
     transition: width 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
@@ -81,7 +81,7 @@ const ControlVisibilityContainer = styled.div`
   display: flex;
   justify-content: flex-start;
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
     transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
@@ -110,7 +110,7 @@ const StyledInput = styled.input`
     cursor: default;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '100%' : '0')};
   }
 `;
@@ -129,7 +129,7 @@ const SearchButton = styled.button`
     height: 16px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     color: ${({ theme }) => theme.colors.gray500};
   }
 `;

@@ -35,18 +35,30 @@ import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import StoryGridView from './storyGridView';
-import PageHeading from './pageHeading';
-import NoResults from './noResults';
+import {
+  BodyWrapper,
+  PageHeading,
+  NoResults,
+  StoryGridView,
+  ListBarContainer,
+} from '../shared';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px 0;
-  margin: 0 20px;
+  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
-`;
 
-const ListBarContainer = styled.div`
-  margin: 10px 0 0 20px;
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    & > label {
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 10px 0 0;
+    }
+  }
 `;
 
 const DefaultBodyText = styled.p`
@@ -105,7 +117,7 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {
       return (
-        <>
+        <BodyWrapper>
           <ListBarContainer>
             <ListBar
               label={listBarLabel}
@@ -114,7 +126,7 @@ function MyStories() {
             />
           </ListBarContainer>
           <StoryGridView filteredStories={filteredStories} />
-        </>
+        </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -140,6 +152,7 @@ function MyStories() {
         <UnitsProvider pageSize={pageSize}>
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
+            searchPlaceholder={__('Search Stories', 'web-stories')}
             filteredStories={filteredStories}
             handleTypeaheadChange={setTypeaheadValue}
             typeaheadValue={typeaheadValue}

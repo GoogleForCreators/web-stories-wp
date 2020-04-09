@@ -25,7 +25,7 @@ export {
   MoreVerticalButton,
 } from './cardGridItem';
 export { default as Dropdown } from './dropdown';
-export { default as NavigationBar } from './navigation-bar';
+export { default as NavigationBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popover-menu';
 export { default as PreviewPage } from './previewPage';
