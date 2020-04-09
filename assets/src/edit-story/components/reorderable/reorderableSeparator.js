@@ -55,11 +55,6 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
       return;
     }
     setCurrentSeparator(position);
-    separatorRef.current.scrollIntoView({
-      inline: 'center',
-      block: 'center',
-      behavior: 'smooth',
-    });
   }, [setCurrentSeparator, isReordering, position]);
 
   return (
@@ -82,7 +77,7 @@ ReorderableSeparator.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired,
+  ]),
 };
 
 export default ReorderableSeparator;

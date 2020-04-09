@@ -100,7 +100,6 @@ const BackgroundDescription = styled.div`
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
-  line-height: 0;
 `;
 
 function Layer({ layer }) {

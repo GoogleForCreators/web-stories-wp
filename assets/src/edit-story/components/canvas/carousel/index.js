@@ -332,6 +332,8 @@ function Carousel() {
           hasHorizontalOverflow={hasHorizontalOverflow}
           aria-label={__('Pages List', 'web-stories')}
           onPositionChange={rearrangePages}
+          mode={'horizontal'}
+          getItemSize={() => pageThumbWidth}
         >
           {pages.map((page, index) => {
             return (

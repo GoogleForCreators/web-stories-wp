@@ -55,6 +55,15 @@ const Container = styled.div`
 
 const Wrapper = styled(Reorderable)`
   position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Grid = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: ${({ scale }) =>
     `repeat(auto-fit, minmax(${
@@ -64,8 +73,6 @@ const Wrapper = styled(Reorderable)`
   justify-content: center;
   justify-items: center;
   align-items: center;
-  overflow-y: scroll;
-  overflow-x: hidden;
   flex-grow: 1;
 `;
 
@@ -75,6 +82,7 @@ const RangeInputWrapper = styled.div`
   align-items: center;
   max-width: 430px;
   margin: 0 auto 75px auto;
+  width: 100%;
 `;
 
 const FlexGrowRangeInput = styled(RangeInput)`
@@ -217,57 +225,60 @@ function GridView() {
     <Container>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper
-        scale={zoomLevel}
         aria-label={__('Pages List', 'web-stories')}
         onPositionChange={(oldPos, newPos) => {
           const pageId = pages[oldPos].id;
           arrangePage({ pageId, position: newPos });
           setCurrentPage({ pageId });
         }}
+        mode={'grid'}
+        getItemSize={() => height}
       >
-        {pages.map((page, index) => {
-          const isCurrentPage = index === currentPageIndex;
+        <Grid scale={zoomLevel}>
+          {pages.map((page, index) => {
+            const isCurrentPage = index === currentPageIndex;
 
-          return (
-            <ItemContainer key={`page-${index}`}>
-              <PageSeparator
-                position={index}
-                width={width}
-                height={height}
-                margin={GRID_GAP}
-                before
-              >
-                <Line height={height} />
-              </PageSeparator>
-              <ReorderableItem position={index}>
-                <PagePreview
-                  key={index}
-                  ariaLabel={
-                    isCurrentPage
-                      ? sprintf(
-                          __('Page %s (current page)', 'web-stories'),
-                          index + 1
-                        )
-                      : sprintf(__('Page %s', 'web-stories'), index + 1)
-                  }
-                  isActive={isCurrentPage}
-                  index={index}
+            return (
+              <ItemContainer key={`page-${index}`}>
+                <PageSeparator
+                  position={index}
                   width={width}
                   height={height}
-                  dragIndicatorOffset={GRID_GAP / 2}
-                />
-              </ReorderableItem>
-              <PageSeparator
-                position={index + 1}
-                width={width}
-                height={height}
-                margin={GRID_GAP}
-              >
-                <Line height={height} />
-              </PageSeparator>
-            </ItemContainer>
-          );
-        })}
+                  margin={GRID_GAP}
+                  before
+                >
+                  <Line height={height} />
+                </PageSeparator>
+                <ReorderableItem position={index}>
+                  <PagePreview
+                    key={index}
+                    ariaLabel={
+                      isCurrentPage
+                        ? sprintf(
+                            __('Page %s (current page)', 'web-stories'),
+                            index + 1
+                          )
+                        : sprintf(__('Page %s', 'web-stories'), index + 1)
+                    }
+                    isActive={isCurrentPage}
+                    index={index}
+                    width={width}
+                    height={height}
+                    dragIndicatorOffset={GRID_GAP / 2}
+                  />
+                </ReorderableItem>
+                <PageSeparator
+                  position={index + 1}
+                  width={width}
+                  height={height}
+                  margin={GRID_GAP}
+                >
+                  <Line height={height} />
+                </PageSeparator>
+              </ItemContainer>
+            );
+          })}
+        </Grid>
       </Wrapper>
     </Container>
   );

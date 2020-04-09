@@ -19,20 +19,32 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
 import useReordering from './useReordering';
+import ReorderableScroller from './reorderableScroller';
+import useScroll from './useScroll';
 
 const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
 const Reorderable = forwardRef(
-  ({ children, onPositionChange = () => {}, ...props }, forwardedRef) => {
+  (
+    {
+      children,
+      onPositionChange = () => {},
+      getItemSize = () => 10,
+      mode = 'horizontal',
+      ...props
+    },
+    forwardedRef
+  ) => {
+    const containerRef = forwardedRef || useRef(null);
     const {
       isReordering,
       currentSeparator,
@@ -40,21 +52,35 @@ const Reorderable = forwardRef(
       handleStartReordering,
     } = useReordering(onPositionChange, children.length);
 
+    const { startScroll, canScrollEnd, canScrollStart } = useScroll(
+      mode,
+      isReordering,
+      containerRef,
+      getItemSize()
+    );
+
     const state = {
       state: {
         isReordering,
         currentSeparator,
+        containerRef,
+        mode,
+        canScrollEnd,
+        canScrollStart,
       },
       actions: {
         setCurrentSeparator,
         handleStartReordering,
+        startScroll,
       },
     };
 
     return (
       <Context.Provider value={state}>
-        <ReorderableContainer ref={forwardedRef} {...props}>
+        <ReorderableContainer ref={containerRef} {...props}>
+          <ReorderableScroller direction={-1} size={getItemSize()} />
           {children}
+          <ReorderableScroller direction={1} size={getItemSize()} />
         </ReorderableContainer>
       </Context.Provider>
     );
@@ -67,6 +93,7 @@ Reorderable.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onPositionChange: PropTypes.func.isRequired,
+  getItemSize: PropTypes.func.isRequired,
 };
 
 export default Reorderable;

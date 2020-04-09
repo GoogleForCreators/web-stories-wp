@@ -36,8 +36,10 @@ import Layer from './layer';
 const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
   flex-direction: column;
   width: 100%;
+  height: 100%;
   align-items: stretch;
   user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
+  overflow-y: scroll;
 `;
 
 const LayerSeparator = styled(ReorderableSeparator)`
@@ -65,6 +67,8 @@ function LayerPanel({ layers }) {
           position: newPos,
         })
       }
+      mode={'vertical'}
+      getItemSize={() => LAYER_HEIGHT}
     >
       {layers.map((layer) => (
         <Fragment key={layer.id}>
