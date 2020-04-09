@@ -53,7 +53,7 @@ function getResourceFromAttachment(attachment) {
     videoId,
     length,
     lengthFormatted,
-    alt: alt || description,
+    alt: alt || description || title,
     title,
     sizes,
     local: false,

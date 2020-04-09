@@ -73,6 +73,7 @@ const getImageDimensions = (src) => {
  * @return {Promise<import('./createResource').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
+  const fileName = file.name;
   const mimeType = file.type;
   const reader = await createFileReader(file);
   const src = window.URL.createObjectURL(
@@ -85,6 +86,8 @@ const getImageResource = async (file) => {
     src,
     width,
     height,
+    alt: fileName,
+    title: fileName,
   });
 };
 
@@ -95,6 +98,7 @@ const getImageResource = async (file) => {
  * @return {Promise<import('./createResource').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
+  const fileName = file.name;
   const mimeType = file.type;
   const reader = await createFileReader(file);
   const src = window.URL.createObjectURL(
@@ -110,6 +114,8 @@ const getVideoResource = async (file) => {
     width,
     height,
     poster,
+    alt: fileName,
+    title: fileName,
   });
 };
 

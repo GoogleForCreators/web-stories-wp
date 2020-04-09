@@ -31,10 +31,14 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     url,
     mime: mimeType,
     width,
+    title,
+    alt,
+    description,
     height,
     id: videoId,
     featured_media: posterId,
     featured_media_src: poster,
+    fileLength: lengthFormatted,
     sizes,
   } = mediaPickerEl;
   return createResource({
@@ -45,7 +49,11 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     poster,
     posterId,
     videoId,
+    lengthFormatted,
+    alt: alt || description || title,
+    title,
     sizes,
+    local: false,
   });
 };
 
