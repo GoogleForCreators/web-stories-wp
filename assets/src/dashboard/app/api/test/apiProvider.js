@@ -57,13 +57,15 @@ describe('reshapeStoryObject', () => {
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
       responseObj
     );
+
     expect(reshapedObj).toMatchObject({
       id: 27,
       title: 'Carlos Draft',
       status: 'draft',
       modified: moment('2020-03-26T21:42:14'),
       pages: [{ id: 0, elements: [] }],
-      editStoryUrl: 'http://editstory.com?action=edit&post=27',
+      centerTargetAction: '',
+      bottomTargetAction: 'http://editstory.com?action=edit&post=27',
     });
   });
 });
