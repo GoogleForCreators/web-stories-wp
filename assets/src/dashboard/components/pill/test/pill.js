@@ -61,7 +61,7 @@ describe('Pill', () => {
   });
 
   it('should simulate a click on <Pill />', () => {
-    const { getByText } = wrapper(
+    const { getByRole } = wrapper(
       <Pill
         onClick={onClickMock}
         name="test_pill"
@@ -72,7 +72,7 @@ describe('Pill', () => {
       </Pill>
     );
 
-    const pill = getByText(pillText);
+    const pill = getByRole('radio');
 
     fireEvent.click(pill);
 

@@ -100,7 +100,7 @@ const PopoverPanel = ({ isOpen, onClose, title, items, onSelect }) => {
         <PanelHeader>{title}</PanelHeader>
       </TitleBar>
       {isOpen && (
-        <PillFieldset>
+        <PillFieldset data-testid={'pill-fieldset'}>
           {items.map(({ label, selected, value }, index) => {
             return (
               <Pill
