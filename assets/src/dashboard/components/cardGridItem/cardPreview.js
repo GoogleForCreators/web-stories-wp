@@ -43,15 +43,21 @@ const EditControls = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   padding: 0;
+  opacity: 0;
+  transition: opacity ease-in-out 300ms;
+  background: ${({ theme }) => theme.overlay};
+  border-radius: 8px;
+
+  &:hover {
+    opacity: 1;
+  }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
     a {
       min-width: ${({ cardSize }) => cardSize.width};
-      max-width: 90%;
       & > label {
         font-size: 12px;
       }
@@ -59,23 +65,23 @@ const EditControls = styled.div`
   }
 `;
 
-const CenterActionContainer = styled.div`
-  display: flex;
-  margin: auto auto 0;
+const ActionContainer = styled.div`
+  padding: 20px;
+`;
+
+const EmptyActionContainer = styled(ActionContainer)`
+  padding: 40px;
 `;
 
 const CenterActionButton = styled(Button)`
+  width: 100%;
   font-size: 22px;
-  align-self: center;
-  line-height: 31px;
+  line-height: 22px;
 `;
 
-const CtaContainer = styled.div`
-  display: flex;
-  margin: auto auto 25%;
+const BottomActionButton = styled(Button)`
+  width: 100%;
 `;
-
-const BottomActionButton = styled(Button)``;
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
@@ -89,23 +95,24 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
     <>
       <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
       <EditControls cardSize={pageSize}>
+        <EmptyActionContainer />
         {centerAction && (
-          <CenterActionContainer>
+          <ActionContainer>
             <CenterActionButton
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
             >
               {centerAction.label}
             </CenterActionButton>
-          </CenterActionContainer>
+          </ActionContainer>
         )}
-        <CtaContainer>
+        <ActionContainer>
           <BottomActionButton
             {...getActionAttributes(bottomAction.targetAction)}
           >
             {bottomAction.label}
           </BottomActionButton>
-        </CtaContainer>
+        </ActionContainer>
       </EditControls>
     </>
   );
