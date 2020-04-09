@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -45,10 +46,34 @@ export const createNewElement = (type, attributes = {}) => {
 
 export const createPage = (attributes) => createNewElement('page', attributes);
 
+const defaultBackgroundElement = {
+  type: 'shape',
+  x: PAGE_WIDTH / 4,
+  y: PAGE_HEIGHT / 4,
+  width: PAGE_WIDTH / 3,
+  height: PAGE_HEIGHT / 3,
+  rotationAngle: 0,
+  mask: {
+    type: 'rectangle',
+  },
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+  isBackground: true,
+  backgroundColor: {
+    color: { r: 255, g: 255, b: 255, a: 1 },
+  },
+  id: uuidv4(),
+};
+
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: {},
+    defaultAttributes: {
+      elements: [defaultBackgroundElement],
+      backgroundElementId: defaultBackgroundElement.id,
+    },
     name: __('Page', 'web-stories'),
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },

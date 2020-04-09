@@ -15,15 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-/**
  * Internal dependencies
  */
 import { OverlayType } from '../../../../utils/backgroundOverlay';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { isInsideRange } from './utils';
 
 /**
@@ -51,33 +45,10 @@ function addPage(state, { page, position }) {
 
   const { id } = page;
 
-  const backgroundId = uuidv4();
-  // Ensure new page has elements array and background element.
   const newPage = {
-    backgroundElementId: backgroundId,
+    elements: [],
+    backgroundElementId: null,
     backgroundOverlay: OverlayType.NONE,
-    elements: [
-      {
-        type: 'shape',
-        x: PAGE_WIDTH / 4,
-        y: PAGE_HEIGHT / 4,
-        width: PAGE_WIDTH / 3,
-        height: PAGE_HEIGHT / 3,
-        rotationAngle: 0,
-        mask: {
-          type: 'rectangle',
-        },
-        flip: {
-          vertical: false,
-          horizontal: false,
-        },
-        isBackground: true,
-        backgroundColor: {
-          color: { r: 255, g: 255, b: 255, a: 1 },
-        },
-        id: backgroundId,
-      },
-    ],
     ...page,
   };
 
