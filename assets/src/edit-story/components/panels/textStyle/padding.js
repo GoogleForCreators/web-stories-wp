@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -55,21 +55,13 @@ function PaddingControls({
     'padding',
     DEFAULT_PADDING
   );
-  const isPaddingLock =
-    getCommonValue(selectedElements, 'lockPadding') === MULTIPLE_VALUE
-      ? true
-      : getCommonValue(selectedElements, 'lockPadding');
-
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(isPaddingLock);
-
-  useEffect(() => {
-    setLockPaddingRatio(isPaddingLock);
-  }, [isPaddingLock]);
+  const rawLockPadding = getCommonValue(selectedElements, 'lockPadding');
+  const lockPadding = rawLockPadding === MULTIPLE_VALUE ? true : rawLockPadding;
 
   const handleChange = useCallback(
     (newPadding) => {
       let update = newPadding;
-      if (lockPaddingRatio) {
+      if (lockPadding) {
         const commonPadding =
           newPadding.horizontal !== undefined
             ? newPadding.horizontal
@@ -81,7 +73,7 @@ function PaddingControls({
       }
       pushUpdateForObject('padding', update, DEFAULT_PADDING);
     },
-    [pushUpdateForObject, lockPaddingRatio]
+    [pushUpdateForObject, lockPadding]
   );
 
   return (
@@ -98,11 +90,8 @@ function PaddingControls({
         data-testid="padding.lock"
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
-        value={lockPaddingRatio}
-        onChange={() => {
-          pushUpdate({ lockPadding: !lockPaddingRatio });
-          setLockPaddingRatio(!lockPaddingRatio);
-        }}
+        value={lockPadding}
+        onChange={() => pushUpdate({ lockPadding: !lockPadding })}
       />
       <Space />
       <BoxedNumeric

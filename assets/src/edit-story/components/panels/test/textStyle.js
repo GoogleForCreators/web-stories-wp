@@ -80,6 +80,8 @@ describe('Panels/TextStyle', () => {
       height: 100,
       width: 120,
       rotationAngle: 0,
+      lockPadding: true,
+      lockAspectRatio: true,
     };
 
     controls = {};

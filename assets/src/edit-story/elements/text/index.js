@@ -48,6 +48,7 @@ export const defaultAttributes = {
     horizontal: 0,
   },
   lockPadding: true,
+  lockAspectRatio: true,
 };
 
 export const hasEditMode = true;
