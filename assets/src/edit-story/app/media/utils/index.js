@@ -23,3 +23,4 @@ export { default as getResourceFromUploadAPI } from './getResourceFromUploadAPI'
 export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
 export { default as preloadImage } from './preloadImage';
+export { default as hasGeneratedPoster } from './hasGeneratedPoster';

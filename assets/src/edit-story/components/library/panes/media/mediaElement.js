@@ -28,6 +28,7 @@ import { useState, useRef, useMemo } from 'react';
  */
 import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
+import { hasGeneratedPoster } from '../../../../app/media/utils';
 
 const styledTiles = css`
   width: 100%;
@@ -121,9 +122,6 @@ const MediaElement = ({
     type,
     width: originalWidth,
     height: originalHeight,
-    posterWidth,
-    posterHeight,
-    posterGenerated,
     sizes,
     local,
   } = resource;
@@ -131,7 +129,8 @@ const MediaElement = ({
   let oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
 
-  if (posterGenerated && posterWidth && posterHeight) {
+  if (hasGeneratedPoster(resource)) {
+    const { posterWidth, posterHeight } = resource;
     oRatio = posterWidth / posterHeight;
   }
   const width = requestedWidth || requestedHeight / oRatio;
