@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -48,11 +47,12 @@ export const createPage = (attributes = {}) => {
   const { elements, backgroundElementId } = attributes;
   // Enforce having background element for each Page.
   if (!backgroundElementId) {
+    // The values of x, y, width, height are irrelevant here, however, need to be set.
     const props = {
-      x: PAGE_WIDTH / 4,
-      y: PAGE_HEIGHT / 4,
-      width: PAGE_WIDTH / 3,
-      height: PAGE_HEIGHT / 3,
+      x: 1,
+      y: 1,
+      width: 1,
+      height: 1,
       mask: {
         type: 'rectangle',
       },
