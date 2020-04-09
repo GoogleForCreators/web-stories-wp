@@ -56,7 +56,6 @@ function PaddingControls({
     DEFAULT_PADDING
   );
   const isPaddingLock =
-    getCommonValue(selectedElements, 'lockPadding') === undefined ||
     getCommonValue(selectedElements, 'lockPadding') === MULTIPLE_VALUE
       ? true
       : getCommonValue(selectedElements, 'lockPadding');
