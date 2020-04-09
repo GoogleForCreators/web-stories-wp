@@ -26,6 +26,7 @@ import { useRef, useCallback, useState } from 'react';
 import useAverageColor from './useAverageColor';
 
 const Image = styled.img`
+  display: block;
   ${({ isTooBright }) =>
     isTooBright &&
     `
