@@ -23,18 +23,33 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import PopoverPanel from '../';
+import PopoverPanel from '..';
 
 export default {
   title: 'Dashboard/Components/PopoverPanel',
   component: PopoverPanel,
 };
+
+const categoryDemoData = [
+  {
+    label: <span>{'All Categories'}</span>,
+    value: 'all',
+    selected: true,
+  },
+  { label: 'Arts and Crafts', value: 'arts_crafts' },
+  { label: 'Beauty', value: 'beauty' },
+  { label: 'Cooking', value: 'cooking' },
+  { label: 'News', value: 'news' },
+  { label: 'Sports', value: 'sports' },
+  { label: 'News', value: 'news' },
+];
+
 export const _default = () => (
   <PopoverPanel
     isOpen={boolean('isOpen', true)}
-    title={'Hi'}
+    title={text('title', 'Category')}
     onClose={action('Close button selected')}
-  >
-    <div>{text('children', 'Popover Panel Content')}</div>
-  </PopoverPanel>
+    items={categoryDemoData}
+    onSelect={action('on click selected')}
+  />
 );

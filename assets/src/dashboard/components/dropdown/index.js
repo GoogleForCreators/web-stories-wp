@@ -27,9 +27,9 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import PopoverMenu from '../popover-menu';
 import { DROPDOWN_TYPES } from '../../constants';
-import PopoverPanel from '../popover-panel';
+import PopoverMenu from '../popover-menu';
+import PopoverPanel from '../popoverPanel';
 
 export const DropdownContainer = styled.div`
   position: static;
@@ -100,7 +100,7 @@ const Dropdown = ({
   onChange,
   value,
   placeholder,
-  type,
+  type = DROPDOWN_TYPES.MENU,
   children,
   ...rest
 }) => {
@@ -120,6 +120,11 @@ const Dropdown = ({
   };
 
   const handleMenuItemSelect = (item) => {
+    if (DROPDOWN_TYPES.PANEL) {
+      onChange(item);
+      return;
+    }
+
     if (!item.value) {
       return;
     }
@@ -159,9 +164,11 @@ const Dropdown = ({
           isOpen={showMenu}
           title={currentLabel}
           onClose={() => setShowMenu(false)}
-        >
-          {children}
-        </PopoverPanel>
+          items={items}
+          onSelect={(e, selectedValue) => {
+            handleMenuItemSelect(selectedValue);
+          }}
+        />
       ) : (
         <PopoverMenu
           isOpen={showMenu}
@@ -178,7 +185,7 @@ Dropdown.propTypes = {
   ariaLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
     })
   ),
@@ -188,10 +195,6 @@ Dropdown.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(Object.values(DROPDOWN_TYPES)),
   children: PropTypes.node,
-};
-
-Dropdown.defaultProps = {
-  type: DROPDOWN_TYPES.MENU,
 };
 
 export default Dropdown;

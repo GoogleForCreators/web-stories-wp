@@ -25,7 +25,9 @@ import styled from 'styled-components';
  */
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
+import { Pill } from '../pill';
 
+// TODO fix padding issue
 export const Panel = styled.div`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
@@ -33,15 +35,17 @@ export const Panel = styled.div`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow: hidden;
-  padding: 0;
+  padding: 40px 4px 4px 16px;
+  margin: 20px 0;
   position: absolute;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
   z-index: ${Z_INDEX.POPOVER_PANEL};
+  max-width: 595px;
+  min-width: 30vw;
 `;
 
 Panel.propTypes = {
@@ -55,7 +59,7 @@ const CloseButton = styled.button`
 `;
 
 const TitleBar = styled.div`
-  padding: 25px;
+  padding: 0 0 15px 0;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
@@ -69,10 +73,20 @@ const PanelHeader = styled.h3`
   font-weight: ${({ theme }) => theme.fonts.heading3.weight};
   line-height: ${({ theme }) => theme.fonts.heading3.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing};
-  margin: 0 10px;
+  margin: 0 15px;
 `;
 
-function PopoverPanel({ isOpen, onClose, title, children }) {
+const PillFieldset = styled.fieldset`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  > label {
+    margin: 0 16px 12px 0;
+  }
+`;
+
+const PopoverPanel = ({ isOpen, onClose, title, items, onSelect }) => {
   return (
     <Panel isOpen={isOpen}>
       <TitleBar>
@@ -85,16 +99,40 @@ function PopoverPanel({ isOpen, onClose, title, children }) {
         </CloseButton>
         <PanelHeader>{title}</PanelHeader>
       </TitleBar>
-      {isOpen && children}
+      {isOpen && (
+        <PillFieldset>
+          {items.map(({ label, selected, value }, index) => {
+            return (
+              <Pill
+                key={`${value}_${index}`}
+                inputType="checkbox"
+                name={`${title}_pillGroup`}
+                onClick={onSelect}
+                value={value}
+                isSelected={selected}
+              >
+                {label}
+              </Pill>
+            );
+          })}
+        </PillFieldset>
+      )}
     </Panel>
   );
-}
+};
 
 PopoverPanel.propTypes = {
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
-  children: PropTypes.node,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+      value: PropTypes.string,
+      selected: PropTypes.bool,
+    })
+  ),
 };
 
 export default PopoverPanel;

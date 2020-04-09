@@ -93,24 +93,47 @@ export const _transparent = () => {
   );
 };
 
+const categoryDemoData = [
+  {
+    label: <span>{'All Categories'}</span>,
+    value: 'all',
+    selected: true,
+  },
+  { label: 'Arts and Crafts', value: 'arts_crafts' },
+  { label: 'Beauty', value: 'beauty' },
+  { label: 'Cooking', value: 'cooking' },
+  { label: 'News', value: 'news' },
+  { label: 'Sports', value: 'sports' },
+  { label: 'News', value: 'news' },
+  { label: 'UNCLICKABLE', value: false },
+];
+
 export const _panel = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = (datumToUpdate) => {
+    const newDemoData = statefulDemoData.map((item) => {
+      if (item.value === datumToUpdate) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+
+    setStatefulDemoData(newDemoData);
+  };
   return (
     <DropdownWrapper>
       <Dropdown
         ariaLabel={text('ariaLabel', 'my dropdown description')}
         disabled={boolean('disabled')}
         type={DROPDOWN_TYPES.PANEL}
-        placeholder={text('placeholder', 'Select Value')}
-      >
-        {({ closeMenu }) => (
-          <div>
-            <button onClick={closeMenu}>
-              {text('closeButtonLabel', 'Close')}
-            </button>
-            <h1>{text('panelTitle', 'Panel Content')}</h1>
-          </div>
-        )}
-      </Dropdown>
+        placeholder={text('placeholder', 'Category')}
+        items={statefulDemoData}
+        onChange={(selectedValue) => {
+          action(`clicked on dropdown item ${selectedValue}`)(selectedValue);
+          updateDemoDataState(selectedValue);
+        }}
+      />
       <FillerContainer />
     </DropdownWrapper>
   );

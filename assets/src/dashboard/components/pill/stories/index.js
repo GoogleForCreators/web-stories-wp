@@ -60,6 +60,7 @@ const categoryDemoData = [
   { label: 'Cooking', value: 'cooking', icon: TEMP_EDIT_PENCIL },
   { label: 'Sports', value: 'sports', icon: TEMP_EDIT_PENCIL },
   { label: 'News', value: 'news', icon: TEMP_EDIT_PENCIL },
+  { label: 'UNCLICKABLE', value: false, icon: TEMP_EDIT_PENCIL },
 ];
 
 const DemoFieldSet = styled.fieldset`

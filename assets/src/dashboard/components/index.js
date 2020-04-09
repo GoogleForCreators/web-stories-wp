@@ -29,6 +29,7 @@ export { default as Dropdown } from './dropdown';
 export { default as NavigationBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popover-menu';
+export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
