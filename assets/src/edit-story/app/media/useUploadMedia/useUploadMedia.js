@@ -33,6 +33,7 @@ import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
+  getResourceFromAttachment,
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
