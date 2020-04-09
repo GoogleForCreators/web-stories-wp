@@ -123,6 +123,7 @@ const MediaElement = ({
     height: originalHeight,
     sizes,
     local,
+    alt,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -190,6 +191,7 @@ const MediaElement = ({
           ref={mediaElement}
           width={width}
           height={height}
+          alt={alt}
           loading={'lazy'}
           onClick={onClick}
           {...dropTargetsBindings}

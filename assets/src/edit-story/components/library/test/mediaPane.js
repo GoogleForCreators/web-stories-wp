@@ -17,13 +17,14 @@
 /**
  * Internal dependencies
  */
-import { arrange, mediaResponseWithPdfAndImage } from './_utils';
+import { arrange } from './_utils';
+import mediaResponseWithPdfAndImage from './_utils/mediaResponseWithPdfAndImage';
 
 describe('mediaPane', () => {
   it('should only display supported mimeTypes and not crash on unsupported', async () => {
-    const { container } = await arrange({
+    const { getByAltText } = await arrange({
       mediaResponse: mediaResponseWithPdfAndImage,
     });
-    expect(container.querySelector(`img[src*=testImage]`)).not.toBeNull();
+    expect(getByAltText('test-image')).toBeDefined();
   });
 });
