@@ -57,6 +57,7 @@ export const Z_INDEX = {
 };
 
 export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
+export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },

@@ -31,39 +31,20 @@ import styled from 'styled-components';
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
 
 const PreviewPane = styled.div`
   position: relative;
   border-radius: 8px;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
-  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   overflow: hidden;
   z-index: -1;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
-    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight}px;
-    width: ${({ theme }) => theme.grid.min.itemWidth}px;
-  }
 `;
 
 const EditControls = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -71,33 +52,15 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
-    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
-  }
-
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
-
     button,
     a {
-      min-width: 120px;
+      min-width: ${({ cardSize }) => cardSize.width};
       max-width: 90%;
       & > label {
         font-size: 12px;
       }
     }
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight}px;
-    width: ${({ theme }) => theme.grid.min.itemWidth}px;
   }
 `;
 
@@ -126,12 +89,12 @@ const EditButton = styled(Button).attrs({ onClick: () => {} })``;
 // TODO modify to handle other types of grid items, not just own stories
 const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
   const displayEditControls = onPreviewClick || editUrl;
-
+  const { pageSize } = usePagePreviewSize();
   return (
     <>
-      <PreviewPane>{children}</PreviewPane>
+      <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
       {displayEditControls && (
-        <EditControls>
+        <EditControls cardSize={pageSize}>
           {onPreviewClick && (
             <PreviewContainer>
               <PreviewButton

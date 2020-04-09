@@ -46,10 +46,10 @@ MoreVerticalButton.propTypes = {
 
 const MenuContainer = styled.div`
   position: relative;
-  align-self: flex-end;
-  margin-top: 12px;
+  align-self: flex-start;
   text-align: right;
   flex-grow: 1;
+  margin-top: 12px;
 
   .grid-story-popover-menu {
     right: 0;
