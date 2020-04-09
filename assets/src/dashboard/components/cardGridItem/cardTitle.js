@@ -25,21 +25,28 @@ import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+
 const StyledCardTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
   font-size: ${({ theme }) => theme.fonts.storyGridItem.size};
   font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
-  width: 100%;
+  padding-top: 12px;
+  max-width: 80%;
+  height: ${CARD_TITLE_AREA_HEIGHT}px;
 `;
 
 const StyledTitle = styled.p`
   color: ${({ theme }) => theme.colors.gray900};
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledDate = styled.p`

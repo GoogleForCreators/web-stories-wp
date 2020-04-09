@@ -36,6 +36,7 @@ import { ReactComponent as HighlightedIcon } from '../../../icons/fill_highlight
 import { Color, Label, Row, ToggleButton } from '../../form';
 import { useKeyDownEffect } from '../../keyboard';
 import { useCommonColorValue, getCommonValue } from '../utils';
+import getColorPickerActions from '../utils/getColorPickerActions';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
@@ -120,6 +121,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
               true
             )
           }
+          colorPickerActions={getColorPickerActions}
         />
       </Row>
       <FillRow ref={fillRow}>

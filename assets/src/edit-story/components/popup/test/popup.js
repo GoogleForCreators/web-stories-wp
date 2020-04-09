@@ -23,20 +23,42 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
+import Popup from '../index';
 import theme from '../../../theme';
-import ColorPreset from '../colorPreset';
 
 function arrange(children = null) {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 }
 
-describe('Panels/ColorPreset', () => {
-  it('should render <ColorPreset /> panel', () => {
-    const { getByText } = arrange(<ColorPreset />);
+describe('Popup', () => {
+  it('should render popup', () => {
+    const anchor = {
+      current: document.createElement('div'),
+    };
+    document.body.append(anchor.current);
+    const { getByText } = arrange(
+      <Popup anchor={anchor} isOpen={true}>
+        {'Hello World!'}
+      </Popup>
+    );
 
-    const element = getByText('Color presets');
-
-    expect(element).toBeDefined();
+    const popup = getByText('Hello World!');
+    expect(popup).toBeDefined();
+    expect(popup).toHaveAttribute('width', '270');
   });
-  // TODO: More tests should be defined as soon as we start https://github.com/google/web-stories-wp/issues/279
+
+  it('should not render popup when isOpen set to false', () => {
+    const anchor = {
+      current: document.createElement('div'),
+    };
+    document.body.append(anchor.current);
+    const { queryByText } = arrange(
+      <Popup anchor={anchor} isOpen={false}>
+        {'Hello World!'}
+      </Popup>
+    );
+
+    const popup = queryByText('Hello World!');
+    expect(popup).toBeNull();
+  });
 });

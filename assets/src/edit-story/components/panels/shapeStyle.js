@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { Row, Color } from '../form';
 import { SimplePanel } from './panel';
 import getCommonValue from './utils/getCommonValue';
+import getColorPickerActions from './utils/getColorPickerActions';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -45,6 +46,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
           label={__('Background color', 'web-stories')}
           hasOpacity={!isBackground}
+          colorPickerActions={getColorPickerActions}
         />
       </Row>
     </SimplePanel>

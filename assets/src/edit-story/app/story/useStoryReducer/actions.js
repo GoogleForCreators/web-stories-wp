@@ -68,6 +68,12 @@ const updateElementsById = (dispatch) => ({ elementIds, properties }) =>
     payload: { elementIds, properties },
   });
 
+const updateElementsByResourceId = (dispatch) => ({ id, properties }) =>
+  dispatch({
+    type: types.UPDATE_ELEMENTS_BY_RESOURCE_ID,
+    payload: { id, properties },
+  });
+
 const updateElementById = (dispatch) => ({ elementId, properties }) =>
   dispatch({
     type: types.UPDATE_ELEMENTS,
@@ -131,6 +137,7 @@ export const exposedActions = {
   deleteElementById,
   deleteSelectedElements,
   updateElementsById,
+  updateElementsByResourceId,
   updateElementById,
   updateSelectedElements,
   setBackgroundElement,

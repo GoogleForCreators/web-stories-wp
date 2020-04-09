@@ -78,7 +78,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const longestMediaElement = getLongestMediaElement(elements);
 
   const autoAdvanceAfter = longestMediaElement?.id
-    ? `el-${longestMediaElement?.id}`
+    ? `el-${longestMediaElement?.id}-media`
     : `${defaultPageDuration}s`;
 
   return (
@@ -142,6 +142,11 @@ OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
+};
+
+OutputPage.defaultProps = {
+  autoAdvance: true,
+  defaultPageDuration: 7,
 };
 
 export default OutputPage;

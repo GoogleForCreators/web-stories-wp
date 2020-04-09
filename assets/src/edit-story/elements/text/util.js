@@ -50,7 +50,6 @@ export function generateParagraphTextStyle(
     whiteSpace: 'pre-wrap',
     margin: 0,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
     fontSize: dataToFontSizeY(fontSize),
     fontStyle,
     fontWeight,
@@ -135,10 +134,22 @@ export const getHandleKeyCommand = (setEditorState) => (
 };
 
 export const generateFontFamily = (fontFamily, fontFallback) => {
-  let fontFamilyDisplay = fontFamily ? `${fontFamily}` : null;
+  const genericFamilyKeywords = [
+    'cursive',
+    'fantasy',
+    'monospace',
+    'serif',
+    'sans-serif',
+  ];
+  // Wrap into " since some fonts won't work without it.
+  let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
   if (fontFallback && fontFallback.length) {
     fontFamilyDisplay += fontFamily ? `,` : ``;
-    fontFamilyDisplay += `${fontFallback.join(`,`)}`;
+    fontFamilyDisplay += fontFallback
+      .map((fallback) =>
+        genericFamilyKeywords.includes(fallback) ? fallback : `"${fallback}"`
+      )
+      .join(`,`);
   }
   return fontFamilyDisplay;
 };

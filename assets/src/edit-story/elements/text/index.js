@@ -33,7 +33,7 @@ export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   bold: false,
-  fontFamily: 'Arial',
+  fontFamily: 'Roboto',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,
   fontSize: 36,
@@ -64,6 +64,7 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.STYLE_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,

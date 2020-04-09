@@ -41,7 +41,7 @@ import {
   generateParagraphTextStyle,
 } from './util';
 
-const HighlightElement = styled.p`
+const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithFontColor}
@@ -50,6 +50,12 @@ const HighlightElement = styled.p`
     getHighlightLineheight(lineHeight, verticalPadding)};
   margin: 0;
   padding: 0;
+`;
+const HighlightElement = styled.p`
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  position: absolute;
 `;
 
 const MarginedElement = styled.span`
@@ -110,7 +116,9 @@ function TextDisplay({
 
   const props = {
     color,
-    backgroundColor,
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
+      ? {}
+      : { backgroundColor }),
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     horizontalBuffer: 0.01 * pageWidth,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
@@ -135,8 +143,8 @@ function TextDisplay({
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
-      <>
-        <HighlightElement ref={ref} {...props}>
+      <HighlightWrapperElement ref={ref} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <BackgroundSpan
               {...props}
@@ -156,7 +164,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-      </>
+      </HighlightWrapperElement>
     );
   }
 

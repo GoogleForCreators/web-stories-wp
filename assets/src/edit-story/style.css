@@ -21,7 +21,8 @@
  */
 
 #screen-meta,
-#screen-meta-links {
+#screen-meta-links,
+#screen-meta-links ~ :not(#edit-story):not(.clear) {
   display: none;
 }
 
@@ -39,6 +40,8 @@ body.edit-story #edit-story {
 body.edit-story .loading-message {
   color: #fff;
   text-align: center;
+  margin: 0;
+  padding: 0.67em 0;
 }
 
 body.edit-story #wpfooter {

@@ -84,6 +84,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         'featuredMedia',
         'password',
         'publisherLogo',
+        'stylePresets',
         'autoAdvance',
         'defaultPageDuration',
       ]);

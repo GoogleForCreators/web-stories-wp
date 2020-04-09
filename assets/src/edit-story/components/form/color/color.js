@@ -34,7 +34,14 @@ const Container = styled.div`
   align-items: center;
 `;
 
-function ColorInput({ onChange, hasGradient, hasOpacity, value, label }) {
+function ColorInput({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  value,
+  label,
+  colorPickerActions,
+}) {
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
@@ -47,6 +54,7 @@ function ColorInput({ onChange, hasGradient, hasOpacity, value, label }) {
         hasOpacity={hasOpacity}
         value={value}
         label={label}
+        colorPickerActions={colorPickerActions}
       />
       {hasOpacity && (
         <OpacityPreview value={value} onChange={handleOpacityChange} />
@@ -61,6 +69,7 @@ ColorInput.propTypes = {
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+  colorPickerActions: PropTypes.func,
 };
 
 ColorInput.defaultProps = {

@@ -32,48 +32,85 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { useConfig } from '../config';
 import { STORY_STATUSES } from '../../constants';
+import allTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
-export function reshapeStoryObject({ id, title, modified, status }) {
+export function reshapeStoryObject(editStoryURL) {
+  return function ({ id, title, modified, status, story_data: storyData }) {
+    return {
+      id,
+      status,
+      title: title.rendered,
+      modified: moment(modified),
+      pages: storyData.pages,
+      editStoryUrl: `${editStoryURL}&post=${id}`,
+    };
+  };
+}
+
+export function reshapeTemplateObject({ id, title, pages }) {
   return {
     id,
-    status,
-    title: title.rendered,
-    modified: moment(modified),
+    title,
+    status: 'template',
+    modified: moment('2020-04-07'),
+    pages,
+    editStoryUrl: '',
   };
 }
 
 export default function ApiProvider({ children }) {
-  const { api } = useConfig();
+  const { api, editStoryURL } = useConfig();
   const [stories, setStories] = useState([]);
+
+  const templates = useMemo(() => allTemplates.map(reshapeTemplateObject), []);
 
   const fetchStories = useCallback(
     async ({ status = STORY_STATUSES[0].value }) => {
+      if (!api.stories) {
+        return [];
+      }
+
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
-          query: { status },
+          query: { status, context: 'edit' },
         });
         const serverStoryResponse = await apiFetch({
           path,
         });
-        const reshapedStories = serverStoryResponse.map(reshapeStoryObject);
+        const reshapedStories = serverStoryResponse.map(
+          reshapeStoryObject(editStoryURL)
+        );
         setStories(reshapedStories);
         return reshapedStories;
       } catch (err) {
         return [];
       }
     },
-    [api.stories]
+    [api.stories, editStoryURL]
   );
+
+  const getAllFonts = useCallback(() => {
+    if (!api.fonts) {
+      return Promise.resolve([]);
+    }
+
+    return apiFetch({ path: api.fonts }).then((data) =>
+      data.map((font) => ({
+        value: font.name,
+        ...font,
+      }))
+    );
+  }, [api.fonts]);
 
   const value = useMemo(
     () => ({
-      state: { stories },
-      actions: { fetchStories },
+      state: { stories, templates },
+      actions: { fetchStories, getAllFonts },
     }),
-    [stories, fetchStories]
+    [stories, templates, fetchStories, getAllFonts]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

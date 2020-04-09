@@ -28,52 +28,39 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { Button } from '../';
 import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
 
-const PreviewImage = styled.img`
-  object-fit: cover;
+const PreviewPane = styled.div`
+  position: relative;
   border-radius: 8px;
-  width: 100%;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight};
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight};
-  }
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
+  overflow: hidden;
+  z-index: -1;
 `;
 
 const EditControls = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth};
-  height: ${({ theme }) => theme.grid.desktop.imageHeight};
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight};
-    width: ${({ theme }) => theme.grid.tablet.itemWidth};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => theme.grid.mobile.imageHeight};
-    width: ${({ theme }) => theme.grid.mobile.itemWidth};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight};
-    width: ${({ theme }) => theme.grid.min.itemWidth};
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    button,
+    a {
+      min-width: ${({ cardSize }) => cardSize.width};
+      max-width: 90%;
+      & > label {
+        font-size: 12px;
+      }
+    }
   }
 `;
 
@@ -90,26 +77,24 @@ const PreviewButton = styled(Button)`
 
 const CtaContainer = styled.div`
   display: flex;
-  margin: auto auto 25px;
+  margin: auto auto 25%;
 `;
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
-// TODO modify to handle other types of grid items, not just own stories
-const CardPreviewContainer = ({
-  onOpenInEditorClick,
-  onPreviewClick,
-  previewSource,
-}) => {
-  const displayEditControls = onPreviewClick || onOpenInEditorClick;
+const EditButton = styled(Button).attrs({ onClick: () => {} })``;
 
+// TODO modify to handle other types of grid items, not just own stories
+const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
+  const displayEditControls = onPreviewClick || editUrl;
+  const { pageSize } = usePagePreviewSize();
   return (
     <>
-      <PreviewImage src={previewSource} alt="preview" />
+      <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
       {displayEditControls && (
-        <EditControls>
+        <EditControls cardSize={pageSize}>
           {onPreviewClick && (
             <PreviewContainer>
               <PreviewButton
@@ -121,13 +106,11 @@ const CardPreviewContainer = ({
               </PreviewButton>
             </PreviewContainer>
           )}
-          {onOpenInEditorClick && (
-            <CtaContainer>
-              <Button type={BUTTON_TYPES.PRIMARY} onClick={onOpenInEditorClick}>
-                {__('Open in editor', 'web-stories')}
-              </Button>
-            </CtaContainer>
-          )}
+          <CtaContainer>
+            <EditButton forwardedAs="a" href={editUrl}>
+              {__('Open in editor', 'web-stories')}
+            </EditButton>
+          </CtaContainer>
         </EditControls>
       )}
     </>
@@ -135,8 +118,8 @@ const CardPreviewContainer = ({
 };
 
 CardPreviewContainer.propTypes = {
-  previewSource: PropTypes.string.isRequired,
-  onOpenInEditorClick: PropTypes.func,
+  children: PropTypes.node.isRequired,
+  editUrl: PropTypes.string.isRequired,
   onPreviewClick: PropTypes.func,
 };
 

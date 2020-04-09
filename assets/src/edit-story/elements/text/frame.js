@@ -72,6 +72,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     const element = elementRef.current;
 
     let clickTime = 0;
+    let clickCoordinates = null;
 
     const handleKeyDown = (evt) => {
       if (evt.metaKey || evt.altKey || evt.ctrlKey) {
@@ -93,15 +94,25 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
       }
     };
 
-    const handleMouseDown = () => {
+    const handleMouseDown = (evt) => {
       clickTime = window.performance.now();
+      clickCoordinates = {
+        x: evt.clientX,
+        y: evt.clientY,
+      };
     };
 
     const handleMouseUp = (evt) => {
       const timingDifference = window.performance.now() - clickTime;
+      if (!clickCoordinates) {
+        return;
+      }
 
-      if (timingDifference > 150) {
-        // Only short clicks count.
+      const distanceMoved =
+        Math.abs(evt.clientX - clickCoordinates.x) +
+        Math.abs(evt.clientY - clickCoordinates.y);
+      if (timingDifference > 300 || distanceMoved > 4) {
+        // Only enter edit mode in case of short clicks and (almost) without moving.
         return;
       }
 

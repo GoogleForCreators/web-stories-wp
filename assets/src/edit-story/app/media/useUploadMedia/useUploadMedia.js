@@ -23,7 +23,7 @@ import { useCallback, useState } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
+import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
-  getResourceFromUploadAPI,
+  getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
@@ -109,7 +109,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         if (onUploadedFile) {
           uploadingFiles.forEach(({ element, fileUploaded }) => {
             onUploadedFile({
-              resource: getResourceFromUploadAPI(fileUploaded),
+              resource: getResourceFromAttachment(fileUploaded),
               element,
             });
           });

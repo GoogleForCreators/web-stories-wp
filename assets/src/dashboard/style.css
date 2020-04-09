@@ -26,12 +26,12 @@ body {
 }
 
 #screen-meta,
-#screen-meta-links {
+#screen-meta ~ :not(#web-stories-dashboard):not(.clear) {
   display: none;
 }
 
-body.web-story_page_dashboard #wpcontent,
-body.web-story_page_dashboard #wpbody-content {
+body.web-story_page_stories-dashboard #wpcontent,
+body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
@@ -39,11 +39,11 @@ body.web-story_page_dashboard #web-stories-dashboard {
   overflow: hidden;
 }
 
-body.web-story_page_dashboard #web-stories-dashboard .loading-message {
+body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   text-align: center;
 }
 
-body.web-story_page_dashboard #wpfooter {
+body.web-story_page_stories-dashboard #wpfooter {
   display: none;
 }
 
