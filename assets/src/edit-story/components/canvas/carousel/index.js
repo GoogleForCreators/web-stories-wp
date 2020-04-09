@@ -155,23 +155,22 @@ const PageSeparator = styled(ReorderableSeparator)`
   &:first-of-type {
     left: -${({ width, margin }) => (width + 2 * margin) / 2}px;
   }
+`;
 
-  & > div {
-    height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
-    width: 4px;
-    margin: 0px;
-  }
+const Line = styled.div`
+  background: ${({ theme }) => theme.colors.action};
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  width: 4px;
+  margin: 0px;
 `;
 
 const ItemContainer = styled.div`
   display: flex;
-  flex-direction: row;
   position: relative;
 `;
 
 const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
   display: flex;
-  flex-direction: row;
   z-index: 1;
   margin: 0 10px 0 0;
   &:last-of-type {
@@ -348,7 +347,9 @@ function Carousel() {
                     width={pageThumbWidth}
                     height={pageThumbHeight}
                     margin={10 /** px */}
-                  />
+                  >
+                    <Line height={pageThumbHeight} />
+                  </PageSeparator>
                 )}
                 <ReorderablePage position={index}>
                   <Page
@@ -373,7 +374,9 @@ function Carousel() {
                   width={pageThumbWidth}
                   height={pageThumbHeight}
                   margin={10 /** px */}
-                />
+                >
+                  <Line height={pageThumbHeight} />
+                </PageSeparator>
               </ItemContainer>
             );
           })}

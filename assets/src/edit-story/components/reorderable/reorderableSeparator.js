@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   z-index: ${({ isReordering }) => (isReordering ? 2 : -1)};
 
   &:hover {
-    opacity: 1;
+    opacity: ${({ isReordering }) => (isReordering ? 1 : 0)};
   }
 `;
 
@@ -43,7 +43,7 @@ const Line = styled.div`
   width: 100%;
 `;
 
-function ReorderableSeparator({ position, ...props }) {
+function ReorderableSeparator({ position, children = <Line />, ...props }) {
   const separatorRef = useRef(null);
 
   const {
@@ -72,13 +72,17 @@ function ReorderableSeparator({ position, ...props }) {
       isReordering={isReordering}
       {...props}
     >
-      <Line />
+      {children}
     </Wrapper>
   );
 }
 
 ReorderableSeparator.propTypes = {
   position: PropTypes.number.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default ReorderableSeparator;

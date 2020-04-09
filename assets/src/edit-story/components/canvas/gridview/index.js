@@ -47,6 +47,12 @@ const PREVIEW_WIDTH = 90;
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
 const GRID_GAP = 20;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
 const Wrapper = styled(Reorderable)`
   position: relative;
   display: grid;
@@ -58,6 +64,9 @@ const Wrapper = styled(Reorderable)`
   justify-content: center;
   justify-items: center;
   align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex-grow: 1;
 `;
 
 const RangeInputWrapper = styled.div`
@@ -106,21 +115,32 @@ const Space = styled.div`
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
-  margin-left: ${({ isFirst, width }) =>
-    isFirst ? `calc(-${width}px - 12px)` : `calc(-${width}px + 8px)`};
-  margin-right: ${({ isFirst, width }) =>
-    isFirst ? `calc(-${width}px + 8px)` : `calc(-${width}px - 12px)`};
-  padding-left: ${({ width }) => width}px;
-  padding-right: ${({ width }) => width}px;
-  & > div {
-    height: ${({ height }) => height}px;
-    width: 4px;
-  }
+  position: absolute;
+  bottom: 0;
+  left: ${({ width }) => width / 2}px;
+  width: ${({ width, margin }) => width + margin}px;
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  display: flex;
+  justify-content: center;
+
+  ${({ before, width, margin }) =>
+    before &&
+    `
+      left: -${(width + 2 * margin) / 2}px;
+    `}
 `;
 
-const PagePreviewContainer = styled.div`
+const Line = styled.div`
+  background: ${({ theme }) => theme.colors.action};
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  width: 4px;
+  margin: 0px;
+`;
+
+const ItemContainer = styled.div`
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 function ThumbnailSizeControl({ value, onChange }) {
@@ -194,7 +214,7 @@ function GridView() {
   const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
 
   return (
-    <>
+    <Container>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper
         scale={zoomLevel}
@@ -209,15 +229,16 @@ function GridView() {
           const isCurrentPage = index === currentPageIndex;
 
           return (
-            <PagePreviewContainer key={`page-${index}`}>
-              {index === 0 && (
-                <PageSeparator
-                  position={0}
-                  width={width / 2}
-                  height={height}
-                  isFirst
-                />
-              )}
+            <ItemContainer key={`page-${index}`}>
+              <PageSeparator
+                position={index}
+                width={width}
+                height={height}
+                margin={GRID_GAP}
+                before
+              >
+                <Line height={height} />
+              </PageSeparator>
               <ReorderableItem position={index}>
                 <PagePreview
                   key={index}
@@ -238,14 +259,17 @@ function GridView() {
               </ReorderableItem>
               <PageSeparator
                 position={index + 1}
-                width={width / 2}
+                width={width}
                 height={height}
-              />
-            </PagePreviewContainer>
+                margin={GRID_GAP}
+              >
+                <Line height={height} />
+              </PageSeparator>
+            </ItemContainer>
           );
         })}
       </Wrapper>
-    </>
+    </Container>
   );
 }
 
