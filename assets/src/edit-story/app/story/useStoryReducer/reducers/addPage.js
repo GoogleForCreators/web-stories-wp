@@ -45,6 +45,7 @@ function addPage(state, { page, position }) {
 
   const { id } = page;
 
+  // Ensure new page has elements array and background id
   const newPage = {
     elements: [],
     backgroundElementId: null,
