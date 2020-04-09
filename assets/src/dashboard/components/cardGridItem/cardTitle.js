@@ -25,6 +25,11 @@ import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
   font-size: ${({ theme }) => theme.fonts.storyGridItem.size};
@@ -33,34 +38,7 @@ const StyledCardTitle = styled.div`
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
   padding-top: 12px;
   max-width: 80%;
-  height: ${({ theme }) =>
-    `${theme.grid.desktop.itemHeight - theme.grid.desktop.imageHeight}px`};
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) =>
-      `${theme.grid.tablet.itemHeight - theme.grid.tablet.imageHeight}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    height: ${({ theme }) =>
-      `${
-        theme.grid.largeDisplayPhone.itemHeight -
-        theme.grid.largeDisplayPhone.imageHeight
-      }px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    height: ${({ theme }) =>
-      `${
-        theme.grid.smallDisplayPhone.itemHeight -
-        theme.grid.smallDisplayPhone.imageHeight
-      }px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) =>
-      `${theme.grid.min.itemHeight - theme.grid.min.imageHeight}px`};
-  }
+  height: ${CARD_TITLE_AREA_HEIGHT}px;
 `;
 
 const StyledTitle = styled.p`

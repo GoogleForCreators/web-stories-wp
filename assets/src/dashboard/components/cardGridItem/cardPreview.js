@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -30,40 +25,21 @@ import styled from 'styled-components';
  */
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
   border-radius: 8px;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
-  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   overflow: hidden;
   z-index: -1;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
-    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight}px;
-    width: ${({ theme }) => theme.grid.min.itemWidth}px;
-  }
 `;
 
 const EditControls = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth}px;
-  height: ${({ theme }) => theme.grid.desktop.imageHeight}px;
+  height: ${({ cardSize }) => `${cardSize.height}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -71,42 +47,24 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => theme.grid.tablet.imageHeight}px;
-    width: ${({ theme }) => theme.grid.tablet.itemWidth}px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    height: ${({ theme }) => theme.grid.largeDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.largeDisplayPhone.itemWidth}px;
-  }
-
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    height: ${({ theme }) => theme.grid.smallDisplayPhone.imageHeight}px;
-    width: ${({ theme }) => theme.grid.smallDisplayPhone.itemWidth}px;
-
     button,
     a {
-      min-width: 120px;
+      min-width: ${({ cardSize }) => cardSize.width};
       max-width: 90%;
       & > label {
         font-size: 12px;
       }
     }
   }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => theme.grid.min.imageHeight}px;
-    width: ${({ theme }) => theme.grid.min.itemWidth}px;
-  }
 `;
 
-const PreviewContainer = styled.div`
+const CenterActionContainer = styled.div`
   display: flex;
   margin: auto auto 0;
 `;
 
-const PreviewButton = styled(Button)`
+const CenterActionButton = styled(Button)`
   font-size: 22px;
   align-self: center;
   line-height: 31px;
@@ -117,47 +75,52 @@ const CtaContainer = styled.div`
   margin: auto auto 25%;
 `;
 
-const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
-  margin-right: 9px;
-`;
+const BottomActionButton = styled(Button)``;
 
-const EditButton = styled(Button).attrs({ onClick: () => {} })``;
+const getActionAttributes = (targetAction) =>
+  typeof targetAction === 'string'
+    ? { forwardedAs: 'a', href: targetAction, onClick: () => {} }
+    : { onClick: targetAction };
 
-// TODO modify to handle other types of grid items, not just own stories
-const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
-  const displayEditControls = onPreviewClick || editUrl;
+const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
+  const { pageSize } = usePagePreviewSize();
 
   return (
     <>
-      <PreviewPane>{children}</PreviewPane>
-      {displayEditControls && (
-        <EditControls>
-          {onPreviewClick && (
-            <PreviewContainer>
-              <PreviewButton
-                type={BUTTON_TYPES.SECONDARY}
-                onClick={onPreviewClick}
-              >
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </PreviewButton>
-            </PreviewContainer>
-          )}
-          <CtaContainer>
-            <EditButton forwardedAs="a" href={editUrl}>
-              {__('Open in editor', 'web-stories')}
-            </EditButton>
-          </CtaContainer>
-        </EditControls>
-      )}
+      <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
+      <EditControls cardSize={pageSize}>
+        {centerAction && (
+          <CenterActionContainer>
+            <CenterActionButton
+              type={BUTTON_TYPES.SECONDARY}
+              {...getActionAttributes(centerAction.targetAction)}
+            >
+              {centerAction.label}
+            </CenterActionButton>
+          </CenterActionContainer>
+        )}
+        <CtaContainer>
+          <BottomActionButton
+            {...getActionAttributes(bottomAction.targetAction)}
+          >
+            {bottomAction.label}
+          </BottomActionButton>
+        </CtaContainer>
+      </EditControls>
     </>
   );
 };
 
+const ActionButtonPropType = PropTypes.shape({
+  targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+    .isRequired,
+  label: ActionLabel.isRequired,
+});
+
 CardPreviewContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  editUrl: PropTypes.string.isRequired,
-  onPreviewClick: PropTypes.func,
+  centerAction: ActionButtonPropType,
+  bottomAction: ActionButtonPropType.isRequired,
 };
 
 export default CardPreviewContainer;

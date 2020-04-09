@@ -17,47 +17,52 @@
 /**
  * Internal dependencies
  */
-import TravelStoryData from './data/travel.json';
+import getTravelStoryData from './data/travel';
 
-export default [
-  {
-    id: 1,
-    title: 'Beauty',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 2,
-    title: 'Cooking',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 3,
-    title: 'DIY',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 4,
-    title: 'Entertainment',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 5,
-    title: 'Fashion',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 6,
-    title: 'Fitness',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 7,
-    title: 'Travel',
-    pages: TravelStoryData.pages,
-  },
-  {
-    id: 8,
-    title: 'Wellbeing',
-    pages: TravelStoryData.pages,
-  },
-];
+export default function (config) {
+  const { pluginDir } = config;
+  const travelStoryData = getTravelStoryData(pluginDir);
+
+  return [
+    {
+      id: 1,
+      title: 'Beauty',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 2,
+      title: 'Cooking',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 3,
+      title: 'DIY',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 4,
+      title: 'Entertainment',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 5,
+      title: 'Fashion',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 6,
+      title: 'Fitness',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 7,
+      title: 'Travel',
+      pages: travelStoryData.pages,
+    },
+    {
+      id: 8,
+      title: 'Wellbeing',
+      pages: travelStoryData.pages,
+    },
+  ];
+}

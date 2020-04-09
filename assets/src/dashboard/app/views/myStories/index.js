@@ -35,6 +35,7 @@ import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
+import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import {
   BodyWrapper,
   PageHeading,
@@ -69,6 +70,10 @@ const DefaultBodyText = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
+`;
+
+const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
+  margin-right: 9px;
 `;
 
 function MyStories() {
@@ -125,7 +130,16 @@ function MyStories() {
               onPress={handleViewStyleBarButtonSelected}
             />
           </ListBarContainer>
-          <StoryGridView filteredStories={filteredStories} />
+          <StoryGridView
+            filteredStories={filteredStories}
+            centerActionLabel={
+              <>
+                <PlayArrowIcon />
+                {__('Preview', 'web-stories')}
+              </>
+            }
+            bottomActionLabel={__('Open in editor', 'web-stories')}
+          />
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {

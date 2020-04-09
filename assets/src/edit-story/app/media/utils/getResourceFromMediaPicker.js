@@ -31,6 +31,9 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     url,
     mime: mimeType,
     width,
+    title,
+    alt,
+    description,
     height,
     id,
     featured_media: posterId,
@@ -40,6 +43,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       height: posterHeight,
       generated: posterGenerated,
     },
+    fileLength: lengthFormatted,
     sizes,
   } = mediaPickerEl;
   return createResource({
@@ -53,7 +57,11 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     posterGenerated,
     posterId,
     id,
+    lengthFormatted,
+    alt: alt || description || title,
+    title,
     sizes,
+    local: false,
   });
 };
 

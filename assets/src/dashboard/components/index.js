@@ -16,13 +16,14 @@
 
 export { default as BookmarkChip } from './bookmark-chip';
 export { default as Button } from './button';
-export { default as CardGrid, StoryGrid } from './cardGrid';
+export { default as CardGrid } from './cardGrid';
 export {
   default as CardGridItem,
   CardPreviewContainer,
   CardTitle,
   CardItemMenu,
   MoreVerticalButton,
+  ActionLabel,
 } from './cardGridItem';
 export { default as Dropdown } from './dropdown';
 export { default as NavigationBar } from './navigationBar';

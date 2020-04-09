@@ -61,7 +61,7 @@ function getResourceFromAttachment(attachment) {
     id,
     length,
     lengthFormatted,
-    alt: alt || description,
+    alt: alt || description || title,
     title,
     sizes,
     local: false,

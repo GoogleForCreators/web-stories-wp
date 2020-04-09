@@ -33,7 +33,7 @@ import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
-  getResourceFromUploadAPI,
+  getResourceFromAttachment,
 } from '../../../app/media/utils';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
@@ -106,7 +106,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         if (onUploadedFile) {
           uploadingFiles.forEach(({ element, fileUploaded }) => {
             onUploadedFile({
-              resource: getResourceFromUploadAPI(fileUploaded),
+              resource: getResourceFromAttachment(fileUploaded),
               element,
             });
           });

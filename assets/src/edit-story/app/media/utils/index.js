@@ -19,7 +19,6 @@ export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getResourceFromAttachment } from './getResourceFromAttachment';
 export { default as getResourceFromLocalFile } from './getResourceFromLocalFile';
 export { default as getResourceFromMediaPicker } from './getResourceFromMediaPicker';
-export { default as getResourceFromUploadAPI } from './getResourceFromUploadAPI';
 export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
 export { default as preloadImage } from './preloadImage';

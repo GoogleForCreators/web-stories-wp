@@ -212,42 +212,12 @@ const theme = {
     desktop: 20,
     min: 10,
   },
-  grid: {
-    desktop: {
-      gap: '25px',
-      itemWidth: 221,
-      itemHeight: 391,
-      imageHeight: 331,
-      fr: '1fr',
-    },
-    tablet: {
-      gap: '22px',
-      itemWidth: 189,
-      itemHeight: 324,
-      imageHeight: 284,
-      fr: '1fr',
-    },
-    largeDisplayPhone: {
-      gap: '20px',
-      itemWidth: 162,
-      itemHeight: 303,
-      imageHeight: 243,
-      fr: '1fr',
-    },
-    smallDisplayPhone: {
-      gap: '24px',
-      itemWidth: 185,
-      itemHeight: 338,
-      imageHeight: 278,
-      fr: '1fr',
-    },
-    min: {
-      gap: '16px',
-      itemWidth: 139,
-      itemHeight: 256,
-      imageHeight: 209,
-      fr: '1fr',
-    },
+  previewWidth: {
+    desktop: 221,
+    tablet: 189,
+    largeDisplayPhone: 162,
+    smallDisplayPhone: 185,
+    min: 139,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
