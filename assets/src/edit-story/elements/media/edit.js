@@ -128,6 +128,7 @@ function MediaEdit({ element, box }) {
     ref: setCroppedMedia,
     draggable: false,
     src: resource.src,
+    alt: resource.alt,
     opacity: opacity / 100,
     ...mediaProps,
   };
