@@ -41,7 +41,7 @@ import {
   generateParagraphTextStyle,
 } from './util';
 
-const HighlightElement = styled.p`
+const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithFontColor}
@@ -50,6 +50,12 @@ const HighlightElement = styled.p`
     getHighlightLineheight(lineHeight, verticalPadding)};
   margin: 0;
   padding: 0;
+`;
+const HighlightElement = styled.p`
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  position: absolute;
 `;
 
 const MarginedElement = styled.span`
@@ -100,7 +106,6 @@ function TextDisplay({
   },
 }) {
   const ref = useRef(null);
-  const secondaryRef = useRef(null);
 
   const {
     state: {
@@ -134,18 +139,12 @@ function TextDisplay({
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
-    const secondaryTarget = secondaryRef.current;
-    if (secondaryTarget && secondaryTarget.ownerDocument) {
-      secondaryTarget.style.fontSize = updatedFontSize
-        ? `${dataToEditorY(updatedFontSize)}px`
-        : '';
-    }
   });
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
-      <>
-        <HighlightElement ref={ref} {...props}>
+      <HighlightWrapperElement ref={ref} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <BackgroundSpan
               {...props}
@@ -155,7 +154,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-        <HighlightElement ref={secondaryRef} {...props}>
+        <HighlightElement {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
               {...props}
@@ -165,7 +164,7 @@ function TextDisplay({
             />
           </MarginedElement>
         </HighlightElement>
-      </>
+      </HighlightWrapperElement>
     );
   }
 
