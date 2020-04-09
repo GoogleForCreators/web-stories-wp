@@ -41,6 +41,7 @@ const Image = styled.img`
 
 const Video = styled.video`
   ${styledTiles}
+  object-fit: cover;
 `;
 
 const Container = styled.div`
