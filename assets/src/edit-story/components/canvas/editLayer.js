@@ -29,7 +29,7 @@ import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea } from './layout';
+import { Layer, PageArea, Z_INDEX } from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled(Layer)`
@@ -80,6 +80,7 @@ function EditLayerForElement({ element }) {
     <LayerWithGrayout
       ref={ref}
       grayout={editModeGrayout}
+      zIndex={Z_INDEX.EDIT}
       onClick={(evt) => {
         if (evt.target !== ref.current) {
           return;
