@@ -126,7 +126,7 @@ function useCanvasSelectionCopyPaste(container) {
           let copiedContent = '';
           for (let n = template.content.firstChild; n; n = n.nextSibling) {
             if (n.nodeType !== /* COMMENT */ 8) {
-              if (copiedContent.length && n.tagName === 'P') {
+              if (copiedContent.trim().length && n.tagName === 'P') {
                 copiedContent += ' ';
               }
               if (n.textContent.length) {
@@ -160,7 +160,7 @@ function useCanvasSelectionCopyPaste(container) {
             evt.preventDefault();
           }
           // If we're not copying a Story element, assume copying text.
-          if (!copyingStoryElement && copiedContent.length) {
+          if (!copyingStoryElement && copiedContent.trim().length) {
             const props = {
               type: 'text',
               x: 0,
