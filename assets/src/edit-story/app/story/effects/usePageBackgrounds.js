@@ -26,16 +26,12 @@ import theme from '../../../theme';
 import { PAGE_WIDTH } from '../../../constants';
 import { MaskTypes } from '../../../masks';
 import createSolidFromString from '../../../utils/createSolidFromString';
-import { useHistory } from '../../history';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 
 // Make sure pages have background elements at all times
 function usePageBackgrounds({ currentPage, setBackgroundElement, addElement }) {
-  const {
-    actions: { clearHistory },
-  } = useHistory();
   useEffect(() => {
     if (!currentPage || currentPage?.backgroundElementId) {
       return;
@@ -58,8 +54,7 @@ function usePageBackgrounds({ currentPage, setBackgroundElement, addElement }) {
     });
     addElement({ element });
     setBackgroundElement({ elementId: element.id });
-    clearHistory();
-  }, [addElement, currentPage, setBackgroundElement, clearHistory]);
+  }, [addElement, currentPage, setBackgroundElement]);
 }
 
 export default usePageBackgrounds;
