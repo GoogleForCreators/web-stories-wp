@@ -105,8 +105,12 @@ function PreviewButton() {
       let previewOpened = false;
       if (popup && !popup.closed) {
         try {
-          popup.location.replace(previewLink);
-          previewOpened = true;
+          // The `popup.location.href` will fail if the expected window has
+          // been naviagted to a different origin.
+          if (popup.location.href) {
+            popup.location.replace(previewLink);
+            previewOpened = true;
+          }
         } catch (e) {
           // Ignore the errors. They will simply trigger the "try again"
           // dialog.
@@ -120,7 +124,9 @@ function PreviewButton() {
 
   const openPreviewLinkSync = (evt) => {
     setPreviewLinkToOpenViaDialog(null);
-    window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET);
+    // Ensure that this method is as safe as possible and pass the random
+    // target in case the normal target is not openable.
+    window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
     evt.preventDefault();
   };
 
