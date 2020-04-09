@@ -209,6 +209,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   }),
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
+  lockPadding: PropTypes.bool,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
