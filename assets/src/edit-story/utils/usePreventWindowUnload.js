@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, createContext, useContext } from 'react';
 
-const beforeUnloadListeners = new Map();
+const PreventUnloadContext = createContext({ listeners: new Map() });
 
 /**
  * This is a helper that to compliant the correct register/unregister system of `beforeunload` event
@@ -32,29 +32,26 @@ const beforeUnloadListener = (event, id) => {
   event.returnValue = id;
 };
 
-/**
- * This register/unregister `beforeunload` events based on scope
- *
- * @param {string} id Identifier to register beforeunload Event for a specific scope in the Map of listeners
- */
-const setBeforeUnloadListenersById = (id) => {
-  beforeUnloadListeners.set(id, (event) => beforeUnloadListener(event, id));
-};
-
-function PreventWindowUnloadProvider() {
-  const setPreventUnload = useCallback((id, value) => {
-    if (value) {
-      // Register beforeunload by scope
-      if (!beforeUnloadListeners.has(id)) setBeforeUnloadListenersById(id);
-      window.addEventListener('beforeunload', beforeUnloadListeners.get(id));
-    } else {
-      // Unregister beforeunload by scope
-      window.removeEventListener('beforeunload', beforeUnloadListeners.get(id));
-      beforeUnloadListeners.delete(id);
-    }
-  }, []);
+function usePreventWindowUnload() {
+  const context = useContext(PreventUnloadContext);
+  const setPreventUnload = useCallback(
+    (id, value) => {
+      if (value) {
+        // Register beforeunload by scope
+        if (!context.listeners.has(id)) {
+          context.listeners.set(id, (event) => beforeUnloadListener(event, id));
+        }
+        window.addEventListener('beforeunload', context.listeners.get(id));
+      } else {
+        // Unregister beforeunload by scope
+        window.removeEventListener('beforeunload', context.listeners.get(id));
+        context.listeners.delete(id);
+      }
+    },
+    [context]
+  );
 
   return setPreventUnload;
 }
 
-export default PreventWindowUnloadProvider;
+export default usePreventWindowUnload;

@@ -44,6 +44,8 @@ function HistoryProvider({ children, size }) {
 
   useEffect(() => {
     setPreventUnload('history', versionNumber - 1 > 0);
+
+    return () => setPreventUnload('history', false);
   }, [setPreventUnload, versionNumber]);
 
   const state = {
