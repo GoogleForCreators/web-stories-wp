@@ -23,6 +23,8 @@ export {
   CardTitle,
   CardItemMenu,
   MoreVerticalButton,
+  ActionButtonPropType,
+  ActionLabel,
 } from './cardGridItem';
 export { default as Dropdown } from './dropdown';
 export { default as NavigationBar } from './navigationBar';

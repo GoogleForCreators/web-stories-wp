@@ -102,7 +102,11 @@ function TemplatesGallery() {
               onPress={handleViewStyleBarButtonSelected}
             />
           </ListBarContainer>
-          <StoryGridView filteredStories={filteredTemplates} />
+          <StoryGridView
+            filteredStories={filteredTemplates}
+            centerActionLabel={__('View details', 'web-stories')}
+            bottomActionLabel={__('Use template', 'web-stories')}
+          />
         </BodyWrapper>
       );
     }

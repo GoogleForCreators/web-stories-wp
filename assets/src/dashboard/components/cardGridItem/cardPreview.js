@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -30,7 +25,6 @@ import styled from 'styled-components';
  */
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import { ReactComponent as PlayArrowSvg } from '../../icons/playArrow.svg';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
 
 const PreviewPane = styled.div`
@@ -64,12 +58,12 @@ const EditControls = styled.div`
   }
 `;
 
-const PreviewContainer = styled.div`
+const CenterActionContainer = styled.div`
   display: flex;
   margin: auto auto 0;
 `;
 
-const PreviewButton = styled(Button)`
+const CenterActionButton = styled(Button)`
   font-size: 22px;
   align-self: center;
   line-height: 31px;
@@ -80,47 +74,57 @@ const CtaContainer = styled.div`
   margin: auto auto 25%;
 `;
 
-const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
-  margin-right: 9px;
-`;
+const BottomActionButton = styled(Button)``;
 
-const EditButton = styled(Button).attrs({ onClick: () => {} })``;
+const getActionAttributes = (targetAction) =>
+  typeof targetAction === 'string'
+    ? { forwardedAs: 'a', href: targetAction, onClick: () => {} }
+    : { onClick: targetAction };
 
-// TODO modify to handle other types of grid items, not just own stories
-const CardPreviewContainer = ({ editUrl, onPreviewClick, children }) => {
-  const displayEditControls = onPreviewClick || editUrl;
+const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
   const { pageSize } = usePagePreviewSize();
+
   return (
     <>
       <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
-      {displayEditControls && (
-        <EditControls cardSize={pageSize}>
-          {onPreviewClick && (
-            <PreviewContainer>
-              <PreviewButton
-                type={BUTTON_TYPES.SECONDARY}
-                onClick={onPreviewClick}
-              >
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </PreviewButton>
-            </PreviewContainer>
-          )}
-          <CtaContainer>
-            <EditButton forwardedAs="a" href={editUrl}>
-              {__('Open in editor', 'web-stories')}
-            </EditButton>
-          </CtaContainer>
-        </EditControls>
-      )}
+      <EditControls cardSize={pageSize}>
+        {centerAction && (
+          <CenterActionContainer>
+            <CenterActionButton
+              type={BUTTON_TYPES.SECONDARY}
+              {...getActionAttributes(centerAction.targetAction)}
+            >
+              {centerAction.label}
+            </CenterActionButton>
+          </CenterActionContainer>
+        )}
+        <CtaContainer>
+          <BottomActionButton
+            {...getActionAttributes(bottomAction.targetAction)}
+          >
+            {bottomAction.label}
+          </BottomActionButton>
+        </CtaContainer>
+      </EditControls>
     </>
   );
 };
 
+export const ActionLabel = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.node,
+]);
+
+export const ActionButtonPropType = PropTypes.shape({
+  targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+    .isRequired,
+  label: ActionLabel.isRequired,
+});
+
 CardPreviewContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  editUrl: PropTypes.string.isRequired,
-  onPreviewClick: PropTypes.func,
+  centerAction: ActionButtonPropType,
+  bottomAction: ActionButtonPropType.isRequired,
 };
 
 export default CardPreviewContainer;

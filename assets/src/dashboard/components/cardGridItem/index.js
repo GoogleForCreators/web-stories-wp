@@ -50,6 +50,10 @@ CardGridItem.propTypes = {
 };
 
 export default CardGridItem;
-export { default as CardPreviewContainer } from './cardPreview';
+export {
+  default as CardPreviewContainer,
+  ActionButtonPropType,
+  ActionLabel,
+} from './cardPreview';
 export { default as CardTitle } from './cardTitle';
 export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';
