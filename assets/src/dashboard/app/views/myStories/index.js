@@ -35,9 +35,13 @@ import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import StoryGridView from './storyGridView';
-import PageHeading from './pageHeading';
-import NoResults from './noResults';
+import {
+  BodyWrapper,
+  PageHeading,
+  NoResults,
+  StoryGridView,
+  ListBarContainer,
+} from '../shared';
 
 const FilterContainer = styled.div`
   padding: 0 20px 20px 0;
@@ -55,17 +59,6 @@ const FilterContainer = styled.div`
       padding: 0 10px 0 0;
     }
   }
-`;
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
-  }
-`;
-
-const ListBarContainer = styled.div`
-  margin-top: 10px;
 `;
 
 const DefaultBodyText = styled.p`
@@ -159,6 +152,7 @@ function MyStories() {
         <UnitsProvider pageSize={pageSize}>
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
+            searchPlaceholder={__('Search Stories', 'web-stories')}
             filteredStories={filteredStories}
             handleTypeaheadChange={setTypeaheadValue}
             typeaheadValue={typeaheadValue}
