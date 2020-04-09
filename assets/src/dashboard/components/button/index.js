@@ -39,7 +39,7 @@ const StyledButton = styled.button`
   height: 40px;
   min-width: 100px;
   opacity: 0.75;
-  padding: 0;
+  padding: 0 10px;
   text-decoration: none;
 
   &:focus,
