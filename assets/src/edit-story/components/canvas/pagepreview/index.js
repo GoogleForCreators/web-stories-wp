@@ -92,6 +92,7 @@ function PagePreview({ index, ...props }) {
                 key={id}
                 previewMode={true}
                 element={{ id, ...rest }}
+                page={page}
               />
             ))}
           </PreviewWrapper>

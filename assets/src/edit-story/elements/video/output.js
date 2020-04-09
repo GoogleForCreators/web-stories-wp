@@ -39,7 +39,7 @@ function VideoOutput({ element, box }) {
 
   return (
     <MediaOutput element={element} box={box}>
-      <amp-video {...props}>
+      <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
       </amp-video>
     </MediaOutput>

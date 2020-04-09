@@ -396,6 +396,7 @@ function Carousel() {
               <KeyboardShortcutsButton
                 width="24"
                 height="24"
+                isDisabled
                 aria-label={__('Keyboard Shortcuts', 'web-stories')}
               />
             </OverflowButtons>

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback, useMemo, useState } from 'react';
 
 /**
@@ -45,6 +45,17 @@ const DEFAULT_FLIP = { horizontal: false, vertical: false };
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
+`;
+
+const withMargin = css`
+  margin: 0 10px;
+`;
+
+const StyledLocked = styled(Locked)`
+  ${withMargin}
+`;
+const StyledUnlocked = styled(Unlocked)`
+  ${withMargin}
 `;
 
 function isNum(v) {
@@ -119,6 +130,13 @@ function SizePositionPanel({
     [lockRatio]
   );
 
+  usePresubmitHandler(
+    ({ rotationAngle: newRotationAngle }) => ({
+      rotationAngle: newRotationAngle % 360,
+    }),
+    []
+  );
+
   const handleSetBackground = useCallback(() => {
     pushUpdate(
       {
@@ -165,8 +183,8 @@ function SizePositionPanel({
         />
         <Toggle
           data-testid="lockRatio"
-          icon={<Locked />}
-          uncheckedIcon={<Unlocked />}
+          icon={<StyledLocked />}
+          uncheckedIcon={<StyledUnlocked />}
           value={lockRatio}
           onChange={setLockRatio}
           disabled={isFill}

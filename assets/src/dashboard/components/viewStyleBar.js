@@ -37,7 +37,6 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 10px 0 0 5px;
 `;
 
 const ToggleButton = styled.button`

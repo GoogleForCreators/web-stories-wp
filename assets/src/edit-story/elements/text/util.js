@@ -50,7 +50,6 @@ export function generateParagraphTextStyle(
     whiteSpace: 'pre-wrap',
     margin: 0,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
-    fontFallback,
     fontSize: dataToFontSizeY(fontSize),
     fontStyle,
     fontWeight,

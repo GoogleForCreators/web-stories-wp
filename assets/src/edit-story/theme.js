@@ -67,6 +67,7 @@ const theme = {
       v5: '#DDDDDD',
       v6: '#232636',
       v7: '#1A73E8',
+      v8: '#E6E6E6',
     },
     action: '#47A0F4',
     danger: '#FF0000',

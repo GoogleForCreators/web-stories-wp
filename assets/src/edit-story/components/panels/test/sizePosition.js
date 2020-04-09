@@ -255,10 +255,12 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (100 / 80)),
       });
       expect(submits[imageWithSameSize.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (100 / 80)),
       });
@@ -278,10 +280,12 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: 150 / (100 / 80),
       });
       expect(submits[imageWithDifferentSize.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (200 / 120)),
       });
@@ -301,10 +305,12 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         height: 160,
         width: 160 * (100 / 80),
       });
       expect(submits[imageWithDifferentSize.id]).toStrictEqual({
+        rotationAngle: 0,
         height: 160,
         width: dataPixels(160 * (200 / 120)),
       });

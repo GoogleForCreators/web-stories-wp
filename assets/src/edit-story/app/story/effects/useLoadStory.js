@@ -64,6 +64,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           featured_media_url: featuredMediaUrl,
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
+          style_presets: stylePresets,
           password,
         } = post;
 
@@ -89,6 +90,14 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         const pages =
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
+        // Initialize color presets, if missing.
+        if (!stylePresets.fillColors) {
+          stylePresets.fillColors = [];
+        }
+        if (!stylePresets.textColors) {
+          stylePresets.textColors = [];
+        }
+
         // Set story-global variables.
         const story = {
           storyId,
@@ -105,6 +114,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
+          stylePresets,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
         };
