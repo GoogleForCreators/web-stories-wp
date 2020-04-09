@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DEFAULT_BACKGROUND_ELEMENT } from '../constants';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -49,14 +48,7 @@ export const createPage = (attributes) => createNewElement('page', attributes);
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: {
-      elements: [
-        {
-          ...DEFAULT_BACKGROUND_ELEMENT,
-          id: uuidv4(),
-        },
-      ],
-    },
+    defaultAttributes: {},
     name: __('Page', 'web-stories'),
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },

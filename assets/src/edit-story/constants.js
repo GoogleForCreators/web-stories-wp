@@ -64,23 +64,3 @@ export const BACKGROUND_TEXT_MODE = {
   FILL: 'FILL',
   HIGHLIGHT: 'HIGHLIGHT',
 };
-
-export const DEFAULT_BACKGROUND_ELEMENT = {
-  type: 'shape',
-  x: (PAGE_WIDTH / 4) * Math.random(),
-  y: (PAGE_WIDTH / 4) * Math.random(),
-  width: PAGE_WIDTH / 3,
-  height: PAGE_WIDTH / 3,
-  rotationAngle: 0,
-  mask: {
-    type: 'rectangle',
-  },
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  isBackground: true,
-  backgroundColor: {
-    color: { r: 255, g: 255, b: 255, a: 1 },
-  },
-};

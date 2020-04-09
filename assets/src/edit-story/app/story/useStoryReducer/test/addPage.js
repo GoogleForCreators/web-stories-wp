@@ -27,7 +27,7 @@ describe('addPage', () => {
     const result = addPage({ page: { id: '123' } });
     const addedPage = result.pages[0];
 
-    expect(addedPage.id).toStrictEqual(123);
+    expect(addedPage.id).toStrictEqual('123');
     expect(addedPage.backgroundOverlay).toStrictEqual(OverlayType.NONE);
     expect(addedPage.backgroundElementId).toStrictEqual(
       addedPage.elements[0].id
