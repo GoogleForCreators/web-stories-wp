@@ -27,7 +27,6 @@ import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
 
-// TODO fix padding issue
 export const Panel = styled.div`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
@@ -37,8 +36,8 @@ export const Panel = styled.div`
   flex-direction: column;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow: hidden;
-  padding: 40px 4px 4px 16px;
-  margin: 20px 0;
+  padding: 20px 20px 8px;
+  margin: 24px 0 0;
   position: absolute;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${({ isOpen }) =>
@@ -56,10 +55,11 @@ const CloseButton = styled.button`
   border: none;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.gray400};
+  margin: 0;
+  padding: 0;
 `;
 
 const TitleBar = styled.div`
-  padding: 0 0 15px 0;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
@@ -73,16 +73,17 @@ const PanelHeader = styled.h3`
   font-weight: ${({ theme }) => theme.fonts.heading3.weight};
   line-height: ${({ theme }) => theme.fonts.heading3.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing};
-  margin: 0 15px;
+  margin: 0;
+  padding-left: 20px;
 `;
 
 const PillFieldset = styled.fieldset`
   width: 100%;
-  margin: 0;
+  margin: 20px 0 0 0;
   padding: 0;
   border: none;
   > label {
-    margin: 0 16px 12px 0;
+    margin: 0 10px 14px 0;
   }
 `;
 
