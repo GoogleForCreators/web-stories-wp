@@ -33,10 +33,11 @@ import { useStory } from '../../app';
 import { useUploader } from '../../app/uploader';
 import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType, createNewElement } from '../../elements';
 import createSolid from '../../utils/createSolid';
-import { BACKGROUND_TEXT_MODE, PAGE_WIDTH } from '../../constants';
-import useInsertElement from './useInsertElement';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import { calculateFitTextFontSize } from '../../utils/textMeasurements';
+import { dataPixels } from '../../units';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -48,8 +49,6 @@ function useCanvasSelectionCopyPaste(container) {
     state: { currentPage, selectedElements },
     actions: { addElement, deleteSelectedElements },
   } = useStory();
-
-  const insertElement = useInsertElement();
 
   const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
@@ -162,18 +161,22 @@ function useCanvasSelectionCopyPaste(container) {
           // If we're not copying a Story element, assume copying text.
           if (!copyingStoryElement && copiedContent.trim().length) {
             const props = {
-              type: 'text',
-              x: 0,
-              y: 0,
-              height: 100,
-              id: uuidv4(),
+              x: (PAGE_WIDTH / 4) * Math.random(),
+              y: (PAGE_HEIGHT / 4) * Math.random(),
+              height: 50,
               content: copiedContent,
-              color: createSolid(0, 0, 0),
               backgroundColor: createSolid(196, 196, 196),
-              backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
               width: PAGE_WIDTH / 2,
             };
-            insertElement('text', props);
+            const textElement = createNewElement('text', props);
+            textElement.fontSize = dataPixels(
+              calculateFitTextFontSize(
+                textElement,
+                textElement.width,
+                textElement.height
+              )
+            );
+            addElement({ element: textElement });
           }
         }
         const { items } = clipboardData;
@@ -202,14 +205,7 @@ function useCanvasSelectionCopyPaste(container) {
         // Ignore.
       }
     },
-    [
-      addElement,
-      currentPage,
-      insertElement,
-      isValidType,
-      showSnackbar,
-      uploadFile,
-    ]
+    [addElement, currentPage, isValidType, showSnackbar, uploadFile]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
