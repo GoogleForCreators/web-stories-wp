@@ -13,22 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../edit-story/types';
+function videoIdToId({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-export const StoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
-  title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
-});
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
 
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+function updateElement(element) {
+  if (element.resource && 'videoId' in element.resource) {
+    element.resource.id = element.resource.videoId;
+    delete element.resource.videoId;
+  }
+  return element;
+}
+
+export default videoIdToId;

@@ -32,6 +32,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { useConfig } from '../config';
 import { STORY_STATUSES } from '../../constants';
+import allTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -48,9 +49,22 @@ export function reshapeStoryObject(editStoryURL) {
   };
 }
 
+export function reshapeTemplateObject({ id, title, pages }) {
+  return {
+    id,
+    title,
+    status: 'template',
+    modified: moment('2020-04-07'),
+    pages,
+    editStoryUrl: '',
+  };
+}
+
 export default function ApiProvider({ children }) {
   const { api, editStoryURL } = useConfig();
   const [stories, setStories] = useState([]);
+
+  const templates = useMemo(() => allTemplates.map(reshapeTemplateObject), []);
 
   const fetchStories = useCallback(
     async ({ status = STORY_STATUSES[0].value }) => {
@@ -93,10 +107,10 @@ export default function ApiProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      state: { stories },
+      state: { stories, templates },
       actions: { fetchStories, getAllFonts },
     }),
-    [stories, fetchStories, getAllFonts]
+    [stories, templates, fetchStories, getAllFonts]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

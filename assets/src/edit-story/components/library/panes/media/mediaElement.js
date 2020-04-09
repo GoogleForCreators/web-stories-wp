@@ -238,7 +238,7 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        preload="metadata"
+        preload="none"
         muted
         {...dropTargetsBindings}
       >
