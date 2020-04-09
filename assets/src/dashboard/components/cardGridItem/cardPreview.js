@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
@@ -110,12 +111,7 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
   );
 };
 
-export const ActionLabel = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.node,
-]);
-
-export const ActionButtonPropType = PropTypes.shape({
+const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
   label: ActionLabel.isRequired,
