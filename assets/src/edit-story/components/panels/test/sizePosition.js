@@ -31,7 +31,7 @@ import { renderPanel } from './_utils';
 jest.mock('../../../elements');
 
 describe('Panels/SizePosition', () => {
-  let defaultElement, defaultImage, defaultText;
+  let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;
   let defaultFlip;
 
   beforeEach(() => {
@@ -44,6 +44,15 @@ describe('Panels/SizePosition', () => {
       isFill: false,
       rotationAngle: 0,
       lockAspectRatio: true,
+    };
+    unlockAspectRatioElement = {
+      id: '1',
+      isBackground: false,
+      width: 100,
+      height: 80,
+      isFill: false,
+      rotationAngle: 0,
+      lockAspectRatio: false,
     };
     defaultImage = {
       ...defaultElement,
@@ -156,9 +165,9 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
 
       const input = getByTestId('width');
       fireEvent.change(input, { target: { value: '150' } });
@@ -166,9 +175,9 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update height without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
 
       const input = getByTestId('height');
       fireEvent.change(input, { target: { value: '160' } });
@@ -191,16 +200,18 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
       const input = getByTestId('width');
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: 80 });
     });
 
     it('should update height without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
       const input = getByTestId('height');
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });

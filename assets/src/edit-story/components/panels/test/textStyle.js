@@ -63,13 +63,13 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement;
+  let textElement, unlockPaddingTextElement;
   let controls;
 
   beforeEach(() => {
     global.fetch.resetMocks();
 
-    textElement = {
+    unlockPaddingTextElement = {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
@@ -80,6 +80,11 @@ describe('Panels/TextStyle', () => {
       height: 100,
       width: 120,
       rotationAngle: 0,
+      lockPadding: false,
+    };
+
+    textElement = {
+      ...unlockPaddingTextElement,
       lockPadding: true,
     };
 
@@ -122,7 +127,10 @@ describe('Panels/TextStyle', () => {
   });
 
   describe('PaddingControls', () => {
-    let textSamePadding, textDifferentPadding;
+    let textSamePadding,
+      unlockPaddingTextSamePadding,
+      textDifferentPadding,
+      unlockPaddingTextDifferentPadding;
 
     beforeEach(() => {
       textSamePadding = {
@@ -130,10 +138,19 @@ describe('Panels/TextStyle', () => {
         id: 'textSamePadding',
         padding: DEFAULT_PADDING,
       };
+      unlockPaddingTextSamePadding = {
+        ...textSamePadding,
+        lockPadding: false,
+      };
       textDifferentPadding = {
         ...textElement,
         id: 'textDifferentPadding',
         padding: { horizontal: 10, vertical: 20 },
+        lockPadding: true,
+      };
+      unlockPaddingTextDifferentPadding = {
+        ...textDifferentPadding,
+        lockPadding: false,
       };
     });
 
@@ -191,9 +208,8 @@ describe('Panels/TextStyle', () => {
 
     it('should update horizontal padding without lock', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
+        unlockPaddingTextElement,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -205,9 +221,8 @@ describe('Panels/TextStyle', () => {
 
     it('should update vertical padding without lock', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
+        unlockPaddingTextElement,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.vertical');
       fireEvent.change(input, { target: { value: '12' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -260,8 +275,8 @@ describe('Panels/TextStyle', () => {
 
     it('should update multi padding without lock and same padding', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-        textSamePadding,
+        unlockPaddingTextElement,
+        unlockPaddingTextSamePadding,
       ]);
       fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
@@ -275,8 +290,8 @@ describe('Panels/TextStyle', () => {
 
     it('should update multi padding without lock and different padding', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-        textDifferentPadding,
+        unlockPaddingTextElement,
+        unlockPaddingTextDifferentPadding,
       ]);
       fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');

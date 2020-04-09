@@ -157,6 +157,7 @@ const StoryElementPropTypes = {
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
   opacity: PropTypes.number,
+  lockAspectRatio: PropTypes.bool,
 };
 
 const StoryMediaPropTypes = {
@@ -210,7 +211,6 @@ StoryPropTypes.elements.text = PropTypes.shape({
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
   lockPadding: PropTypes.bool,
-  lockAspectRatio: PropTypes.bool,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
