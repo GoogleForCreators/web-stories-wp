@@ -87,7 +87,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         'defaultPageDuration',
       ]);
       const content = getStoryMarkup(story, pages, metadata);
-      saveStoryById({
+      return saveStoryById({
         storyId,
         content,
         pages,
