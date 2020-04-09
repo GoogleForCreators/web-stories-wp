@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
 import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { MoreVerticalButton } from './cardItemMenu';
+import { ActionLabel } from './types';
 
 const StyledCard = styled.div`
   margin: auto 0;
@@ -51,6 +52,6 @@ CardGridItem.propTypes = {
 
 export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
-export { ActionLabel } from './types';
+export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
 export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';
