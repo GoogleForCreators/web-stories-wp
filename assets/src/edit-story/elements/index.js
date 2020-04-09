@@ -44,9 +44,19 @@ export const createNewElement = (type, attributes = {}) => {
 };
 
 export const createPage = (attributes = {}) => {
-  const { elements, backgroundElementId } = attributes;
+  const { elements: oldElements, ...rest } = attributes;
+
+  // Ensure all existing elements get new ids
+  const elements = (oldElements || []).map(({ type, ...attrs }) =>
+    createNewElement(type, attrs)
+  );
+  const newAttributes = {
+    elements,
+    ...rest,
+  };
+
   // Enforce having background element for each Page.
-  if (!backgroundElementId) {
+  if (!newAttributes.backgroundElementId) {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
     const props = {
       x: 1,
@@ -59,12 +69,11 @@ export const createPage = (attributes = {}) => {
       isBackground: true,
     };
     const backgroundElement = createNewElement('shape', props);
-    attributes.elements = elements
-      ? [backgroundElement, ...elements]
-      : [backgroundElement];
-    attributes.backgroundElementId = backgroundElement.id;
+    newAttributes.elements = [backgroundElement, ...elements];
+    newAttributes.backgroundElementId = backgroundElement.id;
   }
-  return createNewElement('page', attributes);
+
+  return createNewElement('page', newAttributes);
 };
 
 export const elementTypes = [
