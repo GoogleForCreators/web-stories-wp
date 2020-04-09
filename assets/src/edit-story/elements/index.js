@@ -45,9 +45,9 @@ export const createNewElement = (type, attributes = {}) => {
 };
 
 export const createPage = (attributes = {}) => {
-  const { elements } = attributes;
+  const { elements, backgroundElementId } = attributes;
   // Enforce having background element for each Page.
-  if (!attributes.backgroundElementId) {
+  if (!backgroundElementId) {
     const props = {
       x: PAGE_WIDTH / 4,
       y: PAGE_HEIGHT / 4,
