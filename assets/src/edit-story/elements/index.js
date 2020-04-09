@@ -43,12 +43,34 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = (attributes) => createNewElement('page', attributes);
+export const createPage = (attributes = {}) => {
+  const { elements, backgroundElementId } = attributes;
+  // Enforce having background element for each Page.
+  if (!backgroundElementId) {
+    // The values of x, y, width, height are irrelevant here, however, need to be set.
+    const props = {
+      x: 1,
+      y: 1,
+      width: 1,
+      height: 1,
+      mask: {
+        type: 'rectangle',
+      },
+      isBackground: true,
+    };
+    const backgroundElement = createNewElement('shape', props);
+    attributes.elements = elements
+      ? [backgroundElement, ...elements]
+      : [backgroundElement];
+    attributes.backgroundElementId = backgroundElement.id;
+  }
+  return createNewElement('page', attributes);
+};
 
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: { elements: [] },
+    defaultAttributes: {},
     name: __('Page', 'web-stories'),
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
