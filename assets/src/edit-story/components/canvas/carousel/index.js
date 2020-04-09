@@ -198,7 +198,7 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageIndex },
+    state: { pages, currentPageId },
     actions: { setCurrentPage, arrangePage },
   } = useStory();
   const { isRTL } = useConfig();
@@ -206,6 +206,7 @@ function Carousel() {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
+  const pageRefs = useRef([]);
 
   const [carouselSize, setCarouselSize] = useState({
     width: COMPACT_THUMB_WIDTH,
@@ -227,6 +228,21 @@ function Carousel() {
     },
     [pages.length]
   );
+
+  useLayoutEffect(() => {
+    if (hasHorizontalOverflow) {
+      const currentPageRef = pageRefs.current[currentPageId];
+
+      if (!currentPageRef || !currentPageRef.scrollIntoView) {
+        return;
+      }
+
+      currentPageRef.scrollIntoView({
+        inline: 'center',
+        behavior: 'smooth',
+      });
+    }
+  }, [currentPageId, hasHorizontalOverflow, pageRefs]);
 
   useLayoutEffect(() => {
     const rect = listRef.current.getBoundingClientRect();
@@ -319,10 +335,13 @@ function Carousel() {
           onPositionChange={rearrangePages}
         >
           {pages.map((page, index) => {
-            const isCurrentPage = index === currentPageIndex;
-
             return (
-              <ItemContainer key={page.id}>
+              <ItemContainer
+                key={page.id}
+                ref={(el) => {
+                  pageRefs.current[page.id] = el;
+                }}
+              >
                 {index === 0 && (
                   <PageSeparator
                     position={0}
@@ -336,14 +355,14 @@ function Carousel() {
                     onClick={handleClickPage(page)}
                     role="option"
                     ariaLabel={
-                      isCurrentPage
+                      page.id === currentPageId
                         ? sprintf(
                             __('Page %s (current page)', 'web-stories'),
                             index + 1
                           )
                         : sprintf(__('Go to page %s', 'web-stories'), index + 1)
                     }
-                    isActive={isCurrentPage}
+                    isActive={page.id === currentPageId}
                     index={index}
                     width={pageThumbWidth}
                     height={pageThumbHeight}
