@@ -44,36 +44,33 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = (attributes) => createNewElement('page', attributes);
-
-const defaultBackgroundElement = {
-  type: 'shape',
-  x: PAGE_WIDTH / 4,
-  y: PAGE_HEIGHT / 4,
-  width: PAGE_WIDTH / 3,
-  height: PAGE_HEIGHT / 3,
-  rotationAngle: 0,
-  mask: {
-    type: 'rectangle',
-  },
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  isBackground: true,
-  backgroundColor: {
-    color: { r: 255, g: 255, b: 255, a: 1 },
-  },
-  id: uuidv4(),
+export const createPage = (attributes = {}) => {
+  const { elements } = attributes;
+  // Enforce having background element for each Page.
+  if (!attributes.backgroundElementId) {
+    const props = {
+      x: PAGE_WIDTH / 4,
+      y: PAGE_HEIGHT / 4,
+      width: PAGE_WIDTH / 3,
+      height: PAGE_HEIGHT / 3,
+      mask: {
+        type: 'rectangle',
+      },
+      isBackground: true,
+    };
+    const backgroundElement = createNewElement('shape', props);
+    attributes.elements = elements
+      ? [backgroundElement, ...elements]
+      : [backgroundElement];
+    attributes.backgroundElementId = backgroundElement.id;
+  }
+  return createNewElement('page', attributes);
 };
 
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: {
-      elements: [defaultBackgroundElement],
-      backgroundElementId: defaultBackgroundElement.id,
-    },
+    defaultAttributes: {},
     name: __('Page', 'web-stories'),
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
