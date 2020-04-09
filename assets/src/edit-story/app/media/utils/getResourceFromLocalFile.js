@@ -125,7 +125,7 @@ const getVideoResource = async (file) => {
  * @param {File} file File object.
  * @return {string} File name.
  */
-const getFileName = (file) => file.name.split('.').shift();
+const getFileName = (file) => file.name.split('.').slice(0, -1).join('.');
 
 /**
  * Generates a resource object from a local File object.
