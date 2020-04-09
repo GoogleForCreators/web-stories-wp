@@ -83,7 +83,7 @@ function DropDownList({
   toggleOptions,
 }) {
   const listContainerRef = useRef();
-  const arrayOfOptionsRefs = [];
+  const listRef = useRef();
 
   const [searchValue, setSearchValue] = useState('');
   const [focusedValue, setFocusedValue] = useState(value);
@@ -171,18 +171,12 @@ function DropDownList({
   useEffect(() => {
     if (!isNullOrUndefined(focusedValue)) {
       if (focusedIndex < 0) return;
-      arrayOfOptionsRefs[focusedIndex].focus();
+      listRef.current.children[focusedIndex].focus();
     }
-  }, [focusedValue, options, focusedIndex, arrayOfOptionsRefs]);
+  }, [focusedValue, options, focusedIndex, listRef]);
 
   const handleItemClick = (option) => {
     handleCurrentValue(option);
-  };
-
-  const setOptionRef = (element) => {
-    if (element !== null) {
-      arrayOfOptionsRefs.push(element);
-    }
   };
 
   return (
@@ -192,20 +186,18 @@ function DropDownList({
         aria-required={false}
         aria-activedescendant={value || ''}
         aria-labelledby={ariaLabel}
+        ref={listRef}
       >
-        {options.map(({ name, value: optValue }) => {
-          return (
-            <Item
-              id={`dropDown-${optValue}`}
-              aria-selected={value === optValue}
-              key={optValue}
-              onClick={() => handleItemClick(optValue)}
-              ref={setOptionRef}
-            >
-              {name}
-            </Item>
-          );
-        })}
+        {options.map(({ name, value: optValue }) => (
+          <Item
+            id={`dropDown-${optValue}`}
+            aria-selected={value === optValue}
+            key={optValue}
+            onClick={() => handleItemClick(optValue)}
+          >
+            {name}
+          </Item>
+        ))}
       </List>
     </ListContainer>
   );

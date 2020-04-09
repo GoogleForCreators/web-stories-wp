@@ -34,19 +34,17 @@ const Container = styled.div.attrs(({ x, y }) => ({
 }))`
   position: fixed;
   z-index: 2147483646;
-  width: ${({ width }) => (width === 'auto' ? width : `${width}px`)};
+  width: ${({ width }) => width}px;
   max-height: ${MAX_HEIGHT}px;
   overflow: auto;
 
   /*
-   * Custom dark scrollbars for Chromium & Firefox.
-   * Scoped to <Editor> to make sure we don't mess with WP dialogs
-   * like the Backbone Media Gallery dialog.
+   * Custom gray scrollbars for Chromium & Firefox.
    */
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-      ${({ theme }) => theme.colors.bg.v3};
+      ${({ theme }) => theme.colors.bg.v12};
   }
 
   *::-webkit-scrollbar {
@@ -55,12 +53,12 @@ const Container = styled.div.attrs(({ x, y }) => ({
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v3};
+    background: ${({ theme }) => theme.colors.bg.v12};
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.bg.v10};
-    border: 2px solid ${({ theme }) => theme.colors.bg.v3};
+    background-color: ${({ theme }) => theme.colors.fg.v5};
+    border: 2px solid ${({ theme }) => theme.colors.bg.v12};
     border-left-width: 3px;
     border-top-width: 3px;
     border-radius: 6px;
