@@ -52,6 +52,9 @@ describe('Panels/VideoAccessibility', () => {
     const element = getByLabelText('Select as video poster');
     fireEvent.click(element);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
-    expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1', posterGenerated: false, }, true);
+    expect(pushUpdate).toHaveBeenCalledWith(
+      { poster: 'media1', posterGenerated: false },
+      true
+    );
   });
 });
