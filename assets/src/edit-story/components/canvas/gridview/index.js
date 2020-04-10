@@ -55,7 +55,8 @@ const Container = styled.div`
 
 const Wrapper = styled(Reorderable)`
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-y: overlay;
   overflow-x: hidden;
   flex-grow: 1;
   display: flex;
