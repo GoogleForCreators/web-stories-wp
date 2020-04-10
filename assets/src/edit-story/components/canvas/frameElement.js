@@ -91,7 +91,9 @@ function FrameElement({ element }) {
       data-element-id={id}
       {...box}
       onMouseDown={(evt) => {
-        if (!isSelected) {
+        if (isSelected) {
+          elementRef.current.focus();
+        } else {
           handleSelectElement(id, evt);
         }
         if (!isBackground) {
