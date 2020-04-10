@@ -34,6 +34,7 @@ import {
 import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../link/frame';
+import { useTransformHandler } from '../transform';
 import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
@@ -84,6 +85,13 @@ function FrameElement({ element }) {
   const isSelected = selectedElementIds.includes(id);
   const box = getBox(element);
   const isBackground = currentPage?.backgroundElementId === id;
+
+  useTransformHandler(id, (transform) => {
+    const target = elementRef.current;
+    if (transform?.dropTargets?.hover !== undefined) {
+      target.style.opacity = transform.dropTargets.hover ? 0 : 1;
+    }
+  });
 
   return (
     <Wrapper
