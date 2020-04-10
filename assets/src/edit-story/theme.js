@@ -38,6 +38,13 @@ export const GlobalStyle = createGlobalStyle`
     border-right-color: ${({ theme }) => theme.colors.bg.v4};
   }
 
+  /**
+   * Override the shell (WP) the default styling used for stories content.
+   */
+  .web-stories-content b, .web-stories-content strong {
+    font-weight: bold;
+  }
+
   /*
    * Custom dark scrollbars for Chromium & Firefox.
    * Scoped to <Editor> to make sure we don't mess with WP dialogs
