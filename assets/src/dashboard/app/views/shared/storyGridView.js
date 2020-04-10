@@ -33,7 +33,7 @@ import {
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
-import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
+import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -58,8 +58,13 @@ const StoryGridView = ({
 
   const handleMenuItemSelected = useCallback((sender, story) => {
     setContextMenuId(-1);
-    if (sender.value === STORY_CONTEXT_MENU_ITEMS[0].value) {
-      window.location.href = story.bottomTargetAction;
+    switch (sender.value) {
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+        window.location.href = story.bottomTargetAction;
+        break;
+
+      default:
+        break;
     }
   }, []);
 
