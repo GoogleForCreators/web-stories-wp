@@ -122,7 +122,7 @@ const PageList = styled(Reorderable).attrs({
   align-items: center;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
   padding: 0px 10px;
