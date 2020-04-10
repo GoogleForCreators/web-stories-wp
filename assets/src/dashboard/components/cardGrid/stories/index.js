@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { text } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
 import CardGrid from '../';
@@ -25,13 +31,28 @@ export default {
   component: CardGrid,
 };
 
+const Card = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  padding: 20px;
+  background-color: orange;
+`;
+
 const StorybookGridItem = (
   <CardGridItem>
     <CardPreviewContainer
-      onOpenInEditorClick={() => {}}
-      onPreviewClick={() => {}}
-      previewSource={'http://placeimg.com/225/400/nature'}
-    />
+      bottomAction={{
+        targetAction: 'https://www.google.com',
+        label: 'Open in Editor',
+      }}
+      centerAction={{
+        targetAction: '',
+        label: 'Preview',
+      }}
+    >
+      <Card>{text('Sample Story Content', 'Sample Story')}</Card>
+    </CardPreviewContainer>
     <CardTitle title="Story Title" modifiedDate="12 days" />
   </CardGridItem>
 );

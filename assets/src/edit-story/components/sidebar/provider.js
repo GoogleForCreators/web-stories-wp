@@ -43,7 +43,7 @@ const Sidebar = styled(CanvasArea)`
 
 const SidebarContent = styled.div`
   position: absolute;
-  right: 0px;
+  right: 20px;
   top: ${({ top }) => `${top}px`};
 `;
 

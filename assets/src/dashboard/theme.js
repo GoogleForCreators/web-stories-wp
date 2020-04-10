@@ -111,12 +111,17 @@ const theme = {
   subNavigationBar: {
     border: `1px solid ${colors.gray50}`,
   },
+  overlay:
+    'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
   fonts: {
     heading1: {
       family: 'Google Sans',
       size: '38px',
+      minSize: '28px',
       lineHeight: '53px',
+      minLineHeight: '43px',
       letterSpacing: '-0.005em',
+      minLetterSpacing: '-0.01em',
     },
     heading3: {
       family: 'Google Sans',
@@ -141,6 +146,7 @@ const theme = {
     tab: {
       family: 'Google Sans',
       size: '14px',
+      minSize: '12px',
       lineHeight: '20px',
       letterSpacing: '0.01em',
       weight: '500',
@@ -204,50 +210,29 @@ const theme = {
       letterSpacing: '0.01em',
     },
   },
-  grid: {
-    desktop: {
-      columns: 5,
-      gap: '25px',
-      itemWidth: 221,
-      itemHeight: 391,
-      imageHeight: 331,
-      fr: '1fr',
-    },
-    tablet: {
-      columns: 5,
-      gap: '22px',
-      itemWidth: 189,
-      itemHeight: 324,
-      imageHeight: 284,
-      fr: '1fr',
-    },
-    mobile: {
-      columns: 4,
-      gap: '20px',
-      itemWidth: 162,
-      itemHeight: 303,
-      imageHeight: 243,
-      fr: '1fr',
-    },
-    min: {
-      columns: 3,
-      gap: '24px',
-      itemWidth: 185,
-      itemHeight: 338,
-      imageHeight: 278,
-      fr: '1fr',
-    },
+  pageGutter: {
+    desktop: 20,
+    min: 10,
+  },
+  previewWidth: {
+    desktop: 221,
+    tablet: 189,
+    largeDisplayPhone: 162,
+    smallDisplayPhone: 185,
+    min: 139,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',
-    mobile: 'screen and (max-width: 800px)',
-    min: 'screen and (max-width: 684px)',
+    largeDisplayPhone: 'screen and (max-width: 800px)',
+    smallDisplayPhone: 'screen and (max-width: 684px)',
+    min: 'screen and (max-width: 440px)',
     raw: {
       desktop: 1280,
       tablet: 1120,
-      mobile: 800,
-      min: 684,
+      largeDisplayPhone: 800,
+      smallDisplayPhone: 684,
+      min: 440,
     },
   },
 };

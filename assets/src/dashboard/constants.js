@@ -57,6 +57,7 @@ export const Z_INDEX = {
 };
 
 export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
+export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
@@ -80,3 +81,20 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
+
+export const STORY_CONTEXT_MENU_ITEMS = [
+  {
+    label: __('Open in editor', 'web-stories'),
+    value: 'open-in-editor-action',
+  },
+  { label: __('Preview', 'web-stories'), value: 'preview-action' },
+  { label: null, value: false, separator: true },
+  { label: __('Rename', 'web-stories'), value: 'rename-action' },
+  { label: __('Duplicate', 'web-stories'), value: 'duplicate-action' },
+  {
+    label: __('Create Template', 'web-stories'),
+    value: 'create-template-action',
+  },
+  { label: null, value: false, separator: true },
+  { label: __('Delete Story', 'web-stories'), value: 'delete-story-action' },
+];

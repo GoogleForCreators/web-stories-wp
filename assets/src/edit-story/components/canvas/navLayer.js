@@ -28,11 +28,16 @@ import {
   NavPrevArea,
   NavNextArea,
   CarouselArea,
+  Z_INDEX,
 } from './layout';
 
 function NavLayer() {
   return (
-    <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
+    <Layer
+      pointerEvents="none"
+      zIndex={Z_INDEX.NAV}
+      onMouseDown={(evt) => evt.stopPropagation()}
+    >
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>

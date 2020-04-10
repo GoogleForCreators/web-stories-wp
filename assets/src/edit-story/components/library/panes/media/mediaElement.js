@@ -41,6 +41,7 @@ const Image = styled.img`
 
 const Video = styled.video`
   ${styledTiles}
+  object-fit: cover;
 `;
 
 const Container = styled.div`
@@ -238,7 +239,7 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        preload="metadata"
+        preload="none"
         muted
         {...dropTargetsBindings}
       >
