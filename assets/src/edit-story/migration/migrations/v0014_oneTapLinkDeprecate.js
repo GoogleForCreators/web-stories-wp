@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-export function getLinkFromElement(element) {
-  return element.link || null;
-}
-
-export function createLink({ url = '', ...rest } = {}) {
+function oneTapLinkDeprecate({ pages, ...rest }) {
   return {
-    url,
+    pages: pages.map(reducePage),
     ...rest,
   };
 }
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element.link && element.link.type) {
+    delete element.link.type;
+  }
+  return element;
+}
+
+export default oneTapLinkDeprecate;
