@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row } from '../../form';
+import { Media, Row, Button } from '../../form';
 import { createLink, getLinkFromElement } from '../../link';
 import { useAPI } from '../../../app/api';
 import { useSnackbar } from '../../../app/snackbar';
@@ -39,9 +39,31 @@ import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useCanvas } from '../../canvas';
+import { ReactComponent as Close } from '../../../icons/close_icon.svg';
 
-const BrandIconText = styled.span`
+const IconText = styled.span`
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+`;
+
+const IconInfo = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 12px;
+`;
+
+const IconRemoveButton = styled(Button)`
+  margin-top: 6px;
+  justify-content: flex-start;
+  align-self: flex-start;
+  padding: 4px 6px;
+`;
+
+const CloseIcon = styled(Close)`
+  margin-right: 4px;
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
@@ -52,7 +74,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
   const defaultLink = useMemo(
-    () => createLink({ url: null, icon: null, desc: null }),
+    () => createLink({ url: '', icon: null, desc: null }),
     []
   );
   const link = useMemo(
@@ -113,9 +135,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       }
       return pushUpdateForObject(
         'link',
-        {
-          ...properties,
-        },
+        properties.url !== ''
+          ? {
+              ...properties,
+            }
+          : null,
         defaultLink,
         submit
       );
@@ -140,7 +164,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
           disabled={!canLink}
-          onChange={(value) => handleChange({ url: value })}
+          onChange={(value) =>
+            handleChange({ url: value }, !value /* submit */)
+          }
           value={link.url || ''}
           clear
         />
@@ -151,7 +177,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
             disabled={!canLink}
-            onChange={(value) => handleChange({ desc: value })}
+            onChange={(value) =>
+              handleChange({ desc: value }, !value /* submit */)
+            }
             value={link.desc || ''}
           />
         </Row>
@@ -164,13 +192,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             title={__('Select as link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
-            size={60}
+            size={64}
             loading={fetchingMetadata}
             circle
           />
-          <BrandIconText>
-            {__('Optional brand icon', 'web-stories')}
-          </BrandIconText>
+          <IconInfo>
+            <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+            {link.icon && (
+              <IconRemoveButton
+                onClick={() => handleChange({ icon: null }, true /* submit */)}
+              >
+                <CloseIcon width={14} height={14} />
+                {__('Remove', 'web-stories')}
+              </IconRemoveButton>
+            )}
+          </IconInfo>
         </Row>
       )}
     </SimplePanel>
