@@ -115,12 +115,11 @@ function MediaEdit({ element, box }) {
     flip?.vertical ? 100 - focalY : focalY
   );
 
-  mediaProps.transformFlip = getTransformFlip(flip);
-
   const fadedMediaProps = {
     ref: setFullMedia,
     draggable: false,
     opacity: opacity / 100,
+    transformFlip: getTransformFlip(flip),
     ...mediaProps,
   };
 
@@ -144,7 +143,7 @@ function MediaEdit({ element, box }) {
         </FadedVideo>
       )}
       <CropBox ref={setCropBox}>
-        <WithMask element={element} fill={true} applyFlip={false} box={box}>
+        <WithMask element={element} fill={true} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             <CropVideo {...cropMediaProps}>

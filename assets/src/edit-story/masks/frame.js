@@ -26,6 +26,7 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
+import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
@@ -127,9 +128,22 @@ WithDropTarget.propTypes = {
   hover: PropTypes.bool,
 };
 
-export default function WithMask({ element, fill, style, children, ...rest }) {
+export default function WithMask({
+  element,
+  fill,
+  style = {},
+  children,
+  ...rest
+}) {
   const [hover, setHover] = useState(false);
-  const { isBackground } = element;
+  const { flip, isBackground } = element;
+
+  const transformFlip = getTransformFlip(flip);
+  if (transformFlip) {
+    style.transform = style.transform
+      ? `${style.transform} ${transformFlip}`
+      : transformFlip;
+  }
 
   const mask = getElementMask(element);
   if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
