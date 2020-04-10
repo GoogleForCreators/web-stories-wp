@@ -43,7 +43,7 @@ function LayerPanel() {
         {__('Layers', 'web-stories')}
       </PanelTitle>
 
-      <PanelContent isSecondary isScrollable padding={'0'}>
+      <PanelContent isSecondary padding={'0'}>
         <LayerList layers={layers} />
       </PanelContent>
     </Panel>

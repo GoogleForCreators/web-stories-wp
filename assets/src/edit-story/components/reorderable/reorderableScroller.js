@@ -26,26 +26,46 @@ import { useEffect, useState, useCallback, useContext } from 'react';
  */
 import ReorderableContext from './context';
 
-const Wrapper = styled.div`
-  z-index: 2;
+const Scroller = styled.div`
+  z-index: 3;
   opacity: 0;
   position: sticky;
-  height: ${({ size }) => size}px;
+`;
+
+const HorizontalScroller = styled(Scroller)`
+  padding-left: ${({ size }) => size}px;
+  height: 100%;
+
   ${({ direction, size }) =>
     direction === -1
       ? `
-    top: 0px;
-    margin-bottom: -${size}px
-    `
+        left: 0px;
+        margin-right: -${size}px;
+        `
       : `
-    bottom: 0px;
-    margin-top: -${size}px;
-  `}
+        right: 0px;
+        margin-left: -${size}px;
+        `}
+`;
+const VerticalScroller = styled(Scroller)`
+  padding-top: ${({ size }) => size}px;
+  width: 100%;
+
+  ${({ direction, size }) =>
+    direction === -1
+      ? `
+        top: 0px;
+        margin-bottom: -${size}px;
+        `
+      : `
+        bottom: 0px;
+        margin-top: -${size}px;
+        `}
 `;
 
 function ReorderableScroller({ direction, size }) {
   const {
-    state: { canScrollDown, canScrollUp },
+    state: { canScrollEnd, canScrollStart, mode },
     actions: { startScroll },
   } = useContext(ReorderableContext);
   const [isHovering, setIsHovering] = useState(false);
@@ -59,10 +79,10 @@ function ReorderableScroller({ direction, size }) {
     return startScroll(direction);
   }, [direction, startScroll, isHovering]);
 
-  const isScrollingUp = direction === -1;
-  const isScrollingDown = direction === 1;
+  const isScrollingStart = direction === -1;
+  const isScrollingEnd = direction === 1;
   const isVisible =
-    (isScrollingUp && canScrollUp) || (isScrollingDown && canScrollDown);
+    (isScrollingStart && canScrollStart) || (isScrollingEnd && canScrollEnd);
 
   // Make sure to clear hovering flag when hiding element
   // (pointerLeave won't trigger when element is removed)
@@ -76,12 +96,16 @@ function ReorderableScroller({ direction, size }) {
     return null;
   }
 
+  const ScrollerElement =
+    mode === 'horizontal' ? HorizontalScroller : VerticalScroller;
+
   return (
-    <Wrapper
+    <ScrollerElement
       size={size}
       direction={direction}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
+      mode={mode}
     />
   );
 }
