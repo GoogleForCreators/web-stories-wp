@@ -84,7 +84,7 @@ export default function CardItemMenu({
         className="grid-story-popover-menu"
         isOpen={contextMenuId === story.id}
         framelessButton
-        onSelect={onMenuItemSelected}
+        onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
         items={STORY_CONTEXT_MENU_ITEMS}
       />
     </MenuContainer>
