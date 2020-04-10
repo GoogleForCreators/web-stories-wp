@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
@@ -32,16 +37,17 @@ export default {
 
 const categoryDemoData = [
   {
-    label: <span>{'All Categories'}</span>,
+    label: <span>{__('All Categories', 'web-stories')}</span>,
     value: 'all',
     selected: true,
   },
-  { label: 'Arts and Crafts', value: 'arts_crafts' },
-  { label: 'Beauty', value: 'beauty' },
-  { label: 'Cooking', value: 'cooking' },
-  { label: 'News', value: 'news' },
-  { label: 'Sports', value: 'sports' },
-  { label: 'News', value: 'news' },
+  { label: __('Arts and Crafts', 'web-stories'), value: 'arts_crafts' },
+  { label: __('Beauty', 'web-stories'), value: 'beauty' },
+  { label: __('Cooking', 'web-stories'), value: 'cooking' },
+  { label: __('News', 'web-stories'), value: 'news' },
+  { label: __('Sports', 'web-stories'), value: 'sports' },
+  { label: __('News', 'web-stories'), value: 'news' },
+  { label: __('UNCLICKABLE', 'web-stories'), value: false },
 ];
 
 export const _default = () => (

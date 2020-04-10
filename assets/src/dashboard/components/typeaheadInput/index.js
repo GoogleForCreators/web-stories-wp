@@ -33,7 +33,6 @@ import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import TypeaheadOptions from '../typeaheadOptions';
-import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 const SearchContainer = styled.div`
   width: 272px;
@@ -285,7 +284,13 @@ const TypeaheadInput = ({
 
 TypeaheadInput.propTypes = {
   inputId: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+    })
+  ).isRequired,
+
   ariaLabel: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,

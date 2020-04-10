@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
@@ -50,17 +55,38 @@ const TEMP_EDIT_PENCIL = (
 
 const categoryDemoData = [
   {
-    label: 'All categories',
+    label: <span>{__('All Categories', 'web-stories')}</span>,
     value: 'all',
-    icon: TEMP_EDIT_PENCIL,
     selected: true,
+    icon: TEMP_EDIT_PENCIL,
   },
-  { label: 'Arts and Crafts', value: 'arts_crafts', icon: TEMP_EDIT_PENCIL },
-  { label: 'Beauty', value: 'beauty', icon: TEMP_EDIT_PENCIL },
-  { label: 'Cooking', value: 'cooking', icon: TEMP_EDIT_PENCIL },
-  { label: 'Sports', value: 'sports', icon: TEMP_EDIT_PENCIL },
-  { label: 'News', value: 'news', icon: TEMP_EDIT_PENCIL },
-  { label: 'UNCLICKABLE', value: false, icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('Arts and Crafts', 'web-stories'),
+    value: 'arts_crafts',
+    icon: TEMP_EDIT_PENCIL,
+  },
+  {
+    label: __('Beauty', 'web-stories'),
+    value: 'beauty',
+    icon: TEMP_EDIT_PENCIL,
+  },
+  {
+    label: __('Cooking', 'web-stories'),
+    value: 'cooking',
+    icon: TEMP_EDIT_PENCIL,
+  },
+  { label: __('News', 'web-stories'), value: 'news', icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('Sports', 'web-stories'),
+    value: 'sports',
+    icon: TEMP_EDIT_PENCIL,
+  },
+  { label: __('News', 'web-stories'), value: 'news', icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('UNCLICKABLE', 'web-stories'),
+    value: false,
+    icon: TEMP_EDIT_PENCIL,
+  },
 ];
 
 const DemoFieldSet = styled.fieldset`
