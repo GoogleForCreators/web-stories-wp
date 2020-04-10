@@ -33,11 +33,8 @@ import { useStory } from '../../app';
 import { useUploader } from '../../app/uploader';
 import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
-import { getDefinitionForType, createNewElement } from '../../elements';
-import createSolid from '../../utils/createSolid';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
-import { calculateFitTextFontSize } from '../../utils/textMeasurements';
-import { dataPixels } from '../../units';
+import { getDefinitionForType } from '../../elements';
+import useInsertElement from './useInsertElement';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -52,6 +49,8 @@ function useCanvasSelectionCopyPaste(container) {
 
   const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
+
+  const insertElement = useInsertElement();
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -160,23 +159,7 @@ function useCanvasSelectionCopyPaste(container) {
           }
           // If we're not copying a Story element, assume copying text.
           if (!copyingStoryElement && copiedContent.trim().length) {
-            const props = {
-              x: (PAGE_WIDTH / 4) * Math.random(),
-              y: (PAGE_HEIGHT / 4) * Math.random(),
-              height: 50,
-              content: copiedContent,
-              backgroundColor: createSolid(196, 196, 196),
-              width: PAGE_WIDTH / 2,
-            };
-            const textElement = createNewElement('text', props);
-            textElement.fontSize = dataPixels(
-              calculateFitTextFontSize(
-                textElement,
-                textElement.width,
-                textElement.height
-              )
-            );
-            addElement({ element: textElement });
+            insertElement('text', { content: copiedContent });
           }
         }
         const { items } = clipboardData;
@@ -205,7 +188,14 @@ function useCanvasSelectionCopyPaste(container) {
         // Ignore.
       }
     },
-    [addElement, currentPage, isValidType, showSnackbar, uploadFile]
+    [
+      addElement,
+      currentPage.elements,
+      insertElement,
+      isValidType,
+      showSnackbar,
+      uploadFile,
+    ]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
