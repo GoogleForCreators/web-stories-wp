@@ -29,6 +29,7 @@ import {
   CardTitle,
   CardItemMenu,
   CardPreviewContainer,
+  ActionLabel,
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
@@ -47,15 +48,25 @@ const StoryGrid = styled(CardGrid)`
   }
 `;
 
-const StoryGridView = ({ filteredStories }) => {
+const StoryGridView = ({
+  filteredStories,
+  centerActionLabel,
+  bottomActionLabel,
+}) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
         <CardGridItem key={story.id}>
           <CardPreviewContainer
-            editUrl={story.editStoryUrl}
-            onPreviewClick={() => {}}
+            centerAction={{
+              targetAction: story.centerTargetAction,
+              label: centerActionLabel,
+            }}
+            bottomAction={{
+              targetAction: story.bottomTargetAction,
+              label: bottomActionLabel,
+            }}
           >
             <PreviewPage page={story.pages[0]} />
           </CardPreviewContainer>
@@ -79,6 +90,8 @@ const StoryGridView = ({ filteredStories }) => {
 
 StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
+  centerActionLabel: ActionLabel,
+  bottomActionLabel: ActionLabel,
 };
 
 export default StoryGridView;

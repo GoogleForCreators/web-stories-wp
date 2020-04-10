@@ -27,12 +27,43 @@ import {
   useEffect,
 } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { SCROLLBAR_WIDTH } from '../../constants';
+
 const Container = styled.div.attrs(({ x, y }) => ({
   style: { left: `${x}px`, top: `${y}px` },
 }))`
   position: fixed;
   z-index: 2147483646;
   ${({ placement }) => getTransforms(placement)}
+
+  /*
+   * Custom gray scrollbars for Chromium & Firefox.
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+      ${({ theme }) => theme.colors.bg.v12};
+  }
+
+  *::-webkit-scrollbar {
+    width: ${SCROLLBAR_WIDTH}px;
+    height: ${SCROLLBAR_WIDTH}px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.bg.v12};
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.fg.v5};
+    border: 2px solid ${({ theme }) => theme.colors.bg.v12};
+    border-left-width: 3px;
+    border-top-width: 3px;
+    border-radius: 6px;
+  }
 `;
 
 function getXTransforms(placement) {
