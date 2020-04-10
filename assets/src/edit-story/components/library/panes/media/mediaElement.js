@@ -41,6 +41,7 @@ const Image = styled.img`
 
 const Video = styled.video`
   ${styledTiles}
+  object-fit: cover;
 `;
 
 const Container = styled.div`
@@ -123,6 +124,7 @@ const MediaElement = ({
     height: originalHeight,
     sizes,
     local,
+    alt,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -190,6 +192,7 @@ const MediaElement = ({
           ref={mediaElement}
           width={width}
           height={height}
+          alt={alt}
           loading={'lazy'}
           onClick={onClick}
           {...dropTargetsBindings}
