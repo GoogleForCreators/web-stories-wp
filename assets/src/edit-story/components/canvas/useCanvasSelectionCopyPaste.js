@@ -149,29 +149,54 @@ function useCanvasSelectionCopyPaste(container) {
     [addElement, currentPage]
   );
 
+  // @todo Split up this part to make the file smaller/more manageable.
+  const allowedContentNodes = ['strong', 'em', 'u'];
+
+  const processNodeContent = useCallback(
+    (node) => {
+      const tag = node.parentNode?.tagName?.toLowerCase();
+      const stripTags = !allowedContentNodes.includes(tag);
+      if (stripTags) {
+        return node.textContent.trim();
+      }
+      return `<${tag}>${node.textContent.trim()}<${tag}/>`;
+    },
+    [allowedContentNodes]
+  );
+
+  const processNodeList = useCallback(
+    (nodeList, content) => {
+      for (let i = 0; i < nodeList.length; i++) {
+        const n = nodeList[i];
+        if (n.childNodes.length > 0) {
+          if ('p' === n.tagName.toLowerCase() && content.trim().length) {
+            content += '\n';
+          }
+          content = processNodeList(n.childNodes, content);
+        } else {
+          content += processNodeContent(n, content);
+        }
+      }
+      return content;
+    },
+    [processNodeContent]
+  );
+
   const rawPasteHandler = useCallback(
     (html) => {
       let foundContent = false;
       const template = document.createElement('template');
-      template.innerHTML = html;
-      let copiedContent = '';
-      for (let n = template.content.firstChild; n; n = n.nextSibling) {
-        // @todo bold, italic underline
-        // @todo Images.
-        if (copiedContent.trim().length && n.tagName === 'P') {
-          copiedContent += '\n';
-        }
-        if (n.textContent.length) {
-          copiedContent += n.textContent;
-        }
-      }
+      // Remove meta tag.
+      template.innerHTML = html.replace(/<meta[^>]+>/g, '');
+      // @todo Images.
+      const copiedContent = processNodeList(template.content.childNodes, '');
       if (copiedContent.trim().length) {
         insertElement('text', { content: copiedContent });
         foundContent = true;
       }
       return foundContent;
     },
-    [insertElement]
+    [insertElement, processNodeList]
   );
 
   // @todo This should be in global handler by UX, not just Canvas.
