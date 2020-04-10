@@ -24,6 +24,11 @@ import { useEffect } from 'react';
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import useMedia from '../../app/media/useMedia';
+
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
@@ -32,10 +37,22 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
+  const {
+    actions: { uploadVideoPoster },
+  } = useMedia();
   useEffect(() => {
     // Work around that forces default tab as upload tab.
     wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
   });
+  useEffect(() => {
+    try {
+      wp.Uploader.prototype.success = ({ attributes }) => {
+        if (attributes.type === 'video') {
+          uploadVideoPoster(attributes.id, attributes.url);
+        }
+      };
+    } catch (e) {}
+  }, [uploadVideoPoster]);
 
   const openMediaPicker = (evt) => {
     // Create the media frame.

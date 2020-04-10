@@ -19,9 +19,20 @@
  */
 import PropTypes from 'prop-types';
 
-function WithAnimation({ id, style, children }) {
-  return (
-    <div id={id} style={style}>
+function WithAnimation({ id, style, animationStyle, useContainer, children }) {
+  return useContainer ? (
+    <div
+      style={{
+        clipPath: 'inset(0)',
+        ...style,
+      }}
+    >
+      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
+        {children}
+      </div>
+    </div>
+  ) : (
+    <div id={id} style={{ ...style, ...animationStyle }}>
       {children}
     </div>
   );
@@ -30,6 +41,8 @@ function WithAnimation({ id, style, children }) {
 WithAnimation.propTypes = {
   id: PropTypes.string,
   style: PropTypes.object,
+  animationStyle: PropTypes.object,
+  useContainer: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

@@ -21,7 +21,6 @@ import { CSSTransition } from 'react-transition-group';
 import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -39,11 +38,9 @@ import GradientPicker from './gradientPicker';
 import Header from './header';
 import useColor from './useColor';
 
-const CONTAINER_PADDING = 15;
-
 const Container = styled.div`
-  border-radius: 4px;
-  background: ${({ theme }) => theme.colors.bg.v7};
+  border-radius: 6px;
+  background: ${({ theme }) => theme.colors.bg.v8};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 240px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -69,8 +66,7 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => rgba(theme.colors.fg.v2, 0.2)};
-  padding: ${CONTAINER_PADDING}px;
+  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
 `;
 
 function ColorPicker({

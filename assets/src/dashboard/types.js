@@ -25,7 +25,7 @@ import StoryPropTypes from '../edit-story/types';
 
 export const StoryPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
   title: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,

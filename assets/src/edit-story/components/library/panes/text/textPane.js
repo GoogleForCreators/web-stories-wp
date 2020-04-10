@@ -20,6 +20,11 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
@@ -73,6 +78,8 @@ function getPresetById(id) {
   return null;
 }
 
+const SectionContent = styled.p``;
+
 function TextPane(props) {
   const {
     actions: { insertElement },
@@ -83,6 +90,7 @@ function TextPane(props) {
         value={''}
         placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
+        disabled
       />
 
       <Section
@@ -120,7 +128,9 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      <Section title={__('Text Sets', 'web-stories')} />
+      <Section title={__('Text Sets', 'web-stories')}>
+        <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
+      </Section>
     </Pane>
   );
 }

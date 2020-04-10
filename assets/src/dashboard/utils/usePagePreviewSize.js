@@ -33,15 +33,16 @@ export default function usePagePreviewSize() {
     let itemWidth = 0;
 
     if (innerWidth <= theme.breakpoint.raw.min) {
-      itemWidth = theme.grid.min.itemWidth;
-    } else if (innerWidth <= theme.breakpoint.raw.mobile) {
-      itemWidth = theme.grid.mobile.itemWidth;
+      itemWidth = theme.previewWidth.min;
+    } else if (innerWidth <= theme.breakpoint.raw.smallDisplayPhone) {
+      itemWidth = theme.previewWidth.smallDisplayPhone;
+    } else if (innerWidth <= theme.breakpoint.raw.largeDisplayPhone) {
+      itemWidth = theme.previewWidth.largeDisplayPhone;
     } else if (innerWidth <= theme.breakpoint.raw.tablet) {
-      itemWidth = theme.grid.tablet.itemWidth;
+      itemWidth = theme.previewWidth.tablet;
     } else {
-      itemWidth = theme.grid.desktop.itemWidth;
+      itemWidth = theme.previewWidth.desktop;
     }
-
     setPageSize({
       width: itemWidth,
       height: itemWidth * PAGE_RATIO,

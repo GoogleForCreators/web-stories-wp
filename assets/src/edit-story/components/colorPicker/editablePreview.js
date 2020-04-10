@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { EditableInput } from 'react-color/lib/components/common';
-import { useCallback, useRef, useLayoutEffect, useState } from 'react';
+import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -31,7 +31,7 @@ const Preview = styled.button`
   padding: 0;
   margin: 0;
   border: none;
-  background: ${({ theme }) => theme.colors.bg.v7};
+  background: ${({ theme }) => theme.colors.bg.v8};
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
@@ -41,13 +41,23 @@ function EditablePreview({ label, value, width, format, onChange }) {
   const disableEditing = useCallback(() => setIsEditing(false), []);
   const wrapperRef = useRef(null);
   const editableRef = useRef();
-  const inputStyles = {
-    input: {
-      fontFamily: 'monospace',
-      width: `${width}px`,
-      textAlign: 'center',
-    },
-  };
+  const inputStyles = useMemo(
+    () => ({
+      input: {
+        textAlign: 'center',
+        border: 'none',
+        textTransform: 'lowercase',
+        width: '100%',
+        padding: '4px',
+        borderRadius: '2px',
+      },
+      wrap: {
+        lineHeight: 0,
+        maxWidth: `${width}px`,
+      },
+    }),
+    [width]
+  );
 
   // Handle ESC keypress to toggle input field.
   useKeyDownEffect(wrapperRef, { key: 'esc', editable: true }, disableEditing, [

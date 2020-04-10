@@ -69,6 +69,7 @@ function ShapesPane(props) {
         value={''}
         placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
+        disabled
       />
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>

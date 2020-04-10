@@ -18,29 +18,38 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const CardGridItem = styled.div`
-  width: ${({ theme }) => theme.grid.desktop.itemWidth};
-  height: ${({ theme }) => theme.grid.desktop.itemHeight};
+/**
+ * Internal dependencies
+ */
+import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { MoreVerticalButton } from './cardItemMenu';
+
+const StyledCard = styled.div`
+  margin: auto 0;
+  height: ${({ cardSize }) => `${cardSize.height + CARD_TITLE_AREA_HEIGHT}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   display: flex;
   flex-direction: column;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    width: ${({ theme }) => theme.grid.tablet.itemWidth};
-    height: ${({ theme }) => theme.grid.tablet.itemHeight};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    width: ${({ theme }) => theme.grid.mobile.itemWidth};
-    height: ${({ theme }) => theme.grid.mobile.itemHeight};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    width: ${({ theme }) => theme.grid.min.itemWidth};
-    height: ${({ theme }) => theme.grid.min.itemHeight};
+  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+    opacity: 1;
   }
 `;
 
+const CardGridItem = ({ children }) => {
+  const { pageSize } = usePagePreviewSize();
+
+  return <StyledCard cardSize={pageSize}>{children}</StyledCard>;
+};
+
+CardGridItem.propTypes = {
+  children: PropTypes.node,
+};
+
 export default CardGridItem;
-export { default as CardPreviewContainer } from './card-preview';
-export { default as CardTitle } from './card-title';
+export { default as CardPreviewContainer } from './cardPreview';
+export { default as CardTitle } from './cardTitle';
+export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

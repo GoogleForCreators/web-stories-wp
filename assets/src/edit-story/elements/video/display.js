@@ -89,7 +89,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           style={style}
           {...videoProps}
           loop={loop}
-          preload="metadata"
+          preload="none"
           ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />
