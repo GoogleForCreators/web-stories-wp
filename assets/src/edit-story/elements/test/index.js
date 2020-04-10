@@ -20,6 +20,16 @@
 import { createNewElement, createPage } from '../';
 describe('Element', () => {
   describe('createNewElement', () => {
+    it('should create an element with just default attributes', () => {
+      const imageElement = createNewElement('image');
+      expect(imageElement).toStrictEqual(
+        expect.objectContaining({
+          opacity: 100, // a default shared attribute
+          scale: 100, // a default media attribute
+        })
+      );
+    });
+
     it('should create an element with correct attributes', () => {
       const atts = {
         x: 10,
@@ -35,6 +45,11 @@ describe('Element', () => {
         'Helvetica',
         'sans-serif',
       ]);
+    });
+
+    it('should throw if trying to create unknown element type', () => {
+      const unknownElementCreator = () => createNewElement('puppy');
+      expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);
     });
   });
 
