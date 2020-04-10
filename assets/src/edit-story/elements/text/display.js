@@ -104,13 +104,11 @@ function TextDisplay({
     backgroundTextMode,
     ...rest
   },
+  box: { width },
 }) {
   const ref = useRef(null);
 
   const {
-    state: {
-      pageSize: { width: pageWidth },
-    },
     actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
@@ -120,7 +118,7 @@ function TextDisplay({
       ? {}
       : { backgroundColor }),
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalBuffer: 0.01 * pageWidth,
+    horizontalBuffer: 0.02 * width,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
@@ -181,6 +179,7 @@ function TextDisplay({
 
 TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextDisplay;
