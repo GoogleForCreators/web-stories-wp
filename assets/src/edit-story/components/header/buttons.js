@@ -100,8 +100,9 @@ function PreviewButton() {
       // will be resolved after the story is saved.
     }
 
-    // DO NOT SUBMIT: what if the status is no longer draft?
-    saveStory({ status: 'draft' }).then(() => {
+    // @todo: See https://github.com/google/web-stories-wp/issues/1149. This
+    // has the effect of pushing the changes to a published story.
+    saveStory().then(() => {
       let previewOpened = false;
       if (popup && !popup.closed) {
         try {
