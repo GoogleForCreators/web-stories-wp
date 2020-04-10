@@ -32,14 +32,38 @@ const reducer = (size) => (state, { type, payload }) => {
       // if so, update `offset` to match the state in entries and clear `replayState`
       // and of course leave entries unchanged.
       if (state.replayState) {
-        const isReplay = Object.keys(state.replayState).every(
-          (key) => state.replayState[key] === payload[key]
-        );
+        const isReplay = Object.keys(state.replayState).every((key) => {
+          return 'current' === key || state.replayState[key] === payload[key];
+        });
 
         if (isReplay) {
+          // Get the changed page
+          // Set the current page to the changed page instead of what's in payload.
+          const currentEntry = state.entries[state.offset];
+          const offset = state.entries.indexOf(state.replayState);
+          if (
+            currentEntry.pages !== state.replayState.pages &&
+            currentEntry.pages.length === state.replayState.pages.length &&
+            currentEntry.current !== state.replayState.current
+          ) {
+            const changedPage = currentEntry.pages.filter((page, index) => {
+              return page !== state.replayState.pages[index];
+            });
+            if (changedPage.length === 1) {
+              const current = changedPage[0].id;
+              const replayState = { ...state.replayState, current };
+              const entries = state.entries;
+              Object.assign([], entries, { [offset]: replayState });
+              return {
+                entries,
+                offset,
+                replayState,
+              };
+            }
+          }
           return {
             ...state,
-            offset: state.entries.indexOf(state.replayState),
+            offset,
             replayState: null,
           };
         }

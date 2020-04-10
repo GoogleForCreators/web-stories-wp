@@ -30,20 +30,22 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     actions: { appendToHistory },
   } = useHistory();
 
-  const selectedElementIdsRef = useRef(selection);
+  const currentPageIndexRef = useRef();
+  const selectedElementIdsRef = useRef();
   useEffect(() => {
+    currentPageIndexRef.current = current;
     selectedElementIdsRef.current = selection;
   }, [current, selection]);
 
   useEffect(() => {
     appendToHistory({
       story,
-      current,
+      current: currentPageIndexRef.current,
       selection: selectedElementIdsRef.current,
       pages,
       capabilities,
     });
-  }, [capabilities, story, pages, appendToHistory, current]);
+  }, [capabilities, story, pages, appendToHistory]);
 }
 
 export default useHistoryEntry;
