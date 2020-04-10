@@ -15,7 +15,7 @@
  */
 
 export { default as BodyWrapper } from './bodyWrapper';
-export { default as ListBarContainer } from './listBarContainer';
+export { default as BodyViewOptions } from './bodyViewOptions';
 export { default as NoResults } from './noResults';
 export { default as PageHeading } from './pageHeading';
 export { default as StoryGridView } from './storyGridView';
