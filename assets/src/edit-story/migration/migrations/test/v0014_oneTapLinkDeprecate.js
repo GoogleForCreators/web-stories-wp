@@ -73,7 +73,7 @@ describe('oneTapLinkDeprecate', () => {
                   src: 'https://example.com/video.mp4',
                   poster: 'https://example.com/image.png',
                   posterId: 100002,
-                  videoId: 102113,
+                  id: 102113,
                   mimeType: 'video/mp4',
                   width: 265,
                   height: 527,
@@ -107,7 +107,6 @@ describe('oneTapLinkDeprecate', () => {
               width: 100,
               height: 200,
               link: {
-                type: 1,
                 url: 'https://example.com/',
               },
             },
@@ -127,7 +126,6 @@ describe('oneTapLinkDeprecate', () => {
               height: 527,
               fontSize: 58,
               link: {
-                type: 2,
                 url: 'https://example.com/',
               },
             },
@@ -155,7 +153,6 @@ describe('oneTapLinkDeprecate', () => {
               height: 527,
               fontSize: 58,
               link: {
-                type: 1,
                 url: 'https://example.com/',
                 image: 'https://example.com/image.png',
               },
