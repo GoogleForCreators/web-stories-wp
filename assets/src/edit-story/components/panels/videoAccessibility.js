@@ -50,7 +50,6 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       pushUpdate(
         {
           poster: image.sizes?.medium?.url || image.url,
-          posterGenerated: false,
         },
         true
       );

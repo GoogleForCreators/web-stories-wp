@@ -15,11 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-import { hasGeneratedPoster } from '../../app/media/utils';
-
-/**
  * Get props for media specifically influenced by scale and focal point.
  *
  * @param {Object} resource   Media resource.
@@ -39,13 +34,8 @@ function getMediaSizePositionProps(
   focalY
 ) {
   const ratio = width / height;
-  let oRatio =
+  const oRatio =
     resource.width && resource.height ? resource.width / resource.height : 1;
-
-  if (hasGeneratedPoster(resource)) {
-    const { posterWidth, posterHeight } = resource;
-    oRatio = posterWidth / posterHeight;
-  }
   scale = Math.max(scale || 100, 100);
   focalX = typeof focalX === 'number' ? focalX : 50;
   focalY = typeof focalY === 'number' ? focalY : 50;

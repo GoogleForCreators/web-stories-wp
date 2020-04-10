@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import createResource from './createResource';
+import getResourceSize from './getResourceSize';
 
 /**
  * Generates a resource object from a WordPress media picker object.
@@ -49,12 +50,14 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
   return createResource({
     mimeType,
     src: url || src,
-    width,
-    height,
+    ...getResourceSize(
+      width,
+      height,
+      posterGenerated,
+      posterWidth,
+      posterHeight
+    ),
     poster,
-    posterWidth,
-    posterHeight,
-    posterGenerated,
     posterId,
     id,
     lengthFormatted,

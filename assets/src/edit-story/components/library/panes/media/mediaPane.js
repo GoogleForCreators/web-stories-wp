@@ -39,7 +39,6 @@ import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import {
   getTypeFromMime,
   getResourceFromMediaPicker,
-  hasGeneratedPoster,
 } from '../../../../app/media/utils';
 import paneId from './paneId';
 import MediaElement from './mediaElement';
@@ -184,17 +183,8 @@ function MediaPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = (resource) => {
-    const newWidth = hasGeneratedPoster(resource)
-      ? resource.posterWidth
-      : resource.width;
-    const newHeight = hasGeneratedPoster(resource)
-      ? resource.posterHeight
-      : resource.height;
-    const oRatio = newWidth && newHeight ? newWidth / newHeight : 1;
-    const width = Math.min(newWidth * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
-    const height = width / oRatio;
-
-    return insertElement(resource.type, { resource, width, height });
+    const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
+    return insertElement(resource.type, { resource, width });
   };
 
   /**

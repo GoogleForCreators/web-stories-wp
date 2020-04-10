@@ -22,4 +22,3 @@ export { default as getResourceFromMediaPicker } from './getResourceFromMediaPic
 export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
 export { default as preloadImage } from './preloadImage';
-export { default as hasGeneratedPoster } from './hasGeneratedPoster';

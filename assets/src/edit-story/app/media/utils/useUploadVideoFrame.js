@@ -60,15 +60,26 @@ function useUploadVideoFrame({ updateMediaElement }) {
         featured_media: posterId,
         post: storyId,
       });
-      await preloadImage(poster);
+
+      // Preload the full image in the browser to stop jumping around.
+      // It's an asynchronous operation, but there's no need to await it.
+      preloadImage(poster);
+
+      // Overwrite the original video dimensions. The poster reupload has more
+      // accurate dimensions of the video that includes orientation changes.
+      const newSize =
+        (posterWidth &&
+          posterHeight && {
+            width: posterWidth,
+            height: posterHeight,
+          }) ||
+        null;
       const newState = ({ resource }) => ({
         resource: {
           ...resource,
           posterId,
           poster,
-          posterWidth,
-          posterHeight,
-          posterGenerated: true,
+          ...newSize,
         },
       });
       setProperties(id, newState);
@@ -76,9 +87,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         id,
         posterId,
         poster,
-        posterWidth,
-        posterHeight,
-        posterGenerated: true,
+        ...newSize,
       });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.

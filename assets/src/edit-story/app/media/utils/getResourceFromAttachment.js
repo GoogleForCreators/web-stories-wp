@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import createResource from './createResource';
+import getResourceSize from './getResourceSize';
 
 /**
  * Generates a resource object from a WordPress attachment.
@@ -51,12 +52,14 @@ function getResourceFromAttachment(attachment) {
   return createResource({
     mimeType,
     src,
-    width,
-    height,
+    ...getResourceSize(
+      width,
+      height,
+      posterGenerated,
+      posterWidth,
+      posterHeight
+    ),
     poster,
-    posterWidth,
-    posterHeight,
-    posterGenerated,
     posterId,
     id,
     length,
