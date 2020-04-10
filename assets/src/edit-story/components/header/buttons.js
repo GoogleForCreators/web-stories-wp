@@ -81,9 +81,7 @@ function PreviewButton() {
         popup.document.write('<!DOCTYPE html><html><head>');
         popup.document.write('<title>');
         popup.document.write(
-          escapeHTML(
-            __('Generating the preview...', 'web-stories')
-          )
+          escapeHTML(__('Generating the preview...', 'web-stories'))
         );
         popup.document.write('</title>');
         popup.document.write('</head><body>');
