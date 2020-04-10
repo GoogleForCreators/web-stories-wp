@@ -125,6 +125,7 @@ const PageList = styled(Reorderable).attrs({
   overflow-x: scroll;
   overflow-y: hidden;
   margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
+  padding: 0px 10px;
 
   /*
    * These overrides are an exception - generally scrollbars should all
