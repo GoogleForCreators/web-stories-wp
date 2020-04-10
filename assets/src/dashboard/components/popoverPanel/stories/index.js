@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 
@@ -39,23 +40,47 @@ const categoryDemoData = [
   {
     label: <span>{__('All Categories', 'web-stories')}</span>,
     value: 'all',
-    selected: true,
   },
   { label: __('Arts and Crafts', 'web-stories'), value: 'arts_crafts' },
-  { label: __('Beauty', 'web-stories'), value: 'beauty' },
+  { label: __('Beauty', 'web-stories'), value: 'beauty', selected: true },
   { label: __('Cooking', 'web-stories'), value: 'cooking' },
   { label: __('News', 'web-stories'), value: 'news' },
   { label: __('Sports', 'web-stories'), value: 'sports' },
-  { label: __('News', 'web-stories'), value: 'news' },
-  { label: __('UNCLICKABLE', 'web-stories'), value: false },
+  { label: __('News', 'web-stories'), value: 'news_2' },
+  {
+    label: __('UNCLICKABLE', 'web-stories'),
+    value: 'unclickable',
+    disabled: true,
+  },
 ];
 
-export const _default = () => (
-  <PopoverPanel
-    isOpen={boolean('isOpen', true)}
-    title={text('title', 'Category')}
-    onClose={action('Close button selected')}
-    items={categoryDemoData}
-    onSelect={action('on click selected')}
-  />
-);
+export const _default = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
+  return (
+    <PopoverPanel
+      isOpen={boolean('isOpen', true)}
+      title={text('title', 'Category')}
+      onClose={action('Close button selected')}
+      items={statefulDemoData}
+      onSelect={(event, selectedValue) => {
+        action(`selected pill ${selectedValue}`)(selectedValue);
+        updateDemoDataState(selectedValue);
+      }}
+    />
+  );
+};

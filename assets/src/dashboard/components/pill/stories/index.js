@@ -22,8 +22,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -55,37 +56,43 @@ const TEMP_EDIT_PENCIL = (
 
 const categoryDemoData = [
   {
-    label: <span>{__('All Categories', 'web-stories')}</span>,
+    label: __('All Categories', 'web-stories'),
     value: 'all',
-    selected: true,
     icon: TEMP_EDIT_PENCIL,
+    selected: false,
   },
   {
     label: __('Arts and Crafts', 'web-stories'),
     value: 'arts_crafts',
     icon: TEMP_EDIT_PENCIL,
+    selected: false,
   },
   {
     label: __('Beauty', 'web-stories'),
     value: 'beauty',
     icon: TEMP_EDIT_PENCIL,
+    selected: true,
   },
   {
     label: __('Cooking', 'web-stories'),
     value: 'cooking',
     icon: TEMP_EDIT_PENCIL,
+    selected: false,
   },
   { label: __('News', 'web-stories'), value: 'news', icon: TEMP_EDIT_PENCIL },
   {
     label: __('Sports', 'web-stories'),
     value: 'sports',
     icon: TEMP_EDIT_PENCIL,
+    selected: false,
   },
-  { label: __('News', 'web-stories'), value: 'news', icon: TEMP_EDIT_PENCIL },
+  { label: __('News', 'web-stories'), value: 'news_2', icon: TEMP_EDIT_PENCIL },
   {
     label: __('UNCLICKABLE', 'web-stories'),
-    value: false,
+    value: 'unclickable',
+    disabled: true,
     icon: TEMP_EDIT_PENCIL,
+    selected: false,
   },
 ];
 
@@ -104,64 +111,125 @@ const IconSpan = styled.span`
 `;
 
 export const _default = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ icon, label, selected, value }, index) => {
-        return (
-          <Pill
-            key={value + index}
-            inputType="checkbox"
-            name="demo_checkbox"
-            onClick={action('on click selected')}
-            value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-          </Pill>
-        );
-      })}
+      {statefulDemoData.map(
+        ({ icon, label, selected, value, disabled }, index) => {
+          return (
+            <Pill
+              key={value + index}
+              inputType="checkbox"
+              name={value}
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
+            </Pill>
+          );
+        }
+      )}
     </DemoFieldSet>
   );
 };
 
 export const _floatingTabs = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ icon, label, selected, value }, index) => {
-        return (
-          <FloatingTab
-            key={value + index}
-            inputType="checkbox"
-            name="demo_checkbox"
-            onClick={action('on click selected')}
-            value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-          </FloatingTab>
-        );
-      })}
+      {statefulDemoData.map(
+        ({ icon, label, selected, value, disabled }, index) => {
+          return (
+            <FloatingTab
+              key={value + index}
+              inputType="checkbox"
+              name={value}
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
+            </FloatingTab>
+          );
+        }
+      )}
     </DemoFieldSet>
   );
 };
 
 export const _radioGroup = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return { ...item, selected: false };
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ label, selected, value }, index) => {
-        return (
-          <Pill
-            key={value + index}
-            inputType="radio"
-            name="demo_radio"
-            onClick={action('on click selected')}
-            value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            {text(`label: ${index}`, label)}
-          </Pill>
-        );
-      })}
+      {statefulDemoData.map(
+        ({ disabled, label, selected = false, value }, index) => {
+          return (
+            <Pill
+              key={value + index}
+              inputType="radio"
+              name="demo_radio"
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              {text(`label: ${index}`, label)}
+            </Pill>
+          );
+        }
+      )}
     </DemoFieldSet>
   );
 };

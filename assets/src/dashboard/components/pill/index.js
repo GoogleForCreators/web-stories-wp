@@ -101,6 +101,7 @@ const Pill = ({
   ...rest
 }) => {
   const Label = floatingTab ? FloatingTabLabel : PillLabel;
+
   return (
     <PillContainer>
       <PillInput
@@ -109,7 +110,6 @@ const Pill = ({
         onChange={(e) => onClick(e, value)}
         value={value}
         checked={isSelected}
-        disabled={!Boolean(value)}
         {...rest}
       />
       <Label>{children}</Label>

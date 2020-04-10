@@ -110,7 +110,11 @@ const categoryDemoData = [
   { label: __('News', 'web-stories'), value: 'news' },
   { label: __('Sports', 'web-stories'), value: 'sports' },
   { label: __('News', 'web-stories'), value: 'news_2' },
-  { label: __('UNCLICKABLE', 'web-stories'), value: false },
+  {
+    label: __('UNCLICKABLE', 'web-stories'),
+    value: 'unclickable',
+    disabled: true,
+  },
 ];
 
 export const _panel = () => {

@@ -102,15 +102,16 @@ const PopoverPanel = ({ isOpen, onClose, title, items, onSelect }) => {
       </TitleBar>
       {isOpen && (
         <PillFieldset data-testid={'pill-fieldset'}>
-          {items.map(({ label, selected, value }, index) => {
+          {items.map(({ label, selected, value, disabled = false }, index) => {
             return (
               <Pill
                 key={`${value}_${index}`}
                 inputType="checkbox"
-                name={`${title}_pillGroup`}
+                name={`${title}_pillGroup_${value}`}
                 onClick={onSelect}
                 value={value}
                 isSelected={selected}
+                disabled={disabled}
               >
                 {label}
               </Pill>
