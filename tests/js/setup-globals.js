@@ -48,3 +48,9 @@ global.wp = {
     },
   },
 };
+
+global.IntersectionObserver = class IntersectionObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
