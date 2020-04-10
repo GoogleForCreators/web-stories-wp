@@ -35,6 +35,7 @@ const Wrapper = styled.div`
 const TopPanels = styled.div`
   flex: 1 1;
   overflow: auto;
+  overflow: overlay;
 `;
 
 const BottomPanels = styled.div`
