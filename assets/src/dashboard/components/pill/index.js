@@ -43,11 +43,16 @@ Source: https://polished.js.org/docs/#hidevisually
 `;
 
 const PillContainer = styled.label`
-  cursor: pointer;
   display: inline-flex;
   justify-content: center;
+  font-family: ${({ theme }) => theme.fonts.pill.family};
+  font-weight: ${({ theme }) => theme.fonts.pill.weight};
+  font-size: ${({ theme }) => theme.fonts.pill.size};
+  line-height: ${({ theme }) => theme.fonts.pill.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing};
 `;
 const PillLabel = styled.span`
+  cursor: pointer;
   margin: auto;
   width: 100%;
   display: block;
@@ -56,11 +61,6 @@ const PillLabel = styled.span`
   color: ${({ theme }) => theme.colors.gray600};
   border: ${({ theme }) => `1px solid ${theme.colors.gray50}`};
   border-radius: ${({ theme }) => theme.border.buttonRadius};
-  font-family: ${({ theme }) => theme.fonts.pill.family};
-  font-weight: ${({ theme }) => theme.fonts.pill.weight};
-  font-size: ${({ theme }) => theme.fonts.pill.size};
-  line-height: ${({ theme }) => theme.fonts.pill.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing};
 
   ${PillInput}:checked + &,
   ${PillInput}:enabled:hover + & {
@@ -76,7 +76,7 @@ const PillLabel = styled.span`
 
   ${PillInput}:disabled + & {
     opacity: 0.6;
-    cursor:
+    cursor: default;
   }
 `;
 

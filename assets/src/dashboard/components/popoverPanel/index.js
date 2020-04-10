@@ -44,7 +44,6 @@ export const Panel = styled.div`
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
   z-index: ${Z_INDEX.POPOVER_PANEL};
   max-width: 595px;
-  min-width: 30vw;
 `;
 
 Panel.propTypes = {
