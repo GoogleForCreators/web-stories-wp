@@ -22,8 +22,12 @@ import { useCallback } from 'react';
 function useFocusCanvas() {
   const focusCanvas = useCallback(() => {
     setTimeout(() => {
+      const doc = window.document;
+      if (doc.activeElement && doc.activeElement !== doc.body) {
+        doc.activeElement.blur();
+      }
       const evt = new window.FocusEvent('focusout');
-      window.document.dispatchEvent(evt);
+      doc.dispatchEvent(evt);
     });
   }, []);
   return focusCanvas;
