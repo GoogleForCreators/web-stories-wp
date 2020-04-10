@@ -121,7 +121,7 @@ Pill.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
   isSelected: PropTypes.bool,
   floatingTab: PropTypes.bool,

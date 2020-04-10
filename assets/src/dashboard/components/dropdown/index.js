@@ -30,6 +30,7 @@ import useFocusOut from '../../utils/useFocusOut';
 import { DROPDOWN_TYPES } from '../../constants';
 import PopoverMenu from '../popover-menu';
 import PopoverPanel from '../popoverPanel';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const DropdownContainer = styled.div`
   position: static;
@@ -183,12 +184,7 @@ const Dropdown = ({
 
 Dropdown.propTypes = {
   ariaLabel: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-    })
-  ),
+  items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,

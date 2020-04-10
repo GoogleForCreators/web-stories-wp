@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const Panel = styled.div`
   align-items: flex-start;
@@ -126,13 +127,7 @@ PopoverPanel.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-      value: PropTypes.string,
-      selected: PropTypes.bool,
-    })
-  ),
+  items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
 };
 
 export default PopoverPanel;
