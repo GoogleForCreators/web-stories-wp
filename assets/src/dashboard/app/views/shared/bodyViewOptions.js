@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import styled from 'styled-components';
@@ -57,10 +52,10 @@ const StorySortDropdownContainer = styled.div`
 `;
 
 const SortDropdown = styled(Dropdown)`
-  width: 147px;
+  min-width: 147px;
   ul {
     right: 20px;
-    width: 147px;
+    max-width: 147px;
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
@@ -76,6 +71,7 @@ const BodyViewOptions = ({
   handleSortChange,
   listBarLabel,
   layoutStyle,
+  sortDropdownAriaLabel,
 }) => (
   <DisplayFormatContainer>
     <ListBar
@@ -85,7 +81,7 @@ const BodyViewOptions = ({
     />
     <StorySortDropdownContainer>
       <SortDropdown
-        ariaLabel={__('Choose sort option for display', 'web-stories')}
+        ariaLabel={sortDropdownAriaLabel}
         items={STORY_SORT_MENU_ITEMS}
         value={currentSort}
         onChange={(newSort) => handleSortChange(newSort.value)}
@@ -100,5 +96,6 @@ BodyViewOptions.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
   listBarLabel: PropTypes.string.isRequired,
+  sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
 export default BodyViewOptions;

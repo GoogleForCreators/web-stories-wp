@@ -112,8 +112,16 @@ export const STORY_SORT_OPTIONS = {
   NAME: 'title',
   DATE_CREATED: 'date',
   LAST_MODIFIED: 'modified',
-  LAST_OPENED: 'modified', // ????
+  LAST_OPENED: 'modified',
   CREATED_BY: 'author',
+};
+
+export const ORDER_BY_SORT = {
+  [STORY_SORT_OPTIONS.NAME]: 'asc',
+  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
+  [STORY_SORT_OPTIONS.CREATED_BY]: 'asc',
 };
 
 export const STORY_SORT_MENU_ITEMS = [

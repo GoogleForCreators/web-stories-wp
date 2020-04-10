@@ -31,7 +31,11 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../../constants';
+import {
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+  ORDER_BY_SORT,
+} from '../../constants';
 import getAllTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
@@ -68,14 +72,6 @@ export function reshapeTemplateObject({ id, title, pages }) {
     bottomTargetAction: () => {},
   };
 }
-
-const ORDER_BY_SORT = {
-  [STORY_SORT_OPTIONS.NAME]: 'asc',
-  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
-  [STORY_SORT_OPTIONS.NAME]: 'asc',
-};
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();

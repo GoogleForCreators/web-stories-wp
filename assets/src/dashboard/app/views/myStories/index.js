@@ -136,6 +136,10 @@ function MyStories() {
             handleLayoutSelect={handleViewStyleBarButtonSelected}
             currentSort={currentStorySort}
             handleSortChange={setCurrentStorySort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
           />
 
           <StoryGridView

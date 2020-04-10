@@ -108,6 +108,10 @@ function TemplatesGallery() {
             handleLayoutSelect={handleViewStyleBarButtonSelected}
             currentSort={currentTemplateSort}
             handleSortChange={setCurrentTemplateSort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
           />
           <StoryGridView
             filteredStories={filteredTemplates}
