@@ -78,7 +78,15 @@ function PreviewButton() {
     try {
       popup = window.open('about:blank', PREVIEW_TARGET);
       if (popup) {
-        popup.document.write('<!DOCTYPE html><html><body>');
+        popup.document.write('<!DOCTYPE html><html><head>');
+        popup.document.write('<title>');
+        popup.document.write(
+          escapeHTML(
+            __('Generating the preview...', 'web-stories')
+          )
+        );
+        popup.document.write('</title>');
+        popup.document.write('</head><body>');
         // Output "waiting" message.
         popup.document.write(
           escapeHTML(
