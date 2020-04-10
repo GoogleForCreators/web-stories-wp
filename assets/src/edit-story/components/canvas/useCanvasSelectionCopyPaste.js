@@ -151,6 +151,7 @@ function useCanvasSelectionCopyPaste(container) {
 
   const rawPasteHandler = useCallback(
     (html) => {
+      let foundContent = false;
       const template = document.createElement('template');
       template.innerHTML = html;
       let copiedContent = '';
@@ -166,7 +167,9 @@ function useCanvasSelectionCopyPaste(container) {
       }
       if (copiedContent.trim().length) {
         insertElement('text', { content: copiedContent });
+        foundContent = true;
       }
+      return foundContent;
     },
     [insertElement]
   );
