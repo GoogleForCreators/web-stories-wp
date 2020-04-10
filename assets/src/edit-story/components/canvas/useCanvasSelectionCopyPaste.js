@@ -125,7 +125,7 @@ function useCanvasSelectionCopyPaste(container) {
           for (let n = template.content.firstChild; n; n = n.nextSibling) {
             if (n.nodeType !== /* COMMENT */ 8) {
               if (copiedContent.trim().length && n.tagName === 'P') {
-                copiedContent += ' ';
+                copiedContent += '\n';
               }
               if (n.textContent.length) {
                 copiedContent += n.textContent;
@@ -190,7 +190,7 @@ function useCanvasSelectionCopyPaste(container) {
     },
     [
       addElement,
-      currentPage.elements,
+      currentPage,
       insertElement,
       isValidType,
       showSnackbar,
