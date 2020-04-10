@@ -111,6 +111,8 @@ const theme = {
   subNavigationBar: {
     border: `1px solid ${colors.gray50}`,
   },
+  overlay:
+    'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
   fonts: {
     heading1: {
       family: 'Google Sans',
