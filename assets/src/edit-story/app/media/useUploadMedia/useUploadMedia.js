@@ -35,6 +35,7 @@ import {
   getResourceFromLocalFile,
   getResourceFromAttachment,
 } from '../../../app/media/utils';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
@@ -47,12 +48,14 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   const [isUploading, setIsUploading] = useState(false);
+  const setPreventUnload = usePreventWindowUnload();
 
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
       let localFiles;
       try {
         setIsUploading(true);
+        setPreventUnload('upload', true);
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
@@ -126,6 +129,8 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         });
 
         setIsUploading(false);
+      } finally {
+        setPreventUnload('upload', false);
       }
     },
     [
@@ -137,6 +142,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       pagingNum,
       mediaType,
       uploadFile,
+      setPreventUnload,
     ]
   );
 

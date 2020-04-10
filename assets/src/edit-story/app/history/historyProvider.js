@@ -18,11 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useGlobalKeyDownEffect } from '../../components/keyboard';
+import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';
 
@@ -35,7 +37,16 @@ function HistoryProvider({ children, size }) {
     historyLength,
     undo,
     redo,
+    versionNumber,
   } = useHistoryReducer(size);
+
+  const setPreventUnload = usePreventWindowUnload();
+
+  useEffect(() => {
+    setPreventUnload('history', versionNumber - 1 > 0);
+
+    return () => setPreventUnload('history', false);
+  }, [setPreventUnload, versionNumber]);
 
   const state = {
     state: {
