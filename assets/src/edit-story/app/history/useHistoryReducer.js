@@ -23,7 +23,12 @@ const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';
 const REPLAY = 'replay';
 
-const EMPTY_STATE = { entries: [], offset: 0, replayState: null };
+const EMPTY_STATE = {
+  entries: [],
+  offset: 0,
+  replayState: null,
+  versionNumber: 0,
+};
 
 const reducer = (size) => (state, { type, payload }) => {
   switch (type) {
@@ -74,6 +79,7 @@ const reducer = (size) => (state, { type, payload }) => {
       // and clear `offset` and `replayState`.
       return {
         entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
+        versionNumber: state.versionNumber + 1,
         offset: 0,
         replayState: null,
       };
@@ -110,7 +116,7 @@ function useHistoryReducer(size) {
   // state.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const { entries, offset, replayState } = state;
+  const { entries, offset, replayState, versionNumber } = state;
   const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
@@ -160,6 +166,7 @@ function useHistoryReducer(size) {
     clearHistory,
     offset,
     historyLength,
+    versionNumber,
     undo,
     redo,
   };

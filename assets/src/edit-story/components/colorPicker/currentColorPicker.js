@@ -35,9 +35,9 @@ import { Eyedropper } from '../button';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
-const CONTAINER_PADDING = 15;
+const CONTAINER_PADDING = 12;
 const EYEDROPPER_ICON_SIZE = 15;
-const HEADER_FOOTER_HEIGHT = 50;
+const HEADER_FOOTER_HEIGHT = 42;
 const BODY_HEIGHT = 140;
 const CONTROLS_WIDTH = 12;
 const CONTROLS_BORDER_RADIUS = 6;
@@ -48,18 +48,23 @@ const Container = styled.div`
   font-weight: normal;
   font-size: 12px;
   user-select: none;
+  padding: ${CONTAINER_PADDING}px;
+  padding-bottom: 0px;
 `;
 
 const Body = styled.div`
   padding-bottom: 0;
   display: grid;
-  grid: 'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px;
+  grid: ${({ showOpacity }) =>
+    showOpacity
+      ? `'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px`
+      : `'saturation hue' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px`};
   grid-gap: 10px;
 `;
 
 const SaturationWrapper = styled.div`
   position: relative;
-  width: 167px;
+  width: 100%;
   height: ${BODY_HEIGHT}px;
   grid-area: saturation;
 `;
@@ -81,35 +86,22 @@ const AlphaWrapper = styled.div`
 `;
 
 const Footer = styled.div`
-  padding: ${CONTAINER_PADDING}px;
+  padding: ${CONTAINER_PADDING}px 0px;
   height: ${HEADER_FOOTER_HEIGHT}px;
   font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
-`;
-
-const EyedropperWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: ${CONTAINER_PADDING}px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const EyedropperButton = styled(Eyedropper)`
   line-height: ${EYEDROPPER_ICON_SIZE}px;
 `;
 
-const CurrentWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  text-align: center;
-  bottom: ${CONTAINER_PADDING}px;
-`;
-
-const CurrentAlphaWrapper = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: ${CONTAINER_PADDING}px;
+const OpacityPlaceholder = styled.div`
+  width: 32px;
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
@@ -133,7 +125,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
 
   return (
     <Container>
-      <Body>
+      <Body showOpacity={showOpacity}>
         <SaturationWrapper>
           <Saturation
             radius={`${CONTROLS_BORDER_RADIUS}px`}
@@ -173,33 +165,29 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
-        <EyedropperWrapper>
-          <EyedropperButton
-            width={EYEDROPPER_ICON_SIZE}
-            height={EYEDROPPER_ICON_SIZE}
-            aria-label={__('Select color', 'web-stories')}
-            isDisabled
-          />
-        </EyedropperWrapper>
-        <CurrentWrapper>
+        <EyedropperButton
+          width={EYEDROPPER_ICON_SIZE}
+          height={EYEDROPPER_ICON_SIZE}
+          aria-label={__('Select color', 'web-stories')}
+          isDisabled
+        />
+        <EditablePreview
+          label={__('Edit hex value', 'web-stories')}
+          value={hexValue}
+          onChange={handleHexInputChange}
+          width={56}
+          format={handleFormatHex}
+        />
+        {showOpacity ? (
           <EditablePreview
-            label={__('Edit hex value', 'web-stories')}
-            value={hexValue}
-            onChange={handleHexInputChange}
-            width={65}
-            format={handleFormatHex}
+            label={__('Edit opacity', 'web-stories')}
+            value={alphaPercentage}
+            width={32}
+            format={handleFormatPercentage}
+            onChange={handleOpacityInputChange}
           />
-        </CurrentWrapper>
-        {showOpacity && (
-          <CurrentAlphaWrapper>
-            <EditablePreview
-              label={__('Edit opacity', 'web-stories')}
-              value={alphaPercentage}
-              width={35}
-              format={handleFormatPercentage}
-              onChange={handleOpacityInputChange}
-            />
-          </CurrentAlphaWrapper>
+        ) : (
+          <OpacityPlaceholder />
         )}
       </Footer>
     </Container>

@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useMemo } from 'react';
@@ -29,7 +24,8 @@ import PropTypes from 'prop-types';
  */
 import { TypeaheadInput } from '../../../components';
 
-export default function MyStoriesSearch({
+export default function TypeaheadSearch({
+  placeholder = '',
   handleChange,
   currentValue = '',
   filteredStories = [],
@@ -46,17 +42,18 @@ export default function MyStoriesSearch({
 
   return (
     <TypeaheadInput
-      inputId="my-stories-search"
+      inputId="typeahead-search"
       items={typeaheadMenuOptions}
       onChange={(val) => handleChange(val.trim())}
       value={currentValue}
-      placeholder={__('Search Stories', 'web-stories')}
-      ariaLabel={__('Search Stories', 'web-stories')}
+      placeholder={placeholder}
+      ariaLabel={placeholder}
     />
   );
 }
 
-MyStoriesSearch.propTypes = {
+TypeaheadSearch.propTypes = {
+  placeholder: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   currentValue: PropTypes.string,
   filteredStories: PropTypes.arrayOf(

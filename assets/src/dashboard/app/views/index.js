@@ -15,5 +15,5 @@
  */
 
 export { default as MyStoriesView } from './myStories';
-export { default as TemplatesGalleryView } from './templates-gallery';
+export { default as TemplatesGalleryView } from './templatesGallery';
 export { default as MyBookmarksView } from './my-bookmarks';

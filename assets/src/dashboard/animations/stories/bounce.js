@@ -49,8 +49,8 @@ export const _default = () => {
         style={{
           width: '50px',
           height: '50px',
-          ...getInitialStyleFromKeyframes(keyframes),
         }}
+        animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
         <div
           style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
@@ -102,8 +102,8 @@ export const Cascading = () => {
               width,
               height: '50px',
               marginBottom: '10px',
-              ...getInitialStyleFromKeyframes(keyframes),
             }}
+            animationStyle={getInitialStyleFromKeyframes(keyframes)}
           >
             <div
               style={{ width: '100%', height: '100%', backgroundColor: color }}

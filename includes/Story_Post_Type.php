@@ -395,6 +395,7 @@ class Story_Post_Type {
 			'audio' => [], // todo: support audio uploads.
 			'video' => [
 				'video/mp4',
+				'video/webm',
 			],
 		];
 

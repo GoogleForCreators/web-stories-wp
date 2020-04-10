@@ -29,7 +29,7 @@ import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea } from './layout';
+import { Layer, PageArea, Z_INDEX } from './layout';
 import useCanvas from './useCanvas';
 
 const LayerWithGrayout = styled(Layer)`
@@ -67,6 +67,7 @@ function EditLayer({}) {
 
 function EditLayerForElement({ element }) {
   const ref = useRef(null);
+  const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
   const {
@@ -77,8 +78,17 @@ function EditLayerForElement({ element }) {
   ]);
 
   return (
-    <LayerWithGrayout ref={ref} grayout={editModeGrayout} pointerEvents="none">
-      <EditPageArea>
+    <LayerWithGrayout
+      ref={ref}
+      grayout={editModeGrayout}
+      zIndex={Z_INDEX.EDIT}
+      onClick={(evt) => {
+        if (evt.target === ref.current || evt.target === pageAreaRef.current) {
+          clearEditing();
+        }
+      }}
+    >
+      <EditPageArea ref={pageAreaRef}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>
