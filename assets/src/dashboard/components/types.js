@@ -17,24 +17,11 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
+import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import PopoverPanel from '../';
-
-export default {
-  title: 'Dashboard/Components/PopoverPanel',
-  component: PopoverPanel,
-};
-export const _default = () => (
-  <PopoverPanel
-    isOpen={boolean('isOpen', true)}
-    title={'Hi'}
-    onClose={action('Close button selected')}
-  >
-    <div>{text('children', 'Popover Panel Content')}</div>
-  </PopoverPanel>
-);
+export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  selected: PropTypes.bool,
+  disabled: PropTypes.bool,
+});

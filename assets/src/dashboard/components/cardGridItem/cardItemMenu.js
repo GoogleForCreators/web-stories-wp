@@ -24,11 +24,11 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import PopoverMenu from '../popover-menu';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
 import { ReactComponent as MoreVerticalSvg } from '../../icons/moreVertical.svg';
 import useFocusOut from '../../utils/useFocusOut';
+import PopoverMenu from '../popoverMenu';
 
 export const MoreVerticalButton = styled.button`
   border: none;

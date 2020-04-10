@@ -137,21 +137,29 @@ function TemplatesGallery() {
               ariaLabel={__('Category Dropdown', 'web-stories')}
               type={DROPDOWN_TYPES.PANEL}
               placeholder={__('Category', 'web-stories')}
+              items={[]}
+              onChange={() => {}}
             />
             <Dropdown
               ariaLabel={__('Style Dropdown', 'web-stories')}
               type={DROPDOWN_TYPES.PANEL}
               placeholder={__('Style', 'web-stories')}
+              items={[]}
+              onChange={() => {}}
             />
             <Dropdown
               ariaLabel={__('Color Dropdown', 'web-stories')}
               type={DROPDOWN_TYPES.PANEL}
               placeholder={__('Color', 'web-stories')}
+              items={[]}
+              onChange={() => {}}
             />
             <Dropdown
               ariaLabel={__('Layout Type Dropdown', 'web-stories')}
               type={DROPDOWN_TYPES.PANEL}
               placeholder={__('Layout Type', 'web-stories')}
+              items={[]}
+              onChange={() => {}}
             />
           </ExploreFiltersContainer>
           {BodyContent}
