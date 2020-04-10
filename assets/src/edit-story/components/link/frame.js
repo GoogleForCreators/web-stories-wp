@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useMemo } from 'react';
 import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
@@ -121,6 +122,9 @@ function WithLink({
   anchorRef,
 }) {
   const link = getLinkFromElement(element);
+  const spacing = useMemo(() => ({ x: active ? 0 : 20, y: active ? 42 : 0 }), [
+    active,
+  ]);
 
   return (
     <>
@@ -129,7 +133,7 @@ function WithLink({
         anchor={anchorRef}
         isOpen={link && !dragging && !hasTransforms}
         placement={active ? 'top' : 'left-start'}
-        spacing={{ x: active ? 0 : 20, y: active ? 42 : 0 }}
+        spacing={spacing}
       >
         {link &&
           !dragging &&

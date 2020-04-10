@@ -19,13 +19,7 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import {
-  useLayoutEffect,
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import { useLayoutEffect, useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -190,32 +184,24 @@ function getOffset(placement, spacing, anchor, dock, popup) {
   };
 }
 
-function Popup({
-  anchor,
-  dock,
-  children,
-  placement = 'bottom',
-  spacing,
-  isOpen,
-}) {
+function Popup({ anchor, dock, children, placement, spacing, isOpen }) {
   const [popupState, setPopupState] = useState(null);
   const popup = useRef(null);
 
-  const positionPopup = useCallback(
-    (evt) => {
+  useLayoutEffect(() => {
+    const positionPopup = (evt) => {
       // If scrolling within the popup, ignore.
-      if (evt && popup.current?.contains(evt.target)) {
+      if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
 
       setPopupState({
         offset: getOffset(placement, spacing, anchor, dock, popup),
       });
-    },
-    [popup, anchor, dock, placement, spacing]
-  );
+    };
 
-  useLayoutEffect(() => {
+    positionPopup();
+
     // Adjust the position when scrolling or resizing.
     window.addEventListener('resize', positionPopup);
     document.addEventListener('scroll', positionPopup, true);
@@ -223,11 +209,13 @@ function Popup({
       window.removeEventListener('resize', positionPopup);
       document.removeEventListener('scroll', positionPopup, true);
     };
-  }, [positionPopup]);
+  }, [anchor, dock, placement, spacing]);
 
   useEffect(() => {
-    positionPopup();
-  }, [anchor, placement, positionPopup, spacing]);
+    setPopupState({
+      offset: getOffset(placement, spacing, anchor, dock, popup),
+    });
+  }, [placement, spacing, anchor, dock, popup]);
 
   return popupState && isOpen
     ? createPortal(

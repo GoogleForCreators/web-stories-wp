@@ -19,12 +19,20 @@
  */
 import Modal from 'react-modal';
 import { render } from 'react-dom';
+import React from 'react';
 
 /**
  * Internal dependencies
  */
 import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
+
+// Why-did-you-render for debugging performance issues
+if (process.env.NODE_ENV !== 'production') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+
+  whyDidYouRender(React, {});
+}
 
 /**
  * Initializes the web stories editor.

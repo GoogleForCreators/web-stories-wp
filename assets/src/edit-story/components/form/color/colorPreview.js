@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
 import { parseToRgb } from 'polished';
 
 /**
@@ -146,6 +146,9 @@ function ColorPreview({
   // Always hide color picker on unmount - note the double arrows
   useEffect(() => () => setPickerOpen(false), []);
 
+  const onClose = useCallback(() => setPickerOpen(false), []);
+  const spacing = useMemo(() => ({ x: 20 }), []);
+
   return (
     <>
       {isEditable ? (
@@ -177,18 +180,14 @@ function ColorPreview({
         dock={inspectorRef}
         isOpen={pickerOpen}
         placement={'left-start'}
-        spacing={{ x: 20 }}
+        spacing={spacing}
       >
         <ColorPicker
           color={isMultiple ? null : value}
           onChange={onChange}
           hasGradient={hasGradient}
           hasOpacity={hasOpacity}
-          onClose={(evt) => {
-            setPickerOpen(false);
-            evt.stopPropagation();
-            evt.preventDefault();
-          }}
+          onClose={onClose}
           renderFooter={colorPickerActions}
         />
       </Popup>

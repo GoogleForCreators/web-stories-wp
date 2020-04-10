@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -118,6 +118,19 @@ function WithTooltip({
 }) {
   const [shown, setShown] = useState(false);
   const ref = useRef(null);
+  const spacing = useMemo(
+    () => ({
+      x:
+        placement.startsWith('left') || placement.startsWith('right')
+          ? SPACING
+          : 0,
+      y:
+        placement.startsWith('top') || placement.startsWith('bottom')
+          ? SPACING
+          : 0,
+    }),
+    [placement]
+  );
 
   return (
     <>
@@ -146,16 +159,7 @@ function WithTooltip({
       <Popup
         anchor={ref}
         placement={placement}
-        spacing={{
-          x:
-            placement.startsWith('left') || placement.startsWith('right')
-              ? SPACING
-              : 0,
-          y:
-            placement.startsWith('top') || placement.startsWith('bottom')
-              ? SPACING
-              : 0,
-        }}
+        spacing={spacing}
         isOpen={shown}
       >
         <Tooltip arrow={arrow} placement={placement} shown={shown}>
