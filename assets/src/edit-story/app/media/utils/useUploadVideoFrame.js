@@ -62,8 +62,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       });
 
       // Preload the full image in the browser to stop jumping around.
-      // It's an asynchronous operation, but there's no need to await it.
-      preloadImage(poster);
+      await preloadImage(poster);
 
       // Overwrite the original video dimensions. The poster reupload has more
       // accurate dimensions of the video that includes orientation changes.
