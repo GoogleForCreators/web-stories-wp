@@ -71,6 +71,10 @@ export const createPage = (attributes = {}) => {
     const backgroundElement = createNewElement('shape', props);
     newAttributes.elements = [backgroundElement, ...elements];
     newAttributes.backgroundElementId = backgroundElement.id;
+  } else {
+    // Update reference background element, as we just changed the id
+    // Background element is guaranteed to be first element
+    newAttributes.backgroundElementId = elements[0].id;
   }
 
   return createNewElement('page', newAttributes);
