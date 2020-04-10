@@ -29,7 +29,7 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (element.link && element.link.type) {
+  if (element.link?.type) {
     delete element.link.type;
   }
   return element;
