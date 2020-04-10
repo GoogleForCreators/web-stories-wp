@@ -28,7 +28,7 @@ import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg
 import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { DROPDOWN_TYPES } from '../../constants';
-import PopoverMenu from '../popover-menu';
+import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
@@ -166,7 +166,7 @@ const Dropdown = ({
           title={currentLabel}
           onClose={() => setShowMenu(false)}
           items={items}
-          onSelect={(e, selectedValue) => {
+          onSelect={(__, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
         />
