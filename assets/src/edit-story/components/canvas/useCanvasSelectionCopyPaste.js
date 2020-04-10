@@ -111,6 +111,67 @@ function useCanvasSelectionCopyPaste(container) {
     [deleteSelectedElements, selectedElements]
   );
 
+  const elementPasteHandler = useCallback(
+    (html) => {
+      const template = document.createElement('template');
+      template.innerHTML = html;
+      let foundElements = false;
+      for (let n = template.content.firstChild; n; n = n.nextSibling) {
+        if (n.nodeType !== /* COMMENT */ 8) {
+          continue;
+        }
+        const payload = JSON.parse(
+          n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
+        );
+        if (payload.sentinel !== 'story-elements') {
+          continue;
+        }
+        foundElements = true;
+        payload.items.forEach(({ x, y, basedOn, ...rest }) => {
+          currentPage.elements.forEach((element) => {
+            if (element.id === basedOn || element.basedOn === basedOn) {
+              x = Math.max(x, element.x + 60);
+              y = Math.max(y, element.y + 60);
+            }
+          });
+          const element = {
+            ...rest,
+            basedOn,
+            id: uuidv4(),
+            x,
+            y,
+          };
+          addElement({ element });
+        });
+      }
+      return foundElements;
+    },
+    [addElement, currentPage]
+  );
+
+  const rawPasteHandler = useCallback(
+    (html) => {
+      const template = document.createElement('template');
+      template.innerHTML = html;
+      let copiedContent = '';
+      for (let n = template.content.firstChild; n; n = n.nextSibling) {
+        // @todo bold, italic underline
+        // @todo Images.
+        if (copiedContent.trim().length && n.tagName === 'P') {
+          copiedContent += '\n';
+        }
+        if (n.textContent.length) {
+          copiedContent += n.textContent;
+        }
+      }
+      if (copiedContent.trim().length) {
+        insertElement('text', { content: copiedContent });
+      }
+    },
+    [insertElement]
+  );
+
+  // @todo This should be in global handler by UX, not just Canvas.
   const pasteHandler = useCallback(
     (evt) => {
       const { clipboardData } = evt;
@@ -118,48 +179,13 @@ function useCanvasSelectionCopyPaste(container) {
       try {
         const html = clipboardData.getData('text/html');
         if (html) {
-          const template = document.createElement('template');
-          template.innerHTML = html;
-          let copyingStoryElement = false;
-          let copiedContent = '';
-          for (let n = template.content.firstChild; n; n = n.nextSibling) {
-            if (n.nodeType !== /* COMMENT */ 8) {
-              if (copiedContent.trim().length && n.tagName === 'P') {
-                copiedContent += '\n';
-              }
-              if (n.textContent.length) {
-                copiedContent += n.textContent;
-              }
-              continue;
-            }
-            const payload = JSON.parse(
-              n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
-            );
-            if (payload.sentinel !== 'story-elements') {
-              continue;
-            }
-            copyingStoryElement = true;
-            payload.items.forEach(({ x, y, basedOn, ...rest }) => {
-              currentPage.elements.forEach((element) => {
-                if (element.id === basedOn || element.basedOn === basedOn) {
-                  x = Math.max(x, element.x + 60);
-                  y = Math.max(y, element.y + 60);
-                }
-              });
-              const element = {
-                ...rest,
-                basedOn,
-                id: uuidv4(),
-                x,
-                y,
-              };
-              addElement({ element });
-            });
-            evt.preventDefault();
+          let addedElements = elementPasteHandler(html);
+          if (!addedElements) {
+            addedElements = rawPasteHandler(html);
           }
-          // If we're not copying a Story element, assume copying text.
-          if (!copyingStoryElement && copiedContent.trim().length) {
-            insertElement('text', { content: copiedContent });
+          if (addedElements) {
+            // @todo Should we always prevent default?
+            evt.preventDefault();
           }
         }
         const { items } = clipboardData;
@@ -189,10 +215,9 @@ function useCanvasSelectionCopyPaste(container) {
       }
     },
     [
-      addElement,
-      currentPage,
-      insertElement,
+      elementPasteHandler,
       isValidType,
+      rawPasteHandler,
       showSnackbar,
       uploadFile,
     ]
