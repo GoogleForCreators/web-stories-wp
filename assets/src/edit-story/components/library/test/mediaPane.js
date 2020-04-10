@@ -15,18 +15,16 @@
  */
 
 /**
- * Infer element type from mime type of its resource
- *
- * @param {string} mimeType Mime type.
- * @return {string|null} Element type.
+ * Internal dependencies
  */
-const getTypeFromMime = (mimeType) => {
-  if (mimeType.match('image.*')) {
-    return 'image';
-  } else if (mimeType.match('video.*')) {
-    return 'video';
-  }
-  return null;
-};
+import { arrange } from './_utils';
+import mediaResponseWithPdfAndImage from './_utils/mediaResponseWithPdfAndImage';
 
-export default getTypeFromMime;
+describe('mediaPane', () => {
+  it('should only display supported mimeTypes and not crash on unsupported', async () => {
+    const { getByAltText } = await arrange({
+      mediaResponse: mediaResponseWithPdfAndImage,
+    });
+    expect(getByAltText('test-image')).toBeDefined();
+  });
+});
