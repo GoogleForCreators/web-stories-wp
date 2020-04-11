@@ -86,7 +86,7 @@ function PagePreview({ index, ...props }) {
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page {...props}>
-          <PreviewWrapper>
+          <PreviewWrapper className="web-stories-content">
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}
