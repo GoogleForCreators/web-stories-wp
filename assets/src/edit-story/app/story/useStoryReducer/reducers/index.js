@@ -27,6 +27,7 @@ export { default as updateElements } from './updateElements';
 export { default as updateElementsByResourceId } from './updateElementsByResourceId';
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
+export { default as combineElements } from './combineElements';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';

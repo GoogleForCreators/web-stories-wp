@@ -14,9 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { createContext } from 'react';
+function oneTapLinkDeprecate({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-export default createContext({ actions: {}, state: {} });
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element.link?.type) {
+    delete element.link.type;
+  }
+  return element;
+}
+
+export default oneTapLinkDeprecate;

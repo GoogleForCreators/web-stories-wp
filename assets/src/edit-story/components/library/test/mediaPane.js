@@ -15,17 +15,16 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
-import Context from './context';
+import { arrange } from './_utils';
+import mediaResponseWithPdfAndImage from './_utils/mediaResponseWithPdfAndImage';
 
-function useDropZone() {
-  return useContext(Context);
-}
-
-export default useDropZone;
+describe('mediaPane', () => {
+  it('should only display supported mimeTypes and not crash on unsupported', async () => {
+    const { getByAltText } = await arrange({
+      mediaResponse: mediaResponseWithPdfAndImage,
+    });
+    expect(getByAltText('test-image')).toBeDefined();
+  });
+});

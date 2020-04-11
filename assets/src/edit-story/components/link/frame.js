@@ -27,24 +27,7 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
-import { getLinkFromElement, LinkType } from './index';
-
-const Hint = styled.div`
-  position: relative;
-  background-color: ${({ theme }) => theme.colors.bg.v0};
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 14px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  margin-top: -52px;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  max-width: 200px;
-  pointer-events: all;
-  padding: 2px 6px;
-`;
+import { getLinkFromElement } from './index';
 
 const Tooltip = styled.div`
   position: relative;
@@ -135,21 +118,13 @@ function WithLink({ element, active, dragging, children }) {
       {link && !active && !dragging && <LinkIcon />}
       {link && active && !dragging && (
         <TooltipContainer>
-          {link.type === LinkType.ONE_TAP ? (
-            <Hint>{link.url}</Hint>
-          ) : (
-            <Tooltip>
-              <BrandIcon src={link.icon} />
-              <LinkDesc>{link.desc || link.url}</LinkDesc>
-              <LinkOut
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkOutIcon />
-              </LinkOut>
-            </Tooltip>
-          )}
+          <Tooltip>
+            <BrandIcon src={link.icon} />
+            <LinkDesc>{link.desc || link.url}</LinkDesc>
+            <LinkOut href={link.url} target="_blank" rel="noopener noreferrer">
+              <LinkOutIcon />
+            </LinkOut>
+          </Tooltip>
         </TooltipContainer>
       )}
     </>

@@ -98,10 +98,10 @@ function DisplayElement({ element, previewMode, page }) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
-      if (typeof dropTargets?.hover !== 'undefined') {
+      if (dropTargets?.hover !== undefined) {
         target.style.opacity = dropTargets.hover ? 0 : 1;
       }
-      if (typeof dropTargets?.replacement !== 'undefined') {
+      if (dropTargets?.replacement !== undefined) {
         setReplacement(dropTargets.replacement || null);
       }
     }

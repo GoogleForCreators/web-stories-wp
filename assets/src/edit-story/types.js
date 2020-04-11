@@ -74,7 +74,6 @@ StoryPropTypes.mask = PropTypes.shape({
 });
 
 StoryPropTypes.link = PropTypes.shape({
-  type: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   icon: PropTypes.string,

@@ -92,8 +92,8 @@ export const _contextMenu = () => {
           <CardItemMenu
             onMoreButtonSelected={setContextMenuId}
             contextMenuId={contextMenuId}
-            onMenuItemSelected={(item) => {
-              actions('onClick', item.label);
+            onMenuItemSelected={(item, story) => {
+              actions('onClick ', item.label, story.id);
               setContextMenuId(-1);
             }}
             story={{ id: 1, status: 'publish', title: 'Sample Story' }}

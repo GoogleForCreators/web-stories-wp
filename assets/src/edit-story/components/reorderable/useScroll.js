@@ -17,40 +17,46 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import useBatchingCallback from '../../utils/useBatchingCallback';
 
-const SCROLL_DISTANCE = 5;
+const SCROLL_PERCENT = 0.2;
+const MAX_SCROLL_STEP = 10;
 
-function useScroll(isReordering) {
+function useScroll(mode = 'horizontal', isReordering, scrollTarget, size) {
   const [hasScrollAbove, setHasScrollAbove] = useState(false);
   const [hasScrollBelow, setHasScrollBelow] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(0);
-  const scrollTarget = useRef(null);
-
-  const setScrollTarget = useCallback(
-    (node) => node && (scrollTarget.current = node.parentElement),
-    []
-  );
 
   const updateScrollMarkers = useBatchingCallback(() => {
     const node = scrollTarget.current;
     if (!node) {
       return;
     }
-    const possibleScroll = node.scrollHeight - node.clientHeight;
-    if (possibleScroll <= 0) {
-      setHasScrollAbove(false);
-      setHasScrollBelow(false);
+    if (mode === 'horizontal') {
+      const possibleScroll = node.scrollWidth - node.clientWidth;
+      if (possibleScroll <= 0) {
+        setHasScrollAbove(false);
+        setHasScrollBelow(false);
+      } else {
+        setHasScrollAbove(node.scrollLeft > 0);
+        setHasScrollBelow(node.scrollLeft < possibleScroll);
+      }
     } else {
-      setHasScrollAbove(node.scrollTop > 0);
-      setHasScrollBelow(node.scrollTop < possibleScroll);
+      const possibleScroll = node.scrollHeight - node.clientHeight;
+      if (possibleScroll <= 0) {
+        setHasScrollAbove(false);
+        setHasScrollBelow(false);
+      } else {
+        setHasScrollAbove(node.scrollTop > 0);
+        setHasScrollBelow(node.scrollTop < possibleScroll);
+      }
     }
-  }, []);
+  }, [mode, scrollTarget]);
 
   const startScroll = useCallback(
     (dir) => {
@@ -60,21 +66,29 @@ function useScroll(isReordering) {
     [setScrollDirection]
   );
 
-  const canScrollUp = isReordering && hasScrollAbove;
-  const canScrollDown = isReordering && hasScrollBelow;
+  const canScrollStart = isReordering && hasScrollAbove;
+  const canScrollEnd = isReordering && hasScrollBelow;
 
   useEffect(() => {
     const isNotScrolling = scrollDirection === 0;
-    const isScrollingUp = canScrollUp && scrollDirection < 0;
-    const isScrollingDown = canScrollDown && scrollDirection > 0;
-    const isScrollingAnywhere = isScrollingUp || isScrollingDown;
+    const isScrollingStart = canScrollStart && scrollDirection < 0;
+    const isScrollingEnd = canScrollEnd && scrollDirection > 0;
+    const isScrollingAnywhere = isScrollingStart || isScrollingEnd;
     if (isNotScrolling || !isScrollingAnywhere) {
       return undefined;
     }
 
     let mounted = true;
     const update = () => {
-      scrollTarget.current.scrollTop += scrollDirection * SCROLL_DISTANCE;
+      const scrollStep = Math.max(
+        Math.min(SCROLL_PERCENT * size, MAX_SCROLL_STEP),
+        0
+      );
+      if (mode === 'horizontal') {
+        scrollTarget.current.scrollLeft += scrollDirection * scrollStep;
+      } else {
+        scrollTarget.current.scrollTop += scrollDirection * scrollStep;
+      }
       updateScrollMarkers();
       if (mounted) {
         window.requestAnimationFrame(update);
@@ -85,16 +99,23 @@ function useScroll(isReordering) {
     return () => {
       mounted = false;
     };
-  }, [scrollDirection, updateScrollMarkers, canScrollUp, canScrollDown]);
+  }, [
+    scrollDirection,
+    updateScrollMarkers,
+    canScrollStart,
+    canScrollEnd,
+    size,
+    mode,
+    scrollTarget,
+  ]);
 
   // Update scroll markers whenever isReordering changes (to true really, but no harm)
   useEffect(() => updateScrollMarkers(), [isReordering, updateScrollMarkers]);
 
   return {
     startScroll,
-    setScrollTarget,
-    canScrollDown,
-    canScrollUp,
+    canScrollEnd,
+    canScrollStart,
   };
 }
 
