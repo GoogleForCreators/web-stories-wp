@@ -278,7 +278,6 @@ describe('Panels/TextStyle', () => {
         unlockPaddingTextElement,
         unlockPaddingTextSamePadding,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -293,7 +292,6 @@ describe('Panels/TextStyle', () => {
         unlockPaddingTextElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -301,6 +299,35 @@ describe('Panels/TextStyle', () => {
         { horizontal: 11 },
         DEFAULT_PADDING
       );
+    });
+
+    it('should update default element lockPadding to false when padding lock clicked', () => {
+      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
+      fireEvent.click(getByTestId('padding.lock'));
+      expect(pushUpdate).toHaveBeenCalledWith({
+        lockPadding: false,
+      });
+    });
+
+    it('should update unlock padding element lockPadding to true when padding lock clicked', () => {
+      const { getByTestId, pushUpdate } = renderTextStyle([
+        unlockPaddingTextElement,
+      ]);
+      fireEvent.click(getByTestId('padding.lock'));
+      expect(pushUpdate).toHaveBeenCalledWith({
+        lockPadding: true,
+      });
+    });
+
+    it('should update multiple elements with default text element and unlock padding elements lockPadding to false when padding lock clicked', () => {
+      const { getByTestId, pushUpdate } = renderTextStyle([
+        unlockPaddingTextElement,
+        textElement,
+      ]);
+      fireEvent.click(getByTestId('padding.lock'));
+      expect(pushUpdate).toHaveBeenCalledWith({
+        lockPadding: false,
+      });
     });
   });
 

@@ -216,14 +216,37 @@ describe('Panels/SizePosition', () => {
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });
     });
+
+    it('should update lock ratio to false for element', () => {
+      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
+      fireEvent.click(getByTestId('lockRatio'));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should update lock ratio to true for unlock aspect ratio element', () => {
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
+      fireEvent.click(getByTestId('lockRatio'));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
+    });
   });
 
   describe('multi selection', () => {
     let image, imageWithSameSize, imageWithDifferentSize;
+    let unlockImage, unlockImageWithSameSize;
 
     beforeEach(() => {
       image = defaultImage;
+      unlockImage = {
+        ...defaultImage,
+        lockAspectRatio: false,
+      };
       imageWithSameSize = { ...image, id: 'imageWithSameSize' };
+      unlockImageWithSameSize = {
+        ...imageWithSameSize,
+        lockAspectRatio: false,
+      };
       imageWithDifferentSize = {
         ...image,
         id: 'imageWithDifferentSize',
@@ -326,6 +349,33 @@ describe('Panels/SizePosition', () => {
         height: 160,
         width: dataPixels(160 * (200 / 120)),
       });
+    });
+
+    it('should update lock ratio to false for default elements', () => {
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        image,
+        imageWithSameSize,
+      ]);
+      fireEvent.click(getByTestId('lockRatio'));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should update lock ratio to false for default element and unlock element', () => {
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockImage,
+        imageWithSameSize,
+      ]);
+      fireEvent.click(getByTestId('lockRatio'));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should update lock ratio to true for unlock aspect ratio elements', () => {
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockImageWithSameSize,
+        unlockImage,
+      ]);
+      fireEvent.click(getByTestId('lockRatio'));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
   });
 });
