@@ -102,6 +102,7 @@ function TextEdit({
     backgroundColor,
     backgroundTextMode,
     opacity,
+    height: eHeight,
     ...rest
   },
   box: { x, y, height, rotationAngle },
@@ -249,6 +250,11 @@ function TextEdit({
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
   }, [editorState]);
+
+  // Update the height when the text height updated from the outside like design panel
+  useEffect(() => {
+    editorHeightRef.current = eHeight;
+  }, [eHeight]);
 
   const { fontFamily } = rest;
   useEffect(() => {
