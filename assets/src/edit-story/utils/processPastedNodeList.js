@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import escapeHTML from './escapeHTML';
+
 const ALLOWED_CONTENT_NODES = ['strong', 'em', 'u'];
-
-let span = null;
-let textNode = null;
-
-function escapeHTML(text) {
-  if (!span) {
-    span = document.createElement('span');
-    textNode = document.createTextNode('');
-    span.appendChild(textNode);
-  }
-  textNode.nodeValue = text;
-  return span.innerHTML;
-}
 
 function processNodeContent(node) {
   const tag = node.parentNode?.tagName?.toLowerCase();
