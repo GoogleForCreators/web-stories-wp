@@ -20,11 +20,6 @@
 import escapeHTML from '../escapeHTML';
 
 describe('escapeHTML', () => {
-  it('should maintain escaped HTML', () => {
-    const toEscape = 'Use &lt;u&gt; for underline.';
-    expect(escapeHTML(toEscape)).toStrictEqual(toEscape);
-  });
-
   it('should escape HTML', () => {
     expect(escapeHTML('<div>Hello & World</div>')).toStrictEqual(
       '&lt;div&gt;Hello &amp; World&lt;/div&gt;'
