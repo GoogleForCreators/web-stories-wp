@@ -249,14 +249,7 @@ function TextEdit({
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState]);
-
-  // Update the height when the text height updated from the outside like design panel
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    editorHeightRef.current = dataToEditorY(eHeight);
-    wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [eHeight, dataToEditorY]);
+  }, [editorState, eHeight]);
 
   const { fontFamily } = rest;
   useEffect(() => {
