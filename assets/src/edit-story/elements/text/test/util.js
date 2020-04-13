@@ -46,6 +46,11 @@ describe('Text/util', () => {
       expect(draftMarkupToContent(nestedInput, false)).toStrictEqual(
         '<em>Hello <strong>World, again!</strong></em>'
       );
+
+      const invalidInput = '<em>Hello</strong> world<u font="> not';
+      expect(draftMarkupToContent(invalidInput, false)).toStrictEqual(
+        '<em>Hello world</em>'
+      );
     });
 
     it('should add <strong> wrapper when bold', () => {
