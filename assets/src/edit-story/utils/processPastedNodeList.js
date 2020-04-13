@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const allowedContentNodes = ['strong', 'em', 'u'];
+const ALLOWED_CONTENT_NODES = ['strong', 'em', 'u'];
+
+let span = null;
+let textNode = null;
+
+function escapeHTML(text) {
+  if (!span) {
+    span = document.createElement('span');
+    textNode = document.createTextNode('');
+    span.appendChild(textNode);
+  }
+  textNode.nodeValue = text;
+  return span.innerHTML;
+}
 
 function processNodeContent(node) {
   const tag = node.parentNode?.tagName?.toLowerCase();
-  const stripTags = !allowedContentNodes.includes(tag);
+  const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
+  const content = escapeHTML(node.textContent).trim();
   if (stripTags) {
-    return node.textContent.trim();
+    return content;
   }
-  return `<${tag}>${node.textContent.trim()}<${tag}/>`;
+  return `<${tag}>${content}<${tag}/>`;
 }
 
 export default function processPastedNodeList(nodeList, content) {
@@ -33,7 +47,7 @@ export default function processPastedNodeList(nodeList, content) {
       }
       content = processPastedNodeList(n.childNodes, content);
     } else {
-      content += processNodeContent(n, content);
+      content += processNodeContent(n);
     }
   }
   return content;

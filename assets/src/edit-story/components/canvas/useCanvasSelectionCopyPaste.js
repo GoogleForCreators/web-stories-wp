@@ -151,8 +151,6 @@ function useCanvasSelectionCopyPaste(container) {
   const rawPasteHandler = useCallback(
     (content) => {
       let foundContent = false;
-      // Remove meta tag.
-      content = content.replace(/<meta[^>]+>/g, '');
       // @todo Images.
       const copiedContent = processPastedNodeList(content.childNodes, '');
       if (copiedContent.trim().length) {
@@ -170,10 +168,13 @@ function useCanvasSelectionCopyPaste(container) {
       const { clipboardData } = evt;
 
       try {
-        const html = clipboardData.getData('text/html');
-        if (html) {
+        const content =
+          clipboardData.getData('text/html') ||
+          clipboardData.getData('text/plain');
+        if (content) {
           const template = document.createElement('template');
-          template.innerHTML = html;
+          // Remove meta tag.
+          template.innerHTML = content.replace(/<meta[^>]+>/g, '');
           let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
             addedElements = rawPasteHandler(template.content);
