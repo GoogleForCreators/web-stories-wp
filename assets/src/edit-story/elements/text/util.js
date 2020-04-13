@@ -158,7 +158,7 @@ let contentBuffer = null;
 export const draftMarkupToContent = (content, bold) => {
   // @todo This logic is temporary and will change with selecting part + marking bold/italic/underline.
   if (bold) {
-    content = `<strong>${content}`;
+    content = `<strong>${content}</strong>`;
   }
   if (!contentBuffer) {
     contentBuffer = document.createElement('template');
