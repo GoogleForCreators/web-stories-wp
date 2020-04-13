@@ -194,17 +194,31 @@ class Media {
 				'get_callback' => static function ( $prepared, $field_name, $request ) {
 
 					$id    = $prepared['featured_media'];
-					$image = '';
+					$image = [];
 					if ( $id ) {
-						$image = wp_get_attachment_image_url( $id, 'medium' );
+						$image = self::get_thumbnail_data( $id );
 					}
 
 					return $image;
 				},
 				'schema'       => [
-					'description' => __( 'URL', 'web-stories' ),
-					'type'        => 'string',
-					'format'      => 'uri',
+					'description' => __( 'URL, width and height.', 'web-stories' ),
+					'type'        => 'object',
+					'properties'  => [
+						'src'       => [
+							'type'   => 'string',
+							'format' => 'uri',
+						],
+						'width'     => [
+							'type' => 'integer',
+						],
+						'height'    => [
+							'type' => 'integer',
+						],
+						'generated' => [
+							'type' => 'boolean',
+						],
+					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			]
@@ -225,7 +239,7 @@ class Media {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 === $thumbnail_id ) {
-				$image = wp_get_attachment_image_url( $thumbnail_id, 'medium' );
+				$image = self::get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
@@ -234,6 +248,19 @@ class Media {
 		return $response;
 	}
 
+	/**
+	 * Get poster image data.
+	 *
+	 * @param int $thumbnail_id Attachment ID.
+	 *
+	 * @return array
+	 */
+	public static function get_thumbnail_data( $thumbnail_id ) {
+		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+		list ( $src, $width, $height ) = $img_src;
+		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
+		return compact( 'src', 'width', 'height', 'generated' );
+	}
 	/**
 	 * Filters the list of mime types and file extensions.
 	 *
