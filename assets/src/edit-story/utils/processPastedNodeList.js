@@ -28,8 +28,8 @@ const TAG_REPLACEMENTS = {
 export default function processPastedNodeList(nodeList, content) {
   for (let i = 0; i < nodeList.length; i++) {
     const n = nodeList[i];
-    let tag = n.tagName?.toLowerCase();
-    tag = TAG_REPLACEMENTS[tag] ? TAG_REPLACEMENTS[tag] : tag;
+    const originalTag = n.tagName?.toLowerCase();
+    const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
     const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
     if (!stripTags) {
       content += `<${tag}>`;
