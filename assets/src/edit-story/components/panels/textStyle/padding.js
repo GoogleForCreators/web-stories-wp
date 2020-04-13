@@ -52,7 +52,9 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_PADDING
   );
 
-  const lockPadding = padding.locked === MULTIPLE_VALUE ? true : padding.locked;
+  // When multiple element selected with padding locked value combined, it treated as false, reversed behavior with aspect lock ratio.
+  const lockPadding =
+    padding.locked === MULTIPLE_VALUE ? false : padding.locked;
 
   const handleChange = useCallback(
     (newPadding) => {

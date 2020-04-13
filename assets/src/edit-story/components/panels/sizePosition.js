@@ -90,6 +90,8 @@ function SizePositionPanel({
     selectedElements,
     'lockAspectRatio'
   );
+
+  // When multiple element selected with aspect lock ratio value combined, it treated as true, reversed behavior with padding lock ratio.
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
