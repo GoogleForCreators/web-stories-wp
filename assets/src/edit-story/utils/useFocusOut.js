@@ -21,6 +21,7 @@ import { useLayoutEffect } from 'react';
 
 function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
+    let isFocused = false;
     const node = ref.current;
     if (!node) {
       return undefined;
@@ -29,8 +30,13 @@ function useFocusOut(ref, callback, deps) {
     const onFocusOut = (evt) => {
       // If focus moves somewhere outside the node, callback time!
       if (evt.relatedTarget && !node.contains(evt.relatedTarget)) {
+        isFocused = false;
         callback();
       }
+    };
+
+    const onFocusIn = () => {
+      isFocused = true;
     };
 
     const onDocumentClick = (evt) => {
@@ -38,14 +44,26 @@ function useFocusOut(ref, callback, deps) {
       const isInDocument = node.ownerDocument.contains(evt.target);
       const isInNode = node.contains(evt.target);
       if (!isInNode && isInDocument) {
+        isFocused = false;
         callback();
+      }
+      // Handle text element editor case
+      const activeElementInNode = node.contains(document.activeElement);
+      if (activeElementInNode) {
+        isFocused = true;
       }
     };
 
     node.addEventListener('focusout', onFocusOut);
+    node.addEventListener('focusin', onFocusIn);
     node.ownerDocument.addEventListener('click', onDocumentClick);
 
     return () => {
+      // When element is focused and is now being removed, callback time!
+      if (isFocused) {
+        callback();
+      }
+
       node.removeEventListener('focusout', onFocusOut);
       node.ownerDocument.removeEventListener('click', onDocumentClick);
     };
