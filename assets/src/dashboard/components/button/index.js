@@ -41,7 +41,6 @@ const StyledButton = styled.button`
   opacity: 0.75;
   padding: 0 10px;
   text-decoration: none;
-  background-color: ${({ isLink }) => (isLink ? 'salmon' : 'lime')};
 
   &:focus,
   &:active,
