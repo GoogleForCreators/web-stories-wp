@@ -31,7 +31,7 @@ const DisplayFormatContainer = styled.div`
   padding-bottom: 20px;
   padding-left: 15px;
 
-  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
   display: flex;
   align-items: space-between;
   align-content: center;
