@@ -24,14 +24,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Dropdown, ListBar } from '../../../components';
-import { STORY_SORT_MENU_ITEMS } from '../../../constants';
+import { STORY_SORT_MENU_ITEMS, DROPDOWN_TYPES } from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
   margin: ${({ theme }) => `${theme.pageGutter.desktop}px 0`};
   padding-bottom: 20px;
   padding-left: 15px;
-
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
   display: flex;
   align-items: space-between;
   align-content: center;
@@ -83,6 +81,7 @@ const BodyViewOptions = ({
       <SortDropdown
         ariaLabel={sortDropdownAriaLabel}
         items={STORY_SORT_MENU_ITEMS}
+        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
         value={currentSort}
         onChange={(newSort) => handleSortChange(newSort.value)}
       />
