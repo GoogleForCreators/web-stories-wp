@@ -58,11 +58,10 @@ const FilterContainer = styled.fieldset`
 
   @media ${({ theme }) => theme.breakpoint.min} {
     & > label span {
-        border-radius: 0;
-        box-shadow: none !important;
-        padding: 0 10px 0 0;
-        background-color: transparent !important;
-      }
+      border-radius: 0;
+      box-shadow: none !important;
+      padding: 0 10px 0 0;
+      background-color: transparent !important;
     }
   }
 `;
