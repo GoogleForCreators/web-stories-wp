@@ -31,7 +31,7 @@ function escapeHTML(text) {
 function processNodeContent(node) {
   const tag = node.parentNode?.tagName?.toLowerCase();
   const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
-  const content = escapeHTML(node.textContent).trim();
+  const content = escapeHTML(node.textContent);
   if (stripTags) {
     return content;
   }
