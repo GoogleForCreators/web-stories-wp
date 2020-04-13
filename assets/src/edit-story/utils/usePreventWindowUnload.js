@@ -50,11 +50,9 @@ function usePreventWindowUnload() {
     },
     [context]
   );
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  if (isDevelopment) {
-    return () => {};
-  }
   return setPreventUnload;
 }
 
-export default usePreventWindowUnload;
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+export default isDevelopment ? () => {} : usePreventWindowUnload;
