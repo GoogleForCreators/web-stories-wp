@@ -140,7 +140,7 @@ function PreviewButton() {
   return (
     <>
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
-        {__('Preview', 'web-stories')}
+        {__('Save & Preview', 'web-stories')}
       </Outline>
       <Dialog
         open={Boolean(previewLinkToOpenViaDialog)}
