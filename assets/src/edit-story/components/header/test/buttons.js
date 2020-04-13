@@ -105,11 +105,19 @@ describe('buttons', () => {
     expect(getByRole(container, 'progressbar')).toBeInTheDocument();
   });
 
-  it('should open preview when clicking on Preview', () => {
-    const { getByText } = setupButtons({ link: 'https://example.com' });
-    const previewButton = getByText('Preview');
+  it('should open preview when clicking on Preview via about:blank', () => {
+    const { getByText, saveStory } = setupButtons({
+      link: 'https://example.com',
+    });
+    const previewButton = getByText('Save & Preview');
 
     expect(previewButton).toBeDefined();
+
+    saveStory.mockImplementation(() => ({
+      then(callback) {
+        callback();
+      },
+    }));
 
     const mockedOpen = jest.fn();
     const originalWindow = { ...window };
@@ -119,11 +127,23 @@ describe('buttons', () => {
       open: mockedOpen,
     }));
 
+    const popup = {
+      document: {
+        write: jest.fn(),
+      },
+      location: {
+        href: 'about:blank',
+        replace: jest.fn(),
+      },
+    };
+    mockedOpen.mockImplementation(() => popup);
+
     fireEvent.click(previewButton);
 
-    expect(mockedOpen).toHaveBeenCalledWith(
-      'https://example.com/?preview=true',
-      'story-preview'
+    expect(saveStory).toHaveBeenCalledWith();
+    expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
+    expect(popup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview=true'
     );
 
     windowSpy.mockRestore();
