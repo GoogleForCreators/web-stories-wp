@@ -109,7 +109,7 @@ describe('buttons', () => {
     const { getByText, saveStory } = setupButtons({
       link: 'https://example.com',
     });
-    const previewButton = getByText('Preview');
+    const previewButton = getByText('Save & Preview');
 
     expect(previewButton).toBeDefined();
 
