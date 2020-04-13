@@ -48,6 +48,8 @@ import {
   StoryGridView,
 } from '../shared';
 
+// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
+
 const FilterContainer = styled.fieldset`
   padding: 0 20px 20px 0;
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
@@ -55,7 +57,6 @@ const FilterContainer = styled.fieldset`
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    /* TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated */
     & > label span {
         border-radius: 0;
         box-shadow: none !important;
