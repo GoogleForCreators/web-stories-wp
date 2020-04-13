@@ -82,7 +82,7 @@ function EditLayerForElement({ element }) {
       ref={ref}
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
-      onClick={(evt) => {
+      onPointerDown={(evt) => {
         if (evt.target === ref.current || evt.target === pageAreaRef.current) {
           clearEditing();
         }

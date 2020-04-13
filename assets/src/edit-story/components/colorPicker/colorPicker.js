@@ -107,7 +107,7 @@ function ColorPicker({
 
   // Detect focus out of color picker (clicks or focuses outside)
   const containerRef = useRef();
-  useFocusOut(containerRef, onClose);
+  useFocusOut(containerRef, onClose, [], 'pointerdown');
 
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
