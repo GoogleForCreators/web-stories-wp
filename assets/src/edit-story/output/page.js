@@ -25,7 +25,6 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
-import { LinkType } from '../components/link';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
@@ -33,18 +32,6 @@ const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, elements, backgroundElementId, backgroundOverlay } = page;
-  // Aspect-ratio constraints.
-  const aspectRatioStyles = {
-    margin: 'auto',
-    width: `calc(100 * var(--story-page-vw))`, // 100vw
-    height: `calc(100 * ${PAGE_HEIGHT / PAGE_WIDTH} * var(--story-page-vw))`, // W/H * 100vw
-    maxHeight: `calc(100 * var(--story-page-vh))`, // 100vh
-    maxWidth: `calc(100 * ${PAGE_WIDTH / PAGE_HEIGHT} * var(--story-page-vh))`, // H/W * 100vh
-    // todo@: this expression uses CSS `min()`, which is still very sparsely supported.
-    fontSize: `calc(100 * min(var(--story-page-vh), var(--story-page-vw) * ${
-      PAGE_HEIGHT / PAGE_WIDTH
-    }))`,
-  };
   const backgroundStyles = {
     backgroundColor: 'white',
     backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
@@ -66,14 +53,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       element.isFullbleedBackground !== false
   );
   const regularElements = elements.filter(
-    (element) =>
-      element.id !== backgroundElementId &&
-      element.link?.type !== LinkType.ONE_TAP
-  );
-  const ctaElements = elements.filter(
-    (element) =>
-      element.id !== backgroundElementId &&
-      element.link?.type === LinkType.ONE_TAP
+    (element) => element.id !== backgroundElementId
   );
   const longestMediaElement = getLongestMediaElement(elements);
 
@@ -122,18 +102,6 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           ))}
         </div>
       </amp-story-grid-layer>
-
-      {ctaElements.length > 0 && (
-        <amp-story-cta-layer>
-          <div className="page-cta-area">
-            <div className="page-safe-area" style={aspectRatioStyles}>
-              {ctaElements.map((element) => (
-                <OutputElement key={'el-' + element.id} element={element} />
-              ))}
-            </div>
-          </div>
-        </amp-story-cta-layer>
-      )}
     </amp-story-page>
   );
 }

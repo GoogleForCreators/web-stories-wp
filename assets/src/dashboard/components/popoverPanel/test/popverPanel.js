@@ -26,37 +26,65 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import PopoverPanel from '../';
 
+const categoryDemoData = [
+  {
+    label: <span>{'All Categories'}</span>,
+    value: 'all',
+    selected: true,
+  },
+  { label: 'Arts and Crafts', value: 'arts_crafts' },
+  { label: 'Beauty', value: 'beauty' },
+  { label: 'Cooking', value: 'cooking' },
+  { label: 'News', value: 'news' },
+  { label: 'Sports', value: 'sports' },
+  { label: 'News', value: 'news' },
+];
+
 const wrapper = (children) => {
   return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 };
 
 describe('CardGrid', () => {
   it('should render children when open', () => {
-    const { getAllByTestId } = wrapper(
-      <PopoverPanel isOpen onClose={() => {}} title={'Sample Popover'}>
-        <div data-testid={'test-child'}>{'Popover Content'}</div>
-      </PopoverPanel>
+    const { getByTestId } = wrapper(
+      <PopoverPanel
+        isOpen
+        onClose={() => {}}
+        title={'Sample Popover'}
+        items={categoryDemoData}
+        onSelect={() => {}}
+      />
     );
 
-    expect(getAllByTestId('test-child')).toHaveLength(1);
+    expect(getByTestId('pill-fieldset').children).toHaveLength(
+      categoryDemoData.length
+    );
   });
 
   it('should not render children when open', () => {
     const { queryByTestId } = wrapper(
-      <PopoverPanel isOpen={false} onClose={() => {}} title={'Sample Popover'}>
-        <div data-testid={'test-child'}>{'Popover Content'}</div>
-      </PopoverPanel>
+      <PopoverPanel
+        isOpen={false}
+        onClose={() => {}}
+        title={'Sample Popover'}
+        items={categoryDemoData}
+        onSelect={() => {}}
+      />
     );
 
-    expect(queryByTestId('test-child')).toBeNull();
+    expect(queryByTestId('pill-fieldset')).toBeNull();
   });
 
   it('calls the close function when the x icon is pressed', () => {
     const closeFn = jest.fn();
     const { getByTestId } = wrapper(
-      <PopoverPanel isOpen onClose={closeFn} title={'Sample Popover'}>
-        <div data-testid={'test-child'}>{'Popover Content'}</div>
-      </PopoverPanel>
+      <PopoverPanel
+        isOpen
+        onClose={closeFn}
+        title={'Sample Popover'}
+        items={categoryDemoData}
+        onSelect={() => {}}
+      />
     );
 
     const closeButton = getByTestId('popover-close-btn');

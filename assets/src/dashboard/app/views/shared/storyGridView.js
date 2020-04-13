@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -33,6 +33,7 @@ import {
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
+import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -54,6 +55,19 @@ const StoryGridView = ({
   bottomActionLabel,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
+
+  const handleMenuItemSelected = useCallback((sender, story) => {
+    setContextMenuId(-1);
+    switch (sender.value) {
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+        window.location.href = story.bottomTargetAction;
+        break;
+
+      default:
+        break;
+    }
+  }, []);
+
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
@@ -78,7 +92,7 @@ const StoryGridView = ({
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}
               contextMenuId={contextMenuId}
-              onMenuItemSelected={() => setContextMenuId(-1)}
+              onMenuItemSelected={handleMenuItemSelected}
               story={story}
             />
           </DetailRow>

@@ -38,6 +38,13 @@ export const ApiContext = createContext({ state: {}, actions: {} });
 
 export function reshapeStoryObject(editStoryURL) {
   return function ({ id, title, modified, status, story_data: storyData }) {
+    if (
+      !Array.isArray(storyData.pages) ||
+      !id ||
+      storyData.pages.length === 0
+    ) {
+      return null;
+    }
     return {
       id,
       status,
@@ -85,9 +92,9 @@ export default function ApiProvider({ children }) {
         const serverStoryResponse = await apiFetch({
           path,
         });
-        const reshapedStories = serverStoryResponse.map(
-          reshapeStoryObject(editStoryURL)
-        );
+        const reshapedStories = serverStoryResponse
+          .map(reshapeStoryObject(editStoryURL))
+          .filter(Boolean);
         setStories(reshapedStories);
         return reshapedStories;
       } catch (err) {

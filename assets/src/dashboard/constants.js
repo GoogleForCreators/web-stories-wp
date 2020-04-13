@@ -82,6 +82,15 @@ export const VIEW_STYLE = {
 
 export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
 
+export const STORY_CONTEXT_MENU_ACTIONS = {
+  OPEN_IN_EDITOR: 'open-in-editor-action',
+  PREVIEW: 'preview-action',
+  RENAME: 'rename-action',
+  DUPLICATE: 'duplicate-action',
+  CREATE_TEMPLATE: 'create-template-action',
+  DELETE: 'delete-story-action',
+};
+
 export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),

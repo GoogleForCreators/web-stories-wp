@@ -38,7 +38,7 @@ const LayerWithGrayout = styled(Layer)`
 `;
 
 const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container',
+  className: 'container web-stories-content',
 })`
   position: relative;
   width: 100%;
