@@ -64,7 +64,6 @@ const PillLabel = styled.span`
 
   ${PillInput}:checked + & {
     background-color: ${({ theme }) => theme.colors.blueLight};
-    border-color: ${({ theme }) => theme.colors.action};
     color: ${({ theme }) => theme.colors.bluePrimary};
     border: 1px solid transparent;
   }
@@ -86,6 +85,7 @@ const FloatingTabLabel = styled(PillLabel)`
 
   ${PillInput}:checked + & {
     box-shadow: ${({ theme }) => theme.floatingTab.shadow};
+    background-color: transparent;
   }
 `;
 
