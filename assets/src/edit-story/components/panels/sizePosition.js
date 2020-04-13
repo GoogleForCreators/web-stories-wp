@@ -104,6 +104,18 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const getUpdateObject = (nWidth, nHeight) =>
+    rawLockAspectRatio === MULTIPLE_VALUE
+      ? {
+          lockAspectRatio,
+          height: nHeight,
+          width: nWidth,
+        }
+      : {
+          height: nHeight,
+          width: nWidth,
+        };
+
   // Recalculate width/height if ratio locked.
   usePresubmitHandler(
     (
@@ -186,10 +198,7 @@ function SizePositionPanel({
                 newHeight = dataPixels(newWidth / origRatio);
               }
             }
-            pushUpdate({
-              width: newWidth,
-              height: newHeight,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
         />
@@ -215,10 +224,7 @@ function SizePositionPanel({
                 newWidth = dataPixels(newHeight * origRatio);
               }
             }
-            pushUpdate({
-              height: newHeight,
-              width: newWidth,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
         />

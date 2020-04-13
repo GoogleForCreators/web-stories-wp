@@ -32,9 +32,9 @@ import { __, _x } from '@wordpress/i18n';
 import { Label, Numeric, Row, Toggle, MULTIPLE_VALUE } from '../../form';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
-import { useCommonObjectValue, getCommonValue } from '../utils';
+import { useCommonObjectValue } from '../utils';
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };
+const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -45,18 +45,14 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function PaddingControls({
-  selectedElements,
-  pushUpdateForObject,
-  pushUpdate,
-}) {
+function PaddingControls({ selectedElements, pushUpdateForObject }) {
   const padding = useCommonObjectValue(
     selectedElements,
     'padding',
     DEFAULT_PADDING
   );
-  const rawLockPadding = getCommonValue(selectedElements, 'lockPadding');
-  const lockPadding = rawLockPadding === MULTIPLE_VALUE ? true : rawLockPadding;
+
+  const lockPadding = padding.locked === MULTIPLE_VALUE ? true : padding.locked;
 
   const handleChange = useCallback(
     (newPadding) => {
@@ -70,10 +66,12 @@ function PaddingControls({
           horizontal: commonPadding,
           vertical: commonPadding,
         };
+
+        if (padding.locked === MULTIPLE_VALUE) update.locked = lockPadding;
       }
       pushUpdateForObject('padding', update, DEFAULT_PADDING);
     },
-    [pushUpdateForObject, lockPadding]
+    [pushUpdateForObject, lockPadding, padding]
   );
 
   return (
@@ -91,7 +89,13 @@ function PaddingControls({
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={lockPadding}
-        onChange={() => pushUpdate({ lockPadding: !lockPadding })}
+        onChange={() =>
+          pushUpdateForObject(
+            'padding',
+            { locked: !lockPadding },
+            DEFAULT_PADDING
+          )
+        }
       />
       <Space />
       <BoxedNumeric
@@ -107,7 +111,6 @@ function PaddingControls({
 PaddingControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default PaddingControls;

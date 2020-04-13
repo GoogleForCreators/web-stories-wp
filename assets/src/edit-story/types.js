@@ -206,10 +206,10 @@ StoryPropTypes.elements.text = PropTypes.shape({
   padding: PropTypes.shape({
     horizontal: PropTypes.number,
     vertical: PropTypes.number,
+    locked: PropTypes.bool,
   }),
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
-  lockPadding: PropTypes.bool,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
