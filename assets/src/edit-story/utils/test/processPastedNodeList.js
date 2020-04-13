@@ -38,7 +38,7 @@ describe('processPastedNodeList', () => {
       '<p><strong>Hello</strong> <u>World</u><em>!</em></p>'
     );
     expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-      '<strong>Hello<strong/> <u>World<u/><em>!<em/>'
+      '<strong>Hello</strong> <u>World</u><em>!</em>'
     );
   });
 
@@ -47,7 +47,7 @@ describe('processPastedNodeList', () => {
       '<p><strong class="foo">Hello</strong> <u style="font-size:36px">World</u><em data-bar="foo-bar">!</em></p>'
     );
     expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-      '<strong>Hello<strong/> <u>World<u/><em>!<em/>'
+      '<strong>Hello</strong> <u>World</u><em>!</em>'
     );
   });
 
@@ -61,5 +61,19 @@ describe('processPastedNodeList', () => {
   it('should add line break between paragraphs', () => {
     const nodeList = getNodeList('<p>Hello</p><p>World</p>');
     expect(processPastedNodeList(nodeList, '')).toStrictEqual('Hello\nWorld');
+  });
+
+  it('should handle nested tags properly', () => {
+    const nodeList = getNodeList('<strong>Hello <em>World</em>!</strong>');
+    expect(processPastedNodeList(nodeList, '')).toStrictEqual(
+      '<strong>Hello <em>World</em>!</strong>'
+    );
+  });
+
+  it('should convert `b` and `i` tags to `strong` and `em` respectively', () => {
+    const nodeList = getNodeList('<b>Hello <i>World</i>!</b>');
+    expect(processPastedNodeList(nodeList, '')).toStrictEqual(
+      '<strong>Hello <em>World</em>!</strong>'
+    );
   });
 });

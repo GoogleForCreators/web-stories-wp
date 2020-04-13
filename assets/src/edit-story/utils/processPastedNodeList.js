@@ -20,27 +20,30 @@
 import escapeHTML from './escapeHTML';
 
 const ALLOWED_CONTENT_NODES = ['strong', 'em', 'u'];
-
-function processNodeContent(node) {
-  const tag = node.parentNode?.tagName?.toLowerCase();
-  const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
-  const content = escapeHTML(node.textContent);
-  if (stripTags) {
-    return content;
-  }
-  return `<${tag}>${content}<${tag}/>`;
-}
+const TAG_REPLACEMENTS = {
+  b: 'strong',
+  i: 'em',
+};
 
 export default function processPastedNodeList(nodeList, content) {
   for (let i = 0; i < nodeList.length; i++) {
     const n = nodeList[i];
+    let tag = n.tagName?.toLowerCase();
+    tag = TAG_REPLACEMENTS[tag] ? TAG_REPLACEMENTS[tag] : tag;
+    const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
+    if (!stripTags) {
+      content += `<${tag}>`;
+    }
     if (n.childNodes.length > 0) {
-      if ('p' === n.tagName.toLowerCase() && content.trim().length) {
+      if ('p' === tag && content.trim().length) {
         content += '\n';
       }
       content = processPastedNodeList(n.childNodes, content);
     } else {
-      content += processNodeContent(n);
+      content += escapeHTML(n.textContent);
+    }
+    if (!stripTags) {
+      content += `</${tag}>`;
     }
   }
   return content;
