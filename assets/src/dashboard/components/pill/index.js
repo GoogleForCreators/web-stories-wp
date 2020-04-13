@@ -62,8 +62,7 @@ const PillLabel = styled.span`
   border: ${({ theme }) => `1px solid ${theme.colors.gray50}`};
   border-radius: ${({ theme }) => theme.border.buttonRadius};
 
-  ${PillInput}:checked + &,
-  ${PillInput}:enabled:hover + & {
+  ${PillInput}:checked + & {
     background-color: ${({ theme }) => theme.colors.blueLight};
     border-color: ${({ theme }) => theme.colors.action};
     color: ${({ theme }) => theme.colors.bluePrimary};
