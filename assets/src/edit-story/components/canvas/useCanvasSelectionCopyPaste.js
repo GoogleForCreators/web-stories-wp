@@ -33,6 +33,7 @@ import { useStory } from '../../app';
 import { useUploader } from '../../app/uploader';
 import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
+import processPastedNodeList from '../../utils/processPastedNodeList';
 import { getDefinitionForType } from '../../elements';
 import useInsertElement from './useInsertElement';
 
@@ -112,11 +113,9 @@ function useCanvasSelectionCopyPaste(container) {
   );
 
   const elementPasteHandler = useCallback(
-    (html) => {
-      const template = document.createElement('template');
-      template.innerHTML = html;
+    (content) => {
       let foundElements = false;
-      for (let n = template.content.firstChild; n; n = n.nextSibling) {
+      for (let n = content.firstChild; n; n = n.nextSibling) {
         if (n.nodeType !== /* COMMENT */ 8) {
           continue;
         }
@@ -149,54 +148,20 @@ function useCanvasSelectionCopyPaste(container) {
     [addElement, currentPage]
   );
 
-  // @todo Split up this part to make the file smaller/more manageable.
-  const allowedContentNodes = ['strong', 'em', 'u'];
-
-  const processNodeContent = useCallback(
-    (node) => {
-      const tag = node.parentNode?.tagName?.toLowerCase();
-      const stripTags = !allowedContentNodes.includes(tag);
-      if (stripTags) {
-        return node.textContent.trim();
-      }
-      return `<${tag}>${node.textContent.trim()}<${tag}/>`;
-    },
-    [allowedContentNodes]
-  );
-
-  const processNodeList = useCallback(
-    (nodeList, content) => {
-      for (let i = 0; i < nodeList.length; i++) {
-        const n = nodeList[i];
-        if (n.childNodes.length > 0) {
-          if ('p' === n.tagName.toLowerCase() && content.trim().length) {
-            content += '\n';
-          }
-          content = processNodeList(n.childNodes, content);
-        } else {
-          content += processNodeContent(n, content);
-        }
-      }
-      return content;
-    },
-    [processNodeContent]
-  );
-
   const rawPasteHandler = useCallback(
-    (html) => {
+    (content) => {
       let foundContent = false;
-      const template = document.createElement('template');
       // Remove meta tag.
-      template.innerHTML = html.replace(/<meta[^>]+>/g, '');
+      content = content.replace(/<meta[^>]+>/g, '');
       // @todo Images.
-      const copiedContent = processNodeList(template.content.childNodes, '');
+      const copiedContent = processPastedNodeList(content.childNodes, '');
       if (copiedContent.trim().length) {
         insertElement('text', { content: copiedContent });
         foundContent = true;
       }
       return foundContent;
     },
-    [insertElement, processNodeList]
+    [insertElement]
   );
 
   // @todo This should be in global handler by UX, not just Canvas.
@@ -207,9 +172,11 @@ function useCanvasSelectionCopyPaste(container) {
       try {
         const html = clipboardData.getData('text/html');
         if (html) {
-          let addedElements = elementPasteHandler(html);
+          const template = document.createElement('template');
+          template.innerHTML = html;
+          let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
-            addedElements = rawPasteHandler(html);
+            addedElements = rawPasteHandler(template.content);
           }
           if (addedElements) {
             // @todo Should we always prevent default?
