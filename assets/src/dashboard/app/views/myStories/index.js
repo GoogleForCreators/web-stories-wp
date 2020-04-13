@@ -87,8 +87,8 @@ function MyStories() {
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
+    fetchStories({ status, searchTerm: typeaheadValue });
+  }, [fetchStories, status, typeaheadValue]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {

@@ -145,7 +145,7 @@ function reducer(state, { type, payload }) {
     }
 
     case types.UPDATE_MEDIA_ELEMENT: {
-      const { id, posterId, poster } = payload;
+      const { id, ...properties } = payload;
 
       const mediaIndex = state.media.findIndex((media) => media.id === id);
       if (mediaIndex === -1) {
@@ -154,8 +154,7 @@ function reducer(state, { type, payload }) {
 
       const updatedVideo = {
         ...state.media[mediaIndex],
-        posterId,
-        poster,
+        ...properties,
       };
 
       const newMedia = [

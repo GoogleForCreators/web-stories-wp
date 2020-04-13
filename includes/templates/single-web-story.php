@@ -28,10 +28,10 @@ use Google\Web_Stories\Story_Renderer;
 
 the_post();
 
-$post = get_post();
+$post = get_post(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 if ( $post instanceof WP_Post ) {
 	echo '<!DOCTYPE html>';
 	$renderer = new Story_Renderer( $post );
-	echo $renderer->render();
+	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
