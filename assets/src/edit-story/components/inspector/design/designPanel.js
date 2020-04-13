@@ -146,10 +146,12 @@ function DesignPanel({
       pushUpdate((prevUpdatedElement) => {
         const prevObject = prevUpdatedElement[propertyName] || defaultObject;
         return {
-          [propertyName]: {
-            ...prevObject,
-            ...updateProperties(prevObject, update, false),
-          },
+          [propertyName]: update
+            ? {
+                ...prevObject,
+                ...updateProperties(prevObject, update, false),
+              }
+            : null,
         };
       }, submitArg);
     },

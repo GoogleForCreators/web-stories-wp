@@ -24,11 +24,11 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import PopoverMenu from '../popover-menu';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
 import { ReactComponent as MoreVerticalSvg } from '../../icons/moreVertical.svg';
 import useFocusOut from '../../utils/useFocusOut';
+import PopoverMenu from '../popoverMenu';
 
 export const MoreVerticalButton = styled.button`
   border: none;
@@ -46,10 +46,10 @@ MoreVerticalButton.propTypes = {
 
 const MenuContainer = styled.div`
   position: relative;
-  align-self: flex-end;
-  margin-top: 12px;
+  align-self: flex-start;
   text-align: right;
   flex-grow: 1;
+  margin-top: 12px;
 
   .grid-story-popover-menu {
     right: 0;
@@ -84,7 +84,7 @@ export default function CardItemMenu({
         className="grid-story-popover-menu"
         isOpen={contextMenuId === story.id}
         framelessButton
-        onSelect={onMenuItemSelected}
+        onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
         items={STORY_CONTEXT_MENU_ITEMS}
       />
     </MenuContainer>

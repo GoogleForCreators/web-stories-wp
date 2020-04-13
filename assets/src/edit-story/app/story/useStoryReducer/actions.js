@@ -86,6 +86,12 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
     payload: { elementIds: null, properties },
   });
 
+const combineElements = (dispatch) => ({ firstId, secondId }) =>
+  dispatch({
+    type: types.COMBINE_ELEMENTS,
+    payload: { firstId, secondId },
+  });
+
 const setBackgroundElement = (dispatch) => ({ elementId }) =>
   dispatch({ type: types.SET_BACKGROUND_ELEMENT, payload: { elementId } });
 
@@ -140,6 +146,7 @@ export const exposedActions = {
   updateElementsByResourceId,
   updateElementById,
   updateSelectedElements,
+  combineElements,
   setBackgroundElement,
   clearBackgroundElement,
   arrangeElement,

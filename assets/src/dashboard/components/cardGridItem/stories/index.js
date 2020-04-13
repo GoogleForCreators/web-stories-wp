@@ -42,14 +42,28 @@ const Container = styled.div`
   width: 250px;
 `;
 
+const Card = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  padding: 20px;
+  background-color: orange;
+`;
+
 export const _default = () => {
   return (
     <CardGridItem>
       <CardPreviewContainer
-        editUrl={'https://www.google.com'}
-        onPreviewClick={() => {}}
+        bottomAction={{
+          targetAction: 'https://www.google.com',
+          label: 'Open in Editor',
+        }}
+        centerAction={{
+          targetAction: '',
+          label: 'Preview',
+        }}
       >
-        <div> {text('Sample Story Content', 'Sample Story')}</div>
+        <Card>{text('Sample Story Content', 'Sample Story')}</Card>
       </CardPreviewContainer>
       <CardTitle title="Story Title" modifiedDate="12 days" />
     </CardGridItem>
@@ -62,21 +76,27 @@ export const _contextMenu = () => {
     <Container>
       <CardGridItem>
         <CardPreviewContainer
-          editUrl={'https://www.google.com'}
-          onPreviewClick={() => {}}
+          bottomAction={{
+            targetAction: 'https://www.google.com',
+            label: 'Open in Editor',
+          }}
+          centerAction={{
+            targetAction: '',
+            label: 'Preview',
+          }}
         >
-          <div> {text('Sample Story Content', 'Sample Story')}</div>
+          <Card>{text('Sample Story Content', 'Sample Story')}</Card>
         </CardPreviewContainer>
         <DetailRow>
           <CardTitle title="Story Title" modifiedDate="12 days" />
           <CardItemMenu
             onMoreButtonSelected={setContextMenuId}
             contextMenuId={contextMenuId}
-            onMenuItemSelected={(item) => {
-              actions('onClick', item.label);
+            onMenuItemSelected={(item, story) => {
+              actions('onClick ', item.label, story.id);
               setContextMenuId(-1);
             }}
-            story={{ id: 1, status: 'published', title: 'Sample Story' }}
+            story={{ id: 1, status: 'publish', title: 'Sample Story' }}
           />
         </DetailRow>
       </CardGridItem>

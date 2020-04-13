@@ -17,15 +17,9 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useDropZone() {
-  return useContext(Context);
-}
-
-export default useDropZone;
+export const ActionLabel = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.node,
+]);

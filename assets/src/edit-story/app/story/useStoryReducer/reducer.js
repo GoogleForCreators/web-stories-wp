@@ -58,6 +58,10 @@ function reducer(state, { type, payload }) {
       return reducers.updateElementsByResourceId(state, payload);
     }
 
+    case types.COMBINE_ELEMENTS: {
+      return reducers.combineElements(state, payload);
+    }
+
     case types.SET_BACKGROUND_ELEMENT: {
       return reducers.setBackgroundElement(state, payload);
     }

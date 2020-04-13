@@ -17,21 +17,23 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import {
-  StoryGrid,
+  CardGrid,
   CardGridItem,
   CardTitle,
   CardItemMenu,
   CardPreviewContainer,
+  ActionLabel,
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
+import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -39,15 +41,46 @@ export const DetailRow = styled.div`
   justify-content: space-between;
 `;
 
-const StoryGridView = ({ filteredStories }) => {
+const StoryGrid = styled(CardGrid)`
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+  }
+`;
+
+const StoryGridView = ({
+  filteredStories,
+  centerActionLabel,
+  bottomActionLabel,
+}) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
+
+  const handleMenuItemSelected = useCallback((sender, story) => {
+    setContextMenuId(-1);
+    switch (sender.value) {
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+        window.location.href = story.bottomTargetAction;
+        break;
+
+      default:
+        break;
+    }
+  }, []);
+
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
         <CardGridItem key={story.id}>
           <CardPreviewContainer
-            editUrl={story.editStoryUrl}
-            onPreviewClick={() => {}}
+            centerAction={{
+              targetAction: story.centerTargetAction,
+              label: centerActionLabel,
+            }}
+            bottomAction={{
+              targetAction: story.bottomTargetAction,
+              label: bottomActionLabel,
+            }}
           >
             <PreviewPage page={story.pages[0]} />
           </CardPreviewContainer>
@@ -59,7 +92,7 @@ const StoryGridView = ({ filteredStories }) => {
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}
               contextMenuId={contextMenuId}
-              onMenuItemSelected={() => setContextMenuId(-1)}
+              onMenuItemSelected={handleMenuItemSelected}
               story={story}
             />
           </DetailRow>
@@ -71,6 +104,8 @@ const StoryGridView = ({ filteredStories }) => {
 
 StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
+  centerActionLabel: ActionLabel,
+  bottomActionLabel: ActionLabel,
 };
 
 export default StoryGridView;

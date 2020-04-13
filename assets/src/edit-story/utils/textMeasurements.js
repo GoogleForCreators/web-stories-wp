@@ -35,6 +35,7 @@ const MEASURER_STYLES = {
   zIndex: -1,
   ...(false && {
     // For debugging purposes - this will show the output render on screen
+    background: 'red',
     visibility: 'visible',
     top: '99px',
     left: '99px',
@@ -82,6 +83,7 @@ function getOrCreateMeasurer(element) {
   if (!measurerNode) {
     measurerNode = document.createElement('div');
     measurerNode.id = '__web-stories-text-measurer';
+    measurerNode.className = 'web-stories-content';
     setStyles(measurerNode, MEASURER_STYLES);
     document.body.appendChild(measurerNode);
   }
