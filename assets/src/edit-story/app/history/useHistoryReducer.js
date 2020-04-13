@@ -59,10 +59,8 @@ const reducer = (size) => (state, { type, payload }) => {
               // Ensure we stay on the changed page by overriding the previously saved current page.
               const current = changedPage[0].id;
               const replayState = { ...state.replayState, current };
-              const entries = state.entries;
-              Object.assign([], entries, { [offset]: replayState });
               return {
-                entries,
+                ...state,
                 offset,
                 replayState,
               };
