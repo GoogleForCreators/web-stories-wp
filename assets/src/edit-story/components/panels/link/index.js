@@ -38,7 +38,6 @@ import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import { useCanvas } from '../../canvas';
 import { ReactComponent as Close } from '../../../icons/close_icon.svg';
 
 const IconText = styled.span`
@@ -67,10 +66,6 @@ const CloseIcon = styled(Close)`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
-
   const selectedElement = selectedElements[0];
   const { isFill } = selectedElement;
   const defaultLink = useMemo(
@@ -128,8 +123,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChange = useCallback(
     (properties, submit) => {
-      clearEditing();
-
       if (properties.url) {
         populateMetadata(properties.url);
       }
@@ -144,7 +137,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         submit
       );
     },
-    [clearEditing, pushUpdateForObject, defaultLink, populateMetadata]
+    [pushUpdateForObject, defaultLink, populateMetadata]
   );
 
   const handleChangeIcon = useCallback(
