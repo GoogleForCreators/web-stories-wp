@@ -81,4 +81,7 @@ describe('reducer', () => {
       expect(result.offset).toStrictEqual(0);
     });
   });
+  // @todo CLEAR_HISTORY
+  // @todo CLEAR_REPLAY_STATE
+  // @todo REPLAY
 });
