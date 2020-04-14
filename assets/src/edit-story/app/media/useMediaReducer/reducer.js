@@ -79,7 +79,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
-      if (searchTerm === state.searchTerm) return state;
+      if (searchTerm === state.searchTerm) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         processing: [...state.processing],
@@ -91,7 +93,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_MEDIA_TYPE: {
       const { mediaType } = payload;
-      if (mediaType === state.mediaType) return state;
+      if (mediaType === state.mediaType) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
@@ -119,43 +123,42 @@ function reducer(state, { type, payload }) {
     }
 
     case types.ADD_PROCESSING: {
-      const { videoId } = payload;
-      if (!videoId || state.processing.includes(videoId)) {
+      const { id } = payload;
+      if (!id || state.processing.includes(id)) {
         return state;
       }
       return {
         ...state,
-        processing: [...state.processing, videoId],
+        processing: [...state.processing, id],
       };
     }
 
     case types.REMOVE_PROCESSING: {
-      const { videoId } = payload;
-      if (!videoId || !state.processing.includes(videoId)) {
+      const { id } = payload;
+      if (!id || !state.processing.includes(id)) {
         return state;
       }
       const currentProcessing = [...state.processing];
-      const processing = currentProcessing.filter((e) => e !== videoId);
+      const processing = currentProcessing.filter((e) => e !== id);
 
       return {
         ...state,
         processing,
-        processed: [...state.processed, videoId],
+        processed: [...state.processed, id],
       };
     }
 
     case types.UPDATE_MEDIA_ELEMENT: {
-      const { videoId, posterId, poster } = payload;
+      const { id, ...properties } = payload;
 
-      const mediaIndex = state.media.findIndex(({ id }) => id === videoId);
+      const mediaIndex = state.media.findIndex((media) => media.id === id);
       if (mediaIndex === -1) {
         return state;
       }
 
       const updatedVideo = {
         ...state.media[mediaIndex],
-        posterId,
-        poster,
+        ...properties,
       };
 
       const newMedia = [

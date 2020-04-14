@@ -37,12 +37,11 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 10px 0 0 5px;
 `;
 
 const ToggleButton = styled.button`
   border: none;
-  padding: 15px;
+  padding: 15px 15px 15px 0;
   background: transparent;
 
   &:hover svg {
@@ -73,7 +72,6 @@ const Label = styled.span`
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   color: ${({ theme }) => theme.colors.gray500};
-  margin-left: 20px;
 `;
 
 export default function ViewStyleBar({ onPress, label, layoutStyle }) {

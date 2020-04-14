@@ -58,8 +58,8 @@ export const _default = () => {
           position: 'absolute',
           top: '50px',
           left: '100px',
-          ...getInitialStyleFromKeyframes(keyframes),
         }}
+        animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
         <div
           style={{ width: '100%', height: '100%', backgroundColor: 'orange' }}
@@ -114,8 +114,8 @@ export const Repeater = () => {
             top: '150px',
             left: '100px',
             zIndex: 10 - index,
-            ...getInitialStyleFromKeyframes(keyframes),
           }}
+          animationStyle={getInitialStyleFromKeyframes(keyframes)}
         >
           <div
             style={{ width: '100%', height: '100%', backgroundColor: color }}

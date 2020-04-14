@@ -17,10 +17,12 @@
 export const ANIMATION_TYPES = {
   BLINK_ON: 'blinkOn',
   BOUNCE: 'bounce',
+  FADE: 'fade',
   FLIP: 'flip',
   FLOAT_ON: 'floatOn',
   MOVE: 'move',
   SPIN: 'spin',
+  ZOOM: 'zoom',
 };
 
 export const ROTATION = {

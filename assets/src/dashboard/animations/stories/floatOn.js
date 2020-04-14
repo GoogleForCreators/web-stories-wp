@@ -59,8 +59,8 @@ const FloatOn = ({ direction }) => {
           top: '50px',
           left: '100px',
           width: '200px',
-          ...getInitialStyleFromKeyframes(keyframes),
         }}
+        animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
         <div>{text}</div>
       </WithAnimation>

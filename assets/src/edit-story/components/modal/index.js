@@ -65,6 +65,7 @@ function Modal({
     <ReactModal
       {...props}
       style={{
+        maxHeight: '100vh',
         ...style,
         overlay: {
           position: 'fixed',
@@ -84,7 +85,7 @@ function Modal({
           overflow: 'auto',
           outline: 'none',
           display: 'flex',
-          alignItems: 'center',
+          maxHeight: '100%',
           justifyContent: 'center',
           ...style?.content,
           ...contentStyles,

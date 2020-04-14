@@ -31,40 +31,88 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { STORY_STATUSES } from '../../constants';
+import {
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+  ORDER_BY_SORT,
+} from '../../constants';
+import getAllTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export function reshapeStoryObject(editStoryURL) {
   return function ({ id, title, modified, status, story_data: storyData }) {
+    if (
+      !Array.isArray(storyData.pages) ||
+      !id ||
+      storyData.pages.length === 0
+    ) {
+      return null;
+    }
     return {
       id,
       status,
       title: title.rendered,
       modified: moment(modified),
       pages: storyData.pages,
-      editStoryUrl: `${editStoryURL}&post=${id}`,
+      centerTargetAction: '',
+      bottomTargetAction: `${editStoryURL}&post=${id}`,
     };
   };
 }
 
+export function reshapeTemplateObject({ id, title, pages }) {
+  return {
+    id,
+    title,
+    status: 'template',
+    modified: moment('2020-04-07'),
+    pages,
+    centerTargetAction: '',
+    bottomTargetAction: () => {},
+  };
+}
+
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL } = useConfig();
+  const { api, editStoryURL, pluginDir } = useConfig();
   const [stories, setStories] = useState([]);
 
+  const templates = useMemo(
+    () => getAllTemplates({ pluginDir }).map(reshapeTemplateObject),
+    [pluginDir]
+  );
+
   const fetchStories = useCallback(
-    async ({ status = STORY_STATUSES[0].value }) => {
+    async ({
+      status = STORY_STATUSES[0].value,
+      orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      searchTerm,
+    }) => {
+      if (!api.stories) {
+        return [];
+      }
+      const perPage = '100'; // TODO set up pagination
+      const query = {
+        status,
+        context: 'edit',
+        search: searchTerm || undefined,
+        orderby,
+        per_page: perPage,
+        order: ORDER_BY_SORT[orderby],
+      };
+
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
-          query: { status, context: 'edit' },
+          query,
         });
+
         const serverStoryResponse = await apiFetch({
           path,
         });
-        const reshapedStories = serverStoryResponse.map(
-          reshapeStoryObject(editStoryURL)
-        );
+        const reshapedStories = serverStoryResponse
+          .map(reshapeStoryObject(editStoryURL))
+          .filter(Boolean);
         setStories(reshapedStories);
         return reshapedStories;
       } catch (err) {
@@ -75,6 +123,10 @@ export default function ApiProvider({ children }) {
   );
 
   const getAllFonts = useCallback(() => {
+    if (!api.fonts) {
+      return Promise.resolve([]);
+    }
+
     return apiFetch({ path: api.fonts }).then((data) =>
       data.map((font) => ({
         value: font.name,
@@ -85,10 +137,10 @@ export default function ApiProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      state: { stories },
+      state: { stories, templates },
       actions: { fetchStories, getAllFonts },
     }),
-    [stories, fetchStories, getAllFonts]
+    [stories, templates, fetchStories, getAllFonts]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -28,20 +28,38 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, ListBar } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { FloatingTab } from '../../../components';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+} from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import StoryGridView from './storyGridView';
-import PageHeading from './pageHeading';
-import NoResults from './noResults';
+import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import {
+  BodyWrapper,
+  BodyViewOptions,
+  PageHeading,
+  NoResults,
+  StoryGridView,
+} from '../shared';
 
 const FilterContainer = styled.div`
-  padding: 0 20px 20px;
+  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
+  padding-bottom: 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    & > label {
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 10px 0 0;
+    }
+  }
 `;
 
 const DefaultBodyText = styled.p`
@@ -54,10 +72,17 @@ const DefaultBodyText = styled.p`
   margin: 40px 20px;
 `;
 
+const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
+  margin-right: 9px;
+`;
+
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentStorySort, setCurrentStorySort] = useState(
+    STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
   const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
@@ -65,8 +90,12 @@ function MyStories() {
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
+    fetchStories({
+      orderby: currentStorySort,
+      searchTerm: typeaheadValue,
+      status,
+    });
+  }, [currentStorySort, fetchStories, status, typeaheadValue]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
@@ -100,14 +129,30 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {
       return (
-        <>
-          <ListBar
-            label={listBarLabel}
+        <BodyWrapper>
+          <BodyViewOptions
+            listBarLabel={listBarLabel}
             layoutStyle={viewStyle}
-            onPress={handleViewStyleBarButtonSelected}
+            handleLayoutSelect={handleViewStyleBarButtonSelected}
+            currentSort={currentStorySort}
+            handleSortChange={setCurrentStorySort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
           />
-          <StoryGridView filteredStories={filteredStories} />
-        </>
+
+          <StoryGridView
+            filteredStories={filteredStories}
+            centerActionLabel={
+              <>
+                <PlayArrowIcon />
+                {__('Preview', 'web-stories')}
+              </>
+            }
+            bottomActionLabel={__('Open in editor', 'web-stories')}
+          />
+        </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -125,6 +170,7 @@ function MyStories() {
     listBarLabel,
     typeaheadValue,
     viewStyle,
+    currentStorySort,
   ]);
 
   return (
@@ -133,6 +179,7 @@ function MyStories() {
         <UnitsProvider pageSize={pageSize}>
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
+            searchPlaceholder={__('Search Stories', 'web-stories')}
             filteredStories={filteredStories}
             handleTypeaheadChange={setTypeaheadValue}
             typeaheadValue={typeaheadValue}
@@ -150,6 +197,7 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
+
           {BodyContent}
         </UnitsProvider>
       </TransformProvider>

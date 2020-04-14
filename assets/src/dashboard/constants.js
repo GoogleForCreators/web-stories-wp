@@ -57,6 +57,7 @@ export const Z_INDEX = {
 };
 
 export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
+export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const paths = [
   { value: '/', label: __('My Stories', 'web-stories') },
@@ -80,3 +81,68 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
+
+export const STORY_CONTEXT_MENU_ACTIONS = {
+  OPEN_IN_EDITOR: 'open-in-editor-action',
+  PREVIEW: 'preview-action',
+  RENAME: 'rename-action',
+  DUPLICATE: 'duplicate-action',
+  CREATE_TEMPLATE: 'create-template-action',
+  DELETE: 'delete-story-action',
+};
+
+export const STORY_CONTEXT_MENU_ITEMS = [
+  {
+    label: __('Open in editor', 'web-stories'),
+    value: 'open-in-editor-action',
+  },
+  { label: __('Preview', 'web-stories'), value: 'preview-action' },
+  { label: null, value: false, separator: true },
+  { label: __('Rename', 'web-stories'), value: 'rename-action' },
+  { label: __('Duplicate', 'web-stories'), value: 'duplicate-action' },
+  {
+    label: __('Create Template', 'web-stories'),
+    value: 'create-template-action',
+  },
+  { label: null, value: false, separator: true },
+  { label: __('Delete Story', 'web-stories'), value: 'delete-story-action' },
+];
+
+export const STORY_SORT_OPTIONS = {
+  NAME: 'title',
+  DATE_CREATED: 'date',
+  LAST_MODIFIED: 'modified',
+  LAST_OPENED: 'modified',
+  CREATED_BY: 'author',
+};
+
+export const ORDER_BY_SORT = {
+  [STORY_SORT_OPTIONS.NAME]: 'asc',
+  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
+  [STORY_SORT_OPTIONS.CREATED_BY]: 'asc',
+};
+
+export const STORY_SORT_MENU_ITEMS = [
+  {
+    label: __('Name', 'web-stories'),
+    value: STORY_SORT_OPTIONS.NAME,
+  },
+  {
+    label: __('Date created', 'web-stories'),
+    value: STORY_SORT_OPTIONS.DATE_CREATED,
+  },
+  {
+    label: __('Last modified', 'web-stories'), // default
+    value: STORY_SORT_OPTIONS.LAST_MODIFIED,
+  },
+  {
+    label: __('Last opened', 'web-stories'),
+    value: STORY_SORT_OPTIONS.LAST_OPENED,
+  },
+  {
+    label: __('Created by', 'web-stories'), // owner first then alpha
+    value: STORY_SORT_OPTIONS.CREATED_BY,
+  },
+];

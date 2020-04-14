@@ -45,7 +45,7 @@ export const defaultAttributes = {
   resource: {
     posterId: null,
     poster: null,
-    videoId: 0,
+    id: 0,
     title: '',
   },
 };
