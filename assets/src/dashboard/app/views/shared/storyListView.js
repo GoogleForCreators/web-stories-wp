@@ -40,11 +40,14 @@ import {
 
 const PreviewContainer = styled.div`
   position: relative;
-  top: -17px;
+  width: 33px;
+  height: 50px;
+  vertical-align: middle;
+  display: inline-block;
 `;
 
 const Title = styled.span`
-  margin-left: 50px;
+  display: inline;
 `;
 
 export default function StoryListView({ filteredStories }) {
@@ -54,6 +57,7 @@ export default function StoryListView({ filteredStories }) {
         <TableHeader>
           <TableRow>
             <TableHeaderCell>{__('Title', 'web-stories')}</TableHeaderCell>
+            <TableHeaderCell />
             <TableHeaderCell>{__('Author', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
@@ -69,8 +73,8 @@ export default function StoryListView({ filteredStories }) {
                 <PreviewContainer>
                   <PreviewPage page={story.pages[0]} />
                 </PreviewContainer>
-                <Title>{story.title}</Title>
               </TableCell>
+              <TableCell>{story.title}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>

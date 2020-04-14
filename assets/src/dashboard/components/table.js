@@ -48,4 +48,5 @@ export const TableCell = styled.td`
   font-weight: ${({ theme }) => theme.fonts.table.weight};
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
+  vertical-align: middle;
 `;
