@@ -26,18 +26,13 @@ import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import {
-  draftMarkupToContent,
-  generateParagraphTextStyle,
-  getHighlightLineheight,
-} from './util';
+import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
  */
 export function TextOutputWithUnits({
   element: {
-    bold,
     content,
     color,
     backgroundColor,
@@ -146,7 +141,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </span>
@@ -156,7 +151,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </span>
@@ -169,7 +164,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }

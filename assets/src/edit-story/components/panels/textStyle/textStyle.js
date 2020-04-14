@@ -64,9 +64,12 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
-  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
   const bold = getCommonValue(selectedElements, 'bold');
+  const hasBold = getCommonValue(selectedElements, 'hasBold');
+  const italic = getCommonValue(selectedElements, 'italic');
+  const hasItalic = getCommonValue(selectedElements, 'hasItalic');
+  const underline = getCommonValue(selectedElements, 'underline');
+  const hasUnderline = getCommonValue(selectedElements, 'hasUnderline');
 
   return (
     <>
@@ -128,28 +131,24 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={bold === true}
+          value={hasBold === true}
           iconWidth={9}
           iconHeight={10}
-          onChange={(value) => pushUpdate({ bold: value }, true)}
+          onChange={() => pushUpdate({ bold: !bold }, true)}
         />
         <ToggleButton
           icon={<ItalicIcon />}
-          value={fontStyle === 'italic'}
+          value={hasItalic === true}
           iconWidth={10}
           iconHeight={10}
-          onChange={(value) =>
-            pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true)
-          }
+          onChange={() => pushUpdate({ italic: !italic }, true)}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
-          value={textDecoration === 'underline'}
+          value={hasUnderline === true}
           iconWidth={8}
           iconHeight={21}
-          onChange={(value) =>
-            pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true)
-          }
+          onChange={() => pushUpdate({ underline: !underline }, true)}
         />
       </Row>
     </>

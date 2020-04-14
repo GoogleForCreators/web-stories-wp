@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Editor, EditorState } from 'draft-js';
+import { Editor, EditorState, RichUtils } from 'draft-js';
 import { stateFromHTML } from 'draft-js-import-html';
 import { stateToHTML } from 'draft-js-export-html';
 import {
@@ -49,7 +49,6 @@ import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
-  draftMarkupToContent,
   getFilteredState,
   getHandleKeyCommand,
   getSelectionForAll,
@@ -97,6 +96,8 @@ function TextEdit({
   element: {
     id,
     bold,
+    italic,
+    underline,
     content,
     color,
     backgroundColor,
@@ -150,7 +151,7 @@ function TextEdit({
       .replace(/\n(?=\n)/g, '\n<br />')
       .split('\n')
       .map((s) => {
-        return `<p>${draftMarkupToContent(s, bold)}</p>`;
+        return `<p>${s}</p>`;
       })
       .join('');
     let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
@@ -169,12 +170,13 @@ function TextEdit({
       state = EditorState.forceSelection(state, selection);
     }
     return state;
-  }, [content, clearContent, selectAll, offset, bold]);
+  }, [content, clearContent, selectAll, offset]);
   const [editorState, setEditorState] = useState(initialState);
   const editorHeightRef = useRef(0);
 
   // This is to allow the finalizing useEffect to *not* depend on editorState,
   // as would otherwise be a lint error.
+  const lastKnownContentState = useRef(null);
   const lastKnownState = useRef(null);
 
   // This filters out illegal content (see `getFilteredState`)
@@ -183,7 +185,8 @@ function TextEdit({
   const updateEditorState = useCallback(
     (newEditorState) => {
       const filteredState = getFilteredState(newEditorState, editorState);
-      lastKnownState.current = filteredState.getCurrentContent();
+      lastKnownState.current = filteredState;
+      lastKnownContentState.current = filteredState.getCurrentContent();
       setEditorState(filteredState);
     },
     [editorState]
@@ -202,17 +205,44 @@ function TextEdit({
     evt.stopPropagation();
   };
 
+  // Parse content selected with RichUtils.toggleInlineStyle to apply programatically bold, italic and/or underline
+  const applyContentStyle = useCallback(
+    (style, hasStyle) => {
+      if (lastKnownState.current) {
+        const newEditorState = RichUtils.toggleInlineStyle(
+          lastKnownState.current,
+          style
+        );
+
+        lastKnownState.current = newEditorState;
+        lastKnownContentState.current = newEditorState.getCurrentContent();
+        setEditorState(newEditorState);
+
+        const properties = {
+          [hasStyle]: true,
+          content: stateToHTML(lastKnownContentState.current, {
+            defaultBlockTag: null,
+          })
+            .replace(/<br ?\/?>/g, '')
+            .replace(/&nbsp;$/, ''),
+        };
+        setProperties(properties);
+      }
+    },
+    [setProperties, lastKnownState]
+  );
+
   // Finally update content for element on focus out.
   useFocusOut(
     textBoxRef,
     () => {
-      const newState = lastKnownState.current;
+      const newState = lastKnownContentState.current;
       const newHeight = editorHeightRef.current;
       wrapperRef.current.style.height = '';
       if (newState) {
         // Remove manual line breaks and remember to trim any trailing non-breaking space.
         const properties = {
-          content: stateToHTML(lastKnownState.current, {
+          content: stateToHTML(lastKnownContentState.current, {
             defaultBlockTag: null,
           })
             .replace(/<br ?\/?>/g, '')
@@ -234,7 +264,16 @@ function TextEdit({
         setProperties(properties);
       }
     },
-    [setProperties, x, y, height, rotationAngle, editorToDataY, editorToDataX]
+    [
+      setProperties,
+      x,
+      y,
+      height,
+      rotationAngle,
+      editorToDataY,
+      editorToDataX,
+      lastKnownContentState,
+    ]
   );
 
   // Set focus when initially rendered.
@@ -254,6 +293,36 @@ function TextEdit({
   useEffect(() => {
     maybeEnqueueFontStyle(fontFamily);
   }, [fontFamily, maybeEnqueueFontStyle]);
+
+  // If content selected has bold, italic and/or underline, the respective buttons on Design Panel should be activated
+  useEffect(() => {
+    if (editorState) {
+      setProperties({
+        hasBold: editorState.getCurrentInlineStyle().has('BOLD'),
+      });
+      setProperties({
+        hasItalic: editorState.getCurrentInlineStyle().has('ITALIC'),
+      });
+      setProperties({
+        hasUnderline: editorState.getCurrentInlineStyle().has('UNDERLINE'),
+      });
+    }
+  }, [setProperties, editorState]);
+
+  // Apply bold to selected content when Bold Button is selected
+  useEffect(() => {
+    applyContentStyle('BOLD', 'hasBold');
+  }, [applyContentStyle, bold]);
+
+  // Apply italic to selected content when Italic Button is selected
+  useEffect(() => {
+    applyContentStyle('ITALIC', 'hasItalic');
+  }, [applyContentStyle, italic]);
+
+  // Apply underline to selected content when Underline Button is selected
+  useEffect(() => {
+    applyContentStyle('UNDERLINE', 'hasUnderline');
+  }, [applyContentStyle, underline]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
