@@ -18,40 +18,40 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { MoreVerticalButton } from './cardItemMenu';
+import { ActionLabel } from './types';
 
-const CardGridItem = styled.div`
+const StyledCard = styled.div`
   margin: auto 0;
-  height: ${({ theme }) => `${theme.grid.desktop.itemHeight}px`};
-  width: ${({ theme }) => `${theme.grid.desktop.itemWidth}px`};
+  height: ${({ cardSize }) => `${cardSize.height + CARD_TITLE_AREA_HEIGHT}px`};
+  width: ${({ cardSize }) => `${cardSize.width}px`};
   display: flex;
   flex-direction: column;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    height: ${({ theme }) => `${theme.grid.tablet.itemHeight}px`};
-    width: ${({ theme }) => `${theme.grid.tablet.itemWidth}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    height: ${({ theme }) => `${theme.grid.mobile.itemHeight}px`};
-    width: ${({ theme }) => `${theme.grid.mobile.itemWidth}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    height: ${({ theme }) => `${theme.grid.min.itemHeight}px`};
-    width: ${({ theme }) => `${theme.grid.min.itemWidth}px`};
-  }
 
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
     opacity: 1;
   }
 `;
 
+const CardGridItem = ({ children }) => {
+  const { pageSize } = usePagePreviewSize();
+
+  return <StyledCard cardSize={pageSize}>{children}</StyledCard>;
+};
+
+CardGridItem.propTypes = {
+  children: PropTypes.node,
+};
+
 export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
+export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
 export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

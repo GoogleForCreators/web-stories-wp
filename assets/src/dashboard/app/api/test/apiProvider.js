@@ -57,13 +57,84 @@ describe('reshapeStoryObject', () => {
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
       responseObj
     );
+
     expect(reshapedObj).toMatchObject({
       id: 27,
       title: 'Carlos Draft',
       status: 'draft',
       modified: moment('2020-03-26T21:42:14'),
       pages: [{ id: 0, elements: [] }],
-      editStoryUrl: 'http://editstory.com?action=edit&post=27',
+      centerTargetAction: '',
+      bottomTargetAction: 'http://editstory.com?action=edit&post=27',
     });
+  });
+
+  it('should return null if the ID is missing', () => {
+    const responseObj = {
+      date: '2020-03-26T20:57:24',
+      date_gmt: '2020-03-26T20:57:24',
+      guid: {
+        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
+      },
+      modified: '2020-03-26T21:42:14',
+      modified_gmt: '2020-03-26T21:42:14',
+      slug: '',
+      status: 'draft',
+      type: 'web-story',
+      link: 'http://localhost:8899/?post_type=web-story&p=27',
+      title: { rendered: 'Carlos Draft' },
+      content: {
+        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
+        protected: false,
+      },
+      excerpt: { rendered: '', protected: false },
+      author: 1,
+      featured_media: 0,
+      template: '',
+      categories: [],
+      tags: [],
+      featured_media_url: '',
+      story_data: { pages: [{ id: 0, elements: [] }] },
+    };
+
+    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
+      responseObj
+    );
+    expect(reshapedObj).toBeNull();
+  });
+
+  it('should return null if the story has no pages', () => {
+    const responseObj = {
+      id: 27,
+      date: '2020-03-26T20:57:24',
+      date_gmt: '2020-03-26T20:57:24',
+      guid: {
+        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
+      },
+      modified: '2020-03-26T21:42:14',
+      modified_gmt: '2020-03-26T21:42:14',
+      slug: '',
+      status: 'draft',
+      type: 'web-story',
+      link: 'http://localhost:8899/?post_type=web-story&p=27',
+      title: { rendered: 'Carlos Draft' },
+      content: {
+        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
+        protected: false,
+      },
+      excerpt: { rendered: '', protected: false },
+      author: 1,
+      featured_media: 0,
+      template: '',
+      categories: [],
+      tags: [],
+      featured_media_url: '',
+      story_data: { pages: [] },
+    };
+
+    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
+      responseObj
+    );
+    expect(reshapedObj).toBeNull();
   });
 });

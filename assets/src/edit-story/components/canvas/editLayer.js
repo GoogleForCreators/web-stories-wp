@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -29,8 +29,9 @@ import { useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
-import { Layer, PageArea } from './layout';
+import { Layer, PageArea, Z_INDEX } from './layout';
 import useCanvas from './useCanvas';
+import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
   background-color: ${({ grayout, theme }) =>
@@ -38,7 +39,7 @@ const LayerWithGrayout = styled(Layer)`
 `;
 
 const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container',
+  className: 'container web-stories-content',
 })`
   position: relative;
   width: 100%;
@@ -67,28 +68,37 @@ function EditLayer({}) {
 
 function EditLayerForElement({ element }) {
   const ref = useRef(null);
+  const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
   const {
     actions: { clearEditing },
   } = useCanvas();
+
+  const focusCanvas = useFocusCanvas();
+
   useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing(), [
     clearEditing,
   ]);
+
+  // Unmount effect to restore focus, but do not force it, in case the
+  // design panel is active.
+  useEffect(() => {
+    return () => focusCanvas(/* force */ false);
+  }, [focusCanvas]);
 
   return (
     <LayerWithGrayout
       ref={ref}
       grayout={editModeGrayout}
+      zIndex={Z_INDEX.EDIT}
       onClick={(evt) => {
-        if (evt.target !== ref.current) {
-          return;
+        if (evt.target === ref.current || evt.target === pageAreaRef.current) {
+          clearEditing();
         }
-
-        clearEditing();
       }}
     >
-      <EditPageArea>
+      <EditPageArea ref={pageAreaRef}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

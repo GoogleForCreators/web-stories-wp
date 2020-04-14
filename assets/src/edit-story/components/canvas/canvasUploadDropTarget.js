@@ -36,6 +36,7 @@ import {
 import { useMedia } from '../../app/media';
 import { useStory } from '../../app/story';
 import useInsertElement from '../canvas/useInsertElement';
+import objectPick from '../../utils/objectPick';
 
 import { Layer as CanvasLayer, PageArea } from './layout';
 
@@ -43,7 +44,7 @@ const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
 function CanvasUploadDropTarget({ children }) {
   const {
-    actions: { uploadMedia },
+    actions: { uploadMedia, uploadVideoPoster },
   } = useMedia();
   const insertElement = useInsertElement();
   const {
@@ -59,16 +60,30 @@ function CanvasUploadDropTarget({ children }) {
   );
 
   const onUploadedFile = useCallback(
-    ({ resource, element }) => {
+    async ({ resource, element }) => {
+      const keysToUpdate = objectPick(resource, [
+        'src',
+        'width',
+        'height',
+        'length',
+        'lengthFormatted',
+        'id',
+      ]);
+      const updatedResource = {
+        ...element.resource,
+        ...keysToUpdate,
+      };
       updateElementById({
         elementId: element.id,
         properties: {
-          resource,
-          type: element.resource.type,
+          resource: updatedResource,
         },
       });
+      if (resource.type === 'video') {
+        await uploadVideoPoster(resource.id, resource.src);
+      }
     },
-    [updateElementById]
+    [updateElementById, uploadVideoPoster]
   );
 
   const onUploadFailure = useCallback(

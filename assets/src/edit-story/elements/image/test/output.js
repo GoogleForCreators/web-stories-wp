@@ -34,6 +34,7 @@ describe('Image output', () => {
         width: 1080,
         rotationAngle: 0,
         resource: {
+          id: 123,
           type: 'image',
           mimeType: 'image/png',
           src: 'https://example.com/image.png',

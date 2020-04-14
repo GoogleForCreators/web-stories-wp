@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 /**
  * Add messages to an ARIA live region.
@@ -29,9 +29,27 @@ import { useEffect, useRef } from 'react';
 function useLiveRegion(politeness = 'polite') {
   const elementRef = useRef();
 
-  useEffect(() => {
+  const ensureContainerExists = useCallback(() => {
+    if (elementRef.current) {
+      return () => {
+        document.body.removeChild(elementRef.current);
+        elementRef.current = null;
+      };
+    }
+
+    const containerId = 'web-stories-aria-live-region-' + politeness;
+
+    const existingContainer = document.getElementById(containerId);
+
+    if (existingContainer) {
+      elementRef.current = existingContainer;
+      return () => {
+        elementRef.current = null;
+      };
+    }
+
     const container = document.createElement('div');
-    container.id = 'web-stories-aria-live-region-' + politeness;
+    container.id = containerId;
     container.className = 'web-stories-aria-live-region';
 
     container.setAttribute(
@@ -61,7 +79,11 @@ function useLiveRegion(politeness = 'polite') {
     };
   }, [politeness]);
 
+  useEffect(ensureContainerExists, [politeness]);
+
   const speak = (message) => {
+    ensureContainerExists();
+
     // Clear any existing messages.
     const regions = document.querySelectorAll('.web-stories-aria-live-region');
     for (const region of regions) {
