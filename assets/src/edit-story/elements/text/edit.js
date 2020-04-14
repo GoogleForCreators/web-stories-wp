@@ -45,6 +45,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
+import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
@@ -145,6 +146,8 @@ function TextEdit({
   const { offset, clearContent, selectAll } = editingElementState || {};
   const initialState = useMemo(() => {
     const contentWithBreaks = (content || '')
+      // Re-insert manual line-breaks for empty lines
+      .replace(/\n(?=\n)/g, '\n<br />')
       .split('\n')
       .map((s) => {
         return `<p>${draftMarkupToContent(s, bold)}</p>`;
@@ -199,18 +202,21 @@ function TextEdit({
     evt.stopPropagation();
   };
 
-  // Finally update content for element on unmount.
-  useEffect(
-    () => () => {
+  // Finally update content for element on focus out.
+  useFocusOut(
+    textBoxRef,
+    () => {
       const newState = lastKnownState.current;
       const newHeight = editorHeightRef.current;
       wrapperRef.current.style.height = '';
       if (newState) {
-        // Remember to trim any trailing non-breaking space.
+        // Remove manual line breaks and remember to trim any trailing non-breaking space.
         const properties = {
           content: stateToHTML(lastKnownState.current, {
             defaultBlockTag: null,
-          }).replace(/&nbsp;$/, ''),
+          })
+            .replace(/<br ?\/?>/g, '')
+            .replace(/&nbsp;$/, ''),
         };
         // Recalculate the new height and offset.
         if (newHeight) {

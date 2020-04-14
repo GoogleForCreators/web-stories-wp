@@ -26,6 +26,10 @@ import styled from 'styled-components';
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const StyledButton = styled.button`
+  font-family: ${({ theme }) => theme.fonts.button.family};
+  font-size: ${({ theme }) => theme.fonts.button.size};
+  font-weight: ${({ theme }) => theme.fonts.button.weight};
+  line-height: ${({ theme }) => theme.fonts.button.lineHeight};
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
@@ -33,9 +37,9 @@ const StyledButton = styled.button`
   border-radius: ${({ theme }) => theme.border.buttonRadius};
   display: flex;
   height: 40px;
-  min-width: 132px;
+  min-width: 100px;
   opacity: 0.75;
-  padding: 0;
+  padding: 0 10px;
   text-decoration: none;
 
   &:focus,
@@ -77,12 +81,8 @@ const SecondaryButton = styled(StyledButton)`
   }
 `;
 const StyledChildren = styled.span`
-  font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size};
-  font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight};
-  margin: auto;
-  padding: 10px 12px;
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;

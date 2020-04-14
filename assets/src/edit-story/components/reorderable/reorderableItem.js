@@ -18,11 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import useReorderable from './useReorderable';
+
+const Container = styled.div`
+  z-index: 1;
+`;
 
 function ReorderableItem({
   children,
@@ -36,7 +41,7 @@ function ReorderableItem({
   } = useReorderable();
 
   return (
-    <div
+    <Container
       {...(disabled
         ? null
         : {
@@ -48,7 +53,7 @@ function ReorderableItem({
       {...props}
     >
       {children}
-    </div>
+    </Container>
   );
 }
 

@@ -24,10 +24,10 @@ import { useCallback } from 'react';
  */
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
-import useFocusCanvas from '../../components/canvas/useFocusCanvas';
 import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import useFocusCanvas from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
@@ -45,12 +45,12 @@ function useInsertElement() {
    * is complete.
    */
   const backfillResource = useCallback(
-    (resource, elementId) => {
-      const { type, src, videoId, posterId } = resource;
+    (resource) => {
+      const { type, src, id, posterId } = resource;
 
       // Generate video poster if one not set.
-      if (type === 'video' && videoId && !posterId) {
-        uploadVideoPoster(videoId, src, elementId, resource);
+      if (type === 'video' && id && !posterId) {
+        uploadVideoPoster(id, src);
       }
     },
     [uploadVideoPoster]
@@ -65,15 +65,15 @@ function useInsertElement() {
   const insertElement = useCallback(
     (type, props) => {
       const element = createElementForCanvas(type, props);
-      const { id: elementId, resource } = element;
+      const { id, resource } = element;
       addElement({ element });
       if (resource) {
-        backfillResource(resource, elementId);
+        backfillResource(resource);
       }
       // Auto-play on insert.
       if (type === 'video') {
         setTimeout(() => {
-          const videoEl = document.getElementById(`video-${elementId}`);
+          const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
             videoEl.play();
           }

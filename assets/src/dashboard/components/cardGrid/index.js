@@ -20,40 +20,32 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const CardGrid = styled.div`
+/**
+ * Internal dependencies
+ */
+import usePagePreviewSize from '../../utils/usePagePreviewSize';
+
+const DashboardGrid = styled.div`
   display: grid;
   width: 100%;
   align-content: space-between;
-
-  grid-template-columns: ${({ theme }) =>
-    `repeat(auto-fill, minmax(${theme.grid.desktop.itemWidth}px, ${theme.grid.desktop.fr}))`};
-  grid-gap: ${({ theme }) => theme.grid.desktop.gap};
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    grid-template-columns: ${({ theme }) =>
-      `repeat(auto-fill, minmax(${theme.grid.tablet.itemWidth}px, ${theme.grid.tablet.fr}))`};
-    grid-gap: ${({ theme }) => theme.grid.tablet.gap};
-  }
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    grid-template-columns: ${({ theme }) =>
-      `repeat(auto-fill, minmax(${theme.grid.mobile.itemWidth}px, ${theme.grid.mobile.fr}))`};
-    grid-gap: ${({ theme }) => theme.grid.mobile.gap};
-  }
+  grid-column-gap: 10px;
+  grid-template-columns: ${({ columnWidth }) =>
+    `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    grid-template-columns: ${({ theme }) =>
-      `repeat(auto-fill, minmax(${theme.grid.min.itemWidth}px, ${theme.grid.min.fr}))`};
-    grid-gap: ${({ theme }) => theme.grid.min.gap};
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
+
+const CardGrid = ({ children }) => {
+  const { pageSize } = usePagePreviewSize();
+
+  return <DashboardGrid columnWidth={pageSize.width}>{children}</DashboardGrid>;
+};
 
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export const StoryGrid = styled(CardGrid)`
-  margin: 20px;
-  width: calc(100% - 40px);
-`;
 
 export default CardGrid;

@@ -34,7 +34,10 @@ import * as videoElement from './video';
 
 export const createNewElement = (type, attributes = {}) => {
   const element = elementTypes.find((el) => el.type === type);
-  const defaultAttributes = element ? element.defaultAttributes : {};
+  if (!element) {
+    throw new Error(`Unknown element type: ${type}`);
+  }
+  const { defaultAttributes } = element;
   return {
     ...defaultAttributes,
     ...attributes,
@@ -43,12 +46,47 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = (attributes) => createNewElement('page', attributes);
+export const createPage = (attributes = {}) => {
+  const { elements: oldElements, ...rest } = attributes;
+
+  // Ensure all existing elements get new ids
+  const elements = (oldElements || []).map(({ type, ...attrs }) =>
+    createNewElement(type, attrs)
+  );
+  const newAttributes = {
+    elements,
+    ...rest,
+  };
+
+  // Enforce having background element for each Page.
+  if (!newAttributes.backgroundElementId) {
+    // The values of x, y, width, height are irrelevant here, however, need to be set.
+    const props = {
+      x: 1,
+      y: 1,
+      width: 1,
+      height: 1,
+      mask: {
+        type: 'rectangle',
+      },
+      isBackground: true,
+    };
+    const backgroundElement = createNewElement('shape', props);
+    newAttributes.elements = [backgroundElement, ...elements];
+    newAttributes.backgroundElementId = backgroundElement.id;
+  } else {
+    // Update reference background element, as we just changed the id
+    // Background element is guaranteed to be first element
+    newAttributes.backgroundElementId = elements[0].id;
+  }
+
+  return createNewElement('page', newAttributes);
+};
 
 export const elementTypes = [
   {
     type: 'page',
-    defaultAttributes: { elements: [] },
+    defaultAttributes: {},
     name: __('Page', 'web-stories'),
   },
   { type: 'text', name: __('Text', 'web-stories'), ...textElement },
