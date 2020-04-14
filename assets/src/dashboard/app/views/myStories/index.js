@@ -61,7 +61,6 @@ const FilterContainer = styled.fieldset`
       border-radius: 0;
       box-shadow: none !important;
       padding: 0 10px 0 0;
-      background-color: transparent !important;
     }
   }
 `;
