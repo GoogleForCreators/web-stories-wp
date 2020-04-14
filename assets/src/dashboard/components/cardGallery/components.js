@@ -31,10 +31,9 @@ export const GalleryContainer = styled.div`
 export const MiniCardsContainer = styled.div`
   ${({ rowHeight, gap }) => `
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, auto);
     grid-auto-rows: ${rowHeight}px;
-    column-gap: ${gap}px;
-    row-gap: ${gap}px;
+    grid-gap: ${gap}px;
   `}
 `;
 
