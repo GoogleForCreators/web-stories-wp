@@ -19,7 +19,12 @@
  */
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
+import {
+  MEDIA_DEFAULT_ATTRIBUTES,
+  MEDIA_PANELS,
+  resizeRules as mediaResizeRules,
+} from '../media';
+import { PLAY_BUTTON_MIN_SIZE } from './frame';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -33,8 +38,13 @@ export {
   isMedia,
   hasEditMode,
   editModeGrayout,
-  resizeRules,
 } from '../media';
+
+export const resizeRules = {
+  ...mediaResizeRules,
+  minWidth: PLAY_BUTTON_MIN_SIZE,
+  minHeight: PLAY_BUTTON_MIN_SIZE,
+};
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,

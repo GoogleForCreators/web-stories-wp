@@ -58,6 +58,8 @@ export const resizeRules = {
   vertical: false,
   horizontal: true,
   diagonal: true,
+  minWidth: 20,
+  minHeight: 20,
 };
 
 export const panels = [
