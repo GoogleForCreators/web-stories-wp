@@ -25,26 +25,28 @@ const TAG_REPLACEMENTS = {
   i: 'em',
 };
 
-export default function processPastedNodeList(nodeList, content) {
-  for (let i = 0; i < nodeList.length; i++) {
-    const n = nodeList[i];
-    const originalTag = n.tagName?.toLowerCase();
-    const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
-    const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
-    if (!stripTags) {
-      content += `<${tag}>`;
+function getNodeContent(content, node) {
+  const originalTag = node.tagName?.toLowerCase();
+  const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
+  const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
+  if (!stripTags) {
+    content += `<${tag}>`;
+  }
+  if (node.childNodes.length > 0) {
+    if ('p' === tag && content.trim().length) {
+      content += '\n';
     }
-    if (n.childNodes.length > 0) {
-      if ('p' === tag && content.trim().length) {
-        content += '\n';
-      }
-      content = processPastedNodeList(n.childNodes, content);
-    } else {
-      content += escapeHTML(n.textContent);
-    }
-    if (!stripTags) {
-      content += `</${tag}>`;
-    }
+    content = processPastedNodeList(node.childNodes, content);
+  } else {
+    content += escapeHTML(node.textContent);
+  }
+  if (!stripTags) {
+    content += `</${tag}>`;
   }
   return content;
+}
+
+export default function processPastedNodeList(nodeList, content) {
+  const nodeArray = Array.from(nodeList);
+  return nodeArray.reduce(getNodeContent, content);
 }
