@@ -84,7 +84,7 @@ const StoryGridView = ({
             }}
           >
             <PreviewErrorBoundary>
-              <PreviewPage page={{}} />
+              <PreviewPage page={story.pages[0]} />
             </PreviewErrorBoundary>
           </CardPreviewContainer>
           <DetailRow>
