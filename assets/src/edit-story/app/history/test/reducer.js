@@ -80,6 +80,26 @@ describe('reducer', () => {
       expect(result.versionNumber).toStrictEqual(4);
       expect(result.offset).toStrictEqual(0);
     });
+
+    it('should respect the determined history size when adding a new entry', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          { id: 1 },
+          { id: 2 },
+          { id: 3 },
+          { id: 4 },
+          { id: 5 },
+          { id: 6 },
+        ],
+      };
+      const newEntry = { id: 7 };
+      const result = reducer(initialState, {
+        type: ADD_ENTRY,
+        payload: newEntry,
+      });
+      expect(result.entries).toHaveLength(size);
+    });
   });
   // @todo CLEAR_HISTORY
   // @todo CLEAR_REPLAY_STATE
