@@ -243,6 +243,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <SeparateBorder />
       <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlign('left', boundRect, pushUpdate)}
           aria-label={__('Justify Left', 'web-stories')}
           id={alignmentButtonIds[2]}
@@ -253,6 +254,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlignCenter(boundRect, pushUpdate)}
           aria-label={__('Justify Center', 'web-stories')}
           id={alignmentButtonIds[3]}
@@ -263,6 +265,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlign('right', boundRect, pushUpdate)}
           aria-label={__('Justify Right', 'web-stories')}
           id={alignmentButtonIds[4]}
@@ -273,6 +276,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align top', 'web-stories')}>
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlign('top', boundRect, pushUpdate)}
           aria-label={__('Justify Top', 'web-stories')}
           id={alignmentButtonIds[5]}
@@ -283,6 +287,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align vertical center', 'web-stories')}>
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
           aria-label={__('Justify Middle', 'web-stories')}
           id={alignmentButtonIds[6]}
@@ -293,6 +298,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align bottom', 'web-stories')}>
         <IconButton
+          disabled={isFill}
           onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
           aria-label={__('Justify Bottom', 'web-stories')}
           id={alignmentButtonIds[7]}
