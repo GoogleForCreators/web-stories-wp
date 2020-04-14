@@ -48,13 +48,7 @@ const MenuContainer = styled.div`
   position: relative;
   align-self: flex-start;
   text-align: right;
-  flex-grow: 1;
   margin-top: 12px;
-
-  .grid-story-popover-menu {
-    right: 0;
-    top: 0;
-  }
 `;
 
 export default function CardItemMenu({
@@ -81,7 +75,6 @@ export default function CardItemMenu({
         <MoreVerticalSvg width={4} height={20} />
       </MoreVerticalButton>
       <PopoverMenu
-        className="grid-story-popover-menu"
         isOpen={contextMenuId === story.id}
         framelessButton
         onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}

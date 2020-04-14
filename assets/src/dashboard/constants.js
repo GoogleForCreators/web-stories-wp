@@ -50,6 +50,13 @@ export const KEYS = {
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
+export const CORNER_DIRECTIONS = {
+  TOP_LEFT: 'top_left',
+  TOP_RIGHT: 'top_right',
+  BOTTOM_RIGHT: 'bottom_right',
+  BOTTOM_LEFT: 'bottom_left',
+};
+
 export const Z_INDEX = {
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,

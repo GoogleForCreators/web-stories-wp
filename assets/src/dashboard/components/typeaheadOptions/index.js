@@ -27,13 +27,6 @@ import { useEffect, useState, useRef } from 'react';
 import { KEYS, Z_INDEX } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
-export const DROPDOWN_MENU_DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down',
-  LEFT: 'left',
-  RIGHT: 'right',
-};
-
 export const Menu = styled.ul`
   width: 100%;
   align-items: flex-start;
