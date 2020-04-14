@@ -34,7 +34,7 @@ const reducer = (size) => (state, { type, payload }) => {
   switch (type) {
     case ADD_ENTRY:
       // First check if everything in payload matches the current `replayState`,
-      // if so, update `offset` to match the state in entries and clear `replayState`
+      // if so, clear `replayState`
       // and of course leave entries unchanged.
       if (state.replayState) {
         const isReplay = Object.keys(state.replayState).every(
@@ -42,33 +42,8 @@ const reducer = (size) => (state, { type, payload }) => {
         );
 
         if (isReplay) {
-          const currentEntry = state.entries[state.offset];
-          const offset = state.entries.indexOf(state.replayState);
-          // If a page has changed and it was not an added page, and if the page is about to change with replay,
-          // Ensure the user stays on the page where the latest change happened.
-          if (
-            currentEntry.pages !== state.replayState.pages &&
-            currentEntry.pages.length === state.replayState.pages.length &&
-            currentEntry.current !== state.replayState.current
-          ) {
-            const changedPage = currentEntry.pages.filter((page, index) => {
-              return page !== state.replayState.pages[index];
-            });
-            // If a changed page was found.
-            if (changedPage.length === 1) {
-              // Ensure we stay on the changed page by overriding the previously saved current page.
-              const current = changedPage[0].id;
-              const replayState = { ...state.replayState, current };
-              return {
-                ...state,
-                offset,
-                replayState,
-              };
-            }
-          }
           return {
             ...state,
-            offset,
             replayState: null,
           };
         }
@@ -85,9 +60,35 @@ const reducer = (size) => (state, { type, payload }) => {
       };
 
     case REPLAY:
+      const currentEntry = state.entries[state.offset];
+      const replayState = state.entries[payload];
+      // If a page has changed and it was not an added page, and if the page is about to change with replay,
+      // Ensure the user stays on the page where the latest change happened.
+      if (
+        currentEntry &&
+        currentEntry.pages !== replayState.pages &&
+        currentEntry.pages.length === replayState.pages.length &&
+        currentEntry.current !== replayState.current
+      ) {
+        const changedPage = currentEntry.pages.filter((page, index) => {
+          return page !== replayState.pages[index];
+        });
+        // If a changed page was found.
+        if (changedPage.length === 1) {
+          // Ensure we stay on the changed page by overriding the previously saved current page.
+          const current = changedPage[0].id;
+          const replay = { ...replayState, current };
+          return {
+            ...state,
+            offset: payload,
+            replayState: replay,
+          };
+        }
+      }
       return {
         ...state,
-        replayState: state.entries[payload],
+        offset: payload,
+        replayState,
       };
 
     case CLEAR_HISTORY:
