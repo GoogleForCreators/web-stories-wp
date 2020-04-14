@@ -40,11 +40,6 @@ function useFocusOut(ref, callback, deps) {
       if (!isInNode && isInDocument) {
         callback();
       }
-      // Handle text element editor case (3P library with auto-focus)
-      const activeElementInNode = node.contains(document.activeElement);
-      if (activeElementInNode) {
-        isFocused = true;
-      }
     };
 
     node.addEventListener('focusout', onFocusOut);
