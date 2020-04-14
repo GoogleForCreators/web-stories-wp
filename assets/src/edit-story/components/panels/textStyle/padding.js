@@ -67,13 +67,12 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
         update = {
           horizontal: commonPadding,
           vertical: commonPadding,
+          locked: true,
         };
-
-        if (padding.locked === MULTIPLE_VALUE) update.locked = lockPadding;
       }
       pushUpdateForObject('padding', update, DEFAULT_PADDING);
     },
-    [pushUpdateForObject, lockPadding, padding]
+    [pushUpdateForObject, lockPadding]
   );
 
   return (

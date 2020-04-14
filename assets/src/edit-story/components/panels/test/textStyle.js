@@ -188,7 +188,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -201,7 +201,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '12' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { vertical: 12, horizontal: 12 },
+        { vertical: 12, horizontal: 12, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -240,7 +240,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: '', vertical: '' },
+        { horizontal: '', vertical: '', locked: true },
         DEFAULT_PADDING
       );
     });
@@ -254,7 +254,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -268,7 +268,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -297,6 +297,34 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should default padding lock ration should be false when multiple elements with different lock ratio and update only horizontal', () => {
+      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+        textElement,
+        unlockPaddingTextDifferentPadding,
+      ]);
+      const input = getByTestId('padding.horizontal');
+      fireEvent.change(input, { target: { value: '11' } });
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        { horizontal: 11 },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should default padding lock ration should be false when multiple elements with different lock ratio and update only vertical', () => {
+      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+        textElement,
+        unlockPaddingTextDifferentPadding,
+      ]);
+      const input = getByTestId('padding.vertical');
+      fireEvent.change(input, { target: { value: '11' } });
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        { vertical: 11 },
         DEFAULT_PADDING
       );
     });
