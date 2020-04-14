@@ -36,3 +36,11 @@ export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
 export { default as ListBar } from './viewStyleBar';
+export {
+  Table,
+  TableBody,
+  TableHeaderCell,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from './table';
