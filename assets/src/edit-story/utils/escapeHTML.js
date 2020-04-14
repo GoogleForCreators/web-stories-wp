@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
+const buffer = document.createElement('div');
 
-const ListBarContainer = styled.div`
-  margin-top: 10px;
-`;
-
-export default ListBarContainer;
+export default function escapeHTML(string) {
+  // @todo: implement a cheaper way to escape HTML characters.
+  buffer.textContent = string;
+  return buffer.innerHTML;
+}

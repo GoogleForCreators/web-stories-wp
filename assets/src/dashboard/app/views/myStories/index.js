@@ -28,8 +28,12 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, ListBar } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { FloatingTab } from '../../../components';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+} from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
@@ -38,20 +42,16 @@ import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import {
   BodyWrapper,
+  BodyViewOptions,
   PageHeading,
   NoResults,
   StoryGridView,
-  ListBarContainer,
 } from '../shared';
 
 const FilterContainer = styled.div`
-  padding: 0 20px 20px 0;
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
+  padding-bottom: 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
-  }
 
   @media ${({ theme }) => theme.breakpoint.min} {
     & > label {
@@ -80,6 +80,9 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentStorySort, setCurrentStorySort] = useState(
+    STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
   const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
@@ -87,8 +90,12 @@ function MyStories() {
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchStories({ status, searchTerm: typeaheadValue });
-  }, [fetchStories, status, typeaheadValue]);
+    fetchStories({
+      orderby: currentStorySort,
+      searchTerm: typeaheadValue,
+      status,
+    });
+  }, [currentStorySort, fetchStories, status, typeaheadValue]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
@@ -123,13 +130,18 @@ function MyStories() {
     if (filteredStoriesCount > 0) {
       return (
         <BodyWrapper>
-          <ListBarContainer>
-            <ListBar
-              label={listBarLabel}
-              layoutStyle={viewStyle}
-              onPress={handleViewStyleBarButtonSelected}
-            />
-          </ListBarContainer>
+          <BodyViewOptions
+            listBarLabel={listBarLabel}
+            layoutStyle={viewStyle}
+            handleLayoutSelect={handleViewStyleBarButtonSelected}
+            currentSort={currentStorySort}
+            handleSortChange={setCurrentStorySort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
+          />
+
           <StoryGridView
             filteredStories={filteredStories}
             centerActionLabel={
@@ -158,6 +170,7 @@ function MyStories() {
     listBarLabel,
     typeaheadValue,
     viewStyle,
+    currentStorySort,
   ]);
 
   return (
@@ -184,6 +197,7 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
+
           {BodyContent}
         </UnitsProvider>
       </TransformProvider>

@@ -107,3 +107,42 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   { label: null, value: false, separator: true },
   { label: __('Delete Story', 'web-stories'), value: 'delete-story-action' },
 ];
+
+export const STORY_SORT_OPTIONS = {
+  NAME: 'title',
+  DATE_CREATED: 'date',
+  LAST_MODIFIED: 'modified',
+  LAST_OPENED: 'modified',
+  CREATED_BY: 'author',
+};
+
+export const ORDER_BY_SORT = {
+  [STORY_SORT_OPTIONS.NAME]: 'asc',
+  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
+  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
+  [STORY_SORT_OPTIONS.CREATED_BY]: 'asc',
+};
+
+export const STORY_SORT_MENU_ITEMS = [
+  {
+    label: __('Name', 'web-stories'),
+    value: STORY_SORT_OPTIONS.NAME,
+  },
+  {
+    label: __('Date created', 'web-stories'),
+    value: STORY_SORT_OPTIONS.DATE_CREATED,
+  },
+  {
+    label: __('Last modified', 'web-stories'), // default
+    value: STORY_SORT_OPTIONS.LAST_MODIFIED,
+  },
+  {
+    label: __('Last opened', 'web-stories'),
+    value: STORY_SORT_OPTIONS.LAST_OPENED,
+  },
+  {
+    label: __('Created by', 'web-stories'), // owner first then alpha
+    value: STORY_SORT_OPTIONS.CREATED_BY,
+  },
+];

@@ -67,7 +67,9 @@ function getBoundRect(list) {
 }
 
 export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
-  if (!angle || angle === 0) return { x, y, width, height };
+  if (!angle || angle === 0) {
+    return { x, y, width, height };
+  }
   /// variables
   const centerX = x + width * 0.5;
   const centerY = y + height * 0.5;
