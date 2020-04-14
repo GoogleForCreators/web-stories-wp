@@ -102,7 +102,7 @@ function TextEdit({
     backgroundColor,
     backgroundTextMode,
     opacity,
-    height: eHeight,
+    height: elementHeight,
     ...rest
   },
   box: { x, y, height, rotationAngle },
@@ -249,7 +249,7 @@ function TextEdit({
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState, eHeight]);
+  }, [editorState, elementHeight]);
 
   const { fontFamily } = rest;
   useEffect(() => {
