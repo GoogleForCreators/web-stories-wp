@@ -30,13 +30,13 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
-import useUnmount from '../../../utils/useUnmount';
 
 const Preview = styled(ColorBox)`
   display: flex;
