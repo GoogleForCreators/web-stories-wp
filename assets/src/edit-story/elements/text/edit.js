@@ -205,6 +205,15 @@ function TextEdit({
     evt.stopPropagation();
   };
 
+  // Extract content html for updates
+  const extractContentHTML = useCallback((currentContentState) => {
+    return stateToHTML(currentContentState, {
+      defaultBlockTag: null,
+    })
+      .replace(/<br ?\/?>/g, '')
+      .replace(/&nbsp;$/, '');
+  }, []);
+
   // Parse content selected with RichUtils.toggleInlineStyle to apply programatically bold, italic and/or underline
   const applyContentStyle = useCallback(
     (style, hasStyle) => {
@@ -213,23 +222,16 @@ function TextEdit({
           lastKnownState.current,
           style
         );
-
         lastKnownState.current = newEditorState;
         lastKnownContentState.current = newEditorState.getCurrentContent();
         setEditorState(newEditorState);
-
-        const properties = {
+        setProperties({
           [hasStyle]: true,
-          content: stateToHTML(lastKnownContentState.current, {
-            defaultBlockTag: null,
-          })
-            .replace(/<br ?\/?>/g, '')
-            .replace(/&nbsp;$/, ''),
-        };
-        setProperties(properties);
+          content: extractContentHTML(lastKnownContentState.current),
+        });
       }
     },
-    [setProperties, lastKnownState]
+    [setProperties, extractContentHTML, lastKnownState]
   );
 
   // Finally update content for element on focus out.
@@ -242,11 +244,7 @@ function TextEdit({
       if (newState) {
         // Remove manual line breaks and remember to trim any trailing non-breaking space.
         const properties = {
-          content: stateToHTML(lastKnownContentState.current, {
-            defaultBlockTag: null,
-          })
-            .replace(/<br ?\/?>/g, '')
-            .replace(/&nbsp;$/, ''),
+          content: extractContentHTML(lastKnownContentState.current),
         };
         // Recalculate the new height and offset.
         if (newHeight) {
@@ -309,17 +307,17 @@ function TextEdit({
     }
   }, [setProperties, editorState]);
 
-  // Apply bold to selected content when Bold Button is selected
+  // Apply bold to the selected content when Bold Button is selected on Design Panel
   useEffect(() => {
     applyContentStyle('BOLD', 'hasBold');
   }, [applyContentStyle, bold]);
 
-  // Apply italic to selected content when Italic Button is selected
+  // Apply italic to the selected content when Italic Button is selected on Design Panel
   useEffect(() => {
     applyContentStyle('ITALIC', 'hasItalic');
   }, [applyContentStyle, italic]);
 
-  // Apply underline to selected content when Underline Button is selected
+  // Apply underline to the selected content when Underline Button is selected on Design Panel
   useEffect(() => {
     applyContentStyle('UNDERLINE', 'hasUnderline');
   }, [applyContentStyle, underline]);
