@@ -34,6 +34,7 @@ import {
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
+import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -82,7 +83,9 @@ const StoryGridView = ({
               label: bottomActionLabel,
             }}
           >
-            <PreviewPage page={story.pages[0]} />
+            <PreviewErrorBoundary>
+              <PreviewPage page={{}} />
+            </PreviewErrorBoundary>
           </CardPreviewContainer>
           <DetailRow>
             <CardTitle
