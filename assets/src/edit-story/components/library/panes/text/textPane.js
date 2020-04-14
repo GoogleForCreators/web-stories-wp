@@ -27,8 +27,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
-import createSolid from '../../../../utils/createSolid';
+import { PAGE_WIDTH } from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
@@ -101,9 +100,6 @@ function TextPane(props) {
               insertElement('text', {
                 ...getPresetById('subheading'),
                 content: __('Fill in some text', 'web-stories'),
-                color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
-                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
@@ -119,9 +115,6 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 ...preset,
-                color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
-                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
