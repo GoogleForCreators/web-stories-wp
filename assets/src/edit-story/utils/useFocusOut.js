@@ -19,7 +19,7 @@
  */
 import { useLayoutEffect } from 'react';
 
-function useFocusOut(ref, callback, deps, clickEvent = 'click') {
+function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) {
@@ -43,11 +43,11 @@ function useFocusOut(ref, callback, deps, clickEvent = 'click') {
     };
 
     node.addEventListener('focusout', onFocusOut);
-    node.ownerDocument.addEventListener(clickEvent, onDocumentClick);
+    node.ownerDocument.addEventListener('pointerdown', onDocumentClick);
 
     return () => {
       node.removeEventListener('focusout', onFocusOut);
-      node.ownerDocument.removeEventListener(clickEvent, onDocumentClick);
+      node.ownerDocument.removeEventListener('pointerdown', onDocumentClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps || []);
