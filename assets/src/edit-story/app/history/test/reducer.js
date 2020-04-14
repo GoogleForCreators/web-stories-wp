@@ -17,12 +17,19 @@
 /**
  * Internal dependencies
  */
-import { default as useReducer, ADD_ENTRY, EMPTY_STATE } from '../reducer';
+import {
+  default as useReducer,
+  ADD_ENTRY,
+  CLEAR_HISTORY,
+  CLEAR_REPLAY_STATE,
+  EMPTY_STATE,
+  REPLAY,
+} from '../reducer';
 
 describe('reducer', () => {
   const size = 5;
   const reducer = useReducer(size);
-  it('should do nothing if unknown action given', () => {
+  it('should throw error if unknown action given', () => {
     expect(() =>
       reducer(EMPTY_STATE, {
         type: 'UNKNOWN_ACTION',
@@ -82,16 +89,12 @@ describe('reducer', () => {
     });
 
     it('should respect the determined history size when adding a new entry', () => {
+      const entries = [...Array(size + 1)].map(() => {
+        return { id: 'foo' };
+      });
       const initialState = {
         ...EMPTY_STATE,
-        entries: [
-          { id: 1 },
-          { id: 2 },
-          { id: 3 },
-          { id: 4 },
-          { id: 5 },
-          { id: 6 },
-        ],
+        entries,
       };
       const newEntry = { id: 7 };
       const result = reducer(initialState, {
@@ -101,7 +104,139 @@ describe('reducer', () => {
       expect(result.entries).toHaveLength(size);
     });
   });
-  // @todo CLEAR_HISTORY
-  // @todo CLEAR_REPLAY_STATE
-  // @todo REPLAY
+
+  describe('clearHistory', () => {
+    it('should set initial state when clearing history', () => {
+      const initialState = {
+        offset: 1,
+        replayState: { id: 1 },
+        entries: [{ id: 1 }],
+        versionNumber: 1,
+      };
+
+      const result = reducer(initialState, {
+        type: CLEAR_HISTORY,
+      });
+
+      Object.keys(result).forEach((k) => {
+        expect(result[k]).toStrictEqual(EMPTY_STATE[k]);
+      });
+    });
+  });
+
+  describe('clearReplayState', () => {
+    it('should clear replay state', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        replayState: { id: 1 },
+      };
+
+      const result = reducer(initialState, {
+        type: CLEAR_REPLAY_STATE,
+      });
+
+      expect(result.replayState).toBeNull();
+    });
+  });
+
+  describe('replay', () => {
+    it('should set the correct offset when replaying', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [{ id: 1 }, { id: 2 }],
+      };
+
+      const result = reducer(initialState, {
+        type: REPLAY,
+        payload: 1,
+      });
+
+      expect(result.offset).toStrictEqual(1);
+    });
+
+    it('should set the correct replayState when replaying', () => {
+      const replay = { id: 1 };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [{ id: 2 }, replay],
+      };
+
+      const result = reducer(initialState, {
+        type: REPLAY,
+        payload: 1,
+      });
+
+      expect(result.replayState).toStrictEqual(replay);
+    });
+
+    it('should set replay the current page relevant to the latest replayed change', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          { current: 1, pages: [{ id: 1, foo: 'bar' }] },
+          { current: 2, pages: [{ id: 2, foo: 'foo' }] },
+        ],
+      };
+
+      const result = reducer(initialState, {
+        type: REPLAY,
+        payload: 1,
+      });
+
+      expect(result.replayState.current).toStrictEqual(1);
+      expect(result.replayState.pages[0].id).toStrictEqual(2);
+    });
+
+    it('should not dynamically set the replay if changed happened on more than one page', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          {
+            current: 1,
+            pages: [
+              { id: 1, foo: 'bar' },
+              { id: 2, foo: 'bar' },
+            ],
+          },
+          {
+            current: 2,
+            pages: [
+              { id: 1, foo: 'foo' },
+              { id: 2, foo: 'foo' },
+            ],
+          },
+        ],
+      };
+
+      const result = reducer(initialState, {
+        type: REPLAY,
+        payload: 1,
+      });
+
+      expect(result.replayState.current).toStrictEqual(2);
+    });
+
+    it('should not dynamically set the replay if a page was added', () => {
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          { current: 1, pages: [{ id: 1, foo: 'bar' }] },
+          {
+            current: 2,
+            pages: [
+              { id: 2, foo: 'foo' },
+              { id: 1, foo: 'bar' },
+            ],
+          },
+        ],
+      };
+
+      const result = reducer(initialState, {
+        type: REPLAY,
+        payload: 1,
+      });
+
+      expect(result.replayState.current).toStrictEqual(2);
+    });
+  });
 });
