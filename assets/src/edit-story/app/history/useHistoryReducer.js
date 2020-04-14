@@ -21,6 +21,7 @@ import { useReducer, useCallback } from 'react';
 
 const ADD_ENTRY = 'add';
 const CLEAR_HISTORY = 'clear';
+const CLEAR_REPLAY_STATE = 'clear_replay';
 const REPLAY = 'replay';
 
 const EMPTY_STATE = {
@@ -33,22 +34,6 @@ const EMPTY_STATE = {
 const reducer = (size) => (state, { type, payload }) => {
   switch (type) {
     case ADD_ENTRY:
-      // First check if everything in payload matches the current `replayState`,
-      // if so, clear `replayState`
-      // and of course leave entries unchanged.
-      if (state.replayState) {
-        const isReplay = Object.keys(state.replayState).every(
-          (key) => state.replayState[key] === payload[key]
-        );
-
-        if (isReplay) {
-          return {
-            ...state,
-            replayState: null,
-          };
-        }
-      }
-
       // If not, trim `entries` from `offset` (basically destroy all undone states),
       // add new entry but limit entire storage to `size`
       // and clear `offset` and `replayState`.
@@ -59,6 +44,15 @@ const reducer = (size) => (state, { type, payload }) => {
         replayState: null,
       };
 
+    case CLEAR_REPLAY_STATE:
+      // Clears the replayState which indicates that state change was caused by applying replay.
+      if (state.replayState) {
+        return {
+          ...state,
+          replayState: null,
+        };
+      }
+      return state;
     case REPLAY:
       const currentEntry = state.entries[state.offset];
       const replayState = state.entries[payload];
@@ -161,8 +155,13 @@ function useHistoryReducer(size) {
     [dispatch]
   );
 
+  const clearReplayState = useCallback(() => {
+    dispatch({ type: CLEAR_REPLAY_STATE });
+  }, [dispatch]);
+
   return {
     replayState,
+    clearReplayState,
     appendToHistory,
     clearHistory,
     offset,

@@ -27,25 +27,34 @@ import { useHistory } from '../../';
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   const {
-    actions: { appendToHistory },
+    state: { replayState },
+    actions: { appendToHistory, clearReplayState },
   } = useHistory();
 
   const currentPageIndexRef = useRef();
   const selectedElementIdsRef = useRef();
+  const replayStateRef = useRef();
   useEffect(() => {
     currentPageIndexRef.current = current;
     selectedElementIdsRef.current = selection;
-  }, [current, selection]);
+    replayStateRef.current = replayState;
+  }, [current, selection, replayState]);
 
   useEffect(() => {
-    appendToHistory({
-      story,
-      current: currentPageIndexRef.current,
-      selection: selectedElementIdsRef.current,
-      pages,
-      capabilities,
-    });
-  }, [capabilities, story, pages, appendToHistory]);
+    // If the change was applied by replay, clear the replay flag.
+    if (replayStateRef.current) {
+      clearReplayState();
+    } else {
+      // If it was a real change.
+      appendToHistory({
+        story,
+        current: currentPageIndexRef.current,
+        selection: selectedElementIdsRef.current,
+        pages,
+        capabilities,
+      });
+    }
+  }, [capabilities, story, pages, appendToHistory, clearReplayState]);
 }
 
 export default useHistoryEntry;

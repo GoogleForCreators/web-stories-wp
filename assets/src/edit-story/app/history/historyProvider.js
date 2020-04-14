@@ -31,6 +31,7 @@ import Context from './context';
 function HistoryProvider({ children, size }) {
   const {
     replayState,
+    clearReplayState,
     appendToHistory,
     clearHistory,
     offset,
@@ -57,6 +58,7 @@ function HistoryProvider({ children, size }) {
     actions: {
       appendToHistory,
       clearHistory,
+      clearReplayState,
       undo,
       redo,
     },
