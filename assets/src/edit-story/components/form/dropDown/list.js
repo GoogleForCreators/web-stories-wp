@@ -170,7 +170,9 @@ function DropDownList({
 
   useEffect(() => {
     if (!isNullOrUndefined(focusedValue)) {
-      if (focusedIndex < 0) return;
+      if (focusedIndex < 0) {
+        return;
+      }
       listRef.current.children[focusedIndex].focus();
     }
   }, [focusedValue, options, focusedIndex, listRef]);

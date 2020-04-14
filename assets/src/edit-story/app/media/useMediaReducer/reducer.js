@@ -79,7 +79,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
-      if (searchTerm === state.searchTerm) return state;
+      if (searchTerm === state.searchTerm) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         processing: [...state.processing],
@@ -91,7 +93,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_MEDIA_TYPE: {
       const { mediaType } = payload;
-      if (mediaType === state.mediaType) return state;
+      if (mediaType === state.mediaType) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
