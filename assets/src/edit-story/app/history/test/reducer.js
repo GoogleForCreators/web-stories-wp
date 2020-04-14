@@ -138,7 +138,7 @@ describe('reducer', () => {
       expect(result.replayState).toBeNull();
     });
 
-    it('should not modify the state is replayState is not set', () => {
+    it('should not modify the state if replayState is not set', () => {
       const result = reducer(EMPTY_STATE, {
         type: CLEAR_REPLAY_STATE,
       });
