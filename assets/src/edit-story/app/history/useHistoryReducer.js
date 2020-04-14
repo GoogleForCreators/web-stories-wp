@@ -19,81 +19,16 @@
  */
 import { useReducer, useCallback } from 'react';
 
-const ADD_ENTRY = 'add';
-const CLEAR_HISTORY = 'clear';
-const CLEAR_REPLAY_STATE = 'clear_replay';
-const REPLAY = 'replay';
-
-const EMPTY_STATE = {
-  entries: [],
-  offset: 0,
-  replayState: null,
-  versionNumber: 0,
-};
-
-const reducer = (size) => (state, { type, payload }) => {
-  switch (type) {
-    case ADD_ENTRY:
-      // If not, trim `entries` from `offset` (basically destroy all undone states),
-      // add new entry but limit entire storage to `size`
-      // and clear `offset` and `replayState`.
-      return {
-        entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
-        versionNumber: state.versionNumber + 1,
-        offset: 0,
-        replayState: null,
-      };
-
-    case CLEAR_REPLAY_STATE:
-      // Clears the replayState which indicates that state change was caused by applying replay.
-      if (state.replayState) {
-        return {
-          ...state,
-          replayState: null,
-        };
-      }
-      return state;
-    case REPLAY:
-      const currentEntry = state.entries[state.offset];
-      const replayState = state.entries[payload];
-      // If a page has changed and it was not an added page, and if the page is about to change with replay,
-      // Ensure the user stays on the page where the latest change happened.
-      if (
-        currentEntry &&
-        currentEntry.pages !== replayState.pages &&
-        currentEntry.pages.length === replayState.pages.length &&
-        currentEntry.current !== replayState.current
-      ) {
-        const changedPage = currentEntry.pages.filter((page, index) => {
-          return page !== replayState.pages[index];
-        });
-        // If a changed page was found.
-        if (changedPage.length === 1) {
-          // Ensure we stay on the changed page by overriding the previously saved current page.
-          const current = changedPage[0].id;
-          const replay = { ...replayState, current };
-          return {
-            ...state,
-            offset: payload,
-            replayState: replay,
-          };
-        }
-      }
-      return {
-        ...state,
-        offset: payload,
-        replayState,
-      };
-
-    case CLEAR_HISTORY:
-      return {
-        ...EMPTY_STATE,
-      };
-
-    default:
-      throw new Error(`Unknown history reducer action: ${type}`);
-  }
-};
+/**
+ * Internal dependencies
+ */
+import reducer, {
+  ADD_ENTRY,
+  CLEAR_HISTORY,
+  CLEAR_REPLAY_STATE,
+  REPLAY,
+  EMPTY_STATE,
+} from './reducer';
 
 function useHistoryReducer(size) {
   // State has 3 parts:
