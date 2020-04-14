@@ -36,6 +36,7 @@ import MULTIPLE_VALUE from '../multipleValue';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import ColorBox from './colorBox';
+import useUnmount from '../../../utils/useUnmount';
 
 const Preview = styled(ColorBox)`
   display: flex;
@@ -160,8 +161,8 @@ function ColorPreview({
     previewText,
   ]);
 
-  // Always hide color picker on unmount - note the double arrows
-  useEffect(() => () => hideSidebar(), [hideSidebar]);
+  // Always hide color picker on unmount
+  useUnmount(hideSidebar);
 
   if (isEditable) {
     // If editable, only the visual preview component is a button
