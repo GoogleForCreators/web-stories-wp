@@ -14,7 +14,36 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplatesGalleryView } from './templates/index';
-export { default as TemplateDetail } from './templates/detail';
-export { default as MyBookmarksView } from './my-bookmarks';
+/**
+ * Internal dependencies
+ */
+import CardGallery from '../index';
+
+export default {
+  title: 'Dashboard/Components/CardGallery',
+  component: CardGallery,
+};
+
+export const _default = () => {
+  const cards = [
+    'red',
+    'orange',
+    'green',
+    'blue',
+    'purple',
+    'aqua',
+    'yellow',
+    'grey',
+  ].map((color) => (
+    <div
+      key={color}
+      style={{ backgroundColor: color, width: '100%', height: '100%' }}
+    />
+  ));
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <CardGallery>{cards}</CardGallery>
+    </div>
+  );
+};

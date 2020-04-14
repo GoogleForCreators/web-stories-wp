@@ -59,13 +59,20 @@ export const Z_INDEX = {
 export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
 export const CARD_TITLE_AREA_HEIGHT = 80;
 
+export const APP_ROUTES = {
+  MY_STORIES: '/',
+  MY_BOOKMARKS: '/bookmarks',
+  TEMPLATES_GALLERY: '/templates-gallery',
+  TEMPLATE_DETAIL: '/template-detail',
+};
+
 export const paths = [
-  { value: '/', label: __('My Stories', 'web-stories') },
+  { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
   // {
-  //   value: '/templates-gallery',
+  //   value: APP_ROUTES.TEMPLATES_GALLERY,
   //   label: __('Templates Gallery', 'web-stories'),
   // },
-  // { value: '/my-bookmarks', label: __('My Bookmarks', 'web-stories') },
+  // { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
 ];
 
 export const STORY_STATUSES = [

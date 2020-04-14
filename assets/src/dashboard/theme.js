@@ -53,6 +53,7 @@ const colors = {
   gray25: '#F6F6F6',
   white: '#fff',
   bluePrimary: '#2979FF',
+  bluePrimary600: '#1A73E8',
   blueLight: '#EAF2FF',
   // taken from edit-stories
   action: '#47A0F4',
