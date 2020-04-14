@@ -46,10 +46,6 @@ const PreviewContainer = styled.div`
   display: inline-block;
 `;
 
-const Title = styled.span`
-  display: inline;
-`;
-
 export default function StoryListView({ filteredStories }) {
   return (
     <div style={{ width: '100%' }}>
