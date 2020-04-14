@@ -168,9 +168,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
-  // Will be moved to element definition, resizeRules.minWidth/minHeight?
-  const minWidth = dataToEditorY(20);
-  const minHeight = dataToEditorY(20);
+  const minWidth = dataToEditorY(resizeRules.minWidth);
+  const minHeight = dataToEditorY(resizeRules.minHeight);
   const aspectRatio = selectedElement.width / selectedElement.height;
 
   return (

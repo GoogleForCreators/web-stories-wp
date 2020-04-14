@@ -35,6 +35,8 @@ import { useStory } from '../../app/story';
 import { ReactComponent as PlayIcon } from '../../icons/play.svg';
 import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 
+export const PLAY_BUTTON_MIN_SIZE = 24;
+
 const Play = styled(PlayIcon)`
   width: 100%;
   height: 100%;
@@ -147,7 +149,7 @@ function VideoFrame({ element, box }) {
     : __('Click to play', 'web-stories');
 
   const smallestDimension = Math.min(box.width, box.height);
-  const buttonSize = Math.max(Math.ceil(smallestDimension * 0.2), 24);
+  const buttonSize = Math.max(Math.ceil(smallestDimension * 0.2), PLAY_BUTTON_MIN_SIZE);
 
   return (
     <Wrapper
