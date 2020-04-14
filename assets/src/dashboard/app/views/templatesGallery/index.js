@@ -28,9 +28,13 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown, ListBar } from '../../../components';
+import { Dropdown } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
-import { VIEW_STYLE, DROPDOWN_TYPES } from '../../../constants';
+import {
+  VIEW_STYLE,
+  DROPDOWN_TYPES,
+  STORY_SORT_OPTIONS,
+} from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
@@ -41,7 +45,7 @@ import {
   PageHeading,
   NoResults,
   StoryGridView,
-  ListBarContainer,
+  BodyViewOptions,
 } from '../shared';
 
 const ExploreFiltersContainer = styled.div`
@@ -58,6 +62,9 @@ const ExploreFiltersContainer = styled.div`
 function TemplatesGallery() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentTemplateSort, setCurrentTemplateSort] = useState(
+    STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
   const { pageSize } = usePagePreviewSize();
   const {
     state: { templates },
@@ -95,13 +102,17 @@ function TemplatesGallery() {
     if (filteredTemplatesCount > 0) {
       return (
         <BodyWrapper>
-          <ListBarContainer>
-            <ListBar
-              label={listBarLabel}
-              layoutStyle={viewStyle}
-              onPress={handleViewStyleBarButtonSelected}
-            />
-          </ListBarContainer>
+          <BodyViewOptions
+            listBarLabel={listBarLabel}
+            layoutStyle={viewStyle}
+            handleLayoutSelect={handleViewStyleBarButtonSelected}
+            currentSort={currentTemplateSort}
+            handleSortChange={setCurrentTemplateSort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
+          />
           <StoryGridView
             filteredStories={filteredTemplates}
             centerActionLabel={__('View details', 'web-stories')}
@@ -119,6 +130,7 @@ function TemplatesGallery() {
     listBarLabel,
     typeaheadValue,
     viewStyle,
+    currentTemplateSort,
   ]);
 
   return (
