@@ -338,7 +338,7 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         {
-          locked: false,
+          locked: true,
         },
         DEFAULT_PADDING
       );
