@@ -25,6 +25,7 @@ import { useEffect, useState, useRef } from 'react';
  * Internal dependencies
  */
 import { KEYS, Z_INDEX } from '../../constants';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const DROPDOWN_MENU_DIRECTIONS = {
   UP: 'up',
@@ -154,12 +155,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
 };
 
 TypeaheadOptions.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-      label: PropTypes.string,
-    })
-  ).isRequired,
+  items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   maxItemsVisible: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,

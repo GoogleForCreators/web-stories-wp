@@ -30,6 +30,8 @@ import defaultBackground from './migrations/v0009_defaultBackground';
 import dataPixelTo440 from './migrations/v0010_dataPixelTo440';
 import pageAdvancement from './migrations/v0011_pageAdvancement';
 import setBackgroundTextMode from './migrations/v0012_setBackgroundTextMode';
+import videoIdToId from './migrations/v0013_videoIdToId';
+import oneTapLinkDeprecate from './migrations/v0014_oneTapLinkDeprecate';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -44,6 +46,8 @@ const MIGRATIONS = {
   10: [dataPixelTo440],
   11: [pageAdvancement],
   12: [setBackgroundTextMode],
+  13: [videoIdToId],
+  14: [oneTapLinkDeprecate],
 };
 
 export const DATA_VERSION = Math.max.apply(

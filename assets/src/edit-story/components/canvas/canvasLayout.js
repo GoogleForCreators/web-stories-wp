@@ -52,8 +52,8 @@ function CanvasLayout() {
         <CanvasElementDropzone>
           <SelectionCanvas>
             <DisplayLayer />
-            <NavLayer />
             <FramesLayer />
+            <NavLayer />
           </SelectionCanvas>
           <EditLayer />
         </CanvasElementDropzone>

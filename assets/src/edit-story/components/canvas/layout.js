@@ -37,6 +37,11 @@ import useCanvas from './useCanvas';
  * for the layering details.
  */
 
+export const Z_INDEX = {
+  NAV: 1,
+  EDIT: 2,
+};
+
 const MENU_HEIGHT = 48;
 
 export const CAROUSEL_VERTICAL_PADDING = 24;
@@ -79,6 +84,8 @@ const Layer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+
+  ${({ zIndex }) => (typeof zIndex === 'number' ? `z-index: ${zIndex};` : '')}
 
   display: grid;
   grid:
