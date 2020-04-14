@@ -137,6 +137,14 @@ describe('reducer', () => {
 
       expect(result.replayState).toBeNull();
     });
+
+    it('should not modify the state is replayState is not set', () => {
+      const result = reducer(EMPTY_STATE, {
+        type: CLEAR_REPLAY_STATE,
+      });
+
+      expect(result).toStrictEqual(EMPTY_STATE);
+    });
   });
 
   describe('replay', () => {
