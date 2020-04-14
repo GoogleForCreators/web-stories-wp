@@ -19,11 +19,6 @@
  */
 import { useReducer, useCallback, useState } from 'react';
 
-/**
- * Internal dependencies
- */
-import useFocusCanvas from './useFocusCanvas';
-
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {
     editingElement: null,
@@ -31,12 +26,9 @@ function useEditingElement() {
   });
   const [nodesById, setNodesById] = useState({});
 
-  const focusCanvas = useFocusCanvas();
-
   const clearEditing = useCallback(() => {
     dispatch({ editingElement: null });
-    focusCanvas();
-  }, [focusCanvas]);
+  }, []);
 
   const setEditingElementWithoutState = useCallback((id) => {
     dispatch({ editingElement: id });
