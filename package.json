@@ -69,7 +69,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@wordpress/babel-preset-default": "^4.12.0",
     "@wordpress/e2e-test-utils": "^4.4.0",
-    "@wordpress/eslint-plugin": "^4.1.0",
+    "@wordpress/eslint-plugin": "^5.0.0",
     "@wordpress/jest-puppeteer-axe": "^1.7.0",
     "@wordpress/scripts": "^7.2.0",
     "amphtml-validator": "^1.0.30",
