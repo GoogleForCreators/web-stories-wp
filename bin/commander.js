@@ -68,7 +68,7 @@ function updateVersionNumbers(version = undefined, isPrerelease = false) {
 
   const newVersion =
     version ||
-    (isPrerelease ? `${currentVersion}-${currentCommitHash}` : currentVersion);
+    (isPrerelease ? `${currentVersion}+${currentCommitHash}` : currentVersion);
 
   const versionConstant = pluginFileContent.match(VERSION_CONSTANT_REGEX);
 
