@@ -118,9 +118,7 @@ describe('reducer', () => {
         type: CLEAR_HISTORY,
       });
 
-      Object.keys(result).forEach((k) => {
-        expect(result[k]).toStrictEqual(EMPTY_STATE[k]);
-      });
+      expect(result).toMatchObject(EMPTY_STATE);
     });
   });
 
