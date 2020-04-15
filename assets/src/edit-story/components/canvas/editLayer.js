@@ -77,7 +77,8 @@ function EditLayerForElement({ element }) {
 
   const focusCanvas = useFocusCanvas();
 
-  useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing(), [
+  const key = ['esc', 'tab'];
+  useKeyDownEffect(ref, { key, editable: true }, () => clearEditing(), [
     clearEditing,
   ]);
 
