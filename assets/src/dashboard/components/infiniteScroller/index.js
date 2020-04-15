@@ -25,7 +25,6 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import 'intersection-observer';
-// TODO add package for IE
 
 const InfiniteScroller = ({
   allDataLoadedMessage = 'No More Stories',
@@ -83,7 +82,9 @@ const InfiniteScroller = ({
       {isAllDataLoaded ? (
         <div>{allDataLoadedMessage}</div>
       ) : (
-        <div ref={loadingRef}>{loadingMessage}</div>
+        <div data-testid="load-more-on-scroll" ref={loadingRef}>
+          {loadingMessage}
+        </div>
       )}
     </>
   );
