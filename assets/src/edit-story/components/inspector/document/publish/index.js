@@ -157,7 +157,7 @@ function PublishPanel() {
   return (
     <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
       <Row>
-        <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
+        <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
         <StyledButton
           aria-pressed={showDatePicker}
           aria-haspopup={true}

@@ -128,28 +128,10 @@
       "excludePattern": "^use"
     }],
     "@wordpress/react-no-unsafe-timeout": "error",
-    "@wordpress/valid-sprintf": "error",
-    "no-restricted-syntax": [
-      "error",
-      {
-        "selector":
-        "CallExpression[callee.name=/^(__|_n|_nx|_x)$/]:not([arguments.0.type=/^Literal|BinaryExpression$/])",
-        "message":
-        "Translate function arguments must be string literals."
-      },
-      {
-        "selector":
-        "CallExpression[callee.name=/^(_n|_nx|_x)$/]:not([arguments.1.type=/^Literal|BinaryExpression$/])",
-        "message":
-        "Translate function arguments must be string literals."
-      },
-      {
-        "selector":
-        "CallExpression[callee.name=_nx]:not([arguments.3.type=/^Literal|BinaryExpression$/])",
-        "message":
-        "Translate function arguments must be string literals."
-      }
-    ]
+    "@wordpress/i18n-text-domain": ["error", {
+      "allowedTextDomain":  "web-stories"
+    }],
+    "@wordpress/valid-sprintf": "error"
   },
   "env": {
     "browser": true,

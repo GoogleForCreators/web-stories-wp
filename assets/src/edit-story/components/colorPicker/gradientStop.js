@@ -77,7 +77,7 @@ function GradientStopWithRef(
       aria-selected={isSelected}
       aria-label={sprintf(
         /* translators: %d: stop percentage */
-        __('Gradient stop at %d%%', 'web-stories'),
+        __('Gradient stop at %1$d%%', 'web-stories'),
         Math.round(position * 100)
       )}
     >

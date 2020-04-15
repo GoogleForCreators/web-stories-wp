@@ -73,10 +73,10 @@ function useUploader(refreshLibrary = true) {
       sizeError.file = file.name;
       sizeError.isUserError = true;
 
-      /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
       sizeError.message = sprintf(
+        /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
         __(
-          'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
+          'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
           'web-stories'
         ),
         bytesToMB(file.size),
