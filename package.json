@@ -20,9 +20,9 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "dependencies": {
-    "@wordpress/api-fetch": "^3.12.0",
-    "@wordpress/element": "^2.12.0",
-    "@wordpress/i18n": "^3.10.0",
+    "@wordpress/api-fetch": "^3.13.1",
+    "@wordpress/element": "^2.13.1",
+    "@wordpress/i18n": "^3.11.0",
     "colorthief": "^2.3.0",
     "draft-js": "^0.11.5",
     "draft-js-export-html": "^1.4.1",
@@ -49,7 +49,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.2.0",
+    "@ampproject/toolbox-optimizer": "^2.3.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -68,12 +68,12 @@
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",
     "@testing-library/react-hooks": "^3.2.1",
-    "@wordpress/babel-preset-default": "^4.11.0",
+    "@wordpress/babel-preset-default": "^4.12.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.4.0",
-    "@wordpress/e2e-test-utils": "^4.4.0",
+    "@wordpress/e2e-test-utils": "^4.5.0",
     "@wordpress/eslint-plugin": "^4.1.0",
     "@wordpress/jest-console": "^3.5.0",
-    "@wordpress/jest-puppeteer-axe": "^1.6.0",
+    "@wordpress/jest-puppeteer-axe": "^1.7.0",
     "amphtml-validator": "^1.0.30",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.3.0",
