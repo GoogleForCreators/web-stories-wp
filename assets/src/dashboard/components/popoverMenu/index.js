@@ -18,27 +18,25 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useCallback, useEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { CORNER_DIRECTIONS, KEYS, Z_INDEX } from '../../constants';
+import { KEYS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const Menu = styled.ul`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
   min-width: 210px;
   overflow: hidden;
   padding: 0;
-  position: absolute;
 `;
 Menu.propTypes = {
   isOpen: PropTypes.bool,
@@ -76,66 +74,6 @@ const Separator = styled.li`
   width: 100%;
 `;
 
-const PopoverMenuWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  z-index: ${Z_INDEX.POPOVER_MENU};
-  transform: ${(props) => {
-    switch (props.align) {
-      case CORNER_DIRECTIONS.TOP_LEFT:
-        return 'translate(-100%, -100%)';
-      case CORNER_DIRECTIONS.TOP_RIGHT:
-        return 'transformranslate(100%, -100%)';
-      case CORNER_DIRECTIONS.BOTTOM_RIGHT:
-        return 'translate(100%, 20%)';
-      case CORNER_DIRECTIONS.BOTTOM_LEFT:
-      default:
-        return 'translate(-100%, 20%)';
-    }
-  }};
-
-  ${Menu} {
-    ${(props) => {
-      switch (props.align) {
-        case CORNER_DIRECTIONS.TOP_RIGHT:
-          return css`
-            top: 0;
-            right: 0;
-            transform: translate(0%, 0%);
-          `;
-        case CORNER_DIRECTIONS.TOP_LEFT:
-          return css`
-            top: 0;
-            left: 0;
-            transform: translate(0%, 0%);
-          `;
-        case CORNER_DIRECTIONS.BOTTOM_RIGHT:
-          return css`
-            right: 0;
-            bottom: 0;
-            transform: translate(0%, 0%);
-          `;
-        case CORNER_DIRECTIONS.BOTTOM_LEFT:
-        default:
-          return css`
-            left: 0;
-            bottom: 0;
-            transform: translate(0%, 0%);
-          `;
-      }
-    }}
-  }
-`;
-PopoverMenuWrapper.propTypes = {
-  align: PropTypes.oneOf(Object.values(CORNER_DIRECTIONS)),
-  isOpen: PropTypes.bool,
-};
-
 const PopoverMenu = ({
   className,
   isOpen,
@@ -143,11 +81,8 @@ const PopoverMenu = ({
   onSelect,
   framelessButton,
 }) => {
-  const [align, setAlign] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
-  const menuRef = useRef(null);
-  const menuTogglePositionRef = useRef(null);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -220,47 +155,15 @@ const PopoverMenu = ({
     return <Separator key={`separator-${index}`} />;
   }, []);
 
-  useEffect(() => {
-    if (!isOpen) {
-      setAlign(null);
-      return;
-    }
-    if (!(menuTogglePositionRef.current && menuRef.current)) return;
-
-    const toggleBoundingBox = menuTogglePositionRef.current.getBoundingClientRect();
-    const menuBoundingBox = menuRef.current.getBoundingClientRect();
-
-    const alignHorizontal =
-      toggleBoundingBox.left + menuBoundingBox.width > window.innerWidth
-        ? 'RIGHT'
-        : 'LEFT';
-    const alignVertical =
-      0 > toggleBoundingBox.bottom - menuBoundingBox.height ? 'TOP' : 'BOTTOM';
-
-    setAlign(CORNER_DIRECTIONS[`${alignVertical}_${alignHorizontal}`]);
-  }, [isOpen]);
-
-  const isOpenAndAlignmentSet = isOpen && Boolean(align);
-
   return (
-    <PopoverMenuWrapper
-      ref={menuTogglePositionRef}
-      isOpen={isOpenAndAlignmentSet}
-      align={align}
-    >
-      <Menu
-        ref={menuRef}
-        className={className}
-        framelessButton={framelessButton}
-      >
-        {items.map((item, index) => {
-          if (item.separator) {
-            return renderSeparator(index);
-          }
-          return renderMenuItem(item, index);
-        })}
-      </Menu>
-    </PopoverMenuWrapper>
+    <Menu className={className} framelessButton={framelessButton}>
+      {items.map((item, index) => {
+        if (item.separator) {
+          return renderSeparator(index);
+        }
+        return renderMenuItem(item, index);
+      })}
+    </Menu>
   );
 };
 
@@ -273,3 +176,4 @@ PopoverMenu.propTypes = {
 };
 
 export default PopoverMenu;
+export { default as PopeverRevealer } from './popoverRevealer';
