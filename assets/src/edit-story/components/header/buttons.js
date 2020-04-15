@@ -57,7 +57,7 @@ function PreviewButton() {
     state: {
       meta: { isSaving },
     },
-    actions: { saveStory },
+    actions: { autoSave },
   } = useStory();
   const { previewLink } = useConfig();
 
@@ -105,7 +105,7 @@ function PreviewButton() {
 
     // @todo: See https://github.com/google/web-stories-wp/issues/1149. This
     // has the effect of pushing the changes to a published story.
-    saveStory({}, true).then(() => {
+    autoSave().then(() => {
       let previewOpened = false;
       if (popup && !popup.closed) {
         try {

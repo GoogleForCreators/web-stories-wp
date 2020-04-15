@@ -46,66 +46,46 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const saveStoryById = useCallback(
-    /**
-     * Fire REST API call to save story.
-     *
-     * @param {import('../../types').Story} story Story object.
-     * @param {boolean} isAutoSave If is auto-saving.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (
-      {
-        storyId,
-        title,
-        status,
+  const getStorySaveData = ({
+    title,
+    status,
+    pages,
+    author,
+    slug,
+    date,
+    modified,
+    content,
+    excerpt,
+    featuredMedia,
+    password,
+    stylePresets,
+    publisherLogo,
+    autoAdvance,
+    defaultPageDuration,
+  }) => {
+    return {
+      title,
+      status,
+      author,
+      password,
+      slug,
+      date,
+      modified,
+      content,
+      excerpt,
+      story_data: {
+        version: DATA_VERSION,
         pages,
-        author,
-        slug,
-        date,
-        modified,
-        content,
-        excerpt,
-        featuredMedia,
-        password,
-        stylePresets,
-        publisherLogo,
         autoAdvance,
         defaultPageDuration,
       },
-      isAutoSave = false
-    ) => {
-      return apiFetch({
-        path: isAutoSave
-          ? `${stories}/${storyId}/autosaves`
-          : `${stories}/${storyId}`,
-        data: {
-          title,
-          status,
-          author,
-          password,
-          slug,
-          date,
-          modified,
-          content,
-          excerpt,
-          story_data: {
-            version: DATA_VERSION,
-            pages,
-            autoAdvance,
-            defaultPageDuration,
-          },
-          featured_media: featuredMedia,
-          style_presets: stylePresets,
-          publisher_logo: publisherLogo,
-        },
-        method: 'POST',
-      });
-    },
-    [stories]
-  );
+      featured_media: featuredMedia,
+      style_presets: stylePresets,
+      publisher_logo: publisherLogo,
+    };
+  };
 
-  const autoSave = useCallback(
+  const saveStoryById = useCallback(
     /**
      * Fire REST API call to save story.
      *
@@ -113,9 +93,32 @@ function APIProvider({ children }) {
      * @return {Promise} Return apiFetch promise.
      */
     (story) => {
-      return saveStoryById(story, true);
+      const { storyId } = story;
+      return apiFetch({
+        path: `${stories}/${storyId}`,
+        data: getStorySaveData(story),
+        method: 'POST',
+      });
     },
-    [saveStoryById]
+    [stories]
+  );
+
+  const autoSaveById = useCallback(
+    /**
+     * Fire REST API call to save story.
+     *
+     * @param {import('../../types').Story} story Story object.
+     * @return {Promise} Return apiFetch promise.
+     */
+    (story) => {
+      const { storyId } = story;
+      return apiFetch({
+        path: `${stories}/${storyId}/autosaves`,
+        data: getStorySaveData(story),
+        method: 'POST',
+      });
+    },
+    [stories]
   );
 
   const deleteStoryById = useCallback(
@@ -247,7 +250,7 @@ function APIProvider({ children }) {
 
   const state = {
     actions: {
-      autoSave,
+      autoSaveById,
       getStoryById,
       getMedia,
       getLinkMetadata,
