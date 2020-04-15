@@ -233,6 +233,7 @@ const theme = {
     largeDisplayPhone: 162,
     smallDisplayPhone: 185,
     min: 139,
+    thumbnail: 33,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',

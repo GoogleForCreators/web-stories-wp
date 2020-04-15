@@ -37,18 +37,27 @@ import {
   TableHeaderCell,
   TableRow,
 } from '../../../components';
+import { PAGE_RATIO } from '../../../constants';
+
+const ListView = styled.div`
+  width: 100%;
+`;
 
 const PreviewContainer = styled.div`
   position: relative;
-  width: 33px;
-  height: 50px;
+  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail * PAGE_RATIO}px;
   vertical-align: middle;
   display: inline-block;
 `;
 
+const PreviewCell = styled(TableCell)`
+  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
+`;
+
 export default function StoryListView({ filteredStories }) {
   return (
-    <div style={{ width: '100%' }}>
+    <ListView>
       <Table>
         <TableHeader>
           <TableRow>
@@ -65,11 +74,11 @@ export default function StoryListView({ filteredStories }) {
         <TableBody>
           {filteredStories.map((story) => (
             <TableRow key={`story-${story.id}`}>
-              <TableCell>
+              <PreviewCell>
                 <PreviewContainer>
                   <PreviewPage page={story.pages[0]} />
                 </PreviewContainer>
-              </TableCell>
+              </PreviewCell>
               <TableCell>{story.title}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>
@@ -79,7 +88,7 @@ export default function StoryListView({ filteredStories }) {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </ListView>
   );
 }
 
