@@ -141,8 +141,13 @@ function createBuildDir() {
   });
 }
 
-function copyFiles() {
+function copyFiles(skipVendor) {
   const ignoredFiles = getIgnoredFiles();
+
+  if (skipVendor) {
+    ignoredFiles.push('vendor');
+  }
+
   const excludeList = ignoredFiles
     .map((file) => `--exclude '${file}'`)
     .join(' ');
@@ -177,9 +182,22 @@ function generateZipFile(filename) {
   });
 }
 
-function bundlePlugin(target, copy) {
+function bundlePlugin(target, copy, composer) {
   createBuildDir();
-  copyFiles();
+
+  if (!composer) {
+    execSync(
+      'composer update --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-suggest'
+    );
+  }
+
+  copyFiles(composer);
+
+  if (!composer) {
+    execSync(
+      'composer update --optimize-autoloader --no-interaction --prefer-dist --no-suggest'
+    );
+  }
 
   if (copy) {
     return;
@@ -206,12 +224,13 @@ program
   .alias('bundle')
   .arguments('[filename]')
   .option(
-    '-c, --copy',
+    '--copy',
     'Only copy files to build/ folder without creating a ZIP file'
   )
+  .option('--composer', 'Create Composer-ready ZIP file without PHP autoloader')
   .description('Bundle Web Stories plugin as ZIP file')
-  .action(async (filename, { copy }) => {
-    await bundlePlugin(filename, copy);
+  .action(async (filename, { copy, composer }) => {
+    await bundlePlugin(filename, copy, composer);
 
     console.log('Plugin successfully bundled!');
   });

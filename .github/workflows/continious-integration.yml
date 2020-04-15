@@ -149,9 +149,16 @@ jobs:
         run: |
           npm run build:plugin
           npm run bundle-plugin web-stories.zip
+          npm run bundle-plugin web-stories-composer.zip -- --composer
 
-      - name: Upload ZIP file
+      - name: Upload full bundle
         uses: actions/upload-artifact@v1
         with:
           name: web-stories.zip
           path: build/web-stories.zip
+
+      - name: Upload composer bundle
+        uses: actions/upload-artifact@v1
+        with:
+          name: web-stories-composer.zip
+          path: build/web-stories-composer.zip

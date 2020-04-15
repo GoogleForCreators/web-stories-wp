@@ -60,12 +60,13 @@ jobs:
         run: |
           npm run build:plugin
           npm run bundle-plugin web-stories.zip
+          npm run bundle-plugin web-stories-composer.zip -- --composer
 
       - name: Get upload url
         run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
         id: release
 
-      - name: Upload final bundle
+      - name: Upload full bundle
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,4 +74,14 @@ jobs:
           upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: /build/web-stories.zip
           asset_name: web-stories.zip
+          asset_content_type: application/zip
+
+      - name: Upload composer bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: /build/web-stories-composer.zip
+          asset_name: web-stories-composer.zip
           asset_content_type: application/zip
