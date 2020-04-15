@@ -117,26 +117,20 @@ export default function ApiProvider({ children }) {
           query,
         });
 
-        // Get header response metadata without messing with data structure of response
-        await apiFetch({
+        const response = await apiFetch({
           path,
           parse: false,
-        }).then((response) => {
-          // TODO these are not setting up updates based on searching
-          const totalStories = parseInt(response.headers.get('X-WP-Total'));
-          const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
-
-          return dispatch({
-            type: STORY_ACTION_TYPES.STORY_COUNT_DATA,
-            payload: { totalStories, totalPages },
-          });
         });
 
-        // get api response
-        const serverStoryResponse = await apiFetch({
-          path,
+        // TODO add headers for totals by status and have header reflect search
+        const totalStories = parseInt(response.headers.get('X-WP-Total'));
+        const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        dispatch({
+          type: STORY_ACTION_TYPES.STORY_COUNT_DATA,
+          payload: { totalStories, totalPages },
         });
 
+        const serverStoryResponse = await response.json();
         const reshapedStories = serverStoryResponse
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
