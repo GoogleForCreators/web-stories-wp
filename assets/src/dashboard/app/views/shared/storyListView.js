@@ -38,6 +38,7 @@ import {
   TableRow,
 } from '../../../components';
 import { PAGE_RATIO } from '../../../constants';
+import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 
 const ListView = styled.div`
   width: 100%;
@@ -76,7 +77,9 @@ export default function StoryListView({ filteredStories }) {
             <TableRow key={`story-${story.id}`}>
               <PreviewCell>
                 <PreviewContainer>
-                  <PreviewPage page={story.pages[0]} />
+                  <PreviewErrorBoundary>
+                    <PreviewPage page={story.pages[0]} />
+                  </PreviewErrorBoundary>
                 </PreviewContainer>
               </PreviewCell>
               <TableCell>{story.title}</TableCell>
