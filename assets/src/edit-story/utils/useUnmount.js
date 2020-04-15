@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-export { default as BodyWrapper } from './bodyWrapper';
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as NoResults } from './noResults';
-export { default as PageHeading } from './pageHeading';
-export { default as StoryGridView } from './storyGridView';
-export { default as TypeaheadSearch } from './typeaheadSearch';
+/**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+/**
+ * @param {function()} callback The identity-stable callback to be executed on unmount
+ */
+function useUnmount(callback) {
+  useEffect(() => callback, [callback]);
+}
+
+export default useUnmount;

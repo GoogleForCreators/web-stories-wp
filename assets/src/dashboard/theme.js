@@ -91,7 +91,7 @@ const theme = {
       activeBackground: 'transparent',
       borderRadius: 0,
       border: 'none',
-      arrowColor: colors.bluePrimary,
+      arrowColor: colors.gray300,
       height: '40px',
     },
   },

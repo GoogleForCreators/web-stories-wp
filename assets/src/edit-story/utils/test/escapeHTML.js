@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-export { default as BodyWrapper } from './bodyWrapper';
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as NoResults } from './noResults';
-export { default as PageHeading } from './pageHeading';
-export { default as StoryGridView } from './storyGridView';
-export { default as TypeaheadSearch } from './typeaheadSearch';
+/**
+ * Internal dependencies
+ */
+import escapeHTML from '../escapeHTML';
+
+describe('escapeHTML', () => {
+  it('should escape HTML', () => {
+    expect(escapeHTML('<div>Hello & World</div>')).toStrictEqual(
+      '&lt;div&gt;Hello &amp; World&lt;/div&gt;'
+    );
+  });
+});

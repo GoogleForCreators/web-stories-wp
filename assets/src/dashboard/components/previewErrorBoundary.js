@@ -17,10 +17,31 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 
-const ListBarContainer = styled.div`
-  margin-top: 10px;
-`;
+export default class PreviewErrorBoundary extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  };
 
-export default ListBarContainer;
+  state = {
+    hasError: false,
+  };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // eslint-disable-next-line no-console
+    console.error(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div />;
+    }
+    return this.props.children;
+  }
+}
