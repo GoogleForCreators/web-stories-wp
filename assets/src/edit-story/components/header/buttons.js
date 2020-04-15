@@ -28,8 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia } from '../../app';
+import { useStory, useMedia, useConfig } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Plain, Primary } from '../button';
 import CircularProgress from '../circularProgress';
@@ -57,10 +56,10 @@ function PreviewButton() {
   const {
     state: {
       meta: { isSaving },
-      story: { link },
     },
     actions: { saveStory },
   } = useStory();
+  const { previewLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
     null
@@ -70,8 +69,6 @@ function PreviewButton() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = () => {
-    const previewLink = addQueryArgs(link, { preview: 'true' });
-
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
     let popup;
@@ -108,7 +105,7 @@ function PreviewButton() {
 
     // @todo: See https://github.com/google/web-stories-wp/issues/1149. This
     // has the effect of pushing the changes to a published story.
-    saveStory().then(() => {
+    saveStory({}, true).then(() => {
       let previewOpened = false;
       if (popup && !popup.closed) {
         try {

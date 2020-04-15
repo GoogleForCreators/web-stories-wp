@@ -51,28 +51,34 @@ function APIProvider({ children }) {
      * Fire REST API call to save story.
      *
      * @param {import('../../types').Story} story Story object.
+     * @param {boolean} isAutoSave If is auto-saving.
      * @return {Promise} Return apiFetch promise.
      */
-    ({
-      storyId,
-      title,
-      status,
-      pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      stylePresets,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    }) => {
+    (
+      {
+        storyId,
+        title,
+        status,
+        pages,
+        author,
+        slug,
+        date,
+        modified,
+        content,
+        excerpt,
+        featuredMedia,
+        password,
+        stylePresets,
+        publisherLogo,
+        autoAdvance,
+        defaultPageDuration,
+      },
+      isAutoSave = false
+    ) => {
       return apiFetch({
-        path: `${stories}/${storyId}`,
+        path: isAutoSave
+          ? `${stories}/${storyId}/autosaves`
+          : `${stories}/${storyId}`,
         data: {
           title,
           status,
@@ -97,6 +103,19 @@ function APIProvider({ children }) {
       });
     },
     [stories]
+  );
+
+  const autoSave = useCallback(
+    /**
+     * Fire REST API call to save story.
+     *
+     * @param {import('../../types').Story} story Story object.
+     * @return {Promise} Return apiFetch promise.
+     */
+    (story) => {
+      return saveStoryById(story, true);
+    },
+    [saveStoryById]
   );
 
   const deleteStoryById = useCallback(
@@ -228,6 +247,7 @@ function APIProvider({ children }) {
 
   const state = {
     actions: {
+      autoSave,
       getStoryById,
       getMedia,
       getLinkMetadata,
