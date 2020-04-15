@@ -21,23 +21,27 @@ import groupBy from '../../../utils/groupBy';
 
 // TODO make these actions
 export const ACTION_TYPES = {
-  ADD_STORIES: 'add_stories',
-  STORY_COUNT_DATA: 'story_count_data',
+  UPDATE_STORIES: 'update_stories',
+  UPDATE_TOTAL_STORIES_PAGES: 'update_total_stories_pages',
+  UPDATE_TOTAL_STORIES_COUNT: 'update_total_stories_count',
 };
 
 function storyReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.STORY_COUNT_DATA:
+    case ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES:
+      return {
+        ...state,
+        totalPages: action.payload.totalPages,
+      };
+    case ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT:
       return {
         ...state,
         totalStories: action.payload.totalStories,
-        totalPages: action.payload.totalPages,
       };
-    case ACTION_TYPES.ADD_STORIES:
+    case ACTION_TYPES.UPDATE_STORIES:
       return {
         ...state,
         stories: { ...state.stories, ...groupBy(action.payload, 'id') },
-        // TODO this needs to keep its order otherwise things get funky on load
       };
     default:
       return state;

@@ -19,6 +19,7 @@
  */
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -38,6 +39,7 @@ const Item = styled.div`
   width: 100%;
   height: 300px;
   padding: 20px;
+  margin-top: 20px;
   background-color: teal;
   color: salmon;
   font-size: 30px;
@@ -49,7 +51,7 @@ const Item = styled.div`
   }
 `;
 
-const generateArray = (n) => new Array(n).fill(<span>Demo Item</span>);
+const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 
 export const _default = () => {
   const [currentCount, setCurrentCount] = useState(5);
@@ -71,7 +73,8 @@ export const _default = () => {
         }
       }}
       isAllDataLoaded={isAllDataLoaded}
-      allDataLoadedMessage={"You've reached the end of the line"}
+      loadingMessage={text('loadingMessage', 'Data is loading')}
+      allDataLoadedMessage={text('allDataLoadedMessage', 'all data is loaded')}
     >
       {dummyData.map((data, index) => (
         <Item key={index}>

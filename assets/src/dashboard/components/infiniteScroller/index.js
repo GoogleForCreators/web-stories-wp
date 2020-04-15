@@ -24,7 +24,7 @@ import {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
-
+import 'intersection-observer';
 // TODO add package for IE
 
 const InfiniteScroller = ({
@@ -48,13 +48,13 @@ const InfiniteScroller = ({
     root: null,
     threshold: 1.0,
   };
-
+  // IntersectionObserver is in the native browser, imported above is a polyfill to ensure older browser compatibility
+  // eslint-disable-next-line no-undef
   const observer = new IntersectionObserver(
     useCallback(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            console.log('GIMME MOREEEE');
             setLoadMore(true);
           }
         });
@@ -65,12 +65,12 @@ const InfiniteScroller = ({
   );
 
   useLayoutEffect(() => {
+    const currentRef = loadingRef.current;
     if (!isAllDataLoaded) {
       observer.observe(loadingRef.current);
       return () => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         // eslint-disable-next-line no-unused-expressions
-        loadingRef.current && observer.unobserve(loadingRef.current);
+        currentRef && observer.unobserve(currentRef);
       };
     }
     return () => {};

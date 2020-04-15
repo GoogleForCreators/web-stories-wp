@@ -124,10 +124,15 @@ export default function ApiProvider({ children }) {
 
         // TODO add headers for totals by status and have header reflect search
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
+          payload: { totalStories },
+        });
+
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
         dispatch({
-          type: STORY_ACTION_TYPES.STORY_COUNT_DATA,
-          payload: { totalStories, totalPages },
+          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
+          payload: { totalPages },
         });
 
         const serverStoryResponse = await response.json();
@@ -136,7 +141,7 @@ export default function ApiProvider({ children }) {
           .filter(Boolean);
 
         dispatch({
-          type: STORY_ACTION_TYPES.ADD_STORIES,
+          type: STORY_ACTION_TYPES.UPDATE_STORIES,
           payload: reshapedStories,
         });
 
