@@ -15,10 +15,10 @@
  */
 
 module.exports = function (api) {
-  const isTestEnvironment = api.env() === 'test';
+  const isTest = api.env('test');
   const isProduction = api.env() === 'production';
 
-  const targets = isTestEnvironment
+  const targets = isTest
     ? {
         node: 'current',
       }
