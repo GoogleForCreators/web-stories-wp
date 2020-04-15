@@ -41,6 +41,7 @@ export {
   TableBody,
   TableHeaderCell,
   TableCell,
+  TablePreviewCell,
   TableHeader,
   TableRow,
 } from './table';

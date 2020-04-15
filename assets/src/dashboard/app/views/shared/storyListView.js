@@ -35,6 +35,7 @@ import {
   TableCell,
   TableHeader,
   TableHeaderCell,
+  TablePreviewCell,
   TableRow,
 } from '../../../components';
 import { PAGE_RATIO } from '../../../constants';
@@ -50,10 +51,6 @@ const PreviewContainer = styled.div`
   height: ${({ theme }) => theme.previewWidth.thumbnail * PAGE_RATIO}px;
   vertical-align: middle;
   display: inline-block;
-`;
-
-const PreviewCell = styled(TableCell)`
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
 `;
 
 export default function StoryListView({ filteredStories }) {
@@ -75,13 +72,13 @@ export default function StoryListView({ filteredStories }) {
         <TableBody>
           {filteredStories.map((story) => (
             <TableRow key={`story-${story.id}`}>
-              <PreviewCell>
+              <TablePreviewCell>
                 <PreviewContainer>
                   <PreviewErrorBoundary>
                     <PreviewPage page={story.pages[0]} />
                   </PreviewErrorBoundary>
                 </PreviewContainer>
-              </PreviewCell>
+              </TablePreviewCell>
               <TableCell>{story.title}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>
               <TableCell>{__('—', 'web-stories')}</TableCell>

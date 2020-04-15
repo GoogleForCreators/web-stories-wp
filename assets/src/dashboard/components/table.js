@@ -50,3 +50,7 @@ export const TableCell = styled.td`
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
 `;
+
+export const TablePreviewCell = styled(TableCell)`
+  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
+`;
