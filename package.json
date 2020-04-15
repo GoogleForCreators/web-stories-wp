@@ -52,6 +52,7 @@
     "@ampproject/toolbox-optimizer": "^2.3.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@prettier/plugin-xml": "^0.7.2",
