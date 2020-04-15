@@ -26,6 +26,7 @@ export {
   ActionLabel,
 } from './cardGridItem';
 export { default as Dropdown } from './dropdown';
+export { default as InfiniteScroller } from './infiniteScroller';
 export { default as NavigationBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
