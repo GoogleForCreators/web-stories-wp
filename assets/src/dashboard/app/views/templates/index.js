@@ -22,7 +22,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useState, useContext, useMemo, useCallback } from 'react';
+import { useState, useContext, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -68,7 +68,12 @@ function TemplatesGallery() {
   const { pageSize } = usePagePreviewSize();
   const {
     state: { templates },
+    actions: { fetchTemplates },
   } = useContext(ApiContext);
+
+  useEffect(() => {
+    fetchTemplates();
+  }, [fetchTemplates]);
 
   const filteredTemplates = useMemo(() => {
     return templates.filter((template) => {
