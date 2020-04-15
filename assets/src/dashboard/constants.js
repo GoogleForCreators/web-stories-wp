@@ -116,6 +116,8 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'author',
 };
 
+export const ITEMS_PER_PAGE = 10;
+
 export const ORDER_BY_SORT = {
   [STORY_SORT_OPTIONS.NAME]: 'asc',
   [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',

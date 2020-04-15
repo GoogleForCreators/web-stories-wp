@@ -28,7 +28,7 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab } from '../../../components';
+import { FloatingTab, InfiniteScroller } from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
@@ -80,25 +80,28 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allStoriesLoaded, setAllStoriesLoaded] = useState(false);
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
   const { pageSize } = usePagePreviewSize();
   const {
     actions: { fetchStories },
-    state: { stories },
+    state: { stories, totalStories, totalPages },
   } = useContext(ApiContext);
-
+  console.log(totalStories, totalPages);
   useEffect(() => {
     fetchStories({
       orderby: currentStorySort,
       searchTerm: typeaheadValue,
+      page: currentPage,
       status,
     });
-  }, [currentStorySort, fetchStories, status, typeaheadValue]);
+  }, [currentPage, currentStorySort, fetchStories, status, typeaheadValue]);
 
   const filteredStories = useMemo(() => {
-    return stories.filter((story) => {
+    return Object.values(stories).filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toLowerCase();
 
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
@@ -113,7 +116,7 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const filteredStoriesCount = filteredStories.length;
+  const filteredStoriesCount = totalStories;
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
@@ -141,17 +144,28 @@ function MyStories() {
               'web-stories'
             )}
           />
-
-          <StoryGridView
-            filteredStories={filteredStories}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
+          <InfiniteScroller
+            isAllDataLoaded={allStoriesLoaded}
+            allDataLoadedMessage={'There are no more stories to load'}
+            handleGetData={() => {
+              if (currentPage < totalPages) {
+                setCurrentPage(currentPage + 1);
+              } else {
+                setAllStoriesLoaded(true);
+              }
+            }}
+          >
+            <StoryGridView
+              filteredStories={filteredStories}
+              centerActionLabel={
+                <>
+                  <PlayArrowIcon />
+                  {__('Preview', 'web-stories')}
+                </>
+              }
+              bottomActionLabel={__('Open in editor', 'web-stories')}
+            />
+          </InfiniteScroller>
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
@@ -171,6 +185,7 @@ function MyStories() {
     typeaheadValue,
     viewStyle,
     currentStorySort,
+    currentPage,
   ]);
 
   return (

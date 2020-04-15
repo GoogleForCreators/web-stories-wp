@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useCallback, useMemo, useState } from 'react';
+import { createContext, useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
 
@@ -32,11 +32,15 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { useConfig } from '../config';
 import {
+  ITEMS_PER_PAGE,
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
 } from '../../constants';
 import getAllTemplates from '../../templates';
+import storyReducer, {
+  ACTION_TYPES as STORY_ACTION_TYPES,
+} from './reducer/stories';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -75,7 +79,11 @@ export function reshapeTemplateObject({ id, title, pages }) {
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
-  const [stories, setStories] = useState([]);
+  const [state, dispatch] = useReducer(storyReducer, {
+    stories: {},
+    totalStories: null,
+    totalPages: null,
+  });
 
   const templates = useMemo(
     () => getAllTemplates({ pluginDir }).map(reshapeTemplateObject),
@@ -84,21 +92,23 @@ export default function ApiProvider({ children }) {
 
   const fetchStories = useCallback(
     async ({
-      status = STORY_STATUSES[0].value,
       orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      page = 1,
       searchTerm,
+      status = STORY_STATUSES[0].value,
     }) => {
       if (!api.stories) {
         return [];
       }
-      const perPage = '100'; // TODO set up pagination
+
       const query = {
-        status,
         context: 'edit',
-        search: searchTerm || undefined,
-        orderby,
-        per_page: perPage,
         order: ORDER_BY_SORT[orderby],
+        orderby,
+        page,
+        per_page: ITEMS_PER_PAGE,
+        search: searchTerm || undefined,
+        status,
       };
 
       try {
@@ -107,13 +117,35 @@ export default function ApiProvider({ children }) {
           query,
         });
 
+        // Get header response metadata without messing with data structure of response
+        await apiFetch({
+          path,
+          parse: false,
+        }).then((response) => {
+          // TODO these are not setting up updates based on searching
+          const totalStories = parseInt(response.headers.get('X-WP-Total'));
+          const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+
+          return dispatch({
+            type: STORY_ACTION_TYPES.STORY_COUNT_DATA,
+            payload: { totalStories, totalPages },
+          });
+        });
+
+        // get api response
         const serverStoryResponse = await apiFetch({
           path,
         });
+
         const reshapedStories = serverStoryResponse
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
-        setStories(reshapedStories);
+
+        dispatch({
+          type: STORY_ACTION_TYPES.ADD_STORIES,
+          payload: reshapedStories,
+        });
+
         return reshapedStories;
       } catch (err) {
         return [];
@@ -137,10 +169,22 @@ export default function ApiProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      state: { stories, templates },
+      state: {
+        stories: state.stories,
+        totalStories: state.totalStories,
+        totalPages: state.totalPages,
+        templates,
+      },
       actions: { fetchStories, getAllFonts },
     }),
-    [stories, templates, fetchStories, getAllFonts]
+    [
+      templates,
+      fetchStories,
+      getAllFonts,
+      state.stories,
+      state.totalStories,
+      state.totalPages,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
