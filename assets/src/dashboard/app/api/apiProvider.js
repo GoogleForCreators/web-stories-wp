@@ -31,7 +31,11 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { STORY_STATUSES } from '../../constants';
+import {
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+  ORDER_BY_SORT,
+} from '../../constants';
 import getAllTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
@@ -79,16 +83,22 @@ export default function ApiProvider({ children }) {
   );
 
   const fetchStories = useCallback(
-    async ({ status = STORY_STATUSES[0].value, searchTerm }) => {
+    async ({
+      status = STORY_STATUSES[0].value,
+      orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      searchTerm,
+    }) => {
       if (!api.stories) {
         return [];
       }
       const perPage = '100'; // TODO set up pagination
       const query = {
         status,
-        per_page: perPage,
         context: 'edit',
         search: searchTerm || undefined,
+        orderby,
+        per_page: perPage,
+        order: ORDER_BY_SORT[orderby],
       };
 
       try {

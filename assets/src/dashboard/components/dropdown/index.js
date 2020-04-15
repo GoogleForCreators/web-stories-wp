@@ -121,14 +121,14 @@ const Dropdown = ({
   };
 
   const handleMenuItemSelect = (item) => {
-    if (DROPDOWN_TYPES.PANEL) {
+    if (type === DROPDOWN_TYPES.PANEL) {
       onChange(item);
       return;
     }
-
     if (!item.value) {
       return;
     }
+
     if (onChange) {
       onChange(item);
     }

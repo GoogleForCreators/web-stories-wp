@@ -226,9 +226,15 @@ function MediaPane(props) {
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
-      if (!isMediaLoaded || isMediaLoading) return;
-      if (!hasMore) return;
-      if (!entry.isIntersecting) return;
+      if (!isMediaLoaded || isMediaLoading) {
+        return;
+      }
+      if (!hasMore) {
+        return;
+      }
+      if (!entry.isIntersecting) {
+        return;
+      }
 
       setNextPage();
     },
