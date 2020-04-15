@@ -213,7 +213,9 @@ const PopoverRevealer = ({ children, isOpen }) => {
       setAlign(null);
       return;
     }
-    if (!(menuTogglePositionRef.current && menuPositionRef.current)) return;
+    if (!(menuTogglePositionRef.current && menuPositionRef.current)) {
+      return;
+    }
 
     const toggleBoundingBox = menuTogglePositionRef.current.getBoundingClientRect();
     const menuWrapperBoundingBox = menuPositionRef.current.getBoundingClientRect();
