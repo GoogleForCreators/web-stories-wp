@@ -85,8 +85,12 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         showSnackbar({
           message: createInterpolateElement(
             sprintf(
+              /* translators: %s: list of allowed file types. */
               __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedMimeTypes.join(', ')
+              allowedMimeTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
             ),
             {
               b: <b />,

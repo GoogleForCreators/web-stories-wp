@@ -192,7 +192,7 @@ function PublishPanel() {
           {isUsersLoading ? (
             <DropDown
               ariaLabel={authorLabel}
-              placeholder={__('Loading...', 'web-stories')}
+              placeholder={__('Loading…', 'web-stories')}
               disabled
               lightMode={true}
             />

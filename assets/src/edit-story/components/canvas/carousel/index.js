@@ -362,10 +362,15 @@ function Carousel() {
                     ariaLabel={
                       page.id === currentPageId
                         ? sprintf(
+                            /* translators: %s: page number. */
                             __('Page %s (current page)', 'web-stories'),
                             index + 1
                           )
-                        : sprintf(__('Go to page %s', 'web-stories'), index + 1)
+                        : sprintf(
+                            /* translators: %s: page number. */
+                            __('Go to page %s', 'web-stories'),
+                            index + 1
+                          )
                     }
                     isActive={page.id === currentPageId}
                     index={index}

@@ -94,8 +94,12 @@ function useUploader(refreshLibrary = true) {
       /* translators: %s is a list of allowed file extensions. */
       validError.message = createInterpolateElement(
         sprintf(
+          /* translators: %s: list of allowed file types. */
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedMimeTypes.join(', ')
+          allowedMimeTypes.join(
+            /* translators: delimiter used in a list */
+            __(', ', 'web-stories')
+          )
         ),
         {
           b: <b />,

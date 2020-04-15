@@ -2,6 +2,7 @@
   "root": true,
   "parser": "babel-eslint",
   "extends": [
+    "plugin:@wordpress/eslint-plugin/i18n",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:eslint-comments/recommended",
