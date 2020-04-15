@@ -86,7 +86,7 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
       />
       <Space />
       <Toggle
-        data-testid="padding.lock"
+        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={lockPadding}

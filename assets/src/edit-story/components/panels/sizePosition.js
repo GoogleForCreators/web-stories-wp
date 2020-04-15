@@ -205,7 +205,7 @@ function SizePositionPanel({
           disabled={isFill}
         />
         <Toggle
-          data-testid="lockRatio"
+          aria-label={__('Aspect ratio lock', 'web-stories')}
           icon={<StyledLocked />}
           uncheckedIcon={<StyledUnlocked />}
           value={lockAspectRatio}
