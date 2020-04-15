@@ -46,6 +46,7 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useFocusOut from '../../utils/useFocusOut';
+import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
@@ -202,40 +203,49 @@ function TextEdit({
     evt.stopPropagation();
   };
 
-  // Finally update content for element on focus out.
-  useFocusOut(
-    textBoxRef,
-    () => {
-      const newState = lastKnownState.current;
-      const newHeight = editorHeightRef.current;
-      wrapperRef.current.style.height = '';
-      if (newState) {
-        // Remove manual line breaks and remember to trim any trailing non-breaking space.
-        const properties = {
-          content: stateToHTML(lastKnownState.current, {
-            defaultBlockTag: null,
-          })
-            .replace(/<br ?\/?>/g, '')
-            .replace(/&nbsp;$/, ''),
-        };
-        // Recalculate the new height and offset.
-        if (newHeight) {
-          const [dx, dy] = calcRotatedResizeOffset(
-            rotationAngle,
-            0,
-            0,
-            0,
-            newHeight - height
-          );
-          properties.height = editorToDataY(newHeight);
-          properties.x = editorToDataX(x + dx);
-          properties.y = editorToDataY(y + dy);
-        }
-        setProperties(properties);
+  const updateContent = useCallback(() => {
+    const newState = lastKnownState.current;
+    const newHeight = editorHeightRef.current;
+    wrapperRef.current.style.height = '';
+    if (newState) {
+      // Remove manual line breaks and remember to trim any trailing non-breaking space.
+      const properties = {
+        content: stateToHTML(lastKnownState.current, {
+          defaultBlockTag: null,
+        })
+          .replace(/<br ?\/?>/g, '')
+          .replace(/&nbsp;$/, ''),
+      };
+      // Recalculate the new height and offset.
+      if (newHeight) {
+        const [dx, dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          0,
+          0,
+          0,
+          newHeight - height
+        );
+        properties.height = editorToDataY(newHeight);
+        properties.x = editorToDataX(x + dx);
+        properties.y = editorToDataY(y + dy);
       }
-    },
-    [setProperties, x, y, height, rotationAngle, editorToDataY, editorToDataX]
-  );
+      setProperties(properties);
+    }
+  }, [
+    editorToDataX,
+    editorToDataY,
+    height,
+    rotationAngle,
+    setProperties,
+    x,
+    y,
+  ]);
+
+  // Update content for element on focus out.
+  useFocusOut(textBoxRef, updateContent, [updateContent]);
+
+  // Update content for element on unmount.
+  useUnmount(updateContent);
 
   // Set focus when initially rendered.
   useLayoutEffect(() => {

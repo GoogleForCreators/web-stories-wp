@@ -48,15 +48,18 @@ import {
   StoryGridView,
 } from '../shared';
 
-const FilterContainer = styled.div`
+// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
+
+const FilterContainer = styled.fieldset`
+  padding: 0 20px 20px 0;
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
   padding-bottom: 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    & > label {
+    & > label span {
       border-radius: 0;
-      box-shadow: none;
+      box-shadow: none !important;
       padding: 0 10px 0 0;
     }
   }
@@ -189,9 +192,10 @@ function MyStories() {
               <FloatingTab
                 key={storyStatus.value}
                 onClick={(_, value) => setStatus(value)}
-                name="all-stories"
+                name="my-stories-filter-selection"
                 value={storyStatus.value}
                 isSelected={status === storyStatus.value}
+                inputType="radio"
               >
                 {storyStatus.label}
               </FloatingTab>
