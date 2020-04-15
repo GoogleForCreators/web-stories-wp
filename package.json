@@ -111,6 +111,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^2.0.4",
     "puppeteer": "^2.1.1",
+    "react-test-renderer": "^16.13.1",
     "rtlcss-webpack-plugin": "^4.0.3",
     "source-map-loader": "^0.2.4",
     "stylelint": "^13.3.2",
