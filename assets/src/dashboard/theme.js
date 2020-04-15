@@ -129,6 +129,12 @@ const theme = {
       letterSpacing: '-0.005em',
       minLetterSpacing: '-0.01em',
     },
+    heading2: {
+      family: 'Google Sans',
+      size: '24px',
+      lineHeight: '34px',
+      weight: 500,
+    },
     heading3: {
       family: 'Google Sans',
       size: '20px',
@@ -226,6 +232,10 @@ const theme = {
   pageGutter: {
     desktop: 20,
     min: 10,
+    large: {
+      desktop: 80,
+      tablet: 40,
+    },
   },
   previewWidth: {
     desktop: 221,

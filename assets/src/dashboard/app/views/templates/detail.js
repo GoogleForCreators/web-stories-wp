@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -27,26 +26,18 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
-import { CardGallery, PreviewPage } from '../../../components';
-
-const PageContainer = styled.div`
-  display: flex;
-  padding: 20px;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    display: block;
-  }
-`;
-
-const PageColumn = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 50%;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    width: 100%;
-  }
-`;
+import { CardGallery, PreviewPage, Pill } from '../../../components';
+import {
+  ByLine,
+  ContentContainer,
+  ColorBadge,
+  ColumnContainer,
+  Column,
+  DetailContainer,
+  MetaDataContainer,
+  Text,
+  Title,
+} from './components';
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
@@ -68,22 +59,45 @@ function TemplateDetail() {
   }, [fetchTemplate, templateId]);
 
   return (
-    <PageContainer>
-      <PageColumn>
-        {template && (
-          <FontProvider>
-            <TransformProvider>
-              <CardGallery>
-                {template.pages.map((page) => (
-                  <PreviewPage key={page.id} page={page} />
-                ))}
-              </CardGallery>
-            </TransformProvider>
-          </FontProvider>
-        )}
-      </PageColumn>
-      <PageColumn />
-    </PageContainer>
+    template && (
+      <FontProvider>
+        <TransformProvider>
+          <section />
+          <ContentContainer>
+            <ColumnContainer>
+              <Column>
+                <CardGallery>
+                  {template.pages.map((page) => (
+                    <PreviewPage key={page.id} page={page} />
+                  ))}
+                </CardGallery>
+              </Column>
+              <Column>
+                <DetailContainer>
+                  <Title>{`${template.title} Template`}</Title>
+                  <ByLine>{`by ${template.createdBy}`}</ByLine>
+                  <Text>{template.description}</Text>
+                  <MetaDataContainer>
+                    {template.metadata.map(({ label, color }) => (
+                      <Pill
+                        name={label}
+                        key={label}
+                        disabled
+                        onClick={() => {}}
+                        value={label}
+                      >
+                        {color && <ColorBadge color={color} />}
+                        {label}
+                      </Pill>
+                    ))}
+                  </MetaDataContainer>
+                </DetailContainer>
+              </Column>
+            </ColumnContainer>
+          </ContentContainer>
+        </TransformProvider>
+      </FontProvider>
+    )
   );
 }
 
