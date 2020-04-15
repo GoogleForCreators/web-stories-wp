@@ -230,8 +230,10 @@ const theme = {
     },
   },
   pageGutter: {
-    desktop: 20,
-    min: 10,
+    small: {
+      desktop: 20,
+      min: 10,
+    },
     large: {
       desktop: 80,
       tablet: 40,
