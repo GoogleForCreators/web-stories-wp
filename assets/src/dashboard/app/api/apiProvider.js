@@ -62,12 +62,25 @@ export function reshapeStoryObject(editStoryURL) {
   };
 }
 
-export function reshapeTemplateObject({ id, title, pages }) {
+export function reshapeTemplateObject({
+  id,
+  title,
+  tags,
+  colors,
+  createdBy,
+  description,
+  pages,
+}) {
   return {
     id,
     title,
+    createdBy,
+    description,
     status: 'template',
     modified: moment('2020-04-07'),
+    metadata: [...tags, ...colors].map((value) =>
+      typeof value === 'object' ? { ...value } : { label: value }
+    ),
     pages,
     centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}`,
     bottomTargetAction: () => {},

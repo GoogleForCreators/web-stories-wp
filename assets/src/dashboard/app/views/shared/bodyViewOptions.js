@@ -27,7 +27,7 @@ import { Dropdown, ListBar } from '../../../components';
 import { STORY_SORT_MENU_ITEMS, DROPDOWN_TYPES } from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
-  margin: ${({ theme }) => `${theme.pageGutter.desktop}px 0`};
+  margin: ${({ theme }) => `${theme.pageGutter.small.desktop}px 0`};
   padding-bottom: 20px;
   padding-left: 15px;
   display: flex;

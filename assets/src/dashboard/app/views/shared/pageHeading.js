@@ -36,12 +36,12 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: ${({ theme }) => `40px ${theme.pageGutter.desktop}px`};
+  margin: ${({ theme }) => `40px ${theme.pageGutter.small.desktop}px`};
   max-width: 100%;
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     display: block;
-    margin: ${({ theme }) => `20px ${theme.pageGutter.min}px 60px`};
+    margin: ${({ theme }) => `20px ${theme.pageGutter.small.min}px 60px`};
   }
 `;
 
@@ -59,11 +59,11 @@ const SearchContainer = styled.div`
   position: absolute;
   max-width: 35%;
   margin: auto 0;
-  right: ${({ theme }) => `${theme.pageGutter.desktop}px`};
+  right: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
   display: flex;
   justify-content: flex-end;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.pageGutter.min}px`};
+    left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
