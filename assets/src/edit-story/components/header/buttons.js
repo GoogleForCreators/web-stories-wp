@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia, useConfig } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Plain, Primary } from '../button';
@@ -56,19 +57,26 @@ function PreviewButton() {
   const {
     state: {
       meta: { isSaving },
+      story: { link, status },
     },
-    actions: { autoSave },
+    actions: { autoSave, saveStory },
   } = useStory();
-  const { previewLink } = useConfig();
+  const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
     null
   );
+  const isDraft = 'draft' === status;
 
   /**
    * Open a preview of the story in current window.
    */
   const openPreviewLink = () => {
+    // Display the actual link in case of a draft.
+    const previewLink = isDraft
+      ? addQueryArgs(link, { preview: 'true' })
+      : autoSaveLink;
+
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
     let popup;
@@ -101,9 +109,9 @@ function PreviewButton() {
       // will be resolved after the story is saved.
     }
 
-    // @todo: See https://github.com/google/web-stories-wp/issues/1149. This
-    // has the effect of pushing the changes to a published story.
-    autoSave().then(() => {
+    // Save story directly if draft, otherwise, use auto-save.
+    const updateFunc = isDraft ? saveStory : autoSave;
+    updateFunc().then(() => {
       let previewOpened = false;
       if (popup && !popup.closed) {
         try {
@@ -135,7 +143,7 @@ function PreviewButton() {
   return (
     <>
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
-        {__('Save & Preview', 'web-stories')}
+        {__('Preview', 'web-stories')}
       </Outline>
       <Dialog
         open={Boolean(previewLinkToOpenViaDialog)}
