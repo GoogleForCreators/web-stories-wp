@@ -16,55 +16,47 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
 import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
 
-export default function usePagePreviewSize(options = {}) {
-  const { thumbnailMode = false } = options;
-  const baseSize = thumbnailMode ? 33 : 100;
-  const [pageSize, setPageSize] = useState({
-    width: baseSize,
-    height: PAGE_RATIO * baseSize,
-  });
-  const handleWindowResize = useCallback(() => {
-    const { innerWidth } = window;
-    let itemWidth = 0;
+const sizeFromWidth = (width) => ({
+  width,
+  height: PAGE_RATIO * width,
+});
 
-    if (innerWidth <= theme.breakpoint.raw.min) {
-      itemWidth = theme.previewWidth.min;
-    } else if (innerWidth <= theme.breakpoint.raw.smallDisplayPhone) {
-      itemWidth = theme.previewWidth.smallDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.largeDisplayPhone) {
-      itemWidth = theme.previewWidth.largeDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.tablet) {
-      itemWidth = theme.previewWidth.tablet;
-    } else {
-      itemWidth = theme.previewWidth.desktop;
-    }
-    setPageSize({
-      width: itemWidth,
-      height: itemWidth * PAGE_RATIO,
-    });
-  }, []);
+const ascendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
+  (a, b) => theme.breakpoint.raw[a] - theme.breakpoint.raw[b]
+);
+
+export default function usePagePreviewSize(options = {}) {
+  const [bp, setBp] = useState('desktop');
+  const { thumbnailMode = false } = options;
 
   useEffect(() => {
     if (thumbnailMode) {
-      setPageSize({
-        width: baseSize,
-        height: PAGE_RATIO * baseSize,
-      });
       return () => {};
     }
-    window.addEventListener('resize', handleWindowResize);
-    handleWindowResize();
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, [baseSize, handleWindowResize, thumbnailMode]);
 
-  return { pageSize };
+    const handleResize = () => {
+      setBp('desktop');
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [thumbnailMode]);
+
+  return useMemo(() => {
+    const pageWidth =
+      thumbnailMode && !bp && ascendingBreakpointKeys ? 33 : 100;
+    return {
+      pageSize: sizeFromWidth(pageWidth),
+    };
+  }, [bp, thumbnailMode]);
 }
