@@ -32,8 +32,13 @@ import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
+const StyledPopoverMenu = styled(PopoverMenu)`
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 export const DropdownContainer = styled.div`
-  position: static;
+  position: relative;
 `;
 
 const Label = styled.label`
@@ -171,7 +176,7 @@ const Dropdown = ({
           }}
         />
       ) : (
-        <PopoverMenu
+        <StyledPopoverMenu
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
