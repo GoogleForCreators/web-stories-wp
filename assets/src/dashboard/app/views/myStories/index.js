@@ -46,6 +46,7 @@ import {
   PageHeading,
   NoResults,
   StoryGridView,
+  StoryListView,
 } from '../shared';
 
 // TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
@@ -53,7 +54,6 @@ import {
 const FilterContainer = styled.fieldset`
   padding: 0 20px 20px 0;
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-  padding-bottom: 20px;
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
@@ -86,7 +86,9 @@ function MyStories() {
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({
+    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+  });
   const {
     actions: { fetchStories },
     state: { stories },
@@ -103,7 +105,6 @@ function MyStories() {
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
@@ -117,7 +118,6 @@ function MyStories() {
   }, [viewStyle]);
 
   const filteredStoriesCount = filteredStories.length;
-
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
     _n(
@@ -128,6 +128,28 @@ function MyStories() {
     ),
     filteredStoriesCount
   );
+
+  const storiesView = useMemo(() => {
+    switch (viewStyle) {
+      case VIEW_STYLE.GRID:
+        return (
+          <StoryGridView
+            filteredStories={filteredStories}
+            centerActionLabel={
+              <>
+                <PlayArrowIcon />
+                {__('Preview', 'web-stories')}
+              </>
+            }
+            bottomActionLabel={__('Open in editor', 'web-stories')}
+          />
+        );
+      case VIEW_STYLE.LIST:
+        return <StoryListView filteredStories={filteredStories} />;
+      default:
+        return null;
+    }
+  }, [filteredStories, viewStyle]);
 
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {
@@ -144,17 +166,7 @@ function MyStories() {
               'web-stories'
             )}
           />
-
-          <StoryGridView
-            filteredStories={filteredStories}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
+          {storiesView}
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
@@ -167,10 +179,10 @@ function MyStories() {
       </DefaultBodyText>
     );
   }, [
-    filteredStories,
     filteredStoriesCount,
     handleViewStyleBarButtonSelected,
     listBarLabel,
+    storiesView,
     typeaheadValue,
     viewStyle,
     currentStorySort,
@@ -201,7 +213,6 @@ function MyStories() {
               </FloatingTab>
             ))}
           </FilterContainer>
-
           {BodyContent}
         </UnitsProvider>
       </TransformProvider>

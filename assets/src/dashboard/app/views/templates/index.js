@@ -65,7 +65,9 @@ function TemplatesGallery() {
   const [currentTemplateSort, setCurrentTemplateSort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({
+    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+  });
   const {
     state: { templates },
     actions: { fetchTemplates },
