@@ -30,12 +30,10 @@ import OutputStory from '../output/story';
  * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
- * @return {Element} Story markup.
+ * @return {string} Story markup.
  */
-function getStoryMarkup(story, pages, metadata) {
+export default function getStoryMarkup(story, pages, metadata) {
   return renderToStaticMarkup(
     <OutputStory story={story} pages={pages} metadata={metadata} />
   );
 }
-
-export default getStoryMarkup;
