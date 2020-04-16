@@ -15,9 +15,14 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -34,7 +39,7 @@ import {
   ColumnContainer,
   Column,
   DetailContainer,
-  MetaDataContainer,
+  MetadataContainer,
   Text,
   Title,
 } from './components';
@@ -58,11 +63,21 @@ function TemplateDetail() {
     getTemplateById(templateId);
   }, [fetchTemplate, templateId]);
 
+  const { title, byLine } = useMemo(() => {
+    if (!template) {
+      return {};
+    }
+
+    return {
+      title: sprintf(__('%s Template', 'web-stories'), template.title),
+      byLine: sprintf(__('by %s', 'web-stories'), template.createdBy),
+    };
+  }, [template]);
+
   return (
     template && (
       <FontProvider>
         <TransformProvider>
-          <section />
           <ContentContainer>
             <ColumnContainer>
               <Column>
@@ -74,10 +89,10 @@ function TemplateDetail() {
               </Column>
               <Column>
                 <DetailContainer>
-                  <Title>{`${template.title} Template`}</Title>
-                  <ByLine>{`by ${template.createdBy}`}</ByLine>
+                  <Title>{title}</Title>
+                  <ByLine>{byLine}</ByLine>
                   <Text>{template.description}</Text>
-                  <MetaDataContainer>
+                  <MetadataContainer>
                     {template.metadata.map(({ label, color }) => (
                       <Pill
                         name={label}
@@ -90,7 +105,7 @@ function TemplateDetail() {
                         {label}
                       </Pill>
                     ))}
-                  </MetaDataContainer>
+                  </MetadataContainer>
                 </DetailContainer>
               </Column>
             </ColumnContainer>

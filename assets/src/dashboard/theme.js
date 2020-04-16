@@ -152,8 +152,8 @@ const theme = {
     body2: {
       family: "'Google Sans', sans-serif",
       size: '14px',
-      lineHeight: '16px',
-      letterSpacing: '0.0142em',
+      lineHeight: '22px',
+      letterSpacing: '0.015em',
     },
     tab: {
       family: 'Google Sans',

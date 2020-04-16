@@ -94,13 +94,13 @@ export const Text = styled.p`
     margin: 0 0 20px;
     font-family: ${theme.fonts.body2.family};
     font-size: ${theme.fonts.body2.size};
-    line-height: 22px;
+    line-height: ${theme.fonts.body2.lineHeight};
     letter-spacing: 0.015em;
     color: ${theme.colors.gray600};
   `}
 `;
 
-export const MetaDataContainer = styled.fieldset`
+export const MetadataContainer = styled.fieldset`
   > label {
     margin: 0 10px 14px 0;
 
