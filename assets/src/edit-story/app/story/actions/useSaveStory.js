@@ -71,7 +71,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(
-    (props, isAutoSave = false) => {
+    (props) => {
       setIsSaving(true);
       const propsToSave = objectPick(story, [
         'title',
@@ -89,16 +89,13 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         'defaultPageDuration',
       ]);
       const content = getStoryMarkup(story, pages, metadata);
-      return saveStoryById(
-        {
-          storyId,
-          content,
-          pages,
-          ...propsToSave,
-          ...props,
-        },
-        isAutoSave
-      )
+      return saveStoryById({
+        storyId,
+        content,
+        pages,
+        ...propsToSave,
+        ...props,
+      })
         .then((post) => {
           const properties = {
             ...objectPick(post, ['status', 'slug', 'link']),
