@@ -43,11 +43,11 @@ function useFocusOut(ref, callback, deps) {
     };
 
     node.addEventListener('focusout', onFocusOut);
-    node.ownerDocument.addEventListener('click', onDocumentClick);
+    node.ownerDocument.addEventListener('pointerdown', onDocumentClick);
 
     return () => {
       node.removeEventListener('focusout', onFocusOut);
-      node.ownerDocument.removeEventListener('click', onDocumentClick);
+      node.ownerDocument.removeEventListener('pointerdown', onDocumentClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps || []);

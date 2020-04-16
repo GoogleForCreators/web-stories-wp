@@ -30,6 +30,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
@@ -160,8 +161,8 @@ function ColorPreview({
     previewText,
   ]);
 
-  // Always hide color picker on unmount - note the double arrows
-  useEffect(() => () => hideSidebar(), [hideSidebar]);
+  // Always hide color picker on unmount
+  useUnmount(hideSidebar);
 
   if (isEditable) {
     // If editable, only the visual preview component is a button

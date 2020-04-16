@@ -28,8 +28,12 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, ListBar } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { FloatingTab } from '../../../components';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+} from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
@@ -38,25 +42,24 @@ import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import {
   BodyWrapper,
+  BodyViewOptions,
   PageHeading,
   NoResults,
   StoryGridView,
-  ListBarContainer,
+  StoryListView,
 } from '../shared';
 
-const FilterContainer = styled.div`
+// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
+
+const FilterContainer = styled.fieldset`
   padding: 0 20px 20px 0;
   margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
   border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
-  }
-
   @media ${({ theme }) => theme.breakpoint.min} {
-    & > label {
+    & > label span {
       border-radius: 0;
-      box-shadow: none;
+      box-shadow: none !important;
       padding: 0 10px 0 0;
     }
   }
@@ -80,20 +83,28 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const { pageSize } = usePagePreviewSize();
+  const [currentStorySort, setCurrentStorySort] = useState(
+    STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
+  const { pageSize } = usePagePreviewSize({
+    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+  });
   const {
     actions: { fetchStories },
     state: { stories },
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
+    fetchStories({
+      orderby: currentStorySort,
+      searchTerm: typeaheadValue,
+      status,
+    });
+  }, [currentStorySort, fetchStories, status, typeaheadValue]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
   }, [stories, typeaheadValue]);
@@ -107,7 +118,6 @@ function MyStories() {
   }, [viewStyle]);
 
   const filteredStoriesCount = filteredStories.length;
-
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
     _n(
@@ -119,17 +129,10 @@ function MyStories() {
     filteredStoriesCount
   );
 
-  const BodyContent = useMemo(() => {
-    if (filteredStoriesCount > 0) {
-      return (
-        <BodyWrapper>
-          <ListBarContainer>
-            <ListBar
-              label={listBarLabel}
-              layoutStyle={viewStyle}
-              onPress={handleViewStyleBarButtonSelected}
-            />
-          </ListBarContainer>
+  const storiesView = useMemo(() => {
+    switch (viewStyle) {
+      case VIEW_STYLE.GRID:
+        return (
           <StoryGridView
             filteredStories={filteredStories}
             centerActionLabel={
@@ -140,6 +143,30 @@ function MyStories() {
             }
             bottomActionLabel={__('Open in editor', 'web-stories')}
           />
+        );
+      case VIEW_STYLE.LIST:
+        return <StoryListView filteredStories={filteredStories} />;
+      default:
+        return null;
+    }
+  }, [filteredStories, viewStyle]);
+
+  const BodyContent = useMemo(() => {
+    if (filteredStoriesCount > 0) {
+      return (
+        <BodyWrapper>
+          <BodyViewOptions
+            listBarLabel={listBarLabel}
+            layoutStyle={viewStyle}
+            handleLayoutSelect={handleViewStyleBarButtonSelected}
+            currentSort={currentStorySort}
+            handleSortChange={setCurrentStorySort}
+            sortDropdownAriaLabel={__(
+              'Choose sort option for display',
+              'web-stories'
+            )}
+          />
+          {storiesView}
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
@@ -152,12 +179,13 @@ function MyStories() {
       </DefaultBodyText>
     );
   }, [
-    filteredStories,
     filteredStoriesCount,
     handleViewStyleBarButtonSelected,
     listBarLabel,
+    storiesView,
     typeaheadValue,
     viewStyle,
+    currentStorySort,
   ]);
 
   return (
@@ -176,9 +204,10 @@ function MyStories() {
               <FloatingTab
                 key={storyStatus.value}
                 onClick={(_, value) => setStatus(value)}
-                name="all-stories"
+                name="my-stories-filter-selection"
                 value={storyStatus.value}
                 isSelected={status === storyStatus.value}
+                inputType="radio"
               >
                 {storyStatus.label}
               </FloatingTab>

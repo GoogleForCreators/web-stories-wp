@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { wait, fireEvent } from '@testing-library/react';
+import { waitFor, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -35,14 +35,14 @@ describe('<ColorPicker /> as it closes', () => {
     const dialog = getDialog();
 
     // press escape and wait for onClose to be invoked
-    await wait(() => {
+    await waitFor(() => {
       const promise = getResolvingPromise(onClose);
       fireEvent.keyDown(dialog, { key: 'Escape', which: 27 });
       return promise;
     });
 
     expect(onClose).toHaveBeenCalledWith();
-    await wait(() => expect(document.body).toHaveFocus());
+    await waitFor(() => expect(document.body).toHaveFocus());
   });
 
   it('should invoke onclose and restore focus when clicking close button', async () => {
@@ -55,13 +55,13 @@ describe('<ColorPicker /> as it closes', () => {
     const closeButton = getCloseButton();
 
     // click close button and wait for onClose to be invoked
-    await wait(() => {
+    await waitFor(() => {
       const promise = getResolvingPromise(onClose);
       fireEvent.click(closeButton);
       return promise;
     });
 
     expect(onClose).toHaveBeenCalledWith();
-    await wait(() => expect(document.body).toHaveFocus());
+    await waitFor(() => expect(document.body).toHaveFocus());
   });
 });

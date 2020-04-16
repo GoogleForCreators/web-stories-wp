@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const ToggleButton = styled.button`
   border: none;
-  padding: 15px;
+  padding: 15px 15px 15px 0;
   background: transparent;
 
   &:hover svg {

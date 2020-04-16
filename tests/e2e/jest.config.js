@@ -15,23 +15,23 @@
  */
 
 module.exports = {
-  ...require('@wordpress/scripts/config/jest-e2e.config'),
+  preset: 'jest-puppeteer',
   transform: {
-    '^.+\\.[jt]sx?$':
-      '<rootDir>/../../node_modules/@wordpress/scripts/config/babel-transform',
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
+  testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.git',
+    '<rootDir>/node_modules',
+    '<rootDir>/build',
+    '<rootDir>/tests/e2e/specs/edit-story',
+  ],
   transformIgnorePatterns: ['node_modules'],
   setupFilesAfterEnv: [
     '<rootDir>/config/bootstrap.js',
     '@wordpress/jest-puppeteer-axe',
     '@wordpress/jest-console',
     'expect-puppeteer',
-  ],
-  testPathIgnorePatterns: [
-    '<rootDir>/.git',
-    '<rootDir>/node_modules',
-    '<rootDir>/build',
-    '<rootDir>/tests/e2e/specs/edit-story',
   ],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

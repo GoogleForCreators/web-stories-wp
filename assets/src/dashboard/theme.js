@@ -53,6 +53,7 @@ const colors = {
   gray25: '#F6F6F6',
   white: '#fff',
   bluePrimary: '#2979FF',
+  bluePrimary600: '#1A73E8',
   blueLight: '#EAF2FF',
   // taken from edit-stories
   action: '#47A0F4',
@@ -91,7 +92,7 @@ const theme = {
       activeBackground: 'transparent',
       borderRadius: 0,
       border: 'none',
-      arrowColor: colors.bluePrimary,
+      arrowColor: colors.gray300,
       height: '40px',
     },
   },
@@ -109,6 +110,11 @@ const theme = {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
   subNavigationBar: {
+    border: `1px solid ${colors.gray50}`,
+  },
+  table: {
+    headerCellPadding: 15,
+    cellPadding: 15,
     border: `1px solid ${colors.gray50}`,
   },
   overlay:
@@ -195,6 +201,13 @@ const theme = {
       family: 'Roboto',
       weight: 'normal',
     },
+    table: {
+      family: "'Google Sans', sans-serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
     typeaheadInput: {
       family: "'Google Sans', sans-serif",
       size: '14px',
@@ -220,6 +233,7 @@ const theme = {
     largeDisplayPhone: 162,
     smallDisplayPhone: 185,
     min: 139,
+    thumbnail: 33,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',

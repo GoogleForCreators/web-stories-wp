@@ -15,12 +15,19 @@
  */
 
 /**
- * External dependencies
+ * Preload image using a promise.
+ *
+ * @param {string} src Image source.
+ * @return {Promise} Image object.
  */
-import styled from 'styled-components';
+const preloadImage = (src) => {
+  return new Promise((resolve, reject) => {
+    const image = new window.Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.decoding = 'async';
+    image.src = src;
+  });
+};
 
-const ListBarContainer = styled.div`
-  margin-top: 10px;
-`;
-
-export default ListBarContainer;
+export default preloadImage;

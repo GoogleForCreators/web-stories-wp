@@ -37,7 +37,7 @@ jest.mock('../../../utils/textMeasurements');
 jest.mock('../../form/dropDown');
 jest.mock('../../form/color/color');
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };
+const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
@@ -63,13 +63,14 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement;
+  let textElement, unlockPaddingTextElement;
   let controls;
+  const paddingRatioLockLabel = 'Padding ratio lock';
 
   beforeEach(() => {
     global.fetch.resetMocks();
 
-    textElement = {
+    unlockPaddingTextElement = {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
@@ -80,6 +81,12 @@ describe('Panels/TextStyle', () => {
       height: 100,
       width: 120,
       rotationAngle: 0,
+      padding: { vertical: 0, horizontal: 0, locked: false },
+    };
+
+    textElement = {
+      ...unlockPaddingTextElement,
+      padding: DEFAULT_PADDING,
     };
 
     controls = {};
@@ -121,7 +128,10 @@ describe('Panels/TextStyle', () => {
   });
 
   describe('PaddingControls', () => {
-    let textSamePadding, textDifferentPadding;
+    let textSamePadding,
+      unlockPaddingTextSamePadding,
+      textDifferentPadding,
+      unlockPaddingTextDifferentPadding;
 
     beforeEach(() => {
       textSamePadding = {
@@ -129,18 +139,26 @@ describe('Panels/TextStyle', () => {
         id: 'textSamePadding',
         padding: DEFAULT_PADDING,
       };
+      unlockPaddingTextSamePadding = {
+        ...textSamePadding,
+        padding: { ...DEFAULT_PADDING, locked: false },
+      };
       textDifferentPadding = {
         ...textElement,
         id: 'textDifferentPadding',
-        padding: { horizontal: 10, vertical: 20 },
+        padding: { horizontal: 10, vertical: 20, locked: true },
+      };
+      unlockPaddingTextDifferentPadding = {
+        ...textDifferentPadding,
+        padding: { horizontal: 10, vertical: 20, locked: false },
       };
     });
 
     it('should render default padding controls', () => {
-      const { getByTestId } = renderTextStyle([textElement]);
+      const { getByTestId, getByLabelText } = renderTextStyle([textElement]);
       const horiz = getByTestId('padding.horizontal');
       const vert = getByTestId('padding.vertical');
-      const lock = getByTestId('padding.lock');
+      const lock = getByLabelText(paddingRatioLockLabel);
       expect(horiz.value).toBe('0');
       expect(vert.value).toBe('0');
       expect(lock).toBeChecked();
@@ -153,6 +171,7 @@ describe('Panels/TextStyle', () => {
           padding: {
             horizontal: 11,
             vertical: 12,
+            locked: false,
           },
         },
       ]);
@@ -170,7 +189,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -183,16 +202,15 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '12' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { vertical: 12, horizontal: 12 },
+        { vertical: 12, horizontal: 12, locked: true },
         DEFAULT_PADDING
       );
     });
 
     it('should update horizontal padding without lock', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
+        unlockPaddingTextElement,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -204,9 +222,8 @@ describe('Panels/TextStyle', () => {
 
     it('should update vertical padding without lock', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
+        unlockPaddingTextElement,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.vertical');
       fireEvent.change(input, { target: { value: '12' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -224,7 +241,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: '', vertical: '' },
+        { horizontal: '', vertical: '', locked: true },
         DEFAULT_PADDING
       );
     });
@@ -238,7 +255,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
@@ -252,17 +269,16 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 11, vertical: 11, locked: true },
         DEFAULT_PADDING
       );
     });
 
     it('should update multi padding without lock and same padding', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-        textSamePadding,
+        unlockPaddingTextElement,
+        unlockPaddingTextSamePadding,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
@@ -274,15 +290,85 @@ describe('Panels/TextStyle', () => {
 
     it('should update multi padding without lock and different padding', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-        textDifferentPadding,
+        unlockPaddingTextElement,
+        unlockPaddingTextDifferentPadding,
       ]);
-      fireEvent.click(getByTestId('padding.lock'));
       const input = getByTestId('padding.horizontal');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should correctly update only horizontal padding when multiple elements with different padding lock settings are selected', () => {
+      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+        textElement,
+        unlockPaddingTextDifferentPadding,
+      ]);
+      const input = getByTestId('padding.horizontal');
+      fireEvent.change(input, { target: { value: '11' } });
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        { horizontal: 11 },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should correctly update only vertical padding when multiple elements with different padding lock settings are selected', () => {
+      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+        textElement,
+        unlockPaddingTextDifferentPadding,
+      ]);
+      const input = getByTestId('padding.vertical');
+      fireEvent.change(input, { target: { value: '11' } });
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        { vertical: 11 },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should update default element lockPadding to false when padding lock clicked', () => {
+      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
+        textElement,
+      ]);
+      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        {
+          locked: false,
+        },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should update unlock padding element lockPadding to true when padding lock clicked', () => {
+      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
+        unlockPaddingTextElement,
+      ]);
+      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        {
+          locked: true,
+        },
+        DEFAULT_PADDING
+      );
+    });
+
+    it('should update multiple elements with default text element and unlock padding elements lockPadding to false when padding lock clicked', () => {
+      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
+        unlockPaddingTextElement,
+        textElement,
+      ]);
+      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      expect(pushUpdateForObject).toHaveBeenCalledWith(
+        'padding',
+        {
+          locked: true,
+        },
         DEFAULT_PADDING
       );
     });

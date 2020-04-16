@@ -31,7 +31,12 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { STORY_STATUSES } from '../../constants';
+import {
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+  ORDER_BY_SORT,
+  APP_ROUTES,
+} from '../../constants';
 import getAllTemplates from '../../templates';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
@@ -64,7 +69,7 @@ export function reshapeTemplateObject({ id, title, pages }) {
     status: 'template',
     modified: moment('2020-04-07'),
     pages,
-    centerTargetAction: '',
+    centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}`,
     bottomTargetAction: () => {},
   };
 }
@@ -72,23 +77,33 @@ export function reshapeTemplateObject({ id, title, pages }) {
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
   const [stories, setStories] = useState([]);
-
-  const templates = useMemo(
-    () => getAllTemplates({ pluginDir }).map(reshapeTemplateObject),
-    [pluginDir]
-  );
+  const [templates, setTemplates] = useState([]);
 
   const fetchStories = useCallback(
-    async ({ status = STORY_STATUSES[0].value }) => {
+    async ({
+      status = STORY_STATUSES[0].value,
+      orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      searchTerm,
+    }) => {
       if (!api.stories) {
         return [];
       }
+      const perPage = '100'; // TODO set up pagination
+      const query = {
+        status,
+        context: 'edit',
+        search: searchTerm || undefined,
+        orderby,
+        per_page: perPage,
+        order: ORDER_BY_SORT[orderby],
+      };
 
       try {
         const path = queryString.stringifyUrl({
           url: api.stories,
-          query: { status, context: 'edit' },
+          query,
         });
+
         const serverStoryResponse = await apiFetch({
           path,
         });
@@ -102,6 +117,25 @@ export default function ApiProvider({ children }) {
       }
     },
     [api.stories, editStoryURL]
+  );
+
+  const fetchTemplates = useCallback(() => {
+    const reshapedTemplates = getAllTemplates({ pluginDir }).map(
+      reshapeTemplateObject
+    );
+    setTemplates(reshapedTemplates);
+
+    return Promise.resolve(reshapedTemplates);
+  }, [pluginDir]);
+
+  const fetchTemplate = useCallback(
+    async (id) => {
+      const fetchedTemplates = await fetchTemplates();
+      return Promise.resolve(
+        fetchedTemplates.find((template) => template.id === id)
+      );
+    },
+    [fetchTemplates]
   );
 
   const getAllFonts = useCallback(() => {
@@ -120,9 +154,16 @@ export default function ApiProvider({ children }) {
   const value = useMemo(
     () => ({
       state: { stories, templates },
-      actions: { fetchStories, getAllFonts },
+      actions: { fetchStories, fetchTemplates, fetchTemplate, getAllFonts },
     }),
-    [stories, templates, fetchStories, getAllFonts]
+    [
+      stories,
+      templates,
+      fetchStories,
+      fetchTemplates,
+      fetchTemplate,
+      getAllFonts,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
