@@ -97,7 +97,6 @@ const sharedConfig = {
   plugins: [
     process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
     new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
       requestToExternal,
     }),
     new MiniCssExtractPlugin({
