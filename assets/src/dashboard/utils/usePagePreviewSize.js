@@ -28,13 +28,21 @@ const sizeFromWidth = (width) => ({
   height: PAGE_RATIO * width,
 });
 
-const ascendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
-  (a, b) => theme.breakpoint.raw[a] - theme.breakpoint.raw[b]
+const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
+  (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
+const defaultBp = descendingBreakpointKeys[0];
+const getCurrentBp = () =>
+  descendingBreakpointKeys.reduce((current, mq) => {
+    if (window.innerWidth <= theme.breakpoint.raw[mq]) {
+      current = mq;
+    }
+    return current;
+  }, defaultBp);
 
 export default function usePagePreviewSize(options = {}) {
-  const [bp, setBp] = useState('desktop');
   const { thumbnailMode = false } = options;
+  const [bp, setBp] = useState(getCurrentBp());
 
   useEffect(() => {
     if (thumbnailMode) {
@@ -42,10 +50,8 @@ export default function usePagePreviewSize(options = {}) {
     }
 
     const handleResize = () => {
-      setBp('desktop');
+      setBp(getCurrentBp);
     };
-
-    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -53,8 +59,7 @@ export default function usePagePreviewSize(options = {}) {
   }, [thumbnailMode]);
 
   return useMemo(() => {
-    const pageWidth =
-      thumbnailMode && !bp && ascendingBreakpointKeys ? 33 : 100;
+    const pageWidth = thumbnailMode ? 33 : theme.previewWidth[bp];
     return {
       pageSize: sizeFromWidth(pageWidth),
     };
