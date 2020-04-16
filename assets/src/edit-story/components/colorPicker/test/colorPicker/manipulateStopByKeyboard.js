@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, wait } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -51,7 +51,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
 
     // Expect next stop to have focus now, so that any
     // future key presses will still be correctly handled
-    await wait(() => expect(getGradientStopAt(50)).toHaveFocus());
+    await waitFor(() => expect(getGradientStopAt(50)).toHaveFocus());
   });
 
   it('should delete stop when pressing backspace when gradient stop is focused', async () => {
@@ -81,7 +81,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
 
     // Expect last stop to have focus now, so that any
     // future key presses will still be correctly handled
-    await wait(() => expect(getGradientStopAt(100)).toHaveFocus());
+    await waitFor(() => expect(getGradientStopAt(100)).toHaveFocus());
   });
 
   it('should move stop when pressing arrow keys', () => {

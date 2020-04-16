@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
+const path = require('path');
+
 module.exports = {
   rootDir: '../../',
-  ...require('@wordpress/scripts/config/jest-unit.config'),
   transform: {
-    '^.+\\.[jt]sx?$':
-      '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
   moduleNameMapper: {
-    '\\.svg': '<rootDir>/__mocks__/svgrMock.js',
+    '\\.svg': path.join(__dirname, '/svgrMock.js'),
+    '\\.css': path.join(__dirname, '/styleMock.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',

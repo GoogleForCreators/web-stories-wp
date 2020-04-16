@@ -46,7 +46,7 @@ const EditPageArea = withOverlay(styled(PageArea).attrs({
   height: 100%;
 `);
 
-function EditLayer({}) {
+function EditLayer() {
   const {
     state: { currentPage },
   } = useStory();

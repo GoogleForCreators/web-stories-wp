@@ -16,6 +16,7 @@ tests
 .eslintrc
 .gitignore
 .imgbotconfig
+.markdownlint.json
 .markdownlintignore
 .npmrc
 .nvmrc
@@ -25,17 +26,17 @@ tests
 .stylelintrc
 .svgo.yml
 .travis.yml
-.travis_deploy_key
 .travis_deploy_key.enc
 babel.config.js
 codecov.yml
-CONTRIBUTING.md
 composer.json
 composer.lock
+CONTRIBUTING.md
 package.json
 package-lock.json
 phpcs.xml
 phpstan.neon.dist
 phpunit.xml.dist
+puppeteer.config.js
 README.md
 webpack.config.js

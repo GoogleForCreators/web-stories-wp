@@ -85,7 +85,7 @@ const BottomActionButton = styled(Button)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { forwardedAs: 'a', href: targetAction, onClick: () => {} }
+    ? { href: targetAction, isLink: true }
     : { onClick: targetAction };
 
 const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {

@@ -39,7 +39,7 @@ export default function addQueryArgs(url, args) {
   }
 
   for (const key in args) {
-    if (!args.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(args, key)) {
       continue;
     }
 

@@ -48,6 +48,7 @@ export const defaultAttributes = {
   padding: {
     vertical: 0,
     horizontal: 0,
+    locked: true,
   },
 };
 

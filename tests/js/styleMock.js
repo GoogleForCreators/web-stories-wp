@@ -14,24 +14,4 @@
  * limitations under the License.
  */
 
-export { isUri as isValidUrl } from 'valid-url';
-
-/**
- * Prepends a protocol (default http) to a URL that
- * doesn't have one
- *
- * @param {string} url
- * @param {string=} protocol default protocol to prepend
- * @return {string} the url with the protocol prepended to it
- */
-export function withProtocol(url, protocol = 'http') {
-  return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
-}
-
-export function toAbsoluteUrl(base, path) {
-  try {
-    return new URL(path, base).href;
-  } catch (error) {
-    return path;
-  }
-}
+module.exports = {};

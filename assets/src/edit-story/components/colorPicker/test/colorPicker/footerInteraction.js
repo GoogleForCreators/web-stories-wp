@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { wait, fireEvent, act } from '@testing-library/react';
+import { waitFor, fireEvent, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -40,14 +40,14 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     // When clicked, it's an input
     const input = getEditableHexElement();
     expect(input).toHaveValue('0000FF'); // toHaveValue doesn't support regex
-    await wait(() => expect(input).toHaveFocus());
+    await waitFor(() => expect(input).toHaveFocus());
     fireEvent.change(input, { target: { value: 'ff00ff' } });
 
     // Press esc to abort editing
     fireEvent.keyDown(input, { key: 'Escape', which: 27 });
 
     // It's the button again
-    await wait(() =>
+    await waitFor(() =>
       expect(getEditableHexElement()).toHaveTextContent(/#ff00ff/i)
     );
 
@@ -68,7 +68,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     // When clicked, it's an input
     const input = getEditableAlphaElement();
     expect(input).toHaveValue('40');
-    await wait(() => expect(input).toHaveFocus());
+    await waitFor(() => expect(input).toHaveFocus());
     fireEvent.change(input, { target: { value: '70' } });
 
     // focus solid button in order to blur and thus abort editin
@@ -77,7 +77,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     act(() => getSolidButton().focus());
 
     // It's the button again
-    await wait(() =>
+    await waitFor(() =>
       expect(getEditableAlphaElement()).toHaveTextContent(/70%/i)
     );
 
@@ -96,7 +96,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
 
     // When clicked, it's an input
     const input = getEditableAlphaElement();
-    await wait(() => expect(input).toHaveFocus());
+    await waitFor(() => expect(input).toHaveFocus());
     fireEvent.change(input, { target: { value: 'ten' } });
 
     // focus solid button in order to blur and thus abort editin
@@ -105,7 +105,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     act(() => getSolidButton().focus());
 
     // It's the button again
-    await wait(() =>
+    await waitFor(() =>
       expect(getEditableAlphaElement()).toHaveTextContent(/100%/i)
     );
 

@@ -106,8 +106,6 @@ PageLinks.propTypes = {
   pathCount: PropTypes.number,
 };
 
-const NewStoryLink = styled(Button).attrs({ onClick: () => {} })``;
-
 function NavigationBar() {
   const { state, actions } = useRouteHistory();
   const { newStoryURL } = useConfig();
@@ -135,9 +133,9 @@ function NavigationBar() {
         ))}
       </PageLinks>
 
-      <NewStoryLink forwardedAs="a" type={BUTTON_TYPES.CTA} href={newStoryURL}>
+      <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink={true}>
         {__('Create Story', 'web-stories')}
-      </NewStoryLink>
+      </Button>
     </Nav>
   );
 }

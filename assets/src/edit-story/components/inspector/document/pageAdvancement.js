@@ -97,7 +97,7 @@ function PageAdvancementPanel() {
       </Row>
       <SwitchRow>
         <Switch
-          label={__('Page Advancement')}
+          label={__('Page Advancement', 'web-stories')}
           value={autoAdvance}
           onLabel={__('Auto', 'web-stories')}
           offLabel={__('Manual', 'web-stories')}

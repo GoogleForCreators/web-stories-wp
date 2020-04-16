@@ -35,6 +35,7 @@ import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
+  APP_ROUTES,
 } from '../../constants';
 import getAllTemplates from '../../templates';
 
@@ -68,7 +69,7 @@ export function reshapeTemplateObject({ id, title, pages }) {
     status: 'template',
     modified: moment('2020-04-07'),
     pages,
-    centerTargetAction: '',
+    centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}`,
     bottomTargetAction: () => {},
   };
 }
@@ -76,11 +77,7 @@ export function reshapeTemplateObject({ id, title, pages }) {
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
   const [stories, setStories] = useState([]);
-
-  const templates = useMemo(
-    () => getAllTemplates({ pluginDir }).map(reshapeTemplateObject),
-    [pluginDir]
-  );
+  const [templates, setTemplates] = useState([]);
 
   const fetchStories = useCallback(
     async ({
@@ -122,6 +119,25 @@ export default function ApiProvider({ children }) {
     [api.stories, editStoryURL]
   );
 
+  const fetchTemplates = useCallback(() => {
+    const reshapedTemplates = getAllTemplates({ pluginDir }).map(
+      reshapeTemplateObject
+    );
+    setTemplates(reshapedTemplates);
+
+    return Promise.resolve(reshapedTemplates);
+  }, [pluginDir]);
+
+  const fetchTemplate = useCallback(
+    async (id) => {
+      const fetchedTemplates = await fetchTemplates();
+      return Promise.resolve(
+        fetchedTemplates.find((template) => template.id === id)
+      );
+    },
+    [fetchTemplates]
+  );
+
   const getAllFonts = useCallback(() => {
     if (!api.fonts) {
       return Promise.resolve([]);
@@ -138,9 +154,16 @@ export default function ApiProvider({ children }) {
   const value = useMemo(
     () => ({
       state: { stories, templates },
-      actions: { fetchStories, getAllFonts },
+      actions: { fetchStories, fetchTemplates, fetchTemplate, getAllFonts },
     }),
-    [stories, templates, fetchStories, getAllFonts]
+    [
+      stories,
+      templates,
+      fetchStories,
+      fetchTemplates,
+      fetchTemplate,
+      getAllFonts,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
