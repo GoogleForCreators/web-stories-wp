@@ -148,7 +148,7 @@
     "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
     "format:yml": "prettier --write '**/*.yml'",
     "lint": "npm-run-all --parallel lint:*",
-    "lint:css": "stylelint **/*.css",
+    "lint:css": "stylelint \"**/*.(js|css)\"",
     "lint:css:fix": "npm run lint:css -- --fix",
     "lint:js": "eslint .",
     "lint:js:fix": "npm run lint:js -- --fix",
