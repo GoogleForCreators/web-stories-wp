@@ -56,5 +56,9 @@ class Plugin {
 
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
+
+		// Gutenberg Blocks.
+		$embed_block = new Embed_Block();
+		add_action( 'init', [ $embed_block, 'init' ] );
 	}
 }

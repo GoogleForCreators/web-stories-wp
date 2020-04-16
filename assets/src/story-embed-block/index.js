@@ -17,29 +17,11 @@
 /**
  * WordPress dependencies
  */
-const defaultConfig = require('@wordpress/babel-preset-default');
+import { registerBlockType } from '@wordpress/blocks';
 
-module.exports = function (api) {
-  const config = defaultConfig(api);
+/**
+ * Internal dependencies
+ */
+import { name, settings } from './block';
 
-  return {
-    ...config,
-    plugins: [
-      ...config.plugins,
-      'babel-plugin-styled-components',
-      '@babel/plugin-proposal-class-properties',
-      'babel-plugin-inline-json-import',
-    ],
-    sourceMaps: true,
-    env: {
-      production: {
-        plugins: [
-          ...config.plugins,
-          'babel-plugin-styled-components',
-          '@babel/plugin-proposal-class-properties',
-          'transform-react-remove-prop-types',
-        ],
-      },
-    },
-  };
-};
+registerBlockType(name, settings);
