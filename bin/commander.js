@@ -145,7 +145,7 @@ function copyFiles(skipVendor) {
   const ignoredFiles = getIgnoredFiles();
 
   if (skipVendor) {
-    ignoredFiles.push('vendor');
+    ignoredFiles.push('vendor/');
   }
 
   const excludeList = ignoredFiles
@@ -162,6 +162,13 @@ function copyFiles(skipVendor) {
 
 function deleteExistingZipFiles() {
   execSync(`rm -rf web-stories-*.zip`, {
+    cwd: PLUGIN_DIR + '/build',
+    stdio: ['pipe', 'pipe', 'ignore'],
+  });
+}
+
+function deleteExistingBuildFolder() {
+  execSync(`rm -rf web-stories`, {
     cwd: PLUGIN_DIR + '/build',
     stdio: ['pipe', 'pipe', 'ignore'],
   });
@@ -191,11 +198,12 @@ function bundlePlugin(target, copy, composer) {
     );
   }
 
+  deleteExistingBuildFolder();
   copyFiles(composer);
 
   if (!composer) {
     execSync(
-      'composer update --optimize-autoloader --no-interaction --prefer-dist --no-suggest'
+      'composer update --optimize-autoloader --no-interaction --prefer-dist --no-suggest; git checkout composer.lock; composer install'
     );
   }
 
