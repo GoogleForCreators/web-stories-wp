@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -24,14 +29,13 @@ import {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
-import 'intersection-observer';
 
 const InfiniteScroller = ({
-  allDataLoadedMessage = 'No More Stories',
+  allDataLoadedMessage = __('No More Stories', 'web-stories'),
   children,
   handleGetData,
   isAllDataLoaded,
-  loadingMessage = 'Loading...',
+  loadingMessage = __('Loading…', 'web-stories'),
 }) => {
   const [loadMore, setLoadMore] = useState(false);
   const loadingRef = useRef(null);
