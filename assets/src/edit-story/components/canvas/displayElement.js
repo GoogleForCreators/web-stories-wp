@@ -77,6 +77,7 @@ function DisplayElement({ element, previewMode, page }) {
     : null;
 
   const { id, opacity, type, isBackground } = element;
+  //eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.type) || {};
