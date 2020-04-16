@@ -24,16 +24,21 @@ import { useEffect, useLayoutEffect, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { CORNER_DIRECTIONS, Z_INDEX, BEZIER } from '../../constants';
+import {
+  BEZIER,
+  CORNER_DIRECTIONS,
+  DIRECTIONS,
+  Z_INDEX,
+} from '../../constants';
 
 const PERCENTAGE_OFFSET = {
-  TOP: 100,
-  RIGHT: 0,
-  BOTTOM: -100,
-  LEFT: -50,
+  [DIRECTIONS.TOP]: 100,
+  [DIRECTIONS.RIGHT]: 0,
+  [DIRECTIONS.BOTTOM]: -100,
+  [DIRECTIONS.LEFT]: -50,
 };
 
-const transition = `transform 0.2s ${BEZIER.outSine}`;
+const transition = `transform 0.175s ${BEZIER.outSine}`;
 const initialScale = 0.5;
 const fullSize = css`
   top: 0;
@@ -72,14 +77,22 @@ const ButtonInner = styled.div`
   transform: ${(props) => {
     switch (props.align) {
       case CORNER_DIRECTIONS.TOP_LEFT:
-        return `translate(${PERCENTAGE_OFFSET.LEFT}%, ${PERCENTAGE_OFFSET.TOP}%)`;
+        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
+          PERCENTAGE_OFFSET[DIRECTIONS.TOP]
+        }%)`;
       case CORNER_DIRECTIONS.TOP_RIGHT:
-        return `translate(${PERCENTAGE_OFFSET.RIGHT}%, ${PERCENTAGE_OFFSET.TOP}%)`;
+        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
+          PERCENTAGE_OFFSET[DIRECTIONS.TOP]
+        }%)`;
       case CORNER_DIRECTIONS.BOTTOM_RIGHT:
-        return `translate(${PERCENTAGE_OFFSET.RIGHT}%, ${PERCENTAGE_OFFSET.BOTTOM}%)`;
+        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
+          PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
+        }%)`;
       case CORNER_DIRECTIONS.BOTTOM_LEFT:
       default:
-        return `translate(${PERCENTAGE_OFFSET.LEFT}%, ${PERCENTAGE_OFFSET.BOTTOM}%)`;
+        return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
+          PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
+        }%)`;
     }
   }};
 
@@ -222,17 +235,19 @@ const PopoverRevealer = ({ children, isOpen }) => {
 
     const menuLeft =
       toggleBoundingBox.left +
-      toggleBoundingBox.width * (PERCENTAGE_OFFSET.LEFT / 100);
+      toggleBoundingBox.width * (PERCENTAGE_OFFSET[DIRECTIONS.LEFT] / 100);
     const menuBottom =
       toggleBoundingBox.bottom +
-      toggleBoundingBox.height * (PERCENTAGE_OFFSET.BOTTOM / 100);
+      toggleBoundingBox.height * (PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM] / 100);
 
     const alignHorizontal =
       menuLeft + menuWrapperBoundingBox.width > window.innerWidth
-        ? 'RIGHT'
-        : 'LEFT';
+        ? DIRECTIONS.RIGHT
+        : DIRECTIONS.LEFT;
     const alignVertical =
-      0 > menuBottom - menuWrapperBoundingBox.height ? 'TOP' : 'BOTTOM';
+      0 > menuBottom - menuWrapperBoundingBox.height
+        ? DIRECTIONS.TOP
+        : DIRECTIONS.BOTTOM;
 
     setAlign(CORNER_DIRECTIONS[`${alignVertical}_${alignHorizontal}`]);
   }, [isOpen]);

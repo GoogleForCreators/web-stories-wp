@@ -176,4 +176,4 @@ PopoverMenu.propTypes = {
 };
 
 export default PopoverMenu;
-export { default as PopeverRevealer } from './popoverRevealer';
+export { default as PopoverRevealer } from './popoverRevealer';
