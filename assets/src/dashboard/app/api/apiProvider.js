@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useCallback, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useMemo,
+  useState,
+  useReducer,
+} from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
 
@@ -36,8 +42,12 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   APP_ROUTES,
+  ITEMS_PER_PAGE,
 } from '../../constants';
 import getAllTemplates from '../../templates';
+import storyReducer, {
+  ACTION_TYPES as STORY_ACTION_TYPES,
+} from '../reducer/stories';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -89,7 +99,13 @@ export function reshapeTemplateObject({
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
-  const [stories, setStories] = useState([]);
+  const [state, dispatch] = useReducer(storyReducer, {
+    stories: {},
+    storiesOrderById: [],
+    totalStories: null,
+    totalPages: null,
+  });
+  // TODO same treatment to templates
   const [templates, setTemplates] = useState([]);
 
   const fetchStories = useCallback(
@@ -98,18 +114,21 @@ export default function ApiProvider({ children }) {
       sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
       sortDirection,
       searchTerm,
+      page = 1,
+      perPage = ITEMS_PER_PAGE,
     }) => {
       if (!api.stories) {
         return [];
       }
-      const perPage = '100'; // TODO set up pagination
+
       const query = {
-        status,
         context: 'edit',
         search: searchTerm || undefined,
         orderby: sortOption,
+        page,
         per_page: perPage,
         order: sortDirection || ORDER_BY_SORT[sortOption],
+        status,
       };
 
       try {
@@ -118,13 +137,35 @@ export default function ApiProvider({ children }) {
           query,
         });
 
-        const serverStoryResponse = await apiFetch({
+        const response = await apiFetch({
           path,
+          parse: false,
         });
+
+        // TODO add headers for totals by status and have header reflect search
+        const totalStories = parseInt(response.headers.get('X-WP-Total'));
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
+          payload: totalStories,
+        });
+
+        const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
+          payload: totalPages,
+        });
+
+        const serverStoryResponse = await response.json();
+
         const reshapedStories = serverStoryResponse
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
-        setStories(reshapedStories);
+
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_STORIES,
+          payload: reshapedStories,
+        });
+
         return reshapedStories;
       } catch (err) {
         return [];
@@ -165,18 +206,42 @@ export default function ApiProvider({ children }) {
     );
   }, [api.fonts]);
 
+  const clearExistingStoriesOrder = useCallback(
+    () =>
+      dispatch({
+        type: STORY_ACTION_TYPES.CLEAR_STORIES_ORDER,
+      }),
+    []
+  );
+
   const value = useMemo(
     () => ({
-      state: { stories, templates },
-      actions: { fetchStories, fetchTemplates, fetchTemplate, getAllFonts },
+      state: {
+        stories: state.stories,
+        storiesOrderById: state.storiesOrderById,
+        totalStories: state.totalStories,
+        totalPages: state.totalPages,
+        templates,
+      },
+      actions: {
+        clearExistingStoriesOrder,
+        fetchStories,
+        fetchTemplates,
+        fetchTemplate,
+        getAllFonts,
+      },
     }),
     [
-      stories,
+      clearExistingStoriesOrder,
       templates,
       fetchStories,
       fetchTemplates,
       fetchTemplate,
       getAllFonts,
+      state.stories,
+      state.storiesOrderById,
+      state.totalStories,
+      state.totalPages,
     ]
   );
 

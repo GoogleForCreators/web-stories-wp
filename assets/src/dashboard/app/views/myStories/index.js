@@ -28,7 +28,7 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, MainNavBar } from '../../../components';
+import { FloatingTab, InfiniteScroller, MainNavBar } from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
@@ -84,6 +84,9 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allStoriesLoaded, setAllStoriesLoaded] = useState(false);
+  const [currentViewStoryCount, setCurrentViewStoryCount] = useState(0);
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
@@ -94,8 +97,8 @@ function MyStories() {
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
   const {
-    actions: { fetchStories },
-    state: { stories },
+    actions: { fetchStories, clearExistingStoriesOrder },
+    state: { stories, storiesOrderById, totalStories },
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -104,22 +107,48 @@ function MyStories() {
       searchTerm: typeaheadValue,
       sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
       status,
+      page: currentPage,
     });
   }, [
     viewStyle,
     currentListSortDirection,
+    currentPage,
     currentStorySort,
     fetchStories,
     status,
     typeaheadValue,
   ]);
 
+  const orderedStories = useMemo(() => {
+    return storiesOrderById.map((storyId) => {
+      return stories[storyId];
+    });
+  }, [stories, storiesOrderById]);
+
   const filteredStories = useMemo(() => {
-    return stories.filter((story) => {
+    return Object.values(orderedStories).filter((story) => {
       const lowerTypeaheadValue = typeaheadValue.toLowerCase();
       return story.title.toLowerCase().includes(lowerTypeaheadValue);
     });
-  }, [stories, typeaheadValue]);
+  }, [orderedStories, typeaheadValue]);
+
+  useEffect(() => {
+    if (typeaheadValue.length > 0) {
+      setCurrentViewStoryCount(filteredStories.length); // this might be bad
+    } else {
+      setCurrentViewStoryCount(totalStories);
+    }
+  }, [
+    setCurrentViewStoryCount,
+    typeaheadValue,
+    totalStories,
+    filteredStories.length,
+  ]);
+
+  useEffect(() => {
+    const isAllStoriesLoaded = filteredStories.length === currentViewStoryCount;
+    setAllStoriesLoaded(isAllStoriesLoaded);
+  }, [currentViewStoryCount, filteredStories.length]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -129,32 +158,41 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const filteredStoriesCount = filteredStories.length;
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
     _n(
       '%s total story',
       '%s total stories',
-      filteredStoriesCount,
+      currentViewStoryCount,
       'web-stories'
     ),
-    filteredStoriesCount
+    currentViewStoryCount
   );
 
   const storiesView = useMemo(() => {
     switch (viewStyle) {
       case VIEW_STYLE.GRID:
         return (
-          <StoryGridView
-            filteredStories={filteredStories}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
+          <InfiniteScroller
+            isAllDataLoaded={allStoriesLoaded}
+            allDataLoadedMessage={'There are no more stories to load'}
+            handleGetData={() => {
+              if (!allStoriesLoaded) {
+                setCurrentPage(currentPage + 1);
+              }
+            }}
+          >
+            <StoryGridView
+              filteredStories={filteredStories}
+              centerActionLabel={
+                <>
+                  <PlayArrowIcon />
+                  {__('Preview', 'web-stories')}
+                </>
+              }
+              bottomActionLabel={__('Open in editor', 'web-stories')}
+            />
+          </InfiniteScroller>
         );
       case VIEW_STYLE.LIST:
         return (
@@ -169,23 +207,48 @@ function MyStories() {
       default:
         return null;
     }
-  }, [currentStorySort, filteredStories, viewStyle, currentListSortDirection]);
+  }, [
+    allStoriesLoaded,
+    currentPage,
+    currentStorySort,
+    filteredStories,
+    viewStyle,
+    currentListSortDirection,
+  ]);
+
+  const storiesViewControls = useMemo(() => {
+    return (
+      <BodyViewOptions
+        listBarLabel={listBarLabel}
+        layoutStyle={viewStyle}
+        handleLayoutSelect={handleViewStyleBarButtonSelected}
+        currentSort={currentStorySort}
+        handleSortChange={(sort) => {
+          clearExistingStoriesOrder();
+          setCurrentPage(1);
+          setCurrentStorySort(sort);
+        }}
+        sortDropdownAriaLabel={__(
+          'Choose sort option for display',
+          'web-stories'
+        )}
+      />
+    );
+  }, [
+    clearExistingStoriesOrder,
+    setCurrentPage,
+    setCurrentStorySort,
+    currentStorySort,
+    handleViewStyleBarButtonSelected,
+    listBarLabel,
+    viewStyle,
+  ]);
 
   const BodyContent = useMemo(() => {
-    if (filteredStoriesCount > 0) {
+    if (currentViewStoryCount > 0) {
       return (
         <BodyWrapper>
-          <BodyViewOptions
-            listBarLabel={listBarLabel}
-            layoutStyle={viewStyle}
-            handleLayoutSelect={handleViewStyleBarButtonSelected}
-            currentSort={currentStorySort}
-            handleSortChange={setCurrentStorySort}
-            sortDropdownAriaLabel={__(
-              'Choose sort option for display',
-              'web-stories'
-            )}
-          />
+          {storiesViewControls}
           {storiesView}
         </BodyWrapper>
       );
@@ -198,15 +261,7 @@ function MyStories() {
         {__('Create a story to get started!', 'web-stories')}
       </DefaultBodyText>
     );
-  }, [
-    filteredStoriesCount,
-    handleViewStyleBarButtonSelected,
-    listBarLabel,
-    storiesView,
-    typeaheadValue,
-    viewStyle,
-    currentStorySort,
-  ]);
+  }, [currentViewStoryCount, typeaheadValue, storiesViewControls, storiesView]);
 
   return (
     <FontProvider>
