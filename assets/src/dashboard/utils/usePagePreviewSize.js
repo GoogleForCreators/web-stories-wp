@@ -23,11 +23,6 @@ import { useEffect, useState, useMemo } from 'react';
 import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
 
-const sizeFromWidth = (width) => ({
-  width,
-  height: PAGE_RATIO * width,
-});
-
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
@@ -39,6 +34,11 @@ const getCurrentBp = () =>
     }
     return current;
   }, defaultBp);
+
+const sizeFromWidth = (width) => ({
+  width,
+  height: PAGE_RATIO * width,
+});
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false } = options;
@@ -58,10 +58,10 @@ export default function usePagePreviewSize(options = {}) {
     };
   }, [thumbnailMode]);
 
-  return useMemo(() => {
-    const pageWidth = thumbnailMode ? 33 : theme.previewWidth[bp];
-    return {
-      pageSize: sizeFromWidth(pageWidth),
-    };
-  }, [bp, thumbnailMode]);
+  return useMemo(
+    () => ({
+      pageSize: sizeFromWidth(thumbnailMode ? 33 : theme.previewWidth[bp]),
+    }),
+    [bp, thumbnailMode]
+  );
 }
