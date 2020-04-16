@@ -101,18 +101,30 @@ export const STORY_CONTEXT_MENU_ACTIONS = {
 export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
-    value: 'open-in-editor-action',
+    value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
   },
-  { label: __('Preview', 'web-stories'), value: 'preview-action' },
+  {
+    label: __('Preview', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
+  },
   { label: null, value: false, separator: true },
-  { label: __('Rename', 'web-stories'), value: 'rename-action' },
-  { label: __('Duplicate', 'web-stories'), value: 'duplicate-action' },
+  {
+    label: __('Rename', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
+  },
+  {
+    label: __('Duplicate', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
+  },
   {
     label: __('Create Template', 'web-stories'),
-    value: 'create-template-action',
+    value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
   },
   { label: null, value: false, separator: true },
-  { label: __('Delete Story', 'web-stories'), value: 'delete-story-action' },
+  {
+    label: __('Delete Story', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
+  },
 ];
 
 export const STORY_SORT_OPTIONS = {

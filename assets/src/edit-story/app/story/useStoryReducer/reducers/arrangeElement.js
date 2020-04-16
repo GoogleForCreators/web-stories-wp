@@ -75,7 +75,7 @@ function arrangeElement(state, { elementId, position }) {
     return state;
   }
 
-  const minPosition = Boolean(page.backgroundElementId) ? 1 : 0;
+  const minPosition = page.backgroundElementId ? 1 : 0;
   const maxPosition = page.elements.length - 1;
   const newPosition = getAbsolutePosition({
     currentPosition,

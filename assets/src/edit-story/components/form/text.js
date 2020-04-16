@@ -36,7 +36,7 @@ import { Input } from '.';
 const StyledInput = styled(Input)`
   width: 100%;
   border: none;
-  padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
+  padding-right: ${({ suffix }) => (suffix ? 6 : 0)}px;
   padding-left: ${({ label }) => (label ? 6 : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};

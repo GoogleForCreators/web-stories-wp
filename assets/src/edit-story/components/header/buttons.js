@@ -81,15 +81,13 @@ function PreviewButton() {
         popup.document.write('<!DOCTYPE html><html><head>');
         popup.document.write('<title>');
         popup.document.write(
-          escapeHTML(__('Generating the preview...', 'web-stories'))
+          escapeHTML(__('Generating the preview…', 'web-stories'))
         );
         popup.document.write('</title>');
         popup.document.write('</head><body>');
         // Output "waiting" message.
         popup.document.write(
-          escapeHTML(
-            __('Please wait. Generating the preview...', 'web-stories')
-          )
+          escapeHTML(__('Please wait. Generating the preview…', 'web-stories'))
         );
         // Force redirect to the preview URL after 5 seconds. The saving tab
         // might get frozen by the browser.

@@ -91,7 +91,7 @@ const StyledChildren = styled.span`
 const Button = ({
   children,
   isDisabled,
-  onClick,
+  isLink,
   type = BUTTON_TYPES.PRIMARY,
   ...rest
 }) => {
@@ -104,7 +104,11 @@ const Button = ({
   const StyledButtonByType = ButtonOptions[type];
 
   return (
-    <StyledButtonByType disabled={isDisabled} onClick={onClick} {...rest}>
+    <StyledButtonByType
+      as={isLink ? 'a' : 'button'}
+      disabled={isDisabled}
+      {...rest}
+    >
       <StyledChildren>{children}</StyledChildren>
     </StyledButtonByType>
   );
@@ -112,9 +116,9 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
   isCta: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isLink: PropTypes.bool,
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 

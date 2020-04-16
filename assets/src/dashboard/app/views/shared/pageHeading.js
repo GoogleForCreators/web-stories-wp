@@ -78,8 +78,16 @@ const PageHeading = ({
 }) => {
   const resultsText =
     filteredStories.length > 0
-      ? sprintf(__('Results for "%s"', 'web-stories'), typeaheadValue)
-      : sprintf(__('No results for "%s"', 'web-stories'), typeaheadValue);
+      ? sprintf(
+          /* translators: %s: search term. */
+          __('Results for "%s"', 'web-stories'),
+          typeaheadValue
+        )
+      : sprintf(
+          /* translators: %s: search term. */
+          __('No results for "%s"', 'web-stories'),
+          typeaheadValue
+        );
 
   const viewHeaderText = typeaheadValue.length ? resultsText : defaultTitle;
 

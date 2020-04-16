@@ -41,7 +41,7 @@ const StyledInput = styled(Input)`
   flex: 1 1 auto;
   min-width: 0;
   border: none;
-  padding-right: ${({ suffix }) => (Boolean(suffix) ? 6 : 0)}px;
+  padding-right: ${({ suffix }) => (suffix ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};

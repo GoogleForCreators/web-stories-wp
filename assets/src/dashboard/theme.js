@@ -112,6 +112,11 @@ const theme = {
   subNavigationBar: {
     border: `1px solid ${colors.gray50}`,
   },
+  table: {
+    headerCellPadding: 15,
+    cellPadding: 15,
+    border: `1px solid ${colors.gray50}`,
+  },
   overlay:
     'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
   fonts: {
@@ -196,6 +201,13 @@ const theme = {
       family: 'Roboto',
       weight: 'normal',
     },
+    table: {
+      family: "'Google Sans', sans-serif",
+      size: '14px',
+      lineHeight: '20px',
+      weight: '500',
+      letterSpacing: '0.01em',
+    },
     typeaheadInput: {
       family: "'Google Sans', sans-serif",
       size: '14px',
@@ -221,6 +233,7 @@ const theme = {
     largeDisplayPhone: 162,
     smallDisplayPhone: 185,
     min: 139,
+    thumbnail: 33,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
