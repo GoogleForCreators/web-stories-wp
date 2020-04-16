@@ -38,8 +38,8 @@ function updateElement({ padding, type, ...rest }) {
   // If padding is already set, just return as is.
   if (
     padding &&
-    padding.hasOwnProperty('vertical') &&
-    padding.hasOwnProperty('horizontal')
+    Object.prototype.hasOwnProperty.call(padding, 'vertical') &&
+    Object.prototype.hasOwnProperty.call(padding, 'horizontal')
   ) {
     return {
       type,

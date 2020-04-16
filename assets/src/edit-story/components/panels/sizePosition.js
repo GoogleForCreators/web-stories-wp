@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +29,14 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Button, Row, Numeric, Toggle, usePresubmitHandler } from '../form';
+import {
+  Button,
+  Row,
+  Numeric,
+  Toggle,
+  usePresubmitHandler,
+  MULTIPLE_VALUE,
+} from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
@@ -79,7 +86,14 @@ function SizePositionPanel({
     const origHeight = getCommonValue(submittedSelectedElements, 'height');
     return origWidth / origHeight;
   }, [submittedSelectedElements]);
-  const [lockRatio, setLockRatio] = useState(true);
+  const rawLockAspectRatio = getCommonValue(
+    selectedElements,
+    'lockAspectRatio'
+  );
+
+  // When multiple element selected with aspect lock ratio value combined, it treated as true, reversed behavior with padding lock ratio.
+  const lockAspectRatio =
+    rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
   const {
     actions: { setBackgroundElement },
@@ -91,6 +105,18 @@ function SizePositionPanel({
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
   );
+
+  const getUpdateObject = (nWidth, nHeight) =>
+    rawLockAspectRatio === MULTIPLE_VALUE
+      ? {
+          lockAspectRatio,
+          height: nHeight,
+          width: nWidth,
+        }
+      : {
+          height: nHeight,
+          width: nWidth,
+        };
 
   // Recalculate width/height if ratio locked.
   usePresubmitHandler(
@@ -115,7 +141,7 @@ function SizePositionPanel({
       }
 
       // Fallback to ratio.
-      if (lockRatio) {
+      if (lockAspectRatio) {
         const ratio = oldWidth / oldHeight;
         if (!isResizeWidth) {
           return { width: dataPixels(newHeight * ratio) };
@@ -127,7 +153,7 @@ function SizePositionPanel({
 
       return null;
     },
-    [lockRatio]
+    [lockAspectRatio]
   );
 
   usePresubmitHandler(
@@ -167,26 +193,23 @@ function SizePositionPanel({
           onChange={(value) => {
             const newWidth = value;
             let newHeight = height;
-            if (lockRatio) {
+            if (lockAspectRatio) {
               if (newWidth === '') {
                 newHeight = '';
               } else if (isNum(newWidth / origRatio)) {
                 newHeight = dataPixels(newWidth / origRatio);
               }
             }
-            pushUpdate({
-              width: newWidth,
-              height: newHeight,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
         />
         <Toggle
-          data-testid="lockRatio"
+          aria-label={__('Aspect ratio lock', 'web-stories')}
           icon={<StyledLocked />}
           uncheckedIcon={<StyledUnlocked />}
-          value={lockRatio}
-          onChange={setLockRatio}
+          value={lockAspectRatio}
+          onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
           disabled={isFill}
         />
         <BoxedNumeric
@@ -196,17 +219,14 @@ function SizePositionPanel({
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
-            if (lockRatio) {
+            if (lockAspectRatio) {
               if (newHeight === '') {
                 newWidth = '';
               } else if (isNum(newHeight * origRatio)) {
                 newWidth = dataPixels(newHeight * origRatio);
               }
             }
-            pushUpdate({
-              height: newHeight,
-              width: newWidth,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
         />

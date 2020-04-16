@@ -227,17 +227,14 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAllFonts = useCallback(
-    ({}) => {
-      return apiFetch({ path: fonts }).then((data) =>
-        data.map((font) => ({
-          value: font.name,
-          ...font,
-        }))
-      );
-    },
-    [fonts]
-  );
+  const getAllFonts = useCallback(() => {
+    return apiFetch({ path: fonts }).then((data) =>
+      data.map((font) => ({
+        value: font.name,
+        ...font,
+      }))
+    );
+  }, [fonts]);
 
   const getAllStatuses = useCallback(() => {
     const path = addQueryArgs(statuses, { context: `edit` });

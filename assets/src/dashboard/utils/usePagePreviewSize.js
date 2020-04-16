@@ -23,10 +23,12 @@ import { useCallback, useEffect, useState } from 'react';
 import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
 
-export default function usePagePreviewSize() {
+export default function usePagePreviewSize(options = {}) {
+  const { thumbnailMode = false } = options;
+  const baseSize = thumbnailMode ? 33 : 100;
   const [pageSize, setPageSize] = useState({
-    width: 100,
-    height: PAGE_RATIO * 100,
+    width: baseSize,
+    height: PAGE_RATIO * baseSize,
   });
   const handleWindowResize = useCallback(() => {
     const { innerWidth } = window;
@@ -50,12 +52,19 @@ export default function usePagePreviewSize() {
   }, []);
 
   useEffect(() => {
+    if (thumbnailMode) {
+      setPageSize({
+        width: baseSize,
+        height: PAGE_RATIO * baseSize,
+      });
+      return () => {};
+    }
     window.addEventListener('resize', handleWindowResize);
     handleWindowResize();
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     };
-  }, [handleWindowResize]);
+  }, [baseSize, handleWindowResize, thumbnailMode]);
 
   return { pageSize };
 }

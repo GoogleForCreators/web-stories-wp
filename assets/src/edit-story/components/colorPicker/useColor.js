@@ -166,7 +166,7 @@ const reducer = {
       currentStopIndex,
     };
   },
-  removeCurrentStop: (state, {}) => {
+  removeCurrentStop: (state) => {
     // Can't have less than two stops
     if (state.stops.length === 2) {
       return state;

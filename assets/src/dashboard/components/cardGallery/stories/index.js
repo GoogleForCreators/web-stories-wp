@@ -14,24 +14,36 @@
  * limitations under the License.
  */
 
-export { isUri as isValidUrl } from 'valid-url';
-
 /**
- * Prepends a protocol (default http) to a URL that
- * doesn't have one
- *
- * @param {string} url
- * @param {string=} protocol default protocol to prepend
- * @return {string} the url with the protocol prepended to it
+ * Internal dependencies
  */
-export function withProtocol(url, protocol = 'http') {
-  return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
-}
+import CardGallery from '../index';
 
-export function toAbsoluteUrl(base, path) {
-  try {
-    return new URL(path, base).href;
-  } catch (error) {
-    return path;
-  }
-}
+export default {
+  title: 'Dashboard/Components/CardGallery',
+  component: CardGallery,
+};
+
+export const _default = () => {
+  const cards = [
+    'red',
+    'orange',
+    'green',
+    'blue',
+    'purple',
+    'aqua',
+    'yellow',
+    'grey',
+  ].map((color) => (
+    <div
+      key={color}
+      style={{ backgroundColor: color, width: '100%', height: '100%' }}
+    />
+  ));
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <CardGallery>{cards}</CardGallery>
+    </div>
+  );
+};
