@@ -51,7 +51,9 @@ export default function useMediaPicker({
           uploadVideoPoster(attributes.id, attributes.url);
         }
       };
-    } catch (e) {}
+    } catch (e) {
+      // Silence.
+    }
   }, [uploadVideoPoster]);
 
   const openMediaPicker = (evt) => {

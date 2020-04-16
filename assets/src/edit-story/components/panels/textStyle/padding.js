@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,12 +29,12 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Label, Numeric, Row, Toggle } from '../../form';
+import { Label, Numeric, Row, Toggle, MULTIPLE_VALUE } from '../../form';
 import { ReactComponent as Locked } from '../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../icons/unlock.svg';
 import { useCommonObjectValue } from '../utils';
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0 };
+const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -52,12 +52,14 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_PADDING
   );
 
-  const [lockPaddingRatio, setLockPaddingRatio] = useState(true);
+  // When multiple element selected with padding locked value combined, it treated as false, reversed behavior with aspect lock ratio.
+  const lockPadding =
+    padding.locked === MULTIPLE_VALUE ? false : padding.locked;
 
   const handleChange = useCallback(
     (newPadding) => {
       let update = newPadding;
-      if (lockPaddingRatio) {
+      if (lockPadding) {
         const commonPadding =
           newPadding.horizontal !== undefined
             ? newPadding.horizontal
@@ -65,11 +67,12 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
         update = {
           horizontal: commonPadding,
           vertical: commonPadding,
+          locked: true,
         };
       }
       pushUpdateForObject('padding', update, DEFAULT_PADDING);
     },
-    [pushUpdateForObject, lockPaddingRatio]
+    [pushUpdateForObject, lockPadding]
   );
 
   return (
@@ -83,11 +86,17 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
       />
       <Space />
       <Toggle
-        data-testid="padding.lock"
+        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
-        value={lockPaddingRatio}
-        onChange={setLockPaddingRatio}
+        value={lockPadding}
+        onChange={() =>
+          pushUpdateForObject(
+            'padding',
+            { locked: !lockPadding },
+            DEFAULT_PADDING
+          )
+        }
       />
       <Space />
       <BoxedNumeric

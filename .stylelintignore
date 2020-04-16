@@ -1,3 +1,11 @@
-/assets/css/*.css
-/node_modules
-/vendor
+.github
+.storybook
+__mocks__
+assets/css/*.css
+bin
+build
+docs
+includes
+node_modules
+tests
+vendor

@@ -29,8 +29,8 @@ import { sprintf, __ } from '@wordpress/i18n';
  */
 import useLiveRegion from '../../utils/useLiveRegion';
 
+/* translators: %d: new position. */
 const REORDER_MESSAGE = __(
-  /* translators: d: new position. */
   'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
   'web-stories'
 );

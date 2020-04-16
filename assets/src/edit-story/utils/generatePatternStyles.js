@@ -65,14 +65,14 @@ function getGradientDescription({ type, rotation, center, size }) {
       }
       return `${sizeString}${centerString}`.trim();
 
-    case 'conic':
+    case 'conic': {
       if (!rotation && !centerString) {
         return null;
       }
       // Here we don't always need rotation, as default is 0turn
       const fromRotationString = rotation ? `from ${rotation}turn` : '';
       return `${fromRotationString}${centerString}`.trim();
-
+    }
     case 'linear':
       // Always include rotation and offset by .5turn, as default is .5turn(?)
       return `${((rotation || 0) + 0.5) % 1}turn`;
