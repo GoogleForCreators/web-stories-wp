@@ -256,10 +256,15 @@ function GridView() {
                     ariaLabel={
                       isCurrentPage
                         ? sprintf(
+                            /* translators: %s: page number. */
                             __('Page %s (current page)', 'web-stories'),
                             index + 1
                           )
-                        : sprintf(__('Page %s', 'web-stories'), index + 1)
+                        : sprintf(
+                            /* translators: %s: page number. */
+                            __('Page %s', 'web-stories'),
+                            index + 1
+                          )
                     }
                     isActive={isCurrentPage}
                     index={index}

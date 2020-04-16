@@ -25,6 +25,7 @@ export {
   MoreVerticalButton,
   ActionLabel,
 } from './cardGridItem';
+export { default as CardGallery } from './cardGallery';
 export { default as Dropdown } from './dropdown';
 export { default as NavigationBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
@@ -35,3 +36,12 @@ export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
 export { default as ListBar } from './viewStyleBar';
+export {
+  Table,
+  TableBody,
+  TableHeaderCell,
+  TableCell,
+  TablePreviewCell,
+  TableHeader,
+  TableRow,
+} from './table';
