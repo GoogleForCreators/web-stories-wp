@@ -215,7 +215,15 @@
       }
     },
     {
-      "files": ["babel.config.js", "webpack.config.js", ".storybook/*.js", "tests/js/*.js", "tests/e2e/*.js", "tests/e2e/config/*.js"],
+      "files": [
+        "babel.config.js",
+        "puppeteer.config.js",
+        "webpack.config.js",
+        ".storybook/*.js",
+        "tests/js/*.js",
+        "tests/e2e/*.js",
+        "tests/e2e/config/*.js"
+      ],
       "env": {
         "node": true
       }
