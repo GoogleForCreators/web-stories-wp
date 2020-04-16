@@ -42,10 +42,13 @@ import { ReactComponent as AlignRight } from '../../../icons/align_right.svg';
 import { ReactComponent as HorizontalDistribute } from '../../../icons/horizontal_distribute.svg';
 import { ReactComponent as VerticalDistribute } from '../../../icons/vertical_distribute.svg';
 import getCommonValue from '../utils/getCommonValue';
-import { useCanvas } from '../../canvas';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
+import {
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../../constants';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -105,18 +108,16 @@ const alignmentButtonIds = [
 
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
-  const {
-    state: { pageSize },
-  } = useCanvas();
   // Set boundRect with pageSize when there is only element selected
   const boundRect =
     selectedElements.length === 1
       ? {
           startX: 0,
           startY: 0,
-          endX: pageSize.width,
-          endY: pageSize.height,
-          ...pageSize,
+          endX: DEFAULT_EDITOR_PAGE_WIDTH,
+          endY: DEFAULT_EDITOR_PAGE_HEIGHT,
+          width: DEFAULT_EDITOR_PAGE_WIDTH,
+          height: DEFAULT_EDITOR_PAGE_HEIGHT,
         }
       : getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
@@ -171,6 +172,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   const isDistributionEnabled = !isFill && selectedElements.length > 2;
+  const isAlignEnabled = !isFill;
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);
@@ -217,7 +219,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <ElementRow ref={ref}>
+    <ElementRow ref={ref} aria-label={__('Alignment Panel', 'web-stories')}>
       <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
         <IconButton
           disabled={!isDistributionEnabled}
@@ -243,7 +245,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       <SeparateBorder />
       <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlign('left', boundRect, pushUpdate)}
           aria-label={__('Justify Left', 'web-stories')}
           id={alignmentButtonIds[2]}
@@ -254,7 +256,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlignCenter(boundRect, pushUpdate)}
           aria-label={__('Justify Center', 'web-stories')}
           id={alignmentButtonIds[3]}
@@ -265,7 +267,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlign('right', boundRect, pushUpdate)}
           aria-label={__('Justify Right', 'web-stories')}
           id={alignmentButtonIds[4]}
@@ -276,7 +278,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align top', 'web-stories')}>
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlign('top', boundRect, pushUpdate)}
           aria-label={__('Justify Top', 'web-stories')}
           id={alignmentButtonIds[5]}
@@ -287,7 +289,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align vertical center', 'web-stories')}>
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
           aria-label={__('Justify Middle', 'web-stories')}
           id={alignmentButtonIds[6]}
@@ -298,7 +300,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align bottom', 'web-stories')}>
         <IconButton
-          disabled={isFill}
+          disabled={!isAlignEnabled}
           onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
           aria-label={__('Justify Bottom', 'web-stories')}
           id={alignmentButtonIds[7]}
