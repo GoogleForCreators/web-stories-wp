@@ -134,6 +134,9 @@ describe('buttons', () => {
     saveStory.mockImplementation(() => ({
       then(callback) {
         callback();
+        return {
+          catch: () => {},
+        };
       },
     }));
 
@@ -168,6 +171,9 @@ describe('buttons', () => {
     autoSave.mockImplementation(() => ({
       then(callback) {
         callback();
+        return {
+          catch: () => {},
+        };
       },
     }));
 
