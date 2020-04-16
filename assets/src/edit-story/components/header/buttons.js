@@ -111,25 +111,29 @@ function PreviewButton() {
 
     // Save story directly if draft, otherwise, use auto-save.
     const updateFunc = isDraft ? saveStory : autoSave;
-    updateFunc().then(() => {
-      let previewOpened = false;
-      if (popup && !popup.closed) {
-        try {
-          // The `popup.location.href` will fail if the expected window has
-          // been naviagted to a different origin.
-          if (popup.location.href) {
-            popup.location.replace(previewLink);
-            previewOpened = true;
+    updateFunc()
+      .then(() => {
+        let previewOpened = false;
+        if (popup && !popup.closed) {
+          try {
+            // The `popup.location.href` will fail if the expected window has
+            // been naviagted to a different origin.
+            if (popup.location.href) {
+              popup.location.replace(previewLink);
+              previewOpened = true;
+            }
+          } catch (e) {
+            // Ignore the errors. They will simply trigger the "try again"
+            // dialog.
           }
-        } catch (e) {
-          // Ignore the errors. They will simply trigger the "try again"
-          // dialog.
         }
-      }
-      if (!previewOpened) {
+        if (!previewOpened) {
+          //setPreviewLinkToOpenViaDialog(previewLink);
+        }
+      })
+      .catch(() => {
         setPreviewLinkToOpenViaDialog(previewLink);
-      }
-    });
+      });
   };
 
   const openPreviewLinkSync = (evt) => {

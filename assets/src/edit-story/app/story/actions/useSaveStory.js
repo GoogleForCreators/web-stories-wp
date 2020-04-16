@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * WordPress dependencies
@@ -31,24 +30,10 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import OutputStory from '../../../output/story';
+import getStoryMarkup from '../../../utils/getStoryMarkup';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-
-/**
- * Creates AMP HTML markup for saving to DB for rendering in the FE.
- *
- * @param {import('../../../types').Story} story Story object.
- * @param {Array<Object>} pages List of pages.
- * @param {Object} metadata Metadata.
- * @return {Element} Story markup.
- */
-const getStoryMarkup = (story, pages, metadata) => {
-  return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
-  );
-};
 
 /**
  * Custom hook to save story.

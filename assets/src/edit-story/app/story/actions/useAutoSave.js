@@ -18,12 +18,6 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -31,22 +25,7 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import OutputStory from '../../../output/story';
-import { useSnackbar } from '../../snackbar';
-
-/**
- * Creates AMP HTML markup for saving to DB for rendering in the FE.
- *
- * @param {import('../../../types').Story} story Story object.
- * @param {Array<Object>} pages List of pages.
- * @param {Object} metadata Metadata.
- * @return {Element} Story markup.
- */
-const getStoryMarkup = (story, pages, metadata) => {
-  return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
-  );
-};
+import getStoryMarkup from '../../../utils/getStoryMarkup';
 
 /**
  * Custom hook to auto-save a story.
@@ -62,7 +41,6 @@ function useAutoSave({ storyId, pages, story }) {
     actions: { autoSaveById },
   } = useAPI();
   const { metadata } = useConfig();
-  const { showSnackbar } = useSnackbar();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
   const autoSave = useCallback(
@@ -90,20 +68,11 @@ function useAutoSave({ storyId, pages, story }) {
         pages,
         ...propsToSave,
         ...props,
-      })
-        .catch(() => {
-          showSnackbar({
-            message: __(
-              'Failed to generate preview for the story',
-              'web-stories'
-            ),
-          });
-        })
-        .finally(() => {
-          setIsAutoSaving(false);
-        });
+      }).finally(() => {
+        setIsAutoSaving(false);
+      });
     },
-    [story, pages, metadata, autoSaveById, storyId, showSnackbar]
+    [story, pages, metadata, autoSaveById, storyId]
   );
 
   return { autoSave, isAutoSaving };
