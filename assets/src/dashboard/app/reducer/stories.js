@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import groupBy from '../../../utils/groupBy';
+import groupBy from '../../utils/groupBy';
 
 // TODO make these actions
 export const ACTION_TYPES = {
@@ -28,21 +28,22 @@ export const ACTION_TYPES = {
 
 function storyReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES:
-      return {
-        ...state,
-        totalPages: action.payload.totalPages,
-      };
-    case ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT:
-      return {
-        ...state,
-        totalStories: action.payload.totalStories,
-      };
     case ACTION_TYPES.UPDATE_STORIES:
       return {
         ...state,
         stories: { ...state.stories, ...groupBy(action.payload, 'id') },
       };
+    case ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT:
+      return {
+        ...state,
+        totalStories: action.payload,
+      };
+    case ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES:
+      return {
+        ...state,
+        totalPages: action.payload,
+      };
+
     default:
       return state;
   }

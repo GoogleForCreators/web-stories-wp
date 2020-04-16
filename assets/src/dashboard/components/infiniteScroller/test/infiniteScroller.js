@@ -17,18 +17,12 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import InfiniteScroller from '../index';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 
@@ -54,26 +48,23 @@ describe('InfiniteScroller', () => {
     expect(scrollingChildren).toHaveLength(5);
   });
 
-  //   it.skip('should call handleGetData when loading component is seen', () => {
-  //     const { getByTestId } = render(
-  //       <InfiniteScroller data-testid="scroller" handleGetData={onGetDataMock}>
-  //         {dummyData.map((data, index) => (
-  //           <div key={index}>
-  //             {data} {index}
-  //           </div>
-  //         ))}
-  //       </InfiniteScroller>
-  //     );
+  it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
+    const { getByText } = render(
+      <InfiniteScroller
+        handleGetData={onGetDataMock}
+        allDataLoadedMessage="All data has been fetched"
+        isAllDataLoaded={true}
+      >
+        {dummyData.map((data, index) => (
+          <div key={index}>
+            {data} {index}
+          </div>
+        ))}
+      </InfiniteScroller>
+    );
 
-  //     const loadingComponent = getByTestId('load-more-on-scroll');
-  //     const scrollerContainer = getByTestId('scroller');
+    const allDataLoaded = getByText('All data has been fetched');
 
-  //     fireEvent.scroll(scrollerContainer);
-
-  // waitFor(() => {
-  //   return expect(onGetDataMock).toHaveBeenCalledTimes(1);
-  // });
-  //   });
-
-  //   it.skip('should show all data loaded component and not loading component when isAllDataLoaded is true', () => {});
+    expect(allDataLoaded).toBeDefined();
+  });
 });

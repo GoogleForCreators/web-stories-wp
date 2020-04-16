@@ -30,7 +30,6 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import {
   ITEMS_PER_PAGE,
   STORY_STATUSES,
@@ -38,9 +37,10 @@ import {
   ORDER_BY_SORT,
 } from '../../constants';
 import getAllTemplates from '../../templates';
+import { useConfig } from '../config';
 import storyReducer, {
   ACTION_TYPES as STORY_ACTION_TYPES,
-} from './reducer/stories';
+} from '../reducer/stories';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -126,13 +126,13 @@ export default function ApiProvider({ children }) {
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
-          payload: { totalStories },
+          payload: totalStories,
         });
 
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
-          payload: { totalPages },
+          payload: totalPages,
         });
 
         const serverStoryResponse = await response.json();
