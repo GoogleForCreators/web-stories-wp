@@ -69,8 +69,16 @@ function TemplateDetail() {
     }
 
     return {
-      title: sprintf(__('%s Template', 'web-stories'), template.title),
-      byLine: sprintf(__('by %s', 'web-stories'), template.createdBy),
+      title: sprintf(
+        /* translators: %s: template title  */
+        __('%s Template', 'web-stories'),
+        template.title
+      ),
+      byLine: sprintf(
+        /* translators: %s: template author  */
+        __('by %s', 'web-stories'),
+        template.createdBy
+      ),
     };
   }, [template]);
 
