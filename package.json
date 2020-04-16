@@ -71,7 +71,7 @@
     "@wordpress/e2e-test-utils": "^4.5.0",
     "@wordpress/eslint-plugin": "^5.0.1",
     "@wordpress/jest-puppeteer-axe": "^1.7.0",
-    "@wordpress/scripts": "^7.2.0",
+    "@wordpress/scripts": "^8.0.1",
     "amphtml-validator": "^1.0.30",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.3.0",
