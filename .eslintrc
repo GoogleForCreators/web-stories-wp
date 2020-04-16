@@ -216,6 +216,7 @@
     },
     {
       "files": [
+        "bin/**/*.js",
         "babel.config.js",
         "puppeteer.config.js",
         "webpack.config.js",
