@@ -29,7 +29,6 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "history": "^4.10.1",
-    "intersection-observer": "^0.8.0",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.5",
     "polished": "^3.5.1",

@@ -39,7 +39,7 @@ const InfiniteScroller = ({
 }) => {
   const [loadMore, setLoadMore] = useState(false);
   const loadingRef = useRef(null);
-
+  const containerRef = useRef(null);
   useEffect(() => {
     if (loadMore) {
       handleGetData(loadMore);
@@ -48,7 +48,7 @@ const InfiniteScroller = ({
   }, [loadMore, handleGetData]);
 
   const options = {
-    root: null,
+    root: containerRef.current,
     threshold: 1.0,
   };
 
@@ -69,7 +69,7 @@ const InfiniteScroller = ({
   useLayoutEffect(() => {
     const currentRef = loadingRef.current;
     if (!isAllDataLoaded) {
-      observer.observe(loadingRef.current);
+      observer.observe(currentRef);
       return () => {
         currentRef && observer.unobserve(currentRef);
       };
@@ -78,7 +78,7 @@ const InfiniteScroller = ({
   }, [isAllDataLoaded, loadingRef, observer]);
 
   return (
-    <>
+    <div ref={containerRef}>
       {children}
 
       {isAllDataLoaded ? (
@@ -88,7 +88,7 @@ const InfiniteScroller = ({
           {loadingMessage}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
