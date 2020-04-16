@@ -16,24 +16,24 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
+import theme from '../theme';
+
+const THUMBNAIL_WIDTH = 33;
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
-const defaultBp = descendingBreakpointKeys[0];
 const getCurrentBp = () =>
-  descendingBreakpointKeys.reduce((current, mq) => {
-    if (window.innerWidth <= theme.breakpoint.raw[mq]) {
-      current = mq;
-    }
-    return current;
-  }, defaultBp);
+  descendingBreakpointKeys.reduce(
+    (current, bp) =>
+      window.innerWidth <= theme.breakpoint.raw[bp] ? bp : current,
+    descendingBreakpointKeys[0]
+  );
 
 const sizeFromWidth = (width) => ({
   width,
@@ -49,9 +49,7 @@ export default function usePagePreviewSize(options = {}) {
       return () => {};
     }
 
-    const handleResize = () => {
-      setBp(getCurrentBp);
-    };
+    const handleResize = () => setBp(getCurrentBp());
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -60,7 +58,9 @@ export default function usePagePreviewSize(options = {}) {
 
   return useMemo(
     () => ({
-      pageSize: sizeFromWidth(thumbnailMode ? 33 : theme.previewWidth[bp]),
+      pageSize: sizeFromWidth(
+        thumbnailMode ? THUMBNAIL_WIDTH : theme.previewWidth[bp]
+      ),
     }),
     [bp, thumbnailMode]
   );
