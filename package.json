@@ -131,7 +131,7 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "webpack",
+    "build:js": "NODE_ENV=production webpack",
     "build:plugin": "wp dist-archive . $(pwd)/build/web-stories --create-target-dir",
     "build:storybook": "build-storybook -c .storybook -o build/storybook --quiet",
     "download-fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",
