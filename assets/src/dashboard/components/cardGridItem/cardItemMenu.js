@@ -28,7 +28,7 @@ import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
 import { ReactComponent as MoreVerticalSvg } from '../../icons/moreVertical.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import PopoverMenu, { PopeverRevealer } from '../popoverMenu';
+import PopoverMenu, { PopoverRevealer } from '../popoverMenu';
 
 export const MoreVerticalButton = styled.button`
   border: none;
@@ -76,14 +76,14 @@ export default function CardItemMenu({
       >
         <MoreVerticalSvg width={4} height={20} />
       </MoreVerticalButton>
-      <PopeverRevealer isOpen={isPopoverMenuOpen}>
+      <PopoverRevealer isOpen={isPopoverMenuOpen}>
         <PopoverMenu
           isOpen={isPopoverMenuOpen}
           framelessButton
           onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
           items={STORY_CONTEXT_MENU_ITEMS}
         />
-      </PopeverRevealer>
+      </PopoverRevealer>
     </MenuContainer>
   );
 }
