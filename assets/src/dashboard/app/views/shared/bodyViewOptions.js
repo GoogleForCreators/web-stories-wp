@@ -41,17 +41,8 @@ const StorySortDropdownContainer = styled.div`
 `;
 
 const SortDropdown = styled(Dropdown)`
-  min-width: 147px;
-  ul {
-    right: 20px;
-    max-width: 147px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    ul {
-      left: 20px;
-    }
-  }
+  min-width: 210px;
+  margin-right: 10px;
 `;
 
 const BodyViewOptions = ({
