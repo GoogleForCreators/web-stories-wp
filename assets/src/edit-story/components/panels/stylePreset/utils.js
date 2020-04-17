@@ -18,6 +18,8 @@
  * Internal dependencies
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import convertToCSS from '../../../utils/convertToCSS';
+import {generateFontFamily} from "../../../elements/text/util";
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
@@ -29,4 +31,18 @@ export function findMatchingColor(color, stylePresets, isText) {
     const existing = generatePatternStyles(value, patternType);
     return Object.keys(toAdd).every((key) => existing[key] === toAdd[key]);
   });
+}
+
+export function generatePresetStyle(preset) {
+  debugger;
+  const { color, backgroundColor, padding, fontFamily, fontFallback } = preset;
+  // @todo Generate a constant with mappings/callbacks instead?
+  // @todo What to display in case of padding? Get the padding percentage and then display that in relation to the preset size.
+  // @todo Filter null out.
+  return {
+    padding: `${padding?.vertical ? 2 : 0}px ${padding?.horizontal ? 2 : 0}px`,
+    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    ...generatePatternStyles(color, 'color'),
+    ...generatePatternStyles(backgroundColor, 'background'),
+  };
 }

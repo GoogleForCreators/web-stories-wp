@@ -34,9 +34,8 @@ import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
 import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
-import { getDefinitionForType } from '../../../elements';
 import { Panel, PanelTitle, PanelContent } from './../panel';
-import { findMatchingColor } from './utils';
+import { findMatchingColor, generatePresetStyle } from './utils';
 
 const COLOR_HEIGHT = 35;
 
@@ -82,7 +81,7 @@ const ExitEditMode = styled.a`
   height: initial;
 `;
 
-const colorCSS = css`
+const presetCSS = css`
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -96,12 +95,18 @@ const colorCSS = css`
 `;
 
 const Color = styled.button`
-  ${colorCSS}
+  ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
 `;
 
+const Style = styled.button`
+  ${presetCSS}
+  width: 72px;
+  border-radius: 4px;
+`;
+
 // For max-height: Display 5 extra pixels to show there are more colors.
-const Colors = styled.div`
+const Presets = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -114,7 +119,7 @@ const ButtonWrapper = styled.div`
   height: ${COLOR_HEIGHT}px;
 `;
 
-const ColorGroupLabel = styled.div`
+const PresetGroupLabel = styled.div`
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 10px;
   line-height: 12px;
@@ -132,8 +137,9 @@ function StylePresetPanel() {
     actions: { updateStory, updateElementsById },
   } = useStory();
 
-  const { fillColors, textColors } = stylePresets;
-
+  // @todo Pending UX if to track fonts, too.
+  const stylesToTrack = ['color', 'backgroundColor', 'padding', 'fontFamily'];
+  const { fillColors, textColors, styles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const isType = (elType) => {
@@ -215,16 +221,7 @@ function StylePresetPanel() {
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
-          properties: (currentProperties) => {
-            const { type } = currentProperties;
-            // @todo Is this necessary?
-            const { isMedia } = getDefinitionForType(type);
-            return isMedia
-              ? {}
-              : {
-                  backgroundColor: color,
-                };
-          },
+          properties: { backgroundColor: color },
         });
       }
     },
@@ -290,7 +287,6 @@ function StylePresetPanel() {
       handleApplyColor(color);
     }
   };
-
   return (
     <Panel name="stylepreset">
       <PanelTitle
@@ -303,8 +299,8 @@ function StylePresetPanel() {
       <PanelContent isPrimary padding={hasColorPresets ? null : '0'}>
         {hasColorPresets && (
           <>
-            <ColorGroupLabel>{groupLabel}</ColorGroupLabel>
-            <Colors>
+            <PresetGroupLabel>{groupLabel}</PresetGroupLabel>
+            <Presets>
               {colorPresets.map((color, i) => (
                 <ButtonWrapper key={`color-${i}`}>
                   <Color
@@ -327,7 +323,37 @@ function StylePresetPanel() {
                   </Color>
                 </ButtonWrapper>
               ))}
-            </Colors>
+            </Presets>
+          </>
+        )}
+        {styles.length > 0 && (
+          <>
+            <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
+            <Presets>
+              {styles.map((style, i) => (
+                <ButtonWrapper key={`color-${i}`}>
+                  <Style
+                    style={generatePresetStyle(style)}
+                    onClick={() => {
+                      handleColorClick(style);
+                    }}
+                    onKeyDown={(evt) => {
+                      if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
+                        handleColorClick(style);
+                      }
+                    }}
+                    aria-label={
+                      isEditMode
+                        ? __('Delete preset', 'web-stories')
+                        : __('Apply preset', 'web-stories')
+                    }
+                  >
+                    {isEditMode && <Remove />}
+                    {!isEditMode && __('Text', 'web-stories')}
+                  </Style>
+                </ButtonWrapper>
+              ))}
+            </Presets>
           </>
         )}
       </PanelContent>
