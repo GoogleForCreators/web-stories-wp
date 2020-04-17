@@ -23,8 +23,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { PAGE_RATIO } from '../constants';
 import theme from '../theme';
 
-const THUMBNAIL_WIDTH = 33;
-
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
@@ -59,7 +57,7 @@ export default function usePagePreviewSize(options = {}) {
   return useMemo(
     () => ({
       pageSize: sizeFromWidth(
-        thumbnailMode ? THUMBNAIL_WIDTH : theme.previewWidth[bp]
+        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp]
       ),
     }),
     [bp, thumbnailMode]
