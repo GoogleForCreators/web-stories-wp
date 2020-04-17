@@ -18,8 +18,9 @@
  * Internal dependencies
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import { generateFontFamily } from '../../../elements/text/util';
+import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import convertToCSS from '../../../utils/convertToCSS';
-import {generateFontFamily} from "../../../elements/text/util";
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
@@ -33,8 +34,15 @@ export function findMatchingColor(color, stylePresets, isText) {
   });
 }
 
+export function findMatchingStylePreset(preset, stylePresets) {
+  const stylesToMatch = stylePresets.styles;
+  const toAdd = convertToCSS(generatePresetStyle(preset));
+  return stylesToMatch.find(
+    (value) => toAdd === convertToCSS(generatePresetStyle(value))
+  );
+}
+
 export function generatePresetStyle(preset) {
-  debugger;
   const { color, backgroundColor, padding, fontFamily, fontFallback } = preset;
   // @todo Generate a constant with mappings/callbacks instead?
   // @todo What to display in case of padding? Get the padding percentage and then display that in relation to the preset size.
@@ -44,5 +52,41 @@ export function generatePresetStyle(preset) {
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     ...generatePatternStyles(color, 'color'),
     ...generatePatternStyles(backgroundColor, 'background'),
+  };
+}
+
+function hasStylePreset({ fontFamily, backgroundTextMode }) {
+  const defaultFont = 'Roboto';
+  return (
+    defaultFont !== fontFamily ||
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
+  );
+}
+
+export function getTextPresets(elements, stylePresets) {
+  return {
+    textColors: elements
+      .filter((text) => !hasStylePreset(text))
+      .map(({ color }) => color)
+      .filter((color) => !findMatchingColor(color, stylePresets, true)),
+    styles: elements
+      .filter((text) => hasStylePreset(text))
+      .map((text) => {
+        const {
+          color,
+          backgroundColor,
+          padding,
+          fontFamily,
+          fontFallback,
+        } = text;
+        return {
+          color,
+          backgroundColor,
+          padding,
+          fontFamily,
+          fontFallback,
+        };
+      })
+      .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };
 }

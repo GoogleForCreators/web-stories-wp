@@ -35,7 +35,8 @@ import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { Panel, PanelTitle, PanelContent } from './../panel';
-import { findMatchingColor, generatePresetStyle } from './utils';
+import {findMatchingColor, generatePresetStyle, getTextPresets} from './utils';
+import {BACKGROUND_TEXT_MODE} from "../../../constants";
 
 const COLOR_HEIGHT = 35;
 
@@ -174,14 +175,19 @@ function StylePresetPanel() {
   const handleAddColorPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
-      let addedFillColors = [];
-      let addedTextColors = [];
+      let addedPresets = {
+        fillColors: [],
+        textColors: [],
+        styles: [],
+      };
       if (isText) {
-        addedTextColors = selectedElements
-          .map(({ color }) => color)
-          .filter((color) => !findMatchingColor(color, stylePresets, true));
+        addedPresets = {
+          ...addedPresets,
+          ...getTextPresets(selectedElements, stylePresets),
+        };
       } else {
-        addedFillColors = selectedElements
+        // Currently, shape only supports fillColors.
+        addedPresets.fillColors = selectedElements
           .map(({ backgroundColor }) => {
             return backgroundColor ? backgroundColor : null;
           })
@@ -189,26 +195,23 @@ function StylePresetPanel() {
             (color) => color && !findMatchingColor(color, stylePresets, false)
           );
       }
-      if (addedFillColors.length > 0 || addedTextColors.length > 0) {
+      if (
+        addedPresets.fillColors?.length > 0 ||
+        addedPresets.textColors?.length > 0 ||
+        addedPresets.styles?.length > 0
+      ) {
         updateStory({
           properties: {
             stylePresets: {
-              ...stylePresets,
-              fillColors: [...fillColors, ...addedFillColors],
-              textColors: [...textColors, ...addedTextColors],
+              styles: [...styles, ...addedPresets.styles],
+              fillColors: [...fillColors, ...addedPresets.fillColors],
+              textColors: [...textColors, ...addedPresets.textColors],
             },
           },
         });
       }
     },
-    [
-      isText,
-      selectedElements,
-      updateStory,
-      stylePresets,
-      fillColors,
-      textColors,
-    ]
+    [isText, selectedElements, updateStory, stylePresets]
   );
 
   const handleApplyColor = useCallback(
