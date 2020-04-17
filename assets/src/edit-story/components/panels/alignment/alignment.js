@@ -106,20 +106,20 @@ const alignmentButtonIds = [
   'alignBottom',
 ];
 
+const PAGE_RECT = {
+  startX: 0,
+  startY: 0,
+  endX: DEFAULT_EDITOR_PAGE_WIDTH,
+  endY: DEFAULT_EDITOR_PAGE_HEIGHT,
+  width: DEFAULT_EDITOR_PAGE_WIDTH,
+  height: DEFAULT_EDITOR_PAGE_HEIGHT,
+};
+
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
   // Set boundRect with pageSize when there is only element selected
   const boundRect =
-    selectedElements.length === 1
-      ? {
-          startX: 0,
-          startY: 0,
-          endX: DEFAULT_EDITOR_PAGE_WIDTH,
-          endY: DEFAULT_EDITOR_PAGE_HEIGHT,
-          width: DEFAULT_EDITOR_PAGE_WIDTH,
-          height: DEFAULT_EDITOR_PAGE_HEIGHT,
-        }
-      : getBoundRect(selectedElements);
+    selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
 
   const updatedSelectedElementsWithFrame = useMemo(
@@ -219,7 +219,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <ElementRow ref={ref} aria-label={__('Alignment Panel', 'web-stories')}>
+    <ElementRow ref={ref}>
       <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
         <IconButton
           disabled={!isDistributionEnabled}

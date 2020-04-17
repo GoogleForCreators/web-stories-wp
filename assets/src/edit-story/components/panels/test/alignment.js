@@ -64,24 +64,42 @@ describe('Panels/Alignment', () => {
   });
 
   function renderAlignment(...args) {
-    return renderPanel(Alignment, ...args);
-  }
+    const result = renderPanel(Alignment, ...args);
+    const { getByLabelText } = result;
+    const horizontalDistributionButton = getByLabelText(
+      horizontalDistributionButtonLabel
+    );
+    const verticalDistributionButton = getByLabelText(
+      verticalDistributionButtonLabel
+    );
+    const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
+    const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
+    const justifyRightButton = getByLabelText(justifyRightButtonLabel);
+    const justifyTopButton = getByLabelText(justifyTopButtonLabel);
+    const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
+    const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
 
-  it('should render <Alignment /> panel', () => {
-    const { getByLabelText } = renderAlignment([defaultElement]);
-    const element = getByLabelText('Alignment Panel');
-    expect(element).toBeDefined();
-  });
+    return {
+      ...result,
+      horizontalDistributionButton,
+      verticalDistributionButton,
+      justifyLeftButton,
+      justifyCenterButton,
+      justifyRightButton,
+      justifyTopButton,
+      justifyMiddleButton,
+      justifyBottomButton,
+    };
+  }
 
   describe('single selection', () => {
     it('should render disabled distribution buttons', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const horizontalDistributionButton = getByLabelText(
-        horizontalDistributionButtonLabel
-      );
-      const verticalDistributionButton = getByLabelText(
-        verticalDistributionButtonLabel
-      );
+      const {
+        pushUpdate,
+        horizontalDistributionButton,
+        verticalDistributionButton,
+      } = renderAlignment([defaultElement]);
+
       expect(horizontalDistributionButton).toBeDisabled();
       expect(verticalDistributionButton).toBeDisabled();
 
@@ -93,13 +111,15 @@ describe('Panels/Alignment', () => {
     });
 
     it('should render align and justify buttons for default element', () => {
-      const { getByLabelText } = renderAlignment([defaultElement]);
-      const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
-      const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
-      const justifyRightButton = getByLabelText(justifyRightButtonLabel);
-      const justifyTopButton = getByLabelText(justifyTopButtonLabel);
-      const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
-      const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+      const {
+        justifyLeftButton,
+        justifyCenterButton,
+        justifyRightButton,
+        justifyTopButton,
+        justifyMiddleButton,
+        justifyBottomButton,
+      } = renderAlignment([defaultElement]);
+
       expect(justifyLeftButton).toBeEnabled();
       expect(justifyCenterButton).toBeEnabled();
       expect(justifyRightButton).toBeEnabled();
@@ -109,19 +129,17 @@ describe('Panels/Alignment', () => {
     });
 
     it('should render disabled distribution, align and justify buttons for filled element', () => {
-      const { getByLabelText } = renderAlignment([fillElement]);
-      const horizontalDistributionButton = getByLabelText(
-        horizontalDistributionButtonLabel
-      );
-      const verticalDistributionButton = getByLabelText(
-        verticalDistributionButtonLabel
-      );
-      const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
-      const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
-      const justifyRightButton = getByLabelText(justifyRightButtonLabel);
-      const justifyTopButton = getByLabelText(justifyTopButtonLabel);
-      const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
-      const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+      const {
+        horizontalDistributionButton,
+        verticalDistributionButton,
+        justifyLeftButton,
+        justifyCenterButton,
+        justifyRightButton,
+        justifyTopButton,
+        justifyMiddleButton,
+        justifyBottomButton,
+      } = renderAlignment([fillElement]);
+
       expect(horizontalDistributionButton).toBeDisabled();
       expect(verticalDistributionButton).toBeDisabled();
       expect(justifyLeftButton).toBeDisabled();
@@ -133,48 +151,54 @@ describe('Panels/Alignment', () => {
     });
 
     it('should update element on alignleft button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
+      const { justifyLeftButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyLeftButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on alignright button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyRightButton = getByLabelText(justifyRightButtonLabel);
+      const { justifyRightButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyRightButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on aligncenter button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
+      const { justifyCenterButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyCenterButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifytop button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyTopButton = getByLabelText(justifyTopButtonLabel);
+      const { justifyTopButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyTopButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifybottom button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+      const { justifyBottomButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyBottomButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifymiddle button click', () => {
-      const { getByLabelText, pushUpdate } = renderAlignment([defaultElement]);
-      const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
+      const { justifyMiddleButton, pushUpdate } = renderAlignment([
+        defaultElement,
+      ]);
 
       fireEvent.click(justifyMiddleButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
@@ -183,19 +207,17 @@ describe('Panels/Alignment', () => {
 
   describe('2 element selection', () => {
     it('should render disabled distribution and enabled align and justify buttons for multi default element', () => {
-      const { getByLabelText } = renderAlignment([defaultElement, defaultText]);
-      const horizontalDistributionButton = getByLabelText(
-        horizontalDistributionButtonLabel
-      );
-      const verticalDistributionButton = getByLabelText(
-        verticalDistributionButtonLabel
-      );
-      const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
-      const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
-      const justifyRightButton = getByLabelText(justifyRightButtonLabel);
-      const justifyTopButton = getByLabelText(justifyTopButtonLabel);
-      const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
-      const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+      const {
+        horizontalDistributionButton,
+        verticalDistributionButton,
+        justifyLeftButton,
+        justifyCenterButton,
+        justifyRightButton,
+        justifyTopButton,
+        justifyMiddleButton,
+        justifyBottomButton,
+      } = renderAlignment([defaultElement, defaultText]);
+
       expect(horizontalDistributionButton).toBeDisabled();
       expect(verticalDistributionButton).toBeDisabled();
       expect(justifyLeftButton).toBeEnabled();
@@ -209,23 +231,17 @@ describe('Panels/Alignment', () => {
 
   describe('3 element selection', () => {
     it('should render enabled distribution, align and justify buttons for multi default element', () => {
-      const { getByLabelText } = renderAlignment([
-        defaultElement,
-        defaultText,
-        defaultImage,
-      ]);
-      const horizontalDistributionButton = getByLabelText(
-        horizontalDistributionButtonLabel
-      );
-      const verticalDistributionButton = getByLabelText(
-        verticalDistributionButtonLabel
-      );
-      const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
-      const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
-      const justifyRightButton = getByLabelText(justifyRightButtonLabel);
-      const justifyTopButton = getByLabelText(justifyTopButtonLabel);
-      const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
-      const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+      const {
+        horizontalDistributionButton,
+        verticalDistributionButton,
+        justifyLeftButton,
+        justifyCenterButton,
+        justifyRightButton,
+        justifyTopButton,
+        justifyMiddleButton,
+        justifyBottomButton,
+      } = renderAlignment([defaultElement, defaultText, defaultImage]);
+
       expect(horizontalDistributionButton).toBeEnabled();
       expect(verticalDistributionButton).toBeEnabled();
       expect(justifyLeftButton).toBeEnabled();
