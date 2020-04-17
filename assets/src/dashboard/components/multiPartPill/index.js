@@ -30,11 +30,19 @@ const PillContainer = styled.div`
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.25);
 `;
 
-const PillSeparator = styled.div`
-  width: 1px;
-  height: 20px;
-  margin: 0 10px;
-  background-color: ${({ theme }) => theme.colors.gray75};
+const PillPart = styled.div`
+  display: flex;
+  align-items: center;
+
+  &:nth-child(n + 2) {
+    &:before {
+      content: '';
+      width: 1px;
+      height: 20px;
+      margin: 0 10px;
+      background-color: ${({ theme }) => theme.colors.gray75};
+    }
+  }
 `;
 
 function MultiPartPill({ children }) {
@@ -45,16 +53,9 @@ function MultiPartPill({ children }) {
 
   return (
     <PillContainer>
-      {parts.map((part, index) =>
-        index > 0 ? (
-          <React.Fragment key={index}>
-            <PillSeparator />
-            {part}
-          </React.Fragment>
-        ) : (
-          <React.Fragment key={index}>{part}</React.Fragment>
-        )
-      )}
+      {parts.map((part, index) => (
+        <PillPart key={index}>{part}</PillPart>
+      ))}
     </PillContainer>
   );
 }

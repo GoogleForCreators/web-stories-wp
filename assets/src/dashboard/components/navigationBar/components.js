@@ -25,21 +25,23 @@ import styled from 'styled-components';
 import Button from '../button';
 
 export const Nav = styled.nav`
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: ${({ theme }) => `${theme.navBar.height}px`};
-  padding: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
-  margin-bottom: 40px;
+  ${({ theme }) => `
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid ${theme.colors.gray50};
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: ${theme.navBar.height}px;
+    padding: ${theme.pageGutter.small.desktop}px;
+    margin-bottom: 40px;
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    flex-wrap: wrap;
-    padding: 0 ${({ theme }) => `${theme.pageGutter.small.min}px`};
-  }
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      flex-wrap: wrap;
+      padding: 0 ${theme.pageGutter.small.min}px;
+    }
+  `}
 `;
 
 export const ActionLink = styled(Button).attrs({ onClick: () => {} })`
