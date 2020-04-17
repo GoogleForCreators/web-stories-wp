@@ -34,6 +34,7 @@ import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
 import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { Panel, PanelTitle, PanelContent } from './../panel';
 import { generatePresetStyle, getShapePresets, getTextPresets } from './utils';
 
@@ -88,6 +89,7 @@ const presetCSS = css`
   border-radius: 15px;
   border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
   padding: 0;
+  font-size: 13px;
   svg {
     width: 18px;
     height: 28px;
@@ -101,6 +103,8 @@ const Color = styled.button`
 
 const Style = styled.button`
   ${presetCSS}
+  background: transparent;
+  ${({ styles }) => styles}
   width: 72px;
   border-radius: 4px;
 `;
@@ -125,6 +129,11 @@ const PresetGroupLabel = styled.div`
   line-height: 12px;
   text-transform: uppercase;
   padding: 6px 0;
+`;
+
+const HighLightWrapper = styled.p`
+  margin: 0;
+  ${({ background }) => generatePatternStyles(background)}
 `;
 
 function StylePresetPanel() {
@@ -306,6 +315,19 @@ function StylePresetPanel() {
     }
   };
 
+  const getStylePresetText = (preset) => {
+    const isHighLight =
+      preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+    const text = __('Text', 'web-stories');
+    return isHighLight ? (
+      <HighLightWrapper background={preset.backgroundColor}>
+        {text}
+      </HighLightWrapper>
+    ) : (
+      text
+    );
+  };
+
   const ariaLabel = isEditMode
     ? __('Delete preset', 'web-stories')
     : __('Apply preset', 'web-stories');
@@ -344,12 +366,12 @@ function StylePresetPanel() {
               {styles.map((style, i) => (
                 <ButtonWrapper key={`color-${i}`}>
                   <Style
-                    style={generatePresetStyle(style)}
+                    styles={generatePresetStyle(style, true)}
                     {...getEventHandlers(style)}
                     aria-label={ariaLabel}
                   >
                     {isEditMode && <Remove />}
-                    {!isEditMode && __('Text', 'web-stories')}
+                    {!isEditMode && getStylePresetText(style)}
                   </Style>
                 </ButtonWrapper>
               ))}

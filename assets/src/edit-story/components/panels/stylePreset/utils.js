@@ -42,17 +42,31 @@ export function findMatchingStylePreset(preset, stylePresets) {
   );
 }
 
-export function generatePresetStyle(preset) {
-  const { color, backgroundColor, padding, fontFamily, fontFallback } = preset;
-  // @todo Generate a constant with mappings/callbacks instead?
-  // @todo What to display in case of padding? Get the padding percentage and then display that in relation to the preset size.
-  // @todo Filter null out.
-  return {
+export function generatePresetStyle(preset, prepareForCSS) {
+  const {
+    color,
+    backgroundColor,
+    padding,
+    fontFamily,
+    fontFallback,
+    backgroundTextMode,
+  } = preset;
+  let style = {
     padding: `${padding?.vertical ? 2 : 0}px ${padding?.horizontal ? 2 : 0}px`,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     ...generatePatternStyles(color, 'color'),
-    ...generatePatternStyles(backgroundColor, 'background'),
   };
+  // If it's highlight mode then the highlight is displayed on the text wrapper instead.
+  if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    style = {
+      ...style,
+      ...generatePatternStyles(backgroundColor, 'background'),
+    };
+  }
+  // @todo Generate a constant with mappings/callbacks instead?
+  // @todo What to display in case of padding? Get the padding percentage and then display that in relation to the preset size.
+  // @todo Filter null out.
+  return style;
 }
 
 function hasStylePreset({ fontFamily, backgroundTextMode }) {
