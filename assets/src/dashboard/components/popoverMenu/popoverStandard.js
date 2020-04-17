@@ -37,7 +37,7 @@ PopoverStandard.propTypes = {
     PropTypes.node,
   ]).isRequired,
   className: PropTypes.string,
-  isOpen: PropTypes.boolean.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default PopoverStandard;
