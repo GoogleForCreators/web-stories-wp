@@ -33,20 +33,11 @@ const DisplayFormatContainer = styled.div`
   display: flex;
   align-items: space-between;
   align-content: center;
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 `;
 
 const StorySortDropdownContainer = styled.div`
   margin: auto 0 auto auto;
   align-self: flex-end;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    align-self: flex-start;
-    margin: 20px 0 0;
-  }
 `;
 
 const SortDropdown = styled(Dropdown)`
