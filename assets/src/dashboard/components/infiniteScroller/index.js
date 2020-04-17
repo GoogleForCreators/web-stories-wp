@@ -21,15 +21,17 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import {
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-  useRef,
-} from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
+const ScrollMessage = styled.div`
+  margin: 20px 0;
+  text-align: center;
+  width: 100%;
+  border: 1px solid green;
+  background-color: yellow;
+`;
 const InfiniteScroller = ({
   allDataLoadedMessage = __('No More Stories', 'web-stories'),
   children,
@@ -40,17 +42,13 @@ const InfiniteScroller = ({
   const [loadMore, setLoadMore] = useState(false);
   const loadingRef = useRef(null);
   const containerRef = useRef(null);
+
   useEffect(() => {
     if (loadMore) {
       handleGetData(loadMore);
-      setLoadMore(false);
     }
+    setLoadMore(false);
   }, [loadMore, handleGetData]);
-
-  const options = {
-    root: containerRef.current,
-    threshold: 1.0,
-  };
 
   const observer = new IntersectionObserver(
     useCallback(
@@ -63,31 +61,40 @@ const InfiniteScroller = ({
       },
       [setLoadMore]
     ),
-    options
+    {
+      root: containerRef.current,
+      rootMargin: '0px',
+      threshold: 1,
+    }
   );
 
-  useLayoutEffect(() => {
-    const currentRef = loadingRef.current;
-    if (!isAllDataLoaded) {
-      observer.observe(currentRef);
+  useEffect(() => {
+    const currentIntersectingRef = loadingRef.current;
+
+    if (!isAllDataLoaded && currentIntersectingRef) {
+      observer.observe(currentIntersectingRef);
       return () => {
-        currentRef && observer.unobserve(currentRef);
+        observer.unobserve(currentIntersectingRef);
       };
     }
     return () => {};
-  }, [isAllDataLoaded, loadingRef, observer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isAllDataLoaded,
+    loadingRef,
+    containerRef,
+    observer.observe,
+    observer.unobserve,
+  ]);
+  // we intentionally do not want to watch on just the observer, it will cause everything to load immediately, the observer will just keep getting triggered
 
   return (
     <div ref={containerRef}>
       {children}
 
-      {isAllDataLoaded ? (
-        <div>{allDataLoadedMessage}</div>
-      ) : (
-        <div data-testid="load-more-on-scroll" ref={loadingRef}>
-          {loadingMessage}
-        </div>
-      )}
+      <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
+        {isAllDataLoaded ? allDataLoadedMessage : loadingMessage}
+      </ScrollMessage>
     </div>
   );
 };

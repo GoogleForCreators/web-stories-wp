@@ -31,9 +31,11 @@ function storyReducer(state, action) {
       return {
         ...state,
         storiesOrderById: [],
+        stories: {},
       };
     }
     case ACTION_TYPES.UPDATE_STORIES:
+      // eslint-disable-next-line no-case-declarations
       let uniqueStoryIds = [
         ...state.storiesOrderById,
         ...action.payload.map(({ id }) => id),
