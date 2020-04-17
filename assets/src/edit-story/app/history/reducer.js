@@ -26,6 +26,8 @@ export const EMPTY_STATE = {
 };
 
 const reducer = (size) => (state, { type, payload }) => {
+  const currentEntry = state.entries[state.offset];
+  const replayState = state.entries[payload];
   switch (type) {
     case ADD_ENTRY:
       // If not, trim `entries` from `offset` (basically destroy all undone states),
@@ -48,8 +50,6 @@ const reducer = (size) => (state, { type, payload }) => {
       }
       return state;
     case REPLAY:
-      const currentEntry = state.entries[state.offset];
-      const replayState = state.entries[payload];
       // If a page has changed and it was not an added page, and if the page is about to change with replay,
       // Ensure the user stays on the page where the latest change happened.
       if (
