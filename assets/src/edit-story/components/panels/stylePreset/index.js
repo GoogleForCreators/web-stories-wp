@@ -35,8 +35,7 @@ import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { useStory } from '../../../app/story';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { Panel, PanelTitle, PanelContent } from './../panel';
-import {findMatchingColor, generatePresetStyle, getTextPresets} from './utils';
-import {BACKGROUND_TEXT_MODE} from "../../../constants";
+import { generatePresetStyle, getShapePresets, getTextPresets } from './utils';
 
 const COLOR_HEIGHT = 35;
 
@@ -138,8 +137,6 @@ function StylePresetPanel() {
     actions: { updateStory, updateElementsById },
   } = useStory();
 
-  // @todo Pending UX if to track fonts, too.
-  const stylesToTrack = ['color', 'backgroundColor', 'padding', 'fontFamily'];
   const { fillColors, textColors, styles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -153,12 +150,12 @@ function StylePresetPanel() {
   const isText = isType('text');
   const isShape = isType('shape');
 
-  const handleDeleteColor = useCallback(
+  const handleDeletePreset = useCallback(
     (toDelete) => {
       updateStory({
         properties: {
           stylePresets: {
-            ...stylePresets,
+            styles: styles.filter((style) => style !== toDelete),
             fillColors: isText
               ? fillColors
               : fillColors.filter((color) => color !== toDelete),
@@ -169,7 +166,7 @@ function StylePresetPanel() {
         },
       });
     },
-    [fillColors, isText, stylePresets, textColors, updateStory]
+    [styles, fillColors, isText, textColors, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
@@ -187,13 +184,7 @@ function StylePresetPanel() {
         };
       } else {
         // Currently, shape only supports fillColors.
-        addedPresets.fillColors = selectedElements
-          .map(({ backgroundColor }) => {
-            return backgroundColor ? backgroundColor : null;
-          })
-          .filter(
-            (color) => color && !findMatchingColor(color, stylePresets, false)
-          );
+        addedPresets = getShapePresets(selectedElements, stylePresets);
       }
       if (
         addedPresets.fillColors?.length > 0 ||
@@ -211,20 +202,31 @@ function StylePresetPanel() {
         });
       }
     },
-    [isText, selectedElements, updateStory, stylePresets]
+    [
+      fillColors,
+      styles,
+      textColors,
+      isText,
+      selectedElements,
+      updateStory,
+      stylePresets,
+    ]
   );
 
-  const handleApplyColor = useCallback(
-    (color) => {
+  const handleApplyPreset = useCallback(
+    (preset) => {
       if (isText) {
+        // @todo Determine this in a better way.
+        // Only style presets have background text mode set.
+        const isStylePreset = preset.backgroundTextMode !== undefined;
         updateElementsById({
           elementIds: selectedElementIds,
-          properties: { color },
+          properties: isStylePreset ? { ...preset } : { color: preset },
         });
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
-          properties: { backgroundColor: color },
+          properties: { backgroundColor: preset },
         });
       }
     },
@@ -283,13 +285,30 @@ function StylePresetPanel() {
     );
   };
 
-  const handleColorClick = (color) => {
+  const getEventHandlers = (preset) => {
+    return {
+      onClick() {
+        handlePresetClick(preset);
+      },
+      onKeyDown(evt) {
+        if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
+          handlePresetClick(preset);
+        }
+      },
+    };
+  };
+
+  const handlePresetClick = (preset) => {
     if (isEditMode) {
-      handleDeleteColor(color);
+      handleDeletePreset(preset);
     } else {
-      handleApplyColor(color);
+      handleApplyPreset(preset);
     }
   };
+
+  const ariaLabel = isEditMode
+    ? __('Delete preset', 'web-stories')
+    : __('Apply preset', 'web-stories');
   return (
     <Panel name="stylepreset">
       <PanelTitle
@@ -308,19 +327,8 @@ function StylePresetPanel() {
                 <ButtonWrapper key={`color-${i}`}>
                   <Color
                     color={color}
-                    onClick={() => {
-                      handleColorClick(color);
-                    }}
-                    onKeyDown={(evt) => {
-                      if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
-                        handleColorClick(color);
-                      }
-                    }}
-                    aria-label={
-                      isEditMode
-                        ? __('Delete preset', 'web-stories')
-                        : __('Apply preset', 'web-stories')
-                    }
+                    {...getEventHandlers(color)}
+                    aria-label={ariaLabel}
                   >
                     {isEditMode && <Remove />}
                   </Color>
@@ -337,19 +345,8 @@ function StylePresetPanel() {
                 <ButtonWrapper key={`color-${i}`}>
                   <Style
                     style={generatePresetStyle(style)}
-                    onClick={() => {
-                      handleColorClick(style);
-                    }}
-                    onKeyDown={(evt) => {
-                      if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
-                        handleColorClick(style);
-                      }
-                    }}
-                    aria-label={
-                      isEditMode
-                        ? __('Delete preset', 'web-stories')
-                        : __('Apply preset', 'web-stories')
-                    }
+                    {...getEventHandlers(style)}
+                    aria-label={ariaLabel}
                   >
                     {isEditMode && <Remove />}
                     {!isEditMode && __('Text', 'web-stories')}

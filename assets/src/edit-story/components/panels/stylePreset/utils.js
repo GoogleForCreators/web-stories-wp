@@ -75,6 +75,7 @@ export function getTextPresets(elements, stylePresets) {
         const {
           color,
           backgroundColor,
+          backgroundTextMode,
           padding,
           fontFamily,
           fontFallback,
@@ -82,11 +83,25 @@ export function getTextPresets(elements, stylePresets) {
         return {
           color,
           backgroundColor,
+          backgroundTextMode,
           padding,
           fontFamily,
           fontFallback,
         };
       })
       .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
+  };
+}
+
+export function getShapePresets(elements, stylePresets) {
+  // Shapes only support fillColors currently.
+  return {
+    fillColors: elements
+      .map(({ backgroundColor }) => {
+        return backgroundColor ? backgroundColor : null;
+      })
+      .filter(
+        (color) => color && !findMatchingColor(color, stylePresets, false)
+      ),
   };
 }
