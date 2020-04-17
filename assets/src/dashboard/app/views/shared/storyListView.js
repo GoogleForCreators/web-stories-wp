@@ -60,7 +60,7 @@ export default function StoryListView({ filteredStories }) {
         <TableHeader>
           <TableRow>
             <TableHeaderCell>{__('Title', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell />
+            <TableHeaderCell>{__('', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Author', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
