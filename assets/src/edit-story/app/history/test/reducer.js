@@ -19,9 +19,8 @@
  */
 import {
   default as useReducer,
-  ADD_ENTRY,
+  SET_CURRENT_STATE,
   CLEAR_HISTORY,
-  CLEAR_REPLAY_STATE,
   EMPTY_STATE,
   REPLAY,
 } from '../reducer';
@@ -47,7 +46,7 @@ describe('reducer', () => {
 
       const newEntry = { id: 2 };
       const result = reducer(initialState, {
-        type: ADD_ENTRY,
+        type: SET_CURRENT_STATE,
         payload: newEntry,
       });
 
@@ -62,7 +61,7 @@ describe('reducer', () => {
       };
       const newEntry = { id: 4 };
       const result = reducer(initialState, {
-        type: ADD_ENTRY,
+        type: SET_CURRENT_STATE,
         payload: newEntry,
       });
 
@@ -80,7 +79,7 @@ describe('reducer', () => {
       };
       const newEntry = { id: 2 };
       const result = reducer(initialState, {
-        type: ADD_ENTRY,
+        type: SET_CURRENT_STATE,
         payload: newEntry,
       });
 
@@ -98,10 +97,120 @@ describe('reducer', () => {
       };
       const newEntry = { id: 7 };
       const result = reducer(initialState, {
-        type: ADD_ENTRY,
+        type: SET_CURRENT_STATE,
         payload: newEntry,
       });
       expect(result.entries).toHaveLength(size);
+    });
+
+    it('should set the correct offset when replaying', () => {
+      const requestedState = { id: 1 };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [{ id: 2 }, requestedState],
+        requestedState,
+      };
+
+      const result = reducer(initialState, {
+        type: SET_CURRENT_STATE,
+        payload: requestedState,
+      });
+
+      expect(result.offset).toStrictEqual(1);
+    });
+
+    it('should clear the requested state after replaying', () => {
+      const requestedState = { id: 1 };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [{ id: 2 }, requestedState],
+        requestedState,
+      };
+
+      const result = reducer(initialState, {
+        type: SET_CURRENT_STATE,
+        payload: requestedState,
+      });
+
+      expect(result.requestedState).toBeNull();
+    });
+
+    it('should set replay the current page relevant to the latest replayed change', () => {
+      const requestedState = { current: 2, pages: [{ id: 2, foo: 'foo' }] };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          { current: 1, pages: [{ id: 1, foo: 'bar' }] },
+          requestedState,
+        ],
+        requestedState,
+      };
+
+      const result = reducer(initialState, {
+        type: SET_CURRENT_STATE,
+        payload: requestedState,
+      });
+
+      expect(result.requestedState.current).toStrictEqual(1);
+      expect(result.requestedState.pages[0].id).toStrictEqual(2);
+    });
+
+    it('should not dynamically set the replay if changed happened on more than one page', () => {
+      const requestedState = {
+        current: 1,
+        pages: [
+          { id: 1, foo: 'bar' },
+          { id: 2, foo: 'bar' },
+        ],
+      };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          {
+            current: 2,
+            pages: [
+              { id: 1, foo: 'foo' },
+              { id: 2, foo: 'foo' },
+            ],
+          },
+          requestedState,
+        ],
+        requestedState,
+      };
+
+      const result = reducer(initialState, {
+        type: SET_CURRENT_STATE,
+        payload: requestedState,
+      });
+
+      expect(result.requestedState).toBeNull();
+      expect(result.offset).toStrictEqual(1);
+    });
+
+    it('should not dynamically set the replay if a page was added', () => {
+      const requestedState = { current: 1, pages: [{ id: 1, foo: 'bar' }] };
+      const initialState = {
+        ...EMPTY_STATE,
+        entries: [
+          {
+            current: 2,
+            pages: [
+              { id: 2, foo: 'foo' },
+              { id: 1, foo: 'bar' },
+            ],
+          },
+          requestedState,
+        ],
+        requestedState,
+      };
+
+      const result = reducer(initialState, {
+        type: SET_CURRENT_STATE,
+        payload: requestedState,
+      });
+
+      expect(result.requestedState).toBeNull();
+      expect(result.offset).toStrictEqual(1);
     });
   });
 
@@ -109,7 +218,7 @@ describe('reducer', () => {
     it('should set initial state when clearing history', () => {
       const initialState = {
         offset: 1,
-        replayState: { id: 1 },
+        requestedState: { id: 1 },
         entries: [{ id: 1 }],
         versionNumber: 1,
       };
@@ -122,45 +231,8 @@ describe('reducer', () => {
     });
   });
 
-  describe('clearReplayState', () => {
-    it('should clear replay state', () => {
-      const initialState = {
-        ...EMPTY_STATE,
-        replayState: { id: 1 },
-      };
-
-      const result = reducer(initialState, {
-        type: CLEAR_REPLAY_STATE,
-      });
-
-      expect(result.replayState).toBeNull();
-    });
-
-    it('should not modify the state if replayState is not set', () => {
-      const result = reducer(EMPTY_STATE, {
-        type: CLEAR_REPLAY_STATE,
-      });
-
-      expect(result).toStrictEqual(EMPTY_STATE);
-    });
-  });
-
   describe('replay', () => {
-    it('should set the correct offset when replaying', () => {
-      const initialState = {
-        ...EMPTY_STATE,
-        entries: [{ id: 1 }, { id: 2 }],
-      };
-
-      const result = reducer(initialState, {
-        type: REPLAY,
-        payload: 1,
-      });
-
-      expect(result.offset).toStrictEqual(1);
-    });
-
-    it('should set the correct replayState when replaying', () => {
+    it('should set the correct requestedState when replaying', () => {
       const replay = { id: 1 };
       const initialState = {
         ...EMPTY_STATE,
@@ -172,77 +244,7 @@ describe('reducer', () => {
         payload: 1,
       });
 
-      expect(result.replayState).toStrictEqual(replay);
-    });
-
-    it('should set replay the current page relevant to the latest replayed change', () => {
-      const initialState = {
-        ...EMPTY_STATE,
-        entries: [
-          { current: 1, pages: [{ id: 1, foo: 'bar' }] },
-          { current: 2, pages: [{ id: 2, foo: 'foo' }] },
-        ],
-      };
-
-      const result = reducer(initialState, {
-        type: REPLAY,
-        payload: 1,
-      });
-
-      expect(result.replayState.current).toStrictEqual(1);
-      expect(result.replayState.pages[0].id).toStrictEqual(2);
-    });
-
-    it('should not dynamically set the replay if changed happened on more than one page', () => {
-      const initialState = {
-        ...EMPTY_STATE,
-        entries: [
-          {
-            current: 1,
-            pages: [
-              { id: 1, foo: 'bar' },
-              { id: 2, foo: 'bar' },
-            ],
-          },
-          {
-            current: 2,
-            pages: [
-              { id: 1, foo: 'foo' },
-              { id: 2, foo: 'foo' },
-            ],
-          },
-        ],
-      };
-
-      const result = reducer(initialState, {
-        type: REPLAY,
-        payload: 1,
-      });
-
-      expect(result.replayState.current).toStrictEqual(2);
-    });
-
-    it('should not dynamically set the replay if a page was added', () => {
-      const initialState = {
-        ...EMPTY_STATE,
-        entries: [
-          { current: 1, pages: [{ id: 1, foo: 'bar' }] },
-          {
-            current: 2,
-            pages: [
-              { id: 2, foo: 'foo' },
-              { id: 1, foo: 'bar' },
-            ],
-          },
-        ],
-      };
-
-      const result = reducer(initialState, {
-        type: REPLAY,
-        payload: 1,
-      });
-
-      expect(result.replayState.current).toStrictEqual(2);
+      expect(result.requestedState).toStrictEqual(replay);
     });
   });
 });

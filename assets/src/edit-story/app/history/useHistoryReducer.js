@@ -23,9 +23,8 @@ import { useReducer, useCallback } from 'react';
  * Internal dependencies
  */
 import reducer, {
-  ADD_ENTRY,
+  SET_CURRENT_STATE,
   CLEAR_HISTORY,
-  CLEAR_REPLAY_STATE,
   REPLAY,
   EMPTY_STATE,
 } from './reducer';
@@ -40,13 +39,13 @@ function useHistoryReducer(size) {
   // almost always be 0 unless the user recently did an undo without making
   // any new changes since.
   //
-  // `state.replayState` is the state that the user most recently tried to
+  // `state.requestedState` is the state that the user most recently tried to
   // undo/redo to - it will be null except for the very short timespan
   // between the user pressing undo and the app updating to that desired
   // state.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const { entries, offset, replayState, versionNumber } = state;
+  const { entries, offset, requestedState, versionNumber } = state;
   const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
@@ -83,21 +82,16 @@ function useHistoryReducer(size) {
     return dispatch({ type: CLEAR_HISTORY });
   }, [dispatch]);
 
-  const appendToHistory = useCallback(
+  const stateToHistory = useCallback(
     (entry) => {
-      dispatch({ type: ADD_ENTRY, payload: entry });
+      dispatch({ type: SET_CURRENT_STATE, payload: entry });
     },
     [dispatch]
   );
 
-  const clearReplayState = useCallback(() => {
-    dispatch({ type: CLEAR_REPLAY_STATE });
-  }, [dispatch]);
-
   return {
-    replayState,
-    clearReplayState,
-    appendToHistory,
+    requestedState,
+    stateToHistory,
     clearHistory,
     offset,
     historyLength,
