@@ -18,18 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useEffect, useLayoutEffect, useState, useRef } from 'react';
-
 /**
  * Internal dependencies
  */
-import {
-  BEZIER,
-  CORNER_DIRECTIONS,
-  DIRECTIONS,
-  Z_INDEX,
-} from '../../constants';
+import { BEZIER, CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
+import Popover from './popover';
+import Shadow from './shadow';
 
 const PERCENTAGE_OFFSET = {
   [DIRECTIONS.TOP]: 100,
@@ -51,13 +47,6 @@ const MenuWrapper = styled.div`
   position: absolute;
 `;
 
-const MenuShadow = styled.div`
-  position: absolute;
-  border-radius: 8px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-  ${fullSize}
-`;
-
 const MenuRevealer = styled.div`
   overflow: hidden;
   border-radius: 8px;
@@ -68,27 +57,23 @@ const MenuCounterRevealer = styled.div`
   border-radius: 8px;
 `;
 
-const ButtonInner = styled.div`
+const ButtonInner = styled(Popover)`
   ${fullSize}
-  position: absolute;
-  z-index: ${Z_INDEX.POPOVER_MENU};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   transform: ${(props) => {
     switch (props.align) {
-      case CORNER_DIRECTIONS.TOP_LEFT:
+      case CORNER_DIRECTIONS.top_left:
         return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
           PERCENTAGE_OFFSET[DIRECTIONS.TOP]
         }%)`;
-      case CORNER_DIRECTIONS.TOP_RIGHT:
+      case CORNER_DIRECTIONS.top_right:
         return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
           PERCENTAGE_OFFSET[DIRECTIONS.TOP]
         }%)`;
-      case CORNER_DIRECTIONS.BOTTOM_RIGHT:
+      case CORNER_DIRECTIONS.bottom_right:
         return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.RIGHT]}%, ${
           PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
         }%)`;
-      case CORNER_DIRECTIONS.BOTTOM_LEFT:
+      case CORNER_DIRECTIONS.bottom_left:
       default:
         return `translate(${PERCENTAGE_OFFSET[DIRECTIONS.LEFT]}%, ${
           PERCENTAGE_OFFSET[DIRECTIONS.BOTTOM]
@@ -99,22 +84,22 @@ const ButtonInner = styled.div`
   ${MenuWrapper} {
     ${(props) => {
       switch (props.align) {
-        case CORNER_DIRECTIONS.TOP_RIGHT:
+        case CORNER_DIRECTIONS.top_right:
           return css`
             top: 0;
             right: 0;
           `;
-        case CORNER_DIRECTIONS.TOP_LEFT:
+        case CORNER_DIRECTIONS.top_left:
           return css`
             top: 0;
             left: 0;
           `;
-        case CORNER_DIRECTIONS.BOTTOM_RIGHT:
+        case CORNER_DIRECTIONS.bottom_right:
           return css`
             right: 0;
             bottom: 0;
           `;
-        case CORNER_DIRECTIONS.BOTTOM_LEFT:
+        case CORNER_DIRECTIONS.bottom_left:
         default:
           return css`
             left: 0;
@@ -129,25 +114,25 @@ const ButtonInner = styled.div`
     ${(props) => {
       const translateFromScale = 100 * (1 - initialScale);
       switch (props.align) {
-        case CORNER_DIRECTIONS.TOP_RIGHT:
+        case CORNER_DIRECTIONS.top_right:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(${translateFromScale}%, -${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.TOP_LEFT:
+        case CORNER_DIRECTIONS.top_left:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(-${translateFromScale}%, -${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.BOTTOM_RIGHT:
+        case CORNER_DIRECTIONS.bottom_right:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(${translateFromScale}%, ${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.BOTTOM_LEFT:
+        case CORNER_DIRECTIONS.bottom_left:
         default:
           return css`
             transform: ${props.isOpen
@@ -163,25 +148,25 @@ const ButtonInner = styled.div`
     ${(props) => {
       const translateFromScale = 100 * (1 - initialScale);
       switch (props.align) {
-        case CORNER_DIRECTIONS.TOP_RIGHT:
+        case CORNER_DIRECTIONS.top_right:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(-${translateFromScale}%, ${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.TOP_LEFT:
+        case CORNER_DIRECTIONS.top_left:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(${translateFromScale}%, ${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.BOTTOM_RIGHT:
+        case CORNER_DIRECTIONS.bottom_right:
           return css`
             transform: ${props.isOpen
               ? 'none'
               : `translate(-${translateFromScale}%, -${translateFromScale}%)`};
           `;
-        case CORNER_DIRECTIONS.BOTTOM_LEFT:
+        case CORNER_DIRECTIONS.bottom_left:
         default:
           return css`
             transform: ${props.isOpen
@@ -192,18 +177,18 @@ const ButtonInner = styled.div`
     }}
   }
 
-  ${MenuShadow} {
+  ${Shadow} {
     transition: ${(props) => (props.isOpen ? transition : 'none')};
     transform: ${(props) => (props.isOpen ? 'none' : `scale(${initialScale})`)};
     transform-origin: ${(props) => {
       switch (props.align) {
-        case CORNER_DIRECTIONS.TOP_RIGHT:
+        case CORNER_DIRECTIONS.top_right:
           return 'right top';
-        case CORNER_DIRECTIONS.TOP_LEFT:
+        case CORNER_DIRECTIONS.top_left:
           return 'left top';
-        case CORNER_DIRECTIONS.BOTTOM_RIGHT:
+        case CORNER_DIRECTIONS.bottom_right:
           return 'right bottom';
-        case CORNER_DIRECTIONS.BOTTOM_LEFT:
+        case CORNER_DIRECTIONS.bottom_left:
         default:
           return 'left bottom';
       }
@@ -215,7 +200,7 @@ ButtonInner.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-const PopoverRevealer = ({ children, isOpen }) => {
+const popoverCard = ({ children, isOpen }) => {
   const [align, setAlign] = useState(null);
   const [isReady, setIsReady] = useState(false);
   const menuPositionRef = useRef(null);
@@ -276,15 +261,18 @@ const PopoverRevealer = ({ children, isOpen }) => {
             {children}
           </MenuCounterRevealer>
         </MenuRevealer>
-        <MenuShadow />
+        <Shadow />
       </MenuWrapper>
     </ButtonInner>
   );
 };
 
-PopoverRevealer.propTypes = {
-  children: PropTypes.children,
+popoverCard.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   isOpen: PropTypes.bool.isRequired,
 };
 
-export default PopoverRevealer;
+export default popoverCard;

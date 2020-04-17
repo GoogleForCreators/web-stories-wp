@@ -55,7 +55,10 @@ const DropdownContainer = styled.div`
   display: none;
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    position: absolute;
     display: flex;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
@@ -64,6 +67,7 @@ const DropdownContainer = styled.div`
 `;
 
 const Nav = styled.nav`
+  position: relative;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
