@@ -79,5 +79,3 @@ App.propTypes = {
 };
 
 export default App;
-
-export { useConfig, useRouteHistory };

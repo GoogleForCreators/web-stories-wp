@@ -28,9 +28,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useConfig, useRouteHistory } from '../app';
 import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
 import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../constants';
+import { useConfig } from '../app/config';
+import { useRouteHistory } from '../app/router';
 import Button from './button';
 import Dropdown from './dropdown';
 
