@@ -104,7 +104,7 @@
     "jest-matcher-deep-close-to": "^1.3.0",
     "jest-puppeteer": "^4.4.0",
     "jest-silent-reporter": "^0.2.1",
-    "lint-staged": "^10.1.3",
+    "lint-staged": "^10.1.4",
     "markdownlint-cli": "^0.22.0",
     "mini-css-extract-plugin": "^0.9.0",
     "npm-run-all": "^4.1.5",
@@ -131,7 +131,7 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "webpack",
+    "build:js": "NODE_ENV=production webpack",
     "build:plugin": "wp dist-archive . $(pwd)/build/web-stories --create-target-dir",
     "build:storybook": "build-storybook -c .storybook -o build/storybook --quiet",
     "download-fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",

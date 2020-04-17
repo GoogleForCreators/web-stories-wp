@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../edit-story/constants';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
 
 export const BUTTON_TYPES = {
   CTA: 'cta',
@@ -165,3 +165,6 @@ export const STORY_SORT_MENU_ITEMS = [
     value: STORY_SORT_OPTIONS.CREATED_BY,
   },
 ];
+
+export * from './animation';
+export * from './direction';

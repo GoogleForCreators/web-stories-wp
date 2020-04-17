@@ -16,55 +16,50 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import theme from '../theme';
 import { PAGE_RATIO } from '../constants';
+import theme from '../theme';
+
+const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
+  (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
+);
+const getCurrentBp = () =>
+  descendingBreakpointKeys.reduce(
+    (current, bp) =>
+      window.innerWidth <= theme.breakpoint.raw[bp] ? bp : current,
+    descendingBreakpointKeys[0]
+  );
+
+const sizeFromWidth = (width) => ({
+  width,
+  height: PAGE_RATIO * width,
+});
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false } = options;
-  const baseSize = thumbnailMode ? 33 : 100;
-  const [pageSize, setPageSize] = useState({
-    width: baseSize,
-    height: PAGE_RATIO * baseSize,
-  });
-  const handleWindowResize = useCallback(() => {
-    const { innerWidth } = window;
-    let itemWidth = 0;
-
-    if (innerWidth <= theme.breakpoint.raw.min) {
-      itemWidth = theme.previewWidth.min;
-    } else if (innerWidth <= theme.breakpoint.raw.smallDisplayPhone) {
-      itemWidth = theme.previewWidth.smallDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.largeDisplayPhone) {
-      itemWidth = theme.previewWidth.largeDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.tablet) {
-      itemWidth = theme.previewWidth.tablet;
-    } else {
-      itemWidth = theme.previewWidth.desktop;
-    }
-    setPageSize({
-      width: itemWidth,
-      height: itemWidth * PAGE_RATIO,
-    });
-  }, []);
+  const [bp, setBp] = useState(getCurrentBp());
 
   useEffect(() => {
     if (thumbnailMode) {
-      setPageSize({
-        width: baseSize,
-        height: PAGE_RATIO * baseSize,
-      });
       return () => {};
     }
-    window.addEventListener('resize', handleWindowResize);
-    handleWindowResize();
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, [baseSize, handleWindowResize, thumbnailMode]);
 
-  return { pageSize };
+    const handleResize = () => setBp(getCurrentBp());
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [thumbnailMode]);
+
+  return useMemo(
+    () => ({
+      pageSize: sizeFromWidth(
+        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp]
+      ),
+    }),
+    [bp, thumbnailMode]
+  );
 }
