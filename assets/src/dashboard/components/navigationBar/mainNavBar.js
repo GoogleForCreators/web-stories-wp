@@ -23,17 +23,38 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../constants';
-import { useConfig } from '../app/config';
-import { useRouteHistory } from '../app/router';
-import Button from './button';
-import Dropdown from './dropdown';
+import { ReactComponent as WebStoriesLogoSVG } from '../../images/logo.svg';
+import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../../constants';
+import { useConfig } from '../../app/config';
+import { useRouteHistory } from '../../app/router';
+import Dropdown from '../dropdown';
+import { Nav, ActionLink } from './components';
+
+const PageLinks = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 40px;
+  text-align: right;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    display: none;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    justify-content: flex-end;
+    display: ${({ pathCount = 0 }) => (pathCount > 1 ? 'flex' : 'none')};
+    padding-right: 10px;
+    padding-top: 10px;
+    order: 3;
+    width: 100%;
+    margin-right: 0;
+  }
+`;
 
 const Link = styled.a`
   font-family: ${({ theme }) => theme.fonts.tab.family};
@@ -66,60 +87,21 @@ const DropdownContainer = styled.div`
   }
 `;
 
-const Nav = styled.nav`
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  flex-direction: row;
-  padding: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    flex-wrap: wrap;
-    padding: ${({ theme }) => `${theme.pageGutter.small.min}px`};
-  }
-`;
-
 const WebStoriesLogo = styled(WebStoriesLogoSVG)`
   width: 37px;
   height: 28px;
 `;
 
-const PageLinks = styled.div`
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 40px;
-  text-align: right;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    display: none;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    justify-content: flex-end;
-    display: ${({ pathCount = 0 }) => (pathCount > 1 ? 'flex' : 'none')};
-    padding-right: 10px;
-    padding-top: 10px;
-    order: 3;
-    width: 100%;
-    margin-right: 0;
-  }
-`;
-PageLinks.propTypes = {
-  pathCount: PropTypes.number,
-};
-
-function NavigationBar() {
+export function MainNavBar() {
   const { state, actions } = useRouteHistory();
   const { newStoryURL } = useConfig();
+
   return (
     <Nav>
       <WebStoriesLogo />
       <DropdownContainer>
         <Dropdown
-          ariaLabel="Dashboard Navigation"
+          ariaLabel={__('Dashboard Navigation', 'web-stories')}
           items={paths}
           value={state.currentPath}
           type={DROPDOWN_TYPES.TRANSPARENT_MENU}
@@ -138,11 +120,9 @@ function NavigationBar() {
         ))}
       </PageLinks>
 
-      <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink={true}>
+      <ActionLink type={BUTTON_TYPES.CTA} href={newStoryURL} isLink={true}>
         {__('Create Story', 'web-stories')}
-      </Button>
+      </ActionLink>
     </Nav>
   );
 }
-
-export default NavigationBar;

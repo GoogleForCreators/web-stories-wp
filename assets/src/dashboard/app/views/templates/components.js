@@ -36,11 +36,16 @@ export const ContentContainer = styled.div`
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
     display: flex;
+    margin-bottom: 40px;
 
     @media ${theme.breakpoint.largeDisplayPhone} {
       display: block;
     }
   `}
+`;
+
+export const DetailContainer = styled.div`
+  padding: 40px 20px 0;
 `;
 
 export const Column = styled.div`
@@ -61,10 +66,6 @@ export const Column = styled.div`
       width: 100%;
     }
   `}
-`;
-
-export const DetailContainer = styled.div`
-  padding: 40px 20px;
 `;
 
 export const Title = styled.h2`

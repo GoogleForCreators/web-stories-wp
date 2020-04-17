@@ -31,7 +31,12 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
-import { CardGallery, PreviewPage, Pill } from '../../../components';
+import {
+  CardGallery,
+  PreviewPage,
+  Pill,
+  TemplateNavBar,
+} from '../../../components';
 import {
   ByLine,
   ContentContainer,
@@ -56,6 +61,10 @@ function TemplateDetail() {
   } = useContext(ApiContext);
 
   useEffect(() => {
+    if (!templateId) {
+      return;
+    }
+
     async function getTemplateById(id) {
       setTemplate(await fetchTemplate(parseInt(id)));
     }
@@ -86,6 +95,7 @@ function TemplateDetail() {
     template && (
       <FontProvider>
         <TransformProvider>
+          <TemplateNavBar title={template.title} />
           <ContentContainer>
             <ColumnContainer>
               <Column>

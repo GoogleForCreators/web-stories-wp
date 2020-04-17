@@ -28,7 +28,7 @@ export {
 export { default as CardGallery } from './cardGallery';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
-export { default as NavigationBar } from './navigationBar';
+export { MainNavBar, TemplateNavBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
@@ -46,3 +46,4 @@ export {
   TableHeader,
   TableRow,
 } from './table';
+export { default as MultiPartPill } from './multiPartPill';

@@ -26,7 +26,6 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { NavigationBar } from '../components';
 import { APP_ROUTES } from '../constants';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider } from './router';
@@ -48,7 +47,6 @@ function App({ config }) {
             <RouterProvider>
               <GlobalStyle />
               <KeyboardOnlyOutline />
-              <NavigationBar />
               <Route
                 exact
                 path={APP_ROUTES.MY_STORIES}
