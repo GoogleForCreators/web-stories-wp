@@ -17,124 +17,16 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
-import { rgba } from 'polished';
 import { useCallback, useEffect, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
-import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { useStory } from '../../../app/story';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import { BACKGROUND_TEXT_MODE } from '../../../constants';
-import { Panel, PanelTitle, PanelContent } from './../panel';
-import { generatePresetStyle, getShapePresets, getTextPresets } from './utils';
-
-const COLOR_HEIGHT = 35;
-
-const buttonCSS = css`
-  background: transparent;
-  width: 30px;
-  height: 28px;
-  border: none;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
-  cursor: pointer;
-  padding: 0;
-`;
-
-// Since the whole wrapper title is already a button, can't use button directly here.
-// @todo Use custom title instead to use buttons directly.
-const AddColorPresetButton = styled.div.attrs({
-  role: 'button',
-})`
-  ${buttonCSS}
-  svg {
-    width: 26px;
-    height: 28px;
-  }
-`;
-
-const EditModeButton = styled.div.attrs({
-  role: 'button',
-})`
-  ${buttonCSS}
-  height: 20px;
-  svg {
-    width: 16px;
-    height: 20px;
-  }
-`;
-
-const ExitEditMode = styled.a`
-  ${buttonCSS}
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 12px;
-  line-height: 14px;
-  padding: 7px;
-  height: initial;
-`;
-
-const presetCSS = css`
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
-  padding: 0;
-  font-size: 13px;
-  svg {
-    width: 18px;
-    height: 28px;
-  }
-`;
-
-const Color = styled.button`
-  ${presetCSS}
-  ${({ color }) => generatePatternStyles(color)}
-`;
-
-const Style = styled.button`
-  ${presetCSS}
-  background: transparent;
-  ${({ styles }) => styles}
-  width: 72px;
-  border-radius: 4px;
-`;
-
-// For max-height: Display 5 extra pixels to show there are more colors.
-const Presets = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-height: ${6 * COLOR_HEIGHT + 5}px;
-  overflow-y: auto;
-`;
-
-const ButtonWrapper = styled.div`
-  flex-basis: 16%;
-  height: ${COLOR_HEIGHT}px;
-`;
-
-const PresetGroupLabel = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 10px;
-  line-height: 12px;
-  text-transform: uppercase;
-  padding: 6px 0;
-`;
-
-const HighLightWrapper = styled.p`
-  margin: 0;
-  ${({ background }) => generatePatternStyles(background)}
-`;
+import { Panel } from './../panel';
+import { getShapePresets, getTextPresets } from './utils';
+import PresetsHeader from './header';
+import Presets from './presets';
 
 function StylePresetPanel() {
   const {
@@ -243,56 +135,20 @@ function StylePresetPanel() {
   );
 
   const colorPresets = isText ? textColors : fillColors;
-  const groupLabel = isText
-    ? __('Text colors', 'web-stories')
-    : __('Colors', 'web-stories');
   const hasColorPresets = colorPresets.length > 0;
+  const hasPresets = hasColorPresets || styles.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
-    if (isEditMode && !hasColorPresets) {
+    if (isEditMode && !hasPresets) {
       setIsEditMode(false);
     }
-  }, [hasColorPresets, isEditMode]);
+  }, [hasPresets, isEditMode]);
 
   // @todo This is temporary until the presets haven't been implemented fully with multi-selection.
   if (!isText && !isShape && selectedElements.length > 1) {
     return null;
   }
-
-  const getSecondaryActions = () => {
-    return !isEditMode ? (
-      <>
-        {hasColorPresets && (
-          <EditModeButton
-            onClick={(evt) => {
-              evt.stopPropagation();
-              setIsEditMode(true);
-            }}
-            aria-label={__('Edit presets', 'web-stories')}
-          >
-            <Edit />
-          </EditModeButton>
-        )}
-        <AddColorPresetButton
-          onClick={handleAddColorPreset}
-          aria-label={__('Add preset', 'web-stories')}
-        >
-          <Add />
-        </AddColorPresetButton>
-      </>
-    ) : (
-      <ExitEditMode
-        onClick={(evt) => {
-          evt.stopPropagation();
-          setIsEditMode(false);
-        }}
-        aria-label={__('Exit edit mode', 'web-stories')}
-      >
-        {__('Exit', 'web-stories')}
-      </ExitEditMode>
-    );
-  };
 
   const getEventHandlers = (preset) => {
     return {
@@ -315,70 +171,20 @@ function StylePresetPanel() {
     }
   };
 
-  const getStylePresetText = (preset) => {
-    const isHighLight =
-      preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-    const text = __('Text', 'web-stories');
-    return isHighLight ? (
-      <HighLightWrapper background={preset.backgroundColor}>
-        {text}
-      </HighLightWrapper>
-    ) : (
-      text
-    );
-  };
-
-  const ariaLabel = isEditMode
-    ? __('Delete preset', 'web-stories')
-    : __('Apply preset', 'web-stories');
   return (
     <Panel name="stylepreset">
-      <PanelTitle
-        isPrimary
-        secondaryAction={getSecondaryActions()}
-        canCollapse={!isEditMode && hasColorPresets}
-      >
-        {__('Style presets', 'web-stories')}
-      </PanelTitle>
-      <PanelContent isPrimary padding={hasColorPresets ? null : '0'}>
-        {hasColorPresets && (
-          <>
-            <PresetGroupLabel>{groupLabel}</PresetGroupLabel>
-            <Presets>
-              {colorPresets.map((color, i) => (
-                <ButtonWrapper key={`color-${i}`}>
-                  <Color
-                    color={color}
-                    {...getEventHandlers(color)}
-                    aria-label={ariaLabel}
-                  >
-                    {isEditMode && <Remove />}
-                  </Color>
-                </ButtonWrapper>
-              ))}
-            </Presets>
-          </>
-        )}
-        {styles.length > 0 && (
-          <>
-            <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
-            <Presets>
-              {styles.map((style, i) => (
-                <ButtonWrapper key={`color-${i}`}>
-                  <Style
-                    styles={generatePresetStyle(style, true)}
-                    {...getEventHandlers(style)}
-                    aria-label={ariaLabel}
-                  >
-                    {isEditMode && <Remove />}
-                    {!isEditMode && getStylePresetText(style)}
-                  </Style>
-                </ButtonWrapper>
-              ))}
-            </Presets>
-          </>
-        )}
-      </PanelContent>
+      <PresetsHeader
+        handleAddColorPreset={handleAddColorPreset}
+        stylePresets={stylePresets}
+        isEditMode={isEditMode}
+        setIsEditMode={setIsEditMode}
+      />
+      <Presets
+        isEditMode={isEditMode}
+        stylePresets={stylePresets}
+        getEventHandlers={getEventHandlers}
+        isText={isText}
+      />
     </Panel>
   );
 }
