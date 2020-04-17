@@ -15,10 +15,14 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
-import { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState, useContext, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -27,26 +31,18 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
-import { CardGallery, PreviewPage } from '../../../components';
-
-const PageContainer = styled.div`
-  display: flex;
-  padding: 20px;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    display: block;
-  }
-`;
-
-const PageColumn = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 50%;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    width: 100%;
-  }
-`;
+import { CardGallery, PreviewPage, Pill } from '../../../components';
+import {
+  ByLine,
+  ContentContainer,
+  ColorBadge,
+  ColumnContainer,
+  Column,
+  DetailContainer,
+  MetadataContainer,
+  Text,
+  Title,
+} from './components';
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
@@ -67,23 +63,64 @@ function TemplateDetail() {
     getTemplateById(templateId);
   }, [fetchTemplate, templateId]);
 
+  const { title, byLine } = useMemo(() => {
+    if (!template) {
+      return {};
+    }
+
+    return {
+      title: sprintf(
+        /* translators: %s: template title  */
+        __('%s Template', 'web-stories'),
+        template.title
+      ),
+      byLine: sprintf(
+        /* translators: %s: template author  */
+        __('by %s', 'web-stories'),
+        template.createdBy
+      ),
+    };
+  }, [template]);
+
   return (
-    <PageContainer>
-      <PageColumn>
-        {template && (
-          <FontProvider>
-            <TransformProvider>
-              <CardGallery>
-                {template.pages.map((page) => (
-                  <PreviewPage key={page.id} page={page} />
-                ))}
-              </CardGallery>
-            </TransformProvider>
-          </FontProvider>
-        )}
-      </PageColumn>
-      <PageColumn />
-    </PageContainer>
+    template && (
+      <FontProvider>
+        <TransformProvider>
+          <ContentContainer>
+            <ColumnContainer>
+              <Column>
+                <CardGallery>
+                  {template.pages.map((page) => (
+                    <PreviewPage key={page.id} page={page} />
+                  ))}
+                </CardGallery>
+              </Column>
+              <Column>
+                <DetailContainer>
+                  <Title>{title}</Title>
+                  <ByLine>{byLine}</ByLine>
+                  <Text>{template.description}</Text>
+                  <MetadataContainer>
+                    {template.metadata.map(({ label, color }) => (
+                      <Pill
+                        name={label}
+                        key={label}
+                        disabled
+                        onClick={() => {}}
+                        value={label}
+                      >
+                        {color && <ColorBadge color={color} />}
+                        {label}
+                      </Pill>
+                    ))}
+                  </MetadataContainer>
+                </DetailContainer>
+              </Column>
+            </ColumnContainer>
+          </ContentContainer>
+        </TransformProvider>
+      </FontProvider>
+    )
   );
 }
 

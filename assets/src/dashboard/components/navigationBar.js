@@ -68,11 +68,11 @@ const Nav = styled.nav`
   border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: row;
-  padding: ${({ theme }) => `${theme.pageGutter.desktop}px`};
+  padding: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: ${({ theme }) => `${theme.pageGutter.min}px`};
+    padding: ${({ theme }) => `${theme.pageGutter.small.min}px`};
   }
 `;
 

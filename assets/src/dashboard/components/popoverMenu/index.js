@@ -19,38 +19,24 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { KEYS, Z_INDEX } from '../../constants';
+import { KEYS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-
-export const DROPDOWN_MENU_DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down',
-  LEFT: 'left',
-  RIGHT: 'right',
-};
 
 export const Menu = styled.ul`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
   min-width: 210px;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   overflow: hidden;
   padding: 0;
-  position: absolute;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  transform: ${({ isOpen }) =>
-    isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
-  z-index: ${Z_INDEX.POPOVER_MENU};
 `;
 Menu.propTypes = {
   isOpen: PropTypes.bool,
@@ -170,11 +156,7 @@ const PopoverMenu = ({
   }, []);
 
   return (
-    <Menu
-      className={className}
-      isOpen={isOpen}
-      framelessButton={framelessButton}
-    >
+    <Menu className={className} framelessButton={framelessButton}>
       {items.map((item, index) => {
         if (item.separator) {
           return renderSeparator(index);
@@ -194,3 +176,4 @@ PopoverMenu.propTypes = {
 };
 
 export default PopoverMenu;
+export { default as PopoverRevealer } from './popoverRevealer';

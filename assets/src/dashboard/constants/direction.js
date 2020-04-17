@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const DIRECTIONS = {
+  TOP: 'top',
+  RIGHT: 'right',
+  BOTTOM: 'bottom',
+  LEFT: 'left',
+};
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.min}px`};
-  }
-`;
-
-export default BodyWrapper;
+export const CORNER_DIRECTIONS = {
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`,
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`,
+};
