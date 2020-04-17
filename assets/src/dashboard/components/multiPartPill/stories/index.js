@@ -23,17 +23,17 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MultiPartPill from '../';
-import ButtonBase from '../../button';
+import Button from '../../button';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
 import { BUTTON_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Components/MultiButtonPill',
+  title: 'Dashboard/Components/MultiPartPill',
   component: MultiPartPill,
 };
 
-const Button = styled(ButtonBase)`
+const StyledButton = styled(Button)`
   min-width: 0;
   text-shadow: none;
   color: ${({ theme }) => theme.colors.gray800};
@@ -49,12 +49,12 @@ const Button = styled(ButtonBase)`
 export const _default = () => {
   return (
     <MultiPartPill>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         <LeftArrow width="14px" height="14px" />
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         <RightArrow width="14px" height="14px" />
-      </Button>
+      </StyledButton>
     </MultiPartPill>
   );
 };
@@ -62,9 +62,9 @@ export const _default = () => {
 export const Single = () => {
   return (
     <MultiPartPill>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'S'}
-      </Button>
+      </StyledButton>
     </MultiPartPill>
   );
 };
@@ -72,15 +72,15 @@ export const Single = () => {
 export const Triple = () => {
   return (
     <MultiPartPill>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'J'}
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'O'}
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'Y'}
-      </Button>
+      </StyledButton>
     </MultiPartPill>
   );
 };
@@ -88,18 +88,18 @@ export const Triple = () => {
 export const Quadruple = () => {
   return (
     <MultiPartPill>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'G'}
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'A'}
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'M'}
-      </Button>
-      <Button type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
+      </StyledButton>
+      <StyledButton type={BUTTON_TYPES.SECONDARY} onClick={() => {}}>
         {'E'}
-      </Button>
+      </StyledButton>
     </MultiPartPill>
   );
 };
