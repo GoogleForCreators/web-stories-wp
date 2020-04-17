@@ -44,6 +44,6 @@ export const Nav = styled.nav`
   `}
 `;
 
-export const ActionLink = styled(Button).attrs({ onClick: () => {} })`
+export const ActionLink = styled(Button)`
   padding: 0 24px;
 `;
