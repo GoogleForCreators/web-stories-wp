@@ -31,7 +31,7 @@
     "history": "^4.10.1",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.5",
-    "polished": "^3.5.1",
+    "polished": "^3.5.2",
     "prop-types": "^15.7.2",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
