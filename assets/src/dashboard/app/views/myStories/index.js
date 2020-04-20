@@ -28,7 +28,7 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab } from '../../../components';
+import { FloatingTab, MainNavBar } from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
@@ -52,9 +52,9 @@ import {
 // TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
 
 const FilterContainer = styled.fieldset`
-  padding: 0 20px 20px 0;
-  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
+  padding-bottom: 20px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
     & > label span {
@@ -192,6 +192,7 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
+          <MainNavBar />
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
             searchPlaceholder={__('Search Stories', 'web-stories')}
