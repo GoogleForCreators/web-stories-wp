@@ -63,9 +63,6 @@ export function generatePresetStyle(preset, prepareForCSS) {
       ...generatePatternStyles(backgroundColor, 'background'),
     };
   }
-  // @todo Generate a constant with mappings/callbacks instead?
-  // @todo What to display in case of padding? Get the padding percentage and then display that in relation to the preset size.
-  // @todo Filter null out.
   return style;
 }
 
