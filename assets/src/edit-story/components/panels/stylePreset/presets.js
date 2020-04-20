@@ -44,7 +44,7 @@ const presetCSS = css`
   border-radius: 15px;
   border-color: transparent;
   padding: 0;
-  font-size: 13px;
+  font-size: 11px;
   position: relative;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
@@ -95,24 +95,43 @@ const PresetGroupLabel = styled.div`
   padding: 6px 0;
 `;
 
-const HighLightWrapper = styled.p`
-  margin: 0;
-  ${({ background }) => generatePatternStyles(background)}
+const TextWrapper = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  line-height: 1.3;
 `;
 
-function Presets({ stylePresets, getEventHandlers, isEditMode, isText }) {
+const HighLight = styled.span`
+  padding: 0 2px;
+  ${({ background }) => generatePatternStyles(background)}
+  box-decoration-break: clone;
+`;
+
+function Presets({
+  stylePresets,
+  getEventHandlers,
+  isEditMode,
+  isText,
+  textContent,
+}) {
   const { fillColors, textColors, styles } = stylePresets;
 
   const getStylePresetText = (preset) => {
     const isHighLight =
       preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-    const text = __('Text', 'web-stories');
-    return isHighLight ? (
-      <HighLightWrapper background={preset.backgroundColor}>
-        {text}
-      </HighLightWrapper>
-    ) : (
-      text
+    // @todo Confirm text content usage.
+    const text = textContent.substring(0, 17) + '...';
+    return (
+      <TextWrapper>
+        {isHighLight ? (
+          <HighLight background={preset.backgroundColor}>{text}</HighLight>
+        ) : (
+          text
+        )}
+      </TextWrapper>
     );
   };
 
@@ -146,7 +165,8 @@ function Presets({ stylePresets, getEventHandlers, isEditMode, isText }) {
           </PresetGroup>
         </>
       )}
-      {styles.length > 0 && (
+      {/* Only texts support style presets currently */}
+      {styles.length > 0 && isText && (
         <>
           <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
           <PresetGroup>
@@ -161,8 +181,8 @@ function Presets({ stylePresets, getEventHandlers, isEditMode, isText }) {
                       : __('Apply style preset', 'web-stories')
                   }
                 >
-                  {isEditMode && <Remove />}
                   {getStylePresetText(style)}
+                  {isEditMode && <Remove />}
                 </Style>
               </StyleButtonWrapper>
             ))}
@@ -182,6 +202,7 @@ Presets.propTypes = {
   getEventHandlers: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   isText: PropTypes.bool.isRequired,
+  textContent: PropTypes.string,
 };
 
 export default Presets;
