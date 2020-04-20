@@ -48,7 +48,7 @@ const presetCSS = css`
   border-radius: 15px;
   border-color: transparent;
   padding: 0;
-  font-size: 11px;
+  font-size: 13px;
   position: relative;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
@@ -97,10 +97,6 @@ const PresetGroupLabel = styled.div`
 `;
 
 const TextWrapper = styled.span`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   text-align: left;
   line-height: 1.3;
 `;
@@ -188,7 +184,7 @@ function Presets({
     const isHighLight =
       preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
     // @todo Confirm text content usage.
-    const text = textContent.substring(0, 17) + '...';
+    const text = textContent.substring(0, 8) + '...';
     return (
       <TextWrapper>
         {isHighLight ? (
