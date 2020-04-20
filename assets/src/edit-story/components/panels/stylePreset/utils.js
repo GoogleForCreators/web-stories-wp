@@ -35,7 +35,7 @@ export function findMatchingColor(color, stylePresets, isText) {
 }
 
 export function findMatchingStylePreset(preset, stylePresets) {
-  const stylesToMatch = stylePresets.styles;
+  const stylesToMatch = stylePresets.textStyles;
   const toAdd = convertToCSS(generatePresetStyle(preset));
   return stylesToMatch.find(
     (value) => toAdd === convertToCSS(generatePresetStyle(value))
@@ -80,7 +80,7 @@ export function getTextPresets(elements, stylePresets) {
       .filter((text) => !hasStylePreset(text))
       .map(({ color }) => color)
       .filter((color) => !findMatchingColor(color, stylePresets, true)),
-    styles: elements
+    textStyles: elements
       .filter((text) => hasStylePreset(text))
       .map((text) => {
         const {

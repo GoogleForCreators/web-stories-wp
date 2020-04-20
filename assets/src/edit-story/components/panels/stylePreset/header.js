@@ -127,9 +127,9 @@ function PresetsHeader({
     actions: { collapse, expand },
   } = useContext(panelContext);
 
-  const { fillColors, textColors, styles } = stylePresets;
+  const { fillColors, textColors, textStyles } = stylePresets;
   const hasPresets =
-    fillColors.length > 0 || textColors.length > 0 || styles.length > 0;
+    fillColors.length > 0 || textColors.length > 0 || textStyles.length > 0;
   const getActions = () => {
     return !isEditMode ? (
       <>
@@ -191,7 +191,7 @@ PresetsHeader.propTypes = {
   stylePresets: PropTypes.shape({
     fillColors: PropTypes.array,
     textColors: PropTypes.array,
-    styles: PropTypes.array,
+    textStyles: PropTypes.array,
   }).isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddColorPreset: PropTypes.func.isRequired,

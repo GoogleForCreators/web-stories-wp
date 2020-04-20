@@ -118,7 +118,7 @@ function Presets({
   const [activeStyleIndex, setActiveStyleIndex] = useState(null);
   const colorsRef = useRef();
   const stylesRef = useRef();
-  const { fillColors, textColors, styles } = stylePresets;
+  const { fillColors, textColors, textStyles } = stylePresets;
 
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
@@ -172,7 +172,7 @@ function Presets({
         const diff = getIndexDiff(key, STYLES_PER_ROW);
         const newIndex = Math.max(
           0,
-          Math.min(styles.length - 1, (activeStyleIndex ?? 0) + diff)
+          Math.min(textStyles.length - 1, (activeStyleIndex ?? 0) + diff)
         );
         setActiveStyleIndex(newIndex);
       }
@@ -232,11 +232,11 @@ function Presets({
         </>
       )}
       {/* Only texts support style presets currently */}
-      {styles.length > 0 && isText && (
+      {textStyles.length > 0 && isText && (
         <>
           <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
           <PresetGroup ref={stylesRef}>
-            {styles.map((style, i) => (
+            {textStyles.map((style, i) => (
               <StyleButtonWrapper key={`color-${i}`}>
                 <Style
                   tabIndex={
@@ -268,7 +268,7 @@ Presets.propTypes = {
   stylePresets: PropTypes.shape({
     fillColors: PropTypes.array,
     textColors: PropTypes.array,
-    styles: PropTypes.array,
+    textStyles: PropTypes.array,
   }).isRequired,
   getEventHandlers: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,

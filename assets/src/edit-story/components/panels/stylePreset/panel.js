@@ -39,7 +39,7 @@ function StylePresetPanel() {
     actions: { updateStory, updateElementsById },
   } = useStory();
 
-  const { fillColors, textColors, styles } = stylePresets;
+  const { fillColors, textColors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const isType = (elType) => {
@@ -57,7 +57,7 @@ function StylePresetPanel() {
       updateStory({
         properties: {
           stylePresets: {
-            styles: styles.filter((style) => style !== toDelete),
+            textStyles: textStyles.filter((style) => style !== toDelete),
             fillColors: isText
               ? fillColors
               : fillColors.filter((color) => color !== toDelete),
@@ -68,7 +68,7 @@ function StylePresetPanel() {
         },
       });
     },
-    [styles, fillColors, isText, textColors, updateStory]
+    [textStyles, fillColors, isText, textColors, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
@@ -77,7 +77,7 @@ function StylePresetPanel() {
       let addedPresets = {
         fillColors: [],
         textColors: [],
-        styles: [],
+        textStyles: [],
       };
       if (isText) {
         addedPresets = {
@@ -91,12 +91,12 @@ function StylePresetPanel() {
       if (
         addedPresets.fillColors?.length > 0 ||
         addedPresets.textColors?.length > 0 ||
-        addedPresets.styles?.length > 0
+        addedPresets.textStyles?.length > 0
       ) {
         updateStory({
           properties: {
             stylePresets: {
-              styles: [...styles, ...addedPresets.styles],
+              textStyles: [...textStyles, ...addedPresets.styles],
               fillColors: [...fillColors, ...addedPresets.fillColors],
               textColors: [...textColors, ...addedPresets.textColors],
             },
@@ -106,7 +106,7 @@ function StylePresetPanel() {
     },
     [
       fillColors,
-      styles,
+      textStyles,
       textColors,
       isText,
       selectedElements,
@@ -137,7 +137,7 @@ function StylePresetPanel() {
 
   const colorPresets = isText ? textColors : fillColors;
   const hasColorPresets = colorPresets.length > 0;
-  const hasPresets = hasColorPresets || styles.length > 0;
+  const hasPresets = hasColorPresets || textStyles.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
