@@ -46,6 +46,10 @@ export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
 `;
 
+export const TableTitleHeaderCell = styled(TableHeaderCell)`
+  padding-left: 0;
+`;
+
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`

@@ -40,6 +40,7 @@ import {
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
+  TableTitleHeaderCell,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -121,14 +122,14 @@ export default function StoryListView({
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
             </TablePreviewHeaderCell>
-            <TableHeaderCell>
+            <TableTitleHeaderCell>
               <ArrowIcon
                 active={storySort === STORY_SORT_OPTIONS.NAME}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
                 <ArrowIconSvg width={16} height={16} />
               </ArrowIcon>
-            </TableHeaderCell>
+            </TableTitleHeaderCell>
             <TableHeaderCell>
               <SelectableTitle
                 onClick={() =>

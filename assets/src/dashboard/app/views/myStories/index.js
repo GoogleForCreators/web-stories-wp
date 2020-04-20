@@ -83,7 +83,7 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.LIST);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
