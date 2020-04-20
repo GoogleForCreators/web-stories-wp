@@ -114,6 +114,7 @@ function TextDisplay({
 
   const props = {
     color,
+    font: rest.font,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
       ? {}
       : { backgroundColor }),
@@ -126,10 +127,10 @@ function TextDisplay({
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
-  const { fontFamily } = rest;
+  const { family } = rest.font;
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle(family);
+  }, [family, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;

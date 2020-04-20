@@ -51,6 +51,7 @@ class Fonts extends \WP_UnitTestCase {
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 				'slug'      => 'arial',
 				'weights'   => [ '400', '700' ],
+				'service'   => 'system',
 			],
 			$arial_font
 		);
@@ -62,6 +63,8 @@ class Fonts extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'src', $roboto_font );
+		$this->assertArrayHasKey( 'service', $roboto_font );
+		$this->assertSame( 'fonts.google.com', $roboto_font['service'] );
 	}
 
 	public function test_get_google_fonts() {

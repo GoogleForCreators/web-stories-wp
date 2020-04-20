@@ -138,6 +138,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$data['fallbacks'] = isset( $font['fallbacks'] ) ? (array) $font['fallbacks'] : $schema['properties']['fallbacks']['default'];
 		}
 
+		if ( in_array( 'service', $fields, true ) ) {
+			$data['service'] = isset( $font['service'] ) ? $font['service'] : $schema['properties']['service']['default'];
+		}
+
 		if ( in_array( 'weights', $fields, true ) ) {
 			$data['weights'] = isset( $font['weights'] ) ? (array) $font['weights'] : $schema['properties']['weights']['default'];
 		}
@@ -209,6 +213,14 @@ class Fonts_Controller extends WP_REST_Controller {
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
 					'default'     => [],
+				],
+				'service'   => [
+					'description' => __( 'Font service', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+					'default'     => 'system',
 				],
 				'weights'   => [
 					'description' => __( 'List of font weights', 'web-stories' ),

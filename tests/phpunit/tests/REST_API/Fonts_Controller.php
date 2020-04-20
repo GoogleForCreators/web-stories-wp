@@ -40,12 +40,13 @@ class Fonts_Controller extends \WP_Test_REST_TestCase {
 		$this->assertNotEmpty( $data );
 
 		$properties = $data['schema']['properties'];
-		$this->assertCount( 6, $properties );
+		$this->assertCount( 7, $properties );
 		$this->assertArrayHasKey( 'name', $properties );
 		$this->assertArrayHasKey( 'slug', $properties );
 		$this->assertArrayHasKey( 'handle', $properties );
 		$this->assertArrayHasKey( 'fallbacks', $properties );
 		$this->assertArrayHasKey( 'weights', $properties );
 		$this->assertArrayHasKey( 'src', $properties );
+		$this->assertArrayHasKey( 'service', $properties );
 	}
 }

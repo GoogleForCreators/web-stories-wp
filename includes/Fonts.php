@@ -57,96 +57,115 @@ class Fonts {
 				'name'      => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Arial Black',
 				'fallbacks' => [ 'Arial Black', 'Arial Bold', 'Gadget', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Arial Narrow',
 				'fallbacks' => [ 'Arial', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Baskerville',
 				'fallbacks' => [ 'Baskerville Old Face', 'Hoefler Text', 'Garamond', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Brush Script MT',
 				'fallbacks' => [ 'cursive' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Copperplate',
 				'fallbacks' => [ 'Copperplate Gothic Light', 'fantasy' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Courier New',
 				'fallbacks' => [ 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', 'monospace' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Century Gothic',
 				'fallbacks' => [ 'CenturyGothic', 'AppleGothic', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Garamond',
 				'fallbacks' => [ 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Georgia',
 				'fallbacks' => [ 'Times', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Gill Sans',
 				'fallbacks' => [ 'Gill Sans MT', 'Calibri', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Lucida Bright',
 				'fallbacks' => [ 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Lucida Sans Typewriter',
 				'fallbacks' => [ 'Lucida Console', 'monaco', 'Bitstream Vera Sans Mono', 'monospace' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Palatino',
 				'fallbacks' => [ 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Papyrus',
 				'fallbacks' => [ 'fantasy' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Tahoma',
 				'fallbacks' => [ 'Verdana', 'Segoe', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Times New Roman',
 				'fallbacks' => [ 'Times New Roman', 'Times', 'Baskerville', 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Trebuchet MS',
 				'fallbacks' => [ 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Tahoma', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Verdana',
 				'fallbacks' => [ 'Geneva', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'service'   => 'system',
 			],
 		];
 		$file  = __DIR__ . '/data/fonts.json';
@@ -277,6 +296,7 @@ class Fonts {
 				'fallbacks' => (array) self::get_font_fallback( $font['category'] ),
 				'gfont'     => $gfont,
 				'weights'   => $weights,
+				'service'   => 'fonts.google.com',
 			];
 		}
 

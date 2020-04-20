@@ -380,7 +380,10 @@ describe('Panels/TextStyle', () => {
       act(() => controls.font.onChange('Neu Font'));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
-          fontFamily: 'Neu Font',
+          font: {
+            family: 'Neu Font',
+            service: undefined,
+          },
           fontFallback: 'fallback1',
           fontWeight: 400,
         },

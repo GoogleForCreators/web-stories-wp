@@ -44,7 +44,10 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function FontControls({ selectedElements, pushUpdate }) {
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const fontFamily = getCommonValue(
+    selectedElements,
+    ({ font }) => font?.family
+  );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
 
@@ -83,9 +86,16 @@ function FontControls({ selectedElements, pushUpdate }) {
                     ? b
                     : a
                 );
+
+              const fontObj = fonts.find((item) => item.value === value);
+
               pushUpdate(
                 {
-                  fontFamily: value,
+                  font: {
+                    family: value,
+                    // TODO: FIXME
+                    service: fontObj?.service,
+                  },
                   fontWeight: parseInt(newFontWeight),
                   fontFallback: currentFontFallback,
                 },

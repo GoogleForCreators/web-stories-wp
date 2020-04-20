@@ -114,6 +114,7 @@ function TextEdit({
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     color,
+    font: rest.font,
     backgroundColor,
     opacity,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
@@ -261,10 +262,10 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
   }, [editorState, elementHeight]);
 
-  const { fontFamily } = rest;
+  const { family } = rest.font;
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle(family);
+  }, [family, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
