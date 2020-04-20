@@ -57,13 +57,14 @@ class Fonts extends \WP_UnitTestCase {
 			$arial_font
 		);
 
-		$this->assertCount( 7, $roboto_font );
+		$this->assertCount( 8, $roboto_font );
 		$this->assertArrayHasKey( 'name', $roboto_font );
 		$this->assertArrayHasKey( 'slug', $roboto_font );
 		$this->assertArrayHasKey( 'handle', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'src', $roboto_font );
+		$this->assertArrayHasKey( 'gfont', $roboto_font );
 		$this->assertArrayHasKey( 'service', $roboto_font );
 		$this->assertSame( 'fonts.google.com', $roboto_font['service'] );
 	}
