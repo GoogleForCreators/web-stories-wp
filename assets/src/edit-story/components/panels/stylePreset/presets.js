@@ -68,13 +68,10 @@ const Style = styled.button`
   border-radius: 4px;
 `;
 
-// For max-height: Display 5 extra pixels to show there are more colors.
 const PresetGroup = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: ${6 * PRESET_HEIGHT + 5}px;
-  overflow-y: auto;
 `;
 
 const ButtonWrapper = styled.div`

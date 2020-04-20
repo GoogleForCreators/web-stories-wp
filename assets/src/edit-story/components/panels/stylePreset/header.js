@@ -123,7 +123,7 @@ function PresetsHeader({
       secondaryAction={getSecondaryActions()}
       canCollapse={!isEditMode && hasPresets}
     >
-      {__('Style presets', 'web-stories')}
+      {__('Presets', 'web-stories')}
     </PanelTitle>
   );
 }

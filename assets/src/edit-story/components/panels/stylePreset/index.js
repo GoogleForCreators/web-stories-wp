@@ -27,6 +27,7 @@ import { Panel } from './../panel';
 import { getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
+import Resize from './resize';
 
 function StylePresetPanel() {
   const {
@@ -171,8 +172,13 @@ function StylePresetPanel() {
     }
   };
 
+  // @Todo confirm initial height.
   return (
-    <Panel name="stylepreset">
+    <Panel
+      name="stylepreset"
+      initialHeight={Math.min(200, window.innerHeight / 3)}
+      resizeable
+    >
       <PresetsHeader
         handleAddColorPreset={handleAddColorPreset}
         stylePresets={stylePresets}
@@ -186,6 +192,7 @@ function StylePresetPanel() {
         isText={isText}
         textContent={isText && selectedElements[0].content}
       />
+      <Resize />
     </Panel>
   );
 }
