@@ -40,11 +40,12 @@ class Fonts extends \WP_UnitTestCase {
 			)
 		);
 
-		$this->assertCount( 4, $arial_font );
+		$this->assertCount( 5, $arial_font );
 		$this->assertArrayHasKey( 'name', $arial_font );
 		$this->assertArrayHasKey( 'fallbacks', $arial_font );
 		$this->assertArrayHasKey( 'weights', $arial_font );
 		$this->assertArrayHasKey( 'slug', $arial_font );
+		$this->assertArrayHasKey( 'service', $arial_font );
 		$this->assertEquals(
 			[
 				'name'      => 'Arial',
@@ -86,11 +87,12 @@ class Fonts extends \WP_UnitTestCase {
 			)
 		);
 
-		$this->assertCount( 4, $roboto_font );
+		$this->assertCount( 5, $roboto_font );
 		$this->assertArrayHasKey( 'name', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'gfont', $roboto_font );
+		$this->assertArrayHasKey( 'service', $roboto_font );
 
 		$this->assertEquals(
 			[
@@ -98,6 +100,7 @@ class Fonts extends \WP_UnitTestCase {
 				'fallbacks' => [ 'sans-serif' ],
 				'weights'   => [ '100', '300', '400', '500', '700', '900' ],
 				'gfont'     => 'Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
+				'service'   => 'fonts.google.com',
 			],
 			$roboto_font
 		);
