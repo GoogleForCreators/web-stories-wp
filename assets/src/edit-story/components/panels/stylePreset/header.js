@@ -130,7 +130,7 @@ function PresetsHeader({
   const { fillColors, textColors, styles } = stylePresets;
   const hasPresets =
     fillColors.length > 0 || textColors.length > 0 || styles.length > 0;
-  const getSecondaryActions = () => {
+  const getActions = () => {
     return !isEditMode ? (
       <>
         {hasPresets && (
@@ -150,6 +150,11 @@ function PresetsHeader({
         >
           <Add />
         </AddColorPresetButton>
+        {hasPresets && (
+          <Collapse isCollapsed={isCollapsed}>
+            <Arrow />
+          </Collapse>
+        )}
       </>
     ) : (
       <ExitEditMode
@@ -176,14 +181,7 @@ function PresetsHeader({
         aria-controls={panelContentId}
       >
         <Heading>{__('Presets', 'web-stories')}</Heading>
-        <HeaderActions>
-          {getSecondaryActions()}
-          {hasPresets && (
-            <Collapse isCollapsed={isCollapsed}>
-              <Arrow />
-            </Collapse>
-          )}
-        </HeaderActions>
+        <HeaderActions>{getActions()}</HeaderActions>
       </HeaderButton>
     </Header>
   );

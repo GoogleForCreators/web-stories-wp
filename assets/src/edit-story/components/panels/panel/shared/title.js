@@ -104,7 +104,6 @@ function Title({
   children,
   isPrimary,
   isSecondary,
-  secondaryAction,
   isResizable,
   canCollapse = true,
 }) {
@@ -163,7 +162,6 @@ function Title({
       >
         <Heading>{children}</Heading>
         <HeaderActions>
-          {secondaryAction}
           {canCollapse && (
             <Collapse isCollapsed={isCollapsed}>
               <Arrow />
@@ -183,10 +181,6 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
-  secondaryAction: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
   canCollapse: PropTypes.bool,
 };
 
