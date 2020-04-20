@@ -25,12 +25,11 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// TODO
 const ScrollMessage = styled.div`
   margin: 20px 0;
   text-align: center;
   width: 100%;
-  border: 1px solid green;
-  background-color: yellow;
 `;
 const InfiniteScroller = ({
   allDataLoadedMessage = __('No More Stories', 'web-stories'),
