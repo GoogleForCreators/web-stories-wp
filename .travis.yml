@@ -41,22 +41,18 @@ env:
 install:
   - set -e
   - |
-    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install --no-interaction
     fi
   - set +e
 
 before_script:
   - set -e
-  - |
-    if [ "$LINT" = "1" ]; then
-      composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
-    fi
   - |
     if [ "$COVERAGE" != "1" ]; then
       phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
@@ -65,11 +61,6 @@ before_script:
 
 script:
   - set -e
-  - |
-    if [ "$LINT" = "1" ]; then
-      composer --no-interaction validate --no-check-all
-      composer --no-interaction normalize --dry-run
-    fi
   - |
     if [ "$JS" = "1" ]; then
       if [ "$COVERAGE" = "1" ]; then
@@ -101,10 +92,6 @@ script:
 jobs:
   fast_finish: true
   include:
-    - stage: lint
-      name: Lint (JavaScript, and configuration files)
-      php: 7.4
-      env: LINT=1
     - stage: test
       name: JavaScript unit tests
       php: 7.4

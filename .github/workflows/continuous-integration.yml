@@ -28,15 +28,23 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Validate composer.json
+        run: composer --no-interaction validate --no-check-all
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress
 
       - name: Detect coding standard violations (PHPCS)
         run: vendor/bin/phpcs -q --report=checkstyle --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 | cs2pr --graceful-warnings
-        continue-on-error: true
 
       - name: Static Analysis (PHPStan)
         run: phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
+
+      - name: Normalize composer.json
+        # composer-normalize requires PHP 7.1+. Ignore version conflicts.
+        run: |
+          composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
+          composer --no-interaction normalize --dry-run
 
   eslint:
     name: JavaScript Coding Standards
@@ -112,7 +120,6 @@ jobs:
 
       - name: Detect Markdown code style violations (MarkdownLint)
         run: npm run lint:md
-        continue-on-error: true
 
   stylelint:
     name: CSS Coding Standards
@@ -147,7 +154,6 @@ jobs:
 
       - name: Detect coding standard violations (stylelint)
         run: npm run lint:css
-        continue-on-error: true
 
   bundle-size:
     name: Bundle size check
