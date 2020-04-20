@@ -96,7 +96,7 @@ function StylePresetPanel() {
         updateStory({
           properties: {
             stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.styles],
+              textStyles: [...textStyles, ...addedPresets.textStyles],
               fillColors: [...fillColors, ...addedPresets.fillColors],
               textColors: [...textColors, ...addedPresets.textColors],
             },

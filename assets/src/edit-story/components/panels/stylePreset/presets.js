@@ -116,8 +116,8 @@ function Presets({
 }) {
   const [activeColorIndex, setActiveColorIndex] = useState(null);
   const [activeStyleIndex, setActiveStyleIndex] = useState(null);
-  const colorsRef = useRef();
-  const stylesRef = useRef();
+  const colorsRef = useRef(null);
+  const stylesRef = useRef(null);
   const { fillColors, textColors, textStyles } = stylePresets;
 
   const getIndexDiff = (key, rowLength) => {
