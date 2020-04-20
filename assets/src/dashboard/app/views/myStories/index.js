@@ -33,6 +33,7 @@ import {
   VIEW_STYLE,
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
+  SORT_DIRECTION,
 } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
@@ -82,9 +83,12 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.LIST);
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
+  const [currentListSortDirection, setListSortDirection] = useState(
+    SORT_DIRECTION.ASC
   );
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -98,9 +102,17 @@ function MyStories() {
     fetchStories({
       orderby: currentStorySort,
       searchTerm: typeaheadValue,
+      order: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
       status,
     });
-  }, [currentStorySort, fetchStories, status, typeaheadValue]);
+  }, [
+    viewStyle,
+    currentListSortDirection,
+    currentStorySort,
+    fetchStories,
+    status,
+    typeaheadValue,
+  ]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
@@ -145,11 +157,19 @@ function MyStories() {
           />
         );
       case VIEW_STYLE.LIST:
-        return <StoryListView filteredStories={filteredStories} />;
+        return (
+          <StoryListView
+            filteredStories={filteredStories}
+            storySort={currentStorySort}
+            sortDirection={currentListSortDirection}
+            handleSortChange={setCurrentStorySort}
+            handleSortDirectionChange={setListSortDirection}
+          />
+        );
       default:
         return null;
     }
-  }, [filteredStories, viewStyle]);
+  }, [currentStorySort, filteredStories, viewStyle, currentListSortDirection]);
 
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {

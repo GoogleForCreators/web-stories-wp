@@ -96,6 +96,7 @@ export default function ApiProvider({ children }) {
     async ({
       status = STORY_STATUSES[0].value,
       orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      order,
       searchTerm,
     }) => {
       if (!api.stories) {
@@ -108,7 +109,7 @@ export default function ApiProvider({ children }) {
         search: searchTerm || undefined,
         orderby,
         per_page: perPage,
-        order: ORDER_BY_SORT[orderby],
+        order: order || ORDER_BY_SORT[orderby],
       };
 
       try {

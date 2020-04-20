@@ -44,6 +44,7 @@ export {
   TableCell,
   TablePreviewCell,
   TableHeader,
+  TablePreviewHeaderCell,
   TableRow,
 } from './table';
 export { default as MultiPartPill } from './multiPartPill';
