@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -47,15 +47,52 @@ function FontControls({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
+  const timeout = useRef(null);
 
   const {
     state: { fonts },
-    actions: { getFontWeight, getFontFallback },
+    actions: { maybeEnqueueFontStyle, getFontWeight, getFontFallback },
   } = useFont();
   const fontWeights = useMemo(() => getFontWeight(fontFamily), [
     getFontWeight,
     fontFamily,
   ]);
+
+  const loadFont = useCallback(
+    (family, callback) => {
+      // 0. Check browser support to load fonts using JavaScript
+      if (document?.fonts) {
+        const font = `0 ${family}`;
+
+        // 1. Check if font family was not loaded yet
+        if (!document.fonts.check(font)) {
+          // 2. Try to inject <link /> resource of the font family
+          maybeEnqueueFontStyle(family);
+          // 3. Schedule a re-check since we need to wait the <link /> injection
+          timeout.current = setTimeout(async () => {
+            // 4. Load the new injected font in the client
+            await document.fonts.load(font);
+            // 5. Re-check if font was loaded
+            if (document.fonts.check(font)) {
+              return callback();
+            }
+            // 6. Try again if font still is not loaded
+            return loadFont(family, callback);
+          });
+        }
+      }
+
+      return callback();
+    },
+    [maybeEnqueueFontStyle]
+  );
+
+  useEffect(
+    () => () => {
+      clearTimeout(timeout.current);
+    },
+    [timeout]
+  );
 
   return (
     <>
@@ -67,30 +104,31 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontWeights = getFontWeight(value);
-              const currentFontFallback = getFontFallback(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ value: weight }) => weight
-              );
-
-              // Find the nearest font weight from the available font weight list
-              // If no fontweightsArr available then will return undefined
-              const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.reduce((a, b) =>
-                  Math.abs(parseInt(b) - fontWeight) <
-                  Math.abs(parseInt(a) - fontWeight)
-                    ? b
-                    : a
+              loadFont(value, () => {
+                const currentFontWeights = getFontWeight(value);
+                const currentFontFallback = getFontFallback(value);
+                const fontWeightsArr = currentFontWeights.map(
+                  ({ value: weight }) => weight
                 );
-              pushUpdate(
-                {
-                  fontFamily: value,
-                  fontWeight: parseInt(newFontWeight),
-                  fontFallback: currentFontFallback,
-                },
-                true
-              );
+                // Find the nearest font weight from the available font weight list
+                // If no fontweightsArr available then will return undefined
+                const newFontWeight =
+                  fontWeightsArr &&
+                  fontWeightsArr.reduce((a, b) =>
+                    Math.abs(parseInt(b) - fontWeight) <
+                    Math.abs(parseInt(a) - fontWeight)
+                      ? b
+                      : a
+                  );
+                pushUpdate(
+                  {
+                    fontFamily: value,
+                    fontWeight: parseInt(newFontWeight),
+                    fontFallback: currentFontFallback,
+                  },
+                  true
+                );
+              });
             }}
           />
         </Row>
