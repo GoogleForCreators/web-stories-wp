@@ -118,6 +118,7 @@ const theme = {
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
+    headerContentSize: 16,
     border: `1px solid ${colors.gray50}`,
   },
   overlay:
