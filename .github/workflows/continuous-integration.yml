@@ -82,6 +82,76 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           report-json: "build/lint-js-report.json"
 
+  markdownlint:
+    name: Markdown Code Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Setup cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: TRUE
+
+      - name: Detect Markdown code style violations (MarkdownLint)
+        run: npm run lint:md
+        continue-on-error: true
+
+  stylelint:
+    name: CSS Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Setup cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: TRUE
+
+      - name: Detect coding standard violations (stylelint)
+        run: npm run lint:css
+        continue-on-error: true
+
   bundle-size:
     name: Bundle size check
     runs-on: ubuntu-latest

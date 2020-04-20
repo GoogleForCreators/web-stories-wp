@@ -69,8 +69,6 @@ script:
     if [ "$LINT" = "1" ]; then
       composer --no-interaction validate --no-check-all
       composer --no-interaction normalize --dry-run
-      npm run lint:css
-      npm run lint:md
     fi
   - |
     if [ "$JS" = "1" ]; then
@@ -104,7 +102,7 @@ jobs:
   fast_finish: true
   include:
     - stage: lint
-      name: Lint (JavaScript, CSS, Markdown, and configuration files)
+      name: Lint (JavaScript, and configuration files)
       php: 7.4
       env: LINT=1
     - stage: test
