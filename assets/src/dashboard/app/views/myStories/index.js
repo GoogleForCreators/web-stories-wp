@@ -100,9 +100,9 @@ function MyStories() {
 
   useEffect(() => {
     fetchStories({
-      orderby: currentStorySort,
+      sortOption: currentStorySort,
       searchTerm: typeaheadValue,
-      order: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
+      sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
       status,
     });
   }, [

@@ -43,6 +43,7 @@ const ToggleButton = styled.button`
   border: none;
   padding: 15px 15px 15px 0;
   background: transparent;
+  cursor: pointer;
 
   &:hover svg {
     color: ${({ theme }) => theme.colors.gray700};

@@ -71,7 +71,7 @@ const ArrowIcon = styled.div`
   vertical-align: middle;
 
   svg {
-    display: ${({ active }) => (active ? 'visible' : 'none')};
+    visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
     ${({ asc }) => asc && { transform: 'rotate(180deg)' }};
   }
 `;
@@ -86,6 +86,11 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const toggleSortLookup = {
+  [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
+  [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
+};
+
 export default function StoryListView({
   filteredStories,
   storySort,
@@ -98,16 +103,8 @@ export default function StoryListView({
       if (newStorySort !== storySort) {
         handleSortChange(newStorySort);
         handleSortDirectionChange(ORDER_BY_SORT[newStorySort]);
-      } else if (
-        storySort === newStorySort &&
-        sortDirection === SORT_DIRECTION.ASC
-      ) {
-        handleSortDirectionChange(SORT_DIRECTION.DESC);
-      } else if (
-        storySort === newStorySort &&
-        sortDirection === SORT_DIRECTION.DESC
-      ) {
-        handleSortDirectionChange(SORT_DIRECTION.ASC);
+      } else {
+        handleSortDirectionChange(toggleSortLookup[sortDirection]);
       }
     },
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
