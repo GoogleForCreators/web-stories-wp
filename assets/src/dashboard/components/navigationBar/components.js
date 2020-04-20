@@ -13,32 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import Menu, { MenuProps } from './menu';
-import PopoverCard from './popoverCard';
-import PopoverStandard from './popoverStandard';
+import Button from '../button';
 
-const PopoverMenu = ({ className, ...props }) => (
-  <PopoverStandard isOpen={props.isOpen} className={className}>
-    <Menu {...props} />
-  </PopoverStandard>
-);
-PopoverMenu.propTypes = {
-  className: PropTypes.string,
-  ...MenuProps,
-};
+export const Nav = styled.nav`
+  ${({ theme }) => `
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid ${theme.colors.gray50};
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: ${theme.navBar.height}px;
+    padding: ${theme.pageGutter.small.desktop}px;
+    margin-bottom: 40px;
 
-export const PopoverMenuCard = (props) => (
-  <PopoverCard isOpen={props.isOpen}>
-    <Menu {...props} />
-  </PopoverCard>
-);
-PopoverMenuCard.propTypes = MenuProps;
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      flex-wrap: wrap;
+      padding: 0 ${theme.pageGutter.small.min}px;
+    }
+  `}
+`;
 
-export default PopoverMenu;
+export const ActionLink = styled(Button)`
+  padding: 0 24px;
+`;

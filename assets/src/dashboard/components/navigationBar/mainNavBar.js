@@ -23,63 +23,16 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useConfig, useRouteHistory } from '../app';
-import { ReactComponent as WebStoriesLogoSVG } from '../images/logo.svg';
-import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../constants';
-import Button from './button';
-import Dropdown from './dropdown';
-
-const Link = styled.a`
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
-  text-decoration: none;
-  margin-left: 40px;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.gray900 : theme.colors.gray600};
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    margin-left: 20px;
-    font-size: ${({ theme }) => theme.fonts.tab.minSize};
-  }
-`;
-
-const DropdownContainer = styled.div`
-  display: none;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    display: flex;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    display: none;
-  }
-`;
-
-const Nav = styled.nav`
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  flex-direction: row;
-  padding: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    flex-wrap: wrap;
-    padding: ${({ theme }) => `${theme.pageGutter.small.min}px`};
-  }
-`;
-
-const WebStoriesLogo = styled(WebStoriesLogoSVG)`
-  width: 37px;
-  height: 28px;
-`;
+import { ReactComponent as WebStoriesLogoSVG } from '../../images/logo.svg';
+import { BUTTON_TYPES, DROPDOWN_TYPES, paths } from '../../constants';
+import { useConfig } from '../../app/config';
+import { useRouteHistory } from '../../app/router';
+import Dropdown from '../dropdown';
+import { Nav, ActionLink } from './components';
 
 const PageLinks = styled.div`
   flex-grow: 1;
@@ -102,19 +55,53 @@ const PageLinks = styled.div`
     margin-right: 0;
   }
 `;
-PageLinks.propTypes = {
-  pathCount: PropTypes.number,
-};
 
-function NavigationBar() {
+const Link = styled.a`
+  font-family: ${({ theme }) => theme.fonts.tab.family};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
+  text-decoration: none;
+  margin-left: 40px;
+  color: ${({ theme, active }) =>
+    active ? theme.colors.gray900 : theme.colors.gray600};
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    margin-left: 20px;
+    font-size: ${({ theme }) => theme.fonts.tab.minSize};
+  }
+`;
+
+const DropdownContainer = styled.div`
+  display: none;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    position: absolute;
+    display: flex;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media ${({ theme }) => theme.breakpoint.min} {
+    display: none;
+  }
+`;
+
+const WebStoriesLogo = styled(WebStoriesLogoSVG)`
+  width: 37px;
+  height: 28px;
+`;
+
+export function MainNavBar() {
   const { state, actions } = useRouteHistory();
   const { newStoryURL } = useConfig();
+
   return (
     <Nav>
       <WebStoriesLogo />
       <DropdownContainer>
         <Dropdown
-          ariaLabel="Dashboard Navigation"
+          ariaLabel={__('Dashboard Navigation', 'web-stories')}
           items={paths}
           value={state.currentPath}
           type={DROPDOWN_TYPES.TRANSPARENT_MENU}
@@ -133,11 +120,9 @@ function NavigationBar() {
         ))}
       </PageLinks>
 
-      <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink={true}>
+      <ActionLink type={BUTTON_TYPES.CTA} href={newStoryURL} isLink={true}>
         {__('Create Story', 'web-stories')}
-      </Button>
+      </ActionLink>
     </Nav>
   );
 }
-
-export default NavigationBar;
