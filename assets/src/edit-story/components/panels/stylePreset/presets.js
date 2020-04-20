@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,19 +34,24 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { generatePresetStyle } from './utils';
 
-const COLOR_HEIGHT = 35;
+const PRESET_HEIGHT = 35;
+const REMOVE_ICON_SIZE = 18;
 
 const presetCSS = css`
   display: inline-block;
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  border: 0.5px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+  border-color: transparent;
   padding: 0;
   font-size: 13px;
+  position: relative;
   svg {
-    width: 18px;
-    height: 28px;
+    width: ${REMOVE_ICON_SIZE}px;
+    height: ${REMOVE_ICON_SIZE}px;
+    position: absolute;
+    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
   }
 `;
 
@@ -69,13 +73,18 @@ const PresetGroup = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: ${6 * COLOR_HEIGHT + 5}px;
+  max-height: ${6 * PRESET_HEIGHT + 5}px;
   overflow-y: auto;
 `;
 
 const ButtonWrapper = styled.div`
   flex-basis: 16%;
-  height: ${COLOR_HEIGHT}px;
+  height: ${PRESET_HEIGHT}px;
+`;
+
+const StyleButtonWrapper = styled.div`
+  flex-basis: 33.3%;
+  height: ${PRESET_HEIGHT}px;
 `;
 
 const PresetGroupLabel = styled.div`
@@ -142,7 +151,7 @@ function Presets({ stylePresets, getEventHandlers, isEditMode, isText }) {
           <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
           <PresetGroup>
             {styles.map((style, i) => (
-              <ButtonWrapper key={`color-${i}`}>
+              <StyleButtonWrapper key={`color-${i}`}>
                 <Style
                   styles={generatePresetStyle(style, true)}
                   {...getEventHandlers(style)}
@@ -153,9 +162,9 @@ function Presets({ stylePresets, getEventHandlers, isEditMode, isText }) {
                   }
                 >
                   {isEditMode && <Remove />}
-                  {!isEditMode && getStylePresetText(style)}
+                  {getStylePresetText(style)}
                 </Style>
-              </ButtonWrapper>
+              </StyleButtonWrapper>
             ))}
           </PresetGroup>
         </>
