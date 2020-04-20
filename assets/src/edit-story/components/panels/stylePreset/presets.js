@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState, useRef, useLayoutEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -32,10 +33,13 @@ import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
+import { useKeyDownEffect } from '../../keyboard';
 import { generatePresetStyle } from './utils';
 
 const PRESET_HEIGHT = 35;
 const REMOVE_ICON_SIZE = 18;
+const COLORS_PER_ROW = 6;
+const STYLES_PER_ROW = 3;
 
 const presetCSS = css`
   display: inline-block;
@@ -75,12 +79,12 @@ const PresetGroup = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  flex-basis: 16%;
+  flex-basis: ${100 / COLORS_PER_ROW}%;
   height: ${PRESET_HEIGHT}px;
 `;
 
 const StyleButtonWrapper = styled.div`
-  flex-basis: 33.3%;
+  flex-basis: ${100 / STYLES_PER_ROW}%;
   height: ${PRESET_HEIGHT}px;
 `;
 
@@ -114,7 +118,71 @@ function Presets({
   isText,
   textContent,
 }) {
+  const [activeColorIndex, setActiveColorIndex] = useState(null);
+  const [activeStyleIndex, setActiveStyleIndex] = useState(null);
+  const colorsRef = useRef();
+  const stylesRef = useRef();
   const { fillColors, textColors, styles } = stylePresets;
+
+  const getIndexDiff = (key, rowLength) => {
+    switch (key) {
+      case 'ArrowUp':
+        return -rowLength;
+      case 'ArrowDown':
+        return COLORS_PER_ROW;
+      case 'ArrowLeft':
+        return -1;
+      case 'ArrowRight':
+        return 1;
+      default:
+        return 0;
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (colorsRef.current && null !== activeColorIndex) {
+      colorsRef.current.querySelector('[tabindex="0"]').focus();
+    }
+  }, [activeColorIndex]);
+
+  useLayoutEffect(() => {
+    if (stylesRef.current && null !== activeStyleIndex) {
+      stylesRef.current.querySelector('[tabindex="0"]').focus();
+    }
+  }, [activeStyleIndex]);
+
+  useKeyDownEffect(
+    colorsRef,
+    { key: ['up', 'down', 'left', 'right'], shift: true },
+    ({ key }) => {
+      const maxIndex = isText ? textColors.length - 1 : fillColors.length - 1;
+      if (colorsRef.current) {
+        const diff = getIndexDiff(key, COLORS_PER_ROW);
+        const newIndex = Math.max(
+          0,
+          Math.min(maxIndex, (activeColorIndex ?? 0) + diff)
+        );
+        setActiveColorIndex(newIndex);
+      }
+    },
+    [activeColorIndex]
+  );
+
+  useKeyDownEffect(
+    stylesRef,
+    { key: ['up', 'down', 'left', 'right'], shift: true },
+    ({ key }) => {
+      if (stylesRef.current) {
+        const diff = getIndexDiff(key, STYLES_PER_ROW);
+        const newIndex = Math.max(
+          0,
+          Math.min(styles.length - 1, (activeStyleIndex ?? 0) + diff)
+        );
+        setActiveStyleIndex(newIndex);
+      }
+    },
+    [activeStyleIndex]
+  );
 
   const getStylePresetText = (preset) => {
     const isHighLight =
@@ -143,10 +211,15 @@ function Presets({
       {hasColorPresets && (
         <>
           <PresetGroupLabel>{groupLabel}</PresetGroupLabel>
-          <PresetGroup>
+          <PresetGroup ref={colorsRef}>
             {colorPresets.map((color, i) => (
               <ButtonWrapper key={`color-${i}`}>
                 <Color
+                  tabIndex={
+                    activeColorIndex === i || (!activeColorIndex && i === 0)
+                      ? 0
+                      : -1
+                  }
                   color={color}
                   {...getEventHandlers(color)}
                   aria-label={
@@ -166,10 +239,15 @@ function Presets({
       {styles.length > 0 && isText && (
         <>
           <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
-          <PresetGroup>
+          <PresetGroup ref={stylesRef}>
             {styles.map((style, i) => (
               <StyleButtonWrapper key={`color-${i}`}>
                 <Style
+                  tabIndex={
+                    activeStyleIndex === i || (!activeStyleIndex && i === 0)
+                      ? 0
+                      : -1
+                  }
                   styles={generatePresetStyle(style, true)}
                   {...getEventHandlers(style)}
                   aria-label={
