@@ -15,7 +15,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer, cs2pr
+          tools: composer, cs2pr, phpstan
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -36,10 +36,7 @@ jobs:
         continue-on-error: true
 
       - name: Static Analysis (PHPStan)
-        # phpstan only supports PHP 7.1+. Ignore version conflicts.
-        run: |
-          composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-          vendor/bin/phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
+        run: phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
 
   eslint:
     name: JavaScript Coding Standards
