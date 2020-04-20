@@ -188,13 +188,25 @@ function MyStories() {
         );
       case VIEW_STYLE.LIST:
         return (
-          <StoryListView
-            filteredStories={orderedStories}
-            storySort={currentStorySort}
-            sortDirection={currentListSortDirection}
-            handleSortChange={setCurrentStorySort}
-            handleSortDirectionChange={setListSortDirection}
-          />
+          orderedStories.length > 0 && (
+            <InfiniteScroller
+              isAllDataLoaded={allPagesLoaded}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              handleGetData={() => {
+                if (!isLoading) {
+                  setCurrentPageToFetch(currentPageToFetch + 1);
+                }
+              }}
+            >
+              <StoryListView
+                filteredStories={orderedStories}
+                storySort={currentStorySort}
+                sortDirection={currentListSortDirection}
+                handleSortChange={setCurrentStorySort}
+                handleSortDirectionChange={setListSortDirection}
+              />
+            </InfiniteScroller>
+          )
         );
       default:
         return null;
