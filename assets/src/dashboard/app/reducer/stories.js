@@ -20,20 +20,35 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
+  LOADING_STORIES: 'loading_stories',
   UPDATE_STORIES: 'update_stories',
   UPDATE_TOTAL_STORIES_PAGES: 'update_total_stories_pages',
   UPDATE_TOTAL_STORIES_COUNT: 'update_total_stories_count',
 };
 
+export const defaultStoriesState = {
+  isLoading: false,
+  stories: {},
+  storiesOrderById: [],
+  totalStories: null,
+  totalPages: null,
+};
+
 function storyReducer(state, action) {
   switch (action.type) {
+    case ACTION_TYPES.LOADING_STORIES: {
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
+    }
     case ACTION_TYPES.CLEAR_STORIES_ORDER: {
       return {
         ...state,
         storiesOrderById: [],
         stories: {},
-        totalStories: 0,
         totalPages: 0,
+        totalStories: 0,
       };
     }
     case ACTION_TYPES.UPDATE_STORIES:

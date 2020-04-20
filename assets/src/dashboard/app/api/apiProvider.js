@@ -46,6 +46,7 @@ import {
 } from '../../constants';
 import getAllTemplates from '../../templates';
 import storyReducer, {
+  defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 
@@ -99,13 +100,8 @@ export function reshapeTemplateObject({
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
-  const [state, dispatch] = useReducer(storyReducer, {
-    stories: {},
-    storiesOrderById: [],
-    totalStories: null,
-    totalPages: null,
-  });
-  // TODO same treatment to templates
+  const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
+
   const [templates, setTemplates] = useState([]);
 
   const fetchStories = useCallback(
@@ -117,6 +113,11 @@ export default function ApiProvider({ children }) {
       page = 1,
       perPage = ITEMS_PER_PAGE,
     }) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.LOADING_STORIES,
+        payload: true,
+      });
+
       if (!api.stories) {
         return [];
       }
@@ -143,17 +144,20 @@ export default function ApiProvider({ children }) {
         });
 
         // TODO add headers for totals by status and have header reflect search
+        // only update totals when data is different
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
-        dispatch({
-          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
-          payload: totalStories,
-        });
+        state.totalStories !== totalStories &&
+          dispatch({
+            type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
+            payload: totalStories,
+          });
 
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
-        dispatch({
-          type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
-          payload: totalPages,
-        });
+        state.totalPages !== totalPages &&
+          dispatch({
+            type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
+            payload: totalPages,
+          });
 
         const serverStoryResponse = await response.json();
 
@@ -169,9 +173,14 @@ export default function ApiProvider({ children }) {
         return reshapedStories;
       } catch (err) {
         return [];
+      } finally {
+        dispatch({
+          type: STORY_ACTION_TYPES.LOADING_STORIES,
+          payload: false,
+        });
       }
     },
-    [api.stories, editStoryURL]
+    [api.stories, editStoryURL, state.totalPages, state.totalStories]
   );
 
   const fetchTemplates = useCallback(() => {

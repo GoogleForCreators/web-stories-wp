@@ -21,9 +21,11 @@ import storyReducer, { ACTION_TYPES } from '../stories';
 
 describe('storyReducer', () => {
   const initialState = {
+    isLoading: false,
     stories: {},
-    totalPages: 0,
-    totalStories: 0,
+    storiesOrderById: [],
+    totalStories: null,
+    totalPages: null,
   };
   it(`should update stories state when ${ACTION_TYPES.UPDATE_STORIES} is called`, () => {
     const result = storyReducer(initialState, {
@@ -38,6 +40,33 @@ describe('storyReducer', () => {
 
     expect(result).toMatchObject({
       ...initialState,
+      storiesOrderById: [94, 65, 78, 12],
+      stories: {
+        94: { id: 94, status: 'draft', title: 'my test story 1' },
+        65: { id: 65, status: 'published', title: 'my test story 2' },
+        78: { id: 78, status: 'draft', title: 'my test story 3' },
+        12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+    });
+  });
+
+  it(`should update stories state when ${ACTION_TYPES.UPDATE_STORIES} is called and maintain order from existing state`, () => {
+    const result = storyReducer(
+      { ...initialState, storiesOrderById: [55, 99, 10, 3] },
+      {
+        type: ACTION_TYPES.UPDATE_STORIES,
+        payload: [
+          { id: 94, status: 'draft', title: 'my test story 1' },
+          { id: 65, status: 'published', title: 'my test story 2' },
+          { id: 78, status: 'draft', title: 'my test story 3' },
+          { id: 12, status: 'draft', title: 'my test story 4' },
+        ],
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      storiesOrderById: [55, 99, 10, 3, 94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
         65: { id: 65, status: 'published', title: 'my test story 2' },
@@ -68,6 +97,33 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       totalPages: 3,
+    });
+  });
+
+  it(`should update isLoading state to true when ${ACTION_TYPES.LOADING_STORIES} is called with true payload`, () => {
+    const result = storyReducer(initialState, {
+      type: ACTION_TYPES.LOADING_STORIES,
+      payload: true,
+    });
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isLoading: true,
+    });
+  });
+
+  it(`should update isLoading state to false when ${ACTION_TYPES.LOADING_STORIES} is called with false payload`, () => {
+    const result = storyReducer(
+      { ...initialState, isLoading: true },
+      {
+        type: ACTION_TYPES.LOADING_STORIES,
+        payload: false,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isLoading: false,
     });
   });
 });

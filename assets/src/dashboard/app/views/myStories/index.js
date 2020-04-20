@@ -24,6 +24,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
 
 /**
  * Internal dependencies
@@ -86,21 +87,23 @@ function MyStories() {
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [currentPageToFetch, setCurrentPageToFetch] = useState(1);
   const [allPagesLoaded, setAllPagesLoaded] = useState(false);
-  const [displayCurrentStoriesTotal, setDisplayCurrentStoriesTotal] = useState(
-    0
-  );
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
   const [currentListSortDirection, setListSortDirection] = useState(
     SORT_DIRECTION.ASC
   );
+
+  const [debounceTypeaheadValue] = useDebouncedCallback((newTypeaheadValue) => {
+    setTypeaheadValue(newTypeaheadValue);
+  }, 800);
+
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
   const {
     actions: { fetchStories, clearExistingStoriesOrder },
-    state: { stories, storiesOrderById, totalStories, totalPages },
+    state: { isLoading, stories, storiesOrderById, totalStories, totalPages },
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -127,33 +130,20 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const filteredStories = useMemo(() => {
-    return Object.values(orderedStories).filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-      return story.title.toLowerCase().includes(lowerTypeaheadValue);
-    });
-  }, [orderedStories, typeaheadValue]);
-
-  // this controls the display count and which components show
-  useEffect(() => {
-    if (typeaheadValue.length > 0) {
-      setDisplayCurrentStoriesTotal(filteredStories.length);
-    } else {
-      setDisplayCurrentStoriesTotal(totalStories);
-    }
-  }, [
-    setDisplayCurrentStoriesTotal,
-    typeaheadValue,
-    totalStories,
-    filteredStories.length,
-  ]);
-
   // control pagination and attempts to load further pages
   // also controls the loadings vs done messaging
   // could be in reducer
   useEffect(() => {
-    setAllPagesLoaded(currentPageToFetch === totalPages);
+    setAllPagesLoaded(currentPageToFetch >= totalPages);
   }, [currentPageToFetch, totalPages]);
+
+  // as you search, we need to maintain current page of 1 as well as any new order to the results
+  useEffect(() => {
+    if (typeaheadValue.length > 0) {
+      clearExistingStoriesOrder();
+      setCurrentPageToFetch(1);
+    }
+  }, [clearExistingStoriesOrder, typeaheadValue, debounceTypeaheadValue]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -165,29 +155,26 @@ function MyStories() {
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
-    _n(
-      '%s total story',
-      '%s total stories',
-      displayCurrentStoriesTotal,
-      'web-stories'
-    ),
-    displayCurrentStoriesTotal
+    _n('%s total story', '%s total stories', totalStories, 'web-stories'),
+    totalStories
   );
 
   const storiesView = useMemo(() => {
     switch (viewStyle) {
-      case VIEW_STYLE.GRID:
+      case VIEW_STYLE.GRID: {
         return (
-          filteredStories && (
+          orderedStories.length > 0 && (
             <InfiniteScroller
               isAllDataLoaded={allPagesLoaded}
               allDataLoadedMessage={__('No more stories', 'web-stories')}
               handleGetData={() => {
-                setCurrentPageToFetch(currentPageToFetch + 1);
+                if (!isLoading) {
+                  setCurrentPageToFetch(currentPageToFetch + 1);
+                }
               }}
             >
               <StoryGridView
-                filteredStories={filteredStories}
+                filteredStories={orderedStories}
                 centerActionLabel={
                   <>
                     <PlayArrowIcon />
@@ -199,10 +186,11 @@ function MyStories() {
             </InfiniteScroller>
           )
         );
+      }
       case VIEW_STYLE.LIST:
         return (
           <StoryListView
-            filteredStories={filteredStories}
+            filteredStories={orderedStories}
             storySort={currentStorySort}
             sortDirection={currentListSortDirection}
             handleSortChange={setCurrentStorySort}
@@ -213,12 +201,13 @@ function MyStories() {
         return null;
     }
   }, [
-    allStoriesLoaded,
-    currentPage,
     currentStorySort,
-    filteredStories,
-    viewStyle,
     currentListSortDirection,
+    allPagesLoaded,
+    currentPageToFetch,
+    isLoading,
+    orderedStories,
+    viewStyle,
   ]);
 
   const storiesViewControls = useMemo(() => {
@@ -250,7 +239,9 @@ function MyStories() {
   ]);
 
   const BodyContent = useMemo(() => {
-    if (displayCurrentStoriesTotal > 0) {
+    if (isLoading) {
+      return <DefaultBodyText>{'Loading!'}</DefaultBodyText>;
+    } else if (totalStories > 0) {
       return (
         <BodyWrapper>
           {storiesViewControls}
@@ -267,8 +258,8 @@ function MyStories() {
       </DefaultBodyText>
     );
   }, [
-    currentViewStoryCount,
-    displayCurrentStoriesTotal,
+    isLoading,
+    totalStories,
     typeaheadValue,
     storiesViewControls,
     storiesView,
@@ -282,8 +273,10 @@ function MyStories() {
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
             searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={filteredStories}
-            handleTypeaheadChange={setTypeaheadValue}
+            filteredStories={orderedStories}
+            handleTypeaheadChange={(newValue) => {
+              debounceTypeaheadValue(newValue);
+            }}
             typeaheadValue={typeaheadValue}
           />
           <FilterContainer>
