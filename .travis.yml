@@ -41,12 +41,12 @@ env:
 install:
   - set -e
   - |
-    if [ [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install --no-interaction
     fi
   - set +e
