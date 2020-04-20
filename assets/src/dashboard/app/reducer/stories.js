@@ -33,6 +33,7 @@ function storyReducer(state, action) {
         storiesOrderById: [],
         stories: {},
         totalStories: 0,
+        totalPages: 0,
       };
     }
     case ACTION_TYPES.UPDATE_STORIES:
