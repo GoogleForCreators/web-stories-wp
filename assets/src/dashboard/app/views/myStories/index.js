@@ -161,7 +161,7 @@ function MyStories() {
 
   const storiesView = useMemo(() => {
     switch (viewStyle) {
-      case VIEW_STYLE.GRID: {
+      case VIEW_STYLE.GRID:
         return (
           orderedStories.length > 0 && (
             <InfiniteScroller
@@ -186,7 +186,6 @@ function MyStories() {
             </InfiniteScroller>
           )
         );
-      }
       case VIEW_STYLE.LIST:
         return (
           <StoryListView
