@@ -31,7 +31,7 @@ import styled from 'styled-components';
 
 import { ReactComponent as GridSVG } from '../icons/grid.svg';
 import { ReactComponent as ListSVG } from '../icons/list.svg';
-import { VIEW_STYLE, VIEW_STYLE_ICON_METRICS } from '../constants';
+import { ICON_METRICS, VIEW_STYLE } from '../constants';
 
 const Container = styled.div`
   display: flex;
@@ -53,14 +53,14 @@ const ToggleButton = styled.button`
   }
 `;
 
-const ListIcon = styled(ListSVG).attrs(VIEW_STYLE_ICON_METRICS)`
+const ListIcon = styled(ListSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
-const GridIcon = styled(GridSVG).attrs(VIEW_STYLE_ICON_METRICS)`
+const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;

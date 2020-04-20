@@ -43,6 +43,7 @@ import {
   TableTitleHeaderCell,
 } from '../../../components';
 import {
+  ICON_METRICS,
   ORDER_BY_SORT,
   PAGE_RATIO,
   SORT_DIRECTION,
@@ -124,7 +125,7 @@ export default function StoryListView({
                 active={storySort === STORY_SORT_OPTIONS.NAME}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg width={16} height={16} />
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIcon>
             </TableTitleHeaderCell>
             <TableHeaderCell>
@@ -139,7 +140,7 @@ export default function StoryListView({
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg width={16} height={16} />
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
             </TableHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
@@ -157,7 +158,7 @@ export default function StoryListView({
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg width={16} height={16} />
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
             </TableHeaderCell>
           </TableRow>

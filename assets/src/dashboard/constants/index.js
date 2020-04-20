@@ -87,7 +87,10 @@ export const VIEW_STYLE = {
   LIST: 'LIST',
 };
 
-export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
+export const ICON_METRICS = {
+  VIEW_STYLE: { width: 17, height: 14 },
+  UP_DOWN_ARROW: { width: 16, height: 16 },
+};
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
