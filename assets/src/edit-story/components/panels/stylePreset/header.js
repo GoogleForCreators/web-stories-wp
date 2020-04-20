@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import { useContext } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,9 +30,46 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
-import { PanelTitle } from '../panel';
 import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
+import { ReactComponent as Arrow } from '../../../icons/arrow.svg';
+import panelContext from '../panel/context';
+
+const Header = styled.h2`
+  border: 0 solid ${({ theme }) => theme.colors.bg.v9};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  user-select: none;
+`;
+
+const HeaderButton = styled.div.attrs({ role: 'button' })`
+  color: inherit;
+  border: 0;
+  padding: 10px 20px;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const Heading = styled.span`
+  color: inherit;
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+`;
+
+const HeaderActions = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const buttonCSS = css`
   background: transparent;
@@ -43,11 +81,7 @@ const buttonCSS = css`
   padding: 0;
 `;
 
-// Since the whole wrapper title is already a button, can't use button directly here.
-// @todo Use custom title instead to use buttons directly.
-const AddColorPresetButton = styled.div.attrs({
-  role: 'button',
-})`
+const AddColorPresetButton = styled.button`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -55,7 +89,16 @@ const AddColorPresetButton = styled.div.attrs({
   }
 `;
 
-const ExitEditMode = styled.a`
+const Collapse = styled.button`
+  ${buttonCSS}
+  svg {
+    width: 28px;
+    height: 28px;
+    ${({ isCollapsed }) => isCollapsed && `transform: rotate(.5turn);`}
+  }
+`;
+
+const ExitEditMode = styled.button`
   ${buttonCSS}
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 12px;
@@ -64,9 +107,7 @@ const ExitEditMode = styled.a`
   height: initial;
 `;
 
-const EditModeButton = styled.div.attrs({
-  role: 'button',
-})`
+const EditModeButton = styled.button`
   ${buttonCSS}
   height: 20px;
   svg {
@@ -81,6 +122,11 @@ function PresetsHeader({
   setIsEditMode,
   stylePresets,
 }) {
+  const {
+    state: { isCollapsed, panelContentId },
+    actions: { collapse, expand },
+  } = useContext(panelContext);
+
   const { fillColors, textColors, styles } = stylePresets;
   const hasPresets =
     fillColors.length > 0 || textColors.length > 0 || styles.length > 0;
@@ -117,14 +163,29 @@ function PresetsHeader({
       </ExitEditMode>
     );
   };
+
+  const titleLabel = isCollapsed
+    ? __('Expand panel', 'web-stories')
+    : __('Collapse panel', 'web-stories');
   return (
-    <PanelTitle
-      isPrimary
-      secondaryAction={getSecondaryActions()}
-      canCollapse={!isEditMode && hasPresets}
-    >
-      {__('Presets', 'web-stories')}
-    </PanelTitle>
+    <Header>
+      <HeaderButton
+        onClick={isCollapsed ? expand : collapse}
+        aria-label={titleLabel}
+        aria-expanded={!isCollapsed}
+        aria-controls={panelContentId}
+      >
+        <Heading>{__('Presets', 'web-stories')}</Heading>
+        <HeaderActions>
+          {getSecondaryActions()}
+          {hasPresets && (
+            <Collapse isCollapsed={isCollapsed}>
+              <Arrow />
+            </Collapse>
+          )}
+        </HeaderActions>
+      </HeaderButton>
+    </Header>
   );
 }
 
