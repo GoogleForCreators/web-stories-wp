@@ -95,7 +95,8 @@ export default function ApiProvider({ children }) {
   const fetchStories = useCallback(
     async ({
       status = STORY_STATUSES[0].value,
-      orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      sortDirection,
       searchTerm,
     }) => {
       if (!api.stories) {
@@ -106,9 +107,9 @@ export default function ApiProvider({ children }) {
         status,
         context: 'edit',
         search: searchTerm || undefined,
-        orderby,
+        orderby: sortOption,
         per_page: perPage,
-        order: ORDER_BY_SORT[orderby],
+        order: sortDirection || ORDER_BY_SORT[sortOption],
       };
 
       try {
