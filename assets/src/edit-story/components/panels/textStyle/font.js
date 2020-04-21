@@ -93,7 +93,6 @@ function FontControls({ selectedElements, pushUpdate }) {
                 {
                   font: {
                     family: value,
-                    // TODO: FIXME
                     service: fontObj?.service,
                   },
                   fontWeight: parseInt(newFontWeight),
