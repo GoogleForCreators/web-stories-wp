@@ -26,15 +26,24 @@ import moment from 'moment';
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';
 
-function reshapeTemplateObject(isLocal) {
-  return ({ id, title, tags, colors, createdBy, description, pages }) => ({
+export function reshapeTemplateObject(isLocal) {
+  return ({
+    id,
+    title,
+    modified,
+    tags,
+    colors,
+    createdBy,
+    description,
+    pages,
+  }) => ({
     isLocal,
     id,
     title,
     createdBy,
     description,
     status: 'template',
-    modified: moment('2020-04-07'),
+    modified: moment(modified),
     metadata: [...tags, ...colors].map((value) =>
       typeof value === 'object' ? { ...value } : { label: value }
     ),
