@@ -37,7 +37,7 @@ import storyReducer, {
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import useTemplateApi from './useTemplateApi';
-import wpAdapter from './wpAdapter';
+import dataAdapter from './wpAdapter';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -66,7 +66,7 @@ export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
 
-  const { templates, api: templateApi } = useTemplateApi(wpAdapter, {
+  const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     pluginDir,
   });
 
@@ -108,14 +108,13 @@ export default function ApiProvider({ children }) {
           query,
         });
 
-        const response = await wpAdapter.get(path, {
+        const response = await dataAdapter.get(path, {
           parse: false,
         });
 
         // TODO add headers for totals by status and have header reflect search
         // only update totals when data is different
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
-
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
 
         const serverStoryResponse = await response.json();
@@ -156,7 +155,7 @@ export default function ApiProvider({ children }) {
       return Promise.resolve([]);
     }
 
-    return wpAdapter.get(api.fonts).then((data) =>
+    return dataAdapter.get(api.fonts).then((data) =>
       data.map((font) => ({
         value: font.name,
         ...font,
