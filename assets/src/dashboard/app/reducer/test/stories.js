@@ -27,19 +27,25 @@ describe('storyReducer', () => {
     totalStories: null,
     totalPages: null,
   };
-  it(`should update stories state when ${ACTION_TYPES.UPDATE_STORIES} is called`, () => {
+  it(`should update stories state when ${ACTION_TYPES.FETCH_STORIES_SUCCESS} is called`, () => {
     const result = storyReducer(initialState, {
-      type: ACTION_TYPES.UPDATE_STORIES,
-      payload: [
-        { id: 94, status: 'draft', title: 'my test story 1' },
-        { id: 65, status: 'published', title: 'my test story 2' },
-        { id: 78, status: 'draft', title: 'my test story 3' },
-        { id: 12, status: 'draft', title: 'my test story 4' },
-      ],
+      type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
+      payload: {
+        page: 1,
+        stories: [
+          { id: 94, status: 'draft', title: 'my test story 1' },
+          { id: 65, status: 'published', title: 'my test story 2' },
+          { id: 78, status: 'draft', title: 'my test story 3' },
+          { id: 12, status: 'draft', title: 'my test story 4' },
+        ],
+        totalStories: 33,
+        totalPages: 4,
+      },
     });
 
     expect(result).toMatchObject({
       ...initialState,
+      isError: false,
       storiesOrderById: [94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
@@ -47,20 +53,28 @@ describe('storyReducer', () => {
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },
+      totalStories: 33,
+      totalPages: 4,
+      allPagesFetched: false,
     });
   });
 
-  it(`should update stories state when ${ACTION_TYPES.UPDATE_STORIES} is called and maintain order from existing state`, () => {
+  it(`should update stories state when ${ACTION_TYPES.FETCH_STORIES_SUCCESS} is called and maintain order from existing state`, () => {
     const result = storyReducer(
       { ...initialState, storiesOrderById: [55, 99, 10, 3] },
       {
-        type: ACTION_TYPES.UPDATE_STORIES,
-        payload: [
-          { id: 94, status: 'draft', title: 'my test story 1' },
-          { id: 65, status: 'published', title: 'my test story 2' },
-          { id: 78, status: 'draft', title: 'my test story 3' },
-          { id: 12, status: 'draft', title: 'my test story 4' },
-        ],
+        type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
+        payload: {
+          page: 2,
+          stories: [
+            { id: 94, status: 'draft', title: 'my test story 1' },
+            { id: 65, status: 'published', title: 'my test story 2' },
+            { id: 78, status: 'draft', title: 'my test story 3' },
+            { id: 12, status: 'draft', title: 'my test story 4' },
+          ],
+          totalStories: 8,
+          totalPages: 2,
+        },
       }
     );
 
@@ -73,57 +87,9 @@ describe('storyReducer', () => {
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },
-    });
-  });
-
-  it(`should update totalStories state when ${ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT} is called`, () => {
-    const result = storyReducer(initialState, {
-      type: ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
-      payload: 10,
-    });
-
-    expect(result).toMatchObject({
-      ...initialState,
-      totalStories: 10,
-    });
-  });
-
-  it(`should update totalPages state when ${ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES} is called`, () => {
-    const result = storyReducer(initialState, {
-      type: ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
-      payload: 3,
-    });
-
-    expect(result).toMatchObject({
-      ...initialState,
-      totalPages: 3,
-    });
-  });
-
-  it(`should update isLoading state to true when ${ACTION_TYPES.LOADING_STORIES} is called with true payload`, () => {
-    const result = storyReducer(initialState, {
-      type: ACTION_TYPES.LOADING_STORIES,
-      payload: true,
-    });
-
-    expect(result).toMatchObject({
-      ...initialState,
-      isLoading: true,
-    });
-  });
-
-  it(`should update isLoading state to false when ${ACTION_TYPES.LOADING_STORIES} is called with false payload`, () => {
-    const result = storyReducer(
-      { ...initialState, isLoading: true },
-      {
-        type: ACTION_TYPES.LOADING_STORIES,
-        payload: false,
-      }
-    );
-
-    expect(result).toMatchObject({
-      ...initialState,
-      isLoading: false,
+      totalStories: 8,
+      totalPages: 2,
+      allPagesFetched: true,
     });
   });
 });
