@@ -32,18 +32,35 @@ const ScrollMessage = styled.div`
   width: 100%;
 `;
 
+const STATE = {
+  loadable: 'loadable',
+  loading_internal: 'loading_internal',
+  loading_external: 'loading_external',
+  complete: 'complete',
+};
+
+const ACTION = {
+  ON_INTERNAL_LOAD: 'internal on load',
+  ON_EXTERNAL_LOAD: 'external on load',
+  ON_ALL_LOADED: 'all loaded',
+  ON_LOAD_SUCCESS: 'load success',
+};
+
 const machine = {
-  loadable: {
-    LOADING_INTERNAL: 'load_internal',
-    LOADING_EXTERNAL: 'load_external',
+  [STATE.loadable]: {
+    [ACTION.ON_INTERNAL_LOAD]: STATE.loading_internal,
+    [ACTION.ON_EXTERNAL_LOAD]: STATE.loading_external,
   },
-  load_internal: {
-    COMPLETE: 'complete',
-    LOADABLE: 'loadable',
+  [STATE.loading_internal]: {
+    [ACTION.ON_ALL_LOADED]: STATE.complete,
+    [ACTION.ON_LOAD_SUCCESS]: STATE.loadable,
   },
-  load_external: {
-    COMPLETE: 'complete',
-    LOADABLE: 'loadable',
+  [STATE.loading_external]: {
+    [ACTION.ON_ALL_LOADED]: STATE.complete,
+    [ACTION.ON_LOAD_SUCCESS]: STATE.loadable,
+  },
+  [STATE.complete]: {
+    [ACTION.ON_LOAD_SUCCESS]: STATE.loadable,
   },
 };
 
@@ -62,25 +79,31 @@ const InfiniteScroller = ({
   const onLoadMoreRef = useRef(onLoadMore);
   onLoadMoreRef.current = onLoadMore;
 
-  const [loadState, dispatch] = useReducer(loadReducer, 'loadable');
+  const [loadState, dispatch] = useReducer(loadReducer, STATE.loadable);
 
   useEffect(() => {
-    if (loadState === 'loading_internal') {
+    if (loadState === STATE.loading_internal) {
       onLoadMoreRef.current();
     }
   }, [loadState]);
 
   useEffect(() => {
     if (isLoading) {
-      dispatch('LOADING_EXTERNAL');
+      dispatch(ACTION.ON_EXTERNAL_LOAD);
     }
   }, [isLoading]);
 
   useEffect(() => {
     if (!isLoading) {
-      dispatch(canLoadMore ? 'LOADABLE' : 'COMPLETE');
+      dispatch(canLoadMore ? ACTION.ON_LOAD_SUCCESS : ACTION.ON_ALL_LOADED);
     }
   }, [isLoading, canLoadMore]);
+
+  useEffect(() => {
+    if (loadState === STATE.complete && canLoadMore) {
+      dispatch(ACTION.ON_LOAD_SUCCESS);
+    }
+  }, [canLoadMore, loadState]);
 
   useEffect(() => {
     if (!loadingRef.current) {
@@ -91,7 +114,7 @@ const InfiniteScroller = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            dispatch('LOADING_INTERNAL');
+            dispatch(ACTION.ON_INTERNAL_LOAD);
           }
         });
       },

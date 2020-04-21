@@ -152,6 +152,13 @@ function MyStories() {
     },
     [setCurrentStorySort, setCurrentPageClamped]
   );
+  const handleFilterStatusUpdate = useCallback(
+    (_, value) => {
+      setCurrentPageClamped(1);
+      setStatus(value);
+    },
+    [setCurrentPageClamped]
+  );
 
   const handleNewPageRequest = useCallback(() => {
     setCurrentPageClamped(currentPage + 1);
@@ -288,7 +295,7 @@ function MyStories() {
             {STORY_STATUSES.map((storyStatus) => (
               <FloatingTab
                 key={storyStatus.value}
-                onClick={(_, value) => setStatus(value)}
+                onClick={handleFilterStatusUpdate}
                 name="my-stories-filter-selection"
                 value={storyStatus.value}
                 isSelected={status === storyStatus.value}
