@@ -28,7 +28,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown } from '../../../components';
+import { Dropdown, MainNavBar } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 import {
   VIEW_STYLE,
@@ -144,6 +144,7 @@ function TemplatesGallery() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
+          <MainNavBar />
           <PageHeading
             defaultTitle={__('Explore Templates', 'web-stories')}
             searchPlaceholder={__('Template Stories', 'web-stories')}

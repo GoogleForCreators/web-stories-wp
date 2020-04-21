@@ -18,44 +18,41 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
-
 /**
  * Internal dependencies
  */
-import { KEYS, Z_INDEX } from '../../constants';
+import { KEYS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
-export const Menu = styled.ul`
-  width: 100%;
+export const MenuContainer = styled.ul`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  margin: 0;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
+  min-width: 210px;
   overflow: hidden;
   padding: 0;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
 `;
-Menu.propTypes = {
+MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-const MenuItem = styled.li`
-  padding: 14px 16px 14px 44px;
+export const MenuItem = styled.li`
+  padding: 14px 16px;
   background: ${({ isHovering, theme }) =>
     isHovering ? theme.colors.gray50 : 'none'};
   color: ${({ theme }) => theme.colors.gray700};
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   display: flex;
-  font-family: ${({ theme }) => theme.fonts.typeaheadOptions.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size};
-  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.typeaheadOptions.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadOptions.letterSpacing};
+  font-family: ${({ theme }) => theme.fonts.popoverMenu.family};
+  font-size: ${({ theme }) => theme.fonts.popoverMenu.size};
+  line-height: ${({ theme }) => theme.fonts.popoverMenu.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.popoverMenu.weight};
+  letter-spacing: ${({ theme }) => theme.fonts.popoverMenu.letterSpacing};
   width: 100%;
 `;
 
@@ -70,7 +67,13 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
+const Separator = styled.li`
+  height: 1px;
+  background: ${({ theme }) => theme.colors.gray50};
+  width: 100%;
+`;
+
+const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -123,35 +126,47 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
     setHoveredIndex(0);
   }, [items]);
 
-  const renderMenuItem = (item, index) => {
-    const itemIsDisabled = !item.value && item.value !== 0;
-    return (
-      <MenuItem
-        key={`${item.value}_${index}`}
-        isHovering={index === hoveredIndex}
-        onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
-        onMouseEnter={() => setHoveredIndex(index)}
-        isDisabled={itemIsDisabled}
-      >
-        <MenuItemContent>{item.label}</MenuItemContent>
-      </MenuItem>
-    );
-  };
+  const renderMenuItem = useCallback(
+    (item, index) => {
+      const itemIsDisabled = !item.value && item.value !== 0;
+      return (
+        <MenuItem
+          key={`${item.value}_${index}`}
+          isHovering={index === hoveredIndex}
+          onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
+          onMouseEnter={() => setHoveredIndex(index)}
+          isDisabled={itemIsDisabled}
+        >
+          <MenuItemContent>{item.label}</MenuItemContent>
+        </MenuItem>
+      );
+    },
+    [hoveredIndex, onSelect]
+  );
+
+  const renderSeparator = useCallback((index) => {
+    return <Separator key={`separator-${index}`} />;
+  }, []);
 
   return (
-    <Menu isOpen={isOpen}>
-      {items.slice(0, maxItemsVisible).map((item, index) => {
+    <MenuContainer framelessButton={framelessButton}>
+      {items.map((item, index) => {
+        if (item.separator) {
+          return renderSeparator(index);
+        }
         return renderMenuItem(item, index);
       })}
-    </Menu>
+    </MenuContainer>
   );
 };
 
-TypeaheadOptions.propTypes = {
+export const MenuProps = {
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
-  maxItemsVisible: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
+  framelessButton: PropTypes.bool,
 };
 
-export default TypeaheadOptions;
+Menu.propTypes = MenuProps;
+
+export default Menu;

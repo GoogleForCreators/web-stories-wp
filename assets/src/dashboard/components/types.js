@@ -20,8 +20,9 @@
 import PropTypes from 'prop-types';
 
 export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   selected: PropTypes.bool,
+  separator: PropTypes.bool,
   disabled: PropTypes.bool,
 });

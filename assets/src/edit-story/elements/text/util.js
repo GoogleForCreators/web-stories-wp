@@ -84,6 +84,8 @@ export function getSelectionForOffset(content, offset) {
       const selection = new SelectionState({
         anchorKey: block.getKey(),
         anchorOffset: countdown,
+        focusKey: block.getKey(),
+        focusOffset: countdown,
       });
       return selection;
     }

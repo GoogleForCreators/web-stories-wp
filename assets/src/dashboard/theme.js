@@ -109,12 +109,16 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  navBar: {
+    height: 64,
+  },
   subNavigationBar: {
     border: `1px solid ${colors.gray50}`,
   },
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
+    headerContentSize: 16,
     border: `1px solid ${colors.gray50}`,
   },
   overlay:
@@ -128,6 +132,12 @@ const theme = {
       minLineHeight: '43px',
       letterSpacing: '-0.005em',
       minLetterSpacing: '-0.01em',
+    },
+    heading2: {
+      family: 'Google Sans',
+      size: '24px',
+      lineHeight: '34px',
+      weight: 500,
     },
     heading3: {
       family: 'Google Sans',
@@ -146,8 +156,8 @@ const theme = {
     body2: {
       family: "'Google Sans', sans-serif",
       size: '14px',
-      lineHeight: '16px',
-      letterSpacing: '0.0142em',
+      lineHeight: '22px',
+      letterSpacing: '0.015em',
     },
     tab: {
       family: 'Google Sans',
@@ -224,8 +234,14 @@ const theme = {
     },
   },
   pageGutter: {
-    desktop: 20,
-    min: 10,
+    small: {
+      desktop: 20,
+      min: 10,
+    },
+    large: {
+      desktop: 80,
+      tablet: 40,
+    },
   },
   previewWidth: {
     desktop: 221,

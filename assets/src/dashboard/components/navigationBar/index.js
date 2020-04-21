@@ -15,16 +15,7 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
-
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.min}px`};
-  }
-`;
-
-export default BodyWrapper;
+export { MainNavBar } from './mainNavBar';
+export { TemplateNavBar } from './templateNavBar';

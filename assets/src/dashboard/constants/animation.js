@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.min}px`};
-  }
-`;
-
-export default BodyWrapper;
+export const BEZIER = {
+  outQuad: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+  outCubic: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+  outQuart: 'cubic-bezier(0.165, 0.84, 0.44, 1)',
+  outQuint: 'cubic-bezier(0.23, 1, 0.32, 1)',
+  outSine: 'cubic-bezier(0.39, 0.575, 0.565, 1)',
+  outCirc: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
+};
