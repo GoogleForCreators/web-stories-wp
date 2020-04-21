@@ -50,9 +50,9 @@ const useTemplateApi = (dataAdapter, config) => {
   const [templates, setTemplates] = useState([]);
   const { pluginDir } = config;
 
-  const createStoryFromTemplatePages = (pages) => {
+  const createStoryFromTemplatePages = useCallback((pages) => {
     return Promise.resolve({ success: true, storyId: -1 });
-  };
+  }, []);
 
   const fetchSavedTemplates = useCallback((filters) => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -96,8 +96,19 @@ const useTemplateApi = (dataAdapter, config) => {
     [fetchExternalTemplates]
   );
 
+  const bookmarkTemplate = useCallback((templateId, shouldBookmark) => {
+    if (shouldBookmark) {
+      // api call to bookmark template
+      return Promise.resolve({ success: true });
+    } else {
+      // api call to remove bookmark from template
+      return Promise.resolve({ success: true });
+    }
+  }, []);
+
   const api = useMemo(
     () => ({
+      bookmarkTemplate,
       createStoryFromTemplatePages,
       fetchBookmarkedTemplates,
       fetchSavedTemplates,
@@ -107,6 +118,8 @@ const useTemplateApi = (dataAdapter, config) => {
       fetchExternalTemplateById,
     }),
     [
+      bookmarkTemplate,
+      createStoryFromTemplatePages,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
       fetchExternalTemplates,
