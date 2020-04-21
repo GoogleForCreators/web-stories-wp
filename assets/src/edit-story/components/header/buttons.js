@@ -112,10 +112,12 @@ function PreviewButton() {
     // Save story directly if draft, otherwise, use auto-save.
     const updateFunc = isDraft ? saveStory : autoSave;
     updateFunc()
-      .then(() => {
+      .then((update) => {
         if (popup && !popup.closed) {
           if (popup.location.href) {
-            popup.location.replace(previewLink);
+            // Auto-save sends an updated preview link, use that instead if possible.
+            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            popup.location.replace(updatedPreviewLink);
           }
         }
       })
