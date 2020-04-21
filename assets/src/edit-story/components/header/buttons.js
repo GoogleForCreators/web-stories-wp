@@ -115,7 +115,7 @@ function PreviewButton() {
       .then((update) => {
         if (popup && !popup.closed) {
           if (popup.location.href) {
-            // Auto-save sends an updated preview link, use that instead if possible.
+            // Auto-save sends an updated preview link, use that instead if available.
             const updatedPreviewLink = update?.preview_link ?? previewLink;
             popup.location.replace(updatedPreviewLink);
           }
