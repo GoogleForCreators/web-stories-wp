@@ -244,7 +244,7 @@ function Update() {
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
+    <Primary onClick={() => saveStory()} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );

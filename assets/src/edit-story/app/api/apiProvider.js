@@ -47,32 +47,15 @@ function APIProvider({ children }) {
   );
 
   const getStorySaveData = ({
-    title,
-    status,
     pages,
-    author,
-    slug,
-    date,
-    modified,
-    content,
-    excerpt,
     featuredMedia,
-    password,
     stylePresets,
     publisherLogo,
     autoAdvance,
     defaultPageDuration,
+    ...rest
   }) => {
     return {
-      title,
-      status,
-      author,
-      password,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
       story_data: {
         version: DATA_VERSION,
         pages,
@@ -82,6 +65,7 @@ function APIProvider({ children }) {
       featured_media: featuredMedia,
       style_presets: stylePresets,
       publisher_logo: publisherLogo,
+      ...rest,
     };
   };
 
