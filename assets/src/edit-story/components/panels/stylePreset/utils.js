@@ -77,6 +77,7 @@ function hasStylePreset({ fontFamily, backgroundTextMode, padding }) {
 }
 
 export function getTextPresets(elements, stylePresets) {
+  // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
     textColors: elements
       .filter((text) => !hasStylePreset(text))
