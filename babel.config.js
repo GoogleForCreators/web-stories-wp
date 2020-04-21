@@ -16,7 +16,7 @@
 
 module.exports = function (api) {
   const isTest = api.env('test');
-  const isProduction = api.env() === 'production';
+  const isProduction = api.env('production');
 
   const targets = isTest
     ? {
