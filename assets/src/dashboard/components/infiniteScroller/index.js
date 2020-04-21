@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useEffect, useRef, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -31,78 +31,95 @@ const ScrollMessage = styled.div`
   text-align: center;
   width: 100%;
 `;
+
+const machine = {
+  loadable: {
+    LOADING_INTERNAL: 'load_internal',
+    LOADING_EXTERNAL: 'load_external',
+  },
+  load_internal: {
+    COMPLETE: 'complete',
+    LOADABLE: 'loadable',
+  },
+  load_external: {
+    COMPLETE: 'complete',
+    LOADABLE: 'loadable',
+  },
+};
+
+const loadReducer = (state, action) => {
+  return machine[state][action] || state;
+};
+
 const InfiniteScroller = ({
   allDataLoadedMessage = __('No More Stories', 'web-stories'),
-  children,
-  handleGetData,
-  isAllDataLoaded,
+  onLoadMore,
+  canLoadMore,
+  isLoading,
   loadingMessage = __('Loading…', 'web-stories'),
 }) => {
-  const [loadMore, setLoadMore] = useState(false);
   const loadingRef = useRef(null);
-  const containerRef = useRef(null);
+  const onLoadMoreRef = useRef(onLoadMore);
+  onLoadMoreRef.current = onLoadMore;
+
+  const [loadState, dispatch] = useReducer(loadReducer, 'loadable');
 
   useEffect(() => {
-    if (loadMore) {
-      handleGetData(loadMore);
+    if (loadState === 'loading_internal') {
+      onLoadMoreRef.current();
     }
-    setLoadMore(false);
-  }, [loadMore, handleGetData]);
+  }, [loadState]);
 
-  const observer = new IntersectionObserver(
-    useCallback(
+  useEffect(() => {
+    if (isLoading) {
+      dispatch('LOADING_EXTERNAL');
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(canLoadMore ? 'LOADABLE' : 'COMPLETE');
+    }
+  }, [isLoading, canLoadMore]);
+
+  useEffect(() => {
+    if (!loadingRef.current) {
+      return () => {};
+    }
+
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setLoadMore(true);
+            dispatch('LOADING_INTERNAL');
           }
         });
       },
-      [setLoadMore]
-    ),
-    {
-      root: containerRef.current,
-      rootMargin: '0px',
-      threshold: 1,
-    }
-  );
+      {
+        rootMargin: '0px',
+        threshold: 1,
+      }
+    );
 
-  useEffect(() => {
-    const currentIntersectingRef = loadingRef.current;
-
-    if (!isAllDataLoaded && currentIntersectingRef) {
-      observer.observe(currentIntersectingRef);
-      return () => {
-        observer.unobserve(currentIntersectingRef);
-      };
-    }
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isAllDataLoaded,
-    loadingRef,
-    containerRef,
-    observer.observe,
-    observer.unobserve,
-  ]);
-  // we intentionally do not want to watch on just the observer, it will cause everything to load immediately, the observer will just keep getting triggered
+    const triggerEl = loadingRef.current;
+    observer.observe(triggerEl);
+    return () => {
+      observer.unobserve(triggerEl);
+    };
+  }, []);
 
   return (
-    <div ref={containerRef}>
-      {children}
-
-      <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
-        {isAllDataLoaded ? allDataLoadedMessage : loadingMessage}
-      </ScrollMessage>
-    </div>
+    <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
+      {!canLoadMore ? allDataLoadedMessage : loadingMessage}
+    </ScrollMessage>
   );
 };
 
 InfiniteScroller.propTypes = {
-  children: PropTypes.node.isRequired,
-  handleGetData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  onLoadMore: PropTypes.func.isRequired,
   allDataLoadedMessage: PropTypes.string,
-  isAllDataLoaded: PropTypes.bool,
+  canLoadMore: PropTypes.bool,
   loadingMessage: PropTypes.string,
 };
 export default InfiniteScroller;

@@ -113,10 +113,10 @@ export default function ApiProvider({ children }) {
       page = 1,
       perPage = ITEMS_PER_PAGE,
     }) => {
-      // dispatch({
-      //   type: STORY_ACTION_TYPES.LOADING_STORIES,
-      //   payload: true,
-      // });
+      dispatch({
+        type: STORY_ACTION_TYPES.LOADING_STORIES,
+        payload: true,
+      });
 
       if (!api.stories) {
         dispatch({
@@ -176,13 +176,12 @@ export default function ApiProvider({ children }) {
           payload: true,
         });
         return [];
+      } finally {
+        dispatch({
+          type: STORY_ACTION_TYPES.LOADING_STORIES,
+          payload: false,
+        });
       }
-      // finally {
-      //   dispatch({
-      //     type: STORY_ACTION_TYPES.LOADING_STORIES,
-      //     payload: false,
-      //   });
-      // }
     },
     [api.stories, editStoryURL]
   );

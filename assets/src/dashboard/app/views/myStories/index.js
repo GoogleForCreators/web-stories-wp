@@ -105,6 +105,7 @@ function MyStories() {
       storiesOrderById,
       totalStories,
       totalPages,
+      isLoading,
     },
   } = useContext(ApiContext);
 
@@ -182,42 +183,26 @@ function MyStories() {
     switch (viewStyle) {
       case VIEW_STYLE.GRID:
         return (
-          orderedStories.length > 0 && (
-            <InfiniteScroller
-              isAllDataLoaded={allPagesFetched}
-              allDataLoadedMessage={__('No more stories', 'web-stories')}
-              handleGetData={handleNewPageRequest}
-            >
-              <StoryGridView
-                filteredStories={orderedStories}
-                centerActionLabel={
-                  <>
-                    <PlayArrowIcon />
-                    {__('Preview', 'web-stories')}
-                  </>
-                }
-                bottomActionLabel={__('Open in editor', 'web-stories')}
-              />
-            </InfiniteScroller>
-          )
+          <StoryGridView
+            filteredStories={orderedStories}
+            centerActionLabel={
+              <>
+                <PlayArrowIcon />
+                {__('Preview', 'web-stories')}
+              </>
+            }
+            bottomActionLabel={__('Open in editor', 'web-stories')}
+          />
         );
       case VIEW_STYLE.LIST:
         return (
-          orderedStories.length > 0 && (
-            <InfiniteScroller
-              isAllDataLoaded={allPagesFetched}
-              allDataLoadedMessage={__('No more stories', 'web-stories')}
-              handleGetData={handleNewPageRequest}
-            >
-              <StoryListView
-                filteredStories={orderedStories}
-                storySort={currentStorySort}
-                sortDirection={currentListSortDirection}
-                handleSortChange={handleNewStorySort}
-                handleSortDirectionChange={setListSortDirection}
-              />
-            </InfiniteScroller>
-          )
+          <StoryListView
+            filteredStories={orderedStories}
+            storySort={currentStorySort}
+            sortDirection={currentListSortDirection}
+            handleSortChange={handleNewStorySort}
+            handleSortDirectionChange={setListSortDirection}
+          />
         );
       default:
         return null;
@@ -225,8 +210,6 @@ function MyStories() {
   }, [
     currentStorySort,
     currentListSortDirection,
-    allPagesFetched,
-    handleNewPageRequest,
     handleNewStorySort,
     orderedStories,
     viewStyle,
@@ -255,11 +238,19 @@ function MyStories() {
   ]);
 
   const BodyContent = useMemo(() => {
-    if (totalStories > 0) {
+    if (orderedStories.length > 0) {
       return (
         <BodyWrapper>
           {storiesViewControls}
           {storiesView}
+          <InfiniteScroller
+            canLoadMore={!allPagesFetched}
+            isLoading={isLoading}
+            allDataLoadedMessage={__('No more stories', 'web-stories')}
+            onLoadMore={() => {
+              handleNewPageRequest();
+            }}
+          />
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
@@ -271,7 +262,15 @@ function MyStories() {
         {__('Create a story to get started!', 'web-stories')}
       </DefaultBodyText>
     );
-  }, [totalStories, typeaheadValue, storiesViewControls, storiesView]);
+  }, [
+    orderedStories.length,
+    isLoading,
+    allPagesFetched,
+    handleNewPageRequest,
+    typeaheadValue,
+    storiesViewControls,
+    storiesView,
+  ]);
 
   return (
     <FontProvider>
