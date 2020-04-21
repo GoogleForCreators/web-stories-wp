@@ -17,26 +17,22 @@
 const path = require('path');
 
 module.exports = {
-  rootDir: '../../',
+  roots: ['<rootDir>/src', '<rootDir>/tests'],
+  verbose: true,
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
   moduleNameMapper: {
-    '\\.svg': path.join(__dirname, '/svgrMock.js'),
-    '\\.css': path.join(__dirname, '/styleMock.js'),
+    '\\.svg': path.join(__dirname, '/tests/js/svgrMock.js'),
+    '\\.css': path.join(__dirname, '/tests/js/styleMock.js'),
   },
-  setupFiles: [
-    '<rootDir>/tests/js/setup-globals',
-    '<rootDir>/tests/js/setup-mocks',
-    'jest-canvas-mock',
-    'core-js',
-  ],
   testMatch: [
     '**/__tests__/**/*.[jt]s',
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
-  setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
+  setupFiles: [path.join(__dirname, '/tests/js/setup-mocks.js')],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/node_modules',
@@ -45,10 +41,8 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/build/'],
   coverageReporters: ['lcov'],
-  coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/edit-story/**/*.js',
-    '<rootDir>/assets/src/dashboard/**/*.js',
+    '<rootDir>/src/**/*.js',
     '!**/test/**',
     '!**/stories/**',
   ],

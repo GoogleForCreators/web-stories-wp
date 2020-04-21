@@ -15,36 +15,17 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import App from '../../../packages/editor/src/app';
+import PropTypes from 'prop-types';
+import StoryPropTypes from '@web-stories/editor/src/types';
 
-export default {
-  title: 'Playground|Stories Editor',
-};
+export const StoryPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
+  title: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  modified: PropTypes.object,
+});
 
-// @todo: Find better way to mock these.
-const config = {
-  allowedMimeTypes: {
-    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    audio: [],
-    video: ['video/mp4'],
-  },
-  storyId: 1234,
-  api: {
-    stories: '',
-    media: '',
-    fonts: '',
-  },
-  metadata: {
-    publisher: {
-      name: '',
-      logo: '',
-    },
-    poster: '',
-  },
-};
-
-export const _default = () => {
-  return <App config={config} />;
-};
+export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;

@@ -15,14 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories/editor/src/constants';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
 
 export const BUTTON_TYPES = {
   CTA: 'cta',

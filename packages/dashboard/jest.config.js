@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import '@testing-library/jest-dom';
+// Jest configuration for api
+const base = require('../../jest.config.base.js');
 
-/**
- * Internal dependencies
- */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
-
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+module.exports = {
+  ...base,
+  name: '@web-stories/dashboard',
+  displayName: '@web-stories/dashboard',
+  setupFiles: [...base.setupFiles, '<rootDir>/tests/setup-globals'],
+};

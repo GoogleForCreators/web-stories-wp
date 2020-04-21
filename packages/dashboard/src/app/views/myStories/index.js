@@ -24,6 +24,8 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import { UnitsProvider } from '@web-stories/editor/src/units';
+import { TransformProvider } from '@web-stories/editor/src/components/transform';
 
 /**
  * Internal dependencies
@@ -36,8 +38,6 @@ import {
   SORT_DIRECTION,
 } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';

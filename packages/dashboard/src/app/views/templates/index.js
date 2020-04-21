@@ -24,6 +24,8 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  */
 import { useState, useContext, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { UnitsProvider } from '@web-stories/editor/src/units';
+import { TransformProvider } from '@web-stories/editor/src/components/transform';
 
 /**
  * Internal dependencies
@@ -36,8 +38,6 @@ import {
   STORY_SORT_OPTIONS,
 } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import {

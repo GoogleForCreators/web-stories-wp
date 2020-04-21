@@ -26,9 +26,17 @@
   },
   "rules": {
     "block-scoped-var": "error",
-    "complexity": ["error", {"max": 20}],
+    "complexity": [
+      "error",
+      {
+        "max": 20
+      }
+    ],
     "consistent-return": "error",
-    "curly": ["error", "all"],
+    "curly": [
+      "error",
+      "all"
+    ],
     "default-case": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
@@ -42,36 +50,48 @@
     "no-new": "error",
     "no-new-func": "error",
     "no-new-wrappers": "error",
-    "header/header": [ "error", "block", [
-      "",
+    "header/header": [
+      "error",
+      "block",
+      [
+        "",
+        {
+          "pattern": " \\* Copyright \\d{4} Google LLC",
+          "template": " * Copyright 2020 Google LLC"
+        },
+        " *",
+        " * Licensed under the Apache License, Version 2.0 (the \"License\");",
+        " * you may not use this file except in compliance with the License.",
+        " * You may obtain a copy of the License at",
+        " *",
+        " *     https://www.apache.org/licenses/LICENSE-2.0",
+        " *",
+        " * Unless required by applicable law or agreed to in writing, software",
+        " * distributed under the License is distributed on an \"AS IS\" BASIS,",
+        " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
+        " * See the License for the specific language governing permissions and",
+        " * limitations under the License.",
+        " "
+      ]
+    ],
+    "import/no-restricted-paths": [
+      "error",
       {
-        "pattern": " \\* Copyright \\d{4} Google LLC",
-        "template": " * Copyright 2020 Google LLC"
-      },
-      " *",
-      " * Licensed under the Apache License, Version 2.0 (the \"License\");",
-      " * you may not use this file except in compliance with the License.",
-      " * You may obtain a copy of the License at",
-      " *",
-      " *     https://www.apache.org/licenses/LICENSE-2.0",
-      " *",
-      " * Unless required by applicable law or agreed to in writing, software",
-      " * distributed under the License is distributed on an \"AS IS\" BASIS,",
-      " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
-      " * See the License for the specific language governing permissions and",
-      " * limitations under the License.",
-      " "
-    ] ],
-    "import/no-restricted-paths": [ "error", {
-      "zones": [ {
-        "target": "./assets/src/edit-story/migration/migrations",
-        "from": "./assets/src/edit-story",
-        "except": [ "./migration/migrations" ]
-      }, {
-        "target": "./assets/src/edit-story",
-        "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
-      } ]
-    } ],
+        "zones": [
+          {
+            "target": "./packages/editor/src/migration/migrations",
+            "from": "./packages/editor/src",
+            "except": [
+              "./migration/migrations"
+            ]
+          },
+          {
+            "target": "./packages/editor/src",
+            "from": "./packages/editor/src/utils/useWhyDidYouUpdate.js"
+          }
+        ]
+      }
+    ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -93,11 +113,22 @@
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
     "prefer-spread": "error",
-    "radix": ["error", "as-needed"],
+    "radix": [
+      "error",
+      "as-needed"
+    ],
     "require-await": "error",
-    "rest-spread-spacing": ["error", "never"],
+    "rest-spread-spacing": [
+      "error",
+      "never"
+    ],
     "react/prop-types": "error",
-    "react-hooks/exhaustive-deps": ["error", {"additionalHooks": "useBatchingCallback"}],
+    "react-hooks/exhaustive-deps": [
+      "error",
+      {
+        "additionalHooks": "^use(?!DebouncedCallback)"
+      }
+    ],
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
@@ -111,7 +142,10 @@
       {
         "groups": [
           "builtin",
-          ["external", "unknown"],
+          [
+            "external",
+            "unknown"
+          ],
           "internal",
           "parent",
           "sibling",
@@ -125,13 +159,19 @@
     "jsdoc/check-indentation": "error",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
-    "@wordpress/no-unused-vars-before-return": ["error", {
-      "excludePattern": "^use"
-    }],
+    "@wordpress/no-unused-vars-before-return": [
+      "error",
+      {
+        "excludePattern": "^use"
+      }
+    ],
     "@wordpress/react-no-unsafe-timeout": "error",
-    "@wordpress/i18n-text-domain": ["error", {
-      "allowedTextDomain":  "web-stories"
-    }],
+    "@wordpress/i18n-text-domain": [
+      "error",
+      {
+        "allowedTextDomain": "web-stories"
+      }
+    ],
     "@wordpress/valid-sprintf": "error"
   },
   "env": {
@@ -165,7 +205,8 @@
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/?(*.)test.js",
-        "tests/js/**/*.js"
+        "tests/js/**/*.js",
+        "packages/*/tests/**/*.js"
       ],
       "extends": [
         "plugin:jest/all",
@@ -182,7 +223,9 @@
         "jest/lowercase-name": [
           "error",
           {
-            "ignore": ["describe"]
+            "ignore": [
+              "describe"
+            ]
           }
         ],
         "jest/no-hooks": "off",
@@ -193,7 +236,9 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "tests/e2e/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
@@ -201,7 +246,9 @@
         "jest/lowercase-name": [
           "error",
           {
-            "ignore": ["describe"]
+            "ignore": [
+              "describe"
+            ]
           }
         ],
         "jest/no-hooks": "off",
@@ -216,10 +263,7 @@
     },
     {
       "files": [
-        "babel.config.js",
-        "puppeteer.config.js",
-        "webpack.config.js",
-        ".storybook/*.js",
+        "*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
         "tests/e2e/config/*.js"
@@ -229,7 +273,9 @@
       }
     },
     {
-      "files": ["**/*.md"],
+      "files": [
+        "**/*.md"
+      ],
       "plugins": [
         "markdown"
       ],

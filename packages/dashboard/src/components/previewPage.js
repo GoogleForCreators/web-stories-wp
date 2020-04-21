@@ -15,36 +15,19 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import App from '../../../packages/editor/src/app';
+import DisplayElement from '@web-stories/editor/src/components/canvas/displayElement';
+import StoryPropTypes from '@web-stories/editor/src/types';
 
-export default {
-  title: 'Playground|Stories Editor',
+function PreviewPage({ page }) {
+  return page.elements.map(({ id, ...rest }) => (
+    <DisplayElement key={id} page={page} element={{ id, ...rest }} />
+  ));
+}
+
+PreviewPage.propTypes = {
+  page: StoryPropTypes.page.isRequired,
 };
 
-// @todo: Find better way to mock these.
-const config = {
-  allowedMimeTypes: {
-    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    audio: [],
-    video: ['video/mp4'],
-  },
-  storyId: 1234,
-  api: {
-    stories: '',
-    media: '',
-    fonts: '',
-  },
-  metadata: {
-    publisher: {
-      name: '',
-      logo: '',
-    },
-    poster: '',
-  },
-};
-
-export const _default = () => {
-  return <App config={config} />;
-};
+export default PreviewPage;

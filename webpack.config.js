@@ -124,7 +124,7 @@ const sharedConfig = {
 const storiesEditor = {
   ...sharedConfig,
   entry: {
-    'edit-story': './assets/src/edit-story/index.js',
+    'edit-story': './packages/editor/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -151,7 +151,7 @@ const storiesEditor = {
 const dashboard = {
   ...sharedConfig,
   entry: {
-    'stories-dashboard': './assets/src/dashboard/index.js',
+    'stories-dashboard': './packages/dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

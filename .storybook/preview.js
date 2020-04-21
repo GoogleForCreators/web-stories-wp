@@ -27,14 +27,14 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 /**
  * Internal dependencies
  */
-import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
-import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
+import theme, { GlobalStyle } from '../packages/editor/src/theme';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../packages/editor/src/components/movable/cropStyle';
+import { GlobalStyle as ModalGlobalStyle } from '../packages/editor/src/components/modal';
 
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
-} from '../assets/src/dashboard/theme';
-import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
+} from '../packages/dashboard/src/theme';
+import DashboardKeyboardOnlyOutline from '../packages/dashboard/src/utils/keyboardOnlyOutline';
 
 // @todo: Find better way to mock these.
 const wp = {};

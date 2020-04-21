@@ -3,12 +3,13 @@
 .idea
 .storybook
 __mocks__
-assets/images/templates
 assets/src
+assets/images/templates
 bin
 build
 docs
 node_modules
+packages
 tests
 .browserslistrc
 .distignore
@@ -34,6 +35,9 @@ codecov.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
+jest.config.base.js
+jest.config.js
+lerna.json
 package.json
 package-lock.json
 phpcs.xml

@@ -19,12 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import { UnitsProvider } from '@web-stories/editor/src/units';
 
 /**
  * Internal dependencies
  */
 import { PAGE_RATIO } from '../../constants';
-import { UnitsProvider } from '../../../edit-story/units';
 import {
   ActiveCard,
   GalleryContainer,

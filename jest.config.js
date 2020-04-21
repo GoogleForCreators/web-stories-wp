@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
+const base = require('./jest.config.base.js');
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../edit-story/types';
-
-export const StoryPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
-  title: PropTypes.string.isRequired,
-  pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
-});
-
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+module.exports = {
+  ...base,
+  roots: undefined,
+  projects: ['<rootDir>/packages/*/jest.config.js'],
+  coverageDirectory: '<rootDir>/build/logs',
+};

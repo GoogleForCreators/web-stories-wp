@@ -17,17 +17,12 @@
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../edit-story/components/canvas/displayElement';
-import StoryPropTypes from '../../edit-story/types';
+import toBeValidAMP from './matchers/toBeValidAMP';
+import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
+import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
 
-function PreviewPage({ page }) {
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement key={id} page={page} element={{ id, ...rest }} />
-  ));
-}
-
-PreviewPage.propTypes = {
-  page: StoryPropTypes.page.isRequired,
-};
-
-export default PreviewPage;
+expect.extend({
+  toBeValidAMP,
+  toBeValidAMPStoryElement,
+  toBeValidAMPStoryPage,
+});

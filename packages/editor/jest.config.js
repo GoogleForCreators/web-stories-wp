@@ -14,37 +14,21 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import App from '../../../packages/editor/src/app';
+// Jest configuration for api
+const base = require('../../jest.config.base.js');
 
-export default {
-  title: 'Playground|Stories Editor',
-};
-
-// @todo: Find better way to mock these.
-const config = {
-  allowedMimeTypes: {
-    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    audio: [],
-    video: ['video/mp4'],
-  },
-  storyId: 1234,
-  api: {
-    stories: '',
-    media: '',
-    fonts: '',
-  },
-  metadata: {
-    publisher: {
-      name: '',
-      logo: '',
-    },
-    poster: '',
-  },
-};
-
-export const _default = () => {
-  return <App config={config} />;
+module.exports = {
+  ...base,
+  name: '@web-stories/editor',
+  displayName: '@web-stories/editor',
+  setupFiles: [
+    ...base.setupFiles,
+    '<rootDir>/tests/setup-globals',
+    'jest-canvas-mock',
+    'core-js',
+  ],
+  setupFilesAfterEnv: [
+    ...base.setupFilesAfterEnv,
+    '<rootDir>/tests/jest.setup',
+  ],
 };
