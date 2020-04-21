@@ -26,11 +26,10 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { NavigationBar } from '../components';
 import { APP_ROUTES } from '../constants';
 import ApiProvider from './api/apiProvider';
-import { useRouteHistory, Route, RouterProvider } from './router';
-import { useConfig, ConfigProvider } from './config';
+import { Route, RouterProvider } from './router';
+import { ConfigProvider } from './config';
 import {
   MyStoriesView,
   TemplateDetail,
@@ -48,7 +47,6 @@ function App({ config }) {
             <RouterProvider>
               <GlobalStyle />
               <KeyboardOnlyOutline />
-              <NavigationBar />
               <Route
                 exact
                 path={APP_ROUTES.MY_STORIES}
@@ -79,5 +77,3 @@ App.propTypes = {
 };
 
 export default App;
-
-export { useConfig, useRouteHistory };

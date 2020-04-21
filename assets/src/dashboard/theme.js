@@ -109,12 +109,16 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  navBar: {
+    height: 64,
+  },
   subNavigationBar: {
     border: `1px solid ${colors.gray50}`,
   },
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
+    headerContentSize: 16,
     border: `1px solid ${colors.gray50}`,
   },
   overlay:

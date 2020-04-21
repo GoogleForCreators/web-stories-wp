@@ -24,7 +24,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Dropdown, ListBar } from '../../../components';
-import { STORY_SORT_MENU_ITEMS, DROPDOWN_TYPES } from '../../../constants';
+import {
+  STORY_SORT_MENU_ITEMS,
+  DROPDOWN_TYPES,
+  VIEW_STYLE,
+} from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
   margin: ${({ theme }) => `${theme.pageGutter.small.desktop}px 0`};
@@ -33,33 +37,19 @@ const DisplayFormatContainer = styled.div`
   display: flex;
   align-items: space-between;
   align-content: center;
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 `;
 
 const StorySortDropdownContainer = styled.div`
   margin: auto 0 auto auto;
   align-self: flex-end;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    align-self: flex-start;
-    margin: 20px 0 0;
-  }
 `;
 
 const SortDropdown = styled(Dropdown)`
-  min-width: 147px;
-  ul {
-    right: 20px;
-    max-width: 147px;
-  }
+  min-width: 210px;
+  margin-right: 10px;
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    ul {
-      left: 20px;
-    }
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    margin-right: 0px;
   }
 `;
 
@@ -77,15 +67,17 @@ const BodyViewOptions = ({
       layoutStyle={layoutStyle}
       onPress={handleLayoutSelect}
     />
-    <StorySortDropdownContainer>
-      <SortDropdown
-        ariaLabel={sortDropdownAriaLabel}
-        items={STORY_SORT_MENU_ITEMS}
-        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-        value={currentSort}
-        onChange={(newSort) => handleSortChange(newSort.value)}
-      />
-    </StorySortDropdownContainer>
+    {layoutStyle === VIEW_STYLE.GRID && (
+      <StorySortDropdownContainer>
+        <SortDropdown
+          ariaLabel={sortDropdownAriaLabel}
+          items={STORY_SORT_MENU_ITEMS}
+          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+          value={currentSort}
+          onChange={(newSort) => handleSortChange(newSort.value)}
+        />
+      </StorySortDropdownContainer>
+    )}
   </DisplayFormatContainer>
 );
 
