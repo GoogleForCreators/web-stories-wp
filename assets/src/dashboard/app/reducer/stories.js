@@ -21,12 +21,12 @@ import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
   LOADING_STORIES: 'loading_stories',
-  UPDATE_STORIES: 'update_stories',
-  UPDATE_TOTAL_STORIES_PAGES: 'update_total_stories_pages',
-  UPDATE_TOTAL_STORIES_COUNT: 'update_total_stories_count',
+  FETCH_STORIES_SUCCESS: 'fetch_stories_success',
+  FETCH_STORIES_FAILURE: 'fetch_stories_failure',
 };
 
 export const defaultStoriesState = {
+  isError: false,
   isLoading: false,
   stories: {},
   storiesOrderById: [],
@@ -42,40 +42,32 @@ function storyReducer(state, action) {
         isLoading: action.payload,
       };
     }
-    case ACTION_TYPES.CLEAR_STORIES_ORDER: {
+    case ACTION_TYPES.FETCH_STORIES_FAILURE:
       return {
         ...state,
-        storiesOrderById: [],
-        stories: {},
-        totalPages: 0,
-        totalStories: 0,
+        isError: action.payload,
       };
-    }
-    case ACTION_TYPES.UPDATE_STORIES:
-      // eslint-disable-next-line no-case-declarations
-      let uniqueStoryIds = [
-        ...state.storiesOrderById,
-        ...action.payload.map(({ id }) => id),
-      ];
-      uniqueStoryIds = uniqueStoryIds.filter((value, index, self) => {
+
+    case ACTION_TYPES.FETCH_STORIES_SUCCESS: {
+      const fetchedStoriesById = action.payload.stories.map(({ id }) => id);
+      const combinedStoryIds =
+        action.payload.page === 1
+          ? fetchedStoriesById
+          : [...state.storiesOrderById, ...fetchedStoriesById];
+
+      const uniqueStoryIds = combinedStoryIds.filter((value, index, self) => {
         return self.indexOf(value) === index;
       });
-
       return {
         ...state,
+        isError: false,
         storiesOrderById: uniqueStoryIds,
-        stories: { ...state.stories, ...groupBy(action.payload, 'id') },
+        stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
+        totalPages: action.payload.totalPages,
+        totalStories: action.payload.totalStories,
+        allPagesFetched: action.payload.page === action.payload.totalPages,
       };
-    case ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT:
-      return {
-        ...state,
-        totalStories: action.payload,
-      };
-    case ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES:
-      return {
-        ...state,
-        totalPages: action.payload,
-      };
+    }
 
     default:
       return state;

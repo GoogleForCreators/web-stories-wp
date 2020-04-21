@@ -113,12 +113,16 @@ export default function ApiProvider({ children }) {
       page = 1,
       perPage = ITEMS_PER_PAGE,
     }) => {
-      dispatch({
-        type: STORY_ACTION_TYPES.LOADING_STORIES,
-        payload: true,
-      });
+      // dispatch({
+      //   type: STORY_ACTION_TYPES.LOADING_STORIES,
+      //   payload: true,
+      // });
 
       if (!api.stories) {
+        dispatch({
+          type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+          payload: true,
+        });
         return [];
       }
 
@@ -146,18 +150,8 @@ export default function ApiProvider({ children }) {
         // TODO add headers for totals by status and have header reflect search
         // only update totals when data is different
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
-        state.totalStories !== totalStories &&
-          dispatch({
-            type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_COUNT,
-            payload: totalStories,
-          });
 
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
-        state.totalPages !== totalPages &&
-          dispatch({
-            type: STORY_ACTION_TYPES.UPDATE_TOTAL_STORIES_PAGES,
-            payload: totalPages,
-          });
 
         const serverStoryResponse = await response.json();
 
@@ -166,21 +160,31 @@ export default function ApiProvider({ children }) {
           .filter(Boolean);
 
         dispatch({
-          type: STORY_ACTION_TYPES.UPDATE_STORIES,
-          payload: reshapedStories,
+          type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
+          payload: {
+            stories: reshapedStories,
+            totalPages,
+            totalStories,
+            page,
+          },
         });
 
         return reshapedStories;
       } catch (err) {
-        return [];
-      } finally {
         dispatch({
-          type: STORY_ACTION_TYPES.LOADING_STORIES,
-          payload: false,
+          type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+          payload: true,
         });
+        return [];
       }
+      // finally {
+      //   dispatch({
+      //     type: STORY_ACTION_TYPES.LOADING_STORIES,
+      //     payload: false,
+      //   });
+      // }
     },
-    [api.stories, editStoryURL, state.totalPages, state.totalStories]
+    [api.stories, editStoryURL]
   );
 
   const fetchTemplates = useCallback(() => {
@@ -215,17 +219,11 @@ export default function ApiProvider({ children }) {
     );
   }, [api.fonts]);
 
-  const clearExistingStoriesOrder = useCallback(
-    () =>
-      dispatch({
-        type: STORY_ACTION_TYPES.CLEAR_STORIES_ORDER,
-      }),
-    []
-  );
-
   const value = useMemo(
     () => ({
       state: {
+        allPagesFetched: state.allPagesFetched,
+        isLoading: state.isLoading,
         stories: state.stories,
         storiesOrderById: state.storiesOrderById,
         totalStories: state.totalStories,
@@ -233,7 +231,6 @@ export default function ApiProvider({ children }) {
         templates,
       },
       actions: {
-        clearExistingStoriesOrder,
         fetchStories,
         fetchTemplates,
         fetchTemplate,
@@ -241,12 +238,13 @@ export default function ApiProvider({ children }) {
       },
     }),
     [
-      clearExistingStoriesOrder,
       templates,
       fetchStories,
       fetchTemplates,
       fetchTemplate,
       getAllFonts,
+      state.allPagesFetched,
+      state.isLoading,
       state.stories,
       state.storiesOrderById,
       state.totalStories,
