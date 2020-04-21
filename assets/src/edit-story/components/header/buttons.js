@@ -113,22 +113,10 @@ function PreviewButton() {
     const updateFunc = isDraft ? saveStory : autoSave;
     updateFunc()
       .then(() => {
-        let previewOpened = false;
         if (popup && !popup.closed) {
-          try {
-            // The `popup.location.href` will fail if the expected window has
-            // been naviagted to a different origin.
-            if (popup.location.href) {
-              popup.location.replace(previewLink);
-              previewOpened = true;
-            }
-          } catch (e) {
-            // Ignore the errors. They will simply trigger the "try again"
-            // dialog.
+          if (popup.location.href) {
+            popup.location.replace(previewLink);
           }
-        }
-        if (!previewOpened) {
-          //setPreviewLinkToOpenViaDialog(previewLink);
         }
       })
       .catch(() => {
