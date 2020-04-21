@@ -86,7 +86,10 @@ function StylePresetPanel() {
         };
       } else {
         // Currently, shape only supports fillColors.
-        addedPresets = getShapePresets(selectedElements, stylePresets);
+        addedPresets = {
+          ...addedPresets,
+          ...getShapePresets(selectedElements, stylePresets),
+        };
       }
       if (
         addedPresets.fillColors?.length > 0 ||
