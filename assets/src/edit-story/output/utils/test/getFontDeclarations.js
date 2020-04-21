@@ -60,6 +60,22 @@ describe('getFontDeclarations', () => {
           {
             type: 'text',
             font: {
+              family: 'Roboto',
+              service: 'fonts.google.com',
+            },
+            fontStyle: 'italic',
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Lato',
+              service: 'fonts.google.com',
+            },
+            fontWeight: 400,
+          },
+          {
+            type: 'text',
+            font: {
               family: 'Lato',
               service: 'fonts.google.com',
             },

@@ -42,9 +42,19 @@ const getFontDeclarations = (pages) => {
       const serviceMap = map.get(service) || new Map();
       map.set(service, serviceMap);
 
-      const variant = [fontStyle === 'italic' ? 1 : 0, fontWeight || 400];
+      // Example: [1, 700] for bold + italic.
+      const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
+
       const fontObj = serviceMap.get(family) || { family, variants: [variant] };
-      fontObj.variants = [...new Set([...fontObj.variants, variant])];
+      const fontObjHasVariant = fontObj.variants.some(
+        (val) => val[0] === variant[0] && val[1] === variant[1]
+      );
+
+      // Keeps list unique.
+      if (!fontObjHasVariant) {
+        fontObj.variants.push(variant);
+      }
+
       serviceMap.set(family, fontObj);
     }
   }
