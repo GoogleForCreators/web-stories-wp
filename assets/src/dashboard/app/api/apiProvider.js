@@ -62,12 +62,25 @@ export function reshapeStoryObject(editStoryURL) {
   };
 }
 
-export function reshapeTemplateObject({ id, title, pages }) {
+export function reshapeTemplateObject({
+  id,
+  title,
+  tags,
+  colors,
+  createdBy,
+  description,
+  pages,
+}) {
   return {
     id,
     title,
+    createdBy,
+    description,
     status: 'template',
     modified: moment('2020-04-07'),
+    metadata: [...tags, ...colors].map((value) =>
+      typeof value === 'object' ? { ...value } : { label: value }
+    ),
     pages,
     centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}`,
     bottomTargetAction: () => {},
@@ -82,7 +95,8 @@ export default function ApiProvider({ children }) {
   const fetchStories = useCallback(
     async ({
       status = STORY_STATUSES[0].value,
-      orderby = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+      sortDirection,
       searchTerm,
     }) => {
       if (!api.stories) {
@@ -93,9 +107,9 @@ export default function ApiProvider({ children }) {
         status,
         context: 'edit',
         search: searchTerm || undefined,
-        orderby,
+        orderby: sortOption,
         per_page: perPage,
-        order: ORDER_BY_SORT[orderby],
+        order: sortDirection || ORDER_BY_SORT[sortOption],
       };
 
       try {

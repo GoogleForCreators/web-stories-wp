@@ -80,6 +80,7 @@ const SecondaryButton = styled(StyledButton)`
     text-shadow: ${({ theme }) => theme.text.shadow};
   }
 `;
+
 const StyledChildren = styled.span`
   margin: 0 auto;
   padding: 0;

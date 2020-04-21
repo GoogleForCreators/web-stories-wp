@@ -32,34 +32,40 @@ import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
+const StyledPopoverMenu = styled(PopoverMenu)`
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 export const DropdownContainer = styled.div`
-  position: static;
+  position: relative;
 `;
 
 const Label = styled.label`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 export const InnerDropdown = styled.button`
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
+  height: ${({ theme, type }) => theme.dropdown[type].height};
+  width: auto;
+  padding: 10px 16px;
+  margin: 0;
   background-color: ${({ theme, type, isOpen }) =>
     theme.dropdown[type][isOpen ? 'activeBackground' : 'background']};
   border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius};
   border: ${({ theme, type }) => theme.dropdown[type].border};
   color: ${({ theme }) => theme.colors.gray600};
   cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
-  display: flex;
   font-family: ${({ theme }) => theme.fonts.dropdown.family};
   font-size: ${({ theme }) => theme.fonts.dropdown.size};
   font-weight: ${({ theme }) => theme.fonts.dropdown.weight};
-  height: ${({ theme, type }) => theme.dropdown[type].height};
-  margin: 0;
-  justify-content: space-between;
   letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight};
-  padding: 10px 16px;
-  width: 100%;
 
   &:hover {
     background-color: ${({ theme, type }) =>
@@ -171,7 +177,7 @@ const Dropdown = ({
           }}
         />
       ) : (
-        <PopoverMenu
+        <StyledPopoverMenu
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}

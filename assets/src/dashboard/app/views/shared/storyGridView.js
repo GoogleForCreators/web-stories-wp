@@ -43,10 +43,10 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
   }
 `;
 
