@@ -20,7 +20,7 @@
 import getStoryMarkup from '../getStoryMarkup';
 
 describe('getStoryMarkup', () => {
-  it('should generate expected story markupL', () => {
+  it('should generate expected story markup', () => {
     const story = {
       storyId: 1,
       title: 'Story!',

@@ -306,6 +306,7 @@ class Story_Post_Type {
 
 		$preview_query_args = [
 			'preview_id'    => $story_id,
+			// Leveraging the default WP post preview logic.
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 		wp_localize_script(
