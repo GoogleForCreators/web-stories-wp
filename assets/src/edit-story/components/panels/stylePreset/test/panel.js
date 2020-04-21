@@ -42,7 +42,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
       ...extraStateProps,
       story: {
         stylePresets: {
-          ...{ fillColors: [], textColors: [] },
+          ...{ fillColors: [], textColors: [], textStyles: [] },
           ...extraStylePresets,
         },
       },
@@ -78,7 +78,7 @@ describe('Panels/StylePreset', () => {
 
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
-    const element = getByText('Style presets');
+    const element = getByText('Presets');
     expect(element).toBeDefined();
   });
 
@@ -136,7 +136,7 @@ describe('Panels/StylePreset', () => {
     expect(textColorGroupLabel).toBeNull();
   });
 
-  it('should allow deleting the relevant preset', () => {
+  it('should allow deleting the relevant color preset', () => {
     const extraStylePresets = {
       textColors: [TEST_COLOR],
       fillColors: [TEST_COLOR],
@@ -145,19 +145,23 @@ describe('Panels/StylePreset', () => {
     const editButton = getByLabelText(EDIT_BUTTON_LABEL);
     fireEvent.click(editButton);
 
-    const deletePreset = getByLabelText('Delete preset');
+    const deletePreset = getByLabelText('Delete color preset');
     expect(deletePreset).toBeDefined();
 
     fireEvent.click(deletePreset);
     expect(updateStory).toHaveBeenCalledTimes(1);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        stylePresets: { fillColors: [TEST_COLOR], textColors: [] },
+        stylePresets: {
+          fillColors: [TEST_COLOR],
+          textColors: [],
+          textStyles: [],
+        },
       },
     });
   });
 
-  it('should allow applying presets for shapes', () => {
+  it('should allow applying color presets for shapes', () => {
     const extraStylePresets = {
       fillColors: [TEST_COLOR],
     };
@@ -174,18 +178,20 @@ describe('Panels/StylePreset', () => {
       extraStateProps
     );
 
-    const applyPreset = getByLabelText('Apply preset');
+    const applyPreset = getByLabelText('Apply color preset');
     expect(applyPreset).toBeDefined();
 
     fireEvent.click(applyPreset);
     expect(updateElementsById).toHaveBeenCalledTimes(1);
     expect(updateElementsById).toHaveBeenCalledWith({
       elementIds: ['1'],
-      properties: expect.any(Function),
+      properties: {
+        backgroundColor: TEST_COLOR,
+      },
     });
   });
 
-  it('should allow applying presets for text', () => {
+  it('should allow applying color presets for text', () => {
     const extraStylePresets = {
       textColors: [TEST_COLOR],
     };
@@ -193,7 +199,7 @@ describe('Panels/StylePreset', () => {
       extraStylePresets
     );
 
-    const applyPreset = getByLabelText('Apply preset');
+    const applyPreset = getByLabelText('Apply color preset');
     expect(applyPreset).toBeDefined();
 
     fireEvent.click(applyPreset);

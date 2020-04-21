@@ -190,7 +190,7 @@ function StylePresetPanel() {
         stylePresets={stylePresets}
         getEventHandlers={getEventHandlers}
         isText={isText}
-        textContent={isText && selectedElements[0].content}
+        textContent={isText ? selectedElements[0].content : ''}
       />
       <Resize />
     </Panel>
