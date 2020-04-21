@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -30,19 +30,6 @@ import getStoryMarkup from '../../../../utils/getStoryMarkup';
 jest.mock('../../../../utils/getStoryMarkup', () => jest.fn());
 
 function setup(args) {
-  let result = {};
-  function TestButton() {
-    result = Object.assign(result, useAutoSave(args));
-    return (
-      <button
-        onClick={() => {
-          result.autoSave();
-        }}
-      >
-        {'AutoSave'}
-      </button>
-    );
-  }
   const configValue = {
     metadata: 'meta',
   };
@@ -50,16 +37,17 @@ function setup(args) {
   const apiContextValue = {
     actions: { autoSaveById },
   };
-  const { getByText } = render(
+  const wrapper = (params) => (
     <ConfigContext.Provider value={configValue}>
       <APIContext.Provider value={apiContextValue}>
-        <TestButton />
+        {params.children}
       </APIContext.Provider>
     </ConfigContext.Provider>
   );
+  const { result } = renderHook(() => useAutoSave(args), { wrapper });
   return {
+    autoSave: result.current.autoSave,
     autoSaveById,
-    getByText,
   };
 }
 
@@ -97,7 +85,7 @@ describe('useAutoSave', () => {
         ],
       },
     ];
-    const { autoSaveById, getByText } = setup({
+    const { autoSave, autoSaveById } = setup({
       storyId: 1,
       story,
       pages,
@@ -109,8 +97,9 @@ describe('useAutoSave', () => {
       },
     }));
 
-    const button = getByText('AutoSave');
-    fireEvent.click(button);
+    act(() => {
+      autoSave();
+    });
     expect(autoSaveById).toHaveBeenCalledTimes(1);
 
     const expected = {
