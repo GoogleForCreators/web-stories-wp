@@ -95,13 +95,18 @@ describe('Panels/StylePreset', () => {
     const extraStylePresets = {
       textColors: [TEST_COLOR],
     };
-    const { getByLabelText } = setupPanel(extraStylePresets);
+    const { getByLabelText, queryByLabelText } = setupPanel(extraStylePresets);
     const editButton = getByLabelText(EDIT_BUTTON_LABEL);
     expect(editButton).toBeDefined();
 
     fireEvent.click(editButton);
     const exitEditModeButton = getByLabelText('Exit edit mode');
     expect(exitEditModeButton).toBeDefined();
+    expect(queryByLabelText(EDIT_BUTTON_LABEL)).toBeNull();
+
+    fireEvent.click(exitEditModeButton);
+    const newEditButton = getByLabelText(EDIT_BUTTON_LABEL);
+    expect(newEditButton).toBeDefined();
   });
 
   it('should display correct label for Text colors', () => {
