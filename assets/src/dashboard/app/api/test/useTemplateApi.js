@@ -29,7 +29,7 @@ describe('reshapeTemplateObject', () => {
     id: 1,
     title: 'Beauty',
     createdBy: 'Google AMP',
-    modified: '2020-04-21',
+    modified: '2020-04-21T07:00:00.000Z',
     tags: ['Health', 'Bold', 'Joy'],
     colors: [
       { label: 'Pink', color: '#f3d9e1' },
@@ -47,7 +47,9 @@ describe('reshapeTemplateObject', () => {
 
   it('should reshape template object with Moment date', () => {
     const reshapedObject = reshapeTemplateObject(true)(templateData);
-    expect(reshapedObject.modified).toMatchObject(moment('2020-04-21'));
+    expect(reshapedObject.modified).toMatchObject(
+      moment('2020-04-21T07:00:00.000Z')
+    );
   });
 
   it('should combine template tags and colors into metadata', () => {
