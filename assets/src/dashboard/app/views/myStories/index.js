@@ -28,11 +28,12 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab } from '../../../components';
+import { FloatingTab, MainNavBar } from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
+  SORT_DIRECTION,
 } from '../../../constants';
 import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
@@ -52,9 +53,9 @@ import {
 // TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
 
 const FilterContainer = styled.fieldset`
-  padding: 0 20px 20px 0;
-  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
+  padding-bottom: 20px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
     & > label span {
@@ -86,6 +87,9 @@ function MyStories() {
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
+  const [currentListSortDirection, setListSortDirection] = useState(
+    SORT_DIRECTION.ASC
+  );
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
@@ -96,11 +100,19 @@ function MyStories() {
 
   useEffect(() => {
     fetchStories({
-      orderby: currentStorySort,
+      sortOption: currentStorySort,
       searchTerm: typeaheadValue,
+      sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
       status,
     });
-  }, [currentStorySort, fetchStories, status, typeaheadValue]);
+  }, [
+    viewStyle,
+    currentListSortDirection,
+    currentStorySort,
+    fetchStories,
+    status,
+    typeaheadValue,
+  ]);
 
   const filteredStories = useMemo(() => {
     return stories.filter((story) => {
@@ -145,11 +157,19 @@ function MyStories() {
           />
         );
       case VIEW_STYLE.LIST:
-        return <StoryListView filteredStories={filteredStories} />;
+        return (
+          <StoryListView
+            filteredStories={filteredStories}
+            storySort={currentStorySort}
+            sortDirection={currentListSortDirection}
+            handleSortChange={setCurrentStorySort}
+            handleSortDirectionChange={setListSortDirection}
+          />
+        );
       default:
         return null;
     }
-  }, [filteredStories, viewStyle]);
+  }, [currentStorySort, filteredStories, viewStyle, currentListSortDirection]);
 
   const BodyContent = useMemo(() => {
     if (filteredStoriesCount > 0) {
@@ -192,6 +212,7 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
+          <MainNavBar />
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
             searchPlaceholder={__('Search Stories', 'web-stories')}

@@ -20,25 +20,24 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Menu, { MenuProps } from './menu';
-import PopoverCard from './popoverCard';
-import PopoverStandard from './popoverStandard';
+import Popover from './popover';
+import Shadow from './shadow';
 
-const PopoverMenu = ({ className, ...props }) => (
-  <PopoverStandard isOpen={props.isOpen} className={className}>
-    <Menu {...props} />
-  </PopoverStandard>
-);
-PopoverMenu.propTypes = {
+const PopoverStandard = ({ className, children, isOpen }) => {
+  return (
+    <Popover isOpen={isOpen} className={className}>
+      <Shadow />
+      {children}
+    </Popover>
+  );
+};
+PopoverStandard.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   className: PropTypes.string,
-  ...MenuProps,
+  isOpen: PropTypes.bool.isRequired,
 };
 
-export const PopoverMenuCard = (props) => (
-  <PopoverCard isOpen={props.isOpen}>
-    <Menu {...props} />
-  </PopoverCard>
-);
-PopoverMenuCard.propTypes = MenuProps;
-
-export default PopoverMenu;
+export default PopoverStandard;

@@ -30,6 +30,7 @@ export const Table = styled.table`
 export const TableBody = styled.tbody``;
 
 export const TableHeader = styled.thead`
+  background: ${({ theme }) => theme.colors.gray50};
   border-top: ${({ theme }) => theme.table.border};
   border-bottom: ${({ theme }) => theme.table.border};
 `;
@@ -41,6 +42,14 @@ export const TableHeaderCell = styled.th`
   text-align: left;
 `;
 
+export const TablePreviewHeaderCell = styled(TableHeaderCell)`
+  padding-right: 0;
+`;
+
+export const TableTitleHeaderCell = styled(TableHeaderCell)`
+  padding-left: 0;
+`;
+
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
@@ -49,6 +58,7 @@ export const TableCell = styled.td`
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
+  line-height: ${({ theme }) => theme.table.headerContentSize}px;
 `;
 
 export const TablePreviewCell = styled(TableCell)`

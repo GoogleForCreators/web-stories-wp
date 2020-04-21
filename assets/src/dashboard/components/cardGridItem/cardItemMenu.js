@@ -28,7 +28,7 @@ import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
 import { ReactComponent as MoreVerticalSvg } from '../../icons/moreVertical.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import PopoverMenu from '../popoverMenu';
+import { PopoverMenuCard } from '../popoverMenu';
 
 export const MoreVerticalButton = styled.button`
   border: none;
@@ -48,13 +48,7 @@ const MenuContainer = styled.div`
   position: relative;
   align-self: flex-start;
   text-align: right;
-  flex-grow: 1;
   margin-top: 12px;
-
-  .grid-story-popover-menu {
-    right: 0;
-    top: 0;
-  }
 `;
 
 export default function CardItemMenu({
@@ -71,18 +65,19 @@ export default function CardItemMenu({
   }, [contextMenuId, onMoreButtonSelected, story.id]);
   useFocusOut(containerRef, handleFocusOut, [contextMenuId]);
 
+  const isPopoverMenuOpen = contextMenuId === story.id;
+
   return (
     <MenuContainer ref={containerRef}>
       <MoreVerticalButton
-        menuOpen={contextMenuId === story.id}
+        menuOpen={isPopoverMenuOpen}
         aria-label="More Options"
-        onClick={() => onMoreButtonSelected(story.id)}
+        onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
         <MoreVerticalSvg width={4} height={20} />
       </MoreVerticalButton>
-      <PopoverMenu
-        className="grid-story-popover-menu"
-        isOpen={contextMenuId === story.id}
+      <PopoverMenuCard
+        isOpen={isPopoverMenuOpen}
         framelessButton
         onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
         items={STORY_CONTEXT_MENU_ITEMS}

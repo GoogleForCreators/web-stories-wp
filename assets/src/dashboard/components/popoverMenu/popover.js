@@ -17,28 +17,22 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Menu, { MenuProps } from './menu';
-import PopoverCard from './popoverCard';
-import PopoverStandard from './popoverStandard';
+import { Z_INDEX } from '../../constants';
 
-const PopoverMenu = ({ className, ...props }) => (
-  <PopoverStandard isOpen={props.isOpen} className={className}>
-    <Menu {...props} />
-  </PopoverStandard>
-);
-PopoverMenu.propTypes = {
+const Popover = styled.div`
+  position: absolute;
+  z-index: ${Z_INDEX.POPOVER_MENU};
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+`;
+
+Popover.propTypes = {
   className: PropTypes.string,
-  ...MenuProps,
+  isOpen: PropTypes.bool.isRequired,
 };
 
-export const PopoverMenuCard = (props) => (
-  <PopoverCard isOpen={props.isOpen}>
-    <Menu {...props} />
-  </PopoverCard>
-);
-PopoverMenuCard.propTypes = MenuProps;
-
-export default PopoverMenu;
+export default Popover;
