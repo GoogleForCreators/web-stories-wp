@@ -66,11 +66,13 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-function hasStylePreset({ fontFamily, backgroundTextMode }) {
+function hasStylePreset({ fontFamily, backgroundTextMode, padding }) {
   const defaultFont = 'Roboto';
   return (
     defaultFont !== fontFamily ||
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE ||
+    padding.horizontal !== 0 ||
+    padding.vertical !== 0
   );
 }
 
