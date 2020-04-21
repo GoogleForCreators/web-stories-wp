@@ -81,7 +81,10 @@ export const _default = () => {
           }}
           isLoading={isLoading}
           canLoadMore={!isAllDataLoaded}
-          loadingMessage={text('loadingMessage', 'Data is loading')}
+          loadingMessage={text(
+            'loadingMessage',
+            'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.'
+          )}
           allDataLoadedMessage={text(
             'allDataLoadedMessage',
             'all data is loaded'

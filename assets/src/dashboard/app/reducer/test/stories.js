@@ -21,6 +21,7 @@ import storyReducer, { ACTION_TYPES } from '../stories';
 
 describe('storyReducer', () => {
   const initialState = {
+    isError: false,
     isLoading: false,
     stories: {},
     storiesOrderById: [],
@@ -90,6 +91,36 @@ describe('storyReducer', () => {
       totalStories: 8,
       totalPages: 2,
       allPagesFetched: true,
+    });
+  });
+
+  it(`should update isLoading when ${ACTION_TYPES.LOADING_STORIES} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.LOADING_STORIES,
+        payload: true,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isLoading: true,
+    });
+  });
+
+  it(`should update isError when ${ACTION_TYPES.FETCH_STORIES_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_STORIES_FAILURE,
+        payload: true,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isError: true,
     });
   });
 });
