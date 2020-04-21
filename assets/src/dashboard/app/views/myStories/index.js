@@ -39,6 +39,7 @@ import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
+import clamp from '../../../utils/clamp';
 import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import {
@@ -84,7 +85,8 @@ function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const [currentPageToFetch, setCurrentPageToFetch] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [currentStorySort, setCurrentStorySort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
@@ -97,7 +99,13 @@ function MyStories() {
   });
   const {
     actions: { fetchStories },
-    state: { allPagesFetched, stories, storiesOrderById, totalStories },
+    state: {
+      allPagesFetched,
+      stories,
+      storiesOrderById,
+      totalStories,
+      totalPages,
+    },
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -106,17 +114,29 @@ function MyStories() {
       searchTerm: typeaheadValue,
       sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
       status,
-      page: currentPageToFetch,
+      page: currentPage,
     });
   }, [
     viewStyle,
     currentListSortDirection,
-    currentPageToFetch,
+    currentPage,
     currentStorySort,
     fetchStories,
     status,
     typeaheadValue,
   ]);
+
+  const setCurrentPageClamped = useCallback(
+    (v) => {
+      const pageRange = [1, totalPages];
+      setCurrentPage(
+        typeof v === 'function'
+          ? (current) => clamp(v(current), pageRange)
+          : clamp(v, pageRange)
+      );
+    },
+    [totalPages]
+  );
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
@@ -127,21 +147,21 @@ function MyStories() {
   const handleNewStorySort = useCallback(
     (sort) => {
       setCurrentStorySort(sort);
-      setCurrentPageToFetch(1);
+      setCurrentPageClamped(1);
     },
-    [setCurrentStorySort, setCurrentPageToFetch]
+    [setCurrentStorySort, setCurrentPageClamped]
   );
 
   const handleNewPageRequest = useCallback(() => {
-    setCurrentPageToFetch(currentPageToFetch + 1);
-  }, [currentPageToFetch, setCurrentPageToFetch]);
+    setCurrentPageClamped(currentPage + 1);
+  }, [currentPage, setCurrentPageClamped]);
 
   const handleTypeaheadChange = useCallback(
     (newTypeaheadValue) => {
-      setCurrentPageToFetch(1);
+      setCurrentPageClamped(1);
       setTypeaheadValue(newTypeaheadValue);
     },
-    [setCurrentPageToFetch, setTypeaheadValue]
+    [setCurrentPageClamped, setTypeaheadValue]
   );
 
   const handleViewStyleBarButtonSelected = useCallback(() => {

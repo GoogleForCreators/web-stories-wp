@@ -65,7 +65,7 @@ function storyReducer(state, action) {
         stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
         totalPages: action.payload.totalPages,
         totalStories: action.payload.totalStories,
-        allPagesFetched: action.payload.page === action.payload.totalPages,
+        allPagesFetched: action.payload.page >= action.payload.totalPages,
       };
     }
 
