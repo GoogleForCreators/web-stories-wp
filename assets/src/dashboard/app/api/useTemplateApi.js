@@ -96,7 +96,7 @@ const useTemplateApi = (dataAdapter, config) => {
     [fetchExternalTemplates]
   );
 
-  const bookmarkTemplate = useCallback((templateId, shouldBookmark) => {
+  const bookmarkTemplateById = useCallback((templateId, shouldBookmark) => {
     if (shouldBookmark) {
       // api call to bookmark template
       return Promise.resolve({ success: true });
@@ -108,7 +108,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const api = useMemo(
     () => ({
-      bookmarkTemplate,
+      bookmarkTemplateById,
       createStoryFromTemplatePages,
       fetchBookmarkedTemplates,
       fetchSavedTemplates,
@@ -118,7 +118,7 @@ const useTemplateApi = (dataAdapter, config) => {
       fetchExternalTemplateById,
     }),
     [
-      bookmarkTemplate,
+      bookmarkTemplateById,
       createStoryFromTemplatePages,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
