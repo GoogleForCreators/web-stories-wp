@@ -50,14 +50,22 @@ function storyReducer(state, action) {
 
     case ACTION_TYPES.FETCH_STORIES_SUCCESS: {
       const fetchedStoriesById = action.payload.stories.map(({ id }) => id);
+
       const combinedStoryIds =
         action.payload.page === 1
           ? fetchedStoriesById
           : [...state.storiesOrderById, ...fetchedStoriesById];
 
-      const uniqueStoryIds = combinedStoryIds.filter((value, index, self) => {
-        return self.indexOf(value) === index;
-      });
+      // we want to make sure that pagination is kept intact regardless of page number.
+      // we are using infinite scroll, not traditional pagination.
+      // this means we need to append our new stories to the bottom of our already existing stories.
+      // when we combine existing stories with the new ones we need to make sure we're not duplicating anything.
+      const uniqueStoryIds = combinedStoryIds.filter(
+        (storyId, index, storyIdsArray) => {
+          return storyIdsArray.indexOf(storyId) === index;
+        }
+      );
+
       return {
         ...state,
         isError: false,
