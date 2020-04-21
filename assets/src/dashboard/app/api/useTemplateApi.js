@@ -55,6 +55,7 @@ const useTemplateApi = (dataAdapter, config) => {
   };
 
   const fetchSavedTemplates = useCallback((filters) => {
+    // Saved Templates = Bookmarked Templates + My Templates
     setTemplates([]);
     return Promise.resolve([]);
   }, []);
