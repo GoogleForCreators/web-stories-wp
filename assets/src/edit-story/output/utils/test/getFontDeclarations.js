@@ -71,7 +71,7 @@ describe('getFontDeclarations', () => {
 
     expect(getFontDeclarations(pages)).toHaveLength(1);
     expect(getFontDeclarations(pages)).toContain(
-      'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%2Cwght%401%2C&family=Lato'
+      'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato'
     );
   });
 });

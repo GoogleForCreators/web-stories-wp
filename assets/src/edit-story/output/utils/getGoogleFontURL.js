@@ -35,7 +35,7 @@ function getGoogleFontURL(fonts) {
         if (fontStyle === 1 && !acc.includes('ital')) {
           acc.push('ital');
         }
-        if (fontWeight !== 400 && !acc.includes('wght')) {
+        if (fontWeight && fontWeight !== 400 && !acc.includes('wght')) {
           acc.push('wght');
         }
         return acc;

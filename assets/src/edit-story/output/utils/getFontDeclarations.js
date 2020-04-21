@@ -42,7 +42,7 @@ const getFontDeclarations = (pages) => {
       const serviceMap = map.get(service) || new Map();
       map.set(service, serviceMap);
 
-      const variant = [fontStyle === 'italic' ? 1 : 0, fontWeight];
+      const variant = [fontStyle === 'italic' ? 1 : 0, fontWeight || 400];
       const fontObj = serviceMap.get(family) || { family, variants: [variant] };
       fontObj.variants = [...new Set([...fontObj.variants, variant])];
       serviceMap.set(family, fontObj);
