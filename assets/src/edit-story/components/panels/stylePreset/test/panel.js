@@ -52,7 +52,13 @@ function setupPanel(extraStylePresets, extraStateProps) {
     },
     actions: { updateStory, updateElementsById },
   };
-  const { getByText, queryByLabelText, getByLabelText, queryByText } = render(
+  const {
+    getByText,
+    queryByLabelText,
+    getByLabelText,
+    queryByText,
+    queryAllByLabelText,
+  } = render(
     <ThemeProvider theme={theme}>
       <StoryContext.Provider value={storyContextValue}>
         <StylePresetPanel />
@@ -64,6 +70,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
     queryByText,
     getByLabelText,
     queryByLabelText,
+    queryAllByLabelText,
     updateStory,
     updateElementsById,
   };
@@ -291,23 +298,25 @@ describe('Panels/StylePreset', () => {
 
     it('should allow deleting the relevant color preset', () => {
       const extraStylePresets = {
-        textColors: [TEST_COLOR],
+        textColors: [TEST_COLOR, TEST_COLOR_2],
         fillColors: [TEST_COLOR],
       };
-      const { getByLabelText, updateStory } = setupPanel(extraStylePresets);
+      const { getByLabelText, queryAllByLabelText, updateStory } = setupPanel(
+        extraStylePresets
+      );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
-      const deletePreset = getByLabelText('Delete color preset');
-      expect(deletePreset).toBeDefined();
+      const deletePresets = queryAllByLabelText('Delete color preset');
+      expect(deletePresets[0]).toBeDefined();
 
-      fireEvent.click(deletePreset);
+      fireEvent.click(deletePresets[0]);
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
             fillColors: [TEST_COLOR],
-            textColors: [],
+            textColors: [TEST_COLOR_2],
             textStyles: [],
           },
         },
