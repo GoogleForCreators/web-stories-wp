@@ -93,9 +93,9 @@ describe('Panels/StylePreset', () => {
     },
   };
   const STYLE_PRESET = {
-    color: [TEST_COLOR_2],
+    color: TEST_COLOR_2,
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-    backgroundColor: [TEST_COLOR],
+    backgroundColor: TEST_COLOR,
   };
   const DEFAULT_FONT_FAMILY = 'Roboto';
 
@@ -374,7 +374,4 @@ describe('Panels/StylePreset', () => {
       });
     });
   });
-
-  describe('Panels/StylePreset/Styles', () => {});
-  // @TODO More tests to be added once the feature is complete.
 });

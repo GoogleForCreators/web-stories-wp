@@ -112,7 +112,7 @@ function Presets({
   getEventHandlers,
   isEditMode,
   isText,
-  textContent,
+  textContent = 'Text',
 }) {
   const [activeColorIndex, setActiveColorIndex] = useState(null);
   const [activeStyleIndex, setActiveStyleIndex] = useState(null);
