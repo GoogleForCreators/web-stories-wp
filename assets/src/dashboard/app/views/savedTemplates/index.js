@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
-export { default as MyStoriesView } from './myStories';
-export { default as TemplatesGalleryView } from './templates/index';
-export { default as TemplateDetail } from './templates/detail';
-export { default as SavedTemplatesView } from './savedTemplates';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { ViewHeader } from '../../../components';
+
+function SavedTemplates() {
+  return (
+    <div>
+      <ViewHeader>{__('Saved Templates', 'web-stories')}</ViewHeader>
+    </div>
+  );
+}
+
+export default SavedTemplates;
