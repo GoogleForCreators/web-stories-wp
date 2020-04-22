@@ -34,6 +34,8 @@ import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
+  border: none;
+  background: transparent;
   width: 30px;
   height: 28px;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
@@ -41,10 +43,7 @@ const buttonCSS = css`
   padding: 0;
 `;
 
-const AddColorPresetButton = styled.span.attrs({
-  role: 'button',
-  tabIndex: 0,
-})`
+const AddColorPresetButton = styled.button`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -52,10 +51,7 @@ const AddColorPresetButton = styled.span.attrs({
   }
 `;
 
-const ExitEditMode = styled.span.attrs({
-  role: 'button',
-  tabIndex: 0,
-})`
+const ExitEditMode = styled.button`
   ${buttonCSS}
   color: ${({ theme }) => theme.colors.fg.v1};
   font-size: 12px;
@@ -64,10 +60,7 @@ const ExitEditMode = styled.span.attrs({
   height: initial;
 `;
 
-const EditModeButton = styled.span.attrs({
-  role: 'button',
-  tabIndex: 0,
-})`
+const EditModeButton = styled.button`
   ${buttonCSS}
   height: 20px;
   svg {
@@ -86,9 +79,6 @@ function PresetsHeader({
   const hasPresets =
     fillColors.length > 0 || textColors.length > 0 || textStyles.length > 0;
 
-  const shouldTriggerAction = (evt) =>
-    evt.keyCode === 'Enter' || evt.keyCode === 'Space';
-
   const getActions = () => {
     return !isEditMode ? (
       <>
@@ -98,12 +88,6 @@ function PresetsHeader({
               evt.stopPropagation();
               setIsEditMode(true);
             }}
-            onKeyDown={(evt) => {
-              if (shouldTriggerAction(evt)) {
-                evt.preventDefault();
-                setIsEditMode(true);
-              }
-            }}
             aria-label={__('Edit presets', 'web-stories')}
           >
             <Edit />
@@ -111,11 +95,6 @@ function PresetsHeader({
         )}
         <AddColorPresetButton
           onClick={handleAddColorPreset}
-          onKeyDown={(evt) => {
-            if (shouldTriggerAction(evt)) {
-              handleAddColorPreset(evt);
-            }
-          }}
           aria-label={__('Add preset', 'web-stories')}
         >
           <Add />
@@ -127,12 +106,6 @@ function PresetsHeader({
           evt.stopPropagation();
           setIsEditMode(false);
         }}
-        onKeyDown={(evt) => {
-          if (shouldTriggerAction(evt)) {
-            evt.preventDefault();
-            setIsEditMode(false);
-          }
-        }}
         aria-label={__('Exit edit mode', 'web-stories')}
       >
         {__('Exit', 'web-stories')}
@@ -142,7 +115,6 @@ function PresetsHeader({
 
   return (
     <PanelTitle
-      isPrimary
       secondaryAction={getActions()}
       canCollapse={!isEditMode && hasPresets}
     >

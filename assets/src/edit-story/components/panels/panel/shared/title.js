@@ -63,11 +63,9 @@ const Header = styled.h2`
   user-select: none;
 `;
 
-const HeaderButton = styled.button.attrs({ type: 'button' })`
+const HeaderButton = styled.div.attrs({ role: 'button' })`
   color: inherit;
-  border: 0;
   padding: 10px 20px;
-  background: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,12 +85,15 @@ const HeaderActions = styled.div`
   align-items: center;
 `;
 
-const Collapse = styled.span`
+const Collapse = styled.button`
+  border: none;
+  background: transparent;
   color: inherit;
   width: 28px;
   height: 28px;
   display: flex; /* removes implicit line-height padding from child element */
-
+  padding: 0;
+  cursor: pointer;
   svg {
     width: 28px;
     height: 28px;
@@ -155,17 +156,21 @@ function Title({
           handleDoubleClick={resetHeight}
         />
       )}
-      <HeaderButton
-        onClick={isCollapsed ? expand : collapse}
-        aria-label={titleLabel}
-        aria-expanded={!isCollapsed}
-        aria-controls={panelContentId}
-      >
+      <HeaderButton onClick={isCollapsed ? expand : collapse}>
         <Heading>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
-            <Collapse isCollapsed={isCollapsed}>
+            <Collapse
+              isCollapsed={isCollapsed}
+              onClick={(evt) => {
+                evt.stopPropagation();
+                isCollapsed ? expand() : collapse();
+              }}
+              aria-label={titleLabel}
+              aria-expanded={!isCollapsed}
+              aria-controls={panelContentId}
+            >
               <Arrow />
             </Collapse>
           )}
