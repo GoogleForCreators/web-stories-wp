@@ -19,7 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, useRef, useLayoutEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,13 +32,10 @@ import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
-import { useKeyDownEffect } from '../../keyboard';
+import PresetGroup from './presetGroup';
 import { generatePresetStyle } from './utils';
 
-const PRESET_HEIGHT = 35;
 const REMOVE_ICON_SIZE = 18;
-const COLORS_PER_ROW = 6;
-const STYLES_PER_ROW = 3;
 
 const presetCSS = css`
   display: inline-block;
@@ -72,30 +68,6 @@ const Style = styled.button`
   border-radius: 4px;
 `;
 
-const PresetGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
-
-const ButtonWrapper = styled.div`
-  flex-basis: ${100 / COLORS_PER_ROW}%;
-  height: ${PRESET_HEIGHT}px;
-`;
-
-const StyleButtonWrapper = styled.div`
-  flex-basis: ${100 / STYLES_PER_ROW}%;
-  height: ${PRESET_HEIGHT}px;
-`;
-
-const PresetGroupLabel = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 10px;
-  line-height: 12px;
-  text-transform: uppercase;
-  padding: 6px 0;
-`;
-
 const TextWrapper = styled.span`
   text-align: left;
   line-height: 1.3;
@@ -114,70 +86,7 @@ function Presets({
   isText,
   textContent = 'Text',
 }) {
-  const [activeColorIndex, setActiveColorIndex] = useState(null);
-  const [activeStyleIndex, setActiveStyleIndex] = useState(null);
-  const colorsRef = useRef(null);
-  const stylesRef = useRef(null);
   const { fillColors, textColors, textStyles } = stylePresets;
-
-  const getIndexDiff = (key, rowLength) => {
-    switch (key) {
-      case 'ArrowUp':
-        return -rowLength;
-      case 'ArrowDown':
-        return rowLength;
-      case 'ArrowLeft':
-        return -1;
-      case 'ArrowRight':
-        return 1;
-      default:
-        return 0;
-    }
-  };
-
-  useLayoutEffect(() => {
-    if (colorsRef.current && null !== activeColorIndex) {
-      colorsRef.current.querySelector('[tabindex="0"]').focus();
-    }
-  }, [activeColorIndex]);
-
-  useLayoutEffect(() => {
-    if (stylesRef.current && null !== activeStyleIndex) {
-      stylesRef.current.querySelector('[tabindex="0"]').focus();
-    }
-  }, [activeStyleIndex]);
-
-  useKeyDownEffect(
-    colorsRef,
-    { key: ['up', 'down', 'left', 'right'] },
-    ({ key }) => {
-      const maxIndex = isText ? textColors.length - 1 : fillColors.length - 1;
-      if (colorsRef.current) {
-        const diff = getIndexDiff(key, COLORS_PER_ROW);
-        const newIndex = Math.max(
-          0,
-          Math.min(maxIndex, (activeColorIndex ?? 0) + diff)
-        );
-        setActiveColorIndex(newIndex);
-      }
-    },
-    [activeColorIndex]
-  );
-
-  useKeyDownEffect(
-    stylesRef,
-    { key: ['up', 'down', 'left', 'right'] },
-    ({ key }) => {
-      if (stylesRef.current) {
-        const diff = getIndexDiff(key, STYLES_PER_ROW);
-        const max = textStyles.length - 1;
-        const val = (activeStyleIndex ?? 0) + diff;
-        const newIndex = Math.max(0, Math.min(max, val));
-        setActiveStyleIndex(newIndex);
-      }
-    },
-    [activeStyleIndex]
-  );
 
   const getStylePresetText = (preset) => {
     const isHighLight =
@@ -198,66 +107,62 @@ function Presets({
   const colorPresets = isText ? textColors : fillColors;
   const hasColorPresets = colorPresets.length > 0;
 
-  const groupLabel = isText
+  const colorPresetRenderer = (color, i, activeIndex) => {
+    return (
+      <Color
+        tabIndex={activeIndex === i ? 0 : -1}
+        color={color}
+        {...getEventHandlers(color)}
+        aria-label={
+          isEditMode
+            ? __('Delete color preset', 'web-stories')
+            : __('Apply color preset', 'web-stories')
+        }
+      >
+        {isEditMode && <Remove />}
+      </Color>
+    );
+  };
+
+  const stylePresetRenderer = (style, i, activeIndex) => {
+    return (
+      <Style
+        tabIndex={activeIndex === i || (!activeIndex && i === 0) ? 0 : -1}
+        styles={generatePresetStyle(style, true)}
+        {...getEventHandlers(style)}
+        aria-label={
+          isEditMode
+            ? __('Delete style preset', 'web-stories')
+            : __('Apply style preset', 'web-stories')
+        }
+      >
+        {getStylePresetText(style)}
+        {isEditMode && <Remove />}
+      </Style>
+    );
+  };
+
+  const colorLabel = isText
     ? __('Text colors', 'web-stories')
     : __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasColorPresets ? null : '0'}>
       {hasColorPresets && (
-        <>
-          <PresetGroupLabel>{groupLabel}</PresetGroupLabel>
-          <PresetGroup ref={colorsRef}>
-            {colorPresets.map((color, i) => (
-              <ButtonWrapper key={i}>
-                <Color
-                  tabIndex={
-                    activeColorIndex === i || (!activeColorIndex && i === 0)
-                      ? 0
-                      : -1
-                  }
-                  color={color}
-                  {...getEventHandlers(color)}
-                  aria-label={
-                    isEditMode
-                      ? __('Delete color preset', 'web-stories')
-                      : __('Apply color preset', 'web-stories')
-                  }
-                >
-                  {isEditMode && <Remove />}
-                </Color>
-              </ButtonWrapper>
-            ))}
-          </PresetGroup>
-        </>
+        <PresetGroup
+          label={colorLabel}
+          itemRenderer={colorPresetRenderer}
+          presets={colorPresets}
+          type={'color'}
+        />
       )}
       {/* Only texts support style presets currently */}
       {textStyles.length > 0 && isText && (
-        <>
-          <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
-          <PresetGroup ref={stylesRef}>
-            {textStyles.map((style, i) => (
-              <StyleButtonWrapper key={i}>
-                <Style
-                  tabIndex={
-                    activeStyleIndex === i || (!activeStyleIndex && i === 0)
-                      ? 0
-                      : -1
-                  }
-                  styles={generatePresetStyle(style, true)}
-                  {...getEventHandlers(style)}
-                  aria-label={
-                    isEditMode
-                      ? __('Delete style preset', 'web-stories')
-                      : __('Apply style preset', 'web-stories')
-                  }
-                >
-                  {getStylePresetText(style)}
-                  {isEditMode && <Remove />}
-                </Style>
-              </StyleButtonWrapper>
-            ))}
-          </PresetGroup>
-        </>
+        <PresetGroup
+          label={__('Styles', 'web-stories')}
+          itemRenderer={stylePresetRenderer}
+          presets={textStyles}
+          type={'style'}
+        />
       )}
     </PanelContent>
   );
