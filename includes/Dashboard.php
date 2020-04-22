@@ -151,6 +151,7 @@ class Dashboard {
 					'newStoryURL'  => $new_story_url,
 					'editStoryURL' => $edit_story_url,
 					'pluginDir'    => WEBSTORIES_PLUGIN_DIR_URL,
+					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
 						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
 						'fonts'   => '/web-stories/v1/fonts',

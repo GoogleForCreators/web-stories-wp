@@ -32,7 +32,6 @@ import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { BUTTON_TYPES, primaryPaths, secondaryPaths } from '../../constants';
-import packageJson from '../../../../../package.json';
 import {
   AppInfo,
   Content,
@@ -58,7 +57,7 @@ export const PageContent = styled.div`
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL } = useConfig();
+  const { newStoryURL, version } = useConfig();
 
   return (
     <LeftRailContainer>
@@ -98,7 +97,7 @@ export function LeftRail() {
           {__('© Google 2020', 'web-stories')}
           <br />
           {__('Version', 'web-stories')}&nbsp;
-          {packageJson.version || '1.0'}
+          {version}
         </AppInfo>
       </Content>
     </LeftRailContainer>
