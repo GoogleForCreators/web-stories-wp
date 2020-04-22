@@ -125,7 +125,7 @@ function Presets({
       case 'ArrowUp':
         return -rowLength;
       case 'ArrowDown':
-        return COLORS_PER_ROW;
+        return rowLength;
       case 'ArrowLeft':
         return -1;
       case 'ArrowRight':
@@ -209,7 +209,7 @@ function Presets({
           <PresetGroupLabel>{groupLabel}</PresetGroupLabel>
           <PresetGroup ref={colorsRef}>
             {colorPresets.map((color, i) => (
-              <ButtonWrapper key={`color-${i}`}>
+              <ButtonWrapper key={i}>
                 <Color
                   tabIndex={
                     activeColorIndex === i || (!activeColorIndex && i === 0)
@@ -237,7 +237,7 @@ function Presets({
           <PresetGroupLabel>{__('Styles', 'web-stories')}</PresetGroupLabel>
           <PresetGroup ref={stylesRef}>
             {textStyles.map((style, i) => (
-              <StyleButtonWrapper key={`color-${i}`}>
+              <StyleButtonWrapper key={i}>
                 <Style
                   tabIndex={
                     activeStyleIndex === i || (!activeStyleIndex && i === 0)

@@ -21,6 +21,7 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import convertToCSS from '../../../utils/convertToCSS';
+import objectPick from '../../../utils/objectPick';
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
@@ -86,22 +87,14 @@ export function getTextPresets(elements, stylePresets) {
     textStyles: elements
       .filter((text) => hasStylePreset(text))
       .map((text) => {
-        const {
-          color,
-          backgroundColor,
-          backgroundTextMode,
-          padding,
-          fontFamily,
-          fontFallback,
-        } = text;
-        return {
-          color,
-          backgroundColor,
-          backgroundTextMode,
-          padding,
-          fontFamily,
-          fontFallback,
-        };
+        return objectPick(text, [
+          'color',
+          'backgroundColor',
+          'backgroundTextMode',
+          'padding',
+          'fontFamily',
+          'fontFallback',
+        ]);
       })
       .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };
