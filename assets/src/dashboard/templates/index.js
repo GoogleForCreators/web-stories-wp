@@ -24,7 +24,7 @@ export default function (config) {
   const travelStoryData = getTravelStoryData(pluginDir);
 
   const globalConfig = {
-    createdBy: 'Google AMP',
+    createdBy: 'Google Web Stories',
     modified: '2020-04-21',
   };
 

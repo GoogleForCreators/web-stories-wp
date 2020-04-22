@@ -52,12 +52,11 @@ describe('reshapeTemplateObject', () => {
     );
   });
 
-  it('should combine template tags and colors into metadata', () => {
+  it('should pass through tags and colors into reshaped object', () => {
     const reshapedObject = reshapeTemplateObject(true)(templateData);
-    expect(reshapedObject.metadata).toMatchObject([
-      { label: 'Health' },
-      { label: 'Bold' },
-      { label: 'Joy' },
+
+    expect(reshapedObject.tags).toMatchObject(['Health', 'Bold', 'Joy']);
+    expect(reshapedObject.colors).toMatchObject([
       { label: 'Pink', color: '#f3d9e1' },
       { label: 'Green', color: '#d8ddcc' },
       { label: 'Black', color: '#28292b' },

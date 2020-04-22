@@ -152,6 +152,12 @@ const theme = {
       letterSpacing: '-.01em',
       weight: 500,
     },
+    heading4: {
+      family: 'Google Sans',
+      size: '28px',
+      lineHeight: '35px',
+      weight: 500,
+    },
     body1: {
       family: "'Google Sans', sans-serif",
       size: '16px',
