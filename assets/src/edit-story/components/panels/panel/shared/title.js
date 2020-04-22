@@ -100,7 +100,14 @@ const Collapse = styled.span`
   }
 `;
 
-function Title({ children, isPrimary, isSecondary, isResizable }) {
+function Title({
+  children,
+  isPrimary,
+  isSecondary,
+  secondaryAction,
+  isResizable,
+  canCollapse = true,
+}) {
   const {
     state: { isCollapsed, height, resizeable, panelContentId },
     actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
@@ -156,9 +163,12 @@ function Title({ children, isPrimary, isSecondary, isResizable }) {
       >
         <Heading>{children}</Heading>
         <HeaderActions>
-          <Collapse isCollapsed={isCollapsed}>
-            <Arrow />
-          </Collapse>
+          {secondaryAction}
+          {canCollapse && (
+            <Collapse isCollapsed={isCollapsed}>
+              <Arrow />
+            </Collapse>
+          )}
         </HeaderActions>
       </HeaderButton>
     </Header>
@@ -173,6 +183,11 @@ Title.propTypes = {
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
+  secondaryAction: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  canCollapse: PropTypes.bool,
 };
 
 Title.defaultProps = {
