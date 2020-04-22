@@ -124,8 +124,8 @@ function Layer({ layer }) {
         {isBackground ? (
           <LockedIcon aria-label={__('Background element', 'web-stories')} />
         ) : (
-            <LayerIcon />
-          )}
+          <LayerIcon />
+        )}
       </LayerIconWrapper>
       <LayerDescription>
         {showPreview && (
