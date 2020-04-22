@@ -25,11 +25,15 @@ import { useEffect, useRef, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// TODO
 const ScrollMessage = styled.div`
-  margin: 20px 0;
-  text-align: center;
   width: 100%;
+  margin: 40px auto;
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-weight: ${({ theme }) => theme.fonts.body2.weight};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  text-align: center;
+  color: ${({ theme }) => theme.colors.gray500};
 `;
 
 const STATE = {

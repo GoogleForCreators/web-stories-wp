@@ -18,18 +18,24 @@
  * External dependencies
  */
 import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import InfiniteScroller from '../index';
+import theme from '../../../theme';
+
+const wrapper = (children) => {
+  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+};
 
 describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();
 
   it('should render a loading component by default', () => {
-    const { getByTestId } = render(
-      <InfiniteScroller handleGetData={onGetDataMock} />
+    const { getByTestId } = wrapper(
+      <InfiniteScroller canLoadMore={true} onLoadMore={onGetDataMock} />
     );
 
     const loadingComponent = getByTestId('load-more-on-scroll');
@@ -38,11 +44,11 @@ describe('InfiniteScroller', () => {
   });
 
   it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
-    const { getByText } = render(
+    const { getByText } = wrapper(
       <InfiniteScroller
-        handleGetData={onGetDataMock}
+        onLoadMore={onGetDataMock}
         allDataLoadedMessage="All data has been fetched"
-        isAllDataLoaded={true}
+        canLoadMore={false}
       />
     );
 
