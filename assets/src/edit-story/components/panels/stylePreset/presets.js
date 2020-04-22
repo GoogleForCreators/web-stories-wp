@@ -149,7 +149,7 @@ function Presets({
 
   useKeyDownEffect(
     colorsRef,
-    { key: ['up', 'down', 'left', 'right'], shift: true },
+    { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       const maxIndex = isText ? textColors.length - 1 : fillColors.length - 1;
       if (colorsRef.current) {
@@ -166,14 +166,13 @@ function Presets({
 
   useKeyDownEffect(
     stylesRef,
-    { key: ['up', 'down', 'left', 'right'], shift: true },
+    { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       if (stylesRef.current) {
         const diff = getIndexDiff(key, STYLES_PER_ROW);
-        const newIndex = Math.max(
-          0,
-          Math.min(textStyles.length - 1, (activeStyleIndex ?? 0) + diff)
-        );
+        const max = textStyles.length - 1;
+        const val = (activeStyleIndex ?? 0) + diff;
+        const newIndex = Math.max(0, Math.min(max, val));
         setActiveStyleIndex(newIndex);
       }
     },
