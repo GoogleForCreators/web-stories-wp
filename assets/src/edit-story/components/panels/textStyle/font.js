@@ -93,7 +93,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                   font: {
                     family: value,
                     service: fontObj?.service,
-                    fallback: fontObj?.fallbacks || [],
+                    fallback: fontObj?.fallback || [],
                   },
                   fontWeight: parseInt(newFontWeight),
                 },

@@ -50,7 +50,7 @@ function Wrapper({ children }) {
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
-              fallbacks: ['fallback1'],
+              fallback: ['fallback1'],
             },
           ],
         },
