@@ -53,11 +53,11 @@ function TemplateDetail() {
   const [template, setTemplate] = useState(null);
   const {
     state: {
-      queryParams: { id: templateId },
+      queryParams: { id: templateId, isLocal },
     },
   } = useRouteHistory();
   const {
-    actions: { fetchTemplate },
+    actions: { templateApi },
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -65,12 +65,19 @@ function TemplateDetail() {
       return;
     }
 
-    async function getTemplateById(id) {
-      setTemplate(await fetchTemplate(parseInt(id)));
-    }
+    const id = parseInt(templateId);
+    const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
 
-    getTemplateById(templateId);
-  }, [fetchTemplate, templateId]);
+    if (isLocalTemplate) {
+      templateApi.fetchMyTemplateById(id).then((fetchedTemplate) => {
+        setTemplate(fetchedTemplate);
+      });
+    } else {
+      templateApi.fetchExternalTemplateById(id).then((fetchedTemplate) => {
+        setTemplate(fetchedTemplate);
+      });
+    }
+  }, [templateApi, templateId, isLocal]);
 
   const { title, byLine } = useMemo(() => {
     if (!template) {

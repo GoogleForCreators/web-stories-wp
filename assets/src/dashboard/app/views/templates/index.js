@@ -70,12 +70,12 @@ function TemplatesGallery() {
   });
   const {
     state: { templates },
-    actions: { fetchTemplates },
+    actions: { templateApi },
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchTemplates();
-  }, [fetchTemplates]);
+    templateApi.fetchExternalTemplates();
+  }, [templateApi]);
 
   const filteredTemplates = useMemo(() => {
     return templates.filter((template) => {
