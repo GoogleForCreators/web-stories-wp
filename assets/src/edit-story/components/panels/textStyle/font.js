@@ -87,14 +87,13 @@ function FontControls({ selectedElements, pushUpdate }) {
                 );
 
               const fontObj = fonts.find((item) => item.value === value);
-              console.log(fontObj);
 
               pushUpdate(
                 {
                   font: {
                     family: value,
                     service: fontObj?.service,
-                    fallback: fontObj?.fallback || [],
+                    fallbacks: fontObj?.fallbacks || [],
                   },
                   fontWeight: parseInt(newFontWeight),
                 },

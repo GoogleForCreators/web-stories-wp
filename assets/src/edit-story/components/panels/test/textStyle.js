@@ -50,7 +50,7 @@ function Wrapper({ children }) {
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
-              fallback: ['fallback1'],
+              fallbacks: ['fallback1'],
             },
           ],
         },
@@ -394,7 +394,7 @@ describe('Panels/TextStyle', () => {
           font: {
             family: 'Neu Font',
             service: 'foo.bar.baz',
-            fallback: ['fallback1'],
+            fallbacks: ['fallback1'],
           },
           fontWeight: 400,
         },

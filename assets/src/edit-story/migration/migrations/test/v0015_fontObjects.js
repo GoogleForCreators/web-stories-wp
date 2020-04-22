@@ -56,7 +56,7 @@ describe('fontObjects', () => {
               font: {
                 service: 'fonts.google.com',
                 family: 'Roboto',
-                fallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+                fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               },
             },
             {
@@ -65,7 +65,7 @@ describe('fontObjects', () => {
               font: {
                 service: 'system',
                 family: 'Arial',
-                fallback: ['Verdana', 'sans-serif'],
+                fallbacks: ['Verdana', 'sans-serif'],
               },
             },
           ],

@@ -35,7 +35,7 @@ export function generateParagraphTextStyle(
   dataToFontSizeY = dataToStyleY
 ) {
   const {
-    font: { family, fallback },
+    font,
     fontSize,
     fontStyle,
     fontWeight,
@@ -48,7 +48,7 @@ export function generateParagraphTextStyle(
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,
-    fontFamily: generateFontFamily(family, fallback),
+    fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
     fontStyle,
     fontWeight,
@@ -134,7 +134,7 @@ export const getHandleKeyCommand = (setEditorState) => (
   return 'not-handled';
 };
 
-export const generateFontFamily = (fontFamily, fontFallback) => {
+export const generateFontFamily = ({ family, fallbacks }) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -143,10 +143,10 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
     'sans-serif',
   ];
   // Wrap into " since some fonts won't work without it.
-  let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
-  if (fontFallback && fontFallback.length) {
-    fontFamilyDisplay += fontFamily ? `,` : ``;
-    fontFamilyDisplay += fontFallback
+  let fontFamilyDisplay = family ? `"${family}"` : null;
+  if (fallbacks && fallbacks.length) {
+    fontFamilyDisplay += family ? `,` : ``;
+    fontFamilyDisplay += fallbacks
       .map((fallback) =>
         genericFamilyKeywords.includes(fallback) ? fallback : `"${fallback}"`
       )

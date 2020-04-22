@@ -199,7 +199,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   font: PropTypes.shape({
     family: PropTypes.string,
     service: PropTypes.string,
-    fallback: PropTypes.array,
+    fallbacks: PropTypes.array,
   }),
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,

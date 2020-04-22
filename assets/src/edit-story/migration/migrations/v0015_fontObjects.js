@@ -64,7 +64,7 @@ function updateElement({ type, fontFamily, fontFallback, ...rest }) {
     font: {
       service: isSystemFont ? 'system' : 'fonts.google.com',
       family: fontFamily,
-      fallback: fontFallback,
+      fallbacks: fontFallback,
     },
     type,
     ...rest,
