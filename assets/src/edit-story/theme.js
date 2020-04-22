@@ -112,6 +112,7 @@ const theme = {
       v7: '#1A73E8',
       v8: '#E6E6E6',
     },
+    hover: '#4285F4',
     action: '#47A0F4',
     danger: '#FF0000',
     warning: '#EA4335',
