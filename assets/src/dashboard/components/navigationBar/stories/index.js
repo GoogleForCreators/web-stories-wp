@@ -17,14 +17,10 @@
 /**
  * Internal dependencies
  */
-import { MainNavBar, TemplateNavBar } from '../';
+import { TemplateNavBar } from '../';
 
 export default {
-  title: 'Dashboard/Components/NavigationBar',
-};
-
-export const _default = () => {
-  return <MainNavBar />;
+  title: 'Dashboard/Components/TemplateNavigationBar',
 };
 
 export const TemplateNav = () => {

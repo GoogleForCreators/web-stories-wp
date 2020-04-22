@@ -144,7 +144,6 @@ function TemplatesGallery() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <MainNavBar />
           <PageHeading
             defaultTitle={__('Explore Templates', 'web-stories')}
             searchPlaceholder={__('Template Stories', 'web-stories')}

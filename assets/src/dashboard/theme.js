@@ -96,6 +96,12 @@ const theme = {
       height: '40px',
     },
   },
+  leftRail: {
+    border: `1px solid ${colors.gray50}`,
+    contentPadding: 20,
+    inset: 8,
+    logoMargin: '75px auto 20px',
+  },
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
   },
@@ -161,11 +167,17 @@ const theme = {
     },
     tab: {
       family: 'Google Sans',
-      size: '14px',
+      size: 16,
       minSize: '12px',
       lineHeight: '20px',
       letterSpacing: '0.01em',
       weight: '500',
+    },
+    smallLabel: {
+      family: 'Google Sans',
+      size: 12,
+      minSize: '12px',
+      letterSpacing: '0.01em',
     },
     label: {
       family: 'Roboto',

@@ -64,15 +64,28 @@ export const APP_ROUTES = {
   MY_BOOKMARKS: '/bookmarks',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: '/template-detail',
+  EDITOR_SETTINGS: '/editor-settings',
+  SUPPORT: '/support',
 };
 
-export const paths = [
+export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
-  // {
-  //   value: APP_ROUTES.TEMPLATES_GALLERY,
-  //   label: __('Templates Gallery', 'web-stories'),
-  // },
-  // { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
+  {
+    value: APP_ROUTES.TEMPLATES_GALLERY,
+    label: __('Templates Gallery', 'web-stories'),
+  },
+  { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
+];
+
+export const secondaryPaths = [
+  {
+    value: APP_ROUTES.EDITOR_SETTINGS,
+    label: __('Editor Settings', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.SUPPORT,
+    label: __('Support', 'web-stories'),
+  },
 ];
 
 export const STORY_STATUSES = [

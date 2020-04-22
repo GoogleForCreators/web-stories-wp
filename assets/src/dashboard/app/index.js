@@ -27,6 +27,7 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES } from '../constants';
+import { AppFrame, LeftRail, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider } from './router';
 import { ConfigProvider } from './config';
@@ -47,23 +48,28 @@ function App({ config }) {
             <RouterProvider>
               <GlobalStyle />
               <KeyboardOnlyOutline />
-              <Route
-                exact
-                path={APP_ROUTES.MY_STORIES}
-                component={<MyStoriesView />}
-              />
-              <Route
-                path={APP_ROUTES.TEMPLATE_DETAIL}
-                component={<TemplateDetail />}
-              />
-              <Route
-                path={APP_ROUTES.TEMPLATES_GALLERY}
-                component={<TemplatesGalleryView />}
-              />
-              <Route
-                path={APP_ROUTES.MY_BOOKMARKS}
-                component={<MyBookmarksView />}
-              />
+              <AppFrame>
+                <LeftRail />
+                <PageContent>
+                  <Route
+                    exact
+                    path={APP_ROUTES.MY_STORIES}
+                    component={<MyStoriesView />}
+                  />
+                  <Route
+                    path={APP_ROUTES.TEMPLATE_DETAIL}
+                    component={<TemplateDetail />}
+                  />
+                  <Route
+                    path={APP_ROUTES.TEMPLATES_GALLERY}
+                    component={<TemplatesGalleryView />}
+                  />
+                  <Route
+                    path={APP_ROUTES.MY_BOOKMARKS}
+                    component={<MyBookmarksView />}
+                  />
+                </PageContent>
+              </AppFrame>
             </RouterProvider>
           </ApiProvider>
         </ConfigProvider>

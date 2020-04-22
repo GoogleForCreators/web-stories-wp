@@ -161,7 +161,7 @@ class Dashboard {
 
 		wp_register_style(
 			'google-sans-font',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
 			[],
 			WEBSTORIES_VERSION
 		);

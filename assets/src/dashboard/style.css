@@ -38,6 +38,7 @@ body.web-story_page_stories-dashboard #wpbody-content {
 body.web-story_page_stories-dashboard #web-stories-dashboard {
   position: relative;
   overflow: hidden;
+  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
 }
 
 body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
