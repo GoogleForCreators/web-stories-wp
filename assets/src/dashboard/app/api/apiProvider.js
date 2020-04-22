@@ -18,20 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  createContext,
-  useCallback,
-  useMemo,
-  useState,
-  useReducer,
-} from 'react';
+import { createContext, useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
-
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -41,14 +30,14 @@ import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
-  APP_ROUTES,
   ITEMS_PER_PAGE,
 } from '../../constants';
-import getAllTemplates from '../../templates';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
+import useTemplateApi from './useTemplateApi';
+import dataAdapter from './wpAdapter';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -73,36 +62,13 @@ export function reshapeStoryObject(editStoryURL) {
   };
 }
 
-export function reshapeTemplateObject({
-  id,
-  title,
-  tags,
-  colors,
-  createdBy,
-  description,
-  pages,
-}) {
-  return {
-    id,
-    title,
-    createdBy,
-    description,
-    status: 'template',
-    modified: moment('2020-04-07'),
-    metadata: [...tags, ...colors].map((value) =>
-      typeof value === 'object' ? { ...value } : { label: value }
-    ),
-    pages,
-    centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}`,
-    bottomTargetAction: () => {},
-  };
-}
-
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
 
-  const [templates, setTemplates] = useState([]);
+  const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
+    pluginDir,
+  });
 
   const fetchStories = useCallback(
     async ({
@@ -142,15 +108,13 @@ export default function ApiProvider({ children }) {
           query,
         });
 
-        const response = await apiFetch({
-          path,
+        const response = await dataAdapter.get(path, {
           parse: false,
         });
 
         // TODO add headers for totals by status and have header reflect search
         // only update totals when data is different
         const totalStories = parseInt(response.headers.get('X-WP-Total'));
-
         const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
 
         const serverStoryResponse = await response.json();
@@ -186,31 +150,12 @@ export default function ApiProvider({ children }) {
     [api.stories, editStoryURL]
   );
 
-  const fetchTemplates = useCallback(() => {
-    const reshapedTemplates = getAllTemplates({ pluginDir }).map(
-      reshapeTemplateObject
-    );
-    setTemplates(reshapedTemplates);
-
-    return Promise.resolve(reshapedTemplates);
-  }, [pluginDir]);
-
-  const fetchTemplate = useCallback(
-    async (id) => {
-      const fetchedTemplates = await fetchTemplates();
-      return Promise.resolve(
-        fetchedTemplates.find((template) => template.id === id)
-      );
-    },
-    [fetchTemplates]
-  );
-
   const getAllFonts = useCallback(() => {
     if (!api.fonts) {
       return Promise.resolve([]);
     }
 
-    return apiFetch({ path: api.fonts }).then((data) =>
+    return dataAdapter.get(api.fonts).then((data) =>
       data.map((font) => ({
         value: font.name,
         ...font,
@@ -231,16 +176,14 @@ export default function ApiProvider({ children }) {
       },
       actions: {
         fetchStories,
-        fetchTemplates,
-        fetchTemplate,
+        templateApi,
         getAllFonts,
       },
     }),
     [
-      templates,
       fetchStories,
-      fetchTemplates,
-      fetchTemplate,
+      templates,
+      templateApi,
       getAllFonts,
       state.allPagesFetched,
       state.isLoading,
