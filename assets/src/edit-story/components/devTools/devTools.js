@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -46,6 +46,8 @@ const Textarea = styled.textarea`
   border: 0;
   background: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v2};
+  white-space: nowrap;
+  overflow: auto;
 `;
 
 const Options = styled.div`
@@ -55,36 +57,53 @@ const Options = styled.div`
 `;
 
 const Label = styled.label`
-  margin-right: 10px;
+  margin-right: 6px;
 `;
 
+const Button = styled.button`
+  margin-left: 6px;
+`;
+
+const replaceResourcesWithDummy = (state) => {
+  return {
+    ...state,
+    pages: state.pages.map((page) => ({
+      ...page,
+      elements: page.elements.map((element) => {
+        let newElement = { ...element };
+        if ('resource' in element) {
+          newElement.resource = { ...element.resource };
+          newElement.resource.mimeType = 'image/png';
+          newElement.resource.src =
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGElEQVQYV2NkYGD4////fwZGEMnIyMgAAEvqB/6wfXLSAAAAAElFTkSuQmCC';
+        }
+        return newElement;
+      }),
+    })),
+  };
+};
+
 function DevTools() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isBase64, setIsBase64] = useState(false);
-  const [isWholeState, setWholeState] = useState(false);
-  const { state } = useStory();
-  const {
-    currentPageIndex,
-    hasSelection,
-    selectedElementIds,
-    story: { stylePresets },
-    pages,
-  } = state;
-  const storyData = isWholeState
-    ? state
-    : {
-        currentPageIndex,
-        hasSelection,
-        selectedElementIds,
-        story: {
-          stylePresets,
-        },
-        pages,
-      };
+  const [isDummyResources, setIsDummyResources] = useState(false);
   const { showSnackbar } = useSnackbar();
   const textareaRef = useRef();
+  const {
+    state: { reducerState },
+    actions: { restore },
+  } = useStory();
+  // This will not work here
+  // const {
+  //   state, // stale data
+  //   internal: { restore },
+  // } = useStoryReducer();
 
-  const toggleWholeState = () => setWholeState((v) => !v);
+  const storyData = isDummyResources
+    ? replaceResourcesWithDummy(reducerState)
+    : reducerState;
+
+  const toggleDummyResources = () => setIsDummyResources((v) => !v);
   const toggleBase64 = () => setIsBase64((v) => !v);
   const toggleVisible = () => setIsVisible((v) => !v);
   const copyToClipboard = () => {
@@ -93,6 +112,18 @@ function DevTools() {
     textareaRef.current.setSelectionRange(0, 0);
     showSnackbar({ message: 'Copied to clipboard', timeout: 1200 });
   };
+  const loadFromInput = () => {
+    let input = output;
+    try {
+      input = window.atob(input);
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+    const stateToRestore = JSON.parse(input);
+    const stateWithDummyResources = isDummyResources
+      ? replaceResourcesWithDummy(stateToRestore)
+      : stateToRestore;
+    restore(stateWithDummyResources);
+  };
 
   useGlobalKeyDownEffect(
     { key: 'mod+shift+alt+j', editable: true },
@@ -100,28 +131,46 @@ function DevTools() {
   );
 
   const jsonStr = JSON.stringify(storyData, null, 2);
-  const output = isBase64 ? window.btoa(jsonStr) : jsonStr;
+  const defaultOutput = isBase64 ? window.btoa(jsonStr) : jsonStr;
+  const [output, setOutput] = useState(defaultOutput);
+  useEffect(() => setOutput(defaultOutput), [defaultOutput]);
+  const changeTextarea = (evt) => setOutput(evt.target.value);
 
   return isVisible ? (
     <Container>
       <Options>
         <div>
-          <Label>
+          <Label title="For easier sharing thru various channels">
             <input type="checkbox" checked={isBase64} onChange={toggleBase64} />
             {'Base64'}
           </Label>
-          <Label>
+          <Label title="Replace resources with dummy resources">
             <input
               type="checkbox"
-              checked={isWholeState}
-              onChange={toggleWholeState}
+              checked={isDummyResources}
+              onChange={toggleDummyResources}
             />
-            {'Whole state'}
+            {'Dummy resources'}
           </Label>
         </div>
-        <button onClick={copyToClipboard}>{'Copy'}</button>
+        <div>
+          <Button title="Load data from input" onClick={loadFromInput}>
+            {'Load'}
+          </Button>
+          <Button title="Copy data to clipboard" onClick={copyToClipboard}>
+            {'Copy'}
+          </Button>
+          <Button title="Close DevTools" onClick={toggleVisible}>
+            {'X'}
+          </Button>
+        </div>
       </Options>
-      <Textarea ref={textareaRef} className="mousetrap" value={output} />
+      <Textarea
+        ref={textareaRef}
+        className="mousetrap"
+        value={output}
+        onChange={changeTextarea}
+      />
     </Container>
   ) : null;
 }
