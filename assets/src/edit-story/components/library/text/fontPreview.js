@@ -49,14 +49,21 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, fontFamily, ...fontProps }) {
+function FontPreview({
+  title,
+  fontFamily,
+  content,
+  fontWeight,
+  fontStyle,
+  ...fontProps
+}) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle({ fontFamily, content, fontWeight, fontStyle });
+  }, [fontFamily, content, fontWeight, fontStyle, maybeEnqueueFontStyle]);
 
   return (
     <Preview>
@@ -68,6 +75,9 @@ function FontPreview({ title, fontFamily, ...fontProps }) {
 FontPreview.propTypes = {
   title: PropTypes.string,
   fontFamily: PropTypes.string,
+  content: PropTypes.string,
+  fontWeight: PropTypes.number,
+  fontStyle: PropTypes.string,
 };
 
 export default FontPreview;

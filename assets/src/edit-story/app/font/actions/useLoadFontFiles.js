@@ -25,39 +25,58 @@ function useLoadFontFiles({ getFontByName }) {
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {string} name Font name.
+   * @param {string} fontFamily Font name.
    */
   const maybeEnqueueFontStyle = useCallback(
-    (name) => {
-      if (!name) {
-        return;
-      }
+    ({ fontFamily, fontWeight, fontStyle, content }) => {
+      return new Promise((resolve, reject) => {
+        // skip when required infos are not declared
+        if (!fontFamily || !fontWeight || !fontStyle) {
+          return null;
+        }
 
-      const font = getFontByName(name);
-      if (!font) {
-        return;
-      }
+        const fontFaceSet = `${fontStyle} ${fontWeight} 0 '${fontFamily}'`;
+        const { handle, src } = getFontByName(fontFamily);
+        if (handle) {
+          const element = document.getElementById(`${handle}-css`);
+          if (element) {
+            if (document?.fonts && document.fonts.check(fontFaceSet)) {
+              return resolve();
+            }
+            element.remove();
+          }
+        } else {
+          return null;
+        }
 
-      const { handle, src } = font;
-      if (!handle || !src) {
-        return;
-      }
-      const id = `${handle}-css`;
-      const element = document.getElementById(id);
+        const fontStylesheet = document.createElement('link');
+        fontStylesheet.id = `${handle}-css`;
+        fontStylesheet.href = src;
+        fontStylesheet.rel = 'stylesheet';
+        fontStylesheet.type = 'text/css';
+        fontStylesheet.media = 'all';
+        fontStylesheet.crossOrigin = 'anonymous';
 
-      if (element) {
-        return;
-      }
+        const linkEl = document.head.appendChild(fontStylesheet);
 
-      const fontStylesheet = document.createElement('link');
-      fontStylesheet.id = id;
-      fontStylesheet.href = src;
-      fontStylesheet.rel = 'stylesheet';
-      fontStylesheet.type = 'text/css';
-      fontStylesheet.media = 'all';
-      fontStylesheet.crossOrigin = 'anonymous';
+        linkEl.addEventListener('load', async () => {
+          if (document?.fonts) {
+            await document.fonts.load(fontFaceSet, content);
+            if (document.fonts.check(fontFaceSet)) {
+              return resolve();
+            } else {
+              return reject(
+                new Error(`font-family: ${fontFamily} found, but not loaded.`)
+              );
+            }
+          }
+          return resolve();
+        });
 
-      document.head.appendChild(fontStylesheet);
+        linkEl.addEventListener('error', (e) => reject(e));
+
+        return linkEl;
+      });
     },
     [getFontByName]
   );

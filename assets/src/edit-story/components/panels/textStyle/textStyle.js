@@ -40,6 +40,7 @@ import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 import { getCommonValue } from '../utils';
+import { useFont } from '../../../app/font';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -61,12 +62,18 @@ const Space = styled.div`
 `;
 
 function StylePanel({ selectedElements, pushUpdate }) {
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
   const bold = getCommonValue(selectedElements, 'bold');
+  const content = getCommonValue(selectedElements, 'content');
+  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
 
   return (
     <>
@@ -138,9 +145,16 @@ function StylePanel({ selectedElements, pushUpdate }) {
           value={fontStyle === 'italic'}
           iconWidth={10}
           iconHeight={10}
-          onChange={(value) =>
-            pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true)
-          }
+          onChange={async (value) => {
+            const newFontStyle = value ? 'italic' : 'normal';
+            await maybeEnqueueFontStyle({
+              fontFamily,
+              content,
+              fontWeight,
+              fontStyle: newFontStyle,
+            });
+            pushUpdate({ fontStyle: newFontStyle }, true);
+          }}
         />
         <ToggleButton
           icon={<UnderlineIcon />}

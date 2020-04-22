@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback, useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -44,10 +44,11 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function FontControls({ selectedElements, pushUpdate }) {
+  const content = getCommonValue(selectedElements, 'content');
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
-  const timeout = useRef(null);
+  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
 
   const {
     state: { fonts },
@@ -58,42 +59,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     fontFamily,
   ]);
 
-  const loadFont = useCallback(
-    (family, callback) => {
-      // 0. Check browser support to load fonts using JavaScript
-      if (document?.fonts) {
-        const font = `0 ${family}`;
-
-        // 1. Check if font family was not loaded yet
-        if (!document.fonts.check(font)) {
-          // 2. Try to inject <link /> resource of the font family
-          maybeEnqueueFontStyle(family);
-          // 3. Schedule a re-check since we need to wait the <link /> injection
-          timeout.current = setTimeout(async () => {
-            // 4. Load the new injected font in the client
-            await document.fonts.load(font);
-            // 5. Re-check if font was loaded
-            if (document.fonts.check(font)) {
-              return callback();
-            }
-            // 6. Try again if font still is not loaded
-            return loadFont(family, callback);
-          });
-        }
-      }
-
-      return callback();
-    },
-    [maybeEnqueueFontStyle]
-  );
-
-  useEffect(
-    () => () => {
-      clearTimeout(timeout.current);
-    },
-    [timeout]
-  );
-
   return (
     <>
       {fonts && (
@@ -103,32 +68,36 @@ function FontControls({ selectedElements, pushUpdate }) {
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
             value={fontFamily}
-            onChange={(value) => {
-              loadFont(value, () => {
-                const currentFontWeights = getFontWeight(value);
-                const currentFontFallback = getFontFallback(value);
-                const fontWeightsArr = currentFontWeights.map(
-                  ({ value: weight }) => weight
-                );
-                // Find the nearest font weight from the available font weight list
-                // If no fontweightsArr available then will return undefined
-                const newFontWeight =
-                  fontWeightsArr &&
-                  fontWeightsArr.reduce((a, b) =>
-                    Math.abs(parseInt(b) - fontWeight) <
-                    Math.abs(parseInt(a) - fontWeight)
-                      ? b
-                      : a
-                  );
-                pushUpdate(
-                  {
-                    fontFamily: value,
-                    fontWeight: parseInt(newFontWeight),
-                    fontFallback: currentFontFallback,
-                  },
-                  true
-                );
+            onChange={async (value) => {
+              const currentFontWeights = getFontWeight(value);
+              const currentFontFallback = getFontFallback(value);
+              const fontWeightsArr = currentFontWeights.map(
+                ({ value: weight }) => weight
+              );
+              await maybeEnqueueFontStyle({
+                fontFamily: value,
+                content,
+                fontWeight,
+                fontStyle,
               });
+              // Find the nearest font weight from the available font weight list
+              // If no fontweightsArr available then will return undefined
+              const newFontWeight =
+                fontWeightsArr &&
+                fontWeightsArr.reduce((a, b) =>
+                  Math.abs(parseInt(b) - fontWeight) <
+                  Math.abs(parseInt(a) - fontWeight)
+                    ? b
+                    : a
+                );
+              pushUpdate(
+                {
+                  fontFamily: value,
+                  fontWeight: parseInt(newFontWeight),
+                  fontFallback: currentFontFallback,
+                },
+                true
+              );
             }}
           />
         </Row>
@@ -141,9 +110,15 @@ function FontControls({ selectedElements, pushUpdate }) {
               ariaLabel={__('Font weight', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
-              onChange={(value) =>
-                pushUpdate({ fontWeight: parseInt(value) }, true)
-              }
+              onChange={async (value) => {
+                await maybeEnqueueFontStyle({
+                  fontFamily,
+                  content,
+                  fontWeight: value,
+                  fontStyle,
+                });
+                pushUpdate({ fontWeight: parseInt(value) }, true);
+              }}
             />
             <Space />
           </>
