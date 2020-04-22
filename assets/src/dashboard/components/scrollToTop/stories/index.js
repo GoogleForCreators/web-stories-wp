@@ -17,9 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -31,6 +29,16 @@ export default {
   component: ScrollToTop,
 };
 
+const Container = styled.div`
+  width: 100%;
+  height: 3000px;
+  overflow: scroll;
+  background-color: blue;
+`;
 export const _default = () => {
-  return <ScrollToTop />;
+  return (
+    <Container>
+      <ScrollToTop />
+    </Container>
+  );
 };
