@@ -33,6 +33,7 @@ import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
+  ColorList,
   PreviewPage,
   Pill,
   TemplateNavBar,
@@ -40,7 +41,6 @@ import {
 import {
   ByLine,
   ContentContainer,
-  ColorBadge,
   ColumnContainer,
   Column,
   DetailContainer,
@@ -79,17 +79,12 @@ function TemplateDetail() {
     }
   }, [templateApi, templateId, isLocal]);
 
-  const { title, byLine } = useMemo(() => {
+  const { byLine } = useMemo(() => {
     if (!template) {
       return {};
     }
 
     return {
-      title: sprintf(
-        /* translators: %s: template title  */
-        __('%s Template', 'web-stories'),
-        template.title
-      ),
       byLine: sprintf(
         /* translators: %s: template author  */
         __('by %s', 'web-stories'),
@@ -102,7 +97,7 @@ function TemplateDetail() {
     template && (
       <FontProvider>
         <TransformProvider>
-          <TemplateNavBar title={template.title} />
+          <TemplateNavBar />
           <ContentContainer>
             <ColumnContainer>
               <Column>
@@ -114,22 +109,24 @@ function TemplateDetail() {
               </Column>
               <Column>
                 <DetailContainer>
-                  <Title>{title}</Title>
+                  <Title>{template.title}</Title>
                   <ByLine>{byLine}</ByLine>
                   <Text>{template.description}</Text>
                   <MetadataContainer>
-                    {template.metadata.map(({ label, color }) => (
+                    {template.tags.map((tag) => (
                       <Pill
-                        name={label}
-                        key={label}
+                        name={tag}
+                        key={tag}
                         disabled
                         onClick={() => {}}
-                        value={label}
+                        value={tag}
                       >
-                        {color && <ColorBadge color={color} />}
-                        {label}
+                        {tag}
                       </Pill>
                     ))}
+                  </MetadataContainer>
+                  <MetadataContainer>
+                    <ColorList colors={template.colors} size={30} />
                   </MetadataContainer>
                 </DetailContainer>
               </Column>

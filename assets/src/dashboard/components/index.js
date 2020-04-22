@@ -26,6 +26,7 @@ export {
   ActionLabel,
 } from './cardGridItem';
 export { default as CardGallery } from './cardGallery';
+export { default as ColorList } from './colorList';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { TemplateNavBar } from './navigationBar';
