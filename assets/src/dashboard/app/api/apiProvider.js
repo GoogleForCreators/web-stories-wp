@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useCallback, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useMemo,
+  useState,
+  useReducer,
+} from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
 
@@ -36,8 +42,13 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   APP_ROUTES,
+  ITEMS_PER_PAGE,
 } from '../../constants';
 import getAllTemplates from '../../templates';
+import storyReducer, {
+  defaultStoriesState,
+  ACTION_TYPES as STORY_ACTION_TYPES,
+} from '../reducer/stories';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -89,7 +100,8 @@ export function reshapeTemplateObject({
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
-  const [stories, setStories] = useState([]);
+  const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
+
   const [templates, setTemplates] = useState([]);
 
   const fetchStories = useCallback(
@@ -98,18 +110,30 @@ export default function ApiProvider({ children }) {
       sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
       sortDirection,
       searchTerm,
+      page = 1,
+      perPage = ITEMS_PER_PAGE,
     }) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.LOADING_STORIES,
+        payload: true,
+      });
+
       if (!api.stories) {
+        dispatch({
+          type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+          payload: true,
+        });
         return [];
       }
-      const perPage = '100'; // TODO set up pagination
+
       const query = {
-        status,
         context: 'edit',
         search: searchTerm || undefined,
         orderby: sortOption,
+        page,
         per_page: perPage,
         order: sortDirection || ORDER_BY_SORT[sortOption],
+        status,
       };
 
       try {
@@ -118,16 +142,45 @@ export default function ApiProvider({ children }) {
           query,
         });
 
-        const serverStoryResponse = await apiFetch({
+        const response = await apiFetch({
           path,
+          parse: false,
         });
+
+        // TODO add headers for totals by status and have header reflect search
+        // only update totals when data is different
+        const totalStories = parseInt(response.headers.get('X-WP-Total'));
+
+        const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+
+        const serverStoryResponse = await response.json();
+
         const reshapedStories = serverStoryResponse
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
-        setStories(reshapedStories);
+
+        dispatch({
+          type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
+          payload: {
+            stories: reshapedStories,
+            totalPages,
+            totalStories,
+            page,
+          },
+        });
+
         return reshapedStories;
       } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+          payload: true,
+        });
         return [];
+      } finally {
+        dispatch({
+          type: STORY_ACTION_TYPES.LOADING_STORIES,
+          payload: false,
+        });
       }
     },
     [api.stories, editStoryURL]
@@ -167,16 +220,34 @@ export default function ApiProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      state: { stories, templates },
-      actions: { fetchStories, fetchTemplates, fetchTemplate, getAllFonts },
+      state: {
+        allPagesFetched: state.allPagesFetched,
+        isLoading: state.isLoading,
+        stories: state.stories,
+        storiesOrderById: state.storiesOrderById,
+        totalStories: state.totalStories,
+        totalPages: state.totalPages,
+        templates,
+      },
+      actions: {
+        fetchStories,
+        fetchTemplates,
+        fetchTemplate,
+        getAllFonts,
+      },
     }),
     [
-      stories,
       templates,
       fetchStories,
       fetchTemplates,
       fetchTemplate,
       getAllFonts,
+      state.allPagesFetched,
+      state.isLoading,
+      state.stories,
+      state.storiesOrderById,
+      state.totalStories,
+      state.totalPages,
     ]
   );
 

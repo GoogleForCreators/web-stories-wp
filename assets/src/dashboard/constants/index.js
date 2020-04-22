@@ -130,6 +130,8 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   },
 ];
 
+export const ITEMS_PER_PAGE = 10;
+
 export const STORY_SORT_OPTIONS = {
   NAME: 'title',
   DATE_CREATED: 'date',
