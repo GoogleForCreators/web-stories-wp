@@ -46,7 +46,6 @@ function Wrapper({ children }) {
         state: { fonts: [{ name: 'ABeeZee', value: 'ABeeZee' }] },
         actions: {
           getFontWeight: () => [{ name: 'Normal1', value: '400' }],
-          getFontFallback: () => 'fallback1',
         },
       }}
     >
@@ -74,8 +73,10 @@ describe('Panels/TextStyle', () => {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
-      fontFamily: 'ABeeZee',
       fontWeight: 400,
+      font: {
+        family: 'ABeeZee',
+      },
       x: 0,
       y: 0,
       height: 100,
@@ -383,8 +384,8 @@ describe('Panels/TextStyle', () => {
           font: {
             family: 'Neu Font',
             service: undefined,
+            fallback: 'fallback1',
           },
-          fontFallback: 'fallback1',
           fontWeight: 400,
         },
         true

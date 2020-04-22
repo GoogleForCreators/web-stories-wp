@@ -36,9 +36,9 @@ export const defaultAttributes = {
   bold: false,
   font: {
     family: 'Roboto',
+    fallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
     service: 'fonts.google.com',
   },
-  fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,
   fontSize: 36,
   fontStyle: 'normal',

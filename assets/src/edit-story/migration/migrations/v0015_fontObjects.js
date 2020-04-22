@@ -50,7 +50,7 @@ const SYSTEM_FONTS = [
   'Verdana',
 ];
 
-function updateElement({ type, fontFamily, ...rest }) {
+function updateElement({ type, fontFamily, fontFallback, ...rest }) {
   if ('text' !== type) {
     return {
       type,
@@ -64,6 +64,7 @@ function updateElement({ type, fontFamily, ...rest }) {
     font: {
       service: isSystemFont ? 'system' : 'fonts.google.com',
       family: fontFamily,
+      fallback: fontFallback,
     },
     type,
     ...rest,

@@ -40,7 +40,7 @@ describe('Element', () => {
       const textElement = createNewElement('text', atts);
       expect(textElement.rotationAngle).toStrictEqual(0);
       expect(textElement.width).toStrictEqual(100);
-      expect(textElement.fontFallback).toStrictEqual([
+      expect(textElement.font.fallback).toStrictEqual([
         'Helvetica Neue',
         'Helvetica',
         'sans-serif',

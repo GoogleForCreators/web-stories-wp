@@ -53,7 +53,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     state: { fonts },
-    actions: { getFontWeight, getFontFallback },
+    actions: { getFontWeight },
   } = useFont();
   const fontWeights = useMemo(() => getFontWeight(fontFamily), [
     getFontWeight,
@@ -71,7 +71,6 @@ function FontControls({ selectedElements, pushUpdate }) {
             value={fontFamily}
             onChange={(value) => {
               const currentFontWeights = getFontWeight(value);
-              const currentFontFallback = getFontFallback(value);
               const fontWeightsArr = currentFontWeights.map(
                 ({ value: weight }) => weight
               );
@@ -94,9 +93,9 @@ function FontControls({ selectedElements, pushUpdate }) {
                   font: {
                     family: value,
                     service: fontObj?.service,
+                    fallback: fontObj?.fallbacks || [],
                   },
                   fontWeight: parseInt(newFontWeight),
-                  fontFallback: currentFontFallback,
                 },
                 true
               );

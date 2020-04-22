@@ -22,9 +22,9 @@ import getGoogleFontURL from './getGoogleFontURL';
 /**
  * Returns a list of font declarations across all pages in a story.
  *
- * @param {import('../../types').Page[]} pages List of pages.
+ * @param {Array<import('../../types').Page>} pages List of pages.
  *
- * @return {string[]} Font declarations.
+ * @return {Array<string>} Font declarations.
  */
 const getFontDeclarations = (pages) => {
   const map = new Map();

@@ -32,11 +32,13 @@ describe('fontObjects', () => {
                 _test: 'element1',
                 type: 'text',
                 fontFamily: 'Roboto',
+                fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               },
               {
                 _test: 'element2',
                 type: 'text',
                 fontFamily: 'Arial',
+                fontFallback: ['Verdana', 'sans-serif'],
               },
             ],
           },
@@ -54,6 +56,7 @@ describe('fontObjects', () => {
               font: {
                 service: 'fonts.google.com',
                 family: 'Roboto',
+                fallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               },
             },
             {
@@ -62,6 +65,7 @@ describe('fontObjects', () => {
               font: {
                 service: 'system',
                 family: 'Arial',
+                fallback: ['Verdana', 'sans-serif'],
               },
             },
           ],

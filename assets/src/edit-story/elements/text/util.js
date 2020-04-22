@@ -35,8 +35,7 @@ export function generateParagraphTextStyle(
   dataToFontSizeY = dataToStyleY
 ) {
   const {
-    font: { family },
-    fontFallback,
+    font: { family, fallback },
     fontSize,
     fontStyle,
     fontWeight,
@@ -49,7 +48,7 @@ export function generateParagraphTextStyle(
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,
-    fontFamily: generateFontFamily(family, fontFallback),
+    fontFamily: generateFontFamily(family, fallback),
     fontSize: dataToFontSizeY(fontSize),
     fontStyle,
     fontWeight,

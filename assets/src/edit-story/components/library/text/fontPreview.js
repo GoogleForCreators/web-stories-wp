@@ -45,18 +45,18 @@ const Text = styled.span`
   background: none;
   font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  font-family: ${({ fontFamily }) => fontFamily};
+  font-family: ${({ font }) => font.family};
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, fontFamily, ...fontProps }) {
+function FontPreview({ title, font, ...fontProps }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle(font);
+  }, [font, maybeEnqueueFontStyle]);
 
   return (
     <Preview>
@@ -67,7 +67,9 @@ function FontPreview({ title, fontFamily, ...fontProps }) {
 
 FontPreview.propTypes = {
   title: PropTypes.string,
-  fontFamily: PropTypes.string,
+  font: PropTypes.shape({
+    family: PropTypes.string,
+  }),
 };
 
 export default FontPreview;

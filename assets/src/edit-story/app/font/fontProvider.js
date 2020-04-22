@@ -98,9 +98,7 @@ function FontProvider({ children }) {
   const getFontFallback = useCallback(
     (name) => {
       const currentFont = getFontByName(name);
-      const fontFallback =
-        currentFont && currentFont.fallbacks ? currentFont.fallbacks : [];
-      return fontFallback;
+      return currentFont?.fallbacks || [];
     },
     [getFontByName]
   );

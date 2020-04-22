@@ -230,9 +230,9 @@ describe('TextOutput', () => {
       height: 50,
       font: {
         family: 'Baloo Bhaina 2',
+        fallback: ['Roboto', 'cursive'],
       },
       fontSize: 16,
-      fontFallback: ['Roboto', 'cursive'],
       rotationAngle: 0,
       padding: {
         vertical: 0,

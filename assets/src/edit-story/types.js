@@ -198,8 +198,9 @@ StoryPropTypes.elements.text = PropTypes.shape({
   backgroundColor: PatternPropType,
   font: PropTypes.shape({
     family: PropTypes.string,
+    service: PropTypes.string,
+    fallback: PropTypes.array,
   }),
-  fontFallback: PropTypes.array,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
   fontStyle: PropTypes.string,
@@ -241,7 +242,7 @@ export default StoryPropTypes;
  * @property {number} storyId Story post id.
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
- * @property {Page[]} pages Array of all pages.
+ * @property {Array<Page>} pages Array of all pages.
  * @property {number} author User ID of story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
