@@ -128,13 +128,9 @@ function MyStories() {
   ]);
 
   const setCurrentPageClamped = useCallback(
-    (v) => {
+    (newPage) => {
       const pageRange = [1, totalPages];
-      setCurrentPage(
-        typeof v === 'function'
-          ? (current) => clamp(v(current), pageRange)
-          : clamp(v, pageRange)
-      );
+      setCurrentPage(clamp(newPage, pageRange));
     },
     [totalPages]
   );

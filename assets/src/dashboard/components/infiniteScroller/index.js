@@ -44,6 +44,7 @@ const ACTION = {
   ON_EXTERNAL_LOAD: 'external on load',
   ON_ALL_LOADED: 'all loaded',
   ON_LOAD_SUCCESS: 'load success',
+  ON_CAN_LOAD_MORE: 'can load more',
 };
 
 const machine = {
@@ -60,7 +61,7 @@ const machine = {
     [ACTION.ON_LOAD_SUCCESS]: STATE.loadable,
   },
   [STATE.complete]: {
-    [ACTION.ON_LOAD_SUCCESS]: STATE.loadable,
+    [ACTION.ON_CAN_LOAD_MORE]: STATE.loadable,
   },
 };
 
@@ -100,8 +101,8 @@ const InfiniteScroller = ({
   }, [isLoading, canLoadMore]);
 
   useEffect(() => {
-    if (loadState === STATE.complete && canLoadMore) {
-      dispatch(ACTION.ON_LOAD_SUCCESS);
+    if (canLoadMore) {
+      dispatch(ACTION.ON_CAN_LOAD_MORE);
     }
   }, [canLoadMore, loadState]);
 
