@@ -43,7 +43,17 @@ function Wrapper({ children }) {
   return (
     <FontContext.Provider
       value={{
-        state: { fonts: [{ name: 'ABeeZee', value: 'ABeeZee' }] },
+        state: {
+          fonts: [
+            { name: 'ABeeZee', value: 'ABeeZee' },
+            {
+              name: 'Neu Font',
+              value: 'Neu Font',
+              service: 'foo.bar.baz',
+              fallbacks: ['fallback1'],
+            },
+          ],
+        },
         actions: {
           getFontWeight: () => [{ name: 'Normal1', value: '400' }],
         },
@@ -383,8 +393,8 @@ describe('Panels/TextStyle', () => {
         {
           font: {
             family: 'Neu Font',
-            service: undefined,
-            fallback: 'fallback1',
+            service: 'foo.bar.baz',
+            fallback: ['fallback1'],
           },
           fontWeight: 400,
         },
