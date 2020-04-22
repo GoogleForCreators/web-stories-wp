@@ -261,7 +261,7 @@ function TextEdit({
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState, elementHeight, fontFamily]);
+  }, [editorState, elementHeight, fontFamily, content, fontWeight, fontStyle]);
 
   useEffect(() => {
     maybeEnqueueFontStyle({ fontFamily, content, fontWeight, fontStyle });

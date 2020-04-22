@@ -19,6 +19,11 @@
  */
 import { useCallback } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { MULTIPLE_VALUE } from '../../../components/form';
+
 function useLoadFontFiles({ getFontByName }) {
   /**
    * Adds a <link> element to the <head> for a given font in case there is none yet.
@@ -34,13 +39,16 @@ function useLoadFontFiles({ getFontByName }) {
         if (!fontFamily || !fontWeight || !fontStyle) {
           return null;
         }
-
         const fontFaceSet = `${fontStyle} ${fontWeight} 0 '${fontFamily}'`;
+        const hasMultiple = fontFaceSet.indexOf(MULTIPLE_VALUE) > -1;
         const { handle, src } = getFontByName(fontFamily);
         if (handle) {
           const element = document.getElementById(`${handle}-css`);
           if (element) {
-            if (document?.fonts && document.fonts.check(fontFaceSet)) {
+            if (
+              (document?.fonts && document.fonts.check(fontFaceSet)) ||
+              hasMultiple
+            ) {
               return resolve();
             }
             element.remove();
@@ -60,7 +68,7 @@ function useLoadFontFiles({ getFontByName }) {
         const linkEl = document.head.appendChild(fontStylesheet);
 
         linkEl.addEventListener('load', async () => {
-          if (document?.fonts) {
+          if (document?.fonts && !hasMultiple) {
             await document.fonts.load(fontFaceSet, content);
             if (document.fonts.check(fontFaceSet)) {
               return resolve();
