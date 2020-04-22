@@ -22,7 +22,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 /**
  * Internal dependencies
  */
-import OutputStory from '../output/story';
+import OutputStory from '../story';
 
 /**
  * Creates AMP HTML markup for saving to DB for rendering in the FE.

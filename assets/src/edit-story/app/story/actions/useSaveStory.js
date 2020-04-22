@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import getStoryMarkup from '../../../utils/getStoryMarkup';
+import getStoryMarkup from '../../../output/utils/getStoryMarkup';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';

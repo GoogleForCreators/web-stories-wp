@@ -25,9 +25,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import APIContext from '../../../api/context';
 import ConfigContext from '../../../config/context';
 import useAutoSave from '../useAutoSave';
-import getStoryMarkup from '../../../../utils/getStoryMarkup';
+import getStoryMarkup from '../../../../output/utils/getStoryMarkup';
 
-jest.mock('../../../../utils/getStoryMarkup', () => jest.fn());
+jest.mock('../../../../output/utils/getStoryMarkup', () => jest.fn());
 
 function setup(args) {
   const configValue = {

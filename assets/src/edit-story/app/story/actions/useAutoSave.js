@@ -25,7 +25,7 @@ import { useCallback, useState } from 'react';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import getStoryMarkup from '../../../utils/getStoryMarkup';
+import getStoryMarkup from '../../../output/utils/getStoryMarkup';
 
 /**
  * Custom hook to auto-save a story.
