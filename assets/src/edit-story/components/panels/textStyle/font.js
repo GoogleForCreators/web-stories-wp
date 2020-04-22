@@ -87,6 +87,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                 );
 
               const fontObj = fonts.find((item) => item.value === value);
+              console.log(fontObj);
 
               pushUpdate(
                 {

@@ -28,12 +28,12 @@ function useLoadFontFiles({ getFontByName }) {
    * @param {string} name Font name.
    */
   const maybeEnqueueFontStyle = useCallback(
-    (name) => {
-      if (!name) {
+    ({ family }) => {
+      if (!family) {
         return;
       }
 
-      const font = getFontByName(name);
+      const font = getFontByName(family);
       if (!font) {
         return;
       }
@@ -42,6 +42,7 @@ function useLoadFontFiles({ getFontByName }) {
       if (!handle || !src) {
         return;
       }
+
       const id = `${handle}-css`;
       const element = document.getElementById(id);
 
