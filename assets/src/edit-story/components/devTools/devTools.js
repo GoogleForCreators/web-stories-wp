@@ -72,20 +72,14 @@ const replaceResourcesWithDummy = (state) => {
       elements: page.elements.map((element) => {
         let newElement = { ...element };
         if ('resource' in element) {
-          // const { width, height } = newElement.resource
           newElement.resource = { ...element.resource };
           if (element.type === 'video') {
-            // const { length } = newElement.resource
             newElement.resource.mimeType = 'video/mp4';
             newElement.resource.src =
               'data:video/mp4;base64,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';
             newElement.resource.poster =
               'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGElEQVQYV2NkYGD4////fwZGEMnIyMgAAEvqB/6wfXLSAAAAAElFTkSuQmCC';
-            // newElement.resource.poster = `https://dummyimage.com/${width}x${height}`
-            // newElement.resource.src = `https://temp.media/video/?height=${height}&width=${width}&length=${length}`
 
-            // Reload the video
-            // document.querySelectorAll('*[id^="video-"]');
             const videoEl = document.getElementById(`video-${newElement.id}`);
             if (videoEl) {
               videoEl.load();
@@ -95,7 +89,6 @@ const replaceResourcesWithDummy = (state) => {
             newElement.resource.mimeType = 'image/png';
             newElement.resource.src =
               'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGElEQVQYV2NkYGD4////fwZGEMnIyMgAAEvqB/6wfXLSAAAAAElFTkSuQmCC';
-            // newElement.resource.src = `https://dummyimage.com/${width}x${height}`
           }
         }
         return newElement;
@@ -117,12 +110,24 @@ function DevTools() {
   // This will not work here
   // const {
   //   state, // stale data
-  //   internal: { restore },
+  //   internal: { restore }, // will not update
   // } = useStoryReducer();
 
+  const {
+    pages,
+    current,
+    selection,
+    story: { stylePresets },
+  } = reducerState;
+  const reducerStateSlice = {
+    current,
+    selection,
+    story: { stylePresets },
+    pages,
+  };
   const storyData = isDummyResources
-    ? replaceResourcesWithDummy(reducerState)
-    : reducerState;
+    ? replaceResourcesWithDummy(reducerStateSlice)
+    : reducerStateSlice;
 
   const toggleDummyResources = () => setIsDummyResources((v) => !v);
   const toggleBase64 = () => setIsBase64((v) => !v);
@@ -139,11 +144,17 @@ function DevTools() {
       input = window.atob(input);
       // eslint-disable-next-line no-empty
     } catch (e) {}
-    const stateToRestore = JSON.parse(input);
+    const inputState = JSON.parse(input);
+    const stateToRestore = {
+      ...inputState,
+      story: { ...reducerState.story, ...inputState.story },
+      capabilities: reducerState.capabilities,
+    };
     const stateWithDummyResources = isDummyResources
       ? replaceResourcesWithDummy(stateToRestore)
       : stateToRestore;
     restore(stateWithDummyResources);
+    showSnackbar({ message: 'Story restored from input', timeout: 1200 });
   };
 
   useGlobalKeyDownEffect(
