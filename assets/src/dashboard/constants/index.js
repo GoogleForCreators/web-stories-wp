@@ -87,7 +87,10 @@ export const VIEW_STYLE = {
   LIST: 'LIST',
 };
 
-export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
+export const ICON_METRICS = {
+  VIEW_STYLE: { width: 17, height: 14 },
+  UP_DOWN_ARROW: { width: 16, height: 16 },
+};
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
@@ -135,12 +138,17 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'author',
 };
 
+export const SORT_DIRECTION = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const ORDER_BY_SORT = {
-  [STORY_SORT_OPTIONS.NAME]: 'asc',
-  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
-  [STORY_SORT_OPTIONS.CREATED_BY]: 'asc',
+  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
+  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.LAST_OPENED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.CREATED_BY]: SORT_DIRECTION.ASC,
 };
 
 export const STORY_SORT_MENU_ITEMS = [

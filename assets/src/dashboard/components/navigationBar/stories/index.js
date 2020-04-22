@@ -13,32 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import Menu, { MenuProps } from './menu';
-import PopoverCard from './popoverCard';
-import PopoverStandard from './popoverStandard';
+import { MainNavBar, TemplateNavBar } from '../';
 
-const PopoverMenu = ({ className, ...props }) => (
-  <PopoverStandard isOpen={props.isOpen} className={className}>
-    <Menu {...props} />
-  </PopoverStandard>
-);
-PopoverMenu.propTypes = {
-  className: PropTypes.string,
-  ...MenuProps,
+export default {
+  title: 'Dashboard/Components/NavigationBar',
 };
 
-export const PopoverMenuCard = (props) => (
-  <PopoverCard isOpen={props.isOpen}>
-    <Menu {...props} />
-  </PopoverCard>
-);
-PopoverMenuCard.propTypes = MenuProps;
+export const _default = () => {
+  return <MainNavBar />;
+};
 
-export default PopoverMenu;
+export const TemplateNav = () => {
+  return <TemplateNavBar title={'Demo'} />;
+};
