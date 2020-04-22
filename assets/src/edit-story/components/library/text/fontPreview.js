@@ -49,10 +49,12 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, font, ...fontProps }) {
+function FontPreview({ title, ...fontProps }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
+
+  const { font } = fontProps;
 
   useEffect(() => {
     maybeEnqueueFontStyle(font);
