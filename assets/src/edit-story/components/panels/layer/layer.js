@@ -100,6 +100,9 @@ const BackgroundDescription = styled.div`
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 function Layer({ layer }) {
@@ -121,8 +124,8 @@ function Layer({ layer }) {
         {isBackground ? (
           <LockedIcon aria-label={__('Background element', 'web-stories')} />
         ) : (
-          <LayerIcon />
-        )}
+            <LayerIcon />
+          )}
       </LayerIconWrapper>
       <LayerDescription>
         {showPreview && (
