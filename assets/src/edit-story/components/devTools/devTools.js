@@ -86,7 +86,10 @@ const replaceResourcesWithDummy = (state) => {
 
             // Reload the video
             // document.querySelectorAll('*[id^="video-"]');
-            document.getElementById(`video-${newElement.id}`).load();
+            const videoEl = document.getElementById(`video-${newElement.id}`);
+            if (videoEl) {
+              videoEl.load();
+            }
           }
           if (element.type === 'image') {
             newElement.resource.mimeType = 'image/png';
