@@ -40,6 +40,12 @@ const StyledInput = styled(Input)`
   padding-left: ${({ label }) => (label ? 6 : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};
+  ${({ color, theme }) =>
+    color &&
+    color === 'white' &&
+    `
+    color: ${theme.colors.fg.v0}
+  `};
 `;
 
 const Container = styled.div`
@@ -90,6 +96,7 @@ function TextInput({
   disabled,
   clear,
   placeholder,
+  forwardedRef,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -105,6 +112,7 @@ function TextInput({
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
         type="text"
+        ref={forwardedRef}
         placeholder={placeholder}
         label={label}
         value={value}
@@ -154,6 +162,7 @@ TextInput.propTypes = {
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
   placeholder: PropTypes.string,
+  forwardedRef: PropTypes.object,
 };
 
 TextInput.defaultProps = {

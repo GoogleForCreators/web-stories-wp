@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Numeric, Row, DropDown } from '../../form';
+import FontPicker from '../../fontPicker';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
@@ -73,7 +74,7 @@ function FontControls({ selectedElements, pushUpdate }) {
     <>
       {fonts && (
         <Row>
-          <DropDown
+          <FontPicker
             data-testid="font"
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
