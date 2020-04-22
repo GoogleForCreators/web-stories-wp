@@ -30,7 +30,8 @@ function useLoadFontFiles({ getFontByName }) {
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {string} fontFamily Font name.
+   * @param {Object} props An object with FontFaceSet required properties to inject and preload a font-face
+   * @return {Promise|Promise<HTMLLinkElement>} Returns promises callbacks or <link> element
    */
   const maybeEnqueueFontStyle = useCallback(
     ({ fontFamily, fontWeight, fontStyle, content }) => {
