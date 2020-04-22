@@ -61,7 +61,7 @@ export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
   MY_STORIES: '/',
-  MY_BOOKMARKS: '/bookmarks',
+  SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: '/template-detail',
   EDITOR_SETTINGS: '/editor-settings',
@@ -72,9 +72,12 @@ export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
-    label: __('Templates Gallery', 'web-stories'),
+    label: __('Explore Templates', 'web-stories'),
   },
-  { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
+  {
+    value: APP_ROUTES.SAVED_TEMPLATES,
+    label: __('Saved Templates', 'web-stories'),
+  },
 ];
 
 export const secondaryPaths = [

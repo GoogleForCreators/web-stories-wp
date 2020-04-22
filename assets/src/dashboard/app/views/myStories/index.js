@@ -28,7 +28,7 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, InfiniteScroller, MainNavBar } from '../../../components';
+import { FloatingTab, InfiniteScroller } from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
@@ -279,7 +279,6 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <MainNavBar />
           <PageHeading
             defaultTitle={__('My Stories', 'web-stories')}
             searchPlaceholder={__('Search Stories', 'web-stories')}

@@ -24,12 +24,12 @@ import { __ } from '@wordpress/i18n';
  */
 import { ViewHeader } from '../../../components';
 
-function MyBookmarks() {
+function SavedTemplates() {
   return (
     <div>
-      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
+      <ViewHeader>{__('Saved Templates', 'web-stories')}</ViewHeader>
     </div>
   );
 }
 
-export default MyBookmarks;
+export default SavedTemplates;

@@ -35,7 +35,7 @@ import {
   MyStoriesView,
   TemplateDetail,
   TemplatesGalleryView,
-  MyBookmarksView,
+  SavedTemplatesView,
 } from './views';
 
 function App({ config }) {
@@ -65,8 +65,8 @@ function App({ config }) {
                     component={<TemplatesGalleryView />}
                   />
                   <Route
-                    path={APP_ROUTES.MY_BOOKMARKS}
-                    component={<MyBookmarksView />}
+                    path={APP_ROUTES.SAVED_TEMPLATES}
+                    component={<SavedTemplatesView />}
                   />
                 </PageContent>
               </AppFrame>

@@ -176,7 +176,7 @@ const theme = {
     smallLabel: {
       family: 'Google Sans',
       size: 12,
-      minSize: '12px',
+      minSize: 10,
       letterSpacing: '0.01em',
     },
     label: {

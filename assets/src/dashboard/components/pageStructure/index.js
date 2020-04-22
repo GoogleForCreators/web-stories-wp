@@ -49,10 +49,9 @@ export const AppFrame = styled.div`
 
 export const PageContent = styled.div`
   position: relative;
-  width: 85%;
+  width: 100%;
+  padding-left: max(15%, 190px);
   height: inherit;
-  overflow-y: scroll;
-  overflow-x: hidden;
 `;
 
 export function LeftRail() {
@@ -94,7 +93,7 @@ export function LeftRail() {
       </div>
       <Content>
         <AppInfo>
-          {__('© Google 2020', 'web-stories')}
+          {__('\u00A9 Google 2020', 'web-stories')}
           <br />
           {__('Version', 'web-stories')}&nbsp;
           {version}

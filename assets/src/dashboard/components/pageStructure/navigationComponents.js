@@ -20,12 +20,13 @@
 import styled from 'styled-components';
 
 export const LeftRailContainer = styled.nav`
-  position: relative;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 15%;
-  min-width: 190px;
+  z-index: 1;
+  height: inherit;
+  width: max(15%, 190px);
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
 `;
