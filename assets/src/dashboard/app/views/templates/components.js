@@ -53,12 +53,12 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.pageGutter.large.desktop}px;
+      padding-left: ${theme.pageGutter.small.desktop}px;
     }
 
     @media ${theme.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.pageGutter.large.tablet}px;
+        padding-left: ${theme.pageGutter.small.min}px;
       }
     }
 
