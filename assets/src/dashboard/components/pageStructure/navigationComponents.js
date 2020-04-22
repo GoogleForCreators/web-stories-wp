@@ -20,11 +20,12 @@
 import styled from 'styled-components';
 
 export const LeftRailContainer = styled.nav`
+  position: relative;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  position: relative;
   width: 15%;
+  min-width: 190px;
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
 `;
@@ -36,10 +37,10 @@ export const Content = styled.div`
 `;
 
 export const NavLink = styled.a`
+  margin: 0 0 20px ${({ theme }) => theme.leftRail.inset}px;
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size}px;
   font-weight: ${({ active }) => (active ? '500' : 'normal')};
-  margin: 0 0 20px ${({ theme }) => theme.leftRail.inset}px;
   line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
   text-decoration: none;
@@ -63,15 +64,16 @@ export const Rule = styled.div`
 `;
 
 export const AppInfo = styled.div`
-  color: ${({ theme }) => theme.colors.gray300};
+  margin-left: ${({ theme }) => theme.leftRail.inset}px;
+  color: ${({ theme }) => theme.colors.gray500};
   font-family: ${({ theme }) => theme.fonts.smallLabel.family};
-  font-size: ${({ theme }) => theme.fonts.smallLabel.size};
+  font-size: ${({ theme }) => theme.fonts.smallLabel.size}px;
   letter-spacing: ${({ theme }) => theme.fonts.smallLabel.letterSpacing};
 `;
 
 export const LogoPlaceholder = styled.div`
-  width: 145px;
   height: 40px;
+  width: 145px;
   margin: ${({ theme }) => theme.leftRail.logoMargin};
   background-color: ${({ theme }) => theme.colors.gray100};
 `;

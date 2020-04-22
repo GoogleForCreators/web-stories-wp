@@ -17,12 +17,17 @@
 /**
  * Internal dependencies
  */
-import { TemplateNavBar } from '../';
+import { AppFrame, PageContent, LeftRail } from '../';
 
 export default {
-  title: 'Dashboard/Components/TemplateNavigationBar',
+  title: 'Dashboard/Components/LeftRail',
 };
 
-export const _defualt = () => {
-  return <TemplateNavBar title={'Demo'} />;
+export const _default = () => {
+  return (
+    <AppFrame>
+      <LeftRail />
+      <PageContent />
+    </AppFrame>
+  );
 };

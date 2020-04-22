@@ -32,6 +32,7 @@ import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { BUTTON_TYPES, primaryPaths, secondaryPaths } from '../../constants';
+import packageJson from '../../../../../package.json';
 import {
   AppInfo,
   Content,
@@ -40,7 +41,6 @@ import {
   NavLink,
   Rule,
 } from './navigationComponents';
-import packageJson from '../../../../../package.json';
 
 export const AppFrame = styled.div`
   display: flex;

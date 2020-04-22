@@ -28,7 +28,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown, MainNavBar } from '../../../components';
+import { Dropdown } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 import {
   VIEW_STYLE,

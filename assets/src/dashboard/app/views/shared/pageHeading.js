@@ -36,7 +36,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px 40px`};
+  margin: ${({ theme }) => `20px ${theme.pageGutter.small.desktop}px 40px`};
   max-width: 100%;
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
