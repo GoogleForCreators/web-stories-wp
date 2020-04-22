@@ -19,36 +19,32 @@
  */
 import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import StoryPlayer from './storyPlayer';
-
-function save({ attributes }) {
-  const { url, title, poster, width, height, align = 'none' } = attributes;
-
+function StoryPlayer({ url, title, poster, width, height }) {
   return (
-    <div className={`align${align}`}>
-      <StoryPlayer
-        url={url}
-        title={title}
-        poster={poster}
-        width={width}
-        height={height}
-      />
-    </div>
+    <amp-story-player
+      style={{
+        width: width ? `${width}px` : undefined,
+        height: height ? `${height}px` : undefined,
+      }}
+    >
+      <a
+        href={url}
+        style={{
+          ['--story-player-poster']: poster ? `url('${poster}')` : undefined,
+        }}
+      >
+        {title}
+      </a>
+    </amp-story-player>
   );
 }
 
-save.propTypes = {
-  attributes: PropTypes.shape({
-    url: PropTypes.string,
-    title: PropTypes.string,
-    poster: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    align: PropTypes.string,
-  }).isRequired,
+StoryPlayer.propTypes = {
+  url: PropTypes.string,
+  title: PropTypes.string,
+  poster: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
 
-export default save;
+export default StoryPlayer;

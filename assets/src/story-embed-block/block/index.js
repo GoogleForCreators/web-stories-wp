@@ -28,7 +28,7 @@ import metadata from './block.json';
 import edit from './edit';
 import save from './save';
 
-const { name, category } = metadata;
+const { name, category, attributes } = metadata;
 
 const settings = {
   title: __('Web Story', 'web-stories'),
@@ -41,6 +41,7 @@ const settings = {
     /* translators: block keyword. */
     __('story', 'web-stories'),
   ],
+  attributes,
   example: {
     // TODO: Replace with something custom.
     attributes: {

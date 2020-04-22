@@ -22,7 +22,8 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from '@wordpress/element';
+import { useCallback, useState, useEffect } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -31,19 +32,60 @@ import { __ } from '@wordpress/i18n';
 import EmbedPlaceholder from './embed-placeholder';
 import './edit.css';
 import EmbedControls from './embed-controls';
+import StoryPlayer from './storyPlayer';
 import { icon } from './index.js';
 
 function StoryEmbedEdit({ attributes, setAttributes, className }) {
-  const {
-    url: outerURL,
-    width = 360,
-    height = 600,
-    title,
-    poster
-  } = attributes;
+  const { url: outerURL, width, height } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
   const [url, setURL] = useState(outerURL);
+  const [isFetchingData, setIsFetchingData] = useState(false);
+  const [storyData, setStoryData] = useState({});
+
+  useEffect(() => {
+    setURL(outerURL);
+  }, [outerURL]);
+
+  useEffect(() => {
+    if (url === outerURL) {
+      return;
+    }
+
+    try {
+      setIsFetchingData(true);
+      const urlObj = new URL(url);
+      apiFetch({
+        path: `web-stories/v1/embed?url=${urlObj.toString()}`,
+      })
+        .then((data) => {
+          setStoryData(data);
+        })
+        .finally(() => {
+          setIsFetchingData(false);
+        });
+    } catch {
+      // Do not act on invalid URLs.
+    }
+  }, [url, outerURL]);
+
+  useEffect(() => {
+    if (!storyData) {
+      return;
+    }
+
+    const { title, poster } = storyData;
+
+    if (!title && !poster) {
+      return;
+    }
+
+    setAttributes({
+      url,
+      title,
+      poster,
+    });
+  }, [url, storyData, setAttributes]);
 
   const onSubmit = useCallback(
     (event) => {
@@ -63,7 +105,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (editingURL) {
+  if (editingURL || isFetchingData) {
     return (
       <EmbedPlaceholder
         icon={icon}
@@ -75,13 +117,23 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
     );
   }
 
+  const { title, poster } = attributes;
+
   return (
     <>
       <EmbedControls
         showEditButton={true}
         switchBackToURLInput={switchBackToURLInput}
       />
-      <div className={className}>{'todo'}</div>
+      <div className={className}>
+        <StoryPlayer
+          url={outerURL}
+          title={title}
+          poster={poster}
+          width={width}
+          height={height}
+        />
+      </div>
     </>
   );
 }

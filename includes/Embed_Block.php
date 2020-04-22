@@ -72,6 +72,7 @@ class Embed_Block {
 			false
 		);
 
+		// todo: use register_block_type_from_metadata().
 		register_block_type(
 			'web-stories/embed',
 			[
