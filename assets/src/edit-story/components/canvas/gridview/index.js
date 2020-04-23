@@ -222,6 +222,8 @@ function GridView() {
   const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
   const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
 
+  const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
+
   return (
     <Container>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
@@ -253,7 +255,7 @@ function GridView() {
                 <ReorderableItem position={index}>
                   <PagePreview
                     key={index}
-                    ariaLabel={
+                    aria-label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
@@ -271,6 +273,7 @@ function GridView() {
                     width={width}
                     height={height}
                     dragIndicatorOffset={GRID_GAP / 2}
+                    onClick={handleClickPage(page)}
                   />
                 </ReorderableItem>
                 <PageSeparator
