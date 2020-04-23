@@ -18,6 +18,7 @@ module.exports = {
   launch: {
     headless: process.env.PUPPETEER_HEADLESS !== 'false',
     slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
+    dumpio: true,
+    product: process.env.PUPPETEER_PRODUCT || 'chrome',
   },
-  browser: process.env.PUPPETEER_PRODUCT || 'chromium',
 };
