@@ -161,7 +161,7 @@ jobs:
       env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
     - name: E2E tests (Firefox)
       php: 7.4
-      env: E2E=1 WP_VERSION=latest PUPPETEER_PRODUCT=firefox
+      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD= PUPPETEER_PRODUCT=firefox
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       php: 7.3
