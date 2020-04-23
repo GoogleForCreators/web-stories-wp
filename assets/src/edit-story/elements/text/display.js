@@ -35,11 +35,8 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
-import {
-  draftMarkupToContent,
-  getHighlightLineheight,
-  generateParagraphTextStyle,
-} from './util';
+import { draftMarkupToContent } from '../../components/richText/util';
+import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}

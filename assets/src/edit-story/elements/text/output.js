@@ -26,11 +26,8 @@ import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import {
-  draftMarkupToContent,
-  generateParagraphTextStyle,
-  getHighlightLineheight,
-} from './util';
+import { draftMarkupToContent } from '../../components/richText/util';
+import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.

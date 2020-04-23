@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Numeric, Row, ToggleButton } from '../../form';
+import useRichText from '../../richText/useRichText';
 import { ReactComponent as VerticalOffset } from '../../../icons/offset_vertical.svg';
 import { ReactComponent as HorizontalOffset } from '../../../icons/offset_horizontal.svg';
 import { ReactComponent as LeftAlign } from '../../../icons/left_align.svg';
@@ -61,12 +62,46 @@ const Space = styled.div`
 `;
 
 function StylePanel({ selectedElements, pushUpdate }) {
+  const {
+    state: {
+      hasCurrentEditor,
+      selectionIsBold,
+      selectionIsItalic,
+      selectionIsUnderline,
+    },
+    actions: {
+      toggleBoldInSelection,
+      toggleItalicInSelection,
+      toggleUnderlineInSelection,
+    },
+  } = useRichText();
+
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
-  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
-  const bold = getCommonValue(selectedElements, 'bold');
+
+  const isBold = hasCurrentEditor
+    ? selectionIsBold
+    : getCommonValue(selectedElements, 'bold');
+  const isItalic = hasCurrentEditor
+    ? selectionIsItalic
+    : getCommonValue(selectedElements, 'fontStyle') === 'italic';
+  const isUnderline = hasCurrentEditor
+    ? selectionIsUnderline
+    : getCommonValue(selectedElements, 'textDecoration') === 'underline';
+
+  const handleClickBold = hasCurrentEditor
+    ? toggleBoldInSelection
+    : (value) => pushUpdate({ bold: value }, true);
+
+  const handleClickItalic = hasCurrentEditor
+    ? toggleItalicInSelection
+    : (value) => pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true);
+
+  const handleClickUnderline = hasCurrentEditor
+    ? toggleUnderlineInSelection
+    : (value) =>
+        pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true);
 
   return (
     <>
@@ -128,28 +163,24 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={bold === true}
+          value={isBold}
           iconWidth={9}
           iconHeight={10}
-          onChange={(value) => pushUpdate({ bold: value }, true)}
+          onChange={handleClickBold}
         />
         <ToggleButton
           icon={<ItalicIcon />}
-          value={fontStyle === 'italic'}
+          value={isItalic}
           iconWidth={10}
           iconHeight={10}
-          onChange={(value) =>
-            pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true)
-          }
+          onChange={handleClickItalic}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
-          value={textDecoration === 'underline'}
+          value={isUnderline}
           iconWidth={8}
           iconHeight={21}
-          onChange={(value) =>
-            pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true)
-          }
+          onChange={handleClickUnderline}
         />
       </Row>
     </>
