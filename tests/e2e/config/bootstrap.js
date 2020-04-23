@@ -113,12 +113,17 @@ function observeConsoleLogging() {
       return;
     }
 
-    // Firefox warns about this issue when there's no proper favicon
+    // Firefox warns about this issue when there's no proper favicon.
     if (
       text.includes(
         'Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]'
       )
     ) {
+      return;
+    }
+
+    // Firefox warns about this issue on the login screen.
+    if (text.includes('wp-includes/js/zxcvbn.min.js')) {
       return;
     }
 
