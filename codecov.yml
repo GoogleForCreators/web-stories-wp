@@ -1,16 +1,48 @@
+# Overall settings for PR integration via codecov.io
+# See https://docs.codecov.io/docs/codecovyml-reference
+
+# Separate PR statuses for project-level and patch-level coverage
+# See https://docs.codecov.io/docs/commit-status
 coverage:
   status:
+    # Project-level coverage
     project:
       default:
-        threshold: 1%
-        branches:
-          - master
-        if_not_found: success
-        if_ci_failed: error
+        base: auto
         # Disable once code base is more mature.
         informational: true
         only_pulls: true
+        target: 60%
+        threshold: 10%
+        if_not_found: success
+        if_ci_failed: error
 
+      php:
+        paths:
+          - includes
+
+      dashboard:
+        paths:
+          - assets/src/dashboard
+
+      editor:
+        paths:
+          - assets/src/edit-story
+
+    # Patch-level coverage (how well is the PR tested)
+    patch:
+      default:
+        base: auto
+        # Disable once code base is more mature.
+        informational: true
+        only_pulls: true
+        target: 80%
+        threshold: 10%
+        if_not_found: success
+        if_ci_failed: error
+
+# Pull request comments
+# See https://docs.codecov.io/docs/pull-request-comments
 comment:
   layout: 'reach, diff, flags, files'
   behavior: default
