@@ -65,6 +65,9 @@ async function setupBrowser() {
     width: 1680,
     height: 948,
   });
+
+  // eslint-disable-next-line no-console
+  console.log('Using browser:', await browser.version());
 }
 
 /**
