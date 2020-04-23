@@ -28,9 +28,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import { TextInput } from '../input';
+import useFocusOut from '../../utils/useFocusOut';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
@@ -65,7 +66,18 @@ const CardTitle = ({
   onEditComplete,
   onEditCancel,
 }) => {
+  const inputContainerRef = useRef(null);
   const [newTitle, setNewTitle] = useState(title);
+
+  useFocusOut(
+    inputContainerRef,
+    () => {
+      if (editMode) {
+        onEditCancel();
+      }
+    },
+    [editMode]
+  );
 
   const handleChange = useCallback(({ target }) => {
     setNewTitle(target.value);
@@ -85,12 +97,14 @@ const CardTitle = ({
   return (
     <StyledCardTitle>
       {editMode ? (
-        <TextInput
-          data-testid={'title-rename-input'}
-          value={newTitle}
-          onKeyDown={handleKeyPress}
-          onChange={handleChange}
-        />
+        <div ref={inputContainerRef}>
+          <TextInput
+            data-testid={'title-rename-input'}
+            value={newTitle}
+            onKeyDown={handleKeyPress}
+            onChange={handleChange}
+          />
+        </div>
       ) : (
         <StyledTitle>{title}</StyledTitle>
       )}
