@@ -184,11 +184,20 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const listBarLabel = sprintf(
+  const hasFilter = typeaheadValue.length > 0;
+  const listBarLabelUnfiltered = sprintf(
     /* translators: %s: number of stories */
     _n('%s total story', '%s total stories', totalStories, 'web-stories'),
     totalStories
   );
+  const listBarLabelFiltered = sprintf(
+    /* translators: %s: number of stories, when a filter is applied */
+    _n('%s result', '%s results', filteredCount, 'web-stories'),
+    totalStories
+  );
+  const listBarLabel = hasFilter
+    ? listBarLabelFiltered
+    : listBarLabelUnfiltered;
 
   const storiesView = useMemo(() => {
     switch (viewStyle) {
@@ -250,8 +259,18 @@ function MyStories() {
     viewStyle,
   ]);
 
+  const renderStoryStatusLabel = (storyStatus) => {
+    if (!hasFilter) {
+      return `${storyStatus.label}`;
+    }
+    const count = filteredStories.filter((story) =>
+      storyStatus.value.split(',').includes(story.status)
+    ).length;
+    return `${storyStatus.label} (${count})`;
+  };
+
   const BodyContent = useMemo(() => {
-    if (orderedStories.length > 0) {
+    if (totalStories > 0) {
       return (
         <BodyWrapper>
           {storiesViewControls}
@@ -265,7 +284,7 @@ function MyStories() {
           <ScrollToTop />
         </BodyWrapper>
       );
-    } else if (typeaheadValue.length > 0) {
+    } else if (hasFilter) {
       return <NoResults typeaheadValue={typeaheadValue} />;
     }
 
@@ -280,6 +299,7 @@ function MyStories() {
     allPagesFetched,
     handleNewPageRequest,
     typeaheadValue,
+    hasFilter,
     storiesViewControls,
     storiesView,
   ]);
@@ -305,7 +325,7 @@ function MyStories() {
                 isSelected={status === storyStatus.value}
                 inputType="radio"
               >
-                {storyStatus.label}
+                {renderStoryStatusLabel(storyStatus)}
               </FloatingTab>
             ))}
           </FilterContainer>
