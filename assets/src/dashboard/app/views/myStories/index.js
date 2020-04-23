@@ -28,7 +28,11 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, InfiniteScroller } from '../../../components';
+import {
+  FloatingTab,
+  InfiniteScroller,
+  ScrollToTop,
+} from '../../../components';
 import {
   VIEW_STYLE,
   STORY_STATUSES,
@@ -254,6 +258,7 @@ function MyStories() {
               handleNewPageRequest();
             }}
           />
+          <ScrollToTop />
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
