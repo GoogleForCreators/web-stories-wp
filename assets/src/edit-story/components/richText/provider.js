@@ -36,12 +36,16 @@ import {
   toggleBold,
   toggleItalic,
   toggleUnderline,
-  isBold,
-  isItalic,
-  isUnderline,
+  getStateInfo,
 } from './styleManipulation';
 import customImport from './customImport';
 import customExport from './customExport';
+import {
+  toggleBoldInHTML,
+  toggleItalicInHTML,
+  toggleUnderlineInHTML,
+  getHTMLInfo,
+} from './htmlManipulation';
 
 function RichTextProvider({ children }) {
   const {
@@ -51,21 +55,12 @@ function RichTextProvider({ children }) {
   const [forceFocus, setForceFocus] = useState(false);
   const [editorState, setEditorState] = useState(null);
 
-  const getStateInfo = useCallback(
-    (state) => ({
-      isBold: isBold(state),
-      isItalic: isItalic(state),
-      isUnderline: isUnderline(state),
-    }),
-    []
-  );
-
   const selectionInfo = useMemo(() => {
     if (editorState) {
       return getStateInfo(editorState);
     }
     return { isBold: false, isItalic: false, isUnderline: false };
-  }, [getStateInfo, editorState]);
+  }, [editorState]);
 
   const setStateFromContent = useCallback(
     (content) => {
@@ -90,8 +85,6 @@ function RichTextProvider({ children }) {
     [editingElementState, setEditorState]
   );
 
-  // This is to allow the getContentFromState to be stable and *not*
-  // depend on editorState, as would otherwise be a lint error.
   const lastKnownState = useRef(null);
   const lastKnownSelection = useRef(null);
   useEffect(() => {
@@ -100,14 +93,6 @@ function RichTextProvider({ children }) {
       lastKnownSelection.current = editorState.getSelection();
     }
   }, [editorState]);
-
-  const getContentFromState = useCallback((someEditorState) => {
-    if (!someEditorState) {
-      return null;
-    }
-
-    return customExport(someEditorState);
-  }, []);
 
   // This filters out illegal content (see `getFilteredState`)
   // on paste and updates state accordingly.
@@ -154,40 +139,6 @@ function RichTextProvider({ children }) {
     [updateWhileUnfocused]
   );
 
-  const getSelectAllStateFromHTML = useCallback((html) => {
-    const contentState = customImport(html);
-    const initialState = EditorState.createWithContent(contentState);
-    const selection = getSelectionForAll(initialState.getCurrentContent());
-    return EditorState.forceSelection(initialState, selection);
-  }, []);
-
-  const updateAndReturnHTML = useCallback(
-    (html, updater) => {
-      const stateWithUpdate = updater(getSelectAllStateFromHTML(html));
-      const renderedHTML = customExport(stateWithUpdate);
-      return renderedHTML;
-    },
-    [getSelectAllStateFromHTML]
-  );
-
-  const toggleBoldInHTML = useCallback(
-    (html) => updateAndReturnHTML(html, toggleBold),
-    [updateAndReturnHTML]
-  );
-  const toggleItalicInHTML = useCallback(
-    (html) => updateAndReturnHTML(html, toggleItalic),
-    [updateAndReturnHTML]
-  );
-  const toggleUnderlineInHTML = useCallback(
-    (html) => updateAndReturnHTML(html, toggleUnderline),
-    [updateAndReturnHTML]
-  );
-
-  const getHTMLInfo = useCallback(
-    (html) => getStateInfo(getSelectAllStateFromHTML(html)),
-    [getSelectAllStateFromHTML, getStateInfo]
-  );
-
   const clearForceFocus = useCallback(() => setForceFocus(false), []);
 
   const value = {
@@ -201,12 +152,13 @@ function RichTextProvider({ children }) {
       setStateFromContent,
       updateEditorState,
       getHandleKeyCommand,
-      getContentFromState,
       clearState,
       clearForceFocus,
       toggleBoldInSelection,
       toggleItalicInSelection,
       toggleUnderlineInSelection,
+      // These actually don't work on the state at all, just pure functions
+      getContentFromState: customExport,
       getHTMLInfo,
       toggleBoldInHTML,
       toggleItalicInHTML,

@@ -72,6 +72,10 @@ function inlineStyleFn(styles) {
 }
 
 function exportHTML(editorState) {
+  if (!editorState) {
+    return null;
+  }
+
   const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
     defaultBlockTag: null,

@@ -174,6 +174,14 @@ export function isUnderline(editorState) {
   return !styles.includes(NONE);
 }
 
+export function getStateInfo(state) {
+  return {
+    isBold: isBold(state),
+    isItalic: isItalic(state),
+    isUnderline: isUnderline(state),
+  };
+}
+
 export function toggleUnderline(editorState) {
   return togglePrefixStyle(editorState, UNDERLINE);
 }
