@@ -145,10 +145,6 @@ describe('Panels/StylePreset/utils', () => {
   it('should get correct text presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
-      padding: {
-        vertical: 0,
-        horizontal: 0,
-      },
       fontFamily: 'Foo',
       fontFallback: ['Bar'],
     };
@@ -186,10 +182,6 @@ describe('Panels/StylePreset/utils', () => {
   it('should not consider existing presets as new', () => {
     const stylePreset = {
       ...STYLE_PRESET,
-      padding: {
-        vertical: 0,
-        horizontal: 0,
-      },
       fontFamily: 'Foo',
       fontFallback: ['Bar'],
     };

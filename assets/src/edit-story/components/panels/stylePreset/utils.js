@@ -47,13 +47,11 @@ export function generatePresetStyle(preset, prepareForCSS) {
   const {
     color,
     backgroundColor,
-    padding,
     fontFamily,
     fontFallback,
     backgroundTextMode,
   } = preset;
   let style = {
-    padding: `${padding?.vertical ? 2 : 0}px ${padding?.horizontal ? 2 : 0}px`,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     ...generatePatternStyles(color, 'color'),
   };
@@ -67,13 +65,11 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-function hasStylePreset({ fontFamily, backgroundTextMode, padding }) {
+function hasStylePreset({ fontFamily, backgroundTextMode }) {
   const defaultFont = 'Roboto';
   return (
     defaultFont !== fontFamily ||
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE ||
-    padding.horizontal !== 0 ||
-    padding.vertical !== 0
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
   );
 }
 
@@ -91,7 +87,6 @@ export function getTextPresets(elements, stylePresets) {
           'color',
           'backgroundColor',
           'backgroundTextMode',
-          'padding',
           'fontFamily',
           'fontFallback',
         ]);
