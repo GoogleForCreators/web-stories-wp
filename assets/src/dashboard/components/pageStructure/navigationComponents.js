@@ -25,7 +25,7 @@ export const LeftRailContainer = styled.nav`
   justify-content: space-between;
   flex-direction: column;
   z-index: 1;
-  height: inherit;
+  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
   width: max(15%, 190px);
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};

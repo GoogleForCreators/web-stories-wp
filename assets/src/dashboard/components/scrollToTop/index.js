@@ -41,12 +41,12 @@ const ScrollButton = styled.button`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   cursor: pointer;
   border-radius: 50%;
-  border: none;
-  box-shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)';
+  border: 1px solid transparent;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   color: ${({ theme }) => theme.colors.gray900};
-  background-color: ${({ theme, isVisible }) =>
-    isVisible ? theme.colors.white : 'transparent'};
-  transition: background-color 0.25s ${BEZIER.outSine};
+  background-color: ${({ theme }) => theme.colors.white};
+  opacity: ${({ isVisible }) => (isVisible ? 1.0 : 0)};
+  transition: opacity 0.75s ${BEZIER.outSine};
 `;
 
 // TODO needs actual SVG
@@ -111,11 +111,15 @@ const ScrollToTop = () => {
   });
 
   const handleScrollBackToTop = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
     <ScrollButton
+      data-testid="scroll-to-top-button"
       ref={targetRef}
       isVisible={showButtonState === STATE.visible}
       onClick={handleScrollBackToTop}

@@ -32,9 +32,9 @@ const wrapper = (children) => {
 
 describe('ScrollToTop', () => {
   it('should render a <ScrollToTop /> by default', () => {
-    const { getByRole } = wrapper(<ScrollToTop />);
+    const { getByTestId } = wrapper(<ScrollToTop />);
 
-    const Button = getByRole('button');
+    const Button = getByTestId('scroll-to-top-button');
 
     expect(Button).toBeDefined();
   });
