@@ -17,19 +17,17 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { BUTTON_TYPES, APP_ROUTES } from '../../constants';
-import { ReactComponent as Close } from '../../icons/close.svg';
 import BookmarkChip from '../../components/bookmark-chip';
 import { Nav, ActionLink } from './components';
 
@@ -43,55 +41,30 @@ const BookmarkToggle = styled(BookmarkChip)`
 `;
 
 const CloseLink = styled.a`
-  display: inline-block;
-  color: ${({ theme }) => theme.colors.gray200};
-  width: 14px;
-  height: 14px;
-  margin-right: 20px;
-  cursor: pointer;
-`;
-
-const Title = styled.h1`
   ${({ theme }) => `
-  margin: 0;
-  font-family: ${theme.fonts.body1.family};
-  font-size: ${theme.fonts.body1.size};
-  font-weight: ${theme.fonts.body1.weight};
-  line-height: ${theme.fonts.body1.lineHeight};
-  color: ${theme.colors.gray700};
+    font-family: ${theme.fonts.body1.family};
+    font-size: ${theme.fonts.body1.size};
+    font-weight: ${theme.fonts.body1.weight};
+    line-height: ${theme.fonts.body1.lineHeight};
+    text-decoration: none;
+    color: ${theme.colors.gray700};
   `}
 `;
 
-export function TemplateNavBar({ title }) {
-  const translatedTitle = sprintf(
-    /* translators: %s: template title */
-    __('%s Template', 'web-stories'),
-    title
-  );
-  const closeLabel = __('Go back to template gallery', 'web-stories');
-
+export function TemplateNavBar() {
   return (
     <Nav>
       <Container>
-        <CloseLink
-          title={closeLabel}
-          aria-label={closeLabel}
-          href={`#${APP_ROUTES.TEMPLATES_GALLERY}`}
-        >
-          <Close />
+        <CloseLink href={`#${APP_ROUTES.TEMPLATES_GALLERY}`}>
+          {__('Close', 'web-stories')}
         </CloseLink>
-        <Title>{translatedTitle}</Title>
       </Container>
       <Container>
         <BookmarkToggle />
         <ActionLink type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
-          {__('Use this template', 'web-stories')}
+          {__('USE TEMPLATE', 'web-stories')}
         </ActionLink>
       </Container>
     </Nav>
   );
 }
-
-TemplateNavBar.propTypes = {
-  title: PropTypes.string.isRequired,
-};

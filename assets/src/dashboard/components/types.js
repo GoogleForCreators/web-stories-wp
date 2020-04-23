@@ -26,3 +26,8 @@ export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
   separator: PropTypes.bool,
   disabled: PropTypes.bool,
 });
+
+export const ColorType = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+});

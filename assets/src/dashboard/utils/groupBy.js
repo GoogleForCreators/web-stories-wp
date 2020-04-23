@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+const groupBy = (arr, key) => {
+  return arr.reduce((prev, curr) => {
+    if (!curr[key]) {
+      return prev;
+    }
+    if (prev[curr[key]]) {
+      prev[curr[key]] = curr;
+    } else {
+      prev[curr[key]] = curr;
+    }
+    return prev;
+  }, {});
+};
 
-/**
- * Internal dependencies
- */
-import { ViewHeader } from '../../../components';
-
-function MyBookmarks() {
-  return (
-    <div>
-      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
-    </div>
-  );
-}
-
-export default MyBookmarks;
+export default groupBy;

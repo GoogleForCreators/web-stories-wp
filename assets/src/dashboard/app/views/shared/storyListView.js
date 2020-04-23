@@ -23,10 +23,12 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { useCallback } from 'react';
 import { StoriesPropType } from '../../../types';
 import {
   PreviewPage,
@@ -36,10 +38,19 @@ import {
   TableHeader,
   TableHeaderCell,
   TablePreviewCell,
+  TablePreviewHeaderCell,
   TableRow,
+  TableTitleHeaderCell,
 } from '../../../components';
-import { PAGE_RATIO } from '../../../constants';
+import {
+  ICON_METRICS,
+  ORDER_BY_SORT,
+  PAGE_RATIO,
+  SORT_DIRECTION,
+  STORY_SORT_OPTIONS,
+} from '../../../constants';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
 
 const ListView = styled.div`
   width: 100%;
@@ -53,19 +64,102 @@ const PreviewContainer = styled.div`
   display: inline-block;
 `;
 
-export default function StoryListView({ filteredStories }) {
+const ArrowIcon = styled.div`
+  width: ${({ theme }) => theme.table.headerContentSize}px;
+  height: ${({ theme }) => theme.table.headerContentSize}px;
+  display: inline-block;
+  color: ${({ theme }) => theme.colors.gray900};
+  vertical-align: middle;
+
+  svg {
+    visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
+    ${({ asc }) => asc && { transform: 'rotate(180deg)' }};
+  }
+`;
+
+const ArrowIconWithTitle = styled(ArrowIcon)`
+  margin-left: 15px;
+`;
+
+const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
+  color: ${({ theme }) => theme.colors.bluePrimary};
+  font-weight: 500;
+  cursor: pointer;
+`;
+
+const toggleSortLookup = {
+  [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
+  [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
+};
+
+export default function StoryListView({
+  filteredStories,
+  storySort,
+  handleSortChange,
+  handleSortDirectionChange,
+  sortDirection,
+}) {
+  const onSortTitleSelected = useCallback(
+    (newStorySort) => {
+      if (newStorySort !== storySort) {
+        handleSortChange(newStorySort);
+        handleSortDirectionChange(ORDER_BY_SORT[newStorySort]);
+      } else {
+        handleSortDirectionChange(toggleSortLookup[sortDirection]);
+      }
+    },
+    [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
+  );
   return (
     <ListView>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHeaderCell>{__('Title', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>{__('', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>{__('Author', 'web-stories')}</TableHeaderCell>
+            <TablePreviewHeaderCell
+              onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+            >
+              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
+            </TablePreviewHeaderCell>
+            <TableTitleHeaderCell>
+              <ArrowIcon
+                active={storySort === STORY_SORT_OPTIONS.NAME}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+              </ArrowIcon>
+            </TableTitleHeaderCell>
+            <TableHeaderCell>
+              <SelectableTitle
+                onClick={() =>
+                  onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
+                }
+              >
+                {__('Author', 'web-stories')}
+              </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+              </ArrowIconWithTitle>
+            </TableHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>
-              {__('Last Modified', 'web-stories')}
+              <SelectableTitle
+                onClick={() =>
+                  onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
+                }
+              >
+                {__('Last Modified', 'web-stories')}
+              </SelectableTitle>
+
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+              </ArrowIconWithTitle>
             </TableHeaderCell>
           </TableRow>
         </TableHeader>
@@ -94,4 +188,8 @@ export default function StoryListView({ filteredStories }) {
 
 StoryListView.propTypes = {
   filteredStories: StoriesPropType,
+  handleSortChange: PropTypes.func.isRequired,
+  handleSortDirectionChange: PropTypes.func.isRequired,
+  storySort: PropTypes.string.isRequired,
+  sortDirection: PropTypes.string.isRequired,
 };
