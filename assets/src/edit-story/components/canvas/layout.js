@@ -18,13 +18,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
+  PREVIEW_RATIO,
+  PAGE_RATIO,
+  ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
   PAGE_NAV_WIDTH,
 } from '../../constants';
@@ -63,18 +65,6 @@ const MIN_CAROUSEL_HEIGHT =
 const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
 
-const LARGE_EDITOR_PAGE_SIZE = [
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-];
-const MEDIUM_EDITOR_PAGE_SIZE = [280, 420];
-const SMALL_EDITOR_PAGE_SIZE = [240, 360];
-const ALLOWED_PAGE_SIZES = [
-  LARGE_EDITOR_PAGE_SIZE,
-  MEDIUM_EDITOR_PAGE_SIZE,
-  SMALL_EDITOR_PAGE_SIZE,
-];
-
 // @todo: the menu height is not responsive
 const Layer = styled.div`
   ${pointerEventsCss}
@@ -91,14 +81,17 @@ const Layer = styled.div`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(--page-height-px)
+    '.         prev      page      next      .       ' var(
+      --page-preview-height-px
+    )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' minmax(
       ${MIN_CAROUSEL_HEIGHT}px,
       ${MAX_CAROUSEL_HEIGHT}px
     )
-    / 1fr ${PAGE_NAV_WIDTH}px var(--page-width-px) ${PAGE_NAV_WIDTH}px 1fr;
+    / 1fr ${PAGE_NAV_WIDTH}px var(--page-preview-width-px)
+    ${PAGE_NAV_WIDTH}px 1fr;
 `;
 
 const Area = styled.div`
@@ -114,7 +107,50 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled(Area).attrs({ area: 'page', overflowAllowed: true })``;
+const PageAreaContainer = styled(Area).attrs({
+  area: 'page',
+  overflowAllowed: false,
+})`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+const PageAreaContent = styled.div`
+  width: 100%;
+  height: var(--page-height-px);
+  overflow: visible;
+  position: relative;
+`;
+
+const PageAreaSafeZone = styled.div`
+  pointer-events: none;
+  position: absolute;
+  background-image: linear-gradient(
+    45deg,
+    #a3a3a3 25%,
+    #000000 25%,
+    #000000 50%,
+    #a3a3a3 50%,
+    #a3a3a3 75%,
+    #000000 75%,
+    #000000 100%
+  );
+  background-size: 28.28px 28.28px;
+  opacity: 0.05;
+  width: 100%;
+  height: calc((var(--page-preview-height-px) - var(--page-height-px)) / 2);
+  z-index: 1;
+`;
+
+const PageAreaSafeZoneTop = styled(PageAreaSafeZone)`
+  top: 0;
+`;
+
+const PageAreaSafeZoneBottom = styled(PageAreaSafeZone)`
+  bottom: 0;
+`;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
 
@@ -151,15 +187,16 @@ function useLayoutParams(containerRef) {
       height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
 
     // Find the first size that fits within the [maxWidth, maxHeight].
-    let bestSize = ALLOWED_PAGE_SIZES[ALLOWED_PAGE_SIZES.length - 1];
-    for (let i = 0; i < ALLOWED_PAGE_SIZES.length; i++) {
-      const size = ALLOWED_PAGE_SIZES[i];
-      if (size[0] <= maxWidth && size[1] <= maxHeight) {
+    let bestSize =
+      ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
+    for (let i = 0; i < ALLOWED_EDITOR_PAGE_WIDTHS.length; i++) {
+      const size = ALLOWED_EDITOR_PAGE_WIDTHS[i];
+      if (size <= maxWidth && size * PAGE_RATIO <= maxHeight) {
         bestSize = size;
         break;
       }
     }
-    setPageSize({ width: bestSize[0], height: bestSize[1] });
+    setPageSize({ width: bestSize, height: bestSize * PAGE_RATIO });
   });
 }
 
@@ -170,8 +207,27 @@ function useLayoutParamsCssVars() {
   return {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,
+    '--page-preview-width-px': `${pageSize.width}px`,
+    '--page-preview-height-px': `${pageSize.width * PREVIEW_RATIO}px`,
   };
 }
+
+function PageArea({ children }) {
+  return (
+    <PageAreaContainer>
+      <PageAreaContent>{children}</PageAreaContent>
+      <PageAreaSafeZoneTop />
+      <PageAreaSafeZoneBottom />
+    </PageAreaContainer>
+  );
+}
+
+PageArea.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 export {
   Layer,

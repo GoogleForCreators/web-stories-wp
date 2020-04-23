@@ -24,7 +24,7 @@ function CustomStyles() {
               .page-background-overlay-area,
               .page-safe-area {
                 position: absolute;
-                overflow: hidden;
+                overflow: visible;
                 top: 0;
                 bottom: 0;
                 left: 0;
