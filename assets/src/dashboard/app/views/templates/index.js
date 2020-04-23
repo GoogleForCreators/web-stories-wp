@@ -28,7 +28,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Dropdown, MainNavBar } from '../../../components';
+import { Dropdown } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 import {
   VIEW_STYLE,
@@ -70,12 +70,12 @@ function TemplatesGallery() {
   });
   const {
     state: { templates },
-    actions: { fetchTemplates },
+    actions: { templateApi },
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchTemplates();
-  }, [fetchTemplates]);
+    templateApi.fetchExternalTemplates();
+  }, [templateApi]);
 
   const filteredTemplates = useMemo(() => {
     return templates.filter((template) => {
@@ -144,7 +144,6 @@ function TemplatesGallery() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <MainNavBar />
           <PageHeading
             defaultTitle={__('Explore Templates', 'web-stories')}
             searchPlaceholder={__('Template Stories', 'web-stories')}

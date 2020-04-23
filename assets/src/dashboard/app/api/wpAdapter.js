@@ -15,19 +15,28 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import PropTypes from 'prop-types';
+import apiFetch from '@wordpress/api-fetch';
 
-export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  selected: PropTypes.bool,
-  separator: PropTypes.bool,
-  disabled: PropTypes.bool,
-});
+const get = (path, options = {}) => apiFetch({ path, ...options });
 
-export const ColorType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-});
+const post = (path, options = {}) =>
+  apiFetch({
+    path,
+    ...options,
+    method: 'POST',
+  });
+
+const deleteRequest = (path, options = {}) =>
+  apiFetch({
+    path,
+    ...options,
+    method: 'DELETE',
+  });
+
+export default {
+  get,
+  post,
+  deleteRequest,
+};

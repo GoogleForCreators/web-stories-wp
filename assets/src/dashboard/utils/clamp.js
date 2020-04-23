@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const clamp = (v, range) => {
+  const lowerBound = Math.min(range[0], range[1]);
+  const upperBound = Math.max(range[0], range[1]);
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
+  return Math.min(Math.max(lowerBound, v), upperBound);
+};
 
-export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  selected: PropTypes.bool,
-  separator: PropTypes.bool,
-  disabled: PropTypes.bool,
-});
-
-export const ColorType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-});
+export default clamp;

@@ -23,11 +23,16 @@ export default function (config) {
   const { pluginDir } = config;
   const travelStoryData = getTravelStoryData(pluginDir);
 
+  const globalConfig = {
+    createdBy: 'Google Web Stories',
+    modified: '2020-04-21',
+  };
+
   return [
     {
       id: 1,
       title: 'Beauty',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Health', 'Bold', 'Joy'],
       colors: [
         { label: 'Pink', color: '#f3d9e1' },
@@ -43,7 +48,7 @@ export default function (config) {
     {
       id: 2,
       title: 'Cooking',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Delicious', 'Baker', 'Cook'],
       colors: [
         { label: 'Cream', color: '#fff933' },
@@ -59,7 +64,7 @@ export default function (config) {
     {
       id: 3,
       title: 'DIY',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Doers', 'Expand', 'Start'],
       colors: [
         { label: 'Black', color: '#211f1e' },
@@ -76,7 +81,7 @@ export default function (config) {
     {
       id: 4,
       title: 'Entertainment',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Funny', 'Action', 'Hip'],
       colors: [
         { label: 'Black', color: '#000' },
@@ -91,7 +96,7 @@ export default function (config) {
     {
       id: 5,
       title: 'Fashion',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Clothing', 'Sparkle'],
       colors: [
         { label: 'Cream', color: '#ffece3' },
@@ -107,7 +112,7 @@ export default function (config) {
     {
       id: 6,
       title: 'Fitness',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Exercise', 'Fitness', 'Health', 'Workout', 'Bold'],
       colors: [
         { label: 'Black', color: '#1a1a1a' },
@@ -121,7 +126,7 @@ export default function (config) {
     {
       id: 7,
       title: 'Travel',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Explore', 'Adventure', 'Taste'],
       colors: [
         { label: 'Green', color: '#094228' },
@@ -136,7 +141,7 @@ export default function (config) {
     {
       id: 8,
       title: 'Wellbeing',
-      createdBy: 'Google AMP',
+      ...globalConfig,
       tags: ['Health', 'Happiness', 'Joy', 'Mindfulness'],
       colors: [
         { label: 'Blue', color: '#1f2a2e' },

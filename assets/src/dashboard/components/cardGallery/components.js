@@ -45,7 +45,6 @@ export const MiniCardWrapper = styled.div`
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    border-radius: 5px;
     ${isSelected ? `border: 3px solid ${theme.colors.bluePrimary600}` : ``}
   `}
 `;
@@ -56,18 +55,15 @@ export const MiniCard = styled.div`
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    border-radius: 4px;
     cursor: pointer;
   `}
 `;
 
 export const ActiveCard = styled.div`
-  ${({ theme, height, width }) => `
+  ${({ height, width }) => `
     position: relative;
     width: ${width}px;
     height: ${height}px;
-    border-radius: ${theme.border.cardRadius};
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
     overflow: hidden;
   `}
 `;
