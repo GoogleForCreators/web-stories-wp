@@ -132,7 +132,7 @@ jobs:
     - stage: test
       name: JavaScript unit tests
       php: 7.4
-      env: JS=1
+      env: JS=1 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
     - name: PHP unit tests (7.4, WordPress latest)
       php: 7.4
       env: PHP=1 WP_VERSION=latest
