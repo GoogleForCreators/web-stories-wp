@@ -50,14 +50,19 @@ const Text = styled.span`
 `;
 
 function FontPreview({ title, ...fontProps }) {
-  const { fontFamily, content, fontWeight, fontStyle } = fontProps;
+  const { fontFamily, fontWeight, fontStyle, fontSize } = fontProps;
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
   useEffect(() => {
-    maybeEnqueueFontStyle({ fontFamily, content, fontWeight, fontStyle });
-  }, [fontFamily, content, fontWeight, fontStyle, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle({
+      fontFamily,
+      fontWeight,
+      fontStyle,
+      fontSize,
+    });
+  }, [fontFamily, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
 
   return (
     <Preview>
@@ -68,10 +73,6 @@ function FontPreview({ title, ...fontProps }) {
 
 FontPreview.propTypes = {
   title: PropTypes.string,
-  fontFamily: PropTypes.string,
-  content: PropTypes.string,
-  fontWeight: PropTypes.number,
-  fontStyle: PropTypes.string,
 };
 
 export default FontPreview;

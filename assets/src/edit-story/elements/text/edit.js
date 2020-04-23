@@ -253,7 +253,7 @@ function TextEdit({
     editorRef.current.focus();
   }, []);
 
-  const { fontFamily, fontWeight, fontStyle } = rest;
+  const { fontFamily, fontWeight, fontStyle, fontSize } = rest;
 
   // Remeasure the height on each content update.
   useEffect(() => {
@@ -261,11 +261,16 @@ function TextEdit({
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState, elementHeight, fontFamily, content, fontWeight, fontStyle]);
+  }, [editorState, elementHeight, fontFamily, fontWeight, fontStyle]);
 
   useEffect(() => {
-    maybeEnqueueFontStyle({ fontFamily, content, fontWeight, fontStyle });
-  }, [fontFamily, content, fontWeight, fontStyle, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle({
+      fontFamily,
+      fontWeight,
+      fontStyle,
+      fontSize,
+    });
+  }, [fontFamily, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>

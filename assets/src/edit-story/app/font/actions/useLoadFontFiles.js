@@ -20,9 +20,17 @@
 import { useCallback } from 'react';
 
 /**
- * Internal dependencies
+ * This is a utility ensure that Promise.all return ONLY when all promises are processed.
+ *
+ * @param {Promise} promise Promise to be processed
+ * @return {Promise} Return a rejected or fulfilled Promise
  */
-import { MULTIPLE_VALUE } from '../../../components/form';
+const reflect = (promise) => {
+  return promise.then(
+    (v) => ({ v, status: 'fulfilled' }),
+    (e) => ({ e, status: 'rejected' })
+  );
+};
 
 function useLoadFontFiles({ getFontByName }) {
   /**
@@ -30,67 +38,85 @@ function useLoadFontFiles({ getFontByName }) {
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {Object} props An object with FontFaceSet required properties to inject and preload a font-face
-   * @return {Promise|Promise<HTMLLinkElement>} Returns promises callbacks or <link> element
+   * @param {Object} props An object with properties to create a valid FontFaceSet to inject and preload a font-face
+   * @return {Promise} Returns font load promise
    */
   const maybeEnqueueFontStyle = useCallback(
-    ({ fontFamily, fontWeight, fontStyle, content }) => {
-      return new Promise((resolve, reject) => {
-        // skip when required infos are not declared
-        if (!fontFamily || !fontWeight || !fontStyle) {
-          return null;
-        }
-        const fontFaceSet = `${fontStyle} ${fontWeight} 0 '${fontFamily}'`;
-        const hasMultiple = fontFaceSet.indexOf(MULTIPLE_VALUE) > -1;
-        const { handle, src } = getFontByName(fontFamily);
-        if (handle) {
-          const element = document.getElementById(`${handle}-css`);
-          if (element) {
-            if (
-              (document?.fonts && document.fonts.check(fontFaceSet)) ||
-              hasMultiple
-            ) {
-              return resolve();
-            }
-            element.remove();
-          }
-        } else {
-          return null;
-        }
+    ({ fontFamily, fontWeight, fontStyle, fontSize } = { fontSize: 0 }) => {
+      const { handle, src } = getFontByName(fontFamily);
+      if (!fontFamily || !fontWeight || !fontStyle || !handle) {
+        return null;
+      }
+      const fontFaceSet = `${fontStyle} ${fontWeight} ${fontSize}px '${fontFamily}'`;
+      const elementId = `${handle}-css`;
 
-        const fontStylesheet = document.createElement('link');
-        fontStylesheet.id = `${handle}-css`;
-        fontStylesheet.href = src;
-        fontStylesheet.rel = 'stylesheet';
-        fontStylesheet.type = 'text/css';
-        fontStylesheet.media = 'all';
-        fontStylesheet.crossOrigin = 'anonymous';
+      const hasFontLink = () => {
+        return handle && document.getElementById(elementId);
+      };
 
-        const linkEl = document.head.appendChild(fontStylesheet);
-
-        linkEl.addEventListener('load', async () => {
-          if (document?.fonts && !hasMultiple) {
-            await document.fonts.load(fontFaceSet, content);
-            if (document.fonts.check(fontFaceSet)) {
-              return resolve();
-            } else {
-              return reject(
-                new Error(`font-family: ${fontFamily} found, but not loaded.`)
-              );
-            }
-          }
-          return resolve();
+      const appendFontLink = () => {
+        return new Promise((resolve, reject) => {
+          const fontStylesheet = document.createElement('link');
+          fontStylesheet.id = elementId;
+          fontStylesheet.href = src;
+          fontStylesheet.rel = 'stylesheet';
+          fontStylesheet.type = 'text/css';
+          fontStylesheet.media = 'all';
+          fontStylesheet.crossOrigin = 'anonymous';
+          fontStylesheet.addEventListener('load', () => resolve());
+          fontStylesheet.addEventListener('error', (e) => reject(e));
+          return document.head.appendChild(fontStylesheet);
         });
+      };
 
-        linkEl.addEventListener('error', (e) => reject(e));
+      const ensureFontLoaded = () => {
+        return new Promise((resolve, reject) => {
+          if (document?.fonts) {
+            document.fonts.load(fontFaceSet).then(() => {
+              if (document.fonts.check(fontFaceSet)) {
+                resolve();
+              } else {
+                reject(
+                  new Error(`font-family: ${fontFamily} found, but not loaded.`)
+                );
+              }
+            });
+          } else {
+            resolve();
+          }
+        });
+      };
 
-        return linkEl;
-      });
+      if (!hasFontLink(fontFamily)) {
+        return appendFontLink().then(() => ensureFontLoaded());
+      }
+      return ensureFontLoaded();
     },
     [getFontByName]
   );
 
-  return maybeEnqueueFontStyle;
+  /**
+   * It allows control each text element font-face for multiple types and font family aspect
+   *
+   * @param {string} aspect Font family aspect that should be synced between one or more elements
+   * @param {Object} state Font family state to be synced with `maybeEnqueueFontStyle`
+   * @param {Array} elements List of elements selected to be processed
+   * @return {Promise} Returns a Promise after process all font with `maybeEnqueueFontStyle`
+   */
+  const ensureFontFaceSetIsAvaialble = (aspect, state, elements) => {
+    const fontFamilies = elements.map((e) => ({
+      ...e,
+      [aspect]: state[aspect],
+    }));
+    return Promise.all(
+      fontFamilies.map((family) => maybeEnqueueFontStyle(family)).map(reflect)
+    );
+  };
+
+  return {
+    maybeEnqueueFontStyle,
+    ensureFontFaceSetIsAvaialble,
+  };
 }
 
 export default useLoadFontFiles;

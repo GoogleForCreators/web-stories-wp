@@ -63,7 +63,7 @@ const Space = styled.div`
 
 function StylePanel({ selectedElements, pushUpdate }) {
   const {
-    actions: { maybeEnqueueFontStyle },
+    actions: { ensureFontFaceSetIsAvaialble },
   } = useFont();
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
@@ -71,9 +71,9 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
   const bold = getCommonValue(selectedElements, 'bold');
-  const content = getCommonValue(selectedElements, 'content');
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
+  const fontSize = getCommonValue(selectedElements, 'fontSize');
 
   return (
     <>
@@ -147,12 +147,16 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconHeight={10}
           onChange={async (value) => {
             const newFontStyle = value ? 'italic' : 'normal';
-            await maybeEnqueueFontStyle({
-              fontFamily,
-              content,
-              fontWeight,
-              fontStyle: newFontStyle,
-            });
+            await ensureFontFaceSetIsAvaialble(
+              'fontStyle',
+              {
+                fontStyle: newFontStyle,
+                fontWeight,
+                fontSize,
+                fontFamily,
+              },
+              selectedElements
+            );
             pushUpdate({ fontStyle: newFontStyle }, true);
           }}
         />

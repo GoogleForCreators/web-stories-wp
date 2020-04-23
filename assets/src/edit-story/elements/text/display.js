@@ -126,10 +126,15 @@ function TextDisplay({
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
-  const { fontFamily, fontWeight, fontStyle } = rest;
+  const { fontFamily, fontWeight, fontStyle, fontSize } = rest;
   useEffect(() => {
-    maybeEnqueueFontStyle({ fontFamily, content, fontWeight, fontStyle });
-  }, [fontFamily, content, fontWeight, fontStyle, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle({
+      fontFamily,
+      fontWeight,
+      fontStyle,
+      fontSize,
+    });
+  }, [fontFamily, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;

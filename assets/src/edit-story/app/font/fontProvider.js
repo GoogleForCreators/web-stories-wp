@@ -105,7 +105,10 @@ function FontProvider({ children }) {
     [getFontByName]
   );
 
-  const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
+  const {
+    maybeEnqueueFontStyle,
+    ensureFontFaceSetIsAvaialble,
+  } = useLoadFontFiles({ getFontByName });
 
   const state = {
     state: {
@@ -115,6 +118,7 @@ function FontProvider({ children }) {
       getFontByName,
       getFontBySlug,
       maybeEnqueueFontStyle,
+      ensureFontFaceSetIsAvaialble,
       getFontWeight,
       getFontFallback,
     },
