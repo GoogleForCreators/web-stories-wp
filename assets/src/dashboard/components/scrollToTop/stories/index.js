@@ -34,11 +34,13 @@ const Container = styled.div`
   height: 3000px;
   overflow: scroll;
   background-color: blue;
+  opacity: 0.25;
 `;
 export const _default = () => {
   return (
-    <Container>
+    <>
+      <Container />
       <ScrollToTop />
-    </Container>
+    </>
   );
 };

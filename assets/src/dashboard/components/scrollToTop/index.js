@@ -34,10 +34,8 @@ const ScrollButton = styled.button`
   position: fixed;
   right: 40px;
   bottom: 40px;
-  height: 60px;
-  width: 60px;
-  display: flex;
-  justify-content: center;
+  height: 50px;
+  width: 50px;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   cursor: pointer;
   border-radius: 50%;
@@ -50,7 +48,7 @@ const ScrollButton = styled.button`
 `;
 
 // TODO needs actual SVG
-const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 25, height: 35 })`
+const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 30, height: 40 })`
   margin: auto;
 `;
 
