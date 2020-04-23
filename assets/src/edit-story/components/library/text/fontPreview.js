@@ -49,14 +49,8 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({
-  title,
-  fontFamily,
-  content,
-  fontWeight,
-  fontStyle,
-  ...fontProps
-}) {
+function FontPreview({ title, ...fontProps }) {
+  const { fontFamily, content, fontWeight, fontStyle } = fontProps;
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
