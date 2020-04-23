@@ -17,17 +17,31 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { number } from '@storybook/addon-knobs';
 
-export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  selected: PropTypes.bool,
-  separator: PropTypes.bool,
-  disabled: PropTypes.bool,
-});
+/**
+ * Internal dependencies
+ */
+import ColorList from '../';
 
-export const ColorType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-});
+export default {
+  title: 'Dashboard/Components/ColorList',
+  component: ColorList,
+};
+
+export const _default = () => {
+  const colors = [
+    { label: 'Red', color: 'red' },
+    { label: 'Blue', color: 'blue' },
+    { label: 'Green', color: 'green' },
+    { label: 'White', color: 'white' },
+  ];
+
+  return (
+    <ColorList
+      colors={colors}
+      size={number('Size', 50) || 0}
+      spacing={number('Spacing', 10) || 10}
+    />
+  );
+};

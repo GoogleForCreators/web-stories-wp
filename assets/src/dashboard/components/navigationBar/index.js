@@ -17,5 +17,4 @@
 /**
  * Internal dependencies
  */
-export { MainNavBar } from './mainNavBar';
 export { TemplateNavBar } from './templateNavBar';
