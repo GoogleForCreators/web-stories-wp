@@ -26,9 +26,10 @@ export {
   ActionLabel,
 } from './cardGridItem';
 export { default as CardGallery } from './cardGallery';
+export { default as ColorList } from './colorList';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
-export { MainNavBar, TemplateNavBar } from './navigationBar';
+export { TemplateNavBar } from './navigationBar';
 export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
@@ -49,3 +50,4 @@ export {
   TableRow,
 } from './table';
 export { default as MultiPartPill } from './multiPartPill';
+export { LeftRail, PageContent, AppFrame } from './pageStructure';

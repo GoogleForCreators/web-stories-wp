@@ -15,19 +15,21 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import PropTypes from 'prop-types';
+import { __ } from '@wordpress/i18n';
 
-export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  selected: PropTypes.bool,
-  separator: PropTypes.bool,
-  disabled: PropTypes.bool,
-});
+/**
+ * Internal dependencies
+ */
+import { ViewHeader } from '../../../components';
 
-export const ColorType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-});
+function SavedTemplates() {
+  return (
+    <div>
+      <ViewHeader>{__('Saved Templates', 'web-stories')}</ViewHeader>
+    </div>
+  );
+}
+
+export default SavedTemplates;

@@ -53,12 +53,12 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.pageGutter.large.desktop}px;
+      padding-left: ${theme.pageGutter.small.desktop}px;
     }
 
     @media ${theme.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.pageGutter.large.tablet}px;
+        padding-left: ${theme.pageGutter.small.min}px;
       }
     }
 
@@ -70,11 +70,11 @@ export const Column = styled.div`
 
 export const Title = styled.h2`
   ${({ theme }) => `
-    margin: 0 0 5px;
-    font-family: ${theme.fonts.heading2.family};
-    font-size: ${theme.fonts.heading2.size};
-    font-weight: ${theme.fonts.heading2.weight};
-    line-height: ${theme.fonts.heading2.lineHeight};
+    margin: 0;
+    font-family: ${theme.fonts.heading4.family};
+    font-size: ${theme.fonts.heading4.size};
+    font-weight: ${theme.fonts.heading4.weight};
+    line-height: ${theme.fonts.heading4.lineHeight};
     color: ${theme.colors.gray900};
   `}
 `;
@@ -82,10 +82,9 @@ export const Title = styled.h2`
 export const ByLine = styled.p`
   ${({ theme }) => `
     margin: 0 0 20px;
-    font-family: ${theme.fonts.body1.family};
-    font-size: ${theme.fonts.body1.size};
-    font-weight: ${theme.fonts.body1.weight};
-    line-height: ${theme.fonts.body1.lineHeight};
+    font-family: ${theme.fonts.body2.family};
+    font-size: ${theme.fonts.body2.size};
+    line-height: ${theme.fonts.body2.lineHeight};
     color: ${theme.colors.gray400};
   `}
 `;
@@ -97,7 +96,7 @@ export const Text = styled.p`
     font-size: ${theme.fonts.body2.size};
     line-height: ${theme.fonts.body2.lineHeight};
     letter-spacing: 0.015em;
-    color: ${theme.colors.gray600};
+    color: ${theme.colors.gray900};
   `}
 `;
 
@@ -111,22 +110,4 @@ export const MetadataContainer = styled.fieldset`
       opacity: 1 !important;
     }
   }
-`;
-
-const borderLookup = (color) => ({
-  '#fff': `border: solid 1px ${color}`,
-  '#ffffff': `border: solid 1px ${color}`,
-  white: `border: solid 1px ${color}`,
-});
-
-export const ColorBadge = styled.span`
-  ${({ theme, color }) => `
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 14px;
-    margin-right: 8px;
-    background-color: ${color};
-    ${borderLookup(theme.colors.gray50)[color] || ''}
-  `}
 `;

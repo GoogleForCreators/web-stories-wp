@@ -15,19 +15,19 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import PropTypes from 'prop-types';
+import { AppFrame, PageContent, LeftRail } from '../';
 
-export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  selected: PropTypes.bool,
-  separator: PropTypes.bool,
-  disabled: PropTypes.bool,
-});
+export default {
+  title: 'Dashboard/Components/LeftRail',
+};
 
-export const ColorType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-});
+export const _default = () => {
+  return (
+    <AppFrame>
+      <LeftRail />
+      <PageContent />
+    </AppFrame>
+  );
+};

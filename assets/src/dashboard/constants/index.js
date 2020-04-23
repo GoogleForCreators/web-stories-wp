@@ -61,18 +61,34 @@ export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
   MY_STORIES: '/',
-  MY_BOOKMARKS: '/bookmarks',
+  SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: '/template-detail',
+  EDITOR_SETTINGS: '/editor-settings',
+  SUPPORT: '/support',
 };
 
-export const paths = [
+export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
-  // {
-  //   value: APP_ROUTES.TEMPLATES_GALLERY,
-  //   label: __('Templates Gallery', 'web-stories'),
-  // },
-  // { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
+  {
+    value: APP_ROUTES.TEMPLATES_GALLERY,
+    label: __('Explore Templates', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.SAVED_TEMPLATES,
+    label: __('Saved Templates', 'web-stories'),
+  },
+];
+
+export const secondaryPaths = [
+  {
+    value: APP_ROUTES.EDITOR_SETTINGS,
+    label: __('Editor Settings', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.SUPPORT,
+    label: __('Support', 'web-stories'),
+  },
 ];
 
 export const STORY_STATUSES = [
@@ -129,6 +145,8 @@ export const STORY_CONTEXT_MENU_ITEMS = [
     value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
   },
 ];
+
+export const ITEMS_PER_PAGE = 10;
 
 export const STORY_SORT_OPTIONS = {
   NAME: 'title',

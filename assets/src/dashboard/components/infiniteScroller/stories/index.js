@@ -55,6 +55,7 @@ const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 export const _default = () => {
   const [currentCount, setCurrentCount] = useState(5);
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [dummyData, setDummyData] = useState(generateArray(currentCount));
 
   useEffect(() => {
@@ -62,24 +63,35 @@ export const _default = () => {
     if (currentCount === 30) {
       setIsAllDataLoaded(true);
     }
+    setIsLoading(false);
   }, [currentCount]);
 
-  return (
-    <InfiniteScroller
-      handleGetData={() => {
-        if (!isAllDataLoaded) {
-          setCurrentCount(currentCount + 5);
-        }
-      }}
-      isAllDataLoaded={isAllDataLoaded}
-      loadingMessage={text('loadingMessage', 'Data is loading')}
-      allDataLoadedMessage={text('allDataLoadedMessage', 'all data is loaded')}
-    >
-      {dummyData.map((data, index) => (
-        <Item key={index}>
-          {data} {index}
-        </Item>
-      ))}
-    </InfiniteScroller>
-  );
+  if (dummyData.length > 0) {
+    return (
+      <>
+        {dummyData.map((data, index) => (
+          <Item key={index}>
+            {data} {index}
+          </Item>
+        ))}
+        <InfiniteScroller
+          onLoadMore={() => {
+            setIsLoading(true);
+            setCurrentCount(currentCount + 5);
+          }}
+          isLoading={isLoading}
+          canLoadMore={!isAllDataLoaded}
+          loadingMessage={text(
+            'loadingMessage',
+            'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.'
+          )}
+          allDataLoadedMessage={text(
+            'allDataLoadedMessage',
+            'all data is loaded'
+          )}
+        />
+      </>
+    );
+  }
+  return null;
 };

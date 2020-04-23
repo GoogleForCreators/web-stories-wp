@@ -93,6 +93,7 @@ const DropdownIcon = styled.span`
   display: flex;
   align-items: center;
   height: 100%;
+  pointer-events: none;
   & > svg {
     color: ${({ theme, type }) => theme.dropdown[type].arrowColor};
     width: 10px;
