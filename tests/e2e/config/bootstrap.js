@@ -108,8 +108,13 @@ function observeConsoleLogging() {
       return;
     }
 
-    // Firefox warns about this issue in WordPress.
+    // Firefox warns about this issue in WordPress admin.
     if (text.includes('This page uses the non standard property “zoom”')) {
+      return;
+    }
+
+    // Firefox warns about this issue when there's no proper favicon
+    if (text.includes('Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]')) {
       return;
     }
 
