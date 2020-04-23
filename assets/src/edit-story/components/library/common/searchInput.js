@@ -42,7 +42,7 @@ const Search = styled.input.attrs({ type: 'text' })`
     color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
   }
   &:focus {
-    background: White;
+    background: ${({ theme }) => theme.colors.bg.v13};
     color: ${({ theme }) => theme.colors.bg.v0};
   }
   &:focus::placeholder {
