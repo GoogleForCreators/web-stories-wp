@@ -44,9 +44,8 @@ export function reshapeTemplateObject(isLocal) {
     description,
     status: 'template',
     modified: moment(modified),
-    metadata: [...tags, ...colors].map((value) =>
-      typeof value === 'object' ? { ...value } : { label: value }
-    ),
+    tags,
+    colors,
     pages,
     centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
     bottomTargetAction: () => {},

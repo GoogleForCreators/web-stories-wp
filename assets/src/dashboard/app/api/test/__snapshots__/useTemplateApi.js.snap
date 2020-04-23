@@ -4,20 +4,7 @@ exports[`reshapeTemplateObject should reshape object to match snapshot 1`] = `
 Object {
   "bottomTargetAction": [Function],
   "centerTargetAction": "#/template-detail?id=1&isLocal=true",
-  "createdBy": "Google AMP",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "id": 1,
-  "isLocal": true,
-  "metadata": Array [
-    Object {
-      "label": "Health",
-    },
-    Object {
-      "label": "Bold",
-    },
-    Object {
-      "label": "Joy",
-    },
+  "colors": Array [
     Object {
       "color": "#f3d9e1",
       "label": "Pink",
@@ -31,6 +18,10 @@ Object {
       "label": "Black",
     },
   ],
+  "createdBy": "Google AMP",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "id": 1,
+  "isLocal": true,
   "modified": "2020-04-21T07:00:00.000Z",
   "pages": Array [
     Object {
@@ -39,6 +30,11 @@ Object {
     },
   ],
   "status": "template",
+  "tags": Array [
+    "Health",
+    "Bold",
+    "Joy",
+  ],
   "title": "Beauty",
 }
 `;

@@ -97,7 +97,7 @@
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
-    "eslint-plugin-jest-dom": "^2.0.1",
+    "eslint-plugin-jest-dom": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-markdown": "^1.0.2",
     "eslint-plugin-prettier": "^3.1.3",

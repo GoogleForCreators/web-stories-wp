@@ -15,21 +15,19 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { ViewHeader } from '../../../components';
+import { AppFrame, PageContent, LeftRail } from '../';
 
-function MyBookmarks() {
+export default {
+  title: 'Dashboard/Components/LeftRail',
+};
+
+export const _default = () => {
   return (
-    <div>
-      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
-    </div>
+    <AppFrame>
+      <LeftRail />
+      <PageContent />
+    </AppFrame>
   );
-}
-
-export default MyBookmarks;
+};

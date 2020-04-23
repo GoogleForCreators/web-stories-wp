@@ -37,7 +37,7 @@ const MAX_WIDTH = 680;
 const ACTIVE_CARD_WIDTH = 330;
 const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
-const CARD_WRAPPER_BUFFER = 10;
+const CARD_WRAPPER_BUFFER = 12;
 
 function CardGallery({ children }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(1);
@@ -78,7 +78,7 @@ function CardGallery({ children }) {
   const miniWrapperCardSize = useMemo(
     () => ({
       width: miniCardWidth + CARD_WRAPPER_BUFFER,
-      height: (miniCardWidth + CARD_WRAPPER_BUFFER / 2) * PAGE_RATIO,
+      height: miniCardWidth * PAGE_RATIO + CARD_WRAPPER_BUFFER,
     }),
     [miniCardWidth]
   );

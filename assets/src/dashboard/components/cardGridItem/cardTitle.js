@@ -52,7 +52,7 @@ const StyledTitle = styled.p`
 const StyledDate = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-family: ${({ theme }) => theme.fonts.storyGridItemSub.weight};
+  font-weight: ${({ theme }) => theme.fonts.storyGridItemSub.weight};
   font-family: ${({ theme }) => theme.fonts.storyGridItemSub.family};
 `;
 
