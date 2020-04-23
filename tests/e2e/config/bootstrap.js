@@ -105,6 +105,11 @@ function observeConsoleLogging() {
       return;
     }
 
+    // Firefox warns about this issue in WordPress.
+    if (text.includes('This page uses the non standard property “zoom”')) {
+      return;
+    }
+
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
