@@ -28,7 +28,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useCallback, useState } from 'react';
 import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+import { TextInput } from '../input';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
@@ -56,19 +58,54 @@ const StyledDate = styled.p`
   font-family: ${({ theme }) => theme.fonts.storyGridItemSub.family};
 `;
 
-// TODO this needs date handling
-// TODO modify to handle other types of card titles - not just own stories
-const CardTitle = ({ title, modifiedDate }) => (
-  <StyledCardTitle>
-    <StyledTitle>{title}</StyledTitle>
-    <StyledDate>{`
+const CardTitle = ({
+  title,
+  modifiedDate,
+  editMode,
+  onEditComplete,
+  onEditCancel,
+}) => {
+  const [newTitle, setNewTitle] = useState(title);
+
+  const handleChange = useCallback(({ target }) => {
+    setNewTitle(target.value);
+  }, []);
+
+  const handleKeyPress = useCallback(
+    ({ nativeEvent }) => {
+      if (nativeEvent.keyCode === 13) {
+        onEditComplete(newTitle);
+      } else if (nativeEvent.keyCode === 27) {
+        onEditCancel();
+      }
+    },
+    [newTitle, onEditComplete, onEditCancel]
+  );
+
+  return (
+    <StyledCardTitle>
+      {editMode ? (
+        <TextInput
+          data-testid={'title-rename-input'}
+          value={newTitle}
+          onKeyDown={handleKeyPress}
+          onChange={handleChange}
+        />
+      ) : (
+        <StyledTitle>{title}</StyledTitle>
+      )}
+      <StyledDate>{`
       ${__('Modified', 'web-stories')} ${modifiedDate} `}</StyledDate>
-  </StyledCardTitle>
-);
+    </StyledCardTitle>
+  );
+};
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  editMode: PropTypes.bool,
   modifiedDate: PropTypes.string.isRequired,
+  onEditComplete: PropTypes.func.isRequired,
+  onEditCancel: PropTypes.func.isRequired,
 };
 
 export default CardTitle;

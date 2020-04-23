@@ -98,7 +98,7 @@ function MyStories() {
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
   const {
-    actions: { fetchStories },
+    actions: { fetchStories, updateStory },
     state: {
       allPagesFetched,
       stories,
@@ -187,6 +187,7 @@ function MyStories() {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
+            updateStory={updateStory}
             filteredStories={orderedStories}
             centerActionLabel={
               <>
@@ -211,11 +212,12 @@ function MyStories() {
         return null;
     }
   }, [
+    viewStyle,
+    updateStory,
+    orderedStories,
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
-    orderedStories,
-    viewStyle,
   ]);
 
   const storiesViewControls = useMemo(() => {
