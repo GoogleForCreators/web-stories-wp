@@ -63,6 +63,8 @@ export const _default = () => {
         color: createSolid(255, 255, 0, 0.9),
         backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
         backgroundColor: createSolid(0, 0, 0, 1),
+        fontFamily: 'Princess Sofia',
+        fontFallback: ['cursive'],
       },
       {
         color: createSolid(255, 255, 255, 0.9),
