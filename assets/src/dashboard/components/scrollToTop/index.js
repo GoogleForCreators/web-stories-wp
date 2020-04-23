@@ -21,14 +21,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useRef, useReducer, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../constants/animation';
 import { ReactComponent as DropUpArrowSvg } from '../../icons/dropUpArrow.svg';
+import getCurrentYAxis from '../../utils/getCurrentYAxis';
 
 const ScrollButton = styled.button`
   position: fixed;
@@ -44,7 +44,7 @@ const ScrollButton = styled.button`
   color: ${({ theme }) => theme.colors.gray900};
   background-color: ${({ theme }) => theme.colors.white};
   opacity: ${({ isVisible }) => (isVisible ? 1.0 : 0)};
-  transition: opacity 0.75s ${BEZIER.outSine};
+  transition: opacity 0.5s linear;
 `;
 
 // TODO needs actual SVG
@@ -52,54 +52,13 @@ const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 30, height: 40 })`
   margin: auto;
 `;
 
-const STATE = {
-  hidden: 'hidden',
-  visible: 'visible',
-};
-
-const ACTION = {
-  ON_Y_AXIS_SCROLLED: 'y axis is not 0',
-  ON_PAGE_TOP: 'y axis is 0',
-};
-
-const machine = {
-  [STATE.hidden]: {
-    [ACTION.ON_Y_AXIS_SCROLLED]: STATE.visible,
-  },
-  [STATE.visible]: {
-    [ACTION.ON_PAGE_TOP]: STATE.hidden,
-  },
-};
-
-const showButtonReducer = (state, action) => {
-  return machine[state][action] || state;
-};
-
 const ScrollToTop = () => {
-  const getCurrentYAxis = () => {
-    const isBrowserWindow = typeof window !== 'undefined';
-    if (!isBrowserWindow) {
-      return 0;
-    }
-
-    return window.scrollY;
-  };
+  const [isVisible, setIsVisible] = useState(false);
   const targetRef = useRef(null);
-  const position = useRef(getCurrentYAxis);
-  position.current = getCurrentYAxis;
-
-  const [showButtonState, dispatch] = useReducer(
-    showButtonReducer,
-    STATE.hidden
-  );
 
   const [handleScroll] = useDebouncedCallback(() => {
-    const hasScrolledDown = position.current();
-    if (hasScrolledDown) {
-      dispatch(ACTION.ON_Y_AXIS_SCROLLED);
-    } else {
-      dispatch(ACTION.ON_PAGE_TOP);
-    }
+    const hasScrolledDown = getCurrentYAxis();
+    setIsVisible(hasScrolledDown > 0);
   }, 100);
 
   useLayoutEffect(() => {
@@ -119,7 +78,7 @@ const ScrollToTop = () => {
     <ScrollButton
       data-testid="scroll-to-top-button"
       ref={targetRef}
-      isVisible={showButtonState === STATE.visible}
+      isVisible={isVisible}
       onClick={handleScrollBackToTop}
       title={__('scroll back to top', 'web-stories')}
     >
