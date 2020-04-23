@@ -338,6 +338,8 @@ function Carousel() {
           getItemSize={() => pageThumbWidth}
         >
           {pages.map((page, index) => {
+            const isCurrentPage = page.id === currentPageId;
+
             return (
               <ItemContainer
                 key={page.id}
@@ -360,7 +362,7 @@ function Carousel() {
                     onClick={handleClickPage(page)}
                     role="option"
                     ariaLabel={
-                      page.id === currentPageId
+                      isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
                             __('Page %s (current page)', 'web-stories'),
@@ -372,7 +374,7 @@ function Carousel() {
                             index + 1
                           )
                     }
-                    isActive={page.id === currentPageId}
+                    isActive={isCurrentPage && pages.length > 1}
                     index={index}
                     width={pageThumbWidth}
                     height={pageThumbHeight}

@@ -266,7 +266,7 @@ function GridView() {
                             index + 1
                           )
                     }
-                    isActive={isCurrentPage}
+                    isActive={isCurrentPage && pages.length > 1}
                     index={index}
                     width={width}
                     height={height}
