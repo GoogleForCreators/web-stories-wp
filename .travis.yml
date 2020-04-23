@@ -149,7 +149,6 @@ jobs:
       php: nightly
       env: PHP=1 WP_VERSION=trunk
     - name: PHP and JavaScript unit tests (7.4, WordPress latest, with code coverage)
-      if: branch = master AND type = push
       php: 7.4
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
     - name: E2E tests
