@@ -22,10 +22,9 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import getStoryMarkup from '../../../output/utils/getStoryMarkup';
+import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 
 /**
  * Custom hook to auto-save a story.
@@ -46,27 +45,9 @@ function useAutoSave({ storyId, pages, story }) {
   const autoSave = useCallback(
     (props) => {
       setIsAutoSaving(true);
-      const propsToSave = objectPick(story, [
-        'title',
-        'status',
-        'author',
-        'date',
-        'modified',
-        'slug',
-        'excerpt',
-        'featuredMedia',
-        'password',
-        'publisherLogo',
-        'stylePresets',
-        'autoAdvance',
-        'defaultPageDuration',
-      ]);
-      const content = getStoryMarkup(story, pages, metadata);
       return autoSaveById({
         storyId,
-        content,
-        pages,
-        ...propsToSave,
+        ...getStoryPropsToSave({ story, pages, metadata }),
         ...props,
       }).finally(() => setIsAutoSaving(false));
     },

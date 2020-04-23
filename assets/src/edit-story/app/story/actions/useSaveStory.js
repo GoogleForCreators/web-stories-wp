@@ -30,10 +30,10 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import getStoryMarkup from '../../../output/utils/getStoryMarkup';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 
 /**
  * Custom hook to save story.
@@ -58,27 +58,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
-      const propsToSave = objectPick(story, [
-        'title',
-        'status',
-        'author',
-        'date',
-        'modified',
-        'slug',
-        'excerpt',
-        'featuredMedia',
-        'password',
-        'publisherLogo',
-        'stylePresets',
-        'autoAdvance',
-        'defaultPageDuration',
-      ]);
-      const content = getStoryMarkup(story, pages, metadata);
       return saveStoryById({
         storyId,
-        content,
-        pages,
-        ...propsToSave,
+        ...getStoryPropsToSave({ story, pages, metadata }),
         ...props,
       })
         .then((post) => {
