@@ -17,18 +17,13 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../testUtils/';
 import TypeaheadInput from '..';
-import theme from '../../../theme';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('TypeaheadInput', () => {
   const demoItems = [
@@ -40,7 +35,7 @@ describe('TypeaheadInput', () => {
   const onClickMock = jest.fn();
 
   it('should render a <TypeaheadInput /> by default', () => {
-    const { getByRole } = wrapper(
+    const { getByRole } = renderWithTheme(
       <TypeaheadInput
         inputId={'demo-search-component'}
         placeholder="placeholder text"
@@ -58,7 +53,7 @@ describe('TypeaheadInput', () => {
   });
 
   it('should clear input value when button is clicked', () => {
-    const { getByRole, getByTestId } = wrapper(
+    const { getByRole, getByTestId } = renderWithTheme(
       <TypeaheadInput
         inputId={'demo-search-component'}
         placeholder="placeholder text"

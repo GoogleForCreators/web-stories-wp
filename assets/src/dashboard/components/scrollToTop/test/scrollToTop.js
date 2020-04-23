@@ -15,24 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../testUtils/';
 import ScrollToTop from '..';
-import theme from '../../../theme';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('ScrollToTop', () => {
   it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = wrapper(<ScrollToTop />);
+    const { getByTestId } = renderWithTheme(<ScrollToTop />);
 
     const Button = getByTestId('scroll-to-top-button');
 

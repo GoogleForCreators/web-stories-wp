@@ -14,23 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
-
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
-
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
-  });
-});
+export { default as renderWithTheme } from './renderWithTheme';
