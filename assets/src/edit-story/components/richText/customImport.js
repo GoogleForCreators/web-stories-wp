@@ -49,9 +49,10 @@ function customInlineFn(element, { Style }) {
         .filter((style) => Boolean(style));
 
       if (styles.length) {
-        // This is the reason we need a fork, as multiple styles aren't supported by published package
+        // This is the reason we need a patch, as multiple styles aren't supported by published package
         // and maintainer clearly doesn't care about it enough to merge.
-        return Style(styles[0]);
+        // see: <rootDir>/patches/draft-js-import-element+1.4.0.patch
+        return Style(styles);
       }
 
       return null;
