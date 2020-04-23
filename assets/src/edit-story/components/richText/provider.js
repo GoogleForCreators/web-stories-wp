@@ -51,20 +51,21 @@ function RichTextProvider({ children }) {
   const [forceFocus, setForceFocus] = useState(false);
   const [editorState, setEditorState] = useState(null);
 
-  const [
-    selectionIsBold,
-    selectionIsItalic,
-    selectionIsUnderline,
-  ] = useMemo(() => {
+  const getStateInfo = useCallback(
+    (state) => ({
+      isBold: isBold(state),
+      isItalic: isItalic(state),
+      isUnderline: isUnderline(state),
+    }),
+    []
+  );
+
+  const selectionInfo = useMemo(() => {
     if (editorState) {
-      return [
-        isBold(editorState),
-        isItalic(editorState),
-        isUnderline(editorState),
-      ];
+      return getStateInfo(editorState);
     }
-    return [false, false, false];
-  }, [editorState]);
+    return { isBold: false, isItalic: false, isUnderline: false };
+  }, [getStateInfo, editorState]);
 
   const setStateFromContent = useCallback(
     (content) => {
@@ -105,9 +106,7 @@ function RichTextProvider({ children }) {
       return null;
     }
 
-    return customExport(someEditorState)
-      .replace(/<br ?\/?>/g, '')
-      .replace(/&nbsp;$/, '');
+    return customExport(someEditorState);
   }, []);
 
   // This filters out illegal content (see `getFilteredState`)
@@ -155,15 +154,47 @@ function RichTextProvider({ children }) {
     [updateWhileUnfocused]
   );
 
+  const getSelectAllStateFromHTML = useCallback((html) => {
+    const contentState = customImport(html);
+    const initialState = EditorState.createWithContent(contentState);
+    const selection = getSelectionForAll(initialState.getCurrentContent());
+    return EditorState.forceSelection(initialState, selection);
+  }, []);
+
+  const updateAndReturnHTML = useCallback(
+    (html, updater) => {
+      const stateWithUpdate = updater(getSelectAllStateFromHTML(html));
+      const renderedHTML = customExport(stateWithUpdate);
+      return renderedHTML;
+    },
+    [getSelectAllStateFromHTML]
+  );
+
+  const toggleBoldInHTML = useCallback(
+    (html) => updateAndReturnHTML(html, toggleBold),
+    [updateAndReturnHTML]
+  );
+  const toggleItalicInHTML = useCallback(
+    (html) => updateAndReturnHTML(html, toggleItalic),
+    [updateAndReturnHTML]
+  );
+  const toggleUnderlineInHTML = useCallback(
+    (html) => updateAndReturnHTML(html, toggleUnderline),
+    [updateAndReturnHTML]
+  );
+
+  const getHTMLInfo = useCallback(
+    (html) => getStateInfo(getSelectAllStateFromHTML(html)),
+    [getSelectAllStateFromHTML, getStateInfo]
+  );
+
   const clearForceFocus = useCallback(() => setForceFocus(false), []);
 
   const value = {
     state: {
       editorState,
       hasCurrentEditor,
-      selectionIsBold,
-      selectionIsItalic,
-      selectionIsUnderline,
+      selectionInfo,
       forceFocus,
     },
     actions: {
@@ -176,6 +207,10 @@ function RichTextProvider({ children }) {
       toggleBoldInSelection,
       toggleItalicInSelection,
       toggleUnderlineInSelection,
+      getHTMLInfo,
+      toggleBoldInHTML,
+      toggleItalicInHTML,
+      toggleUnderlineInHTML,
     },
   };
 

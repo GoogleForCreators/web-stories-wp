@@ -72,10 +72,12 @@ function inlineStyleFn(styles) {
 }
 
 function exportHTML(editorState) {
-  return stateToHTML(editorState.getCurrentContent(), {
+  const html = stateToHTML(editorState.getCurrentContent(), {
     inlineStyleFn,
     defaultBlockTag: null,
   });
+
+  return html.replace(/<br ?\/?>/g, '').replace(/&nbsp;$/, '');
 }
 
 export default exportHTML;

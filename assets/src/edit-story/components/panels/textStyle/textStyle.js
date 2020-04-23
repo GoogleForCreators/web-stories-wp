@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -63,16 +64,15 @@ const Space = styled.div`
 
 function StylePanel({ selectedElements, pushUpdate }) {
   const {
-    state: {
-      hasCurrentEditor,
-      selectionIsBold,
-      selectionIsItalic,
-      selectionIsUnderline,
-    },
+    state: { hasCurrentEditor, selectionInfo },
     actions: {
       toggleBoldInSelection,
       toggleItalicInSelection,
       toggleUnderlineInSelection,
+      toggleBoldInHTML,
+      toggleItalicInHTML,
+      toggleUnderlineInHTML,
+      getHTMLInfo,
     },
   } = useRichText();
 
@@ -80,28 +80,34 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
 
-  const isBold = hasCurrentEditor
-    ? selectionIsBold
-    : getCommonValue(selectedElements, 'bold');
-  const isItalic = hasCurrentEditor
-    ? selectionIsItalic
-    : getCommonValue(selectedElements, 'fontStyle') === 'italic';
-  const isUnderline = hasCurrentEditor
-    ? selectionIsUnderline
-    : getCommonValue(selectedElements, 'textDecoration') === 'underline';
+  const content = selectedElements[0].content;
+
+  const { isBold, isItalic, isUnderline } = useMemo(() => {
+    if (hasCurrentEditor) {
+      return selectionInfo;
+    }
+
+    return getHTMLInfo(content);
+  }, [hasCurrentEditor, selectionInfo, getHTMLInfo, content]);
+
+  const pushContentUpdate = useCallback(
+    (updater) => {
+      pushUpdate({ content: updater(content) }, true);
+    },
+    [content, pushUpdate]
+  );
 
   const handleClickBold = hasCurrentEditor
     ? toggleBoldInSelection
-    : (value) => pushUpdate({ bold: value }, true);
+    : () => pushContentUpdate(toggleBoldInHTML);
 
   const handleClickItalic = hasCurrentEditor
     ? toggleItalicInSelection
-    : (value) => pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true);
+    : () => pushContentUpdate(toggleItalicInHTML);
 
   const handleClickUnderline = hasCurrentEditor
     ? toggleUnderlineInSelection
-    : (value) =>
-        pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true);
+    : () => pushContentUpdate(toggleUnderlineInHTML);
 
   return (
     <>
