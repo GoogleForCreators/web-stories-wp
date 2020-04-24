@@ -24,7 +24,7 @@ import moment from 'moment';
  */
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useContext } from 'react';
-import ApiProvider, { ApiContext, reshapeStoryObject } from '../apiProvider';
+import ApiProvider, { ApiContext } from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
 jest.mock('../wpAdapter', () => ({
@@ -54,121 +54,6 @@ jest.mock('../wpAdapter', () => ({
     }),
 }));
 
-describe('reshapeStoryObject', () => {
-  it('should reshape the response object with a Moment date', () => {
-    const responseObj = {
-      id: 27,
-      date: '2020-03-26T20:57:24',
-      date_gmt: '2020-03-26T20:57:24',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-      },
-      modified: '2020-03-26T21:42:14',
-      modified_gmt: '2020-03-26T21:42:14',
-      slug: '',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
-      excerpt: { rendered: '', protected: false },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      featured_media_url: '',
-      story_data: { pages: [{ id: 0, elements: [] }] },
-    };
-
-    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
-      responseObj
-    );
-
-    expect(reshapedObj).toMatchObject({
-      id: 27,
-      title: 'Carlos Draft',
-      status: 'draft',
-      modified: moment('2020-03-26T21:42:14'),
-      pages: [{ id: 0, elements: [] }],
-      centerTargetAction: '',
-      bottomTargetAction: 'http://editstory.com?action=edit&post=27',
-    });
-  });
-
-  it('should return null if the ID is missing', () => {
-    const responseObj = {
-      date: '2020-03-26T20:57:24',
-      date_gmt: '2020-03-26T20:57:24',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-      },
-      modified: '2020-03-26T21:42:14',
-      modified_gmt: '2020-03-26T21:42:14',
-      slug: '',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
-      excerpt: { rendered: '', protected: false },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      featured_media_url: '',
-      story_data: { pages: [{ id: 0, elements: [] }] },
-    };
-
-    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
-      responseObj
-    );
-    expect(reshapedObj).toBeNull();
-  });
-
-  it('should return null if the story has no pages', () => {
-    const responseObj = {
-      id: 27,
-      date: '2020-03-26T20:57:24',
-      date_gmt: '2020-03-26T20:57:24',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-      },
-      modified: '2020-03-26T21:42:14',
-      modified_gmt: '2020-03-26T21:42:14',
-      slug: '',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
-      excerpt: { rendered: '', protected: false },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      featured_media_url: '',
-      story_data: { pages: [] },
-    };
-
-    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
-      responseObj
-    );
-    expect(reshapedObj).toBeNull();
-  });
-});
-
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
     const { result } = renderHook(() => useContext(ApiContext), {
@@ -183,10 +68,10 @@ describe('ApiProvider', () => {
     });
 
     await act(async () => {
-      await result.current.actions.fetchStories({});
+      await result.current.actions.storyApi.fetchStories({});
     });
 
-    expect(result.current.state.stories).toStrictEqual({
+    expect(result.current.state.stories.stories).toStrictEqual({
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
@@ -217,11 +102,11 @@ describe('ApiProvider', () => {
     });
 
     await act(async () => {
-      await result.current.actions.fetchStories({});
+      await result.current.actions.storyApi.fetchStories({});
     });
 
     await act(async () => {
-      await result.current.actions.updateStory({
+      await result.current.actions.storyApi.updateStory({
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         pages: [
@@ -235,7 +120,7 @@ describe('ApiProvider', () => {
       });
     });
 
-    expect(result.current.state.stories).toStrictEqual({
+    expect(result.current.state.stories.stories).toStrictEqual({
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
