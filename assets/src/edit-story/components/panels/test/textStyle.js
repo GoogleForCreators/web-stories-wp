@@ -391,7 +391,15 @@ describe('Panels/TextStyle', () => {
     it('should select font weight', () => {
       const { pushUpdate } = renderTextStyle([textElement]);
       act(() => controls['font.weight'].onChange('300'));
-      expect(pushUpdate).toHaveBeenCalledWith({ fontWeight: 300 }, true);
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content:
+            '<span class="weight" style="font-weight: 300">Hello world</span>',
+        },
+        true
+      );
     });
 
     it('should select font size', () => {

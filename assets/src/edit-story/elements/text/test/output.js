@@ -57,7 +57,6 @@ describe('TextOutput', () => {
       fontSize: 16,
       letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
@@ -89,7 +88,6 @@ describe('TextOutput', () => {
       fontSize: '0.242424em',
       letterSpacing: '1.3em',
       textAlign: 'left',
-      textDecoration: 'none',
     });
   });
 
@@ -107,7 +105,6 @@ describe('TextOutput', () => {
       fontSize: 16,
       letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
@@ -132,52 +129,6 @@ describe('TextOutput', () => {
     expect(output.style).toMatchObject({
       padding: '20% 20%',
     });
-  });
-
-  it('should apply <strong> tags if bold', () => {
-    const element = {
-      id: '123',
-      content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
-      backgroundColor: {
-        color: {
-          r: 255,
-          g: 0,
-          b: 0,
-          a: 0.3,
-        },
-      },
-      fontSize: 16,
-      letterSpacing: 1.3,
-      textAlign: 'left',
-      textDecoration: 'none',
-      type: 'text',
-      x: 10,
-      y: 10,
-      width: 50,
-      height: 50,
-      rotationAngle: 0,
-      padding: {
-        vertical: 0,
-        horizontal: 0,
-      },
-      bold: true,
-    };
-
-    const output = renderViaString(
-      <TextOutput
-        element={element}
-        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
-      />
-    );
-    expect(output.innerHTML).toBe('<strong>Content</strong>');
   });
 
   it('should wrap font-family into quotes', () => {
