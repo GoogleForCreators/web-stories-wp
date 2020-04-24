@@ -87,10 +87,12 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             sprintf(
               /* translators: %s: list of allowed file types. */
               __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedMimeTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
+              allowedMimeTypes
+                .map((type) => type.replace('image/', '').replace('video/', ''))
+                .join(
+                  /* translators: delimiter used in a list */
+                  __(', ', 'web-stories')
+                )
             ),
             {
               b: <b />,

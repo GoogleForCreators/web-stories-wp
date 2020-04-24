@@ -79,7 +79,9 @@ function UploadDropTargetMessage({ message, ...rest }) {
           {sprintf(
             /* translators: %s is a list of allowed file extensions. */
             __('You can upload %s.', 'web-stories'),
-            allowedFileTypes.join(', ')
+            allowedFileTypes
+              .map((type) => type.replace('image/', '').replace('video/', ''))
+              .join(', ')
           )}
         </Text>
       </Box>
