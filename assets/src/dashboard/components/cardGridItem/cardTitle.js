@@ -22,13 +22,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useCallback, useRef, useState } from 'react';
 import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import { TextInput } from '../input';
 import useFocusOut from '../../utils/useFocusOut';
