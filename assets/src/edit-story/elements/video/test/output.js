@@ -27,6 +27,7 @@ describe('Video output', () => {
         type: 'video',
         mimeType: 'video/mp4',
         scale: 1,
+        origRatio: 9 / 16,
         x: 50,
         y: 100,
         height: 1920,

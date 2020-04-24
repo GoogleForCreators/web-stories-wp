@@ -27,6 +27,7 @@ describe('Image output', () => {
         type: 'image',
         mimeType: 'image/png',
         scale: 1,
+        origRatio: 9 / 16,
         x: 50,
         y: 100,
         height: 1920,
