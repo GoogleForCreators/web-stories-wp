@@ -146,11 +146,11 @@ describe('WithMask', () => {
             height: 1920,
             width: 1080,
           },
-        },
-        mask: {
-          type: 'heart',
-          fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-          style: {},
+          mask: {
+            type: 'heart',
+            fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+            style: {},
+          },
         },
         box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
       };
