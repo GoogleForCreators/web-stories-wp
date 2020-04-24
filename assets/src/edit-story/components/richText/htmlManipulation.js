@@ -28,6 +28,7 @@ import {
   toggleUnderline,
   setFontWeight,
   setLetterSpacing,
+  setColor,
   getStateInfo,
 } from './styleManipulation';
 import customImport from './customImport';
@@ -53,14 +54,17 @@ export function toggleBoldInHTML(html, flag) {
 export function setFontWeightInHTML(html, weight) {
   return updateAndReturnHTML(html, setFontWeight, weight);
 }
-export function setLetterSpacingInHTML(html, letterSpacing) {
-  return updateAndReturnHTML(html, setLetterSpacing, letterSpacing);
-}
 export function toggleItalicInHTML(html, flag) {
   return updateAndReturnHTML(html, toggleItalic, flag);
 }
 export function toggleUnderlineInHTML(html, flag) {
   return updateAndReturnHTML(html, toggleUnderline, flag);
+}
+export function setLetterSpacingInHTML(html, letterSpacing) {
+  return updateAndReturnHTML(html, setLetterSpacing, letterSpacing);
+}
+export function setColorInHTML(html, color) {
+  return updateAndReturnHTML(html, setColor, color);
 }
 
 export function getHTMLInfo(html) {

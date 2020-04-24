@@ -17,11 +17,13 @@
 /**
  * Internal dependencies
  */
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import {
   ITALIC,
   UNDERLINE,
   styleToWeight,
   styleToLetterSpacing,
+  styleToColor,
 } from './customConstants';
 
 function customInlineDisplay(styles) {
@@ -48,8 +50,11 @@ function customInlineDisplay(styles) {
       return { ...css, letterSpacing: `${letterSpacing / 100}em` };
     }
 
-    // TODO: Color
-    // TODO: Letter spacing
+    // Color
+    const color = styleToColor(style);
+    if (color) {
+      return { ...css, ...generatePatternStyles(color, 'color') };
+    }
 
     return css;
   }, {});

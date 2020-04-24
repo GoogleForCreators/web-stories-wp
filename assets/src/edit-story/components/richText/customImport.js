@@ -22,11 +22,13 @@ import { stateFromHTML } from 'draft-js-import-html';
 /**
  * Internal dependencies
  */
+import createSolidFromString from '../../utils/createSolidFromString';
 import {
   ITALIC,
   UNDERLINE,
   weightToStyle,
   letterSpacingToStyle,
+  colorToStyle,
 } from './customConstants';
 import { draftMarkupToContent } from './util';
 
@@ -52,6 +54,12 @@ function customInlineFn(element, { Style }) {
               const lsNumber = ls.split(/[a-z%]/)[0] || 0;
               const lsScaled = Math.round(lsNumber * 100);
               return letterSpacingToStyle(lsScaled);
+            }
+
+            case 'color': {
+              const rawColor = element.style.color;
+              const solid = createSolidFromString(rawColor);
+              return colorToStyle(solid);
             }
 
             default:

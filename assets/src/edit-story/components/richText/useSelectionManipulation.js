@@ -29,6 +29,7 @@ import {
   toggleUnderline,
   setFontWeight,
   setLetterSpacing,
+  setColor,
 } from './styleManipulation';
 
 function useSelectionManipulation(editorState, setEditorState) {
@@ -80,6 +81,14 @@ function useSelectionManipulation(editorState, setEditorState) {
       ),
     [updateWhileUnfocused]
   );
+  const setColorInSelection = useCallback(
+    (color) =>
+      updateWhileUnfocused(
+        (s) => setColor(s, color),
+        /* shouldForceFocus */ false
+      ),
+    [updateWhileUnfocused]
+  );
 
   return {
     toggleBoldInSelection,
@@ -87,6 +96,7 @@ function useSelectionManipulation(editorState, setEditorState) {
     toggleItalicInSelection,
     toggleUnderlineInSelection,
     setLetterSpacingInSelection,
+    setColorInSelection,
   };
 }
 

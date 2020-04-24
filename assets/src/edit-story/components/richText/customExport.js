@@ -22,11 +22,13 @@ import { stateToHTML } from 'draft-js-export-html';
 /**
  * Internal dependencies
  */
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import {
   ITALIC,
   UNDERLINE,
   styleToWeight,
   styleToLetterSpacing,
+  styleToColor,
 } from './customConstants';
 
 function inlineStyleFn(styles) {
@@ -65,7 +67,14 @@ function inlineStyleFn(styles) {
         };
       }
 
-      // TODO: Color
+      // Color
+      const color = styleToColor(style);
+      if (color) {
+        return {
+          classes: [...classes, 'color'],
+          css: { ...css, ...generatePatternStyles(color, 'color') },
+        };
+      }
 
       return { classes, css };
     },

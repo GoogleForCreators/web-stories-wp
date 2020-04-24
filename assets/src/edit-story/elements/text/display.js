@@ -29,7 +29,6 @@ import {
   elementFillContent,
   elementWithFont,
   elementWithBackgroundColor,
-  elementWithFontColor,
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -41,7 +40,6 @@ import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
-  ${elementWithFontColor}
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
@@ -87,20 +85,11 @@ const FillElement = styled.p`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithBackgroundColor}
-  ${elementWithFontColor}
   ${elementWithTextParagraphStyle}
 `;
 
 function TextDisplay({
-  element: {
-    id,
-    bold,
-    content,
-    color,
-    backgroundColor,
-    backgroundTextMode,
-    ...rest
-  },
+  element: { id, content, backgroundColor, backgroundTextMode, ...rest },
   box: { width },
 }) {
   const ref = useRef(null);
@@ -110,7 +99,6 @@ function TextDisplay({
   } = useUnits();
 
   const props = {
-    color,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
       ? {}
       : { backgroundColor }),
@@ -144,7 +132,7 @@ function TextDisplay({
             <BackgroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: draftMarkupToContent(content),
               }}
             />
           </MarginedElement>
@@ -154,7 +142,7 @@ function TextDisplay({
             <ForegroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: draftMarkupToContent(content),
               }}
             />
           </MarginedElement>
@@ -167,7 +155,7 @@ function TextDisplay({
     <FillElement
       ref={ref}
       dangerouslySetInnerHTML={{
-        __html: draftMarkupToContent(content, bold),
+        __html: draftMarkupToContent(content),
       }}
       {...props}
     />

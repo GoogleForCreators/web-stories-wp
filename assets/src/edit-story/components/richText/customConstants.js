@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { getHexFromSolid, getSolidFromHex } from '../../utils/patternUtils';
+
 export const NONE = 'NONE';
 export const ITALIC = 'CUSTOM-ITALIC';
 export const UNDERLINE = 'CUSTOM-UNDERLINE';
@@ -33,6 +38,10 @@ export const weightToStyle = (weight) => `${WEIGHT}-${weight}`;
 export const styleToWeight = (style) =>
   isStyle(style, WEIGHT) ? parseInt(getVariable(style, WEIGHT)) : null;
 
+/*
+ * Letter spacing uses PREFIX-123 for the number 123
+ * and PREFIX-N123 for the number -123.
+ */
 export const letterSpacingToStyle = (ls) =>
   `${LETTERSPACING}-${ls < 0 ? 'N' : ''}${Math.abs(ls)}`;
 export const styleToLetterSpacing = (style) => {
@@ -47,6 +56,10 @@ export const styleToLetterSpacing = (style) => {
   return parseInt(raw);
 };
 
+/*
+ * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
+ * hex represenation of the RGBA color.
+ */
 export const styleToColor = (style) =>
-  isStyle(style, COLOR) ? getVariable(style, COLOR) : null;
-export const colorToStyle = (color) => `${COLOR}-${color}`;
+  isStyle(style, COLOR) ? getSolidFromHex(getVariable(style, COLOR)) : null;
+export const colorToStyle = (color) => `${COLOR}-${getHexFromSolid(color)}`;

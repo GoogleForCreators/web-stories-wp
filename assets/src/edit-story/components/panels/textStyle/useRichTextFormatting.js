@@ -30,6 +30,7 @@ import {
   toggleItalicInHTML,
   toggleUnderlineInHTML,
   setLetterSpacingInHTML,
+  setColorInHTML,
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 
@@ -57,6 +58,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         toggleItalicInSelection,
         toggleUnderlineInSelection,
         setLetterSpacingInSelection,
+        setColorInSelection,
       },
     },
   } = useRichText();
@@ -91,6 +93,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickItalic: toggleItalicInSelection,
         handleClickUnderline: toggleUnderlineInSelection,
         handleSetLetterSpacing: setLetterSpacingInSelection,
+        handleSetColor: setColorInSelection,
       };
     }
 
@@ -100,6 +103,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleClickItalic: (flag) => push(toggleItalicInHTML, flag),
       handleClickUnderline: (flag) => push(toggleUnderlineInHTML, flag),
       handleSetLetterSpacing: (ls) => push(setLetterSpacingInHTML, ls),
+      handleSetColor: (c) => push(setColorInHTML, c),
     };
   }, [
     hasCurrentEditor,
@@ -108,6 +112,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     toggleItalicInSelection,
     toggleUnderlineInSelection,
     setLetterSpacingInSelection,
+    setColorInSelection,
     push,
   ]);
 

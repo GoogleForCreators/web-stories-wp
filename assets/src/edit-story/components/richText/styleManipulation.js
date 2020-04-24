@@ -23,16 +23,20 @@ import { Modifier, EditorState } from 'draft-js';
  * Internal dependencies
  */
 import { MULTIPLE_VALUE } from '../form';
+import createSolid from '../../utils/createSolid';
 import {
   weightToStyle,
   styleToWeight,
   letterSpacingToStyle,
   styleToLetterSpacing,
+  colorToStyle,
+  styleToColor,
   NONE,
   WEIGHT,
-  LETTERSPACING,
   ITALIC,
   UNDERLINE,
+  LETTERSPACING,
+  COLOR,
   NORMAL_WEIGHT,
   SMALLEST_BOLD,
   DEFAULT_BOLD,
@@ -245,16 +249,6 @@ export function isUnderline(editorState) {
   return !styles.includes(NONE);
 }
 
-export function getStateInfo(state) {
-  return {
-    letterSpacing: getLetterSpacing(state),
-    fontWeight: getFontWeight(state),
-    isBold: isBold(state),
-    isItalic: isItalic(state),
-    isUnderline: isUnderline(state),
-  };
-}
-
 export function toggleUnderline(editorState, flag) {
   return togglePrefixStyle(
     editorState,
@@ -268,11 +262,11 @@ export function getLetterSpacing(editorState) {
   if (styles.length > 1) {
     return MULTIPLE_VALUE;
   }
-  const spacing = styles[0];
-  if (spacing === NONE) {
+  const spacingStyle = styles[0];
+  if (spacingStyle === NONE) {
     return 0;
   }
-  return styleToLetterSpacing(spacing);
+  return styleToLetterSpacing(spacingStyle);
 }
 
 export function setLetterSpacing(editorState, letterSpacing) {
@@ -288,4 +282,38 @@ export function setLetterSpacing(editorState, letterSpacing) {
     shouldSetStyle,
     getStyleToSet
   );
+}
+
+export function getColor(editorState) {
+  const styles = getPrefixStylesInSelection(editorState, COLOR);
+  if (styles.length > 1) {
+    return MULTIPLE_VALUE;
+  }
+  const colorStyle = styles[0];
+  if (colorStyle === NONE) {
+    return createSolid(0, 0, 0);
+  }
+  return styleToColor(colorStyle);
+}
+
+export function setColor(editorState, color) {
+  // we set all colors - one could argue that opaque black
+  // was default, and wasn't necessary, but it's probably not worth the trouble
+  const shouldSetStyle = () => true;
+
+  // the style util manages conversion
+  const getStyleToSet = () => colorToStyle(color);
+
+  return togglePrefixStyle(editorState, COLOR, shouldSetStyle, getStyleToSet);
+}
+
+export function getStateInfo(state) {
+  return {
+    fontWeight: getFontWeight(state),
+    isBold: isBold(state),
+    isItalic: isItalic(state),
+    isUnderline: isUnderline(state),
+    letterSpacing: getLetterSpacing(state),
+    color: getColor(state),
+  };
 }

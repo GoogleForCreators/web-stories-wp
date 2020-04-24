@@ -30,7 +30,6 @@ import {
   elementFillContent,
   elementWithFont,
   elementWithBackgroundColor,
-  elementWithFontColor,
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -66,7 +65,6 @@ const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
   ${elementWithBackgroundColor}
-  ${elementWithFontColor}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -79,7 +77,6 @@ function TextEdit({
   element: {
     id,
     content,
-    color,
     backgroundColor,
     backgroundTextMode,
     opacity,
@@ -93,7 +90,6 @@ function TextEdit({
   } = useUnits();
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    color,
     backgroundColor,
     opacity,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {

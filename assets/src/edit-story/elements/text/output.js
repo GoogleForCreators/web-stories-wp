@@ -36,7 +36,6 @@ export function TextOutputWithUnits({
   element: {
     bold,
     content,
-    color,
     backgroundColor,
     backgroundTextMode,
     padding,
@@ -75,7 +74,6 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...generatePatternStyles(color, 'color'),
     ...bgColor,
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
