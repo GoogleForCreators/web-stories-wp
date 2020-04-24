@@ -37,6 +37,11 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
+const themeFonts = {
+  primary: "'Google Sans', sans-serif",
+  secondary: 'Roboto',
+};
+
 const colors = {
   gray900: '#1A1D1F',
   gray800: '#2C3033',
@@ -131,7 +136,7 @@ const theme = {
     'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
   fonts: {
     heading1: {
-      family: 'Google Sans',
+      family: themeFonts.primary,
       size: 38,
       minSize: 28,
       lineHeight: 53,
@@ -141,39 +146,39 @@ const theme = {
     },
     // heading2 is not in use
     // heading2: {
-    //   family: 'Google Sans',
-    //   size: '24px',
-    //   lineHeight: '34px',
+    //   family: themeFonts.primary,
+    //   size: 24,
+    //   lineHeight: 34,
     //   weight: 500,
     // },
     heading3: {
-      family: 'Google Sans',
+      family: themeFonts.primary,
       size: 20,
       lineHeight: 28,
       letterSpacing: -0.01,
       weight: 500,
     },
     heading4: {
-      family: 'Google Sans',
+      family: themeFonts.primary,
       size: 28,
       lineHeight: 35,
       weight: 500,
     },
     body1: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 16,
       weight: 500,
       lineHeight: 22,
       letterSpacing: 0.001,
     },
     body2: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 22,
       letterSpacing: 0.015,
     },
     tab: {
-      family: 'Google Sans',
+      family: themeFonts.primary,
       size: 16,
       minSize: 12,
       lineHeight: 20,
@@ -181,46 +186,40 @@ const theme = {
       weight: '500',
     },
     smallLabel: {
-      family: 'Google Sans',
+      family: themeFonts.primary,
       size: 12,
       minSize: 10,
       letterSpacing: '0.01em',
     },
-    // label: {
-    //   family: 'Roboto',
-    //   size: 15,
-    //   lineHeight: '18px',
-    //   weight: '400',
-    // },
     button: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '500',
     },
     pill: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       weight: 500,
       size: 14,
       lineHeight: 20,
       letterSpacing: 0.01,
     },
     popoverMenu: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '400',
       letterSpacing: 0.01,
     },
     dropdown: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '500',
       letterSpacing: 0.01,
     },
     textInput: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 13,
       border: `1px solid ${colors.gray100}`,
       activeBorder: `1px solid ${colors.bluePrimary}`,
@@ -229,31 +228,31 @@ const theme = {
       padding: '1px 8px',
     },
     storyGridItem: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '500',
       letterSpacing: 0.01,
     },
     storyGridItemSub: {
-      family: 'Roboto',
+      family: themeFonts.secondary,
       weight: 'normal',
     },
     table: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       weight: '500',
       letterSpacing: 0.01,
     },
     typeaheadInput: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '500',
       letterSpacing: 0.01,
     },
     typeaheadOptions: {
-      family: "'Google Sans', sans-serif",
+      family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
       weight: '400',
