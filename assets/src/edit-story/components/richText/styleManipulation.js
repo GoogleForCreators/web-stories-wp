@@ -96,9 +96,43 @@ function togglePrefixStyle(
   shouldSetStyle = null,
   getStyleToSet = null
 ) {
+  if (editorState.getSelection().isCollapsed()) {
+    // A different set of rules apply here
+    // First find all styles that apply at cursor - we'll reapply those as override
+    // with modifications at the end
+    let inlineStyles = editorState.getCurrentInlineStyle();
+
+    // See if there's a matching style for our prefix
+    const foundMatch = getPrefixStyleForCharacter(inlineStyles, prefix);
+
+    // Then remove potentially found style from list
+    if (foundMatch !== NONE) {
+      inlineStyles = inlineStyles.remove(foundMatch);
+    }
+
+    // Then figure out whether to apply new style or not
+    const willAddStyle = shouldSetStyle
+      ? shouldSetStyle([foundMatch])
+      : foundMatch === NONE;
+
+    // If so, add to list
+    if (willAddStyle) {
+      const styleToAdd = getStyleToSet ? getStyleToSet([foundMatch]) : prefix;
+      inlineStyles = inlineStyles.add(styleToAdd);
+    }
+
+    // Finally apply to style override
+    const newState = EditorState.setInlineStyleOverride(
+      editorState,
+      inlineStyles
+    );
+    return newState;
+  }
+
   const matchingStyles = getPrefixStylesInSelection(editorState, prefix);
 
-  // never the less, remove all old styles (except NONE, it's not actually a style)
+  // First remove all old styles natching prefix
+  // (except NONE, it's not actually a style)
   const stylesToRemove = matchingStyles.filter((s) => s !== NONE);
   const strippedContentState = stylesToRemove.reduce(
     (contentState, styleToRemove) =>
