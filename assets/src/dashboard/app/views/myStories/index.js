@@ -28,6 +28,8 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 import {
   FloatingTab,
   InfiniteScroller,
@@ -40,13 +42,10 @@ import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
 } from '../../../constants';
-import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import clamp from '../../../utils/clamp';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { ApiContext } from '../../api/apiProvider';
+import FontProvider from '../../font/fontProvider';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
   BodyViewOptions,
@@ -113,11 +112,11 @@ function MyStories() {
     state: {
       stories: {
         allPagesFetched,
+        isLoading,
         stories,
         storiesOrderById,
         totalStories,
         totalPages,
-        isLoading,
       },
     },
   } = useContext(ApiContext);
