@@ -36,16 +36,11 @@ import {
   toggleBold,
   toggleItalic,
   toggleUnderline,
+  setFontWeight,
   getStateInfo,
 } from './styleManipulation';
 import customImport from './customImport';
 import customExport from './customExport';
-import {
-  toggleBoldInHTML,
-  toggleItalicInHTML,
-  toggleUnderlineInHTML,
-  getHTMLInfo,
-} from './htmlManipulation';
 
 function RichTextProvider({ children }) {
   const {
@@ -117,17 +112,21 @@ function RichTextProvider({ children }) {
 
   const hasCurrentEditor = Boolean(editorState);
 
-  const updateWhileUnfocused = useCallback((updater) => {
+  const updateWhileUnfocused = useCallback((updater, ...args) => {
     const oldState = lastKnownState.current;
     const selection = lastKnownSelection.current;
     const workingState = EditorState.forceSelection(oldState, selection);
-    const newState = updater(workingState);
+    const newState = updater(workingState, ...args);
     setEditorState(newState);
     setForceFocus(true);
   }, []);
 
   const toggleBoldInSelection = useCallback(
     () => updateWhileUnfocused(toggleBold),
+    [updateWhileUnfocused]
+  );
+  const setFontWeightInSelection = useCallback(
+    (weight) => updateWhileUnfocused(setFontWeight, weight),
     [updateWhileUnfocused]
   );
   const toggleItalicInSelection = useCallback(
@@ -155,14 +154,11 @@ function RichTextProvider({ children }) {
       clearState,
       clearForceFocus,
       toggleBoldInSelection,
+      setFontWeightInSelection,
       toggleItalicInSelection,
       toggleUnderlineInSelection,
       // These actually don't work on the state at all, just pure functions
       getContentFromState: customExport,
-      getHTMLInfo,
-      toggleBoldInHTML,
-      toggleItalicInHTML,
-      toggleUnderlineInHTML,
     },
   };
 

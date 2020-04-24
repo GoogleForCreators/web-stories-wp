@@ -21,6 +21,7 @@ export const WEIGHT = 'CUSTOM-WEIGHT';
 export const COLOR = 'CUSTOM-COLOR';
 export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
 
+export const NORMAL_WEIGHT = 400;
 export const SMALLEST_BOLD = 600;
 export const DEFAULT_BOLD = 700;
 
@@ -40,6 +41,3 @@ export const styleToLs = (style) =>
   isStyle(style, LETTERSPACING)
     ? parseInt(getVariable(style, LETTERSPACING))
     : null;
-
-export const isBold = (style) => styleToWeight(style) >= 700;
-export const hasBold = (styles) => styles.some(isBold);

@@ -32,25 +32,19 @@ export function generateParagraphTextStyle(
     fontFamily,
     fontFallback,
     fontSize,
-    fontStyle,
-    fontWeight,
     lineHeight,
     letterSpacing,
     padding,
     textAlign,
-    textDecoration,
   } = element;
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontSize: dataToFontSizeY(fontSize),
-    fontStyle,
-    fontWeight,
     lineHeight,
     letterSpacing: `${typeof letterSpacing === 'number' ? letterSpacing : 0}em`,
     textAlign,
-    textDecoration,
     padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
       padding?.horizontal || 0
     )}px`,

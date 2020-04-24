@@ -26,6 +26,7 @@ import {
   toggleBold,
   toggleItalic,
   toggleUnderline,
+  setFontWeight,
   getStateInfo,
 } from './styleManipulation';
 import customImport from './customImport';
@@ -39,20 +40,23 @@ function getSelectAllStateFromHTML(html) {
   return EditorState.forceSelection(initialState, selection);
 }
 
-function updateAndReturnHTML(html, updater) {
-  const stateWithUpdate = updater(getSelectAllStateFromHTML(html));
+function updateAndReturnHTML(html, updater, ...args) {
+  const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
   const renderedHTML = customExport(stateWithUpdate);
   return renderedHTML;
 }
 
-export function toggleBoldInHTML(html) {
-  updateAndReturnHTML(html, toggleBold);
+export function toggleBoldInHTML(html, flag) {
+  return updateAndReturnHTML(html, toggleBold, flag);
 }
-export function toggleItalicInHTML(html) {
-  updateAndReturnHTML(html, toggleItalic);
+export function setFontWeightInHTML(html, weight) {
+  return updateAndReturnHTML(html, setFontWeight, weight);
 }
-export function toggleUnderlineInHTML(html) {
-  updateAndReturnHTML(html, toggleUnderline);
+export function toggleItalicInHTML(html, flag) {
+  return updateAndReturnHTML(html, toggleItalic, flag);
+}
+export function toggleUnderlineInHTML(html, flag) {
+  return updateAndReturnHTML(html, toggleUnderline, flag);
 }
 
 export function getHTMLInfo(html) {

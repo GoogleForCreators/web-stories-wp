@@ -33,6 +33,7 @@ import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
+import useRichTextFormatting from './useRichTextFormatting';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -46,7 +47,11 @@ const BoxedNumeric = styled(Numeric)`
 function FontControls({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(selectedElements, 'fontFamily');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
-  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
+
+  const {
+    textInfo: { fontWeight },
+    handlers: { handleSelectFontWeight },
+  } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const {
     state: { fonts },
@@ -103,9 +108,7 @@ function FontControls({ selectedElements, pushUpdate }) {
               ariaLabel={__('Font weight', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
-              onChange={(value) =>
-                pushUpdate({ fontWeight: parseInt(value) }, true)
-              }
+              onChange={handleSelectFontWeight}
             />
             <Space />
           </>

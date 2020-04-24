@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -31,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Numeric, Row, ToggleButton } from '../../form';
-import useRichText from '../../richText/useRichText';
 import { ReactComponent as VerticalOffset } from '../../../icons/offset_vertical.svg';
 import { ReactComponent as HorizontalOffset } from '../../../icons/offset_horizontal.svg';
 import { ReactComponent as LeftAlign } from '../../../icons/left_align.svg';
@@ -42,6 +40,7 @@ import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 import { getCommonValue } from '../utils';
+import useRichTextFormatting from './useRichTextFormatting';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -63,51 +62,14 @@ const Space = styled.div`
 `;
 
 function StylePanel({ selectedElements, pushUpdate }) {
-  const {
-    state: { hasCurrentEditor, selectionInfo },
-    actions: {
-      toggleBoldInSelection,
-      toggleItalicInSelection,
-      toggleUnderlineInSelection,
-      toggleBoldInHTML,
-      toggleItalicInHTML,
-      toggleUnderlineInHTML,
-      getHTMLInfo,
-    },
-  } = useRichText();
-
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
 
-  const content = selectedElements[0].content;
-
-  const { isBold, isItalic, isUnderline } = useMemo(() => {
-    if (hasCurrentEditor) {
-      return selectionInfo;
-    }
-
-    return getHTMLInfo(content);
-  }, [hasCurrentEditor, selectionInfo, getHTMLInfo, content]);
-
-  const pushContentUpdate = useCallback(
-    (updater) => {
-      pushUpdate({ content: updater(content) }, true);
-    },
-    [content, pushUpdate]
-  );
-
-  const handleClickBold = hasCurrentEditor
-    ? toggleBoldInSelection
-    : () => pushContentUpdate(toggleBoldInHTML);
-
-  const handleClickItalic = hasCurrentEditor
-    ? toggleItalicInSelection
-    : () => pushContentUpdate(toggleItalicInHTML);
-
-  const handleClickUnderline = hasCurrentEditor
-    ? toggleUnderlineInSelection
-    : () => pushContentUpdate(toggleUnderlineInHTML);
+  const {
+    textInfo: { isBold, isItalic, isUnderline },
+    handlers: { handleClickBold, handleClickItalic, handleClickUnderline },
+  } = useRichTextFormatting(selectedElements, pushUpdate);
 
   return (
     <>

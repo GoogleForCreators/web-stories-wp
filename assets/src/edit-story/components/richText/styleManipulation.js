@@ -22,6 +22,7 @@ import { Modifier, EditorState } from 'draft-js';
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../form';
 import {
   weightToStyle,
   styleToWeight,
@@ -29,6 +30,7 @@ import {
   WEIGHT,
   ITALIC,
   UNDERLINE,
+  NORMAL_WEIGHT,
   SMALLEST_BOLD,
   DEFAULT_BOLD,
 } from './customConstants';
@@ -134,7 +136,9 @@ function togglePrefixStyle(
 
 // convert a set of weight styles to a set of weights
 function getWeights(styles) {
-  return styles.map((style) => (style === NONE ? 400 : styleToWeight(style)));
+  return styles.map((style) =>
+    style === NONE ? NORMAL_WEIGHT : styleToWeight(style)
+  );
 }
 
 export function isBold(editorState) {
@@ -144,20 +148,46 @@ export function isBold(editorState) {
   return allIsBold;
 }
 
-export function toggleBold(editorState) {
-  // if any character has weight less than SMALLEST_BOLD,
+export function toggleBold(editorState, flag) {
+  // if flag set, use flag
+  // otherwise if any character has weight less than SMALLEST_BOLD,
   // everything should be bolded
   const shouldSetBold = (styles) =>
-    getWeights(styles).some((w) => w < SMALLEST_BOLD);
+    typeof flag === 'boolean'
+      ? flag
+      : getWeights(styles).some((w) => w < SMALLEST_BOLD);
 
-  // if setting a bold, it should be the boldest current weight,
+  // if flag set, toggle to either 400 or 700,
+  // otherwise if setting a bold, it should be the boldest current weight,
   // though at least DEFAULT_BOLD
   const getBoldToSet = (styles) =>
-    weightToStyle(
-      Math.max.apply(null, [DEFAULT_BOLD].concat(getWeights(styles)))
-    );
+    typeof flag === 'boolean'
+      ? weightToStyle(flag ? DEFAULT_BOLD : NORMAL_WEIGHT)
+      : weightToStyle(
+          Math.max.apply(null, [DEFAULT_BOLD].concat(getWeights(styles)))
+        );
 
   return togglePrefixStyle(editorState, WEIGHT, shouldSetBold, getBoldToSet);
+}
+
+export function getFontWeight(editorState) {
+  const styles = getPrefixStylesInSelection(editorState, WEIGHT);
+  const weights = getWeights(styles);
+  if (weights.length > 1) {
+    return MULTIPLE_VALUE;
+  }
+  return weights[0];
+}
+
+export function setFontWeight(editorState, weight) {
+  // if the weight to set is non-400, set a style
+  // (if 400 is target, all other weights are just removed, and we're good)
+  const shouldSetStyle = () => weight !== 400;
+
+  // and if we're setting a style, it's the style for the weight of course
+  const getBoldToSet = () => weightToStyle(weight);
+
+  return togglePrefixStyle(editorState, WEIGHT, shouldSetStyle, getBoldToSet);
 }
 
 export function isItalic(editorState) {
@@ -165,8 +195,12 @@ export function isItalic(editorState) {
   return !styles.includes(NONE);
 }
 
-export function toggleItalic(editorState) {
-  return togglePrefixStyle(editorState, ITALIC);
+export function toggleItalic(editorState, flag) {
+  return togglePrefixStyle(
+    editorState,
+    ITALIC,
+    typeof flag === 'boolean' && (() => flag)
+  );
 }
 
 export function isUnderline(editorState) {
@@ -176,12 +210,17 @@ export function isUnderline(editorState) {
 
 export function getStateInfo(state) {
   return {
+    fontWeight: getFontWeight(state),
     isBold: isBold(state),
     isItalic: isItalic(state),
     isUnderline: isUnderline(state),
   };
 }
 
-export function toggleUnderline(editorState) {
-  return togglePrefixStyle(editorState, UNDERLINE);
+export function toggleUnderline(editorState, flag) {
+  return togglePrefixStyle(
+    editorState,
+    UNDERLINE,
+    typeof flag === 'boolean' && (() => flag)
+  );
 }
