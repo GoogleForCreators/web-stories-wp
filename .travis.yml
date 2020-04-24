@@ -46,6 +46,10 @@ install:
       npm ci
     fi
   - |
+    if ! [ -z $PUPPETEER_PRODUCT ] ; then
+      npm ci puppeteer
+    fi
+  - |
     if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       composer install --no-interaction
     fi
@@ -114,7 +118,7 @@ script:
     if [ "$E2E" = "1" ]; then
       npm run build:js
       npm run env:start
-      npm run test:e2e:ci
+      npm run test:e2e
       npm run env:stop
     fi
   - set +e
@@ -149,12 +153,14 @@ jobs:
       php: nightly
       env: PHP=1 WP_VERSION=trunk
     - name: PHP and JavaScript unit tests (7.4, WordPress latest, with code coverage)
-      if: branch = master AND type = push
       php: 7.4
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
-    - name: E2E tests
+    - name: E2E tests (Chromium)
       php: 7.4
       env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
+    - name: E2E tests (Firefox)
+      php: 7.4
+      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD= PUPPETEER_PRODUCT=firefox
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       php: 7.3

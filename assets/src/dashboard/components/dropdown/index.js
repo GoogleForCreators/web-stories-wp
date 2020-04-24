@@ -24,8 +24,8 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownArrow } from '../../icons/drop-down-arrow.svg';
-import { ReactComponent as DropUpArrow } from '../../icons/drop-up-arrow.svg';
+import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
+import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { DROPDOWN_TYPES } from '../../constants';
 import PopoverMenu from '../popoverMenu';
