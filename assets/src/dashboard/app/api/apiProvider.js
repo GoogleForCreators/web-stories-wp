@@ -150,6 +150,24 @@ export default function ApiProvider({ children }) {
     [api.stories, editStoryURL]
   );
 
+  const updateStory = useCallback(
+    async (story) => {
+      try {
+        const response = await dataAdapter.post(`${api.stories}/${story.id}`, {
+          data: story,
+        });
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_STORY,
+          payload: reshapeStoryObject(editStoryURL)(response),
+        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    },
+    [api.stories, editStoryURL]
+  );
+
   const getAllFonts = useCallback(() => {
     if (!api.fonts) {
       return Promise.resolve([]);
@@ -178,19 +196,21 @@ export default function ApiProvider({ children }) {
         fetchStories,
         templateApi,
         getAllFonts,
+        updateStory,
       },
     }),
     [
-      fetchStories,
-      templates,
-      templateApi,
-      getAllFonts,
       state.allPagesFetched,
       state.isLoading,
       state.stories,
       state.storiesOrderById,
       state.totalStories,
       state.totalPages,
+      templates,
+      fetchStories,
+      templateApi,
+      getAllFonts,
+      updateStory,
     ]
   );
 
