@@ -59,13 +59,13 @@ const PillLabel = styled.span`
   padding: 6px 16px;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.gray600};
-  border: ${({ theme }) => `1px solid ${theme.colors.gray50}`};
-  border-radius: ${({ theme }) => `${theme.border.buttonRadius}px`};
+  border: ${({ theme }) => theme.borders.gray50};
+  border-radius: ${({ theme }) => `${theme.button.borderRadius}px`};
 
   ${PillInput}:checked + & {
     background-color: ${({ theme }) => theme.colors.blueLight};
     color: ${({ theme }) => theme.colors.bluePrimary};
-    border: 1px solid transparent;
+    border: ${({ theme }) => theme.borders.transparent};
   }
 
   ${PillInput}:focus + & {

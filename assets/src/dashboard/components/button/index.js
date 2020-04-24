@@ -33,8 +33,8 @@ const StyledButton = styled.button`
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => `${theme.border.buttonRadius}px`};
+  border: ${({ theme }) => theme.borders.transparent};
+  border-radius: ${({ theme }) => `${theme.button.borderRadius}px`};
   display: flex;
   height: 40px;
   min-width: 100px;

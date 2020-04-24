@@ -68,19 +68,25 @@ const colors = {
   placeholder: '#d9dbdd',
 };
 
+const borders = {
+  gray50: `1px solid ${colors.gray50}`,
+  gray100: `1px solid ${colors.gray100}`,
+  transparent: '1px solid none',
+  bluePrimary: `1px solid ${colors.bluePrimary}`,
+};
+
 const theme = {
   colors,
-  border: {
-    buttonRadius: 100,
-    typeaheadRadius: 100,
-    expandedTypeaheadRadius: 8,
+  borders,
+  button: {
+    borderRadius: 100,
   },
   dropdown: {
     [DROPDOWN_TYPES.PANEL]: {
       background: 'transparent',
       activeBackground: colors.gray25,
       borderRadius: 40,
-      border: `1px solid ${colors.gray50}`,
+      border: borders.gray50,
       arrowColor: colors.bluePrimary,
       height: 48,
     },
@@ -102,7 +108,7 @@ const theme = {
     },
   },
   leftRail: {
-    border: `1px solid ${colors.gray50}`,
+    border: borders.gray50,
     contentPadding: 20,
     inset: 8,
     logoMargin: '75px auto 20px',
@@ -113,8 +119,12 @@ const theme = {
   chip: {
     shadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
   },
-  boxShadow: {
-    expandedTypeahead:
+  typeahead: {
+    borderRadius: 100,
+  },
+  expandedTypeahead: {
+    borderRadius: 8,
+    boxShadow:
       '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
   },
   floatingTab: {
@@ -124,16 +134,18 @@ const theme = {
     height: 64,
   },
   subNavigationBar: {
-    border: `1px solid ${colors.gray50}`,
+    border: borders.gray50,
   },
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
     headerContentSize: 16,
-    border: `1px solid ${colors.gray50}`,
+    border: borders.gray50,
   },
-  overlay:
-    'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
+  cardItem: {
+    previewOverlay:
+      'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
+  },
   fonts: {
     heading1: {
       family: themeFonts.primary,
@@ -221,8 +233,8 @@ const theme = {
     textInput: {
       family: themeFonts.primary,
       size: 13,
-      border: `1px solid ${colors.gray100}`,
-      activeBorder: `1px solid ${colors.bluePrimary}`,
+      border: borders.gray100,
+      activeBorder: borders.bluePrimary,
       weight: '400',
       letterSpacing: 0.01,
       padding: '1px 8px',

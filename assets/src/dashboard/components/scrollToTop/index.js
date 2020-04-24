@@ -39,7 +39,7 @@ const ScrollButton = styled.button`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   cursor: pointer;
   border-radius: 50%;
-  border: 1px solid transparent;
+  border: ${({ theme }) => theme.borders.transparent};
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   color: ${({ theme }) => theme.colors.gray900};
   background-color: ${({ theme }) => theme.colors.white};

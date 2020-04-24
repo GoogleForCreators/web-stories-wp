@@ -40,10 +40,10 @@ const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? `${theme.border.expandedTypeaheadRadius}px` : 'none'};
+    isOpen ? `${theme.expandedTypeahead.borderRadius}px` : 'none'};
   border: none;
   box-shadow: ${({ theme, isOpen }) =>
-    isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
+    isOpen ? theme.expandedTypeahead.boxShadow : 'none'};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
@@ -64,10 +64,9 @@ const InputContainer = styled.div`
   padding: 16px;
   align-items: center;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? 'none' : `${theme.border.typeaheadRadius}px`};
+    isOpen ? 'none' : `${theme.typeahead.borderRadius}px`};
   border: none;
-  border-bottom: ${({ theme, isOpen }) =>
-    isOpen && `1px solid ${theme.colors.gray50}`};
+  border-bottom: ${({ theme, isOpen }) => isOpen && theme.borders.gray50};
   color: ${({ theme }) => theme.colors.gray500};
   background-color: ${({ theme, isOpen }) =>
     isOpen ? theme.colors.white : theme.colors.gray25};
