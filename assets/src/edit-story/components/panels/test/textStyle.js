@@ -80,7 +80,6 @@ describe('Panels/TextStyle', () => {
       textAlign: 'normal',
       fontSize: 30,
       fontFamily: 'ABeeZee',
-      fontWeight: 400,
       x: 0,
       y: 0,
       height: 100,
@@ -387,7 +386,6 @@ describe('Panels/TextStyle', () => {
         {
           fontFamily: 'Neu Font',
           fontFallback: 'fallback1',
-          fontWeight: 400,
         },
         true
       );

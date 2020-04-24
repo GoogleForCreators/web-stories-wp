@@ -72,26 +72,10 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontWeights = getFontWeight(value);
               const currentFontFallback = getFontFallback(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ value: weight }) => weight
-              );
-
-              // Find the nearest font weight from the available font weight list
-              // If no fontweightsArr available then will return undefined
-              const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.reduce((a, b) =>
-                  Math.abs(parseInt(b) - fontWeight) <
-                  Math.abs(parseInt(a) - fontWeight)
-                    ? b
-                    : a
-                );
               pushUpdate(
                 {
                   fontFamily: value,
-                  fontWeight: parseInt(newFontWeight),
                   fontFallback: currentFontFallback,
                 },
                 true
@@ -106,6 +90,7 @@ function FontControls({ selectedElements, pushUpdate }) {
             <DropDown
               data-testid="font.weight"
               ariaLabel={__('Font weight', 'web-stories')}
+              placeholder={__('(multiple)', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
               onChange={handleSelectFontWeight}
