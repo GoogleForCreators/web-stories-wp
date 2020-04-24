@@ -69,10 +69,10 @@ const TitleBar = styled.div`
 const PanelHeader = styled.h3`
   color: ${({ theme }) => theme.colors.gray700};
   font-family: ${({ theme }) => theme.fonts.heading3.family};
-  font-size: ${({ theme }) => theme.fonts.heading3.size};
+  font-size: ${({ theme }) => `${theme.fonts.heading3.size}px`};
   font-weight: ${({ theme }) => theme.fonts.heading3.weight};
-  line-height: ${({ theme }) => theme.fonts.heading3.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing};
+  line-height: ${({ theme }) => `${theme.fonts.heading3.lineHeight}px`};
+  letter-spacing: ${({ theme }) => `${theme.fonts.heading3.letterSpacing}em`};
   margin: 0;
   padding-left: 20px;
 `;

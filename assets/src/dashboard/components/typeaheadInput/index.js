@@ -40,7 +40,7 @@ const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? theme.border.expandedTypeaheadRadius : 'none'};
+    isOpen ? `${theme.border.expandedTypeaheadRadius}px` : 'none'};
   border: none;
   box-shadow: ${({ theme, isOpen }) =>
     isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
@@ -64,7 +64,7 @@ const InputContainer = styled.div`
   padding: 16px;
   align-items: center;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? 'none' : theme.border.typeaheadRadius};
+    isOpen ? 'none' : `${theme.border.typeaheadRadius}px`};
   border: none;
   border-bottom: ${({ theme, isOpen }) =>
     isOpen && `1px solid ${theme.colors.gray50}`};
@@ -100,9 +100,10 @@ const StyledInput = styled.input`
   height: 100%;
   flex-grow: 1;
   font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size};
-  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing};
+  font-size: ${({ theme }) => `${theme.fonts.typeaheadInput.size}px`};
+  line-height: ${({ theme }) => `${theme.fonts.typeaheadInput.lineHeight}px`};
+  letter-spacing: ${({ theme }) =>
+    `${theme.fonts.typeaheadInput.letterSpacing}em`};
   font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
   color: ${({ theme }) => theme.colors.gray500};
 

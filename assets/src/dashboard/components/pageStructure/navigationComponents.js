@@ -42,8 +42,8 @@ export const NavLink = styled.a`
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size}px;
   font-weight: ${({ active }) => (active ? '500' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
+  line-height: ${({ theme }) => `${theme.fonts.tab.lineHeight}px`};
+  letter-spacing: ${({ theme }) => `${theme.fonts.tab.letterSpacing}em`};
   text-decoration: none;
   color: ${({ theme, active }) =>
     active ? theme.colors.gray900 : theme.colors.gray600};
@@ -53,7 +53,7 @@ export const NavLink = styled.a`
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    font-size: ${({ theme }) => theme.fonts.tab.minSize};
+    font-size: ${({ theme }) => `${theme.fonts.tab.minSize}px`};
   }
 `;
 

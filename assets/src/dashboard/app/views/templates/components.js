@@ -72,9 +72,9 @@ export const Title = styled.h2`
   ${({ theme }) => `
     margin: 0;
     font-family: ${theme.fonts.heading4.family};
-    font-size: ${theme.fonts.heading4.size};
+    font-size: ${theme.fonts.heading4.size}px;
     font-weight: ${theme.fonts.heading4.weight};
-    line-height: ${theme.fonts.heading4.lineHeight};
+    line-height: ${theme.fonts.heading4.lineHeight}px;
     color: ${theme.colors.gray900};
   `}
 `;
@@ -83,8 +83,8 @@ export const ByLine = styled.p`
   ${({ theme }) => `
     margin: 0 0 20px;
     font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
-    line-height: ${theme.fonts.body2.lineHeight};
+    font-size: ${theme.fonts.body2.size}px;
+    line-height: ${theme.fonts.body2.lineHeight}px;
     color: ${theme.colors.gray400};
   `}
 `;
@@ -93,9 +93,9 @@ export const Text = styled.p`
   ${({ theme }) => `
     margin: 0 0 20px;
     font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
-    line-height: ${theme.fonts.body2.lineHeight};
-    letter-spacing: 0.015em;
+    font-size: ${theme.fonts.body2.size}px;
+    line-height: ${theme.fonts.body2.lineHeight}px;
+    letter-spacing: ${theme.fonts.body2.letterSpacing}em;
     color: ${theme.colors.gray900};
   `}
 `;

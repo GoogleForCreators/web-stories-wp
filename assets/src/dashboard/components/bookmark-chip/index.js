@@ -48,7 +48,7 @@ const ChipContainer = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
   border: 1px solid none;
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border-radius: ${({ theme }) => `${theme.border.buttonRadius}px`};
   box-shadow: ${({ theme }) => theme.chip.shadow};
   color: ${({ theme }) => theme.colors.gray500};
   cursor: pointer;
