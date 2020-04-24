@@ -27,7 +27,7 @@ import { rgba } from 'polished';
  */
 import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
-import { useAPI } from '../../app/api';
+import { useFont } from '../../app/font';
 import { TextInput } from '../form';
 
 const PickerContainer = styled.div`
@@ -35,6 +35,7 @@ const PickerContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
   min-width: 160px;
   max-height: 355px;
   overflow: hidden;
@@ -51,7 +52,7 @@ const ListContainer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
-  max-height: 355px;
+  max-height: 305px;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: none auto;
@@ -70,6 +71,8 @@ const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 16px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
   font-family: ${({ theme, fontFamily }) =>
     fontFamily ? fontFamily : theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
@@ -106,8 +109,8 @@ function FontPickerContainer({
   toggleOptions,
 }) {
   const {
-    actions: { getMenuFonts },
-  } = useAPI();
+    state: { fontFaces },
+  } = useFont();
 
   const pickerContainerRef = useRef();
   const listContainerRef = useRef();
@@ -115,16 +118,25 @@ function FontPickerContainer({
   const inputRef = useRef();
 
   const [searchValue, setSearchValue] = useState('');
-  const [menuFonts, setMenuFonts] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const optionsWithFontFaces = useMemo(
+    () =>
+      options.map((option) => {
+        option.fontFace = fontFaces.find((fontFace) =>
+          fontFace.includes(`'${option.name}'`)
+        );
+        return option;
+      }),
+    [options, fontFaces]
+  );
   const fileredOptions = useMemo(
     () =>
       searchValue && searchValue !== ''
-        ? options.filter(({ name }) =>
+        ? optionsWithFontFaces.filter(({ name }) =>
             name.toLowerCase().includes(searchValue.toLowerCase())
           )
-        : options,
-    [searchValue, options]
+        : optionsWithFontFaces,
+    [searchValue, optionsWithFontFaces]
   );
 
   useEffect(() => {
@@ -149,15 +161,6 @@ function FontPickerContainer({
     };
   }, [currentIndex]);
 
-  useEffect(() => {
-    const limitFonts = fileredOptions
-      .slice(currentIndex, currentIndex + 10)
-      .map(({ name }) => name);
-    getMenuFonts(limitFonts).then((result) => {
-      setMenuFonts(result);
-    });
-  }, [currentIndex, getMenuFonts, fileredOptions]);
-
   useFocusOut(pickerContainerRef, toggleOptions);
 
   useKeyDownEffect(pickerContainerRef, { key: 'esc' }, toggleOptions, [
@@ -169,7 +172,13 @@ function FontPickerContainer({
   };
 
   return (
-    <PickerContainer ref={pickerContainerRef} menuFonts={menuFonts}>
+    <PickerContainer
+      ref={pickerContainerRef}
+      menuFonts={fileredOptions
+        .slice(currentIndex, currentIndex + 7)
+        .map((font) => font.fontFace)
+        .join('')}
+    >
       <ExpandedTextInput
         forwardedRef={inputRef}
         value={searchValue}
@@ -192,7 +201,7 @@ function FontPickerContainer({
               key={optValue}
               onClick={() => handleItemClick(optValue)}
               fontFamily={
-                index < currentIndex + 10 && index >= currentIndex
+                index < currentIndex + 8 && index >= currentIndex
                   ? name
                   : undefined
               }

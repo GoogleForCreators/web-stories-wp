@@ -15,10 +15,15 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -30,6 +35,7 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
+  const [fontFaces, setFontFaces] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
 
@@ -51,15 +57,87 @@ function FontProvider({ children }) {
     [getFontBy]
   );
 
-  const maybeEnqueueFontStyle = useLoadFontFiles();
+  const getFontWeight = useCallback(
+    (name) => {
+      const fontWeightNames = {
+        100: __('Thin', 'web-stories'),
+        200: __('Extra-light', 'web-stories'),
+        300: __('Light', 'web-stories'),
+        400: __('Regular', 'web-stories'),
+        500: __('Medium', 'web-stories'),
+        600: __('Semi-bold', 'web-stories'),
+        700: __('Bold', 'web-stories'),
+        800: __('Extra-bold', 'web-stories'),
+        900: __('Black', 'web-stories'),
+      };
+
+      const defaultFontWeights = [{ name: fontWeightNames[400], value: 400 }];
+
+      const currentFont = getFontByName(name);
+      let fontWeights = defaultFontWeights;
+      if (currentFont) {
+        const { weights } = currentFont;
+        if (weights) {
+          fontWeights = weights.map((weight) => ({
+            name: fontWeightNames[weight],
+            value: weight,
+          }));
+        }
+      }
+      return fontWeights;
+    },
+    [getFontByName]
+  );
+
+  const getFontFallback = useCallback(
+    (name) => {
+      const currentFont = getFontByName(name);
+      const fontFallback =
+        currentFont && currentFont.fallbacks ? currentFont.fallbacks : [];
+      return fontFallback;
+    },
+    [getFontByName]
+  );
+
+  const getMenuFonts = useCallback((fontList) => {
+    const googleMenuFontsUrl = 'https://fonts.googleapis.com/css';
+    return fetch(
+      `${googleMenuFontsUrl}?family=${fontList.join('|')}&subset=menu`
+    )
+      .then((response) => response.body)
+      .then((body) => {
+        return body
+          .getReader()
+          .read()
+          .then(({ value }) => {
+            const decoder = new TextDecoder('utf-8');
+            return decoder.decode(value).replace(/::MENU/g, '');
+          });
+      });
+  }, []);
+
+  useEffect(() => {
+    if (fonts?.length > 0) {
+      getMenuFonts(fonts.map((font) => font.name)).then((result) => {
+        const resultArray = result.replace(/}/g, '}},').split('},');
+        setFontFaces(resultArray);
+      });
+    }
+  }, [fonts, getMenuFonts]);
+
+  const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
   const state = {
     state: {
       fonts,
+      fontFaces,
     },
     actions: {
       getFontByName,
       maybeEnqueueFontStyle,
+      getFontWeight,
+      getFontFallback,
+      getMenuFonts,
     },
   };
 
