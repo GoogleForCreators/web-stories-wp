@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const getCurrentYAxis = () => {
+  const isBrowserWindow = typeof window !== 'undefined';
+  if (!isBrowserWindow) {
+    return 0;
+  }
 
-module.exports = {
-  launch: {
-    headless: process.env.PUPPETEER_HEADLESS !== 'false',
-    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
-  },
+  return window.scrollY;
 };
+
+export default getCurrentYAxis;

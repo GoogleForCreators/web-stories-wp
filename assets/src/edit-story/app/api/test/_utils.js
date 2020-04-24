@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
+const TEST_COLOR = {
+  color: { r: 1, g: 1, b: 1 },
+};
 
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
-
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
-  });
-});
+export function createStory(properties = {}) {
+  return {
+    title: { raw: 'title' },
+    excerpt: { raw: 'excerpt' },
+    permalink_template: 'http://localhost:8899/stories/%pagename%',
+    style_presets: { fillColors: [TEST_COLOR] },
+    ...properties,
+  };
+}

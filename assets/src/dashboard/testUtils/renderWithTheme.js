@@ -15,22 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
+import theme from '../theme';
 
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
+const renderWithTheme = (children) => {
+  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+};
 
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
-  });
-});
+export default renderWithTheme;

@@ -218,7 +218,7 @@
       "files": [
         "bin/**/*.js",
         "babel.config.js",
-        "puppeteer.config.js",
+        "jest-puppeteer.config.js",
         "webpack.config.js",
         ".storybook/*.js",
         "tests/js/*.js",

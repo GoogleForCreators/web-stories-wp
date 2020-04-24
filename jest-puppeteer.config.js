@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
-
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
-
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
-  });
-});
+module.exports = {
+  launch: {
+    headless: process.env.PUPPETEER_HEADLESS !== 'false',
+    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
+    dumpio: true,
+    product: process.env.PUPPETEER_PRODUCT || 'chrome',
+  },
+};

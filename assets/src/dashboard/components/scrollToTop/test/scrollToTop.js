@@ -18,19 +18,14 @@
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
+import ScrollToTop from '..';
 
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
+describe('ScrollToTop', () => {
+  it('should render a <ScrollToTop /> by default', () => {
+    const { getByTestId } = renderWithTheme(<ScrollToTop />);
 
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
+    const Button = getByTestId('scroll-to-top-button');
+
+    expect(Button).toBeDefined();
   });
 });

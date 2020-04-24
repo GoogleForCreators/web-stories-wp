@@ -15,22 +15,32 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import CardGridItem from '../';
+import ScrollToTop from '../';
 
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
+export default {
+  title: 'Dashboard/Components/ScrollToTop',
+  component: ScrollToTop,
+};
 
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
-  });
-});
+const Container = styled.div`
+  width: 100%;
+  height: 3000px;
+  overflow: scroll;
+  background-color: blue;
+  opacity: 0.25;
+`;
+export const _default = () => {
+  return (
+    <>
+      <Container />
+      <ScrollToTop />
+    </>
+  );
+};
