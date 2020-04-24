@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia } from '../../app';
+import { useStory, useMedia, useConfig } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Plain, Primary } from '../button';
 import CircularProgress from '../circularProgress';
@@ -57,20 +57,25 @@ function PreviewButton() {
   const {
     state: {
       meta: { isSaving },
-      story: { link },
+      story: { link, status },
     },
-    actions: { saveStory },
+    actions: { autoSave, saveStory },
   } = useStory();
+  const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
     null
   );
+  const isDraft = 'draft' === status;
 
   /**
    * Open a preview of the story in current window.
    */
   const openPreviewLink = () => {
-    const previewLink = addQueryArgs(link, { preview: 'true' });
+    // Display the actual link in case of a draft.
+    const previewLink = isDraft
+      ? addQueryArgs(link, { preview: 'true' })
+      : autoSaveLink;
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
@@ -104,27 +109,21 @@ function PreviewButton() {
       // will be resolved after the story is saved.
     }
 
-    // @todo: See https://github.com/google/web-stories-wp/issues/1149. This
-    // has the effect of pushing the changes to a published story.
-    saveStory().then(() => {
-      let previewOpened = false;
-      if (popup && !popup.closed) {
-        try {
-          // The `popup.location.href` will fail if the expected window has
-          // been naviagted to a different origin.
+    // Save story directly if draft, otherwise, use auto-save.
+    const updateFunc = isDraft ? saveStory : autoSave;
+    updateFunc()
+      .then((update) => {
+        if (popup && !popup.closed) {
           if (popup.location.href) {
-            popup.location.replace(previewLink);
-            previewOpened = true;
+            // Auto-save sends an updated preview link, use that instead if available.
+            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            popup.location.replace(updatedPreviewLink);
           }
-        } catch (e) {
-          // Ignore the errors. They will simply trigger the "try again"
-          // dialog.
         }
-      }
-      if (!previewOpened) {
+      })
+      .catch(() => {
         setPreviewLinkToOpenViaDialog(previewLink);
-      }
-    });
+      });
   };
 
   const openPreviewLinkSync = (evt) => {
@@ -138,7 +137,7 @@ function PreviewButton() {
   return (
     <>
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
-        {__('Save & Preview', 'web-stories')}
+        {__('Preview', 'web-stories')}
       </Outline>
       <Dialog
         open={Boolean(previewLinkToOpenViaDialog)}
@@ -247,7 +246,7 @@ function Update() {
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
+    <Primary onClick={() => saveStory()} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
