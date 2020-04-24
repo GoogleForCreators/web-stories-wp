@@ -39,7 +39,6 @@ export default function ApiProvider({ children }) {
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
-    pluginDir,
     editStoryURL,
     wpApi: api.stories,
   });
