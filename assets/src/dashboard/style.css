@@ -37,7 +37,7 @@ body.web-story_page_stories-dashboard #wpbody-content {
 
 body.web-story_page_stories-dashboard #web-stories-dashboard {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {

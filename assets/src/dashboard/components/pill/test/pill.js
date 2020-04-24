@@ -17,26 +17,20 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
-
+import { renderWithTheme } from '../../../testUtils/';
 import { Pill } from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('Pill', () => {
   const pillText = 'text pill label';
   const onClickMock = jest.fn();
 
   it('should render default pill as checkbox', () => {
-    const { getByRole, getByText } = wrapper(
+    const { getByRole, getByText } = renderWithTheme(
       <Pill onClick={onClickMock} name="test_pill" value="test">
         {pillText}
       </Pill>
@@ -46,7 +40,7 @@ describe('Pill', () => {
   });
 
   it('should render pill as radio input', () => {
-    const { getByRole, getByText } = wrapper(
+    const { getByRole, getByText } = renderWithTheme(
       <Pill
         onClick={onClickMock}
         name="test_pill"
@@ -61,7 +55,7 @@ describe('Pill', () => {
   });
 
   it('should simulate a click on <Pill />', () => {
-    const { getByRole } = wrapper(
+    const { getByRole } = renderWithTheme(
       <Pill
         onClick={onClickMock}
         name="test_pill"

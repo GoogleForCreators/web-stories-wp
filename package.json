@@ -92,7 +92,7 @@
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
-    "eslint-plugin-jest-dom": "^2.0.1",
+    "eslint-plugin-jest-dom": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-markdown": "^1.0.2",
     "eslint-plugin-prettier": "^3.1.3",
@@ -106,13 +106,13 @@
     "jest-matcher-deep-close-to": "^1.3.0",
     "jest-puppeteer": "^4.4.0",
     "jest-silent-reporter": "^0.2.1",
-    "lint-staged": "^10.1.6",
+    "lint-staged": "^10.1.7",
     "markdownlint-cli": "^0.22.0",
     "mini-css-extract-plugin": "^0.9.0",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^2.0.5",
-    "puppeteer": "^2.1.1",
+    "puppeteer": "^3.0.1",
     "react-test-renderer": "^16.13.1",
     "rtlcss-webpack-plugin": "^4.0.3",
     "source-map-loader": "^0.2.4",
@@ -170,7 +170,8 @@
     "test:e2e:help": "npm run test:e2e -- --help",
     "test:e2e:watch": "npm run test:e2e -- --watch",
     "test:e2e:interactive": "PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
-    "test:e2e:ci": "npm run test:e2e -- --runInBand"
+    "test:e2e:firefox": "PUPPETEER_PRODUCT=firefox WP_BASE_URL=http://localhost:8899 jest --runInBand --config=tests/e2e/jest.config.js",
+    "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e"
   },
   "husky": {
     "hooks": {

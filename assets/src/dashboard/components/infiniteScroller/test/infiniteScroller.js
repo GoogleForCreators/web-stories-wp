@@ -15,52 +15,31 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../testUtils/';
 import InfiniteScroller from '../index';
-
-const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 
 describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();
-  const dummyData = generateArray(5);
 
-  it('should render children and a loading component by default', () => {
-    const { getByTestId, getAllByTestId } = render(
-      <InfiniteScroller handleGetData={onGetDataMock}>
-        {dummyData.map((data, index) => (
-          <div data-testid="child-item" key={index}>
-            {data} {index}
-          </div>
-        ))}
-      </InfiniteScroller>
+  it('should render a loading component by default', () => {
+    const { getByTestId } = renderWithTheme(
+      <InfiniteScroller canLoadMore={true} onLoadMore={onGetDataMock} />
     );
 
     const loadingComponent = getByTestId('load-more-on-scroll');
-    const scrollingChildren = getAllByTestId('child-item');
 
     expect(loadingComponent).toBeDefined();
-    expect(scrollingChildren).toHaveLength(5);
   });
 
   it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithTheme(
       <InfiniteScroller
-        handleGetData={onGetDataMock}
+        onLoadMore={onGetDataMock}
         allDataLoadedMessage="All data has been fetched"
-        isAllDataLoaded={true}
-      >
-        {dummyData.map((data, index) => (
-          <div key={index}>
-            {data} {index}
-          </div>
-        ))}
-      </InfiniteScroller>
+        canLoadMore={false}
+      />
     );
 
     const allDataLoaded = getByText('All data has been fetched');

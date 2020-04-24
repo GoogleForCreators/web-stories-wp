@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-module.exports = {
-  launch: {
-    headless: process.env.PUPPETEER_HEADLESS !== 'false',
-    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
-  },
+const groupBy = (arr, key) => {
+  return arr.reduce((prev, curr) => {
+    if (!curr[key]) {
+      return prev;
+    }
+    if (prev[curr[key]]) {
+      prev[curr[key]] = curr;
+    } else {
+      prev[curr[key]] = curr;
+    }
+    return prev;
+  }, {});
 };
+
+export default groupBy;

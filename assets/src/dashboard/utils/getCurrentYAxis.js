@@ -13,23 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const getCurrentYAxis = () => {
+  const isBrowserWindow = typeof window !== 'undefined';
+  if (!isBrowserWindow) {
+    return 0;
+  }
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+  return window.scrollY;
+};
 
-/**
- * Internal dependencies
- */
-import { ViewHeader } from '../../../components';
-
-function MyBookmarks() {
-  return (
-    <div>
-      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
-    </div>
-  );
-}
-
-export default MyBookmarks;
+export default getCurrentYAxis;
