@@ -24,33 +24,6 @@ import moment from 'moment';
  */
 import { reshapeStoryObject } from '../useStoryApi';
 
-jest.mock('../wpAdapter', () => ({
-  get: () =>
-    Promise.resolve({
-      headers: {
-        get: () => '1',
-      },
-      json: () =>
-        Promise.resolve([
-          {
-            id: 123,
-            status: 'published',
-            title: { rendered: 'Carlos', raw: 'Carlos' },
-            story_data: { pages: [{ id: 1, elements: [] }] },
-            modified: '1970-01-01T00:00:00.000Z',
-          },
-        ]),
-    }),
-  post: (path, { data }) =>
-    Promise.resolve({
-      id: data.id,
-      status: 'published',
-      title: { rendered: data.title, raw: data.title },
-      story_data: { pages: [{ id: 1, elements: [] }] },
-      modified: '1970-01-01T00:00:00.000Z',
-    }),
-}));
-
 describe('reshapeStoryObject', () => {
   it('should reshape the response object with a Moment date', () => {
     const responseObj = {

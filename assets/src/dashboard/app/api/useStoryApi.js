@@ -78,7 +78,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: true,
         });
-        return [];
+        return;
       }
 
       const query = {
@@ -121,14 +121,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
             page,
           },
         });
-
-        return reshapedStories;
+        return;
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: true,
         });
-        return [];
+        return;
       } finally {
         dispatch({
           type: STORY_ACTION_TYPES.LOADING_STORIES,
