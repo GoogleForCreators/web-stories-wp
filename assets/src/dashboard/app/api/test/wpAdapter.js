@@ -31,7 +31,7 @@ describe('wpAdapter', () => {
 
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 
-    wpAdapter.get('https://stories.google.com');
+    wpAdapter.get('https://stories.google.com').catch(() => {});
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
@@ -50,7 +50,9 @@ describe('wpAdapter', () => {
 
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 
-    wpAdapter.post('https://stories.google.com', { data: 'Carlos' });
+    wpAdapter
+      .post('https://stories.google.com', { data: 'Carlos' })
+      .catch(() => {});
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
@@ -74,7 +76,7 @@ describe('wpAdapter', () => {
 
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
 
-    wpAdapter.deleteRequest('https://stories.google.com');
+    wpAdapter.deleteRequest('https://stories.google.com').catch(() => {});
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
