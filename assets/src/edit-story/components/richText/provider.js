@@ -96,25 +96,22 @@ function RichTextProvider({ children }) {
 
   const hasCurrentEditor = Boolean(editorState);
 
-  const {
-    forceFocus,
-    clearForceFocus,
-    selectionActions,
-  } = useSelectionManipulation(editorState, setEditorState);
+  const selectionActions = useSelectionManipulation(
+    editorState,
+    setEditorState
+  );
 
   const value = {
     state: {
       editorState,
       hasCurrentEditor,
       selectionInfo,
-      forceFocus,
     },
     actions: {
       setStateFromContent,
       updateEditorState,
       getHandleKeyCommand,
       clearState,
-      clearForceFocus,
       selectionActions,
       // These actually don't work on the state at all, just pure functions
       getContentFromState: customExport,

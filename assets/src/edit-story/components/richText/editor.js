@@ -37,14 +37,13 @@ import customInlineDisplay from './customInlineDisplay';
 function RichTextEditor({ content, onChange }, ref) {
   const editorRef = useRef(null);
   const {
-    state: { editorState, forceFocus },
+    state: { editorState },
     actions: {
       setStateFromContent,
       updateEditorState,
       getHandleKeyCommand,
       getContentFromState,
       clearState,
-      clearForceFocus,
     },
   } = useRichText();
 
@@ -67,14 +66,6 @@ function RichTextEditor({ content, onChange }, ref) {
       editorRef.current.focus();
     }
   }, []);
-
-  // Set focus when forced to, then clear
-  useLayoutEffect(() => {
-    if (editorRef.current && forceFocus) {
-      editorRef.current.focus();
-      clearForceFocus();
-    }
-  }, [forceFocus, clearForceFocus]);
 
   const hasEditorState = Boolean(editorState);
 

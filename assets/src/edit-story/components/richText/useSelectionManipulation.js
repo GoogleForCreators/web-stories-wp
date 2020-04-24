@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { EditorState } from 'draft-js';
 
 /**
@@ -43,15 +43,15 @@ function useSelectionManipulation(editorState, setEditorState) {
     }
   }, [editorState]);
 
-  const [forceFocus, setForceFocus] = useState(false);
   const updateWhileUnfocused = useCallback(
-    (updater, ...args) => {
+    (updater, shouldForceFocus = true) => {
       const oldState = lastKnownState.current;
       const selection = lastKnownSelection.current;
-      const workingState = EditorState.forceSelection(oldState, selection);
-      const newState = updater(workingState, ...args);
+      const workingState = shouldForceFocus
+        ? EditorState.forceSelection(oldState, selection)
+        : oldState;
+      const newState = updater(workingState);
       setEditorState(newState);
-      setForceFocus(true);
     },
     [setEditorState]
   );
@@ -61,7 +61,7 @@ function useSelectionManipulation(editorState, setEditorState) {
     [updateWhileUnfocused]
   );
   const setFontWeightInSelection = useCallback(
-    (weight) => updateWhileUnfocused(setFontWeight, weight),
+    (weight) => updateWhileUnfocused((s) => setFontWeight(s, weight)),
     [updateWhileUnfocused]
   );
   const toggleItalicInSelection = useCallback(
@@ -73,21 +73,20 @@ function useSelectionManipulation(editorState, setEditorState) {
     [updateWhileUnfocused]
   );
   const setLetterSpacingInSelection = useCallback(
-    (ls) => updateWhileUnfocused(setLetterSpacing, ls),
+    (ls) =>
+      updateWhileUnfocused(
+        (s) => setLetterSpacing(s, ls),
+        /* shouldForceFocus */ false
+      ),
     [updateWhileUnfocused]
   );
 
-  const clearForceFocus = useCallback(() => setForceFocus(false), []);
   return {
-    forceFocus,
-    clearForceFocus,
-    selectionActions: {
-      toggleBoldInSelection,
-      setFontWeightInSelection,
-      toggleItalicInSelection,
-      toggleUnderlineInSelection,
-      setLetterSpacingInSelection,
-    },
+    toggleBoldInSelection,
+    setFontWeightInSelection,
+    toggleItalicInSelection,
+    toggleUnderlineInSelection,
+    setLetterSpacingInSelection,
   };
 }
 
