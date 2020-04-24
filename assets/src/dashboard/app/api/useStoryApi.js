@@ -121,13 +121,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
             page,
           },
         });
-        return;
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: true,
         });
-        return;
       } finally {
         dispatch({
           type: STORY_ACTION_TYPES.LOADING_STORIES,
