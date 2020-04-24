@@ -73,7 +73,7 @@ const Span = styled.span`
 `;
 
 const BackgroundSpan = styled(Span)`
-  color: transparent;
+  color: transparent !important;
 `;
 
 const ForegroundSpan = styled(Span)`

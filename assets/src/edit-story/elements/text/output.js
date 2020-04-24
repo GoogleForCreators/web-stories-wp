@@ -33,14 +33,7 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
  * Renders DOM for the text output based on the provided unit converters.
  */
 export function TextOutputWithUnits({
-  element: {
-    bold,
-    content,
-    backgroundColor,
-    backgroundTextMode,
-    padding,
-    ...rest
-  },
+  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -125,7 +118,7 @@ export function TextOutputWithUnits({
 
   const backgroundTextStyle = {
     ...textStyle,
-    color: 'transparent',
+    color: 'transparent !important',
   };
 
   const foregroundTextStyle = {
@@ -141,7 +134,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: draftMarkupToContent(content),
               }}
             />
           </span>
@@ -151,7 +144,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: draftMarkupToContent(content),
               }}
             />
           </span>
@@ -164,7 +157,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content) }}
     />
   );
 }
