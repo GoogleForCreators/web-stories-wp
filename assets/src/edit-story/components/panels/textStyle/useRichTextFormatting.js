@@ -22,6 +22,7 @@ import { useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 import useRichText from '../../richText/useRichText';
 import {
   getHTMLInfo,
@@ -34,12 +35,24 @@ import {
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 
+function isEqual(a, b) {
+  const isPattern = typeof a === 'object' && (a.type || a.color);
+  if (!isPattern) {
+    return a === b;
+  }
+
+  const aStyle = generatePatternStyles(a);
+  const bStyle = generatePatternStyles(b);
+  const keys = Object.keys(aStyle);
+  return keys.every((key) => aStyle[key] === bStyle[key]);
+}
+
 function reduceWithMultiple(reduced, info) {
   return Object.fromEntries(
     Object.keys(info).map((key) => {
       const wasMultiple = reduced[key] === MULTIPLE_VALUE;
       const hadValue = typeof reduced[key] !== 'undefined';
-      const areDifferent = hadValue && reduced[key] !== info[key];
+      const areDifferent = hadValue && !isEqual(reduced[key], info[key]);
       if (wasMultiple || areDifferent) {
         return [key, MULTIPLE_VALUE];
       }

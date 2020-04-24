@@ -38,14 +38,6 @@ describe('TextOutput', () => {
     const element = {
       id: '123',
       content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
       backgroundColor: {
         color: {
           r: 255,
@@ -55,7 +47,6 @@ describe('TextOutput', () => {
         },
       },
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
       type: 'text',
       x: 10,
@@ -83,10 +74,8 @@ describe('TextOutput', () => {
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
       margin: '0px',
-      color: 'rgba(255, 255, 255, 0.5)',
       backgroundColor: 'rgba(255, 0, 0, 0.3)',
       fontSize: '0.242424em',
-      letterSpacing: '1.3em',
       textAlign: 'left',
     });
   });
@@ -94,16 +83,8 @@ describe('TextOutput', () => {
   it('should convert padding to percent of width', () => {
     const element = {
       id: '123',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-        },
-      },
       content: 'Content',
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
       type: 'text',
       x: 10,
@@ -147,7 +128,6 @@ describe('TextOutput', () => {
         horizontal: 0,
       },
       fontSize: 16,
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
@@ -176,7 +156,6 @@ describe('TextOutput', () => {
         horizontal: 0,
       },
       fontSize: 16,
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
@@ -199,7 +178,6 @@ describe('TextOutput', () => {
         width: 1080,
         rotationAngle: 0,
         content: 'Hello World',
-        color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
         padding: {
           horizontal: 0,
           vertical: 0,
