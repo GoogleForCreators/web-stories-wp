@@ -63,12 +63,16 @@ const Space = styled.div`
 
 function StylePanel({ selectedElements, pushUpdate }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
-  const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
 
   const {
-    textInfo: { isBold, isItalic, isUnderline },
-    handlers: { handleClickBold, handleClickItalic, handleClickUnderline },
+    textInfo: { isBold, isItalic, isUnderline, letterSpacing },
+    handlers: {
+      handleClickBold,
+      handleClickItalic,
+      handleClickUnderline,
+      handleSetLetterSpacing,
+    },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   return (
@@ -86,18 +90,10 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <ExpandedNumeric
           data-testid="text.letterSpacing"
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={
-            typeof letterSpacing === 'number'
-              ? Math.round(letterSpacing * 100)
-              : 0
-          }
+          value={letterSpacing}
           suffix={<HorizontalOffset />}
           symbol="%"
-          onChange={(value) =>
-            pushUpdate({
-              letterSpacing: typeof value === 'number' ? value / 100 : value,
-            })
-          }
+          onChange={handleSetLetterSpacing}
         />
       </Row>
       <Row>

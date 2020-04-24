@@ -26,8 +26,11 @@ import { MULTIPLE_VALUE } from '../form';
 import {
   weightToStyle,
   styleToWeight,
+  letterSpacingToStyle,
+  styleToLetterSpacing,
   NONE,
   WEIGHT,
+  LETTERSPACING,
   ITALIC,
   UNDERLINE,
   NORMAL_WEIGHT,
@@ -244,6 +247,7 @@ export function isUnderline(editorState) {
 
 export function getStateInfo(state) {
   return {
+    letterSpacing: getLetterSpacing(state),
     fontWeight: getFontWeight(state),
     isBold: isBold(state),
     isItalic: isItalic(state),
@@ -256,5 +260,32 @@ export function toggleUnderline(editorState, flag) {
     editorState,
     UNDERLINE,
     typeof flag === 'boolean' && (() => flag)
+  );
+}
+
+export function getLetterSpacing(editorState) {
+  const styles = getPrefixStylesInSelection(editorState, LETTERSPACING);
+  if (styles.length > 1) {
+    return MULTIPLE_VALUE;
+  }
+  const spacing = styles[0];
+  if (spacing === NONE) {
+    return 0;
+  }
+  return styleToLetterSpacing(spacing);
+}
+
+export function setLetterSpacing(editorState, letterSpacing) {
+  // if the spacing to set to non-0, set a style
+  const shouldSetStyle = () => letterSpacing !== 0;
+
+  // and if we're setting a style, it's the style for the spacing of course
+  const getStyleToSet = () => letterSpacingToStyle(letterSpacing);
+
+  return togglePrefixStyle(
+    editorState,
+    LETTERSPACING,
+    shouldSetStyle,
+    getStyleToSet
   );
 }

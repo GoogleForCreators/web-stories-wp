@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { styleToWeight, ITALIC, UNDERLINE } from './customConstants';
+import {
+  ITALIC,
+  UNDERLINE,
+  styleToWeight,
+  styleToLetterSpacing,
+} from './customConstants';
 
 function customInlineDisplay(styles) {
   return styles.toArray().reduce((css, style) => {
@@ -35,6 +40,12 @@ function customInlineDisplay(styles) {
     const weight = styleToWeight(style);
     if (weight) {
       return { ...css, fontWeight: weight };
+    }
+
+    // Letter spacing
+    const letterSpacing = styleToLetterSpacing(style);
+    if (letterSpacing) {
+      return { ...css, letterSpacing: `${letterSpacing / 100}em` };
     }
 
     // TODO: Color

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { EditorState } from 'draft-js';
 
 /**
@@ -32,22 +32,16 @@ import {
   getFilteredState,
   getHandleKeyCommandFromState,
 } from './util';
-import {
-  toggleBold,
-  toggleItalic,
-  toggleUnderline,
-  setFontWeight,
-  getStateInfo,
-} from './styleManipulation';
+import { getStateInfo } from './styleManipulation';
 import customImport from './customImport';
 import customExport from './customExport';
+import useSelectionManipulation from './useSelectionManipulation';
 
 function RichTextProvider({ children }) {
   const {
     state: { editingElementState },
   } = useCanvas();
 
-  const [forceFocus, setForceFocus] = useState(false);
   const [editorState, setEditorState] = useState(null);
 
   const selectionInfo = useMemo(() => {
@@ -80,15 +74,6 @@ function RichTextProvider({ children }) {
     [editingElementState, setEditorState]
   );
 
-  const lastKnownState = useRef(null);
-  const lastKnownSelection = useRef(null);
-  useEffect(() => {
-    lastKnownState.current = editorState;
-    if (editorState?.getSelection()?.hasFocus) {
-      lastKnownSelection.current = editorState.getSelection();
-    }
-  }, [editorState]);
-
   // This filters out illegal content (see `getFilteredState`)
   // on paste and updates state accordingly.
   // Furthermore it also sets initial selection if relevant.
@@ -107,38 +92,15 @@ function RichTextProvider({ children }) {
 
   const clearState = useCallback(() => {
     setEditorState(null);
-    lastKnownSelection.current = null;
   }, [setEditorState]);
 
   const hasCurrentEditor = Boolean(editorState);
 
-  const updateWhileUnfocused = useCallback((updater, ...args) => {
-    const oldState = lastKnownState.current;
-    const selection = lastKnownSelection.current;
-    const workingState = EditorState.forceSelection(oldState, selection);
-    const newState = updater(workingState, ...args);
-    setEditorState(newState);
-    setForceFocus(true);
-  }, []);
-
-  const toggleBoldInSelection = useCallback(
-    () => updateWhileUnfocused(toggleBold),
-    [updateWhileUnfocused]
-  );
-  const setFontWeightInSelection = useCallback(
-    (weight) => updateWhileUnfocused(setFontWeight, weight),
-    [updateWhileUnfocused]
-  );
-  const toggleItalicInSelection = useCallback(
-    () => updateWhileUnfocused(toggleItalic),
-    [updateWhileUnfocused]
-  );
-  const toggleUnderlineInSelection = useCallback(
-    () => updateWhileUnfocused(toggleUnderline),
-    [updateWhileUnfocused]
-  );
-
-  const clearForceFocus = useCallback(() => setForceFocus(false), []);
+  const {
+    forceFocus,
+    clearForceFocus,
+    selectionActions,
+  } = useSelectionManipulation(editorState, setEditorState);
 
   const value = {
     state: {
@@ -153,10 +115,7 @@ function RichTextProvider({ children }) {
       getHandleKeyCommand,
       clearState,
       clearForceFocus,
-      toggleBoldInSelection,
-      setFontWeightInSelection,
-      toggleItalicInSelection,
-      toggleUnderlineInSelection,
+      selectionActions,
       // These actually don't work on the state at all, just pure functions
       getContentFromState: customExport,
     },

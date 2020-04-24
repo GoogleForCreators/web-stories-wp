@@ -29,6 +29,7 @@ import {
   setFontWeightInHTML,
   toggleItalicInHTML,
   toggleUnderlineInHTML,
+  setLetterSpacingInHTML,
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 
@@ -50,10 +51,13 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   const {
     state: { hasCurrentEditor, selectionInfo },
     actions: {
-      toggleBoldInSelection,
-      setFontWeightInSelection,
-      toggleItalicInSelection,
-      toggleUnderlineInSelection,
+      selectionActions: {
+        toggleBoldInSelection,
+        setFontWeightInSelection,
+        toggleItalicInSelection,
+        toggleUnderlineInSelection,
+        setLetterSpacingInSelection,
+      },
     },
   } = useRichText();
 
@@ -86,6 +90,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleSelectFontWeight: setFontWeightInSelection,
         handleClickItalic: toggleItalicInSelection,
         handleClickUnderline: toggleUnderlineInSelection,
+        handleSetLetterSpacing: setLetterSpacingInSelection,
       };
     }
 
@@ -94,6 +99,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSelectFontWeight: (weight) => push(setFontWeightInHTML, weight),
       handleClickItalic: (flag) => push(toggleItalicInHTML, flag),
       handleClickUnderline: (flag) => push(toggleUnderlineInHTML, flag),
+      handleSetLetterSpacing: (ls) => push(setLetterSpacingInHTML, ls),
     };
   }, [
     hasCurrentEditor,
@@ -101,6 +107,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     setFontWeightInSelection,
     toggleItalicInSelection,
     toggleUnderlineInSelection,
+    setLetterSpacingInSelection,
     push,
   ]);
 

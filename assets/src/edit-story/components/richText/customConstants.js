@@ -25,19 +25,28 @@ export const NORMAL_WEIGHT = 400;
 export const SMALLEST_BOLD = 600;
 export const DEFAULT_BOLD = 700;
 
-export const weightToStyle = (weight) => `${WEIGHT}-${weight}`;
-export const colorToStyle = (color) => `${COLOR}-${color}`;
-export const lsToStyle = (ls) => `${LETTERSPACING}-${ls}`;
-
 export const isStyle = (style, prefix) =>
   typeof style === 'string' && style.startsWith(prefix);
 export const getVariable = (style, prefix) => style.slice(prefix.length + 1);
 
+export const weightToStyle = (weight) => `${WEIGHT}-${weight}`;
 export const styleToWeight = (style) =>
   isStyle(style, WEIGHT) ? parseInt(getVariable(style, WEIGHT)) : null;
+
+export const letterSpacingToStyle = (ls) =>
+  `${LETTERSPACING}-${ls < 0 ? 'N' : ''}${Math.abs(ls)}`;
+export const styleToLetterSpacing = (style) => {
+  if (!isStyle(style, LETTERSPACING)) {
+    return null;
+  }
+  const raw = getVariable(style, LETTERSPACING);
+  // Negative numbers are prefixed with an N:
+  if (raw.charAt(0) === 'N') {
+    return -parseInt(raw.slice(1));
+  }
+  return parseInt(raw);
+};
+
 export const styleToColor = (style) =>
   isStyle(style, COLOR) ? getVariable(style, COLOR) : null;
-export const styleToLs = (style) =>
-  isStyle(style, LETTERSPACING)
-    ? parseInt(getVariable(style, LETTERSPACING))
-    : null;
+export const colorToStyle = (color) => `${COLOR}-${color}`;

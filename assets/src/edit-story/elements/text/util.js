@@ -33,7 +33,6 @@ export function generateParagraphTextStyle(
     fontFallback,
     fontSize,
     lineHeight,
-    letterSpacing,
     padding,
     textAlign,
   } = element;
@@ -43,7 +42,6 @@ export function generateParagraphTextStyle(
     fontFamily: generateFontFamily(fontFamily, fontFallback),
     fontSize: dataToFontSizeY(fontSize),
     lineHeight,
-    letterSpacing: `${typeof letterSpacing === 'number' ? letterSpacing : 0}em`,
     textAlign,
     padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
       padding?.horizontal || 0

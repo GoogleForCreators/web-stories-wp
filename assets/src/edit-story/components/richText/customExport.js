@@ -22,7 +22,12 @@ import { stateToHTML } from 'draft-js-export-html';
 /**
  * Internal dependencies
  */
-import { styleToWeight, ITALIC, UNDERLINE } from './customConstants';
+import {
+  ITALIC,
+  UNDERLINE,
+  styleToWeight,
+  styleToLetterSpacing,
+} from './customConstants';
 
 function inlineStyleFn(styles) {
   const inline = styles.toArray().reduce(
@@ -51,9 +56,16 @@ function inlineStyleFn(styles) {
           css: { ...css, fontWeight: weight },
         };
       }
+      // Letter spacing
+      const letterSpacing = styleToLetterSpacing(style);
+      if (letterSpacing) {
+        return {
+          classes: [...classes, 'letterspacing'],
+          css: { ...css, letterSpacing: `${letterSpacing / 100}em` },
+        };
+      }
 
       // TODO: Color
-      // TODO: Letter spacing
 
       return { classes, css };
     },
