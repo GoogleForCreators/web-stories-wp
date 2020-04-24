@@ -190,8 +190,9 @@ function useCanvasSelectionCopyPaste(container) {
             files.push(file);
           }
         }
-
-        uploadWithPreview(files);
+        if (files) {
+          uploadWithPreview(files);
+        }
       } catch (e) {
         // Ignore.
       }
