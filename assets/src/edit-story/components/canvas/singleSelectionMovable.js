@@ -29,7 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
-import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
+import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import useCanvas from './useCanvas';
 
@@ -165,8 +165,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     isMaskable,
   } = getDefinitionForType(selectedElement.type);
 
-  const canSnap =
-    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
   return (
