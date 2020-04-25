@@ -101,7 +101,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   });
 
   // ⌘ key disables snapping
-  const canSnap = !useGlobalIsKeyPressed('meta');
+  const snapDisabled = useGlobalIsKeyPressed('meta');
 
   // ⇧ key rotates the element 30 degrees at a time
   const throttleRotation = useGlobalIsKeyPressed('shift');
@@ -165,6 +165,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     isMaskable,
   } = getDefinitionForType(selectedElement.type);
 
+  const canSnap =
+    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
   return (
