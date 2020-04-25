@@ -18,7 +18,7 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useContext, useEffect, createRef } from 'react';
+import { useContext, useEffect, createRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -147,6 +147,31 @@ export function useGlobalKeyUpEffect(
     globalRef.current = document;
   }
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
+}
+
+/**
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {Array|undefined} deps
+ * @return {boolean} Stateful boolean that tracks whether key is pressed.
+ */
+export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
+  const [isKeyPressed, setIsKeyPressed] = useState(false);
+  useGlobalKeyDownEffect(keyNameOrSpec, () => setIsKeyPressed(true), deps);
+  useGlobalKeyUpEffect(keyNameOrSpec, () => setIsKeyPressed(false), deps);
+  return isKeyPressed;
+}
+
+/**
+ * @param {{current: Node}} ref
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {Array|undefined} deps
+ * @return {boolean} Stateful boolean that tracks whether key is pressed.
+ */
+export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
+  const [isKeyPressed, setIsKeyPressed] = useState(false);
+  useKeyDownEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(true), deps);
+  useKeyUpEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(false), deps);
+  return isKeyPressed;
 }
 
 /**
