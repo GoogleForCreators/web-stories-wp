@@ -183,7 +183,10 @@
   "lint-staged": {
     "*.js": "eslint --fix",
     "*.(js|css)": "stylelint --fix",
-    "*.md": ["eslint --fix", "markdownlint -f"],
+    "*.md": [
+      "eslint --fix",
+      "markdownlint -f"
+    ],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
