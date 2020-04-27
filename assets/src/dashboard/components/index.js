@@ -34,6 +34,10 @@ export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';
 export { TemplateNavBar } from './navigationBar';
 export { AppFrame, LeftRail, PageContent } from './pageStructure';
+export {
+  default as NavProvider,
+  useNavContext,
+} from '../components/pageStructure/navProvider';
 export { FloatingTab, Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';

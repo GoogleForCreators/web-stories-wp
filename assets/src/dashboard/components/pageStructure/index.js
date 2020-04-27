@@ -57,6 +57,10 @@ export const PageContent = styled.div`
   right: 0;
   bottom: 0;
   left: max(15%, 190px);
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    left: 0;
+  }
 `;
 
 export const LeftRailContainer = styled.nav`
@@ -74,7 +78,6 @@ export const LeftRailContainer = styled.nav`
     visibility 0.25s linear;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    padding-left: 0;
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
