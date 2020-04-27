@@ -51,7 +51,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     state: { fonts },
-    actions: { ensureFontFaceSetIsAvaialble, getFontWeight, getFontFallback },
+    actions: { ensureFontFaceSetIsAvailable, getFontWeight, getFontFallback },
   } = useFont();
   const fontWeights = useMemo(() => getFontWeight(fontFamily), [
     getFontWeight,
@@ -74,7 +74,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                 ({ value: weight }) => weight
               );
 
-              await ensureFontFaceSetIsAvaialble(
+              await ensureFontFaceSetIsAvailable(
                 'fontFamily',
                 {
                   fontStyle,
@@ -115,7 +115,7 @@ function FontControls({ selectedElements, pushUpdate }) {
               options={fontWeights}
               value={fontWeight}
               onChange={async (value) => {
-                await ensureFontFaceSetIsAvaialble(
+                await ensureFontFaceSetIsAvailable(
                   'fontWeight',
                   {
                     fontStyle,
@@ -139,7 +139,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           flexBasis={58}
           textCenter
           onChange={async (value) => {
-            await ensureFontFaceSetIsAvaialble(
+            await ensureFontFaceSetIsAvailable(
               'fontSize',
               {
                 fontStyle,

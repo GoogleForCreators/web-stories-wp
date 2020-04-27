@@ -45,7 +45,7 @@ function Wrapper({ children }) {
       value={{
         state: { fonts: [{ name: 'ABeeZee', value: 'ABeeZee' }] },
         actions: {
-          ensureFontFaceSetIsAvaialble: () => Promise.resolve(),
+          ensureFontFaceSetIsAvailable: () => Promise.resolve(),
           getFontWeight: () => [{ name: 'Normal1', value: '400' }],
           getFontFallback: () => 'fallback1',
         },

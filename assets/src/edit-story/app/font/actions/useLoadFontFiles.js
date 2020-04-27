@@ -104,7 +104,7 @@ function useLoadFontFiles({ getFontByName }) {
    * @param {Array} elements List of elements selected to be processed
    * @return {Promise} Returns a Promise after process all font with `maybeEnqueueFontStyle`
    */
-  const ensureFontFaceSetIsAvaialble = (aspect, state, elements) => {
+  const ensureFontFaceSetIsAvailable = (aspect, state, elements) => {
     const fontFamilies = elements.map((e) => ({
       ...e,
       [aspect]: state[aspect],
@@ -116,7 +116,7 @@ function useLoadFontFiles({ getFontByName }) {
 
   return {
     maybeEnqueueFontStyle,
-    ensureFontFaceSetIsAvaialble,
+    ensureFontFaceSetIsAvailable,
   };
 }
 
