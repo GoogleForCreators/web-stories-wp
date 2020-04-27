@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
+import { dummyImage, dummyVideo } from './dummyData';
 
 const Container = styled.div`
   position: fixed;
@@ -75,10 +76,8 @@ const replaceResourcesWithDummy = (state) => {
           newElement.resource = { ...element.resource };
           if (element.type === 'video') {
             newElement.resource.mimeType = 'video/mp4';
-            newElement.resource.src =
-              'data:video/mp4;base64,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';
-            newElement.resource.poster =
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGElEQVQYV2NkYGD4////fwZGEMnIyMgAAEvqB/6wfXLSAAAAAElFTkSuQmCC';
+            newElement.resource.src = dummyVideo;
+            newElement.resource.poster = dummyImage;
 
             const videoEl = document.getElementById(`video-${newElement.id}`);
             if (videoEl) {
@@ -87,8 +86,7 @@ const replaceResourcesWithDummy = (state) => {
           }
           if (element.type === 'image') {
             newElement.resource.mimeType = 'image/png';
-            newElement.resource.src =
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGElEQVQYV2NkYGD4////fwZGEMnIyMgAAEvqB/6wfXLSAAAAAElFTkSuQmCC';
+            newElement.resource.src = dummyImage;
           }
         }
         return newElement;
@@ -104,14 +102,8 @@ function DevTools() {
   const { showSnackbar } = useSnackbar();
   const textareaRef = useRef();
   const {
-    state: { reducerState },
-    actions: { restore },
+    internal: { reducerState, restore },
   } = useStory();
-  // This will not work here
-  // const {
-  //   state, // stale data
-  //   internal: { restore }, // will not update
-  // } = useStoryReducer();
 
   const {
     pages,
