@@ -61,10 +61,13 @@ function TemplateDetail() {
     state: {
       queryParams: { id: templateId, isLocal },
     },
+    actions,
   } = useRouteHistory();
   const {
     state: { templates },
-    actions: { templateApi },
+    actions: {
+      templateApi: { fetchMyTemplateById, fetchExternalTemplateById },
+    },
   } = useContext(ApiContext);
   const { isRTL } = useConfig();
 
@@ -77,15 +80,15 @@ function TemplateDetail() {
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
 
     if (isLocalTemplate) {
-      templateApi.fetchMyTemplateById(id).then((fetchedTemplate) => {
-        setTemplate(fetchedTemplate);
-      });
+      fetchMyTemplateById(id).then((fetchedTemplate) =>
+        setTemplate(fetchedTemplate)
+      );
     } else {
-      templateApi.fetchExternalTemplateById(id).then((fetchedTemplate) => {
-        setTemplate(fetchedTemplate);
-      });
+      fetchExternalTemplateById(id).then((fetchedTemplate) =>
+        setTemplate(fetchedTemplate)
+      );
     }
-  }, [templateApi, templateId, isLocal]);
+  }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -119,9 +122,13 @@ function TemplateDetail() {
         0,
         templates.length - 1,
       ]);
-      setTemplate(templates[index]);
+      const selectedTemplate = templates[index];
+
+      actions.push(
+        `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
+      );
     },
-    [activeTemplateIndex, templates]
+    [activeTemplateIndex, templates, actions]
   );
 
   const { NextButton, PrevButton } = useMemo(() => {

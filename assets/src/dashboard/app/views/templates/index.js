@@ -124,6 +124,7 @@ function TemplatesGallery() {
             filteredStories={filteredTemplates}
             centerActionLabel={__('View details', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
+            updateStory={() => {}}
           />
         </BodyWrapper>
       );
