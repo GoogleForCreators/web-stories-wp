@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -54,8 +55,10 @@ const StoryGridView = ({
   filteredStories,
   centerActionLabel,
   bottomActionLabel,
+  updateStory,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
+  const [titleRenameId, setTitleRenameId] = useState(-1);
 
   const handleMenuItemSelected = useCallback((sender, story) => {
     setContextMenuId(-1);
@@ -63,11 +66,22 @@ const StoryGridView = ({
       case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
         window.location.href = story.bottomTargetAction;
         break;
+      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+        setTitleRenameId(story.id);
+        break;
 
       default:
         break;
     }
   }, []);
+
+  const handleOnRenameStory = useCallback(
+    (story, newTitle) => {
+      setTitleRenameId(-1);
+      updateStory({ ...story, title: { raw: newTitle } });
+    },
+    [updateStory]
+  );
 
   return (
     <StoryGrid>
@@ -91,6 +105,11 @@ const StoryGridView = ({
             <CardTitle
               title={story.title}
               modifiedDate={story.modified.startOf('day').fromNow()}
+              onEditComplete={(newTitle) =>
+                handleOnRenameStory(story, newTitle)
+              }
+              onEditCancel={() => setTitleRenameId(-1)}
+              editMode={titleRenameId === story.id}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}
@@ -109,6 +128,7 @@ StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
+  updateStory: PropTypes.func.isRequired,
 };
 
 export default StoryGridView;

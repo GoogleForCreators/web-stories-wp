@@ -102,14 +102,18 @@ function MyStories() {
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
   const {
-    actions: { fetchStories },
+    actions: {
+      storyApi: { updateStory, fetchStories },
+    },
     state: {
-      allPagesFetched,
-      stories,
-      storiesOrderById,
-      totalStories,
-      totalPages,
-      isLoading,
+      stories: {
+        allPagesFetched,
+        stories,
+        storiesOrderById,
+        totalStories,
+        totalPages,
+        isLoading,
+      },
     },
   } = useContext(ApiContext);
 
@@ -126,9 +130,9 @@ function MyStories() {
     currentListSortDirection,
     currentPage,
     currentStorySort,
-    fetchStories,
     status,
     typeaheadValue,
+    fetchStories,
   ]);
 
   const setCurrentPageClamped = useCallback(
@@ -191,6 +195,7 @@ function MyStories() {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
+            updateStory={updateStory}
             filteredStories={orderedStories}
             centerActionLabel={
               <>
@@ -215,11 +220,12 @@ function MyStories() {
         return null;
     }
   }, [
+    viewStyle,
+    updateStory,
+    orderedStories,
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
-    orderedStories,
-    viewStyle,
   ]);
 
   const storiesViewControls = useMemo(() => {
@@ -254,9 +260,7 @@ function MyStories() {
             canLoadMore={!allPagesFetched}
             isLoading={isLoading}
             allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={() => {
-              handleNewPageRequest();
-            }}
+            onLoadMore={handleNewPageRequest}
           />
           <ScrollToTop />
         </BodyWrapper>
