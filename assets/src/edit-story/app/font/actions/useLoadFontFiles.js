@@ -57,8 +57,9 @@ function useLoadFontFiles({ getFontByName }) {
       const appendFontLink = () => {
         return new Promise((resolve, reject) => {
           const fontStylesheet = document.createElement('link');
+          const fontHref = `${src}&display=auto`.replace('&display=swap', '');
           fontStylesheet.id = elementId;
-          fontStylesheet.href = src;
+          fontStylesheet.href = fontHref;
           fontStylesheet.rel = 'stylesheet';
           fontStylesheet.type = 'text/css';
           fontStylesheet.media = 'all';

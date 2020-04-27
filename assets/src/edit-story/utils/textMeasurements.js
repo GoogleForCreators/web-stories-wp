@@ -32,7 +32,6 @@ const MEASURER_STYLES = {
   contain: 'layout paint',
   top: '-9999px',
   left: '-9999px',
-  fontDisplay: 'block',
   zIndex: -1,
   ...(false && {
     // For debugging purposes - this will show the output render on screen
