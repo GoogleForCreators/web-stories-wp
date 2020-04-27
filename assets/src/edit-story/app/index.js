@@ -43,6 +43,7 @@ import { useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
+import AutoSaveHandler from "../components/autoSaveHandler";
 
 function App({ config }) {
   const { storyId, isRTL } = config;
@@ -58,6 +59,7 @@ function App({ config }) {
                     <MediaProvider>
                       <TransformProvider>
                         <DropTargetsProvider>
+                          <AutoSaveHandler />
                           <GlobalStyle />
                           <DefaultMoveableGlobalStyle />
                           <CropMoveableGlobalStyle />

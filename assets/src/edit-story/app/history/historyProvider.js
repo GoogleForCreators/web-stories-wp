@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -40,23 +40,29 @@ function HistoryProvider({ children, size }) {
     versionNumber,
   } = useHistoryReducer(size);
 
+  const [hasNewChanges, setHasNewChanges] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
   useEffect(() => {
-    setPreventUnload('history', versionNumber - 1 > 0);
-
+    setPreventUnload('history', hasNewChanges);
     return () => setPreventUnload('history', false);
-  }, [setPreventUnload, versionNumber]);
+  }, [setPreventUnload, hasNewChanges]);
+
+  useEffect(() => {
+    setHasNewChanges(versionNumber - 1 > 0);
+  }, [versionNumber]);
 
   const state = {
     state: {
       replayState,
+      hasNewChanges,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
     },
     actions: {
       appendToHistory,
       clearHistory,
+      setHasNewChanges,
       undo,
       redo,
     },
