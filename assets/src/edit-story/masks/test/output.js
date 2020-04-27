@@ -125,41 +125,41 @@ describe('WithMask', () => {
     await expect(content).toContain(MaskTypes.HEART);
   });
 
-  // see https://github.com/google/web-stories-wp/issues/536
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should produce valid AMP output', async () => {
-    const props = {
-      element: {
-        id: '123',
-        type: 'image',
-        mimeType: 'image/png',
-        scale: 1,
-        origRatio: 9 / 16,
-        x: 50,
-        y: 100,
-        height: 1920,
-        width: 1080,
-        rotationAngle: 0,
-        resource: {
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      const props = {
+        element: {
+          id: '123',
           type: 'image',
           mimeType: 'image/png',
-          src: 'https://example.com/image.png',
+          scale: 1,
+          origRatio: 9 / 16,
+          x: 50,
+          y: 100,
           height: 1920,
           width: 1080,
+          rotationAngle: 0,
+          resource: {
+            type: 'image',
+            mimeType: 'image/png',
+            src: 'https://example.com/image.png',
+            height: 1920,
+            width: 1080,
+          },
+          mask: {
+            type: 'heart',
+            fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+            style: {},
+          },
         },
-      },
-      mask: {
-        type: 'heart',
-        fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-        style: {},
-      },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
-    };
+        box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+      };
 
-    await expect(
-      <WithMask {...props}>
-        <amp-img src="https://example.com/image.png" layout="fill" />
-      </WithMask>
-    ).toBeValidAMPStoryElement();
+      await expect(
+        <WithMask {...props}>
+          <amp-img src="https://example.com/image.png" layout="fill" />
+        </WithMask>
+      ).toBeValidAMPStoryElement();
+    });
   });
 });

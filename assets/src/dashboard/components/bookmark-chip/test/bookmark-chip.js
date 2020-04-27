@@ -15,38 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import theme from '../../../theme';
-
 import BookmarkChip from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
+import { renderWithTheme } from '../../../testUtils/';
 
 describe('BookmarkChip', () => {
   it('should render a <BookmarkChip />', () => {
-    const { getByRole } = wrapper(<BookmarkChip />);
+    const { getByRole } = renderWithTheme(<BookmarkChip />);
 
     expect(getByRole('button')).toBeDefined();
   });
 
   it('should render `not-bookmarked` when `isBookmarked` is false', () => {
-    const { queryByTestId } = wrapper(<BookmarkChip />);
+    const { queryByTestId } = renderWithTheme(<BookmarkChip />);
 
     expect(queryByTestId('not-bookmarked')).toBeDefined();
     expect(queryByTestId('is-bookmarked')).toBeNull();
   });
 
   it('should render `is-bookmarked` when `isBookmarked` is true', () => {
-    const { queryByTestId } = wrapper(<BookmarkChip isBookmarked={true} />);
+    const { queryByTestId } = renderWithTheme(
+      <BookmarkChip isBookmarked={true} />
+    );
 
     expect(queryByTestId('is-bookmarked')).toBeDefined();
     expect(queryByTestId('not-bookmarked')).toBeNull();

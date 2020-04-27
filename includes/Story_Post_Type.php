@@ -304,6 +304,11 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
+		$preview_query_args = [
+			'preview_id'    => $story_id,
+			// Leveraging the default WP post preview logic.
+			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
+		];
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
@@ -316,7 +321,7 @@ class Story_Post_Type {
 					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
 					'storyId'          => $story_id,
-					'previewLink'      => get_preview_post_link( $story_id ),
+					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
 					'api'              => [

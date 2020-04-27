@@ -218,6 +218,15 @@ const theme = {
       weight: '500',
       letterSpacing: '0.01em',
     },
+    textInput: {
+      family: "'Google Sans', sans-serif",
+      size: 13,
+      border: `1px solid ${colors.gray100}`,
+      activeBorder: `1px solid ${colors.bluePrimary}`,
+      weight: '400',
+      letterSpacing: '0.01em',
+      padding: '1px 8px',
+    },
     storyGridItem: {
       family: "'Google Sans', sans-serif",
       size: '14px',
