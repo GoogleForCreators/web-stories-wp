@@ -16,8 +16,13 @@
 /**
  * External dependencies
  */
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import useAddSquishVar from './useAddSquishVar';
 
 const FixedContent = styled.div`
   position: absolute;
@@ -41,7 +46,10 @@ const FixedContent = styled.div`
 `;
 
 const Fixed = ({ children }) => {
-  return <FixedContent>{children}</FixedContent>;
+  const rootRef = useRef(null);
+  useAddSquishVar(rootRef);
+
+  return <FixedContent ref={rootRef}>{children}</FixedContent>;
 };
 
 Fixed.propTypes = {

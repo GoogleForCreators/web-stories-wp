@@ -22,14 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { ViewHeader } from '../../../components';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
-
-const lerp = (start, end, progress) => {
-  return `calc(calc(calc(1 - var(${progress}, 0)) * ${start}) + calc(var(${progress}, 0) * ${end}))`;
-};
 
 const Container = styled.div`
   padding: 10px 0;
@@ -40,7 +37,8 @@ const StyledHeader = styled(ViewHeader)`
   width: 25%;
   justify-content: baseline;
   line-height: 1;
-  font-size: ${lerp('38px', '24px', '--progress')};
+  font-size: ${cssLerp('38px', '24px', '--squish-progress')};
+  white-space: nowrap;
 `;
 
 const Content = styled.div`
@@ -54,23 +52,19 @@ const SearchContainer = styled.div`
   vertical-align: baseline;
   position: relative;
   width: 25%;
-  overflow: hidden; 
-  /* needed to break display flow and align bottom to text */
-  /* margin: auto 0; */
-  /* right: ${({ theme }) => `${theme.pageGutter.small.desktop}px`}; */
-  /* display: flex;
-  justify-content: flex-end; */
-  /* @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  height: 29px;
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
     max-width: 100%;
     justify-content: flex-start;
-  } */
+  }
 `;
 
 const SearchInner = styled.div`
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: min(190px, 100%);
-  margin-left: auto;
 `;
 
 const PageHeading = ({
@@ -81,19 +75,6 @@ const PageHeading = ({
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
-  // const resultsText =
-  //   filteredStories.length > 0
-  //     ? sprintf(
-  //         /* translators: %s: search term. */
-  //         __('Results for "%s"', 'web-stories'),
-  //         typeaheadValue
-  //       )
-  //     : sprintf(
-  //         /* translators: %s: search term. */
-  //         __('No results for "%s"', 'web-stories'),
-  //         typeaheadValue
-  //       );
-
   return (
     <Container>
       <BodyWrapper>

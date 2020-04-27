@@ -13,21 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import Provider from './provider';
-import Scrollable from './scrollable';
-import Squishable from './squishable';
-import Fixed from './fixed';
-
-const Layout = {
-  Provider,
-  Scrollable,
-  Squishable,
-  Fixed,
+const cssLerp = (start, end, progress) => {
+  return `calc(calc(calc(1 - var(${progress}, 0)) * ${start}) + calc(var(${progress}, 0) * ${end}))`;
 };
 
-export default Layout;
-export { default as useLayoutContext } from './useLayoutContext';
-export { SQUISH_CSS_VAR } from './provider';
+export default cssLerp;
