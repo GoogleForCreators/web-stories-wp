@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * WordPress dependencies
@@ -31,24 +30,10 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import OutputStory from '../../../output/story';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-
-/**
- * Creates AMP HTML markup for saving to DB for rendering in the FE.
- *
- * @param {import('../../../types').Story} story Story object.
- * @param {Array<Object>} pages List of pages.
- * @param {Object} metadata Metadata.
- * @return {Element} Story markup.
- */
-const getStoryMarkup = (story, pages, metadata) => {
-  return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
-  );
-};
+import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 
 /**
  * Custom hook to save story.
@@ -73,27 +58,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
-      const propsToSave = objectPick(story, [
-        'title',
-        'status',
-        'author',
-        'date',
-        'modified',
-        'slug',
-        'excerpt',
-        'featuredMedia',
-        'password',
-        'publisherLogo',
-        'stylePresets',
-        'autoAdvance',
-        'defaultPageDuration',
-      ]);
-      const content = getStoryMarkup(story, pages, metadata);
       return saveStoryById({
         storyId,
-        content,
-        pages,
-        ...propsToSave,
+        ...getStoryPropsToSave({ story, pages, metadata }),
         ...props,
       })
         .then((post) => {

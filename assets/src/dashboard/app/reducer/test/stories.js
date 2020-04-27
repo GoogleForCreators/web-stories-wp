@@ -123,4 +123,32 @@ describe('storyReducer', () => {
       isError: true,
     });
   });
+
+  it(`should update stories state when ${ACTION_TYPES.UPDATE_STORY} is called`, () => {
+    const result = storyReducer(
+      {
+        ...initialState,
+        stories: {
+          94: { id: 94, status: 'draft', title: 'my test story 1' },
+          65: { id: 65, status: 'published', title: 'my test story 2' },
+          78: { id: 78, status: 'draft', title: 'my test story 3' },
+          12: { id: 12, status: 'draft', title: 'my test story 4' },
+        },
+      },
+      {
+        type: ACTION_TYPES.UPDATE_STORY,
+        payload: { id: 65, status: 'published', title: 'new title for story' },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      stories: {
+        94: { id: 94, status: 'draft', title: 'my test story 1' },
+        65: { id: 65, status: 'published', title: 'new title for story' },
+        78: { id: 78, status: 'draft', title: 'my test story 3' },
+        12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+    });
+  });
 });
