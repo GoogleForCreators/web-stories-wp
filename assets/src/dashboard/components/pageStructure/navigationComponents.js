@@ -19,18 +19,6 @@
  */
 import styled from 'styled-components';
 
-export const LeftRailContainer = styled.nav`
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  z-index: 1;
-  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
-  width: max(15%, 190px);
-  background: ${({ theme }) => theme.colors.white};
-  border-right: ${({ theme }) => theme.leftRail.border};
-`;
-
 export const Content = styled.div`
   display: flex;
   flex-direction: column;

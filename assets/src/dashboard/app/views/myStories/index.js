@@ -32,6 +32,9 @@ import {
   FloatingTab,
   InfiniteScroller,
   ScrollToTop,
+  LayoutProvider,
+  LayoutScrollable,
+  LayoutSquishable,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -288,28 +291,32 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={orderedStories}
-            handleTypeaheadChange={handleTypeaheadChange}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={handleFilterStatusUpdate}
-                name="my-stories-filter-selection"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-                inputType="radio"
-              >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
+          <LayoutProvider>
+            <LayoutSquishable>
+              <PageHeading
+                defaultTitle={__('My Stories', 'web-stories')}
+                searchPlaceholder={__('Search Stories', 'web-stories')}
+                filteredStories={orderedStories}
+                handleTypeaheadChange={handleTypeaheadChange}
+                typeaheadValue={typeaheadValue}
+              />
+              <FilterContainer>
+                {STORY_STATUSES.map((storyStatus) => (
+                  <FloatingTab
+                    key={storyStatus.value}
+                    onClick={handleFilterStatusUpdate}
+                    name="my-stories-filter-selection"
+                    value={storyStatus.value}
+                    isSelected={status === storyStatus.value}
+                    inputType="radio"
+                  >
+                    {storyStatus.label}
+                  </FloatingTab>
+                ))}
+              </FilterContainer>
+            </LayoutSquishable>
+            <LayoutScrollable>{BodyContent}</LayoutScrollable>
+          </LayoutProvider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>
