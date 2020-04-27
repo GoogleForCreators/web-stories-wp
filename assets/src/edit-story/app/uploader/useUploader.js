@@ -47,6 +47,7 @@ function useUploader(refreshLibrary = true) {
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+  const { allowedFileTypes = {} } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
@@ -96,12 +97,10 @@ function useUploader(refreshLibrary = true) {
         sprintf(
           /* translators: %s: list of allowed file types. */
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedMimeTypes
-            .map((type) => type.replace('image/', '').replace('video/', ''))
-            .join(
-              /* translators: delimiter used in a list */
-              __(', ', 'web-stories')
-            )
+          allowedFileTypes.join(
+            /* translators: delimiter used in a list */
+            __(', ', 'web-stories')
+          )
         ),
         {
           b: <b />,
