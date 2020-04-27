@@ -35,8 +35,6 @@ import useFocusOut from '../../utils/useFocusOut';
 import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
-  width: 272px;
-  position: static;
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme, isOpen }) =>
@@ -60,8 +58,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 48px;
-  padding: 16px;
+  padding: 5px 8px;
   align-items: center;
   border-radius: ${({ theme, isOpen }) =>
     isOpen ? 'none' : theme.border.typeaheadRadius};
@@ -69,8 +66,7 @@ const InputContainer = styled.div`
   border-bottom: ${({ theme, isOpen }) =>
     isOpen && `1px solid ${theme.colors.gray50}`};
   color: ${({ theme }) => theme.colors.gray500};
-  background-color: ${({ theme, isOpen }) =>
-    isOpen ? theme.colors.white : theme.colors.gray25};
+  background-color: ${({ theme }) => theme.colors.gray50};
 `;
 InputContainer.propTypes = {
   isOpen: PropTypes.bool,
@@ -95,8 +91,7 @@ const StyledInput = styled.input`
   border: none;
   background-color: transparent;
   text-overflow: ellipsis;
-  padding: 0 12px;
-  margin: auto 0;
+  padding: 0 7.5px;
   height: 100%;
   flex-grow: 1;
   font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
@@ -104,7 +99,7 @@ const StyledInput = styled.input`
   line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing};
   font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
-  color: ${({ theme }) => theme.colors.gray500};
+  color: ${({ theme }) => theme.colors.gray};
 
   &:disabled {
     cursor: default;
@@ -124,9 +119,9 @@ const SearchButton = styled.button`
   border: none;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.gray300};
+  height: 18px;
   & > svg {
-    width: 16px;
-    height: 16px;
+    height: 100%;
   }
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
