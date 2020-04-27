@@ -37,8 +37,12 @@ const ScrollContent = styled.div`
 
 const Inner = styled.div`
   position: relative;
-  padding-top: 200px;
+  padding-top: ${(props) => props.paddingTop || 0}px;
 `;
+
+Inner.propTypes = {
+  paddingTop: PropTypes.number,
+};
 
 const SquishRange = styled.div`
   position: absolute;
@@ -55,13 +59,13 @@ SquishRange.propTypes = {
 
 const Scrollable = ({ children }) => {
   const {
-    state: { scrollFrameRef, squishDriverRef },
+    state: { scrollFrameRef, squishDriverRef, squishContentHeight },
   } = useLayoutContext();
 
   return (
     <ScrollContent ref={scrollFrameRef}>
       <SquishRange ref={squishDriverRef} />
-      <Inner>{children}</Inner>
+      <Inner paddingTop={squishContentHeight}>{children}</Inner>
     </ScrollContent>
   );
 };

@@ -32,9 +32,7 @@ import {
   FloatingTab,
   InfiniteScroller,
   ScrollToTop,
-  LayoutProvider,
-  LayoutScrollable,
-  LayoutSquishable,
+  Layout,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -86,6 +84,10 @@ const DefaultBodyText = styled.p`
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
+`;
+
+const CardPanel = styled.div`
+  padding-top: 60px;
 `;
 
 function MyStories() {
@@ -256,17 +258,17 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <BodyWrapper>
-          {storiesViewControls}
-          {storiesView}
-          <InfiniteScroller
-            canLoadMore={!allPagesFetched}
-            isLoading={isLoading}
-            allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={handleNewPageRequest}
-          />
-          <ScrollToTop />
-        </BodyWrapper>
+        <CardPanel>
+          <BodyWrapper>
+            {storiesView}
+            <InfiniteScroller
+              canLoadMore={!allPagesFetched}
+              isLoading={isLoading}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              onLoadMore={handleNewPageRequest}
+            />
+          </BodyWrapper>
+        </CardPanel>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -283,7 +285,6 @@ function MyStories() {
     allPagesFetched,
     handleNewPageRequest,
     typeaheadValue,
-    storiesViewControls,
     storiesView,
   ]);
 
@@ -291,8 +292,8 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <LayoutProvider>
-            <LayoutSquishable>
+          <Layout.Provider>
+            <Layout.Squishable>
               <PageHeading
                 defaultTitle={__('My Stories', 'web-stories')}
                 searchPlaceholder={__('Search Stories', 'web-stories')}
@@ -314,9 +315,13 @@ function MyStories() {
                   </FloatingTab>
                 ))}
               </FilterContainer>
-            </LayoutSquishable>
-            <LayoutScrollable>{BodyContent}</LayoutScrollable>
-          </LayoutProvider>
+              {storiesViewControls}
+            </Layout.Squishable>
+            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
+          </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>

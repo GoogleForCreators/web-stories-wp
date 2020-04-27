@@ -16,29 +16,23 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
-import { SQUISH_LENGTH } from './provider';
+import cssLerp from '../../utils/cssLerp';
+import { SQUISH_LENGTH, SQUISH_CSS_VAR } from './provider';
 import useLayoutContext from './useLayoutContext';
-
-const lerp = (start, end, progress) => {
-  return `calc(calc(calc(1 - var(${progress}, 0)) * ${start}) + calc(var(${progress}, 0) * ${end}))`;
-};
+import useAddSquishVar from './useAddSquishVar';
 
 const Squish = styled.div`
-  contain: content;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding-top: ${lerp(`${SQUISH_LENGTH}px`, '0px', '--progress')};
+  padding-top: ${cssLerp(`${SQUISH_LENGTH}px`, '0px', SQUISH_CSS_VAR)};
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 2;
 `;
@@ -49,29 +43,23 @@ const Content = styled.div`
 
 const Squishable = ({ children }) => {
   const contentRef = useRef(null);
-  const cssVarScope = useRef(null);
+  const rootRef = useRef(null);
+  useAddSquishVar(rootRef);
+
   const {
-    actions: { addSquishListener, removeSquishListener },
+    actions: { setSquishContentHeight },
   } = useLayoutContext();
 
-  useEffect(() => {
-    const cssVarEl = cssVarScope.current;
-    if (!cssVarEl) {
-      return () => {};
+  useLayoutEffect(() => {
+    const contentEl = contentRef.current;
+    if (!contentEl) {
+      return;
     }
-
-    const handleSquish = (event) => {
-      cssVarEl.style.setProperty('--progress', event.data.progress);
-    };
-
-    addSquishListener(handleSquish);
-    return () => {
-      removeSquishListener(handleSquish);
-    };
-  }, [addSquishListener, removeSquishListener]);
+    setSquishContentHeight(contentEl.offsetHeight + SQUISH_LENGTH);
+  }, [setSquishContentHeight]);
 
   return (
-    <Squish ref={cssVarScope}>
+    <Squish ref={rootRef}>
       <Content ref={contentRef}>{children}</Content>
     </Squish>
   );

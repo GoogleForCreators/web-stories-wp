@@ -30,13 +30,7 @@ export { default as ColorList } from './colorList';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { TextInput } from './input';
-export {
-  LayoutFixed,
-  LayoutProvider,
-  LayoutScrollable,
-  LayoutSquishable,
-  useLayoutContext,
-} from './layout';
+export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';
 export { TemplateNavBar } from './navigationBar';
 export { AppFrame, LeftRail, PageContent } from './pageStructure';

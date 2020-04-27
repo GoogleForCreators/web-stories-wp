@@ -27,6 +27,7 @@ import React, {
 import PropTypes from 'prop-types';
 
 export const SQUISH_LENGTH = 90;
+export const SQUISH_CSS_VAR = '--squish-progress';
 
 const generateThreshold = (steps) => {
   return Array.from({ length: steps + 1 }, (_, i) => i / steps);
@@ -84,6 +85,17 @@ const Provider = ({ children }) => {
     squishDriverRef.current.removeEventListener('squish', listener);
   }, []);
 
+  const scrollToTop = useCallback(() => {
+    const scrollFrameEl = scrollFrameRef.current;
+    if (!scrollFrameEl) {
+      return;
+    }
+    scrollFrameEl.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
       state: {
@@ -106,9 +118,10 @@ const Provider = ({ children }) => {
          */
         removeSquishListener,
         setSquishContentHeight,
+        scrollToTop,
       },
     }),
-    [addSquishListener, removeSquishListener, squishContentHeight]
+    [addSquishListener, removeSquishListener, squishContentHeight, scrollToTop]
   );
 
   return (
