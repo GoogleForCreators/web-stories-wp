@@ -34,6 +34,7 @@ export { Pill, FloatingTab } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
+export { default as ScrollToTop } from './scrollToTop';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
@@ -51,3 +52,4 @@ export {
 } from './table';
 export { default as MultiPartPill } from './multiPartPill';
 export { LeftRail, PageContent, AppFrame } from './pageStructure';
+export { TextInput } from './input';

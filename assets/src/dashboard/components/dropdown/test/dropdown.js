@@ -15,21 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import theme from '../../../theme';
-
+import { renderWithTheme } from '../../../testUtils/';
 import Dropdown from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('Dropdown', () => {
   const demoItems = [
@@ -41,7 +30,7 @@ describe('Dropdown', () => {
   const onClickMock = jest.fn();
 
   it('should render a <Dropdown /> by default', () => {
-    const { getByRole } = wrapper(
+    const { getByRole } = renderWithTheme(
       <Dropdown
         placeholder="placeholder text"
         ariaLabel="my dropdown test"

@@ -32,6 +32,7 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import usePageBackgrounds from './effects/usePageBackgrounds';
 import useStoryReducer from './useStoryReducer';
 import useDeleteStory from './actions/useDeleteStory';
+import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
   const {
@@ -108,6 +109,12 @@ function StoryProvider({ storyId, children }) {
     story,
     updateStory,
   });
+
+  const { autoSave, isAutoSaving } = useAutoSave({
+    storyId,
+    pages,
+    story,
+  });
   const { deleteStory } = useDeleteStory({ storyId });
 
   const state = {
@@ -123,11 +130,12 @@ function StoryProvider({ storyId, children }) {
       story,
       capabilities,
       meta: {
-        isSaving,
+        isSaving: isSaving || isAutoSaving,
       },
     },
     actions: {
       ...api,
+      autoSave,
       saveStory,
       deleteStory,
     },
