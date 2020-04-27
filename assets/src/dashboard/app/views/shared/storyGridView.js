@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -57,6 +60,7 @@ const StoryGridView = ({
   bottomActionLabel,
   updateStory,
   trashStory,
+  duplicateStory,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -72,15 +76,29 @@ const StoryGridView = ({
           setTitleRenameId(story.id);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          duplicateStory(story);
+          break;
+
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          trashStory(story);
+          if (
+            window.confirm(
+              sprintf(
+                /* translators: %s: story title. */
+                __('Are you sure you want to delete "%s"?', 'web-stories'),
+                story.title
+              )
+            )
+          ) {
+            trashStory(story);
+          }
           break;
 
         default:
           break;
       }
     },
-    [trashStory]
+    [trashStory, duplicateStory]
   );
 
   const handleOnRenameStory = useCallback(
@@ -136,8 +154,9 @@ StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
-  updateStory: PropTypes.func,
-  trashStory: PropTypes.func,
+  updateStory: PropTypes.func.isRequired,
+  trashStory: PropTypes.func.isRequired,
+  duplicateStory: PropTypes.func.isRequired,
 };
 
 export default StoryGridView;
