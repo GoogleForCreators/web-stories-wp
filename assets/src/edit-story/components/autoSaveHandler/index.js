@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -27,7 +27,6 @@ import { useConfig, useHistory, useStory } from '../../app';
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
   const {
-    actions: { setHasNewChanges },
     state: { hasNewChanges },
   } = useHistory();
   const {
@@ -37,6 +36,8 @@ function AutoSaveHandler() {
     actions: { autoSave, saveStory },
   } = useStory();
 
+  const [didAutoSave, setDidAutoSave] = useState(false);
+
   const timeout = useRef();
 
   // If autoSaveInterval is set to 0 or not defined, don't.
@@ -45,27 +46,34 @@ function AutoSaveHandler() {
   }
 
   useEffect(() => {
+    // If there are new changes, mark autoSave as not done.
+    if (hasNewChanges) {
+      setDidAutoSave(false);
+    }
+  }, [hasNewChanges]);
+
+  useEffect(() => {
     if (timeout.current) {
       // Clear the previous timeout if there were any relevant changes meanwhile.
       clearTimeout(timeout.current);
     }
 
-    if (hasNewChanges) {
+    if (!didAutoSave) {
       timeout.current = setTimeout(() => {
         if (hasNewChanges) {
           const update = 'draft' === status ? saveStory : autoSave;
           update();
-          setHasNewChanges(false);
+          setDidAutoSave(true);
         }
-      }, autoSaveInterval * 1000);
+      }, 1000);
     }
   }, [
     autoSave,
     autoSaveInterval,
+    didAutoSave,
     saveStory,
     status,
     hasNewChanges,
-    setHasNewChanges,
   ]);
 
   return null;
