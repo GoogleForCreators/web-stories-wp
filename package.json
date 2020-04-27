@@ -181,11 +181,11 @@
     }
   },
   "lint-staged": {
-    "*.js": "npm run lint:js:fix",
-    "*.(js|css)": "npm run lint:css:fix",
-    "*.md": "npm run format:md",
+    "*.js": "eslint --fix",
+    "*.(js|css)": "stylelint --fix",
+    "*.md": ["eslint --fix", "markdownlint -f"],
     "*.php": "npm run lint:php:fix",
-    "*.(xml|xml.dist)": "npm run format:xml",
-    "*.yml": "npm run format:yml"
+    "*.(xml|xml.dist)": "prettier --write",
+    "*.yml": "prettier --write"
   }
 }
