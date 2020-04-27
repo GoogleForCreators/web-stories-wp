@@ -47,6 +47,9 @@ export {
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
+  TableTitleCell,
+  TableContentCell,
+  TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
 } from './table';

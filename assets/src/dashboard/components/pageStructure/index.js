@@ -28,10 +28,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useCallback, useRef } from 'react';
 import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { BUTTON_TYPES, primaryPaths, secondaryPaths } from '../../constants';
+import useFocusOut from '../../utils/useFocusOut';
 import {
   AppInfo,
   Content,
@@ -39,6 +41,7 @@ import {
   NavLink,
   Rule,
 } from './navigationComponents';
+import { useNavContext } from './navProvider';
 
 export const AppFrame = styled.div`
   position: absolute;
@@ -67,15 +70,54 @@ export const LeftRailContainer = styled.nav`
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
   z-index: 2;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.25s linear;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    padding-left: 0;
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+    transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
+  }
 `;
 
 export function LeftRail() {
+  const leftRailRef = useRef(null);
+  const upperContentRef = useRef(null);
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
+  const {
+    state: { sideBarVisible },
+    actions: { toggleSideBar },
+  } = useNavContext();
+
+  const onContainerClickCapture = useCallback(
+    ({ target }) => {
+      if (
+        target === leftRailRef.current ||
+        target === upperContentRef.current
+      ) {
+        return;
+      }
+      toggleSideBar();
+    },
+    [toggleSideBar, leftRailRef, upperContentRef]
+  );
+
+  const handleSideBarClose = useCallback(() => {
+    if (sideBarVisible) {
+      toggleSideBar();
+    }
+  }, [toggleSideBar, sideBarVisible]);
+
+  useFocusOut(leftRailRef, handleSideBarClose, [sideBarVisible]);
 
   return (
-    <LeftRailContainer>
-      <div>
+    <LeftRailContainer
+      onClickCapture={onContainerClickCapture}
+      ref={leftRailRef}
+      isOpen={sideBarVisible}
+    >
+      <div ref={upperContentRef}>
         <LogoPlaceholder />
         <Content>
           <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>

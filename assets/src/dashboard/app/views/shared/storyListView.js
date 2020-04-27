@@ -34,13 +34,14 @@ import {
   PreviewPage,
   Table,
   TableBody,
-  TableCell,
   TableHeader,
-  TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
   TableTitleHeaderCell,
+  TableTitleCell,
+  TableContentCell,
+  TableContentHeaderCell,
 } from '../../../components';
 import {
   ICON_METRICS,
@@ -62,6 +63,7 @@ const PreviewContainer = styled.div`
   height: ${({ theme }) => theme.previewWidth.thumbnail * PAGE_RATIO}px;
   vertical-align: middle;
   display: inline-block;
+  overflow: hidden;
 `;
 
 const ArrowIcon = styled.div`
@@ -128,7 +130,7 @@ export default function StoryListView({
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIcon>
             </TableTitleHeaderCell>
-            <TableHeaderCell>
+            <TableContentHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
@@ -142,10 +144,14 @@ export default function StoryListView({
               >
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
-            </TableHeaderCell>
-            <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>
+            </TableContentHeaderCell>
+            <TableContentHeaderCell>
+              {__('Categories', 'web-stories')}
+            </TableContentHeaderCell>
+            <TableContentHeaderCell>
+              {__('Tags', 'web-stories')}
+            </TableContentHeaderCell>
+            <TableContentHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
@@ -160,7 +166,7 @@ export default function StoryListView({
               >
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
-            </TableHeaderCell>
+            </TableContentHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -173,11 +179,13 @@ export default function StoryListView({
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
-              <TableCell>{story.title}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
-              <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
+              <TableTitleCell>{story.title}</TableTitleCell>
+              <TableContentCell>{__('—', 'web-stories')}</TableContentCell>
+              <TableContentCell>{__('—', 'web-stories')}</TableContentCell>
+              <TableContentCell>{__('—', 'web-stories')}</TableContentCell>
+              <TableContentCell>
+                {story.modified.startOf('day').fromNow()}
+              </TableContentCell>
             </TableRow>
           ))}
         </TableBody>

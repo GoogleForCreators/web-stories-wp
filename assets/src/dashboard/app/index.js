@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES } from '../constants';
-import { AppFrame, LeftRail, PageContent } from '../components';
+import { AppFrame, LeftRail, PageContent, NavProvider } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider } from './router';
 import { ConfigProvider } from './config';
@@ -46,30 +46,32 @@ function App({ config }) {
         <ConfigProvider config={config}>
           <ApiProvider>
             <RouterProvider>
-              <GlobalStyle />
-              <KeyboardOnlyOutline />
-              <AppFrame>
-                <LeftRail />
-                <PageContent>
-                  <Route
-                    exact
-                    path={APP_ROUTES.MY_STORIES}
-                    component={<MyStoriesView />}
-                  />
-                  <Route
-                    path={APP_ROUTES.TEMPLATE_DETAIL}
-                    component={<TemplateDetail />}
-                  />
-                  <Route
-                    path={APP_ROUTES.TEMPLATES_GALLERY}
-                    component={<TemplatesGalleryView />}
-                  />
-                  <Route
-                    path={APP_ROUTES.SAVED_TEMPLATES}
-                    component={<SavedTemplatesView />}
-                  />
-                </PageContent>
-              </AppFrame>
+              <NavProvider>
+                <GlobalStyle />
+                <KeyboardOnlyOutline />
+                <AppFrame>
+                  <LeftRail />
+                  <PageContent>
+                    <Route
+                      exact
+                      path={APP_ROUTES.MY_STORIES}
+                      component={<MyStoriesView />}
+                    />
+                    <Route
+                      path={APP_ROUTES.TEMPLATE_DETAIL}
+                      component={<TemplateDetail />}
+                    />
+                    <Route
+                      path={APP_ROUTES.TEMPLATES_GALLERY}
+                      component={<TemplatesGalleryView />}
+                    />
+                    <Route
+                      path={APP_ROUTES.SAVED_TEMPLATES}
+                      component={<SavedTemplatesView />}
+                    />
+                  </PageContent>
+                </AppFrame>
+              </NavProvider>
             </RouterProvider>
           </ApiProvider>
         </ConfigProvider>
