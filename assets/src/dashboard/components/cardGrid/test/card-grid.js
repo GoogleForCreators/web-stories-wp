@@ -15,24 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils/';
 import CardGrid from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('CardGrid', () => {
   it('should render CardGrid', () => {
-    const { getAllByTestId } = wrapper(
+    const { getAllByTestId } = renderWithTheme(
       <CardGrid>
         <div data-testid={'test-child'}>{'Item 1'}</div>
         <div data-testid={'test-child'}>{'Item 2'}</div>

@@ -14,9 +14,26 @@
  * limitations under the License.
  */
 
-module.exports = {
-  launch: {
-    headless: process.env.PUPPETEER_HEADLESS !== 'false',
-    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
-  },
-};
+/**
+ * External dependencies
+ */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
+ * Internal dependencies
+ */
+import OutputStory from '../story';
+
+/**
+ * Creates AMP HTML markup for saving to DB for rendering in the FE.
+ *
+ * @param {import('../../../types').Story} story Story object.
+ * @param {Array<Object>} pages List of pages.
+ * @param {Object} metadata Metadata.
+ * @return {string} Story markup.
+ */
+export default function getStoryMarkup(story, pages, metadata) {
+  return renderToStaticMarkup(
+    <OutputStory story={story} pages={pages} metadata={metadata} />
+  );
+}
