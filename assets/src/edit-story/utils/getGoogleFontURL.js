@@ -19,8 +19,6 @@
  *
  * @see https://developers.google.com/fonts/docs/css2
  *
- * @todo support specifying subsets: https://developers.google.com/fonts/docs/getting_started#specifying_script_subsets
- *
  * @param {Array<Object<string, Array<number, number>>>} fonts List of font objects.
  * @return {string} Google Fonts embed URL.
  */
