@@ -154,12 +154,34 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     [wpApi, dataAdapter, editStoryURL]
   );
 
+  const trashStory = useCallback(
+    async (story) => {
+      try {
+        const response = await dataAdapter.deleteRequest(
+          `${wpApi}/${story.id}`,
+          {
+            data: story,
+          }
+        );
+        dispatch({
+          type: STORY_ACTION_TYPES.TRASH_STORY,
+          payload: reshapeStoryObject(editStoryURL)(response),
+        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    },
+    [wpApi, dataAdapter, editStoryURL]
+  );
+
   const api = useMemo(
     () => ({
       updateStory,
       fetchStories,
+      trashStory,
     }),
-    [updateStory, fetchStories]
+    [trashStory, updateStory, fetchStories]
   );
 
   return { stories: state, api };

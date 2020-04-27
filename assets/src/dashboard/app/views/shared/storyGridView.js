@@ -56,24 +56,32 @@ const StoryGridView = ({
   centerActionLabel,
   bottomActionLabel,
   updateStory,
+  trashStory,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
 
-  const handleMenuItemSelected = useCallback((sender, story) => {
-    setContextMenuId(-1);
-    switch (sender.value) {
-      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-        window.location.href = story.bottomTargetAction;
-        break;
-      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-        setTitleRenameId(story.id);
-        break;
+  const handleMenuItemSelected = useCallback(
+    (sender, story) => {
+      setContextMenuId(-1);
+      switch (sender.value) {
+        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          window.location.href = story.bottomTargetAction;
+          break;
+        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+          setTitleRenameId(story.id);
+          break;
 
-      default:
-        break;
-    }
-  }, []);
+        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+          trashStory(story);
+          break;
+
+        default:
+          break;
+      }
+    },
+    [trashStory]
+  );
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -129,6 +137,7 @@ StoryGridView.propTypes = {
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   updateStory: PropTypes.func,
+  trashStory: PropTypes.func,
 };
 
 export default StoryGridView;
