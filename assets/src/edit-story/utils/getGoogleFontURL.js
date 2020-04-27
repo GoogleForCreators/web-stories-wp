@@ -28,7 +28,7 @@ function getGoogleFontURL(fonts) {
   const url = new URL('https://fonts.googleapis.com/css2');
   url.searchParams.append('display', 'swap');
 
-  for (const { family: familyName, variants } of fonts) {
+  for (const { family: familyName, variants = [] } of fonts) {
     // [ [ 1, 400 ], [ 0, 700 ] ] -> [ ital, wght ]
     const axes = variants
       .reduce((acc, [fontStyle, fontWeight]) => {

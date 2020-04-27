@@ -19,7 +19,13 @@
  */
 import { useCallback } from 'react';
 
-function useLoadFontFiles({ getFontByName }) {
+/**
+ * Internal dependencies
+ */
+import cleanForSlug from '../../../utils/cleanForSlug';
+import getGoogleFontURL from '../../../utils/getGoogleFontURL';
+
+function useLoadFontFiles() {
   /**
    * Adds a <link> element to the <head> for a given font in case there is none yet.
    *
@@ -27,41 +33,31 @@ function useLoadFontFiles({ getFontByName }) {
    *
    * @param {string} name Font name.
    */
-  const maybeEnqueueFontStyle = useCallback(
-    ({ family }) => {
-      if (!family) {
-        return;
-      }
+  const maybeEnqueueFontStyle = useCallback(({ family, service }) => {
+    if (!family || service !== 'fonts.google.com') {
+      return;
+    }
 
-      const font = getFontByName(family);
-      if (!font) {
-        return;
-      }
+    const handle = cleanForSlug(family);
+    const id = `${handle}-css`;
+    const element = document.getElementById(id);
 
-      const { handle, src } = font;
-      if (!handle || !src) {
-        return;
-      }
+    if (element) {
+      return;
+    }
 
-      const id = `${handle}-css`;
-      const element = document.getElementById(id);
+    const src = getGoogleFontURL([{ family }]);
 
-      if (element) {
-        return;
-      }
+    const fontStylesheet = document.createElement('link');
+    fontStylesheet.id = id;
+    fontStylesheet.href = src;
+    fontStylesheet.rel = 'stylesheet';
+    fontStylesheet.type = 'text/css';
+    fontStylesheet.media = 'all';
+    fontStylesheet.crossOrigin = 'anonymous';
 
-      const fontStylesheet = document.createElement('link');
-      fontStylesheet.id = id;
-      fontStylesheet.href = src;
-      fontStylesheet.rel = 'stylesheet';
-      fontStylesheet.type = 'text/css';
-      fontStylesheet.media = 'all';
-      fontStylesheet.crossOrigin = 'anonymous';
-
-      document.head.appendChild(fontStylesheet);
-    },
-    [getFontByName]
-  );
+    document.head.appendChild(fontStylesheet);
+  }, []);
 
   return maybeEnqueueFontStyle;
 }

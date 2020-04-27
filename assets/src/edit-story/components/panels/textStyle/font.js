@@ -33,6 +33,7 @@ import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
+import objectPick from '../../../utils/objectPick';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -53,10 +54,10 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     state: { fonts },
-    actions: { getFontWeight },
+    actions: { getFontWeights },
   } = useFont();
-  const fontWeights = useMemo(() => getFontWeight(fontFamily), [
-    getFontWeight,
+  const fontWeights = useMemo(() => getFontWeights(fontFamily), [
+    getFontWeights,
     fontFamily,
   ]);
 
@@ -70,7 +71,7 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontWeights = getFontWeight(value);
+              const currentFontWeights = getFontWeights(value);
               const fontWeightsArr = currentFontWeights.map(
                 ({ value: weight }) => weight
               );
@@ -92,8 +93,13 @@ function FontControls({ selectedElements, pushUpdate }) {
                 {
                   font: {
                     family: value,
-                    service: fontObj?.service,
-                    fallbacks: fontObj?.fallbacks || [],
+                    ...objectPick(fontObj, [
+                      'service',
+                      'fallbacks',
+                      'weights',
+                      'styles',
+                      'variants',
+                    ]),
                   },
                   fontWeight: parseInt(newFontWeight),
                 },

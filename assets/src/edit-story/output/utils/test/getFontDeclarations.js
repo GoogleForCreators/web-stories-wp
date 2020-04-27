@@ -90,4 +90,27 @@ describe('getFontDeclarations', () => {
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato'
     );
   });
+
+  it('should only include valid variants', () => {
+    const pages = [
+      {
+        elements: [
+          {
+            type: 'text',
+            font: {
+              family: 'Architects Daughter',
+              service: 'fonts.google.com',
+              variants: [[0, 400]],
+            },
+            fontStyle: 'italic',
+          },
+        ],
+      },
+    ];
+
+    expect(getFontDeclarations(pages)).toHaveLength(1);
+    expect(getFontDeclarations(pages)).toContain(
+      'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
+    );
+  });
 });

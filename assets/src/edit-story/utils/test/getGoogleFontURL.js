@@ -50,6 +50,9 @@ describe('getGoogleFontURL', () => {
         [1, 300],
       ],
     };
+    const architects_daughter = {
+      family: 'Architects Daughter',
+    };
 
     expect(getGoogleFontURL([roboto_400])).toStrictEqual(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto'
@@ -68,6 +71,9 @@ describe('getGoogleFontURL', () => {
     );
     expect(getGoogleFontURL([roboto_100_400, lato_300i_900i])).toStrictEqual(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40100%3B400&family=Lato%3Aital%2Cwght%401%2C300%3B1%2C900'
+    );
+    expect(getGoogleFontURL([architects_daughter])).toStrictEqual(
+      'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
     );
   });
 });

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import getGoogleFontURL from './getGoogleFontURL';
+import getGoogleFontURL from '../../utils/getGoogleFontURL';
 
 /**
  * Returns a list of font declarations across all pages in a story.
@@ -34,7 +34,7 @@ const getFontDeclarations = (pages) => {
 
     // Prepare font objects for later use.
     for (const { font, fontStyle, fontWeight } of textElements) {
-      const { service, family } = font;
+      const { service, family, variants } = font;
       if (!service || service === 'system') {
         continue;
       }
@@ -45,13 +45,18 @@ const getFontDeclarations = (pages) => {
       // Example: [1, 700] for bold + italic.
       const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
 
-      const fontObj = serviceMap.get(family) || { family, variants: [variant] };
+      const fontObj = serviceMap.get(family) || { family, variants: [] };
       const fontObjHasVariant = fontObj.variants.some(
         (val) => val[0] === variant[0] && val[1] === variant[1]
       );
 
+      // @todo: use nearest variant as fallback?
+      const isValidVariant =
+        variants === undefined ||
+        variants.some((val) => val[0] === variant[0] && val[1] === variant[1]);
+
       // Keeps list unique.
-      if (!fontObjHasVariant) {
+      if (!fontObjHasVariant && isValidVariant) {
         fontObj.variants.push(variant);
       }
 

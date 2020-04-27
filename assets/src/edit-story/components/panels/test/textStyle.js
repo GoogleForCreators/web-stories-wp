@@ -55,7 +55,7 @@ function Wrapper({ children }) {
           ],
         },
         actions: {
-          getFontWeight: () => [{ name: 'Normal1', value: '400' }],
+          getFontWeights: () => [{ name: 'Normal1', value: '400' }],
         },
       }}
     >
