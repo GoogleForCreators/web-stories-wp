@@ -13,21 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { useRef, useEffect } from 'react';
+
 /**
  * Internal dependencies
  */
-import { useConfig, useHistory } from '../../app';
+import { useConfig, useHistory, useStory } from '../../app';
 
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
   const {
+    actions: { setHasNewChanges },
     state: { hasNewChanges },
   } = useHistory();
+  const {
+    state: {
+      story: { status },
+    },
+    actions: { autoSave, saveStory },
+  } = useStory();
+
+  const timeout = useRef();
+
   // If autoSaveInterval is set to 0 or not defined, don't.
   if (!autoSaveInterval) {
     return null;
   }
 
+  useEffect(() => {
+    if (timeout.current) {
+      // Clear the previous timeout if there were any relevant changes meanwhile.
+      clearTimeout(timeout.current);
+    }
+
+    if (hasNewChanges) {
+      timeout.current = setTimeout(() => {
+        if (hasNewChanges) {
+          const update = 'draft' === status ? saveStory : autoSave;
+          update();
+          setHasNewChanges(false);
+        }
+      }, autoSaveInterval * 1000);
+    }
+  }, [
+    autoSave,
+    autoSaveInterval,
+    saveStory,
+    status,
+    hasNewChanges,
+    setHasNewChanges,
+  ]);
 
   return null;
 }
