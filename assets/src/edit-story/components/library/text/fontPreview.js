@@ -46,24 +46,29 @@ const Text = styled.span`
   background: none;
   font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
-  font-family: ${({ font }) => font.family};
+  font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, ...fontProps }) {
+function FontPreview({ title, font, ...rest }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-
-  const { font } = fontProps;
 
   useEffect(() => {
     maybeEnqueueFontStyle(font);
   }, [font, maybeEnqueueFontStyle]);
 
+  const { fontSize, fontWeight } = rest;
   return (
     <Preview>
-      <Text {...fontProps}>{title}</Text>
+      <Text
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fontFamily={font.family}
+      >
+        {title}
+      </Text>
     </Preview>
   );
 }
