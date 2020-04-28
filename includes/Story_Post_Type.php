@@ -331,7 +331,7 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
-					'autoSaveInterval' => AUTOSAVE_INTERVAL,
+					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 					'isRTL'            => is_rtl(),
 					'timeFormat'       => get_option( 'time_format' ),
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
