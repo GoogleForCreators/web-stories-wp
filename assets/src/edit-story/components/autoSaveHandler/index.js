@@ -37,8 +37,14 @@ function AutoSaveHandler() {
   } = useStory();
 
   const [didAutoSave, setDidAutoSave] = useState(false);
-
   const timeout = useRef();
+
+  // @todo This is temporary to ensure only draft gets auto-saved,
+  // until the logic for other statuses has been decided.
+  const isDraft = 'draft' === status;
+  if (!isDraft) {
+    return null;
+  }
 
   // If autoSaveInterval is set to 0 or not defined, don't.
   if (!autoSaveInterval) {
@@ -61,16 +67,17 @@ function AutoSaveHandler() {
     if (!didAutoSave) {
       timeout.current = setTimeout(() => {
         if (hasNewChanges) {
-          const update = 'draft' === status ? saveStory : autoSave;
+          const update = isDraft ? saveStory : autoSave;
           update();
           setDidAutoSave(true);
         }
-      }, 1000);
+      }, autoSaveInterval * 1000);
     }
   }, [
     autoSave,
     autoSaveInterval,
     didAutoSave,
+    isDraft,
     saveStory,
     status,
     hasNewChanges,
