@@ -46,6 +46,8 @@ class Embed_Block {
 
 	/**
 	 * Initializes the Web Stories embed block.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
@@ -68,8 +70,7 @@ class Embed_Block {
 			self::STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::STYLE_HANDLE . '.css',
 			[],
-			$version,
-			false
+			$version
 		);
 
 		// todo: use register_block_type_from_metadata().
@@ -90,6 +91,7 @@ class Embed_Block {
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
+	 *
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) {
