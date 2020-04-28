@@ -40,11 +40,27 @@ describe('Element', () => {
       const textElement = createNewElement('text', atts);
       expect(textElement.rotationAngle).toStrictEqual(0);
       expect(textElement.width).toStrictEqual(100);
-      expect(textElement.font.fallback).toStrictEqual([
-        'Helvetica Neue',
-        'Helvetica',
-        'sans-serif',
-      ]);
+      expect(textElement.font).toMatchObject({
+        family: 'Roboto',
+        weights: [100, 300, 400, 500, 700, 900],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 100],
+          [1, 100],
+          [0, 300],
+          [1, 300],
+          [0, 400],
+          [1, 400],
+          [0, 500],
+          [1, 500],
+          [0, 700],
+          [1, 700],
+          [0, 900],
+          [1, 900],
+        ],
+        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+        service: 'fonts.google.com',
+      });
     });
 
     it('should throw if trying to create unknown element type', () => {
