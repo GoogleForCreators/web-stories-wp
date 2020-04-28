@@ -19,14 +19,19 @@
  */
 import PropTypes from 'prop-types';
 
-function StoryPlayer({ url, title, poster, width, height }) {
+function StoryPlayer({ url, title, poster, width, height, fullWidth }) {
+  const fixedWidthStyle = {
+    width: width ? `${width}px` : undefined,
+    height: height ? `${height}px` : undefined,
+  };
+
+  const responsiveStyle = {
+    width: '100%',
+    height: '100%',
+  };
+
   return (
-    <amp-story-player
-      style={{
-        width: width ? `${width}px` : undefined,
-        height: height ? `${height}px` : undefined,
-      }}
-    >
+    <amp-story-player style={fullWidth ? responsiveStyle : fixedWidthStyle}>
       <a
         href={url}
         style={{
@@ -40,11 +45,12 @@ function StoryPlayer({ url, title, poster, width, height }) {
 }
 
 StoryPlayer.propTypes = {
-  url: PropTypes.string,
-  title: PropTypes.string,
+  url: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   poster: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
+  fullWidth: PropTypes.bool,
 };
 
 export default StoryPlayer;

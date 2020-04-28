@@ -25,6 +25,8 @@ import PropTypes from 'prop-types';
 import { useCallback, useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { ResizableBox } from '@wordpress/components';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -35,8 +37,10 @@ import EmbedControls from './embed-controls';
 import StoryPlayer from './storyPlayer';
 import { icon } from './index.js';
 
+const MIN_SIZE = 20;
+
 function StoryEmbedEdit({ attributes, setAttributes, className }) {
-  const { url: outerURL, width, height } = attributes;
+  const { url: outerURL, width = 360, height = 600, align } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
   const [url, setURL] = useState(outerURL);
@@ -103,6 +107,20 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
     setEditingURL(true);
   }, []);
 
+  const { isRTL, maxWidth } = useSelect((select) => {
+    const { getSettings } = select('core/block-editor');
+    const settings = getSettings();
+    return {
+      isRTL: settings.isRTL,
+      maxWidth: settings.maxWidth,
+    };
+  });
+
+  const { toggleSelection } = useDispatch('core/block-editor');
+
+  const onResizeStart = () => toggleSelection(false);
+  const onResizeStop = () => toggleSelection(true);
+
   const label = __('Web Story URL', 'web-stories');
 
   if (editingURL || isFetchingData) {
@@ -117,7 +135,22 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
     );
   }
 
+  const ratio = width / height;
+  const minWidth = width < height ? MIN_SIZE : MIN_SIZE * ratio;
+  const minHeight = height < width ? MIN_SIZE : MIN_SIZE / ratio;
+  const maxWidthBuffer = maxWidth * 2.5;
+
   const { title, poster } = attributes;
+
+  const showRightHandle =
+    align === 'center' ||
+    (align === 'right' && isRTL) ||
+    (align === 'left' && !isRTL);
+
+  const showLeftHandle =
+    align === 'center' ||
+    (align === 'left' && isRTL) ||
+    (align === 'right' && !isRTL);
 
   return (
     <>
@@ -125,14 +158,40 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
         showEditButton={true}
         switchBackToURLInput={switchBackToURLInput}
       />
-      <div className={className}>
-        <StoryPlayer
-          url={outerURL}
-          title={title}
-          poster={poster}
-          width={width}
-          height={height}
-        />
+      <div className={`${className} align${align}`}>
+        <ResizableBox
+          showHandle
+          size={{
+            width,
+            height,
+          }}
+          minWidth={minWidth}
+          maxWidth={maxWidthBuffer}
+          minHeight={minHeight}
+          maxHeight={maxWidthBuffer / ratio}
+          lockAspectRatio
+          enable={{
+            top: false,
+            right: showRightHandle,
+            bottom: true,
+            left: showLeftHandle,
+          }}
+          onResizeStart={onResizeStart}
+          onResizeStop={(event, direction, elt, delta) => {
+            onResizeStop();
+            setAttributes({
+              width: parseInt(width + delta.width),
+              height: parseInt(height + delta.height),
+            });
+          }}
+        >
+          <StoryPlayer
+            url={outerURL}
+            title={title}
+            poster={poster}
+            fullWidth
+          />  
+        </ResizableBox>
       </div>
     </>
   );
