@@ -40,7 +40,7 @@ import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
-  const { allowedFileTypes = {} } = useConfig();
+  const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 

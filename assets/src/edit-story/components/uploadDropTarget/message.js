@@ -65,7 +65,7 @@ const Icon = styled(UploadIcon)`
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {
-  const { allowedFileTypes = {} } = useConfig();
+  const { allowedFileTypes } = useConfig();
 
   return (
     <Container {...rest}>

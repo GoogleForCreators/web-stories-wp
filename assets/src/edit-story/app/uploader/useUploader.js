@@ -46,8 +46,8 @@ function useUploader(refreshLibrary = true) {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
+    allowedFileTypes,
   } = useConfig();
-  const { allowedFileTypes = {} } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
