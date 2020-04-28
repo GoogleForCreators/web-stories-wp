@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reshapeTemplateObject should reshape object to match snapshot 1`] = `
+Object {
+  "bottomTargetAction": [Function],
+  "centerTargetAction": "#/template-detail?id=1&isLocal=true",
+  "colors": Array [
+    Object {
+      "color": "#f3d9e1",
+      "label": "Pink",
+    },
+    Object {
+      "color": "#d8ddcc",
+      "label": "Green",
+    },
+    Object {
+      "color": "#28292b",
+      "label": "Black",
+    },
+  ],
+  "createdBy": "Google AMP",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "id": 1,
+  "isLocal": true,
+  "modified": "2020-04-21T07:00:00.000Z",
+  "pages": Array [
+    Object {
+      "elements": Array [],
+      "id": 0,
+    },
+  ],
+  "status": "template",
+  "tags": Array [
+    "Health",
+    "Bold",
+    "Joy",
+  ],
+  "title": "Beauty",
+}
+`;

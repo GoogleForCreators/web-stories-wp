@@ -61,18 +61,34 @@ export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
   MY_STORIES: '/',
-  MY_BOOKMARKS: '/bookmarks',
+  SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
   TEMPLATE_DETAIL: '/template-detail',
+  EDITOR_SETTINGS: '/editor-settings',
+  SUPPORT: '/support',
 };
 
-export const paths = [
+export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
-  // {
-  //   value: APP_ROUTES.TEMPLATES_GALLERY,
-  //   label: __('Templates Gallery', 'web-stories'),
-  // },
-  // { value: APP_ROUTES.MY_BOOKMARKS, label: __('My Bookmarks', 'web-stories') },
+  {
+    value: APP_ROUTES.TEMPLATES_GALLERY,
+    label: __('Explore Templates', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.SAVED_TEMPLATES,
+    label: __('Saved Templates', 'web-stories'),
+  },
+];
+
+export const secondaryPaths = [
+  {
+    value: APP_ROUTES.EDITOR_SETTINGS,
+    label: __('Editor Settings', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.SUPPORT,
+    label: __('Support', 'web-stories'),
+  },
 ];
 
 export const STORY_STATUSES = [
@@ -87,7 +103,10 @@ export const VIEW_STYLE = {
   LIST: 'LIST',
 };
 
-export const VIEW_STYLE_ICON_METRICS = { width: 17, height: 14 };
+export const ICON_METRICS = {
+  VIEW_STYLE: { width: 17, height: 14 },
+  UP_DOWN_ARROW: { width: 16, height: 16 },
+};
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
@@ -127,6 +146,8 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   },
 ];
 
+export const ITEMS_PER_PAGE = 10;
+
 export const STORY_SORT_OPTIONS = {
   NAME: 'title',
   DATE_CREATED: 'date',
@@ -135,12 +156,17 @@ export const STORY_SORT_OPTIONS = {
   CREATED_BY: 'author',
 };
 
+export const SORT_DIRECTION = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const ORDER_BY_SORT = {
-  [STORY_SORT_OPTIONS.NAME]: 'asc',
-  [STORY_SORT_OPTIONS.DATE_CREATED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_MODIFIED]: 'desc',
-  [STORY_SORT_OPTIONS.LAST_OPENED]: 'desc',
-  [STORY_SORT_OPTIONS.CREATED_BY]: 'asc',
+  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
+  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.LAST_OPENED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.CREATED_BY]: SORT_DIRECTION.ASC,
 };
 
 export const STORY_SORT_MENU_ITEMS = [

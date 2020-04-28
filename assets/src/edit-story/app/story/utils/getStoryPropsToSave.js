@@ -13,23 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
-import { ViewHeader } from '../../../components';
+import objectPick from '../../../utils/objectPick';
+import getStoryMarkup from '../../../output/utils/getStoryMarkup';
 
-function MyBookmarks() {
-  return (
-    <div>
-      <ViewHeader>{__('My Bookmarks', 'web-stories')}</ViewHeader>
-    </div>
-  );
+function getStoryPropsToSave({ story, pages, metadata }) {
+  const propsFromStory = objectPick(story, [
+    'title',
+    'status',
+    'author',
+    'date',
+    'modified',
+    'slug',
+    'excerpt',
+    'featuredMedia',
+    'password',
+    'publisherLogo',
+    'stylePresets',
+    'autoAdvance',
+    'defaultPageDuration',
+  ]);
+  const content = getStoryMarkup(story, pages, metadata);
+  return {
+    content,
+    pages,
+    ...propsFromStory,
+  };
 }
 
-export default MyBookmarks;
+export default getStoryPropsToSave;

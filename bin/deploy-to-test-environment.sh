@@ -86,19 +86,13 @@ echo "Starting build process..."
 echo "Installing npm dependencies"
 npm install --silent
 
-echo "Removing non-development composer dependencies"
-composer update --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-suggest || echo "Could not optimize autoloader"
-
 echo "Building plugin"
 npm run build:js --silent
-# npm run build:plugin - does not seem to work on CI
-(cd ..; wp dist-archive "$project_dir" "$project_dir"/build/web-stories --create-target-dir; cd "$project_dir";)
-
-echo "Unzipping dist archive"
-unzip -oq build/web-stories.zip -d build/dist
+npm run build:plugin --silent -- --prerelease
+npm run bundle-plugin --silent -- --copy
 
 echo "Moving files to repository"
-rsync -avz --delete ./build/dist/web-stories-wp/ "$repo_dir/wp-content/plugins/web-stories/"
+rsync -avz --delete ./build/web-stories/ "$repo_dir/wp-content/plugins/web-stories/"
 git --no-pager log -1 --format="Build Web Stories plugin at %h: %s" > /tmp/commit-message.txt
 
 echo "Committing changes"

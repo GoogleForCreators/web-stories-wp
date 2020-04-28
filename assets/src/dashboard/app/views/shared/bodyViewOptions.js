@@ -24,7 +24,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Dropdown, ListBar } from '../../../components';
-import { STORY_SORT_MENU_ITEMS, DROPDOWN_TYPES } from '../../../constants';
+import {
+  STORY_SORT_MENU_ITEMS,
+  DROPDOWN_TYPES,
+  VIEW_STYLE,
+} from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
   margin: ${({ theme }) => `${theme.pageGutter.small.desktop}px 0`};
@@ -63,15 +67,17 @@ const BodyViewOptions = ({
       layoutStyle={layoutStyle}
       onPress={handleLayoutSelect}
     />
-    <StorySortDropdownContainer>
-      <SortDropdown
-        ariaLabel={sortDropdownAriaLabel}
-        items={STORY_SORT_MENU_ITEMS}
-        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-        value={currentSort}
-        onChange={(newSort) => handleSortChange(newSort.value)}
-      />
-    </StorySortDropdownContainer>
+    {layoutStyle === VIEW_STYLE.GRID && (
+      <StorySortDropdownContainer>
+        <SortDropdown
+          ariaLabel={sortDropdownAriaLabel}
+          items={STORY_SORT_MENU_ITEMS}
+          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+          value={currentSort}
+          onChange={(newSort) => handleSortChange(newSort.value)}
+        />
+      </StorySortDropdownContainer>
+    )}
   </DisplayFormatContainer>
 );
 
