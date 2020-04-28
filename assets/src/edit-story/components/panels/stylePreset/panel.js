@@ -23,6 +23,7 @@ import { useCallback, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
+import stripHTML from '../../../utils/stripHTML';
 import { Panel } from './../panel';
 import { getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
@@ -180,7 +181,7 @@ function StylePresetPanel() {
         stylePresets={stylePresets}
         handleOnClick={handlePresetClick}
         isText={isText}
-        textContent={isText ? selectedElements[0].content : ''}
+        textContent={isText ? stripHTML(selectedElements[0].content) : ''}
       />
       <Resize />
     </Panel>

@@ -37,11 +37,12 @@ import PresetGroup from './presetGroup';
 import { generatePresetStyle } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
+const PRESET_HEIGHT = 30;
 
 const presetCSS = css`
   display: inline-block;
   width: 30px;
-  height: 30px;
+  height: ${PRESET_HEIGHT}px;
   border-radius: 15px;
   border-color: transparent;
   padding: 0;
@@ -64,15 +65,19 @@ const Color = styled.button`
 
 const Style = styled.button`
   ${presetCSS}
+  padding: 0 3px;
   background: transparent;
   ${({ styles }) => styles}
   width: 72px;
   border-radius: 4px;
 `;
 
-const TextWrapper = styled.span`
+const TextWrapper = styled.div`
   text-align: left;
-  line-height: 1.3;
+  line-height: ${PRESET_HEIGHT}px;
+  max-height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const HighLight = styled.span`
@@ -93,14 +98,14 @@ function Presets({
   const getStylePresetText = (preset) => {
     const isHighLight =
       preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-    // @todo Confirm text content usage.
-    const text = textContent.substring(0, 8) + '...';
     return (
       <TextWrapper>
         {isHighLight ? (
-          <HighLight background={preset.backgroundColor}>{text}</HighLight>
+          <HighLight background={preset.backgroundColor}>
+            {textContent}
+          </HighLight>
         ) : (
-          text
+          textContent
         )}
       </TextWrapper>
     );

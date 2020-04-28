@@ -102,7 +102,7 @@ describe('stylePresets/Presets', () => {
         fillColors: [],
       },
     });
-    expect(getByText(textContent.substring(0, 8) + '...')).toBeDefined();
+    expect(getByText(textContent)).toBeDefined();
   });
 
   it('should display highlight wrapper in a style preset', () => {
@@ -120,7 +120,7 @@ describe('stylePresets/Presets', () => {
         fillColors: [],
       },
     });
-    const text = getByText(textContent.substring(0, 8) + '...');
+    const text = getByText(textContent);
     expect(text.nodeName).toStrictEqual('SPAN');
     expect(text.className.toLowerCase()).toContain('highlight');
   });
