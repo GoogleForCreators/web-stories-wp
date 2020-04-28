@@ -76,6 +76,7 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
       initialRender.current = false;
     } else if (groupRef.current) {
       // When the active color has been changed via keyboard handling, focus on the active preset.
+      // Only one preset of a preset group has tabIndex 0 at a time.
       groupRef.current.querySelector('[tabindex="0"]').focus();
     }
   }, [activeIndex]);
