@@ -36,8 +36,20 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
   const [fontFaces, setFontFaces] = useState([]);
+  const [recentUsedFontSlugs, setRecentUsedFontSlugs] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
+
+  const addUsedFont = (slug) => {
+    const findFontIndex = recentUsedFontSlugs.findIndex(
+      (fontSlug) => fontSlug === slug
+    );
+    if (findFontIndex < 0) {
+      const newUsedFontSlugs = recentUsedFontSlugs.slice();
+      newUsedFontSlugs.push(slug);
+      setRecentUsedFontSlugs(newUsedFontSlugs);
+    }
+  };
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -131,8 +143,10 @@ function FontProvider({ children }) {
     state: {
       fonts,
       fontFaces,
+      recentUsedFontSlugs,
     },
     actions: {
+      addUsedFont,
       getFontByName,
       maybeEnqueueFontStyle,
       getFontWeight,

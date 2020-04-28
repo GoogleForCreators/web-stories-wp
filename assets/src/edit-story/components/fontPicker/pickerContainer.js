@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useRef, useLayoutEffect, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -43,19 +48,20 @@ const PickerContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.v1};
   background-clip: padding-box;
   box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
-  padding: 8px;
-  ${({ menuFonts }) => menuFonts};
+  padding: 0;
 `;
 
 const ListContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   max-height: 305px;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: none auto;
+  padding-bottom: 8px;
+  ${({ menuFonts }) => menuFonts};
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -65,11 +71,12 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   font-size: 14px;
   text-align: left;
   list-style: none;
+  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
 `;
 
 const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 16px;
+  padding: 8px 12px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -89,6 +96,16 @@ const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
   }
 `;
 
+const NoItem = styled.span`
+  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  padding: 8px 12px 0 12px;
+  margin: 0;
+  font-style: italic;
+  color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.54)};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+`;
+
 const BoxedTextInput = styled(TextInput)`
   padding: 6px;
   border: 1px solid ${({ theme }) => theme.colors.bg.v4};
@@ -99,43 +116,73 @@ const BoxedTextInput = styled(TextInput)`
 
 const ExpandedTextInput = styled(BoxedTextInput)`
   flex-grow: 1;
+  margin: 8px;
 `;
 
-function FontPickerContainer({
-  handleCurrentValue,
-  value,
-  ariaLabel,
-  options,
-  toggleOptions,
-}) {
+function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   const {
-    state: { fontFaces },
+    state: { fonts, fontFaces, recentUsedFontSlugs },
+    actions: { addUsedFont },
   } = useFont();
 
   const pickerContainerRef = useRef();
   const listContainerRef = useRef();
   const listRef = useRef();
   const inputRef = useRef();
+  const currentActiveRef = useRef(0);
 
-  const [searchValue, setSearchValue] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
+
+  // Font options with fontFace as property
   const optionsWithFontFaces = useMemo(
     () =>
-      options.map((option) => {
+      fonts.map((option) => {
         option.fontFace = fontFaces.find((fontFace) =>
           fontFace.includes(`'${option.name}'`)
         );
         return option;
       }),
-    [options, fontFaces]
+    [fonts, fontFaces]
   );
-  const fileredOptions = useMemo(
+
+  // Recently used font options, clean up on refresh
+  const recentUsedFonts = useMemo(
+    () =>
+      searchValue && searchValue !== ''
+        ? recentUsedFontSlugs
+            .map((slug) =>
+              optionsWithFontFaces.find((font) => font.slug === slug)
+            )
+            .filter(({ name }) =>
+              name.toLowerCase().includes(searchValue.toLowerCase())
+            )
+        : recentUsedFontSlugs.map((slug) =>
+            optionsWithFontFaces.find((font) => font.slug === slug)
+          ),
+    [searchValue, recentUsedFontSlugs, optionsWithFontFaces]
+  );
+
+  // Font options that start with search term
+  const fileredFonts = useMemo(
     () =>
       searchValue && searchValue !== ''
         ? optionsWithFontFaces.filter(({ name }) =>
-            name.toLowerCase().includes(searchValue.toLowerCase())
+            name.toLowerCase().startsWith(searchValue.toLowerCase())
           )
         : optionsWithFontFaces,
+    [searchValue, optionsWithFontFaces]
+  );
+
+  // Font options that include search term but not start with
+  const includeSearchFonts = useMemo(
+    () =>
+      searchValue && searchValue !== ''
+        ? optionsWithFontFaces.filter(
+            ({ name }) =>
+              name.toLowerCase().indexOf(searchValue.toLowerCase()) > 0
+          )
+        : [],
     [searchValue, optionsWithFontFaces]
   );
 
@@ -143,23 +190,40 @@ function FontPickerContainer({
     inputRef.current.focus();
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const listElement = listContainerRef.current;
 
     const handleScroll = () => {
-      const { scrollTop } = listElement;
-      const currentVisibleIndex = Math.floor(scrollTop / 50);
-      if (currentVisibleIndex !== currentIndex) {
+      let { scrollTop } = listElement;
+      scrollTop -= 5;
+      let currentVisibleIndex = Math.floor(scrollTop / 34);
+      if (
+        recentUsedFonts.length > 0 &&
+        currentVisibleIndex > recentUsedFonts.length
+      ) {
+        scrollTop -= 10;
+        currentVisibleIndex =
+          Math.floor(scrollTop / 34) - recentUsedFonts.length;
+      }
+      if (
+        fileredFonts.length > 0 &&
+        currentVisibleIndex > fileredFonts.length
+      ) {
+        scrollTop -= 10;
+      }
+      currentVisibleIndex = Math.floor(scrollTop / 34);
+      if (currentVisibleIndex !== currentActiveRef.current) {
+        currentActiveRef.current = currentVisibleIndex;
         setCurrentIndex(currentVisibleIndex);
       }
     };
-
-    listElement.addEventListener('scroll', handleScroll, { passive: true });
+    listElement.addEventListener('scroll', handleScroll, { passive: false });
 
     return () => {
       listElement.removeEventListener('scroll', handleScroll);
     };
-  }, [currentIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useFocusOut(pickerContainerRef, toggleOptions);
 
@@ -167,41 +231,32 @@ function FontPickerContainer({
     toggleOptions,
   ]);
 
-  const handleItemClick = (option) => {
-    handleCurrentValue(option);
+  const getVisibleFontFaces = () => {
+    let combinedFontList = []
+      .concat(recentUsedFonts)
+      .concat(fileredFonts)
+      .concat(includeSearchFonts)
+      .slice(currentIndex, currentIndex + 10);
+
+    return combinedFontList.map((font) => font.fontFace).join('');
   };
 
-  return (
-    <PickerContainer
-      ref={pickerContainerRef}
-      menuFonts={fileredOptions
-        .slice(currentIndex, currentIndex + 7)
-        .map((font) => font.fontFace)
-        .join('')}
-    >
-      <ExpandedTextInput
-        forwardedRef={inputRef}
-        value={searchValue}
-        onChange={setSearchValue}
-        color="white"
-        clear
-      />
-      <ListContainer ref={listContainerRef}>
-        <List
-          aria-multiselectable={false}
-          aria-required={false}
-          aria-activedescendant={value || ''}
-          aria-labelledby={ariaLabel}
-          ref={listRef}
-        >
-          {fileredOptions.map(({ name, value: optValue }, index) => (
+  const handleItemClick = (option, slug) => {
+    handleCurrentValue(option);
+    addUsedFont(slug);
+  };
+
+  const renderListWithOptions = (options, offset = 0) => {
+    if (options?.length > 0) {
+      return (
+        <List aria-multiselectable={false} aria-required={false} ref={listRef}>
+          {options.map(({ name, value, slug }, index) => (
             <Item
-              id={`dropDown-${optValue}`}
-              aria-selected={value === optValue}
-              key={optValue}
-              onClick={() => handleItemClick(optValue)}
+              key={value}
+              onClick={() => handleItemClick(value, slug)}
               fontFamily={
-                index < currentIndex + 8 && index >= currentIndex
+                index < currentIndex + 10 - offset &&
+                index >= currentIndex - offset
                   ? name
                   : undefined
               }
@@ -210,6 +265,36 @@ function FontPickerContainer({
             </Item>
           ))}
         </List>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <PickerContainer ref={pickerContainerRef}>
+      <ExpandedTextInput
+        forwardedRef={inputRef}
+        value={searchValue}
+        onChange={setSearchValue}
+        color="white"
+        clear
+      />
+      <ListContainer
+        ref={listContainerRef}
+        aria-labelledby={__('FontPicker', 'web-stories')}
+        menuFonts={getVisibleFontFaces}
+      >
+        {renderListWithOptions(recentUsedFonts)}
+        {renderListWithOptions(fileredFonts, recentUsedFonts.length)}
+        {renderListWithOptions(
+          includeSearchFonts,
+          fileredFonts.length + recentUsedFonts.length
+        )}
+        {recentUsedFonts.length === 0 &&
+          fileredFonts.length === 0 &&
+          includeSearchFonts.length === 0 && (
+            <NoItem>{__('No matches found', 'web-stories')}</NoItem>
+          )}
       </ListContainer>
     </PickerContainer>
   );
@@ -218,9 +303,6 @@ function FontPickerContainer({
 FontPickerContainer.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  options: PropTypes.array.isRequired,
 };
 
 export default FontPickerContainer;

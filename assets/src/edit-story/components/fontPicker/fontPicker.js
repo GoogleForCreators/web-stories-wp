@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -81,29 +81,11 @@ const FontPickerTitle = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
 `;
 
-function FontPicker({
-  options,
-  value,
-  onChange,
-  disabled,
-  ariaLabel,
-  lightMode = false,
-  placeholder,
-}) {
+function FontPicker({ onChange, lightMode = false, placeholder, value }) {
   const selectRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
-  const isNullOrUndefined = (item) => item === null || item === undefined;
 
-  const activeItem = useMemo(
-    () =>
-      options.find(
-        (item) =>
-          !isNullOrUndefined(value) &&
-          item.value.toString() === value.toString()
-      ),
-    [value, options]
-  );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
   }, []);
@@ -131,22 +113,15 @@ function FontPicker({
         aria-pressed={isOpen}
         aria-haspopup={true}
         aria-expanded={isOpen}
-        disabled={disabled}
         ref={selectRef}
-        aria-disabled={disabled}
         lightMode={lightMode}
       >
-        <FontPickerTitle>
-          {(activeItem && activeItem.name) || placeholder}
-        </FontPickerTitle>
+        <FontPickerTitle>{value || placeholder}</FontPickerTitle>
         <DropDownIcon />
       </FontPickerSelect>
       <Popup anchor={selectRef} isOpen={isOpen} width={DEFAULT_WIDTH}>
         <FontPickerContainer
           handleCurrentValue={handleCurrentValue}
-          value={activeItem && activeItem.value}
-          ariaLabel={ariaLabel}
-          options={options}
           toggleOptions={toggleOptions}
         />
       </Popup>
@@ -155,21 +130,14 @@ function FontPicker({
 }
 
 FontPicker.propTypes = {
-  value: PropTypes.any.isRequired,
-  options: PropTypes.array.isRequired,
+  value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
 };
 
 FontPicker.defaultProps = {
-  disabled: false,
-  ariaLabel: __('FontPicker', 'web-stories'),
-  value: '',
   onChange: () => {},
-  options: [],
   placeholder: __('Select an Option', 'web-stories'),
 };
 
