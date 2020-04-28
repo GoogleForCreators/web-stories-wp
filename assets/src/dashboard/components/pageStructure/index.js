@@ -31,7 +31,12 @@ import styled from 'styled-components';
 import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
-import { BUTTON_TYPES, primaryPaths, secondaryPaths } from '../../constants';
+import {
+  BUTTON_TYPES,
+  primaryPaths,
+  secondaryPaths,
+  Z_INDEX,
+} from '../../constants';
 import {
   AppInfo,
   Content,
@@ -66,7 +71,7 @@ export const LeftRailContainer = styled.nav`
   width: max(15%, 190px);
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
-  z-index: 2;
+  z-index: ${Z_INDEX.LAYOUT_FIXED};
 `;
 
 export function LeftRail() {
