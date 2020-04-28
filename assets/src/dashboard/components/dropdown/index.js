@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -31,6 +36,8 @@ import { DROPDOWN_TYPES } from '../../constants';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { ColorDot } from '../colorDot';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;
@@ -82,6 +89,9 @@ InnerDropdown.propTypes = {
 };
 
 const InnerDropdownText = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,6 +111,17 @@ const DropdownIcon = styled.span`
   }
 `;
 
+const ClearButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.bluePrimary600};
+  margin: 0 8px 0 0;
+  padding: 0;
+`;
+
 const Dropdown = ({
   ariaLabel,
   items,
@@ -108,6 +129,7 @@ const Dropdown = ({
   onChange,
   value,
   placeholder,
+  onClear,
   type = DROPDOWN_TYPES.MENU,
   children,
   ...rest
@@ -142,14 +164,18 @@ const Dropdown = ({
     setShowMenu(false);
   };
 
+  const selectedItems = useMemo(
+    () => items.filter((item) => item.value !== 'all' && item.selected),
+    [items]
+  );
+
   const currentLabel = useMemo(() => {
     const getCurrentLabel = () => {
       const grouping = [items.find((item) => item.value === value)];
       return grouping[0]?.label;
     };
-
-    return value ? getCurrentLabel() : placeholder;
-  }, [value, placeholder, items]);
+    return value && getCurrentLabel();
+  }, [value, items]);
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
@@ -160,7 +186,33 @@ const Dropdown = ({
           disabled={disabled}
           type={type}
         >
-          <InnerDropdownText>{currentLabel}</InnerDropdownText>
+          <InnerDropdownText>
+            {currentLabel || (
+              <>
+                {selectedItems.length > 0 && (
+                  <ClearButton
+                    tab-index={0}
+                    data-testid="dropdown-clear-btn"
+                    aria-label="Clear Button"
+                    onClick={onClear}
+                  >
+                    <CloseIcon width={13} height={13} />
+                  </ClearButton>
+                )}
+                {selectedItems[0]?.hex ? (
+                  <ColorDot color={selectedItems[0].hex} />
+                ) : (
+                  selectedItems[0]?.label || placeholder
+                )}
+                {selectedItems.length > 1 &&
+                  sprintf(
+                    /* translators: %s: number selected */
+                    __(' + %s', 'web-stories'),
+                    (selectedItems.length - 1).toString(10)
+                  )}
+              </>
+            )}
+          </InnerDropdownText>
           <DropdownIcon type={type}>
             {showMenu ? <DropUpArrow /> : <DropDownArrow />}
           </DropdownIcon>
@@ -170,10 +222,10 @@ const Dropdown = ({
       {type === DROPDOWN_TYPES.PANEL ? (
         <PopoverPanel
           isOpen={showMenu}
-          title={currentLabel}
+          title={placeholder}
           onClose={() => setShowMenu(false)}
           items={items}
-          onSelect={(__, selectedValue) => {
+          onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
         />
@@ -195,6 +247,7 @@ Dropdown.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
+  onClear: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(Object.values(DROPDOWN_TYPES)),
   children: PropTypes.node,
