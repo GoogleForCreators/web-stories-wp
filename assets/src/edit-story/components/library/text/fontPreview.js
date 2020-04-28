@@ -50,7 +50,7 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, font, ...rest }) {
+function FontPreview({ title, font, fontSize, fontWeight }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -59,7 +59,6 @@ function FontPreview({ title, font, ...rest }) {
     maybeEnqueueFontStyle(font);
   }, [font, maybeEnqueueFontStyle]);
 
-  const { fontSize, fontWeight } = rest;
   return (
     <Preview>
       <Text
@@ -76,6 +75,8 @@ function FontPreview({ title, font, ...rest }) {
 FontPreview.propTypes = {
   title: PropTypes.string,
   font: FontPropType,
+  fontSize: PropTypes.number,
+  fontWeight: PropTypes.number,
 };
 
 export default FontPreview;
