@@ -45,11 +45,20 @@ function Wrapper({ children }) {
       value={{
         state: {
           fonts: [
-            { name: 'ABeeZee', value: 'ABeeZee' },
+            {
+              name: 'ABeeZee',
+              value: 'ABeeZee',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              fallbacks: ['serif'],
+            },
             {
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
               fallbacks: ['fallback1'],
             },
           ],
