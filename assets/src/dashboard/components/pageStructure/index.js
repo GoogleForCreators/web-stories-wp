@@ -50,7 +50,7 @@ export const AppFrame = styled.div`
 export const PageContent = styled.div`
   position: relative;
   width: 100%;
-  padding-left: max(15%, 190px);
+  padding-left: ${({ fullWidth }) => (fullWidth ? '0' : 'max(15%, 190px)')};
   height: inherit;
 `;
 

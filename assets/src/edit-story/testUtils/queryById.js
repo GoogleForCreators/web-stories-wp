@@ -15,27 +15,21 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { Numeric } from '../';
-import { renderWithTheme } from '../../../testUtils';
+import { queryAllByAttribute, buildQueries } from '@testing-library/react';
 
-describe('Form/Numeric', () => {
-  it('should render <Numeric /> form', () => {
-    const onChangeMock = jest.fn();
-    const onBlurMock = jest.fn();
+const queryAllById = (...args) => queryAllByAttribute('id', ...args);
 
-    const { getByTestId } = renderWithTheme(
-      <Numeric
-        value={0}
-        onChange={onChangeMock}
-        onBlur={onBlurMock}
-        data-testid="numeric"
-      />
-    );
+const getMultipleError = (c, value) =>
+  `Found multiple elements with the id attribute of: ${value}`;
+const getMissingError = (c, value) =>
+  `Unable to find an element with the id attribute of: ${value}`;
 
-    const input = getByTestId('numeric');
+const [queryById, getAllById, getById, findAllById, findById] = buildQueries(
+  queryAllById,
+  getMultipleError,
+  getMissingError
+);
 
-    expect(input).toBeDefined();
-  });
-});
+export { queryById, queryAllById, getById, getAllById, findAllById, findById };

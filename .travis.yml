@@ -95,6 +95,11 @@ script:
 
 jobs:
   fast_finish: true
+  # These need to be exact matches, including whitespace!
+  allow_failures:
+    # PHP unit tests (nightly, WordPress trunk)
+    - env: PHP=1 WP_VERSION=trunk
+      php: nightly
   include:
     - stage: test
       name: JavaScript unit tests

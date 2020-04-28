@@ -14,28 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { Numeric } from '../';
-import { renderWithTheme } from '../../../testUtils';
-
-describe('Form/Numeric', () => {
-  it('should render <Numeric /> form', () => {
-    const onChangeMock = jest.fn();
-    const onBlurMock = jest.fn();
-
-    const { getByTestId } = renderWithTheme(
-      <Numeric
-        value={0}
-        onChange={onChangeMock}
-        onBlur={onBlurMock}
-        data-testid="numeric"
-      />
-    );
-
-    const input = getByTestId('numeric');
-
-    expect(input).toBeDefined();
-  });
-});
+export { default as renderWithTheme } from './renderWithTheme';
+export * from './queryByAriaLabel';
+export * from './queryByAutoAdvanceAfter';
+export * from './queryById';
