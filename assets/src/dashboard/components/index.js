@@ -52,3 +52,4 @@ export {
 } from './table';
 export { default as MultiPartPill } from './multiPartPill';
 export { LeftRail, PageContent, AppFrame } from './pageStructure';
+export { TextInput } from './input';

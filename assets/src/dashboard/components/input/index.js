@@ -1,16 +1,4 @@
-<?php
-/**
- * Template for web-story post type.
- *
- * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
- */
-
-use Google\Web_Stories\Story_Renderer;
-
-/**
+/*
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,12 +14,17 @@ use Google\Web_Stories\Story_Renderer;
  * limitations under the License.
  */
 
-the_post();
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
-$current_post = get_post();
-
-if ( $current_post instanceof WP_Post ) {
-	echo '<!DOCTYPE html>';
-	$renderer = new Story_Renderer( $current_post );
-	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
+export const TextInput = styled.input`
+  margin: 0;
+  padding: ${({ theme }) => theme.fonts.textInput.padding};
+  border-radius: 6px;
+  border: ${({ theme }) => theme.fonts.textInput.border};
+  font-family: ${({ theme }) => theme.fonts.textInput.family};
+  font-size: ${({ theme }) => theme.fonts.textInput.size}px;
+  letter-spacing: ${({ theme }) => theme.fonts.textInput.letterSpacing};
+`;
