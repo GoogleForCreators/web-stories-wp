@@ -114,7 +114,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
       isRTL: settings.isRTL,
       maxWidth: settings.maxWidth,
     };
-  });
+  }, []);
 
   const { toggleSelection } = useDispatch('core/block-editor');
 
@@ -157,6 +157,8 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
       <EmbedControls
         showEditButton={true}
         switchBackToURLInput={switchBackToURLInput}
+        poster={poster}
+        setAttributes={setAttributes}
       />
       <div className={`${className} align${align}`}>
         <ResizableBox
@@ -190,7 +192,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
             title={title}
             poster={poster}
             fullWidth
-          />  
+          />
         </ResizableBox>
       </div>
     </>
