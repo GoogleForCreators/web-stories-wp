@@ -51,7 +51,7 @@ class Fonts extends \WP_UnitTestCase {
 				'name'      => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 				'weights'   => [ 400, 700 ],
-				'styles'   => [ 'italic', 'regular' ],
+				'styles'    => [ 'italic', 'regular' ],
 				'service'   => 'system',
 			],
 			$arial_font
