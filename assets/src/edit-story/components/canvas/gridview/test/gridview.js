@@ -21,16 +21,14 @@ import {
   fireEvent,
   makeSingleQuery,
   queryAllByAttribute,
-  render,
 } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StoryContext from '../../../../app/story/context';
 import GridView from '../';
+import { renderWithTheme } from '../../../../testUtils';
 
 const queryByAriaLabel = makeSingleQuery(
   (container, value) => queryAllByAttribute('aria-label', container, value),
@@ -57,12 +55,10 @@ function setupGridView() {
     },
     actions: { setCurrentPage, arrangePage },
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <GridView />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText, container } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <GridView />
+    </StoryContext.Provider>
   );
   return {
     container,

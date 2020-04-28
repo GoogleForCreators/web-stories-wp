@@ -15,27 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { Numeric } from '../';
-import { renderWithTheme } from '../../../testUtils';
+import theme from '../theme';
 
-describe('Form/Numeric', () => {
-  it('should render <Numeric /> form', () => {
-    const onChangeMock = jest.fn();
-    const onBlurMock = jest.fn();
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
 
-    const { getByTestId } = renderWithTheme(
-      <Numeric
-        value={0}
-        onChange={onChangeMock}
-        onBlur={onBlurMock}
-        data-testid="numeric"
-      />
-    );
+const renderWithTheme = (ui, options) =>
+  render(ui, { wrapper: WithThemeProvider, ...options });
 
-    const input = getByTestId('numeric');
-
-    expect(input).toBeDefined();
-  });
-});
+export default renderWithTheme;

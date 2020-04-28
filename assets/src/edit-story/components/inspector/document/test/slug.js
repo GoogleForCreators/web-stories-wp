@@ -25,6 +25,7 @@ import { ThemeProvider } from 'styled-components';
 import StoryContext from '../../../../app/story/context';
 import theme from '../../../../theme';
 import SlugPanel from '../slug';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel() {
   const updateStory = jest.fn();
@@ -43,12 +44,10 @@ function setupPanel() {
     },
     actions: { updateStory, deleteStory },
   };
-  const { getByText } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <SlugPanel />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <SlugPanel />
+    </StoryContext.Provider>
   );
   return {
     getByText,
