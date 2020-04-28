@@ -51,21 +51,21 @@ export const InnerDropdown = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: ${({ theme, type }) => theme.dropdown[type].height};
+  height: ${({ theme, type }) => theme.dropdown[type].height}px;
   width: auto;
   padding: 10px 16px;
   margin: 0;
   background-color: ${({ theme, type, isOpen }) =>
     theme.dropdown[type][isOpen ? 'activeBackground' : 'background']};
-  border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius};
+  border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius}px;
   border: ${({ theme, type }) => theme.dropdown[type].border};
   color: ${({ theme }) => theme.colors.gray600};
   cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
   font-family: ${({ theme }) => theme.fonts.dropdown.family};
-  font-size: ${({ theme }) => theme.fonts.dropdown.size};
+  font-size: ${({ theme }) => theme.fonts.dropdown.size}px;
   font-weight: ${({ theme }) => theme.fonts.dropdown.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing}em;
+  line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight}px;
 
   &:hover {
     background-color: ${({ theme, type }) =>

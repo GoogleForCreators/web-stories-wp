@@ -15,24 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import SimplePanel from '../simplePanel';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderWithTheme } from '../../../../testUtils';
 
 describe('Panels/Panel/SimplePanel', () => {
   it('should render <SimplePanel />', () => {
-    const { getByText } = arrange(
+    const { getByText } = renderWithTheme(
       <SimplePanel name="simple-panel" title="Simple Panel">
         <div>{'Simple Panel Content'}</div>
       </SimplePanel>
