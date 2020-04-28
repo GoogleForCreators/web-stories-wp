@@ -123,8 +123,7 @@ const PopoverPanel = ({ isOpen, onClose, title, items, onSelect }) => {
                   isSelected={selected}
                   disabled={disabled}
                 >
-                  {hex && <ColorDot color={hex} />}
-                  {label}
+                  {hex ? <ColorDot color={hex} /> : label}
                 </Pill>
               );
             }

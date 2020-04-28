@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -194,10 +199,17 @@ const Dropdown = ({
                     <CloseIcon width={13} height={13} />
                   </ClearButton>
                 )}
-                {selectedItems[0]?.hex && (
+                {selectedItems[0]?.hex ? (
                   <ColorDot color={selectedItems[0].hex} />
+                ) : (
+                  selectedItems[0]?.label || placeholder
                 )}
-                {selectedItems[0]?.label || placeholder}
+                {selectedItems.length > 1 &&
+                  sprintf(
+                    /* translators: %s: number selected */
+                    __(' + %s', 'web-stories'),
+                    (selectedItems.length - 1).toString(10)
+                  )}
               </>
             )}
           </InnerDropdownText>
@@ -213,7 +225,7 @@ const Dropdown = ({
           title={placeholder}
           onClose={() => setShowMenu(false)}
           items={items}
-          onSelect={(__, selectedValue) => {
+          onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
         />
