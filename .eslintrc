@@ -97,7 +97,7 @@
     "require-await": "error",
     "rest-spread-spacing": ["error", "never"],
     "react/prop-types": "error",
-    "react-hooks/exhaustive-deps": ["error", {"additionalHooks": "useBatchingCallback"}],
+    "react-hooks/exhaustive-deps": ["error", {"additionalHooks": "useBatchingCallback|useSelect"}],
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
