@@ -128,7 +128,7 @@ StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
-  updateStory: PropTypes.func.isRequired,
+  updateStory: PropTypes.func,
 };
 
 export default StoryGridView;
