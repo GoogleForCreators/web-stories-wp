@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, render, getByRole } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent, getByRole } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,7 +25,7 @@ import { ThemeProvider } from 'styled-components';
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
 import Buttons from '../buttons';
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils';
 
 function setupButtons(extraStoryProps, extraMetaProps) {
   const saveStory = jest.fn();
@@ -43,14 +42,12 @@ function setupButtons(extraStoryProps, extraMetaProps) {
     previewLink:
       'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
-      <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <Buttons />
-        </StoryContext.Provider>
-      </ConfigContext.Provider>
-    </ThemeProvider>
+  const { getByText, container } = renderWithTheme(
+    <ConfigContext.Provider value={configValue}>
+      <StoryContext.Provider value={storyContextValue}>
+        <Buttons />
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
   return {
     container,

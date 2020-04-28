@@ -22,13 +22,16 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useState, useContext, useMemo } from 'react';
+import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../config';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
+import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -38,6 +41,8 @@ import {
   Pill,
   TemplateNavBar,
 } from '../../../components';
+import { ICON_METRICS } from '../../../constants';
+import clamp from '../../../utils/clamp';
 import {
   ByLine,
   ContentContainer,
@@ -45,6 +50,7 @@ import {
   Column,
   DetailContainer,
   MetadataContainer,
+  NavButton,
   Text,
   Title,
 } from './components';
@@ -55,10 +61,15 @@ function TemplateDetail() {
     state: {
       queryParams: { id: templateId, isLocal },
     },
+    actions,
   } = useRouteHistory();
   const {
-    actions: { templateApi },
+    state: { templates },
+    actions: {
+      templateApi: { fetchMyTemplateById, fetchExternalTemplateById },
+    },
   } = useContext(ApiContext);
+  const { isRTL } = useConfig();
 
   useEffect(() => {
     if (!templateId) {
@@ -69,15 +80,15 @@ function TemplateDetail() {
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
 
     if (isLocalTemplate) {
-      templateApi.fetchMyTemplateById(id).then((fetchedTemplate) => {
-        setTemplate(fetchedTemplate);
-      });
+      fetchMyTemplateById(id).then((fetchedTemplate) =>
+        setTemplate(fetchedTemplate)
+      );
     } else {
-      templateApi.fetchExternalTemplateById(id).then((fetchedTemplate) => {
-        setTemplate(fetchedTemplate);
-      });
+      fetchExternalTemplateById(id).then((fetchedTemplate) =>
+        setTemplate(fetchedTemplate)
+      );
     }
-  }, [templateApi, templateId, isLocal]);
+  }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -93,6 +104,67 @@ function TemplateDetail() {
     };
   }, [template]);
 
+  const activeTemplateIndex = useMemo(
+    () => templates?.findIndex((t) => t.id === template?.id),
+    [template, templates]
+  );
+
+  const previewPages = useMemo(
+    () =>
+      template &&
+      template.pages.map((page) => <PreviewPage key={page.id} page={page} />),
+    [template]
+  );
+
+  const switchToTemplateByOffset = useCallback(
+    (offset) => {
+      const index = clamp(activeTemplateIndex + offset, [
+        0,
+        templates.length - 1,
+      ]);
+      const selectedTemplate = templates[index];
+
+      actions.push(
+        `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
+      );
+    },
+    [activeTemplateIndex, templates, actions]
+  );
+
+  const { NextButton, PrevButton } = useMemo(() => {
+    const Previous = (
+      <NavButton
+        aria-label={__('View previous template', 'web-stories')}
+        onClick={() => switchToTemplateByOffset(-1)}
+        disabled={!templates?.length || activeTemplateIndex === 0}
+      >
+        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+      </NavButton>
+    );
+
+    const Next = (
+      <NavButton
+        aria-label={__('View next template', 'web-stories')}
+        onClick={() => switchToTemplateByOffset(1)}
+        disabled={
+          !templates?.length || activeTemplateIndex === templates.length - 1
+        }
+      >
+        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+      </NavButton>
+    );
+
+    return isRTL
+      ? {
+          NextButton: Previous,
+          PrevButton: Next,
+        }
+      : {
+          NextButton: Next,
+          PrevButton: Previous,
+        };
+  }, [isRTL, switchToTemplateByOffset, activeTemplateIndex, templates]);
+
   return (
     template && (
       <FontProvider>
@@ -101,11 +173,8 @@ function TemplateDetail() {
           <ContentContainer>
             <ColumnContainer>
               <Column>
-                <CardGallery>
-                  {template.pages.map((page) => (
-                    <PreviewPage key={page.id} page={page} />
-                  ))}
-                </CardGallery>
+                {PrevButton}
+                <CardGallery>{previewPages}</CardGallery>
               </Column>
               <Column>
                 <DetailContainer>
@@ -129,6 +198,7 @@ function TemplateDetail() {
                     <ColorList colors={template.colors} size={30} />
                   </MetadataContainer>
                 </DetailContainer>
+                {NextButton}
               </Column>
             </ColumnContainer>
           </ContentContainer>

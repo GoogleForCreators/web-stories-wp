@@ -15,24 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
-import { ThemeProvider } from 'styled-components';
 import CardTitle from '../cardTitle';
-import theme from '../../../theme';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
+import { renderWithTheme } from '../../../testUtils';
 
 describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
-    const { getByText, queryByTestId } = wrapper(
+    const { getByText, queryByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
         modifiedDate="July 13"
@@ -47,7 +37,7 @@ describe('CardTitle', () => {
   });
 
   it('should render Card Title with an input field when edit mode is true', () => {
-    const { getByTestId } = wrapper(
+    const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
         modifiedDate="July 13"

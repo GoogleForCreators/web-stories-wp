@@ -27,14 +27,14 @@ import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const StyledButton = styled.button`
   font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size};
+  font-size: ${({ theme }) => theme.fonts.button.size}px;
   font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight};
+  line-height: ${({ theme }) => theme.fonts.button.lineHeight}px;
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border: ${({ theme }) => theme.borders.transparent};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
   height: 40px;
   min-width: 100px;

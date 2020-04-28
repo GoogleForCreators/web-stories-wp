@@ -109,6 +109,10 @@ function CardGallery({ children }) {
     };
   }, [updateContainerSize]);
 
+  useEffect(() => {
+    setActiveCardIndex(0);
+  }, [children]);
+
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
       <UnitsProvider pageSize={miniCardSize}>
