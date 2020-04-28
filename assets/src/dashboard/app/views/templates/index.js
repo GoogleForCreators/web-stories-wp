@@ -172,7 +172,7 @@ function TemplatesGallery() {
               <PageHeading
                 defaultTitle={__('Explore Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
-                filteredStories={filteredTemplates}
+                filteredStories={orderedTemplates}
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
               />

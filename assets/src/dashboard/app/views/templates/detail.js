@@ -57,6 +57,7 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
+
   const {
     state: {
       queryParams: { id: templateId, isLocal },
@@ -64,7 +65,9 @@ function TemplateDetail() {
     actions,
   } = useRouteHistory();
   const {
-    state: { templates },
+    state: {
+      templates: { templates, templatesOrderById },
+    },
     actions: {
       templateApi: { fetchMyTemplateById, fetchExternalTemplateById },
     },
@@ -90,6 +93,12 @@ function TemplateDetail() {
     }
   }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
 
+  const orderedTemplates = useMemo(() => {
+    return templatesOrderById.map((templateByOrderId) => {
+      return templates[templateByOrderId];
+    });
+  }, [templatesOrderById, templates]);
+
   const { byLine } = useMemo(() => {
     if (!template) {
       return {};
@@ -105,8 +114,8 @@ function TemplateDetail() {
   }, [template]);
 
   const activeTemplateIndex = useMemo(
-    () => templates?.findIndex((t) => t.id === template?.id),
-    [template, templates]
+    () => orderedTemplates?.findIndex((t) => t.id === template?.id),
+    [template, orderedTemplates]
   );
 
   const previewPages = useMemo(
@@ -120,15 +129,15 @@ function TemplateDetail() {
     (offset) => {
       const index = clamp(activeTemplateIndex + offset, [
         0,
-        templates.length - 1,
+        orderedTemplates.length - 1,
       ]);
-      const selectedTemplate = templates[index];
+      const selectedTemplate = orderedTemplates[index];
 
       actions.push(
         `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
       );
     },
-    [activeTemplateIndex, templates, actions]
+    [activeTemplateIndex, orderedTemplates, actions]
   );
 
   const { NextButton, PrevButton } = useMemo(() => {
@@ -136,7 +145,7 @@ function TemplateDetail() {
       <NavButton
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(-1)}
-        disabled={!templates?.length || activeTemplateIndex === 0}
+        disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
       >
         <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
       </NavButton>
@@ -147,7 +156,8 @@ function TemplateDetail() {
         aria-label={__('View next template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(1)}
         disabled={
-          !templates?.length || activeTemplateIndex === templates.length - 1
+          !orderedTemplates?.length ||
+          activeTemplateIndex === orderedTemplates.length - 1
         }
       >
         <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
@@ -163,7 +173,11 @@ function TemplateDetail() {
           NextButton: Next,
           PrevButton: Previous,
         };
-  }, [isRTL, switchToTemplateByOffset, activeTemplateIndex, templates]);
+  }, [isRTL, switchToTemplateByOffset, activeTemplateIndex, orderedTemplates]);
+
+  if (!template) {
+    return null;
+  }
 
   return (
     template && (
