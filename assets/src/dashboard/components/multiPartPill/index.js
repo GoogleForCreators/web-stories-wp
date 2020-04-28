@@ -26,7 +26,7 @@ const PillContainer = styled.div`
   align-items: center;
   height: 44px;
   padding: 0 10px;
-  border-radius: ${({ theme }) => `${theme.button.borderRadius}px`};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.25);
 `;
 

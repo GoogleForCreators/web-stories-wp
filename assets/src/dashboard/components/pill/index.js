@@ -48,8 +48,8 @@ const PillContainer = styled.label`
   font-family: ${({ theme }) => theme.fonts.pill.family};
   font-weight: ${({ theme }) => theme.fonts.pill.weight};
   font-size: ${({ theme }) => `${theme.fonts.pill.size}px`};
-  line-height: ${({ theme }) => `${theme.fonts.pill.lineHeight}px`};
-  letter-spacing: ${({ theme }) => `${theme.fonts.pill.letterSpacing}em`};
+  line-height: ${({ theme }) => theme.fonts.pill.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing}em;
 `;
 const PillLabel = styled.span`
   cursor: pointer;
@@ -60,7 +60,7 @@ const PillLabel = styled.span`
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.gray600};
   border: ${({ theme }) => theme.borders.gray50};
-  border-radius: ${({ theme }) => `${theme.button.borderRadius}px`};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
 
   ${PillInput}:checked + & {
     background-color: ${({ theme }) => theme.colors.blueLight};

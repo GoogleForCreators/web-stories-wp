@@ -99,10 +99,9 @@ const StyledInput = styled.input`
   height: 100%;
   flex-grow: 1;
   font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
-  font-size: ${({ theme }) => `${theme.fonts.typeaheadInput.size}px`};
-  line-height: ${({ theme }) => `${theme.fonts.typeaheadInput.lineHeight}px`};
-  letter-spacing: ${({ theme }) =>
-    `${theme.fonts.typeaheadInput.letterSpacing}em`};
+  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size}px;
+  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing}em;
   font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
   color: ${({ theme }) => theme.colors.gray500};
 
