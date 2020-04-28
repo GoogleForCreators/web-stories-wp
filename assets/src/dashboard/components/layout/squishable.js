@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import cssLerp from '../../utils/cssLerp';
+import { Z_INDEX } from '../../constants';
 import { SQUISH_LENGTH, SQUISH_CSS_VAR } from './provider';
 import useLayoutContext from './useLayoutContext';
 import useAddSquishVar from './useAddSquishVar';
@@ -34,7 +35,7 @@ const Squish = styled.div`
   right: 0;
   padding-top: ${cssLerp(`${SQUISH_LENGTH}px`, '0px', SQUISH_CSS_VAR)};
   background-color: ${({ theme }) => theme.colors.white};
-  z-index: 2;
+  z-index: ${Z_INDEX.LAYOUT_SQUISHABLE};
 `;
 
 const Content = styled.div`

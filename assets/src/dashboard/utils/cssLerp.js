@@ -21,7 +21,13 @@
  * @param {string} progress - css variable to represent progress in range [0, 1]
  */
 const cssLerp = (start, end, progress) => {
-  return `calc(calc(calc(1 - var(${progress}, 0)) * ${start}) + calc(var(${progress}, 0) * ${end}))`;
+  const currentProgress = `var(${progress}, 0)`;
+  const remainingProgress = `calc(1 - ${currentProgress})`;
+  return `
+    calc(
+      calc(${remainingProgress} * ${start}) +
+      calc(${currentProgress} * ${end})
+  )`;
 };
 
 export default cssLerp;

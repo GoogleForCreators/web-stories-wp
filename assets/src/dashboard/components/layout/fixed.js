@@ -22,6 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Z_INDEX } from '../../constants';
 import useAddSquishVar from './useAddSquishVar';
 
 const FixedContent = styled.div`
@@ -30,7 +31,7 @@ const FixedContent = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 3;
+  z-index: ${Z_INDEX.LAYOUT_FIXED};
   overflow: hidden;
 
   /**

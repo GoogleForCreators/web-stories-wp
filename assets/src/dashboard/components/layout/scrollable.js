@@ -32,6 +32,11 @@ const ScrollContent = styled.div`
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+
+  /**
+   * Adds inertial scrolling to iOS
+   * devices like iPad
+   */
   -webkit-overflow-scrolling: touch;
 `;
 
