@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, queries } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -25,12 +25,25 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../theme';
 
+import * as ariaLabelQueries from './queryByAriaLabel';
+import * as autoAdvanceAfterQueries from './queryByAutoAdvanceAfter';
+import * as idQueries from './queryById';
+
 // eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 const renderWithTheme = (ui, options) =>
-  render(ui, { wrapper: WithThemeProvider, ...options });
+  render(ui, {
+    wrapper: WithThemeProvider,
+    queries: {
+      ...queries,
+      ...ariaLabelQueries,
+      ...autoAdvanceAfterQueries,
+      ...idQueries,
+    },
+    ...options,
+  });
 
 export default renderWithTheme;

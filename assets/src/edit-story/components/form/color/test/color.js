@@ -17,25 +17,22 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import createSolid from '../../../../utils/createSolid';
 import Color from '../color';
 import applyOpacityChange from '../applyOpacityChange';
+import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
-  const { queryByLabelText } = render(
-    <ThemeProvider theme={theme}>
-      <Color label="Color" onChange={onChange} {...props} />
-    </ThemeProvider>
+  const { queryByLabelText } = renderWithTheme(
+    <Color label="Color" onChange={onChange} {...props} />
   );
   const colorPreview = queryByLabelText(/Edit: Color/);
   const opacityInput = queryByLabelText(/Opacity/);

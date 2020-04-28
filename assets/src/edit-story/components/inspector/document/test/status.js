@@ -16,16 +16,15 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
-import theme from '../../../../theme';
 import StatusPanel from '../status';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel(
   capabilities = {
@@ -62,14 +61,12 @@ function setupPanel(
     actions: { loadStatuses, loadUsers },
     state: { statuses },
   };
-  const { getByText, queryByText } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <StatusPanel />
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText, queryByText } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <InspectorContext.Provider value={inspectorContextValue}>
+        <StatusPanel />
+      </InspectorContext.Provider>
+    </StoryContext.Provider>
   );
   return {
     getByText,
