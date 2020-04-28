@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import ScrollToTop from '..';
-import Layout from '../../layout';
+import Provider from './provider';
+import Scrollable from './scrollable';
+import Squishable from './squishable';
+import Fixed from './fixed';
 
-describe('ScrollToTop', () => {
-  it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
-      <Layout.Provider>
-        <ScrollToTop />
-      </Layout.Provider>
-    );
+const Layout = {
+  Provider,
+  Scrollable,
+  Squishable,
+  Fixed,
+};
 
-    const Button = getByTestId('scroll-to-top-button');
-
-    expect(Button).toBeDefined();
-  });
-});
+export default Layout;
+export { default as useLayoutContext } from './useLayoutContext';
+export { SQUISH_CSS_VAR } from './provider';

@@ -15,22 +15,19 @@
  */
 
 /**
- * Internal dependencies
+ *
+ * @param {string} start - css value with unit
+ * @param {string} end - css value with unit
+ * @param {string} progress - css variable to represent progress in range [0, 1]
  */
-import { renderWithTheme } from '../../../testUtils/';
-import ScrollToTop from '..';
-import Layout from '../../layout';
+const cssLerp = (start, end, progress) => {
+  const currentProgress = `var(${progress}, 0)`;
+  const remainingProgress = `calc(1 - ${currentProgress})`;
+  return `
+    calc(
+      calc(${remainingProgress} * ${start}) +
+      calc(${currentProgress} * ${end})
+  )`;
+};
 
-describe('ScrollToTop', () => {
-  it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
-      <Layout.Provider>
-        <ScrollToTop />
-      </Layout.Provider>
-    );
-
-    const Button = getByTestId('scroll-to-top-button');
-
-    expect(Button).toBeDefined();
-  });
-});
+export default cssLerp;

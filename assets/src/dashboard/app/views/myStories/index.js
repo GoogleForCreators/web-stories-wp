@@ -32,6 +32,7 @@ import {
   FloatingTab,
   InfiniteScroller,
   ScrollToTop,
+  Layout,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -83,6 +84,10 @@ const DefaultBodyText = styled.p`
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
+`;
+
+const CardPanel = styled.div`
+  padding-top: 60px;
 `;
 
 function MyStories() {
@@ -253,17 +258,17 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <BodyWrapper>
-          {storiesViewControls}
-          {storiesView}
-          <InfiniteScroller
-            canLoadMore={!allPagesFetched}
-            isLoading={isLoading}
-            allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={handleNewPageRequest}
-          />
-          <ScrollToTop />
-        </BodyWrapper>
+        <CardPanel>
+          <BodyWrapper>
+            {storiesView}
+            <InfiniteScroller
+              canLoadMore={!allPagesFetched}
+              isLoading={isLoading}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              onLoadMore={handleNewPageRequest}
+            />
+          </BodyWrapper>
+        </CardPanel>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -280,7 +285,6 @@ function MyStories() {
     allPagesFetched,
     handleNewPageRequest,
     typeaheadValue,
-    storiesViewControls,
     storiesView,
   ]);
 
@@ -288,28 +292,36 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={orderedStories}
-            handleTypeaheadChange={handleTypeaheadChange}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={handleFilterStatusUpdate}
-                name="my-stories-filter-selection"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-                inputType="radio"
-              >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
+          <Layout.Provider>
+            <Layout.Squishable>
+              <PageHeading
+                defaultTitle={__('My Stories', 'web-stories')}
+                searchPlaceholder={__('Search Stories', 'web-stories')}
+                filteredStories={orderedStories}
+                handleTypeaheadChange={handleTypeaheadChange}
+                typeaheadValue={typeaheadValue}
+              />
+              <FilterContainer>
+                {STORY_STATUSES.map((storyStatus) => (
+                  <FloatingTab
+                    key={storyStatus.value}
+                    onClick={handleFilterStatusUpdate}
+                    name="my-stories-filter-selection"
+                    value={storyStatus.value}
+                    isSelected={status === storyStatus.value}
+                    inputType="radio"
+                  >
+                    {storyStatus.label}
+                  </FloatingTab>
+                ))}
+              </FilterContainer>
+              {storiesViewControls}
+            </Layout.Squishable>
+            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
+          </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>
