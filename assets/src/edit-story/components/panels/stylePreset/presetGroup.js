@@ -69,10 +69,13 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
     }
   };
 
+  // This effect is dependent on the useKeyDownEffect below and reacts to changes coming from keyboard interaction.
   useLayoutEffect(() => {
+    // Prevent the focus on the initial render, it should only focus when there was a change.
     if (initialRender.current) {
       initialRender.current = false;
     } else if (groupRef.current) {
+      // When the active color has been changed via keyboard handling, focus on the active preset.
       groupRef.current.querySelector('[tabindex="0"]').focus();
     }
   }, [activeIndex]);
@@ -81,6 +84,8 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
     groupRef,
     { key: ['up', 'down', 'left', 'right', 'tab'] },
     ({ key }) => {
+      // When the user navigates in the color presets using the arrow keys,
+      // Let's change the active index accordingly, to indicate which preset should be focused
       if (groupRef.current) {
         const rowLength = 'color' === type ? COLORS_PER_ROW : STYLES_PER_ROW;
         const diff = getIndexDiff(key, rowLength);
