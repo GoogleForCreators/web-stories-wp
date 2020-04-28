@@ -71,23 +71,16 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontWeights = getFontWeights(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ value: weight }) => weight
-              );
+              const fontObj = fonts.find((item) => item.value === value);
+              const { weights } = fontObj;
 
               // Find the nearest font weight from the available font weight list
-              // If no fontweightsArr available then will return undefined
-              const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.reduce((a, b) =>
-                  Math.abs(parseInt(b) - fontWeight) <
-                  Math.abs(parseInt(a) - fontWeight)
-                    ? b
-                    : a
-                );
-
-              const fontObj = fonts.find((item) => item.value === value);
+              const newFontWeight = weights.reduce((a, b) =>
+                Math.abs(parseInt(b) - fontWeight) <
+                Math.abs(parseInt(a) - fontWeight)
+                  ? b
+                  : a
+              );
 
               pushUpdate(
                 {
