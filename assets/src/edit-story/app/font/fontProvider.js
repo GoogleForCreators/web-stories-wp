@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -35,7 +35,6 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
-  const [fontFaces, setFontFaces] = useState([]);
   const [recentUsedFontSlugs, setRecentUsedFontSlugs] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
@@ -128,21 +127,12 @@ function FontProvider({ children }) {
       });
   }, []);
 
-  useEffect(() => {
-    if (fonts?.length > 0) {
-      getMenuFonts(fonts.map((font) => font.name)).then((result) => {
-        const resultArray = result.replace(/}/g, '}},').split('},');
-        setFontFaces(resultArray);
-      });
-    }
-  }, [fonts, getMenuFonts]);
-
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
   const state = {
     state: {
       fonts,
-      fontFaces,
+      // fontFaces,
       recentUsedFontSlugs,
     },
     actions: {

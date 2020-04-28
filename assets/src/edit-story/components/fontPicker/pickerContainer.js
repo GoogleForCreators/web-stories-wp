@@ -121,8 +121,8 @@ const ExpandedTextInput = styled(BoxedTextInput)`
 
 function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   const {
-    state: { fonts, fontFaces, recentUsedFontSlugs },
-    actions: { addUsedFont },
+    state: { fonts, recentUsedFontSlugs },
+    actions: { addUsedFont, getMenuFonts },
   } = useFont();
 
   const pickerContainerRef = useRef();
@@ -133,58 +133,64 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchValue, setSearchValue] = useState('');
-
-  // Font options with fontFace as property
-  const optionsWithFontFaces = useMemo(
-    () =>
-      fonts.map((option) => {
-        option.fontFace = fontFaces.find((fontFace) =>
-          fontFace.includes(`'${option.name}'`)
-        );
-        return option;
-      }),
-    [fonts, fontFaces]
-  );
+  const [menuFonts, setMenuFonts] = useState([]);
 
   // Recently used font options, clean up on refresh
   const recentUsedFonts = useMemo(
     () =>
       searchValue && searchValue !== ''
         ? recentUsedFontSlugs
-            .map((slug) =>
-              optionsWithFontFaces.find((font) => font.slug === slug)
-            )
+            .map((slug) => fonts.find((font) => font.slug === slug))
             .filter(({ name }) =>
               name.toLowerCase().includes(searchValue.toLowerCase())
             )
         : recentUsedFontSlugs.map((slug) =>
-            optionsWithFontFaces.find((font) => font.slug === slug)
+            fonts.find((font) => font.slug === slug)
           ),
-    [searchValue, recentUsedFontSlugs, optionsWithFontFaces]
+    [searchValue, recentUsedFontSlugs, fonts]
   );
 
   // Font options that start with search term
-  const fileredFonts = useMemo(
+  const normalFonts = useMemo(
     () =>
       searchValue && searchValue !== ''
-        ? optionsWithFontFaces.filter(({ name }) =>
+        ? fonts.filter(({ name }) =>
             name.toLowerCase().startsWith(searchValue.toLowerCase())
           )
-        : optionsWithFontFaces,
-    [searchValue, optionsWithFontFaces]
+        : fonts,
+    [searchValue, fonts]
   );
 
   // Font options that include search term but not start with
   const includeSearchFonts = useMemo(
     () =>
       searchValue && searchValue !== ''
-        ? optionsWithFontFaces.filter(
+        ? fonts.filter(
             ({ name }) =>
               name.toLowerCase().indexOf(searchValue.toLowerCase()) > 0
           )
         : [],
-    [searchValue, optionsWithFontFaces]
+    [searchValue, fonts]
   );
+
+  useEffect(() => {
+    const combinedFontList = []
+      .concat(recentUsedFonts)
+      .concat(normalFonts)
+      .concat(includeSearchFonts)
+      .slice(currentIndex, currentIndex + 10)
+      .map(({ name }) => name);
+    getMenuFonts(combinedFontList).then((result) => {
+      const resultArray = result.replace(/}/g, '}},').split('},');
+      setMenuFonts(resultArray);
+    });
+  }, [
+    currentIndex,
+    getMenuFonts,
+    recentUsedFonts,
+    normalFonts,
+    includeSearchFonts,
+  ]);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -205,10 +211,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         currentVisibleIndex =
           Math.floor(scrollTop / 34) - recentUsedFonts.length;
       }
-      if (
-        fileredFonts.length > 0 &&
-        currentVisibleIndex > fileredFonts.length
-      ) {
+      if (normalFonts.length > 0 && currentVisibleIndex > normalFonts.length) {
         scrollTop -= 10;
       }
       currentVisibleIndex = Math.floor(scrollTop / 34);
@@ -233,16 +236,6 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   useKeyDownEffect(pickerContainerRef, { key: 'esc' }, toggleOptions, [
     toggleOptions,
   ]);
-
-  const getVisibleFontFaces = () => {
-    let combinedFontList = []
-      .concat(recentUsedFonts)
-      .concat(fileredFonts)
-      .concat(includeSearchFonts)
-      .slice(currentIndex, currentIndex + 10);
-
-    return combinedFontList.map((font) => font.fontFace).join('');
-  };
 
   const handleItemClick = (option, slug) => {
     handleCurrentValue(option);
@@ -286,15 +279,15 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         ref={listContainerRef}
         aria-labelledby={__('FontPicker', 'web-stories')}
       >
-        <GlobalFontFaces menuFonts={getVisibleFontFaces} />
+        <GlobalFontFaces menuFonts={menuFonts.join('')} />
         {renderListWithOptions(recentUsedFonts)}
-        {renderListWithOptions(fileredFonts, recentUsedFonts.length)}
+        {renderListWithOptions(normalFonts, recentUsedFonts.length)}
         {renderListWithOptions(
           includeSearchFonts,
-          fileredFonts.length + recentUsedFonts.length
+          normalFonts.length + recentUsedFonts.length
         )}
         {recentUsedFonts.length === 0 &&
-          fileredFonts.length === 0 &&
+          normalFonts.length === 0 &&
           includeSearchFonts.length === 0 && (
             <NoItem>{__('No matches found', 'web-stories')}</NoItem>
           )}
