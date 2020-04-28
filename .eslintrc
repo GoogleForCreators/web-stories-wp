@@ -216,8 +216,9 @@
     },
     {
       "files": [
+        "bin/**/*.js",
         "babel.config.js",
-        "puppeteer.config.js",
+        "jest-puppeteer.config.js",
         "webpack.config.js",
         ".storybook/*.js",
         "tests/js/*.js",
@@ -229,13 +230,17 @@
       }
     },
     {
-      "files": ["**/*.md"],
+      "files": [
+        "*.md",
+        "**/*.md"
+      ],
       "plugins": [
         "markdown"
       ],
       "rules": {
         "no-undef": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "header/header": "off"
       }
     }
   ]

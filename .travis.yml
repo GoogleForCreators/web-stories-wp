@@ -41,35 +41,22 @@ env:
 install:
   - set -e
   - |
-    if [ "$LINT" = "1" ] || [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
     fi
   - |
-    if [ "$LINT" = "1" ] || [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      composer install --no-interaction
+    if ! [ -z $PUPPETEER_PRODUCT ] ; then
+      npm ci puppeteer
     fi
   - |
-    if [ "$DEPLOY_PLUGIN" = "1" ]; then
-      curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-      chmod +x wp-cli.phar
-      mv wp-cli.phar $HOME/wp
-      export PATH="$HOME:$PATH"
-      wp package install git@github.com:wp-cli/dist-archive-command.git
+    if [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+      composer install --no-interaction
     fi
   - set +e
 
 before_script:
   - set -e
-  - |
-    if [ "$LINT" = "1" ]; then
-      composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
-    fi
-  - |
-    if [ "$ANALYSIS" = "1" ]; then
-      # phpstan only supports PHP 7.1+. Ignore version conflicts.
-      composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-    fi
   - |
     if [ "$COVERAGE" != "1" ]; then
       phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
@@ -78,15 +65,6 @@ before_script:
 
 script:
   - set -e
-  - |
-    if [ "$LINT" = "1" ]; then
-      composer --no-interaction validate --no-check-all
-      composer --no-interaction normalize --dry-run
-      npm run lint:css
-      npm run lint:js
-      npm run lint:php
-      npm run lint:md
-    fi
   - |
     if [ "$JS" = "1" ]; then
       if [ "$COVERAGE" = "1" ]; then
@@ -107,28 +85,22 @@ script:
       fi
     fi
   - |
-    if [ "$ANALYSIS" = "1" ]; then
-      vendor/bin/phpstan analyze --memory-limit=256M
-    fi
-  - |
     if [ "$E2E" = "1" ]; then
       npm run build:js
       npm run env:start
-      npm run test:e2e:ci
+      npm run test:e2e
       npm run env:stop
     fi
   - set +e
 
 jobs:
   fast_finish: true
+  # These need to be exact matches, including whitespace!
+  allow_failures:
+    # PHP unit tests (nightly, WordPress trunk)
+    - env: PHP=1 WP_VERSION=trunk
+      php: nightly
   include:
-    - stage: lint
-      name: Lint (PHP, JavaScript, CSS, Markdown, and configuration files)
-      php: 7.4
-      env: LINT=1
-    - name: Static Analysis (PHPStan)
-      php: 7.4
-      env: ANALYSIS=1
     - stage: test
       name: JavaScript unit tests
       php: 7.4
@@ -151,9 +123,12 @@ jobs:
     - name: PHP and JavaScript unit tests (7.4, WordPress latest, with code coverage)
       php: 7.4
       env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
-    - name: E2E tests
+    - name: E2E tests (Chromium)
       php: 7.4
       env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
+    - name: E2E tests (Firefox)
+      php: 7.4
+      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD= PUPPETEER_PRODUCT=firefox
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       php: 7.3

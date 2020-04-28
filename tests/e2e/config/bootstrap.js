@@ -105,6 +105,25 @@ function observeConsoleLogging() {
       return;
     }
 
+    // Firefox warns about this issue in WordPress admin.
+    if (text.includes('This page uses the non standard property “zoom”')) {
+      return;
+    }
+
+    // Firefox warns about this issue when there's no proper favicon.
+    if (
+      text.includes(
+        'Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]'
+      )
+    ) {
+      return;
+    }
+
+    // Firefox warns about this issue on the login screen.
+    if (text.includes('wp-includes/js/zxcvbn.min.js')) {
+      return;
+    }
+
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
