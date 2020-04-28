@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
-import { ViewHeader } from '../../../components';
+import { ViewHeader, NavMenuButton } from '../../../components';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 
@@ -33,9 +33,10 @@ const Container = styled.div`
 `;
 
 const StyledHeader = styled(ViewHeader)`
-  display: inline-block;
+  display: inline-flex;
   width: 25%;
-  justify-content: baseline;
+  justify-content: flex-start;
+  align-items: center;
   line-height: 1;
   font-size: ${cssLerp('38px', '24px', '--squish-progress')};
   white-space: nowrap;
@@ -78,7 +79,10 @@ const PageHeading = ({
   return (
     <Container>
       <BodyWrapper>
-        <StyledHeader>{defaultTitle}</StyledHeader>
+        <StyledHeader>
+          <NavMenuButton showOnlyOnSmallViewport />
+          {defaultTitle}
+        </StyledHeader>
         <Content>{children}</Content>
         <SearchContainer>
           <SearchInner>

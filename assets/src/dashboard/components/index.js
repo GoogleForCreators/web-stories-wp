@@ -26,6 +26,10 @@ export {
   default as CardGridItem,
   MoreVerticalButton,
 } from './cardGridItem';
+export {
+  default as NavProvider,
+  useNavContext,
+} from '../components/pageStructure/navProvider';
 export { default as ColorList } from './colorList';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
@@ -34,6 +38,7 @@ export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';
 export { TemplateNavBar } from './navigationBar';
 export { AppFrame, LeftRail, PageContent } from './pageStructure';
+export { default as NavMenuButton } from './pageStructure/menuButton';
 export { FloatingTab, Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
@@ -47,6 +52,9 @@ export {
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
+  TableTitleCell,
+  TableContentCell,
+  TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
 } from './table';
