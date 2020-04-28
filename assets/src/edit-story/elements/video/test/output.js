@@ -42,6 +42,7 @@ describe('Video output', () => {
         id: 123,
         src: 'https://example.com/image.png',
         poster: 'https://example.com/poster.png',
+        alt: 'alt text',
         height: 1920,
         width: 1080,
       },

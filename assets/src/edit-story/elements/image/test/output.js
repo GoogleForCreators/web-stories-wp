@@ -48,9 +48,11 @@ describe('Image output', () => {
     },
     box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
   };
+
   it('should produce valid AMP output', async () => {
     await expect(<ImageOutput {...baseProps} />).toBeValidAMPStoryElement();
   });
+
   it('an undefined alt tag in the element should fall back to the resource', async () => {
     const props = {
       ...baseProps,
