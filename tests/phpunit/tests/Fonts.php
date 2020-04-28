@@ -40,16 +40,18 @@ class Fonts extends \WP_UnitTestCase {
 			)
 		);
 
-		$this->assertCount( 4, $arial_font );
+		$this->assertCount( 5, $arial_font );
 		$this->assertArrayHasKey( 'name', $arial_font );
 		$this->assertArrayHasKey( 'fallbacks', $arial_font );
 		$this->assertArrayHasKey( 'weights', $arial_font );
+		$this->assertArrayHasKey( 'styles', $arial_font );
 		$this->assertArrayHasKey( 'service', $arial_font );
 		$this->assertEqualSetsWithIndex(
 			[
 				'name'      => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
-				'weights'   => [ '400', '700' ],
+				'weights'   => [ 400, 700 ],
+				'styles'   => [ 'italic', 'regular' ],
 				'service'   => 'system',
 			],
 			$arial_font
@@ -95,7 +97,7 @@ class Fonts extends \WP_UnitTestCase {
 			[
 				'name'      => 'Roboto',
 				'fallbacks' => [ 'sans-serif' ],
-				'weights'   => [ '100', '300', '400', '500', '700', '900' ],
+				'weights'   => [ 100, 300, 400, 500, 700, 900 ],
 				'styles'    => [ 'italic', 'regular' ],
 				'service'   => 'fonts.google.com',
 				'variants'  => [

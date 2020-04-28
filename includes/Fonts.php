@@ -42,7 +42,7 @@ class Fonts {
 			return $fonts;
 		}
 
-		$default_weight = [ '400', '700' ];
+		$default_weight = [ 400, 700 ];
 		$default_styles = [ 'italic', 'regular' ];
 
 		// Default system fonts.
