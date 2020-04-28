@@ -55,8 +55,10 @@ const PillLabel = styled.span`
   cursor: pointer;
   margin: auto;
   width: 100%;
-  display: block;
+  display: flex;
   padding: 6px 16px;
+  align-items: center;
+  justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.gray600};
   border: ${({ theme }) => theme.borders.gray50};
@@ -92,7 +94,7 @@ const FloatingTabLabel = styled(PillLabel)`
 const Pill = ({
   children,
   inputType = PILL_TYPES.CHECKBOX,
-  isSelected,
+  isSelected = false,
   name,
   onClick,
   floatingTab,
@@ -100,7 +102,6 @@ const Pill = ({
   ...rest
 }) => {
   const Label = floatingTab ? FloatingTabLabel : PillLabel;
-
   return (
     <PillContainer>
       <PillInput

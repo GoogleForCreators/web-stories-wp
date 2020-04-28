@@ -53,6 +53,7 @@ import {
   StoryGridView,
   BodyViewOptions,
 } from '../shared';
+import useTemplateFilters from './templateFilters';
 
 const ExploreFiltersContainer = styled.div`
   padding: 0 20px 20px;
@@ -132,6 +133,15 @@ function TemplatesGallery() {
     totalTemplates
   );
 
+  const {
+    selectedCategories,
+    selectedColors,
+    onNewCategorySelected,
+    onNewColorSelected,
+    clearAllCategories,
+    clearAllColors,
+  } = useTemplateFilters();
+
   const BodyContent = useMemo(() => {
     if (totalTemplates > 0) {
       return (
@@ -180,8 +190,9 @@ function TemplatesGallery() {
                   ariaLabel={__('Category Dropdown', 'web-stories')}
                   type={DROPDOWN_TYPES.PANEL}
                   placeholder={__('Category', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
+                  items={selectedCategories}
+                  onClear={clearAllCategories}
+                  onChange={onNewCategorySelected}
                 />
                 <Dropdown
                   ariaLabel={__('Style Dropdown', 'web-stories')}
@@ -194,8 +205,9 @@ function TemplatesGallery() {
                   ariaLabel={__('Color Dropdown', 'web-stories')}
                   type={DROPDOWN_TYPES.PANEL}
                   placeholder={__('Color', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
+                  items={selectedColors}
+                  onClear={clearAllColors}
+                  onChange={onNewColorSelected}
                 />
                 <Dropdown
                   ariaLabel={__('Layout Type Dropdown', 'web-stories')}

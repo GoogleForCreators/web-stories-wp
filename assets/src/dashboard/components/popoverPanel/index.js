@@ -27,6 +27,7 @@ import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { ColorDot } from '../colorDot';
 
 export const Panel = styled.div`
   align-items: flex-start;
@@ -44,7 +45,15 @@ export const Panel = styled.div`
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
   z-index: ${Z_INDEX.POPOVER_PANEL};
-  max-width: 595px;
+  max-width: ${({ theme }) => theme.popoverPanel.desktopWidth}px;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    width: ${({ theme }) => theme.popoverPanel.tabletWidth}px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    width: ${({ theme }) => theme.popoverPanel.desktopWidth}px;
+  }
 `;
 
 Panel.propTypes = {
@@ -102,21 +111,24 @@ const PopoverPanel = ({ isOpen, onClose, title, items, onSelect }) => {
       </TitleBar>
       {isOpen && (
         <PillFieldset data-testid={'pill-fieldset'}>
-          {items.map(({ label, selected, value, disabled = false }, index) => {
-            return (
-              <Pill
-                key={`${value}_${index}`}
-                inputType="checkbox"
-                name={`${title}_pillGroup_${value}`}
-                onClick={onSelect}
-                value={value}
-                isSelected={selected}
-                disabled={disabled}
-              >
-                {label}
-              </Pill>
-            );
-          })}
+          {items.map(
+            ({ label, selected, value, hex, disabled = false }, index) => {
+              return (
+                <Pill
+                  key={`${value}_${index}`}
+                  inputType="checkbox"
+                  name={`${title}_pillGroup_${value}`}
+                  onClick={onSelect}
+                  value={value}
+                  isSelected={selected}
+                  disabled={disabled}
+                >
+                  {hex && <ColorDot color={hex} />}
+                  {label}
+                </Pill>
+              );
+            }
+          )}
         </PillFieldset>
       )}
     </Panel>
