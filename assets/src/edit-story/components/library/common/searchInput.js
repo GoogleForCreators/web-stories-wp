@@ -38,9 +38,15 @@ const Search = styled.input.attrs({ type: 'text' })`
   font-size: ${({ theme }) => theme.fonts.body1.size};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-
   &::placeholder {
-    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  }
+  &:focus {
+    background: ${({ theme }) => theme.colors.bg.v13};
+    color: ${({ theme }) => theme.colors.bg.v0};
+  }
+  &:focus::placeholder {
+    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.54)};
   }
 `;
 

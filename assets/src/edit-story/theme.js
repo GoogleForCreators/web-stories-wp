@@ -96,6 +96,7 @@ const theme = {
       v10: '#44485B',
       v11: '#08223A',
       v12: '#F2F2F2',
+      v13: '#FFFFFF',
     },
     mg: {
       v1: '#616877',
@@ -112,6 +113,7 @@ const theme = {
       v7: '#1A73E8',
       v8: '#E6E6E6',
     },
+    hover: '#4285F4',
     action: '#47A0F4',
     danger: '#FF0000',
     warning: '#EA4335',

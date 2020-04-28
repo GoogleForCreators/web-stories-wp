@@ -1,0 +1,83 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
+ * External dependencies
+ */
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as DropUpArrowSvg } from '../../icons/dropUpArrow.svg';
+import cssLerp from '../../utils/cssLerp';
+import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
+
+const ScrollButton = styled.button`
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  height: 50px;
+  width: 50px;
+  pointer-events: ${({ isVisible }) => (isVisible ? 'auto' : 'none')};
+  cursor: pointer;
+  border-radius: 50%;
+  border: ${({ theme }) => theme.borders.transparent};
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+  color: ${({ theme }) => theme.colors.gray900};
+  background-color: ${({ theme }) => theme.colors.white};
+  opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
+`;
+
+// TODO needs actual SVG
+const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 30, height: 40 })`
+  margin: auto;
+`;
+
+const ScrollToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const {
+    actions: { scrollToTop, addSquishListener, removeSquishListener },
+  } = useLayoutContext();
+
+  useEffect(() => {
+    const isVisibleFromProgress = (event) => {
+      setIsVisible(event.data.progress > 0);
+    };
+
+    addSquishListener(isVisibleFromProgress);
+    return () => {
+      removeSquishListener(isVisibleFromProgress);
+    };
+  }, [addSquishListener, removeSquishListener]);
+
+  return (
+    <ScrollButton
+      data-testid="scroll-to-top-button"
+      isVisible={isVisible}
+      onClick={scrollToTop}
+      title={__('scroll back to top', 'web-stories')}
+    >
+      <DropUpArrowIcon aria-hidden={true} />
+    </ScrollButton>
+  );
+};
+
+export default ScrollToTop;

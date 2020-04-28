@@ -17,24 +17,14 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ThemeProvider } from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import Switch from '../switch';
-
-function ThemeProviderWrapper({ children }) {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-}
-
-ThemeProviderWrapper.propTypes = {
-  children: PropTypes.any.isRequired,
-};
+import { renderWithTheme } from '../../../testUtils';
 
 describe('Switch', () => {
   it('should render with default state that can be updated', () => {
@@ -42,11 +32,8 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText, getByLabelText } = render(
-      <Switch onChange={onChange} />,
-      {
-        wrapper: ThemeProviderWrapper,
-      }
+    const { getByText, getByLabelText } = renderWithTheme(
+      <Switch onChange={onChange} />
     );
 
     const onLabelEl = getByText(onLabel);
@@ -71,14 +58,13 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText, getByLabelText } = render(
+    const { getByText, getByLabelText } = renderWithTheme(
       <Switch
         onChange={onChange}
         onLabel={onLabel}
         offLabel={offLabel}
         value={true}
-      />,
-      { wrapper: ThemeProviderWrapper }
+      />
     );
 
     const onLabelEl = getByText(onLabel);
@@ -104,9 +90,9 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText } = render(<Switch onChange={onChange} disabled />, {
-      wrapper: ThemeProviderWrapper,
-    });
+    const { getByText } = renderWithTheme(
+      <Switch onChange={onChange} disabled />
+    );
 
     fireEvent.click(getByText(onLabel));
     fireEvent.click(getByText(offLabel));

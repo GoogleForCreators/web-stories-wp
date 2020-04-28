@@ -17,19 +17,13 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
-
+import { renderWithTheme } from '../../../testUtils/';
 import PopoverMenu from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('PopoverMenu', () => {
   const demoItems = [
@@ -41,7 +35,7 @@ describe('PopoverMenu', () => {
   const onClickMock = jest.fn();
 
   it('should render a <PopoverMenu />', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -49,7 +43,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should simulate a click on one of the items', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -61,7 +55,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should not allow click on item that has false value', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 

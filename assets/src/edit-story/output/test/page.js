@@ -17,27 +17,13 @@
 /**
  * External dependencies
  */
-import {
-  makeSingleQuery,
-  queryAllByAttribute,
-  render,
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import PageOutput from '../page';
-
-const queryByAutoAdvanceAfter = makeSingleQuery(
-  (container, value) =>
-    queryAllByAttribute('auto-advance-after', container, value),
-  (c, value) => `Found multiple elements with the attribute value: ${value}`
-);
-
-const queryById = makeSingleQuery(
-  (container, id) => queryAllByAttribute('id', container, id),
-  (c, id) => `Found multiple elements with the ID: ${id}`
-);
+import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 
 describe('Page output', () => {
   it('should use default value for auto-advance-after', async () => {
@@ -202,45 +188,45 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
-    // see https://github.com/google/web-stories-wp/issues/536
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid output with media elements', async () => {
-      const props = {
-        id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-        page: {
+    describe('AMP validation', () => {
+      it('should produce valid output with media elements', async () => {
+        const props = {
           id: '123',
-          elements: [
-            {
-              id: '123',
-              type: 'video',
-              mimeType: 'video/mp4',
-              scale: 1,
-              origRatio: 9 / 16,
-              x: 50,
-              y: 100,
-              height: 1920,
-              width: 1080,
-              rotationAngle: 0,
-              loop: true,
-              resource: {
+          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [
+              {
+                id: '123',
                 type: 'video',
                 mimeType: 'video/mp4',
-                id: 123,
-                src: 'https://example.com/image.png',
-                poster: 'https://example.com/poster.png',
+                scale: 1,
+                origRatio: 9 / 16,
+                x: 50,
+                y: 100,
                 height: 1920,
                 width: 1080,
-                length: 99,
+                rotationAngle: 0,
+                loop: true,
+                resource: {
+                  type: 'video',
+                  mimeType: 'video/mp4',
+                  id: 123,
+                  src: 'https://example.com/image.png',
+                  poster: 'https://example.com/poster.png',
+                  height: 1920,
+                  width: 1080,
+                  length: 99,
+                },
               },
-            },
-          ],
-        },
-        autoAdvance: true,
-        defaultPageDuration: 11,
-      };
+            ],
+          },
+          autoAdvance: true,
+          defaultPageDuration: 11,
+        };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+        await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      });
     });
   });
 });

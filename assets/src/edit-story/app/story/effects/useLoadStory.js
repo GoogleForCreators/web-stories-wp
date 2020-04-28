@@ -55,7 +55,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           status,
           author,
           slug,
-          date,
+          date_gmt,
           modified,
           excerpt: { raw: excerpt },
           link,
@@ -67,6 +67,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           style_presets: stylePresets,
           password,
         } = post;
+        const date = `${date_gmt}Z`;
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/

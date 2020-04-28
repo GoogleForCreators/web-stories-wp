@@ -31,27 +31,47 @@ import styled from 'styled-components';
 import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
-import { BUTTON_TYPES, primaryPaths, secondaryPaths } from '../../constants';
+import {
+  BUTTON_TYPES,
+  primaryPaths,
+  secondaryPaths,
+  Z_INDEX,
+} from '../../constants';
 import {
   AppInfo,
   Content,
-  LeftRailContainer,
   LogoPlaceholder,
   NavLink,
   Rule,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: inherit;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `;
 
 export const PageContent = styled.div`
-  position: relative;
-  width: 100%;
-  padding-left: max(15%, 190px);
-  height: inherit;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: ${({ fullWidth }) => (fullWidth ? '0' : 'max(15%, 190px)')};
+`;
+
+export const LeftRailContainer = styled.nav`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  width: max(15%, 190px);
+  background: ${({ theme }) => theme.colors.white};
+  border-right: ${({ theme }) => theme.leftRail.border};
+  z-index: ${Z_INDEX.LAYOUT_FIXED};
 `;
 
 export function LeftRail() {

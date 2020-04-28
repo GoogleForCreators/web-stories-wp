@@ -29,9 +29,9 @@ const ScrollMessage = styled.div`
   width: 100%;
   margin: 40px auto;
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-size: ${({ theme }) => theme.fonts.body2.size}px;
   font-weight: ${({ theme }) => theme.fonts.body2.weight};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.gray500};
 `;

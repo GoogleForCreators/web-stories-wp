@@ -102,11 +102,6 @@ if [ "$CURRENT_URL" != "http://localhost:$HOST_PORT" ]; then
 	wp option update siteurl "http://localhost:$HOST_PORT" --quiet
 fi
 
-# Install a dummy favicon to avoid 404 errors.
-echo -e $(status_message "Installing a dummy favicon...")
-container touch /var/www/html/favicon.ico
-container chmod 767 /var/www/html/favicon.ico
-
 # Activate Web Stories plugin.
 echo -e $(status_message "Activating Web Stories plugin...")
 wp plugin activate web-stories --quiet
