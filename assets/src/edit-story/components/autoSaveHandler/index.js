@@ -38,13 +38,7 @@ function AutoSaveHandler() {
 
   const [didAutoSave, setDidAutoSave] = useState(false);
   const timeout = useRef();
-
-  // @todo This is temporary to ensure only draft gets auto-saved,
-  // until the logic for other statuses has been decided.
   const isDraft = 'draft' === status;
-  if (!isDraft) {
-    return null;
-  }
 
   // If autoSaveInterval is set to 0 or not defined, don't.
   if (!autoSaveInterval) {
@@ -53,12 +47,17 @@ function AutoSaveHandler() {
 
   useEffect(() => {
     // If there are new changes, mark autoSave as not done.
-    if (hasNewChanges) {
+    if (hasNewChanges && didAutoSave) {
       setDidAutoSave(false);
     }
-  }, [hasNewChanges]);
+  }, [hasNewChanges, didAutoSave]);
 
   useEffect(() => {
+    // @todo This is temporary to ensure only draft gets auto-saved,
+    // until the logic for other statuses has been decided.
+    if (!isDraft) {
+      return;
+    }
     if (timeout.current) {
       // Clear the previous timeout if there were any relevant changes meanwhile.
       clearTimeout(timeout.current);
