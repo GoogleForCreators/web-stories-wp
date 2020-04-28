@@ -27,6 +27,7 @@ import { useEffect } from 'react';
  */
 import { useFont } from '../../../app';
 import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+import { FontPropType } from '../../../types';
 
 const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
 
@@ -69,9 +70,7 @@ function FontPreview({ title, ...fontProps }) {
 
 FontPreview.propTypes = {
   title: PropTypes.string,
-  font: PropTypes.shape({
-    family: PropTypes.string,
-  }),
+  font: FontPropType,
 };
 
 export default FontPreview;
