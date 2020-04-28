@@ -70,18 +70,12 @@ function FontProvider({ children }) {
         900: __('Black', 'web-stories'),
       };
 
-      const defaultFontWeights = [{ name: fontWeightNames[400], value: 400 }];
       const currentFont = getFontByName(name);
-
-      if (!currentFont) {
-        return defaultFontWeights;
-      }
-
       const { weights } = currentFont;
 
       return weights.map((weight) => ({
         name: fontWeightNames[weight],
-        value: weight,
+        value: weight.toString(),
       }));
     },
     [getFontByName]
