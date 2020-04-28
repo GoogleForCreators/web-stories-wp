@@ -49,10 +49,10 @@ export const MenuItem = styled.li`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   display: flex;
   font-family: ${({ theme }) => theme.fonts.popoverMenu.family};
-  font-size: ${({ theme }) => theme.fonts.popoverMenu.size};
-  line-height: ${({ theme }) => theme.fonts.popoverMenu.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.popoverMenu.size}px;
+  line-height: ${({ theme }) => theme.fonts.popoverMenu.lineHeight}px;
   font-weight: ${({ theme }) => theme.fonts.popoverMenu.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.popoverMenu.letterSpacing};
+  letter-spacing: ${({ theme }) => theme.fonts.popoverMenu.letterSpacing}em;
   width: 100%;
 `;
 

@@ -21,14 +21,14 @@ import styled from 'styled-components';
 
 export const ViewHeader = styled.h1`
   font-family: ${({ theme }) => theme.fonts.heading1.family};
-  font-size: ${({ theme }) => theme.fonts.heading1.size};
-  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing};
+  font-size: ${({ theme }) => theme.fonts.heading1.size}px;
+  line-height: ${({ theme }) => theme.fonts.heading1.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing}em;
   font-weight: bold;
   margin: 0;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    font-size: ${({ theme }) => theme.fonts.heading1.minSize};
-    line-height: ${({ theme }) => theme.fonts.heading1.minLineHeight};
-    letter-spacing: ${({ theme }) => theme.fonts.heading1.minLetterSpacing};
+    font-size: ${({ theme }) => theme.fonts.heading1.minSize}px;
+    line-height: ${({ theme }) => theme.fonts.heading1.minLineHeight}px;
+    letter-spacing: ${({ theme }) => theme.fonts.heading1.minLetterSpacing}em;
   }
 `;
