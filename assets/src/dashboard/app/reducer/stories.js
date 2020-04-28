@@ -78,7 +78,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.DUPLICATE_STORY:
       return {
         ...state,
-        storiesOrderById: [...state.storiesOrderById, action.payload.id],
+        storiesOrderById: [action.payload.id, ...state.storiesOrderById],
         totalStories: state.totalStories + 1,
         stories: {
           ...state.stories,

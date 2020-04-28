@@ -171,22 +171,19 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        const response = await dataAdapter.deleteRequest(
-          `${wpApi}/${story.id}`,
-          {
-            data: story,
-          }
-        );
+        await dataAdapter.deleteRequest(`${wpApi}/${story.id}`, {
+          data: story,
+        });
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
-          payload: reshapeStoryObject(editStoryURL)(response),
+          payload: { id: story.id },
         });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [wpApi, dataAdapter]
   );
 
   const duplicateStory = useCallback(
