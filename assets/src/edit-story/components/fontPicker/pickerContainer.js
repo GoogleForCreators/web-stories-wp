@@ -34,6 +34,7 @@ import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
 import { useFont } from '../../app/font';
 import { TextInput } from '../form';
+import { GlobalFontFaces } from './util';
 
 const PickerContainer = styled.div`
   float: right;
@@ -61,7 +62,6 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   padding-bottom: 8px;
-  ${({ menuFonts }) => menuFonts};
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -212,6 +212,9 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         scrollTop -= 10;
       }
       currentVisibleIndex = Math.floor(scrollTop / 34);
+      if (currentVisibleIndex < 0) {
+        currentVisibleIndex = 0;
+      }
       if (currentVisibleIndex !== currentActiveRef.current) {
         currentActiveRef.current = currentVisibleIndex;
         setCurrentIndex(currentVisibleIndex);
@@ -282,8 +285,8 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
       <ListContainer
         ref={listContainerRef}
         aria-labelledby={__('FontPicker', 'web-stories')}
-        menuFonts={getVisibleFontFaces}
       >
+        <GlobalFontFaces menuFonts={getVisibleFontFaces} />
         {renderListWithOptions(recentUsedFonts)}
         {renderListWithOptions(fileredFonts, recentUsedFonts.length)}
         {renderListWithOptions(
