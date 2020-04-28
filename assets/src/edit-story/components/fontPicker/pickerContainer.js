@@ -180,10 +180,13 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
       .concat(includeSearchFonts)
       .slice(currentIndex, currentIndex + 10)
       .map(({ name }) => name);
-    getMenuFonts(combinedFontList).then((result) => {
-      const resultArray = result.replace(/}/g, '}},').split('},');
-      setMenuFonts(resultArray);
-    });
+
+    if (combinedFontList.length > 0) {
+      getMenuFonts(combinedFontList).then((result) => {
+        const resultArray = result.replace(/}/g, '}},').split('},');
+        setMenuFonts(resultArray);
+      });
+    }
   }, [
     currentIndex,
     getMenuFonts,
