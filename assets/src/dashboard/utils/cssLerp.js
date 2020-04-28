@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ *
+ * @param {string} start - css value with unit
+ * @param {string} end - css value with unit
+ * @param {string} progress - css variable to represent progress in range [0, 1]
+ */
 const cssLerp = (start, end, progress) => {
   return `calc(calc(calc(1 - var(${progress}, 0)) * ${start}) + calc(var(${progress}, 0) * ${end}))`;
 };

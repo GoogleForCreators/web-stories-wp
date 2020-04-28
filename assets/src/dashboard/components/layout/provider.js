@@ -33,6 +33,16 @@ const generateThreshold = (steps) => {
   return Array.from({ length: steps + 1 }, (_, i) => i / steps);
 };
 
+export const dispatchSquishEvent = (el, progress) => {
+  /**
+   * Will need a polyfill for the `CustomEvent`
+   * here If we decide to support ie.
+   */
+  const event = new CustomEvent('squish');
+  event.data = { progress };
+  el.dispatchEvent(event);
+};
+
 export const LayoutContext = createContext(null);
 
 const Provider = ({ children }) => {
@@ -51,11 +61,7 @@ const Provider = ({ children }) => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio) {
-            const event = new CustomEvent('squish');
-            event.data = {
-              progress: 1 - entry.intersectionRatio,
-            };
-            squishDriverEl.dispatchEvent(event);
+            dispatchSquishEvent(squishDriverEl, 1 - entry.intersectionRatio);
           }
         });
       },

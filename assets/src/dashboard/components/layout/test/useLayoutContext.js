@@ -27,65 +27,24 @@ import LayoutProvider from '../provider';
 import useLayoutContext from '../useLayoutContext';
 
 describe('useLayoutContext()', () => {
-  it('should throw an error if used oustide LayoutProvider', () => {
-    expect(renderHook(() => useLayoutContext())).toThrow(Error);
+  it('should throw an error if used oustide Layout.Provider', () => {
+    expect(() => {
+      const {
+        // eslint-disable-next-line no-unused-vars
+        result: { current },
+      } = renderHook(() => useLayoutContext());
+    }).toThrow(
+      Error('useLayoutContext() must be used within a <Layout.Provider />')
+    );
   });
 
   it('should not throw an error if used inside LayoutProvider', () => {
-    expect(
-      renderHook({
-        callback: () => useLayoutContext(),
-        options: {
-          wrapper: LayoutProvider,
-        },
-      })
-    ).not.toThrow(Error);
+    const { result } = renderHook(() => useLayoutContext(), {
+      wrapper: LayoutProvider,
+    });
+    expect(result.current.error).toBeUndefined();
   });
 
   it.todo('has a setable squish height');
-
-  it.todo('is subscribable to squish events', () => {
-    const { result } = renderHook({
-      callback: () => useLayoutContext(),
-      options: {
-        wrapper: LayoutProvider,
-      },
-    });
-
-    const listener = jest.fn();
-    result.addSquishListener(listener);
-
-    /**
-     * @todo find way to get SquishDriver DOM node and fire event below:
-     * const event = new CustomEvent('squish', {
-     * progress: 1,
-     * });
-     * squishDriverEl.dispatchEvent(event);
-     */
-
-    expect(listener).toHaveBeenCalledTimes(1);
-  });
-
-  it.todo('can unsubscribe from squish events', () => {
-    const { result } = renderHook({
-      callback: () => useLayoutContext(),
-      options: {
-        wrapper: LayoutProvider,
-      },
-    });
-
-    const listener = jest.fn();
-    result.addSquishListener(listener);
-    result.removeSquishListener(listener);
-
-    /**
-     * @todo find way to get SquishDriver DOM node and fire event below:
-     * const event = new CustomEvent('squish', {
-     * progress: 1,
-     * });
-     * squishDriverEl.dispatchEvent(event);
-     */
-
-    expect(listener).toHaveBeenCalledTimes(0);
-  });
+  it.todo('has a data.progress property on squish events');
 });

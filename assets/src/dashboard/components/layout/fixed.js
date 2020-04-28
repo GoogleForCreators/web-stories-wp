@@ -30,7 +30,16 @@ const FixedContent = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 3;
   overflow: hidden;
+
+  /**
+   * This is an absolutley positioned full size
+   * overlay over the scrollable content. being
+   * such, we don't want it to block pointer
+   * events to the scrollable and squishable
+   * content.
+   */
   pointer-events: none;
 
   /**
