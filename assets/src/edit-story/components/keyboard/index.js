@@ -41,11 +41,10 @@ const NON_EDITABLE_INPUT_TYPES = [
 
 const globalRef = createRef();
 
-function getGlobalRef() {
+function setGlobalRef() {
   if (!globalRef.current) {
     globalRef.current = document;
   }
-  return globalRef;
 }
 
 /**
@@ -147,7 +146,7 @@ export function useGlobalKeyDownEffect(
   callback,
   deps = undefined
 ) {
-  const globalRef = getGlobalRef();
+  setGlobalRef();
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -161,7 +160,7 @@ export function useGlobalKeyUpEffect(
   callback,
   deps = undefined
 ) {
-  const globalRef = getGlobalRef();
+  setGlobalRef();
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
