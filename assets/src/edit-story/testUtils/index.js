@@ -15,3 +15,6 @@
  */
 
 export { default as renderWithTheme } from './renderWithTheme';
+export * from './queryByAriaLabel';
+export * from './queryByAutoAdvanceAfter';
+export * from './queryById';

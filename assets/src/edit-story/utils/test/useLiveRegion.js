@@ -17,18 +17,13 @@
 /**
  * External dependencies
  */
-import { makeSingleQuery, queryAllByAttribute } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
  */
 import useLiveRegion from '../useLiveRegion';
-
-const queryById = makeSingleQuery(
-  (container, id) => queryAllByAttribute('id', container, id),
-  (c, id) => `Found multiple elements with the ID: ${id}`
-);
+import { queryById } from '../../testUtils';
 
 describe('useLiveRegion', () => {
   it('should add message to live region', () => {
