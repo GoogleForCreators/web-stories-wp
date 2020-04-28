@@ -33,6 +33,7 @@ import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import {
+  BEZIER,
   BUTTON_TYPES,
   primaryPaths,
   secondaryPaths,
@@ -79,8 +80,7 @@ export const LeftRailContainer = styled.nav`
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.25s linear;
+  transition: transform 0.25s ${BEZIER.outCubic}, visibility 0.25s linear;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     padding-left: 0;
