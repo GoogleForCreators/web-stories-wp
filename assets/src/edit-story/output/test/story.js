@@ -15,12 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
  * Internal dependencies
  */
 import StoryOutput from '../story';
 
 describe('Story output', () => {
-  it('requires at least one page', async () => {
+  it('should include Google Fonts stylesheet', () => {
     const props = {
       id: '123',
       backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
@@ -38,7 +43,60 @@ describe('Story output', () => {
         link: 'https://example.com/story',
         autoAdvance: false,
       },
-      pages: [],
+      pages: [
+        {
+          id: '123',
+          backgroundColor: {
+            type: 'solid',
+            color: { r: 255, g: 255, b: 255 },
+          },
+          page: {
+            id: '123',
+          },
+          elements: [
+            {
+              type: 'text',
+              id: '123',
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              content: 'Hello World',
+              color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+              padding: {
+                horizontal: 0,
+                vertical: 0,
+              },
+              font: {
+                family: 'Roboto',
+                service: 'fonts.google.com',
+              },
+              fontStyle: 'italic',
+            },
+            {
+              type: 'text',
+              id: '123',
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              content: 'Hello World',
+              color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+              padding: {
+                horizontal: 0,
+                vertical: 0,
+              },
+              font: {
+                family: 'Lato',
+                service: 'fonts.google.com',
+              },
+              fontWeight: 400,
+            },
+          ],
+        },
+      ],
       metadata: {
         publisher: {
           name: 'Publisher Name',
@@ -49,10 +107,46 @@ describe('Story output', () => {
       },
     };
 
-    await expect(<StoryOutput {...props} />).not.toBeValidAMP();
+    const content = renderToStaticMarkup(<StoryOutput {...props} />);
+
+    expect(content).toContain(
+      '<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Aital%401&amp;family=Lato" rel="stylesheet"/>'
+    );
   });
 
   describe('AMP validation', () => {
+    it('requires at least one page', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        story: {
+          title: 'Example',
+          slug: 'example',
+          status: 'publish',
+          author: 123,
+          date: '123',
+          modified: '123',
+          excerpt: '123',
+          featuredMedia: 123,
+          publisherLogoUrl: 'https://example.com/logo.png',
+          password: '123',
+          link: 'https://example.com/story',
+          autoAdvance: false,
+        },
+        pages: [],
+        metadata: {
+          publisher: {
+            name: 'Publisher Name',
+            logo: 'https://example.com/logo.png',
+          },
+          fallbackPoster: 'https://example.com/logo.png',
+          logoPlaceholder: 'https://example.com/logo.png',
+        },
+      };
+
+      await expect(<StoryOutput {...props} />).not.toBeValidAMP();
+    });
+
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',
