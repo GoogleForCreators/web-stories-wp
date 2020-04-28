@@ -17,6 +17,9 @@
 /**
  * Given a list of Google fonts, returns a URL to embed them.
  *
+ * Uses the given list of font variants (axis tuples) to assemble the
+ * axis tag list and axis tuple list that Google Fonts expects.
+ *
  * @see https://developers.google.com/fonts/docs/css2
  *
  * @param {Array<Object<string, Array<number, number>>>} fonts List of font objects.
@@ -30,6 +33,7 @@ function getGoogleFontURL(fonts) {
     // [ [ 1, 400 ], [ 0, 700 ] ] -> [ ital, wght ]
     const axes = variants
       .reduce((acc, [fontStyle, fontWeight]) => {
+        // Uses axis names as listed on https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts.
         if (fontStyle === 1 && !acc.includes('ital')) {
           acc.push('ital');
         }
@@ -38,7 +42,7 @@ function getGoogleFontURL(fonts) {
         }
         return acc;
       }, [])
-      .sort();
+      .sort(); // Need to be sorted alphabetically.
 
     let family = familyName;
 

@@ -42,7 +42,11 @@ const getFontDeclarations = (pages) => {
       const serviceMap = map.get(service) || new Map();
       map.set(service, serviceMap);
 
-      // Example: [1, 700] for bold + italic.
+      // A variant ("axis tuple" in Google Fonts terms) is a combination
+      // of font style and weight for a given font.
+      // The first item is a flag for italic.
+      // The second item is the numeric font weight.
+      // Example: [1, 700] for italic + bold
       const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
 
       const fontObj = serviceMap.get(family) || { family, variants: [] };
