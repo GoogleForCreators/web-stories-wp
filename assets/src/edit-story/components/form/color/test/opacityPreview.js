@@ -17,13 +17,11 @@
 /**
  * External dependencies
  */
-import { render, waitFor, act, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { waitFor, act, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import createSolid from '../../../../utils/createSolid';
 import OpacityPreview from '../opacityPreview';
 import getPreviewOpacityMock from '../getPreviewOpacity';

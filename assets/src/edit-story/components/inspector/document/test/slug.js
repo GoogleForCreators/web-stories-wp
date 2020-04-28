@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import theme from '../../../../theme';
 import SlugPanel from '../slug';
 import { renderWithTheme } from '../../../../testUtils';
 

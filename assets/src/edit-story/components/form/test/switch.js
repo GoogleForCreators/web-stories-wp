@@ -90,7 +90,9 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText } = renderWithTheme(<Switch onChange={onChange} disabled />);
+    const { getByText } = renderWithTheme(
+      <Switch onChange={onChange} disabled />
+    );
 
     fireEvent.click(getByText(onLabel));
     fireEvent.click(getByText(offLabel));
