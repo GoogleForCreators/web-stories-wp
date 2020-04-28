@@ -172,6 +172,111 @@ jobs:
           # Todo: compare final plugin ZIP file size too.
           build-script: 'build:js'
 
+  unit-js:
+    name: JavaScript Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Setup cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: TRUE
+
+      - name: Run JavaScript unit tests
+        run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+
+      - name: Uplaod code coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          file: build/logs/lcov.info
+
+  unit-php:
+    name: PHP Unit Tests (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD:
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      continue-on-error: ${{ matrix.experimental }}
+      strategy:
+        matrix:
+          php: ['7.4', '7.0', '5.6']
+          wp: ['latest']
+          include:
+            - php: '8.0'
+              wp: 'trunk'
+              experimental: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysql
+          coverage: xdebug
+          tools: composer, cs2pr
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Setup cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Start mysql service
+        run: sudo /etc/init.d/mysql start
+
+      - name: Set up tests
+        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }}
+
+      - name: Run tests
+        run: npm run test:php
+        if: ${{ matrix.wp !== 'latest' && matrix.php !== 7.4 }}
+
+      - name: Run tests with coverage
+        run: npm run test:php -- --coverage-clover build/logs/clover.xml
+        if: ${{ matrix.wp === 'latest' && matrix.php === 7.4 }}
+
+      - name: Uplaod code coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          file: build/logs/clover.xml
+        if: ${{ matrix.wp === 'latest' && matrix.php === 7.4 }}
+
   build:
     name: Build plugin
     runs-on: ubuntu-latest
