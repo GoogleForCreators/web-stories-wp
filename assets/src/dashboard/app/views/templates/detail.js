@@ -113,10 +113,13 @@ function TemplateDetail() {
     };
   }, [template]);
 
-  const activeTemplateIndex = useMemo(
-    () => orderedTemplates?.findIndex((t) => t.id === template?.id),
-    [template, orderedTemplates]
-  );
+  const activeTemplateIndex = useMemo(() => {
+    if (orderedTemplates.length <= 0) {
+      return 0;
+    }
+
+    return orderedTemplates.findIndex((t) => t.id === template?.id);
+  }, [template, orderedTemplates]);
 
   const previewPages = useMemo(
     () =>
