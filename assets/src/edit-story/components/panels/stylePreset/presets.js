@@ -32,6 +32,7 @@ import { ReactComponent as Remove } from '../../../icons/remove.svg';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
+import { StylePresetPropType } from '../../../types';
 import PresetGroup from './presetGroup';
 import { generatePresetStyle } from './utils';
 
@@ -46,6 +47,7 @@ const presetCSS = css`
   padding: 0;
   font-size: 13px;
   position: relative;
+  cursor: pointer;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
@@ -81,7 +83,7 @@ const HighLight = styled.span`
 
 function Presets({
   stylePresets,
-  getEventHandlers,
+  handleOnClick,
   isEditMode,
   isText,
   textContent = 'Text',
@@ -112,7 +114,10 @@ function Presets({
       <Color
         tabIndex={activeIndex === i ? 0 : -1}
         color={color}
-        {...getEventHandlers(color)}
+        onClick={(e) => {
+          e.preventDefault();
+          handleOnClick(color);
+        }}
         aria-label={
           isEditMode
             ? __('Delete color preset', 'web-stories')
@@ -129,7 +134,10 @@ function Presets({
       <Style
         tabIndex={activeIndex === i || (!activeIndex && i === 0) ? 0 : -1}
         styles={generatePresetStyle(style, true)}
-        {...getEventHandlers(style)}
+        onClick={(e) => {
+          e.preventDefault();
+          handleOnClick(style);
+        }}
         aria-label={
           isEditMode
             ? __('Delete style preset', 'web-stories')
@@ -169,12 +177,8 @@ function Presets({
 }
 
 Presets.propTypes = {
-  stylePresets: PropTypes.shape({
-    fillColors: PropTypes.array,
-    textColors: PropTypes.array,
-    textStyles: PropTypes.array,
-  }).isRequired,
-  getEventHandlers: PropTypes.func.isRequired,
+  stylePresets: StylePresetPropType.isRequired,
+  handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   isText: PropTypes.bool.isRequired,
   textContent: PropTypes.string,

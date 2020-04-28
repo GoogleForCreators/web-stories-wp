@@ -84,7 +84,7 @@ export const _default = () => {
     <Wrapper>
       <Presets
         stylePresets={stylePresets}
-        getEventHandlers={() => {}}
+        handlePresetClick={() => {}}
         isEditMode={false}
         isText={true}
         textContent={'Hello, World!'}

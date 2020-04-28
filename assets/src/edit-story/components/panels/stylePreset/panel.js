@@ -42,15 +42,15 @@ function StylePresetPanel() {
   const { fillColors, textColors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const isType = (elType) => {
+  const areAllType = (elType) => {
     return (
       selectedElements.length > 0 &&
       selectedElements.every(({ type }) => elType === type)
     );
   };
 
-  const isText = isType('text');
-  const isShape = isType('shape');
+  const isText = areAllType('text');
+  const isShape = areAllType('shape');
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
@@ -149,23 +149,10 @@ function StylePresetPanel() {
     }
   }, [hasPresets, isEditMode]);
 
-  // @todo This is temporary until the presets haven't been implemented fully with multi-selection.
+  // Text and shape presets are not compatible.
   if (!isText && !isShape && selectedElements.length > 1) {
     return null;
   }
-
-  const getEventHandlers = (preset) => {
-    return {
-      onClick() {
-        handlePresetClick(preset);
-      },
-      onKeyDown(evt) {
-        if (evt.keyCode === 'Enter' || evt.keyCode === 'Space') {
-          handlePresetClick(preset);
-        }
-      },
-    };
-  };
 
   const handlePresetClick = (preset) => {
     if (isEditMode) {
@@ -191,7 +178,7 @@ function StylePresetPanel() {
       <Presets
         isEditMode={isEditMode}
         stylePresets={stylePresets}
-        getEventHandlers={getEventHandlers}
+        handleOnClick={handlePresetClick}
         isText={isText}
         textContent={isText ? selectedElements[0].content : ''}
       />

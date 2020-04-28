@@ -52,6 +52,12 @@ export const PatternPropType = PropTypes.shape({
   }),
 });
 
+export const StylePresetPropType = PropTypes.shape({
+  fillColors: PropTypes.array,
+  textColors: PropTypes.array,
+  textStyles: PropTypes.array,
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({

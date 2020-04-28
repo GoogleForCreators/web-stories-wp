@@ -39,12 +39,12 @@ function setupPresets(props = {}) {
     textStyles: [],
     ...stylePresets,
   };
-  const getEventHandlers = jest.fn();
+  const handlePresetClick = jest.fn();
   return render(
     <ThemeProvider theme={theme}>
       <Presets
         isEditMode={isEditMode}
-        getEventHandlers={getEventHandlers}
+        handlePresetClick={handlePresetClick}
         isText={isText}
         stylePresets={presets}
         textContent={textContent}

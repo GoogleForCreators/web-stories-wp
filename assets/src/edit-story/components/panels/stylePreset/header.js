@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
 import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
 import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { PanelTitle } from '../panel';
+import { StylePresetPropType } from '../../../types';
 
 const buttonCSS = css`
   border: none;
@@ -124,11 +125,7 @@ function PresetsHeader({
 }
 
 PresetsHeader.propTypes = {
-  stylePresets: PropTypes.shape({
-    fillColors: PropTypes.array,
-    textColors: PropTypes.array,
-    textStyles: PropTypes.array,
-  }).isRequired,
+  stylePresets: StylePresetPropType.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddColorPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
