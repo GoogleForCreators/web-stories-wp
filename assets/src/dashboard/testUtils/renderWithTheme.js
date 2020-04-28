@@ -25,8 +25,12 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../theme';
 
-const renderWithTheme = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
+
+const renderWithTheme = (ui, options) =>
+  render(ui, { wrapper: WithThemeProvider, ...options });
 
 export default renderWithTheme;

@@ -23,8 +23,8 @@ export const Table = styled.table`
   border-collapse: collapse;
   width: inherit;
   font-family: ${({ theme }) => theme.fonts.table.family};
-  font-size: ${({ theme }) => theme.fonts.table.size};
-  letter-spacing: ${({ theme }) => theme.fonts.table.letterSpacing};
+  font-size: ${({ theme }) => theme.fonts.table.size}px;
+  letter-spacing: ${({ theme }) => theme.fonts.table.letterSpacing}em;
 `;
 
 export const TableBody = styled.tbody``;

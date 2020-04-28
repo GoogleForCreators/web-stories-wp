@@ -17,24 +17,19 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils';
 import { Toggle } from '../';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
 
 describe('Form/Toggle', () => {
   it('should render <Toggle /> form', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = arrange(
+    const { getByTestId } = renderWithTheme(
       <Toggle value={0} onChange={onChangeMock} data-testid="toggle" />
     );
 
@@ -46,7 +41,7 @@ describe('Form/Toggle', () => {
   it('should simulate a change on <Toggle />', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = arrange(
+    const { getByTestId } = renderWithTheme(
       <Toggle
         value={1}
         checked={false}
