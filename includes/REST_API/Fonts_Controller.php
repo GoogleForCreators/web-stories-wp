@@ -147,7 +147,7 @@ class Fonts_Controller extends WP_REST_Controller {
 		}
 
 		if ( in_array( 'styles', $fields, true ) ) {
-			$data['styles'] = isset( $font['styles'] ) ? (array) $font['weights'] : $schema['properties']['styles']['default'];
+			$data['styles'] = isset( $font['styles'] ) ? (array) $font['styles'] : $schema['properties']['styles']['default'];
 		}
 
 		if ( in_array( 'variants', $fields, true ) ) {
