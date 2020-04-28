@@ -21,30 +21,29 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
 import { ReactComponent as DropUpArrowSvg } from '../../icons/dropUpArrow.svg';
-import getCurrentYAxis from '../../utils/getCurrentYAxis';
+import cssLerp from '../../utils/cssLerp';
+import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
 
 const ScrollButton = styled.button`
-  position: fixed;
+  position: absolute;
   right: 40px;
   bottom: 40px;
   height: 50px;
   width: 50px;
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  pointer-events: ${({ isVisible }) => (isVisible ? 'auto' : 'none')};
   cursor: pointer;
   border-radius: 50%;
-  border: 1px solid transparent;
+  border: ${({ theme }) => theme.borders.transparent};
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   color: ${({ theme }) => theme.colors.gray900};
   background-color: ${({ theme }) => theme.colors.white};
-  opacity: ${({ isVisible }) => (isVisible ? 1.0 : 0)};
-  transition: opacity 0.5s linear;
+  opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
 `;
 
 // TODO needs actual SVG
@@ -54,32 +53,26 @@ const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 30, height: 40 })`
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const targetRef = useRef(null);
+  const {
+    actions: { scrollToTop, addSquishListener, removeSquishListener },
+  } = useLayoutContext();
 
-  const [handleScroll] = useDebouncedCallback(() => {
-    const hasScrolledDown = getCurrentYAxis();
-    setIsVisible(hasScrolledDown > 0);
-  }, 100);
+  useEffect(() => {
+    const isVisibleFromProgress = (event) => {
+      setIsVisible(event.data.progress > 0);
+    };
 
-  useLayoutEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  });
-
-  const handleScrollBackToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+    addSquishListener(isVisibleFromProgress);
+    return () => {
+      removeSquishListener(isVisibleFromProgress);
+    };
+  }, [addSquishListener, removeSquishListener]);
 
   return (
     <ScrollButton
       data-testid="scroll-to-top-button"
-      ref={targetRef}
       isVisible={isVisible}
-      onClick={handleScrollBackToTop}
+      onClick={scrollToTop}
       title={__('scroll back to top', 'web-stories')}
     >
       <DropUpArrowIcon aria-hidden={true} />

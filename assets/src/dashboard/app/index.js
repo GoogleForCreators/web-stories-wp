@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useContext } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -29,7 +30,7 @@ import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES } from '../constants';
 import { AppFrame, LeftRail, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider } from './router';
+import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
   MyStoriesView,
@@ -37,6 +38,39 @@ import {
   TemplatesGalleryView,
   SavedTemplatesView,
 } from './views';
+
+const AppContent = () => {
+  const {
+    state: { currentPath },
+  } = useContext(RouterContext);
+
+  const hideLeftRail = matchPath(currentPath, APP_ROUTES.TEMPLATE_DETAIL);
+
+  return (
+    <AppFrame>
+      {!hideLeftRail && <LeftRail />}
+      <PageContent fullWidth={hideLeftRail}>
+        <Route
+          exact
+          path={APP_ROUTES.MY_STORIES}
+          component={<MyStoriesView />}
+        />
+        <Route
+          path={APP_ROUTES.TEMPLATE_DETAIL}
+          component={<TemplateDetail />}
+        />
+        <Route
+          path={APP_ROUTES.TEMPLATES_GALLERY}
+          component={<TemplatesGalleryView />}
+        />
+        <Route
+          path={APP_ROUTES.SAVED_TEMPLATES}
+          component={<SavedTemplatesView />}
+        />
+      </PageContent>
+    </AppFrame>
+  );
+};
 
 function App({ config }) {
   const { isRTL } = config;
@@ -48,28 +82,7 @@ function App({ config }) {
             <RouterProvider>
               <GlobalStyle />
               <KeyboardOnlyOutline />
-              <AppFrame>
-                <LeftRail />
-                <PageContent>
-                  <Route
-                    exact
-                    path={APP_ROUTES.MY_STORIES}
-                    component={<MyStoriesView />}
-                  />
-                  <Route
-                    path={APP_ROUTES.TEMPLATE_DETAIL}
-                    component={<TemplateDetail />}
-                  />
-                  <Route
-                    path={APP_ROUTES.TEMPLATES_GALLERY}
-                    component={<TemplatesGalleryView />}
-                  />
-                  <Route
-                    path={APP_ROUTES.SAVED_TEMPLATES}
-                    component={<SavedTemplatesView />}
-                  />
-                </PageContent>
-              </AppFrame>
+              <AppContent />
             </RouterProvider>
           </ApiProvider>
         </ConfigProvider>
