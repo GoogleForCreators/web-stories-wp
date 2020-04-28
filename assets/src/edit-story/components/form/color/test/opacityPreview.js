@@ -42,7 +42,9 @@ function arrange(customProps = {}) {
     <OpacityPreview {...props} />
   );
   const element = queryByLabelText('Opacity');
-  return { element, onChange, rerender };
+  const wrappedRerender = (extraProps) =>
+    rerender(<OpacityPreview {...props} {...extraProps} />);
+  return { element, onChange, rerender: wrappedRerender };
 }
 
 describe('<OpacityPreview />', () => {
