@@ -20,6 +20,10 @@
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
 
+function defaultForUndefined(value, def) {
+  return value === undefined ? def : value;
+}
+
 function VideoOutput({ element, box }) {
   const { resource, loop } = element;
 
@@ -28,13 +32,12 @@ function VideoOutput({ element, box }) {
     src: resource.src,
   };
 
-  const _defaultForUndefined = (s, d) => (s === undefined ? d : s);
   const props = {
     autoPlay: 'autoplay',
-    poster: _defaultForUndefined(element.poster, resource.poster),
-    artwork: _defaultForUndefined(element.poster, resource.poster),
-    title: _defaultForUndefined(element.title, resource.title),
-    alt: _defaultForUndefined(element.alt, resource.alt),
+    poster: defaultForUndefined(element.poster, resource.poster),
+    artwork: defaultForUndefined(element.poster, resource.poster),
+    title: defaultForUndefined(element.title, resource.title),
+    alt: defaultForUndefined(element.alt, resource.alt),
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
   };

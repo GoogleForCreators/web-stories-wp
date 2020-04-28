@@ -42,20 +42,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
 
-  const _defaultForUndefined = (s, d) => (s === undefined ? d : s);
-
-  const poster = _defaultForUndefined(
-    getCommonValue(selectedElements, 'poster'),
-    resource.poster
-  );
-  const title = _defaultForUndefined(
-    getCommonValue(selectedElements, 'title'),
-    resource.title
-  );
-  const alt = _defaultForUndefined(
-    getCommonValue(selectedElements, 'alt'),
-    resource.alt
-  );
+  const poster = getCommonValue(selectedElements, 'poster', resource.poster);
+  const title = getCommonValue(selectedElements, 'title', resource.title);
+  const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   const handleChangePoster = useCallback(
     (image) => {
