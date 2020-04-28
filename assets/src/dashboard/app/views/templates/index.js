@@ -148,7 +148,6 @@ function TemplatesGallery() {
             allDataLoadedMessage={__('No more templates', 'web-stories')}
             onLoadMore={handleNewPageRequest}
           />
-          <ScrollToTop />
         </BodyWrapper>
       );
     }
@@ -219,6 +218,9 @@ function TemplatesGallery() {
               />
             </Layout.Squishable>
             <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
           </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
