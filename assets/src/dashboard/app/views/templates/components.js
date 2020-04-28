@@ -19,6 +19,11 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { Button } from '../../../components';
+
 export const ContentContainer = styled.div`
   ${({ theme }) => `
     padding: 0 ${theme.pageGutter.large.desktop}px;
@@ -45,11 +50,13 @@ export const ColumnContainer = styled.section`
 `;
 
 export const DetailContainer = styled.div`
+  width: 100%;
   padding: 40px 20px 0;
 `;
 
 export const Column = styled.div`
   ${({ theme }) => `
+    display: flex;
     width: 50%;
 
     & + & {
@@ -110,4 +117,19 @@ export const MetadataContainer = styled.fieldset`
       opacity: 1 !important;
     }
   }
+`;
+
+export const NavButton = styled(Button)`
+  ${({ theme }) => `
+    display: block;
+    align-self: center;
+    min-width: 0;
+    height: 40%;
+    color: ${theme.colors.gray900};
+    background-color: transparent;
+
+    &:hover, &:active, &:focus {
+      color: ${theme.colors.bluePrimary};
+    }
+  `}
 `;

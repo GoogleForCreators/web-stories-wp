@@ -71,12 +71,12 @@ export const APP_ROUTES = {
 export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
   {
-    value: APP_ROUTES.TEMPLATES_GALLERY,
-    label: __('Explore Templates', 'web-stories'),
-  },
-  {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: __('Saved Templates', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.TEMPLATES_GALLERY,
+    label: __('Explore Templates', 'web-stories'),
   },
 ];
 
@@ -106,6 +106,7 @@ export const VIEW_STYLE = {
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   UP_DOWN_ARROW: { width: 16, height: 16 },
+  LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
