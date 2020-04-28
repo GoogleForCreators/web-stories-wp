@@ -45,7 +45,7 @@ export const Panel = styled.div`
   transform: ${({ isOpen }) =>
     isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
   z-index: ${Z_INDEX.POPOVER_PANEL};
-  max-width: ${({ theme }) => theme.popoverPanel.desktopWidth}px;
+  width: ${({ theme }) => theme.popoverPanel.desktopWidth}px;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     width: ${({ theme }) => theme.popoverPanel.tabletWidth}px;
