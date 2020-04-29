@@ -24,6 +24,7 @@ import {
   getTextPresets,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 describe('Panels/StylePreset/utils', () => {
   const TEST_COLOR = {
@@ -44,6 +45,7 @@ describe('Panels/StylePreset/utils', () => {
     color: TEST_COLOR_2,
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
+    font: TEXT_ELEMENT_DEFAULT_FONT,
   };
   it('should return matching color object', () => {
     const stylePresets = {
@@ -110,6 +112,7 @@ describe('Panels/StylePreset/utils', () => {
           b: 1,
         },
       },
+      font: TEXT_ELEMENT_DEFAULT_FONT,
     };
     expect(findMatchingStylePreset(stylePreset, stylePresets)).toStrictEqual(
       stylePreset
@@ -136,6 +139,7 @@ describe('Panels/StylePreset/utils', () => {
           b: 1,
         },
       },
+      font: TEXT_ELEMENT_DEFAULT_FONT,
     };
     expect(
       findMatchingStylePreset(stylePreset, stylePresets)
@@ -145,14 +149,16 @@ describe('Panels/StylePreset/utils', () => {
   it('should get correct text presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
-      fontFamily: 'Foo',
-      fontFallback: ['Bar'],
+      font: {
+        family: 'Foo',
+        fallbacks: ['Bar'],
+      },
     };
     const elements = [
       {
         type: 'text',
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-        fontFamily: 'Roboto',
+        font: TEXT_ELEMENT_DEFAULT_FONT,
         foo: 'bar',
         padding: {
           vertical: 0,
@@ -182,14 +188,16 @@ describe('Panels/StylePreset/utils', () => {
   it('should not consider existing presets as new', () => {
     const stylePreset = {
       ...STYLE_PRESET,
-      fontFamily: 'Foo',
-      fontFallback: ['Bar'],
+      font: {
+        family: 'Foo',
+        fallbacks: ['Bar'],
+      },
     };
     const elements = [
       {
         type: 'text',
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-        fontFamily: 'Roboto',
+        font: TEXT_ELEMENT_DEFAULT_FONT,
         foo: 'bar',
         color: TEST_COLOR,
         padding: {

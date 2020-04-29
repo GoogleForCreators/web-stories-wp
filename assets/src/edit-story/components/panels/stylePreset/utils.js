@@ -22,6 +22,7 @@ import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import convertToCSS from '../../../utils/convertToCSS';
 import objectPick from '../../../utils/objectPick';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
@@ -44,17 +45,12 @@ export function findMatchingStylePreset(preset, stylePresets) {
 }
 
 export function generatePresetStyle(preset, prepareForCSS) {
-  const {
-    color,
-    backgroundColor,
-    fontFamily,
-    fontFallback,
-    backgroundTextMode,
-  } = preset;
+  const { color, backgroundColor, font, backgroundTextMode } = preset;
   let style = {
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    fontFamily: generateFontFamily(font),
     ...generatePatternStyles(color, 'color'),
   };
+
   // If it's highlight mode then the highlight is displayed on the text wrapper instead.
   if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     style = {
@@ -65,10 +61,10 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-function hasStylePreset({ fontFamily, backgroundTextMode }) {
-  const defaultFont = 'Roboto';
+function hasStylePreset({ font, backgroundTextMode }) {
+  const { family } = font;
   return (
-    defaultFont !== fontFamily ||
+    TEXT_ELEMENT_DEFAULT_FONT.family !== family ||
     backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
   );
 }
@@ -87,8 +83,7 @@ export function getTextPresets(elements, stylePresets) {
           'color',
           'backgroundColor',
           'backgroundTextMode',
-          'fontFamily',
-          'fontFallback',
+          'font',
         ]);
       })
       .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),

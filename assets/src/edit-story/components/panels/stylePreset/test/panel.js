@@ -27,6 +27,7 @@ import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { getShapePresets, getTextPresets } from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 jest.mock('../utils');
 
 function setupPanel(extraStylePresets, extraStateProps) {
@@ -94,7 +95,6 @@ describe('Panels/StylePreset', () => {
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
   };
-  const DEFAULT_FONT_FAMILY = 'Roboto';
 
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
@@ -157,7 +157,7 @@ describe('Panels/StylePreset', () => {
             type: 'text',
             color: [TEST_COLOR_2],
             backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-            fontFamily: DEFAULT_FONT_FAMILY,
+            font: TEXT_ELEMENT_DEFAULT_FONT,
           },
         ],
       };

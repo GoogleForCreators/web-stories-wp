@@ -23,6 +23,7 @@
 import Presets from '../presets';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 function setupPresets(props = {}) {
   const {
@@ -68,6 +69,7 @@ describe('stylePresets/Presets', () => {
     color: TEST_COLOR_2,
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
+    font: TEXT_ELEMENT_DEFAULT_FONT,
   };
   it('should not display labels when no presets exist', () => {
     const { queryByLabelText } = setupPresets();
