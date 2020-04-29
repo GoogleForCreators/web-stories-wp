@@ -127,6 +127,7 @@ export const NavButton = styled(Button)`
     height: 40%;
     color: ${theme.colors.gray900};
     background-color: transparent;
+    border: none;
 
     &:hover, &:active, &:focus {
       color: ${theme.colors.bluePrimary};
