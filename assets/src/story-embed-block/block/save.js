@@ -27,8 +27,12 @@ import StoryPlayer from './storyPlayer';
 function save({ attributes }) {
   const { url, title, poster, width, height, align = 'none' } = attributes;
 
+  if (!url || !title) {
+    return null;
+  }
+
   return (
-    <div className={`align${align}`}>
+    <div className={`wp-block-web-stories-embed align${align}`}>
       <StoryPlayer
         url={url}
         title={title}

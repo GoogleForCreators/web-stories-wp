@@ -34,7 +34,7 @@ describe('save', () => {
     const { container } = render(<Save attributes={{ url, title, poster }} />);
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="alignnone"
+        class="wp-block-web-stories-embed alignnone"
       >
         <amp-story-player>
           <a
@@ -46,5 +46,15 @@ describe('save', () => {
         </amp-story-player>
       </div>
     `);
+  });
+
+  it('should render nothing if url is missing', () => {
+    const { container } = render(<Save attributes={{ title, poster }} />);
+    expect(container.firstChild).toMatchInlineSnapshot(`null`);
+  });
+
+  it('should render nothing if title is missing', () => {
+    const { container } = render(<Save attributes={{ url, poster }} />);
+    expect(container.firstChild).toMatchInlineSnapshot(`null`);
   });
 });
