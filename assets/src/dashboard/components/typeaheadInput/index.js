@@ -35,15 +35,13 @@ import useFocusOut from '../../utils/useFocusOut';
 import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
-  width: 272px;
-  position: static;
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? theme.border.expandedTypeaheadRadius : 'none'};
+    isOpen ? `${theme.expandedTypeahead.borderRadius}px` : 'none'};
   border: none;
   box-shadow: ${({ theme, isOpen }) =>
-    isOpen ? theme.boxShadow.expandedTypeahead : 'none'};
+    isOpen ? theme.expandedTypeahead.boxShadow : 'none'};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
@@ -58,28 +56,23 @@ SearchContainer.propTypes = {
 const InputContainer = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row;
   width: 100%;
-  height: 48px;
-  padding: 16px;
-  align-items: center;
+  padding: 5px 8px;
   border-radius: ${({ theme, isOpen }) =>
-    isOpen ? 'none' : theme.border.typeaheadRadius};
+    isOpen ? 'none' : `${theme.typeahead.borderRadius}px`};
   border: none;
-  border-bottom: ${({ theme, isOpen }) =>
-    isOpen && `1px solid ${theme.colors.gray50}`};
+  border-bottom: ${({ theme, isOpen }) => isOpen && theme.borders.gray50};
   color: ${({ theme }) => theme.colors.gray500};
-  background-color: ${({ theme, isOpen }) =>
-    isOpen ? theme.colors.white : theme.colors.gray25};
+  background-color: ${({ theme }) => theme.colors.gray50};
 `;
 InputContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
 const ControlVisibilityContainer = styled.div`
-  flex-grow: 1;
+  position: relative;
   display: flex;
-  justify-content: flex-start;
+  flex-grow: 1;
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
@@ -91,20 +84,19 @@ ControlVisibilityContainer.propTypes = {
 };
 
 const StyledInput = styled.input`
-  align-self: center;
-  border: none;
-  background-color: transparent;
-  text-overflow: ellipsis;
-  padding: 0 12px;
-  margin: auto 0;
+  position: relative;
   height: 100%;
-  flex-grow: 1;
+  width: 100%;
+  padding: 0 0 0 7.5px;
   font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size};
-  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing};
+  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size}px;
+  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing}em;
   font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
-  color: ${({ theme }) => theme.colors.gray500};
+  text-overflow: ellipsis;
+  color: ${({ theme }) => theme.colors.gray};
+  background-color: transparent;
+  border: none;
 
   &:disabled {
     cursor: default;
@@ -124,9 +116,9 @@ const SearchButton = styled.button`
   border: none;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.gray300};
+  height: 18px;
   & > svg {
-    width: 16px;
-    height: 16px;
+    height: 100%;
   }
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
@@ -135,15 +127,17 @@ const SearchButton = styled.button`
 `;
 
 const ClearInputButton = styled.button`
-  align-self: flex-end;
   border: none;
   background-color: transparent;
   margin: auto 0;
-  width: 14px;
-  height: 14px;
   padding: 0;
   color: ${({ theme }) => theme.colors.gray600};
   cursor: pointer;
+  height: 14px;
+
+  & > svg {
+    height: 100%;
+  }
 `;
 
 const TypeaheadInput = ({
@@ -258,16 +252,16 @@ const TypeaheadInput = ({
             }}
             placeholder={placeholder}
           />
-          {inputValue.length > 0 && !isMenuOpen && (
-            <ClearInputButton
-              data-testid="clear-search"
-              onClick={handleInputClear}
-              aria-label={__('Clear Input', 'web-stories')}
-            >
-              <CloseIcon />
-            </ClearInputButton>
-          )}
         </ControlVisibilityContainer>
+        {inputValue.length > 0 && !isMenuOpen && (
+          <ClearInputButton
+            data-testid="clear-search"
+            onClick={handleInputClear}
+            aria-label={__('Clear Input', 'web-stories')}
+          >
+            <CloseIcon />
+          </ClearInputButton>
+        )}
       </InputContainer>
 
       {isMenuOpen && (

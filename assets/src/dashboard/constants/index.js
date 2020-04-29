@@ -51,6 +51,8 @@ export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
+  LAYOUT_SQUISHABLE: 2,
+  LAYOUT_FIXED: 2,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
@@ -71,12 +73,12 @@ export const APP_ROUTES = {
 export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
   {
-    value: APP_ROUTES.TEMPLATES_GALLERY,
-    label: __('Explore Templates', 'web-stories'),
-  },
-  {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: __('Saved Templates', 'web-stories'),
+  },
+  {
+    value: APP_ROUTES.TEMPLATES_GALLERY,
+    label: __('Explore Templates', 'web-stories'),
   },
 ];
 
@@ -106,6 +108,7 @@ export const VIEW_STYLE = {
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   UP_DOWN_ARROW: { width: 16, height: 16 },
+  LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
@@ -194,3 +197,4 @@ export const STORY_SORT_MENU_ITEMS = [
 
 export * from './animation';
 export * from './direction';
+export * from './templates';

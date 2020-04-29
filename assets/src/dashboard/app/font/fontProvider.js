@@ -30,7 +30,9 @@ import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFi
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
   const {
-    actions: { getAllFonts },
+    actions: {
+      fontApi: { getAllFonts },
+    },
   } = useContext(ApiContext);
 
   const getFontBy = useCallback(
