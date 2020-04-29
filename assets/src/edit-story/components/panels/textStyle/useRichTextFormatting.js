@@ -23,6 +23,7 @@ import { useMemo, useCallback } from 'react';
  * Internal dependencies
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import convertToCSS from '../../../utils/convertToCSS';
 import useRichText from '../../richText/useRichText';
 import {
   getHTMLFormatters,
@@ -30,18 +31,42 @@ import {
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 
+/**
+ * Equality function for *primitives and color patterns* only.
+ *
+ * @param {any} a  First value to compare
+ * @param {any} b  Second value to compare
+ * @return {boolean} True if equal
+ */
 function isEqual(a, b) {
-  const isPattern = typeof a === 'object' && (a.type || a.color);
+  // patterns are truthy objects with either a type or a color attribute.
+  // Note: `null` is a falsy object, that would cause an error if first
+  // check is removed.
+  const isPattern = a && typeof a === 'object' && (a.type || a.color);
   if (!isPattern) {
     return a === b;
   }
 
-  const aStyle = generatePatternStyles(a);
-  const bStyle = generatePatternStyles(b);
-  const keys = Object.keys(aStyle);
-  return keys.every((key) => aStyle[key] === bStyle[key]);
+  const aStyle = convertToCSS(generatePatternStyles(a));
+  const bStyle = convertToCSS(generatePatternStyles(b));
+  return aStyle === bStyle;
 }
 
+/**
+ * A function to gather the text info for multiple elements into a single
+ * one.
+ *
+ * The text info object contains a number of values that can be either
+ * primitives or a color object.
+ *
+ * If any two objects for the same key have different values, return
+ * `MULTIPLE_VALUE`. Uses `isEqual` to determine this equality.`
+ *
+ * @param {Object} reduced  Currently reduced object from previous elements
+ * - will be empty for first object
+ * @param {Object} info  Info about current object
+ * @return {Object} Combination of object as described.
+ */
 function reduceWithMultiple(reduced, info) {
   return Object.fromEntries(
     Object.keys(info).map((key) => {
