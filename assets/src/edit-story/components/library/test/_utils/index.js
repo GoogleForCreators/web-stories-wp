@@ -36,6 +36,7 @@ export async function arrange({ mediaResponse = [] }) {
       image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
       video: ['video/mp4'],
     },
+    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   };
   const getMediaPromise = Promise.resolve({
     data: mediaResponse,
