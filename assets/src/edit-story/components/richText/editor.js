@@ -60,10 +60,14 @@ function RichTextEditor({ content, onChange }, ref) {
   useUnmount(clearState);
 
   // Allow parent to focus editor and access main node
-  useImperativeHandle(ref, () => ({
-    focus: () => editorRef.current?.focus?.(),
-    getNode: () => editorRef.current?.editorContainer,
-  }));
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus: () => editorRef.current?.focus?.(),
+      getNode: () => editorRef.current?.editorContainer,
+    }),
+    []
+  );
 
   if (!hasEditorState) {
     return null;
