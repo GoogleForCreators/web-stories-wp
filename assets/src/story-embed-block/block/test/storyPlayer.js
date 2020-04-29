@@ -58,21 +58,4 @@ describe('StoryPlayer', () => {
       </amp-story-player>
     `);
   });
-
-  it('should be responsive if set', () => {
-    const { container } = render(
-      <StoryPlayer url={url} title={title} fullWidth />
-    );
-    expect(container.firstChild).toMatchInlineSnapshot(`
-      <amp-story-player
-        style="width: 100%; height: 100%;"
-      >
-        <a
-          href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
-        >
-          Stories in AMP
-        </a>
-      </amp-story-player>
-    `);
-  });
 });

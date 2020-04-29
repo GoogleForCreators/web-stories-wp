@@ -1,0 +1,4 @@
+.wp-block-web-stories-embed .components-resizable-box__container amp-story-player {
+  width: inherit;
+  height: inherit;
+}

@@ -39,7 +39,7 @@ import './edit.css';
 
 const MIN_SIZE = 20;
 
-function StoryEmbedEdit({ attributes, setAttributes, className }) {
+function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const { url: outerURL, width = 360, height = 600, align } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
@@ -162,7 +162,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
       />
       <div className={`${className} align${align}`}>
         <ResizableBox
-          showHandle
+          showHandle={isSelected}
           size={{
             width,
             height,
@@ -187,7 +187,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
             });
           }}
         >
-          <StoryPlayer url={outerURL} title={title} poster={poster} fullWidth />
+          <StoryPlayer url={outerURL} title={title} poster={poster} />
         </ResizableBox>
       </div>
     </>
@@ -205,6 +205,7 @@ StoryEmbedEdit.propTypes = {
   }).isRequired,
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool,
 };
 
 export default StoryEmbedEdit;
