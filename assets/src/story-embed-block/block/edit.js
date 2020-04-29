@@ -31,11 +31,11 @@ import { useSelect, useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import EmbedPlaceholder from './embed-placeholder';
-import './edit.css';
-import EmbedControls from './embed-controls';
+import EmbedPlaceholder from './embedPlaceholder';
+import EmbedControls from './embedControls';
 import StoryPlayer from './storyPlayer';
 import { icon } from './index.js';
+import './edit.css';
 
 const MIN_SIZE = 20;
 
