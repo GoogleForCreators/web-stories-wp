@@ -19,35 +19,48 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState, useCallback, useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
-const ToggleButtonGroup = styled.div`
+const ToggleButtonContainer = styled.div`
   display: flex;
   height: 100%;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
-ToggleButtonGroup.propTypes = {
-  children: PropTypes.node.isRequired,
+const AnimationBar = styled.div`
+  ${({ theme, selectedButtonWidth = 0, selectedButtonLeft = 0 }) => `
+    height: 3px;
+    background-color:  ${theme.colors.bluePrimary600};
+    width: ${selectedButtonWidth}px;
+    left: ${selectedButtonLeft}px;
+    transition: all 0.3s ease-out; 
+    position: absolute;
+  `}
+`;
+AnimationBar.propTypes = {
+  selectedButtonWidth: PropTypes.number,
+  selectedButtonLeft: PropTypes.number,
 };
 
 const ToggleButton = styled.button`
   ${({ theme, isActive }) => `
-
   display: flex;
+  background-color: transparent;
   flex-direction: column;
   justify-content: space-between;
   outline: none;
   border: none;
-  padding-bottom: 0;
+  padding: 0;
+  margin: 0;
   font-size: ${theme.fonts.body1.size}px;
   font-family: ${theme.fonts.body1.family};
-  font-weight: ${isActive ? 600 : theme.fonts.body1.weight}};
+  font-weight: ${theme.fonts.body1.weight}};
   line-height: ${theme.fonts.body1.lineHeight}px;
   letter-spacing: ${theme.fonts.body1.letterSpacing}em;
   color: ${isActive ? theme.colors.gray900 : theme.colors.gray600};
@@ -55,20 +68,62 @@ const ToggleButton = styled.button`
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border: 1px solid ${theme.colors.action};
   }
-
-  &:after {
-    content: '';
-    width: 100%;
-    display: inline-block;
-    border-bottom: 3px solid
-        ${isActive ? theme.colors.bluePrimary600 : 'transparent'};
-  }
   `}
 `;
 
 ToggleButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
 };
 
-export { ToggleButtonGroup, ToggleButton };
+const ToggleButtonGroup = ({ buttons }) => {
+  const [selectedButton, setSelectedButton] = useState();
+  const activeRef = useRef(null);
+  activeRef.current = activeRef;
+
+  useLayoutEffect(() => {
+    const { left, width } = activeRef?.current?.getBoundingClientRect();
+    setSelectedButton({ left, width });
+  }, [activeRef]);
+
+  return (
+    <>
+      <ToggleButtonContainer>
+        {buttons.map(({ isActive, handleClick, key, text }, idx) => (
+          <ToggleButton
+            ref={isActive ? activeRef : null}
+            type="button"
+            onClick={useCallback(
+              (e) => {
+                const { left, width } = e.currentTarget.getBoundingClientRect();
+                handleClick();
+                setSelectedButton({ left, width });
+              },
+              [handleClick]
+            )}
+            key={key || `toggle_button_${idx}`}
+            isActive={isActive}
+          >
+            {text}
+          </ToggleButton>
+        ))}
+      </ToggleButtonContainer>
+      <AnimationBar
+        selectedButtonWidth={selectedButton?.width}
+        selectedButtonLeft={selectedButton?.left}
+      />
+    </>
+  );
+};
+
+const ToggleButtonShape = PropTypes.shape({
+  handleClick: PropTypes.func,
+  key: PropTypes.string,
+  isActive: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+});
+
+ToggleButtonGroup.propTypes = {
+  buttons: PropTypes.arrayOf(ToggleButtonShape).isRequired,
+};
+
+export default ToggleButtonGroup;

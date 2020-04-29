@@ -17,33 +17,58 @@
 /**
  * External dependencies
  */
-
 import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { ToggleButton } from '../';
+import ToggleButtonGroup from '../';
 import { renderWithTheme } from '../../../testUtils/';
 
+const TEST_BUTTON_GROUP = [
+  { label: 'label one', value: 'label_one' },
+  { label: 'label two', value: 'label_two' },
+  { label: 'label three', value: 'label_three' },
+];
+
 describe('ToggleButton', () => {
-  const buttonText = 'Some button text';
   const onClickMock = jest.fn();
 
-  it('should render the default non cta button', () => {
-    const { getByText } = renderWithTheme(
-      <ToggleButton onClick={onClickMock}>{buttonText}</ToggleButton>
+  it('should render a button group with three items', () => {
+    const { debug, getAllByRole } = renderWithTheme(
+      <ToggleButtonGroup
+        buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
+          return {
+            handleClick: onClickMock,
+            key: storyStatus.value,
+            isActive: status === storyStatus.value,
+            text: storyStatus.label,
+          };
+        })}
+      />
     );
+    debug();
 
-    expect(getByText(buttonText)).toBeDefined();
+    const buttons = getAllByRole('button');
+    // expect(getAllByRole('button')).toHaveLength(3);
+    expect(buttons).toBeDefined();
   });
 
-  it('should simulate a click on <ToggleButton />', () => {
+  xit('should simulate a click on a button in <ToggleButtonGroup />', () => {
     const { getByText } = renderWithTheme(
-      <ToggleButton onClick={onClickMock}>{buttonText}</ToggleButton>
+      <ToggleButtonGroup
+        buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
+          return {
+            handleClick: onClickMock,
+            key: storyStatus.value,
+            isActive: status === storyStatus.value,
+            text: storyStatus.label,
+          };
+        })}
+      />
     );
 
-    const button = getByText(buttonText);
+    const button = getByText('label two');
 
     fireEvent.click(button);
 

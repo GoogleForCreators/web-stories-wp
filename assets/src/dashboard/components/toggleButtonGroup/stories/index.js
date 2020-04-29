@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ToggleButton, ToggleButtonGroup } from '../';
+import ToggleButtonGroup from '../';
 import { STORY_STATUSES } from '../../../constants';
 
 export default {
@@ -40,20 +40,19 @@ export const _default = () => {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   return (
     <Container>
-      <ToggleButtonGroup>
-        {STORY_STATUSES.map((storyStatus) => (
-          <ToggleButton
-            key={storyStatus.value}
-            onClick={() => {
+      <ToggleButtonGroup
+        buttons={STORY_STATUSES.map((storyStatus) => {
+          return {
+            handleClick: () => {
               setStatus(storyStatus.value);
               action('button clicked ', storyStatus.value);
-            }}
-            isActive={status === storyStatus.value}
-          >
-            {storyStatus.label}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
+            },
+            key: storyStatus.value,
+            isActive: status === storyStatus.value,
+            text: storyStatus.label,
+          };
+        })}
+      />
     </Container>
   );
 };
