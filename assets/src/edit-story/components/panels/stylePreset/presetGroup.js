@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -52,7 +52,6 @@ const Label = styled.div`
 function PresetGroup({ presets, itemRenderer, type, label }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
-  const initialRender = useRef(true);
 
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
@@ -69,21 +68,9 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
     }
   };
 
-  // This effect is dependent on the useKeyDownEffect below and reacts to changes coming from keyboard interaction.
-  useLayoutEffect(() => {
-    // Prevent the focus on the initial render, it should only focus when there was a change.
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else if (groupRef.current) {
-      // When the active color has been changed via keyboard handling, focus on the active preset.
-      // Only one preset of a preset group has tabIndex 0 at a time.
-      groupRef.current.querySelector('[tabindex="0"]').focus();
-    }
-  }, [activeIndex]);
-
   useKeyDownEffect(
     groupRef,
-    { key: ['up', 'down', 'left', 'right', 'tab'] },
+    { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       // When the user navigates in the color presets using the arrow keys,
       // Let's change the active index accordingly, to indicate which preset should be focused
@@ -94,6 +81,10 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
         const val = (activeIndex ?? 0) + diff;
         const newIndex = Math.max(0, Math.min(maxIndex, val));
         setActiveIndex(newIndex);
+        const buttons = groupRef.current.querySelectorAll('button');
+        if (buttons[newIndex]) {
+          buttons[newIndex].focus();
+        }
       }
     },
     [activeIndex]
