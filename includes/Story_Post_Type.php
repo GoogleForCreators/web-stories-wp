@@ -318,7 +318,7 @@ class Story_Post_Type {
 		);
 
 		wp_register_style(
-			'roboto-css',
+			'roboto',
 			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
 			[],
 			WEBSTORIES_VERSION
@@ -327,7 +327,7 @@ class Story_Post_Type {
 		wp_enqueue_style(
 			self::WEB_STORIES_STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'roboto-css' ],
+			[ 'roboto' ],
 			$version
 		);
 
