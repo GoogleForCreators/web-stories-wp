@@ -33,7 +33,7 @@ function AutoSaveHandler() {
     state: {
       story: { status },
     },
-    actions: { autoSave, saveStory },
+    actions: { saveStory },
   } = useStory();
 
   const isDraft = 'draft' === status;
@@ -50,14 +50,13 @@ function AutoSaveHandler() {
       return () => {};
     }
     let timeout = setTimeout(() => {
-      const update = isDraft ? saveStory : autoSave;
-      update();
+      saveStory();
     }, autoSaveInterval * 1000);
 
     return () => {
       timeout && clearTimeout(timeout);
     };
-  }, [autoSave, autoSaveInterval, isDraft, saveStory, status, hasNewChanges]);
+  }, [autoSaveInterval, isDraft, saveStory, status, hasNewChanges]);
 
   return null;
 }
