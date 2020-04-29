@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -131,6 +131,13 @@ function TextEdit({
     evt.stopPropagation();
   };
 
+  // Set focus when initially rendered.
+  useLayoutEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.focus();
+    }
+  }, []);
+
   const updateContent = useCallback(() => {
     const newHeight = editorHeightRef.current;
     wrapperRef.current.style.height = '';
@@ -161,9 +168,6 @@ function TextEdit({
     x,
     y,
   ]);
-
-  // Update content for element on focus out.
-  //useFocusOut(textBoxRef, updateContent, [updateContent]);
 
   // Update content for element on unmount.
   useUnmount(updateContent);

@@ -19,13 +19,7 @@
  */
 import { Editor } from 'draft-js';
 import PropTypes from 'prop-types';
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -59,13 +53,6 @@ function RichTextEditor({ content, onChange }, ref) {
       onChange(newContent);
     }
   }, [onChange, getContentFromState, editorState]);
-
-  // Set focus when initially rendered.
-  useLayoutEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.focus();
-    }
-  }, []);
 
   const hasEditorState = Boolean(editorState);
 
