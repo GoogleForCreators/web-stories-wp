@@ -130,7 +130,7 @@ const EmbedControls = (props) => {
 };
 
 EmbedControls.propTypes = {
-  instanceId: PropTypes.string,
+  instanceId: PropTypes.number,
   showEditButton: PropTypes.bool,
   switchBackToURLInput: PropTypes.func,
   poster: PropTypes.string,
