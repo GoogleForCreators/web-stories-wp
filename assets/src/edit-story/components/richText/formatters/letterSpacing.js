@@ -36,7 +36,7 @@ function styleToLetterSpacing(style) {
 function elementToStyle(element) {
   const isSpan = element.tagName.toLowerCase() === 'span';
   // This will implicitly strip any trailing unit from the value - it's assumed to be em
-  const letterSpacing = parseFloat(element.style.letterSpacing, 10);
+  const letterSpacing = parseFloat(element.style.letterSpacing);
   const hasLetterSpacing = letterSpacing && !isNaN(letterSpacing);
   if (isSpan && hasLetterSpacing) {
     return letterSpacingToStyle(letterSpacing * 100);
