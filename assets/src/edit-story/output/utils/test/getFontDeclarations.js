@@ -113,4 +113,36 @@ describe('getFontDeclarations', () => {
       'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
     );
   });
+
+  it('should fall back to closest variant', () => {
+    const pages = [
+      {
+        elements: [
+          {
+            type: 'text',
+            font: {
+              family: 'Mukta Mahee',
+              service: 'fonts.google.com',
+              variants: [
+                [0, 200],
+                [0, 300],
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+                [0, 800],
+              ],
+            },
+            fontStyle: 'italic',
+            fontWeight: 200,
+          },
+        ],
+      },
+    ];
+
+    expect(getFontDeclarations(pages)).toHaveLength(1);
+    expect(getFontDeclarations(pages)).toContain(
+      'https://fonts.googleapis.com/css2?display=swap&family=Mukta+Mahee%3Awght%40200'
+    );
+  });
 });

@@ -54,14 +54,26 @@ const getFontDeclarations = (pages) => {
         (val) => val[0] === variant[0] && val[1] === variant[1]
       );
 
-      // @todo: use nearest variant as fallback?
+      // Use closest variant as fallback.
+      // If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
+      // [ 1, 200] was requested, fall back to [ 0, 200 ]
+      // and let browser do the math.
+      const newVariant = (variants || []).reduce((acc, _variant) => {
+        return _variant[0] - variant[0] + _variant[1] - variant[1] <
+          acc[0] - variant[0] + acc[1] - variant[1]
+          ? _variant
+          : acc;
+      }, variant);
+
       const isValidVariant =
         variants === undefined ||
-        variants.some((val) => val[0] === variant[0] && val[1] === variant[1]);
+        variants.some(
+          (val) => val[0] === newVariant[0] && val[1] === newVariant[1]
+        );
 
       // Keeps list unique.
       if (!fontObjHasVariant && isValidVariant) {
-        fontObj.variants.push(variant);
+        fontObj.variants.push(newVariant);
       }
 
       serviceMap.set(family, fontObj);
