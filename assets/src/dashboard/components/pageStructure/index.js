@@ -69,7 +69,9 @@ export const PageContent = styled.div`
   }
 `;
 
-export const LeftRailContainer = styled.nav`
+export const LeftRailContainer = styled.nav.attrs({
+  ['data-testid']: 'dashboard-left-rail',
+})`
   position: absolute;
   display: flex;
   justify-content: space-between;

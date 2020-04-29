@@ -26,7 +26,7 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
-const NavContext = createContext({ actions: {}, state: {} });
+export const NavContext = createContext({ actions: {}, state: {} });
 
 export function useNavContext() {
   return useContext(NavContext);
