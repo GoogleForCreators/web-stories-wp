@@ -21,11 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import Context from './context';
