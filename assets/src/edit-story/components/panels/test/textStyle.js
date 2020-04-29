@@ -398,8 +398,7 @@ describe('Panels/TextStyle', () => {
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
       expect(resultOfUpdating).toStrictEqual(
         {
-          content:
-            '<span class="weight" style="font-weight: 300">Hello world</span>',
+          content: '<span style="font-weight: 300">Hello world</span>',
         },
         true
       );
@@ -443,8 +442,7 @@ describe('Panels/TextStyle', () => {
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
       expect(resultOfUpdating).toStrictEqual(
         {
-          content:
-            '<span class="letterspacing" style="letter-spacing: 1.5em">Hello world</span>',
+          content: '<span style="letter-spacing: 1.5em">Hello world</span>',
         },
         true
       );
@@ -456,8 +454,7 @@ describe('Panels/TextStyle', () => {
       fireEvent.change(input, { target: { value: '' } });
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({
-        content:
-          '<span class="letterspacing" style="letter-spacing: 1.5em">Hello world</span>',
+        content: '<span style="letter-spacing: 1.5em">Hello world</span>',
       });
       expect(resultOfUpdating).toStrictEqual(
         {
@@ -477,8 +474,7 @@ describe('Panels/TextStyle', () => {
     it('should render a color', () => {
       const textWithColor = {
         ...textElement,
-        content:
-          '<span class="color" style="color: rgb(255, 0, 0)">Hello world</span>',
+        content: '<span style="color: rgb(255, 0, 0)">Hello world</span>',
       };
       renderTextStyle([textWithColor]);
       expect(controls['text.color'].value).toStrictEqual(
@@ -495,7 +491,7 @@ describe('Panels/TextStyle', () => {
       });
       expect(resultOfUpdating).toStrictEqual(
         {
-          content: '<span class="color" style="color: #0f0">Hello world</span>',
+          content: '<span style="color: #0f0">Hello world</span>',
         },
         true
       );
@@ -504,13 +500,11 @@ describe('Panels/TextStyle', () => {
     it('should detect color with multi selection, same values', () => {
       const textWithColor1 = {
         ...textElement,
-        content:
-          '<span class="color" style="color: rgb(0, 0, 255)">Hello world</span>',
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       const textWithColor2 = {
         ...textElement,
-        content:
-          '<span class="color" style="color: rgb(0, 0, 255)">Hello world</span>',
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       renderTextStyle([textWithColor1, textWithColor2]);
       expect(controls['text.color'].value).toStrictEqual(
@@ -521,13 +515,11 @@ describe('Panels/TextStyle', () => {
     it('should set color with multi selection, different values', () => {
       const textWithColor1 = {
         ...textElement,
-        content:
-          '<span class="color" style="color: rgb(0, 0, 255)">Hello world</span>',
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       const textWithColor2 = {
         ...textElement,
-        content:
-          '<span class="color" style="color: rgb(0, 255, 255)">Hello world</span>',
+        content: '<span style="color: rgb(0, 255, 255)">Hello world</span>',
       };
       renderTextStyle([textWithColor1, textWithColor2]);
       expect(controls['text.color'].value).toStrictEqual(MULTIPLE_VALUE);
