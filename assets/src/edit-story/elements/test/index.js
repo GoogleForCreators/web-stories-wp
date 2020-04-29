@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { createNewElement, createPage } from '../';
+
 describe('Element', () => {
   describe('createNewElement', () => {
     it('should create an element with just default attributes', () => {
@@ -40,27 +42,7 @@ describe('Element', () => {
       const textElement = createNewElement('text', atts);
       expect(textElement.rotationAngle).toStrictEqual(0);
       expect(textElement.width).toStrictEqual(100);
-      expect(textElement.font).toMatchObject({
-        family: 'Roboto',
-        weights: [100, 300, 400, 500, 700, 900],
-        styles: ['italic', 'regular'],
-        variants: [
-          [0, 100],
-          [1, 100],
-          [0, 300],
-          [1, 300],
-          [0, 400],
-          [1, 400],
-          [0, 500],
-          [1, 500],
-          [0, 700],
-          [1, 700],
-          [0, 900],
-          [1, 900],
-        ],
-        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-        service: 'fonts.google.com',
-      });
+      expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
     });
 
     it('should throw if trying to create unknown element type', () => {
