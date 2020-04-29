@@ -52,10 +52,11 @@ const MenuItem = styled.li`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   display: flex;
   font-family: ${({ theme }) => theme.fonts.typeaheadOptions.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size};
-  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size}px;
+  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight}px;
   font-weight: ${({ theme }) => theme.fonts.typeaheadOptions.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadOptions.letterSpacing};
+  letter-spacing: ${({ theme }) =>
+    theme.fonts.typeaheadOptions.letterSpacing}em;
   width: 100%;
 `;
 

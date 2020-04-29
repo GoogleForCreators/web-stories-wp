@@ -30,14 +30,31 @@ body {
   display: none;
 }
 
+body.web-story_page_stories-dashboard {
+  position: relative;
+}
+
+body.web-story_page_stories-dashboard #wpwrap,
+body.web-story_page_stories-dashboard #wpbody-content {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
 body.web-story_page_stories-dashboard #wpcontent,
 body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_stories-dashboard #web-stories-dashboard {
+body.web-story_page_stories-dashboard #wpbody {
   position: relative;
-  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {

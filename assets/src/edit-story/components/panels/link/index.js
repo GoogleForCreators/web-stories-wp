@@ -72,7 +72,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   } = useCanvas();
 
   const selectedElement = selectedElements[0];
-  const { isFill } = selectedElement;
   const defaultLink = useMemo(
     () => createLink({ url: '', icon: null, desc: null }),
     []
@@ -81,7 +80,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     () => getLinkFromElement(selectedElement) || defaultLink,
     [selectedElement, defaultLink]
   );
-  const canLink = selectedElements.length === 1 && !isFill;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
@@ -163,7 +161,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       <Row>
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
-          disabled={!canLink}
           onChange={(value) =>
             handleChange({ url: value }, !value /* submit */)
           }
@@ -176,7 +173,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
-            disabled={!canLink}
             onChange={(value) =>
               handleChange({ desc: value }, !value /* submit */)
             }

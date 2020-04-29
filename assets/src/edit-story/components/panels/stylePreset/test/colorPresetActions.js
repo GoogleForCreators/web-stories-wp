@@ -17,15 +17,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StoryContext from '../../../../app/story/context';
 import ColorPresetActions from '../colorPresetActions';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupActions() {
   const updateStory = jest.fn();
@@ -41,12 +40,10 @@ function setupActions() {
     },
     actions: { updateStory },
   };
-  const { getByText } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <ColorPresetActions color={{ color: { r: 1, g: 1, b: 1 } }} />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <ColorPresetActions color={{ color: { r: 1, g: 1, b: 1 } }} />
+    </StoryContext.Provider>
   );
   return {
     getByText,
