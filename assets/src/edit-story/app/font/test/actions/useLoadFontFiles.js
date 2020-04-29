@@ -26,39 +26,34 @@ import useLoadFontFiles from '../../actions/useLoadFontFiles';
 
 const DEFAULT_FONT = {
   font: {
-    name: 'My Font',
+    family: 'Font',
+    service: 'fonts.google.com',
   },
   fontWeight: 400,
   fontStyle: 'normal',
   fontSize: 20,
 };
 
-const useLoadFontFilesMock = () =>
-  useLoadFontFiles({
-    getFontByName: () => ({
-      handle: 'myfont',
-      src: 'https://myfont.com',
-    }),
-  });
-
 describe('useFont', () => {
   it('maybeEnqueueFontStyle', () => {
+    expect(document.getElementById('font-css')).toBeNull();
+
     renderHook(async () => {
-      const { maybeEnqueueFontStyle } = useLoadFontFilesMock();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle(DEFAULT_FONT);
     });
 
-    expect(document.getElementById('myfont-css')).toBeDefined();
+    expect(document.getElementById('font-css')).toBeDefined();
   });
 
   it('ensureFontFaceSetIsAvailable', () => {
     renderHook(async () => {
-      const { ensureFontFaceSetIsAvailable } = useLoadFontFilesMock();
+      const { ensureFontFaceSetIsAvailable } = useLoadFontFiles();
 
       await ensureFontFaceSetIsAvailable('font', DEFAULT_FONT, [DEFAULT_FONT]);
     });
 
-    expect(document.getElementById('myfont-css')).toBeDefined();
+    expect(document.getElementById('font-css')).toBeDefined();
   });
 });

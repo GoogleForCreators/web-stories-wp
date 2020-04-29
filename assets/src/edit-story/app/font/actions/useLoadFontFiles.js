@@ -60,7 +60,6 @@ function useLoadFontFiles() {
         !family ||
         !fontWeight ||
         !fontStyle ||
-        !fontSize ||
         service !== 'fonts.google.com'
       ) {
         return null;
