@@ -84,6 +84,29 @@ class Embed_Block {
 				'style'           => 'amp-story-player',
 			]
 		);
+
+		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+	}
+
+	/**
+	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 *
+	 * @param array|string $allowed_tags Allowed tags.
+	 *
+	 * @return array|string Allowed tags.
+	 */
+	public static function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
+		$story_player_components = [
+			'amp-story-player' => [],
+		];
+
+		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
+
+		return $allowed_tags;
 	}
 
 	/**

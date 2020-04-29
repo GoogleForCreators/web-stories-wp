@@ -32,4 +32,8 @@ class Embed_Block extends \WP_UnitTestCase {
 
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}
+
+	public function test_adds_amp_story_player_to_list_of_allowed_html() {
+		$this->assertArrayHasKey( 'amp-story-player', wp_kses_allowed_html() );
+	}
 }
