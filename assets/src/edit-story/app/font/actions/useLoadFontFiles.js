@@ -33,7 +33,7 @@ function useLoadFontFiles() {
    *
    * @param {string} name Font name.
    */
-  const maybeEnqueueFontStyle = useCallback(({ family, service }) => {
+  const maybeEnqueueFontStyle = useCallback(({ family, service, variants }) => {
     if (!family || service !== 'fonts.google.com') {
       return;
     }
@@ -46,7 +46,7 @@ function useLoadFontFiles() {
       return;
     }
 
-    const src = getGoogleFontURL([{ family }]);
+    const src = getGoogleFontURL([{ family, variants }]);
 
     const fontStylesheet = document.createElement('link');
     fontStylesheet.id = id;
