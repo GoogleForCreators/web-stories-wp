@@ -32,6 +32,7 @@ import pageAdvancement from './migrations/v0011_pageAdvancement';
 import setBackgroundTextMode from './migrations/v0012_setBackgroundTextMode';
 import videoIdToId from './migrations/v0013_videoIdToId';
 import oneTapLinkDeprecate from './migrations/v0014_oneTapLinkDeprecate';
+import fontObjects from './migrations/v0015_fontObjects';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -48,6 +49,7 @@ const MIGRATIONS = {
   12: [setBackgroundTextMode],
   13: [videoIdToId],
   14: [oneTapLinkDeprecate],
+  15: [fontObjects],
 };
 
 export const DATA_VERSION = Math.max.apply(

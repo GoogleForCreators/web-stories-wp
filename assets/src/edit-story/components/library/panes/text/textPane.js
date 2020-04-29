@@ -45,7 +45,10 @@ const PRESETS = [
     content: __('Heading', 'web-stories'),
     fontSize: dataFontEm(2),
     fontWeight: 700,
-    fontFamily: 'Open Sans',
+    font: {
+      family: 'Open Sans',
+      service: 'fonts.google.com',
+    },
   },
   {
     id: 'subheading',
@@ -53,7 +56,10 @@ const PRESETS = [
     content: __('Subheading', 'web-stories'),
     fontSize: dataFontEm(1.5),
     fontWeight: 600,
-    fontFamily: 'Open Sans',
+    font: {
+      family: 'Open Sans',
+      service: 'fonts.google.com',
+    },
   },
   {
     id: 'body-text',
@@ -64,7 +70,10 @@ const PRESETS = [
     ),
     fontSize: dataFontEm(1.1),
     fontWeight: 400,
-    fontFamily: 'Roboto',
+    font: {
+      family: 'Roboto',
+      service: 'fonts.google.com',
+    },
   },
 ];
 

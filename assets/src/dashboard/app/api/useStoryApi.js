@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
@@ -24,6 +29,7 @@ import queryString from 'query-string';
 /**
  * Internal dependencies
  */
+
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
@@ -36,7 +42,14 @@ import storyReducer, {
 } from '../reducer/stories';
 
 export function reshapeStoryObject(editStoryURL) {
-  return function ({ id, title, modified, status, story_data: storyData }) {
+  return function (originalStoryData) {
+    const {
+      id,
+      title,
+      modified,
+      status,
+      story_data: storyData,
+    } = originalStoryData;
     if (
       !Array.isArray(storyData.pages) ||
       !id ||
@@ -52,6 +65,7 @@ export function reshapeStoryObject(editStoryURL) {
       pages: storyData.pages,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
+      originalStoryData,
     };
   };
 }
@@ -154,12 +168,68 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     [wpApi, dataAdapter, editStoryURL]
   );
 
+  const trashStory = useCallback(
+    async (story) => {
+      try {
+        await dataAdapter.deleteRequest(`${wpApi}/${story.id}`, {
+          data: story,
+        });
+        dispatch({
+          type: STORY_ACTION_TYPES.TRASH_STORY,
+          payload: { id: story.id },
+        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    },
+    [wpApi, dataAdapter]
+  );
+
+  const duplicateStory = useCallback(
+    async (story) => {
+      try {
+        const {
+          content,
+          story_data,
+          style_presets,
+          publisher_logo,
+          featured_media,
+          title,
+        } = story.originalStoryData;
+        const response = await dataAdapter.post(wpApi, {
+          data: {
+            content,
+            story_data,
+            featured_media,
+            style_presets,
+            publisher_logo,
+            title: {
+              raw: `${title.raw} ${__('(Copy)', 'web-stories')}`,
+            },
+            status: 'draft',
+          },
+        });
+        dispatch({
+          type: STORY_ACTION_TYPES.DUPLICATE_STORY,
+          payload: reshapeStoryObject(editStoryURL)(response),
+        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    },
+    [wpApi, dataAdapter, editStoryURL]
+  );
+
   const api = useMemo(
     () => ({
       updateStory,
       fetchStories,
+      trashStory,
+      duplicateStory,
     }),
-    [updateStory, fetchStories]
+    [duplicateStory, trashStory, updateStory, fetchStories]
   );
 
   return { stories: state, api };
