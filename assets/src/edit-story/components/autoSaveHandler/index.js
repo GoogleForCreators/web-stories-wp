@@ -47,7 +47,7 @@ function AutoSaveHandler() {
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
     // until the logic for other statuses has been decided.
     if (!isDraft || !hasNewChanges) {
-      return () => {};
+      return undefined;
     }
     let timeout = setTimeout(() => {
       saveStory();
