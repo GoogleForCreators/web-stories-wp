@@ -25,7 +25,7 @@ import { forwardRef } from 'react';
  * Internal dependencies
  */
 import {
-  PREVIEW_RATIO,
+  FULLBLEED_RATIO,
   PAGE_RATIO,
   ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
@@ -183,9 +183,9 @@ function useLayoutParams(containerRef) {
 
     let bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size * PAGE_RATIO <= maxHeight
+        (size) => size <= maxWidth && size / PAGE_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
-    setPageSize({ width: bestSize, height: bestSize * PAGE_RATIO });
+    setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });
 }
 
@@ -197,7 +197,7 @@ function useLayoutParamsCssVars() {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,
     '--fullbleed-width-px': `${pageSize.width}px`,
-    '--fullbleed-height-px': `${pageSize.width * PREVIEW_RATIO}px`,
+    '--fullbleed-height-px': `${pageSize.width / FULLBLEED_RATIO}px`,
   };
 }
 

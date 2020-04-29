@@ -32,9 +32,6 @@ const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, elements, backgroundElementId, backgroundOverlay } = page;
-  const gridLayerStyles = {
-    overflow: 'visible',
-  };
   const backgroundStyles = {
     backgroundColor: 'white',
     backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
@@ -63,7 +60,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
       {backgroundElements.length > 0 && (
-        <amp-story-grid-layer template="vertical" style={gridLayerStyles}>
+        <amp-story-grid-layer template="vertical">
           <div className="page-background-area" style={backgroundStyles}>
             {backgroundElements.map((element) => (
               <OutputElement key={'el-' + element.id} element={element} />
@@ -73,7 +70,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       )}
 
       {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
-        <amp-story-grid-layer template="vertical" style={gridLayerStyles}>
+        <amp-story-grid-layer template="vertical">
           <div
             className="page-background-overlay-area"
             style={{ ...backgroundOverlayStyles }}
@@ -81,11 +78,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         </amp-story-grid-layer>
       )}
 
-      <amp-story-grid-layer
-        template="vertical"
-        style={gridLayerStyles}
-        aspect-ratio={ASPECT_RATIO}
-      >
+      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
         <div className="page-safe-area">
           {regularElements.map((element) => (
             <OutputElement key={'el-' + element.id} element={element} />

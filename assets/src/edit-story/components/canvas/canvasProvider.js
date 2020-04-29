@@ -36,7 +36,7 @@ function CanvasProvider({ children }) {
 
   const [pageSize, setPageSize] = useState({
     width: PAGE_WIDTH,
-    height: PAGE_RATIO * PAGE_WIDTH,
+    height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
 

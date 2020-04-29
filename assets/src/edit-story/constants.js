@@ -28,13 +28,13 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_WIDTH = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
 
-export const PAGE_RATIO = 3 / 2;
+export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 440;
 export const PAGE_HEIGHT = 660;
 
 export const ALLOWED_EDITOR_PAGE_WIDTHS = [440, 280, 240];
 
-export const PREVIEW_RATIO = 16 / 9;
+export const FULLBLEED_RATIO = 9 / 16;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;

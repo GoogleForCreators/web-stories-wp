@@ -20,6 +20,10 @@ function CustomStyles() {
       amp-custom=""
       dangerouslySetInnerHTML={{
         __html: `
+              amp-story-grid-layer {
+                overflow: visible;
+              }
+
               .page-background-area,
               .page-background-overlay-area,
               .page-safe-area {

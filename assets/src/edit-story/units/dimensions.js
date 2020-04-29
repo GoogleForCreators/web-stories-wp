@@ -20,7 +20,7 @@
 import {
   PAGE_WIDTH,
   PAGE_HEIGHT,
-  PREVIEW_RATIO,
+  FULLBLEED_RATIO,
   DEFAULT_EM,
 } from '../constants';
 
@@ -122,12 +122,12 @@ export function getBox(
   return {
     x: dataToEditorX(displayFull ? 0 : x, pageWidth),
     y: dataToEditorY(
-      displayFull ? -(PAGE_WIDTH * PREVIEW_RATIO - PAGE_HEIGHT) / 2 : y,
+      displayFull ? -(PAGE_WIDTH / FULLBLEED_RATIO - PAGE_HEIGHT) / 2 : y,
       pageHeight
     ),
     width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
     height: dataToEditorY(
-      displayFull ? PAGE_WIDTH * PREVIEW_RATIO : height,
+      displayFull ? PAGE_WIDTH / FULLBLEED_RATIO : height,
       pageHeight
     ),
     rotationAngle: displayFull ? 0 : rotationAngle,

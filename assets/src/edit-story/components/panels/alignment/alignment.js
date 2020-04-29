@@ -45,7 +45,7 @@ import getCommonValue from '../utils/getCommonValue';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
-import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_RATIO } from '../../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -106,10 +106,10 @@ const alignmentButtonIds = [
 const PAGE_RECT = {
   startX: 0,
   startY: 0,
-  endX: ALLOWED_EDITOR_PAGE_WIDTHS[0],
-  endY: ALLOWED_EDITOR_PAGE_WIDTHS[0] * PAGE_RATIO,
-  width: ALLOWED_EDITOR_PAGE_WIDTHS[0],
-  height: ALLOWED_EDITOR_PAGE_WIDTHS[0] * PAGE_RATIO,
+  endX: PAGE_WIDTH,
+  endY: PAGE_HEIGHT,
+  width: PAGE_WIDTH,
+  height: PAGE_HEIGHT,
 };
 
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {

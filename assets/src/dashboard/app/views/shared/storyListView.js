@@ -59,7 +59,7 @@ const ListView = styled.div`
 const PreviewContainer = styled.div`
   position: relative;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail * PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
   vertical-align: middle;
   display: inline-block;
 `;
