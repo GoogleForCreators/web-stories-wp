@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -42,6 +42,7 @@ function HistoryProvider({ children, size }) {
 
   const [hasNewChanges, setHasNewChanges] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
+  const savedVersionNumber = useRef(false);
 
   useEffect(() => {
     setPreventUnload('history', hasNewChanges);
@@ -49,10 +50,21 @@ function HistoryProvider({ children, size }) {
   }, [setPreventUnload, hasNewChanges]);
 
   useEffect(() => {
-    setHasNewChanges(versionNumber - 1 > 0);
+    // The first version number is 1. There are new changes if:
+    // a) If the story hasn't been saved yet and the version number is larger than 1 or,
+    // b) The version number is different from the last saved version number.
+    setHasNewChanges(
+      (versionNumber > 1 && false === savedVersionNumber.current) ||
+        (false !== savedVersionNumber.current &&
+          versionNumber !== savedVersionNumber.current)
+    );
   }, [versionNumber]);
 
-  const resetNewChanges = () => setHasNewChanges(false);
+  const resetNewChanges = () => {
+    // When new changes are saved, let's track which version was saved.
+    savedVersionNumber.current = versionNumber;
+    setHasNewChanges(false);
+  };
 
   const state = {
     state: {
