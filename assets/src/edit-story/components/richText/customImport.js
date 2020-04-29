@@ -22,8 +22,8 @@ import { stateFromHTML } from 'draft-js-import-html';
 /**
  * Internal dependencies
  */
+import getValidHTML from '../../utils/getValidHTML';
 import formatters from './formatters';
-import { draftMarkupToContent } from './util';
 
 function customInlineFn(element, { Style }) {
   const styleStrings = formatters
@@ -43,7 +43,7 @@ function importHTML(html) {
     .replace(/\n(?=\n)/g, '\n<br />')
     .split('\n')
     .map((s) => {
-      return `<p>${draftMarkupToContent(s)}</p>`;
+      return `<p>${getValidHTML(s)}</p>`;
     })
     .join('');
   return stateFromHTML(htmlWithBreaks, { customInlineFn });

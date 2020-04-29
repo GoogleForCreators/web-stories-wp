@@ -24,9 +24,9 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import getValidHTML from '../../utils/getValidHTML';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { draftMarkupToContent } from '../../components/richText/util';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
@@ -134,7 +134,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content),
+                __html: getValidHTML(content),
               }}
             />
           </span>
@@ -144,7 +144,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content),
+                __html: getValidHTML(content),
               }}
             />
           </span>
@@ -157,7 +157,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content) }}
+      dangerouslySetInnerHTML={{ __html: getValidHTML(content) }}
     />
   );
 }
