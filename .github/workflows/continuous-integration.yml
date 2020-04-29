@@ -281,6 +281,49 @@ jobs:
           file: build/logs/clover.xml
         if: ${{ matrix.wp === 'latest' && matrix.php === 7.4 }}
 
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Setup cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CI: TRUE
+
+      - name: Run E2E tests (Chromium)
+        run: npm run test:e2e
+
+      - name: Download Firefox
+        run: npm install puppeteer
+        env:
+          PUPPETEER_PRODUCT: firefox
+
+      - name: Run E2E tests (Firefox)
+        run: npm run test:e2e
+        if: always()
+
   build:
     name: Build plugin
     runs-on: ubuntu-latest

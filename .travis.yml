@@ -41,37 +41,20 @@ env:
 install:
   - set -e
   - |
-    if [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
+    if [ [ "$DEPLOY_PLUGIN" = "1" ]; then
       nvm install
       npm ci
       composer install --no-interaction
-    fi
-  - |
-    if ! [ -z $PUPPETEER_PRODUCT ] ; then
-      npm ci puppeteer
     fi
   - set +e
 
 script:
   - set -e
-  - |
-    if [ "$E2E" = "1" ]; then
-      npm run build:js
-      npm run env:start
-      npm run test:e2e
-      npm run env:stop
-    fi
   - set +e
 
 jobs:
   fast_finish: true
   include:
-    - name: E2E tests (Chromium)
-      env: E2E=1 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
-
-    - name: E2E tests (Firefox)
-      env: E2E=1 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD= PUPPETEER_PRODUCT=firefox
-
     - stage: deploy
       if: (NOT type IN (pull_request)) AND (branch = master)
       php: 7.3
