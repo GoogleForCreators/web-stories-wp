@@ -50,6 +50,9 @@ describe('FrameElement selection', () => {
       width: 100,
       height: 80,
       rotationAngle: 0,
+      font: {
+        family: 'Roboto',
+      },
       fontSize: 20,
       content: 'hello world',
       color: createSolid(255, 255, 255),
@@ -73,6 +76,9 @@ describe('FrameElement selection', () => {
       width: 100,
       height: 80,
       rotationAngle: 0,
+      font: {
+        family: 'Roboto',
+      },
       fontSize: 20,
       content: 'hello world',
       color: createSolid(255, 255, 255),
@@ -96,6 +102,9 @@ describe('FrameElement selection', () => {
       width: 100,
       height: 80,
       rotationAngle: 0,
+      font: {
+        family: 'Roboto',
+      },
       fontSize: 20,
       content: 'hello world',
       color: createSolid(255, 255, 255),
@@ -125,6 +134,9 @@ describe('FrameElement selection', () => {
       width: 100,
       height: 80,
       rotationAngle: 0,
+      font: {
+        family: 'Roboto',
+      },
       fontSize: 20,
       content: 'hello world',
       color: createSolid(255, 255, 255),

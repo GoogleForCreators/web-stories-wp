@@ -14,6 +14,25 @@
  * limitations under the License.
  */
 
-export { default as OutputPage } from './page';
-export { default as OutputStory } from './story';
-export { default as OutputElement } from './element';
+// @todo: only provide font family, and use font provider to fill the rest.
+export const TEXT_ELEMENT_DEFAULT_FONT = {
+  family: 'Roboto',
+  weights: [100, 300, 400, 500, 700, 900],
+  styles: ['italic', 'regular'],
+  variants: [
+    [0, 100],
+    [1, 100],
+    [0, 300],
+    [1, 300],
+    [0, 400],
+    [1, 400],
+    [0, 500],
+    [1, 500],
+    [0, 700],
+    [1, 700],
+    [0, 900],
+    [1, 900],
+  ],
+  fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+  service: 'fonts.google.com',
+};

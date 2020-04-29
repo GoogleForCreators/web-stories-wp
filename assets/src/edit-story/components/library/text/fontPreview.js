@@ -27,6 +27,7 @@ import { useEffect } from 'react';
  */
 import { useFont } from '../../../app';
 import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+import { FontPropType } from '../../../types';
 
 const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
 
@@ -49,25 +50,33 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, fontFamily, ...fontProps }) {
+function FontPreview({ title, font, fontSize, fontWeight }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle(font);
+  }, [font, maybeEnqueueFontStyle]);
 
   return (
     <Preview>
-      <Text {...fontProps}>{title}</Text>
+      <Text
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fontFamily={font.family}
+      >
+        {title}
+      </Text>
     </Preview>
   );
 }
 
 FontPreview.propTypes = {
   title: PropTypes.string,
-  fontFamily: PropTypes.string,
+  font: FontPropType,
+  fontSize: PropTypes.number,
+  fontWeight: PropTypes.number,
 };
 
 export default FontPreview;
