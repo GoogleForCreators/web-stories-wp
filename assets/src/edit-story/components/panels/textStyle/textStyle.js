@@ -71,7 +71,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
   const textDecoration = getCommonValue(selectedElements, 'textDecoration');
   const bold = getCommonValue(selectedElements, 'bold');
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const font = getCommonValue(selectedElements, 'font');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
 
@@ -153,7 +153,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
                 fontStyle: newFontStyle,
                 fontWeight,
                 fontSize,
-                fontFamily,
+                font,
               },
               selectedElements
             );

@@ -108,12 +108,15 @@ function TextEdit({
   },
   box: { x, y, height, rotationAngle },
 }) {
+  const { font, fontWeight, fontStyle, fontSize } = rest;
+
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     color,
+    font,
     backgroundColor,
     opacity,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
@@ -253,24 +256,22 @@ function TextEdit({
     editorRef.current.focus();
   }, []);
 
-  const { fontFamily, fontWeight, fontStyle, fontSize } = rest;
-
   // Remeasure the height on each content update.
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState, elementHeight, fontFamily, fontWeight, fontStyle]);
+  }, [editorState, elementHeight, font, fontWeight, fontStyle, fontSize]);
 
   useEffect(() => {
     maybeEnqueueFontStyle({
-      fontFamily,
+      font,
       fontWeight,
       fontStyle,
       fontSize,
     });
-  }, [fontFamily, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
+  }, [font, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>

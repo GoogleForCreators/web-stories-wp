@@ -17,25 +17,14 @@
 /**
  * External dependencies
  */
-import {
-  fireEvent,
-  makeSingleQuery,
-  queryAllByAttribute,
-  render,
-} from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StoryContext from '../../../../app/story/context';
 import GridView from '../';
-
-const queryByAriaLabel = makeSingleQuery(
-  (container, value) => queryAllByAttribute('aria-label', container, value),
-  (c, value) => `Found multiple elements with the attribute value: ${value}`
-);
+import { queryByAriaLabel, renderWithTheme } from '../../../../testUtils';
 
 function setupGridView() {
   const setCurrentPage = jest.fn();
@@ -57,12 +46,10 @@ function setupGridView() {
     },
     actions: { setCurrentPage, arrangePage },
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <GridView />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText, container } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <GridView />
+    </StoryContext.Provider>
   );
   return {
     container,

@@ -22,20 +22,14 @@ import { useCallback } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import { useUploader } from '../../app/uploader';
-import { useSnackbar } from '../../app/snackbar';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
 import { getDefinitionForType } from '../../elements';
 import useInsertElement from './useInsertElement';
+import useUploadWithPreview from './useUploadWithPreview';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -48,8 +42,7 @@ function useCanvasSelectionCopyPaste(container) {
     actions: { addElement, deleteSelectedElements },
   } = useStory();
 
-  const { uploadFile, isValidType } = useUploader();
-  const { showSnackbar } = useSnackbar();
+  const uploadWithPreview = useUploadWithPreview();
 
   const insertElement = useInsertElement();
 
@@ -190,35 +183,21 @@ function useCanvasSelectionCopyPaste(container) {
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
+        let files = [];
         for (let i = 0; i < items.length; i++) {
-          const item = items[i];
-          if (isValidType(item)) {
-            try {
-              uploadFile(item.getAsFile());
-            } catch (e) {
-              if (!e.isUserError) {
-                e.message = __(
-                  'Sorry, file has failed to upload',
-                  'web-stories'
-                );
-              }
-              showSnackbar({
-                message: e.message,
-              });
-            }
+          const file = items[i].getAsFile();
+          if (file) {
+            files.push(file);
           }
+        }
+        if (files.length > 0) {
+          uploadWithPreview(files);
         }
       } catch (e) {
         // Ignore.
       }
     },
-    [
-      elementPasteHandler,
-      isValidType,
-      rawPasteHandler,
-      showSnackbar,
-      uploadFile,
-    ]
+    [elementPasteHandler, rawPasteHandler, uploadWithPreview]
   );
 
   useClipboardHandlers(container, copyCutHandler, pasteHandler);

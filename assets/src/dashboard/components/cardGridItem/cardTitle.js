@@ -35,10 +35,10 @@ import useFocusOut from '../../utils/useFocusOut';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
-  font-size: ${({ theme }) => theme.fonts.storyGridItem.size};
+  font-size: ${({ theme }) => theme.fonts.storyGridItem.size}px;
   font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing}em;
+  line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
   max-width: 80%;
   height: ${CARD_TITLE_AREA_HEIGHT}px;

@@ -21,11 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import Context from './context';
@@ -56,59 +51,10 @@ function FontProvider({ children }) {
     [getFontBy]
   );
 
-  const getFontBySlug = useCallback(
-    (slug) => {
-      return getFontBy('slug', slug);
-    },
-    [getFontBy]
-  );
-
-  const getFontWeight = useCallback(
-    (name) => {
-      const fontWeightNames = {
-        100: __('Thin', 'web-stories'),
-        200: __('Extra-light', 'web-stories'),
-        300: __('Light', 'web-stories'),
-        400: __('Regular', 'web-stories'),
-        500: __('Medium', 'web-stories'),
-        600: __('Semi-bold', 'web-stories'),
-        700: __('Bold', 'web-stories'),
-        800: __('Extra-bold', 'web-stories'),
-        900: __('Black', 'web-stories'),
-      };
-
-      const defaultFontWeights = [{ name: fontWeightNames[400], value: 400 }];
-
-      const currentFont = getFontByName(name);
-      let fontWeights = defaultFontWeights;
-      if (currentFont) {
-        const { weights } = currentFont;
-        if (weights) {
-          fontWeights = weights.map((weight) => ({
-            name: fontWeightNames[weight],
-            value: weight,
-          }));
-        }
-      }
-      return fontWeights;
-    },
-    [getFontByName]
-  );
-
-  const getFontFallback = useCallback(
-    (name) => {
-      const currentFont = getFontByName(name);
-      const fontFallback =
-        currentFont && currentFont.fallbacks ? currentFont.fallbacks : [];
-      return fontFallback;
-    },
-    [getFontByName]
-  );
-
   const {
     maybeEnqueueFontStyle,
     ensureFontFaceSetIsAvailable,
-  } = useLoadFontFiles({ getFontByName });
+  } = useLoadFontFiles();
 
   const state = {
     state: {
@@ -116,11 +62,8 @@ function FontProvider({ children }) {
     },
     actions: {
       getFontByName,
-      getFontBySlug,
       maybeEnqueueFontStyle,
       ensureFontFaceSetIsAvailable,
-      getFontWeight,
-      getFontFallback,
     },
   };
 

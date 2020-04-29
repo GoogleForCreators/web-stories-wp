@@ -20,6 +20,12 @@
 import { useCallback } from 'react';
 
 /**
+ * Internal dependencies
+ */
+import cleanForSlug from '../../../utils/cleanForSlug';
+import getGoogleFontURL from '../../../utils/getGoogleFontURL';
+
+/**
  * This is a utility ensure that Promise.all return ONLY when all promises are processed.
  *
  * @param {Promise} promise Promise to be processed
@@ -32,7 +38,7 @@ const reflect = (promise) => {
   );
 };
 
-function useLoadFontFiles({ getFontByName }) {
+function useLoadFontFiles() {
   /**
    * Adds a <link> element to the <head> for a given font in case there is none yet.
    *
@@ -42,22 +48,37 @@ function useLoadFontFiles({ getFontByName }) {
    * @return {Promise} Returns font load promise
    */
   const maybeEnqueueFontStyle = useCallback(
-    ({ fontFamily, fontWeight, fontStyle, fontSize } = { fontSize: 0 }) => {
-      const { handle, src } = getFontByName(fontFamily);
-      if (!fontFamily || !fontWeight || !fontStyle || !handle) {
+    async (
+      {
+        font: { family, service, variants },
+        fontWeight,
+        fontStyle,
+        fontSize,
+      } = { fontSize: 0 }
+    ) => {
+      if (
+        !family ||
+        !fontWeight ||
+        !fontStyle ||
+        !fontSize ||
+        service !== 'fonts.google.com'
+      ) {
         return null;
       }
-      const fontFaceSet = `${fontStyle} ${fontWeight} ${fontSize}px '${fontFamily}'`;
+
+      const handle = cleanForSlug(family);
       const elementId = `${handle}-css`;
+      const fontFaceSet = `${fontStyle} ${fontWeight} ${fontSize}px '${family}'`;
 
       const hasFontLink = () => {
-        return handle && document.getElementById(elementId);
+        return document.getElementById(elementId);
       };
 
       const appendFontLink = () => {
         return new Promise((resolve, reject) => {
+          const src = getGoogleFontURL([{ family, variants }]);
           const fontStylesheet = document.createElement('link');
-          const fontHref = `${src}&display=auto`.replace('&display=swap', '');
+          const fontHref = src.replace('display=swap', 'display=auto');
           fontStylesheet.id = elementId;
           fontStylesheet.href = fontHref;
           fontStylesheet.rel = 'stylesheet';
@@ -66,34 +87,26 @@ function useLoadFontFiles({ getFontByName }) {
           fontStylesheet.crossOrigin = 'anonymous';
           fontStylesheet.addEventListener('load', () => resolve());
           fontStylesheet.addEventListener('error', (e) => reject(e));
-          return document.head.appendChild(fontStylesheet);
+          document.head.appendChild(fontStylesheet);
         });
       };
 
-      const ensureFontLoaded = () => {
-        return new Promise((resolve, reject) => {
-          if (document?.fonts) {
-            document.fonts.load(fontFaceSet).then(() => {
-              if (document.fonts.check(fontFaceSet)) {
-                resolve();
-              } else {
-                reject(
-                  new Error(`font-family: ${fontFamily} found, but not loaded.`)
-                );
-              }
-            });
-          } else {
-            resolve();
-          }
-        });
+      const ensureFontLoaded = async () => {
+        if (document?.fonts) {
+          await document.fonts.load(fontFaceSet);
+          return document.fonts.check(fontFaceSet);
+        } else {
+          return null;
+        }
       };
 
-      if (!hasFontLink(fontFamily)) {
-        return appendFontLink().then(() => ensureFontLoaded());
+      if (!hasFontLink()) {
+        await appendFontLink();
       }
+
       return ensureFontLoaded();
     },
-    [getFontByName]
+    []
   );
 
   /**
@@ -105,12 +118,14 @@ function useLoadFontFiles({ getFontByName }) {
    * @return {Promise} Returns a Promise after process all font with `maybeEnqueueFontStyle`
    */
   const ensureFontFaceSetIsAvailable = (aspect, state, elements) => {
-    const fontFamilies = elements.map((e) => ({
+    const currentFontConfigs = elements.map((e) => ({
       ...e,
       [aspect]: state[aspect],
     }));
     return Promise.all(
-      fontFamilies.map((family) => maybeEnqueueFontStyle(family)).map(reflect)
+      currentFontConfigs
+        .map((currentFontConfig) => maybeEnqueueFontStyle(currentFontConfig))
+        .map(reflect)
     );
   };
 

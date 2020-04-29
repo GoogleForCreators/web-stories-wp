@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -25,6 +25,7 @@ import { ThemeProvider } from 'styled-components';
  */
 import theme from '../../../../theme';
 import ColorPicker from '../../';
+import { renderWithTheme } from '../../../../testUtils';
 
 function getResolvingPromise(mock) {
   return new Promise((resolve) => {
@@ -42,11 +43,7 @@ function arrange(customProps = {}) {
     onClose,
     ...customProps,
   };
-  const accessors = render(
-    <ThemeProvider theme={theme}>
-      <ColorPicker {...props} />
-    </ThemeProvider>
-  );
+  const accessors = renderWithTheme(<ColorPicker {...props} />);
   const {
     getByRole,
     queryByLabelText,

@@ -43,9 +43,10 @@ const BookmarkToggle = styled(BookmarkChip)`
 const CloseLink = styled.a`
   ${({ theme }) => `
     font-family: ${theme.fonts.body1.family};
-    font-size: ${theme.fonts.body1.size};
+    font-size: ${theme.fonts.body1.size}px;
     font-weight: ${theme.fonts.body1.weight};
-    line-height: ${theme.fonts.body1.lineHeight};
+    line-height: ${theme.fonts.body1.lineHeight}px;
+    letter-spacing: ${theme.fonts.body1.letterSpacing}em;
     text-decoration: none;
     color: ${theme.colors.gray700};
   `}

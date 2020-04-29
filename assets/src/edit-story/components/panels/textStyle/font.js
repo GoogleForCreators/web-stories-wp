@@ -33,6 +33,7 @@ import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
+import objectPick from '../../../utils/objectPick';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -43,20 +44,39 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+const getFontWeights = ({ weights }) => {
+  const fontWeightNames = {
+    100: __('Thin', 'web-stories'),
+    200: __('Extra-light', 'web-stories'),
+    300: __('Light', 'web-stories'),
+    400: __('Regular', 'web-stories'),
+    500: __('Medium', 'web-stories'),
+    600: __('Semi-bold', 'web-stories'),
+    700: __('Bold', 'web-stories'),
+    800: __('Extra-bold', 'web-stories'),
+    900: __('Black', 'web-stories'),
+  };
+
+  return weights.map((weight) => ({
+    name: fontWeightNames[weight],
+    value: weight.toString(),
+  }));
+};
+
 function FontControls({ selectedElements, pushUpdate }) {
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const font = getCommonValue(selectedElements, 'font');
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
   const fontStyle = getCommonValue(selectedElements, 'fontStyle');
 
   const {
     state: { fonts },
-    actions: { ensureFontFaceSetIsAvailable, getFontWeight, getFontFallback },
+    actions: { ensureFontFaceSetIsAvailable, getFontByName },
   } = useFont();
-  const fontWeights = useMemo(() => getFontWeight(fontFamily), [
-    getFontWeight,
-    fontFamily,
-  ]);
+  const fontWeights = useMemo(
+    () => getFontWeights(getFontByName(font.family)),
+    [getFontByName, font]
+  );
 
   return (
     <>
@@ -66,39 +86,43 @@ function FontControls({ selectedElements, pushUpdate }) {
             data-testid="font"
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
-            value={fontFamily}
+            value={font.family}
             onChange={async (value) => {
-              const currentFontWeights = getFontWeight(value);
-              const currentFontFallback = getFontFallback(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ value: weight }) => weight
-              );
+              const fontObj = fonts.find((item) => item.value === value);
+              const newFont = {
+                family: value,
+                ...objectPick(fontObj, [
+                  'service',
+                  'fallbacks',
+                  'weights',
+                  'styles',
+                  'variants',
+                ]),
+              };
+              const { weights } = fontObj;
 
               await ensureFontFaceSetIsAvailable(
-                'fontFamily',
+                'font',
                 {
                   fontStyle,
                   fontWeight,
                   fontSize,
-                  fontFamily: value,
+                  font: newFont,
                 },
                 selectedElements
               );
               // Find the nearest font weight from the available font weight list
-              // If no fontweightsArr available then will return undefined
-              const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.reduce((a, b) =>
-                  Math.abs(parseInt(b) - fontWeight) <
-                  Math.abs(parseInt(a) - fontWeight)
-                    ? b
-                    : a
-                );
+              const newFontWeight = weights.reduce((a, b) =>
+                Math.abs(parseInt(b) - fontWeight) <
+                Math.abs(parseInt(a) - fontWeight)
+                  ? b
+                  : a
+              );
+
               pushUpdate(
                 {
-                  fontFamily: value,
+                  font: newFont,
                   fontWeight: parseInt(newFontWeight),
-                  fontFallback: currentFontFallback,
                 },
                 true
               );
@@ -121,7 +145,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                     fontStyle,
                     fontWeight: value,
                     fontSize,
-                    fontFamily,
+                    font,
                   },
                   selectedElements
                 );
@@ -145,7 +169,7 @@ function FontControls({ selectedElements, pushUpdate }) {
                 fontStyle,
                 fontWeight,
                 fontSize: value,
-                fontFamily,
+                font,
               },
               selectedElements
             );

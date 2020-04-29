@@ -25,7 +25,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import useLoadFontFiles from '../../actions/useLoadFontFiles';
 
 const DEFAULT_FONT = {
-  fontFamily: 'My Font',
+  font: {
+    name: 'My Font',
+  },
   fontWeight: 400,
   fontStyle: 'normal',
   fontSize: 20,
@@ -54,9 +56,7 @@ describe('useFont', () => {
     renderHook(async () => {
       const { ensureFontFaceSetIsAvailable } = useLoadFontFilesMock();
 
-      await ensureFontFaceSetIsAvailable('fontFamily', DEFAULT_FONT, [
-        DEFAULT_FONT,
-      ]);
+      await ensureFontFaceSetIsAvailable('font', DEFAULT_FONT, [DEFAULT_FONT]);
     });
 
     expect(document.getElementById('myfont-css')).toBeDefined();

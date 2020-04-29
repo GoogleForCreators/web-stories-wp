@@ -19,10 +19,15 @@
  */
 import { renderWithTheme } from '../../../testUtils/';
 import ScrollToTop from '..';
+import Layout from '../../layout';
 
 describe('ScrollToTop', () => {
   it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(<ScrollToTop />);
+    const { getByTestId } = renderWithTheme(
+      <Layout.Provider>
+        <ScrollToTop />
+      </Layout.Provider>
+    );
 
     const Button = getByTestId('scroll-to-top-button');
 
