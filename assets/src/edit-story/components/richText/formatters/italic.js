@@ -34,8 +34,8 @@ function elementToStyle(element) {
 }
 
 function stylesToCSS(styles) {
-  const style = styles.find((someStyle) => someStyle === ITALIC);
-  if (!style) {
+  const hasItalic = styles.includes(ITALIC);
+  if (!hasItalic) {
     return null;
   }
   return { fontStyle: 'italic' };

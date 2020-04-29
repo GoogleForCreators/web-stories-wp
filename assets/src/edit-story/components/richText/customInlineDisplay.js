@@ -18,10 +18,16 @@
  * Internal dependencies
  */
 import formatters from './formatters';
+import { fauxStylesToCSS } from './fauxSelection';
 
 function customInlineDisplay(styles) {
-  return formatters.reduce(
-    (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
+  const stylesToCSSConverters = [
+    ...formatters.map(({ stylesToCSS }) => stylesToCSS),
+    fauxStylesToCSS,
+  ];
+
+  return stylesToCSSConverters.reduce(
+    (css, stylesToCSS) => ({ ...css, ...stylesToCSS(styles) }),
     {}
   );
 }

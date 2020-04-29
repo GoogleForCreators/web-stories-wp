@@ -34,8 +34,8 @@ function elementToStyle(element) {
 }
 
 function stylesToCSS(styles) {
-  const style = styles.find((someStyle) => someStyle === UNDERLINE);
-  if (!style) {
+  const hasUnderline = styles.includes(UNDERLINE);
+  if (!hasUnderline) {
     return null;
   }
   return { textDecoration: 'underline' };

@@ -87,7 +87,7 @@ function setColor(editorState, color) {
 const formatter = {
   elementToStyle,
   stylesToCSS,
-  autoFocus: true,
+  autoFocus: false,
   getters: {
     color: getColor,
   },

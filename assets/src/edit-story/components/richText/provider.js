@@ -33,6 +33,7 @@ import {
   getHandleKeyCommandFromState,
 } from './util';
 import getStateInfo from './getStateInfo';
+import { useFauxSelection } from './fauxSelection';
 import customImport from './customImport';
 import customExport from './customExport';
 import useSelectionManipulation from './useSelectionManipulation';
@@ -73,6 +74,8 @@ function RichTextProvider({ children }) {
     },
     [editingElementState, setEditorState]
   );
+
+  useFauxSelection(editorState, setEditorState);
 
   // This filters out illegal content (see `getFilteredState`)
   // on paste and updates state accordingly.
