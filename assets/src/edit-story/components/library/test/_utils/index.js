@@ -17,18 +17,17 @@
 /**
  * External dependencies
  */
-import { render, act } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { act } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import Library from '../../index';
 import { MediaProvider } from '../../../../app/media';
 import { ConfigProvider } from '../../../../app/config';
 import { FontProvider } from '../../../../app/font';
 import APIContext from '../../../../app/api/context';
+import { renderWithTheme } from '../../../../testUtils';
 
 export async function arrange({ mediaResponse = [] }) {
   const config = {
@@ -37,6 +36,7 @@ export async function arrange({ mediaResponse = [] }) {
       image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
       video: ['video/mp4'],
     },
+    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   };
   const getMediaPromise = Promise.resolve({
     data: mediaResponse,
@@ -51,18 +51,16 @@ export async function arrange({ mediaResponse = [] }) {
     },
   };
 
-  const accessors = render(
-    <ThemeProvider theme={theme}>
-      <ConfigProvider config={config}>
-        <APIContext.Provider value={apiContextValue}>
-          <FontProvider>
-            <MediaProvider>
-              <Library />
-            </MediaProvider>
-          </FontProvider>
-        </APIContext.Provider>
-      </ConfigProvider>
-    </ThemeProvider>
+  const accessors = renderWithTheme(
+    <ConfigProvider config={config}>
+      <APIContext.Provider value={apiContextValue}>
+        <FontProvider>
+          <MediaProvider>
+            <Library />
+          </MediaProvider>
+        </FontProvider>
+      </APIContext.Provider>
+    </ConfigProvider>
   );
 
   // Another option without allPromises:

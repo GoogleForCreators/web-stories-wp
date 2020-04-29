@@ -16,15 +16,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import PresetGroup from '../presetGroup';
 import createSolid from '../../../../utils/createSolid';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPresetGroup() {
   const itemRenderer = jest.fn();
@@ -38,15 +37,13 @@ function setupPresetGroup() {
     return <button tabIndex={index === i ? 0 : -1} />;
   });
 
-  const { container, getByText } = render(
-    <ThemeProvider theme={theme}>
-      <PresetGroup
-        presets={presets}
-        itemRenderer={itemRenderer}
-        label={'Colors'}
-        type={'color'}
-      />
-    </ThemeProvider>
+  const { container, getByText } = renderWithTheme(
+    <PresetGroup
+      presets={presets}
+      itemRenderer={itemRenderer}
+      label={'Colors'}
+      type={'color'}
+    />
   );
   return {
     getByText,

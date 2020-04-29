@@ -47,25 +47,27 @@ const PillContainer = styled.label`
   justify-content: center;
   font-family: ${({ theme }) => theme.fonts.pill.family};
   font-weight: ${({ theme }) => theme.fonts.pill.weight};
-  font-size: ${({ theme }) => theme.fonts.pill.size};
-  line-height: ${({ theme }) => theme.fonts.pill.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing};
+  font-size: ${({ theme }) => `${theme.fonts.pill.size}px`};
+  line-height: ${({ theme }) => theme.fonts.pill.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing}em;
 `;
 const PillLabel = styled.span`
   cursor: pointer;
   margin: auto;
   width: 100%;
-  display: block;
+  display: flex;
   padding: 6px 16px;
+  align-items: center;
+  justify-content: center;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.gray600};
-  border: ${({ theme }) => `1px solid ${theme.colors.gray50}`};
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border: ${({ theme }) => theme.borders.gray50};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
 
   ${PillInput}:checked + & {
     background-color: ${({ theme }) => theme.colors.blueLight};
     color: ${({ theme }) => theme.colors.bluePrimary};
-    border: 1px solid transparent;
+    border: ${({ theme }) => theme.borders.transparent};
   }
 
   ${PillInput}:focus + & {
@@ -92,7 +94,7 @@ const FloatingTabLabel = styled(PillLabel)`
 const Pill = ({
   children,
   inputType = PILL_TYPES.CHECKBOX,
-  isSelected,
+  isSelected = false,
   name,
   onClick,
   floatingTab,
@@ -100,7 +102,6 @@ const Pill = ({
   ...rest
 }) => {
   const Label = floatingTab ? FloatingTabLabel : PillLabel;
-
   return (
     <PillContainer>
       <PillInput

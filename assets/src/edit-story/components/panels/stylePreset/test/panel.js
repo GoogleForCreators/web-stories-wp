@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StylePresetPanel from '../index';
 import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { getShapePresets, getTextPresets } from '../utils';
+import { renderWithTheme } from '../../../../testUtils';
 jest.mock('../utils');
 
 function setupPanel(extraStylePresets, extraStateProps) {
@@ -58,12 +57,10 @@ function setupPanel(extraStylePresets, extraStateProps) {
     getByLabelText,
     queryByText,
     queryAllByLabelText,
-  } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <StylePresetPanel />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <StylePresetPanel />
+    </StoryContext.Provider>
   );
   return {
     getByText,

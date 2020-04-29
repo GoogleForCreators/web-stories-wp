@@ -16,15 +16,13 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import Presets from '../presets';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPresets(props = {}) {
   const {
@@ -40,16 +38,14 @@ function setupPresets(props = {}) {
     ...stylePresets,
   };
   const handlePresetClick = jest.fn();
-  return render(
-    <ThemeProvider theme={theme}>
-      <Presets
-        isEditMode={isEditMode}
-        handlePresetClick={handlePresetClick}
-        isText={isText}
-        stylePresets={presets}
-        textContent={textContent}
-      />
-    </ThemeProvider>
+  return renderWithTheme(
+    <Presets
+      isEditMode={isEditMode}
+      handlePresetClick={handlePresetClick}
+      isText={isText}
+      stylePresets={presets}
+      textContent={textContent}
+    />
   );
 }
 
