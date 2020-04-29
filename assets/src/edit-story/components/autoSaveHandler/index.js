@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -36,7 +36,6 @@ function AutoSaveHandler() {
     actions: { autoSave, saveStory },
   } = useStory();
 
-  const [didAutoSave, setDidAutoSave] = useState(false);
   const isDraft = 'draft' === status;
 
   // If autoSaveInterval is set to 0 or not defined, don't.
@@ -45,37 +44,20 @@ function AutoSaveHandler() {
   }
 
   useEffect(() => {
-    // If there are new changes, mark autoSave as not done.
-    if (hasNewChanges && didAutoSave) {
-      setDidAutoSave(false);
-    }
-  }, [hasNewChanges, didAutoSave]);
-
-  useEffect(() => {
-    let timeout;
-
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
     // until the logic for other statuses has been decided.
-    if (isDraft && !didAutoSave && hasNewChanges) {
-      timeout = setTimeout(() => {
-        const update = isDraft ? saveStory : autoSave;
-        update();
-        setDidAutoSave(true);
-      }, autoSaveInterval * 1000);
+    if (!isDraft || !hasNewChanges) {
+      return () => {};
     }
+    let timeout = setTimeout(() => {
+      const update = isDraft ? saveStory : autoSave;
+      update();
+    }, autoSaveInterval * 1000);
 
     return () => {
       timeout && clearTimeout(timeout);
     };
-  }, [
-    autoSave,
-    autoSaveInterval,
-    didAutoSave,
-    isDraft,
-    saveStory,
-    status,
-    hasNewChanges,
-  ]);
+  }, [autoSave, autoSaveInterval, isDraft, saveStory, status, hasNewChanges]);
 
   return null;
 }
