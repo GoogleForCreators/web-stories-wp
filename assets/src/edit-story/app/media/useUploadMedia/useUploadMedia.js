@@ -40,13 +40,7 @@ import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-  } = useConfig();
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
@@ -87,7 +81,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             sprintf(
               /* translators: %s: list of allowed file types. */
               __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedMimeTypes.join(
+              allowedFileTypes.join(
                 /* translators: delimiter used in a list */
                 __(', ', 'web-stories')
               )
@@ -141,7 +135,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       setMedia,
       media,
       showSnackbar,
-      allowedMimeTypes,
+      allowedFileTypes,
       fetchMedia,
       pagingNum,
       mediaType,

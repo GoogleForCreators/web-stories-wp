@@ -197,3 +197,4 @@ export const STORY_SORT_MENU_ITEMS = [
 
 export * from './animation';
 export * from './direction';
+export * from './templates';
