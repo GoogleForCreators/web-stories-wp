@@ -153,20 +153,13 @@ const theme = {
   fonts: {
     heading1: {
       family: themeFonts.primary,
-      size: 38,
-      minSize: 28,
+      size: 26,
+      minSize: 18,
       lineHeight: 53,
       minLineHeight: 43,
       letterSpacing: -0.005,
       minLetterSpacing: -0.01,
     },
-    // heading2 is not in use
-    // heading2: {
-    //   family: themeFonts.primary,
-    //   size: 24,
-    //   lineHeight: 34,
-    //   weight: 500,
-    // },
     heading3: {
       family: themeFonts.primary,
       size: 20,

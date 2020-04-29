@@ -25,11 +25,12 @@ import PropTypes from 'prop-types';
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { ViewHeader, NavMenuButton } from '../../../components';
+import { DropdownContainer } from '../../../components/dropdown';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
-  padding: 10px 0;
+  padding: 10px 0 0;
 `;
 
 const StyledHeader = styled(ViewHeader)`
@@ -38,14 +39,27 @@ const StyledHeader = styled(ViewHeader)`
   justify-content: flex-start;
   align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('38px', '24px', '--squish-progress')};
+  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
   white-space: nowrap;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
+  }
 `;
 
 const Content = styled.div`
-  display: inline-block;
-  justify-content: baseline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 50%;
+
+  ${DropdownContainer} {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -68,6 +82,14 @@ const SearchInner = styled.div`
   width: min(190px, 100%);
 `;
 
+const HeadingBodyWrapper = styled(BodyWrapper)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+`;
+
 const PageHeading = ({
   children,
   defaultTitle,
@@ -78,7 +100,7 @@ const PageHeading = ({
 }) => {
   return (
     <Container>
-      <BodyWrapper>
+      <HeadingBodyWrapper>
         <StyledHeader>
           <NavMenuButton showOnlyOnSmallViewport />
           {defaultTitle}
@@ -94,7 +116,7 @@ const PageHeading = ({
             />
           </SearchInner>
         </SearchContainer>
-      </BodyWrapper>
+      </HeadingBodyWrapper>
     </Container>
   );
 };

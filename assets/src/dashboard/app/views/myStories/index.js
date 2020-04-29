@@ -55,22 +55,6 @@ import {
   StoryListView,
 } from '../shared';
 
-// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
-
-const FilterContainer = styled.fieldset`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-  padding-bottom: 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    & > label span {
-      border-radius: 0;
-      box-shadow: none !important;
-      padding: 0 10px 0 0;
-    }
-  }
-`;
-
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-weight: ${({ theme }) => theme.fonts.body1.weight};
@@ -83,10 +67,6 @@ const DefaultBodyText = styled.p`
 
 const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
-`;
-
-const CardPanel = styled.div`
-  padding-top: 60px;
 `;
 
 function MyStories() {
@@ -239,6 +219,7 @@ function MyStories() {
   const storiesViewControls = useMemo(() => {
     return (
       <BodyViewOptions
+        showGridToggle
         listBarLabel={listBarLabel}
         layoutStyle={viewStyle}
         handleLayoutSelect={handleViewStyleBarButtonSelected}
@@ -261,7 +242,7 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <CardPanel>
+        <div>
           <BodyWrapper>
             {storiesView}
             <InfiniteScroller
@@ -271,7 +252,7 @@ function MyStories() {
               onLoadMore={handleNewPageRequest}
             />
           </BodyWrapper>
-        </CardPanel>
+        </div>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -303,8 +284,7 @@ function MyStories() {
                 filteredStories={orderedStories}
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
-              />
-              <FilterContainer>
+              >
                 {STORY_STATUSES.map((storyStatus) => (
                   <FloatingTab
                     key={storyStatus.value}
@@ -317,7 +297,7 @@ function MyStories() {
                     {storyStatus.label}
                   </FloatingTab>
                 ))}
-              </FilterContainer>
+              </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
             <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
