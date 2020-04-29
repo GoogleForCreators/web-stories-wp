@@ -28,11 +28,15 @@ import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
 import AutoSaveHandler from '../index';
 
-function setup(hasNewChanges = true, status = 'draft') {
+function setup({
+  hasNewChanges = true,
+  status = 'draft',
+  autoSaveInterval = 0.1,
+}) {
   const saveStory = jest.fn();
   const historyContextValue = { state: { hasNewChanges } };
   const configValue = {
-    autoSaveInterval: 0.1,
+    autoSaveInterval,
   };
   const storyContextValue = {
     state: {
@@ -58,19 +62,27 @@ jest.useFakeTimers();
 
 describe('AutoSaveHandler', () => {
   it('should trigger saving in case of a draft', () => {
-    const { saveStory } = setup();
+    const { saveStory } = setup({});
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
   it('should not trigger saving in case of not having new changes', () => {
-    const { saveStory } = setup(false);
+    const { saveStory } = setup({ hasNewChanges: false });
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(0);
   });
 
   it('should not trigger saving in case of a non-draft post', () => {
-    const { saveStory } = setup(true, 'publish');
+    const { saveStory } = setup({ hasNewChanges: true, status: 'publish' });
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not trigger saving when interval is 0', () => {
+    const { saveStory } = setup({
+      autoSaveInterval: 0,
+    });
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(0);
   });
