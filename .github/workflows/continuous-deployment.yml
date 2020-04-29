@@ -55,6 +55,7 @@ jobs:
         run: npm install
         env:
           CI: TRUE
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
 
       - name: Bundle plugin
         run: |
