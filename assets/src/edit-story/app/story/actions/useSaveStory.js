@@ -49,7 +49,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     actions: { saveStoryById },
   } = useAPI();
   const {
-    actions: { setHasNewChanges },
+    actions: { resetNewChanges },
   } = useHistory();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
@@ -81,7 +81,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         })
         .finally(() => {
           setIsSaving(false);
-          setHasNewChanges(false);
+          resetNewChanges();
         });
     },
     [
@@ -93,7 +93,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       updateStory,
       refreshPostEditURL,
       showSnackbar,
-      setHasNewChanges,
+      resetNewChanges,
     ]
   );
 

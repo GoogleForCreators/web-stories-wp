@@ -52,6 +52,8 @@ function HistoryProvider({ children, size }) {
     setHasNewChanges(versionNumber - 1 > 0);
   }, [versionNumber]);
 
+  const resetNewChanges = () => setHasNewChanges(false);
+
   const state = {
     state: {
       replayState,
@@ -62,7 +64,7 @@ function HistoryProvider({ children, size }) {
     actions: {
       appendToHistory,
       clearHistory,
-      setHasNewChanges,
+      resetNewChanges,
       undo,
       redo,
     },
