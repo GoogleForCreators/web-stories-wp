@@ -1,5 +1,30 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["testIsKeyPressed"] }] */
+
+/**
+ * External dependencies
+ */
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
+
+/**
+ * Internal dependencies
+ */
 import { useGlobalIsKeyPressed, useIsKeyPressed } from '../index';
 
 const keys = {
@@ -52,8 +77,8 @@ describe('keyboard/index.js', () => {
     it('should not register key presses on other elements', async () => {
       const { findByText } = render(
         <div>
-          <div>ElemWithHook</div>
-          <div>ElemWhereKeyPressIsFired</div>
+          <div>{'ElemWithHook'}</div>
+          <div>{'ElemWhereKeyPressIsFired'}</div>
         </div>
       );
 
@@ -78,12 +103,12 @@ describe('keyboard/index.js', () => {
       testIsKeyPressed(result, document, keys.b, false);
     });
 
-    it('should register key presses on any part of the document', async () => {
+    it('should register key presses on any part of the document', () => {
       const { container } = render(
         <div>
-          <div>elem1</div>
-          <div>elem2</div>
-          <div>elem3</div>
+          <div>{'elem1'}</div>
+          <div>{'elem2'}</div>
+          <div>{'elem3'}</div>
         </div>
       );
 

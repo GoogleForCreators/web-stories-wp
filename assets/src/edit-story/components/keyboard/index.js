@@ -124,7 +124,7 @@ export function useKeyUpEffect(
 }
 
 /**
- * @param {{current: Node}} ref
+ * @param {{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {Array|undefined} deps
  * @return {boolean} Stateful boolean that tracks whether key is pressed.
