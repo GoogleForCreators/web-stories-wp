@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import inlineTextProperties from '../v0015_inlineTextProperties';
+import inlineTextProperties from '../v0016_inlineTextProperties';
 
 function convert(content, properties) {
   const converted = inlineTextProperties({

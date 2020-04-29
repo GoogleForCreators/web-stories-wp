@@ -28,18 +28,24 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Layout, Dropdown } from '../../../components';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+
+import {
+  Layout,
+  Dropdown,
+  InfiniteScroller,
+  ScrollToTop,
+} from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
   STORY_SORT_OPTIONS,
 } from '../../../constants';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import {
   BodyWrapper,
   PageHeading,
@@ -47,6 +53,7 @@ import {
   StoryGridView,
   BodyViewOptions,
 } from '../shared';
+import useTemplateFilters from './templateFilters';
 
 const ExploreFiltersContainer = styled.div`
   padding: 0 20px 20px;
@@ -62,6 +69,7 @@ const ExploreFiltersContainer = styled.div`
 function TemplatesGallery() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [currentPage, setCurrentPage] = useState(1);
   const [currentTemplateSort, setCurrentTemplateSort] = useState(
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
@@ -69,20 +77,30 @@ function TemplatesGallery() {
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
   });
   const {
-    state: { templates },
-    actions: { templateApi },
+    state: {
+      templates: {
+        allPagesFetched,
+        isLoading,
+        templates,
+        templatesOrderById,
+        totalPages,
+        totalTemplates,
+      },
+    },
+    actions: {
+      templateApi: { fetchExternalTemplates },
+    },
   } = useContext(ApiContext);
 
   useEffect(() => {
-    templateApi.fetchExternalTemplates();
-  }, [templateApi]);
+    fetchExternalTemplates();
+  }, [fetchExternalTemplates]);
 
-  const filteredTemplates = useMemo(() => {
-    return templates.filter((template) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-      return template.title.toLowerCase().includes(lowerTypeaheadValue);
+  const orderedTemplates = useMemo(() => {
+    return templatesOrderById.map((templateId) => {
+      return templates[templateId];
     });
-  }, [templates, typeaheadValue]);
+  }, [templatesOrderById, templates]);
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -92,35 +110,67 @@ function TemplatesGallery() {
     }
   }, [viewStyle]);
 
-  const filteredTemplatesCount = filteredTemplates.length;
+  const setCurrentPageClamped = useCallback(
+    (newPage) => {
+      const pageRange = [1, totalPages];
+      setCurrentPage(clamp(newPage, pageRange));
+    },
+    [totalPages]
+  );
+
+  const handleNewPageRequest = useCallback(() => {
+    setCurrentPageClamped(currentPage + 1);
+  }, [currentPage, setCurrentPageClamped]);
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
     _n(
       '%s total template',
       '%s total templates',
-      filteredTemplatesCount,
+      totalTemplates,
       'web-stories'
     ),
-    filteredTemplatesCount
+    totalTemplates
   );
 
+  const {
+    selectedCategories,
+    selectedColors,
+    onNewCategorySelected,
+    onNewColorSelected,
+    clearAllCategories,
+    clearAllColors,
+  } = useTemplateFilters();
+
   const BodyContent = useMemo(() => {
-    if (filteredTemplatesCount > 0) {
+    if (totalTemplates > 0) {
       return (
         <BodyWrapper>
           <StoryGridView
-            filteredStories={filteredTemplates}
+            filteredStories={orderedTemplates}
             centerActionLabel={__('View details', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
             updateStory={() => {}}
+          />
+          <InfiniteScroller
+            canLoadMore={!allPagesFetched}
+            isLoading={isLoading}
+            allDataLoadedMessage={__('No more templates', 'web-stories')}
+            onLoadMore={handleNewPageRequest}
           />
         </BodyWrapper>
       );
     }
 
     return <NoResults typeaheadValue={typeaheadValue} />;
-  }, [filteredTemplates, filteredTemplatesCount, typeaheadValue]);
+  }, [
+    allPagesFetched,
+    handleNewPageRequest,
+    isLoading,
+    orderedTemplates,
+    totalTemplates,
+    typeaheadValue,
+  ]);
 
   return (
     <FontProvider>
@@ -131,7 +181,7 @@ function TemplatesGallery() {
               <PageHeading
                 defaultTitle={__('Explore Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
-                filteredStories={filteredTemplates}
+                filteredStories={orderedTemplates}
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
               />
@@ -140,8 +190,9 @@ function TemplatesGallery() {
                   ariaLabel={__('Category Dropdown', 'web-stories')}
                   type={DROPDOWN_TYPES.PANEL}
                   placeholder={__('Category', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
+                  items={selectedCategories}
+                  onClear={clearAllCategories}
+                  onChange={onNewCategorySelected}
                 />
                 <Dropdown
                   ariaLabel={__('Style Dropdown', 'web-stories')}
@@ -154,8 +205,9 @@ function TemplatesGallery() {
                   ariaLabel={__('Color Dropdown', 'web-stories')}
                   type={DROPDOWN_TYPES.PANEL}
                   placeholder={__('Color', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
+                  items={selectedColors}
+                  onClear={clearAllColors}
+                  onChange={onNewColorSelected}
                 />
                 <Dropdown
                   ariaLabel={__('Layout Type Dropdown', 'web-stories')}
@@ -178,6 +230,9 @@ function TemplatesGallery() {
               />
             </Layout.Squishable>
             <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
           </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>

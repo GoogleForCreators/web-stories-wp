@@ -33,6 +33,7 @@ import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
+import objectPick from '../../../utils/objectPick';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const Space = styled.div`
@@ -44,8 +45,30 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+const getFontWeights = ({ weights }) => {
+  const fontWeightNames = {
+    100: __('Thin', 'web-stories'),
+    200: __('Extra-light', 'web-stories'),
+    300: __('Light', 'web-stories'),
+    400: __('Regular', 'web-stories'),
+    500: __('Medium', 'web-stories'),
+    600: __('Semi-bold', 'web-stories'),
+    700: __('Bold', 'web-stories'),
+    800: __('Extra-bold', 'web-stories'),
+    900: __('Black', 'web-stories'),
+  };
+
+  return weights.map((weight) => ({
+    name: fontWeightNames[weight],
+    value: weight.toString(),
+  }));
+};
+
 function FontControls({ selectedElements, pushUpdate }) {
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const fontFamily = getCommonValue(
+    selectedElements,
+    ({ font }) => font?.family
+  );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
 
   const {
@@ -55,10 +78,10 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     state: { fonts },
-    actions: { getFontWeight, getFontFallback },
+    actions: { getFontByName },
   } = useFont();
-  const fontWeights = useMemo(() => getFontWeight(fontFamily), [
-    getFontWeight,
+  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
+    getFontByName,
     fontFamily,
   ]);
 
@@ -72,11 +95,20 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontFallback = getFontFallback(value);
+              const fontObj = fonts.find((item) => item.value === value);
+
               pushUpdate(
                 {
-                  fontFamily: value,
-                  fontFallback: currentFontFallback,
+                  font: {
+                    family: value,
+                    ...objectPick(fontObj, [
+                      'service',
+                      'fallbacks',
+                      'weights',
+                      'styles',
+                      'variants',
+                    ]),
+                  },
                 },
                 true
               );
