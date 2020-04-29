@@ -159,6 +159,8 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         switchBackToURLInput={switchBackToURLInput}
         poster={poster}
         setAttributes={setAttributes}
+        width={width}
+        height={height}
       />
       <div className={`${className} align${align}`}>
         <ResizableBox

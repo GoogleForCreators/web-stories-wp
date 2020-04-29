@@ -27,7 +27,9 @@ import {
   Button,
   ToolbarGroup,
   BaseControl,
+  TextControl,
   PanelBody,
+  PanelRow,
 } from '@wordpress/components';
 import {
   BlockControls,
@@ -45,6 +47,8 @@ const EmbedControls = (props) => {
     instanceId,
     showEditButton,
     switchBackToURLInput,
+    width,
+    height,
     poster,
     setAttributes,
   } = props;
@@ -66,6 +70,8 @@ const EmbedControls = (props) => {
     posterImageButton.current.focus();
   }, [setAttributes, posterImageButton]);
 
+  const hasPoster = Boolean(poster);
+
   return (
     <>
       <BlockControls>
@@ -81,48 +87,81 @@ const EmbedControls = (props) => {
         </ToolbarGroup>
       </BlockControls>
       <InspectorControls>
-        <PanelBody>
+        <PanelBody title={__('Embed Settings', 'web-stories')}>
           <MediaUploadCheck>
-            <BaseControl className="editor-video-poster-control">
-              <BaseControl.VisualLabel>
-                {__('Poster image', 'web-stories')}
-              </BaseControl.VisualLabel>
-              <MediaUpload
-                title={__('Select poster image', 'web-stories')}
-                onSelect={onSelectPoster}
-                allowedTypes={POSTER_ALLOWED_MEDIA_TYPES}
-                render={({ open }) => (
-                  <Button
-                    isPrimary
-                    onClick={open}
-                    ref={posterImageButton}
-                    aria-describedby={posterDescription}
-                  >
-                    {!poster
-                      ? __('Select', 'web-stories')
-                      : __('Replace', 'web-stories')}
+            <PanelRow>
+              <BaseControl>
+                <BaseControl.VisualLabel className="web-stories-embed-poster-label">
+                  {__('Poster image', 'web-stories')}
+                </BaseControl.VisualLabel>
+                <MediaUpload
+                  title={__('Select poster image', 'web-stories')}
+                  onSelect={onSelectPoster}
+                  allowedTypes={POSTER_ALLOWED_MEDIA_TYPES}
+                  render={({ open }) => (
+                    <Button
+                      isPrimary
+                      onClick={open}
+                      ref={posterImageButton}
+                      aria-describedby={posterDescription}
+                    >
+                      {!hasPoster
+                        ? __('Select', 'web-stories')
+                        : __('Replace', 'web-stories')}
+                    </Button>
+                  )}
+                />
+                <p id={posterDescription} hidden>
+                  {hasPoster
+                    ? sprintf(
+                        /* translators: %s: poster image URL. */
+                        __('The current poster image url is %s', 'web-stories'),
+                        poster
+                      )
+                    : __(
+                        'There is no poster image currently selected',
+                        'web-stories'
+                      )}
+                </p>
+                {hasPoster && (
+                  <Button onClick={onRemovePoster} isTertiary>
+                    {__('Remove', 'web-stories')}
                   </Button>
                 )}
-              />
-              <p id={posterDescription} hidden>
-                {poster
-                  ? sprintf(
-                      /* translators: %s: poster image URL. */
-                      __('The current poster image url is %s', 'web-stories'),
-                      poster
-                    )
-                  : __(
-                      'There is no poster image currently selected',
-                      'web-stories'
-                    )}
-              </p>
-              {Boolean(poster) && (
-                <Button onClick={onRemovePoster} isTertiary>
-                  {__('Remove', 'web-stories')}
-                </Button>
-              )}
-            </BaseControl>
+              </BaseControl>
+            </PanelRow>
           </MediaUploadCheck>
+          <PanelRow>
+            <BaseControl className="web-stories-embed-size-control">
+              <BaseControl.VisualLabel>
+                {__('Story dimensions', 'web-stories')}
+              </BaseControl.VisualLabel>
+              <div className="web-stories-embed-size-control__row">
+                <TextControl
+                  type="number"
+                  className="web-stories-embed-size-control__width"
+                  label={__('Width', 'web-stories')}
+                  value={width || ''}
+                  min={1}
+                  onChange={(value) =>
+                    setAttributes({ width: parseInt(value) })
+                  }
+                />
+                <TextControl
+                  type="number"
+                  className="web-stories-embed-size-control__height"
+                  label={__('Height', 'web-stories')}
+                  value={height || ''}
+                  min={1}
+                  onChange={(value) =>
+                    setAttributes({
+                      height: parseInt(value),
+                    })
+                  }
+                />
+              </div>
+            </BaseControl>
+          </PanelRow>
         </PanelBody>
       </InspectorControls>
     </>
@@ -133,6 +172,8 @@ EmbedControls.propTypes = {
   instanceId: PropTypes.number,
   showEditButton: PropTypes.bool,
   switchBackToURLInput: PropTypes.func,
+  width: PropTypes.number,
+  height: PropTypes.number,
   poster: PropTypes.string,
   setAttributes: PropTypes.func,
 };
