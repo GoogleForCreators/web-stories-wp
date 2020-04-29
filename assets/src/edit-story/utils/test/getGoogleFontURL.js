@@ -76,4 +76,14 @@ describe('getGoogleFontURL', () => {
       'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
     );
   });
+
+  it('should use provided font-display parameter', () => {
+    const roboto_400 = { family: 'Roboto', variants: [[0, 400]] };
+    expect(getGoogleFontURL([roboto_400])).toStrictEqual(
+      'https://fonts.googleapis.com/css2?display=swap&family=Roboto'
+    );
+    expect(getGoogleFontURL([roboto_400], 'auto')).toStrictEqual(
+      'https://fonts.googleapis.com/css2?display=auto&family=Roboto'
+    );
+  });
 });

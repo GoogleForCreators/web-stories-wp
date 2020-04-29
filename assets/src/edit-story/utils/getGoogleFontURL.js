@@ -23,11 +23,12 @@
  * @see https://developers.google.com/fonts/docs/css2
  *
  * @param {Array<Object<string, Array<number, number>>>} fonts List of font objects.
+ * @param {string} [display] Valid font-display value, e.g. 'swap' or 'auto'. Default 'swap'.
  * @return {string} Google Fonts embed URL.
  */
-function getGoogleFontURL(fonts) {
+function getGoogleFontURL(fonts, display = 'swap') {
   const url = new URL('https://fonts.googleapis.com/css2');
-  url.searchParams.append('display', 'swap');
+  url.searchParams.append('display', display);
 
   for (const { family: familyName, variants = [] } of fonts) {
     // [ [ 1, 400 ], [ 0, 700 ] ] -> [ ital, wght ]
