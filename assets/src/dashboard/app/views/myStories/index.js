@@ -79,7 +79,7 @@ function MyStories() {
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
   const [currentListSortDirection, setListSortDirection] = useState(
-    SORT_DIRECTION.ASC
+    SORT_DIRECTION.DESC
   );
 
   const { pageSize } = usePagePreviewSize({
@@ -165,8 +165,13 @@ function MyStories() {
       setViewStyle(VIEW_STYLE.GRID);
     } else {
       setViewStyle(VIEW_STYLE.LIST);
+      if (currentStorySort === STORY_SORT_OPTIONS.NAME) {
+        setListSortDirection(SORT_DIRECTION.ASC);
+      } else {
+        setListSortDirection(SORT_DIRECTION.DESC);
+      }
     }
-  }, [viewStyle]);
+  }, [currentStorySort, viewStyle]);
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
