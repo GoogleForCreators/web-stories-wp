@@ -168,9 +168,11 @@ function useCanvasSelectionCopyPaste(container) {
       const { clipboardData } = evt;
 
       try {
+        // Get the html text and plain text but only if it's not a file being copied.
         const content =
-          clipboardData.getData('text/html') ||
-          clipboardData.getData('text/plain');
+          !clipboardData.files?.length &&
+          (clipboardData.getData('text/html') ||
+            clipboardData.getData('text/plain'));
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.

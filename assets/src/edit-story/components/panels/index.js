@@ -137,6 +137,9 @@ export function getPanels(elements) {
         case SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
         case LINK:
+          if (elements.some((e) => e.isFill)) {
+            return null;
+          }
           return { type, Panel: LinkPanel };
         case TEXT_STYLE:
           return { type, Panel: TextStylePanel };

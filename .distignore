@@ -34,11 +34,11 @@ codecov.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
+jest-puppeteer.config.js
 package.json
 package-lock.json
 phpcs.xml
 phpstan.neon.dist
 phpunit.xml.dist
-puppeteer.config.js
 README.md
 webpack.config.js

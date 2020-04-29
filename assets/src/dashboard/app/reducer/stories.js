@@ -23,6 +23,7 @@ export const ACTION_TYPES = {
   LOADING_STORIES: 'loading_stories',
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
+  UPDATE_STORY: 'update_story',
 };
 
 export const defaultStoriesState = {
@@ -46,6 +47,15 @@ function storyReducer(state, action) {
       return {
         ...state,
         isError: action.payload,
+      };
+
+    case ACTION_TYPES.UPDATE_STORY:
+      return {
+        ...state,
+        stories: {
+          ...state.stories,
+          [action.payload.id]: action.payload,
+        },
       };
 
     case ACTION_TYPES.FETCH_STORIES_SUCCESS: {

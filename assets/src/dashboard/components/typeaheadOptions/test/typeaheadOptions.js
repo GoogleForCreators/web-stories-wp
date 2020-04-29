@@ -17,18 +17,13 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils/';
 import TypeaheadOptions from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('TypeaheadOptions', () => {
   const demoItems = [
@@ -43,7 +38,7 @@ describe('TypeaheadOptions', () => {
   const onClickMock = jest.fn();
 
   it('should render a <TypeaheadOptions />', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -51,7 +46,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should simulate a click on one of the items', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -63,7 +58,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should not allow click on item that has false value', () => {
-    const { getByText } = wrapper(
+    const { getByText } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -75,7 +70,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should default to showing 5 items', () => {
-    const { getAllByRole } = wrapper(
+    const { getAllByRole } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -85,7 +80,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should only show 3 items when maxItemsVisible is set', () => {
-    const { getAllByRole } = wrapper(
+    const { getAllByRole } = renderWithTheme(
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}

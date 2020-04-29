@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  */
 import { RouterContext } from './routerProvider';
 
-function matchPath(currentPath, path, exact = false) {
+export function matchPath(currentPath, path, exact = false) {
   const match = new RegExp(`^${path}`).exec(currentPath);
   if (!match) {
     return null;
