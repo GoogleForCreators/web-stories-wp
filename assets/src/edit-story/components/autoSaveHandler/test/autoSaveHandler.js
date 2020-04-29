@@ -13,3 +13,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import React from 'react';
+
+/**
+ * Internal dependencies
+ */
+import HistoryContext from '../../../app/history/context';
+import StoryContext from '../../../app/story/context';
+import ConfigContext from '../../../app/config/context';
+import AutoSaveHandler from '../index';
+
+function setup(hasNewChanges = true, status = 'draft') {
+  const saveStory = jest.fn();
+  const historyContextValue = { state: { hasNewChanges } };
+  const configValue = {
+    autoSaveInterval: 0.1,
+  };
+  const storyContextValue = {
+    state: {
+      story: { status },
+    },
+    actions: { saveStory },
+  };
+  render(
+    <ConfigContext.Provider value={configValue}>
+      <HistoryContext.Provider value={historyContextValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <AutoSaveHandler />
+        </StoryContext.Provider>
+      </HistoryContext.Provider>
+    </ConfigContext.Provider>
+  );
+  return {
+    saveStory,
+  };
+}
+
+jest.useFakeTimers();
+
+describe('AutoSaveHandler', () => {
+  it('should trigger saving in case of a draft', () => {
+    const { saveStory } = setup();
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not trigger saving in case of not having new changes', () => {
+    const { saveStory } = setup(false);
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not trigger saving in case of a non-draft post', () => {
+    const { saveStory } = setup(true, 'publish');
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(0);
+  });
+});
