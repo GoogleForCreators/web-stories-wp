@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 /**
  * Internal dependencies
@@ -29,8 +30,8 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
 
-const THUMB_INDICATOR_HEIGHT = 6;
-const THUMB_INDICATOR_GAP = 4;
+export const THUMB_INDICATOR_HEIGHT = 6;
+export const THUMB_INDICATOR_GAP = 4;
 
 export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
 export const THUMB_FRAME_WIDTH = 0;
@@ -73,7 +74,7 @@ const PreviewWrapper = styled.div`
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 `;
 
-function PagePreview({ index, forwardedRef, ...props }) {
+function PagePreview({ index, ...props }) {
   const {
     state: { pages },
   } = useStory();
@@ -84,13 +85,14 @@ function PagePreview({ index, forwardedRef, ...props }) {
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props} ref={forwardedRef}>
-          <PreviewWrapper>
+        <Page {...props}>
+          <PreviewWrapper className="web-stories-content">
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}
                 previewMode={true}
                 element={{ id, ...rest }}
+                page={page}
               />
             ))}
           </PreviewWrapper>
@@ -102,7 +104,6 @@ function PagePreview({ index, forwardedRef, ...props }) {
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.object,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };

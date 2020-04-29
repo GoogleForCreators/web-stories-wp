@@ -25,7 +25,7 @@ import { text, boolean } from '@storybook/addon-knobs';
 import Switch from '../';
 
 export default {
-  title: 'Components/Switch',
+  title: 'Stories Editor/Components/Switch',
   component: Switch,
 };
 

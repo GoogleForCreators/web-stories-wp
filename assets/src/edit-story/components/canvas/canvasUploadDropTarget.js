@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useCallback } from 'react';
 
 /**
@@ -31,26 +30,21 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 import {
   UploadDropTarget,
-  UploadDropTargetScreen,
-  UploadDropTargetMessageOverlay,
+  UploadDropTargetMessage,
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
 import { useMedia } from '../../app/media';
 import { useStory } from '../../app/story';
 import useInsertElement from '../canvas/useInsertElement';
+import objectPick from '../../utils/objectPick';
 
 import { Layer as CanvasLayer, PageArea } from './layout';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
-const PageAreaCover = styled(PageArea)`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-  outline: 2px solid ${({ theme }) => theme.colors.selection};
-`;
-
 function CanvasUploadDropTarget({ children }) {
   const {
-    actions: { uploadMedia },
+    actions: { uploadMedia, uploadVideoPoster },
   } = useMedia();
   const insertElement = useInsertElement();
   const {
@@ -66,16 +60,30 @@ function CanvasUploadDropTarget({ children }) {
   );
 
   const onUploadedFile = useCallback(
-    ({ resource, element }) => {
+    async ({ resource, element }) => {
+      const keysToUpdate = objectPick(resource, [
+        'src',
+        'width',
+        'height',
+        'length',
+        'lengthFormatted',
+        'id',
+      ]);
+      const updatedResource = {
+        ...element.resource,
+        ...keysToUpdate,
+      };
       updateElementById({
         elementId: element.id,
         properties: {
-          resource,
-          type: element.resource.type,
+          resource: updatedResource,
         },
       });
+      if (resource.type === 'video') {
+        await uploadVideoPoster(resource.id, resource.src);
+      }
     },
-    [updateElementById]
+    [updateElementById, uploadVideoPoster]
   );
 
   const onUploadFailure = useCallback(
@@ -98,38 +106,24 @@ function CanvasUploadDropTarget({ children }) {
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
-      <UploadCanvasOverlay>
-        <PageAreaCover />
-      </UploadCanvasOverlay>
-      <UploadDropTargetScreen />
-      <UploadCanvasOverlay>
-        <PageArea>
-          <UploadDropTargetMessageOverlay
-            id={MESSAGE_ID}
-            message={__(
-              'Upload to media library and add to the page.',
-              'web-stories'
-            )}
-          />
-        </PageArea>
-      </UploadCanvasOverlay>
+      <UploadDropTargetOverlay>
+        <CanvasLayer>
+          <PageArea>
+            <UploadDropTargetMessage
+              id={MESSAGE_ID}
+              message={__(
+                'Upload to media library and add to the page.',
+                'web-stories'
+              )}
+            />
+          </PageArea>
+        </CanvasLayer>
+      </UploadDropTargetOverlay>
     </UploadDropTarget>
   );
 }
 
 CanvasUploadDropTarget.propTypes = {
-  children: StoryPropTypes.children.isRequired,
-};
-
-function UploadCanvasOverlay({ children }) {
-  return (
-    <UploadDropTargetOverlay>
-      <CanvasLayer>{children}</CanvasLayer>
-    </UploadDropTargetOverlay>
-  );
-}
-
-UploadCanvasOverlay.propTypes = {
   children: StoryPropTypes.children.isRequired,
 };
 

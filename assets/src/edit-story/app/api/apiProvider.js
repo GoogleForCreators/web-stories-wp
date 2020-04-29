@@ -46,6 +46,29 @@ function APIProvider({ children }) {
     [stories]
   );
 
+  const getStorySaveData = ({
+    pages,
+    featuredMedia,
+    stylePresets,
+    publisherLogo,
+    autoAdvance,
+    defaultPageDuration,
+    ...rest
+  }) => {
+    return {
+      story_data: {
+        version: DATA_VERSION,
+        pages,
+        autoAdvance,
+        defaultPageDuration,
+      },
+      featured_media: featuredMedia,
+      style_presets: stylePresets,
+      publisher_logo: publisherLogo,
+      ...rest,
+    };
+  };
+
   const saveStoryById = useCallback(
     /**
      * Fire REST API call to save story.
@@ -53,44 +76,29 @@ function APIProvider({ children }) {
      * @param {import('../../types').Story} story Story object.
      * @return {Promise} Return apiFetch promise.
      */
-    ({
-      storyId,
-      title,
-      status,
-      pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    }) => {
+    (story) => {
+      const { storyId } = story;
       return apiFetch({
         path: `${stories}/${storyId}`,
-        data: {
-          title,
-          status,
-          author,
-          password,
-          slug,
-          date,
-          modified,
-          content,
-          excerpt,
-          story_data: {
-            version: DATA_VERSION,
-            pages,
-            autoAdvance,
-            defaultPageDuration,
-          },
-          featured_media: featuredMedia,
-          publisher_logo: publisherLogo,
-        },
+        data: getStorySaveData(story),
+        method: 'POST',
+      });
+    },
+    [stories]
+  );
+
+  const autoSaveById = useCallback(
+    /**
+     * Fire REST API call to save story.
+     *
+     * @param {import('../../types').Story} story Story object.
+     * @return {Promise} Return apiFetch promise.
+     */
+    (story) => {
+      const { storyId } = story;
+      return apiFetch({
+        path: `${stories}/${storyId}/autosaves`,
+        data: getStorySaveData(story),
         method: 'POST',
       });
     },
@@ -203,17 +211,14 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAllFonts = useCallback(
-    ({}) => {
-      return apiFetch({ path: fonts }).then((data) =>
-        data.map((font) => ({
-          value: font.name,
-          ...font,
-        }))
-      );
-    },
-    [fonts]
-  );
+  const getAllFonts = useCallback(() => {
+    return apiFetch({ path: fonts }).then((data) =>
+      data.map((font) => ({
+        value: font.name,
+        ...font,
+      }))
+    );
+  }, [fonts]);
 
   const getAllStatuses = useCallback(() => {
     const path = addQueryArgs(statuses, { context: `edit` });
@@ -221,11 +226,12 @@ function APIProvider({ children }) {
   }, [statuses]);
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: users });
+    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
   const state = {
     actions: {
+      autoSaveById,
       getStoryById,
       getMedia,
       getLinkMetadata,

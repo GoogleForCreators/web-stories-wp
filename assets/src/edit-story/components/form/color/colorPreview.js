@@ -30,6 +30,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import { useSidebar } from '../../sidebar';
 import MULTIPLE_VALUE from '../multipleValue';
@@ -72,7 +73,14 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   overflow: auto;
 `;
 
-function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
+function ColorPreview({
+  onChange,
+  hasGradient,
+  hasOpacity,
+  value,
+  label,
+  colorPickerActions,
+}) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   const previewStyle = getPreviewStyle(value);
@@ -91,15 +99,17 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
       hasGradient,
       hasOpacity,
       onClose: hideSidebar,
+      renderFooter: colorPickerActions,
     });
   }, [
     showColorPickerAt,
-    hideSidebar,
     isMultiple,
     value,
     onChange,
     hasGradient,
     hasOpacity,
+    hideSidebar,
+    colorPickerActions,
   ]);
 
   const [hexInputValue, setHexInputValue] = useState('');
@@ -151,8 +161,8 @@ function ColorPreview({ onChange, hasGradient, hasOpacity, value, label }) {
     previewText,
   ]);
 
-  // Always hide color picker on unmount - note the double arrows
-  useEffect(() => () => hideSidebar(), [hideSidebar]);
+  // Always hide color picker on unmount
+  useUnmount(hideSidebar);
 
   if (isEditable) {
     // If editable, only the visual preview component is a button
@@ -190,6 +200,7 @@ ColorPreview.propTypes = {
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
+  colorPickerActions: PropTypes.func,
 };
 
 ColorPreview.defaultProps = {

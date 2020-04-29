@@ -48,16 +48,29 @@ export function TextOutputWithUnits({
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
+  dataToPaddingX,
+  dataToPaddingY,
   className,
 }) {
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }
-  const { width } = rest;
+  if (!dataToPaddingX) {
+    dataToPaddingX = dataToStyleX;
+  }
+  if (!dataToPaddingY) {
+    dataToPaddingY = dataToStyleY;
+  }
   const paddingStyles = {
-    vertical: `${(padding.vertical / width) * 100}%`,
-    horizontal: `${(padding.horizontal / width) * 100}%`,
+    vertical: dataToPaddingY(padding.vertical),
+    horizontal: dataToPaddingX(padding.horizontal),
   };
+
+  const bgColor =
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
+      ? generatePatternStyles(backgroundColor)
+      : undefined;
+
   const fillStyle = {
     ...generateParagraphTextStyle(
       rest,
@@ -65,15 +78,10 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...generatePatternStyles(backgroundColor),
     ...generatePatternStyles(color, 'color'),
+    ...bgColor,
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
-
-  const bgColor =
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
-      ? generatePatternStyles(backgroundColor)
-      : undefined;
 
   const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
@@ -171,6 +179,8 @@ TextOutputWithUnits.propTypes = {
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
   dataToFontSizeY: PropTypes.func,
+  dataToPaddingX: PropTypes.func,
+  dataToPaddingY: PropTypes.func,
   className: PropTypes.string,
 };
 
@@ -178,6 +188,7 @@ TextOutputWithUnits.propTypes = {
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function TextOutput({ element }) {
+  const { width } = element;
   return (
     <TextOutputWithUnits
       element={element}
@@ -185,6 +196,10 @@ function TextOutput({ element }) {
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
       dataToFontSizeY={(y) => `${(dataToEditorY(y, 100) / 10).toFixed(6)}em`}
+      // Both vertical and horizontal paddings are calculated in % relative to
+      // the box's width per CSS rules.
+      dataToPaddingX={(x) => `${(x / width) * 100}%`}
+      dataToPaddingY={(y) => `${(y / width) * 100}%`}
     />
   );
 }

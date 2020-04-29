@@ -26,10 +26,9 @@ function useEditingElement() {
   });
   const [nodesById, setNodesById] = useState({});
 
-  const clearEditing = useCallback(
-    () => dispatch({ editingElement: null }),
-    []
-  );
+  const clearEditing = useCallback(() => {
+    dispatch({ editingElement: null });
+  }, []);
 
   const setEditingElementWithoutState = useCallback((id) => {
     dispatch({ editingElement: id });

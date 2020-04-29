@@ -23,7 +23,7 @@ import { useCallback, useState } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { __experimentalCreateInterpolateElement as createInterpolateElement } from '@wordpress/element';
+import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -33,8 +33,9 @@ import { useSnackbar } from '../../snackbar';
 import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
-  getResourceFromUploadAPI,
+  getResourceFromAttachment,
 } from '../../../app/media/utils';
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
@@ -47,12 +48,14 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   const [isUploading, setIsUploading] = useState(false);
+  const setPreventUnload = usePreventWindowUnload();
 
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
       let localFiles;
       try {
         setIsUploading(true);
+        setPreventUnload('upload', true);
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
@@ -82,8 +85,12 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         showSnackbar({
           message: createInterpolateElement(
             sprintf(
+              /* translators: %s: list of allowed file types. */
               __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedMimeTypes.join(', ')
+              allowedMimeTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
             ),
             {
               b: <b />,
@@ -106,7 +113,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         if (onUploadedFile) {
           uploadingFiles.forEach(({ element, fileUploaded }) => {
             onUploadedFile({
-              resource: getResourceFromUploadAPI(fileUploaded),
+              resource: getResourceFromAttachment(fileUploaded),
               element,
             });
           });
@@ -126,6 +133,8 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         });
 
         setIsUploading(false);
+      } finally {
+        setPreventUnload('upload', false);
       }
     },
     [
@@ -137,6 +146,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       pagingNum,
       mediaType,
       uploadFile,
+      setPreventUnload,
     ]
   );
 

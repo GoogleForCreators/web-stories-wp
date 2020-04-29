@@ -28,7 +28,7 @@ import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
 const DisplayPageArea = styled(PageArea).attrs({
-  className: 'container',
+  className: 'container web-stories-content',
   overflowAllowed: false,
 })`
   background-color: white;
@@ -57,7 +57,13 @@ function DisplayLayer() {
             if (editingElement === id) {
               return null;
             }
-            return <DisplayElement key={id} element={{ id, ...rest }} />;
+            return (
+              <DisplayElement
+                key={id}
+                element={{ id, ...rest }}
+                page={currentPage}
+              />
+            );
           })}
       </DisplayPageArea>
     </Layer>

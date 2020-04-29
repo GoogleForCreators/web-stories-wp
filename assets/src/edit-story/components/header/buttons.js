@@ -18,21 +18,25 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Spinner } from '@wordpress/components';
-import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia } from '../../app';
+import { useStory, useMedia, useConfig } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
-import { Outline, Primary } from '../button';
+import { Outline, Plain, Primary } from '../button';
+import CircularProgress from '../circularProgress';
+import Dialog from '../dialog';
+import escapeHTML from '../../utils/escapeHTML';
+
+const PREVIEW_TARGET = 'story-preview';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -53,21 +57,106 @@ function PreviewButton() {
   const {
     state: {
       meta: { isSaving },
-      story: { link },
+      story: { link, status },
     },
+    actions: { autoSave, saveStory },
   } = useStory();
+  const { previewLink: autoSaveLink } = useConfig();
+
+  const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
+    null
+  );
+  const isDraft = 'draft' === status;
 
   /**
    * Open a preview of the story in current window.
    */
   const openPreviewLink = () => {
-    const previewLink = addQueryArgs(link, { preview: 'true' });
-    window.open(previewLink, 'story-preview');
+    // Display the actual link in case of a draft.
+    const previewLink = isDraft
+      ? addQueryArgs(link, { preview: 'true' })
+      : autoSaveLink;
+
+    // Start a about:blank popup with waiting message until we complete
+    // the saving operation. That way we will not bust the popup timeout.
+    let popup;
+    try {
+      popup = window.open('about:blank', PREVIEW_TARGET);
+      if (popup) {
+        popup.document.write('<!DOCTYPE html><html><head>');
+        popup.document.write('<title>');
+        popup.document.write(
+          escapeHTML(__('Generating the preview…', 'web-stories'))
+        );
+        popup.document.write('</title>');
+        popup.document.write('</head><body>');
+        // Output "waiting" message.
+        popup.document.write(
+          escapeHTML(__('Please wait. Generating the preview…', 'web-stories'))
+        );
+        // Force redirect to the preview URL after 5 seconds. The saving tab
+        // might get frozen by the browser.
+        popup.document.write(
+          `<script>
+            setTimeout(function() {
+              location.replace(${JSON.stringify(previewLink)});
+            }, 5000);
+          </script>`
+        );
+      }
+    } catch (e) {
+      // Ignore errors. Anything can happen with a popup. The errors
+      // will be resolved after the story is saved.
+    }
+
+    // Save story directly if draft, otherwise, use auto-save.
+    const updateFunc = isDraft ? saveStory : autoSave;
+    updateFunc()
+      .then((update) => {
+        if (popup && !popup.closed) {
+          if (popup.location.href) {
+            // Auto-save sends an updated preview link, use that instead if available.
+            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            popup.location.replace(updatedPreviewLink);
+          }
+        }
+      })
+      .catch(() => {
+        setPreviewLinkToOpenViaDialog(previewLink);
+      });
   };
+
+  const openPreviewLinkSync = (evt) => {
+    setPreviewLinkToOpenViaDialog(null);
+    // Ensure that this method is as safe as possible and pass the random
+    // target in case the normal target is not openable.
+    window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
+    evt.preventDefault();
+  };
+
   return (
-    <Outline onClick={openPreviewLink} isDisabled={isSaving}>
-      {__('Preview', 'web-stories')}
-    </Outline>
+    <>
+      <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+        {__('Preview', 'web-stories')}
+      </Outline>
+      <Dialog
+        open={Boolean(previewLinkToOpenViaDialog)}
+        onClose={() => setPreviewLinkToOpenViaDialog(null)}
+        title={__('Open preview', 'web-stories')}
+        actions={
+          <>
+            <Primary onClick={openPreviewLinkSync}>
+              {__('Try again', 'web-stories')}
+            </Primary>
+            <Plain onClick={() => setPreviewLinkToOpenViaDialog(null)}>
+              {__('Cancel', 'web-stories')}
+            </Plain>
+          </>
+        }
+      >
+        {__('The preview window failed to open.', 'web-stories')}
+      </Dialog>
+    </>
   );
 }
 
@@ -77,7 +166,7 @@ function Publish() {
       meta: { isSaving },
       story: { date, storyId },
     },
-    actions: { updateStory },
+    actions: { saveStory },
   } = useStory();
   const {
     state: { isUploading },
@@ -87,9 +176,9 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
-    updateStory({ properties: { status: 'publish' } });
+    saveStory({ status: 'publish' });
     refreshPostEditURL();
-  }, [refreshPostEditURL, updateStory]);
+  }, [refreshPostEditURL, saveStory]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -106,16 +195,15 @@ function SwitchToDraft() {
     state: {
       meta: { isSaving },
     },
-    actions: { updateStory },
+    actions: { saveStory },
   } = useStory();
   const {
     state: { isUploading },
   } = useMedia();
 
-  const handleUnPublish = useCallback(
-    () => updateStory({ properties: { status: 'draft' } }),
-    [updateStory]
-  );
+  const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
+    saveStory,
+  ]);
 
   return (
     <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
@@ -137,7 +225,6 @@ function Update() {
   } = useMedia();
 
   let text;
-
   switch (status) {
     case 'publish':
     case 'private':
@@ -149,14 +236,17 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline onClick={saveStory} isDisabled={isSaving || isUploading}>
+        <Outline
+          onClick={() => saveStory({ status: 'draft' })}
+          isDisabled={isSaving || isUploading}
+        >
           {text}
         </Outline>
       );
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
+    <Primary onClick={() => saveStory()} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
@@ -168,7 +258,12 @@ function Loading() {
       meta: { isSaving },
     },
   } = useStory();
-  return isSaving ? <Spinner /> : <Space />;
+  return (
+    <>
+      {isSaving && <CircularProgress size={30} />}
+      <Space />
+    </>
+  );
 }
 
 function Buttons() {

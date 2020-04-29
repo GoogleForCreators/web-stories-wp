@@ -26,7 +26,7 @@ import { useState } from 'react';
 import Switch from '../switch';
 
 export default {
-  title: 'Components/Form/Switch',
+  title: 'Stories Editor/Components/Form/Switch',
   component: Switch,
 };
 

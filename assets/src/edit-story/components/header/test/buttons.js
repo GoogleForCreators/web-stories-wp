@@ -17,42 +17,57 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent, getByRole } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import ConfigContext from '../../../app/config/context';
 import Buttons from '../buttons';
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils';
 
 function setupButtons(extraStoryProps, extraMetaProps) {
-  const updateStory = jest.fn();
+  const saveStory = jest.fn();
+  const autoSave = jest.fn();
 
   const storyContextValue = {
     state: {
       meta: { isSaving: false, ...extraMetaProps },
       story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
     },
-    actions: { updateStory },
+    actions: { saveStory, autoSave },
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
+  const configValue = {
+    previewLink:
+      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+  };
+  const { getByText, container } = renderWithTheme(
+    <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
         <Buttons />
       </StoryContext.Provider>
-    </ThemeProvider>
+    </ConfigContext.Provider>
   );
   return {
     container,
     getByText,
-    updateStory,
+    autoSave,
+    saveStory,
   };
 }
 
 describe('buttons', () => {
   const FUTURE_DATE = '9999-01-01T20:20:20';
+  const PREVIEW_POPUP = {
+    document: {
+      write: jest.fn(),
+    },
+    location: {
+      href: 'about:blank',
+      replace: jest.fn(),
+    },
+  };
 
   it('should display Publish button when in draft mode', () => {
     const { getByText } = setupButtons();
@@ -61,25 +76,25 @@ describe('buttons', () => {
   });
 
   it('should update window location when publishing', () => {
-    const { getByText, updateStory } = setupButtons();
+    const { getByText, saveStory } = setupButtons();
     const publishButton = getByText('Publish');
 
     fireEvent.click(publishButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
     expect(window.location.href).toContain('post=123&action=edit');
   });
 
   it('should display Switch to draft button when published', () => {
-    const { getByText, updateStory } = setupButtons({ status: 'publish' });
+    const { getByText, saveStory } = setupButtons({ status: 'publish' });
     const draftButton = getByText('Switch to Draft');
 
     expect(draftButton).toBeDefined();
     fireEvent.click(draftButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
   it('should display Schedule button when future date is set', () => {
-    const { getByText, updateStory } = setupButtons({
+    const { getByText, saveStory } = setupButtons({
       status: 'draft',
       date: FUTURE_DATE,
     });
@@ -87,7 +102,7 @@ describe('buttons', () => {
 
     expect(scheduleButton).toBeDefined();
     fireEvent.click(scheduleButton);
-    expect(updateStory).toHaveBeenCalledTimes(1);
+    expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
   it('should display Schedule button with future status', () => {
@@ -100,18 +115,27 @@ describe('buttons', () => {
     expect(scheduleButton).toBeDefined();
   });
 
-  it('should display Spinner while the story is updating', () => {
+  it('should display loading indicator while the story is updating', () => {
     const { container } = setupButtons({}, { isSaving: true });
-    const spinner = container.querySelector('span');
-    // @todo This test is relying on Gutenberg component's class list and should be replaced as soon as we have a custom spinner.
-    expect(spinner.classList.contains('components-spinner')).toBe(true);
+    expect(getByRole(container, 'progressbar')).toBeInTheDocument();
   });
 
-  it('should open preview when clicking on Preview', () => {
-    const { getByText } = setupButtons({ link: 'https://example.com' });
+  it('should open draft preview when clicking on Preview via about:blank', () => {
+    const { getByText, saveStory } = setupButtons({
+      link: 'https://example.com',
+    });
     const previewButton = getByText('Preview');
 
     expect(previewButton).toBeDefined();
+
+    saveStory.mockImplementation(() => ({
+      then(callback) {
+        callback();
+        return {
+          catch: () => {},
+        };
+      },
+    }));
 
     const mockedOpen = jest.fn();
     const originalWindow = { ...window };
@@ -121,11 +145,51 @@ describe('buttons', () => {
       open: mockedOpen,
     }));
 
+    const popup = PREVIEW_POPUP;
+    mockedOpen.mockImplementation(() => popup);
+
     fireEvent.click(previewButton);
 
-    expect(mockedOpen).toHaveBeenCalledWith(
-      'https://example.com/?preview=true',
-      'story-preview'
+    expect(saveStory).toHaveBeenCalledWith();
+    expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
+    expect(popup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview=true'
+    );
+
+    windowSpy.mockRestore();
+  });
+
+  it('should open preview for a published story when clicking on Preview via about:blank', () => {
+    const { getByText, autoSave } = setupButtons({
+      link: 'https://example.com',
+      status: 'publish',
+    });
+    const previewButton = getByText('Preview');
+    autoSave.mockImplementation(() => ({
+      then(callback) {
+        callback();
+        return {
+          catch: () => {},
+        };
+      },
+    }));
+
+    const mockedOpen = jest.fn();
+    const originalWindow = { ...window };
+    const windowSpy = jest.spyOn(global, 'window', 'get');
+    windowSpy.mockImplementation(() => ({
+      ...originalWindow,
+      open: mockedOpen,
+    }));
+
+    const popup = PREVIEW_POPUP;
+    mockedOpen.mockImplementation(() => popup);
+
+    fireEvent.click(previewButton);
+
+    expect(autoSave).toHaveBeenCalledWith();
+    expect(popup.location.replace).toHaveBeenCalledWith(
+      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true'
     );
 
     windowSpy.mockRestore();

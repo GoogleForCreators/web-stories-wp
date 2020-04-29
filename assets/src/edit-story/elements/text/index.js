@@ -20,6 +20,7 @@
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import createSolid from '../../utils/createSolid';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -33,12 +34,13 @@ export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   bold: false,
-  fontFamily: 'Arial',
+  fontFamily: 'Roboto',
   fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
   fontWeight: 400,
   fontSize: 36,
   fontStyle: 'normal',
-  color: '#000000',
+  backgroundColor: createSolid(196, 196, 196),
+  color: createSolid(0, 0, 0),
   letterSpacing: 0,
   lineHeight: 1.3,
   textAlign: 'initial',
@@ -46,6 +48,7 @@ export const defaultAttributes = {
   padding: {
     vertical: 0,
     horizontal: 0,
+    locked: true,
   },
 };
 
@@ -64,6 +67,7 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.STYLE_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,

@@ -28,7 +28,10 @@ export const GlobalStyle = createGlobalStyle`
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
-	.default-movable .moveable-direction.moveable-n {
+	.default-movable.type-text .moveable-direction.moveable-n, .default-movable.type-text .moveable-direction.moveable-s {
+		pointer-events: none;
+	}
+	.default-movable .moveable-control.moveable-n {
 		display: none !important;
 	}
 

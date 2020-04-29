@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -29,10 +29,10 @@ import useReorderable from './useReorderable';
 const Wrapper = styled.div`
   opacity: 0;
   position: relative;
-  z-index: 1;
+  z-index: ${({ isReordering }) => (isReordering ? 2 : -1)};
 
   &:hover {
-    opacity: 1;
+    opacity: ${({ isReordering }) => (isReordering ? 1 : 0)};
   }
 `;
 
@@ -43,30 +43,41 @@ const Line = styled.div`
   width: 100%;
 `;
 
-function ReorderableSeparator({ position, ...props }) {
+function ReorderableSeparator({ position, children = <Line />, ...props }) {
+  const separatorRef = useRef(null);
+
   const {
     actions: { setCurrentSeparator },
     state: { isReordering },
   } = useReorderable();
   const handlePointerEnter = useCallback(() => {
+    if (!isReordering) {
+      return;
+    }
     setCurrentSeparator(position);
-  }, [setCurrentSeparator, position]);
+  }, [setCurrentSeparator, isReordering, position]);
 
-  if (!isReordering) {
-    return null;
-  }
   return (
     // Disable reason: This one does not need keyboard interactivity
     //  - there are better ways to reorder using keyboard.
     // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-    <Wrapper onMouseOver={handlePointerEnter} {...props}>
-      <Line />
+    <Wrapper
+      onMouseOver={handlePointerEnter}
+      ref={separatorRef}
+      isReordering={isReordering}
+      {...props}
+    >
+      {children}
     </Wrapper>
   );
 }
 
 ReorderableSeparator.propTypes = {
   position: PropTypes.number.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 export default ReorderableSeparator;

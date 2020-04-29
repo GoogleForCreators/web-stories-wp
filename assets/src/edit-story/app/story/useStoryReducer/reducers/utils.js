@@ -18,7 +18,9 @@
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
-export { default as objectWithout } from '../../../../utils/objectWithout';
+import { ELEMENT_RESERVED_PROPERTIES } from '../types';
+import objectWithout from '../../../../utils/objectWithout';
+export { objectWithout };
 
 export function intersect(first, ...rest) {
   if (!first || !rest || rest.length === 0) {
@@ -78,4 +80,14 @@ export function getAbsolutePosition({
     default:
       return currentPosition;
   }
+}
+
+export function updateElementWithUpdater(element, properties) {
+  const updater =
+    typeof properties === 'function' ? properties(element) : properties;
+  const allowedProperties = objectWithout(updater, ELEMENT_RESERVED_PROPERTIES);
+  if (Object.keys(allowedProperties).length === 0) {
+    return element;
+  }
+  return { ...element, ...allowedProperties };
 }

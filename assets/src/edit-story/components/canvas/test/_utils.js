@@ -24,9 +24,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import FrameElement from '../frameElement';
+import DisplayElement from '../displayElement';
 import CanvasProvider from '../canvasProvider';
 import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
+import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
 import useEditingElement from '../useEditingElement';
 
@@ -34,6 +36,7 @@ jest.mock('../useEditingElement');
 
 export function TestFrameElement({
   element,
+  refs,
   configContext: inputConfigContext,
   storyContext: inputStoryContext,
   editingElementContext: inputEditingElementContext,
@@ -71,7 +74,11 @@ export function TestFrameElement({
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
           <CanvasProvider>
-            <FrameElement element={element} />
+            <TransformProvider>
+              <WithRefs refs={refs}>
+                <FrameElement element={element} />
+              </WithRefs>
+            </TransformProvider>
           </CanvasProvider>
         </StoryContext.Provider>
       </ConfigProvider>
@@ -81,7 +88,80 @@ export function TestFrameElement({
 
 TestFrameElement.propTypes = {
   element: PropTypes.object.isRequired,
+  refs: PropTypes.object,
   configContext: PropTypes.object,
   storyContext: PropTypes.object,
   editingElementContext: PropTypes.object,
+};
+
+export function TestDisplayElement({
+  element,
+  refs,
+  configContext: inputConfigContext,
+  storyContext: inputStoryContext,
+}) {
+  const configContext = {
+    ...inputConfigContext,
+    allowedMimeTypes: {
+      image: [],
+      video: [],
+      ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
+    },
+  };
+  const storyContext = {
+    ...inputStoryContext,
+    state: {
+      selectedElements: [],
+      selectedElementIds: [],
+      ...(inputStoryContext && inputStoryContext.state),
+    },
+    actions: {
+      toggleElementInSelection: () => {},
+      setSelectedElementsById: () => {},
+      ...(inputStoryContext && inputStoryContext.actions),
+    },
+  };
+  const editingElementContext = {
+    nodesById: {},
+    setNodeForElement: () => {},
+    setEditingElementWithState: () => {},
+  };
+  useEditingElement.mockImplementation(() => editingElementContext);
+  return (
+    <ThemeProvider theme={theme}>
+      <ConfigProvider config={configContext}>
+        <StoryContext.Provider value={storyContext}>
+          <CanvasProvider>
+            <TransformProvider>
+              <WithRefs refs={refs}>
+                <DisplayElement element={element} />
+              </WithRefs>
+            </TransformProvider>
+          </CanvasProvider>
+        </StoryContext.Provider>
+      </ConfigProvider>
+    </ThemeProvider>
+  );
+}
+
+TestDisplayElement.propTypes = {
+  element: PropTypes.object.isRequired,
+  refs: PropTypes.object,
+  configContext: PropTypes.object,
+  storyContext: PropTypes.object,
+};
+
+function WithRefs({ refs, children }) {
+  const transformContext = useTransform();
+  if (refs) {
+    Object.assign(refs, {
+      transformContext,
+    });
+  }
+  return children;
+}
+
+WithRefs.propTypes = {
+  refs: PropTypes.object,
+  children: PropTypes.node,
 };

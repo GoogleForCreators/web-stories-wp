@@ -20,10 +20,19 @@
 import { useCallback } from 'react';
 
 function useFocusCanvas() {
-  const focusCanvas = useCallback(() => {
+  /**
+   * @param {boolean} force When true, the focus will always be
+   * transfered to the canvas. Otherwise, the focus will only be transfered
+   * when no other editor input is holding it.
+   */
+  const focusCanvas = useCallback((force = true) => {
     setTimeout(() => {
+      const doc = window.document;
+      if (force && doc.activeElement && doc.activeElement !== doc.body) {
+        doc.activeElement.blur();
+      }
       const evt = new window.FocusEvent('focusout');
-      window.document.dispatchEvent(evt);
+      doc.dispatchEvent(evt);
     });
   }, []);
   return focusCanvas;

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * WordPress dependencies
@@ -28,25 +27,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-import OutputStory from '../../../output/story';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
-
-/**
- * Creates AMP HTML markup for saving to DB for rendering in the FE.
- *
- * @param {import('../../../types').Story} story Story object.
- * @param {Array<Object>} pages List of pages.
- * @param {Object} metadata Metadata.
- * @return {Element} Story markup.
- */
-const getStoryMarkup = (story, pages, metadata) => {
-  return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
-  );
-};
+import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 
 /**
  * Custom hook to save story.
@@ -64,80 +51,49 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
+  const setPreventUnload = usePreventWindowUnload();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
-  const saveStory = useCallback(() => {
-    setIsSaving(true);
-    const {
-      title,
-      status,
-      author,
-      date,
-      modified,
-      slug,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    } = story;
+  const saveStory = useCallback(
+    (props) => {
+      setIsSaving(true);
+      return saveStoryById({
+        storyId,
+        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...props,
+      })
+        .then((post) => {
+          const properties = {
+            ...objectPick(post, ['status', 'slug', 'link']),
+            featuredMediaUrl: post.featured_media_url,
+          };
+          updateStory({ properties });
 
-    const content = getStoryMarkup(story, pages, metadata);
-    saveStoryById({
-      storyId,
-      title,
-      status,
+          refreshPostEditURL();
+        })
+        .catch(() => {
+          showSnackbar({
+            message: __('Failed to save the story', 'web-stories'),
+          });
+        })
+        .finally(() => {
+          setIsSaving(false);
+          setPreventUnload('history', false);
+        });
+    },
+    [
+      story,
       pages,
-      author,
-      slug,
-      date,
-      modified,
-      content,
-      excerpt,
-      featuredMedia,
-      password,
-      publisherLogo,
-      autoAdvance,
-      defaultPageDuration,
-    })
-      .then((post) => {
-        const {
-          status: newStatus,
-          slug: newSlug,
-          link,
-          featured_media_url: featuredMediaUrl,
-        } = post;
-
-        updateStory({
-          properties: {
-            status: newStatus,
-            slug: newSlug,
-            link,
-            featuredMediaUrl,
-          },
-        });
-        refreshPostEditURL();
-      })
-      .catch(() => {
-        showSnackbar({
-          message: __('Failed to save the story', 'web-stories'),
-        });
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  }, [
-    story,
-    pages,
-    metadata,
-    saveStoryById,
-    storyId,
-    updateStory,
-    refreshPostEditURL,
-    showSnackbar,
-  ]);
+      metadata,
+      saveStoryById,
+      storyId,
+      updateStory,
+      refreshPostEditURL,
+      showSnackbar,
+      setPreventUnload,
+    ]
+  );
 
   return { saveStory, isSaving };
 }

@@ -157,25 +157,6 @@ class Story_Post_Type {
 			1
 		);
 
-		add_filter(
-			'the_content',
-			static function ( $content ) {
-				if ( is_singular( self::POST_TYPE_SLUG ) ) {
-					remove_all_filters( 'the_content' );
-
-					$post = get_post();
-
-					if ( $post instanceof WP_Post ) {
-						$renderer = new Story_Renderer( $post );
-						return $renderer->render();
-					}
-				}
-
-				return $content;
-			},
-			0
-		);
-
 		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
 
 		// @todo Check if there's something to skip in the new version.
@@ -192,6 +173,19 @@ class Story_Post_Type {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
+
+		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+		add_filter(
+			'amp_skip_post',
+			static function( $skipped, $post ) {
+				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+					$skipped = true;
+				}
+				return $skipped;
+			},
+			PHP_INT_MAX,
+			2
+		);
 	}
 
 	/**
@@ -310,6 +304,11 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
+		$preview_query_args = [
+			'preview_id'    => $story_id,
+			// Leveraging the default WP post preview logic.
+			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
+		];
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
@@ -322,7 +321,7 @@ class Story_Post_Type {
 					'allowedFileTypes' => self::get_allowed_file_types(),
 					'postType'         => self::POST_TYPE_SLUG,
 					'storyId'          => $story_id,
-					'previewLink'      => get_preview_post_link( $story_id ),
+					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
 					'api'              => [
@@ -401,6 +400,7 @@ class Story_Post_Type {
 			'audio' => [], // todo: support audio uploads.
 			'video' => [
 				'video/mp4',
+				'video/webm',
 			],
 		];
 
@@ -498,6 +498,10 @@ class Story_Post_Type {
 
 		if ( $post_story_data_pages ) {
 			foreach ( $post_story_data_pages as $page ) {
+				if ( ! isset( $page['elements'] ) ) {
+					continue;
+				}
+
 				foreach ( $page['elements'] as $element ) {
 					if ( ! isset( $element['fontFamily'] ) ) {
 						continue;
@@ -723,7 +727,7 @@ class Story_Post_Type {
 		// Loop through other size to find a square image.
 		foreach ( $metadata['sizes'] as $size ) {
 			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
-				$logo_img = wp_get_attachment_image_src( $image_id, $size, false );
+				$logo_img = wp_get_attachment_image_src( $image_id, [ $size['width'], $size['height'] ], false );
 				if ( is_array( $logo_img ) ) {
 					return array_shift( $logo_img );
 				}

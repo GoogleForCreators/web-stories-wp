@@ -93,6 +93,47 @@ describe('TextOutput', () => {
     });
   });
 
+  it('should convert padding to percent of width', () => {
+    const element = {
+      id: '123',
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+      },
+      content: 'Content',
+      fontSize: 16,
+      letterSpacing: 1.3,
+      textAlign: 'left',
+      textDecoration: 'none',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 100,
+      rotationAngle: 0,
+      padding: {
+        vertical: 10,
+        horizontal: 10,
+      },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('Content');
+    expect(output.className).toBe('fill');
+    expect(output.style).toMatchObject({
+      padding: '20% 20%',
+    });
+  });
+
   it('should apply <strong> tags if bold', () => {
     const element = {
       id: '123',
@@ -137,6 +178,63 @@ describe('TextOutput', () => {
       />
     );
     expect(output.innerHTML).toBe('<strong>Content</strong>');
+  });
+
+  it('should wrap font-family into quotes', () => {
+    const element = {
+      id: '123',
+      content: 'Content',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 50,
+      fontFamily: 'Baloo Bhaina 2',
+      rotationAngle: 0,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 16,
+      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
+      />
+    );
+    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2"');
+  });
+
+  it('should display correct font fallback', () => {
+    const element = {
+      id: '123',
+      content: 'Content',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 50,
+      fontFamily: 'Baloo Bhaina 2',
+      fontFallback: ['Roboto', 'cursive'],
+      rotationAngle: 0,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 16,
+      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
+      />
+    );
+    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2","Roboto",cursive');
   });
 
   it('should produce valid AMP output', async () => {

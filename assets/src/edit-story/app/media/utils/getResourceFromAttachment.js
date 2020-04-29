@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import createResource from './createResource';
+import getResourceSize from './getResourceSize';
 
 /**
  * Generates a resource object from a WordPress attachment.
@@ -27,28 +28,45 @@ import createResource from './createResource';
  */
 function getResourceFromAttachment(attachment) {
   const {
-    id: videoId,
+    id,
     guid: { rendered: src },
-    media_details: { width, height, length, length_formatted: lengthFormatted },
+    media_details: {
+      width,
+      height,
+      length,
+      length_formatted: lengthFormatted,
+      sizes,
+    },
     title: { raw: title },
     description: { raw: description },
     mime_type: mimeType,
     featured_media: posterId,
-    featured_media_src: poster,
+    featured_media_src: {
+      src: poster,
+      width: posterWidth,
+      height: posterHeight,
+      generated: posterGenerated,
+    },
     alt_text: alt,
   } = attachment;
   return createResource({
     mimeType,
     src,
-    width,
-    height,
+    ...getResourceSize(
+      width,
+      height,
+      posterGenerated,
+      posterWidth,
+      posterHeight
+    ),
     poster,
     posterId,
-    videoId,
+    id,
     length,
     lengthFormatted,
-    alt: alt || description,
+    alt: alt || description || title,
     title,
+    sizes,
     local: false,
   });
 }

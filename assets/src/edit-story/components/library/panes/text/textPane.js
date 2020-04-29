@@ -20,10 +20,14 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import { PAGE_WIDTH } from '../../../../constants';
-import createSolid from '../../../../utils/createSolid';
 import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
@@ -38,23 +42,29 @@ const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
+    content: __('Heading', 'web-stories'),
     fontSize: dataFontEm(2),
-    fontWeight: 800,
-    fontFamily: 'Ubuntu',
+    fontWeight: 700,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
+    content: __('Subheading', 'web-stories'),
     fontSize: dataFontEm(1.5),
-    fontWeight: 500,
-    fontFamily: 'Ubuntu',
+    fontWeight: 600,
+    fontFamily: 'Open Sans',
   },
   {
     id: 'body-text',
     title: __('Body text', 'web-stories'),
-    fontSize: dataFontEm(1),
-    fontWeight: 'normal',
-    fontFamily: 'Ubuntu',
+    content: __(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'web-stories'
+    ),
+    fontSize: dataFontEm(1.1),
+    fontWeight: 400,
+    fontFamily: 'Roboto',
   },
 ];
 
@@ -67,6 +77,8 @@ function getPresetById(id) {
   return null;
 }
 
+const SectionContent = styled.p``;
+
 function TextPane(props) {
   const {
     actions: { insertElement },
@@ -77,6 +89,7 @@ function TextPane(props) {
         value={''}
         placeholder={__('Search', 'web-stories')}
         onChange={() => {}}
+        disabled
       />
 
       <Section
@@ -86,8 +99,7 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 ...getPresetById('subheading'),
-                content: __('Text...', 'web-stories'),
-                color: createSolid(0, 0, 0),
+                content: __('Fill in some text', 'web-stories'),
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
@@ -103,15 +115,15 @@ function TextPane(props) {
             onClick={() =>
               insertElement('text', {
                 ...preset,
-                content: __('Text...', 'web-stories'),
-                color: createSolid(0, 0, 0),
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
           />
         ))}
       </Section>
-      <Section title={__('Text Sets', 'web-stories')} />
+      <Section title={__('Text Sets', 'web-stories')}>
+        <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
+      </Section>
     </Pane>
   );
 }

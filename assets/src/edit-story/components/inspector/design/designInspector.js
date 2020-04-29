@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { LayerPanel, ColorPresetPanel } from '../../panels';
+import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
@@ -35,6 +35,7 @@ const Wrapper = styled.div`
 const TopPanels = styled.div`
   flex: 1 1;
   overflow: auto;
+  overflow: overlay;
 `;
 
 const BottomPanels = styled.div`
@@ -45,7 +46,6 @@ function DesignInspector() {
   return (
     <Wrapper>
       <TopPanels>
-        <ColorPresetPanel />
         <DesignPanels />
       </TopPanels>
       <BottomPanels>

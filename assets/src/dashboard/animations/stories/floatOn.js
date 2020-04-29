@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPE, DIRECTION } from '../constants';
+import { ANIMATION_TYPES, DIRECTION } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
@@ -32,7 +32,7 @@ export default {
 };
 
 const FloatOn = ({ direction }) => {
-  const name = ANIMATION_TYPE.FLOAT_ON;
+  const name = ANIMATION_TYPES.FLOAT_ON;
   const { keyframes, ...config } = getAnimationConfigs[name](direction);
 
   const label = 'Animate';
@@ -59,8 +59,8 @@ const FloatOn = ({ direction }) => {
           top: '50px',
           left: '100px',
           width: '200px',
-          ...getInitialStyleFromKeyframes(keyframes),
         }}
+        animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
         <div>{text}</div>
       </WithAnimation>

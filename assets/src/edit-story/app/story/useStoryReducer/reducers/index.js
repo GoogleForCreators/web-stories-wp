@@ -24,8 +24,10 @@ export { default as arrangePage } from './arrangePage';
 export { default as addElements } from './addElements';
 export { default as deleteElements } from './deleteElements';
 export { default as updateElements } from './updateElements';
+export { default as updateElementsByResourceId } from './updateElementsByResourceId';
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
+export { default as combineElements } from './combineElements';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';

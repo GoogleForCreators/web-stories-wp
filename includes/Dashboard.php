@@ -129,7 +129,16 @@ class Dashboard {
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			) 
+			)
+		);
+
+		$edit_story_url = admin_url(
+			add_query_arg(
+				[
+					'action' => 'edit',
+				],
+				'post.php'
+			)
 		);
 
 		wp_localize_script(
@@ -138,10 +147,14 @@ class Dashboard {
 			[
 				'id'     => 'web-stories-dashboard',
 				'config' => [
-					'isRTL'       => is_rtl(),
-					'newStoryURL' => $new_story_url,
-					'api'         => [
+					'isRTL'        => is_rtl(),
+					'newStoryURL'  => $new_story_url,
+					'editStoryURL' => $edit_story_url,
+					'pluginDir'    => WEBSTORIES_PLUGIN_DIR_URL,
+					'version'      => WEBSTORIES_VERSION,
+					'api'          => [
 						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+						'fonts'   => '/web-stories/v1/fonts',
 					],
 				],
 			]
@@ -149,7 +162,7 @@ class Dashboard {
 
 		wp_register_style(
 			'google-sans-font',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
 			[],
 			WEBSTORIES_VERSION
 		);

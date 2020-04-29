@@ -18,62 +18,46 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useCallback, useMemo, useState } from 'react';
-import moment from 'moment';
-import queryString from 'query-string';
-
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
+import { createContext, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { STORY_STATUSES } from '../../constants';
+import useFontApi from './useFontApi';
+import useStoryApi from './useStoryApi';
+import useTemplateApi from './useTemplateApi';
+import dataAdapter from './wpAdapter';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
-export function reshapeStoryObject({ id, title, modified, status }) {
-  return {
-    id,
-    status,
-    title: title.rendered,
-    modified: moment(modified),
-  };
-}
-
 export default function ApiProvider({ children }) {
-  const { api } = useConfig();
-  const [stories, setStories] = useState([]);
+  const { api, editStoryURL, pluginDir } = useConfig();
 
-  const fetchStories = useCallback(
-    async ({ status = STORY_STATUSES[0].value }) => {
-      try {
-        const path = queryString.stringifyUrl({
-          url: api.stories,
-          query: { status },
-        });
-        const serverStoryResponse = await apiFetch({
-          path,
-        });
-        const reshapedStories = serverStoryResponse.map(reshapeStoryObject);
-        setStories(reshapedStories);
-        return reshapedStories;
-      } catch (err) {
-        return [];
-      }
-    },
-    [api.stories]
-  );
+  const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
+    pluginDir,
+  });
+
+  const { stories, api: storyApi } = useStoryApi(dataAdapter, {
+    editStoryURL,
+    wpApi: api.stories,
+  });
+
+  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
 
   const value = useMemo(
     () => ({
-      state: { stories },
-      actions: { fetchStories },
+      state: {
+        stories,
+        templates,
+      },
+      actions: {
+        storyApi,
+        templateApi,
+        fontApi,
+      },
     }),
-    [stories, fetchStories]
+    [stories, templates, storyApi, templateApi, fontApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

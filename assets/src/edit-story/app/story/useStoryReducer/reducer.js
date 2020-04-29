@@ -54,6 +54,14 @@ function reducer(state, { type, payload }) {
       return reducers.updateElements(state, payload);
     }
 
+    case types.UPDATE_ELEMENTS_BY_RESOURCE_ID: {
+      return reducers.updateElementsByResourceId(state, payload);
+    }
+
+    case types.COMBINE_ELEMENTS: {
+      return reducers.combineElements(state, payload);
+    }
+
     case types.SET_BACKGROUND_ELEMENT: {
       return reducers.setBackgroundElement(state, payload);
     }

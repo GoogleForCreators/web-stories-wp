@@ -45,6 +45,8 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
+import useFocusOut from '../../utils/useFocusOut';
+import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
@@ -101,6 +103,7 @@ function TextEdit({
     backgroundColor,
     backgroundTextMode,
     opacity,
+    height: elementHeight,
     ...rest
   },
   box: { x, y, height, rotationAngle },
@@ -118,7 +121,11 @@ function TextEdit({
         rest.lineHeight,
         dataToEditorX(rest.padding?.vertical || 0)
       ),
+      color: createSolid(0, 0, 0),
       backgroundColor: createSolid(255, 255, 255),
+    }),
+    ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
+      backgroundColor: null,
     }),
   };
   const wrapperRef = useRef(null);
@@ -141,6 +148,8 @@ function TextEdit({
   const { offset, clearContent, selectAll } = editingElementState || {};
   const initialState = useMemo(() => {
     const contentWithBreaks = (content || '')
+      // Re-insert manual line-breaks for empty lines
+      .replace(/\n(?=\n)/g, '\n<br />')
       .split('\n')
       .map((s) => {
         return `<p>${draftMarkupToContent(s, bold)}</p>`;
@@ -195,37 +204,49 @@ function TextEdit({
     evt.stopPropagation();
   };
 
-  // Finally update content for element on unmount.
-  useEffect(
-    () => () => {
-      const newState = lastKnownState.current;
-      const newHeight = editorHeightRef.current;
-      wrapperRef.current.style.height = '';
-      if (newState) {
-        // Remember to trim any trailing non-breaking space.
-        const properties = {
-          content: stateToHTML(lastKnownState.current, {
-            defaultBlockTag: null,
-          }).replace(/&nbsp;$/, ''),
-        };
-        // Recalculate the new height and offset.
-        if (newHeight) {
-          const [dx, dy] = calcRotatedResizeOffset(
-            rotationAngle,
-            0,
-            0,
-            0,
-            newHeight - height
-          );
-          properties.height = editorToDataY(newHeight);
-          properties.x = editorToDataX(x + dx);
-          properties.y = editorToDataY(y + dy);
-        }
-        setProperties(properties);
+  const updateContent = useCallback(() => {
+    const newState = lastKnownState.current;
+    const newHeight = editorHeightRef.current;
+    wrapperRef.current.style.height = '';
+    if (newState) {
+      // Remove manual line breaks and remember to trim any trailing non-breaking space.
+      const properties = {
+        content: stateToHTML(lastKnownState.current, {
+          defaultBlockTag: null,
+        })
+          .replace(/<br ?\/?>/g, '')
+          .replace(/&nbsp;$/, ''),
+      };
+      // Recalculate the new height and offset.
+      if (newHeight) {
+        const [dx, dy] = calcRotatedResizeOffset(
+          rotationAngle,
+          0,
+          0,
+          0,
+          newHeight - height
+        );
+        properties.height = editorToDataY(newHeight);
+        properties.x = editorToDataX(x + dx);
+        properties.y = editorToDataY(y + dy);
       }
-    },
-    [setProperties, x, y, height, rotationAngle, editorToDataY, editorToDataX]
-  );
+      setProperties(properties);
+    }
+  }, [
+    editorToDataX,
+    editorToDataY,
+    height,
+    rotationAngle,
+    setProperties,
+    x,
+    y,
+  ]);
+
+  // Update content for element on focus out.
+  useFocusOut(textBoxRef, updateContent, [updateContent]);
+
+  // Update content for element on unmount.
+  useUnmount(updateContent);
 
   // Set focus when initially rendered.
   useLayoutEffect(() => {
@@ -238,7 +259,7 @@ function TextEdit({
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState]);
+  }, [editorState, elementHeight]);
 
   const { fontFamily } = rest;
   useEffect(() => {

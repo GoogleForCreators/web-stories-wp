@@ -37,6 +37,7 @@ import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { useConfig } from '../../../../app/config';
+import Popup from '../../../popup';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const LabelWrapper = styled.div`
@@ -81,11 +82,6 @@ const Time = styled.span`
   display: inline-block;
 `;
 
-const DateTimeWrapper = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
 const StyledToggleIcon = styled(ToggleIcon)`
   height: 26px;
   min-width: 25px;
@@ -93,7 +89,7 @@ const StyledToggleIcon = styled(ToggleIcon)`
 
 function PublishPanel() {
   const {
-    state: { users },
+    state: { users, isUsersLoading },
   } = useInspector();
 
   const {
@@ -109,9 +105,9 @@ function PublishPanel() {
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimeNode = useRef();
-  const dateFieldNode = useRef();
+  const dateFieldRef = useRef();
 
-  useKeyDownEffect(dateFieldNode, { key: ['space', 'enter'] }, () => {
+  useKeyDownEffect(dateFieldRef, { key: ['space', 'enter'] }, () => {
     setShowDatePicker((val) => !val);
   });
 
@@ -161,7 +157,7 @@ function PublishPanel() {
   return (
     <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
       <Row>
-        <FieldLabel>{__('Publish', 'web_stories')}</FieldLabel>
+        <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
         <StyledButton
           aria-pressed={showDatePicker}
           aria-haspopup={true}
@@ -173,7 +169,7 @@ function PublishPanel() {
               setShowDatePicker(true);
             }
           }}
-          ref={dateFieldNode}
+          ref={dateFieldRef}
         >
           <DateWrapper>
             <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
@@ -182,27 +178,34 @@ function PublishPanel() {
           <StyledToggleIcon />
         </StyledButton>
       </Row>
-      {showDatePicker && (
-        <DateTimeWrapper>
-          <DateTime
-            value={date}
-            onChange={handleDateChange}
-            is12Hour={use12HourFormat}
-            forwardedRef={dateTimeNode}
-          />
-        </DateTimeWrapper>
-      )}
+      <Popup anchor={dateFieldRef} isOpen={showDatePicker}>
+        <DateTime
+          value={date}
+          onChange={handleDateChange}
+          is12Hour={use12HourFormat}
+          forwardedRef={dateTimeNode}
+        />
+      </Popup>
       {capabilities && capabilities.hasAssignAuthorAction && users && (
         <Row>
           <FieldLabel>{authorLabel}</FieldLabel>
-          <DropDown
-            ariaLabel={authorLabel}
-            options={users}
-            value={author}
-            disabled={isSaving}
-            onChange={handleChangeValue('author')}
-            lightMode={true}
-          />
+          {isUsersLoading ? (
+            <DropDown
+              ariaLabel={authorLabel}
+              placeholder={__('Loading…', 'web-stories')}
+              disabled
+              lightMode={true}
+            />
+          ) : (
+            <DropDown
+              ariaLabel={authorLabel}
+              options={users}
+              value={author}
+              disabled={isSaving}
+              onChange={handleChangeValue('author')}
+              lightMode={true}
+            />
+          )}
         </Row>
       )}
       <Row>

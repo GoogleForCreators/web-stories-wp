@@ -41,7 +41,7 @@ function getPreviewText(pattern) {
     case 'linear':
       return __('Linear', 'web-stories');
     case 'solid':
-    default:
+    default: {
       const {
         color: { r, g, b, a },
       } = pattern;
@@ -49,6 +49,7 @@ function getPreviewText(pattern) {
         return null;
       }
       return printRGB(r, g, b);
+    }
   }
 }
 

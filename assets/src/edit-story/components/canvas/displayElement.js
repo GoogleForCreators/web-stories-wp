@@ -34,7 +34,6 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
-import { useStory } from '../../app';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
@@ -58,13 +57,10 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element, previewMode }) {
+function DisplayElement({ element, previewMode, page }) {
   const {
     actions: { getBox },
   } = useUnits();
-  const {
-    state: { currentPage },
-  } = useStory();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -81,6 +77,7 @@ function DisplayElement({ element, previewMode }) {
     : null;
 
   const { id, opacity, type, isBackground } = element;
+  //eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.type) || {};
@@ -102,10 +99,10 @@ function DisplayElement({ element, previewMode }) {
         target.style.width = `${resize[0]}px`;
         target.style.height = `${resize[1]}px`;
       }
-      if (typeof dropTargets?.hover !== 'undefined') {
+      if (dropTargets?.hover !== undefined) {
         target.style.opacity = dropTargets.hover ? 0 : 1;
       }
-      if (typeof dropTargets?.replacement !== 'undefined') {
+      if (dropTargets?.replacement !== undefined) {
         setReplacement(dropTargets.replacement || null);
       }
     }
@@ -131,9 +128,9 @@ function DisplayElement({ element, previewMode }) {
           </ReplacementContainer>
         )}
       </WithMask>
-      {Boolean(isBackground) && Boolean(currentPage.backgroundOverlay) && (
+      {Boolean(isBackground) && Boolean(page.backgroundOverlay) && (
         <BackgroundOverlay
-          style={generateOverlayStyles(currentPage.backgroundOverlay)}
+          style={generateOverlayStyles(page.backgroundOverlay)}
         />
       )}
     </Wrapper>
@@ -143,6 +140,7 @@ function DisplayElement({ element, previewMode }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
+  page: StoryPropTypes.page.isRequired,
 };
 
 export default DisplayElement;

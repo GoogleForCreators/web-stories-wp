@@ -3,6 +3,7 @@
 .idea
 .storybook
 __mocks__
+assets/images/templates
 assets/src
 bin
 build
@@ -16,6 +17,7 @@ tests
 .eslintrc
 .gitignore
 .imgbotconfig
+.markdownlint.json
 .markdownlintignore
 .npmrc
 .nvmrc
@@ -29,9 +31,10 @@ tests
 .travis_deploy_key.enc
 babel.config.js
 codecov.yml
-CONTRIBUTING.md
 composer.json
 composer.lock
+CONTRIBUTING.md
+jest-puppeteer.config.js
 package.json
 package-lock.json
 phpcs.xml

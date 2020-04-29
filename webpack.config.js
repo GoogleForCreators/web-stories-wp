@@ -22,12 +22,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 /**
  * WordPress dependencies
  */
-const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 /**
@@ -50,16 +49,41 @@ function requestToExternal(request) {
   return undefined;
 }
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+const isProduction = process.env.NODE_ENV === 'production';
+const mode = isProduction ? 'production' : 'development';
+
 const sharedConfig = {
+  mode,
+  devtool: !isProduction ? 'source-map' : undefined,
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
   module: {
-    ...defaultConfig.module,
     rules: [
-      ...defaultConfig.module.rules,
+      !isProduction && {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          require.resolve('thread-loader'),
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              // Babel uses a directory within local node_modules
+              // by default. Use the environment variable option
+              // to enable more persistent caching.
+              cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
+            },
+          },
+        ],
+      },
       {
         test: /\.svg$/,
         use: ['@svgr/webpack', 'url-loader'],
@@ -68,17 +92,17 @@ const sharedConfig = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
-    ],
+    ].filter(Boolean),
   },
   plugins: [
+    process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
     new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
       requestToExternal,
     }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-  ],
+  ].filter(Boolean),
   optimization: {
     minimizer: [
       new TerserPlugin({
@@ -98,7 +122,6 @@ const sharedConfig = {
 };
 
 const storiesEditor = {
-  ...defaultConfig,
   ...sharedConfig,
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
@@ -126,7 +149,6 @@ const storiesEditor = {
 };
 
 const dashboard = {
-  ...defaultConfig,
   ...sharedConfig,
   entry: {
     'stories-dashboard': './assets/src/dashboard/index.js',

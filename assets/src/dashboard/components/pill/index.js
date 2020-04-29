@@ -25,52 +25,76 @@ const PILL_TYPES = {
   RADIO: 'radio',
 };
 
-// TODO hover, action, disabled styles
-const PillLabel = styled.label`
-  cursor: pointer;
+const PillInput = styled.input`
+  /*
+Hide checkbox visually but remain accessible to screen readers.
+Source: https://polished.js.org/docs/#hidevisually
+*/
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`;
+
+const PillContainer = styled.label`
   display: inline-flex;
   justify-content: center;
-  margin: auto;
-  padding: 6px 16px;
-  background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.blueLight : theme.colors.white};
-  color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.bluePrimary : theme.colors.gray600};
-  border: ${({ theme, isSelected }) =>
-    isSelected ? '1px solid transparent' : `1px solid ${theme.colors.gray50}`};
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
   font-family: ${({ theme }) => theme.fonts.pill.family};
   font-weight: ${({ theme }) => theme.fonts.pill.weight};
-  font-size: ${({ theme }) => theme.fonts.pill.size};
-  line-height: ${({ theme }) => theme.fonts.pill.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing};
+  font-size: ${({ theme }) => `${theme.fonts.pill.size}px`};
+  line-height: ${({ theme }) => theme.fonts.pill.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing}em;
 `;
-PillLabel.propTypes = {
-  isSelected: PropTypes.bool,
-};
+const PillLabel = styled.span`
+  cursor: pointer;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  padding: 6px 16px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.gray600};
+  border: ${({ theme }) => theme.borders.gray50};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
+
+  ${PillInput}:checked + & {
+    background-color: ${({ theme }) => theme.colors.blueLight};
+    color: ${({ theme }) => theme.colors.bluePrimary};
+    border: ${({ theme }) => theme.borders.transparent};
+  }
+
+  ${PillInput}:focus + & {
+    border-color: ${({ theme }) => theme.colors.action};
+  }
+
+  ${PillInput}:disabled + & {
+    opacity: 0.6;
+    cursor: default;
+  }
+`;
 
 const FloatingTabLabel = styled(PillLabel)`
   background-color: transparent;
   padding: 10px 24px;
-  border: none;
-  ${({ isSelected, theme }) =>
-    isSelected && {
-      boxShadow: theme.floatingTab.shadow,
-    }}
-`;
+  border-color: transparent;
 
-const PillInput = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
+  ${PillInput}:checked + & {
+    box-shadow: ${({ theme }) => theme.floatingTab.shadow};
+    background-color: transparent;
+  }
 `;
 
 const Pill = ({
   children,
   inputType = PILL_TYPES.CHECKBOX,
-  isSelected,
+  isSelected = false,
   name,
   onClick,
   floatingTab,
@@ -79,7 +103,7 @@ const Pill = ({
 }) => {
   const Label = floatingTab ? FloatingTabLabel : PillLabel;
   return (
-    <Label isSelected={isSelected}>
+    <PillContainer>
       <PillInput
         type={inputType}
         name={name}
@@ -88,8 +112,8 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      {children}
-    </Label>
+      <Label>{children}</Label>
+    </PillContainer>
   );
 };
 
@@ -97,7 +121,7 @@ Pill.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
   isSelected: PropTypes.bool,
   floatingTab: PropTypes.bool,

@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPE, ROTATION, AXIS, DIRECTION } from '../constants';
+import { ANIMATION_TYPES, ROTATION, AXIS, DIRECTION } from '../constants';
 import theme from '../../theme';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -37,7 +37,7 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
   const delay = 100;
   const label = 'Animate';
 
-  const floatOnName = ANIMATION_TYPE.FLOAT_ON;
+  const floatOnName = ANIMATION_TYPES.FLOAT_ON;
   const { keyframes: floatKeyframes, ...floatConfig } = getAnimationConfigs[
     floatOnName
   ](direction);
@@ -111,8 +111,8 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
                   fontWeight: 600,
                   color,
                   textTransform: 'uppercase',
-                  ...getInitialStyleFromKeyframes(keyframes),
                 }}
+                animationStyle={getInitialStyleFromKeyframes(keyframes)}
               >
                 {text}
               </WithAnimation>
@@ -133,7 +133,7 @@ Flip.propTypes = {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.FLIP;
+  const name = ANIMATION_TYPES.FLIP;
   const content = [
     {
       id: 'el1',
@@ -187,7 +187,7 @@ export const _default = () => {
 };
 
 export const Vertical = () => {
-  const name = ANIMATION_TYPE.FLIP;
+  const name = ANIMATION_TYPES.FLIP;
   const content = [
     {
       id: 'el1',

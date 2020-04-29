@@ -17,27 +17,13 @@
 /**
  * External dependencies
  */
-import {
-  makeSingleQuery,
-  queryAllByAttribute,
-  render,
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import PageOutput from '../page';
-
-const queryByAutoAdvanceAfter = makeSingleQuery(
-  (container, value) =>
-    queryAllByAttribute('auto-advance-after', container, value),
-  (c, value) => `Found multiple elements with the attribute value: ${value}`
-);
-
-const queryById = makeSingleQuery(
-  (container, id) => queryAllByAttribute('id', container, id),
-  (c, id) => `Found multiple elements with the ID: ${id}`
-);
+import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 
 describe('Page output', () => {
   it('should use default value for auto-advance-after', async () => {
@@ -74,6 +60,45 @@ describe('Page output', () => {
     await expect(queryByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
   });
 
+  it('should use default duration for images', async () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      page: {
+        id: '123',
+        elements: [
+          {
+            id: 'baz',
+            type: 'image',
+            mimeType: 'image/png',
+            scale: 1,
+            origRatio: 9 / 16,
+            x: 50,
+            y: 100,
+            height: 1920,
+            width: 1080,
+            rotationAngle: 0,
+            loop: true,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              id: 123,
+              src: 'https://example.com/image.png',
+              poster: 'https://example.com/poster.png',
+              height: 1920,
+              width: 1080,
+            },
+          },
+        ],
+      },
+      autoAdvance: true,
+      defaultPageDuration: 7,
+    };
+
+    const { container } = render(<PageOutput {...props} />);
+    await expect(queryByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
+  });
+
   it('should use video element ID for auto-advance-after', async () => {
     const props = {
       id: 'foo',
@@ -96,8 +121,8 @@ describe('Page output', () => {
             resource: {
               type: 'video',
               mimeType: 'video/mp4',
-              videoId: 123,
-              src: 'https://example.com/image.png',
+              id: 123,
+              src: 'https://example.com/video.mp4',
               poster: 'https://example.com/poster.png',
               height: 1920,
               width: 1080,
@@ -111,9 +136,25 @@ describe('Page output', () => {
     };
 
     const { container } = render(<PageOutput {...props} />);
-    await expect(queryById(container, 'el-baz')).toBeInTheDocument();
+    const video = queryById(container, 'el-baz-media');
+    await expect(video).toBeInTheDocument();
+    expect(video).toMatchInlineSnapshot(`
+      <amp-video
+        artwork="https://example.com/poster.png"
+        autoplay="autoplay"
+        id="el-baz-media"
+        layout="fill"
+        loop="loop"
+        poster="https://example.com/poster.png"
+      >
+        <source
+          src="https://example.com/video.mp4"
+          type="video/mp4"
+        />
+      </amp-video>
+    `);
     await expect(
-      queryByAutoAdvanceAfter(container, 'el-baz')
+      queryByAutoAdvanceAfter(container, 'el-baz-media')
     ).toBeInTheDocument();
   });
 
@@ -147,45 +188,45 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
-    // see https://github.com/google/web-stories-wp/issues/536
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid output with media elements', async () => {
-      const props = {
-        id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-        page: {
+    describe('AMP validation', () => {
+      it('should produce valid output with media elements', async () => {
+        const props = {
           id: '123',
-          elements: [
-            {
-              id: '123',
-              type: 'video',
-              mimeType: 'video/mp4',
-              scale: 1,
-              origRatio: 9 / 16,
-              x: 50,
-              y: 100,
-              height: 1920,
-              width: 1080,
-              rotationAngle: 0,
-              loop: true,
-              resource: {
+          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [
+              {
+                id: '123',
                 type: 'video',
                 mimeType: 'video/mp4',
-                videoId: 123,
-                src: 'https://example.com/image.png',
-                poster: 'https://example.com/poster.png',
+                scale: 1,
+                origRatio: 9 / 16,
+                x: 50,
+                y: 100,
                 height: 1920,
                 width: 1080,
-                length: 99,
+                rotationAngle: 0,
+                loop: true,
+                resource: {
+                  type: 'video',
+                  mimeType: 'video/mp4',
+                  id: 123,
+                  src: 'https://example.com/image.png',
+                  poster: 'https://example.com/poster.png',
+                  height: 1920,
+                  width: 1080,
+                  length: 99,
+                },
               },
-            },
-          ],
-        },
-        autoAdvance: true,
-        defaultPageDuration: 11,
-      };
+            ],
+          },
+          autoAdvance: true,
+          defaultPageDuration: 11,
+        };
 
-      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+        await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      });
     });
   });
 });

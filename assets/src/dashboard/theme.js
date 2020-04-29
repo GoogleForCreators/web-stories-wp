@@ -37,6 +37,11 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
+const themeFonts = {
+  primary: "'Google Sans', sans-serif",
+  secondary: 'Roboto',
+};
+
 const colors = {
   gray900: '#1A1D1F',
   gray800: '#2C3033',
@@ -53,6 +58,7 @@ const colors = {
   gray25: '#F6F6F6',
   white: '#fff',
   bluePrimary: '#2979FF',
+  bluePrimary600: '#1A73E8',
   blueLight: '#EAF2FF',
   // taken from edit-stories
   action: '#47A0F4',
@@ -62,38 +68,50 @@ const colors = {
   placeholder: '#d9dbdd',
 };
 
+const borders = {
+  gray50: `1px solid ${colors.gray50}`,
+  gray100: `1px solid ${colors.gray100}`,
+  transparent: '1px solid none',
+  bluePrimary: `1px solid ${colors.bluePrimary}`,
+};
+
 const theme = {
   colors,
-  border: {
-    buttonRadius: '100px',
-    typeaheadRadius: '100px',
-    expandedTypeaheadRadius: '8px',
+  borders,
+  button: {
+    borderRadius: 100,
   },
   dropdown: {
     [DROPDOWN_TYPES.PANEL]: {
       background: 'transparent',
       activeBackground: colors.gray25,
-      borderRadius: '40px',
-      border: `1px solid ${colors.gray50}`,
+      borderRadius: 40,
+      border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: '48px',
+      height: 48,
     },
     [DROPDOWN_TYPES.MENU]: {
       background: colors.gray25,
       activeBackground: colors.gray25,
-      borderRadius: '4px',
+      borderRadius: 4,
       border: 'none',
       arrowColor: colors.gray300,
-      height: '40px',
+      height: 48,
     },
     [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
       activeBackground: 'transparent',
       borderRadius: 0,
       border: 'none',
-      arrowColor: colors.bluePrimary,
-      height: '40px',
+      arrowColor: colors.gray300,
+      height: 40,
     },
+  },
+  leftRail: {
+    border: borders.gray50,
+    contentPadding: 20,
+    inset: 8,
+    logoMargin: '75px auto 20px',
   },
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',
@@ -101,152 +119,192 @@ const theme = {
   chip: {
     shadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
   },
-  boxShadow: {
-    expandedTypeahead:
+  typeahead: {
+    borderRadius: 100,
+  },
+  expandedTypeahead: {
+    borderRadius: 8,
+    boxShadow:
       '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
   },
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  navBar: {
+    height: 64,
+  },
   subNavigationBar: {
-    border: `1px solid ${colors.gray50}`,
+    border: borders.gray50,
+  },
+  table: {
+    headerCellPadding: 15,
+    cellPadding: 15,
+    headerContentSize: 16,
+    border: borders.gray50,
+  },
+  cardItem: {
+    previewOverlay:
+      'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
+  },
+  popoverPanel: {
+    desktopWidth: 595,
+    tabletWidth: 395,
   },
   fonts: {
     heading1: {
-      family: 'Google Sans',
-      size: '38px',
-      lineHeight: '53px',
-      letterSpacing: '-0.005em',
+      family: themeFonts.primary,
+      size: 38,
+      minSize: 28,
+      lineHeight: 53,
+      minLineHeight: 43,
+      letterSpacing: -0.005,
+      minLetterSpacing: -0.01,
     },
+    // heading2 is not in use
+    // heading2: {
+    //   family: themeFonts.primary,
+    //   size: 24,
+    //   lineHeight: 34,
+    //   weight: 500,
+    // },
     heading3: {
-      family: 'Google Sans',
-      size: '20px',
-      lineHeight: '28px',
-      letterSpacing: '-.01em',
+      family: themeFonts.primary,
+      size: 20,
+      lineHeight: 28,
+      letterSpacing: -0.01,
+      weight: 500,
+    },
+    heading4: {
+      family: themeFonts.primary,
+      size: 28,
+      lineHeight: 35,
       weight: 500,
     },
     body1: {
-      family: 'Roboto',
-      size: '16px',
-      lineHeight: '24px',
-      letterSpacing: '0.00625em',
+      family: themeFonts.primary,
+      size: 16,
+      weight: 500,
+      lineHeight: 22,
+      letterSpacing: 0.001,
     },
     body2: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '16px',
-      letterSpacing: '0.0142em',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 22,
+      letterSpacing: 0.015,
     },
     tab: {
-      family: 'Google Sans',
-      size: '14px',
-      lineHeight: '20px',
-      letterSpacing: '0.01em',
+      family: themeFonts.primary,
+      size: 16,
+      minSize: 12,
+      lineHeight: 20,
+      letterSpacing: 0.01,
       weight: '500',
     },
-    label: {
-      family: 'Roboto',
-      size: '15px',
-      lineHeight: '18px',
-      weight: '400',
+    smallLabel: {
+      family: themeFonts.primary,
+      size: 12,
+      minSize: 10,
+      letterSpacing: '0.01em',
     },
     button: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
       weight: '500',
     },
     pill: {
-      family: "'Google Sans', Sans Serif",
+      family: themeFonts.primary,
       weight: 500,
-      size: '14px',
-      lineHeight: '20px',
-      letterSpacing: '0.01em',
+      size: 14,
+      lineHeight: 20,
+      letterSpacing: 0.01,
     },
     popoverMenu: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
       weight: '400',
-      letterSpacing: '0.01em',
+      letterSpacing: 0.01,
     },
     dropdown: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
       weight: '500',
-      letterSpacing: '0.01em',
+      letterSpacing: 0.01,
+    },
+    textInput: {
+      family: themeFonts.primary,
+      size: 13,
+      border: borders.gray100,
+      activeBorder: borders.bluePrimary,
+      weight: '400',
+      letterSpacing: 0.01,
+      padding: '1px 8px',
     },
     storyGridItem: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
       weight: '500',
-      letterSpacing: '0.01em',
+      letterSpacing: 0.01,
     },
     storyGridItemSub: {
-      family: 'Roboto',
+      family: themeFonts.secondary,
       weight: 'normal',
     },
-    typeaheadInput: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+    table: {
+      family: themeFonts.primary,
+      size: 14,
       weight: '500',
-      letterSpacing: '0.01em',
+      letterSpacing: 0.01,
+    },
+    typeaheadInput: {
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
+      weight: '500',
+      letterSpacing: 0.01,
     },
     typeaheadOptions: {
-      family: "'Google Sans', Sans Serif",
-      size: '14px',
-      lineHeight: '20px',
+      family: themeFonts.primary,
+      size: 14,
+      lineHeight: 20,
       weight: '400',
-      letterSpacing: '0.01em',
+      letterSpacing: 0.01,
     },
   },
-  grid: {
-    desktop: {
-      columns: 5,
-      gap: '25px',
-      itemWidth: '221px',
-      itemHeight: '453px',
-      imageHeight: '393px',
-      fr: '1fr',
+  pageGutter: {
+    small: {
+      desktop: 20,
+      min: 10,
     },
-    tablet: {
-      columns: 5,
-      gap: '22px',
-      itemWidth: '189px',
-      itemHeight: '395px',
-      imageHeight: '335px',
-      fr: '1fr',
+    large: {
+      desktop: 80,
+      tablet: 40,
     },
-    mobile: {
-      columns: 4,
-      gap: '20px',
-      itemWidth: '162px',
-      itemHeight: '347px',
-      imageHeight: '287px',
-      fr: '1fr',
-    },
-    min: {
-      columns: 3,
-      gap: '24px',
-      itemWidth: '185px',
-      itemHeight: '395px',
-      imageHeight: '335px',
-      fr: '1fr',
-    },
+  },
+  previewWidth: {
+    desktop: 221,
+    tablet: 189,
+    largeDisplayPhone: 162,
+    smallDisplayPhone: 185,
+    min: 139,
+    thumbnail: 33,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',
-    mobile: 'screen and (max-width: 800px)',
-    min: 'screen and (max-width: 684px)',
+    largeDisplayPhone: 'screen and (max-width: 800px)',
+    smallDisplayPhone: 'screen and (max-width: 684px)',
+    min: 'screen and (max-width: 440px)',
     raw: {
       desktop: 1280,
       tablet: 1120,
-      mobile: 800,
-      min: 684,
+      largeDisplayPhone: 800,
+      smallDisplayPhone: 684,
+      min: 440,
     },
   },
 };

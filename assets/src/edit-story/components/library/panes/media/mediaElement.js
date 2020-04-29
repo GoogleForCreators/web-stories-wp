@@ -32,15 +32,16 @@ import { ReactComponent as Play } from '../../../../icons/play.svg';
 const styledTiles = css`
   width: 100%;
   transition: 0.2s transform, 0.15s opacity;
+  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
   ${styledTiles}
-  margin-bottom: 10px;
 `;
 
 const Video = styled.video`
   ${styledTiles}
+  object-fit: cover;
 `;
 
 const Container = styled.div`
@@ -121,7 +122,9 @@ const MediaElement = ({
     type,
     width: originalWidth,
     height: originalHeight,
+    sizes,
     local,
+    alt,
   } = resource;
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -170,14 +173,26 @@ const MediaElement = ({
   const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
+    let imageSrc = src;
+    if (sizes) {
+      const { web_stories_thumbnail: webStoriesThumbnail, large, full } = sizes;
+      if (webStoriesThumbnail && webStoriesThumbnail.source_url) {
+        imageSrc = webStoriesThumbnail.source_url;
+      } else if (large && large.source_url) {
+        imageSrc = large.source_url;
+      } else if (full && full.source_url) {
+        imageSrc = full.source_url;
+      }
+    }
     return (
       <Container>
         <Image
           key={src}
-          src={src}
+          src={imageSrc}
           ref={mediaElement}
           width={width}
           height={height}
+          alt={alt}
           loading={'lazy'}
           onClick={onClick}
           {...dropTargetsBindings}
@@ -224,7 +239,8 @@ const MediaElement = ({
         poster={poster}
         width={width}
         height={height}
-        preload="metadata"
+        preload="none"
+        muted
         {...dropTargetsBindings}
       >
         <source src={src} type={mimeType} />

@@ -74,7 +74,6 @@ StoryPropTypes.mask = PropTypes.shape({
 });
 
 StoryPropTypes.link = PropTypes.shape({
-  type: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   icon: PropTypes.string,
@@ -107,6 +106,7 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -117,11 +117,11 @@ StoryPropTypes.imageResource = PropTypes.shape({
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  videoId: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
   alt: PropTypes.string,
@@ -156,6 +156,7 @@ const StoryElementPropTypes = {
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
   opacity: PropTypes.number,
+  lockAspectRatio: PropTypes.bool,
 };
 
 const StoryMediaPropTypes = {
@@ -205,6 +206,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   padding: PropTypes.shape({
     horizontal: PropTypes.number,
     vertical: PropTypes.number,
+    locked: PropTypes.bool,
   }),
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,

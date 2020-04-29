@@ -31,8 +31,9 @@ import { renderPanel } from './_utils';
 jest.mock('../../../elements');
 
 describe('Panels/SizePosition', () => {
-  let defaultElement, defaultImage, defaultText;
+  let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;
   let defaultFlip;
+  const aspectRatioLockButtonLabel = 'Aspect ratio lock';
 
   beforeEach(() => {
     defaultFlip = { horizontal: false, vertical: false };
@@ -43,6 +44,16 @@ describe('Panels/SizePosition', () => {
       height: 80,
       isFill: false,
       rotationAngle: 0,
+      lockAspectRatio: true,
+    };
+    unlockAspectRatioElement = {
+      id: '1',
+      isBackground: false,
+      width: 100,
+      height: 80,
+      isFill: false,
+      rotationAngle: 0,
+      lockAspectRatio: false,
     };
     defaultImage = {
       ...defaultElement,
@@ -155,9 +166,9 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
 
       const input = getByTestId('width');
       fireEvent.change(input, { target: { value: '150' } });
@@ -165,9 +176,9 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update height without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
 
       const input = getByTestId('height');
       fireEvent.change(input, { target: { value: '160' } });
@@ -190,28 +201,53 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
       const input = getByTestId('width');
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: 80 });
     });
 
     it('should update height without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTestId('lockRatio'));
+      const { getByTestId, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
       const input = getByTestId('height');
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });
+    });
+
+    it('should update lock ratio to false for element', () => {
+      const { getByLabelText, pushUpdate } = renderSizePosition([defaultImage]);
+      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should update lock ratio to true for unlock aspect ratio element', () => {
+      const { getByLabelText, pushUpdate } = renderSizePosition([
+        unlockAspectRatioElement,
+      ]);
+      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
   });
 
   describe('multi selection', () => {
     let image, imageWithSameSize, imageWithDifferentSize;
+    let unlockImage, unlockImageWithSameSize;
 
     beforeEach(() => {
       image = defaultImage;
+      unlockImage = {
+        ...defaultImage,
+        lockAspectRatio: false,
+      };
       imageWithSameSize = { ...image, id: 'imageWithSameSize' };
+      unlockImageWithSameSize = {
+        ...imageWithSameSize,
+        lockAspectRatio: false,
+      };
       imageWithDifferentSize = {
         ...image,
         id: 'imageWithDifferentSize',
@@ -255,10 +291,12 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (100 / 80)),
       });
       expect(submits[imageWithSameSize.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (100 / 80)),
       });
@@ -278,10 +316,12 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: 150 / (100 / 80),
       });
       expect(submits[imageWithDifferentSize.id]).toStrictEqual({
+        rotationAngle: 0,
         width: 150,
         height: dataPixels(150 / (200 / 120)),
       });
@@ -301,13 +341,42 @@ describe('Panels/SizePosition', () => {
 
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
         height: 160,
         width: 160 * (100 / 80),
       });
       expect(submits[imageWithDifferentSize.id]).toStrictEqual({
+        rotationAngle: 0,
         height: 160,
         width: dataPixels(160 * (200 / 120)),
       });
+    });
+
+    it('should disable aspect ratio lock if all elements had lock enabled', () => {
+      const { getByLabelText, pushUpdate } = renderSizePosition([
+        image,
+        imageWithSameSize,
+      ]);
+      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should disable aspect ratio lock if elements had different settings for aspect ratio lock', () => {
+      const { getByLabelText, pushUpdate } = renderSizePosition([
+        unlockImage,
+        imageWithSameSize,
+      ]);
+      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
+    });
+
+    it('should enable aspect ratio lock only if all elements had lock disabled', () => {
+      const { getByLabelText, pushUpdate } = renderSizePosition([
+        unlockImageWithSameSize,
+        unlockImage,
+      ]);
+      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
   });
 });

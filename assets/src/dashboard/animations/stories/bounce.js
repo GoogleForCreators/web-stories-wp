@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
-import { ANIMATION_TYPE } from '../constants';
+import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 
@@ -27,7 +27,7 @@ export default {
 };
 
 export const _default = () => {
-  const name = ANIMATION_TYPE.BOUNCE;
+  const name = ANIMATION_TYPES.BOUNCE;
   const { keyframes, ...config } = getAnimationConfigs[name]();
   const label = 'Animate';
 
@@ -49,8 +49,8 @@ export const _default = () => {
         style={{
           width: '50px',
           height: '50px',
-          ...getInitialStyleFromKeyframes(keyframes),
         }}
+        animationStyle={getInitialStyleFromKeyframes(keyframes)}
       >
         <div
           style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
@@ -61,7 +61,7 @@ export const _default = () => {
 };
 
 export const Cascading = () => {
-  const name = ANIMATION_TYPE.BOUNCE;
+  const name = ANIMATION_TYPES.BOUNCE;
   const { keyframes, ...config } = getAnimationConfigs[name]();
   const elementConfigs = [
     { id: 'e1', color: 'red', width: '50px' },
@@ -102,8 +102,8 @@ export const Cascading = () => {
               width,
               height: '50px',
               marginBottom: '10px',
-              ...getInitialStyleFromKeyframes(keyframes),
             }}
+            animationStyle={getInitialStyleFromKeyframes(keyframes)}
           >
             <div
               style={{ width: '100%', height: '100%', backgroundColor: color }}

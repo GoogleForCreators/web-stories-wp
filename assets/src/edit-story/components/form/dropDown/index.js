@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -32,12 +31,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
-import { useKeyDownEffect } from '../../keyboard';
-import useFocusOut from '../../../utils/useFocusOut';
+import Popup from '../../popup';
+import DropDownList from './list';
+
+const DEFAULT_WIDTH = 240;
 
 const DropDownContainer = styled.div`
-  width: 100px;
-  position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -82,88 +81,6 @@ const DropDownTitle = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
 `;
 
-const DropDownListWrapper = styled.div``;
-
-const DropDownList = styled.ul.attrs({ role: 'listbox' })`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  float: left;
-  min-width: 160px;
-  width: 100%;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  font-size: 14px;
-  text-align: left;
-  list-style: none;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-  background-clip: padding-box;
-  border-radius: 4px;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
-`;
-
-const DropDownItem = styled.li.attrs({ tabIndex: '0', role: 'option' })`
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 16px;
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
-  }
-
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
-    outline: none;
-  }
-`;
-
-const availableKeysForSearch = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-];
-
 function DropDown({
   options,
   value,
@@ -171,24 +88,13 @@ function DropDown({
   disabled,
   ariaLabel,
   lightMode = false,
+  placeholder,
 }) {
-  DropDown.wrapperRef = useRef(null);
-  DropDown.selectRef = useRef();
-  DropDown.arrayOfOptionsRefs = [];
+  const selectRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const [focusedValue, setFocusedValue] = useState(null);
   const isNullOrUndefined = (item) => item === null || item === undefined;
-  const focusedIndex = useMemo(
-    () =>
-      options.findIndex(
-        (item) =>
-          !isNullOrUndefined(focusedValue) &&
-          item.value.toString() === focusedValue.toString()
-      ),
-    [focusedValue, options]
-  );
+
   const activeItem = useMemo(
     () =>
       options.find(
@@ -200,55 +106,7 @@ function DropDown({
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
-    setFocusedValue(null);
   }, []);
-
-  const handleMoveFocus = useCallback(
-    (offset) => {
-      if (
-        focusedIndex + offset >= 0 &&
-        focusedIndex + offset < options.length
-      ) {
-        setFocusedValue(options[focusedIndex + offset].value);
-      }
-    },
-    [focusedIndex, options]
-  );
-
-  const handleUpDown = useCallback(
-    ({ key }) => {
-      if (!isOpen) {
-        setIsOpen(true);
-        setFocusedValue(value);
-      } else if (key === 'ArrowUp' && focusedIndex !== 0) {
-        handleMoveFocus(-1);
-      } else if (key === 'ArrowDown' && focusedIndex < options.length - 1) {
-        handleMoveFocus(1);
-      }
-    },
-    [isOpen, value, focusedIndex, options, handleMoveFocus]
-  );
-
-  const [clearSearchValue] = useDebouncedCallback(() => {
-    setSearchValue('');
-  }, 800);
-
-  const handleKeyDown = useCallback(
-    ({ keyCode }) => {
-      if (isOpen) {
-        const searchTerm = searchValue + String.fromCharCode(keyCode);
-        setSearchValue(searchTerm);
-        const searchIndex = options.findIndex((item) =>
-          item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-        );
-        if (searchIndex >= 0) {
-          setFocusedValue(options[searchIndex].value);
-        }
-        clearSearchValue();
-      }
-    },
-    [clearSearchValue, searchValue, options, isOpen]
-  );
 
   const handleCurrentValue = useCallback(
     (option) => {
@@ -256,114 +114,42 @@ function DropDown({
         onChange(option);
       }
       setIsOpen(false);
-      setFocusedValue(null);
-      DropDown.selectRef.current.focus();
+      selectRef.current.focus();
     },
     [onChange]
   );
 
-  const handleEnter = useCallback(() => {
-    if (!isOpen) {
-      setIsOpen(true);
-      setFocusedValue(value);
-    } else {
-      handleCurrentValue(focusedValue);
-    }
-  }, [isOpen, focusedValue, handleCurrentValue, value]);
-
-  useFocusOut(DropDown.wrapperRef, toggleOptions);
-  useKeyDownEffect(DropDown.wrapperRef, { key: 'esc' }, toggleOptions, [
-    toggleOptions,
-  ]);
-  useKeyDownEffect(
-    DropDown.wrapperRef,
-    { key: ['up', 'down'], shift: true },
-    handleUpDown,
-    [handleUpDown]
-  );
-  useKeyDownEffect(
-    DropDown.wrapperRef,
-    { key: availableKeysForSearch, shift: true },
-    handleKeyDown,
-    [handleKeyDown]
-  );
-  useKeyDownEffect(
-    DropDown.wrapperRef,
-    { key: ['space', 'enter'], shift: true },
-    handleEnter,
-    [handleEnter]
-  );
-
-  const clearOptionsRefs = () => {
-    DropDown.arrayOfOptionsRefs = [];
-  };
-
-  useEffect(() => {
-    if (!isNullOrUndefined(focusedValue)) {
-      if (focusedIndex < 0) return;
-      DropDown.arrayOfOptionsRefs[focusedIndex].focus();
-    }
-  }, [focusedValue, options, focusedIndex]);
-
-  const handleSelectClick = () => {
+  const handleSelectClick = (e) => {
+    e.preventDefault();
     setIsOpen(!isOpen);
-    setFocusedValue(isOpen ? null : value);
-  };
-
-  const handleItemClick = (option) => {
-    handleCurrentValue(option);
-  };
-
-  const setOptionRef = (element) => {
-    if (element !== null) {
-      DropDown.arrayOfOptionsRefs.push(element);
-    }
   };
 
   return (
-    <DropDownContainer ref={DropDown.wrapperRef} tabIndex={-1}>
+    <DropDownContainer>
       <DropDownSelect
         onClick={handleSelectClick}
         aria-pressed={isOpen}
         aria-haspopup={true}
         aria-expanded={isOpen}
         disabled={disabled}
-        ref={DropDown.selectRef}
+        ref={selectRef}
         aria-disabled={disabled}
         lightMode={lightMode}
       >
         <DropDownTitle>
-          {(activeItem && activeItem.name) ||
-            __('Select an Option', 'web-stories')}
+          {(activeItem && activeItem.name) || placeholder}
         </DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
-      <DropDownListWrapper>
-        {isOpen ? (
-          <DropDownList
-            aria-multiselectable={false}
-            aria-required={false}
-            aria-activedescendant={activeItem ? activeItem.value : ''}
-            aria-labelledby={ariaLabel}
-          >
-            {options.map(({ name, value: optValue }) => {
-              return (
-                <DropDownItem
-                  id={`dropDown-${optValue}`}
-                  aria-selected={activeItem && activeItem.value === optValue}
-                  key={optValue}
-                  onClick={() => handleItemClick(optValue)}
-                  ref={setOptionRef}
-                >
-                  {name}
-                </DropDownItem>
-              );
-            })}
-          </DropDownList>
-        ) : (
-          [clearOptionsRefs(), null]
-        )}
-      </DropDownListWrapper>
+      <Popup anchor={selectRef} isOpen={isOpen} width={DEFAULT_WIDTH}>
+        <DropDownList
+          handleCurrentValue={handleCurrentValue}
+          value={activeItem && activeItem.value}
+          ariaLabel={ariaLabel}
+          options={options}
+          toggleOptions={toggleOptions}
+        />
+      </Popup>
     </DropDownContainer>
   );
 }
@@ -375,13 +161,16 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
   ariaLabel: __('DropDown', 'web-stories'),
   value: '',
+  onChange: () => {},
   options: [],
+  placeholder: __('Select an Option', 'web-stories'),
 };
 
 export default DropDown;
