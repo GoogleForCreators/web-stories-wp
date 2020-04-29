@@ -83,6 +83,7 @@ function RichTextEditor({ content, onChange }, ref) {
       editorState={editorState}
       handleKeyCommand={handleKeyCommand}
       customStyleFn={customInlineDisplay}
+      stripPastedStyles
     />
   );
 }
