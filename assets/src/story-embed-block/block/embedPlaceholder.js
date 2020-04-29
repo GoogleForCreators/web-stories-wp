@@ -26,12 +26,19 @@ import { __, _x } from '@wordpress/i18n';
 import { Button, Placeholder, ExternalLink } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
 
-const EmbedPlaceholder = ({ icon, label, value, onSubmit, onChange }) => {
+const EmbedPlaceholder = ({
+  icon,
+  label,
+  value,
+  onSubmit,
+  onChange,
+  cannotEmbed,
+}) => {
   return (
     <Placeholder
       icon={<BlockIcon icon={icon} showColors />}
       label={label}
-      className="wp-block-embed"
+      className="wp-block-web-stories-embed"
       instructions={__(
         'Paste a link to the story you want to display on your site.',
         'web-stories'
@@ -60,6 +67,13 @@ const EmbedPlaceholder = ({ icon, label, value, onSubmit, onChange }) => {
           {__('Learn more about embeds', 'web-stories')}
         </ExternalLink>
       </div>
+      {cannotEmbed && (
+        <div className="components-placeholder__error">
+          <div className="components-placeholder__instructions">
+            {__('Sorry, this content could not be embedded.', 'web-stories')}
+          </div>
+        </div>
+      )}
     </Placeholder>
   );
 };
@@ -70,6 +84,7 @@ EmbedPlaceholder.propTypes = {
   value: PropTypes.string,
   onSubmit: PropTypes.func,
   onChange: PropTypes.func,
+  cannotEmbed: PropTypes.bool,
 };
 
 export default EmbedPlaceholder;

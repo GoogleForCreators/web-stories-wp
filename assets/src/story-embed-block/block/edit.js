@@ -31,8 +31,9 @@ import { useSelect, useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import EmbedPlaceholder from './embedPlaceholder';
 import EmbedControls from './embedControls';
+import EmbedLoadinng from './embedLoading';
+import EmbedPlaceholder from './embedPlaceholder';
 import StoryPlayer from './storyPlayer';
 import { icon } from './index.js';
 import './edit.css';
@@ -40,54 +41,64 @@ import './edit.css';
 const MIN_SIZE = 20;
 
 function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
-  const { url: outerURL, width = 360, height = 600, align } = attributes;
+  const {
+    url: outerURL,
+    width = 360,
+    height = 600,
+    align,
+    poster,
+    title,
+  } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
   const [url, setURL] = useState(outerURL);
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [storyData, setStoryData] = useState({});
+  const [cannotEmbed, setCannotEmbed] = useState(false);
 
   useEffect(() => {
     setURL(outerURL);
   }, [outerURL]);
 
   useEffect(() => {
-    if (url === outerURL) {
+    if (poster && title) {
       return;
     }
 
     try {
       setIsFetchingData(true);
-      const urlObj = new URL(url);
+      const urlObj = new URL(outerURL);
+
       apiFetch({
         path: `web-stories/v1/embed?url=${urlObj.toString()}`,
       })
         .then((data) => {
+          setCannotEmbed(!data.title);
           setStoryData(data);
+        })
+        .catch(() => {
+          setCannotEmbed(true);
         })
         .finally(() => {
           setIsFetchingData(false);
         });
     } catch {
-      // Do not act on invalid URLs.
+      setCannotEmbed(true);
     }
-  }, [url, outerURL]);
+  }, [outerURL, poster, title]);
 
   useEffect(() => {
     if (!storyData) {
       return;
     }
 
-    const { title, poster } = storyData;
-
-    if (!title && !poster) {
+    if (!storyData.title) {
       return;
     }
 
     setAttributes({
       url,
-      title,
-      poster,
+      ...storyData,
     });
   }, [url, storyData, setAttributes]);
 
@@ -98,9 +109,11 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       }
 
       setEditingURL(false);
-      setAttributes({ url });
+      if (url !== outerURL) {
+        setAttributes({ url, poster: null });
+      }
     },
-    [setAttributes, url]
+    [setAttributes, url, outerURL]
   );
 
   const switchBackToURLInput = useCallback(() => {
@@ -118,12 +131,16 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const { toggleSelection } = useDispatch('core/block-editor');
 
+  if (isFetchingData) {
+    return <EmbedLoadinng />;
+  }
+
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (editingURL || isFetchingData) {
+  if (editingURL || isFetchingData || cannotEmbed || !title) {
     return (
       <EmbedPlaceholder
         icon={icon}
@@ -131,6 +148,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         value={url}
         onSubmit={onSubmit}
         onChange={(event) => setURL(event.target.value)}
+        cannotEmbed={cannotEmbed || !title}
       />
     );
   }
@@ -139,8 +157,6 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const minWidth = width < height ? MIN_SIZE : MIN_SIZE * ratio;
   const minHeight = height < width ? MIN_SIZE : MIN_SIZE / ratio;
   const maxWidthBuffer = maxWidth * 2.5;
-
-  const { title, poster } = attributes;
 
   const showRightHandle =
     align === 'center' ||
