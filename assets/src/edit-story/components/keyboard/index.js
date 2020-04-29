@@ -170,7 +170,7 @@ export function useGlobalKeyUpEffect(
  * @return {boolean} Stateful boolean that tracks whether key is pressed.
  */
 export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
-  const globalRef = getGlobalRef();
+  setGlobalRef();
   return useIsKeyPressed(globalRef, keyNameOrSpec, deps);
 }
 
