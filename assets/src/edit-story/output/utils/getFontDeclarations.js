@@ -19,6 +19,22 @@
  */
 import getGoogleFontURL from '../../utils/getGoogleFontURL';
 
+const hasTuple = (tuples, tuple) =>
+  tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
+
+const tupleDiff = (a, b) => {
+  return Math.abs(a[0] + a[1] - b[0] - b[1]);
+};
+
+const getNearestTuple = (tuples, tuple) => {
+  return tuples.reduce((acc, curr) => {
+    const currDiff = tupleDiff(curr, tuple);
+    const accDiff = tupleDiff(acc, tuple);
+
+    return currDiff < accDiff ? curr : acc;
+  });
+};
+
 /**
  * Returns a list of font declarations across all pages in a story.
  *
@@ -34,7 +50,7 @@ const getFontDeclarations = (pages) => {
 
     // Prepare font objects for later use.
     for (const { font, fontStyle, fontWeight } of textElements) {
-      const { service, family, variants } = font;
+      const { service, family, variants = [] } = font;
       if (!service || service === 'system') {
         continue;
       }
@@ -42,38 +58,33 @@ const getFontDeclarations = (pages) => {
       const serviceMap = map.get(service) || new Map();
       map.set(service, serviceMap);
 
-      // A variant ("axis tuple" in Google Fonts terms) is a combination
-      // of font style and weight for a given font.
-      // The first item is a flag for italic.
-      // The second item is the numeric font weight.
-      // Example: [1, 700] for italic + bold
-      const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
-
       const fontObj = serviceMap.get(family) || { family, variants: [] };
-      const fontObjHasVariant = fontObj.variants.some(
-        (val) => val[0] === variant[0] && val[1] === variant[1]
-      );
 
-      // Use closest variant as fallback.
-      // If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
-      // [ 1, 200] was requested, fall back to [ 0, 200 ]
-      // and let browser do the math.
-      const newVariant = (variants || []).reduce((acc, _variant) => {
-        return _variant[0] - variant[0] + _variant[1] - variant[1] <
-          acc[0] - variant[0] + acc[1] - variant[1]
-          ? _variant
-          : acc;
-      }, variant);
+      if (variants.length > 0) {
+        // A variant ("axis tuple" in Google Fonts terms) is a combination
+        // of font style and weight for a given font.
+        // The first item is a flag for italic.
+        // The second item is the numeric font weight.
+        // Example: [1, 700] for italic + bold
+        const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
 
-      const isValidVariant =
-        variants === undefined ||
-        variants.some(
-          (val) => val[0] === newVariant[0] && val[1] === newVariant[1]
-        );
+        // Use closest variant as fallback and let browser do the math if needed.
+        // Examples:
+        // - If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
+        //   [ 1, 200] was requested, fall back to [ 0, 200 ].
+        // - If only [ [ 0, 400 ], [ 0, 800 ] ] exist, and
+        //   [ 1, 800] was requested, fall back to [ 0, 800 ].
+        // - If only [ [ 1, 400 ] ] exist, and
+        //   [ 0, 400] was requested, fall back to [ 1, 400 ].
 
-      // Keeps list unique.
-      if (!fontObjHasVariant && isValidVariant) {
-        fontObj.variants.push(newVariant);
+        const newVariant = getNearestTuple(variants, variant);
+        const fontObjHasVariant = hasTuple(fontObj.variants, newVariant);
+        const isValidVariant = hasTuple(variants, newVariant);
+
+        // Keeps list unique.
+        if (!fontObjHasVariant && isValidVariant) {
+          fontObj.variants.push(newVariant);
+        }
       }
 
       serviceMap.set(family, fontObj);

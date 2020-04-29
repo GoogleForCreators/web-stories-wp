@@ -42,7 +42,8 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    expect(getFontDeclarations(pages)).toStrictEqual([]);
+    const result = getFontDeclarations(pages);
+    expect(result).toStrictEqual([]);
   });
 
   it('should return one item for multiple Google fonts', () => {
@@ -54,6 +55,10 @@ describe('getFontDeclarations', () => {
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
             },
             fontStyle: 'italic',
           },
@@ -62,6 +67,10 @@ describe('getFontDeclarations', () => {
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
             },
             fontStyle: 'italic',
           },
@@ -85,8 +94,9 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    expect(getFontDeclarations(pages)).toHaveLength(1);
-    expect(getFontDeclarations(pages)).toContain(
+    const result = getFontDeclarations(pages);
+    expect(result).toHaveLength(1);
+    expect(result).toContain(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%401&family=Lato'
     );
   });
@@ -108,8 +118,9 @@ describe('getFontDeclarations', () => {
       },
     ];
 
-    expect(getFontDeclarations(pages)).toHaveLength(1);
-    expect(getFontDeclarations(pages)).toContain(
+    const result = getFontDeclarations(pages);
+    expect(result).toHaveLength(1);
+    expect(result).toContain(
       'https://fonts.googleapis.com/css2?display=swap&family=Architects+Daughter'
     );
   });
@@ -136,13 +147,63 @@ describe('getFontDeclarations', () => {
             fontStyle: 'italic',
             fontWeight: 200,
           },
+          {
+            type: 'text',
+            font: {
+              family: 'Mukta Mahee',
+              service: 'fonts.google.com',
+              variants: [
+                [0, 200],
+                [0, 300],
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+                [0, 800],
+              ],
+            },
+            fontStyle: 'italic',
+            fontWeight: 800,
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Molle',
+              service: 'fonts.google.com',
+              variants: [[1, 400]],
+            },
+            fontWeight: 400,
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Abel',
+              service: 'fonts.google.com',
+              variants: [[0, 400]],
+            },
+            fontWeight: 700,
+          },
+          {
+            type: 'text',
+            font: {
+              family: 'Alef',
+              service: 'fonts.google.com',
+              variants: [
+                [0, 400],
+                [0, 700],
+              ],
+            },
+            fontStyle: 'italic',
+            fontWeight: 600,
+          },
         ],
       },
     ];
 
-    expect(getFontDeclarations(pages)).toHaveLength(1);
-    expect(getFontDeclarations(pages)).toContain(
-      'https://fonts.googleapis.com/css2?display=swap&family=Mukta+Mahee%3Awght%40200'
+    const result = getFontDeclarations(pages);
+    expect(result).toHaveLength(1);
+    expect(result).toContain(
+      'https://fonts.googleapis.com/css2?display=swap&family=Mukta+Mahee%3Awght%40200%3B800&family=Molle%3Aital%401&family=Abel&family=Alef%3Awght%40700'
     );
   });
 });
