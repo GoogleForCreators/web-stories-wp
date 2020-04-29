@@ -26,6 +26,7 @@ import StoryPropTypes from '../types';
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
+import getFontDeclarations from './utils/getFontDeclarations';
 import { OutputPage } from './';
 
 function OutputStory({
@@ -34,6 +35,7 @@ function OutputStory({
   metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
+  const fontDeclarations = getFontDeclarations(pages);
   return (
     <html amp="" lang="en">
       <head>
@@ -44,6 +46,9 @@ function OutputStory({
         />
         {ampExtensions.map(({ name, src }) => (
           <script key={src} async="async" src={src} custom-element={name} />
+        ))}
+        {fontDeclarations.map((url) => (
+          <link key={url} href={url} rel="stylesheet" />
         ))}
         <Boilerplate />
         <CustomCSS />

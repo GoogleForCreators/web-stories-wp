@@ -29,7 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
-import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
+import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import useCanvas from './useCanvas';
 
@@ -42,8 +42,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
-  const [snapDisabled, setSnapDisabled] = useState(false);
-  const [throttleRotation, setThrottleRotation] = useState(false);
 
   const {
     actions: { updateSelectedElements },
@@ -103,12 +101,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   });
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setSnapDisabled(true));
-  useGlobalKeyUpEffect('meta', () => setSnapDisabled(false));
+  const snapDisabled = useGlobalIsKeyPressed('meta');
 
   // ⇧ key rotates the element 30 degrees at a time
-  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
-  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
+  const throttleRotation = useGlobalIsKeyPressed('shift');
 
   const box = getBox(selectedElement);
   const frame = {

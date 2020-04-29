@@ -22,16 +22,28 @@ import { draftMarkupToContent, generateFontFamily } from '../util';
 describe('Text/util', () => {
   describe('Text/util/generateFontFamily', () => {
     it('should return correct string value for font family', () => {
+      const fallbackArray = [];
       const expected = '"Baloo Bhaina 2"';
-      expect(generateFontFamily('Baloo Bhaina 2', [])).toStrictEqual(expected);
+      expect(
+        generateFontFamily({
+          family: 'Baloo Bhaina 2',
+          fallbacks: fallbackArray,
+        })
+      ).toStrictEqual(expected);
+      expect(generateFontFamily({ family: 'Baloo Bhaina 2' })).toStrictEqual(
+        expected
+      );
     });
 
     it('should return correct string value for font family with fallbacks', () => {
       const fallbackArray = ['foo', 'bar', 'sans-serif'];
       const expected = '"Baloo Bhaina 2","foo","bar",sans-serif';
-      expect(generateFontFamily('Baloo Bhaina 2', fallbackArray)).toStrictEqual(
-        expected
-      );
+      expect(
+        generateFontFamily({
+          family: 'Baloo Bhaina 2',
+          fallbacks: fallbackArray,
+        })
+      ).toStrictEqual(expected);
     });
   });
 

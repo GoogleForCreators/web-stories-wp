@@ -31,13 +31,6 @@ namespace Google\Web_Stories;
  */
 class Fonts {
 	/**
-	 * The URL of Google fonts.
-	 *
-	 * @var string
-	 */
-	const URL = 'https://fonts.googleapis.com/css';
-
-	/**
 	 * Get list of fonts used in AMP Stories.
 	 *
 	 * @return array Fonts.
@@ -49,7 +42,8 @@ class Fonts {
 			return $fonts;
 		}
 
-		$default_weight = [ '400', '700' ];
+		$default_weight = [ 400, 700 ];
+		$default_styles = [ 'italic', 'regular' ];
 
 		// Default system fonts.
 		$fonts = [
@@ -57,96 +51,134 @@ class Fonts {
 				'name'      => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Arial Black',
 				'fallbacks' => [ 'Arial Black', 'Arial Bold', 'Gadget', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Arial Narrow',
 				'fallbacks' => [ 'Arial', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Baskerville',
 				'fallbacks' => [ 'Baskerville Old Face', 'Hoefler Text', 'Garamond', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Brush Script MT',
 				'fallbacks' => [ 'cursive' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Copperplate',
 				'fallbacks' => [ 'Copperplate Gothic Light', 'fantasy' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Courier New',
 				'fallbacks' => [ 'Courier', 'Lucida Sans Typewriter', 'Lucida Typewriter', 'monospace' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Century Gothic',
 				'fallbacks' => [ 'CenturyGothic', 'AppleGothic', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Garamond',
 				'fallbacks' => [ 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Georgia',
 				'fallbacks' => [ 'Times', 'Times New Roman', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Gill Sans',
 				'fallbacks' => [ 'Gill Sans MT', 'Calibri', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Lucida Bright',
 				'fallbacks' => [ 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Lucida Sans Typewriter',
 				'fallbacks' => [ 'Lucida Console', 'monaco', 'Bitstream Vera Sans Mono', 'monospace' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Palatino',
 				'fallbacks' => [ 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Papyrus',
 				'fallbacks' => [ 'fantasy' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Tahoma',
 				'fallbacks' => [ 'Verdana', 'Segoe', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Times New Roman',
 				'fallbacks' => [ 'Times New Roman', 'Times', 'Baskerville', 'Georgia', 'serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Trebuchet MS',
 				'fallbacks' => [ 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Tahoma', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 			[
 				'name'      => 'Verdana',
 				'fallbacks' => [ 'Geneva', 'sans-serif' ],
 				'weights'   => $default_weight,
+				'styles'    => $default_styles,
+				'service'   => 'system',
 			],
 		];
 		$file  = __DIR__ . '/data/fonts.json';
@@ -155,65 +187,7 @@ class Fonts {
 		$columns = wp_list_pluck( $fonts, 'name' );
 		array_multisort( $columns, SORT_ASC, $fonts );
 
-		$fonts_url = self::URL;
-		$subsets   = self::get_subsets();
-
-		$fonts = array_map(
-			static function ( $font ) use ( $fonts_url, $subsets ) {
-				$font['slug'] = sanitize_title( $font['name'] );
-
-				if ( ! empty( $font['gfont'] ) ) {
-					$font['handle'] = sprintf( '%s-font', $font['slug'] );
-					$font['src']    = add_query_arg(
-						[
-							'family'  => rawurlencode( $font['gfont'] ),
-							'subset'  => rawurlencode( implode( ',', $subsets ) ),
-							'display' => 'swap',
-						],
-						$fonts_url
-					);
-				}
-
-				return $font;
-			},
-			$fonts
-		);
-
 		return $fonts;
-	}
-
-	/**
-	 * Get subsets of fonts based on language settings.
-	 *
-	 * @return array<string> List of font subsets.
-	 */
-	public static function get_subsets() {
-		$subsets = [ 'latin', 'latin-ext' ];
-
-		/*
-		 * Translators: To add an additional character subset specific to your language,
-		 * translate this to 'greek', 'cyrillic', 'devanagari' or 'vietnamese'. Do not translate into your own language.
-		 */
-		$subset = _x( 'no-subset', 'Add new subset (greek, cyrillic, devanagari, vietnamese)', 'web-stories' );
-
-		switch ( $subset ) {
-			case 'cyrillic':
-				$subsets[] = 'cyrillic';
-				$subsets[] = 'cyrillic-ext';
-				break;
-			case 'greek':
-				$subsets[] = 'greek';
-				$subsets[] = 'greek-ext';
-				break;
-			case 'devanagari':
-				$subsets[] = 'devanagari';
-				break;
-			case 'vietnamese':
-				$subsets[] = 'vietnamese';
-				break;
-		}
-
-		return $subsets;
 	}
 
 	/**
@@ -242,41 +216,42 @@ class Fonts {
 		$fonts = [];
 
 		foreach ( $google_fonts as $font ) {
+			$variants = [];
+			$weights  = [];
+			$styles   = [];
 
-			$variants = array_map(
-				static function ( $variant ) {
-					$variant = str_replace(
-						[ '0italic', 'regular', 'italic' ],
-						[ '0i', '400', '400i' ],
-						$variant
-					);
-
-					return $variant;
-				},
-				$font['variants']
-			);
-
-			$gfont = '';
-
-			if ( $variants ) {
-				$gfont = $font['family'] . ':' . implode( ',', $variants );
-			}
-
-			$weights = [];
+			// Example variants: 100,100italic,300,300italic,regular,italic, etc.
 			foreach ( $font['variants'] as $variant ) {
-				$variant   = str_replace( [ 'italic', 'regular' ], [ '', '400' ], $variant );
-				$weights[] = $variant;
+				preg_match( '/(?<weight>\d+)?(?<style>\D+)?/', $variant, $matches );
+
+				$weight = isset( $matches['weight'] ) ? (int) $matches['weight'] : false;
+				if ( $weight ) {
+					$weights[] = $weight;
+				}
+
+				$style = isset( $matches['style'] ) ? $matches['style'] : false;
+				if ( $style ) {
+					if ( 'regular' === $style || ! $weight ) {
+						$weights[] = 400;
+					}
+
+					$styles[] = $style;
+				}
+
+				$variants[] = [ (int) ( 'italic' === $style ), $weight ?: 400 ];
 			}
 
-			$weights = array_unique( $weights );
-			$weights = array_filter( $weights );
-			$weights = array_values( $weights );
+			$weights  = array_unique( $weights );
+			$styles   = array_unique( $styles );
+			$variants = array_intersect_key( $variants, array_unique( array_map( 'serialize', $variants ) ) );
 
 			$fonts[] = [
 				'name'      => $font['family'],
 				'fallbacks' => (array) self::get_font_fallback( $font['category'] ),
-				'gfont'     => $gfont,
-				'weights'   => $weights,
+				'weights'   => array_values( $weights ),
+				'styles'    => array_values( $styles ),
+				'variants'  => array_values( $variants ),
+				'service'   => 'fonts.google.com',
 			];
 		}
 

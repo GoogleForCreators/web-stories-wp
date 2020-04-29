@@ -107,7 +107,7 @@ function MyStories() {
   });
   const {
     actions: {
-      storyApi: { updateStory, fetchStories },
+      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
     },
     state: {
       stories: {
@@ -199,7 +199,9 @@ function MyStories() {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
+            trashStory={trashStory}
             updateStory={updateStory}
+            duplicateStory={duplicateStory}
             filteredStories={orderedStories}
             centerActionLabel={
               <>
@@ -224,6 +226,8 @@ function MyStories() {
         return null;
     }
   }, [
+    duplicateStory,
+    trashStory,
     viewStyle,
     updateStory,
     orderedStories,
