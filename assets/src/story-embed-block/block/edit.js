@@ -61,7 +61,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   }, [outerURL]);
 
   useEffect(() => {
-    if (poster && title) {
+    if (!outerURL || (poster && title)) {
       return;
     }
 
@@ -148,7 +148,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         value={url}
         onSubmit={onSubmit}
         onChange={(event) => setURL(event.target.value)}
-        cannotEmbed={cannotEmbed || !title}
+        cannotEmbed={cannotEmbed || (outerURL && !title)}
       />
     );
   }
