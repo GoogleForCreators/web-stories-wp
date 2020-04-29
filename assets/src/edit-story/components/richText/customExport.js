@@ -22,73 +22,21 @@ import { stateToHTML } from 'draft-js-export-html';
 /**
  * Internal dependencies
  */
-import generatePatternStyles from '../../utils/generatePatternStyles';
-import {
-  ITALIC,
-  UNDERLINE,
-  styleToWeight,
-  styleToLetterSpacing,
-  styleToColor,
-} from './customConstants';
+import formatters from './formatters';
 
 function inlineStyleFn(styles) {
-  const inline = styles.toArray().reduce(
-    ({ classes, css }, style) => {
-      // Italic
-      if (style === ITALIC) {
-        return {
-          classes: [...classes, 'italic'],
-          css: { ...css, fontStyle: 'italic' },
-        };
-      }
-
-      // Underline
-      if (style === UNDERLINE) {
-        return {
-          classes: [...classes, 'underline'],
-          css: { ...css, textDecoration: 'underline' },
-        };
-      }
-
-      // Weight
-      const weight = styleToWeight(style);
-      if (weight) {
-        return {
-          classes: [...classes, 'weight'],
-          css: { ...css, fontWeight: weight },
-        };
-      }
-      // Letter spacing
-      const letterSpacing = styleToLetterSpacing(style);
-      if (letterSpacing) {
-        return {
-          classes: [...classes, 'letterspacing'],
-          css: { ...css, letterSpacing: `${letterSpacing / 100}em` },
-        };
-      }
-
-      // Color
-      const color = styleToColor(style);
-      if (color) {
-        return {
-          classes: [...classes, 'color'],
-          css: { ...css, ...generatePatternStyles(color, 'color') },
-        };
-      }
-
-      return { classes, css };
-    },
-    { classes: [], css: {} }
+  const inlineCSS = formatters.reduce(
+    (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
+    {}
   );
 
-  if (inline.classes.length === 0) {
+  if (Object.keys(inlineCSS).length === 0) {
     return null;
   }
 
   return {
     element: 'span',
-    attributes: { class: inline.classes.join(' ') },
-    style: inline.css,
+    style: inlineCSS,
   };
 }
 

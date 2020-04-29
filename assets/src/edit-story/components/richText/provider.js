@@ -32,7 +32,7 @@ import {
   getFilteredState,
   getHandleKeyCommandFromState,
 } from './util';
-import { getStateInfo } from './styleManipulation';
+import getStateInfo from './getStateInfo';
 import customImport from './customImport';
 import customExport from './customExport';
 import useSelectionManipulation from './useSelectionManipulation';

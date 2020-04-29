@@ -17,13 +17,18 @@
 /**
  * Internal dependencies
  */
-import formatters from './formatters';
+import weightFormatter from './weight';
+import italicFormatter from './italic';
+import underlineFormatter from './underline';
+import colorFormatter from './color';
+import letterSpacingFormatter from './letterSpacing';
 
-function customInlineDisplay(styles) {
-  return formatters.reduce(
-    (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
-    {}
-  );
-}
+const formatters = [
+  weightFormatter,
+  italicFormatter,
+  underlineFormatter,
+  colorFormatter,
+  letterSpacingFormatter,
+];
 
-export default customInlineDisplay;
+export default formatters;

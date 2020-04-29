@@ -25,13 +25,8 @@ import { useMemo, useCallback } from 'react';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import useRichText from '../../richText/useRichText';
 import {
+  getHTMLFormatters,
   getHTMLInfo,
-  toggleBoldInHTML,
-  setFontWeightInHTML,
-  toggleItalicInHTML,
-  toggleUnderlineInHTML,
-  setLetterSpacingInHTML,
-  setColorInHTML,
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 
@@ -64,16 +59,7 @@ function reduceWithMultiple(reduced, info) {
 function useRichTextFormatting(selectedElements, pushUpdate) {
   const {
     state: { hasCurrentEditor, selectionInfo },
-    actions: {
-      selectionActions: {
-        toggleBoldInSelection,
-        setFontWeightInSelection,
-        toggleItalicInSelection,
-        toggleUnderlineInSelection,
-        setLetterSpacingInSelection,
-        setColorInSelection,
-      },
-    },
+    actions: { selectionActions },
   } = useRichText();
 
   const textInfo = useMemo(() => {
@@ -101,33 +87,33 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   const handlers = useMemo(() => {
     if (hasCurrentEditor) {
       return {
-        handleClickBold: toggleBoldInSelection,
-        handleSelectFontWeight: setFontWeightInSelection,
-        handleClickItalic: toggleItalicInSelection,
-        handleClickUnderline: toggleUnderlineInSelection,
-        handleSetLetterSpacing: setLetterSpacingInSelection,
-        handleSetColor: setColorInSelection,
+        // This particular function ignores the flag argument.
+        // Bold for inline selection has its own logic for
+        // determining proper resulting bold weight
+        handleClickBold: () => selectionActions.toggleBoldInSelection(),
+        // All these keep their arguments:
+        handleSelectFontWeight: selectionActions.setFontWeightInSelection,
+        handleClickItalic: selectionActions.toggleItalicInSelection,
+        handleClickUnderline: selectionActions.toggleUnderlineInSelection,
+        handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
+        handleSetColor: selectionActions.setColorInSelection,
       };
     }
 
+    const htmlFormatters = getHTMLFormatters();
+
     return {
-      handleClickBold: (flag) => push(toggleBoldInHTML, flag),
-      handleSelectFontWeight: (weight) => push(setFontWeightInHTML, weight),
-      handleClickItalic: (flag) => push(toggleItalicInHTML, flag),
-      handleClickUnderline: (flag) => push(toggleUnderlineInHTML, flag),
-      handleSetLetterSpacing: (ls) => push(setLetterSpacingInHTML, ls),
-      handleSetColor: (c) => push(setColorInHTML, c),
+      handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
+      handleSelectFontWeight: (weight) =>
+        push(htmlFormatters.setFontWeight, weight),
+      handleClickItalic: (flag) => push(htmlFormatters.toggleItalic, flag),
+      handleClickUnderline: (flag) =>
+        push(htmlFormatters.toggleUnderline, flag),
+      handleSetLetterSpacing: (letterSpacing) =>
+        push(htmlFormatters.setLetterSpacing, letterSpacing),
+      handleSetColor: (color) => push(htmlFormatters.setColor, color),
     };
-  }, [
-    hasCurrentEditor,
-    toggleBoldInSelection,
-    setFontWeightInSelection,
-    toggleItalicInSelection,
-    toggleUnderlineInSelection,
-    setLetterSpacingInSelection,
-    setColorInSelection,
-    push,
-  ]);
+  }, [hasCurrentEditor, selectionActions, push]);
 
   return {
     textInfo,

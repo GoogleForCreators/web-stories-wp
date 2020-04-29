@@ -17,20 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, useMemo } from 'react';
 import { EditorState } from 'draft-js';
 
 /**
  * Internal dependencies
  */
-import {
-  toggleBold,
-  toggleItalic,
-  toggleUnderline,
-  setFontWeight,
-  setLetterSpacing,
-  setColor,
-} from './styleManipulation';
+import formatters from './formatters';
 
 function useSelectionManipulation(editorState, setEditorState) {
   const lastKnownState = useRef(null);
@@ -57,47 +50,35 @@ function useSelectionManipulation(editorState, setEditorState) {
     [setEditorState]
   );
 
-  const toggleBoldInSelection = useCallback(
-    () => updateWhileUnfocused(toggleBold),
-    [updateWhileUnfocused]
+  const getSetterName = useCallback(
+    (setterName) => `${setterName}InSelection`,
+    []
   );
-  const setFontWeightInSelection = useCallback(
-    (weight) => updateWhileUnfocused((s) => setFontWeight(s, weight)),
-    [updateWhileUnfocused]
-  );
-  const toggleItalicInSelection = useCallback(
-    () => updateWhileUnfocused(toggleItalic),
-    [updateWhileUnfocused]
-  );
-  const toggleUnderlineInSelection = useCallback(
-    () => updateWhileUnfocused(toggleUnderline),
-    [updateWhileUnfocused]
-  );
-  const setLetterSpacingInSelection = useCallback(
-    (ls) =>
-      updateWhileUnfocused(
-        (s) => setLetterSpacing(s, ls),
-        /* shouldForceFocus */ false
-      ),
-    [updateWhileUnfocused]
-  );
-  const setColorInSelection = useCallback(
-    (color) =>
-      updateWhileUnfocused(
-        (s) => setColor(s, color),
-        /* shouldForceFocus */ false
-      ),
+
+  const getSetterCallback = useCallback(
+    (setter, autoFocus) => (...args) =>
+      updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
     [updateWhileUnfocused]
   );
 
-  return {
-    toggleBoldInSelection,
-    setFontWeightInSelection,
-    toggleItalicInSelection,
-    toggleUnderlineInSelection,
-    setLetterSpacingInSelection,
-    setColorInSelection,
-  };
+  const selectionFormatters = useMemo(
+    () =>
+      formatters.reduce(
+        (aggr, { setters, autoFocus }) => ({
+          ...aggr,
+          ...Object.fromEntries(
+            Object.entries(setters).map(([key, setter]) => [
+              getSetterName(key),
+              getSetterCallback(setter, autoFocus),
+            ])
+          ),
+        }),
+        {}
+      ),
+    [getSetterName, getSetterCallback]
+  );
+
+  return selectionFormatters;
 }
 
 export default useSelectionManipulation;

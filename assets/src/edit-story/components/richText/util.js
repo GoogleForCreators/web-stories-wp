@@ -23,7 +23,9 @@ import { filterEditorState } from 'draftjs-filters';
 /**
  * Internal dependencies
  */
-import { toggleBold, toggleUnderline, toggleItalic } from './styleManipulation';
+import weightFormatter from './formatters/weight';
+import italicFormatter from './formatters/italic';
+import underlineFormatter from './formatters/underline';
 
 export function getFilteredState(editorState, oldEditorState) {
   const shouldFilterPaste =
@@ -49,13 +51,13 @@ export function getFilteredState(editorState, oldEditorState) {
 function getStateFromCommmand(command, oldEditorState) {
   switch (command) {
     case 'bold':
-      return toggleBold(oldEditorState);
+      return weightFormatter.setters.toggleBold(oldEditorState);
 
     case 'italic':
-      return toggleItalic(oldEditorState);
+      return italicFormatter.setters.toggleItalic(oldEditorState);
 
     case 'underline':
-      return toggleUnderline(oldEditorState);
+      return underlineFormatter.setters.toggleUnderline(oldEditorState);
 
     default:
       return null;

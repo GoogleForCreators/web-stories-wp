@@ -14,52 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { getHexFromSolid, getSolidFromHex } from '../../utils/patternUtils';
-
 export const NONE = 'NONE';
 export const ITALIC = 'CUSTOM-ITALIC';
 export const UNDERLINE = 'CUSTOM-UNDERLINE';
 export const WEIGHT = 'CUSTOM-WEIGHT';
 export const COLOR = 'CUSTOM-COLOR';
 export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
-
-export const NORMAL_WEIGHT = 400;
-export const SMALLEST_BOLD = 600;
-export const DEFAULT_BOLD = 700;
-
-export const isStyle = (style, prefix) =>
-  typeof style === 'string' && style.startsWith(prefix);
-export const getVariable = (style, prefix) => style.slice(prefix.length + 1);
-
-export const weightToStyle = (weight) => `${WEIGHT}-${weight}`;
-export const styleToWeight = (style) =>
-  isStyle(style, WEIGHT) ? parseInt(getVariable(style, WEIGHT)) : null;
-
-/*
- * Letter spacing uses PREFIX-123 for the number 123
- * and PREFIX-N123 for the number -123.
- */
-export const letterSpacingToStyle = (ls) =>
-  `${LETTERSPACING}-${ls < 0 ? 'N' : ''}${Math.abs(ls)}`;
-export const styleToLetterSpacing = (style) => {
-  if (!isStyle(style, LETTERSPACING)) {
-    return null;
-  }
-  const raw = getVariable(style, LETTERSPACING);
-  // Negative numbers are prefixed with an N:
-  if (raw.charAt(0) === 'N') {
-    return -parseInt(raw.slice(1));
-  }
-  return parseInt(raw);
-};
-
-/*
- * Color uses PREFIX-XXXXXXXX where XXXXXXXX is the 8 digit
- * hex represenation of the RGBA color.
- */
-export const styleToColor = (style) =>
-  isStyle(style, COLOR) ? getSolidFromHex(getVariable(style, COLOR)) : null;
-export const colorToStyle = (color) => `${COLOR}-${getHexFromSolid(color)}`;

@@ -19,11 +19,17 @@
  */
 import formatters from './formatters';
 
-function customInlineDisplay(styles) {
-  return formatters.reduce(
-    (css, { stylesToCSS }) => ({ ...css, ...stylesToCSS(styles) }),
+function getStateInfo(state) {
+  const stateInfo = formatters.reduce(
+    (aggr, { getters }) => ({
+      ...aggr,
+      ...Object.fromEntries(
+        Object.entries(getters).map(([key, getter]) => [key, getter(state)])
+      ),
+    }),
     {}
   );
+  return stateInfo;
 }
 
-export default customInlineDisplay;
+export default getStateInfo;

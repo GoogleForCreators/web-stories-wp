@@ -22,65 +22,19 @@ import { stateFromHTML } from 'draft-js-import-html';
 /**
  * Internal dependencies
  */
-import createSolidFromString from '../../utils/createSolidFromString';
-import {
-  ITALIC,
-  UNDERLINE,
-  weightToStyle,
-  letterSpacingToStyle,
-  colorToStyle,
-} from './customConstants';
+import formatters from './formatters';
 import { draftMarkupToContent } from './util';
 
 function customInlineFn(element, { Style }) {
-  switch (element.tagName.toLowerCase()) {
-    case 'span': {
-      const styles = [...element.classList]
-        .map((className) => {
-          switch (className) {
-            case 'weight': {
-              const fontWeight = parseInt(element.style.fontWeight) || 400;
-              return weightToStyle(fontWeight);
-            }
+  const styleStrings = formatters
+    .map(({ elementToStyle }) => elementToStyle(element))
+    .filter((style) => Boolean(style));
 
-            case 'italic':
-              return ITALIC;
-
-            case 'underline':
-              return UNDERLINE;
-
-            case 'letterspacing': {
-              const ls = element.style.letterSpacing;
-              const lsNumber = ls.split(/[a-z%]/)[0] || 0;
-              const lsScaled = Math.round(lsNumber * 100);
-              return letterSpacingToStyle(lsScaled);
-            }
-
-            case 'color': {
-              const rawColor = element.style.color;
-              const solid = createSolidFromString(rawColor);
-              return colorToStyle(solid);
-            }
-
-            default:
-              return null;
-          }
-        })
-        .filter((style) => Boolean(style));
-
-      if (styles.length) {
-        // This is the reason we need a patch, as multiple styles aren't supported by published package
-        // and maintainer clearly doesn't care about it enough to merge.
-        // see: <rootDir>/patches/draft-js-import-element+1.4.0.patch
-        return Style(styles);
-      }
-
-      return null;
-    }
-
-    default:
-      return null;
+  if (styleStrings.length === 0) {
+    return null;
   }
+
+  return Style(styleStrings);
 }
 
 function importHTML(html) {

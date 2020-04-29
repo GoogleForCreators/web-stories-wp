@@ -22,15 +22,8 @@ import { EditorState } from 'draft-js';
 /**
  * Internal dependencies
  */
-import {
-  toggleBold,
-  toggleItalic,
-  toggleUnderline,
-  setFontWeight,
-  setLetterSpacing,
-  setColor,
-  getStateInfo,
-} from './styleManipulation';
+import formatters from './formatters';
+import getStateInfo from './getStateInfo';
 import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
@@ -48,25 +41,25 @@ function updateAndReturnHTML(html, updater, ...args) {
   return renderedHTML;
 }
 
-export function toggleBoldInHTML(html, flag) {
-  return updateAndReturnHTML(html, toggleBold, flag);
-}
-export function setFontWeightInHTML(html, weight) {
-  return updateAndReturnHTML(html, setFontWeight, weight);
-}
-export function toggleItalicInHTML(html, flag) {
-  return updateAndReturnHTML(html, toggleItalic, flag);
-}
-export function toggleUnderlineInHTML(html, flag) {
-  return updateAndReturnHTML(html, toggleUnderline, flag);
-}
-export function setLetterSpacingInHTML(html, letterSpacing) {
-  return updateAndReturnHTML(html, setLetterSpacing, letterSpacing);
-}
-export function setColorInHTML(html, color) {
-  return updateAndReturnHTML(html, setColor, color);
-}
+const getHTMLFormatter = (setter) => (html, ...args) =>
+  updateAndReturnHTML(html, setter, ...args);
+
+export const getHTMLFormatters = () => {
+  return formatters.reduce(
+    (aggr, { setters }) => ({
+      ...aggr,
+      ...Object.fromEntries(
+        Object.entries(setters).map(([key, setter]) => [
+          key,
+          getHTMLFormatter(setter),
+        ])
+      ),
+    }),
+    {}
+  );
+};
 
 export function getHTMLInfo(html) {
-  return getStateInfo(getSelectAllStateFromHTML(html));
+  const htmlStateInfo = getStateInfo(getSelectAllStateFromHTML(html));
+  return htmlStateInfo;
 }
