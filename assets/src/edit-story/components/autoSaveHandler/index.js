@@ -51,6 +51,7 @@ function AutoSaveHandler() {
     }
     let timeout = setTimeout(() => {
       saveStory();
+      timeout = null;
     }, autoSaveInterval * 1000);
 
     return () => {
