@@ -116,5 +116,5 @@ export function fauxStylesToCSS(styles) {
   if (!hasFauxSelection) {
     return null;
   }
-  return { backgroundColor: 'rgba(169, 169, 169, 0.7' };
+  return { backgroundColor: 'rgba(169, 169, 169, 0.7)' };
 }
