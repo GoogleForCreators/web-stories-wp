@@ -61,7 +61,7 @@ function AutoSaveHandler() {
         const update = isDraft ? saveStory : autoSave;
         update();
         setDidAutoSave(true);
-      }, 2000);
+      }, autoSaveInterval * 1000);
     }
 
     return () => {
