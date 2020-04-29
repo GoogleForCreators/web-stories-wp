@@ -56,31 +56,6 @@ function FontProvider({ children }) {
     [getFontBy]
   );
 
-  const getFontWeights = useCallback(
-    (name) => {
-      const fontWeightNames = {
-        100: __('Thin', 'web-stories'),
-        200: __('Extra-light', 'web-stories'),
-        300: __('Light', 'web-stories'),
-        400: __('Regular', 'web-stories'),
-        500: __('Medium', 'web-stories'),
-        600: __('Semi-bold', 'web-stories'),
-        700: __('Bold', 'web-stories'),
-        800: __('Extra-bold', 'web-stories'),
-        900: __('Black', 'web-stories'),
-      };
-
-      const currentFont = getFontByName(name);
-      const { weights } = currentFont;
-
-      return weights.map((weight) => ({
-        name: fontWeightNames[weight],
-        value: weight.toString(),
-      }));
-    },
-    [getFontByName]
-  );
-
   const maybeEnqueueFontStyle = useLoadFontFiles();
 
   const state = {
@@ -90,7 +65,6 @@ function FontProvider({ children }) {
     actions: {
       getFontByName,
       maybeEnqueueFontStyle,
-      getFontWeights,
     },
   };
 

@@ -72,7 +72,18 @@ function Wrapper({ children }) {
           ],
         },
         actions: {
-          getFontWeights: () => [{ name: 'Normal1', value: '400' }],
+          getFontByName: () => ({
+            name: 'Neu Font',
+            value: 'Neu Font',
+            service: 'foo.bar.baz',
+            weights: [400],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 400],
+              [1, 400],
+            ],
+            fallbacks: ['fallback1'],
+          }),
         },
       }}
     >
