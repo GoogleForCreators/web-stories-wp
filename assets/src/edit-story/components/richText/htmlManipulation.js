@@ -28,6 +28,13 @@ import customImport from './customImport';
 import customExport from './customExport';
 import { getSelectionForAll } from './util';
 
+/**
+ * Return an editor state object with content set to parsed HTML
+ * and selection set to everything.
+ *
+ * @param {string} html  HTML string to parse into content
+ * @return {Object} New editor state with selection
+ */
 function getSelectAllStateFromHTML(html) {
   const contentState = customImport(html);
   const initialState = EditorState.createWithContent(contentState);
@@ -35,6 +42,17 @@ function getSelectAllStateFromHTML(html) {
   return EditorState.forceSelection(initialState, selection);
 }
 
+/**
+ * Convert HTML via updater function. As updater function works on the
+ * current selection in an editor state, first parse HTML to editor state
+ * with entire body selected, then run updater and then export back to
+ * HTML again.
+ *
+ * @param {string} html  HTML string to parse into content
+ * @param {Function} updater  A function converting a state to a new state
+ * @param {Array} args  Extra args to supply to updater other than state
+ * @return {Object} New HTML with updates applied
+ */
 function updateAndReturnHTML(html, updater, ...args) {
   const stateWithUpdate = updater(getSelectAllStateFromHTML(html), ...args);
   const renderedHTML = customExport(stateWithUpdate);
