@@ -71,12 +71,12 @@ function convertInlineBold(content, isBold, fontWeight) {
     // In that case, strip any inline bold from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'strong');
     const fancyBold = `font-weight: ${globalWeight}`;
-    const wrapped = wrapWithSpan(stripped, 'weight', fancyBold);
+    const wrapped = wrapWithSpan(stripped, fancyBold);
     return wrapped;
   }
 
   const justBold = 'font-weight: 700';
-  return replaceTagWithSpan(content, 'strong', 'weight', justBold);
+  return replaceTagWithSpan(content, 'strong', justBold);
 }
 
 function convertInlineItalic(content, fontStyle) {
@@ -87,11 +87,11 @@ function convertInlineItalic(content, fontStyle) {
   if (globalFontStyle) {
     // In that case, strip any inline em from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'em');
-    const wrapped = wrapWithSpan(stripped, 'italic', italicStyle);
+    const wrapped = wrapWithSpan(stripped, italicStyle);
     return wrapped;
   }
 
-  return replaceTagWithSpan(content, 'em', 'italic', italicStyle);
+  return replaceTagWithSpan(content, 'em', italicStyle);
 }
 
 function convertInlineUnderline(content, textDecoration) {
@@ -103,11 +103,11 @@ function convertInlineUnderline(content, textDecoration) {
   if (globalDecoration) {
     // In that case, strip any inline underline from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'u');
-    const wrapped = wrapWithSpan(stripped, 'underline', underlineStyle);
+    const wrapped = wrapWithSpan(stripped, underlineStyle);
     return wrapped;
   }
 
-  return replaceTagWithSpan(content, 'u', 'underline', underlineStyle);
+  return replaceTagWithSpan(content, 'u', underlineStyle);
 }
 
 function addInlineColor(content, color) {
@@ -119,7 +119,7 @@ function addInlineColor(content, color) {
   const {
     color: { r, g, b, a = 1 },
   } = color;
-  return wrapWithSpan(content, 'color', `color: rgba(${r}, ${g}, ${b}, ${a})`);
+  return wrapWithSpan(content, `color: rgba(${r}, ${g}, ${b}, ${a})`);
 }
 
 function addInlineLetterSpacing(content, letterSpacing) {
@@ -128,11 +128,7 @@ function addInlineLetterSpacing(content, letterSpacing) {
     return content;
   }
 
-  return wrapWithSpan(
-    content,
-    'letterspacing',
-    `letter-spacing: ${letterSpacing / 100}em`
-  );
+  return wrapWithSpan(content, `letter-spacing: ${letterSpacing / 100}em`);
 }
 
 function stripTag(html, tag) {
@@ -140,18 +136,15 @@ function stripTag(html, tag) {
   return html.replace(new RegExp(`</?${tag}>`, 'gi'), '');
 }
 
-function replaceTagWithSpan(html, tag, className, style) {
+function replaceTagWithSpan(html, tag, style) {
   // Again, very naive
   return html
-    .replace(
-      new RegExp(`<${tag}>`, 'gi'),
-      `<span class="${className}" style="${style}">`
-    )
+    .replace(new RegExp(`<${tag}>`, 'gi'), `<span style="${style}">`)
     .replace(new RegExp(`</${tag}>`, 'gi'), '</span>');
 }
 
-function wrapWithSpan(html, className, style) {
-  return `<span class="${className}" style="${style}">${html}</span>`;
+function wrapWithSpan(html, style) {
+  return `<span style="${style}">${html}</span>`;
 }
 
 export default inlineTextProperties;

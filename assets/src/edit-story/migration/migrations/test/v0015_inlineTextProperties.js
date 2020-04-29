@@ -19,6 +19,13 @@
  */
 import inlineTextProperties from '../v0015_inlineTextProperties';
 
+function convert(content, properties) {
+  const converted = inlineTextProperties({
+    pages: [{ elements: [{ type: 'text', content, ...properties }] }],
+  });
+  return converted.pages[0].elements[0].content;
+}
+
 describe('inlineTextProperties', () => {
   describe('should parse all text elements', () => {
     it('should ignore non-text elements', () => {
@@ -99,13 +106,12 @@ describe('inlineTextProperties', () => {
             elements: [
               {
                 type: 'text',
-                content:
-                  '<span class="weight" style="font-weight: 700">Hello</span>',
+                content: '<span style="font-weight: 700">Hello</span>',
               },
               {
                 type: 'text',
                 content:
-                  '<span class="underline" style="text-decoration: underline">Hello</span>',
+                  '<span style="text-decoration: underline">Hello</span>',
               },
             ],
           },
@@ -113,13 +119,11 @@ describe('inlineTextProperties', () => {
             elements: [
               {
                 type: 'text',
-                content:
-                  '<span class="italic" style="font-style: italic">Hello</span>',
+                content: '<span style="font-style: italic">Hello</span>',
               },
               {
                 type: 'text',
-                content:
-                  '<span class="weight" style="font-weight: 300">Hello</span>',
+                content: '<span style="font-weight: 300">Hello</span>',
               },
             ],
           },
@@ -160,13 +164,6 @@ describe('inlineTextProperties', () => {
     });
   });
 
-  function convert(content, properties) {
-    const converted = inlineTextProperties({
-      pages: [{ elements: [{ type: 'text', content, ...properties }] }],
-    });
-    return converted.pages[0].elements[0].content;
-  }
-
   it('should convert inline elements', () => {
     const original = `
       Lorem
@@ -183,26 +180,53 @@ describe('inlineTextProperties', () => {
     const converted = convert(original);
     const expected = `
       Lorem
-      <span class="weight" style="font-weight: 700">ipsum</span>
-      <span class="italic" style="font-style: italic">dolor</span>
-      <span class="weight" style="font-weight: 700">sit</span>
+      <span style="font-weight: 700">ipsum</span>
+      <span style="font-style: italic">dolor</span>
+      <span style="font-weight: 700">sit</span>
       amet,
-      <span class="italic" style="font-style: italic">
+      <span style="font-style: italic">
         consectetur
-        <span class="underline" style="text-decoration: underline">adipiscing</span>
+        <span style="text-decoration: underline">adipiscing</span>
         elit
       </span>.
     `;
     expect(converted).toStrictEqual(expected);
   });
 
+  it('should convert nested elements', () => {
+    const original = `
+      <strong>Lorem
+      <strong>ipsum</strong></strong>
+      <em><em>dolor</em>
+      <strong>sit</strong></em>
+      amet,
+      <u><em>
+        consectetur
+        <u>adipiscing</u>
+        elit
+      </em></u>.
+    `;
+    const converted = convert(original);
+    const expected = `
+      <span style="font-weight: 700">Lorem
+      <span style="font-weight: 700">ipsum</span></span>
+      <span style="font-style: italic"><span style="font-style: italic">dolor</span>
+      <span style="font-weight: 700">sit</span></span>
+      amet,
+      <span style="text-decoration: underline"><span style="font-style: italic">
+        consectetur
+        <span style="text-decoration: underline">adipiscing</span>
+        elit
+      </span></span>.
+    `;
+    expect(converted).toStrictEqual(expected);
+  });
   describe('should correctly interpret bold properties', () => {
     it('should correctly interpret bold property and ignore inline elements', () => {
       const original = 'Lorem <strong>ipsum</strong>';
       const properties = { bold: true };
       const converted = convert(original, properties);
-      const expected =
-        '<span class="weight" style="font-weight: 700">Lorem ipsum</span>';
+      const expected = '<span style="font-weight: 700">Lorem ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -210,8 +234,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <strong>ipsum</strong>';
       const properties = { fontWeight: 300 };
       const converted = convert(original, properties);
-      const expected =
-        '<span class="weight" style="font-weight: 300">Lorem ipsum</span>';
+      const expected = '<span style="font-weight: 300">Lorem ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -219,8 +242,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <strong>ipsum</strong>';
       const properties = { fontWeight: 400 };
       const converted = convert(original, properties);
-      const expected =
-        'Lorem <span class="weight" style="font-weight: 700">ipsum</span>';
+      const expected = 'Lorem <span style="font-weight: 700">ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -228,8 +250,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <strong>ipsum</strong>';
       const properties = { fontWeight: 300, bold: true };
       const converted = convert(original, properties);
-      const expected =
-        '<span class="weight" style="font-weight: 300">Lorem ipsum</span>';
+      const expected = '<span style="font-weight: 300">Lorem ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -237,8 +258,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <strong>ipsum</strong>';
       const properties = { fontWeight: 400, bold: false };
       const converted = convert(original, properties);
-      const expected =
-        'Lorem <span class="weight" style="font-weight: 700">ipsum</span>';
+      const expected = 'Lorem <span style="font-weight: 700">ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
   });
@@ -248,8 +268,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <em>ipsum</em>';
       const properties = { fontStyle: 'italic' };
       const converted = convert(original, properties);
-      const expected =
-        '<span class="italic" style="font-style: italic">Lorem ipsum</span>';
+      const expected = '<span style="font-style: italic">Lorem ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -257,8 +276,7 @@ describe('inlineTextProperties', () => {
       const original = 'Lorem <em>ipsum</em>';
       const properties = { fontStyle: 'oblique' };
       const converted = convert(original, properties);
-      const expected =
-        'Lorem <span class="italic" style="font-style: italic">ipsum</span>';
+      const expected = 'Lorem <span style="font-style: italic">ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
   });
@@ -269,7 +287,7 @@ describe('inlineTextProperties', () => {
       const properties = { textDecoration: 'underline' };
       const converted = convert(original, properties);
       const expected =
-        '<span class="underline" style="text-decoration: underline">Lorem ipsum</span>';
+        '<span style="text-decoration: underline">Lorem ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
 
@@ -278,7 +296,7 @@ describe('inlineTextProperties', () => {
       const properties = { textDecoration: 'line-through' };
       const converted = convert(original, properties);
       const expected =
-        'Lorem <span class="underline" style="text-decoration: underline">ipsum</span>';
+        'Lorem <span style="text-decoration: underline">ipsum</span>';
       expect(converted).toStrictEqual(expected);
     });
   });
@@ -288,7 +306,7 @@ describe('inlineTextProperties', () => {
     const properties = { color: { color: { r: 255, g: 0, b: 0, a: 0.5 } } };
     const converted = convert(original, properties);
     const expected =
-      '<span class="color" style="color: rgba(255, 0, 0, 0.5)">Lorem ipsum</span>';
+      '<span style="color: rgba(255, 0, 0, 0.5)">Lorem ipsum</span>';
     expect(converted).toStrictEqual(expected);
   });
 
@@ -296,8 +314,7 @@ describe('inlineTextProperties', () => {
     const original = 'Lorem ipsum';
     const properties = { letterSpacing: 20 };
     const converted = convert(original, properties);
-    const expected =
-      '<span class="letterspacing" style="letter-spacing: 0.2em">Lorem ipsum</span>';
+    const expected = '<span style="letter-spacing: 0.2em">Lorem ipsum</span>';
     expect(converted).toStrictEqual(expected);
   });
 
@@ -323,16 +340,16 @@ describe('inlineTextProperties', () => {
     };
     const converted = convert(original, properties);
     const expected = `
-      <span class="letterspacing" style="letter-spacing: 0.2em">
-        <span class="color" style="color: rgba(255, 0, 0, 1)">
-          <span class="italic" style="font-style: italic">
+      <span style="letter-spacing: 0.2em">
+        <span style="color: rgba(255, 0, 0, 1)">
+          <span style="font-style: italic">
             Lorem
-            <span class="weight" style="font-weight: 700">ipsum</span>
+            <span style="font-weight: 700">ipsum</span>
             dolor
-            <span class="weight" style="font-weight: 700">sit</span>
+            <span style="font-weight: 700">sit</span>
             amet,
             consectetur
-            <span class="underline" style="text-decoration: underline">adipiscing</span>
+            <span style="text-decoration: underline">adipiscing</span>
             elit.
           </span>
         </span>
