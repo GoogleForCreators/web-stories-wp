@@ -29,11 +29,9 @@ import {
   DROPDOWN_TYPES,
   VIEW_STYLE,
 } from '../../../constants';
+import BodyWrapper from './bodyWrapper';
 
 const DisplayFormatContainer = styled.div`
-  margin: ${({ theme }) => `${theme.pageGutter.small.desktop}px 0`};
-  padding-bottom: 20px;
-  padding-left: 15px;
   display: flex;
   align-items: space-between;
   align-content: center;
@@ -46,11 +44,6 @@ const StorySortDropdownContainer = styled.div`
 
 const SortDropdown = styled(Dropdown)`
   min-width: 210px;
-  margin-right: 10px;
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin-right: 0px;
-  }
 `;
 
 const BodyViewOptions = ({
@@ -61,24 +54,26 @@ const BodyViewOptions = ({
   layoutStyle,
   sortDropdownAriaLabel,
 }) => (
-  <DisplayFormatContainer>
-    <ListBar
-      label={listBarLabel}
-      layoutStyle={layoutStyle}
-      onPress={handleLayoutSelect}
-    />
-    {layoutStyle === VIEW_STYLE.GRID && (
-      <StorySortDropdownContainer>
-        <SortDropdown
-          ariaLabel={sortDropdownAriaLabel}
-          items={STORY_SORT_MENU_ITEMS}
-          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-          value={currentSort}
-          onChange={(newSort) => handleSortChange(newSort.value)}
-        />
-      </StorySortDropdownContainer>
-    )}
-  </DisplayFormatContainer>
+  <BodyWrapper>
+    <DisplayFormatContainer>
+      <ListBar
+        label={listBarLabel}
+        layoutStyle={layoutStyle}
+        onPress={handleLayoutSelect}
+      />
+      {layoutStyle === VIEW_STYLE.GRID && (
+        <StorySortDropdownContainer>
+          <SortDropdown
+            ariaLabel={sortDropdownAriaLabel}
+            items={STORY_SORT_MENU_ITEMS}
+            type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+            value={currentSort}
+            onChange={(newSort) => handleSortChange(newSort.value)}
+          />
+        </StorySortDropdownContainer>
+      )}
+    </DisplayFormatContainer>
+  </BodyWrapper>
 );
 
 BodyViewOptions.propTypes = {

@@ -53,4 +53,8 @@ export const MainButton = styled.button`
   font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.hover};
+  }
 `;

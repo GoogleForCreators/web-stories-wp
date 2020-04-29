@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 
 /**
@@ -25,6 +25,10 @@ import moment from 'moment';
  */
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';
+import templateReducer, {
+  defaultTemplatesState,
+  ACTION_TYPES as TEMPLATE_ACTION_TYPES,
+} from '../reducer/templates';
 
 export function reshapeTemplateObject(isLocal) {
   return ({
@@ -55,7 +59,8 @@ export function reshapeTemplateObject(isLocal) {
 // TODO: Remove this eslint rule once endpoints are working
 /* eslint-disable no-unused-vars */
 const useTemplateApi = (dataAdapter, config) => {
-  const [templates, setTemplates] = useState([]);
+  const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
+
   const { pluginDir } = config;
 
   const createStoryFromTemplatePages = useCallback((pages) => {
@@ -64,18 +69,40 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const fetchSavedTemplates = useCallback((filters) => {
     // Saved Templates = Bookmarked Templates + My Templates
-    setTemplates([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
     return Promise.resolve([]);
   }, []);
 
   const fetchBookmarkedTemplates = useCallback((filters) => {
-    setTemplates([]);
-    return Promise.resolve([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
   }, []);
 
   const fetchMyTemplates = useCallback((filters) => {
-    setTemplates([]);
-    return Promise.resolve([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
   }, []);
 
   const fetchMyTemplateById = useCallback((templateId) => {
@@ -84,24 +111,42 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const fetchExternalTemplates = useCallback(
     (filters) => {
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+        payload: true,
+      });
+
       const reshapedTemplates = getAllTemplates({ pluginDir }).map(
         reshapeTemplateObject(false)
       );
-      setTemplates(reshapedTemplates);
-      return Promise.resolve(reshapedTemplates);
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+        payload: {
+          page: 1,
+          templates: reshapedTemplates,
+          totalPages: 1,
+          totalTemplates: reshapedTemplates.length,
+        },
+      });
+
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+      });
     },
     [pluginDir]
   );
 
   const fetchExternalTemplateById = useCallback(
     async (templateId) => {
-      const fetchedTemplates = await fetchExternalTemplates();
+      if (state.templates[templateId]) {
+        return state.templates[templateId];
+      }
 
-      return Promise.resolve(
-        fetchedTemplates.find((template) => template.id === templateId)
-      );
+      await fetchExternalTemplates();
+
+      return state.templates[templateId];
     },
-    [fetchExternalTemplates]
+    [fetchExternalTemplates, state]
   );
 
   const bookmarkTemplateById = useCallback((templateId, shouldBookmark) => {
@@ -137,7 +182,7 @@ const useTemplateApi = (dataAdapter, config) => {
     ]
   );
 
-  return { templates, api };
+  return { templates: state, api };
 };
 /* eslint-enable no-unused-vars */
 

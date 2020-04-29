@@ -1,0 +1,87 @@
+name: Continuous Deployment
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    name: Upload release assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+
+      - name: Setup npm cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-${{ env.cache-name }}-
+            ${{ runner.OS }}-npm-
+            ${{ runner.OS }}-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: composer
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Setup Composer cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: TRUE
+
+      - name: Bundle plugin
+        run: |
+          npm run build:plugin
+          npm run bundle-plugin web-stories.zip
+          npm run bundle-plugin web-stories-composer.zip -- --composer
+
+      - name: Get upload url
+        run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
+        id: release
+
+      - name: Upload full bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: /build/web-stories.zip
+          asset_name: web-stories.zip
+          asset_content_type: application/zip
+
+      - name: Upload composer bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: /build/web-stories-composer.zip
+          asset_name: web-stories-composer.zip
+          asset_content_type: application/zip
