@@ -67,10 +67,7 @@ function FontProvider({ children }) {
 }
 
 FontProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default FontProvider;
