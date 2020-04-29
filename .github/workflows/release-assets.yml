@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Release Assets
 
 on:
   release:
@@ -52,7 +52,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         env:
           CI: TRUE
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
