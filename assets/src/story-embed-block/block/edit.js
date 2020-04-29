@@ -187,12 +187,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className }) {
             });
           }}
         >
-          <StoryPlayer
-            url={outerURL}
-            title={title}
-            poster={poster}
-            fullWidth
-          />
+          <StoryPlayer url={outerURL} title={title} poster={poster} fullWidth />
         </ResizableBox>
       </div>
     </>
