@@ -51,63 +51,49 @@ function setupPresetGroup() {
     container,
   };
 }
+const getThirdArguments = (calls) => {
+  return [...calls.map((args) => args[2])];
+};
 
 describe('stylePresets/PresetGroup', () => {
   it('should modify active index correctly with arrow keys', () => {
     const { itemRenderer, getByText } = setupPresetGroup();
-    expect(itemRenderer).toHaveBeenCalledTimes(3);
-    expect(itemRenderer).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      0
-    );
+    expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
 
     const label = getByText('Colors');
     const group = label.nextSibling;
     expect(group).toBeDefined();
 
+    itemRenderer.mockReset();
     fireEvent.keyDown(group, {
       key: 'ArrowRight',
       which: 39,
     });
 
-    expect(itemRenderer).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      1
-    );
+    expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([1, 1, 1]);
 
+    itemRenderer.mockReset();
     fireEvent.keyDown(group, {
       key: 'ArrowLeft',
       which: 37,
     });
 
-    expect(itemRenderer).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      0
-    );
+    expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
 
+    itemRenderer.mockReset();
     fireEvent.keyDown(group, {
       key: 'ArrowDown',
       which: 40,
     });
 
-    expect(itemRenderer).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      2
-    );
+    expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([2, 2, 2]);
 
+    itemRenderer.mockReset();
     fireEvent.keyDown(group, {
       key: 'ArrowUp',
       which: 38,
     });
 
-    expect(itemRenderer).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      0
-    );
+    expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
   });
 });
