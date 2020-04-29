@@ -71,6 +71,10 @@ describe('Story output', () => {
               font: {
                 family: 'Roboto',
                 service: 'fonts.google.com',
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
               },
               fontStyle: 'italic',
             },
@@ -91,6 +95,10 @@ describe('Story output', () => {
               font: {
                 family: 'Lato',
                 service: 'fonts.google.com',
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
               },
               fontWeight: 400,
             },
