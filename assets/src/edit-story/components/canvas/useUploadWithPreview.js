@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { useCallback } from 'react';
-import { useMedia } from '../../app/media';
-import { useStory } from '../../app/story';
+/**
+ * Internal dependencies
+ */
+import { useMedia, useStory } from '../../app';
 import objectPick from '../../utils/objectPick';
 import useInsertElement from './useInsertElement';
 
