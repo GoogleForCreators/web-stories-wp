@@ -30,6 +30,7 @@ import { Layer, PageArea } from './layout';
 const DisplayPageArea = styled(PageArea).attrs({
   className: 'container web-stories-content',
   overflowAllowed: false,
+  showDangerZone: true,
 })`
   background-color: white;
   background-image: linear-gradient(45deg, #999999 25%, transparent 25%),

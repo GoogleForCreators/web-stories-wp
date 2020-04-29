@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -82,7 +83,7 @@ const Layer = styled.div`
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
     '.         prev      page      next      .       ' var(
-      --page-preview-height-px
+      --fullbleed-height-px
     )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
@@ -90,7 +91,7 @@ const Layer = styled.div`
       ${MIN_CAROUSEL_HEIGHT}px,
       ${MAX_CAROUSEL_HEIGHT}px
     )
-    / 1fr ${PAGE_NAV_WIDTH}px var(--page-preview-width-px)
+    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
     ${PAGE_NAV_WIDTH}px 1fr;
 `;
 
@@ -107,7 +108,7 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageAreaContainer = styled(Area).attrs({
+const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
   overflowAllowed: false,
 })`
@@ -117,38 +118,32 @@ const PageAreaContainer = styled(Area).attrs({
   background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-const PageAreaContent = styled.div`
+const PageAreaSafeZone = styled.div`
   width: 100%;
   height: var(--page-height-px);
   overflow: visible;
   position: relative;
 `;
 
-const PageAreaSafeZone = styled.div`
+const PageAreaDangerZone = styled.div`
   pointer-events: none;
   position: absolute;
-  background-image: linear-gradient(
-    45deg,
-    #a3a3a3 25%,
-    #000000 25%,
-    #000000 50%,
-    #a3a3a3 50%,
-    #a3a3a3 75%,
-    #000000 75%,
-    #000000 100%
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    black 10px 20px
   );
-  background-size: 28.28px 28.28px;
   opacity: 0.05;
   width: 100%;
-  height: calc((var(--page-preview-height-px) - var(--page-height-px)) / 2);
+  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
   z-index: 1;
 `;
 
-const PageAreaSafeZoneTop = styled(PageAreaSafeZone)`
+const PageAreaDangerZoneTop = styled(PageAreaDangerZone)`
   top: 0;
 `;
 
-const PageAreaSafeZoneBottom = styled(PageAreaSafeZone)`
+const PageAreaDangerZoneBottom = styled(PageAreaDangerZone)`
   bottom: 0;
 `;
 
@@ -186,16 +181,10 @@ function useLayoutParams(containerRef) {
     const maxHeight =
       height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
 
-    // Find the first size that fits within the [maxWidth, maxHeight].
     let bestSize =
-      ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
-    for (let i = 0; i < ALLOWED_EDITOR_PAGE_WIDTHS.length; i++) {
-      const size = ALLOWED_EDITOR_PAGE_WIDTHS[i];
-      if (size <= maxWidth && size * PAGE_RATIO <= maxHeight) {
-        bestSize = size;
-        break;
-      }
-    }
+      ALLOWED_EDITOR_PAGE_WIDTHS.find(
+        (size) => size <= maxWidth && size * PAGE_RATIO <= maxHeight
+      ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
     setPageSize({ width: bestSize, height: bestSize * PAGE_RATIO });
   });
 }
@@ -207,26 +196,28 @@ function useLayoutParamsCssVars() {
   return {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,
-    '--page-preview-width-px': `${pageSize.width}px`,
-    '--page-preview-height-px': `${pageSize.width * PREVIEW_RATIO}px`,
+    '--fullbleed-width-px': `${pageSize.width}px`,
+    '--fullbleed-height-px': `${pageSize.width * PREVIEW_RATIO}px`,
   };
 }
 
-function PageArea({ children }) {
+const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
   return (
-    <PageAreaContainer>
-      <PageAreaContent>{children}</PageAreaContent>
-      <PageAreaSafeZoneTop />
-      <PageAreaSafeZoneBottom />
-    </PageAreaContainer>
+    <PageAreaFullbleedContainer>
+      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+      {showDangerZone && (
+        <>
+          <PageAreaDangerZoneTop />
+          <PageAreaDangerZoneBottom />
+        </>
+      )}
+    </PageAreaFullbleedContainer>
   );
-}
+});
 
 PageArea.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
+  showDangerZone: PropTypes.bool,
 };
 
 export {
