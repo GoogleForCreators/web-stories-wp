@@ -28,10 +28,13 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 import {
   FloatingTab,
   InfiniteScroller,
   ScrollToTop,
+  Layout,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -39,13 +42,10 @@ import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
 } from '../../../constants';
-import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import clamp from '../../../utils/clamp';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { ApiContext } from '../../api/apiProvider';
+import FontProvider from '../../font/fontProvider';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
   BodyViewOptions,
@@ -85,6 +85,10 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
+const CardPanel = styled.div`
+  padding-top: 60px;
+`;
+
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
@@ -108,11 +112,11 @@ function MyStories() {
     state: {
       stories: {
         allPagesFetched,
+        isLoading,
         stories,
         storiesOrderById,
         totalStories,
         totalPages,
-        isLoading,
       },
     },
   } = useContext(ApiContext);
@@ -253,17 +257,17 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <BodyWrapper>
-          {storiesViewControls}
-          {storiesView}
-          <InfiniteScroller
-            canLoadMore={!allPagesFetched}
-            isLoading={isLoading}
-            allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={handleNewPageRequest}
-          />
-          <ScrollToTop />
-        </BodyWrapper>
+        <CardPanel>
+          <BodyWrapper>
+            {storiesView}
+            <InfiniteScroller
+              canLoadMore={!allPagesFetched}
+              isLoading={isLoading}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              onLoadMore={handleNewPageRequest}
+            />
+          </BodyWrapper>
+        </CardPanel>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -280,7 +284,6 @@ function MyStories() {
     allPagesFetched,
     handleNewPageRequest,
     typeaheadValue,
-    storiesViewControls,
     storiesView,
   ]);
 
@@ -288,28 +291,36 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={orderedStories}
-            handleTypeaheadChange={handleTypeaheadChange}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={handleFilterStatusUpdate}
-                name="my-stories-filter-selection"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-                inputType="radio"
-              >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
+          <Layout.Provider>
+            <Layout.Squishable>
+              <PageHeading
+                defaultTitle={__('My Stories', 'web-stories')}
+                searchPlaceholder={__('Search Stories', 'web-stories')}
+                filteredStories={orderedStories}
+                handleTypeaheadChange={handleTypeaheadChange}
+                typeaheadValue={typeaheadValue}
+              />
+              <FilterContainer>
+                {STORY_STATUSES.map((storyStatus) => (
+                  <FloatingTab
+                    key={storyStatus.value}
+                    onClick={handleFilterStatusUpdate}
+                    name="my-stories-filter-selection"
+                    value={storyStatus.value}
+                    isSelected={status === storyStatus.value}
+                    inputType="radio"
+                  >
+                    {storyStatus.label}
+                  </FloatingTab>
+                ))}
+              </FilterContainer>
+              {storiesViewControls}
+            </Layout.Squishable>
+            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
+          </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>

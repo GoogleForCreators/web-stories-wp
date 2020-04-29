@@ -15,22 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+/**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import ScrollToTop from '..';
-import Layout from '../../layout';
+import { LayoutContext } from './provider';
 
-describe('ScrollToTop', () => {
-  it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
-      <Layout.Provider>
-        <ScrollToTop />
-      </Layout.Provider>
+const useLayoutContext = () => {
+  const context = useContext(LayoutContext);
+  if (!context) {
+    throw new Error(
+      'useLayoutContext() must be used within a <Layout.Provider />'
     );
+  }
+  return context;
+};
 
-    const Button = getByTestId('scroll-to-top-button');
-
-    expect(Button).toBeDefined();
-  });
-});
+export default useLayoutContext;

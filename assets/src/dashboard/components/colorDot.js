@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import ScrollToTop from '..';
-import Layout from '../../layout';
+import styled from 'styled-components';
 
-describe('ScrollToTop', () => {
-  it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
-      <Layout.Provider>
-        <ScrollToTop />
-      </Layout.Provider>
-    );
-
-    const Button = getByTestId('scroll-to-top-button');
-
-    expect(Button).toBeDefined();
-  });
-});
+export const ColorDot = styled.div`
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  margin: 0 4px;
+  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.25);
+  border-radius: 13px;
+  background-color: ${({ color }) => color};
+`;

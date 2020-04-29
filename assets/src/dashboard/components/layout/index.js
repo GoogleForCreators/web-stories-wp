@@ -13,33 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import MediaOutput from '../media/output';
+import Provider from './provider';
+import Scrollable from './scrollable';
+import Squishable from './squishable';
+import Fixed from './fixed';
 
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function ImageOutput({ element, box }) {
-  const { resource } = element;
-  const props = {
-    layout: 'fill',
-    src: resource.src,
-    alt: element.alt !== undefined ? element.alt : resource.alt,
-  };
-  return (
-    <MediaOutput box={box} element={element}>
-      <amp-img {...props} />
-    </MediaOutput>
-  );
-}
-
-ImageOutput.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
-  box: StoryPropTypes.box.isRequired,
+const Layout = {
+  Provider,
+  Scrollable,
+  Squishable,
+  Fixed,
 };
 
-export default ImageOutput;
+export default Layout;
+export { default as useLayoutContext } from './useLayoutContext';
+export { SQUISH_CSS_VAR } from './provider';

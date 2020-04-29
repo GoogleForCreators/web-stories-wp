@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { renderWithTheme } from '../../../testUtils/';
-import ScrollToTop from '..';
-import Layout from '../../layout';
-
-describe('ScrollToTop', () => {
-  it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
-      <Layout.Provider>
-        <ScrollToTop />
-      </Layout.Provider>
-    );
-
-    const Button = getByTestId('scroll-to-top-button');
-
-    expect(Button).toBeDefined();
-  });
-});
+export { default as clamp } from './clamp';
+export { default as getCurrentYAxis } from './getCurrentYAxis';
+export { default as groupBy } from './groupBy';
+export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
+export { default as useFocusOut } from './useFocusOut';
+export { default as usePagePreviewSize } from './usePagePreviewSize';
