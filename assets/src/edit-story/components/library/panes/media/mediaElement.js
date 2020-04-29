@@ -30,7 +30,8 @@ import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
-  width: 100%;
+  width: auto;
+  height: 100px;
   transition: 0.2s transform, 0.15s opacity;
   margin-bottom: 10px;
 `;

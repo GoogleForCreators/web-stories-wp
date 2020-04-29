@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import VirtualListWrapper from './VirtualListWrapper';
 import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
@@ -241,10 +242,26 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded]
   );
 
+  const loadNextPage = (...args) => {
+    console.log({args})
+    if (!isMediaLoaded || isMediaLoading) {
+      return;
+    }
+    if (!hasMore) {
+      return;
+    }
+    setNextPage()
+  };
+
+  const [useIsScrolling, setUseIsScrolling] = useState(true)
+  const [simpleImage, setSimpleImage] = useState(true)
+
   return (
     <StyledPane id={paneId} {...props}>
       <Inner>
         <Padding>
+          <button onClick={() => setUseIsScrolling(v => !v)}>{useIsScrolling ? 'Disable' : 'Enable'} useIsScrolling</button>
+          <button onClick={() => setSimpleImage(v => !v)}>{simpleImage ? 'Disable' : 'Enable'} simpleImage</button>
           <SearchInput
             value={searchTerm}
             placeholder={__('Search', 'web-stories')}
@@ -272,31 +289,14 @@ function MediaPane(props) {
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
           <Container ref={refContainer}>
-            <Column>
-              {resources
-                .filter((_, index) => isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            <Column>
-              {resources
-                .filter((_, index) => !isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
+            <VirtualListWrapper
+              hasNextPage={hasMore}
+              isNextPageLoading={isMediaLoading}
+              items={resources}
+              loadNextPage={loadNextPage}
+              useIsScrolling={useIsScrolling}
+              simpleImage={simpleImage}
+            />
           </Container>
         )}
       </Inner>

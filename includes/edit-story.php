@@ -36,3 +36,34 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 <div id="edit-story">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>
+
+<script>
+(function() {
+    var script = document.createElement('script');
+    script.onload = function() {
+        var stats = new Stats();
+        var node = document.body.appendChild(stats.dom)
+        node.style.zIndex = 2147483647;
+        node.style.left = 'calc(50% + 109px)';
+        requestAnimationFrame(function loop() {
+            stats.update();
+            requestAnimationFrame(loop)
+        });
+    };
+    script.src = '//mrdoob.github.io/stats.js/build/stats.min.js';
+    document.head.appendChild(script);
+})();
+
+(function() {
+    var script = document.createElement('script');
+    script.onload = function() {
+        var meter = new FPSMeter(document.body, { left: '80px', top: 0, left: '50%', heat: 1, graph: 1, theme: 'colorful', zIndex: 2147483647 });
+        requestAnimationFrame(function loop() {
+            meter.tick();
+            requestAnimationFrame(loop)
+        });
+    };
+    script.src = '//cdnjs.cloudflare.com/ajax/libs/fpsmeter/0.3.1/fpsmeter.min.js';
+    document.head.appendChild(script);
+})();
+</script>
