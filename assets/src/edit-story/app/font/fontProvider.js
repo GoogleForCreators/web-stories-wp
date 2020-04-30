@@ -46,7 +46,7 @@ function FontProvider({ children }) {
 
   const getFontByName = useCallback(
     (name) => {
-      return getFontBy('name', name);
+      return getFontBy('family', name);
     },
     [getFontBy]
   );

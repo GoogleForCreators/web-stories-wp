@@ -30,6 +30,7 @@ const DashboardGrid = styled.div`
   width: 100%;
   align-content: space-between;
   grid-column-gap: 10px;
+  grid-row-gap: 20px;
   grid-template-columns: ${({ columnWidth }) =>
     `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
 

@@ -23,7 +23,6 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  * External dependencies
  */
 import { useState, useContext, useMemo, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -37,7 +36,6 @@ import {
   InfiniteScroller,
   ScrollToTop,
 } from '../../../components';
-import { DropdownContainer } from '../../../components/dropdown';
 import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
@@ -54,17 +52,6 @@ import {
   BodyViewOptions,
 } from '../shared';
 import useTemplateFilters from './templateFilters';
-
-const ExploreFiltersContainer = styled.div`
-  padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
-  flex-direction: row;
-  display: flex;
-
-  ${DropdownContainer} {
-    margin-right: 15px;
-  }
-`;
 
 function TemplatesGallery() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
@@ -148,9 +135,8 @@ function TemplatesGallery() {
         <BodyWrapper>
           <StoryGridView
             filteredStories={orderedTemplates}
-            centerActionLabel={__('View details', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
-            updateStory={() => {}}
+            isTemplate
           />
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -179,13 +165,12 @@ function TemplatesGallery() {
           <Layout.Provider>
             <Layout.Squishable>
               <PageHeading
-                defaultTitle={__('Explore Templates', 'web-stories')}
+                defaultTitle={__('Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
                 filteredStories={orderedTemplates}
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
-              />
-              <ExploreFiltersContainer>
+              >
                 <Dropdown
                   ariaLabel={__('Category Dropdown', 'web-stories')}
                   type={DROPDOWN_TYPES.PANEL}
@@ -216,7 +201,7 @@ function TemplatesGallery() {
                   items={[]}
                   onChange={() => {}}
                 />
-              </ExploreFiltersContainer>{' '}
+              </PageHeading>
               <BodyViewOptions
                 listBarLabel={listBarLabel}
                 layoutStyle={viewStyle}
