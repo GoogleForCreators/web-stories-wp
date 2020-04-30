@@ -219,14 +219,14 @@ jobs:
     name: PHP Unit Tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     services:
-      mysql:
-        image: mysql:5.7
+      mariadb:
+        image: mariadb:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_PASSWORD:
           MYSQL_DATABASE: wordpress_test
         ports:
-          - 3306/tcp
+          - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       continue-on-error: ${{ matrix.experimental == true }}
     strategy:
@@ -249,6 +249,14 @@ jobs:
           extensions: mysql
           coverage: xdebug
           tools: composer, cs2pr
+
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            sleep 1
+          done
 
       - name: Get Composer cache directory
         id: composer-cache
