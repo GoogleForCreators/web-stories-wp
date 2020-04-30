@@ -119,7 +119,7 @@ const ToggleButtonGroup = ({ buttons }) => {
       <ToggleButtonContainer ref={containerRef}>
         {buttons.map(({ isActive, handleClick, key, text }, idx) => (
           <ToggleButton
-            ref={isActive ? activeRef : null}
+            {...(isActive ? { ref: activeRef } : {})}
             type="button"
             onClick={(e) => handleButtonClick(e, handleClick)}
             key={key || `toggle_button_${idx}`}
