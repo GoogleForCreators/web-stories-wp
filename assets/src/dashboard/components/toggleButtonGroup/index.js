@@ -24,7 +24,7 @@ import { useState, useCallback, useLayoutEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
+import { KEYBOARD_USER_SELECTOR, BEZIER } from '../../constants';
 
 const ToggleButtonContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const AnimationBar = styled.div`
     width: ${selectedButtonWidth}px;
     left: ${selectedButtonLeft}px;
     background-color:  ${theme.colors.bluePrimary600};
-    transition: all 0.3s ease-out; 
+    transition: all 0.3s ${BEZIER.outSine}; 
   `}
 `;
 AnimationBar.propTypes = {
