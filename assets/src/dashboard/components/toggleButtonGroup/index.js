@@ -38,7 +38,6 @@ const ToggleButtonContainer = styled.div`
   height: 100%;
   flex-direction: row;
   justify-content: space-evenly;
-  border: 1px solid red;
 `;
 
 const AnimationBar = styled.div`
@@ -113,7 +112,6 @@ const ToggleButtonGroup = ({ buttons }) => {
     if (!activeRef.current) {
       return;
     }
-
     updateBarDimensions(activeRef.current);
   }, [updateBarDimensions]);
 
