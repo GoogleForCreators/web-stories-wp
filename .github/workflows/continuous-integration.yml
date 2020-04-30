@@ -219,7 +219,7 @@ jobs:
     name: PHP Unit Tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     services:
-      mariadb:
+      mysql:
         image: mariadb:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
@@ -254,10 +254,8 @@ jobs:
         run: sudo service mysql stop
 
       - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3306] }}
         run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+          while ! mysqladmin ping -h"127.0.0.1" -P"${{ job.services.mariadb.ports[3306] }}" --silent; do
             sleep 1
           done
 
