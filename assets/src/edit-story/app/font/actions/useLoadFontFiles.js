@@ -44,94 +44,70 @@ function useLoadFontFiles() {
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {Object} props An object with properties to create a valid FontFaceSet to inject and preload a font-face
-   * @return {Promise} Returns font load promise
+   * @param {Array} props An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
+   * @return {Promise} Returns fonts loaded promise
    */
-  const maybeEnqueueFontStyle = useCallback(
-    async (
-      {
-        font: { family, service, variants },
-        fontWeight,
-        fontStyle,
-        fontSize,
-      } = { fontSize: 0 }
-    ) => {
-      if (
-        !family ||
-        !fontWeight ||
-        !fontStyle ||
-        service !== 'fonts.google.com'
-      ) {
-        return null;
-      }
-
-      const handle = cleanForSlug(family);
-      const elementId = `${handle}-css`;
-      const fontFaceSet = `${fontStyle} ${fontWeight} ${fontSize}px '${family}'`;
-
-      const hasFontLink = () => {
-        return document.getElementById(elementId);
-      };
-
-      const appendFontLink = () => {
-        return new Promise((resolve, reject) => {
-          const src = getGoogleFontURL([{ family, variants }]);
-          const fontStylesheet = document.createElement('link');
-          const fontHref = src.replace('display=swap', 'display=auto');
-          fontStylesheet.id = elementId;
-          fontStylesheet.href = fontHref;
-          fontStylesheet.rel = 'stylesheet';
-          fontStylesheet.type = 'text/css';
-          fontStylesheet.media = 'all';
-          fontStylesheet.crossOrigin = 'anonymous';
-          fontStylesheet.addEventListener('load', () => resolve());
-          fontStylesheet.addEventListener('error', (e) => reject(e));
-          document.head.appendChild(fontStylesheet);
-        });
-      };
-
-      const ensureFontLoaded = async () => {
-        if (document?.fonts) {
-          await document.fonts.load(fontFaceSet);
-          return document.fonts.check(fontFaceSet);
-        } else {
-          return null;
-        }
-      };
-
-      if (!hasFontLink()) {
-        await appendFontLink();
-      }
-
-      return ensureFontLoaded();
-    },
-    []
-  );
-
-  /**
-   * It allows control each text element font-face for multiple types and font family aspect
-   *
-   * @param {string} aspect Font family aspect that should be synced between one or more elements
-   * @param {Object} state Font family state to be synced with `maybeEnqueueFontStyle`
-   * @param {Array} elements List of elements selected to be processed
-   * @return {Promise} Returns a Promise after process all font with `maybeEnqueueFontStyle`
-   */
-  const ensureFontFaceSetIsAvailable = (aspect, state, elements) => {
-    const currentFontConfigs = elements.map((e) => ({
-      ...e,
-      [aspect]: state[aspect],
-    }));
+  const maybeEnqueueFontStyle = useCallback((fonts) => {
     return Promise.all(
-      currentFontConfigs
-        .map((currentFontConfig) => maybeEnqueueFontStyle(currentFontConfig))
+      fonts
+        .map(
+          async ({
+            font: { family, service, variants },
+            fontWeight,
+            fontStyle,
+          }) => {
+            if (!family || service !== 'fonts.google.com') {
+              return null;
+            }
+
+            const handle = cleanForSlug(family);
+            const elementId = `${handle}-css`;
+            const fontFaceSet = `
+              ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
+            `.trim();
+
+            const hasFontLink = () => {
+              return document.getElementById(elementId);
+            };
+
+            const appendFontLink = () => {
+              return new Promise((resolve, reject) => {
+                const src = getGoogleFontURL([{ family, variants }]);
+                const fontStylesheet = document.createElement('link');
+                const fontHref = src.replace('display=swap', 'display=auto');
+                fontStylesheet.id = elementId;
+                fontStylesheet.href = fontHref;
+                fontStylesheet.rel = 'stylesheet';
+                fontStylesheet.type = 'text/css';
+                fontStylesheet.media = 'all';
+                fontStylesheet.crossOrigin = 'anonymous';
+                fontStylesheet.addEventListener('load', () => resolve());
+                fontStylesheet.addEventListener('error', (e) => reject(e));
+                document.head.appendChild(fontStylesheet);
+              });
+            };
+
+            const ensureFontLoaded = async () => {
+              if (document?.fonts) {
+                await document.fonts.load(fontFaceSet);
+                return document.fonts.check(fontFaceSet);
+              } else {
+                return null;
+              }
+            };
+
+            if (!hasFontLink()) {
+              await appendFontLink();
+            }
+
+            return ensureFontLoaded();
+          }
+        )
         .map(reflect)
     );
-  };
+  }, []);
 
-  return {
-    maybeEnqueueFontStyle,
-    ensureFontFaceSetIsAvailable,
-  };
+  return maybeEnqueueFontStyle;
 }
 
 export default useLoadFontFiles;

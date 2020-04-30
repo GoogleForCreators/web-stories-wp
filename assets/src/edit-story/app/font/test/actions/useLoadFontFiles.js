@@ -31,29 +31,52 @@ const DEFAULT_FONT = {
   },
   fontWeight: 400,
   fontStyle: 'normal',
-  fontSize: 20,
 };
 
-describe('useFont', () => {
+describe('useLoadFontFiles', () => {
+  beforeEach(() => {
+    const el = document.getElementById('font-css');
+    if (el) {
+      el.remove();
+    }
+  });
+
   it('maybeEnqueueFontStyle', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const { maybeEnqueueFontStyle } = useLoadFontFiles();
+      const maybeEnqueueFontStyle = useLoadFontFiles();
 
-      await maybeEnqueueFontStyle(DEFAULT_FONT);
+      await maybeEnqueueFontStyle([DEFAULT_FONT]);
     });
 
     expect(document.getElementById('font-css')).toBeDefined();
   });
 
-  it('ensureFontFaceSetIsAvailable', () => {
-    renderHook(async () => {
-      const { ensureFontFaceSetIsAvailable } = useLoadFontFiles();
+  it('maybeEnqueueFontStyle skip', () => {
+    expect(document.getElementById('font-css')).toBeNull();
 
-      await ensureFontFaceSetIsAvailable('font', DEFAULT_FONT, [DEFAULT_FONT]);
+    renderHook(async () => {
+      const maybeEnqueueFontStyle = useLoadFontFiles();
+
+      await maybeEnqueueFontStyle([
+        { ...DEFAULT_FONT, font: { ...DEFAULT_FONT.font, service: 'abcd' } },
+      ]);
     });
 
+    expect(document.getElementById('font-css')).toBeNull();
+  });
+
+  it('maybeEnqueueFontStyle reflect', () => {
+    expect(document.getElementById('font-css')).toBeNull();
+
+    renderHook(async () => {
+      const maybeEnqueueFontStyle = useLoadFontFiles();
+
+      await maybeEnqueueFontStyle([{}, DEFAULT_FONT]);
+    });
+
+    expect(document.querySelectorAll('link')).toHaveLength(1);
     expect(document.getElementById('font-css')).toBeDefined();
   });
 });

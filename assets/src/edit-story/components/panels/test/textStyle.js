@@ -72,7 +72,7 @@ function Wrapper({ children }) {
           ],
         },
         actions: {
-          ensureFontFaceSetIsAvailable: () => Promise.resolve(),
+          maybeEnqueueFontStyle: () => Promise.resolve(),
           getFontByName: () => ({
             name: 'Neu Font',
             value: 'Neu Font',

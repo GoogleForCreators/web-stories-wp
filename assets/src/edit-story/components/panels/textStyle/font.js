@@ -64,19 +64,21 @@ const getFontWeights = ({ weights }) => {
 };
 
 function FontControls({ selectedElements, pushUpdate }) {
-  const font = getCommonValue(selectedElements, 'font');
+  const fontFamily = getCommonValue(
+    selectedElements,
+    ({ font }) => font?.family
+  );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
 
   const {
     state: { fonts },
-    actions: { ensureFontFaceSetIsAvailable, getFontByName },
+    actions: { maybeEnqueueFontStyle, getFontByName },
   } = useFont();
-  const fontWeights = useMemo(
-    () => getFontWeights(getFontByName(font.family)),
-    [getFontByName, font]
-  );
+  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
+    getFontByName,
+    fontFamily,
+  ]);
 
   return (
     <>
@@ -86,7 +88,7 @@ function FontControls({ selectedElements, pushUpdate }) {
             data-testid="font"
             ariaLabel={__('Font family', 'web-stories')}
             options={fonts}
-            value={font.family}
+            value={fontFamily}
             onChange={async (value) => {
               const fontObj = fonts.find((item) => item.value === value);
               const newFont = {
@@ -100,16 +102,11 @@ function FontControls({ selectedElements, pushUpdate }) {
                 ]),
               };
               const { weights } = fontObj;
-
-              await ensureFontFaceSetIsAvailable(
-                'font',
-                {
-                  fontStyle,
-                  fontWeight,
-                  fontSize,
+              await maybeEnqueueFontStyle(
+                selectedElements.map((e) => ({
+                  ...e,
                   font: newFont,
-                },
-                selectedElements
+                }))
               );
               // Find the nearest font weight from the available font weight list
               const newFontWeight = weights.reduce((a, b) =>
@@ -139,17 +136,14 @@ function FontControls({ selectedElements, pushUpdate }) {
               options={fontWeights}
               value={fontWeight}
               onChange={async (value) => {
-                await ensureFontFaceSetIsAvailable(
-                  'fontWeight',
-                  {
-                    fontStyle,
-                    fontWeight: value,
-                    fontSize,
-                    font,
-                  },
-                  selectedElements
+                const newFontWeight = parseInt(value);
+                await maybeEnqueueFontStyle(
+                  selectedElements.map((e) => ({
+                    ...e,
+                    fontWeight: newFontWeight,
+                  }))
                 );
-                pushUpdate({ fontWeight: parseInt(value) }, true);
+                pushUpdate({ fontWeight: newFontWeight }, true);
               }}
             />
             <Space />
@@ -162,19 +156,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           max={PAGE_HEIGHT}
           flexBasis={58}
           textCenter
-          onChange={async (value) => {
-            await ensureFontFaceSetIsAvailable(
-              'fontSize',
-              {
-                fontStyle,
-                fontWeight,
-                fontSize: value,
-                font,
-              },
-              selectedElements
-            );
-            pushUpdate({ fontSize: value });
-          }}
+          onChange={(value) => pushUpdate({ fontSize: value })}
         />
       </Row>
     </>

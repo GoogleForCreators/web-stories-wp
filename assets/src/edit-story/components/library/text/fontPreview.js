@@ -56,13 +56,14 @@ function FontPreview({ title, font, fontSize, fontWeight, fontStyle }) {
   } = useFont();
 
   useEffect(() => {
-    maybeEnqueueFontStyle({
-      font,
-      fontWeight,
-      fontStyle,
-      fontSize,
-    });
-  }, [font, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([
+      {
+        font,
+        fontWeight,
+        fontStyle,
+      },
+    ]);
+  }, [font, fontWeight, fontStyle, maybeEnqueueFontStyle]);
 
   return (
     <Preview>

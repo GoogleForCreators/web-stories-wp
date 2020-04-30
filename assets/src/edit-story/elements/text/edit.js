@@ -265,13 +265,14 @@ function TextEdit({
   }, [editorState, elementHeight, font, fontWeight, fontStyle, fontSize]);
 
   useEffect(() => {
-    maybeEnqueueFontStyle({
-      font,
-      fontWeight,
-      fontStyle,
-      fontSize,
-    });
-  }, [font, fontWeight, fontStyle, fontSize, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([
+      {
+        font,
+        fontWeight,
+        fontStyle,
+      },
+    ]);
+  }, [font, fontWeight, fontStyle, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
