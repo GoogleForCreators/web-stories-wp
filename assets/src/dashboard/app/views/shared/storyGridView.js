@@ -58,6 +58,7 @@ const StoryGridView = ({
   filteredStories,
   centerActionLabel,
   bottomActionLabel,
+  createTemplateFromStory,
   updateStory,
   trashStory,
   duplicateStory,
@@ -81,6 +82,10 @@ const StoryGridView = ({
           duplicateStory(story);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE:
+          createTemplateFromStory(story);
+          break;
+
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
           if (
             window.confirm(
@@ -99,7 +104,7 @@ const StoryGridView = ({
           break;
       }
     },
-    [trashStory, duplicateStory]
+    [createTemplateFromStory, duplicateStory, trashStory]
   );
 
   const handleOnRenameStory = useCallback(
@@ -158,6 +163,7 @@ StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
+  createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,
   trashStory: PropTypes.func,
   duplicateStory: PropTypes.func,

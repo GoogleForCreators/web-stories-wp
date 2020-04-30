@@ -87,7 +87,13 @@ function MyStories() {
   });
   const {
     actions: {
-      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      storyApi: {
+        updateStory,
+        createTemplateFromStory,
+        fetchStories,
+        trashStory,
+        duplicateStory,
+      },
     },
     state: {
       stories: {
@@ -186,6 +192,7 @@ function MyStories() {
           <StoryGridView
             trashStory={trashStory}
             updateStory={updateStory}
+            createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
             filteredStories={orderedStories}
             centerActionLabel={
@@ -212,6 +219,7 @@ function MyStories() {
     }
   }, [
     duplicateStory,
+    createTemplateFromStory,
     trashStory,
     viewStyle,
     updateStory,
