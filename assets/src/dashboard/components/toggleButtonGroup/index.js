@@ -19,7 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useCallback, useLayoutEffect, useRef } from 'react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * Internal dependencies
@@ -78,22 +85,25 @@ ToggleButton.propTypes = {
 
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);
+  const [containerWidth, setContainerWidth] = useState(null);
   const activeRef = useRef(null);
   const containerRef = useRef(null);
 
-  const updateBarDimensions = useCallback((target) => {
-    const activeBounds = target.getBoundingClientRect();
-    const containerBounds = containerRef.current.getBoundingClientRect();
+  const updateBarDimensions = useCallback(
+    (target) => {
+      const activeBounds = target.getBoundingClientRect();
+      const containerBounds = containerRef.current.getBoundingClientRect();
 
-    const percentageToLeft =
-      ((activeBounds.left - containerBounds.left) / containerBounds.width) *
-      100;
+      const percentageToLeft =
+        ((activeBounds.left - containerBounds.left) / containerWidth) * 100;
 
-    setSelectedButton({
-      x: percentageToLeft,
-      width: activeBounds.width,
-    });
-  }, []);
+      setSelectedButton({
+        x: percentageToLeft,
+        width: activeBounds.width,
+      });
+    },
+    [containerWidth]
+  );
 
   // this layout effect hook will take care of setting
   //   the initial selectedButton state with left/width property
@@ -106,6 +116,26 @@ const ToggleButtonGroup = ({ buttons }) => {
 
     updateBarDimensions(activeRef.current);
   }, [updateBarDimensions]);
+
+  useEffect(() => {
+    if (typeof window == 'undefined' || !containerRef.current) {
+      return () => {};
+    }
+
+    const resizeContainerObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.contentRect.width !== containerWidth) {
+          setContainerWidth(entry.contentRect.width);
+        }
+      });
+    });
+
+    const resizeEl = containerRef.current;
+    resizeContainerObserver.observe(resizeEl);
+    return () => {
+      resizeContainerObserver.unobserve(resizeEl);
+    };
+  }, [containerWidth]);
 
   const handleButtonClick = useCallback(
     (e, handleClick) => {
