@@ -198,7 +198,8 @@ function MediaPane(props) {
   };
 
   const filterResource = useCallback(
-    ({ mimeType, width, height }) => {
+    (resource) => {
+      if (!resource) return false;
       const allowedMimeTypes = [
         ...allowedImageMimeTypes,
         ...allowedVideoMimeTypes,
