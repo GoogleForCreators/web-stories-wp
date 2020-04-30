@@ -54,10 +54,13 @@ function stylesToCSS(styles) {
   if (!style) {
     return null;
   }
-  const color = styleToColor(style);
-  if (!color) {
+  let color;
+  try {
+    color = styleToColor(style);
+  } catch (e) {
     return null;
   }
+
   return generatePatternStyles(color, 'color');
 }
 

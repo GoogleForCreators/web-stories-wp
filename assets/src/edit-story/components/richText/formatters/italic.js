@@ -47,11 +47,10 @@ function isItalic(editorState) {
 }
 
 function toggleItalic(editorState, flag) {
-  return togglePrefixStyle(
-    editorState,
-    ITALIC,
-    typeof flag === 'boolean' && (() => flag)
-  );
+  if (typeof flag === 'boolean') {
+    return togglePrefixStyle(editorState, ITALIC, () => flag);
+  }
+  return togglePrefixStyle(editorState, ITALIC);
 }
 
 const formatter = {

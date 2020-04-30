@@ -27,9 +27,6 @@ export const numericToStyle = (prefix, num) =>
   `${prefix}-${num < 0 ? 'N' : ''}${Math.abs(num)}`;
 
 export const styleToNumeric = (prefix, style) => {
-  if (!isStyle(style, prefix)) {
-    return null;
-  }
   const raw = getVariable(style, prefix);
   // Negative numbers are prefixed with an N:
   if (raw.charAt(0) === 'N') {

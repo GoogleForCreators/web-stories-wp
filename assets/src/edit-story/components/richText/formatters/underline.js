@@ -47,11 +47,10 @@ function isUnderline(editorState) {
 }
 
 function toggleUnderline(editorState, flag) {
-  return togglePrefixStyle(
-    editorState,
-    UNDERLINE,
-    typeof flag === 'boolean' && (() => flag)
-  );
+  if (typeof flag === 'boolean') {
+    return togglePrefixStyle(editorState, UNDERLINE, () => flag);
+  }
+  return togglePrefixStyle(editorState, UNDERLINE);
 }
 
 const formatter = {

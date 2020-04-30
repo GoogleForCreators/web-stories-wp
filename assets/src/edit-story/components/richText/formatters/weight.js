@@ -75,24 +75,27 @@ function isBold(editorState) {
 }
 
 function toggleBold(editorState, flag) {
-  const hasFlag = typeof flag === 'boolean';
-  // if flag set, use flag
-  // otherwise if any character has weight less than SMALLEST_BOLD,
+  if (typeof flag === 'boolean') {
+    if (flag) {
+      const getDefault = () => weightToStyle(DEFAULT_BOLD);
+      return togglePrefixStyle(editorState, WEIGHT, () => true, getDefault);
+    }
+
+    // No fourth arg needed as we're not setting a style
+    return togglePrefixStyle(editorState, WEIGHT, () => false);
+  }
+
+  // if no flag is set, determine these values from current weights present
+
+  // if any character has weight less than SMALLEST_BOLD,
   // everything should be bolded
   const shouldSetBold = (styles) =>
-    hasFlag ? flag : getWeights(styles).some((w) => w < SMALLEST_BOLD);
+    getWeights(styles).some((w) => w < SMALLEST_BOLD);
 
-  // if flag set, toggle to either 400 or 700,
-  // otherwise if setting a bold, it should be the boldest current weight,
+  // if setting a bold, it should be the boldest current weight,
   // though at least DEFAULT_BOLD
-  const getBoldToSet = (styles) => {
-    const weight = hasFlag
-      ? flag
-        ? DEFAULT_BOLD
-        : NORMAL_WEIGHT
-      : Math.max(...[DEFAULT_BOLD].concat(getWeights(styles)));
-    return weightToStyle(weight);
-  };
+  const getBoldToSet = (styles) =>
+    weightToStyle(Math.max(...[DEFAULT_BOLD].concat(getWeights(styles))));
 
   return togglePrefixStyle(editorState, WEIGHT, shouldSetBold, getBoldToSet);
 }
