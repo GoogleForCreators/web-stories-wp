@@ -220,7 +220,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        image: mariadb
+        image: mariadb:10.5
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_PASSWORD:
@@ -250,6 +250,9 @@ jobs:
           coverage: xdebug
           tools: composer, cs2pr
 
+      - name: Shutdown default MySQL service
+        run: sudo service mysql stop
+
       - name: Verify MariaDB connection
         env:
           PORT: ${{ job.services.mariadb.ports[3306] }}
@@ -268,9 +271,6 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
-
-      - name: Start mysql service
-        run: sudo /etc/init.d/mysql start
 
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }}
