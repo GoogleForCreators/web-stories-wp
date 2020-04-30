@@ -139,7 +139,6 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_action( 'web_stories_story_head', [ __CLASS__, 'enqueue_frontend_styles' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
@@ -225,25 +224,6 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Enqueue Google Fonts on the frontend.
-	 *
-	 * @return void
-	 */
-	public static function enqueue_frontend_styles() {
-		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
-			return;
-		}
-
-		$post = get_post();
-
-		if ( ! $post instanceof WP_Post ) {
-			return;
-		}
-
-		self::load_fonts( $post );
-	}
-
-	/**
 	 *
 	 * Enqueue scripts for the element editor.
 	 *
@@ -294,10 +274,6 @@ class Story_Post_Type {
 			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 		}
 
-		if ( $post ) {
-			self::load_admin_fonts( $post );
-		}
-
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
 		if ( ! $max_upload_size ) {
@@ -341,10 +317,17 @@ class Story_Post_Type {
 			]
 		);
 
+		wp_register_style(
+			'roboto',
+			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
+
 		wp_enqueue_style(
 			self::WEB_STORIES_STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[],
+			[ 'roboto' ],
 			$version
 		);
 
@@ -426,108 +409,6 @@ class Story_Post_Type {
 		}
 
 		return $allowed_mime_types;
-	}
-
-	/**
-	 * Load font from story data.
-	 *
-	 * @param WP_Post $post Post Object.
-	 *
-	 * @return void
-	 */
-	public static function load_fonts( $post ) {
-		$post_story_data       = json_decode( $post->post_content_filtered, true );
-		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
-		$g_fonts               = [];
-		if ( $post_story_data_pages ) {
-			foreach ( $post_story_data_pages as $page ) {
-				foreach ( $page['elements'] as $element ) {
-					if ( ! isset( $element['fontFamily'] ) ) {
-						continue;
-					}
-
-					$font = Fonts::get_font( $element['fontFamily'] );
-
-					if ( $font && isset( $font['gfont'] ) && $font['gfont'] ) {
-						if ( isset( $g_fonts[ $font['name'] ] ) && in_array( $element['fontWeight'], $g_fonts[ $font['name'] ], true ) ) {
-							continue;
-						}
-						$g_fonts[ $font['name'] ][] = $element['fontWeight'];
-					}
-				}
-			}
-
-			if ( $g_fonts ) {
-				$subsets        = Fonts::get_subsets();
-				$g_font_display = '';
-				foreach ( $g_fonts as $name => $numbers ) {
-					$g_font_display .= $name . ':' . implode( ',', $numbers ) . '|';
-				}
-
-				$src = add_query_arg(
-					[
-						'family'  => rawurlencode( $g_font_display ),
-						'subset'  => rawurlencode( implode( ',', $subsets ) ),
-						'display' => 'swap',
-					],
-					Fonts::URL
-				);
-				wp_enqueue_style(
-					self::WEB_STORIES_STYLE_HANDLE . '_fonts',
-					$src,
-					[],
-					WEBSTORIES_VERSION
-				);
-				wp_styles()->do_item( self::WEB_STORIES_STYLE_HANDLE . '_fonts' );
-			}
-		}
-	}
-
-	/**
-	 * Load font in admin from story data.
-	 *
-	 * @param WP_Post $post Post Object.
-	 *
-	 * @return void
-	 */
-	public static function load_admin_fonts( $post ) {
-		$post_story_data       = json_decode( $post->post_content_filtered, true );
-		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
-		$fonts                 = [ Fonts::get_font( 'Roboto' ) ];
-		$font_slugs            = [ 'roboto' ];
-
-		if ( $post_story_data_pages ) {
-			foreach ( $post_story_data_pages as $page ) {
-				if ( ! isset( $page['elements'] ) ) {
-					continue;
-				}
-
-				foreach ( $page['elements'] as $element ) {
-					if ( ! isset( $element['fontFamily'] ) ) {
-						continue;
-					}
-
-					$font = Fonts::get_font( $element['fontFamily'] );
-					if ( $font && ! in_array( $font['slug'], $font_slugs, true ) ) {
-						$fonts[]      = $font;
-						$font_slugs[] = $font['slug'];
-					}
-				}
-			}
-		}
-
-		if ( $fonts ) {
-			foreach ( $fonts as $font ) {
-				if ( isset( $font['src'] ) && $font['src'] ) {
-					wp_enqueue_style(
-						$font['handle'],
-						$font['src'],
-						[],
-						WEBSTORIES_VERSION
-					);
-				}
-			}
-		}
 	}
 
 	/**

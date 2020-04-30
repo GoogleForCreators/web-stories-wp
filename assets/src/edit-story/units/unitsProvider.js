@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -55,7 +56,7 @@ function UnitsProvider({ pageSize, children }) {
 
 UnitsProvider.propTypes = {
   pageSize: StoryPropTypes.size.isRequired,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default UnitsProvider;

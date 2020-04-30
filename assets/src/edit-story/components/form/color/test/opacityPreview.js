@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { render, waitFor, act, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { waitFor, act, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import createSolid from '../../../../utils/createSolid';
 import OpacityPreview from '../opacityPreview';
 import getPreviewOpacityMock from '../getPreviewOpacity';
 import getPreviewTextMock from '../getPreviewText';
+import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
@@ -39,18 +38,12 @@ function arrange(customProps = {}) {
     value: createSolid(0, 0, 0),
     ...customProps,
   };
-  const { queryByLabelText, rerender } = render(
-    <ThemeProvider theme={theme}>
-      <OpacityPreview {...props} />
-    </ThemeProvider>
+  const { queryByLabelText, rerender } = renderWithTheme(
+    <OpacityPreview {...props} />
   );
   const element = queryByLabelText('Opacity');
   const wrappedRerender = (extraProps) =>
-    rerender(
-      <ThemeProvider theme={theme}>
-        <OpacityPreview {...props} {...extraProps} />
-      </ThemeProvider>
-    );
+    rerender(<OpacityPreview {...props} {...extraProps} />);
   return { element, onChange, rerender: wrappedRerender };
 }
 

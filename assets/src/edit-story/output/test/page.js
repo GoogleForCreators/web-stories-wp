@@ -17,27 +17,13 @@
 /**
  * External dependencies
  */
-import {
-  makeSingleQuery,
-  queryAllByAttribute,
-  render,
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import PageOutput from '../page';
-
-const queryByAutoAdvanceAfter = makeSingleQuery(
-  (container, value) =>
-    queryAllByAttribute('auto-advance-after', container, value),
-  (c, value) => `Found multiple elements with the attribute value: ${value}`
-);
-
-const queryById = makeSingleQuery(
-  (container, id) => queryAllByAttribute('id', container, id),
-  (c, id) => `Found multiple elements with the ID: ${id}`
-);
+import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 
 describe('Page output', () => {
   it('should use default value for auto-advance-after', async () => {

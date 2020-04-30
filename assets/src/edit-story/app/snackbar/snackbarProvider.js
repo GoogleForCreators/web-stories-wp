@@ -78,10 +78,7 @@ function SnackbarProvider({ children, place }) {
 
 SnackbarProvider.propTypes = {
   place: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 SnackbarProvider.defaultProps = {

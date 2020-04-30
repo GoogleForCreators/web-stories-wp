@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -56,24 +59,47 @@ const StoryGridView = ({
   centerActionLabel,
   bottomActionLabel,
   updateStory,
+  trashStory,
+  duplicateStory,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
 
-  const handleMenuItemSelected = useCallback((sender, story) => {
-    setContextMenuId(-1);
-    switch (sender.value) {
-      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-        window.location.href = story.bottomTargetAction;
-        break;
-      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-        setTitleRenameId(story.id);
-        break;
+  const handleMenuItemSelected = useCallback(
+    (sender, story) => {
+      setContextMenuId(-1);
+      switch (sender.value) {
+        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          window.location.href = story.bottomTargetAction;
+          break;
+        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+          setTitleRenameId(story.id);
+          break;
 
-      default:
-        break;
-    }
-  }, []);
+        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          duplicateStory(story);
+          break;
+
+        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+          if (
+            window.confirm(
+              sprintf(
+                /* translators: %s: story title. */
+                __('Are you sure you want to delete "%s"?', 'web-stories'),
+                story.title
+              )
+            )
+          ) {
+            trashStory(story);
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    [trashStory, duplicateStory]
+  );
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -129,6 +155,8 @@ StoryGridView.propTypes = {
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   updateStory: PropTypes.func.isRequired,
+  trashStory: PropTypes.func.isRequired,
+  duplicateStory: PropTypes.func.isRequired,
 };
 
 export default StoryGridView;

@@ -69,9 +69,9 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
 
 const Label = styled.span`
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight}px;
+  font-size: ${({ theme }) => theme.fonts.body2.size}px;
   color: ${({ theme }) => theme.colors.gray500};
 `;
 

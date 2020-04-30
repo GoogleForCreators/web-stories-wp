@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -27,84 +27,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import {
   UploadDropTarget,
   UploadDropTargetMessage,
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
-import { useMedia } from '../../app/media';
-import { useStory } from '../../app/story';
-import useInsertElement from '../canvas/useInsertElement';
-import objectPick from '../../utils/objectPick';
 
 import { Layer as CanvasLayer, PageArea } from './layout';
+import useUploadWithPreview from './useUploadWithPreview';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
 function CanvasUploadDropTarget({ children }) {
-  const {
-    actions: { uploadMedia, uploadVideoPoster },
-  } = useMedia();
-  const insertElement = useInsertElement();
-  const {
-    actions: { updateElementById, deleteElementById },
-  } = useStory();
+  const uploadWithPreview = useUploadWithPreview();
 
-  const onLocalFile = useCallback(
-    ({ resource }) => {
-      const element = insertElement(resource.type, { resource });
-      return element;
-    },
-    [insertElement]
-  );
-
-  const onUploadedFile = useCallback(
-    async ({ resource, element }) => {
-      const keysToUpdate = objectPick(resource, [
-        'src',
-        'width',
-        'height',
-        'length',
-        'lengthFormatted',
-        'id',
-      ]);
-      const updatedResource = {
-        ...element.resource,
-        ...keysToUpdate,
-      };
-      updateElementById({
-        elementId: element.id,
-        properties: {
-          resource: updatedResource,
-        },
-      });
-      if (resource.type === 'video') {
-        await uploadVideoPoster(resource.id, resource.src);
-      }
-    },
-    [updateElementById, uploadVideoPoster]
-  );
-
-  const onUploadFailure = useCallback(
-    ({ element }) => {
-      deleteElementById({ elementId: element.id });
-    },
-    [deleteElementById]
-  );
-
-  const onDropHandler = useCallback(
-    (files) => {
-      uploadMedia(files, {
-        onLocalFile,
-        onUploadedFile,
-        onUploadFailure,
-      });
-    },
-    [uploadMedia, onLocalFile, onUploadedFile, onUploadFailure]
-  );
   return (
-    <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
+    <UploadDropTarget onDrop={uploadWithPreview} labelledBy={MESSAGE_ID}>
       {children}
       <UploadDropTargetOverlay>
         <CanvasLayer>
@@ -124,7 +62,7 @@ function CanvasUploadDropTarget({ children }) {
 }
 
 CanvasUploadDropTarget.propTypes = {
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CanvasUploadDropTarget;

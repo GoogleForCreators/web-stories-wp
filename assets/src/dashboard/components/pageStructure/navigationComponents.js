@@ -19,18 +19,6 @@
  */
 import styled from 'styled-components';
 
-export const LeftRailContainer = styled.nav`
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  z-index: 1;
-  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
-  width: max(15%, 190px);
-  background: ${({ theme }) => theme.colors.white};
-  border-right: ${({ theme }) => theme.leftRail.border};
-`;
-
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,8 +30,8 @@ export const NavLink = styled.a`
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size}px;
   font-weight: ${({ active }) => (active ? '500' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing};
+  line-height: ${({ theme }) => theme.fonts.tab.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing}em;
   text-decoration: none;
   color: ${({ theme, active }) =>
     active ? theme.colors.gray900 : theme.colors.gray600};
@@ -53,7 +41,7 @@ export const NavLink = styled.a`
   }
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    font-size: ${({ theme }) => theme.fonts.tab.minSize};
+    font-size: ${({ theme }) => theme.fonts.tab.minSize}px;
   }
 `;
 

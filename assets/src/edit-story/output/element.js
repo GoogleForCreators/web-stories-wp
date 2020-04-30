@@ -26,7 +26,6 @@ import WithLink from '../components/link/output';
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
 
-  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
