@@ -35,6 +35,7 @@ import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import useRichTextFormatting from './useRichTextFormatting';
+import getFontWeights from './getFontWeights';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -44,25 +45,6 @@ const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
 `;
-
-const getFontWeights = ({ weights }) => {
-  const fontWeightNames = {
-    100: __('Thin', 'web-stories'),
-    200: __('Extra-light', 'web-stories'),
-    300: __('Light', 'web-stories'),
-    400: __('Regular', 'web-stories'),
-    500: __('Medium', 'web-stories'),
-    600: __('Semi-bold', 'web-stories'),
-    700: __('Bold', 'web-stories'),
-    800: __('Extra-bold', 'web-stories'),
-    900: __('Black', 'web-stories'),
-  };
-
-  return weights.map((weight) => ({
-    name: fontWeightNames[weight],
-    value: weight.toString(),
-  }));
-};
 
 function FontControls({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(
