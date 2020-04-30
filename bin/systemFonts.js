@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2020 Google LLC
  *
@@ -14,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 const DEFAULT_WEIGHTS = [400, 700];
 const DEFAULT_STYLES = ['italic', 'regular'];
