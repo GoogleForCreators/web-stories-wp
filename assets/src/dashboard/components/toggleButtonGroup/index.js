@@ -81,12 +81,21 @@ const ToggleButtonGroup = ({ buttons }) => {
 
   // this layout effect hook will take care of setting the initial selectedButton state with left/width property of active button after first paint
   useLayoutEffect(() => {
-    if (!activeRef || !activeRef.current) {
+    if (!activeRef.current) {
       return;
     }
     const { left, width } = activeRef.current.getBoundingClientRect();
     setSelectedButton({ left, width });
   }, []);
+
+  const handleButtonClick = useCallback(
+    (e, handleClick) => {
+      const { left, width } = e.currentTarget.getBoundingClientRect();
+      setSelectedButton({ left, width });
+      handleClick && handleClick();
+    },
+    [setSelectedButton]
+  );
 
   // if buttons is not present we do not want to render the component
   if (!buttons || buttons.length <= 0) {
@@ -99,14 +108,7 @@ const ToggleButtonGroup = ({ buttons }) => {
           <ToggleButton
             ref={isActive ? activeRef : null}
             type="button"
-            onClick={useCallback(
-              (e) => {
-                const { left, width } = e.currentTarget.getBoundingClientRect();
-                handleClick();
-                setSelectedButton({ left, width });
-              },
-              [handleClick]
-            )}
+            onClick={(e) => handleButtonClick(e, handleClick)}
             key={key || `toggle_button_${idx}`}
             isActive={isActive}
           >
