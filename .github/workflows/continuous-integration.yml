@@ -82,7 +82,13 @@ jobs:
           CI: TRUE
 
       - name: Detect coding standard violations (ESLint)
+        run: npm run lint:js
+        if: ${{ ! GITHUB_HEAD_REF && ! GITHUB_BASE_REF }}
+        continue-on-error: true
+
+      - name: Detect coding standard violations (ESLint)
         run: npm run lint:js:report
+        if: ${{ GITHUB_HEAD_REF != '' && GITHUB_BASE_REF != '' }}
         continue-on-error: true
 
       - name: Annotate Code Linting Results
@@ -90,6 +96,7 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           report-json: "build/lint-js-report.json"
+        if: ${{ GITHUB_HEAD_REF != '' && GITHUB_BASE_REF != '' }}
 
   markdownlint:
     name: Markdown Code Style
@@ -164,7 +171,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
