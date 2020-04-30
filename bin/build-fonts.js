@@ -45,13 +45,12 @@ const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
  */
 function getFontFallback(category) {
   switch (category) {
-    case 'sans-serif':
-      return 'sans-serif';
     case 'handwriting':
     case 'display':
       return 'cursive';
+    case 'sans-serif':
     case 'monospace':
-      return 'monospace';
+      return category;
     default:
       return 'serif';
   }
