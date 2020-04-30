@@ -30,6 +30,7 @@ const config = {
     audio: [],
     video: ['video/mp4'],
   },
+  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   storyId: 1234,
   api: {
     stories: '',

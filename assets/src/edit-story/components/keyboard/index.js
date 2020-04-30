@@ -18,7 +18,7 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useContext, useEffect, createRef } from 'react';
+import { useContext, useEffect, createRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -41,6 +41,12 @@ const NON_EDITABLE_INPUT_TYPES = [
 
 const globalRef = createRef();
 
+function setGlobalRef() {
+  if (!globalRef.current) {
+    globalRef.current = document;
+  }
+}
+
 /**
  * See https://craig.is/killing/mice#keys for the supported key codes.
  *
@@ -50,7 +56,7 @@ const globalRef = createRef();
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
-function useKeyEffect(
+function useKeyEffectInternal(
   refOrNode,
   keyNameOrSpec,
   type,
@@ -88,6 +94,27 @@ function useKeyEffect(
 }
 
 /**
+ * Depending on the key spec, this will bind to either the 'keypress' or
+ * 'keydown' event type, by passing 'undefined' to the event type parameter of
+ * Mousetrap.bind.
+ *
+ * See https://craig.is/killing/mice#api.bind.
+ *
+ * @param {Node|{current: Node}} refOrNode
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ */
+export function useKeyEffect(
+  refOrNode,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
+}
+
+/**
  * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
@@ -99,7 +126,7 @@ export function useKeyDownEffect(
   callback,
   deps = undefined
 ) {
-  useKeyEffect(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
 /**
@@ -114,7 +141,20 @@ export function useKeyUpEffect(
   callback,
   deps = undefined
 ) {
-  useKeyEffect(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
+}
+
+/**
+ * @param {{current: Node}} refOrNode
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {Array|undefined} deps
+ * @return {boolean} Stateful boolean that tracks whether key is pressed.
+ */
+export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
+  const [isKeyPressed, setIsKeyPressed] = useState(false);
+  useKeyDownEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(true), deps);
+  useKeyUpEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(false), deps);
+  return isKeyPressed;
 }
 
 /**
@@ -127,9 +167,7 @@ export function useGlobalKeyDownEffect(
   callback,
   deps = undefined
 ) {
-  if (!globalRef.current) {
-    globalRef.current = document;
-  }
+  setGlobalRef();
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -143,10 +181,18 @@ export function useGlobalKeyUpEffect(
   callback,
   deps = undefined
 ) {
-  if (!globalRef.current) {
-    globalRef.current = document;
-  }
+  setGlobalRef();
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
+}
+
+/**
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {Array|undefined} deps
+ * @return {boolean} Stateful boolean that tracks whether key is pressed.
+ */
+export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
+  setGlobalRef();
+  return useIsKeyPressed(globalRef, keyNameOrSpec, deps);
 }
 
 /**

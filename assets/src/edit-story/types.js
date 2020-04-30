@@ -92,11 +92,6 @@ StoryPropTypes.box = PropTypes.exact({
   rotationAngle: PropTypes.number.isRequired,
 });
 
-StoryPropTypes.children = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.node),
-  PropTypes.node,
-]);
-
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
@@ -106,7 +101,7 @@ StoryPropTypes.page = PropTypes.shape({
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -117,7 +112,7 @@ StoryPropTypes.imageResource = PropTypes.shape({
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -190,14 +185,23 @@ StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.video,
 ]);
 
+export const FontPropType = PropTypes.shape({
+  family: PropTypes.string,
+  service: PropTypes.string,
+  weights: PropTypes.arrayOf(PropTypes.number),
+  styles: PropTypes.arrayOf(PropTypes.string),
+  // There's no built-in prop type validation for tuples.
+  variants: PropTypes.arrayOf(PropTypes.array),
+  fallbacks: PropTypes.array,
+});
+
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
   color: PatternPropType.isRequired,
   backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
-  fontFamily: PropTypes.string,
-  fontFallback: PropTypes.array,
+  font: FontPropType.isRequired,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
   fontStyle: PropTypes.string,
@@ -225,6 +229,13 @@ StoryPropTypes.elements.background = PropTypes.shape({
 export default StoryPropTypes;
 
 /**
+ * Page object.
+ *
+ * @typedef {Page} Page
+ * @property {Array} elements Array of all elements.
+ */
+
+/**
  * Story object.
  *
  * @typedef {Story} Story
@@ -232,7 +243,7 @@ export default StoryPropTypes;
  * @property {number} storyId Story post id.
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
- * @property {Array}  pages Array of all pages.
+ * @property {Array<Page>} pages Array of all pages.
  * @property {number} author User ID of story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
