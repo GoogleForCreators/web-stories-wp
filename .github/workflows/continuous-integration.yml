@@ -291,8 +291,12 @@ jobs:
         if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
 
   e2e:
-    name: E2E Tests
+    name: E2E Tests (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: ['chrome', 'firefox']
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -323,22 +327,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Install Puppeteer with correct browser
+        run: npm install puppeteer
+        env:
+          PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Start Docker environment
         run: npm run env:start
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
-      - name: Run E2E tests (Chromium)
-        run: npm run test:e2e
-
-      - name: Download Firefox
-        run: npm install puppeteer
-        env:
-          PUPPETEER_PRODUCT: firefox
-
-      - name: Run E2E tests (Firefox)
+      - name: Run E2E tests
         run: npm run test:e2e
 
       - name: Stop Docker environment
