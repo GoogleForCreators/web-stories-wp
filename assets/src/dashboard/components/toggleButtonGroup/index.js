@@ -35,12 +35,12 @@ const ToggleButtonContainer = styled.div`
 
 const AnimationBar = styled.div`
   ${({ theme, selectedButtonWidth = 0, selectedButtonLeft = 0 }) => `
+    position: absolute;
     height: 3px;
-    background-color:  ${theme.colors.bluePrimary600};
     width: ${selectedButtonWidth}px;
     left: ${selectedButtonLeft}px;
+    background-color:  ${theme.colors.bluePrimary600};
     transition: all 0.3s ease-out; 
-    position: absolute;
   `}
 `;
 AnimationBar.propTypes = {
@@ -50,24 +50,24 @@ AnimationBar.propTypes = {
 
 const ToggleButton = styled.button`
   ${({ theme, isActive }) => `
-  display: flex;
-  background-color: transparent;
-  flex-direction: column;
-  justify-content: space-between;
-  outline: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-size: ${theme.fonts.body1.size}px;
-  font-family: ${theme.fonts.body1.family};
-  font-weight: ${theme.fonts.body1.weight}};
-  line-height: ${theme.fonts.body1.lineHeight}px;
-  letter-spacing: ${theme.fonts.body1.letterSpacing}em;
-  color: ${isActive ? theme.colors.gray900 : theme.colors.gray600};
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: ${theme.fonts.body1.size}px;
+    font-family: ${theme.fonts.body1.family};
+    font-weight: ${theme.fonts.body1.weight}};
+    line-height: ${theme.fonts.body1.lineHeight}px;
+    letter-spacing: ${theme.fonts.body1.letterSpacing}em;
+    color: ${isActive ? theme.colors.gray900 : theme.colors.gray600};
+    background-color: transparent;
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    border: 1px solid ${theme.colors.action};
-  }
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+        border: 1px solid ${theme.colors.action};
+    }
   `}
 `;
 
