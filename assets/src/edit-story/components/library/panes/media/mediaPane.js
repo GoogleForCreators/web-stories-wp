@@ -260,8 +260,11 @@ function MediaPane(props) {
     <StyledPane id={paneId} {...props}>
       <Inner>
         <Padding>
-          <button onClick={() => setUseIsScrolling(v => !v)}>{useIsScrolling ? 'Disable' : 'Enable'} useIsScrolling</button>
-          <button onClick={() => setSimpleImage(v => !v)}>{simpleImage ? 'Disable' : 'Enable'} simpleImage</button>
+          <div style={{ position: 'absolute', zIndex: 9, background: '#000' }}>
+            <button onClick={() => setUseIsScrolling(v => !v)}>{useIsScrolling ? 'Dis' : 'Ena'}.useIsScrolling</button>
+            <button onClick={() => setSimpleImage(v => !v)}>{simpleImage ? 'Dis' : 'Ena'}.simpleImage</button>
+            <pre>resources: {resources.length}</pre>
+          </div>
           <SearchInput
             value={searchTerm}
             placeholder={__('Search', 'web-stories')}
