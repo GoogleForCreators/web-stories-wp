@@ -334,7 +334,6 @@ jobs:
 
       - name: Run E2E tests (Firefox)
         run: npm run test:e2e
-        if: always()
 
   build:
     name: Build plugin
