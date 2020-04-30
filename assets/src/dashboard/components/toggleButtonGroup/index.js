@@ -38,7 +38,7 @@ const AnimationBar = styled.div`
     position: absolute;
     height: 3px;
     width: ${selectedButtonWidth}px;
-    left: ${selectedButtonLeft}px;
+    margin-left: ${selectedButtonLeft}px;
     background-color:  ${theme.colors.bluePrimary600};
     transition: all 0.3s ${BEZIER.outSine}; 
   `}
@@ -77,24 +77,37 @@ ToggleButton.propTypes = {
 
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);
+  const [containerX, setContainerX] = useState(null);
   const activeRef = useRef(null);
+  const containerRef = useRef(null);
 
-  // this layout effect hook will take care of setting the initial selectedButton state with left/width property of active button after first paint
+  // this layout effect hook will take care of setting
+  //   the initial selectedButton state with left/width property
+  //   of active button after first paint
+  //   as well as the container x position we will use to gauge the margin for animation
   useLayoutEffect(() => {
     if (!activeRef.current) {
       return;
     }
-    const { left, width } = activeRef.current.getBoundingClientRect();
-    setSelectedButton({ left, width });
+    const containerBounds = containerRef.current.getBoundingClientRect();
+    setContainerX(containerBounds.x);
+    const activeBounds = activeRef.current.getBoundingClientRect();
+    setSelectedButton({
+      x: activeBounds.x - containerBounds.x,
+      width: activeBounds.width,
+    });
   }, []);
 
   const handleButtonClick = useCallback(
     (e, handleClick) => {
-      const { left, width } = e.currentTarget.getBoundingClientRect();
-      setSelectedButton({ left, width });
+      const activeBounds = e.currentTarget.getBoundingClientRect();
+      setSelectedButton({
+        x: activeBounds.x - containerX,
+        width: activeBounds.width,
+      });
       handleClick && handleClick();
     },
-    [setSelectedButton]
+    [setSelectedButton, containerX]
   );
 
   // if buttons is not present we do not want to render the component
@@ -103,7 +116,7 @@ const ToggleButtonGroup = ({ buttons }) => {
   }
   return (
     <>
-      <ToggleButtonContainer>
+      <ToggleButtonContainer ref={containerRef}>
         {buttons.map(({ isActive, handleClick, key, text }, idx) => (
           <ToggleButton
             ref={isActive ? activeRef : null}
@@ -118,7 +131,7 @@ const ToggleButtonGroup = ({ buttons }) => {
       </ToggleButtonContainer>
       <AnimationBar
         selectedButtonWidth={selectedButton?.width}
-        selectedButtonLeft={selectedButton?.left}
+        selectedButtonLeft={selectedButton?.x}
       />
     </>
   );

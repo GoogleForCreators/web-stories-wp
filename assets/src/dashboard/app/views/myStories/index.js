@@ -35,6 +35,7 @@ import {
   InfiniteScroller,
   ScrollToTop,
   Layout,
+  ToggleButtonGroup,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -141,7 +142,7 @@ function MyStories() {
     [setCurrentStorySort, setCurrentPageClamped]
   );
   const handleFilterStatusUpdate = useCallback(
-    (_, value) => {
+    (value) => {
       setCurrentPageClamped(1);
       setStatus(value);
     },
@@ -288,18 +289,17 @@ function MyStories() {
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                {STORY_STATUSES.map((storyStatus) => (
-                  <FloatingTab
-                    key={storyStatus.value}
-                    onClick={handleFilterStatusUpdate}
-                    name="my-stories-filter-selection"
-                    value={storyStatus.value}
-                    isSelected={status === storyStatus.value}
-                    inputType="radio"
-                  >
-                    {storyStatus.label}
-                  </FloatingTab>
-                ))}
+                <ToggleButtonGroup
+                  buttons={STORY_STATUSES.map((storyStatus) => {
+                    return {
+                      handleClick: () =>
+                        handleFilterStatusUpdate(storyStatus.value),
+                      key: storyStatus.value,
+                      isActive: status === storyStatus.value,
+                      text: storyStatus.label,
+                    };
+                  })}
+                />
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
