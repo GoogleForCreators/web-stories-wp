@@ -82,7 +82,6 @@ function useCanvasSelectionCopyPaste(container) {
 
       const htmlContent = selectedElements
         .map(({ type, ...rest }) => {
-          // eslint-disable-next-line @wordpress/no-unused-vars-before-return
           const { Output } = getDefinitionForType(type);
           return renderToStaticMarkup(
             <Output element={rest} box={{ width: 100, height: 100 }} />
