@@ -60,7 +60,7 @@ export const elementWithFontColor = css`
 
 export const elementWithFont = css`
   white-space: pre-wrap;
-  font-family: ${({ fontFamily }) => fontFamily};
+  font-family: ${({ font }) => font?.family};
   font-style: ${({ fontStyle }) => fontStyle};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};

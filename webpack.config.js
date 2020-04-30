@@ -36,12 +36,7 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
  * @return {(string|undefined|boolean)} Script global
  */
 function requestToExternal(request) {
-  const packages = [
-    'react',
-    'react-dom',
-    'react-dom/server',
-    '@wordpress/element',
-  ];
+  const packages = ['react', 'react-dom', 'react-dom/server'];
   if (packages.includes(request)) {
     return false;
   }
