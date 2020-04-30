@@ -21,6 +21,7 @@
 import SYSTEM_FONTS from './systemFonts';
 
 const { readFileSync, writeFileSync, existsSync } = require('fs');
+const process = require('process');
 
 const PLUGIN_DIR = process.cwd();
 const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
@@ -110,3 +111,5 @@ for (const font of googleFonts) {
 fonts.sort((a, b) => a.family.localeCompare(b.family));
 
 writeFileSync(FONTS_FILE, JSON.stringify(fonts));
+
+process.exit(0);
