@@ -14,30 +14,27 @@
  * limitations under the License.
  */
 
-const DEFAULT_WEIGHTS = [400, 700];
-const DEFAULT_STYLES = ['italic', 'regular'];
+const DEFAULT_ATTRIBUTES = {
+  weights: [400, 700],
+  styles: ['italic', 'regular'],
+  service: 'system',
+};
 
 const SYSTEM_FONTS = [
   {
     family: 'Arial',
     fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Arial Black',
     fallbacks: ['Arial Black', 'Arial Bold', 'Gadget', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Arial Narrow',
     fallbacks: ['Arial', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Baskerville',
@@ -48,23 +45,17 @@ const SYSTEM_FONTS = [
       'Times New Roman',
       'serif',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Brush Script MT',
     fallbacks: ['cursive'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Copperplate',
     fallbacks: ['Copperplate Gothic Light', 'fantasy'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Courier New',
@@ -74,16 +65,12 @@ const SYSTEM_FONTS = [
       'Lucida Typewriter',
       'monospace',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Century Gothic',
     fallbacks: ['CenturyGothic', 'AppleGothic', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Garamond',
@@ -94,30 +81,22 @@ const SYSTEM_FONTS = [
       'Times New Roman',
       'serif',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Georgia',
     fallbacks: ['Times', 'Times New Roman', 'serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Gill Sans',
     fallbacks: ['Gill Sans MT', 'Calibri', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Lucida Bright',
     fallbacks: ['Georgia', 'serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Lucida Sans Typewriter',
@@ -127,9 +106,7 @@ const SYSTEM_FONTS = [
       'Bitstream Vera Sans Mono',
       'monospace',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Palatino',
@@ -140,30 +117,22 @@ const SYSTEM_FONTS = [
       'Georgia',
       'serif',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Papyrus',
     fallbacks: ['fantasy'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Tahoma',
     fallbacks: ['Verdana', 'Segoe', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Times New Roman',
     fallbacks: ['Times New Roman', 'Times', 'Baskerville', 'Georgia', 'serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Trebuchet MS',
@@ -174,16 +143,12 @@ const SYSTEM_FONTS = [
       'Tahoma',
       'sans-serif',
     ],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
   {
     family: 'Verdana',
     fallbacks: ['Geneva', 'sans-serif'],
-    weights: DEFAULT_WEIGHTS,
-    styles: DEFAULT_STYLES,
-    service: 'system',
+    ...DEFAULT_ATTRIBUTES,
   },
 ];
 
