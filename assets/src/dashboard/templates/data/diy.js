@@ -16,11 +16,12 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 14,
+    version: 15,
     pages: [
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -44,10 +45,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: 'acc2f8e0-b819-4adf-9b9f-7bf7c878d7b9',
           },
           {
+            type: 'image',
             opacity: 40,
             flip: {
               vertical: false,
@@ -73,7 +74,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '36358de8-eac2-4a37-b86c-6d18eae1187c',
             resource: {
               type: 'image',
@@ -90,6 +90,12 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -99,8 +105,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 82,
             fontStyle: 'normal',
@@ -138,9 +142,14 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -150,8 +159,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 82,
             fontStyle: 'normal',
@@ -186,13 +193,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             id: '59955c3a-57a0-4c4a-857d-bd6234e1382c',
             x: 44,
             y: 359,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -202,8 +214,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 82,
             fontStyle: 'normal',
@@ -238,13 +248,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '59955c3a-57a0-4c4a-857d-bd6234e1382c',
             id: '04ec92dc-313f-428d-87d0-00bd975290b5',
             x: 177,
             y: 359,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -254,8 +269,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 82,
             fontStyle: 'normal',
@@ -290,13 +303,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '04ec92dc-313f-428d-87d0-00bd975290b5',
             id: '7dd406da-ea86-4b60-be48-aeb22c4451a2',
             x: 0,
             y: 445,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -306,8 +324,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -342,13 +358,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             id: 'b8f9eb9a-5007-4642-aca3-750cdb7c7463',
             x: 150,
             y: 88,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -383,7 +399,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'a0f67513-d98a-43f4-bb0b-ad3383051452',
           },
         ],
@@ -395,6 +410,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -418,10 +434,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '6d60fa52-25c3-4207-acea-45c2c9680fcf',
           },
           {
+            type: 'image',
             opacity: 40,
             flip: {
               vertical: false,
@@ -447,7 +463,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '00210dfd-2813-4a6c-9182-df2071c28e1f',
             resource: {
               type: 'image',
@@ -464,6 +479,12 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -473,8 +494,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 70,
             fontStyle: 'normal',
@@ -509,13 +528,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             id: '8e053a88-17a5-4162-8ae0-214e5a84e33c',
             x: -38,
             y: 301,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -525,8 +549,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 70,
             fontStyle: 'normal',
@@ -561,7 +583,6 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '8e053a88-17a5-4162-8ae0-214e5a84e33c',
             id: '9b8df2db-2f35-4aa6-a48c-f7bc71afc6de',
             x: 66,
@@ -576,6 +597,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -600,9 +622,9 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: 'a848ae15-78c1-488a-9c2f-befbc69a1fb3',
-            type: 'shape',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -628,7 +650,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'image',
             id: '7a20f7e7-fe90-46b3-9382-7204473f2724',
             resource: {
               type: 'image',
@@ -645,6 +666,12 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -654,8 +681,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -690,13 +715,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'b8f9eb9a-5007-4642-aca3-750cdb7c7463',
             id: 'b767306b-6b92-4b2a-935d-00954a502681',
             x: 150,
             y: 566,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -706,8 +736,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 60,
             fontStyle: 'normal',
@@ -742,13 +770,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'b767306b-6b92-4b2a-935d-00954a502681',
             id: 'ec867712-86cf-4681-a2f9-48fe633cfb4c',
             x: 172,
             y: 76,
           },
           {
+            type: 'shape',
             opacity: 50,
             flip: {
               vertical: false,
@@ -774,10 +802,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '7d8bae39-0d48-4424-b7ac-f95231a7c688',
           },
           {
+            type: 'shape',
             opacity: 50,
             flip: {
               vertical: false,
@@ -801,13 +829,18 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '7d8bae39-0d48-4424-b7ac-f95231a7c688',
             id: 'a9bf183b-8951-4fdc-8bfd-fa6a71736a28',
             x: 126,
             y: 281,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Open Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -817,8 +850,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Open Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 29,
             fontStyle: 'normal',
@@ -854,7 +885,6 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'b767306b-6b92-4b2a-935d-00954a502681',
             id: '1788ced3-50fc-495e-9944-9f7a205b3107',
             x: 83,
@@ -869,6 +899,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -892,10 +923,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '5249418e-8fb7-46d7-8af1-835671d52f2b',
           },
           {
+            type: 'image',
             opacity: 40,
             flip: {
               vertical: false,
@@ -921,7 +952,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '21c8f992-9285-486b-955d-89212dc3435c',
             resource: {
               type: 'image',
@@ -938,6 +968,12 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -947,8 +983,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 100,
             fontStyle: 'normal',
@@ -983,13 +1017,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             id: '457c0ed6-69da-43c4-ac59-1d1359d980b9',
             x: 71,
             y: 82,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -999,8 +1038,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 100,
             fontStyle: 'normal',
@@ -1035,7 +1072,6 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '457c0ed6-69da-43c4-ac59-1d1359d980b9',
             id: 'b0b134b8-2aae-4da8-83be-a0f5a811f082',
             x: 71,
@@ -1050,6 +1086,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1084,11 +1121,11 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '486b6a5d-60f2-4e23-861c-0e16220e6c76',
             isBackground: true,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1112,13 +1149,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
             id: '969611ae-3a4b-45b5-b075-38ffb5abdce1',
             x: -1,
             y: 490,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1142,13 +1179,18 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
             id: '4496cff1-60d7-4f33-9231-9fb423308319',
             x: 0,
             y: 358,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1158,8 +1200,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 22,
             fontStyle: 'normal',
@@ -1194,13 +1234,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '7b86d9a0-7674-4172-8abb-ddd27f241376',
             id: '67f45a53-bf09-4235-95f0-680ad1bc9e66',
             x: 31,
             y: 390,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1210,8 +1255,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -1248,10 +1291,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '566dcf70-af92-4ee1-8a03-e07dab4556b8',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1261,8 +1309,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 12,
             fontStyle: 'normal',
@@ -1297,13 +1343,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '67f45a53-bf09-4235-95f0-680ad1bc9e66',
             id: '88038fd9-5e4e-41f2-a831-a79e990695ce',
             x: 30,
             y: 616.5,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1338,7 +1384,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'e3adc9ce-fa17-45b6-a26b-6ec2fd532d3d',
           },
         ],
@@ -1350,6 +1395,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1384,11 +1430,11 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '86db87f7-47d4-49e3-b714-8e28bf6c64e1',
             isBackground: true,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1414,10 +1460,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: 'fba88016-92e6-4f7b-9f52-08c870f9ce0a',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1443,10 +1489,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: 'e7d91e07-214b-4718-9b8a-32f13e0e0d01',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1456,8 +1507,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 50,
             fontStyle: 'normal',
@@ -1493,13 +1542,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             id: '2af301c7-7cdf-4afc-bd9c-86309ec7cc80',
             x: 75,
             y: 68,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1509,8 +1563,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -1545,13 +1597,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'b767306b-6b92-4b2a-935d-00954a502681',
             id: 'e754bfb7-0132-4515-80c2-5c20b2b1475b',
             x: 16,
             y: 597,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1561,8 +1618,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -1597,13 +1652,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'e754bfb7-0132-4515-80c2-5c20b2b1475b',
             id: 'e3de1f4e-c47e-439b-97cd-50c779650b6d',
             x: -73,
             y: 413,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1638,7 +1693,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'a125ec6e-4254-4130-916d-e86d6d71aabb',
           },
         ],
@@ -1650,6 +1704,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1673,10 +1728,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '6f62cb45-cbe8-484a-9f9b-0204fd653ded',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1702,7 +1757,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '6994410a-4350-4d7e-bb52-1efe7a952e3c',
             resource: {
               type: 'image',
@@ -1719,6 +1773,7 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1744,10 +1799,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '92f6281c-d00a-4207-a95c-9a6bd40da7d9',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1773,10 +1828,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: '226987ec-9aea-4342-a276-a1fbcf089a87',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1786,8 +1846,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 22,
             fontStyle: 'normal',
@@ -1822,13 +1880,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '67f45a53-bf09-4235-95f0-680ad1bc9e66',
             id: '9c0db82d-9759-4a90-8c97-3d1eb8f370e3',
             x: 42,
             y: 399,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1838,8 +1901,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -1875,13 +1936,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '9c0db82d-9759-4a90-8c97-3d1eb8f370e3',
             id: '112e77ab-1cec-4679-b501-b9085d5f5d79',
             x: 42,
             y: 432,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Roboto',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1891,8 +1957,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Roboto',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -1927,13 +1991,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '9c0db82d-9759-4a90-8c97-3d1eb8f370e3',
             id: '2ee5ed18-dc65-454e-8b69-a76fc5f06a38',
             x: 125,
             y: 616,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1968,7 +2032,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '21029d0a-58a3-4719-a1f9-4d8f47b9da16',
           },
         ],
@@ -1980,6 +2043,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2004,9 +2068,9 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '4ee0756d-c9b1-4914-a3cf-e0b41a442367',
-            type: 'shape',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2032,10 +2096,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2045,8 +2114,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -2081,13 +2148,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '457c0ed6-69da-43c4-ac59-1d1359d980b9',
             id: '2a83d681-85df-4b20-88e4-cc67d02817d4',
             x: 52,
             y: 31,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2097,8 +2169,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -2133,13 +2203,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '2a83d681-85df-4b20-88e4-cc67d02817d4',
             id: '5fe94c96-3a59-4b24-bb76-1a2a24795c23',
             x: 52,
             y: 71,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2165,7 +2235,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: 'ae3014b3-9828-4285-991d-4b0aa1fc83a6',
             resource: {
               type: 'image',
@@ -2182,6 +2251,7 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2205,7 +2275,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -2225,6 +2294,7 @@ export default function (imageBaseUrl) {
             y: 319,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2250,7 +2320,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '33d1b36e-8dae-4501-b295-05b68654e8dd',
             resource: {
               type: 'image',
@@ -2267,6 +2336,12 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2276,8 +2351,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2312,13 +2385,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '5fe94c96-3a59-4b24-bb76-1a2a24795c23',
             id: 'ac28f1fa-0509-49e2-82d2-4607c9e2cc23',
             x: 189,
             y: 210,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2328,8 +2406,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2364,13 +2440,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'ac28f1fa-0509-49e2-82d2-4607c9e2cc23',
             id: 'bc9330a4-a5c1-4711-842c-9f6c2a577bd0',
             x: 188,
             y: 354,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2380,8 +2461,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2416,13 +2495,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'bc9330a4-a5c1-4711-842c-9f6c2a577bd0',
             id: 'b29b6af7-1fd0-4f84-a9c5-8e33c4623865',
             x: 189,
             y: 486,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2432,8 +2516,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2468,13 +2550,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'bc9330a4-a5c1-4711-842c-9f6c2a577bd0',
             id: '7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f',
             x: 169,
             y: 487,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2484,8 +2571,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2520,13 +2605,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f',
             id: 'db606b2b-1199-4a93-885e-8e1be559c256',
             x: 169,
             y: 354,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2536,8 +2626,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -2572,13 +2660,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'db606b2b-1199-4a93-885e-8e1be559c256',
             id: '9b59aecd-69c2-45c3-8f8e-b12aa586e99b',
             x: 168,
             y: 221,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2588,8 +2681,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -2624,13 +2715,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'b767306b-6b92-4b2a-935d-00954a502681',
             id: '1f552208-c803-40aa-8eaf-8c7356196a87',
             x: 53,
             y: 616.5,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2665,7 +2756,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '60f07480-c8af-42f9-953a-98569b97ffe7',
           },
         ],
@@ -2677,6 +2767,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2711,11 +2802,11 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '1b7b64ba-ee71-4edf-be38-d30753ac39ef',
             isBackground: true,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2739,13 +2830,18 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
             id: 'd38b12e9-ba7a-4a62-9e65-b03305beae30',
             x: 0,
             y: -1,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2755,8 +2851,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -2791,13 +2885,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '2a83d681-85df-4b20-88e4-cc67d02817d4',
             id: '7b86d9a0-7674-4172-8abb-ddd27f241376',
             x: 59,
             y: 34,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2807,8 +2906,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -2843,13 +2940,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '2a83d681-85df-4b20-88e4-cc67d02817d4',
             id: '55d03a3d-486e-446e-9e02-92a6af422cfb',
             x: 59,
             y: 74,
           },
           {
+            type: 'shape',
             opacity: 20,
             flip: {
               vertical: false,
@@ -2875,10 +2972,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: '41a2b205-4d95-4aa2-98ac-556605cb93f6',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2904,7 +3001,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: '957322bc-5f94-4cf4-9163-6816b86d8e43',
             link: {
               url: `http://google.com`,
@@ -2913,6 +3009,7 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            type: 'shape',
             opacity: 20,
             flip: {
               vertical: false,
@@ -2936,13 +3033,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             basedOn: '41a2b205-4d95-4aa2-98ac-556605cb93f6',
             id: '91a09dbb-ca6e-42bb-9829-4ac4fc6140d4',
             x: 127,
             y: 315,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2966,7 +3063,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             basedOn: '957322bc-5f94-4cf4-9163-6816b86d8e43',
             id: '6c3bb33f-1d89-4624-96bb-b543e6336251',
             x: 142,
@@ -2979,6 +3075,7 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            type: 'shape',
             opacity: 20,
             flip: {
               vertical: false,
@@ -3002,13 +3099,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             basedOn: '91a09dbb-ca6e-42bb-9829-4ac4fc6140d4',
             id: 'fab864c5-fe89-4082-bfc6-81fcb90fbdc0',
             x: 9,
             y: 430,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3032,7 +3129,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             basedOn: '6c3bb33f-1d89-4624-96bb-b543e6336251',
             id: 'a0c96775-0f7f-48b3-9820-c19f6b6cc01f',
             x: 24,
@@ -3053,6 +3149,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3077,9 +3174,9 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '82dea0d1-dbc5-41e5-9ed7-409bcb672830',
-            type: 'shape',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3103,13 +3200,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
             id: 'f92aa000-0cfa-40ea-a9dd-dfee946477ab',
             x: 0,
             y: -1,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3135,10 +3232,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '94619a1f-53a1-4c37-8481-7c7483565f6d',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3148,8 +3250,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -3184,13 +3284,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '7b86d9a0-7674-4172-8abb-ddd27f241376',
             id: '3d4ecfbb-db87-4575-95f3-ad04b65645c9',
             x: 59,
             y: 34,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3200,8 +3305,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 40,
             fontStyle: 'normal',
@@ -3236,13 +3339,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '55d03a3d-486e-446e-9e02-92a6af422cfb',
             id: '4e3adf8b-0488-45ba-8e8c-ced5b3a9d1b2',
             x: 59,
             y: 74,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3268,7 +3371,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '83166f7e-86d0-4b9f-9ff3-961284d470da',
             resource: {
               type: 'image',
@@ -3285,6 +3387,7 @@ export default function (imageBaseUrl) {
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3308,7 +3411,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -3328,6 +3430,7 @@ export default function (imageBaseUrl) {
             y: 277,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3351,7 +3454,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -3371,6 +3473,7 @@ export default function (imageBaseUrl) {
             y: 398,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3394,7 +3497,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -3414,6 +3516,12 @@ export default function (imageBaseUrl) {
             y: 519,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3423,8 +3531,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -3459,13 +3565,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'bc9330a4-a5c1-4711-842c-9f6c2a577bd0',
             id: '57cb521c-1572-490b-96aa-daa9ae4b45a9',
             x: 180,
             y: 178,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3475,8 +3586,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -3511,13 +3620,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '57cb521c-1572-490b-96aa-daa9ae4b45a9',
             id: 'e68025e7-bea3-47fc-ba92-466cdd5fbaf5',
             x: 179,
             y: 208,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3527,8 +3641,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -3563,13 +3675,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '57cb521c-1572-490b-96aa-daa9ae4b45a9',
             id: 'fb2ab27a-6f74-47b3-b913-395b53e79d62',
             x: 179,
             y: 295,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3579,8 +3696,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -3615,13 +3730,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'e68025e7-bea3-47fc-ba92-466cdd5fbaf5',
             id: '605b22dd-f600-46ae-a0ec-fab0adcb4c9d',
             x: 178,
             y: 322,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3631,8 +3751,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -3667,13 +3785,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'fb2ab27a-6f74-47b3-b913-395b53e79d62',
             id: 'd133aa02-5c7a-4616-b192-cbc97dbbc1ef',
             x: 182,
             y: 421,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3683,8 +3806,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -3719,13 +3840,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '605b22dd-f600-46ae-a0ec-fab0adcb4c9d',
             id: 'c392e542-c5f6-41f0-9096-1215bdbff68c',
             x: 181,
             y: 448,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3735,8 +3861,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 20,
             fontStyle: 'normal',
@@ -3771,13 +3895,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'd133aa02-5c7a-4616-b192-cbc97dbbc1ef',
             id: '94e8ca84-5e11-42d7-bf00-64b4208cf7a2',
             x: 183,
             y: 544,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Noto Sans',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3787,8 +3916,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Noto Sans',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 15,
             fontStyle: 'normal',
@@ -3823,13 +3950,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'c392e542-c5f6-41f0-9096-1215bdbff68c',
             id: '86085ea2-7b70-460f-9a2f-0972f378536d',
             x: 182,
             y: 571,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Anton',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3839,8 +3971,6 @@ export default function (imageBaseUrl) {
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Anton',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 13,
             fontStyle: 'normal',
@@ -3875,13 +4005,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '1f552208-c803-40aa-8eaf-8c7356196a87',
             id: '5e25fd0f-8962-4c22-93fb-9eeb25ad4506',
             x: 343,
             y: 287,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3916,10 +4046,10 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '3684fec7-5606-4dbf-81e9-6c084dc1b1dd',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3954,10 +4084,10 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '3a6d6297-ea58-43c6-888b-4834f806c17d',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3992,10 +4122,10 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'a11f8eb5-8531-4f42-97b8-ada6050f4f59',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -4030,7 +4160,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '563f7eeb-2251-4191-b3be-a269c0d42158',
           },
         ],
