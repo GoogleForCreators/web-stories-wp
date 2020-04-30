@@ -19,6 +19,6 @@ npm run build:fonts
 
 This script does the following:
 
-1. Download all available fonts from Google Fonts to `includes/data/fonts.json`.
+1. Downloads all available fonts from Google Fonts to `includes/data/fonts.json`.
 1. Merges font list with a set of system fonts and prepares them for usage in the editor.
 1. Saves changes to `includes/data/fonts.json`.
