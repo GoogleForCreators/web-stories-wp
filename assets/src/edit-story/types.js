@@ -98,11 +98,6 @@ StoryPropTypes.box = PropTypes.exact({
   rotationAngle: PropTypes.number.isRequired,
 });
 
-StoryPropTypes.children = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.node),
-  PropTypes.node,
-]);
-
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),

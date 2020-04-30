@@ -43,10 +43,7 @@ WithAnimation.propTypes = {
   style: PropTypes.object,
   animationStyle: PropTypes.object,
   useContainer: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default WithAnimation;

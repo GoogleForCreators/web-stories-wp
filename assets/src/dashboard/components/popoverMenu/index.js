@@ -29,6 +29,7 @@ const PopoverMenu = ({ className, ...props }) => (
     <Menu {...props} />
   </PopoverStandard>
 );
+
 PopoverMenu.propTypes = {
   className: PropTypes.string,
   ...MenuProps,
@@ -39,6 +40,7 @@ export const PopoverMenuCard = (props) => (
     <Menu {...props} />
   </PopoverCard>
 );
+
 PopoverMenuCard.propTypes = MenuProps;
 
 export default PopoverMenu;

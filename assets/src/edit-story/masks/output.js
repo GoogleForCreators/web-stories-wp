@@ -107,6 +107,6 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
 };
