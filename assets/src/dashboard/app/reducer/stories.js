@@ -24,6 +24,8 @@ export const ACTION_TYPES = {
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
   UPDATE_STORY: 'update_story',
+  TRASH_STORY: 'trash_story',
+  DUPLICATE_STORY: 'duplicate_story',
 };
 
 export const defaultStoriesState = {
@@ -52,6 +54,32 @@ function storyReducer(state, action) {
     case ACTION_TYPES.UPDATE_STORY:
       return {
         ...state,
+        stories: {
+          ...state.stories,
+          [action.payload.id]: action.payload,
+        },
+      };
+
+    case ACTION_TYPES.TRASH_STORY:
+      return {
+        ...state,
+        storiesOrderById: state.storiesOrderById.filter(
+          (id) => id !== action.payload.id
+        ),
+        totalStories: state.totalStories - 1,
+        stories: Object.keys(state.stories).reduce((memo, storyId) => {
+          if (parseInt(storyId) !== action.payload.id) {
+            memo[storyId] = state.stories[storyId];
+          }
+          return memo;
+        }, {}),
+      };
+
+    case ACTION_TYPES.DUPLICATE_STORY:
+      return {
+        ...state,
+        storiesOrderById: [action.payload.id, ...state.storiesOrderById],
+        totalStories: state.totalStories + 1,
         stories: {
           ...state.stories,
           [action.payload.id]: action.payload,

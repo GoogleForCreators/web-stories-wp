@@ -166,10 +166,7 @@ function CanvasProvider({ children }) {
 }
 
 CanvasProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default CanvasProvider;

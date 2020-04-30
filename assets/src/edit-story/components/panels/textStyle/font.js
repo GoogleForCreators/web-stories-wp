@@ -33,6 +33,8 @@ import { Numeric, Row, DropDown } from '../../form';
 import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
+import objectPick from '../../../utils/objectPick';
+import getFontWeights from './getFontWeights';
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -44,16 +46,19 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function FontControls({ selectedElements, pushUpdate }) {
-  const fontFamily = getCommonValue(selectedElements, 'fontFamily');
+  const fontFamily = getCommonValue(
+    selectedElements,
+    ({ font }) => font?.family
+  );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
   const fontWeight = getCommonValue(selectedElements, 'fontWeight');
 
   const {
     state: { fonts },
-    actions: { getFontWeight, getFontFallback },
+    actions: { getFontByName },
   } = useFont();
-  const fontWeights = useMemo(() => getFontWeight(fontFamily), [
-    getFontWeight,
+  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
+    getFontByName,
     fontFamily,
   ]);
 
@@ -67,27 +72,30 @@ function FontControls({ selectedElements, pushUpdate }) {
             options={fonts}
             value={fontFamily}
             onChange={(value) => {
-              const currentFontWeights = getFontWeight(value);
-              const currentFontFallback = getFontFallback(value);
-              const fontWeightsArr = currentFontWeights.map(
-                ({ value: weight }) => weight
-              );
+              const fontObj = fonts.find((item) => item.value === value);
+              const { weights } = fontObj;
 
               // Find the nearest font weight from the available font weight list
-              // If no fontweightsArr available then will return undefined
-              const newFontWeight =
-                fontWeightsArr &&
-                fontWeightsArr.reduce((a, b) =>
-                  Math.abs(parseInt(b) - fontWeight) <
-                  Math.abs(parseInt(a) - fontWeight)
-                    ? b
-                    : a
-                );
+              const newFontWeight = weights.reduce((a, b) =>
+                Math.abs(parseInt(b) - fontWeight) <
+                Math.abs(parseInt(a) - fontWeight)
+                  ? b
+                  : a
+              );
+
               pushUpdate(
                 {
-                  fontFamily: value,
+                  font: {
+                    family: value,
+                    ...objectPick(fontObj, [
+                      'service',
+                      'fallbacks',
+                      'weights',
+                      'styles',
+                      'variants',
+                    ]),
+                  },
                   fontWeight: parseInt(newFontWeight),
-                  fontFallback: currentFontFallback,
                 },
                 true
               );

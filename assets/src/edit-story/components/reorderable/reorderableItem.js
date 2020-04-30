@@ -58,10 +58,7 @@ function ReorderableItem({
 }
 
 ReorderableItem.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   position: PropTypes.number.isRequired,
   onStartReordering: PropTypes.func,
   disabled: PropTypes.bool,

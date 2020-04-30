@@ -108,12 +108,15 @@ function TextEdit({
   },
   box: { x, y, height, rotationAngle },
 }) {
+  const { font } = rest;
+
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
   } = useUnits();
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     color,
+    font,
     backgroundColor,
     opacity,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
@@ -261,10 +264,9 @@ function TextEdit({
     wrapper.style.height = `${editorHeightRef.current}px`;
   }, [editorState, elementHeight]);
 
-  const { fontFamily } = rest;
   useEffect(() => {
-    maybeEnqueueFontStyle(fontFamily);
-  }, [fontFamily, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle(font);
+  }, [font, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
