@@ -79,8 +79,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Detect coding standard violations (ESLint)
         run: npm run lint:js:report
@@ -121,8 +121,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Detect Markdown code style violations (MarkdownLint)
         run: npm run lint:md
@@ -156,8 +156,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Detect coding standard violations (stylelint)
         run: npm run lint:css
@@ -204,8 +204,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
@@ -394,8 +394,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          CI: TRUE
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle plugin
         run: |
