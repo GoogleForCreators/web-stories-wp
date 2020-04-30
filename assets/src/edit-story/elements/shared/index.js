@@ -60,6 +60,7 @@ export const elementWithFont = css`
   font-style: ${({ fontStyle }) => fontStyle};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
+  color: #000000;
 `;
 
 /**

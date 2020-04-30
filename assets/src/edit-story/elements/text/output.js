@@ -68,6 +68,7 @@ export function TextOutputWithUnits({
       dataToFontSizeY
     ),
     ...bgColor,
+    color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
 
