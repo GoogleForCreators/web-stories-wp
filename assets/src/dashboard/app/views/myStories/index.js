@@ -247,17 +247,15 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <div>
-          <BodyWrapper>
-            {storiesView}
-            <InfiniteScroller
-              canLoadMore={!allPagesFetched}
-              isLoading={isLoading}
-              allDataLoadedMessage={__('No more stories', 'web-stories')}
-              onLoadMore={handleNewPageRequest}
-            />
-          </BodyWrapper>
-        </div>
+        <BodyWrapper>
+          {storiesView}
+          <InfiniteScroller
+            canLoadMore={!allPagesFetched}
+            isLoading={isLoading}
+            allDataLoadedMessage={__('No more stories', 'web-stories')}
+            onLoadMore={handleNewPageRequest}
+          />
+        </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;

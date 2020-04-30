@@ -24,7 +24,7 @@ import { useState } from 'react';
 import { fireEvent } from '@testing-library/react';
 import { renderWithTheme } from '../../../testUtils';
 import { LeftRail } from '../index';
-import NavProvider, { NavContext } from '../navProvider';
+import NavProvider, { NavContext } from '../../navProvider';
 import { primaryPaths } from '../../../constants';
 
 describe('<LeftRail />', () => {

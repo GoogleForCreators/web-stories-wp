@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ReactComponent as MenuSvg } from '../../icons/menu.svg';
-import { useNavContext } from './navProvider';
+import { useNavContext } from '../navProvider';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
   display: block;

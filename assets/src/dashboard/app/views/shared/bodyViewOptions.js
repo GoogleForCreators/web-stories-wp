@@ -49,7 +49,6 @@ const SortDropdown = styled(Dropdown)`
 const ControlsContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 const Label = styled.span`

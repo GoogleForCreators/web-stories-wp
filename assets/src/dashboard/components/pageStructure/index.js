@@ -40,6 +40,7 @@ import {
   Z_INDEX,
 } from '../../constants';
 import useFocusOut from '../../utils/useFocusOut';
+import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
@@ -47,7 +48,6 @@ import {
   NavLink,
   Rule,
 } from './navigationComponents';
-import { useNavContext } from './navProvider';
 
 export const AppFrame = styled.div`
   position: absolute;
@@ -171,3 +171,5 @@ export function LeftRail() {
     </LeftRailContainer>
   );
 }
+
+export { default as NavMenuButton } from './menuButton';

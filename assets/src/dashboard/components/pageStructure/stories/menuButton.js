@@ -22,7 +22,7 @@ import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import NavProvider, { useNavContext } from '../navProvider';
+import NavProvider, { useNavContext } from '../../navProvider';
 import NavMenuButton from '../menuButton';
 
 export default {
