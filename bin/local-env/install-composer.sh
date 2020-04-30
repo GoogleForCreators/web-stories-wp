@@ -35,5 +35,7 @@ if [ "$CI" != "true" ] && ! [[ "$(composer --version)" == "Composer version $COM
 fi
 
 # Install/update packages
-echo -e $(status_message "Installing and updating Composer packages..." )
-composer install --optimize-autoloader --no-interaction --prefer-dist --no-suggest --ignore-platform-reqs
+if [ "$CI" != "true" ]; then
+  echo -e $(status_message "Installing and updating Composer packages..." )
+  composer install --optimize-autoloader --no-interaction --prefer-dist --no-suggest --ignore-platform-reqs
+fi
