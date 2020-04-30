@@ -220,7 +220,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        image: mariadb:10.5
+        image: mariadb:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_PASSWORD:
@@ -228,7 +228,7 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
         php: ['7.4', '7.0', '5.6']
