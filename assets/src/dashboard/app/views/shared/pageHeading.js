@@ -47,8 +47,6 @@ const StyledHeader = styled(ViewHeader)`
 
 const Content = styled.div`
   display: block;
-  align-items: center;
-  justify-content: center;
   height: 100%;
 `;
 
