@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Common variables.
-DOCKER_COMPOSE_FILE_OPTIONS="-f $(dirname "$0")/docker-compose.yml"
+DOCKER_COMPOSE_FILE_OPTIONS="-f $(dirname "$0")/docker-compose.yml -T"
 # These are the containers and values for the development site.
 CLI='cli'
 CONTAINER='wordpress'
