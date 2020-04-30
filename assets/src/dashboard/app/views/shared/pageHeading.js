@@ -25,7 +25,6 @@ import PropTypes from 'prop-types';
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { ViewHeader, NavMenuButton } from '../../../components';
-import { DropdownContainer } from '../../../components/dropdown';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 

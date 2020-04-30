@@ -31,7 +31,6 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import {
-  FloatingTab,
   InfiniteScroller,
   ScrollToTop,
   Layout,
