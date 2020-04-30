@@ -41,17 +41,11 @@ const fontWeightNames = {
 function getFontWeights(font) {
   const defaultFontWeights = [{ name: fontWeightNames[400], value: '400' }];
 
-  if (!font) {
+  if (!font?.weights) {
     return defaultFontWeights;
   }
 
-  const { weights } = font;
-
-  if (!weights) {
-    return defaultFontWeights;
-  }
-
-  return weights.map((weight) => ({
+  return font.weights.map((weight) => ({
     name: fontWeightNames[weight],
     value: weight.toString(),
   }));
