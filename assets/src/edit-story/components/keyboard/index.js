@@ -56,7 +56,7 @@ function setGlobalRef() {
  * @param {function(KeyboardEvent)} callback
  * @param {Array|undefined} deps
  */
-function useKeyEffect(
+function useKeyEffectInternal(
   refOrNode,
   keyNameOrSpec,
   type,
@@ -94,6 +94,27 @@ function useKeyEffect(
 }
 
 /**
+ * Depending on the key spec, this will bind to either the 'keypress' or
+ * 'keydown' event type, by passing 'undefined' to the event type parameter of
+ * Mousetrap.bind.
+ *
+ * See https://craig.is/killing/mice#api.bind.
+ *
+ * @param {Node|{current: Node}} refOrNode
+ * @param {string|Array|Object} keyNameOrSpec
+ * @param {function(KeyboardEvent)} callback
+ * @param {Array|undefined} deps
+ */
+export function useKeyEffect(
+  refOrNode,
+  keyNameOrSpec,
+  callback,
+  deps = undefined
+) {
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
+}
+
+/**
  * @param {Node|{current: Node}} refOrNode
  * @param {string|Array|Object} keyNameOrSpec
  * @param {function(KeyboardEvent)} callback
@@ -105,7 +126,7 @@ export function useKeyDownEffect(
   callback,
   deps = undefined
 ) {
-  useKeyEffect(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
 /**
@@ -120,7 +141,7 @@ export function useKeyUpEffect(
   callback,
   deps = undefined
 ) {
-  useKeyEffect(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
+  useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
 }
 
 /**
