@@ -269,17 +269,17 @@ jobs:
 
       - name: Run tests
         run: npm run test:php
-        if: ${{ matrix.wp !== 'latest' && matrix.php !== 7.4 }}
+        if: ${{ matrix.wp != 'latest' && matrix.php != 7.4 }}
 
       - name: Run tests with coverage
         run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.wp === 'latest' && matrix.php === 7.4 }}
+        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
         with:
           file: build/logs/clover.xml
-        if: ${{ matrix.wp === 'latest' && matrix.php === 7.4 }}
+        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
 
   e2e:
     name: E2E Tests
