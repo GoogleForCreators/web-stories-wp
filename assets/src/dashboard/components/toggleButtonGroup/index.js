@@ -76,9 +76,10 @@ ToggleButton.propTypes = {
 };
 
 const ToggleButtonGroup = ({ buttons }) => {
-  const [selectedButton, setSelectedButton] = useState();
+  const [selectedButton, setSelectedButton] = useState(null);
   const activeRef = useRef(null);
 
+  // this layout effect hook will take care of setting the initial selectedButton state with left/width property of active button after first paint
   useLayoutEffect(() => {
     if (!activeRef || !activeRef.current) {
       return;
@@ -87,6 +88,10 @@ const ToggleButtonGroup = ({ buttons }) => {
     setSelectedButton({ left, width });
   }, []);
 
+  // if buttons is not present we do not want to render the component
+  if (!buttons || buttons.length <= 0) {
+    return null;
+  }
   return (
     <>
       <ToggleButtonContainer>
