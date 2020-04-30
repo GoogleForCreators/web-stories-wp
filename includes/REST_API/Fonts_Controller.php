@@ -118,8 +118,8 @@ class Fonts_Controller extends WP_REST_Controller {
 		$schema = $this->get_item_schema();
 		$data   = [];
 
-		if ( in_array( 'name', $fields, true ) ) {
-			$data['name'] = $font['name'];
+		if ( in_array( 'family', $fields, true ) ) {
+			$data['family'] = $font['family'];
 		}
 
 		if ( in_array( 'slug', $fields, true ) ) {
