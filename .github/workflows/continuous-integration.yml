@@ -324,6 +324,9 @@ jobs:
         env:
           CI: TRUE
 
+      - name: Start Docker environment
+        run: npm run env:start
+
       - name: Run E2E tests (Chromium)
         run: npm run test:e2e
 
@@ -334,6 +337,9 @@ jobs:
 
       - name: Run E2E tests (Firefox)
         run: npm run test:e2e
+
+      - name: Stop Docker environment
+        run: npm run env:stop
 
   build:
     name: Build plugin
