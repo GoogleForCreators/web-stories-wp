@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -33,13 +33,16 @@ import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 
+const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
+
 function FontProvider({ children }) {
+  const loadedFontFamily = useRef([]);
   const [fonts, setFonts] = useState([]);
   const [recentUsedFontSlugs, setRecentUsedFontSlugs] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
 
-  const addUsedFont = (slug) => {
+  const addUsedFontSlug = (slug) => {
     const findFontIndex = recentUsedFontSlugs.findIndex(
       (fontSlug) => fontSlug === slug
     );
@@ -110,10 +113,18 @@ function FontProvider({ children }) {
     [getFontByName]
   );
 
-  const getMenuFonts = useCallback((fontList) => {
-    const googleMenuFontsUrl = 'https://fonts.googleapis.com/css';
+  const getMenuFonts = useCallback((fontFamilyList) => {
+    const newFontList = fontFamilyList.filter(
+      (fontName) =>
+        loadedFontFamily.current.findIndex((name) => name === fontName) < 0
+    );
+    if (!newFontList?.length) {
+      return new Promise((resolve) => resolve(''));
+    }
     return fetch(
-      `${googleMenuFontsUrl}?family=${fontList.join('|')}&subset=menu`
+      `${GOOGLE_MENU_FONT_URL}?family=${encodeURI(
+        newFontList.join('|')
+      )}&subset=menu`
     )
       .then((response) => response.body)
       .then((body) => {
@@ -122,7 +133,12 @@ function FontProvider({ children }) {
           .read()
           .then(({ value }) => {
             const decoder = new TextDecoder('utf-8');
-            return decoder.decode(value).replace(/::MENU/g, '');
+            const decodedResult = decoder.decode(value);
+            loadedFontFamily.current = [
+              ...loadedFontFamily.current,
+              ...newFontList,
+            ];
+            return decodedResult;
           });
       });
   }, []);
@@ -135,7 +151,7 @@ function FontProvider({ children }) {
       recentUsedFontSlugs,
     },
     actions: {
-      addUsedFont,
+      addUsedFontSlug,
       getFontByName,
       maybeEnqueueFontStyle,
       getFontWeight,

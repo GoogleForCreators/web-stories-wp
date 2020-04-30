@@ -137,7 +137,9 @@ FontPicker.propTypes = {
 };
 
 FontPicker.defaultProps = {
+  value: '',
   onChange: () => {},
+  lightMode: false,
   placeholder: __('Select an Option', 'web-stories'),
 };
 

@@ -33,7 +33,6 @@ import { __ } from '@wordpress/i18n';
 import useFocusOut from '../../utils/useFocusOut';
 import { useFont } from '../../app/font';
 import { TextInput } from '../form';
-import { GlobalFontFaces } from './util';
 
 const PickerContainer = styled.div`
   float: right;
@@ -61,6 +60,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   padding-bottom: 8px;
+  ${({ menuFonts }) => menuFonts}
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -122,10 +122,13 @@ const ExpandedTextInput = styled(BoxedTextInput)`
   margin: 8px;
 `;
 
+const LIST_PADDING = 5;
+const FONT_ROW_HEIGHT = 34;
+
 function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   const {
     state: { fonts, recentUsedFontSlugs },
-    actions: { addUsedFont, getMenuFonts },
+    actions: { addUsedFontSlug, getMenuFonts },
   } = useFont();
 
   const pickerContainerRef = useRef();
@@ -174,11 +177,13 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   );
 
   useEffect(() => {
-    const combinedFontList = []
-      .concat(recentUsedFonts)
-      .concat(normalFonts)
-      .concat(includeSearchFonts)
+    const combinedFontList = [
+      ...recentUsedFonts,
+      ...normalFonts,
+      ...includeSearchFonts,
+    ]
       .slice(currentIndex, currentIndex + 10)
+      .filter(({ service }) => service.includes('google'))
       .map(({ name }) => name);
 
     if (combinedFontList.length > 0) {
@@ -201,20 +206,20 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
 
     const handleScroll = () => {
       let { scrollTop } = listElement;
-      scrollTop -= 5;
-      let currentVisibleIndex = Math.floor(scrollTop / 34);
+      scrollTop -= LIST_PADDING;
+      let currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
       if (
         recentUsedFonts.length > 0 &&
         currentVisibleIndex > recentUsedFonts.length
       ) {
-        scrollTop -= 10;
+        scrollTop -= LIST_PADDING * 2;
         currentVisibleIndex =
-          Math.floor(scrollTop / 34) - recentUsedFonts.length;
+          Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
       }
       if (normalFonts.length > 0 && currentVisibleIndex > normalFonts.length) {
-        scrollTop -= 10;
+        scrollTop -= LIST_PADDING * 2;
       }
-      currentVisibleIndex = Math.floor(scrollTop / 34);
+      currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
       if (currentVisibleIndex < 0) {
         currentVisibleIndex = 0;
       }
@@ -235,18 +240,18 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
 
   const handleItemClick = (option, slug) => {
     handleCurrentValue(option);
-    addUsedFont(slug);
+    addUsedFontSlug(slug);
   };
 
   const renderListWithOptions = (options) => {
     if (options?.length > 0) {
       return (
         <List aria-multiselectable={false} aria-required={false} ref={listRef}>
-          {options.map(({ name, value, slug }) => (
+          {options.map(({ name, value, slug, service }) => (
             <Item
               key={value}
               onClick={() => handleItemClick(value, slug)}
-              fontFamily={name}
+              fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
             >
               {name}
             </Item>
@@ -269,17 +274,18 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
       <ListContainer
         ref={listContainerRef}
         aria-labelledby={__('FontPicker', 'web-stories')}
+        menuFonts={menuFonts}
       >
-        <GlobalFontFaces menuFonts={menuFonts} />
+        {/* <GlobalFontFaces menuFonts={menuFonts} /> */}
         {renderListWithOptions(recentUsedFonts)}
         {renderListWithOptions(normalFonts, recentUsedFonts.length)}
         {renderListWithOptions(
           includeSearchFonts,
           normalFonts.length + recentUsedFonts.length
         )}
-        {recentUsedFonts.length === 0 &&
-          normalFonts.length === 0 &&
-          includeSearchFonts.length === 0 && (
+        {!recentUsedFonts.length &&
+          !normalFonts.length &&
+          !includeSearchFonts.length && (
             <NoItem>{__('No matches found', 'web-stories')}</NoItem>
           )}
       </ListContainer>
