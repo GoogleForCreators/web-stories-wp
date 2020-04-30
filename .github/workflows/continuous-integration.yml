@@ -228,7 +228,7 @@ jobs:
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      continue-on-error: ${{ matrix.experimental }}
+      continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
         php: ['7.4', '7.0', '5.6']
