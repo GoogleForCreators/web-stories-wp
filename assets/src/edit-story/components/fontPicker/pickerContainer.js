@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
 import { useFont } from '../../app/font';
 import { TextInput } from '../form';
@@ -74,14 +73,18 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
 `;
 
-const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
+const Item = styled.li.attrs(({ fontFamily }) => ({
+  tabIndex: '0',
+  role: 'option',
+  style: {
+    fontFamily,
+  },
+}))`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 8px 12px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
-  font-family: ${({ theme, fontFamily }) =>
-    fontFamily ? fontFamily : theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
@@ -133,22 +136,19 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchValue, setSearchValue] = useState('');
-  const [menuFonts, setMenuFonts] = useState([]);
+  const [menuFonts, setMenuFonts] = useState();
 
   // Recently used font options, clean up on refresh
-  const recentUsedFonts = useMemo(
-    () =>
-      searchValue && searchValue !== ''
-        ? recentUsedFontSlugs
-            .map((slug) => fonts.find((font) => font.slug === slug))
-            .filter(({ name }) =>
-              name.toLowerCase().includes(searchValue.toLowerCase())
-            )
-        : recentUsedFontSlugs.map((slug) =>
-            fonts.find((font) => font.slug === slug)
-          ),
-    [searchValue, recentUsedFontSlugs, fonts]
-  );
+  const recentUsedFonts = useMemo(() => {
+    const fontsFromSlug = recentUsedFontSlugs.map((slug) =>
+      fonts.find((font) => font.slug === slug)
+    );
+    return searchValue && searchValue !== ''
+      ? fontsFromSlug.filter(({ name }) =>
+          name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      : fontsFromSlug;
+  }, [searchValue, recentUsedFontSlugs, fonts]);
 
   // Font options that start with search term
   const normalFonts = useMemo(
@@ -182,10 +182,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
       .map(({ name }) => name);
 
     if (combinedFontList.length > 0) {
-      getMenuFonts(combinedFontList).then((result) => {
-        const resultArray = result.replace(/}/g, '}},').split('},');
-        setMenuFonts(resultArray);
-      });
+      getMenuFonts(combinedFontList).then(setMenuFonts);
     }
   }, [
     currentIndex,
@@ -234,31 +231,22 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useFocusOut(pickerContainerRef, toggleOptions);
-
-  useKeyDownEffect(pickerContainerRef, { key: 'esc' }, toggleOptions, [
-    toggleOptions,
-  ]);
+  useFocusOut(pickerContainerRef, toggleOptions, [toggleOptions]);
 
   const handleItemClick = (option, slug) => {
     handleCurrentValue(option);
     addUsedFont(slug);
   };
 
-  const renderListWithOptions = (options, offset = 0) => {
+  const renderListWithOptions = (options) => {
     if (options?.length > 0) {
       return (
         <List aria-multiselectable={false} aria-required={false} ref={listRef}>
-          {options.map(({ name, value, slug }, index) => (
+          {options.map(({ name, value, slug }) => (
             <Item
               key={value}
               onClick={() => handleItemClick(value, slug)}
-              fontFamily={
-                index < currentIndex + 10 - offset &&
-                index >= currentIndex - offset
-                  ? name
-                  : undefined
-              }
+              fontFamily={name}
             >
               {name}
             </Item>
@@ -282,7 +270,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         ref={listContainerRef}
         aria-labelledby={__('FontPicker', 'web-stories')}
       >
-        <GlobalFontFaces menuFonts={menuFonts.join('')} />
+        <GlobalFontFaces menuFonts={menuFonts} />
         {renderListWithOptions(recentUsedFonts)}
         {renderListWithOptions(normalFonts, recentUsedFonts.length)}
         {renderListWithOptions(
