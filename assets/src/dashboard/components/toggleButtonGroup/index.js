@@ -78,12 +78,14 @@ ToggleButton.propTypes = {
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState();
   const activeRef = useRef(null);
-  activeRef.current = activeRef;
 
   useLayoutEffect(() => {
-    const { left, width } = activeRef?.current?.getBoundingClientRect();
+    if (!activeRef || !activeRef.current) {
+      return;
+    }
+    const { left, width } = activeRef.current.getBoundingClientRect();
     setSelectedButton({ left, width });
-  }, [activeRef]);
+  }, []);
 
   return (
     <>

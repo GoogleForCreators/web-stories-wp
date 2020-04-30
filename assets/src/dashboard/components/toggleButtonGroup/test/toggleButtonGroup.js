@@ -35,7 +35,7 @@ describe('ToggleButton', () => {
   const onClickMock = jest.fn();
 
   it('should render a button group with three items', () => {
-    const { debug, getAllByRole } = renderWithTheme(
+    const { getAllByRole } = renderWithTheme(
       <ToggleButtonGroup
         buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
           return {
@@ -47,14 +47,12 @@ describe('ToggleButton', () => {
         })}
       />
     );
-    debug();
 
     const buttons = getAllByRole('button');
-    // expect(getAllByRole('button')).toHaveLength(3);
-    expect(buttons).toBeDefined();
+    expect(buttons).toHaveLength(3);
   });
 
-  xit('should simulate a click on a button in <ToggleButtonGroup />', () => {
+  it('should simulate a click on a button in <ToggleButtonGroup />', () => {
     const { getByText } = renderWithTheme(
       <ToggleButtonGroup
         buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
