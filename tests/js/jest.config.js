@@ -54,8 +54,8 @@ module.exports = {
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/edit-story/**/*.js',
-    '<rootDir>/assets/src/dashboard/**/*.js',
+    '<rootDir>/assets/src/**/*.js',
+    '<rootDir>/bin/**/*.js',
     '!**/test/**',
     '!**/stories/**',
   ],

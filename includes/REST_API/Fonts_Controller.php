@@ -197,8 +197,8 @@ class Fonts_Controller extends WP_REST_Controller {
 			'title'      => 'font',
 			'type'       => 'object',
 			'properties' => [
-				'name'      => [
-					'description' => __( 'The title for the font.', 'web-stories' ),
+				'family'    => [
+					'description' => __( 'The font family name.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
