@@ -339,6 +339,7 @@ function Carousel() {
         >
           {pages.map((page, index) => {
             const isCurrentPage = page.id === currentPageId;
+            const isInteractive = pages.length > 1;
 
             return (
               <ItemContainer
@@ -374,10 +375,11 @@ function Carousel() {
                             index + 1
                           )
                     }
-                    isActive={isCurrentPage && pages.length > 1}
+                    isActive={isCurrentPage && isInteractive}
                     index={index}
                     width={pageThumbWidth}
                     height={pageThumbHeight}
+                    isInteractive={isInteractive}
                   />
                 </ReorderablePage>
                 <PageSeparator
