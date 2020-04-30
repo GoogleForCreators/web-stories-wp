@@ -31,14 +31,15 @@ const ToggleButtonContainer = styled.div`
   height: 100%;
   flex-direction: row;
   justify-content: space-evenly;
+  border: 1px solid red;
 `;
 
 const AnimationBar = styled.div`
   ${({ theme, selectedButtonWidth = 0, selectedButtonLeft = 0 }) => `
-    position: absolute;
+    position: relative;
     height: 3px;
     width: ${selectedButtonWidth}px;
-    margin-left: ${selectedButtonLeft}px;
+    margin-left: ${selectedButtonLeft}%;
     background-color:  ${theme.colors.bluePrimary600};
     transition: all 0.3s ${BEZIER.outSine}; 
   `}
@@ -77,9 +78,22 @@ ToggleButton.propTypes = {
 
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);
-  const [containerX, setContainerX] = useState(null);
   const activeRef = useRef(null);
   const containerRef = useRef(null);
+
+  const updateBarDimensions = useCallback((target) => {
+    const activeBounds = target.getBoundingClientRect();
+    const containerBounds = containerRef.current.getBoundingClientRect();
+
+    const percentageToLeft =
+      ((activeBounds.left - containerBounds.left) / containerBounds.width) *
+      100;
+
+    setSelectedButton({
+      x: percentageToLeft,
+      width: activeBounds.width,
+    });
+  }, []);
 
   // this layout effect hook will take care of setting
   //   the initial selectedButton state with left/width property
@@ -89,25 +103,16 @@ const ToggleButtonGroup = ({ buttons }) => {
     if (!activeRef.current) {
       return;
     }
-    const containerBounds = containerRef.current.getBoundingClientRect();
-    setContainerX(containerBounds.x);
-    const activeBounds = activeRef.current.getBoundingClientRect();
-    setSelectedButton({
-      x: activeBounds.x - containerBounds.x,
-      width: activeBounds.width,
-    });
-  }, []);
+
+    updateBarDimensions(activeRef.current);
+  }, [updateBarDimensions]);
 
   const handleButtonClick = useCallback(
     (e, handleClick) => {
-      const activeBounds = e.currentTarget.getBoundingClientRect();
-      setSelectedButton({
-        x: activeBounds.x - containerX,
-        width: activeBounds.width,
-      });
+      updateBarDimensions(e.currentTarget);
       handleClick && handleClick();
     },
-    [setSelectedButton, containerX]
+    [updateBarDimensions]
   );
 
   // if buttons is not present we do not want to render the component
