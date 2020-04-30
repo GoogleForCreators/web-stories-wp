@@ -72,7 +72,7 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.LIST);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [currentStorySort, setCurrentStorySort] = useState(
@@ -98,6 +98,9 @@ function MyStories() {
         totalStories,
         totalPages,
       },
+      tags,
+      categories,
+      users,
     },
   } = useContext(ApiContext);
 
@@ -205,6 +208,9 @@ function MyStories() {
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
+            tags={tags}
+            categories={categories}
+            users={users}
           />
         );
       default:
@@ -219,6 +225,9 @@ function MyStories() {
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
+    tags,
+    categories,
+    users,
   ]);
 
   const storiesViewControls = useMemo(() => {
