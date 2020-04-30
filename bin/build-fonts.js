@@ -107,6 +107,6 @@ for (const font of googleFonts) {
   });
 }
 
-fonts.sort((a, b) => a.localeCompare(b));
+fonts.sort((a, b) => a.family.localeCompare(b.family));
 
 writeFileSync(FONTS_FILE, JSON.stringify(fonts));
