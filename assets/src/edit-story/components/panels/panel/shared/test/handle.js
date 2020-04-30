@@ -17,70 +17,34 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import React from 'react';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { ThemeProvider } from 'styled-components';
 import DragHandle from '../handle';
-import theme from '../../../../../theme';
-
-const mockBind = jest.fn();
-const mockUnbind = jest.fn();
-
-jest.mock('Mousetrap', () =>
-  jest.fn().mockImplementation(() => ({
-    bind: mockBind,
-    unbind: mockUnbind,
-  }))
-);
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderWithTheme } from '../../../../../testUtils';
 
 describe('DragHandle', () => {
-  var bindings;
-
-  beforeEach(() => {
-    bindings = {};
-    mockBind.mockReset();
-    mockUnbind.mockReset();
-
-    mockBind.mockImplementation((name, fn) => (bindings[name] = fn));
-    mockUnbind.mockImplementation((name) => delete bindings[name]);
-  });
-
-  it('should call Mousetrap.unbind on unmount', () => {
-    const component = arrange(<DragHandle />);
-    expect(Object.keys(bindings)).toHaveLength(2);
-
-    // Mousetrap.unbind() must be called when the component is unmounted.
-    component.unmount();
-    expect(Object.keys(bindings)).toHaveLength(0);
-  });
-
   describe('should raise handleHeightChange when up or down key is pressed', () => {
     const handleHeightChange = jest.fn();
-    const mockEvent = {
-      stopPropagation: () => {},
-      preventDefault: () => {},
-      target: {},
-    };
+    var slider;
 
     beforeEach(() => {
       handleHeightChange.mockReset();
-      arrange(<DragHandle handleHeightChange={handleHeightChange} />);
+      slider = renderWithTheme(
+        <DragHandle handleHeightChange={handleHeightChange} />
+      ).getByRole('slider');
     });
 
     it('when up key is pressed', () => {
-      bindings['up'](mockEvent);
+      fireEvent.keyDown(slider, { key: 'ArrowUp', which: 38 });
       expect(handleHeightChange).toHaveBeenCalledWith(20);
     });
 
     it('when down key is pressed', () => {
-      bindings['down'](mockEvent);
+      fireEvent.keyDown(slider, { key: 'ArrowDown', which: 40 });
       expect(handleHeightChange).toHaveBeenCalledWith(-20);
     });
   });
