@@ -137,10 +137,7 @@ function CardGallery({ children }) {
 }
 
 CardGallery.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CardGallery;

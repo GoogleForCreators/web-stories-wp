@@ -118,8 +118,8 @@ class Fonts_Controller extends WP_REST_Controller {
 		$schema = $this->get_item_schema();
 		$data   = [];
 
-		if ( in_array( 'name', $fields, true ) ) {
-			$data['name'] = $font['name'];
+		if ( in_array( 'family', $fields, true ) ) {
+			$data['family'] = $font['family'];
 		}
 
 		if ( in_array( 'slug', $fields, true ) ) {
@@ -138,8 +138,20 @@ class Fonts_Controller extends WP_REST_Controller {
 			$data['fallbacks'] = isset( $font['fallbacks'] ) ? (array) $font['fallbacks'] : $schema['properties']['fallbacks']['default'];
 		}
 
+		if ( in_array( 'service', $fields, true ) ) {
+			$data['service'] = isset( $font['service'] ) ? $font['service'] : $schema['properties']['service']['default'];
+		}
+
 		if ( in_array( 'weights', $fields, true ) ) {
 			$data['weights'] = isset( $font['weights'] ) ? (array) $font['weights'] : $schema['properties']['weights']['default'];
+		}
+
+		if ( in_array( 'styles', $fields, true ) ) {
+			$data['styles'] = isset( $font['styles'] ) ? (array) $font['styles'] : $schema['properties']['styles']['default'];
+		}
+
+		if ( in_array( 'variants', $fields, true ) ) {
+			$data['variants'] = isset( $font['variants'] ) ? (array) $font['variants'] : $schema['properties']['variants']['default'];
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -185,20 +197,8 @@ class Fonts_Controller extends WP_REST_Controller {
 			'title'      => 'font',
 			'type'       => 'object',
 			'properties' => [
-				'name'      => [
-					'description' => __( 'The title for the font.', 'web-stories' ),
-					'type'        => 'string',
-					'context'     => [ 'embed', 'view', 'edit' ],
-					'readonly'    => true,
-				],
-				'slug'      => [
-					'description' => __( 'An alphanumeric identifier for the font.', 'web-stories' ),
-					'type'        => 'string',
-					'context'     => [ 'embed', 'view', 'edit' ],
-					'readonly'    => true,
-				],
-				'handle'    => [
-					'description' => __( 'An alphanumeric identifier for the handle.', 'web-stories' ),
+				'family'    => [
+					'description' => __( 'The font family name.', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
@@ -210,20 +210,34 @@ class Fonts_Controller extends WP_REST_Controller {
 					'readonly'    => true,
 					'default'     => [],
 				],
+				'service'   => [
+					'description' => __( 'Font service', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+					'default'     => 'system',
+				],
 				'weights'   => [
 					'description' => __( 'List of font weights', 'web-stories' ),
 					'type'        => 'array',
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
-					'default'     => [ 'normal', 'bold', 'bolder', 'lighter' ],
+					'default'     => [ 400 ],
 				],
-				'src'       => [
-					'description' => __( 'URL to enqueue the font', 'web-stories' ),
-					'type'        => 'string',
-					'format'      => 'uri',
-					'context'     => [ 'view', 'edit', 'embed' ],
+				'styles'    => [
+					'description' => __( 'List of font styles', 'web-stories' ),
+					'type'        => 'array',
+					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
-					'default'     => '',
+					'default'     => [ 'regular', 'italic' ],
+				],
+				'variants'  => [
+					'description' => __( 'List of font variants', 'web-stories' ),
+					'type'        => 'array',
+					'context'     => [ 'embed', 'view', 'edit' ],
+					'readonly'    => true,
+					'default'     => [],
 				],
 			],
 		];

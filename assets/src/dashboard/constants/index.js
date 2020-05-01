@@ -52,7 +52,7 @@ export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
   LAYOUT_SQUISHABLE: 2,
-  LAYOUT_FIXED: 2,
+  LAYOUT_FIXED: 3,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
@@ -197,3 +197,4 @@ export const STORY_SORT_MENU_ITEMS = [
 
 export * from './animation';
 export * from './direction';
+export * from './templates';

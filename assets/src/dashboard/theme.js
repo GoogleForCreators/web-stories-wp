@@ -71,7 +71,7 @@ const colors = {
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
   gray100: `1px solid ${colors.gray100}`,
-  transparent: '1px solid none',
+  transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
 };
 
@@ -146,23 +146,20 @@ const theme = {
     previewOverlay:
       'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
   },
+  popoverPanel: {
+    desktopWidth: 595,
+    tabletWidth: 395,
+  },
   fonts: {
     heading1: {
       family: themeFonts.primary,
-      size: 38,
-      minSize: 28,
+      size: 26,
+      minSize: 18,
       lineHeight: 53,
       minLineHeight: 43,
       letterSpacing: -0.005,
       minLetterSpacing: -0.01,
     },
-    // heading2 is not in use
-    // heading2: {
-    //   family: themeFonts.primary,
-    //   size: 24,
-    //   lineHeight: 34,
-    //   weight: 500,
-    // },
     heading3: {
       family: themeFonts.primary,
       size: 20,

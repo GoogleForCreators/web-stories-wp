@@ -49,7 +49,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	const EMPTY_STYLE_PRESETS = [
 		'fillColors' => [],
 		'textColors' => [],
-		'styles'     => [],
+		'textStyles' => [],
 	];
 
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';

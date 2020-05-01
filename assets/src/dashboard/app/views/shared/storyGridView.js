@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -56,24 +59,48 @@ const StoryGridView = ({
   centerActionLabel,
   bottomActionLabel,
   updateStory,
+  trashStory,
+  duplicateStory,
+  isTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
 
-  const handleMenuItemSelected = useCallback((sender, story) => {
-    setContextMenuId(-1);
-    switch (sender.value) {
-      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-        window.location.href = story.bottomTargetAction;
-        break;
-      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-        setTitleRenameId(story.id);
-        break;
+  const handleMenuItemSelected = useCallback(
+    (sender, story) => {
+      setContextMenuId(-1);
+      switch (sender.value) {
+        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          window.location.href = story.bottomTargetAction;
+          break;
+        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+          setTitleRenameId(story.id);
+          break;
 
-      default:
-        break;
-    }
-  }, []);
+        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          duplicateStory(story);
+          break;
+
+        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+          if (
+            window.confirm(
+              sprintf(
+                /* translators: %s: story title. */
+                __('Are you sure you want to delete "%s"?', 'web-stories'),
+                story.title
+              )
+            )
+          ) {
+            trashStory(story);
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    [trashStory, duplicateStory]
+  );
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -86,7 +113,7 @@ const StoryGridView = ({
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
-        <CardGridItem key={story.id}>
+        <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
@@ -101,23 +128,25 @@ const StoryGridView = ({
               <PreviewPage page={story.pages[0]} />
             </PreviewErrorBoundary>
           </CardPreviewContainer>
-          <DetailRow>
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-              onEditComplete={(newTitle) =>
-                handleOnRenameStory(story, newTitle)
-              }
-              onEditCancel={() => setTitleRenameId(-1)}
-              editMode={titleRenameId === story.id}
-            />
-            <CardItemMenu
-              onMoreButtonSelected={setContextMenuId}
-              contextMenuId={contextMenuId}
-              onMenuItemSelected={handleMenuItemSelected}
-              story={story}
-            />
-          </DetailRow>
+          {!isTemplate && (
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                modifiedDate={story.modified.startOf('day').fromNow()}
+                onEditComplete={(newTitle) =>
+                  handleOnRenameStory(story, newTitle)
+                }
+                onEditCancel={() => setTitleRenameId(-1)}
+                editMode={titleRenameId === story.id}
+              />
+              <CardItemMenu
+                onMoreButtonSelected={setContextMenuId}
+                contextMenuId={contextMenuId}
+                onMenuItemSelected={handleMenuItemSelected}
+                story={story}
+              />
+            </DetailRow>
+          )}
         </CardGridItem>
       ))}
     </StoryGrid>
@@ -125,10 +154,13 @@ const StoryGridView = ({
 };
 
 StoryGridView.propTypes = {
+  isTemplate: PropTypes.bool,
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
-  updateStory: PropTypes.func.isRequired,
+  updateStory: PropTypes.func,
+  trashStory: PropTypes.func,
+  duplicateStory: PropTypes.func,
 };
 
 export default StoryGridView;

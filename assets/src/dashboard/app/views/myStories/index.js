@@ -28,11 +28,13 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 import {
-  FloatingTab,
   InfiniteScroller,
   ScrollToTop,
   Layout,
+  ToggleButtonGroup,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -40,13 +42,10 @@ import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
 } from '../../../constants';
-import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import clamp from '../../../utils/clamp';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { ApiContext } from '../../api/apiProvider';
+import FontProvider from '../../font/fontProvider';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
   BodyViewOptions,
@@ -55,22 +54,6 @@ import {
   StoryGridView,
   StoryListView,
 } from '../shared';
-
-// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
-
-const FilterContainer = styled.fieldset`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-  padding-bottom: 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    & > label span {
-      border-radius: 0;
-      box-shadow: none !important;
-      padding: 0 10px 0 0;
-    }
-  }
-`;
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -86,10 +69,6 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
-const CardPanel = styled.div`
-  padding-top: 60px;
-`;
-
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
@@ -100,7 +79,7 @@ function MyStories() {
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
   const [currentListSortDirection, setListSortDirection] = useState(
-    SORT_DIRECTION.ASC
+    SORT_DIRECTION.DESC
   );
 
   const { pageSize } = usePagePreviewSize({
@@ -108,16 +87,16 @@ function MyStories() {
   });
   const {
     actions: {
-      storyApi: { updateStory, fetchStories },
+      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
     },
     state: {
       stories: {
         allPagesFetched,
+        isLoading,
         stories,
         storiesOrderById,
         totalStories,
         totalPages,
-        isLoading,
       },
     },
   } = useContext(ApiContext);
@@ -162,7 +141,7 @@ function MyStories() {
     [setCurrentStorySort, setCurrentPageClamped]
   );
   const handleFilterStatusUpdate = useCallback(
-    (_, value) => {
+    (value) => {
       setCurrentPageClamped(1);
       setStatus(value);
     },
@@ -186,8 +165,13 @@ function MyStories() {
       setViewStyle(VIEW_STYLE.GRID);
     } else {
       setViewStyle(VIEW_STYLE.LIST);
+      if (currentStorySort === STORY_SORT_OPTIONS.NAME) {
+        setListSortDirection(SORT_DIRECTION.ASC);
+      } else {
+        setListSortDirection(SORT_DIRECTION.DESC);
+      }
     }
-  }, [viewStyle]);
+  }, [currentStorySort, viewStyle]);
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
@@ -200,7 +184,9 @@ function MyStories() {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
+            trashStory={trashStory}
             updateStory={updateStory}
+            duplicateStory={duplicateStory}
             filteredStories={orderedStories}
             centerActionLabel={
               <>
@@ -225,6 +211,8 @@ function MyStories() {
         return null;
     }
   }, [
+    duplicateStory,
+    trashStory,
     viewStyle,
     updateStory,
     orderedStories,
@@ -236,6 +224,7 @@ function MyStories() {
   const storiesViewControls = useMemo(() => {
     return (
       <BodyViewOptions
+        showGridToggle
         listBarLabel={listBarLabel}
         layoutStyle={viewStyle}
         handleLayoutSelect={handleViewStyleBarButtonSelected}
@@ -258,17 +247,15 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <CardPanel>
-          <BodyWrapper>
-            {storiesView}
-            <InfiniteScroller
-              canLoadMore={!allPagesFetched}
-              isLoading={isLoading}
-              allDataLoadedMessage={__('No more stories', 'web-stories')}
-              onLoadMore={handleNewPageRequest}
-            />
-          </BodyWrapper>
-        </CardPanel>
+        <BodyWrapper>
+          {storiesView}
+          <InfiniteScroller
+            canLoadMore={!allPagesFetched}
+            isLoading={isLoading}
+            allDataLoadedMessage={__('No more stories', 'web-stories')}
+            onLoadMore={handleNewPageRequest}
+          />
+        </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -300,21 +287,19 @@ function MyStories() {
                 filteredStories={orderedStories}
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
-              />
-              <FilterContainer>
-                {STORY_STATUSES.map((storyStatus) => (
-                  <FloatingTab
-                    key={storyStatus.value}
-                    onClick={handleFilterStatusUpdate}
-                    name="my-stories-filter-selection"
-                    value={storyStatus.value}
-                    isSelected={status === storyStatus.value}
-                    inputType="radio"
-                  >
-                    {storyStatus.label}
-                  </FloatingTab>
-                ))}
-              </FilterContainer>
+              >
+                <ToggleButtonGroup
+                  buttons={STORY_STATUSES.map((storyStatus) => {
+                    return {
+                      handleClick: () =>
+                        handleFilterStatusUpdate(storyStatus.value),
+                      key: storyStatus.value,
+                      isActive: status === storyStatus.value,
+                      text: storyStatus.label,
+                    };
+                  })}
+                />
+              </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
             <Layout.Scrollable>{BodyContent}</Layout.Scrollable>

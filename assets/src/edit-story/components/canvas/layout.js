@@ -216,7 +216,7 @@ const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
 });
 
 PageArea.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   showDangerZone: PropTypes.bool,
 };
 
