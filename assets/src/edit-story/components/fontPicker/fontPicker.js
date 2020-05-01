@@ -21,7 +21,6 @@ import { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -31,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce';
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
 import Popup from '../popup';
 import FontPickerContainer from './pickerContainer';
