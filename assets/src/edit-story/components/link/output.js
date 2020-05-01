@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -41,7 +46,7 @@ function WithLink({ element, children, ...rest }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default WithLink;

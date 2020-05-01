@@ -98,6 +98,9 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         if (!stylePresets.textColors) {
           stylePresets.textColors = [];
         }
+        if (!stylePresets.textStyles) {
+          stylePresets.textStyles = [];
+        }
 
         // Set story-global variables.
         const story = {

@@ -45,11 +45,12 @@ const Indicator = styled.button`
   height: ${COMPACT_THUMB_HEIGHT}px;
   border: 0;
   outline: 0;
-  cursor: pointer;
+  cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.selection : 'rgba(255, 255, 255, 0.28)'};
-  ${({ isActive, theme }) =>
+  ${({ isActive, isInteractive, theme }) =>
     !isActive &&
+    isInteractive &&
     css`
       &:hover,
       &:focus {

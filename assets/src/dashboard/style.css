@@ -34,6 +34,10 @@ body.web-story_page_stories-dashboard {
   position: relative;
 }
 
+#adminmenuback {
+  z-index: 4;
+}
+
 body.web-story_page_stories-dashboard #wpwrap,
 body.web-story_page_stories-dashboard #wpbody-content {
   position: absolute;

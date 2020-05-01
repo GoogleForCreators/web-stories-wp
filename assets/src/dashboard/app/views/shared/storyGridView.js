@@ -61,6 +61,7 @@ const StoryGridView = ({
   updateStory,
   trashStory,
   duplicateStory,
+  isTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -112,7 +113,7 @@ const StoryGridView = ({
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
-        <CardGridItem key={story.id}>
+        <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
@@ -127,23 +128,25 @@ const StoryGridView = ({
               <PreviewPage page={story.pages[0]} />
             </PreviewErrorBoundary>
           </CardPreviewContainer>
-          <DetailRow>
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-              onEditComplete={(newTitle) =>
-                handleOnRenameStory(story, newTitle)
-              }
-              onEditCancel={() => setTitleRenameId(-1)}
-              editMode={titleRenameId === story.id}
-            />
-            <CardItemMenu
-              onMoreButtonSelected={setContextMenuId}
-              contextMenuId={contextMenuId}
-              onMenuItemSelected={handleMenuItemSelected}
-              story={story}
-            />
-          </DetailRow>
+          {!isTemplate && (
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                modifiedDate={story.modified.startOf('day').fromNow()}
+                onEditComplete={(newTitle) =>
+                  handleOnRenameStory(story, newTitle)
+                }
+                onEditCancel={() => setTitleRenameId(-1)}
+                editMode={titleRenameId === story.id}
+              />
+              <CardItemMenu
+                onMoreButtonSelected={setContextMenuId}
+                contextMenuId={contextMenuId}
+                onMenuItemSelected={handleMenuItemSelected}
+                story={story}
+              />
+            </DetailRow>
+          )}
         </CardGridItem>
       ))}
     </StoryGrid>
@@ -151,12 +154,13 @@ const StoryGridView = ({
 };
 
 StoryGridView.propTypes = {
+  isTemplate: PropTypes.bool,
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
-  updateStory: PropTypes.func.isRequired,
-  trashStory: PropTypes.func.isRequired,
-  duplicateStory: PropTypes.func.isRequired,
+  updateStory: PropTypes.func,
+  trashStory: PropTypes.func,
+  duplicateStory: PropTypes.func,
 };
 
 export default StoryGridView;

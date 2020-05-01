@@ -69,10 +69,7 @@ function HistoryProvider({ children, size }) {
 }
 
 HistoryProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   size: PropTypes.number,
 };
 

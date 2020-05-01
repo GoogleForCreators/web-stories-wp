@@ -27,7 +27,8 @@ const useFontApi = (dataAdapter, { wpApi }) => {
 
     return dataAdapter.get(wpApi).then((data) =>
       data.map((font) => ({
-        value: font.name,
+        value: font.family,
+        name: font.family,
         ...font,
       }))
     );

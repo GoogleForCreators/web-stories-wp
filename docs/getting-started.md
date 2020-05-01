@@ -183,19 +183,3 @@ To create a build of the plugin for installing in WordPress as a ZIP package, ru
 ```bash
 npm run build
 ```
-
-### Update list of Google Fonts
-
-The project bundles an up-to-date list of available fonts from Google Fonts that can be used in the editor. Every once in a while, this list needs to be updated.
-
-**Note:** this is done automatically using GitHub Actions, so there is rarely ever a need to do this manually.
-
-A [Google Fonts API key](https://developers.google.com/fonts/docs/developer_api) is required to update the list of Google Fonts that is included in the plugin. Details of how to get an API key can be found on in the [Google fonts docs](https://developers.google.com/fonts/docs/developer_api).
-
-Once obtained, follow these steps to configure the project appropriately:
-
-```bash
-GOOGLE_FONTS_API_KEY=your-api-key npm run download-fonts
-```
-
-The fonts will then be downloaded to `includes/data/fonts.json`.

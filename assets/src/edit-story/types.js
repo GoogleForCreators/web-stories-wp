@@ -52,6 +52,12 @@ export const PatternPropType = PropTypes.shape({
   }),
 });
 
+export const StylePresetPropType = PropTypes.shape({
+  fillColors: PropTypes.array,
+  textColors: PropTypes.array,
+  textStyles: PropTypes.array,
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({
@@ -91,11 +97,6 @@ StoryPropTypes.box = PropTypes.exact({
   height: PropTypes.number.isRequired,
   rotationAngle: PropTypes.number.isRequired,
 });
-
-StoryPropTypes.children = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.node),
-  PropTypes.node,
-]);
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
