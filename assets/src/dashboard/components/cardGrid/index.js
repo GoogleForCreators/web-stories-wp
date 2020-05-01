@@ -28,21 +28,22 @@ import usePagePreviewSize from '../../utils/usePagePreviewSize';
 const DashboardGrid = styled.div`
   display: grid;
   width: 100%;
-  align-content: space-between;
-  grid-column-gap: 10px;
+  grid-column-gap: 1vw;
   grid-row-gap: 20px;
   grid-template-columns: ${({ columnWidth }) =>
     `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
 
-  @media ${({ theme }) => theme.breakpoint.min} {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-rows: ${({ columnHeight }) =>
+    `minmax(${columnHeight}px, auto)`};
 `;
 
 const CardGrid = ({ children }) => {
   const { pageSize } = usePagePreviewSize();
-
-  return <DashboardGrid columnWidth={pageSize.width}>{children}</DashboardGrid>;
+  return (
+    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
+      {children}
+    </DashboardGrid>
+  );
 };
 
 CardGrid.propTypes = {

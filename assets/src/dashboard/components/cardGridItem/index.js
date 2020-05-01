@@ -23,15 +23,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { MoreVerticalButton } from './cardItemMenu';
 import { ActionLabel } from './types';
 
 const StyledCard = styled.div`
-  margin: auto 0;
-  height: ${({ cardSize, isTemplate }) =>
-    cardSize.height + (isTemplate ? 0 : CARD_TITLE_AREA_HEIGHT)}px;
+  margin: 0;
   width: ${({ cardSize }) => `${cardSize.width}px`};
   display: flex;
   flex-direction: column;
