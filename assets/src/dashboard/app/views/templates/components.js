@@ -138,7 +138,7 @@ export const NavButton = styled(Button)`
 
 export const RowContainer = styled.section`
   margin-bottom: 40px;
-  padding: 40px 20px 0;
+  padding: 0 20px 0;
   display: flex;
   flex-wrap: wrap;
 `;
