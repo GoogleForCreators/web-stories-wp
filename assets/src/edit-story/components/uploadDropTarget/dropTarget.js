@@ -24,7 +24,6 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { isDraggingFile } from '../../utils/dragEvent';
 import Context from './context';
 
@@ -121,7 +120,7 @@ UploadDropTarget.propTypes = {
   label: PropTypes.string,
   labelledBy: PropTypes.string,
   onDrop: PropTypes.func,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 UploadDropTarget.defaultProps = {

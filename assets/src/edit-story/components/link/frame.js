@@ -140,7 +140,7 @@ WithLink.propTypes = {
   active: PropTypes.bool.isRequired,
   hasTransforms: PropTypes.bool.isRequired,
   dragging: PropTypes.bool.isRequired,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default WithLink;

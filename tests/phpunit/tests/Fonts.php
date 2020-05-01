@@ -26,7 +26,7 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Arial' === $font['name'];
+					return 'Arial' === $font['family'];
 				}
 			)
 		);
@@ -35,33 +35,36 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Roboto' === $font['name'];
+					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
-		$this->assertCount( 4, $arial_font );
-		$this->assertArrayHasKey( 'name', $arial_font );
+		$this->assertCount( 5, $arial_font );
+		$this->assertArrayHasKey( 'family', $arial_font );
 		$this->assertArrayHasKey( 'fallbacks', $arial_font );
 		$this->assertArrayHasKey( 'weights', $arial_font );
-		$this->assertArrayHasKey( 'slug', $arial_font );
-		$this->assertEquals(
+		$this->assertArrayHasKey( 'styles', $arial_font );
+		$this->assertArrayHasKey( 'service', $arial_font );
+		$this->assertEqualSetsWithIndex(
 			[
-				'name'      => 'Arial',
+				'family'    => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
-				'slug'      => 'arial',
-				'weights'   => [ '400', '700' ],
+				'weights'   => [ 400, 700 ],
+				'styles'    => [ 'italic', 'regular' ],
+				'service'   => 'system',
 			],
 			$arial_font
 		);
 
-		$this->assertCount( 7, $roboto_font );
-		$this->assertArrayHasKey( 'name', $roboto_font );
-		$this->assertArrayHasKey( 'slug', $roboto_font );
-		$this->assertArrayHasKey( 'handle', $roboto_font );
+		$this->assertCount( 6, $roboto_font );
+		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
-		$this->assertArrayHasKey( 'src', $roboto_font );
+		$this->assertArrayHasKey( 'styles', $roboto_font );
+		$this->assertArrayHasKey( 'variants', $roboto_font );
+		$this->assertArrayHasKey( 'service', $roboto_font );
+		$this->assertSame( 'fonts.google.com', $roboto_font['service'] );
 	}
 
 	public function test_get_google_fonts() {
@@ -78,44 +81,41 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Roboto' === $font['name'];
+					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
-		$this->assertCount( 4, $roboto_font );
-		$this->assertArrayHasKey( 'name', $roboto_font );
+		$this->assertCount( 6, $roboto_font );
+		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
-		$this->assertArrayHasKey( 'gfont', $roboto_font );
-
-		$this->assertEquals(
+		$this->assertArrayHasKey( 'styles', $roboto_font );
+		$this->assertArrayHasKey( 'variants', $roboto_font );
+		$this->assertArrayHasKey( 'service', $roboto_font );
+		$this->assertEqualSetsWithIndex(
 			[
-				'name'      => 'Roboto',
+				'family'    => 'Roboto',
 				'fallbacks' => [ 'sans-serif' ],
-				'weights'   => [ '100', '300', '400', '500', '700', '900' ],
-				'gfont'     => 'Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
+				'weights'   => [ 100, 300, 400, 500, 700, 900 ],
+				'styles'    => [ 'italic', 'regular' ],
+				'service'   => 'fonts.google.com',
+				'variants'  => [
+					[ 0, 100 ],
+					[ 1, 100 ],
+					[ 0, 300 ],
+					[ 1, 300 ],
+					[ 0, 400 ],
+					[ 1, 400 ],
+					[ 0, 500 ],
+					[ 1, 500 ],
+					[ 0, 700 ],
+					[ 1, 700 ],
+					[ 0, 900 ],
+					[ 1, 900 ],
+				],
 			],
 			$roboto_font
 		);
-	}
-
-	public static function data_font_fallback() {
-		return [
-			[ 'sans-serif', 'sans-serif' ],
-			[ 'display', 'cursive' ],
-			[ 'handwriting', 'cursive' ],
-			[ 'monospace', 'monospace' ],
-			[ 'serif', 'serif' ],
-			[ 'invalid', 'serif' ],
-		];
-	}
-
-	/**
-	 * @dataProvider data_font_fallback
-	 */
-	public function test_get_font_fallback( $category, $expected ) {
-		$actual = \Google\Web_Stories\Fonts::get_font_fallback( $category );
-		$this->assertSame( $actual, $expected );
 	}
 }

@@ -1,0 +1,38 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// @todo: only provide font family, and use font provider to fill the rest.
+export const TEXT_ELEMENT_DEFAULT_FONT = {
+  family: 'Roboto',
+  weights: [100, 300, 400, 500, 700, 900],
+  styles: ['italic', 'regular'],
+  variants: [
+    [0, 100],
+    [1, 100],
+    [0, 300],
+    [1, 300],
+    [0, 400],
+    [1, 400],
+    [0, 500],
+    [1, 500],
+    [0, 700],
+    [1, 700],
+    [0, 900],
+    [1, 900],
+  ],
+  fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+  service: 'fonts.google.com',
+};

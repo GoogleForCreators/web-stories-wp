@@ -268,10 +268,7 @@ const popoverCard = ({ children, isOpen }) => {
 };
 
 popoverCard.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
 };
 

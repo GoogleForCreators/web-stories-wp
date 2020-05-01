@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
 /**
  * WordPress dependencies
  */
@@ -21,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import {
   UploadDropTarget,
   UploadDropTargetMessage,
@@ -57,7 +62,7 @@ function CanvasUploadDropTarget({ children }) {
 }
 
 CanvasUploadDropTarget.propTypes = {
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CanvasUploadDropTarget;
