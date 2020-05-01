@@ -89,6 +89,6 @@ describe('useUploadMedia', () => {
     const sortedMediaArgs = setMedia.mock.calls[0][0].media.sort(sortBySrc);
 
     // Should have skipped every unsupported file.
-    expect(sortedMediaArgs).toEqual(sortedExpectedSetMediaArgs);
+    expect(sortedMediaArgs).toStrictEqual(sortedExpectedSetMediaArgs);
   });
 });
