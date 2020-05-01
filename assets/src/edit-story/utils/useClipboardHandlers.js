@@ -19,6 +19,11 @@
  */
 import { useEffect } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import documentHasSelection from './documentHasSelection';
+
 const BLACKLIST_CLIPBOARD_ELEMENTS = ['INPUT', 'TEXTAREA', 'BUTTON'];
 
 /**
@@ -54,21 +59,12 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       copyCutHandler(evt);
     };
 
+    // We always use global handler for pasting.
     const pasteHandlerWrapper = (evt) => {
-      const { target } = evt;
-
-      // Elements that either handle their own clipboard or use platform.
-      if (!isCopyPasteTarget(target)) {
-        return;
+      // Only proceed custom handling if there is no selection.
+      if (!documentHasSelection()) {
+        pasteHandler(evt);
       }
-
-      // A target can be anywhere in the container's full subtree, but not
-      // in its siblings.
-      if (!container.contains(target) && !target.contains(container)) {
-        return;
-      }
-
-      pasteHandler(evt);
     };
 
     document.addEventListener('copy', copyCutHandlerWrapper);
