@@ -104,9 +104,20 @@ function TemplateDetail() {
     });
   }, [templatesOrderById, templates]);
 
-  const relatedTemplates = useMemo(() => orderedTemplates.slice(0, 4), [
-    orderedTemplates,
-  ]);
+  const relatedTemplates = useMemo(() => {
+    if (templatesOrderById && orderedTemplates) {
+      const getRandomTemplateId = () =>
+        templatesOrderById[
+          Math.floor(Math.random() * templatesOrderById.length)
+        ];
+      const randomlySelectedTemplates = [];
+      for (let i = 0; i < 5; i++) {
+        randomlySelectedTemplates.push(orderedTemplates[getRandomTemplateId()]);
+      }
+      return randomlySelectedTemplates;
+    }
+    return false;
+  }, [orderedTemplates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -228,17 +239,19 @@ function TemplateDetail() {
                   {NextButton}
                 </Column>
               </ColumnContainer>
-              <RowContainer>
-                <SubHeading>
-                  {__('Related Templates', 'web-stories')}
-                </SubHeading>
-                <StoryGridView
-                  filteredStories={relatedTemplates}
-                  centerActionLabel={__('View', 'web-stories')}
-                  bottomActionLabel={__('Use template', 'web-stories')}
-                  isTemplate
-                />
-              </RowContainer>
+              {relatedTemplates && (
+                <RowContainer>
+                  <SubHeading>
+                    {__('Related Templates', 'web-stories')}
+                  </SubHeading>
+                  <StoryGridView
+                    filteredStories={relatedTemplates}
+                    centerActionLabel={__('View', 'web-stories')}
+                    bottomActionLabel={__('Use template', 'web-stories')}
+                    isTemplate
+                  />
+                </RowContainer>
+              )}
             </ContentContainer>
           </UnitsProvider>
         </TransformProvider>
