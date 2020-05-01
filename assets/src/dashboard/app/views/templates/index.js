@@ -23,6 +23,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  * External dependencies
  */
 import { useState, useContext, useMemo, useCallback, useEffect } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -36,6 +37,8 @@ import {
   InfiniteScroller,
   ScrollToTop,
 } from '../../../components';
+import { DropdownContainer } from '../../../components/dropdown';
+
 import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
@@ -53,6 +56,18 @@ import {
 } from '../shared';
 import useTemplateFilters from './templateFilters';
 
+const HeadingDropdownsContainer = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
+
+  ${DropdownContainer} {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
 function TemplatesGallery() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
@@ -171,36 +186,38 @@ function TemplatesGallery() {
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
               >
-                <Dropdown
-                  ariaLabel={__('Category Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Category', 'web-stories')}
-                  items={selectedCategories}
-                  onClear={clearAllCategories}
-                  onChange={onNewCategorySelected}
-                />
-                <Dropdown
-                  ariaLabel={__('Style Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Style', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
-                />
-                <Dropdown
-                  ariaLabel={__('Color Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Color', 'web-stories')}
-                  items={selectedColors}
-                  onClear={clearAllColors}
-                  onChange={onNewColorSelected}
-                />
-                <Dropdown
-                  ariaLabel={__('Layout Type Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Layout Type', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
-                />
+                <HeadingDropdownsContainer>
+                  <Dropdown
+                    ariaLabel={__('Category Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Category', 'web-stories')}
+                    items={selectedCategories}
+                    onClear={clearAllCategories}
+                    onChange={onNewCategorySelected}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Style Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Style', 'web-stories')}
+                    items={[]}
+                    onChange={() => {}}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Color Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Color', 'web-stories')}
+                    items={selectedColors}
+                    onClear={clearAllColors}
+                    onChange={onNewColorSelected}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Layout Type Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Layout Type', 'web-stories')}
+                    items={[]}
+                    onChange={() => {}}
+                  />
+                </HeadingDropdownsContainer>
               </PageHeading>
               <BodyViewOptions
                 listBarLabel={listBarLabel}

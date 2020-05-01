@@ -19,7 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useCallback, useLayoutEffect, useRef } from 'react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * Internal dependencies
@@ -35,10 +42,10 @@ const ToggleButtonContainer = styled.div`
 
 const AnimationBar = styled.div`
   ${({ theme, selectedButtonWidth = 0, selectedButtonLeft = 0 }) => `
-    position: absolute;
+    position: relative;
     height: 3px;
     width: ${selectedButtonWidth}px;
-    left: ${selectedButtonLeft}px;
+    margin-left: ${selectedButtonLeft}%;
     background-color:  ${theme.colors.bluePrimary600};
     transition: all 0.3s ${BEZIER.outSine}; 
   `}
@@ -77,24 +84,63 @@ ToggleButton.propTypes = {
 
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);
+  const [containerWidth, setContainerWidth] = useState(null);
   const activeRef = useRef(null);
+  const containerRef = useRef(null);
 
-  // this layout effect hook will take care of setting the initial selectedButton state with left/width property of active button after first paint
+  const updateBarDimensions = useCallback(
+    (target) => {
+      const activeBounds = target.getBoundingClientRect();
+      const containerBounds = containerRef.current.getBoundingClientRect();
+
+      const percentageToLeft =
+        ((activeBounds.left - containerBounds.left) / containerWidth) * 100;
+
+      setSelectedButton({
+        x: percentageToLeft,
+        width: activeBounds.width,
+      });
+    },
+    [containerWidth]
+  );
+
+  // this layout effect hook will take care of setting
+  //   the initial selectedButton state with left/width property
+  //   of active button after first paint
+  //   as well as the container x position we will use to gauge the margin for animation
   useLayoutEffect(() => {
     if (!activeRef.current) {
       return;
     }
-    const { left, width } = activeRef.current.getBoundingClientRect();
-    setSelectedButton({ left, width });
-  }, []);
+    updateBarDimensions(activeRef.current);
+  }, [updateBarDimensions]);
+
+  useEffect(() => {
+    if (typeof window == 'undefined' || !containerRef.current) {
+      return () => {};
+    }
+
+    const resizeContainerObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.contentRect.width !== containerWidth) {
+          setContainerWidth(entry.contentRect.width);
+        }
+      });
+    });
+
+    const resizeEl = containerRef.current;
+    resizeContainerObserver.observe(resizeEl);
+    return () => {
+      resizeContainerObserver.unobserve(resizeEl);
+    };
+  }, [containerWidth]);
 
   const handleButtonClick = useCallback(
     (e, handleClick) => {
-      const { left, width } = e.currentTarget.getBoundingClientRect();
-      setSelectedButton({ left, width });
+      updateBarDimensions(e.currentTarget);
       handleClick && handleClick();
     },
-    [setSelectedButton]
+    [updateBarDimensions]
   );
 
   // if buttons is not present we do not want to render the component
@@ -103,10 +149,10 @@ const ToggleButtonGroup = ({ buttons }) => {
   }
   return (
     <>
-      <ToggleButtonContainer>
+      <ToggleButtonContainer ref={containerRef}>
         {buttons.map(({ isActive, handleClick, key, text }, idx) => (
           <ToggleButton
-            ref={isActive ? activeRef : null}
+            {...(isActive ? { ref: activeRef } : {})}
             type="button"
             onClick={(e) => handleButtonClick(e, handleClick)}
             key={key || `toggle_button_${idx}`}
@@ -118,7 +164,7 @@ const ToggleButtonGroup = ({ buttons }) => {
       </ToggleButtonContainer>
       <AnimationBar
         selectedButtonWidth={selectedButton?.width}
-        selectedButtonLeft={selectedButton?.left}
+        selectedButtonLeft={selectedButton?.x}
       />
     </>
   );
