@@ -172,7 +172,7 @@ function ColorPreview({
         <VisualPreview role="status" style={previewStyle} {...buttonProps} />
         <TextualInput
           aria-label={`${inputLabel}: ${label}`}
-          value={hexInputValue}
+          value={hexInputValue ?? ''}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
         />
