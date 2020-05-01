@@ -29,7 +29,7 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (element.isFullbleedBackground) {
+  if (typeof element.isFullbleedBackground !== 'undefined') {
     delete element.isFullbleedBackground;
   }
   return element;
