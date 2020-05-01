@@ -17,11 +17,13 @@
 /**
  * Internal dependencies
  */
+import getFashionStoryData from './data/fashion';
 import getTravelStoryData from './data/travel';
 import getDIYStoryData from './data/diy';
 
 export default function (config) {
   const { pluginDir } = config;
+  const fashionStoryData = getFashionStoryData(pluginDir);
   const travelStoryData = getTravelStoryData(pluginDir);
   const diyStoryData = getDIYStoryData(pluginDir);
 
@@ -109,7 +111,7 @@ export default function (config) {
       ],
       description:
         'Duis auctor libero vel dui tincidunt, at mattis nisi placerat. Nam id lacinia lectus.',
-      pages: travelStoryData.pages,
+      pages: fashionStoryData.pages,
     },
     {
       id: 6,
