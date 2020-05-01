@@ -26,6 +26,7 @@ import { Button } from '../../../components';
 
 export const ContentContainer = styled.div`
   ${({ theme }) => `
+    margin-top: ${theme.navBar.height + 40}px;
     padding: 0 ${theme.pageGutter.large.desktop}px;
 
     @media ${theme.breakpoint.tablet} {
@@ -133,4 +134,20 @@ export const NavButton = styled(Button)`
       color: ${theme.colors.bluePrimary};
     }
   `}
+`;
+
+export const RowContainer = styled.section`
+  margin-bottom: 40px;
+  padding: 40px 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const SubHeading = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading3.family};
+  font-size: ${({ theme }) => theme.fonts.heading3.size}px;
+  line-height: ${({ theme }) => theme.fonts.heading3.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing}em;
+  font-weight: 500;
+  margin: 0 0 20px 0;
 `;

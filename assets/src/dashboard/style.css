@@ -42,6 +42,7 @@ body.web-story_page_stories-dashboard #wpwrap,
 body.web-story_page_stories-dashboard #wpbody-content {
   position: absolute;
   overflow: hidden;
+  overflow-y: scroll;
   top: 0;
   right: 0;
   bottom: 0;

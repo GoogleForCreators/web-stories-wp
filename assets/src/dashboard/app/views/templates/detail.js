@@ -33,6 +33,7 @@ import { ApiContext } from '../../api/apiProvider';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
 import { TransformProvider } from '../../../../edit-story/components/transform';
+import { UnitsProvider } from '../../../../edit-story/units';
 import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
@@ -42,8 +43,9 @@ import {
   TemplateNavBar,
 } from '../../../components';
 import { ICON_METRICS } from '../../../constants';
-import clamp from '../../../utils/clamp';
-import StoryGridView from '../shared/storyGridView';
+import { clamp, usePagePreviewSize } from '../../../utils/';
+import { StoryGridView } from '../shared';
+
 import {
   ByLine,
   ContentContainer,
@@ -52,13 +54,15 @@ import {
   DetailContainer,
   MetadataContainer,
   NavButton,
+  RowContainer,
+  SubHeading,
   Text,
   Title,
 } from './components';
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
-
+  const { pageSize } = usePagePreviewSize();
   const {
     state: {
       queryParams: { id: templateId, isLocal },
@@ -191,45 +195,52 @@ function TemplateDetail() {
     template && (
       <FontProvider>
         <TransformProvider>
-          <TemplateNavBar />
-          <ContentContainer>
-            <ColumnContainer>
-              <Column>
-                {PrevButton}
-                <CardGallery>{previewPages}</CardGallery>
-              </Column>
-              <Column>
-                <DetailContainer>
-                  <Title>{template.title}</Title>
-                  <ByLine>{byLine}</ByLine>
-                  <Text>{template.description}</Text>
-                  <MetadataContainer>
-                    {template.tags.map((tag) => (
-                      <Pill
-                        name={tag}
-                        key={tag}
-                        disabled
-                        onClick={() => {}}
-                        value={tag}
-                      >
-                        {tag}
-                      </Pill>
-                    ))}
-                  </MetadataContainer>
-                  <MetadataContainer>
-                    <ColorList colors={template.colors} size={30} />
-                  </MetadataContainer>
-                </DetailContainer>
-                {NextButton}
-              </Column>
-            </ColumnContainer>
-            <StoryGridView
-              filteredStories={relatedTemplates}
-              centerActionLabel={__('View', 'web-stories')}
-              bottomActionLabel={__('Use template', 'web-stories')}
-              isTemplate
-            />
-          </ContentContainer>
+          <UnitsProvider pageSize={pageSize}>
+            <TemplateNavBar />
+            <ContentContainer>
+              <ColumnContainer>
+                <Column>
+                  {PrevButton}
+                  <CardGallery>{previewPages}</CardGallery>
+                </Column>
+                <Column>
+                  <DetailContainer>
+                    <Title>{template.title}</Title>
+                    <ByLine>{byLine}</ByLine>
+                    <Text>{template.description}</Text>
+                    <MetadataContainer>
+                      {template.tags.map((tag) => (
+                        <Pill
+                          name={tag}
+                          key={tag}
+                          disabled
+                          onClick={() => {}}
+                          value={tag}
+                        >
+                          {tag}
+                        </Pill>
+                      ))}
+                    </MetadataContainer>
+                    <MetadataContainer>
+                      <ColorList colors={template.colors} size={30} />
+                    </MetadataContainer>
+                  </DetailContainer>
+                  {NextButton}
+                </Column>
+              </ColumnContainer>
+              <RowContainer>
+                <SubHeading>
+                  {__('Related Templates', 'web-stories')}
+                </SubHeading>
+                <StoryGridView
+                  filteredStories={relatedTemplates}
+                  centerActionLabel={__('View', 'web-stories')}
+                  bottomActionLabel={__('Use template', 'web-stories')}
+                  isTemplate
+                />
+              </RowContainer>
+            </ContentContainer>
+          </UnitsProvider>
         </TransformProvider>
       </FontProvider>
     )
