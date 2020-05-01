@@ -196,46 +196,46 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
     includeSearchFonts,
   ]);
 
+  const handleScroll = useCallback(() => {
+    const listElement = listContainerRef.current;
+    let { scrollTop } = listElement;
+    // Remove the Ul list container padding offset
+    scrollTop -= LIST_PADDING;
+    // Calculate the current visible font index
+    let currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
+
+    // If there is recent used fonts and current visible options index is on next list
+    if (
+      recentUsedFonts.length > 0 &&
+      currentVisibleIndex > recentUsedFonts.length
+    ) {
+      scrollTop -= LIST_PADDING * 2;
+      currentVisibleIndex =
+        Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
+    }
+    // If there is other fonts and current visible options index is on next list
+    if (otherFonts.length > 0 && currentVisibleIndex > otherFonts.length) {
+      scrollTop -= LIST_PADDING * 2;
+    }
+    currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
+    if (currentVisibleIndex < 0) {
+      currentVisibleIndex = 0;
+    }
+    if (currentVisibleIndex !== currentActiveRef.current) {
+      currentActiveRef.current = currentVisibleIndex;
+      setCurrentIndex(currentVisibleIndex);
+    }
+  }, [otherFonts, recentUsedFonts]);
+
   useEffect(() => {
     inputRef.current.focus();
     const listElement = listContainerRef.current;
-
-    const handleScroll = () => {
-      let { scrollTop } = listElement;
-      // Remove the Ul list container padding offset
-      scrollTop -= LIST_PADDING;
-      // Calculate the current visible font index
-      let currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
-
-      // If there is recent used fonts and current visible options index is on next list
-      if (
-        recentUsedFonts.length > 0 &&
-        currentVisibleIndex > recentUsedFonts.length
-      ) {
-        scrollTop -= LIST_PADDING * 2;
-        currentVisibleIndex =
-          Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
-      }
-      // If there is other fonts and current visible options index is on next list
-      if (otherFonts.length > 0 && currentVisibleIndex > otherFonts.length) {
-        scrollTop -= LIST_PADDING * 2;
-      }
-      currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
-      if (currentVisibleIndex < 0) {
-        currentVisibleIndex = 0;
-      }
-      if (currentVisibleIndex !== currentActiveRef.current) {
-        currentActiveRef.current = currentVisibleIndex;
-        setCurrentIndex(currentVisibleIndex);
-      }
-    };
     listElement.addEventListener('scroll', handleScroll, { passive: false });
 
     return () => {
       listElement.removeEventListener('scroll', handleScroll);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleScroll]);
 
   useFocusOut(pickerContainerRef, onClose, [onClose]);
 
