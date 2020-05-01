@@ -150,6 +150,7 @@ function TemplatesGallery() {
         <BodyWrapper>
           <StoryGridView
             filteredStories={orderedTemplates}
+            centerActionLabel={__('View', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
             isTemplate
           />

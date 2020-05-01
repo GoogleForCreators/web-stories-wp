@@ -115,14 +115,10 @@ const StoryGridView = ({
       {filteredStories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
-            centerAction={
-              isTemplate
-                ? undefined
-                : {
-                    targetAction: story.centerTargetAction,
-                    label: centerActionLabel,
-                  }
-            }
+            centerAction={{
+              targetAction: story.centerTargetAction,
+              label: centerActionLabel,
+            }}
             bottomAction={{
               targetAction: story.bottomTargetAction,
               label: bottomActionLabel,

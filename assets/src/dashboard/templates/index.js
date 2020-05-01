@@ -18,10 +18,12 @@
  * Internal dependencies
  */
 import getTravelStoryData from './data/travel';
+import getDIYStoryData from './data/diy';
 
 export default function (config) {
   const { pluginDir } = config;
   const travelStoryData = getTravelStoryData(pluginDir);
+  const diyStoryData = getDIYStoryData(pluginDir);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -76,7 +78,7 @@ export default function (config) {
       ],
       description:
         'Mauris placerat velit ut nunc ornare porta. Integer auctor hendrerit aliquam. Proin egestas nisi et nisl commodo.',
-      pages: travelStoryData.pages,
+      pages: diyStoryData.pages,
     },
     {
       id: 4,
