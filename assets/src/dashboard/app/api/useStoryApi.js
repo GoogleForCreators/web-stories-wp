@@ -222,25 +222,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     [wpApi, dataAdapter, editStoryURL]
   );
 
-  const createTemplateFromStory = useCallback(async (story) => {
-    await story;
-  }, []);
-
   const api = useMemo(
     () => ({
       updateStory,
       fetchStories,
       trashStory,
       duplicateStory,
-      createTemplateFromStory,
     }),
-    [
-      duplicateStory,
-      trashStory,
-      updateStory,
-      fetchStories,
-      createTemplateFromStory,
-    ]
+    [duplicateStory, trashStory, updateStory, fetchStories]
   );
 
   return { stories: state, api };

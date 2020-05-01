@@ -87,13 +87,8 @@ function MyStories() {
   });
   const {
     actions: {
-      storyApi: {
-        updateStory,
-        createTemplateFromStory,
-        fetchStories,
-        trashStory,
-        duplicateStory,
-      },
+      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      templateApi: { createTemplateFromStory },
     },
     state: {
       stories: {
