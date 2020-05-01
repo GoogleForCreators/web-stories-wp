@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { render, wait, act, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { waitFor, act, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import createSolid from '../../../../utils/createSolid';
 import OpacityPreview from '../opacityPreview';
 import getPreviewOpacityMock from '../getPreviewOpacity';
 import getPreviewTextMock from '../getPreviewText';
+import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
@@ -39,18 +38,12 @@ function arrange(customProps = {}) {
     value: createSolid(0, 0, 0),
     ...customProps,
   };
-  const { queryByLabelText, rerender } = render(
-    <ThemeProvider theme={theme}>
-      <OpacityPreview {...props} />
-    </ThemeProvider>
+  const { queryByLabelText, rerender } = renderWithTheme(
+    <OpacityPreview {...props} />
   );
   const element = queryByLabelText('Opacity');
   const wrappedRerender = (extraProps) =>
-    rerender(
-      <ThemeProvider theme={theme}>
-        <OpacityPreview {...props} {...extraProps} />
-      </ThemeProvider>
-    );
+    rerender(<OpacityPreview {...props} {...extraProps} />);
   return { element, onChange, rerender: wrappedRerender };
 }
 
@@ -94,13 +87,13 @@ describe('<OpacityPreview />', () => {
 
     act(() => element.focus());
 
-    await wait(() => expect(element).toHaveFocus());
+    await waitFor(() => expect(element).toHaveFocus());
     expect(element).toHaveValue('100');
 
     document.body.tabIndex = 0; // Allow body to be focused
     act(() => document.body.focus());
 
-    await wait(() => expect(element).not.toHaveFocus());
+    await waitFor(() => expect(element).not.toHaveFocus());
     expect(element).toHaveValue('100%');
   });
 

@@ -1,17 +1,34 @@
 {
   "root": true,
+  "parser": "babel-eslint",
   "extends": [
-    "plugin:@wordpress/eslint-plugin/recommended",
+    "plugin:@wordpress/eslint-plugin/i18n",
+    "eslint:recommended",
     "plugin:import/recommended",
     "plugin:eslint-comments/recommended",
+    "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jsdoc/recommended"
   ],
-  "plugins": ["jsx-a11y", "header"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "header",
+    "@wordpress"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
     "block-scoped-var": "error",
     "complexity": ["error", {"max": 20}],
     "consistent-return": "error",
+    "curly": ["error", "all"],
     "default-case": "error",
     "guard-for-in": "error",
     "no-await-in-loop": "error",
@@ -71,6 +88,7 @@
     ],
     "no-useless-call": "error",
     "no-useless-concat": "error",
+    "no-console": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
@@ -84,6 +102,7 @@
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
     "react/no-unused-prop-types": "error",
+    "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
     "import/no-extraneous-dependencies": "error",
     "import/no-unresolved": "error",
@@ -100,21 +119,65 @@
         ]
       }
     ],
+    "jsdoc/require-jsdoc": "off",
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-param-description": "off",
     "jsdoc/check-indentation": "error",
+    "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
+    "@wordpress/no-unused-vars-before-return": ["error", {
+      "excludePattern": "^use"
+    }],
     "@wordpress/react-no-unsafe-timeout": "error",
-    "eslint-comments/no-unused-disable": "error"
+    "@wordpress/i18n-text-domain": ["error", {
+      "allowedTextDomain":  "web-stories"
+    }],
+    "@wordpress/valid-sprintf": "error"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "global": true,
+    "window": true,
+    "document": true,
+    "wp": "readonly",
+    "process": "readonly"
+  },
+  "settings": {
+    "jsdoc": {
+      "preferredTypes": {
+        "object": "Object"
+      },
+      "tagNamePreference": {
+        "returns": "return",
+        "yields": "yield"
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
   },
   "overrides": [
     {
       "files": [
         "**/__tests__/**/*.js",
-        "**/test/*.js",
+        "**/test/**/*.js",
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
-      "extends": ["plugin:jest/all", "plugin:testing-library/recommended", "plugin:jest-dom/recommended"],
-      "plugins": ["jsx-a11y", "header", "testing-library", "jest-dom"],
+      "extends": [
+        "plugin:jest/all",
+        "plugin:testing-library/recommended",
+        "plugin:jest-dom/recommended"
+      ],
+      "plugins": [
+        "jsx-a11y",
+        "header",
+        "testing-library",
+        "jest-dom"
+      ],
       "rules": {
         "jest/lowercase-name": [
           "error",
@@ -132,7 +195,6 @@
     {
       "files": ["tests/e2e/**/*.js"],
       "extends": [
-        "plugin:@wordpress/eslint-plugin/test-e2e",
         "plugin:jest/all"
       ],
       "rules": {
@@ -145,6 +207,40 @@
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off"
+      },
+      "globals": {
+        "browser": "readonly",
+        "page": "readonly",
+        "wp": "readonly"
+      }
+    },
+    {
+      "files": [
+        "bin/**/*.js",
+        "babel.config.js",
+        "jest-puppeteer.config.js",
+        "webpack.config.js",
+        ".storybook/*.js",
+        "tests/js/*.js",
+        "tests/e2e/*.js",
+        "tests/e2e/config/*.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": [
+        "*.md",
+        "**/*.md"
+      ],
+      "plugins": [
+        "markdown"
+      ],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "header/header": "off"
       }
     }
   ]

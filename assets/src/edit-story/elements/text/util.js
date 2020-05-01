@@ -84,6 +84,8 @@ export function getSelectionForOffset(content, offset) {
       const selection = new SelectionState({
         anchorKey: block.getKey(),
         anchorOffset: countdown,
+        focusKey: block.getKey(),
+        focusOffset: countdown,
       });
       return selection;
     }
@@ -154,12 +156,18 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
   return fontFamilyDisplay;
 };
 
+let contentBuffer = null;
 export const draftMarkupToContent = (content, bold) => {
   // @todo This logic is temporary and will change with selecting part + marking bold/italic/underline.
   if (bold) {
-    return `<strong>${content}</strong>`;
+    content = `<strong>${content}</strong>`;
   }
-  return content;
+  if (!contentBuffer) {
+    contentBuffer = document.createElement('template');
+  }
+  // Ensures the content is valid HTML.
+  contentBuffer.innerHTML = content;
+  return contentBuffer.innerHTML;
 };
 
 export const getHighlightLineheight = function (

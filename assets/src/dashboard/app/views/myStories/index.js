@@ -28,35 +28,44 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { FloatingTab, ListBar } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
-import { ApiContext } from '../../api/apiProvider';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
+import {
+  FloatingTab,
+  InfiniteScroller,
+  ScrollToTop,
+  Layout,
+} from '../../../components';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  STORY_SORT_OPTIONS,
+  SORT_DIRECTION,
+} from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { ApiContext } from '../../api/apiProvider';
+import FontProvider from '../../font/fontProvider';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
+  BodyViewOptions,
   PageHeading,
   NoResults,
   StoryGridView,
-  ListBarContainer,
+  StoryListView,
 } from '../shared';
 
-const FilterContainer = styled.div`
-  padding: 0 20px 20px 0;
-  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
+// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
-  }
+const FilterContainer = styled.fieldset`
+  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
+  padding-bottom: 20px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 
   @media ${({ theme }) => theme.breakpoint.min} {
-    & > label {
+    & > label span {
       border-radius: 0;
-      box-shadow: none;
+      box-shadow: none !important;
       padding: 0 10px 0 0;
     }
   }
@@ -65,9 +74,9 @@ const FilterContainer = styled.div`
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-size: ${({ theme }) => theme.fonts.body1.size}px;
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
 `;
@@ -76,27 +85,100 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
   margin-right: 9px;
 `;
 
+const CardPanel = styled.div`
+  padding-top: 60px;
+`;
+
 function MyStories() {
   const [status, setStatus] = useState(STORY_STATUSES[0].value);
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const { pageSize } = usePagePreviewSize();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [currentStorySort, setCurrentStorySort] = useState(
+    STORY_SORT_OPTIONS.LAST_MODIFIED
+  );
+  const [currentListSortDirection, setListSortDirection] = useState(
+    SORT_DIRECTION.ASC
+  );
+
+  const { pageSize } = usePagePreviewSize({
+    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+  });
   const {
-    actions: { fetchStories },
-    state: { stories },
+    actions: {
+      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+    },
+    state: {
+      stories: {
+        allPagesFetched,
+        isLoading,
+        stories,
+        storiesOrderById,
+        totalStories,
+        totalPages,
+      },
+    },
   } = useContext(ApiContext);
 
   useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
-
-  const filteredStories = useMemo(() => {
-    return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-
-      return story.title.toLowerCase().includes(lowerTypeaheadValue);
+    fetchStories({
+      sortOption: currentStorySort,
+      searchTerm: typeaheadValue,
+      sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
+      status,
+      page: currentPage,
     });
-  }, [stories, typeaheadValue]);
+  }, [
+    viewStyle,
+    currentListSortDirection,
+    currentPage,
+    currentStorySort,
+    status,
+    typeaheadValue,
+    fetchStories,
+  ]);
+
+  const setCurrentPageClamped = useCallback(
+    (newPage) => {
+      const pageRange = [1, totalPages];
+      setCurrentPage(clamp(newPage, pageRange));
+    },
+    [totalPages]
+  );
+
+  const orderedStories = useMemo(() => {
+    return storiesOrderById.map((storyId) => {
+      return stories[storyId];
+    });
+  }, [stories, storiesOrderById]);
+
+  const handleNewStorySort = useCallback(
+    (sort) => {
+      setCurrentStorySort(sort);
+      setCurrentPageClamped(1);
+    },
+    [setCurrentStorySort, setCurrentPageClamped]
+  );
+  const handleFilterStatusUpdate = useCallback(
+    (_, value) => {
+      setCurrentPageClamped(1);
+      setStatus(value);
+    },
+    [setCurrentPageClamped]
+  );
+
+  const handleNewPageRequest = useCallback(() => {
+    setCurrentPageClamped(currentPage + 1);
+  }, [currentPage, setCurrentPageClamped]);
+
+  const handleTypeaheadChange = useCallback(
+    (newTypeaheadValue) => {
+      setCurrentPageClamped(1);
+      setTypeaheadValue(newTypeaheadValue);
+    },
+    [setCurrentPageClamped, setTypeaheadValue]
+  );
 
   const handleViewStyleBarButtonSelected = useCallback(() => {
     if (viewStyle === VIEW_STYLE.LIST) {
@@ -106,32 +188,21 @@ function MyStories() {
     }
   }, [viewStyle]);
 
-  const filteredStoriesCount = filteredStories.length;
-
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
-    _n(
-      '%s total story',
-      '%s total stories',
-      filteredStoriesCount,
-      'web-stories'
-    ),
-    filteredStoriesCount
+    _n('%s total story', '%s total stories', totalStories, 'web-stories'),
+    totalStories
   );
 
-  const BodyContent = useMemo(() => {
-    if (filteredStoriesCount > 0) {
-      return (
-        <BodyWrapper>
-          <ListBarContainer>
-            <ListBar
-              label={listBarLabel}
-              layoutStyle={viewStyle}
-              onPress={handleViewStyleBarButtonSelected}
-            />
-          </ListBarContainer>
+  const storiesView = useMemo(() => {
+    switch (viewStyle) {
+      case VIEW_STYLE.GRID:
+        return (
           <StoryGridView
-            filteredStories={filteredStories}
+            trashStory={trashStory}
+            updateStory={updateStory}
+            duplicateStory={duplicateStory}
+            filteredStories={orderedStories}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
@@ -140,7 +211,67 @@ function MyStories() {
             }
             bottomActionLabel={__('Open in editor', 'web-stories')}
           />
-        </BodyWrapper>
+        );
+      case VIEW_STYLE.LIST:
+        return (
+          <StoryListView
+            filteredStories={orderedStories}
+            storySort={currentStorySort}
+            sortDirection={currentListSortDirection}
+            handleSortChange={handleNewStorySort}
+            handleSortDirectionChange={setListSortDirection}
+          />
+        );
+      default:
+        return null;
+    }
+  }, [
+    duplicateStory,
+    trashStory,
+    viewStyle,
+    updateStory,
+    orderedStories,
+    currentStorySort,
+    currentListSortDirection,
+    handleNewStorySort,
+  ]);
+
+  const storiesViewControls = useMemo(() => {
+    return (
+      <BodyViewOptions
+        listBarLabel={listBarLabel}
+        layoutStyle={viewStyle}
+        handleLayoutSelect={handleViewStyleBarButtonSelected}
+        currentSort={currentStorySort}
+        handleSortChange={handleNewStorySort}
+        sortDropdownAriaLabel={__(
+          'Choose sort option for display',
+          'web-stories'
+        )}
+      />
+    );
+  }, [
+    currentStorySort,
+    handleNewStorySort,
+    handleViewStyleBarButtonSelected,
+    listBarLabel,
+    viewStyle,
+  ]);
+
+  const BodyContent = useMemo(() => {
+    if (orderedStories.length > 0) {
+      return (
+        <CardPanel>
+          <BodyWrapper>
+            {storiesView}
+            <InfiniteScroller
+              canLoadMore={!allPagesFetched}
+              isLoading={isLoading}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              onLoadMore={handleNewPageRequest}
+            />
+          </BodyWrapper>
+        </CardPanel>
       );
     } else if (typeaheadValue.length > 0) {
       return <NoResults typeaheadValue={typeaheadValue} />;
@@ -152,39 +283,48 @@ function MyStories() {
       </DefaultBodyText>
     );
   }, [
-    filteredStories,
-    filteredStoriesCount,
-    handleViewStyleBarButtonSelected,
-    listBarLabel,
+    orderedStories.length,
+    isLoading,
+    allPagesFetched,
+    handleNewPageRequest,
     typeaheadValue,
-    viewStyle,
+    storiesView,
   ]);
 
   return (
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={filteredStories}
-            handleTypeaheadChange={setTypeaheadValue}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={(_, value) => setStatus(value)}
-                name="all-stories"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-              >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
+          <Layout.Provider>
+            <Layout.Squishable>
+              <PageHeading
+                defaultTitle={__('My Stories', 'web-stories')}
+                searchPlaceholder={__('Search Stories', 'web-stories')}
+                filteredStories={orderedStories}
+                handleTypeaheadChange={handleTypeaheadChange}
+                typeaheadValue={typeaheadValue}
+              />
+              <FilterContainer>
+                {STORY_STATUSES.map((storyStatus) => (
+                  <FloatingTab
+                    key={storyStatus.value}
+                    onClick={handleFilterStatusUpdate}
+                    name="my-stories-filter-selection"
+                    value={storyStatus.value}
+                    isSelected={status === storyStatus.value}
+                    inputType="radio"
+                  >
+                    {storyStatus.label}
+                  </FloatingTab>
+                ))}
+              </FilterContainer>
+              {storiesViewControls}
+            </Layout.Squishable>
+            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
+          </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>

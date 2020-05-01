@@ -17,10 +17,8 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ThemeProvider } from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -30,16 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import RadioGroup from '../radioGroup';
-
-function ThemeProviderWrapper({ children }) {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-}
-
-ThemeProviderWrapper.propTypes = {
-  children: PropTypes.any.isRequired,
-};
+import { renderWithTheme } from '../../../testUtils';
 
 describe('RadioGroup', () => {
   const options = [
@@ -56,15 +46,12 @@ describe('RadioGroup', () => {
   ];
 
   it('should render with correct options', () => {
-    const { getByText, getByLabelText } = render(
+    const { getByText, getByLabelText } = renderWithTheme(
       <RadioGroup
         onChange={() => null}
         options={options}
         value={options[0].value}
-      />,
-      {
-        wrapper: ThemeProviderWrapper,
-      }
+      />
     );
 
     const optionA = getByText('Option A');
@@ -77,15 +64,12 @@ describe('RadioGroup', () => {
 
   it('should change the value when clicking', () => {
     const onChange = jest.fn();
-    const { getByLabelText } = render(
+    const { getByLabelText } = renderWithTheme(
       <RadioGroup
         onChange={onChange}
         options={options}
         value={options[0].value}
-      />,
-      {
-        wrapper: ThemeProviderWrapper,
-      }
+      />
     );
     const optionB = getByLabelText(/Option B/i);
     fireEvent.click(optionB);

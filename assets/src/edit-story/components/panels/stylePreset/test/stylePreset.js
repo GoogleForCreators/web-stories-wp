@@ -17,15 +17,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StylePresetPanel from '../index';
 import StoryContext from '../../../../app/story/context';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
@@ -49,12 +48,15 @@ function setupPanel(extraStylePresets, extraStateProps) {
     },
     actions: { updateStory, updateElementsById },
   };
-  const { getByText, queryByLabelText, getByLabelText, queryByText } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <StylePresetPanel />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const {
+    getByText,
+    queryByLabelText,
+    getByLabelText,
+    queryByText,
+  } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <StylePresetPanel />
+    </StoryContext.Provider>
   );
   return {
     getByText,

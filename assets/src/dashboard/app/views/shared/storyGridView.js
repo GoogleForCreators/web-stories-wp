@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -33,6 +37,8 @@ import {
   PreviewPage,
 } from '../../../components';
 import { StoriesPropType } from '../../../types';
+import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
+import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -41,10 +47,10 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
   }
 `;
 
@@ -52,8 +58,57 @@ const StoryGridView = ({
   filteredStories,
   centerActionLabel,
   bottomActionLabel,
+  updateStory,
+  trashStory,
+  duplicateStory,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
+  const [titleRenameId, setTitleRenameId] = useState(-1);
+
+  const handleMenuItemSelected = useCallback(
+    (sender, story) => {
+      setContextMenuId(-1);
+      switch (sender.value) {
+        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          window.location.href = story.bottomTargetAction;
+          break;
+        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+          setTitleRenameId(story.id);
+          break;
+
+        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          duplicateStory(story);
+          break;
+
+        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+          if (
+            window.confirm(
+              sprintf(
+                /* translators: %s: story title. */
+                __('Are you sure you want to delete "%s"?', 'web-stories'),
+                story.title
+              )
+            )
+          ) {
+            trashStory(story);
+          }
+          break;
+
+        default:
+          break;
+      }
+    },
+    [trashStory, duplicateStory]
+  );
+
+  const handleOnRenameStory = useCallback(
+    (story, newTitle) => {
+      setTitleRenameId(-1);
+      updateStory({ ...story, title: { raw: newTitle } });
+    },
+    [updateStory]
+  );
+
   return (
     <StoryGrid>
       {filteredStories.map((story) => (
@@ -68,17 +123,24 @@ const StoryGridView = ({
               label: bottomActionLabel,
             }}
           >
-            <PreviewPage page={story.pages[0]} />
+            <PreviewErrorBoundary>
+              <PreviewPage page={story.pages[0]} />
+            </PreviewErrorBoundary>
           </CardPreviewContainer>
           <DetailRow>
             <CardTitle
               title={story.title}
               modifiedDate={story.modified.startOf('day').fromNow()}
+              onEditComplete={(newTitle) =>
+                handleOnRenameStory(story, newTitle)
+              }
+              onEditCancel={() => setTitleRenameId(-1)}
+              editMode={titleRenameId === story.id}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}
               contextMenuId={contextMenuId}
-              onMenuItemSelected={() => setContextMenuId(-1)}
+              onMenuItemSelected={handleMenuItemSelected}
               story={story}
             />
           </DetailRow>
@@ -92,6 +154,9 @@ StoryGridView.propTypes = {
   filteredStories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
+  updateStory: PropTypes.func.isRequired,
+  trashStory: PropTypes.func.isRequired,
+  duplicateStory: PropTypes.func.isRequired,
 };
 
 export default StoryGridView;

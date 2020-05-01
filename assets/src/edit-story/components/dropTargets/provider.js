@@ -38,7 +38,7 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { deleteElementById, updateElementById },
+    actions: { combineElements, updateElementById },
     state: { currentPage },
   } = useStory();
 
@@ -141,26 +141,25 @@ function DropTargetsProvider({ children }) {
         isFill = false,
       } = activeDropTarget;
 
-      updateElementById({
-        elementId: activeDropTargetId,
-        properties: {
-          resource,
-          type: resource.type,
-          scale,
-          focalX,
-          focalY,
-          isFill,
-        },
-      });
+      if (selfId) {
+        combineElements({ firstId: selfId, secondId: activeDropTargetId });
+      } else {
+        updateElementById({
+          elementId: activeDropTargetId,
+          properties: {
+            resource,
+            type: resource.type,
+            scale,
+            focalX,
+            focalY,
+            isFill,
+          },
+        });
+      }
 
       // Reset styles on visisble elements
       (currentPage?.elements || [])
-        .filter(
-          ({ id }) =>
-            !(id in Object.keys(dropTargets)) &&
-            id !== selfId &&
-            id !== activeDropTargetId
-        )
+        .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
         .forEach((el) => {
           pushTransform(el.id, {
             dropTargets: {
@@ -170,9 +169,6 @@ function DropTargetsProvider({ children }) {
           });
         });
 
-      if (selfId) {
-        deleteElementById({ elementId: selfId });
-      }
       setActiveDropTargetId(null);
     },
     [
@@ -180,7 +176,7 @@ function DropTargetsProvider({ children }) {
       activeDropTargetId,
       currentPage,
       dropTargets,
-      deleteElementById,
+      combineElements,
       pushTransform,
       updateElementById,
     ]

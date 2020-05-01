@@ -25,13 +25,7 @@ import { useEffect, useState, useRef } from 'react';
  * Internal dependencies
  */
 import { KEYS, Z_INDEX } from '../../constants';
-
-export const DROPDOWN_MENU_DIRECTIONS = {
-  UP: 'up',
-  DOWN: 'down',
-  LEFT: 'left',
-  RIGHT: 'right',
-};
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const Menu = styled.ul`
   width: 100%;
@@ -58,10 +52,11 @@ const MenuItem = styled.li`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   display: flex;
   font-family: ${({ theme }) => theme.fonts.typeaheadOptions.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size};
-  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size}px;
+  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight}px;
   font-weight: ${({ theme }) => theme.fonts.typeaheadOptions.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadOptions.letterSpacing};
+  letter-spacing: ${({ theme }) =>
+    theme.fonts.typeaheadOptions.letterSpacing}em;
   width: 100%;
 `;
 
@@ -154,12 +149,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
 };
 
 TypeaheadOptions.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-      label: PropTypes.string,
-    })
-  ).isRequired,
+  items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   maxItemsVisible: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,

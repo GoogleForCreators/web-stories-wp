@@ -18,7 +18,7 @@
  * Infer element type from mime type of its resource
  *
  * @param {string} mimeType Mime type.
- * @return {string} Element type.
+ * @return {string|null} Element type.
  */
 const getTypeFromMime = (mimeType) => {
   if (mimeType.match('image.*')) {
@@ -26,8 +26,7 @@ const getTypeFromMime = (mimeType) => {
   } else if (mimeType.match('video.*')) {
     return 'video';
   }
-
-  throw new Error('File type error');
+  return null;
 };
 
 export default getTypeFromMime;

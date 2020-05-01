@@ -45,6 +45,10 @@ import getCommonValue from '../utils/getCommonValue';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
+import {
+  DEFAULT_EDITOR_PAGE_WIDTH,
+  DEFAULT_EDITOR_PAGE_HEIGHT,
+} from '../../../constants';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -104,9 +108,20 @@ const alignmentButtonIds = [
   'alignBottom',
 ];
 
+const PAGE_RECT = {
+  startX: 0,
+  startY: 0,
+  endX: DEFAULT_EDITOR_PAGE_WIDTH,
+  endY: DEFAULT_EDITOR_PAGE_HEIGHT,
+  width: DEFAULT_EDITOR_PAGE_WIDTH,
+  height: DEFAULT_EDITOR_PAGE_HEIGHT,
+};
+
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
-  const boundRect = getBoundRect(selectedElements);
+  // Set boundRect with pageSize when there is only element selected
+  const boundRect =
+    selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
   const isFill = getCommonValue(selectedElements, 'isFill');
 
   const updatedSelectedElementsWithFrame = useMemo(
@@ -158,8 +173,8 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
   );
 
-  const isAlignEnabled = !isFill && selectedElements.length > 1;
   const isDistributionEnabled = !isFill && selectedElements.length > 2;
+  const isAlignEnabled = !isFill;
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);

@@ -93,6 +93,47 @@ describe('TextOutput', () => {
     });
   });
 
+  it('should convert padding to percent of width', () => {
+    const element = {
+      id: '123',
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+      },
+      content: 'Content',
+      fontSize: 16,
+      letterSpacing: 1.3,
+      textAlign: 'left',
+      textDecoration: 'none',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 100,
+      rotationAngle: 0,
+      padding: {
+        vertical: 10,
+        horizontal: 10,
+      },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('Content');
+    expect(output.className).toBe('fill');
+    expect(output.style).toMatchObject({
+      padding: '20% 20%',
+    });
+  });
+
   it('should apply <strong> tags if bold', () => {
     const element = {
       id: '123',

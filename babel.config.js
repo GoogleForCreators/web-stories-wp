@@ -14,30 +14,46 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-const defaultConfig = require('@wordpress/babel-preset-default');
-
 module.exports = function (api) {
-  const config = defaultConfig(api);
+  const isTest = api.env('test');
+  const isProduction = api.env('production');
+
+  const targets = isTest
+    ? {
+        node: 'current',
+      }
+    : undefined;
 
   return {
-    ...config,
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          shippedProposals: true,
+          targets,
+          useBuiltIns: 'usage',
+          corejs: 3,
+        },
+      ],
+      [
+        '@babel/preset-react',
+        {
+          // Not fully released yet, see https://github.com/facebook/react/pull/18299#issuecomment-603738136.
+          //runtime: 'automatic',
+          development: !isProduction,
+        },
+      ],
+    ],
     plugins: [
-      ...config.plugins,
+      '@wordpress/babel-plugin-import-jsx-pragma',
+      '@babel/plugin-transform-react-jsx',
       'babel-plugin-styled-components',
       '@babel/plugin-proposal-class-properties',
     ],
     sourceMaps: true,
     env: {
       production: {
-        plugins: [
-          ...config.plugins,
-          'babel-plugin-styled-components',
-          '@babel/plugin-proposal-class-properties',
-          'transform-react-remove-prop-types',
-        ],
+        plugins: ['transform-react-remove-prop-types'],
       },
     },
   };

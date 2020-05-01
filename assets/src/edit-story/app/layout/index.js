@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -30,7 +29,6 @@ import {
   LIBRARY_MIN_WIDTH,
   LIBRARY_MAX_WIDTH,
   INSPECTOR_MIN_WIDTH,
-  SCROLLBAR_WIDTH,
 } from '../../constants';
 
 const Editor = styled.div`
@@ -39,35 +37,6 @@ const Editor = styled.div`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   background-color: ${({ theme }) => theme.colors.bg.v1};
-
-  /*
-   * Custom dark scrollbars for Chromium & Firefox.
-   * Scoped to <Editor> to make sure we don't mess with WP dialogs
-   * like the Backbone Media Gallery dialog.
-   */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-      ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
-  }
-
-  *::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
-    border-radius: 6px;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.bg.v10};
-    width: 3px;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
 
   position: relative;
   height: 100%;

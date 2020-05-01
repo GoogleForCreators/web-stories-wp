@@ -28,10 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import useLibrary from '../../useLibrary';
 import { Tab } from '../shared';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
@@ -85,9 +83,6 @@ function TextTab(props) {
     evt.stopPropagation();
     insertElement('text', {
       content: __('Fill in some text', 'web-stories'),
-      color: createSolid(0, 0, 0),
-      backgroundColor: createSolid(196, 196, 196),
-      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       fontSize: DEFAULT_FONT_SIZE,
       width: DEFAULT_ELEMENT_WIDTH,
     });

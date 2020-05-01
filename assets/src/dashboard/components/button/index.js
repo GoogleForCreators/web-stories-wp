@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types'; // import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -27,14 +27,14 @@ import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const StyledButton = styled.button`
   font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size};
+  font-size: ${({ theme }) => theme.fonts.button.size}px;
   font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight};
+  line-height: ${({ theme }) => theme.fonts.button.lineHeight}px;
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border: ${({ theme }) => theme.borders.transparent};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
   height: 40px;
   min-width: 100px;
@@ -80,6 +80,7 @@ const SecondaryButton = styled(StyledButton)`
     text-shadow: ${({ theme }) => theme.text.shadow};
   }
 `;
+
 const StyledChildren = styled.span`
   margin: 0 auto;
   padding: 0;
@@ -91,7 +92,7 @@ const StyledChildren = styled.span`
 const Button = ({
   children,
   isDisabled,
-  onClick,
+  isLink,
   type = BUTTON_TYPES.PRIMARY,
   ...rest
 }) => {
@@ -104,7 +105,11 @@ const Button = ({
   const StyledButtonByType = ButtonOptions[type];
 
   return (
-    <StyledButtonByType disabled={isDisabled} onClick={onClick} {...rest}>
+    <StyledButtonByType
+      as={isLink ? 'a' : 'button'}
+      disabled={isDisabled}
+      {...rest}
+    >
       <StyledChildren>{children}</StyledChildren>
     </StyledButtonByType>
   );
@@ -112,9 +117,9 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
   isCta: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isLink: PropTypes.bool,
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 

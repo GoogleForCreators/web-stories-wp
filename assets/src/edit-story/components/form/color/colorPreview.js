@@ -30,6 +30,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import MULTIPLE_VALUE from '../multipleValue';
 import Popup from '../../popup';
@@ -144,7 +145,7 @@ function ColorPreview({
   ]);
 
   // Always hide color picker on unmount - note the double arrows
-  useEffect(() => () => setPickerOpen(false), []);
+  useUnmount(() => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);

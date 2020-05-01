@@ -116,7 +116,9 @@ function VideoFrame({ element, box }) {
 
   const handlePlayPause = () => {
     const videoNode = getVideoNode();
-    if (!videoNode) return;
+    if (!videoNode) {
+      return;
+    }
 
     if (isPlaying) {
       videoNode.pause();

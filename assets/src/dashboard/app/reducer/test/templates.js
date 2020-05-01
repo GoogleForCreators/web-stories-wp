@@ -1,0 +1,185 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Internal dependencies
+ */
+import templateReducer, {
+  ACTION_TYPES,
+  defaultTemplatesState as initialState,
+} from '../templates';
+
+describe('templateReducer', () => {
+  it(`should update stories state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called`, () => {
+    const result = templateReducer(initialState, {
+      type: ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+      payload: {
+        page: 1,
+        templates: [
+          {
+            id: 1,
+            title: 'Beauty',
+          },
+          {
+            id: 2,
+            title: 'Cooking',
+          },
+          {
+            id: 3,
+            title: 'DIY',
+          },
+          {
+            id: 4,
+            title: 'Cooking',
+          },
+          {
+            id: 5,
+            title: 'Entertainment',
+          },
+        ],
+        totalTemplates: 33,
+        totalPages: 4,
+      },
+    });
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isError: false,
+      templatesOrderById: [1, 2, 3, 4, 5],
+      templates: {
+        1: {
+          id: 1,
+          title: 'Beauty',
+        },
+        2: {
+          id: 2,
+          title: 'Cooking',
+        },
+        3: {
+          id: 3,
+          title: 'DIY',
+        },
+        4: {
+          id: 4,
+          title: 'Cooking',
+        },
+        5: {
+          id: 5,
+          title: 'Entertainment',
+        },
+      },
+      totalTemplates: 33,
+      totalPages: 4,
+      allPagesFetched: false,
+    });
+  });
+
+  it(`should update stories state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called and maintain order from existing state`, () => {
+    const result = templateReducer(
+      { ...initialState, templatesOrderById: [1, 2, 3, 8, 9] },
+      {
+        type: ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+        payload: {
+          page: 2,
+          templates: [
+            {
+              id: 7,
+              title: 'Beauty',
+            },
+            {
+              id: 2,
+              title: 'Cooking',
+            },
+            {
+              id: 3,
+              title: 'DIY',
+            },
+            {
+              id: 4,
+              title: 'Cooking',
+            },
+            {
+              id: 5,
+              title: 'Entertainment',
+            },
+          ],
+          totalTemplates: 8,
+          totalPages: 2,
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      templatesOrderById: [1, 2, 3, 8, 9, 7, 4, 5],
+      templates: {
+        7: {
+          id: 7,
+          title: 'Beauty',
+        },
+        2: {
+          id: 2,
+          title: 'Cooking',
+        },
+        3: {
+          id: 3,
+          title: 'DIY',
+        },
+        4: {
+          id: 4,
+          title: 'Cooking',
+        },
+        5: {
+          id: 5,
+          title: 'Entertainment',
+        },
+      },
+      totalTemplates: 8,
+      totalPages: 2,
+      allPagesFetched: true,
+    });
+  });
+
+  it(`should update isLoading when ${ACTION_TYPES.LOADING_TEMPLATES} is called`, () => {
+    const result = templateReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.LOADING_TEMPLATES,
+        payload: true,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isLoading: true,
+    });
+  });
+
+  it(`should update isError when ${ACTION_TYPES.FETCH_TEMPLATES_FAILURE} is called`, () => {
+    const result = templateReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
+        payload: true,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isError: true,
+    });
+  });
+});

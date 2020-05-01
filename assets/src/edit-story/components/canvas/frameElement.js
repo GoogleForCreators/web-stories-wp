@@ -98,6 +98,10 @@ function FrameElement({ element }) {
     } else {
       setHasTransforms(false);
     }
+    const target = elementRef.current;
+    if (transform?.dropTargets?.hover !== undefined) {
+      target.style.opacity = transform.dropTargets.hover ? 0 : 1;
+    }
   });
 
   return (
@@ -113,7 +117,9 @@ function FrameElement({ element }) {
         data-element-id={id}
         {...box}
         onMouseDown={(evt) => {
-          if (!isSelected) {
+          if (isSelected) {
+            elementRef.current.focus();
+          } else {
             handleSelectElement(id, evt);
           }
           if (!isBackground) {

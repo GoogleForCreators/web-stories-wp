@@ -47,7 +47,7 @@ const EditControls = styled.div`
   padding: 0;
   opacity: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.overlay};
+  background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: 8px;
 
   &:hover {
@@ -85,7 +85,7 @@ const BottomActionButton = styled(Button)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { forwardedAs: 'a', href: targetAction, onClick: () => {} }
+    ? { href: targetAction, isLink: true }
     : { onClick: targetAction };
 
 const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {

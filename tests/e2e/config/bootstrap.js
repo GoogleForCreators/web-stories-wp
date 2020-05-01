@@ -93,7 +93,7 @@ function removePageEvents() {
 function observeConsoleLogging() {
   page.on('console', (message) => {
     const type = message.type();
-    if (!OBSERVED_CONSOLE_MESSAGE_TYPES.hasOwnProperty(type)) {
+    if (!Object.hasOwnProperty.call(OBSERVED_CONSOLE_MESSAGE_TYPES, type)) {
       return;
     }
 
@@ -102,6 +102,25 @@ function observeConsoleLogging() {
     // styled-components warns about dynamically created components.
     // @todo Fix issues.
     if (text.includes(' has been created dynamically.')) {
+      return;
+    }
+
+    // Firefox warns about this issue in WordPress admin.
+    if (text.includes('This page uses the non standard property “zoom”')) {
+      return;
+    }
+
+    // Firefox warns about this issue when there's no proper favicon.
+    if (
+      text.includes(
+        'Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]'
+      )
+    ) {
+      return;
+    }
+
+    // Firefox warns about this issue on the login screen.
+    if (text.includes('wp-includes/js/zxcvbn.min.js')) {
       return;
     }
 
