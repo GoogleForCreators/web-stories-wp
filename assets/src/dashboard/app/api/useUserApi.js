@@ -22,13 +22,30 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
+import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
+import fetchAllFromTotalPages from './fetchAllFromPages';
 
 export default function useUsersApi(dataAdapter, { wpApi }) {
   const [users, setUsers] = useState({});
   const fetchUsers = useCallback(async () => {
     try {
-      const usersJson = await dataAdapter.get(wpApi);
+      const response = await dataAdapter.get(
+        queryString.stringifyUrl({
+          url: wpApi,
+          query: { per_page: 100 },
+        }),
+        {
+          parse: false,
+        }
+      );
+
+      const usersJson = await fetchAllFromTotalPages(
+        response,
+        dataAdapter,
+        wpApi
+      );
+
       setUsers(
         groupBy(
           usersJson.map(({ _links, ...user }) => user),

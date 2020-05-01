@@ -26,13 +26,19 @@ import wpAdapter from '../wpAdapter';
 
 jest.mock('../wpAdapter', () => ({
   get: () =>
-    Promise.resolve([
-      {
-        id: 7,
-        name: 'Fun',
-        slug: 'fun',
+    Promise.resolve({
+      headers: {
+        get: () => '1',
       },
-    ]),
+      json: () =>
+        Promise.resolve([
+          {
+            id: 7,
+            name: 'Fun',
+            slug: 'fun',
+          },
+        ]),
+    }),
 }));
 
 describe('useTagsApi', () => {

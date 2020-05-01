@@ -22,13 +22,30 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
+import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
+import fetchAllFromTotalPages from './fetchAllFromPages';
 
 export default function useTagsApi(dataAdapter, { wpApi }) {
   const [tags, setTags] = useState({});
   const fetchTags = useCallback(async () => {
     try {
-      const tagsJson = await dataAdapter.get(wpApi);
+      const response = await dataAdapter.get(
+        queryString.stringifyUrl({
+          url: wpApi,
+          query: { per_page: 100 },
+        }),
+        {
+          parse: false,
+        }
+      );
+
+      const tagsJson = await fetchAllFromTotalPages(
+        response,
+        dataAdapter,
+        wpApi
+      );
+
       setTags(
         groupBy(
           tagsJson.map(({ _links, ...tag }) => tag),

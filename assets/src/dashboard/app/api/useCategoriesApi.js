@@ -22,13 +22,30 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
+import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
+import fetchAllFromTotalPages from './fetchAllFromPages';
 
 export default function useCategoriesApi(dataAdapter, { wpApi }) {
   const [categories, setCategories] = useState({});
   const fetchCategories = useCallback(async () => {
     try {
-      const categoriesJson = await dataAdapter.get(wpApi);
+      const response = await dataAdapter.get(
+        queryString.stringifyUrl({
+          url: wpApi,
+          query: { per_page: 100 },
+        }),
+        {
+          parse: false,
+        }
+      );
+
+      const categoriesJson = await fetchAllFromTotalPages(
+        response,
+        dataAdapter,
+        wpApi
+      );
+
       setCategories(
         groupBy(
           categoriesJson.map(({ _links, ...category }) => category),

@@ -26,16 +26,22 @@ import wpAdapter from '../wpAdapter';
 
 jest.mock('../wpAdapter', () => ({
   get: () =>
-    Promise.resolve([
-      {
-        id: 13,
-        name: 'Music',
+    Promise.resolve({
+      headers: {
+        get: () => '1',
       },
-      {
-        id: 23,
-        name: 'Art',
-      },
-    ]),
+      json: () =>
+        Promise.resolve([
+          {
+            id: 13,
+            name: 'Music',
+          },
+          {
+            id: 23,
+            name: 'Art',
+          },
+        ]),
+    }),
 }));
 
 describe('useCategoryApi', () => {

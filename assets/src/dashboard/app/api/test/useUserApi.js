@@ -26,12 +26,18 @@ import wpAdapter from '../wpAdapter';
 
 jest.mock('../wpAdapter', () => ({
   get: () =>
-    Promise.resolve([
-      {
-        id: 9,
-        name: 'admin',
+    Promise.resolve({
+      headers: {
+        get: () => '1',
       },
-    ]),
+      json: () =>
+        Promise.resolve([
+          {
+            id: 9,
+            name: 'admin',
+          },
+        ]),
+    }),
 }));
 
 describe('useUserApi', () => {
