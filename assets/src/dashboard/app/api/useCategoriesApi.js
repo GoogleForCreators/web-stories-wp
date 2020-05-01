@@ -28,10 +28,7 @@ export default function useCategoriesApi(dataAdapter, { wpApi }) {
   const [categories, setCategories] = useState({});
   const fetchCategories = useCallback(async () => {
     try {
-      const response = await dataAdapter.get(wpApi, {
-        parse: false,
-      });
-      const categoriesJson = await response.json();
+      const categoriesJson = await dataAdapter.get(wpApi);
       setCategories(
         groupBy(
           categoriesJson.map(({ _links, ...category }) => category),

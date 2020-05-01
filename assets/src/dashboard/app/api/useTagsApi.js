@@ -28,10 +28,7 @@ export default function useTagsApi(dataAdapter, { wpApi }) {
   const [tags, setTags] = useState({});
   const fetchTags = useCallback(async () => {
     try {
-      const response = await dataAdapter.get(wpApi, {
-        parse: false,
-      });
-      const tagsJson = await response.json();
+      const tagsJson = await dataAdapter.get(wpApi);
       setTags(
         groupBy(
           tagsJson.map(({ _links, ...tag }) => tag),

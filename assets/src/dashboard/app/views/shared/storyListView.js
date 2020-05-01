@@ -117,9 +117,8 @@ export default function StoryListView({
 }) {
   const metadataStringForIds = useCallback((metadata, ids) => {
     const metadataString = ids
-      .reduce((memo, current) => {
-        return [...memo, metadata[current].name];
-      }, [])
+      .reduce((memo, current) => [...memo, metadata[current]?.name], [])
+      .filter(Boolean)
       .join(', ');
     return metadataString === '' ? '—' : metadataString;
   }, []);

@@ -28,10 +28,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
   const [users, setUsers] = useState({});
   const fetchUsers = useCallback(async () => {
     try {
-      const response = await dataAdapter.get(wpApi, {
-        parse: false,
-      });
-      const usersJson = await response.json();
+      const usersJson = await dataAdapter.get(wpApi);
       setUsers(
         groupBy(
           usersJson.map(({ _links, ...user }) => user),
