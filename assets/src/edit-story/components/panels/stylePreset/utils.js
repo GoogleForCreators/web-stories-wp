@@ -20,8 +20,11 @@
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
+import createSolid from '../../../utils/createSolid';
 import convertToCSS from '../../../utils/convertToCSS';
 import objectPick from '../../../utils/objectPick';
+import { MULTIPLE_VALUE } from '../../form';
+import { getHTMLInfo } from '../../richText/htmlManipulation';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 export function findMatchingColor(color, stylePresets, isText) {
@@ -74,17 +77,25 @@ export function getTextPresets(elements, stylePresets) {
   return {
     textColors: elements
       .filter((text) => !hasStylePreset(text))
-      .map(({ color }) => color)
+      .map(({ content }) => getHTMLInfo(content).color)
+      .filter((color) => color !== MULTIPLE_VALUE)
       .filter((color) => !findMatchingColor(color, stylePresets, true)),
     textStyles: elements
       .filter((text) => hasStylePreset(text))
       .map((text) => {
-        return objectPick(text, [
-          'color',
-          'backgroundColor',
-          'backgroundTextMode',
-          'font',
-        ]);
+        const extractedColor = getHTMLInfo(text.content).color;
+        const color =
+          extractedColor === MULTIPLE_VALUE
+            ? createSolid(0, 0, 0)
+            : extractedColor;
+        return {
+          color,
+          ...objectPick(text, [
+            'backgroundColor',
+            'backgroundTextMode',
+            'font',
+          ]),
+        };
       })
       .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };

@@ -17,13 +17,14 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
 import stripHTML from '../../../utils/stripHTML';
+import objectWithout from '../../../utils/objectWithout';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { getShapePresets, getTextPresets } from './utils';
@@ -120,12 +121,17 @@ function StylePresetPanel() {
     ]
   );
 
+  const extraPropsToAdd = useRef(null);
   const miniPushUpdate = useCallback(
     (updater) => {
       updateElementsById({
         elementIds: selectedElementIds,
-        properties: updater,
+        properties: (oldProps) => ({
+          ...updater(oldProps),
+          ...extraPropsToAdd.current,
+        }),
       });
+      extraPropsToAdd.current = null;
     },
     [selectedElementIds, updateElementsById]
   );
@@ -141,11 +147,10 @@ function StylePresetPanel() {
         // Only style presets have background text mode set.
         const isStylePreset = preset.backgroundTextMode !== undefined;
         if (isStylePreset) {
-          updateElementsById({
-            elementIds: selectedElementIds,
-            properties: { ...preset },
-          });
+          extraPropsToAdd.current = objectWithout(preset, ['color']);
+          handleSetColor(preset.color);
         } else {
+          extraPropsToAdd.current = null;
           handleSetColor(preset);
         }
       } else {
