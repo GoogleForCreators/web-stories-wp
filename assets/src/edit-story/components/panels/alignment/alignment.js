@@ -58,8 +58,8 @@ const ElementRow = styled.div`
   align-items: center;
   padding: 10px 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.bg.v9};
-  overflow-y: overlay;
-  overflow-x: overlay;
+  overflow: auto;
+  overflow: overlay;
 `;
 
 const IconButton = styled.button`

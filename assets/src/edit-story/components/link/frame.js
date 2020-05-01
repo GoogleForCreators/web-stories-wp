@@ -24,11 +24,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
 import Popup from '../popup';
+import { useTransformHandler } from '../transform';
 import { getLinkFromElement } from './index';
 
 const Tooltip = styled.div`
@@ -97,18 +98,23 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-function WithLink({
-  element,
-  active,
-  dragging,
-  hasTransforms,
-  children,
-  anchorRef,
-}) {
+function WithLink({ element, active, dragging, children, anchorRef }) {
   const link = getLinkFromElement(element);
   const spacing = useMemo(() => ({ x: active ? 0 : 20, y: active ? 42 : 0 }), [
     active,
   ]);
+  const [hasTransforms, setHasTransforms] = useState(false);
+
+  useTransformHandler(element.id, (transform) => {
+    setHasTransforms(
+      Boolean(
+        transform &&
+          [transform.translate, transform.resize, transform.rotate].some(
+            (t) => t !== undefined
+          )
+      )
+    );
+  });
 
   return (
     <>
@@ -138,7 +144,6 @@ WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
   anchorRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
-  hasTransforms: PropTypes.bool.isRequired,
   dragging: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };

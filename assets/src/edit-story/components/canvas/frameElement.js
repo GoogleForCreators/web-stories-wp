@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useState, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -64,7 +64,6 @@ const EmptyFrame = styled.div`
 function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable } = getDefinitionForType(type);
-  const [hasTransforms, setHasTransforms] = useState(false);
   const elementRef = useRef();
 
   const {
@@ -88,16 +87,6 @@ function FrameElement({ element }) {
   const isBackground = currentPage?.backgroundElementId === id;
 
   useTransformHandler(id, (transform) => {
-    if (
-      transform &&
-      [transform.translate, transform.resize, transform.rotate].some(
-        (t) => typeof t !== 'undefined'
-      )
-    ) {
-      setHasTransforms(true);
-    } else {
-      setHasTransforms(false);
-    }
     const target = elementRef.current;
     if (transform?.dropTargets?.hover !== undefined) {
       target.style.opacity = transform.dropTargets.hover ? 0 : 1;
@@ -109,7 +98,6 @@ function FrameElement({ element }) {
       element={element}
       active={selectedElementIds.length === 1 && isSelected}
       dragging={Boolean(activeDropTargetId)}
-      hasTransforms={hasTransforms}
       anchorRef={elementRef}
     >
       <Wrapper

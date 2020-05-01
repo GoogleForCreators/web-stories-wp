@@ -145,7 +145,7 @@ function ColorPreview({
   ]);
 
   // Always hide color picker on unmount - note the double arrows
-  useUnmount(() => setPickerOpen(false));
+  useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);
