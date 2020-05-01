@@ -1,5 +1,12 @@
-import useUploadMedia from '../useUploadMedia';
+/**
+ * External dependencies
+ */
 import { renderHook, act } from '@testing-library/react-hooks';
+
+/**
+ * Internal dependencies
+ */
+import useUploadMedia from '../useUploadMedia';
 
 jest.mock('../../uploader', () => ({
   useUploader: jest.fn(() => ({
@@ -56,8 +63,11 @@ describe('useUploadMedia', () => {
     // Simple implementation of getResourceFromLocalFile that will return
     // null on unsupported resources.
     getResourceFromLocalFile.mockImplementation((e) => {
-      if (supportedLocalResource.includes(e.type)) return e;
-      else return null;
+      if (supportedLocalResource.includes(e.type)) {
+        return e;
+      } else {
+        return null;
+      }
     });
 
     const { result } = renderHook(() =>
