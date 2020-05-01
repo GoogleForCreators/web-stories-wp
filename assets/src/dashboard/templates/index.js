@@ -20,12 +20,14 @@
 import getFashionStoryData from './data/fashion';
 import getTravelStoryData from './data/travel';
 import getDIYStoryData from './data/diy';
+import getCookingStoryData from './data/cooking';
 
 export default function (config) {
   const { pluginDir } = config;
   const fashionStoryData = getFashionStoryData(pluginDir);
   const travelStoryData = getTravelStoryData(pluginDir);
   const diyStoryData = getDIYStoryData(pluginDir);
+  const cookingStoryData = getCookingStoryData(pluginDir);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -63,7 +65,7 @@ export default function (config) {
       ],
       description:
         'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
-      pages: travelStoryData.pages,
+      pages: cookingStoryData.pages,
     },
     {
       id: 3,
