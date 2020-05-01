@@ -99,6 +99,9 @@ function MyStories() {
         totalStories,
         totalPages,
       },
+      tags,
+      categories,
+      users,
     },
   } = useContext(ApiContext);
 
@@ -207,6 +210,9 @@ function MyStories() {
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
+            tags={tags}
+            categories={categories}
+            users={users}
           />
         );
       default:
@@ -222,6 +228,9 @@ function MyStories() {
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
+    tags,
+    categories,
+    users,
   ]);
 
   const storiesViewControls = useMemo(() => {

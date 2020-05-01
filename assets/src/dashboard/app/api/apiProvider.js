@@ -24,15 +24,26 @@ import { createContext, useMemo } from 'react';
  * Internal dependencies
  */
 import { useConfig } from '../config';
+import dataAdapter from './wpAdapter';
 import useFontApi from './useFontApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
-import dataAdapter from './wpAdapter';
+import useTagsApi from './useTagsApi';
+import useCategoriesApi from './useCategoriesApi';
+import useUsersApi from './useUserApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, pluginDir } = useConfig();
+
+  const { users, api: usersApi } = useUsersApi(dataAdapter, {
+    wpApi: api.users,
+  });
+  const { tags, api: tagsApi } = useTagsApi(dataAdapter, { wpApi: api.tags });
+  const { categories, api: categoriesApi } = useCategoriesApi(dataAdapter, {
+    wpApi: api.categories,
+  });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     pluginDir,
@@ -50,14 +61,32 @@ export default function ApiProvider({ children }) {
       state: {
         stories,
         templates,
+        tags,
+        categories,
+        users,
       },
       actions: {
         storyApi,
         templateApi,
         fontApi,
+        tagsApi,
+        categoriesApi,
+        usersApi,
       },
     }),
-    [stories, templates, storyApi, templateApi, fontApi]
+    [
+      users,
+      categories,
+      tags,
+      stories,
+      templates,
+      storyApi,
+      templateApi,
+      fontApi,
+      tagsApi,
+      categoriesApi,
+      usersApi,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
