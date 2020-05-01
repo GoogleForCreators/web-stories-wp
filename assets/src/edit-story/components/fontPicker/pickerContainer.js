@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -35,7 +35,6 @@ import { useFont } from '../../app/font';
 import { TextInput } from '../form';
 
 const PickerContainer = styled.div`
-  float: right;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -127,8 +126,8 @@ const FONT_ROW_HEIGHT = 34;
 
 function FontPickerContainer({ handleCurrentValue, onClose }) {
   const {
-    state: { fonts, recentUsedFontSlugs },
-    actions: { addUsedFontSlug, getMenuFonts },
+    state: { fonts, recentUsedFontValues },
+    actions: { insertUsedFont, getMenuFonts },
   } = useFont();
 
   const pickerContainerRef = useRef();
@@ -143,15 +142,15 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
   // Recently used font options, clean up on refresh
   const recentUsedFonts = useMemo(() => {
-    const fontsFromSlug = recentUsedFontSlugs.map((slug) =>
-      fonts.find((font) => font.slug === slug)
+    const fontsFromSlug = recentUsedFontValues.map((value) =>
+      fonts.find((font) => font.value === value)
     );
     return searchValue && searchValue !== ''
       ? fontsFromSlug.filter(({ name }) =>
           name.toLowerCase().includes(searchValue.toLowerCase())
         )
       : fontsFromSlug;
-  }, [searchValue, recentUsedFontSlugs, fonts]);
+  }, [searchValue, recentUsedFontValues, fonts]);
 
   // Font options that start with search term
   const otherFonts = useMemo(
@@ -203,8 +202,12 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
     const handleScroll = () => {
       let { scrollTop } = listElement;
+      // Remove the Ul list container padding offset
       scrollTop -= LIST_PADDING;
+      // Calculate the current visible font index
       let currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
+
+      // If there is recent used fonts and current visible options index is on next list
       if (
         recentUsedFonts.length > 0 &&
         currentVisibleIndex > recentUsedFonts.length
@@ -213,6 +216,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
         currentVisibleIndex =
           Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
       }
+      // If there is other fonts and current visible options index is on next list
       if (otherFonts.length > 0 && currentVisibleIndex > otherFonts.length) {
         scrollTop -= LIST_PADDING * 2;
       }
@@ -235,19 +239,31 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
   useFocusOut(pickerContainerRef, onClose, [onClose]);
 
-  const handleItemClick = (option, slug) => {
-    handleCurrentValue(option);
-    addUsedFontSlug(slug);
-  };
+  const handleItemClick = useCallback(
+    (value) => {
+      handleCurrentValue(value);
+      insertUsedFont(value);
+    },
+    [insertUsedFont, handleCurrentValue]
+  );
+
+  const handleSearchInput = useCallback(
+    (evt) => {
+      if (evt.keyCode === 13 && otherFonts.length > 0) {
+        handleItemClick(otherFonts[0].value);
+      }
+    },
+    [otherFonts, handleItemClick]
+  );
 
   const renderListWithOptions = (options) => {
     if (options?.length > 0) {
       return (
         <List aria-multiselectable={false} aria-required={false} ref={listRef}>
-          {options.map(({ name, value, slug, service }) => (
+          {options.map(({ name, value, service }) => (
             <Item
               key={value}
-              onClick={() => handleItemClick(value, slug)}
+              onClick={() => handleItemClick(value)}
               fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
             >
               {name}
@@ -264,7 +280,9 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
       <ExpandedTextInput
         ref={inputRef}
         value={searchValue}
+        placeholder={__('Search fonts', 'web-stories')}
         onChange={setSearchValue}
+        onKeyDown={handleSearchInput}
         color="white"
         clear
       />

@@ -21,6 +21,7 @@ import { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -86,9 +87,11 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeFontPicker = useCallback(() => {
+  // Make some delay, since when click the dropdown again to close it, this function called before by useFocusOut
+  // Causing reopen
+  const [closeFontPicker] = useDebouncedCallback(() => {
     setIsOpen(false);
-  }, []);
+  }, 100);
 
   const handleCurrentValue = useCallback(
     (option) => {
