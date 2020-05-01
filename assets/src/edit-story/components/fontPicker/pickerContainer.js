@@ -199,9 +199,6 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
   useEffect(() => {
     inputRef.current.focus();
-  });
-
-  useEffect(() => {
     const listElement = listContainerRef.current;
 
     const handleScroll = () => {
@@ -265,7 +262,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   return (
     <PickerContainer ref={pickerContainerRef}>
       <ExpandedTextInput
-        forwardedRef={inputRef}
+        ref={inputRef}
         value={searchValue}
         onChange={setSearchValue}
         color="white"
