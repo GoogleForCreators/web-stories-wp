@@ -154,7 +154,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   }, [searchValue, recentUsedFontSlugs, fonts]);
 
   // Font options that start with search term
-  const normalFonts = useMemo(
+  const otherFonts = useMemo(
     () =>
       searchValue && searchValue !== ''
         ? fonts.filter(({ name }) =>
@@ -179,7 +179,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
   useEffect(() => {
     const combinedFontList = [
       ...recentUsedFonts,
-      ...normalFonts,
+      ...otherFonts,
       ...includeSearchFonts,
     ]
       .slice(currentIndex, currentIndex + 10)
@@ -193,7 +193,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
     currentIndex,
     getMenuFonts,
     recentUsedFonts,
-    normalFonts,
+    otherFonts,
     includeSearchFonts,
   ]);
 
@@ -216,7 +216,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         currentVisibleIndex =
           Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
       }
-      if (normalFonts.length > 0 && currentVisibleIndex > normalFonts.length) {
+      if (otherFonts.length > 0 && currentVisibleIndex > otherFonts.length) {
         scrollTop -= LIST_PADDING * 2;
       }
       currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
@@ -276,15 +276,11 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
         aria-labelledby={__('FontPicker', 'web-stories')}
         menuFonts={menuFonts}
       >
-        {/* <GlobalFontFaces menuFonts={menuFonts} /> */}
         {renderListWithOptions(recentUsedFonts)}
-        {renderListWithOptions(normalFonts, recentUsedFonts.length)}
-        {renderListWithOptions(
-          includeSearchFonts,
-          normalFonts.length + recentUsedFonts.length
-        )}
+        {renderListWithOptions(otherFonts)}
+        {renderListWithOptions(includeSearchFonts)}
         {!recentUsedFonts.length &&
-          !normalFonts.length &&
+          !otherFonts.length &&
           !includeSearchFonts.length && (
             <NoItem>{__('No matches found', 'web-stories')}</NoItem>
           )}
