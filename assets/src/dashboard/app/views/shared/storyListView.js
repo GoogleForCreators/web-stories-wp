@@ -29,7 +29,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCallback } from 'react';
-import { StoriesPropType } from '../../../types';
+import {
+  CategoriesPropType,
+  StoriesPropType,
+  TagsPropType,
+  UsersPropType,
+} from '../../../types';
 import {
   PreviewPage,
   Table,
@@ -213,9 +218,9 @@ export default function StoryListView({
 
 StoryListView.propTypes = {
   filteredStories: StoriesPropType,
-  tags: PropTypes.object,
-  categories: PropTypes.object,
-  users: PropTypes.object,
+  tags: TagsPropType,
+  categories: CategoriesPropType,
+  users: UsersPropType,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
   storySort: PropTypes.string.isRequired,
