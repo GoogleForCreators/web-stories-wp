@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -41,6 +40,10 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
+const FlexedBoxedNumeric = styled(BoxedNumeric)`
+  flex-basis: auto;
+`;
+
 const Space = styled.div`
   flex: 0 0 10px;
 `;
@@ -56,45 +59,103 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
   const lockPadding =
     padding.locked === MULTIPLE_VALUE ? false : padding.locked;
 
-  const handleChange = useCallback(
-    (newPadding) => {
-      let update = newPadding;
-      if (lockPadding) {
-        const commonPadding =
-          newPadding.horizontal !== undefined
-            ? newPadding.horizontal
-            : newPadding.vertical;
-        update = {
-          horizontal: commonPadding,
-          vertical: commonPadding,
-          locked: true,
-        };
-      }
-      pushUpdateForObject('padding', update, DEFAULT_PADDING);
-    },
-    [pushUpdateForObject, lockPadding]
-  );
-
   return (
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
-      <BoxedNumeric
-        data-testid="padding.horizontal"
-        suffix={_x('H', 'The Horizontal padding', 'web-stories')}
+      {lockPadding ? (
+        <LockedPaddingControls
+          padding={padding}
+          pushUpdateForObject={pushUpdateForObject}
+        />
+      ) : (
+        <UnlockedPaddingControls
+          padding={padding}
+          pushUpdateForObject={pushUpdateForObject}
+        />
+      )}
+    </Row>
+  );
+}
+
+PaddingControls.propTypes = {
+  selectedElements: PropTypes.array.isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
+};
+
+function LockedPaddingControls({ padding, pushUpdateForObject }) {
+  return (
+    <>
+      <FlexedBoxedNumeric
+        data-testid="padding.multiple"
+        suffix={_x(
+          `H\u00A0&\u00A0V`,
+          'The Horizontal & Vertical padding',
+          'web-stories'
+        )}
         value={padding.horizontal}
-        onChange={(value) => handleChange({ horizontal: value })}
+        onChange={(value) =>
+          pushUpdateForObject(
+            'padding',
+            {
+              horizontal: value,
+              vertical: value,
+            },
+            DEFAULT_PADDING
+          )
+        }
       />
       <Space />
       <Toggle
         aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
-        value={lockPadding}
+        value={true}
+        onChange={() =>
+          pushUpdateForObject('padding', { locked: false }, DEFAULT_PADDING)
+        }
+      />
+    </>
+  );
+}
+
+LockedPaddingControls.propTypes = {
+  padding: PropTypes.shape().isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
+};
+
+function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
+  return (
+    <>
+      <BoxedNumeric
+        data-testid="padding.horizontal"
+        suffix={_x('H', 'The Horizontal padding', 'web-stories')}
+        value={padding.horizontal}
+        onChange={(value) =>
+          pushUpdateForObject(
+            'padding',
+            {
+              horizontal: value,
+            },
+            DEFAULT_PADDING
+          )
+        }
+      />
+      <Space />
+      <Toggle
+        aria-label={__('Padding ratio lock', 'web-stories')}
+        icon={<Locked />}
+        uncheckedIcon={<Unlocked />}
+        value={false}
         onChange={() =>
           pushUpdateForObject(
             'padding',
-            { locked: !lockPadding },
-            DEFAULT_PADDING
+            {
+              horizontal: padding.horizontal,
+              vertical: padding.horizontal,
+              locked: true,
+            },
+            DEFAULT_PADDING,
+            true
           )
         }
       />
@@ -103,14 +164,22 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
         data-testid="padding.vertical"
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={padding.vertical}
-        onChange={(value) => handleChange({ vertical: value })}
+        onChange={(value) =>
+          pushUpdateForObject(
+            'padding',
+            {
+              vertical: value,
+            },
+            DEFAULT_PADDING
+          )
+        }
       />
-    </Row>
+    </>
   );
 }
 
-PaddingControls.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
+UnlockedPaddingControls.propTypes = {
+  padding: PropTypes.shape().isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
 };
 
