@@ -23,54 +23,30 @@ import { Modifier, EditorState } from 'draft-js';
  * Internal dependencies
  */
 import { NONE } from './customConstants';
+import { getAllStyleSetsInSelection } from './draftUtils';
 
 export function getPrefixStyleForCharacter(styles, prefix) {
   const list = styles.toArray().map((style) => style.style ?? style);
-  if (!list.some((style) => style && style.startsWith(prefix))) {
+  const matcher = (style) => style && style.startsWith(prefix);
+  if (!list.some(matcher)) {
     return NONE;
   }
-  return list.find((style) => style.startsWith(prefix));
+  return list.find(matcher);
 }
 
 export function getPrefixStylesInSelection(editorState, prefix) {
   const selection = editorState.getSelection();
-  const styles = new Set();
   if (selection.isCollapsed()) {
-    styles.add(
-      getPrefixStyleForCharacter(editorState.getCurrentInlineStyle(), prefix)
-    );
-    return [...styles];
+    return [
+      getPrefixStyleForCharacter(editorState.getCurrentInlineStyle(), prefix),
+    ];
   }
 
-  const contentState = editorState.getCurrentContent();
-  let key = selection.getStartKey();
-  let startOffset = selection.getStartOffset();
-  const endKey = selection.getEndKey();
-  const endOffset = selection.getEndOffset();
-  let hasMoreRounds = true;
-  while (hasMoreRounds) {
-    hasMoreRounds = key !== endKey;
-    const block = contentState.getBlockForKey(key);
-    const offsetEnd = hasMoreRounds ? block.getLength() : endOffset;
-    const characterList = block.getCharacterList();
-    for (
-      let offsetIndex = startOffset;
-      offsetIndex < offsetEnd;
-      offsetIndex++
-    ) {
-      styles.add(
-        getPrefixStyleForCharacter(
-          characterList.get(offsetIndex).getStyle(),
-          prefix
-        )
-      );
-    }
-    if (!hasMoreRounds) {
-      break;
-    }
-    key = contentState.getKeyAfter(key);
-    startOffset = 0;
-  }
+  const styleSets = getAllStyleSetsInSelection(editorState);
+  const styles = new Set();
+  styleSets.forEach((styleSet) =>
+    styles.add(getPrefixStyleForCharacter(styleSet, prefix))
+  );
 
   return [...styles];
 }

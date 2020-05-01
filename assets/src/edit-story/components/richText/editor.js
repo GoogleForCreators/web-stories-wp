@@ -48,6 +48,9 @@ function RichTextEditor({ content, onChange }, ref) {
 
   // Push updates to parent when state changes
   useEffect(() => {
+    if (!editorState) {
+      return;
+    }
     const newContent = getContentFromState(editorState);
     if (newContent) {
       onChange(newContent);
