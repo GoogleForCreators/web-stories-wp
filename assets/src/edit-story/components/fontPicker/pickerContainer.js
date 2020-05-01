@@ -125,7 +125,7 @@ const ExpandedTextInput = styled(BoxedTextInput)`
 const LIST_PADDING = 5;
 const FONT_ROW_HEIGHT = 34;
 
-function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
+function FontPickerContainer({ handleCurrentValue, onClose }) {
   const {
     state: { fonts, recentUsedFontSlugs },
     actions: { addUsedFontSlug, getMenuFonts },
@@ -236,7 +236,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useFocusOut(pickerContainerRef, toggleOptions, [toggleOptions]);
+  useFocusOut(pickerContainerRef, onClose, [onClose]);
 
   const handleItemClick = (option, slug) => {
     handleCurrentValue(option);
@@ -290,7 +290,7 @@ function FontPickerContainer({ handleCurrentValue, toggleOptions }) {
 }
 
 FontPickerContainer.propTypes = {
-  toggleOptions: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
 };
 

@@ -86,7 +86,7 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleOptions = useCallback(() => {
+  const closeFontPicker = useCallback(() => {
     setIsOpen(false);
   }, []);
 
@@ -122,7 +122,7 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
       <Popup anchor={selectRef} isOpen={isOpen} width={DEFAULT_WIDTH}>
         <FontPickerContainer
           handleCurrentValue={handleCurrentValue}
-          toggleOptions={toggleOptions}
+          onClose={closeFontPicker}
         />
       </Popup>
     </Container>
