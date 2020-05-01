@@ -69,7 +69,7 @@ function TemplateDetail() {
   } = useRouteHistory();
   const {
     state: {
-      templates: { templates, templatesOrderById },
+      templates: { relatedTemplates, templates, templatesOrderById },
     },
     actions: {
       templateApi: { fetchMyTemplateById, fetchExternalTemplateById },
@@ -101,21 +101,6 @@ function TemplateDetail() {
       return templates[templateByOrderId];
     });
   }, [templatesOrderById, templates]);
-
-  const relatedTemplates = useMemo(() => {
-    if (templatesOrderById && orderedTemplates) {
-      const getRandomTemplateId = () =>
-        templatesOrderById[
-          Math.floor(Math.random() * templatesOrderById.length)
-        ];
-      const randomlySelectedTemplates = [];
-      for (let i = 0; i < 5; i++) {
-        randomlySelectedTemplates.push(orderedTemplates[getRandomTemplateId()]);
-      }
-      return randomlySelectedTemplates;
-    }
-    return [];
-  }, [orderedTemplates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
     if (!template) {

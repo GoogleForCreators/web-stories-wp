@@ -166,6 +166,21 @@ const useTemplateApi = (dataAdapter, config) => {
     });
   }, []);
 
+  const relatedTemplates = useMemo(() => {
+    if (!state.templates) {
+      return [];
+    }
+    // this will return anywhere between 1 and 5 "related" templates
+    const randomStartingIndex = Math.floor(
+      Math.random() * state.templatesOrderById.length
+    );
+    return [...state.templatesOrderById]
+      .splice(randomStartingIndex, 5)
+      .map((id) => {
+        return state.templates[id];
+      });
+  }, [state.templatesOrderById, state.templates]);
+
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
@@ -191,7 +206,7 @@ const useTemplateApi = (dataAdapter, config) => {
     ]
   );
 
-  return { templates: state, api };
+  return { templates: { ...state, relatedTemplates }, api };
 };
 /* eslint-enable no-unused-vars */
 
