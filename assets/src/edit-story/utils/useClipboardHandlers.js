@@ -24,8 +24,6 @@ import { useEffect } from 'react';
  */
 import documentHasSelection from './documentHasSelection';
 
-const BLACKLIST_CLIPBOARD_ELEMENTS = ['INPUT', 'TEXTAREA', 'BUTTON'];
-
 /**
  * @param {?Element} container
  * @param {function(!ClipboardEvent)} copyCutHandler
@@ -40,8 +38,8 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
     const copyCutHandlerWrapper = (evt) => {
       const { target, clipboardData } = evt;
 
-      // Elements that either handle their own clipboard or use platform.
-      if (!isCopyPasteTarget(target)) {
+      // Elements that either handle their own clipboard or have selection.
+      if (documentHasSelection()) {
         return;
       }
 
@@ -76,19 +74,6 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       document.removeEventListener('paste', pasteHandlerWrapper);
     };
   }, [container, copyCutHandler, pasteHandler]);
-}
-
-/**
- * @param {?Element} target
- * @return {boolean} Where the target can be used for copy/paste. This mainly
- * ignores platform level targets.
- */
-function isCopyPasteTarget(target) {
-  return (
-    target &&
-    !BLACKLIST_CLIPBOARD_ELEMENTS.includes(target.tagName) &&
-    !target.closest('[contenteditable="true"]')
-  );
 }
 
 export default useClipboardHandlers;
