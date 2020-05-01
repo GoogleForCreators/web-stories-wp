@@ -43,6 +43,7 @@ import {
 } from '../../../components';
 import { ICON_METRICS } from '../../../constants';
 import clamp from '../../../utils/clamp';
+import StoryGridView from '../shared/storyGridView';
 import {
   ByLine,
   ContentContainer,
@@ -98,6 +99,10 @@ function TemplateDetail() {
       return templates[templateByOrderId];
     });
   }, [templatesOrderById, templates]);
+
+  const relatedTemplates = useMemo(() => orderedTemplates.slice(0, 4), [
+    orderedTemplates,
+  ]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -218,6 +223,12 @@ function TemplateDetail() {
                 {NextButton}
               </Column>
             </ColumnContainer>
+            <StoryGridView
+              filteredStories={relatedTemplates}
+              centerActionLabel={__('View', 'web-stories')}
+              bottomActionLabel={__('Use template', 'web-stories')}
+              isTemplate
+            />
           </ContentContainer>
         </TransformProvider>
       </FontProvider>
