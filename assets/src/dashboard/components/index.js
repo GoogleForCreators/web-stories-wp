@@ -26,6 +26,10 @@ export {
   default as CardGridItem,
   MoreVerticalButton,
 } from './cardGridItem';
+export {
+  default as NavProvider,
+  useNavContext,
+} from '../components/navProvider';
 export { default as ColorList } from './colorList';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
@@ -33,7 +37,12 @@ export { TextInput } from './input';
 export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';
 export { TemplateNavBar } from './navigationBar';
-export { AppFrame, LeftRail, PageContent } from './pageStructure';
+export {
+  AppFrame,
+  LeftRail,
+  PageContent,
+  NavMenuButton,
+} from './pageStructure';
 export { FloatingTab, Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
@@ -47,10 +56,14 @@ export {
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
+  TableTitleCell,
+  TableContentCell,
+  TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
 } from './table';
+export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
-export { default as ListBar } from './viewStyleBar';
+export { default as ViewStyleBar } from './viewStyleBar';

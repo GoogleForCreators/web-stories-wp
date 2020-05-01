@@ -48,17 +48,36 @@ export const TablePreviewHeaderCell = styled(TableHeaderCell)`
 
 export const TableTitleHeaderCell = styled(TableHeaderCell)`
   padding-left: 0;
+  width: 30%;
+  min-width: 220px;
+`;
+
+export const TableContentHeaderCell = styled(TableHeaderCell)`
+  width: 17.5%;
+  min-width: 160px;
 `;
 
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
-  padding: 0 ${({ theme }) => theme.table.cellPadding}px;
+  padding: ${({ theme }) => theme.table.cellPadding}px;
   font-weight: ${({ theme }) => theme.fonts.table.weight};
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
   line-height: ${({ theme }) => theme.table.headerContentSize}px;
+`;
+
+export const TableTitleCell = styled(TableCell)`
+  width: 30%;
+  min-width: 220px;
+  word-wrap: break-word;
+`;
+
+export const TableContentCell = styled(TableCell)`
+  width: 17.5%;
+  min-width: 160px;
+  word-wrap: break-word;
 `;
 
 export const TablePreviewCell = styled(TableCell)`

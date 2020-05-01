@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES } from '../constants';
-import { AppFrame, LeftRail, PageContent } from '../components';
+import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
@@ -79,11 +79,13 @@ function App({ config }) {
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
           <ApiProvider>
-            <RouterProvider>
-              <GlobalStyle />
-              <KeyboardOnlyOutline />
-              <AppContent />
-            </RouterProvider>
+            <NavProvider>
+              <RouterProvider>
+                <GlobalStyle />
+                <KeyboardOnlyOutline />
+                <AppContent />
+              </RouterProvider>
+            </NavProvider>
           </ApiProvider>
         </ConfigProvider>
       </ThemeProvider>
