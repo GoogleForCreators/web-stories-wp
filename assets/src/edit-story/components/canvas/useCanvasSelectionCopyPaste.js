@@ -146,7 +146,7 @@ function useCanvasSelectionCopyPaste(container) {
       // @todo Images.
       const copiedContent = processPastedNodeList(content.childNodes, '');
       if (copiedContent.trim().length) {
-        insertElement('text', { content: copiedContent });
+        insertElement('text', { id: uuidv4(), content: copiedContent });
         foundContent = true;
       }
       return foundContent;
