@@ -104,6 +104,19 @@ const Inner = styled.div`
     / 1fr;
 `;
 
+const Loading = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 80px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 100px;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+`;
+
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
@@ -296,7 +309,9 @@ function MediaPane(props) {
                   />
                 ))}
             </Column>
-            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
+            {hasMore && (
+              <Loading ref={refContainerFooter}>{'Loading...'}</Loading>
+            )}
           </Container>
         )}
       </Inner>
