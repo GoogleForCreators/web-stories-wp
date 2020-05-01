@@ -114,7 +114,7 @@ function TemplateDetail() {
       }
       return randomlySelectedTemplates;
     }
-    return false;
+    return [];
   }, [orderedTemplates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
