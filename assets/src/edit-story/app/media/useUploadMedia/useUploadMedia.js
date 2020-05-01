@@ -62,7 +62,9 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             localResource: await getResourceFromLocalFile(file),
             file,
           }))
-        ).then((files) => files.filter((f) => f.localResource != null));
+        ).then((newLocalFiles) =>
+          newLocalFiles.filter((f) => f.localResource != null)
+        );
 
         if (onLocalFile) {
           localFiles = localFiles.map(({ localResource, file }) => {

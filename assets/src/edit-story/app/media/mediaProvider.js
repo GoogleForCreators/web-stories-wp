@@ -127,9 +127,11 @@ function MediaProvider({ children }) {
 
   const processor = useCallback(
     (el) => {
-      if (!el) return;
+      if (!el) {
+        return;
+      }
       const { mimeType, posterId, id, src, local } = el;
-      const process = async () => {
+      const process = () => {
         if (
           allowedVideoMimeTypes.includes(mimeType) &&
           !local &&
