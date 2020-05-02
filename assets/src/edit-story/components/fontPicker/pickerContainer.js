@@ -230,7 +230,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   useEffect(() => {
     inputRef.current.focus();
     const listElement = listContainerRef.current;
-    listElement.addEventListener('scroll', handleScroll, { passive: false });
+    listElement.addEventListener('scroll', handleScroll);
 
     return () => {
       listElement.removeEventListener('scroll', handleScroll);
