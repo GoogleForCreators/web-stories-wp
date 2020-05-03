@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { rgba } from 'polished';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -112,8 +113,8 @@ const Loading = styled.div`
   padding: 8px 80px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
   border-radius: 100px;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: 500;
 `;
 
