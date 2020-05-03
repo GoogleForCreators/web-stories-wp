@@ -110,7 +110,7 @@ const Loading = styled.div`
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 80px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
   border-radius: 100px;
   font-size: 15px;
   line-height: 18px;
