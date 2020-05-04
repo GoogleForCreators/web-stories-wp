@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import removeInlineStyle from '../../utils/removeInlineStyle';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import getValidHTML from '../../utils/getValidHTML';
 import { dataToEditorX, dataToEditorY } from '../../units';
@@ -119,7 +120,7 @@ export function TextOutputWithUnits({
 
   const backgroundTextStyle = {
     ...textStyle,
-    color: 'transparent !important',
+    color: 'transparent',
   };
 
   const foregroundTextStyle = {
@@ -128,6 +129,10 @@ export function TextOutputWithUnits({
   };
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    const foregroundContent = getValidHTML(content);
+    const backgroundContent = getValidHTML(content, (node) =>
+      removeInlineStyle(node, 'color')
+    );
     return (
       <>
         <p className={className} style={highlightStyle}>
@@ -135,7 +140,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: getValidHTML(content),
+                __html: backgroundContent,
               }}
             />
           </span>
@@ -145,7 +150,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: getValidHTML(content),
+                __html: foregroundContent,
               }}
             />
           </span>

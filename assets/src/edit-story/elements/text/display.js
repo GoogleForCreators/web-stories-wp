@@ -34,6 +34,7 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
+import removeInlineStyle from '../../utils/removeInlineStyle';
 import getValidHTML from '../../utils/getValidHTML';
 import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
@@ -73,7 +74,7 @@ const Span = styled.span`
 `;
 
 const BackgroundSpan = styled(Span)`
-  color: transparent !important;
+  color: transparent;
 `;
 
 const ForegroundSpan = styled(Span)`
@@ -127,6 +128,10 @@ function TextDisplay({
   });
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    const foregroundContent = getValidHTML(content);
+    const backgroundContent = getValidHTML(content, (node) =>
+      removeInlineStyle(node, 'color')
+    );
     return (
       <HighlightWrapperElement ref={ref} {...props}>
         <HighlightElement {...props}>
@@ -134,7 +139,7 @@ function TextDisplay({
             <BackgroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: getValidHTML(content),
+                __html: backgroundContent,
               }}
             />
           </MarginedElement>
@@ -144,7 +149,7 @@ function TextDisplay({
             <ForegroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: getValidHTML(content),
+                __html: foregroundContent,
               }}
             />
           </MarginedElement>

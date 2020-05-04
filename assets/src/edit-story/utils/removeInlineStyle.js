@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-const contentBuffer = document.createElement('div');
-
-export default function getValidHTML(string, callback = null) {
-  contentBuffer.innerHTML = string;
-  if (callback) {
-    callback(contentBuffer);
+export default function removeInlineStyle(node, style) {
+  // if it's not an element nor fragment, skip
+  if (!node || ![1, 11].includes(node.nodeType)) {
+    return;
   }
-  return contentBuffer.innerHTML;
+
+  if (node.style) {
+    node.style[style] = '';
+  }
+
+  Array.from(node.childNodes).forEach((childNode) =>
+    removeInlineStyle(childNode, style)
+  );
 }
