@@ -78,7 +78,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page1_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page1_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -169,7 +169,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_logo.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_logo.png`,
               width: 56,
               height: 12,
               posterId: 0,
@@ -377,7 +377,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_radish.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_radish.png`,
               width: 220,
               height: 309,
               posterId: 0,
@@ -706,7 +706,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page3_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page3_image1.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -940,7 +940,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_persimmon.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_persimmon.png`,
               width: 220,
               height: 228,
               posterId: 0,
@@ -1179,7 +1179,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -1252,7 +1252,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_radish.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_radish.png`,
               width: 220,
               height: 309,
               posterId: 0,
@@ -1290,7 +1290,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_carrot.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_carrot.png`,
               width: 220,
               height: 237,
               posterId: 0,
@@ -1328,7 +1328,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_persimmon.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_persimmon.png`,
               width: 220,
               height: 228,
               posterId: 0,
@@ -1366,7 +1366,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_artichoke.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_artichoke.png`,
               width: 220,
               height: 223,
               posterId: 0,
@@ -1981,7 +1981,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page5_bg.jpg`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -2183,7 +2183,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_up_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -2487,7 +2487,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page5_bg.jpg`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -2732,7 +2732,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -4112,7 +4112,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page7_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -4362,7 +4362,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -5148,7 +5148,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page8_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page8_bg.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -5607,7 +5607,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page9_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image1.jpg`,
               width: 220,
               height: 294,
               posterId: 0,
@@ -5646,7 +5646,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page9_image2.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image2.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -5689,7 +5689,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page9_image3.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image3.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -5732,7 +5732,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_page9_image4.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image4.jpg`,
               width: 220,
               height: 284,
               posterId: 0,
@@ -5762,7 +5762,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_facebook.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_facebook.png`,
               width: 50,
               height: 100,
               posterId: 0,
@@ -5800,7 +5800,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_instagram.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_instagram.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -5838,7 +5838,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_youtube.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_youtube.png`,
               width: 100,
               height: 68,
               posterId: 0,
@@ -5876,7 +5876,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/cooking/cooking_icon_twitter.png`,
+              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_twitter.png`,
               width: 100,
               height: 79,
               posterId: 0,
