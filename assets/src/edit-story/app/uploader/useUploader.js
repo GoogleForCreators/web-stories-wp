@@ -47,6 +47,7 @@ function useUploader(refreshLibrary = true) {
       video: allowedVideoMimeTypes,
     },
     allowedFileTypes,
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
@@ -67,7 +68,18 @@ function useUploader(refreshLibrary = true) {
   );
 
   const uploadFile = (file) => {
-    // TODO Add permission check here, see Gutenberg's userCan function.
+    if (!hasUploadMediaAction) {
+      const permissionError = new Error();
+      permissionError.name = 'PermissionError';
+      permissionError.file = file.name;
+      permissionError.isUserError = true;
+
+      permissionError.message = __(
+        'Sorry you are unable to upload files.',
+        'web-stories'
+      );
+      throw permissionError;
+    }
     if (!fileSizeCheck(file)) {
       const sizeError = new Error();
       sizeError.name = 'SizeError';
