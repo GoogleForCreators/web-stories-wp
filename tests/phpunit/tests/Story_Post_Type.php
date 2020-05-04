@@ -20,6 +20,11 @@ namespace Google\Web_Stories\Tests;
 
 class Story_Post_Type extends \WP_UnitTestCase {
 
+	public function setUp() {
+		parent::setUp();
+		do_action( 'init' );
+	}
+
 	public function test_filter_rest_collection_params() {
 		$query_params = [
 			'foo',
@@ -28,8 +33,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			],
 		];
 
-		$post_type       = new \stdClass();
-		$post_type->name = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$filtered_params = \Google\Web_Stories\Story_Post_Type::filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals(
 			$filtered_params,
