@@ -25,27 +25,16 @@ import { useEffect } from 'react';
 import documentHasSelection from './documentHasSelection';
 
 /**
- * @param {?Element} container
  * @param {function(!ClipboardEvent)} copyCutHandler
  * @param {function(!ClipboardEvent)} pasteHandler
  */
-function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
+function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
   useEffect(() => {
-    if (!container) {
-      return undefined;
-    }
-
     const copyCutHandlerWrapper = (evt) => {
-      const { target, clipboardData } = evt;
+      const { clipboardData } = evt;
 
       // Elements that either handle their own clipboard or have selection.
       if (documentHasSelection()) {
-        return;
-      }
-
-      // A target can be anywhere in the container's full subtree, but not
-      // in its siblings.
-      if (!container.contains(target) && !target.contains(container)) {
         return;
       }
 
@@ -73,7 +62,7 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       document.removeEventListener('cut', copyCutHandlerWrapper);
       document.removeEventListener('paste', pasteHandlerWrapper);
     };
-  }, [container, copyCutHandler, pasteHandler]);
+  }, [copyCutHandler, pasteHandler]);
 }
 
-export default useClipboardHandlers;
+export default useGlobalClipboardHandlers;

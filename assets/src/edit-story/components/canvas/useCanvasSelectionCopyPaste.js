@@ -25,7 +25,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import useClipboardHandlers from '../../utils/useClipboardHandlers';
+import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalKeyDownEffect } from '../keyboard';
@@ -34,10 +34,7 @@ import useUploadWithPreview from './useUploadWithPreview';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
-/**
- * @param {?Element} container
- */
-function useCanvasSelectionCopyPaste(container) {
+function useCanvasSelectionCopyPaste() {
   const {
     state: { currentPage, selectedElements },
     actions: { addElement, addElements, deleteSelectedElements },
@@ -215,7 +212,7 @@ function useCanvasSelectionCopyPaste(container) {
     addElements({ elements: clonedElements });
   };
 
-  useClipboardHandlers(container, copyCutHandler, pasteHandler);
+  useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.

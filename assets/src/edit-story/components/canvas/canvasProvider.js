@@ -134,7 +134,7 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  useCanvasSelectionCopyPaste(pageContainer);
+  useCanvasSelectionCopyPaste();
 
   const state = {
     state: {
