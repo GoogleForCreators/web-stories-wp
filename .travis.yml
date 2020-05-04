@@ -28,10 +28,8 @@ notifications:
 cache:
   directories:
     - $HOME/.cache/composer
-    - $HOME/.jest-cache
     - $HOME/.npm
     - $HOME/.nvm/.cache
-    - $HOME/.wp-cli/.cache
 
 branches:
   only:
