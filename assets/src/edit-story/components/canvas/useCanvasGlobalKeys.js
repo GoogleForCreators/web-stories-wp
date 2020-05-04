@@ -29,6 +29,7 @@ import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalKeyDownEffect } from '../keyboard';
+import processPastedElements from '../../utils/processPastedElements';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
@@ -37,7 +38,7 @@ const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 function useCanvasGlobalKeys() {
   const {
     state: { currentPage, selectedElements },
-    actions: { addElement, addElements, deleteSelectedElements },
+    actions: { addElements, deleteSelectedElements },
   } = useStory();
 
   const uploadWithPreview = useUploadWithPreview();
@@ -104,38 +105,14 @@ function useCanvasGlobalKeys() {
 
   const elementPasteHandler = useCallback(
     (content) => {
-      let foundElements = false;
-      for (let n = content.firstChild; n; n = n.nextSibling) {
-        if (n.nodeType !== /* COMMENT */ 8) {
-          continue;
-        }
-        const payload = JSON.parse(
-          n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
-        );
-        if (payload.sentinel !== 'story-elements') {
-          continue;
-        }
-        foundElements = true;
-        payload.items.forEach(({ x, y, basedOn, ...rest }) => {
-          currentPage.elements.forEach((element) => {
-            if (element.id === basedOn || element.basedOn === basedOn) {
-              x = Math.max(x, element.x + 60);
-              y = Math.max(y, element.y + 60);
-            }
-          });
-          const element = {
-            ...rest,
-            basedOn,
-            id: uuidv4(),
-            x,
-            y,
-          };
-          addElement({ element });
-        });
+      const elements = processPastedElements(content, currentPage);
+      const foundElements = elements.length > 0;
+      if (foundElements) {
+        addElements({ elements });
       }
       return foundElements;
     },
-    [addElement, currentPage]
+    [addElements, currentPage]
   );
 
   const rawPasteHandler = useCallback(
