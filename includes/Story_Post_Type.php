@@ -281,13 +281,17 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$post             = get_post();
-		$story_id         = ( $post ) ? $post->ID : null;
-		$rest_base        = self::POST_TYPE_SLUG;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+		$post                     = get_post();
+		$story_id                 = ( $post ) ? $post->ID : null;
+		$rest_base                = self::POST_TYPE_SLUG;
+		$has_publish_action       = false;
+		$has_assign_author_action = false;
+		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+			$rest_base                = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+			$has_publish_action       = current_user_can( $post_type_object->cap->publish_posts );
+			$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
 		}
 
 		// Media settings.
@@ -301,6 +305,7 @@ class Story_Post_Type {
 			// Leveraging the default WP post preview logic.
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
+
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
@@ -318,8 +323,8 @@ class Story_Post_Type {
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
 					'capabilities'     => [
-						'hasPublishAction'      => current_user_can( $post_type_object->cap->publish_posts ),
-						'hasAssignAuthorAction' => current_user_can( $post_type_object->cap->edit_others_posts ),
+						'hasPublishAction'      => $has_publish_action,
+						'hasAssignAuthorAction' => $has_assign_author_action,
 					],
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
