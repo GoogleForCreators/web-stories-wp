@@ -214,7 +214,8 @@ function APIProvider({ children }) {
   const getAllFonts = useCallback(() => {
     return apiFetch({ path: fonts }).then((data) =>
       data.map((font) => ({
-        value: font.name,
+        name: font.family,
+        value: font.family,
         ...font,
       }))
     );
