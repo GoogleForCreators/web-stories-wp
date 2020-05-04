@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,9 +30,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { Label, Row, MULTIPLE_VALUE } from '../../../form';
 import { useCommonObjectValue } from '../../utils';
-import { DEFAULT_PADDING } from './common';
 import LockedPaddingControls from './locked';
 import UnlockedPaddingControls from './unlocked';
+
+export const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function PaddingControls({ selectedElements, pushUpdateForObject }) {
   const padding = useCommonObjectValue(
@@ -44,18 +46,22 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
   const lockPadding =
     padding.locked === MULTIPLE_VALUE ? false : padding.locked;
 
+  const handleChange = useCallback(
+    (newPadding, submit = false) => {
+      pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
+    },
+    [pushUpdateForObject]
+  );
+
   return (
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
       {lockPadding ? (
-        <LockedPaddingControls
-          padding={padding}
-          pushUpdateForObject={pushUpdateForObject}
-        />
+        <LockedPaddingControls padding={padding} handleChange={handleChange} />
       ) : (
         <UnlockedPaddingControls
           padding={padding}
-          pushUpdateForObject={pushUpdateForObject}
+          handleChange={handleChange}
         />
       )}
     </Row>

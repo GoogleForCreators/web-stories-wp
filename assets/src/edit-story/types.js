@@ -201,6 +201,12 @@ export const FontPropType = PropTypes.shape({
   fallbacks: PropTypes.array,
 });
 
+export const PaddingPropType = PropTypes.shape({
+  horizontal: PropTypes.number,
+  vertical: PropTypes.number,
+  locked: PropTypes.bool,
+});
+
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
@@ -213,11 +219,7 @@ StoryPropTypes.elements.text = PropTypes.shape({
   fontStyle: PropTypes.string,
   letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
-  padding: PropTypes.shape({
-    horizontal: PropTypes.number,
-    vertical: PropTypes.number,
-    locked: PropTypes.bool,
-  }),
+  padding: PaddingPropType,
   textAlign: PropTypes.string,
   textDecoration: PropTypes.string,
 });

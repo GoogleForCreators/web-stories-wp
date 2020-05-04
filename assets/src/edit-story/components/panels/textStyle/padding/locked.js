@@ -31,13 +31,14 @@ import { __, _x } from '@wordpress/i18n';
 import { Toggle } from '../../../form';
 import { ReactComponent as Locked } from '../../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../../icons/unlock.svg';
-import { BoxedNumeric, Space, DEFAULT_PADDING } from './common';
+import { PaddingPropType } from '../../../../types';
+import { BoxedNumeric, Space } from './common';
 
 const FlexedBoxedNumeric = styled(BoxedNumeric)`
   flex-basis: auto;
 `;
 
-function LockedPaddingControls({ padding, pushUpdateForObject }) {
+function LockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <FlexedBoxedNumeric
@@ -49,14 +50,10 @@ function LockedPaddingControls({ padding, pushUpdateForObject }) {
         )}
         value={padding.horizontal}
         onChange={(value) =>
-          pushUpdateForObject(
-            'padding',
-            {
-              horizontal: value,
-              vertical: value,
-            },
-            DEFAULT_PADDING
-          )
+          handleChange({
+            horizontal: value,
+            vertical: value,
+          })
         }
       />
       <Space />
@@ -65,21 +62,15 @@ function LockedPaddingControls({ padding, pushUpdateForObject }) {
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={true}
-        onChange={() =>
-          pushUpdateForObject('padding', { locked: false }, DEFAULT_PADDING)
-        }
+        onChange={() => handleChange({ locked: false })}
       />
     </>
   );
 }
 
 LockedPaddingControls.propTypes = {
-  padding: PropTypes.shape({
-    horizontal: PropTypes.number,
-    vertical: PropTypes.number,
-    locked: PropTypes.PropTypes.bool,
-  }).isRequired,
-  pushUpdateForObject: PropTypes.func.isRequired,
+  padding: PaddingPropType.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default LockedPaddingControls;

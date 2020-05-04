@@ -30,9 +30,10 @@ import { __, _x } from '@wordpress/i18n';
 import { Toggle } from '../../../form';
 import { ReactComponent as Locked } from '../../../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../../../icons/unlock.svg';
-import { BoxedNumeric, Space, DEFAULT_PADDING } from './common';
+import { PaddingPropType } from '../../../../types';
+import { BoxedNumeric, Space } from './common';
 
-function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
+function UnlockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <BoxedNumeric
@@ -40,13 +41,9 @@ function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={padding.horizontal}
         onChange={(value) =>
-          pushUpdateForObject(
-            'padding',
-            {
-              horizontal: value,
-            },
-            DEFAULT_PADDING
-          )
+          handleChange({
+            horizontal: value,
+          })
         }
       />
       <Space />
@@ -56,14 +53,12 @@ function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
         uncheckedIcon={<Unlocked />}
         value={false}
         onChange={() =>
-          pushUpdateForObject(
-            'padding',
+          handleChange(
             {
               horizontal: padding.horizontal,
               vertical: padding.horizontal,
               locked: true,
             },
-            DEFAULT_PADDING,
             true
           )
         }
@@ -74,13 +69,9 @@ function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={padding.vertical}
         onChange={(value) =>
-          pushUpdateForObject(
-            'padding',
-            {
-              vertical: value,
-            },
-            DEFAULT_PADDING
-          )
+          handleChange({
+            vertical: value,
+          })
         }
       />
     </>
@@ -88,12 +79,8 @@ function UnlockedPaddingControls({ padding, pushUpdateForObject }) {
 }
 
 UnlockedPaddingControls.propTypes = {
-  padding: PropTypes.shape({
-    horizontal: PropTypes.number,
-    vertical: PropTypes.number,
-    locked: PropTypes.PropTypes.bool,
-  }).isRequired,
-  pushUpdateForObject: PropTypes.func.isRequired,
+  padding: PaddingPropType.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default UnlockedPaddingControls;

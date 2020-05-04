@@ -24,8 +24,6 @@ import styled from 'styled-components';
  */
 import { Numeric } from '../../../form';
 
-export const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
-
 export const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
