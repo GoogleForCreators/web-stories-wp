@@ -33,6 +33,8 @@ import { ApiContext } from '../../api/apiProvider';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
 import { TransformProvider } from '../../../../edit-story/components/transform';
+import { UnitsProvider } from '../../../../edit-story/units';
+
 import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
@@ -42,7 +44,7 @@ import {
   TemplateNavBar,
 } from '../../../components';
 import { ICON_METRICS } from '../../../constants';
-import { clamp } from '../../../utils/';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
 
 import {
@@ -61,6 +63,7 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
+  const { pageSize } = usePagePreviewSize();
   const {
     state: {
       queryParams: { id: templateId, isLocal },
@@ -221,17 +224,19 @@ function TemplateDetail() {
                 {NextButton}
               </Column>
             </ColumnContainer>
-            {relatedTemplates && (
+            {relatedTemplates.length > 0 && (
               <RowContainer>
                 <SubHeading>
                   {__('Related Templates', 'web-stories')}
                 </SubHeading>
-                <StoryGridView
-                  filteredStories={relatedTemplates}
-                  centerActionLabel={__('View', 'web-stories')}
-                  bottomActionLabel={__('Use template', 'web-stories')}
-                  isTemplate
-                />
+                <UnitsProvider pageSize={pageSize}>
+                  <StoryGridView
+                    filteredStories={relatedTemplates}
+                    centerActionLabel={__('View', 'web-stories')}
+                    bottomActionLabel={__('Use template', 'web-stories')}
+                    isTemplate
+                  />
+                </UnitsProvider>
               </RowContainer>
             )}
           </ContentContainer>

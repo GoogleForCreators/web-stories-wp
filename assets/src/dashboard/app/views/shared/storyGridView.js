@@ -27,8 +27,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../edit-story/units';
-import { usePagePreviewSize } from '../../../utils';
 import {
   CardGrid,
   CardGridItem,
@@ -68,7 +66,6 @@ const StoryGridView = ({
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
-  const { pageSize } = usePagePreviewSize();
 
   const handleMenuItemSelected = useCallback(
     (sender, story) => {
@@ -119,47 +116,45 @@ const StoryGridView = ({
   );
 
   return (
-    <UnitsProvider pageSize={pageSize}>
-      <StoryGrid>
-        {filteredStories.map((story) => (
-          <CardGridItem key={story.id} isTemplate={isTemplate}>
-            <CardPreviewContainer
-              centerAction={{
-                targetAction: story.centerTargetAction,
-                label: centerActionLabel,
-              }}
-              bottomAction={{
-                targetAction: story.bottomTargetAction,
-                label: bottomActionLabel,
-              }}
-            >
-              <PreviewErrorBoundary>
-                <PreviewPage page={story.pages[0]} />
-              </PreviewErrorBoundary>
-            </CardPreviewContainer>
-            {!isTemplate && (
-              <DetailRow>
-                <CardTitle
-                  title={story.title}
-                  modifiedDate={story.modified.startOf('day').fromNow()}
-                  onEditComplete={(newTitle) =>
-                    handleOnRenameStory(story, newTitle)
-                  }
-                  onEditCancel={() => setTitleRenameId(-1)}
-                  editMode={titleRenameId === story.id}
-                />
-                <CardItemMenu
-                  onMoreButtonSelected={setContextMenuId}
-                  contextMenuId={contextMenuId}
-                  onMenuItemSelected={handleMenuItemSelected}
-                  story={story}
-                />
-              </DetailRow>
-            )}
-          </CardGridItem>
-        ))}
-      </StoryGrid>
-    </UnitsProvider>
+    <StoryGrid>
+      {filteredStories.map((story) => (
+        <CardGridItem key={story.id} isTemplate={isTemplate}>
+          <CardPreviewContainer
+            centerAction={{
+              targetAction: story.centerTargetAction,
+              label: centerActionLabel,
+            }}
+            bottomAction={{
+              targetAction: story.bottomTargetAction,
+              label: bottomActionLabel,
+            }}
+          >
+            <PreviewErrorBoundary>
+              <PreviewPage page={story.pages[0]} />
+            </PreviewErrorBoundary>
+          </CardPreviewContainer>
+          {!isTemplate && (
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                modifiedDate={story.modified.startOf('day').fromNow()}
+                onEditComplete={(newTitle) =>
+                  handleOnRenameStory(story, newTitle)
+                }
+                onEditCancel={() => setTitleRenameId(-1)}
+                editMode={titleRenameId === story.id}
+              />
+              <CardItemMenu
+                onMoreButtonSelected={setContextMenuId}
+                contextMenuId={contextMenuId}
+                onMenuItemSelected={handleMenuItemSelected}
+                story={story}
+              />
+            </DetailRow>
+          )}
+        </CardGridItem>
+      ))}
+    </StoryGrid>
   );
 };
 
