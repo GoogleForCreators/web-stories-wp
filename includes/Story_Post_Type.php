@@ -286,6 +286,7 @@ class Story_Post_Type {
 		$rest_base                = self::POST_TYPE_SLUG;
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
+		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
@@ -329,6 +330,7 @@ class Story_Post_Type {
 					'capabilities'     => [
 						'hasPublishAction'      => $has_publish_action,
 						'hasAssignAuthorAction' => $has_assign_author_action,
+						'hasUploadMediaAction'  => $has_upload_media_action,
 					],
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
