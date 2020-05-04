@@ -81,28 +81,34 @@ export function useFauxSelection(editorState, setEditorState) {
 
     if (isFocused && hasSelectionChanged && hasFauxSelection) {
       setEditorState((oldEditorState) => {
-        // Get new content with style removed from old selection
-        const contentWithoutFaux = Modifier.removeInlineStyle(
-          oldEditorState.getCurrentContent(),
-          fauxSelection,
-          FAUX_SELECTION
-        );
+        try {
+          // Get new content with style removed from old selection
+          const contentWithoutFaux = Modifier.removeInlineStyle(
+            oldEditorState.getCurrentContent(),
+            fauxSelection,
+            FAUX_SELECTION
+          );
 
-        // Push to get a new state
-        const stateWithoutFaux = EditorState.push(
-          oldEditorState,
-          contentWithoutFaux,
-          'change-inline-style'
-        );
+          // Push to get a new state
+          const stateWithoutFaux = EditorState.push(
+            oldEditorState,
+            contentWithoutFaux,
+            'change-inline-style'
+          );
 
-        // Force selection
-        const selectedState = EditorState.forceSelection(
-          stateWithoutFaux,
-          oldEditorState.getSelection()
-        );
+          // Force selection
+          const selectedState = EditorState.forceSelection(
+            stateWithoutFaux,
+            oldEditorState.getSelection()
+          );
 
-        // Save that as the next editor state
-        return selectedState;
+          // Save that as the next editor state
+          return selectedState;
+        } catch (e) {
+          // If the component has unmounted/remounted, some of the above might throw
+          // if so, just ignore it and return old state
+          return oldEditorState;
+        }
       });
 
       // And forget that we ever marked anything
