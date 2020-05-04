@@ -144,6 +144,8 @@ class Story_Post_Type {
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 
+		add_filter( 'posts_orderby', [ __CLASS__, 'filter_posts_orderby' ], 10, 2 );
+
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
@@ -187,6 +189,40 @@ class Story_Post_Type {
 		);
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 *
+	 * @param string   $orderby Original orderby clause.
+	 * @param WP_Query $query WP_Query object.
+	 * @return string Orderby clause.
+	 */
+	public static function filter_posts_orderby( $orderby, $query ) {
+		global $wpdb;
+		if ( self::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+			return $orderby;
+		}
+		if ( 'author' !== $query->get( 'orderby' ) ) {
+			return $orderby;
+		}
+
+		if ( empty( $_SERVER['HTTP_REFERER'] ) ) {
+			return $orderby;
+		}
+
+		// Check the referer to ensure only `stories-dashboard` will get the filter.
+		$referer = wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+		parse_str( $referer['query'], $url_params );
+		if ( empty( $url_params['page'] ) || Dashboard::HANDLE !== $url_params['page'] ) {
+			return $orderby;
+		}
+
+		$current_user = get_current_user_id();
+		if ( ! $current_user ) {
+			return $orderby;
+		}
+		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, ID', $current_user );
 	}
 
 	/**
