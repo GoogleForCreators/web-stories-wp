@@ -194,8 +194,8 @@ class Story_Post_Type {
 	/**
 	 * Filters the orderby query to filter first all the current user's posts and then the rest.
 	 *
-	 * @param string   $orderby Original orderby clause.
-	 * @param WP_Query $query WP_Query object.
+	 * @param string    $orderby Original orderby clause.
+	 * @param \WP_Query $query WP_Query object.
 	 * @return string Orderby clause.
 	 */
 	public static function filter_posts_orderby( $orderby, $query ) {
