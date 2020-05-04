@@ -219,7 +219,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	 * @param \WP_Query $query WP_Query object.
 	 * @return string Orderby clause.
 	 */
-	public static function filter_posts_orderby( $orderby, $query ) {
+	public function filter_posts_orderby( $orderby, $query ) {
 		global $wpdb;
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
 			return $orderby;

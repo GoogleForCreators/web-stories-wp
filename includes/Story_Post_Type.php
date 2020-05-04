@@ -144,7 +144,6 @@ class Story_Post_Type {
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 
-		add_filter( 'posts_orderby', [ __CLASS__, 'filter_posts_orderby' ], 10, 2 );
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
