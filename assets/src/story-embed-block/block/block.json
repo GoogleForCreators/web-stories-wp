@@ -18,6 +18,10 @@
     "height": {
       "type": "number",
       "default": 600
+    },
+    "align": {
+      "type": "string",
+      "default": "none"
     }
   }
 }

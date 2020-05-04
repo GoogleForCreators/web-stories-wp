@@ -24,6 +24,20 @@ import PropTypes from 'prop-types';
  */
 import StoryPlayer from './storyPlayer';
 
+/**
+ * The block's save function (pure).
+ *
+ * Represents a cached copy of the block’s content to be shown in case
+ * the plugin is disabled.
+ *
+ * The server-side 'render_callback' is used to override this on page load.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/
+ *
+ * @param {Object} props Props.
+ * @param {Object} props.attributes Block attributes.
+ * @return {null|*} Rendered block.
+ */
 function save({ attributes }) {
   const { url, title, poster, width, height, align = 'none' } = attributes;
 

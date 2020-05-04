@@ -73,15 +73,16 @@ class Embed_Block {
 			$version
 		);
 
-		// todo: use register_block_type_from_metadata().
+		// todo: use register_block_type_from_metadata() once generally available.
+
+		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
+		// to enqueue these assets only when needed.
 		register_block_type(
 			'web-stories/embed',
 			[
 				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => 'web-stories-embed-block',
 				'editor_style'    => 'web-stories-embed-block',
-				'script'          => 'amp-story-player',
-				'style'           => 'amp-story-player',
 			]
 		);
 
@@ -118,6 +119,51 @@ class Embed_Block {
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) {
-		return $content;
+		$defaults = [
+			'width'  => 360,
+			'height' => 600,
+			'align'  => 'none',
+			'url'    => '',
+			'poster' => '',
+			'title'  => '',
+		];
+
+		$args = wp_parse_args( $attributes, $defaults );
+
+		$url   = (string) $args['url'];
+		$title = (string) $args['title'];
+
+		// The only 2 mandatory attributes.
+		if ( ! $url || ! $title ) {
+			return '';
+		}
+
+		$width        = absint( $args['width'] );
+		$height       = absint( $args['height'] );
+		$poster       = esc_url( $args['poster'] );
+		$align        = sprintf( 'align%s', $args['align'] );
+		$player_style = sprintf( 'width: %spx; height: %spx', $width, $height );
+		$poster_style = $poster ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
+
+		wp_enqueue_style( 'amp-story-player' );
+		wp_enqueue_script( 'amp-story-player' );
+
+		ob_start();
+		?>
+		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+		<amp-story-player
+			style="<?php echo esc_attr( $player_style ); ?>"
+			>
+				<a
+					href="<?php echo esc_url( $url ); ?>"
+					style="<?php echo esc_attr( $poster_style ); ?>"
+				>
+					<?php echo esc_html( $title ); ?>
+				</a>
+			</amp-story-player>
+		</div>
+		<?php
+
+		return ob_get_clean();
 	}
 }
