@@ -22,7 +22,7 @@ import { getDefinitionForType } from '../../elements';
 /**
  * Among all elements, returns the media element with the longest duration.
  *
- * @param {Object[]} elements List of elements.
+ * @param {Array<Object>} elements List of elements.
  * @return {Object|undefined} Found element, or undefined if there are no media elements.
  */
 function getLongestMediaElement(elements) {

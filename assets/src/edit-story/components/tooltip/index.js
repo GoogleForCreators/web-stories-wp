@@ -203,10 +203,7 @@ WithTooltip.propTypes = {
   onPointerLeave: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default WithTooltip;

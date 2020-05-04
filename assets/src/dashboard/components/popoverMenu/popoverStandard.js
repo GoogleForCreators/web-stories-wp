@@ -32,10 +32,7 @@ const PopoverStandard = ({ className, children, isOpen }) => {
   );
 };
 PopoverStandard.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   className: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
 };

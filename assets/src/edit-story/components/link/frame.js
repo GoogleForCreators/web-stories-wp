@@ -135,7 +135,7 @@ WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
   active: PropTypes.bool.isRequired,
   dragging: PropTypes.bool.isRequired,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default WithLink;

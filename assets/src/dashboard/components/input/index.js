@@ -26,5 +26,5 @@ export const TextInput = styled.input`
   border: ${({ theme }) => theme.fonts.textInput.border};
   font-family: ${({ theme }) => theme.fonts.textInput.family};
   font-size: ${({ theme }) => theme.fonts.textInput.size}px;
-  letter-spacing: ${({ theme }) => theme.fonts.textInput.letterSpacing};
+  letter-spacing: ${({ theme }) => theme.fonts.textInput.letterSpacing}em;
 `;
