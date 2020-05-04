@@ -397,7 +397,15 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => [],
+			'flags'  => [
+				/**
+				 * Description: Flag for hover dropdown menu for media element in media library.
+				 * Author: @joannag6
+				 * Issue: #1319 and #354
+				 * Creation date: 2020-05-20
+				 */
+				'dropdownMenu' => false,
+			],
 		];
 
 		return $settings;
