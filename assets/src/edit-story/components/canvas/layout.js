@@ -18,13 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
+  FULLBLEED_RATIO,
+  PAGE_RATIO,
+  ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
   PAGE_NAV_WIDTH,
 } from '../../constants';
@@ -63,18 +66,6 @@ const MIN_CAROUSEL_HEIGHT =
 const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
 
-const LARGE_EDITOR_PAGE_SIZE = [
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-];
-const MEDIUM_EDITOR_PAGE_SIZE = [280, 420];
-const SMALL_EDITOR_PAGE_SIZE = [240, 360];
-const ALLOWED_PAGE_SIZES = [
-  LARGE_EDITOR_PAGE_SIZE,
-  MEDIUM_EDITOR_PAGE_SIZE,
-  SMALL_EDITOR_PAGE_SIZE,
-];
-
 // @todo: the menu height is not responsive
 const Layer = styled.div`
   ${pointerEventsCss}
@@ -91,14 +82,17 @@ const Layer = styled.div`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(--page-height-px)
+    '.         prev      page      next      .       ' var(
+      --fullbleed-height-px
+    )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' minmax(
       ${MIN_CAROUSEL_HEIGHT}px,
       ${MAX_CAROUSEL_HEIGHT}px
     )
-    / 1fr ${PAGE_NAV_WIDTH}px var(--page-width-px) ${PAGE_NAV_WIDTH}px 1fr;
+    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
+    ${PAGE_NAV_WIDTH}px 1fr;
 `;
 
 const Area = styled.div`
@@ -114,7 +108,44 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled(Area).attrs({ area: 'page', overflowAllowed: true })``;
+const PageAreaFullbleedContainer = styled(Area).attrs({
+  area: 'page',
+  overflowAllowed: false,
+})`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+const PageAreaSafeZone = styled.div`
+  width: 100%;
+  height: var(--page-height-px);
+  overflow: visible;
+  position: relative;
+`;
+
+const PageAreaDangerZone = styled.div`
+  pointer-events: none;
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    black 10px 20px
+  );
+  opacity: 0.05;
+  width: 100%;
+  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
+  z-index: 1;
+`;
+
+const PageAreaDangerZoneTop = styled(PageAreaDangerZone)`
+  top: 0;
+`;
+
+const PageAreaDangerZoneBottom = styled(PageAreaDangerZone)`
+  bottom: 0;
+`;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
 
@@ -150,16 +181,11 @@ function useLayoutParams(containerRef) {
     const maxHeight =
       height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
 
-    // Find the first size that fits within the [maxWidth, maxHeight].
-    let bestSize = ALLOWED_PAGE_SIZES[ALLOWED_PAGE_SIZES.length - 1];
-    for (let i = 0; i < ALLOWED_PAGE_SIZES.length; i++) {
-      const size = ALLOWED_PAGE_SIZES[i];
-      if (size[0] <= maxWidth && size[1] <= maxHeight) {
-        bestSize = size;
-        break;
-      }
-    }
-    setPageSize({ width: bestSize[0], height: bestSize[1] });
+    let bestSize =
+      ALLOWED_EDITOR_PAGE_WIDTHS.find(
+        (size) => size <= maxWidth && size / PAGE_RATIO <= maxHeight
+      ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
+    setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });
 }
 
@@ -170,8 +196,29 @@ function useLayoutParamsCssVars() {
   return {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,
+    '--fullbleed-width-px': `${pageSize.width}px`,
+    '--fullbleed-height-px': `${pageSize.width / FULLBLEED_RATIO}px`,
   };
 }
+
+const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
+  return (
+    <PageAreaFullbleedContainer>
+      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+      {showDangerZone && (
+        <>
+          <PageAreaDangerZoneTop />
+          <PageAreaDangerZoneBottom />
+        </>
+      )}
+    </PageAreaFullbleedContainer>
+  );
+});
+
+PageArea.propTypes = {
+  children: PropTypes.node,
+  showDangerZone: PropTypes.bool,
+};
 
 export {
   Layer,

@@ -182,4 +182,13 @@ describe('templateReducer', () => {
       isError: true,
     });
   });
+
+  it(`should return the existing state when ${ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY} is called`, () => {
+    const result = templateReducer(
+      { ...initialState },
+      { type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY }
+    );
+
+    expect(result).toMatchObject(initialState);
+  });
 });
