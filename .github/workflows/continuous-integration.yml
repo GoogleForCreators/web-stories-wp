@@ -42,7 +42,6 @@ jobs:
         run: |
           composer require --no-interaction --dev ergebnis/composer-normalize --ignore-platform-reqs
           composer --no-interaction normalize --dry-run
-        if: always()
 
       - name: Static Analysis (PHPStan)
         # phpstan requires PHP 7.1+. Ignore version conflicts.
