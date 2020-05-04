@@ -42,6 +42,7 @@ import {
   PreviewPage,
   Pill,
   TemplateNavBar,
+  Layout,
 } from '../../../components';
 import { ICON_METRICS } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
@@ -200,54 +201,60 @@ function TemplateDetail() {
     template && (
       <FontProvider>
         <TransformProvider>
-          <TemplateNavBar />
-          <ContentContainer>
-            <ColumnContainer>
-              <Column>
-                {PrevButton}
-                <CardGallery>{previewPages}</CardGallery>
-              </Column>
-              <Column>
-                <DetailContainer>
-                  <Title>{template.title}</Title>
-                  <ByLine>{byLine}</ByLine>
-                  <Text>{template.description}</Text>
-                  <MetadataContainer>
-                    {template.tags.map((tag) => (
-                      <Pill
-                        name={tag}
-                        key={tag}
-                        disabled
-                        onClick={() => {}}
-                        value={tag}
-                      >
-                        {tag}
-                      </Pill>
-                    ))}
-                  </MetadataContainer>
-                  <MetadataContainer>
-                    <ColorList colors={template.colors} size={30} />
-                  </MetadataContainer>
-                </DetailContainer>
-                {NextButton}
-              </Column>
-            </ColumnContainer>
-            {relatedTemplates.length > 0 && (
-              <RowContainer>
-                <SubHeading>
-                  {__('Related Templates', 'web-stories')}
-                </SubHeading>
-                <UnitsProvider pageSize={pageSize}>
-                  <StoryGridView
-                    filteredStories={relatedTemplates}
-                    centerActionLabel={__('View', 'web-stories')}
-                    bottomActionLabel={__('Use template', 'web-stories')}
-                    isTemplate
-                  />
-                </UnitsProvider>
-              </RowContainer>
-            )}
-          </ContentContainer>
+          <Layout.Provider>
+            <Layout.Fixed>
+              <TemplateNavBar />
+            </Layout.Fixed>
+            <Layout.Scrollable>
+              <ContentContainer>
+                <ColumnContainer>
+                  <Column>
+                    {PrevButton}
+                    <CardGallery>{previewPages}</CardGallery>
+                  </Column>
+                  <Column>
+                    <DetailContainer>
+                      <Title>{template.title}</Title>
+                      <ByLine>{byLine}</ByLine>
+                      <Text>{template.description}</Text>
+                      <MetadataContainer>
+                        {template.tags.map((tag) => (
+                          <Pill
+                            name={tag}
+                            key={tag}
+                            disabled
+                            onClick={() => {}}
+                            value={tag}
+                          >
+                            {tag}
+                          </Pill>
+                        ))}
+                      </MetadataContainer>
+                      <MetadataContainer>
+                        <ColorList colors={template.colors} size={30} />
+                      </MetadataContainer>
+                    </DetailContainer>
+                    {NextButton}
+                  </Column>
+                </ColumnContainer>
+                {relatedTemplates.length > 0 && (
+                  <RowContainer>
+                    <SubHeading>
+                      {__('Related Templates', 'web-stories')}
+                    </SubHeading>
+                    <UnitsProvider pageSize={pageSize}>
+                      <StoryGridView
+                        filteredStories={relatedTemplates}
+                        centerActionLabel={__('View', 'web-stories')}
+                        bottomActionLabel={__('Use template', 'web-stories')}
+                        isTemplate
+                      />
+                    </UnitsProvider>
+                  </RowContainer>
+                )}
+              </ContentContainer>
+            </Layout.Scrollable>
+          </Layout.Provider>
         </TransformProvider>
       </FontProvider>
     )

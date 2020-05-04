@@ -26,15 +26,17 @@ import { Button } from '../../../components';
 
 export const ContentContainer = styled.div`
   ${({ theme }) => `
-    margin-top: ${theme.navBar.height + 40}px;
-    padding: 0 ${theme.pageGutter.large.desktop}px;
+    padding-top: ${theme.navBar.height + 40}px;
+    margin: 0 ${theme.pageGutter.large.desktop}px;
+
 
     @media ${theme.breakpoint.tablet} {
-      padding: 0 ${theme.pageGutter.large.tablet}px;
+      padding-top: ${theme.navBar.height + 20}px;
+      margin: 0 ${theme.pageGutter.large.tablet}px;
     }
 
-    @media ${theme.breakpoint.largeDisplayPhone} {
-      padding: 0;
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.pageGutter.small.min}px;
     }
   `}
 `;
@@ -137,10 +139,10 @@ export const NavButton = styled(Button)`
 `;
 
 export const RowContainer = styled.section`
-  margin-bottom: 40px;
-  padding: 0 20px 0;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 40px;
+  margin: 0 20px 0;
 `;
 
 export const SubHeading = styled.h2`

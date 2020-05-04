@@ -22,12 +22,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Z_INDEX } from '../../constants';
 import Button from '../button';
 
 export const Nav = styled.nav`
   ${({ theme }) => `
-    position: fixed;
+    position: absolute;
     justify-content: space-between;
     align-items: center;
     border-bottom: ${theme.borders.gray50};
@@ -36,7 +35,6 @@ export const Nav = styled.nav`
     flex-direction: row;
     width: 100%;
     height: ${theme.navBar.height}px;
-    z-index: ${Z_INDEX.LAYOUT_FIXED};
     margin-bottom: 40px;
 
     padding: 0 ${theme.pageGutter.large.desktop}px;
