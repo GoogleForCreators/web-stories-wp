@@ -32,6 +32,7 @@ import { Row, TextInput, HelperText, Button, RadioGroup } from '../../form';
 import { useStory } from '../../../app/story';
 import useInspector from '../useInspector';
 import { SimplePanel } from '../../panels/panel';
+import { useConfig } from '../../../app/config';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -51,10 +52,11 @@ function StatusPanel() {
   const {
     state: {
       story: { status, password },
-      capabilities,
     },
     actions: { updateStory, deleteStory },
   } = useStory();
+
+  const { capabilities } = useConfig();
 
   useEffect(() => {
     loadStatuses();
