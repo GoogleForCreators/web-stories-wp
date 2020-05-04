@@ -1,6 +1,11 @@
 name: Continuous Integration
 
-on: pull_request
+on:
+  pull_request
+  push:
+    branches:
+      - master
+      - release/*
 
 jobs:
   phpcs:
@@ -165,7 +170,7 @@ jobs:
   bundle-size:
     name: Bundle size check
     runs-on: ubuntu-latest
-
+    if: ${{ github.event_name != 'push' }}
     steps:
       - uses: actions/checkout@v2
       - uses: preactjs/compressed-size-action@v1
@@ -351,7 +356,6 @@ jobs:
   build:
     name: Build plugin
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
