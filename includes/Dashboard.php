@@ -33,11 +33,11 @@ namespace Google\Web_Stories;
  */
 class Dashboard {
 	/**
-	 * Handle used for script and menu.
+	 * Script handle.
 	 *
 	 * @var string
 	 */
-	const HANDLE = 'stories-dashboard';
+	const SCRIPT_HANDLE = 'stories-dashboard';
 
 	/**
 	 * Admin page hook suffix.
@@ -76,7 +76,7 @@ class Dashboard {
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
 			'edit_posts',
-			self::HANDLE,
+			'stories-dashboard',
 			[ $this, 'render' ],
 			0
 		);
@@ -107,20 +107,20 @@ class Dashboard {
 			return;
 		}
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::HANDLE . '.asset.php';
+		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
 		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
 		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
 
 		wp_enqueue_script(
-			self::HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::HANDLE . '.js',
+			self::SCRIPT_HANDLE,
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::SCRIPT_HANDLE . '.js',
 			$dependencies,
 			$version,
 			false
 		);
 
-		wp_set_script_translations( self::HANDLE, 'web-stories' );
+		wp_set_script_translations( self::SCRIPT_HANDLE, 'web-stories' );
 
 		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
 		$new_story_url = admin_url(
@@ -142,7 +142,7 @@ class Dashboard {
 		);
 
 		wp_localize_script(
-			self::HANDLE,
+			self::SCRIPT_HANDLE,
 			'webStoriesDashboardSettings',
 			[
 				'id'     => 'web-stories-dashboard',
@@ -171,8 +171,8 @@ class Dashboard {
 		);
 
 		wp_enqueue_style(
-			self::HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::HANDLE . '.css',
+			self::SCRIPT_HANDLE,
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
 			[ 'google-sans' ],
 			$version
 		);

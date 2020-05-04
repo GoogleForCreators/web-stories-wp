@@ -54,8 +54,8 @@ class Dashboard extends \WP_UnitTestCase {
 		$dashboard = new \Google\Web_Stories\Dashboard();
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( 'foo' );
-		$this->assertFalse( wp_script_is( $dashboard::HANDLE ) );
-		$this->assertFalse( wp_style_is( $dashboard::HANDLE ) );
+		$this->assertFalse( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertFalse( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
 	}
 
 	public function test_enqueue_assets() {
@@ -64,8 +64,8 @@ class Dashboard extends \WP_UnitTestCase {
 		$dashboard = new \Google\Web_Stories\Dashboard();
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( $dashboard->get_hook_suffix() );
-		$this->assertTrue( wp_script_is( $dashboard::HANDLE ) );
-		$this->assertTrue( wp_style_is( $dashboard::HANDLE ) );
-		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::HANDLE ]->textdomain );
+		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );
 	}
 }
