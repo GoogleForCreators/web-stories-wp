@@ -268,4 +268,4 @@ MediaElement.propTypes = {
   onInsert: PropTypes.func,
 };
 
-export default MediaElement;
+export default React.memo(MediaElement);

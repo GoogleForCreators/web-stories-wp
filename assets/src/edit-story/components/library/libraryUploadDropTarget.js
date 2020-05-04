@@ -32,23 +32,25 @@ import { UploadDropTarget, UploadDropTargetMessage } from '../uploadDropTarget';
 import { useMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
+const message = __('Upload to media library', 'web-stories');
 
 function LibraryUploadDropTarget({ children }) {
-  const {
-    actions: { uploadMedia },
-  } = useMedia();
-  const onDropHandler = useCallback(
-    (files) => {
-      uploadMedia(files);
-    },
-    [uploadMedia]
-  );
+  // TODO: Find out why [uploadMedia] causes unnecessary re-renders.
+  // const {
+  //   actions: { uploadMedia },
+  // } = useMedia();
+  // const onDropHandler = useCallback(
+  //   (files) => {
+  //     uploadMedia(files);
+  //   },
+  //   [uploadMedia]
+  // );
   return (
-    <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
+    <UploadDropTarget onDrop={null} labelledBy={MESSAGE_ID}>
       {children}
       <UploadDropTargetMessage
         id={MESSAGE_ID}
-        message={__('Upload to media library', 'web-stories')}
+        message={message}
       />
     </UploadDropTarget>
   );

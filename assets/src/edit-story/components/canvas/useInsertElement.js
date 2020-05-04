@@ -82,7 +82,8 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [addElement, backfillResource, focusCanvas]
+    // TODO: Find out why these cause unnecessary re-renders.
+    [],//addElement, backfillResource, focusCanvas]
   );
 
   return insertElement;

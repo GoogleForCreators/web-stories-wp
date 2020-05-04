@@ -21,6 +21,11 @@
  */
 import * as types from './types';
 
+/**
+ * External dependencies
+ */
+import deepEqual from 'deep-equal';
+
 export const INITIAL_STATE = {
   media: [],
   processing: [],
@@ -37,6 +42,12 @@ export const INITIAL_STATE = {
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.FETCH_MEDIA_START: {
+      // TODO: Find a better way to return the same state reference from
+      // reducers when the state doesn't change, perhaps by using immutable
+      // libraries (such as icepick, seamless-immutable etc).
+      if (!state.isMediaLoaded && state.isMediaLoading) {
+        return state;
+      }
       return {
         ...state,
         isMediaLoaded: false,
@@ -48,7 +59,7 @@ function reducer(state, { type, payload }) {
       const { media, mediaType, searchTerm, pagingNum, totalPages } = payload;
       if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
         const hasMore = pagingNum < totalPages;
-        return {
+        const newState = {
           ...state,
           media: [...state.media, ...media],
           pagingNum,
@@ -57,6 +68,9 @@ function reducer(state, { type, payload }) {
           isMediaLoaded: true,
           isMediaLoading: false,
         };
+        if (!deepEqual(state, newState, { strict: true })) {
+          state = newState;
+        }
       }
       return state;
     }
@@ -116,6 +130,9 @@ function reducer(state, { type, payload }) {
     case types.SET_MEDIA: {
       const { media } = payload;
 
+      if (media === state.media) {
+        return state;
+      }
       return {
         ...state,
         media,

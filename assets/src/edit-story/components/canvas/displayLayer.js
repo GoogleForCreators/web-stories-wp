@@ -72,4 +72,4 @@ function DisplayLayer() {
   );
 }
 
-export default DisplayLayer;
+export default React.memo(DisplayLayer);

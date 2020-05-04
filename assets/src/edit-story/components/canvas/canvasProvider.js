@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 /**
  * Internal dependencies
@@ -133,28 +133,46 @@ function CanvasProvider({ children }) {
 
   useCanvasSelectionCopyPaste(pageContainer);
 
-  const state = {
-    state: {
+  const state = useMemo(
+    () => ({
+      state: {
+        pageContainer,
+        nodesById,
+        editingElement,
+        editingElementState,
+        isEditing: Boolean(editingElement),
+        lastSelectionEvent,
+        pageSize,
+      },
+      actions: {
+        setPageContainer,
+        setNodeForElement,
+        setEditingElement: setEditingElementWithoutState,
+        setEditingElementWithState,
+        clearEditing,
+        handleSelectElement,
+        selectIntersection,
+        setPageSize,
+      },
+    }),
+    [
       pageContainer,
       nodesById,
       editingElement,
       editingElementState,
-      isEditing: Boolean(editingElement),
+      editingElement,
       lastSelectionEvent,
       pageSize,
-    },
-    actions: {
       setPageContainer,
       setNodeForElement,
-      setEditingElement: setEditingElementWithoutState,
+      setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
       selectIntersection,
       setPageSize,
-    },
-  };
-
+    ]
+  );
   return (
     <Context.Provider value={state}>
       <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>

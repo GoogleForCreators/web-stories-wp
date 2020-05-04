@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useCallback, useState } from 'react';
+import { useReducer, useCallback, useState, useMemo } from 'react';
 
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {
@@ -28,7 +28,7 @@ function useEditingElement() {
 
   const clearEditing = useCallback(() => {
     dispatch({ editingElement: null });
-  }, []);
+  }, [dispatch]);
 
   const setEditingElementWithoutState = useCallback((id) => {
     dispatch({ editingElement: id });
@@ -44,15 +44,26 @@ function useEditingElement() {
   );
 
   const { editingElement, editingElementState } = state;
-  return {
-    nodesById,
-    editingElement,
-    editingElementState,
-    setEditingElementWithState,
-    setEditingElementWithoutState,
-    clearEditing,
-    setNodeForElement,
-  };
+  return useMemo(
+    () => ({
+      nodesById,
+      editingElement,
+      editingElementState,
+      setEditingElementWithState,
+      setEditingElementWithoutState,
+      clearEditing,
+      setNodeForElement,
+    }),
+    [
+      nodesById,
+      editingElement,
+      editingElementState,
+      setEditingElementWithState,
+      setEditingElementWithoutState,
+      clearEditing,
+      setNodeForElement
+    ]
+  );
 }
 
 function reducer(state, { editingElement, editingElementState = {} }) {

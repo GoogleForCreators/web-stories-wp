@@ -69,13 +69,13 @@ function DropTargetsProvider({ children }) {
     });
   }, []);
 
-  const isDropSource = (type) => {
+  const isDropSource = useCallback((type) => {
     return DROP_SOURCE_ALLOWED_TYPES.includes(type);
-  };
+  }, []);
 
-  const isDropTarget = (type) => {
+  const isDropTarget = useCallback((type) => {
     return DROP_TARGET_ALLOWED_TYPES.includes(type);
-  };
+  }, []);
 
   const activeDropTarget = useMemo(
     () => currentPage?.elements.find((el) => el.id === activeDropTargetId),

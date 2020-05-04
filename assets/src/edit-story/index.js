@@ -38,6 +38,11 @@ const initialize = (id, config) => {
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
 
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
+  });
+
   render(<App config={config} />, appElement);
 };
 

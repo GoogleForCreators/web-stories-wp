@@ -62,4 +62,4 @@ function CanvasLayout() {
   );
 }
 
-export default CanvasLayout;
+export default React.memo(CanvasLayout);

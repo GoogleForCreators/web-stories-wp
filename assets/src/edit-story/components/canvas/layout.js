@@ -201,19 +201,25 @@ function useLayoutParamsCssVars() {
   };
 }
 
+// TODO: Find out why [PageAreaFullbleedContainer] etc cause unnecessary
+// re-renders.
 const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
-  return (
-    <PageAreaFullbleedContainer>
-      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
-      {showDangerZone && (
-        <>
-          <PageAreaDangerZoneTop />
-          <PageAreaDangerZoneBottom />
-        </>
-      )}
-    </PageAreaFullbleedContainer>
-  );
+  return <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>;
 });
+// cause unnecessary re-renders.
+// const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
+//   return (
+//   <PageAreaFullbleedContainer>
+//     <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+//     {showDangerZone && (
+//       <>
+//         <PageAreaDangerZoneTop />
+//         <PageAreaDangerZoneBottom />
+//       </>
+//     )}
+//   </PageAreaFullbleedContainer>
+// );
+// });
 
 PageArea.propTypes = {
   children: PropTypes.node,

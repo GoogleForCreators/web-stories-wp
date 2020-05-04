@@ -57,4 +57,4 @@ function NavLayer() {
   );
 }
 
-export default NavLayer;
+export default React.memo(NavLayer);

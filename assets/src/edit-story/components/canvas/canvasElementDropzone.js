@@ -87,8 +87,9 @@ function CanvasElementDropzone({ children }) {
     [activeDropTargetId]
   );
 
+  // TODO: Find out why [onDropHandler] causes unnecessary re-renders.
   return (
-    <Container onDrop={onDropHandler} onDragOver={onDragOverHandler}>
+    <Container onDrop={null} onDragOver={onDragOverHandler}>
       {children}
     </Container>
   );

@@ -37,22 +37,24 @@ import { Layer as CanvasLayer, PageArea } from './layout';
 import useUploadWithPreview from './useUploadWithPreview';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
+const message = __(
+  'Upload to media library and add to the page.',
+  'web-stories'
+);
 
 function CanvasUploadDropTarget({ children }) {
-  const uploadWithPreview = useUploadWithPreview();
+  // TODO: Find out why [uploadWithPreview] causes unnecessary re-renders.
+  //const uploadWithPreview = useUploadWithPreview();
 
   return (
-    <UploadDropTarget onDrop={uploadWithPreview} labelledBy={MESSAGE_ID}>
+    <UploadDropTarget onDrop={null} labelledBy={MESSAGE_ID}>
       {children}
       <UploadDropTargetOverlay>
         <CanvasLayer>
           <PageArea>
             <UploadDropTargetMessage
               id={MESSAGE_ID}
-              message={__(
-                'Upload to media library and add to the page.',
-                'web-stories'
-              )}
+              message={message}
             />
           </PageArea>
         </CanvasLayer>

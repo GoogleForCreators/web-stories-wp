@@ -106,4 +106,4 @@ function FramesLayer() {
   );
 }
 
-export default FramesLayer;
+export default React.memo(FramesLayer);

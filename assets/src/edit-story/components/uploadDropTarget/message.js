@@ -91,4 +91,4 @@ UploadDropTargetMessage.propTypes = {
   message: PropTypes.string.isRequired,
 };
 
-export default UploadDropTargetMessage;
+export default React.memo(UploadDropTargetMessage);

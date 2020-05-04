@@ -36,14 +36,17 @@ const Overlay = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.bg.v11, 0.6)};
 `;
 
-function UploadDropTargetOverlayWithRef(props, ref) {
-  const { isDragging } = useUploadDropTarget();
-  if (!isDragging) {
-    return null;
-  }
-  return <Overlay ref={ref} {...props} />;
+// TODO: Find out why [useUploadDropTarget] causes unnecessary re-renders.
+function UploadDropTargetOverlayWithRef(props) {
+  return null;
+  // const { isDragging } = useUploadDropTarget();
+  // if (!isDragging) {
+  //   return null;
+  // }
+  // return <Overlay ref={ref} {...props} />;
 }
 
-const UploadDropTargetOverlay = forwardRef(UploadDropTargetOverlayWithRef);
+//const UploadDropTargetOverlay = forwardRef(UploadDropTargetOverlayWithRef);
+const UploadDropTargetOverlay = UploadDropTargetOverlayWithRef;
 
 export default UploadDropTargetOverlay;

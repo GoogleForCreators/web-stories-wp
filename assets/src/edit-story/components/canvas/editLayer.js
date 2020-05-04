@@ -109,4 +109,4 @@ EditLayerForElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
 };
 
-export default EditLayer;
+export default React.memo(EditLayer);
