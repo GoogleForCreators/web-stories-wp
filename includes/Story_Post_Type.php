@@ -145,6 +145,7 @@ class Story_Post_Type {
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 
 		add_filter( 'posts_orderby', [ __CLASS__, 'filter_posts_orderby' ], 10, 2 );
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
@@ -192,37 +193,22 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 * Add story_author as allowed orderby value for REST API.
 	 *
-	 * @param string    $orderby Original orderby clause.
-	 * @param \WP_Query $query WP_Query object.
-	 * @return string Orderby clause.
+	 * @param array         $query_params Array of allowed query params.
+	 * @param \WP_Post_Type $post_type Post type.
+	 * @return array Array of query params.
 	 */
-	public static function filter_posts_orderby( $orderby, $query ) {
-		global $wpdb;
-		if ( self::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
-			return $orderby;
-		}
-		if ( 'author' !== $query->get( 'orderby' ) ) {
-			return $orderby;
+	public static function filter_rest_collection_params( $query_params, $post_type ) {
+		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
+			return $query_params;
 		}
 
-		if ( empty( $_SERVER['HTTP_REFERER'] ) ) {
-			return $orderby;
+		if ( empty( $query_params['orderby'] ) ) {
+			return $query_params;
 		}
-
-		// Check the referer to ensure only `stories-dashboard` will get the filter.
-		$referer = wp_parse_url( esc_url_raw( $_SERVER['HTTP_REFERER'] ) );
-		parse_str( $referer['query'], $url_params );
-		if ( empty( $url_params['page'] ) || Dashboard::HANDLE !== $url_params['page'] ) {
-			return $orderby;
-		}
-
-		$current_user = get_current_user_id();
-		if ( ! $current_user ) {
-			return $orderby;
-		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_modified DESC', $current_user );
+		$query_params['orderby']['enum'][] = 'story_author';
+		return $query_params;
 	}
 
 	/**
