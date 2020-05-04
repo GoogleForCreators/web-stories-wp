@@ -41,7 +41,6 @@ const Nav = styled.nav`
   flex-direction: row;
   width: 100%;
   height: ${theme.navBar.height}px;
-  margin-bottom: 40px;
 
   padding: 0 ${theme.pageGutter.large.desktop}px;
 
