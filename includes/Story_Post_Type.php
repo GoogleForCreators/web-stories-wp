@@ -317,6 +317,10 @@ class Story_Post_Type {
 					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
+					'capabilities'     => [
+						'hasPublishAction'      => current_user_can( $post_type_object->cap->publish_posts ),
+						'hasAssignAuthorAction' => current_user_can( $post_type_object->cap->edit_others_posts ),
+					],
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',
