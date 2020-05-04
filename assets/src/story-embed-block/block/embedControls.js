@@ -50,6 +50,7 @@ const EmbedControls = (props) => {
     width,
     height,
     poster,
+    title,
     setAttributes,
   } = props;
 
@@ -88,6 +89,17 @@ const EmbedControls = (props) => {
       </BlockControls>
       <InspectorControls>
         <PanelBody title={__('Embed Settings', 'web-stories')}>
+          <PanelRow>
+            <BaseControl>
+              <TextControl
+                type="string"
+                className="web-stories-embed-title-control"
+                label={__('Title', 'web-stories')}
+                value={title || ''}
+                onChange={(value) => setAttributes({ title: value })}
+              />
+            </BaseControl>
+          </PanelRow>
           <MediaUploadCheck>
             <PanelRow>
               <BaseControl>
@@ -175,6 +187,7 @@ EmbedControls.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   poster: PropTypes.string,
+  title: PropTypes.string,
   setAttributes: PropTypes.func,
 };
 

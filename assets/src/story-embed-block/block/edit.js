@@ -61,7 +61,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   }, [outerURL]);
 
   useEffect(() => {
-    if (!outerURL || (poster && title)) {
+    if (!outerURL) {
       return;
     }
 
@@ -85,7 +85,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
     } catch {
       setCannotEmbed(true);
     }
-  }, [outerURL, poster, title]);
+  }, [outerURL]);
 
   useEffect(() => {
     if (!storyData?.title) {
@@ -136,7 +136,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (editingURL || isFetchingData || cannotEmbed || !title) {
+  if (editingURL || isFetchingData || cannotEmbed) {
     return (
       <EmbedPlaceholder
         icon={icon}
@@ -144,7 +144,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         value={url}
         onSubmit={onSubmit}
         onChange={(event) => setURL(event.target.value)}
-        cannotEmbed={cannotEmbed || (outerURL && !title)}
+        cannotEmbed={cannotEmbed}
       />
     );
   }
@@ -156,6 +156,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const showRightHandle =
     align === 'center' ||
+    align === 'none' ||
     (align === 'right' && isRTL) ||
     (align === 'left' && !isRTL);
 
@@ -170,6 +171,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         showEditButton={true}
         switchBackToURLInput={switchBackToURLInput}
         poster={poster}
+        title={title}
         setAttributes={setAttributes}
         width={width}
         height={height}
