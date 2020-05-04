@@ -17,6 +17,9 @@ dist: xenial
 
 language: php
 
+php:
+  - 7.3
+
 notifications:
   email:
     on_success: never
@@ -39,43 +42,34 @@ env:
     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 install:
-  - set -e
-  - |
-    if [ [ "$DEPLOY_PLUGIN" = "1" ]; then
-      nvm install
-      npm ci
-      composer install --no-interaction
-    fi
-  - set +e
+  - nvm install
+  - npm ci
+  - composer install --no-interaction
 
 script:
-  - set -e
-  - set +e
+  - npm run build:js
 
-jobs:
-  fast_finish: true
-  include:
-    - stage: deploy
-      if: (NOT type IN (pull_request)) AND (branch = master)
-      php: 7.3
-      name: Deploy Storybook / Playground
-      env: DEPLOY_PLUGIN=1
-      before_deploy:
-        - npm run build:storybook
-      deploy:
-        - provider: pages
-          edge: true
-          github_token: $GITHUB_TOKEN
-          keep_history: true
-          local_dir: build/storybook
-          on:
-            branch: master
-        - provider: script
-          edge: true
-          # This script also runs `npm run build`.
-          script: bin/deploy-to-test-environment.sh
-          on:
-            branch: master
+before_deploy:
+  - npm run build:storybook
+
+deploy:
+  - provider: pages
+    edge: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    local_dir: build/storybook
+    on:
+      branch: master
+  - provider: script
+    edge: true
+    # This script also runs `npm run build`.
+    script:
+      - npm run build:js --silent
+      - npm run build:plugin --silent -- --prerelease
+      - npm run bundle-plugin --silent -- --copy
+      - bin/deploy-to-test-environment.sh
+    on:
+      branch: master
 
 addons:
   ssh_known_hosts: codeserver.dev.6b7f1eeb-705b-4201-864d-2007030c8372.drush.in:2222
