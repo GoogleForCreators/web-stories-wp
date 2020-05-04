@@ -77,7 +77,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page1_bg-alt.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page1_bg-alt.png`,
               width: 188,
               height: 334,
               posterId: 0,
@@ -103,7 +103,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page1_logo.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page1_logo.png`,
               width: 123,
               height: 38,
               posterId: 0,
@@ -238,7 +238,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page2_figure-formatted.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page2_figure-formatted.png`,
               width: 220,
               height: 350,
               posterId: 0,
@@ -424,7 +424,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page3_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page3_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -740,14 +740,13 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_arrow.png',
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page3_arrow.png`,
               width: 7,
               height: 3,
               posterId: 0,
               id: 64,
-              title: 'fashion_page3_arrow',
-              alt: 'fashion_page3_arrow',
+              title: 'fitness_page3_arrow',
+              alt: 'fitness_page3_arrow',
               local: false,
               sizes: [],
             },
@@ -828,7 +827,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page4_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page4_bg.jpg`,
               width: 220,
               height: 288,
               posterId: 0,
@@ -873,7 +872,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page4_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page4_bg.jpg`,
               width: 220,
               height: 288,
               posterId: 0,
@@ -1110,7 +1109,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page5_bg.jpg`,
               width: 229,
               height: 157,
               posterId: 0,
@@ -1443,7 +1442,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page6_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page6_bg.jpg`,
               width: 220,
               height: 165,
               posterId: 0,
@@ -1472,7 +1471,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page6_watch.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page6_watch.png`,
               width: 220,
               height: 341,
               posterId: 0,
@@ -1877,7 +1876,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page7_bg-formatted.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page7_bg-formatted.png`,
               width: 188,
               height: 334,
               posterId: 0,
@@ -2460,7 +2459,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_offsetblock.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_offsetblock.png`,
               width: 94,
               height: 76,
               posterId: 0,
@@ -2498,7 +2497,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story3-formatted.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_story3-formatted.png`,
               width: 95,
               height: 97,
               posterId: 0,
@@ -2536,7 +2535,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story1-formatted.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_story1-formatted.png`,
               width: 95,
               height: 97,
               posterId: 0,
@@ -2574,7 +2573,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story2-formatted.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_story2-formatted.png`,
               width: 188,
               height: 97,
               posterId: 0,
@@ -2990,7 +2989,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Facebook.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_Facebook.png`,
               width: 6,
               height: 11,
               posterId: 0,
@@ -3028,7 +3027,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Instagram.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_Instagram.png`,
               width: 12,
               height: 12,
               posterId: 0,
@@ -3066,7 +3065,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Youtube.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_Youtube.png`,
               width: 13,
               height: 9,
               posterId: 0,
@@ -3104,7 +3103,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Twitter.png`,
+              src: `${imageBaseUrl}assets/images/templates/fitness/fitness_page8_Twitter.png`,
               width: 12,
               height: 10,
               posterId: 0,
