@@ -212,7 +212,7 @@ class Story_Post_Type {
 		}
 
 		// Check the referer to ensure only `stories-dashboard` will get the filter.
-		$referer = wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+		$referer = wp_parse_url( esc_url_raw( $_SERVER['HTTP_REFERER'] ) );
 		parse_str( $referer['query'], $url_params );
 		if ( empty( $url_params['page'] ) || Dashboard::HANDLE !== $url_params['page'] ) {
 			return $orderby;
@@ -222,7 +222,7 @@ class Story_Post_Type {
 		if ( ! $current_user ) {
 			return $orderby;
 		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, ID', $current_user );
+		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_modified DESC', $current_user );
 	}
 
 	/**
