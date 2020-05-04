@@ -26,7 +26,7 @@ import Button from '../button';
 
 export const Nav = styled.nav`
   ${({ theme }) => `
-    position: absolute;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     border-bottom: ${theme.borders.gray50};
