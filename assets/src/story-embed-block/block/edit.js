@@ -88,11 +88,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   }, [outerURL, poster, title]);
 
   useEffect(() => {
-    if (!storyData) {
-      return;
-    }
-
-    if (!storyData.title) {
+    if (!storyData?.title) {
       return;
     }
 
