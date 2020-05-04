@@ -27,7 +27,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig, useMedia, useSnackbar } from '../../app';
+import useMedia from '../../app/media/useMedia';
+import { useConfig } from '../../app/config';
+import { useSnackbar } from '../../app/snackbar';
 
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
