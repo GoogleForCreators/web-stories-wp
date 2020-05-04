@@ -126,11 +126,7 @@ function MediaProvider({ children }) {
   );
 
   const processor = useCallback(
-    (el) => {
-      if (!el) {
-        return;
-      }
-      const { mimeType, posterId, id, src, local } = el;
+    ({ mimeType, posterId, id, src, local }) => {
       const process = async () => {
         if (
           allowedVideoMimeTypes.includes(mimeType) &&
@@ -149,7 +145,7 @@ function MediaProvider({ children }) {
   const generatePoster = useCallback(() => {
     const looper = async () => {
       await media.reduce((accumulatorPromise, el) => {
-        return accumulatorPromise.then(() => processor(el));
+        return accumulatorPromise.then(() => el && processor(el));
       }, Promise.resolve());
     };
     if (media) {
