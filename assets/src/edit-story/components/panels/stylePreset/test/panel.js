@@ -27,6 +27,8 @@ import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { getShapePresets, getTextPresets } from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+
 jest.mock('../utils');
 
 function setupPanel(extraStylePresets, extraStateProps) {
@@ -147,13 +149,15 @@ describe('Panels/StylePreset', () => {
       expect(newEditButton).toBeDefined();
     });
 
-    it('should add a text color preset', () => {
+    it('should add a text color preset if other text styles are default or missing', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
             content: '<span style="color: rgba(2, 2, 2)">Content</span>',
+            backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+            font: TEXT_ELEMENT_DEFAULT_FONT,
           },
         ],
       };
