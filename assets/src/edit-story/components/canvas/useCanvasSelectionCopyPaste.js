@@ -28,6 +28,7 @@ import { useStory } from '../../app';
 import useClipboardHandlers from '../../utils/useClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
 import { getDefinitionForType } from '../../elements';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
@@ -39,7 +40,7 @@ const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 function useCanvasSelectionCopyPaste(container) {
   const {
     state: { currentPage, selectedElements },
-    actions: { addElement, deleteSelectedElements },
+    actions: { addElement, addElements, deleteSelectedElements },
   } = useStory();
 
   const uploadWithPreview = useUploadWithPreview();
@@ -199,7 +200,23 @@ function useCanvasSelectionCopyPaste(container) {
     [elementPasteHandler, rawPasteHandler, uploadWithPreview]
   );
 
+  const cloneHandler = () => {
+    if (selectedElements.length === 0) {
+      return;
+    }
+    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
+      return {
+        x: x + 10,
+        y: y + 10,
+        id: uuidv4(),
+        ...rest,
+      };
+    });
+    addElements({ elements: clonedElements });
+  };
+
   useClipboardHandlers(container, copyCutHandler, pasteHandler);
+  useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
 }
