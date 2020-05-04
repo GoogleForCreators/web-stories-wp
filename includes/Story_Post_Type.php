@@ -185,6 +185,22 @@ class Story_Post_Type {
 			PHP_INT_MAX,
 			2
 		);
+
+		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
+	 *
+	 * @param array $fields Array of allowed revision fields.
+	 * @param array $story Story post array.
+	 * @return array Array of allowed fields.
+	 */
+	public static function filter_revision_fields( $fields, $story ) {
+		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
+			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
+		}
+		return $fields;
 	}
 
 	/**
@@ -291,6 +307,7 @@ class Story_Post_Type {
 			[
 				'id'     => 'edit-story',
 				'config' => [
+					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 					'isRTL'            => is_rtl(),
 					'timeFormat'       => get_option( 'time_format' ),
 					'allowedMimeTypes' => self::get_allowed_mime_types(),

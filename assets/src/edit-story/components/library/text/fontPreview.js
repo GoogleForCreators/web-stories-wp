@@ -26,20 +26,23 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import { useFont } from '../../../app';
-import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
 import { FontPropType } from '../../../types';
 
-const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
+const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
-const Preview = styled.div`
+const Preview = styled.button`
   position: relative;
   background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  padding: 12px;
+  padding: 6px;
   margin-bottom: 12px;
   border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  border: none;
+  cursor: pointer;
 `;
 
 const Text = styled.span`
@@ -50,7 +53,7 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, font, fontSize, fontWeight }) {
+function FontPreview({ title, font, fontSize, fontWeight, onClick }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -60,7 +63,7 @@ function FontPreview({ title, font, fontSize, fontWeight }) {
   }, [font, maybeEnqueueFontStyle]);
 
   return (
-    <Preview>
+    <Preview onClick={onClick}>
       <Text
         fontSize={fontSize}
         fontWeight={fontWeight}
@@ -77,6 +80,7 @@ FontPreview.propTypes = {
   font: FontPropType,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 export default FontPreview;

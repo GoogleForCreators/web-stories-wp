@@ -24,34 +24,37 @@ import PropTypes from 'prop-types';
  */
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
-import { ViewHeader } from '../../../components';
+import { ViewHeader, NavMenuButton } from '../../../components';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
-  padding: 10px 0;
+  padding: 10px 0 0;
 `;
 
 const StyledHeader = styled(ViewHeader)`
-  display: inline-block;
-  width: 25%;
-  justify-content: baseline;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('38px', '24px', '--squish-progress')};
+  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
   white-space: nowrap;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
+  }
 `;
 
 const Content = styled.div`
-  display: inline-block;
-  justify-content: baseline;
-  width: 50%;
+  display: block;
+  height: 100%;
 `;
 
 const SearchContainer = styled.div`
   display: inline-block;
   vertical-align: baseline;
   position: relative;
-  width: 25%;
+  width: 100%;
   height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
@@ -67,6 +70,15 @@ const SearchInner = styled.div`
   width: min(190px, 100%);
 `;
 
+const HeadingBodyWrapper = styled(BodyWrapper)`
+  display: grid;
+  grid-template-columns: 25% 50% 1fr;
+  align-items: start;
+  height: 75px;
+  padding-bottom: 3px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+`;
+
 const PageHeading = ({
   children,
   defaultTitle,
@@ -77,8 +89,11 @@ const PageHeading = ({
 }) => {
   return (
     <Container>
-      <BodyWrapper>
-        <StyledHeader>{defaultTitle}</StyledHeader>
+      <HeadingBodyWrapper>
+        <StyledHeader>
+          <NavMenuButton showOnlyOnSmallViewport />
+          {defaultTitle}
+        </StyledHeader>
         <Content>{children}</Content>
         <SearchContainer>
           <SearchInner>
@@ -90,7 +105,7 @@ const PageHeading = ({
             />
           </SearchInner>
         </SearchContainer>
-      </BodyWrapper>
+      </HeadingBodyWrapper>
     </Container>
   );
 };
