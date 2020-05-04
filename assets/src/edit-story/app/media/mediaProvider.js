@@ -131,14 +131,14 @@ function MediaProvider({ children }) {
         return;
       }
       const { mimeType, posterId, id, src, local } = el;
-      const process = () => {
+      const process = async () => {
         if (
           allowedVideoMimeTypes.includes(mimeType) &&
           !local &&
           !posterId &&
           id
         ) {
-          uploadVideoPoster(id, src);
+          await uploadVideoPoster(id, src);
         }
       };
       process();
