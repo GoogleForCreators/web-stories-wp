@@ -159,10 +159,18 @@ const useTemplateApi = (dataAdapter, config) => {
     }
   }, []);
 
+  const createTemplateFromStory = useCallback(async (story) => {
+    // api call to create a template from a story
+    await dispatch({
+      type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY,
+    });
+  }, []);
+
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
       createStoryFromTemplatePages,
+      createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchSavedTemplates,
       fetchMyTemplates,
@@ -173,6 +181,7 @@ const useTemplateApi = (dataAdapter, config) => {
     [
       bookmarkTemplateById,
       createStoryFromTemplatePages,
+      createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
       fetchExternalTemplates,

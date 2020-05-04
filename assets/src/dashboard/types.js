@@ -32,4 +32,30 @@ export const StoryPropType = PropTypes.shape({
   modified: PropTypes.object,
 });
 
+export const TagPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+});
+
+export const CategoryPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  parent: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+});
+
+export const UserPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  avatar_urls: PropTypes.object,
+});
+
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
+export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
+  .isRequired;
+export const UsersPropType = PropTypes.objectOf(UserPropType).isRequired;

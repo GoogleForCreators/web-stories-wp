@@ -217,6 +217,7 @@
     },
     {
       "files": [
+        "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.js",
         "jest-puppeteer.config.js",

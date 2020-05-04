@@ -36,10 +36,7 @@ function SimplePanel({ children, name, title }) {
 }
 
 SimplePanel.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

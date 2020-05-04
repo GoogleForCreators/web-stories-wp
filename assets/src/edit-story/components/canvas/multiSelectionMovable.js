@@ -29,7 +29,7 @@ import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
-import { useGlobalKeyDownEffect, useGlobalKeyUpEffect } from '../keyboard';
+import { useGlobalIsKeyPressed } from '../keyboard';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -57,8 +57,6 @@ function MultiSelectionMovable({ selectedElements }) {
   } = useDropTargets();
 
   const [isDragging, setIsDragging] = useState(false);
-  const [canSnap, setCanSnap] = useState(true);
-  const [throttleRotation, setThrottleRotation] = useState(false);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -69,12 +67,10 @@ function MultiSelectionMovable({ selectedElements }) {
   }, [selectedElements, moveable, nodesById]);
 
   // ⌘ key disables snapping
-  useGlobalKeyDownEffect('meta', () => setCanSnap(false));
-  useGlobalKeyUpEffect('meta', () => setCanSnap(true));
+  const canSnap = !useGlobalIsKeyPressed('meta');
 
   // ⇧ key rotates the element 30 degrees at a time
-  useGlobalKeyDownEffect('shift', () => setThrottleRotation(true));
-  useGlobalKeyUpEffect('shift', () => setThrottleRotation(false));
+  const throttleRotation = useGlobalIsKeyPressed('shift');
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({

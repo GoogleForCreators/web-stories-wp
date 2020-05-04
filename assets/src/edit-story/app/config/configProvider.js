@@ -29,10 +29,7 @@ function ConfigProvider({ config, children }) {
 }
 
 ConfigProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   config: PropTypes.object.isRequired,
 };
 

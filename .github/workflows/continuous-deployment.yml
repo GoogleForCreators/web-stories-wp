@@ -72,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: /build/web-stories.zip
+          asset_path: build/web-stories.zip
           asset_name: web-stories.zip
           asset_content_type: application/zip
 
@@ -82,6 +82,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: /build/web-stories-composer.zip
+          asset_path: build/web-stories-composer.zip
           asset_name: web-stories-composer.zip
           asset_content_type: application/zip

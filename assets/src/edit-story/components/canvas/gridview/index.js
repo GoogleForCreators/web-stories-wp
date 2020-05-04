@@ -240,6 +240,7 @@ function GridView() {
         <Grid scale={zoomLevel}>
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
+            const isInteractive = pages.length > 1;
 
             return (
               <ItemContainer key={`page-${index}`}>
@@ -268,12 +269,13 @@ function GridView() {
                             index + 1
                           )
                     }
-                    isActive={isCurrentPage}
+                    isActive={isCurrentPage && isInteractive}
                     index={index}
                     width={width}
                     height={height}
                     dragIndicatorOffset={GRID_GAP / 2}
                     onClick={handleClickPage(page)}
+                    isInteractive={isInteractive}
                   />
                 </ReorderableItem>
                 <PageSeparator

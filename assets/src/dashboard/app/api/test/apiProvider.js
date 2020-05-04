@@ -38,13 +38,29 @@ jest.mock('../wpAdapter', () => ({
           {
             id: 123,
             status: 'published',
+            tags: [1, 2, 3],
+            categories: [4, 5, 6],
+            author: 1,
             title: { rendered: 'Carlos', raw: 'Carlos' },
             story_data: { pages: [{ id: 1, elements: [] }] },
             modified: '1970-01-01T00:00:00.000Z',
           },
         ]),
     }),
-  post: (path, { data }) =>
+  post: (path, { data }) => {
+    const title = typeof data.title === 'string' ? data.title : data.title.raw;
+    return Promise.resolve({
+      id: data.id || 456,
+      status: 'published',
+      title: { rendered: title, raw: title },
+      tags: [1, 2, 3],
+      categories: [4, 5, 6],
+      author: 1,
+      story_data: { pages: [{ id: 1, elements: [] }] },
+      modified: '1970-01-01T00:00:00.000Z',
+    });
+  },
+  deleteRequest: (path, { data }) =>
     Promise.resolve({
       id: data.id,
       status: 'published',
@@ -77,6 +93,29 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
+        tags: [1, 2, 3],
+        categories: [4, 5, 6],
+        author: 1,
+        originalStoryData: {
+          id: 123,
+          modified: '1970-01-01T00:00:00.000Z',
+          status: 'published',
+          tags: [1, 2, 3],
+          categories: [4, 5, 6],
+          author: 1,
+          story_data: {
+            pages: [
+              {
+                elements: [],
+                id: 1,
+              },
+            ],
+          },
+          title: {
+            raw: 'Carlos',
+            rendered: 'Carlos',
+          },
+        },
         pages: [
           {
             elements: [],
@@ -126,6 +165,29 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
+        tags: [1, 2, 3],
+        categories: [4, 5, 6],
+        author: 1,
+        originalStoryData: {
+          id: 123,
+          modified: '1970-01-01T00:00:00.000Z',
+          status: 'published',
+          tags: [1, 2, 3],
+          categories: [4, 5, 6],
+          author: 1,
+          story_data: {
+            pages: [
+              {
+                elements: [],
+                id: 1,
+              },
+            ],
+          },
+          title: {
+            raw: 'New Title',
+            rendered: 'New Title',
+          },
+        },
         pages: [
           {
             elements: [],
@@ -136,5 +198,156 @@ describe('ApiProvider', () => {
         title: 'New Title',
       },
     });
+  });
+
+  it('should return an duplicated story in state data when the duplicate method is called.', async () => {
+    const { result } = renderHook(() => useContext(ApiContext), {
+      // eslint-disable-next-line react/display-name
+      wrapper: (props) => (
+        <ConfigProvider
+          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+        >
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.actions.storyApi.fetchStories({});
+    });
+
+    await act(async () => {
+      await result.current.actions.storyApi.duplicateStory({
+        pages: [
+          {
+            elements: [],
+            id: 1,
+          },
+        ],
+        status: 'published',
+        title: 'Carlos',
+        tags: [1, 2, 3],
+        categories: [4, 5, 6],
+        author: 1,
+        originalStoryData: {
+          story_data: {
+            tags: [1, 2, 3],
+            categories: [4, 5, 6],
+            author: 1,
+            pages: [
+              {
+                elements: [],
+                id: 1,
+              },
+            ],
+          },
+          title: {
+            raw: 'Carlos',
+          },
+        },
+      });
+    });
+
+    expect(result.current.state.stories.stories).toStrictEqual({
+      '123': {
+        bottomTargetAction: 'editStory&post=123',
+        centerTargetAction: '',
+        id: 123,
+        modified: moment('1970-01-01T00:00:00.000Z'),
+        tags: [1, 2, 3],
+        categories: [4, 5, 6],
+        author: 1,
+        originalStoryData: {
+          id: 123,
+          modified: '1970-01-01T00:00:00.000Z',
+          status: 'published',
+          tags: [1, 2, 3],
+          categories: [4, 5, 6],
+          author: 1,
+          story_data: {
+            pages: [
+              {
+                elements: [],
+                id: 1,
+              },
+            ],
+          },
+          title: {
+            raw: 'Carlos',
+            rendered: 'Carlos',
+          },
+        },
+        pages: [
+          {
+            elements: [],
+            id: 1,
+          },
+        ],
+        status: 'published',
+        title: 'Carlos',
+      },
+      '456': {
+        bottomTargetAction: 'editStory&post=456',
+        centerTargetAction: '',
+        id: 456,
+        modified: moment('1970-01-01T00:00:00.000Z'),
+        tags: [1, 2, 3],
+        categories: [4, 5, 6],
+        author: 1,
+        originalStoryData: {
+          id: 456,
+          modified: '1970-01-01T00:00:00.000Z',
+          status: 'published',
+          tags: [1, 2, 3],
+          categories: [4, 5, 6],
+          author: 1,
+          story_data: {
+            pages: [
+              {
+                elements: [],
+                id: 1,
+              },
+            ],
+          },
+          title: {
+            raw: 'Carlos (Copy)',
+            rendered: 'Carlos (Copy)',
+          },
+        },
+        pages: [
+          {
+            elements: [],
+            id: 1,
+          },
+        ],
+        status: 'published',
+        title: 'Carlos (Copy)',
+      },
+    });
+  });
+
+  it('should delete a story when the trash story method is called.', async () => {
+    const { result } = renderHook(() => useContext(ApiContext), {
+      // eslint-disable-next-line react/display-name
+      wrapper: (props) => (
+        <ConfigProvider
+          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+        >
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
+
+    await act(async () => {
+      await result.current.actions.storyApi.fetchStories({});
+    });
+
+    await act(async () => {
+      await result.current.actions.storyApi.trashStory({
+        id: 123,
+      });
+    });
+
+    expect(result.current.state.stories.stories).toStrictEqual({});
   });
 });

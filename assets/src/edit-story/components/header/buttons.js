@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia, useConfig } from '../../app';
+import { useStory, useMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Plain, Primary } from '../button';
 import CircularProgress from '../circularProgress';
@@ -223,6 +223,9 @@ function Update() {
   const {
     state: { isUploading },
   } = useMedia();
+  const {
+    state: { hasNewChanges },
+  } = useHistory();
 
   let text;
   switch (status) {
@@ -238,7 +241,7 @@ function Update() {
       return (
         <Outline
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={isSaving || isUploading}
+          isDisabled={isSaving || isUploading || !hasNewChanges}
         >
           {text}
         </Outline>

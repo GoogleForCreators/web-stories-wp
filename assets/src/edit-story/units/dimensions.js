@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT, DEFAULT_EM } from '../constants';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  FULLBLEED_RATIO,
+  DEFAULT_EM,
+} from '../constants';
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -116,9 +121,15 @@ export function getBox(
   const displayFull = isFill || isBackground;
   return {
     x: dataToEditorX(displayFull ? 0 : x, pageWidth),
-    y: dataToEditorY(displayFull ? 0 : y, pageHeight),
+    y: dataToEditorY(
+      displayFull ? -(PAGE_WIDTH / FULLBLEED_RATIO - PAGE_HEIGHT) / 2 : y,
+      pageHeight
+    ),
     width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
-    height: dataToEditorY(displayFull ? PAGE_HEIGHT : height, pageHeight),
+    height: dataToEditorY(
+      displayFull ? PAGE_WIDTH / FULLBLEED_RATIO : height,
+      pageHeight
+    ),
     rotationAngle: displayFull ? 0 : rotationAngle,
   };
 }

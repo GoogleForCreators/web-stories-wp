@@ -35,7 +35,7 @@ const getCurrentBp = () =>
 
 const sizeFromWidth = (width) => ({
   width,
-  height: PAGE_RATIO * width,
+  height: width / PAGE_RATIO,
 });
 
 export default function usePagePreviewSize(options = {}) {

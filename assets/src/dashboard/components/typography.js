@@ -24,7 +24,7 @@ export const ViewHeader = styled.h1`
   font-size: ${({ theme }) => theme.fonts.heading1.size}px;
   line-height: ${({ theme }) => theme.fonts.heading1.lineHeight}px;
   letter-spacing: ${({ theme }) => theme.fonts.heading1.letterSpacing}em;
-  font-weight: bold;
+  font-weight: 500;
   margin: 0;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     font-size: ${({ theme }) => theme.fonts.heading1.minSize}px;
