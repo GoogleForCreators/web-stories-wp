@@ -373,6 +373,9 @@ jobs:
         env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
+      - name: Build plugin
+        run: npm run build:js
+
       - name: Start Docker environment
         run: npm run env:start
         env:
