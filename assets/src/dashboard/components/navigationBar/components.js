@@ -30,12 +30,18 @@ export const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     border-bottom: ${theme.borders.gray50};
+    background-color: ${theme.colors.white};
     display: flex;
     flex-direction: row;
     width: 100%;
     height: ${theme.navBar.height}px;
-    padding: ${theme.pageGutter.small.desktop}px;
     margin-bottom: 40px;
+
+    padding: 0 ${theme.pageGutter.large.desktop}px;
+
+    @media ${theme.breakpoint.tablet} {
+      padding: 0 ${theme.pageGutter.large.tablet}px;
+    }
 
     @media ${theme.breakpoint.smallDisplayPhone} {
       flex-wrap: wrap;
