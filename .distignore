@@ -3,7 +3,6 @@
 .idea
 .storybook
 __mocks__
-assets/images/templates
 assets/src
 bin
 build
