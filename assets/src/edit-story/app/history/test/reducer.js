@@ -37,7 +37,7 @@ describe('reducer', () => {
     ).toThrow(/Unknown history reducer action: UNKNOWN_ACTION/i);
   });
 
-  describe('addEntry', () => {
+  describe('setCurrentState', () => {
     it('should add entry to the beginning of the history', () => {
       const initialState = {
         ...EMPTY_STATE,
@@ -103,7 +103,7 @@ describe('reducer', () => {
       expect(result.entries).toHaveLength(size);
     });
 
-    it('should set the correct offset when replaying', () => {
+    it('should set the correct values when replaying', () => {
       const requestedState = { id: 1 };
       const initialState = {
         ...EMPTY_STATE,
@@ -117,22 +117,8 @@ describe('reducer', () => {
       });
 
       expect(result.offset).toStrictEqual(1);
-    });
-
-    it('should clear the requested state after replaying', () => {
-      const requestedState = { id: 1 };
-      const initialState = {
-        ...EMPTY_STATE,
-        entries: [{ id: 2 }, requestedState],
-        requestedState,
-      };
-
-      const result = reducer(initialState, {
-        type: SET_CURRENT_STATE,
-        payload: requestedState,
-      });
-
       expect(result.requestedState).toBeNull();
+      expect(result.entries).toHaveLength(initialState.entries.length);
     });
 
     it('should set replay the current page relevant to the latest replayed change', () => {
@@ -215,7 +201,7 @@ describe('reducer', () => {
   });
 
   describe('clearHistory', () => {
-    it('should set initial state when clearing history', () => {
+    it('should set empty state when clearing history', () => {
       const initialState = {
         offset: 1,
         requestedState: { id: 1 },
