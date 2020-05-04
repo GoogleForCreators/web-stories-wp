@@ -26,7 +26,7 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Arial' === $font['name'];
+					return 'Arial' === $font['family'];
 				}
 			)
 		);
@@ -35,20 +35,20 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Roboto' === $font['name'];
+					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
 		$this->assertCount( 5, $arial_font );
-		$this->assertArrayHasKey( 'name', $arial_font );
+		$this->assertArrayHasKey( 'family', $arial_font );
 		$this->assertArrayHasKey( 'fallbacks', $arial_font );
 		$this->assertArrayHasKey( 'weights', $arial_font );
 		$this->assertArrayHasKey( 'styles', $arial_font );
 		$this->assertArrayHasKey( 'service', $arial_font );
 		$this->assertEqualSetsWithIndex(
 			[
-				'name'      => 'Arial',
+				'family'    => 'Arial',
 				'fallbacks' => [ 'Helvetica Neue', 'Helvetica', 'sans-serif' ],
 				'weights'   => [ 400, 700 ],
 				'styles'    => [ 'italic', 'regular' ],
@@ -58,7 +58,7 @@ class Fonts extends \WP_UnitTestCase {
 		);
 
 		$this->assertCount( 6, $roboto_font );
-		$this->assertArrayHasKey( 'name', $roboto_font );
+		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'styles', $roboto_font );
@@ -81,13 +81,13 @@ class Fonts extends \WP_UnitTestCase {
 			array_filter(
 				$fonts,
 				static function ( $font ) {
-					return 'Roboto' === $font['name'];
+					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
 		$this->assertCount( 6, $roboto_font );
-		$this->assertArrayHasKey( 'name', $roboto_font );
+		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'styles', $roboto_font );
@@ -95,7 +95,7 @@ class Fonts extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'service', $roboto_font );
 		$this->assertEqualSetsWithIndex(
 			[
-				'name'      => 'Roboto',
+				'family'    => 'Roboto',
 				'fallbacks' => [ 'sans-serif' ],
 				'weights'   => [ 100, 300, 400, 500, 700, 900 ],
 				'styles'    => [ 'italic', 'regular' ],
@@ -117,24 +117,5 @@ class Fonts extends \WP_UnitTestCase {
 			],
 			$roboto_font
 		);
-	}
-
-	public static function data_font_fallback() {
-		return [
-			[ 'sans-serif', 'sans-serif' ],
-			[ 'display', 'cursive' ],
-			[ 'handwriting', 'cursive' ],
-			[ 'monospace', 'monospace' ],
-			[ 'serif', 'serif' ],
-			[ 'invalid', 'serif' ],
-		];
-	}
-
-	/**
-	 * @dataProvider data_font_fallback
-	 */
-	public function test_get_font_fallback( $category, $expected ) {
-		$actual = \Google\Web_Stories\Fonts::get_font_fallback( $category );
-		$this->assertSame( $actual, $expected );
 	}
 }

@@ -56,7 +56,15 @@ function getGoogleFontURL(fonts, display = 'swap') {
 
     const axisTuples = variants
       .sort((a, b) => {
-        return a[0] - b[0] + a[1] - b[1];
+        if (a[0] < b[0]) {
+          return -1;
+        }
+
+        if (a[0] > b[0]) {
+          return 1;
+        }
+
+        return a[1] - b[1];
       })
       .map(([fontStyle, fontWeight]) => {
         const tuple = [];

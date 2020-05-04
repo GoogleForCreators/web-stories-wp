@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -34,7 +33,6 @@ import useDragHandlers from '../useDragHandlers';
 import useKeyboardHandlers from '../useKeyboardHandlers';
 
 const Handle = styled.div`
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.07)};
   border: 0;
   padding: 0;
   height: 6px;
@@ -46,10 +44,10 @@ const Handle = styled.div`
   user-select: none;
 `;
 
+// @todo This needs blue outline when in focus.
 const Bar = styled.div.attrs({
   tabIndex: 0,
 })`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   width: 36px;
   height: 4px;
   border-radius: 2px;
