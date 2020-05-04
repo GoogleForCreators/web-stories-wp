@@ -20,6 +20,29 @@
  * https://github.com/facebook/draft-js/issues/602#issuecomment-584676405
  */
 /* istanbul ignore next */
+
+/**
+ * This returns *an array of sets of styles* for all currently selected
+ * characters.
+ *
+ * If you have the following states with html tags representing styles
+ * and [] representing selection),you get the following returns:
+ *
+ * <example>
+ * input: Hel[lo w]orld
+ * output: [Set(), Set(), Set(), Set()]
+ *
+ * input: <b>Hel[lo</b> w]orld
+ * output: [Set("BOLD"), Set("BOLD"), Set(), Set()]
+ *
+ * input: <b>Hel[l<b><i>o</i></b></b> <u>w]or</u>ld
+ * output: [Set("BOLD"), Set("BOLD", "ITALIC"), Set(), Set("UNDERLINE")]
+ * </example>
+ *
+ * @param {Object} editorState  The current state of the editor including
+ * selection
+ * @return {Array.<Set.<string>>} list of sets of styles as described
+ */
 export function getAllStyleSetsInSelection(editorState) {
   const styleSets = [];
   const contentState = editorState.getCurrentContent();
