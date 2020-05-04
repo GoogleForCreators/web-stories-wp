@@ -166,7 +166,7 @@ const useTemplateApi = (dataAdapter, config) => {
     });
   }, []);
 
-  const relatedTemplates = useMemo(() => {
+  const fetchRelatedTemplates = useCallback(() => {
     if (!state.templates) {
       return [];
     }
@@ -187,11 +187,12 @@ const useTemplateApi = (dataAdapter, config) => {
       createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
-      fetchSavedTemplates,
-      fetchMyTemplates,
-      fetchMyTemplateById,
       fetchExternalTemplates,
       fetchExternalTemplateById,
+      fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
+      fetchSavedTemplates,
     }),
     [
       bookmarkTemplateById,
@@ -200,13 +201,14 @@ const useTemplateApi = (dataAdapter, config) => {
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
       fetchExternalTemplates,
-      fetchMyTemplateById,
       fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
       fetchSavedTemplates,
     ]
   );
 
-  return { templates: { ...state, relatedTemplates }, api };
+  return { templates: state, api };
 };
 /* eslint-enable no-unused-vars */
 

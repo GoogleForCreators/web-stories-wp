@@ -72,10 +72,14 @@ function TemplateDetail() {
   } = useRouteHistory();
   const {
     state: {
-      templates: { relatedTemplates, templates, templatesOrderById },
+      templates: { templates, templatesOrderById },
     },
     actions: {
-      templateApi: { fetchMyTemplateById, fetchExternalTemplateById },
+      templateApi: {
+        fetchMyTemplateById,
+        fetchExternalTemplateById,
+        fetchRelatedTemplates,
+      },
     },
   } = useContext(ApiContext);
   const { isRTL } = useConfig();
@@ -98,6 +102,10 @@ function TemplateDetail() {
       );
     }
   }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
+
+  const relatedTemplates = useMemo(() => {
+    return fetchRelatedTemplates();
+  }, [fetchRelatedTemplates]);
 
   const orderedTemplates = useMemo(() => {
     return templatesOrderById.map((templateByOrderId) => {
