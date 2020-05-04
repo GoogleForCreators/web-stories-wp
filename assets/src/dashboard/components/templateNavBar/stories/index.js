@@ -17,4 +17,12 @@
 /**
  * Internal dependencies
  */
-export { TemplateNavBar } from './templateNavBar';
+import { TemplateNavBar } from '../';
+
+export default {
+  title: 'Dashboard/Components/TemplateNavBar',
+};
+
+export const _default = () => {
+  return <TemplateNavBar />;
+};

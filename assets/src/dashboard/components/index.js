@@ -36,7 +36,6 @@ export { default as InfiniteScroller } from './infiniteScroller';
 export { TextInput } from './input';
 export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';
-export { TemplateNavBar } from './navigationBar';
 export {
   AppFrame,
   LeftRail,
@@ -62,6 +61,7 @@ export {
   TableRow,
   TableTitleHeaderCell,
 } from './table';
+export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
