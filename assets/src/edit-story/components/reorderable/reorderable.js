@@ -88,10 +88,7 @@ const Reorderable = forwardRef(
 );
 
 Reorderable.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   onPositionChange: PropTypes.func.isRequired,
   getItemSize: PropTypes.func.isRequired,
 };

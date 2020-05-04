@@ -16,11 +16,12 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 13,
+    version: 15,
     pages: [
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -43,7 +44,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page1_bg',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 20,
             y: 125,
@@ -55,11 +56,16 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'ca140433-52d1-4423-896f-2e5c856cb22f',
             isBackground: true,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Playfair Display',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -68,8 +74,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Playfair Display',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 38,
             fontStyle: 'normal',
@@ -104,10 +108,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: 'd5ca2488-668b-4e21-a7d8-05c17084742b',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -116,8 +125,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 500,
             fontSize: 90,
             fontStyle: 'normal',
@@ -152,10 +159,10 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '3c00f665-e2ff-4393-aef4-6ca790f599fd',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -180,10 +187,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '7de325ef-2490-4e19-9c9c-7031bffa4b05',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -218,7 +225,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'd0b3b0de-e60d-4f1d-baa6-b72fe5d4daae',
           },
         ],
@@ -230,6 +236,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -252,10 +259,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '143182cf-804b-4d71-93d8-d4a53c9e6ed6',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -280,10 +287,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: 'a81f2dcc-b5a3-4be6-8a06-bb42ac828ed0',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -292,8 +304,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 500,
             fontSize: 48,
             fontStyle: 'normal',
@@ -328,10 +338,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: 'bfd53cf2-f8e8-41f0-8449-48772b5194bb',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -340,8 +355,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 500,
             fontSize: 48,
             fontStyle: 'normal',
@@ -376,10 +389,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '90e3970e-a7be-4ecb-91a6-4f6065f28de1',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -388,8 +406,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -424,10 +440,10 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '88df74ed-7334-4e91-957c-c48b8da344e4',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: true,
@@ -452,7 +468,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '8a21c4e7-4e9b-4811-9b8b-f36d0297a9e4',
             resource: {
               type: 'image',
@@ -466,7 +481,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page2_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
         ],
@@ -478,6 +493,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -500,10 +516,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: 'b39e1373-e1d4-40ee-bd0c-298924b61a3e',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -528,10 +544,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '6e549d8a-d851-45c5-b168-f3e681261bab',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -540,8 +561,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 31,
             fontStyle: 'normal',
@@ -576,10 +595,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '3cf17fb8-a5ae-4f32-8e5f-d3a0513215de',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -588,8 +612,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -625,10 +647,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '883808f1-b87b-4b35-b0f1-0945e0faef2e',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -637,8 +664,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 48,
             fontStyle: 'normal',
@@ -673,10 +698,10 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '6258d646-a291-498f-81ab-3095f352bb26',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -701,7 +726,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '4c694857-df14-4ba9-8791-9b13935dbbbe',
             resource: {
               type: 'image',
@@ -715,7 +739,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page3_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
         ],
@@ -727,6 +751,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -749,7 +774,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page4_bg',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 97,
             y: 74,
@@ -761,11 +786,11 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'a920881d-6fab-4d96-8884-0df9f0b6a8fd',
             isBackground: true,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -790,10 +815,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '3d3b38a3-d8db-4a86-a4e2-0be30e92b177',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -802,8 +832,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -838,10 +866,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '1b892512-7510-4c09-a750-7dfd21ece74a',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -850,8 +883,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -887,8 +918,126 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: 'd773e2ce-05a7-4195-a815-cfd66e93f66a',
+          },
+          {
+            type: 'shape',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            x: 206,
+            y: 580.5,
+            width: 29,
+            height: 29,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            mask: {
+              type: 'circle',
+            },
+            id: '4a65e5d2-865b-4972-9d14-f713f85329c9',
+          },
+          {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Roboto',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundTextMode: 'NONE',
+            bold: false,
+            fontWeight: 400,
+            fontSize: 15,
+            fontStyle: 'normal',
+            color: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            letterSpacing: 0,
+            lineHeight: 1.3,
+            textAlign: 'center',
+            textDecoration: 'none',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+            },
+            content: 'See Full Story',
+            backgroundColor: {
+              color: {
+                r: 196,
+                g: 196,
+                b: 196,
+              },
+            },
+            width: 147,
+            height: 19,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            basedOn: 'd773e2ce-05a7-4195-a815-cfd66e93f66a',
+            id: 'f30c61c9-1e27-4458-a149-d827c7fad147',
+            x: 146,
+            y: 619,
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_up_arrow.png`,
+              width: 150,
+              height: 69,
+              posterId: 0,
+              id: 404,
+              title: 'travel_icon_up_arrow',
+              alt: 'travel_icon_up_arrow',
+              local: false,
+              sizes: {},
+            },
+            x: 213,
+            y: 591.5,
+            width: 15,
+            height: 7,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            id: '3e017006-465b-461c-ae74-2c57c891f67a',
           },
         ],
         backgroundElementId: 'a920881d-6fab-4d96-8884-0df9f0b6a8fd',
@@ -899,6 +1048,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -921,7 +1071,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page5_bg',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 57,
             y: 18,
@@ -933,11 +1083,16 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '3b0ede46-334e-4bc5-abb7-f09dec3d6d48',
             isBackground: true,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Playfair Display',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -946,8 +1101,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Playfair Display',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 38,
             fontStyle: 'normal',
@@ -982,10 +1135,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '65283dae-40f2-4ace-8b0a-0d9f2066a38a',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -994,8 +1152,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 90,
             fontStyle: 'normal',
@@ -1030,10 +1186,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '95c08a42-48cd-4112-b0e2-f24362adc7bc',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1042,8 +1203,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -1078,10 +1237,10 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: '7dae1bd9-9f88-4ae8-93eb-f3d908cace09',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1104,7 +1263,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page5_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 138,
             y: 163,
@@ -1116,8 +1275,128 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '07f8a241-8aba-4a73-a1dc-cc48aad766d2',
+          },
+          {
+            type: 'shape',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            width: 29,
+            height: 29,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            mask: {
+              type: 'circle',
+            },
+            basedOn: '4a65e5d2-865b-4972-9d14-f713f85329c9',
+            id: '0f006add-3110-4fe2-8b1a-93e55da8c752',
+            x: 206,
+            y: 580.5,
+          },
+          {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Roboto',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundTextMode: 'NONE',
+            bold: false,
+            fontWeight: 400,
+            fontSize: 15,
+            fontStyle: 'normal',
+            color: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            letterSpacing: 0,
+            lineHeight: 1.3,
+            textAlign: 'center',
+            textDecoration: 'none',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+            },
+            content: 'See Full Story',
+            backgroundColor: {
+              color: {
+                r: 196,
+                g: 196,
+                b: 196,
+              },
+            },
+            width: 147,
+            height: 19,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            basedOn: 'f30c61c9-1e27-4458-a149-d827c7fad147',
+            id: 'b563fdfc-f2e2-41a9-8010-c9b2b4a07302',
+            x: 146,
+            y: 619,
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_up_arrow.png`,
+              width: 150,
+              height: 69,
+              posterId: 0,
+              id: 404,
+              title: 'travel_icon_up_arrow',
+              alt: 'travel_icon_up_arrow',
+              local: false,
+              sizes: {},
+            },
+            width: 15,
+            height: 7,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            basedOn: '3e017006-465b-461c-ae74-2c57c891f67a',
+            id: 'd49a21ac-61f1-488d-8b1e-586a846226db',
+            x: 213,
+            y: 591.5,
           },
         ],
         backgroundElementId: '3b0ede46-334e-4bc5-abb7-f09dec3d6d48',
@@ -1128,6 +1407,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1150,7 +1430,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page6_bg',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 47,
             y: 61,
@@ -1162,11 +1442,16 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '117a9caa-d0cc-47d0-b00e-ee623bbcd5fc',
             isBackground: true,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1175,8 +1460,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 48,
             fontStyle: 'normal',
@@ -1211,10 +1494,15 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: 'c40c8eae-e683-4fa6-a632-e1d652279a37',
           },
           {
+            font: {
+              service: 'system',
+              family: 'Arial',
+              fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1223,8 +1511,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Arial',
-            fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -1260,10 +1546,10 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             id: 'ca20176a-3245-4735-9b1c-66017aa9e528',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1288,10 +1574,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: '4393667f-c2ab-417b-a901-81c9aa4e3bb3',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1316,10 +1602,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'circle',
             },
-            type: 'shape',
             id: 'e024d5d3-7398-454a-b28c-52e111e33f1b',
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1342,7 +1628,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page6_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 184,
             y: -11,
@@ -1354,7 +1640,6 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: 'a518c941-56a4-4e2d-afcd-893c88dc31ae',
           },
         ],
@@ -1366,6 +1651,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1388,10 +1674,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '9012bef0-e5e3-4910-8412-a10ce18e23a6',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1406,9 +1692,9 @@ export default function (imageBaseUrl) {
               },
             },
             isFill: false,
-            x: 307,
+            x: 305,
             y: 0,
-            width: 134,
+            width: 136,
             height: 134,
             scale: 100,
             focalX: 50,
@@ -1416,10 +1702,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: '7c4a2686-3bcc-4e41-92ed-f12b899b615b',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1428,8 +1719,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 31,
             fontStyle: 'normal',
@@ -1462,13 +1751,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '3cf17fb8-a5ae-4f32-8e5f-d3a0513215de',
             id: '4f71e74f-fd3f-4840-9ea4-8c0f59363952',
             x: 339,
             y: 51.5,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1477,8 +1771,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 48,
             fontStyle: 'normal',
@@ -1511,13 +1803,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '6258d646-a291-498f-81ab-3095f352bb26',
             id: '3932eb5c-e456-43d8-988d-4aa01dd4a8bd',
             x: 45,
             y: 440,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1526,8 +1823,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -1561,13 +1856,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '883808f1-b87b-4b35-b0f1-0945e0faef2e',
             id: 'bc7d8800-b421-4a19-9db0-f594e9b0bd8d',
             x: 45,
             y: 545,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1592,7 +1887,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '37a09535-568f-4dc6-a07d-57f3ac1c9d39',
             resource: {
               type: 'image',
@@ -1606,7 +1900,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page7_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
         ],
@@ -1618,6 +1912,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1640,7 +1935,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page8_bg',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 13,
             y: 139,
@@ -1652,11 +1947,11 @@ export default function (imageBaseUrl) {
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            type: 'image',
             id: '3f23fce9-2fb5-4f17-acec-f0f6f524967d',
             isBackground: true,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1679,13 +1974,18 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '7c4a2686-3bcc-4e41-92ed-f12b899b615b',
             id: '5f598141-8e1c-4486-8d73-9fd9e8934c48',
             x: 307,
             y: 0,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1694,8 +1994,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 31,
             fontStyle: 'normal',
@@ -1728,13 +2026,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '3cf17fb8-a5ae-4f32-8e5f-d3a0513215de',
             id: '28b135fd-63b8-456c-985d-3dfe542fffd7',
             x: 335.5,
             y: 36,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1760,10 +2058,15 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: 'f60ae332-db13-481f-ace7-107885b1c202',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1772,8 +2075,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 48,
             fontStyle: 'normal',
@@ -1806,13 +2107,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '6258d646-a291-498f-81ab-3095f352bb26',
             id: '30716193-c4ff-4619-b485-8108d250c8b8',
             x: 42,
             y: 51,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1821,8 +2127,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -1856,7 +2160,6 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '883808f1-b87b-4b35-b0f1-0945e0faef2e',
             id: '41d3069f-61de-4998-8487-036ea86917a6',
             x: 42,
@@ -1871,6 +2174,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1893,10 +2197,15 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '55fcd4fb-1af4-4540-ac57-a783f94f6864',
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1905,8 +2214,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -1939,13 +2246,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '3932eb5c-e456-43d8-988d-4aa01dd4a8bd',
             id: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             x: 183,
             y: 47,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1954,8 +2266,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -1988,13 +2298,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             id: '840cd415-bf08-4186-9649-932beb2e6778',
             x: 183,
             y: 180,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2003,8 +2318,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2037,13 +2350,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             id: '2192d51d-a5e1-437e-a6a1-c7c2a1d7a7c4',
             x: 184,
             y: 306,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2052,8 +2370,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2086,13 +2402,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             id: 'bbe6302e-87c0-49d2-b16b-ff787059c187',
             x: 183,
             y: 441,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2101,8 +2422,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2135,13 +2454,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             id: '44db08e2-0900-40a6-9e52-3ab2325aeab2',
             x: 183,
             y: 576,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2150,8 +2474,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -2184,13 +2506,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'd773e2ce-05a7-4195-a815-cfd66e93f66a',
             id: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             x: 184,
             y: 76,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2199,8 +2526,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -2233,13 +2558,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             id: '919e9a80-e851-49fe-9660-c67937a14e13',
             x: 182,
             y: 206,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2248,8 +2578,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -2282,13 +2610,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             id: '0ac04592-1df3-4d5a-896b-18c821c93c4a',
             x: 182,
             y: 333,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2297,8 +2630,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -2331,13 +2662,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             id: '63b0bbbf-6ef4-42c1-b017-d7db0db07039',
             x: 185,
             y: 467,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Lora',
+              fallbacks: ['serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2346,8 +2682,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Lora',
-            fontFallback: ['serif'],
             fontWeight: 400,
             fontSize: 16,
             fontStyle: 'normal',
@@ -2380,13 +2714,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             id: '300c43cc-b0b0-45de-97ba-1775028d50bb',
             x: 183,
             y: 599,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2411,10 +2745,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: 'd90985a8-8ba6-45b1-8e8a-ef2fa073dac9',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2437,13 +2771,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: 'd90985a8-8ba6-45b1-8e8a-ef2fa073dac9',
             id: '3a1f5ae5-8bc5-418f-8178-8dfc4427f719',
             x: -2,
             y: 262,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2466,13 +2800,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: 'd90985a8-8ba6-45b1-8e8a-ef2fa073dac9',
             id: '359fca2c-a5ab-448c-b9e6-11dd47517650',
             x: 0,
             y: 390,
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2495,13 +2829,13 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: '359fca2c-a5ab-448c-b9e6-11dd47517650',
             id: '2a391259-057a-4976-b90d-2c6140e2a222',
             x: 1,
             y: 524,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2526,7 +2860,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '43b28f35-fdc3-4b59-b3da-ad9581cbeb8c',
             resource: {
               type: 'image',
@@ -2540,10 +2873,11 @@ export default function (imageBaseUrl) {
               title: 'travel_page9_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2566,7 +2900,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             basedOn: '43b28f35-fdc3-4b59-b3da-ad9581cbeb8c',
             id: 'd16ef169-d80c-4e70-817a-9e3bf66d1428',
             x: -3,
@@ -2583,10 +2916,11 @@ export default function (imageBaseUrl) {
               title: 'travel_page9_image2',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2609,7 +2943,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             basedOn: '43b28f35-fdc3-4b59-b3da-ad9581cbeb8c',
             id: 'cc687c94-be82-4e6c-8700-610ef40d6f5e',
             x: -2,
@@ -2626,10 +2959,11 @@ export default function (imageBaseUrl) {
               title: 'travel_page9_image3',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2652,7 +2986,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             basedOn: '43b28f35-fdc3-4b59-b3da-ad9581cbeb8c',
             id: 'a7ca1ee4-5f88-45e3-aa3d-ea3cfda6b027',
             x: -3,
@@ -2669,10 +3002,11 @@ export default function (imageBaseUrl) {
               title: 'travel_page9_image4',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2695,7 +3029,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             basedOn: '43b28f35-fdc3-4b59-b3da-ad9581cbeb8c',
             id: '07155f07-19d8-4eca-8817-9b512fd3303f',
             x: -3,
@@ -2712,7 +3045,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page9_image5',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
         ],
@@ -2724,6 +3057,7 @@ export default function (imageBaseUrl) {
       {
         elements: [
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2746,10 +3080,10 @@ export default function (imageBaseUrl) {
               type: 'rectangle',
             },
             isBackground: true,
-            type: 'shape',
             id: '282588c3-fbc2-4b63-8260-2e58d0e63294',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2774,10 +3108,10 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             id: 'b542beff-39c1-4787-a8ad-a2a061c51a60',
           },
           {
+            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2800,13 +3134,18 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'shape',
             basedOn: 'b542beff-39c1-4787-a8ad-a2a061c51a60',
             id: '12b82d84-167c-49b1-8efd-afae77b857f0',
             x: 239,
             y: 469,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2815,8 +3154,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2849,13 +3186,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '840cd415-bf08-4186-9649-932beb2e6778',
             id: '7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f',
             x: 279,
             y: 230,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2864,8 +3206,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2898,13 +3238,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f',
             id: 'cb201d61-faec-476e-9d72-14caf813197b',
             x: 279,
             y: 361,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2913,8 +3258,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 18,
             fontStyle: 'normal',
@@ -2947,13 +3290,18 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: 'cb201d61-faec-476e-9d72-14caf813197b',
             id: 'fcdc8182-cfb1-4010-82cd-91b5f235f0fc',
             x: 279,
             y: 494,
           },
           {
+            font: {
+              service: 'fonts.google.com',
+              family: 'Oswald',
+              fallbacks: ['sans-serif'],
+            },
+            type: 'text',
             opacity: 100,
             flip: {
               vertical: false,
@@ -2962,8 +3310,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
             bold: false,
-            fontFamily: 'Oswald',
-            fontFallback: ['sans-serif'],
             fontWeight: 400,
             fontSize: 48,
             fontStyle: 'normal',
@@ -2996,13 +3342,13 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
-            type: 'text',
             basedOn: '3932eb5c-e456-43d8-988d-4aa01dd4a8bd',
             id: 'e5272870-2b37-4bba-abcf-eab0ffc222a4',
             x: 40,
             y: 53,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3027,7 +3373,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             id: '85439d79-2100-4dc8-9b20-e6e51d2064af',
             resource: {
               type: 'image',
@@ -3041,10 +3386,11 @@ export default function (imageBaseUrl) {
               title: 'travel_page10_image1',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3067,7 +3413,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -3080,7 +3425,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page10_image2',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             basedOn: '85439d79-2100-4dc8-9b20-e6e51d2064af',
             id: '19fd443d-f580-436b-82b4-ef2938c55e89',
@@ -3088,6 +3433,7 @@ export default function (imageBaseUrl) {
             y: 335,
           },
           {
+            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -3110,7 +3456,6 @@ export default function (imageBaseUrl) {
             mask: {
               type: 'rectangle',
             },
-            type: 'image',
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
@@ -3123,12 +3468,164 @@ export default function (imageBaseUrl) {
               title: 'travel_page10_image3',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             basedOn: '19fd443d-f580-436b-82b4-ef2938c55e89',
             id: '098c9143-7ca0-4b04-866f-02c5c48339d2',
             x: -2,
             y: 469,
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_fb.png`,
+              width: 150,
+              height: 300,
+              posterId: 0,
+              id: 420,
+              title: 'travel_icon_fb',
+              alt: 'travel_icon_fb',
+              local: false,
+              sizes: {},
+            },
+            x: 60,
+            y: 615,
+            width: 15,
+            height: 30,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            id: 'cf79c6e9-4f9d-4c4e-a455-aaa490458775',
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_insta.png`,
+              width: 150,
+              height: 156,
+              posterId: 0,
+              id: 419,
+              title: 'travel_icon_insta',
+              alt: 'travel_icon_insta',
+              local: false,
+              sizes: {},
+            },
+            x: 147,
+            y: 617,
+            width: 25,
+            height: 26,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            id: '0a44cd76-e684-4cea-a6e8-f50e0557ce46',
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_yt.png`,
+              width: 150,
+              height: 106,
+              posterId: 0,
+              id: 418,
+              title: 'travel_icon_yt',
+              alt: 'travel_icon_yt',
+              local: false,
+              sizes: {},
+            },
+            x: 244,
+            y: 620,
+            width: 28,
+            height: 20,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            id: '81ec3ab2-7eee-4d86-b981-90e8415a9419',
+          },
+          {
+            type: 'image',
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/png',
+              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_tw.png`,
+              width: 150,
+              height: 121,
+              posterId: 0,
+              id: 417,
+              title: 'travel_icon_tw',
+              alt: 'travel_icon_tw',
+              local: false,
+              sizes: {},
+            },
+            x: 344,
+            y: 618.5,
+            width: 28,
+            height: 23,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
+              ratio: 1,
+            },
+            id: '675e2caa-2276-4b8b-9d80-0fcffd623d62',
           },
         ],
         backgroundElementId: '282588c3-fbc2-4b63-8260-2e58d0e63294',

@@ -38,7 +38,7 @@ export const THUMB_FRAME_WIDTH = 0;
 
 const Page = styled.button`
   display: block;
-  cursor: pointer;
+  cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
   padding: ${THUMB_INDICATOR_GAP}px 0 0 0;
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
@@ -50,8 +50,9 @@ const Page = styled.button`
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
   outline: 0;
-  ${({ isActive, theme }) =>
+  ${({ isActive, isInteractive, theme }) =>
     !isActive &&
+    isInteractive &&
     css`
       &:hover,
       &:focus {
@@ -106,6 +107,11 @@ PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  isInteractive: PropTypes.bool,
+};
+
+PagePreview.defaultProps = {
+  isInteractive: true,
 };
 
 export default PagePreview;

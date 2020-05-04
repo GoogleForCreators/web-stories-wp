@@ -136,10 +136,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default Provider;

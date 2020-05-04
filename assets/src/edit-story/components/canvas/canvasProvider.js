@@ -24,10 +24,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-} from '../../constants';
+import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
@@ -38,8 +35,8 @@ function CanvasProvider({ children }) {
   const lastSelectedElementId = useRef(null);
 
   const [pageSize, setPageSize] = useState({
-    width: DEFAULT_EDITOR_PAGE_WIDTH,
-    height: DEFAULT_EDITOR_PAGE_HEIGHT,
+    width: PAGE_WIDTH,
+    height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
 
@@ -166,10 +163,7 @@ function CanvasProvider({ children }) {
 }
 
 CanvasProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default CanvasProvider;

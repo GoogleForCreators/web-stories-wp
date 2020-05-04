@@ -67,10 +67,7 @@ const Squishable = ({ children }) => {
 };
 
 Squishable.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default Squishable;

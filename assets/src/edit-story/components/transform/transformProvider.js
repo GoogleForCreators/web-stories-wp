@@ -57,10 +57,7 @@ function TransformProvider({ children }) {
 }
 
 TransformProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default TransformProvider;
