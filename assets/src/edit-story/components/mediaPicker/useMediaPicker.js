@@ -64,7 +64,7 @@ export default function useMediaPicker({
     // If a user do not have a rights to upload to the media library, do not show the media picker.
     if (!hasUploadMediaAction) {
       const message = __(
-        'Sorry you are unable to upload files.',
+        'Sorry, you are unable to upload files.',
         'web-stories'
       );
       showSnackbar({ message });

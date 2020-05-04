@@ -75,7 +75,7 @@ function useUploader(refreshLibrary = true) {
       permissionError.isUserError = true;
 
       permissionError.message = __(
-        'Sorry you are unable to upload files.',
+        'Sorry, you are unable to upload files.',
         'web-stories'
       );
       throw permissionError;
