@@ -129,10 +129,7 @@ function RichTextProvider({ children }) {
 }
 
 RichTextProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default RichTextProvider;
