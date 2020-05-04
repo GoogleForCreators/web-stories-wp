@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -31,30 +32,61 @@ import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
 
-function FlipControls({ value, onChange }) {
+const styledToggle = css`
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+`;
+
+const ToggleContainer = styled.div`
+  ${styledToggle}
+  margin-right: ${({ margin }) => (margin ? margin : '0px')};
+`;
+
+const ControlsContainer = styled.div`
+  width: fit-content;
+`;
+
+/**
+ * Get flip controls for flipping elements horizontally and vertically.
+ *
+ * @param {Object} value Element's flip object.
+ * @param {Object} onChange Callback to flip element.
+ * @param {number} margin Space between the two flip toggles (defaults to '8px').
+ * @return {*} Element or null if does not map to video/image.
+ */
+function FlipControls({ value, onChange, margin = '8px' }) {
   return (
-    <>
-      <Toggle
-        title={__('Flip horizontally', 'web-stories')}
-        aria-label={__('Flip horizontally', 'web-stories')}
-        icon={<FlipHorizontal />}
-        value={value.horizontal === true}
-        onChange={(horizontal) => onChange({ ...value, horizontal })}
-      />
-      <Toggle
-        title={__('Flip vertically', 'web-stories')}
-        aria-label={__('Flip vertically', 'web-stories')}
-        icon={<FlipVertical />}
-        value={value.vertical === true}
-        onChange={(vertical) => onChange({ ...value, vertical })}
-      />
-    </>
+    <ControlsContainer>
+      <ToggleContainer margin={margin}>
+        <Toggle
+          title={__('Flip horizontally', 'web-stories')}
+          aria-label={__('Flip horizontally', 'web-stories')}
+          icon={<FlipHorizontal />}
+          value={value.horizontal === true}
+          onChange={(horizontal) => onChange({ ...value, horizontal })}
+        />
+      </ToggleContainer>
+      <ToggleContainer>
+        <Toggle
+          title={__('Flip vertically', 'web-stories')}
+          aria-label={__('Flip vertically', 'web-stories')}
+          icon={<FlipVertical />}
+          value={value.vertical === true}
+          onChange={(vertical) => onChange({ ...value, vertical })}
+        />
+      </ToggleContainer>
+    </ControlsContainer>
   );
 }
 
 FlipControls.propTypes = {
   value: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  margin: PropTypes.string,
 };
 
 export default FlipControls;
