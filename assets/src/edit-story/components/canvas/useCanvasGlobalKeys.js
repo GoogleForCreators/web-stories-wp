@@ -34,7 +34,7 @@ import useUploadWithPreview from './useUploadWithPreview';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
-function useCanvasSelectionCopyPaste() {
+function useCanvasGlobalKeys() {
   const {
     state: { currentPage, selectedElements },
     actions: { addElement, addElements, deleteSelectedElements },
@@ -218,4 +218,4 @@ function useCanvasSelectionCopyPaste() {
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
 }
 
-export default useCanvasSelectionCopyPaste;
+export default useCanvasGlobalKeys;

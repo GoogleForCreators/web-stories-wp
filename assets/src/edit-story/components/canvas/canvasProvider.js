@@ -30,7 +30,7 @@ import {
 } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
-import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
+import useCanvasGlobalKeys from './useCanvasGlobalKeys';
 import Context from './context';
 
 function CanvasProvider({ children }) {
@@ -134,7 +134,7 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  useCanvasSelectionCopyPaste();
+  useCanvasGlobalKeys();
 
   const state = {
     state: {
