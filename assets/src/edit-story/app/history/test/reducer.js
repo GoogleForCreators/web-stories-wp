@@ -246,5 +246,28 @@ describe('reducer', () => {
 
       expect(result.requestedState).toStrictEqual(replay);
     });
+
+    it('should set the correct versionNumber when replaying', () => {
+      const replay = { id: 1 };
+      const initialState = {
+        ...EMPTY_STATE,
+        versionNumber: 4,
+        offset: 3,
+        entries: [{ id: 2 }, replay],
+      };
+
+      const result1 = reducer(initialState, {
+        type: REPLAY,
+        payload: 2,
+      });
+
+      expect(result1.versionNumber).toStrictEqual(5);
+
+      const result2 = reducer(initialState, {
+        type: REPLAY,
+        payload: 5,
+      });
+      expect(result2.versionNumber).toStrictEqual(2);
+    });
   });
 });
