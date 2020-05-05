@@ -26,10 +26,20 @@ import { Numeric } from '../';
 import { renderWithTheme } from '../../../testUtils';
 
 describe('Form/Numeric', () => {
+  const alt = (node) =>
+    fireEvent.keyDown(node, { key: 'Alt', which: 18, altKey: true });
   const arrowUp = (node) =>
     fireEvent.keyDown(node, { key: 'ArrowUp', which: 38 });
+  const altArrowUp = (node) => {
+    alt(node);
+    arrowUp(node);
+  };
   const arrowDown = (node) =>
     fireEvent.keyDown(node, { key: 'ArrowDown', which: 40 });
+  const altArrowDown = (node) => {
+    alt(node);
+    arrowDown(node);
+  };
 
   it('should render <Numeric /> form', () => {
     const onChangeMock = jest.fn();
@@ -49,7 +59,7 @@ describe('Form/Numeric', () => {
     expect(input).toBeDefined();
   });
 
-  it('should increment on key up', () => {
+  it('should increment int on key up', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
@@ -68,13 +78,13 @@ describe('Form/Numeric', () => {
     expect(onChangeMock).toHaveBeenCalledWith(1);
   });
 
-  it('should ceil float on key up', () => {
+  it('should increment non-float on alt + key up', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
     const { getByTestId } = renderWithTheme(
       <Numeric
-        value={1.3}
+        value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         data-testid="numeric"
@@ -82,12 +92,72 @@ describe('Form/Numeric', () => {
     );
 
     const input = getByTestId('numeric');
-    arrowUp(input);
+    altArrowUp(input);
 
-    expect(onChangeMock).toHaveBeenCalledWith(2);
+    expect(onChangeMock).toHaveBeenCalledWith(1);
   });
 
-  it('should decrement on key down', () => {
+  it('should increment to full int on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByTestId } = renderWithTheme(
+      <Numeric
+        value={0.9}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        data-testid="numeric"
+      />
+    );
+
+    const input = getByTestId('numeric');
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should increment float point on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByTestId } = renderWithTheme(
+      <Numeric
+        value={0}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        data-testid="numeric"
+      />
+    );
+
+    const input = getByTestId('numeric');
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(0.1);
+  });
+
+  it('should increment long float point on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByTestId } = renderWithTheme(
+      <Numeric
+        value={0.38934985}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        data-testid="numeric"
+      />
+    );
+
+    const input = getByTestId('numeric');
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(0.48934985);
+  });
+
+  it('should decrement int on key down', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
@@ -106,13 +176,13 @@ describe('Form/Numeric', () => {
     expect(onChangeMock).toHaveBeenCalledWith(1);
   });
 
-  it('should floor float on key down', () => {
+  it('should decrement non-float on alt + key down', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
     const { getByTestId } = renderWithTheme(
       <Numeric
-        value={2.3}
+        value={2}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         data-testid="numeric"
@@ -120,8 +190,48 @@ describe('Form/Numeric', () => {
     );
 
     const input = getByTestId('numeric');
-    arrowDown(input);
+    altArrowDown(input);
 
-    expect(onChangeMock).toHaveBeenCalledWith(2);
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should decrement float point on alt + key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByTestId } = renderWithTheme(
+      <Numeric
+        value={2}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        data-testid="numeric"
+      />
+    );
+
+    const input = getByTestId('numeric');
+    altArrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1.9);
+  });
+
+  it('should decrement long float point on alt + key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByTestId } = renderWithTheme(
+      <Numeric
+        value={2.34598345}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        data-testid="numeric"
+      />
+    );
+
+    const input = getByTestId('numeric');
+    altArrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(2.24598345);
   });
 });

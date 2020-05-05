@@ -20,18 +20,17 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef, useCallback } from 'react';
-
+import { useCallback, useRef, useState } from 'react';
+import Big from 'big.js';
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
-import { useKeyDownEffect } from '../keyboard';
+import { useIsKeyPressed, useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -84,29 +83,34 @@ function Numeric({
   const [dot, setDot] = useState(false);
   const ref = useRef();
 
+  const altPressed =
+    float && useIsKeyPressed(ref, { key: 'alt', editable: true });
+
   const handleUpDown = useCallback(
     ({ key }) => {
       if (isMultiple) {
         return;
       }
-      const isInt = Number.isInteger(value);
-      let newValue;
 
+      let newValue;
       if (key === 'ArrowUp') {
         // Increment value
-        newValue = isInt ? value + 1 : Math.ceil(value);
+        newValue = Big(value).plus(Big(altPressed ? 0.1 : 1));
       } else if (key === 'ArrowDown') {
         // Decrement value
-        newValue = isInt ? value - 1 : Math.floor(value);
+        newValue = Big(value).minus(Big(altPressed ? 0.1 : 1));
       }
-      onChange(newValue);
+      onChange(parseFloat(newValue.toString()));
     },
-    [onChange, value, isMultiple]
+    [onChange, value, isMultiple, altPressed]
   );
 
-  useKeyDownEffect(ref, { key: ['up', 'down'], editable: true }, handleUpDown, [
+  useKeyDownEffect(
+    ref,
+    { key: ['up', 'alt+up', 'down', 'alt+down'], editable: true },
     handleUpDown,
-  ]);
+    [handleUpDown]
+  );
 
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
