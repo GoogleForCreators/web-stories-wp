@@ -149,7 +149,7 @@ function TemplatesGallery() {
       return (
         <BodyWrapper>
           <StoryGridView
-            filteredStories={orderedTemplates}
+            stories={orderedTemplates}
             centerActionLabel={__('View', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
             isTemplate
@@ -184,7 +184,7 @@ function TemplatesGallery() {
                 centerContent
                 defaultTitle={__('Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
-                filteredStories={orderedTemplates}
+                stories={orderedTemplates}
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
               >

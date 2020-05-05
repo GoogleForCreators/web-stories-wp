@@ -244,7 +244,7 @@ function TemplateDetail() {
                     </SubHeading>
                     <UnitsProvider pageSize={pageSize}>
                       <StoryGridView
-                        filteredStories={relatedTemplates}
+                        stories={relatedTemplates}
                         centerActionLabel={__('View', 'web-stories')}
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate
