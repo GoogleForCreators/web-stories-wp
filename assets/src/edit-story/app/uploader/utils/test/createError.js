@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import createError from '../error';
+import createError from '../createError';
 
 describe('createError', () => {
   it('should return an error', () => {

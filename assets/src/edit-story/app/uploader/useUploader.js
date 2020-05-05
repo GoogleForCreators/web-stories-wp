@@ -31,7 +31,7 @@ import { createInterpolateElement } from '@wordpress/element';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import { useMedia } from '../media';
-import createError from './utils/error';
+import createError from './utils/createError';
 
 function useUploader(refreshLibrary = true) {
   const {

@@ -52,7 +52,7 @@ function setup(args, refreshLibrary = false) {
 }
 
 describe('useUploader', () => {
-  it('user unable to upload', () => {
+  it('throws an error when user does not have upload permissions', () => {
     const { uploadFile } = setup({
       capabilities: {
         hasUploadMediaAction: false,
@@ -78,7 +78,7 @@ describe('useUploader', () => {
       );
     }
   });
-  it('user uploads an inavlid file', () => {
+  it('user uploads an invalid file', () => {
     const { uploadFile } = setup({});
     try {
       uploadFile({ size: 20000, type: 'application/pdf' });
