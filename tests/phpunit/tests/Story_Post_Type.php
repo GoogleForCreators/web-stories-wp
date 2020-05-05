@@ -41,7 +41,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
-  public function setUp() {
+	public function setUp() {
 		parent::setUp();
 		do_action( 'init' );
 	}
