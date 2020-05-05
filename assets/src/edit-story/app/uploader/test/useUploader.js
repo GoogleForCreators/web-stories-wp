@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -48,6 +47,7 @@ function setup(args, refreshLibrary = false) {
   const { result } = renderHook(() => useUploader(refreshLibrary), { wrapper });
   return {
     uploadFile: result.current.uploadFile,
+    isValidType: result.current.isValidType,
   };
 }
 
@@ -58,17 +58,25 @@ describe('useUploader', () => {
         hasUploadMediaAction: false,
       },
     });
-
-    expect(uploadFile({})).toThrow('Sorry, you are unable to upload files.');
+    try {
+      uploadFile({});
+    } catch (e) {
+      // eslint-disable-next-line jest/no-try-expect
+      expect(e.message).toStrictEqual('Sorry, you are unable to upload files.');
+    }
   });
   it('user uploads a to large file', () => {
     const { uploadFile } = setup({
       maxUpload: 2000000,
     });
-
-    expect(uploadFile({ size: 3000000 })).toThrow(
-      'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
-    );
+    try {
+      uploadFile({ size: 3000000 });
+    } catch (e) {
+      // eslint-disable-next-line jest/no-try-expect
+      expect(e.message).toStrictEqual(
+        'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
+      );
+    }
   });
   it('user uploads an inavlid file', () => {
     const { uploadFile } = setup({});
