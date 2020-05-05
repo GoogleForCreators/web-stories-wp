@@ -115,7 +115,6 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -205,7 +204,6 @@ const PageArea = forwardRef(
   ({ children, safeZoneChildren, showDangerZone = false }, ref) => {
     return (
       <PageAreaFullbleedContainer ref={ref}>
-        {children}
         <PageAreaSafeZone>{safeZoneChildren}</PageAreaSafeZone>
         {showDangerZone && (
           <>
@@ -213,6 +211,7 @@ const PageArea = forwardRef(
             <PageAreaDangerZoneBottom />
           </>
         )}
+        {children}
       </PageAreaFullbleedContainer>
     );
   }
