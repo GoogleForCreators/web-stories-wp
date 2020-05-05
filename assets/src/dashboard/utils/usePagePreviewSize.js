@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
@@ -26,40 +26,84 @@ import theme from '../theme';
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
-const getCurrentBp = () =>
-  descendingBreakpointKeys.reduce(
-    (current, bp) =>
-      window.innerWidth <= theme.breakpoint.raw[bp] ? bp : current,
-    descendingBreakpointKeys[0]
+const getCurrentBp = (availableContainerSpace) => {
+  return descendingBreakpointKeys.reduce((current, bp) => {
+    return availableContainerSpace <= theme.breakpoint.raw[bp] ? bp : current;
+  }, descendingBreakpointKeys[0]);
+};
+
+// this will break the detail template view
+const sizeFromWidth = (width, { respectSetWidth, availableContainerSpace }) => {
+  if (respectSetWidth) {
+    return { width, height: width / PAGE_RATIO };
+  }
+
+  const itemsInRow = Math.floor(availableContainerSpace / width);
+  const columnGapWidth = 10 * itemsInRow;
+  const takenSpace = width * itemsInRow + columnGapWidth;
+  const remainingSpace = availableContainerSpace - takenSpace;
+  const addToWidthValue = remainingSpace / itemsInRow;
+
+  const trueWidth = width + addToWidthValue;
+  return {
+    width: trueWidth,
+    height: trueWidth / PAGE_RATIO,
+  };
+};
+
+const WP_LEFT_NAV_WIDTH = 38;
+const DASHBOARD_LEFT_NAV_WIDTH = 190;
+
+// NO MAGIC NUMBERS - set gutter by bp
+const getTrueInnerWidth = (bp) => {
+  const { innerWidth } = window;
+  if (innerWidth >= 783 && innerWidth <= 1120) {
+    return innerWidth - WP_LEFT_NAV_WIDTH;
+  } else if (innerWidth >= 1120) {
+    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH - 40;
+  } else {
+    return innerWidth;
+  }
+};
+export default function usePagePreviewSize(options = {}) {
+  const { thumbnailMode = false, isGrid } = options;
+  const [availableContainerSpace, setAvailableContainerSpace] = useState(
+    getTrueInnerWidth()
   );
 
-const sizeFromWidth = (width) => ({
-  width,
-  height: width / PAGE_RATIO,
-});
-
-export default function usePagePreviewSize(options = {}) {
-  const { thumbnailMode = false } = options;
-  const [bp, setBp] = useState(getCurrentBp());
+  const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
 
   useEffect(() => {
     if (thumbnailMode) {
       return () => {};
     }
 
-    const handleResize = () => setBp(getCurrentBp());
+    const handleResize = () => setAvailableContainerSpace(getTrueInnerWidth());
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [thumbnailMode]);
+  }, [thumbnailMode, availableContainerSpace]);
+
+  useEffect(() => {
+    if (thumbnailMode) {
+      return () => {};
+    }
+    return setBp(getCurrentBp(availableContainerSpace));
+  }, [setBp, thumbnailMode, availableContainerSpace]);
 
   return useMemo(
     () => ({
       pageSize: sizeFromWidth(
-        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp]
+        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp],
+        {
+          respectSetWidth: !isGrid || thumbnailMode,
+          availableContainerSpace,
+          bp,
+        }
       ),
     }),
-    [bp, thumbnailMode]
+    [bp, isGrid, thumbnailMode, availableContainerSpace]
   );
 }
