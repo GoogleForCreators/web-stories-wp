@@ -71,7 +71,7 @@ export default function useMediaPicker({
       );
       showSnackbar({ message });
       evt.preventDefault();
-      return;
+      return false;
     }
 
     // Create the media frame.
@@ -100,6 +100,7 @@ export default function useMediaPicker({
     fileFrame.open();
 
     evt.preventDefault();
+    return false;
   };
 
   return openMediaPicker;
