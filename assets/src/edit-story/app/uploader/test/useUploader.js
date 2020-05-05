@@ -76,7 +76,7 @@ describe('useUploader', () => {
     const { uploadFile } = setup({});
     expect(() => {
       uploadFile({ size: 20000, type: 'application/pdf' });
-    }).toThrow('Please choose only <b>png, jpeg, jpg, gif, mp4</b> to upload.');
+    }).toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
   });
   it('isValidType is given an inavlid file', () => {
     const { isValidType } = setup({});

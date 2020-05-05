@@ -100,7 +100,7 @@ function useUploader(refreshLibrary = true) {
       /* translators: %s is a list of allowed file extensions. */
       const message = sprintf(
         /* translators: %s: list of allowed file types. */
-        __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+        __('Please choose only %s to upload.', 'web-stories'),
         allowedFileTypes.join(
           /* translators: delimiter used in a list */
           __(', ', 'web-stories')

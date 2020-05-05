@@ -35,7 +35,6 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-import createInterpolateElement from '../../../utils/create-interpolate-element';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
   const { uploadFile } = useUploader();
@@ -77,18 +76,13 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
 
         setIsUploading(false);
         showSnackbar({
-          message: createInterpolateElement(
-            sprintf(
-              /* translators: %s: list of allowed file types. */
-              __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedFileTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
-            ),
-            {
-              b: <b />,
-            }
+          message: sprintf(
+            /* translators: %s: list of allowed file types. */
+            __('Please choose only %s to upload.', 'web-stories'),
+            allowedFileTypes.join(
+              /* translators: delimiter used in a list */
+              __(', ', 'web-stories')
+            )
           ),
         });
         return;
@@ -115,9 +109,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         fetchMedia({ pagingNum, mediaType }, setMedia);
       } catch (e) {
         showSnackbar({
-          message: createInterpolateElement(e.message, {
-            b: <b />,
-          }),
+          message: e.message,
         });
         localFiles.forEach(({ localResource, element }) => {
           if (onUploadFailure) {
