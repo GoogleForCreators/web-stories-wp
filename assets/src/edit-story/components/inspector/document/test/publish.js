@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
+import ConfigContext from '../../../../app/config/context';
 import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
-import theme from '../../../../theme';
 import PublishPanel from '../publish';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel(
   capabilities = {
@@ -43,23 +43,25 @@ function setupPanel(
         featuredMediaUrl: '',
         publisherLogoUrl: '',
       },
-      capabilities,
     },
     actions: { updateStory },
   };
+
+  const config = { capabilities };
   const inspectorContextValue = {
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
   };
-  const { getByText, getByRole, queryByText } = render(
-    <ThemeProvider theme={theme}>
+
+  const { getByText, getByRole, queryByText } = renderWithTheme(
+    <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
           <PublishPanel />
         </InspectorContext.Provider>
       </StoryContext.Provider>
-    </ThemeProvider>
+    </ConfigContext.Provider>
   );
   return {
     getByText,

@@ -46,6 +46,7 @@ function useUploader(refreshLibrary = true) {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
+    allowedFileTypes,
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
@@ -96,7 +97,7 @@ function useUploader(refreshLibrary = true) {
         sprintf(
           /* translators: %s: list of allowed file types. */
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedMimeTypes.join(
+          allowedFileTypes.join(
             /* translators: delimiter used in a list */
             __(', ', 'web-stories')
           )

@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
 /**
  * External dependencies
  */
@@ -28,40 +22,40 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
-import { ViewHeader } from '../../../components';
+import { ViewHeader, NavMenuButton } from '../../../components';
+import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: ${({ theme }) => `20px ${theme.pageGutter.small.desktop}px 40px`};
-  max-width: 100%;
+  padding: 10px 0 0;
+`;
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    display: block;
-    margin: ${({ theme }) => `20px ${theme.pageGutter.small.min}px 60px`};
+const StyledHeader = styled(ViewHeader)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  line-height: 1;
+  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
+  white-space: nowrap;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
   }
 `;
 
-const ViewHeaderContainer = styled.div`
-  width: 60%;
-  margin: auto 0;
-  overflow-wrap: break-word;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: 100%;
-    padding-bottom: 5px;
-  }
+const Content = styled.div`
+  display: block;
+  height: 100%;
 `;
 
 const SearchContainer = styled.div`
-  position: absolute;
-  max-width: 35%;
-  margin: auto 0;
-  right: ${({ theme }) => `${theme.pageGutter.small.desktop}px`};
-  display: flex;
-  justify-content: flex-end;
+  display: inline-block;
+  vertical-align: baseline;
+  position: relative;
+  width: 100%;
+  height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
     max-width: 100%;
@@ -69,46 +63,58 @@ const SearchContainer = styled.div`
   }
 `;
 
+const SearchInner = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(190px, 100%);
+`;
+
+const HeadingBodyWrapper = styled(BodyWrapper)`
+  display: grid;
+  grid-template-columns: 25% 50% 1fr;
+  align-items: start;
+  height: 75px;
+  padding-bottom: 3px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+`;
+
 const PageHeading = ({
+  children,
   defaultTitle,
   searchPlaceholder,
   filteredStories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
-  const resultsText =
-    filteredStories.length > 0
-      ? sprintf(
-          /* translators: %s: search term. */
-          __('Results for "%s"', 'web-stories'),
-          typeaheadValue
-        )
-      : sprintf(
-          /* translators: %s: search term. */
-          __('No results for "%s"', 'web-stories'),
-          typeaheadValue
-        );
-
-  const viewHeaderText = typeaheadValue.length ? resultsText : defaultTitle;
-
   return (
     <Container>
-      <ViewHeaderContainer>
-        <ViewHeader>{viewHeaderText}</ViewHeader>
-      </ViewHeaderContainer>
-      <SearchContainer>
-        <TypeaheadSearch
-          placeholder={searchPlaceholder}
-          currentValue={typeaheadValue}
-          filteredStories={filteredStories}
-          handleChange={handleTypeaheadChange}
-        />
-      </SearchContainer>
+      <HeadingBodyWrapper>
+        <StyledHeader>
+          <NavMenuButton showOnlyOnSmallViewport />
+          {defaultTitle}
+        </StyledHeader>
+        <Content>{children}</Content>
+        <SearchContainer>
+          <SearchInner>
+            <TypeaheadSearch
+              placeholder={searchPlaceholder}
+              currentValue={typeaheadValue}
+              filteredStories={filteredStories}
+              handleChange={handleTypeaheadChange}
+            />
+          </SearchInner>
+        </SearchContainer>
+      </HeadingBodyWrapper>
     </Container>
   );
 };
 
 PageHeading.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   filteredStories: StoriesPropType,

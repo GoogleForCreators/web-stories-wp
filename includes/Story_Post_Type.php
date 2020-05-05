@@ -139,11 +139,12 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_action( 'web_stories_story_head', [ __CLASS__, 'enqueue_frontend_styles' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
@@ -186,6 +187,41 @@ class Story_Post_Type {
 			PHP_INT_MAX,
 			2
 		);
+
+		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Add story_author as allowed orderby value for REST API.
+	 *
+	 * @param array         $query_params Array of allowed query params.
+	 * @param \WP_Post_Type $post_type Post type.
+	 * @return array Array of query params.
+	 */
+	public static function filter_rest_collection_params( $query_params, $post_type ) {
+		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
+			return $query_params;
+		}
+
+		if ( empty( $query_params['orderby'] ) ) {
+			return $query_params;
+		}
+		$query_params['orderby']['enum'][] = 'story_author';
+		return $query_params;
+	}
+
+	/**
+	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
+	 *
+	 * @param array $fields Array of allowed revision fields.
+	 * @param array $story Story post array.
+	 * @return array Array of allowed fields.
+	 */
+	public static function filter_revision_fields( $fields, $story ) {
+		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
+			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
+		}
+		return $fields;
 	}
 
 	/**
@@ -222,25 +258,6 @@ class Story_Post_Type {
 		}
 
 		return $replace;
-	}
-
-	/**
-	 * Enqueue Google Fonts on the frontend.
-	 *
-	 * @return void
-	 */
-	public static function enqueue_frontend_styles() {
-		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
-			return;
-		}
-
-		$post = get_post();
-
-		if ( ! $post instanceof WP_Post ) {
-			return;
-		}
-
-		self::load_fonts( $post );
 	}
 
 	/**
@@ -285,17 +302,21 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$post             = get_post();
-		$story_id         = ( $post ) ? $post->ID : null;
-		$rest_base        = self::POST_TYPE_SLUG;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+		$post                     = get_post();
+		$story_id                 = ( $post ) ? $post->ID : null;
+		$rest_base                = self::POST_TYPE_SLUG;
+		$has_publish_action       = false;
+		$has_assign_author_action = false;
+		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
 			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		}
-
-		if ( $post ) {
-			self::load_admin_fonts( $post );
+			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
+				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
+			}
+			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
+				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
+			}
 		}
 
 		// Media settings.
@@ -309,12 +330,14 @@ class Story_Post_Type {
 			// Leveraging the default WP post preview logic.
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
+
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
 			[
 				'id'     => 'edit-story',
 				'config' => [
+					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 					'isRTL'            => is_rtl(),
 					'timeFormat'       => get_option( 'time_format' ),
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
@@ -324,6 +347,10 @@ class Story_Post_Type {
 					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
+					'capabilities'     => [
+						'hasPublishAction'      => $has_publish_action,
+						'hasAssignAuthorAction' => $has_assign_author_action,
+					],
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',
@@ -341,10 +368,17 @@ class Story_Post_Type {
 			]
 		);
 
+		wp_register_style(
+			'roboto',
+			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
+
 		wp_enqueue_style(
 			self::WEB_STORIES_STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[],
+			[ 'roboto' ],
 			$version
 		);
 
@@ -426,108 +460,6 @@ class Story_Post_Type {
 		}
 
 		return $allowed_mime_types;
-	}
-
-	/**
-	 * Load font from story data.
-	 *
-	 * @param WP_Post $post Post Object.
-	 *
-	 * @return void
-	 */
-	public static function load_fonts( $post ) {
-		$post_story_data       = json_decode( $post->post_content_filtered, true );
-		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
-		$g_fonts               = [];
-		if ( $post_story_data_pages ) {
-			foreach ( $post_story_data_pages as $page ) {
-				foreach ( $page['elements'] as $element ) {
-					if ( ! isset( $element['fontFamily'] ) ) {
-						continue;
-					}
-
-					$font = Fonts::get_font( $element['fontFamily'] );
-
-					if ( $font && isset( $font['gfont'] ) && $font['gfont'] ) {
-						if ( isset( $g_fonts[ $font['name'] ] ) && in_array( $element['fontWeight'], $g_fonts[ $font['name'] ], true ) ) {
-							continue;
-						}
-						$g_fonts[ $font['name'] ][] = $element['fontWeight'];
-					}
-				}
-			}
-
-			if ( $g_fonts ) {
-				$subsets        = Fonts::get_subsets();
-				$g_font_display = '';
-				foreach ( $g_fonts as $name => $numbers ) {
-					$g_font_display .= $name . ':' . implode( ',', $numbers ) . '|';
-				}
-
-				$src = add_query_arg(
-					[
-						'family'  => rawurlencode( $g_font_display ),
-						'subset'  => rawurlencode( implode( ',', $subsets ) ),
-						'display' => 'swap',
-					],
-					Fonts::URL
-				);
-				wp_enqueue_style(
-					self::WEB_STORIES_STYLE_HANDLE . '_fonts',
-					$src,
-					[],
-					WEBSTORIES_VERSION
-				);
-				wp_styles()->do_item( self::WEB_STORIES_STYLE_HANDLE . '_fonts' );
-			}
-		}
-	}
-
-	/**
-	 * Load font in admin from story data.
-	 *
-	 * @param WP_Post $post Post Object.
-	 *
-	 * @return void
-	 */
-	public static function load_admin_fonts( $post ) {
-		$post_story_data       = json_decode( $post->post_content_filtered, true );
-		$post_story_data_pages = isset( $post_story_data['pages'] ) ? $post_story_data['pages'] : $post_story_data;
-		$fonts                 = [ Fonts::get_font( 'Roboto' ) ];
-		$font_slugs            = [ 'roboto' ];
-
-		if ( $post_story_data_pages ) {
-			foreach ( $post_story_data_pages as $page ) {
-				if ( ! isset( $page['elements'] ) ) {
-					continue;
-				}
-
-				foreach ( $page['elements'] as $element ) {
-					if ( ! isset( $element['fontFamily'] ) ) {
-						continue;
-					}
-
-					$font = Fonts::get_font( $element['fontFamily'] );
-					if ( $font && ! in_array( $font['slug'], $font_slugs, true ) ) {
-						$fonts[]      = $font;
-						$font_slugs[] = $font['slug'];
-					}
-				}
-			}
-		}
-
-		if ( $fonts ) {
-			foreach ( $fonts as $font ) {
-				if ( isset( $font['src'] ) && $font['src'] ) {
-					wp_enqueue_style(
-						$font['handle'],
-						$font['src'],
-						[],
-						WEBSTORIES_VERSION
-					);
-				}
-			}
-		}
 	}
 
 	/**

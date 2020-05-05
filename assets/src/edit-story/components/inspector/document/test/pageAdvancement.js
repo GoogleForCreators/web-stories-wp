@@ -16,15 +16,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import theme from '../../../../theme';
 import PageAdvancementPanel from '../pageAdvancement';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel() {
   const updateStory = jest.fn();
@@ -38,12 +37,10 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByText } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <PageAdvancementPanel />
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <PageAdvancementPanel />
+    </StoryContext.Provider>
   );
   return {
     getByText,

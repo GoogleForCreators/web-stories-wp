@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -27,7 +28,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { UploadDropTarget, UploadDropTargetMessage } from '../uploadDropTarget';
 import { useMedia } from '../../app/media';
 
@@ -55,7 +55,7 @@ function LibraryUploadDropTarget({ children }) {
 }
 
 LibraryUploadDropTarget.propTypes = {
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default LibraryUploadDropTarget;

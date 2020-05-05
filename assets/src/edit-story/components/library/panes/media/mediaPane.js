@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { rgba } from 'polished';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -102,6 +103,19 @@ const Inner = styled.div`
     'header   ' auto
     'infinitescroll' 1fr
     / 1fr;
+`;
+
+const Loading = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 80px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
+  border-radius: 100px;
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: 500;
 `;
 
 const FILTERS = [
@@ -296,7 +310,11 @@ function MediaPane(props) {
                   />
                 ))}
             </Column>
-            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
+            {hasMore && (
+              <Loading ref={refContainerFooter}>
+                {__('Loading…', 'web-stories')}
+              </Loading>
+            )}
           </Container>
         )}
       </Inner>

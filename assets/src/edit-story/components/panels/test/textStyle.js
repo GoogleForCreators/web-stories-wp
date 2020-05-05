@@ -43,10 +43,47 @@ function Wrapper({ children }) {
   return (
     <FontContext.Provider
       value={{
-        state: { fonts: [{ name: 'ABeeZee', value: 'ABeeZee' }] },
+        state: {
+          fonts: [
+            {
+              name: 'ABeeZee',
+              value: 'ABeeZee',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+              fallbacks: ['serif'],
+            },
+            {
+              name: 'Neu Font',
+              value: 'Neu Font',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+              fallbacks: ['fallback1'],
+            },
+          ],
+        },
         actions: {
-          getFontWeight: () => [{ name: 'Normal1', value: '400' }],
-          getFontFallback: () => 'fallback1',
+          getFontByName: () => ({
+            name: 'Neu Font',
+            value: 'Neu Font',
+            service: 'foo.bar.baz',
+            weights: [400],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 400],
+              [1, 400],
+            ],
+            fallbacks: ['fallback1'],
+          }),
         },
       }}
     >
@@ -74,8 +111,10 @@ describe('Panels/TextStyle', () => {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
-      fontFamily: 'ABeeZee',
       fontWeight: 400,
+      font: {
+        family: 'ABeeZee',
+      },
       x: 0,
       y: 0,
       height: 100,
@@ -380,8 +419,17 @@ describe('Panels/TextStyle', () => {
       act(() => controls.font.onChange('Neu Font'));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
-          fontFamily: 'Neu Font',
-          fontFallback: 'fallback1',
+          font: {
+            family: 'Neu Font',
+            service: 'foo.bar.baz',
+            styles: ['italic', 'regular'],
+            weights: [400],
+            variants: [
+              [0, 400],
+              [1, 400],
+            ],
+            fallbacks: ['fallback1'],
+          },
           fontWeight: 400,
         },
         true

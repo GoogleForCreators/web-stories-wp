@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 
 /**
@@ -25,6 +25,10 @@ import moment from 'moment';
  */
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';
+import templateReducer, {
+  defaultTemplatesState,
+  ACTION_TYPES as TEMPLATE_ACTION_TYPES,
+} from '../reducer/templates';
 
 export function reshapeTemplateObject(isLocal) {
   return ({
@@ -55,7 +59,8 @@ export function reshapeTemplateObject(isLocal) {
 // TODO: Remove this eslint rule once endpoints are working
 /* eslint-disable no-unused-vars */
 const useTemplateApi = (dataAdapter, config) => {
-  const [templates, setTemplates] = useState([]);
+  const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
+
   const { pluginDir } = config;
 
   const createStoryFromTemplatePages = useCallback((pages) => {
@@ -64,18 +69,40 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const fetchSavedTemplates = useCallback((filters) => {
     // Saved Templates = Bookmarked Templates + My Templates
-    setTemplates([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
     return Promise.resolve([]);
   }, []);
 
   const fetchBookmarkedTemplates = useCallback((filters) => {
-    setTemplates([]);
-    return Promise.resolve([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
   }, []);
 
   const fetchMyTemplates = useCallback((filters) => {
-    setTemplates([]);
-    return Promise.resolve([]);
+    dispatch({
+      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
+      paylod: {
+        templates: [],
+        totalPages: 0,
+        totalTemplates: 0,
+        page: 1,
+      },
+    });
   }, []);
 
   const fetchMyTemplateById = useCallback((templateId) => {
@@ -84,24 +111,42 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const fetchExternalTemplates = useCallback(
     (filters) => {
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+        payload: true,
+      });
+
       const reshapedTemplates = getAllTemplates({ pluginDir }).map(
         reshapeTemplateObject(false)
       );
-      setTemplates(reshapedTemplates);
-      return Promise.resolve(reshapedTemplates);
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
+        payload: {
+          page: 1,
+          templates: reshapedTemplates,
+          totalPages: 1,
+          totalTemplates: reshapedTemplates.length,
+        },
+      });
+
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+      });
     },
     [pluginDir]
   );
 
   const fetchExternalTemplateById = useCallback(
     async (templateId) => {
-      const fetchedTemplates = await fetchExternalTemplates();
+      if (state.templates[templateId]) {
+        return state.templates[templateId];
+      }
 
-      return Promise.resolve(
-        fetchedTemplates.find((template) => template.id === templateId)
-      );
+      await fetchExternalTemplates();
+
+      return state.templates[templateId];
     },
-    [fetchExternalTemplates]
+    [fetchExternalTemplates, state]
   );
 
   const bookmarkTemplateById = useCallback((templateId, shouldBookmark) => {
@@ -114,30 +159,56 @@ const useTemplateApi = (dataAdapter, config) => {
     }
   }, []);
 
+  const createTemplateFromStory = useCallback(async (story) => {
+    // api call to create a template from a story
+    await dispatch({
+      type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY,
+    });
+  }, []);
+
+  const fetchRelatedTemplates = useCallback(() => {
+    if (!state.templates) {
+      return [];
+    }
+    // this will return anywhere between 1 and 5 "related" templates
+    const randomStartingIndex = Math.floor(
+      Math.random() * state.templatesOrderById.length
+    );
+    return [...state.templatesOrderById]
+      .splice(randomStartingIndex, 5)
+      .map((id) => {
+        return state.templates[id];
+      });
+  }, [state.templatesOrderById, state.templates]);
+
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
       createStoryFromTemplatePages,
+      createTemplateFromStory,
       fetchBookmarkedTemplates,
-      fetchSavedTemplates,
-      fetchMyTemplates,
-      fetchMyTemplateById,
       fetchExternalTemplates,
       fetchExternalTemplateById,
+      fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
+      fetchSavedTemplates,
     }),
     [
       bookmarkTemplateById,
       createStoryFromTemplatePages,
+      createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
       fetchExternalTemplates,
-      fetchMyTemplateById,
       fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
       fetchSavedTemplates,
     ]
   );
 
-  return { templates, api };
+  return { templates: state, api };
 };
 /* eslint-enable no-unused-vars */
 

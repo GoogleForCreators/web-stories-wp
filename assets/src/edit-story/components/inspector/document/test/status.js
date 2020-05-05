@@ -16,16 +16,16 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
-import theme from '../../../../theme';
+import ConfigContext from '../../../../app/config/context';
 import StatusPanel from '../status';
+import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel(
   capabilities = {
@@ -37,10 +37,10 @@ function setupPanel(
   const loadStatuses = jest.fn();
   const loadUsers = jest.fn();
 
+  const config = { timeFormat: 'g:i a', capabilities };
   const storyContextValue = {
     state: {
       story: { status: 'draft', password: '' },
-      capabilities,
     },
     actions: { updateStory, deleteStory },
   };
@@ -62,14 +62,14 @@ function setupPanel(
     actions: { loadStatuses, loadUsers },
     state: { statuses },
   };
-  const { getByText, queryByText } = render(
-    <ThemeProvider theme={theme}>
+  const { getByText, queryByText } = renderWithTheme(
+    <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
           <StatusPanel />
         </InspectorContext.Provider>
       </StoryContext.Provider>
-    </ThemeProvider>
+    </ConfigContext.Provider>
   );
   return {
     getByText,

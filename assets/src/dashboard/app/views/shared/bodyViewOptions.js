@@ -23,20 +23,18 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Dropdown, ListBar } from '../../../components';
+import { Dropdown, ViewStyleBar } from '../../../components';
 import {
   STORY_SORT_MENU_ITEMS,
   DROPDOWN_TYPES,
   VIEW_STYLE,
 } from '../../../constants';
+import BodyWrapper from './bodyWrapper';
 
 const DisplayFormatContainer = styled.div`
-  margin: ${({ theme }) => `${theme.pageGutter.small.desktop}px 0`};
-  padding-bottom: 20px;
-  padding-left: 15px;
   display: flex;
-  align-items: space-between;
-  align-content: center;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StorySortDropdownContainer = styled.div`
@@ -46,11 +44,18 @@ const StorySortDropdownContainer = styled.div`
 
 const SortDropdown = styled(Dropdown)`
   min-width: 210px;
-  margin-right: 10px;
+`;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin-right: 0px;
-  }
+const ControlsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Label = styled.span`
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
+  font-size: ${({ theme }) => theme.fonts.body2.size}px;
+  color: ${({ theme }) => theme.colors.gray500};
 `;
 
 const BodyViewOptions = ({
@@ -59,26 +64,34 @@ const BodyViewOptions = ({
   handleSortChange,
   listBarLabel,
   layoutStyle,
+  showGridToggle,
   sortDropdownAriaLabel,
 }) => (
-  <DisplayFormatContainer>
-    <ListBar
-      label={listBarLabel}
-      layoutStyle={layoutStyle}
-      onPress={handleLayoutSelect}
-    />
-    {layoutStyle === VIEW_STYLE.GRID && (
-      <StorySortDropdownContainer>
-        <SortDropdown
-          ariaLabel={sortDropdownAriaLabel}
-          items={STORY_SORT_MENU_ITEMS}
-          type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-          value={currentSort}
-          onChange={(newSort) => handleSortChange(newSort.value)}
-        />
-      </StorySortDropdownContainer>
-    )}
-  </DisplayFormatContainer>
+  <BodyWrapper>
+    <DisplayFormatContainer>
+      <Label>{listBarLabel}</Label>
+      <ControlsContainer>
+        {layoutStyle === VIEW_STYLE.GRID && (
+          <StorySortDropdownContainer>
+            <SortDropdown
+              ariaLabel={sortDropdownAriaLabel}
+              items={STORY_SORT_MENU_ITEMS}
+              type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+              value={currentSort}
+              onChange={(newSort) => handleSortChange(newSort.value)}
+            />
+          </StorySortDropdownContainer>
+        )}
+        {showGridToggle && (
+          <ViewStyleBar
+            label={listBarLabel}
+            layoutStyle={layoutStyle}
+            onPress={handleLayoutSelect}
+          />
+        )}
+      </ControlsContainer>
+    </DisplayFormatContainer>
+  </BodyWrapper>
 );
 
 BodyViewOptions.propTypes = {
@@ -87,6 +100,7 @@ BodyViewOptions.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
   listBarLabel: PropTypes.string.isRequired,
+  showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
 export default BodyViewOptions;
