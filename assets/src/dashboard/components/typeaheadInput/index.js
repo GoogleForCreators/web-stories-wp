@@ -36,6 +36,7 @@ import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
   display: flex;
+  align-items: flex-end;
   flex-direction: column;
   border-radius: ${({ theme, isOpen }) =>
     isOpen ? `${theme.expandedTypeahead.borderRadius}px` : 'none'};
@@ -44,8 +45,8 @@ const SearchContainer = styled.div`
     isOpen ? theme.expandedTypeahead.boxShadow : 'none'};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
-    transition: width 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    flex: ${({ isExpanded }) => (isExpanded ? '1 0 100%' : '0 1 40px')};
+    transition: flex 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 SearchContainer.propTypes = {

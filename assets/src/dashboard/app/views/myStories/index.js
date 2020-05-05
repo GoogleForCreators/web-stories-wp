@@ -53,6 +53,7 @@ import {
   NoResults,
   StoryGridView,
   StoryListView,
+  HeaderToggleButtonContainer,
 } from '../shared';
 
 const DefaultBodyText = styled.p`
@@ -300,17 +301,19 @@ function MyStories() {
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () =>
-                        handleFilterStatusUpdate(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: status === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
+                <HeaderToggleButtonContainer>
+                  <ToggleButtonGroup
+                    buttons={STORY_STATUSES.map((storyStatus) => {
+                      return {
+                        handleClick: () =>
+                          handleFilterStatusUpdate(storyStatus.value),
+                        key: storyStatus.value,
+                        isActive: status === storyStatus.value,
+                        text: storyStatus.label,
+                      };
+                    })}
+                  />
+                </HeaderToggleButtonContainer>
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
