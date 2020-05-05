@@ -83,6 +83,12 @@ const HeadingBodyWrapper = styled(BodyWrapper)`
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
 `;
 
+export const HeaderToggleButtonContainer = styled.div`
+  display: block;
+  flex: 1;
+  height: 65%;
+`;
+
 const PageHeading = ({
   children,
   defaultTitle,

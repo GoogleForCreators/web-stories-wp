@@ -35,7 +35,6 @@ import {
   ScrollToTop,
   Layout,
   ToggleButtonGroup,
-  ToggleButtonGroupContainer,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -54,6 +53,7 @@ import {
   NoResults,
   StoryGridView,
   StoryListView,
+  HeaderToggleButtonContainer,
 } from '../shared';
 
 const DefaultBodyText = styled.p`
@@ -301,7 +301,7 @@ function MyStories() {
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                <ToggleButtonGroupContainer>
+                <HeaderToggleButtonContainer>
                   <ToggleButtonGroup
                     buttons={STORY_STATUSES.map((storyStatus) => {
                       return {
@@ -313,7 +313,7 @@ function MyStories() {
                       };
                     })}
                   />
-                </ToggleButtonGroupContainer>
+                </HeaderToggleButtonContainer>
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>

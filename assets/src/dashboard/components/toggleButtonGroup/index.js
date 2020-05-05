@@ -82,12 +82,6 @@ ToggleButton.propTypes = {
   isActive: PropTypes.bool,
 };
 
-export const ToggleButtonGroupContainer = styled.div`
-  display: block;
-  flex: 1;
-  height: 65%;
-`;
-
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [containerWidth, setContainerWidth] = useState(null);
