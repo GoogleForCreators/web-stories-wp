@@ -17,10 +17,18 @@
 /**
  * Internal dependencies
  */
+import getCookingStoryData from './data/cooking';
+import getDIYStoryData from './data/diy';
+import getFashionStoryData from './data/fashion';
+import getFitnessStoryData from './data/fitness';
 import getTravelStoryData from './data/travel';
 
 export default function (config) {
   const { pluginDir } = config;
+  const cookingStoryData = getCookingStoryData(pluginDir);
+  const diyStoryData = getDIYStoryData(pluginDir);
+  const fashionStoryData = getFashionStoryData(pluginDir);
+  const fitnessStoryData = getFitnessStoryData(pluginDir);
   const travelStoryData = getTravelStoryData(pluginDir);
 
   const globalConfig = {
@@ -59,7 +67,7 @@ export default function (config) {
       ],
       description:
         'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
-      pages: travelStoryData.pages,
+      pages: cookingStoryData.pages,
     },
     {
       id: 3,
@@ -76,7 +84,7 @@ export default function (config) {
       ],
       description:
         'Mauris placerat velit ut nunc ornare porta. Integer auctor hendrerit aliquam. Proin egestas nisi et nisl commodo.',
-      pages: travelStoryData.pages,
+      pages: diyStoryData.pages,
     },
     {
       id: 4,
@@ -107,7 +115,7 @@ export default function (config) {
       ],
       description:
         'Duis auctor libero vel dui tincidunt, at mattis nisi placerat. Nam id lacinia lectus.',
-      pages: travelStoryData.pages,
+      pages: fashionStoryData.pages,
     },
     {
       id: 6,
@@ -121,7 +129,7 @@ export default function (config) {
       ],
       description:
         'Quisque dignissim urna id lectus ultricies blandit. Cras laoreet pharetra lectus. Nunc mollis suscipit feugiat.',
-      pages: travelStoryData.pages,
+      pages: fitnessStoryData.pages,
     },
     {
       id: 7,

@@ -34,7 +34,6 @@ describe('restore', () => {
       selection: [],
       current: '123',
       story: {},
-      capabilities: {},
     });
   });
 
@@ -90,7 +89,6 @@ describe('restore', () => {
       current: '111',
       selection: ['222'],
       story: { a: 1 },
-      capabilities: { b: 2 },
     });
 
     expect(result).toStrictEqual({
@@ -98,7 +96,6 @@ describe('restore', () => {
       selection: [],
       current: null,
       story: {},
-      capabilities: {},
     });
   });
 
@@ -114,7 +111,6 @@ describe('restore', () => {
       selection: [],
       current: null,
       story: {},
-      capabilities: {},
     });
   });
 
@@ -129,7 +125,6 @@ describe('restore', () => {
       current: '222',
       selection: ['333'],
       story: { a: 1 },
-      capabilities: { b: 2 },
     });
 
     // And validate that it is non-initial.
@@ -137,7 +132,6 @@ describe('restore', () => {
     expect(stateWithContent.current).not.toBeNull();
     expect(stateWithContent.selection).not.toHaveLength(0);
     expect(Object.keys(stateWithContent.story)).not.toHaveLength(0);
-    expect(Object.keys(stateWithContent.capabilities)).not.toHaveLength(0);
 
     // Then override by restoring to a new state.
     const pages = [{ id: '123' }];
@@ -148,7 +142,6 @@ describe('restore', () => {
       selection: [],
       current: '123',
       story: {},
-      capabilities: {},
     });
   });
 });

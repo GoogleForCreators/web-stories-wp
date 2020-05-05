@@ -88,6 +88,7 @@ function MyStories() {
   const {
     actions: {
       storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      templateApi: { createTemplateFromStory },
     },
     state: {
       stories: {
@@ -98,6 +99,9 @@ function MyStories() {
         totalStories,
         totalPages,
       },
+      tags,
+      categories,
+      users,
     },
   } = useContext(ApiContext);
 
@@ -186,6 +190,7 @@ function MyStories() {
           <StoryGridView
             trashStory={trashStory}
             updateStory={updateStory}
+            createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
             filteredStories={orderedStories}
             centerActionLabel={
@@ -205,6 +210,9 @@ function MyStories() {
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
+            tags={tags}
+            categories={categories}
+            users={users}
           />
         );
       default:
@@ -212,6 +220,7 @@ function MyStories() {
     }
   }, [
     duplicateStory,
+    createTemplateFromStory,
     trashStory,
     viewStyle,
     updateStory,
@@ -219,6 +228,9 @@ function MyStories() {
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
+    tags,
+    categories,
+    users,
   ]);
 
   const storiesViewControls = useMemo(() => {

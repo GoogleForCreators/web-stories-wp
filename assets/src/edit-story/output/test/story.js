@@ -199,9 +199,7 @@ describe('Story output', () => {
       await expect(<StoryOutput {...props} />).toBeValidAMP();
     });
 
-    // Disable reason: https://github.com/ampproject/amphtml/issues/27881
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid AMP output when using Google fonts', async () => {
+    it('should produce valid AMP output when using Google fonts', async () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },

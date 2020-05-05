@@ -27,7 +27,6 @@ import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
-import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
 import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
@@ -35,7 +34,6 @@ import StylePresetPanel from './stylePreset';
 export { default as LayerPanel } from './layer';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
-const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const STYLE_PRESETS = 'stylePresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
@@ -54,7 +52,6 @@ export const PanelTypes = {
   STYLE_PRESETS, // Display presets as the first panel for elements.
   ELEMENT_ALIGNMENT,
   BACKGROUND_SIZE_POSITION,
-  BACKGROUND_DISPLAY,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
   SHAPE_STYLE,
@@ -84,7 +81,6 @@ export function getPanels(elements) {
   if (isBackground) {
     const panels = [
       { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
-      { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
     ];
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('shape' === elements[0].type) {
@@ -128,9 +124,6 @@ export function getPanels(elements) {
           return { type, Panel: StylePresetPanel };
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
-        case BACKGROUND_DISPLAY:
-          // Only display when isBackground.
-          return null;
         case BACKGROUND_OVERLAY:
           // Only display when isBackground.
           return null;
