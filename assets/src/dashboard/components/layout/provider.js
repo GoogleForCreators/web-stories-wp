@@ -58,6 +58,10 @@ const Provider = ({ children }) => {
     let prevProgress;
     const handleScroll = throttleToAnimationFrame((e) => {
       const progress = clamp(e.target.scrollTop / SQUISH_LENGTH, [0, 1]);
+      /**
+       * Only dispatch squish event if we're within
+       * the squish range.
+       */
       if (!(progress === 1 && prevProgress === 1)) {
         dispatchSquishEvent(scrollFrameEl, progress);
       }
