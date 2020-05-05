@@ -63,7 +63,7 @@ export default function useMediaPicker({
   }, [uploadVideoPoster]);
 
   const openMediaPicker = (evt) => {
-    // If a user do not have a rights to upload to the media library, do not show the media picker.
+    // If a user does not have the rights to upload to the media library, do not show the media picker.
     if (!hasUploadMediaAction) {
       const message = __(
         'Sorry, you are unable to upload files.',
