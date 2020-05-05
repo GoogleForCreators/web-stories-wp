@@ -20,20 +20,21 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
-      - name: Setup cache
+      - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
         with:
           path: node_modules
-          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-${{ env.cache-name }}-
-            ${{ runner.OS }}-npm-
-            ${{ runner.OS }}-
+            ${{ runner.os }}-npm-${{ env.cache-name }}-
+            ${{ runner.os }}-npm-
+            ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         env:
-          CI: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Update list of Google Fonts
         env:
