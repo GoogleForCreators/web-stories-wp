@@ -23,6 +23,20 @@ use WP_REST_Request;
 class Stories_Controller extends \WP_Test_REST_TestCase {
 	protected $server;
 
+	protected static $user_id;
+
+	public static function wpSetUpBeforeClass( $factory ) {
+		self::$user_id = $factory->user->create(
+			[
+				'role' => 'administrator',
+			]
+		);
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$user_id );
+	}
+
 	public function setUp() {
 		parent::setUp();
 
@@ -57,5 +71,48 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$properties = $data['schema']['properties'];
 		$this->assertArrayHasKey( 'story_data', $properties );
 		$this->assertArrayHasKey( 'featured_media_url', $properties );
+	}
+
+	public function test_filter_posts_orderby() {
+		wp_set_current_user( self::$user_id );
+		do_action( 'init' );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$initial_orderby = 'foo bar';
+
+		$query = new \WP_Query();
+		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$query->set( 'orderby', 'story_author' );
+
+		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+
+		$this->assertEquals( $orderby, "wp_posts.post_author = '" . self::$user_id . "' DESC, wp_posts.post_author DESC" );
+	}
+
+	public function test_filter_posts_orderby_irrelevant_query() {
+		do_action( 'init' );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$initial_orderby = 'foo bar';
+
+		$query = new \WP_Query();
+		$query->set( 'post_type', 'foo' );
+		$query->set( 'orderby', 'story_author' );
+
+		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$this->assertEquals( $orderby, $initial_orderby );
+
+		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$query->set( 'orderby', 'author' );
+
+		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$this->assertEquals( $orderby, $initial_orderby );
+
+		$query->set( 'orderby', 'story_author' );
+		wp_set_current_user( 0 );
+
+		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$this->assertEquals( $orderby, $initial_orderby );
+
 	}
 }

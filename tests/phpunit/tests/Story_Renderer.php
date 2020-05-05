@@ -230,5 +230,6 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
+
 	}
 }

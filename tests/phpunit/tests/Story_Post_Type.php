@@ -41,6 +41,11 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
+  public function setUp() {
+		parent::setUp();
+		do_action( 'init' );
+	}
+  
 	public function test_get_editor_settings_admin() {
 		wp_set_current_user( self::$admin_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
@@ -55,5 +60,38 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
+	public function test_filter_rest_collection_params() {
+		$query_params = [
+			'foo',
+			'orderby' => [
+				'enum' => [],
+			],
+		];
 
+		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$filtered_params = \Google\Web_Stories\Story_Post_Type::filter_rest_collection_params( $query_params, $post_type );
+		$this->assertEquals(
+			$filtered_params,
+			[
+				'foo',
+				'orderby' => [
+					'enum' => [ 'story_author' ],
+				],
+			]
+		);
+	}
+
+	public function test_filter_rest_collection_params_incorrect_post_type() {
+		$query_params = [
+			'foo',
+			'orderby' => [
+				'enum' => [],
+			],
+		];
+
+		$post_type       = new \stdClass();
+		$post_type->name = 'post';
+		$filtered_params = \Google\Web_Stories\Story_Post_Type::filter_rest_collection_params( $query_params, $post_type );
+		$this->assertEquals( $filtered_params, $query_params );
+	}
 }
