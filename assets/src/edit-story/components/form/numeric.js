@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
+import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -82,6 +83,30 @@ function Numeric({
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [dot, setDot] = useState(false);
   const ref = useRef();
+
+  const handleUpDown = useCallback(
+    ({ key }) => {
+      if (isMultiple) {
+        return;
+      }
+      const isInt = Number.isInteger(value);
+      let newValue;
+
+      if (key === 'ArrowUp') {
+        // Increment value
+        newValue = isInt ? value + 1 : Math.ceil(value);
+      } else if (key === 'ArrowDown') {
+        // Decrement value
+        newValue = isInt ? value - 1 : Math.floor(value);
+      }
+      onChange(newValue);
+    },
+    [onChange, value, isMultiple]
+  );
+
+  useKeyDownEffect(ref, { key: ['up', 'down'], editable: true }, handleUpDown, [
+    handleUpDown,
+  ]);
 
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
