@@ -31,6 +31,7 @@ import { createInterpolateElement } from '@wordpress/element';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import { useMedia } from '../media';
+import createError from './utils/error';
 
 function useUploader(refreshLibrary = true) {
   const {
@@ -69,24 +70,20 @@ function useUploader(refreshLibrary = true) {
 
   const uploadFile = (file) => {
     if (!hasUploadMediaAction) {
-      const permissionError = new Error();
-      permissionError.name = 'PermissionError';
-      permissionError.file = file.name;
-      permissionError.isUserError = true;
-
-      permissionError.message = __(
+      const message = __(
         'Sorry, you are unable to upload files.',
         'web-stories'
       );
+      const permissionError = createError(
+        'PermissionError',
+        file.name,
+        message
+      );
+
       throw permissionError;
     }
     if (!fileSizeCheck(file)) {
-      const sizeError = new Error();
-      sizeError.name = 'SizeError';
-      sizeError.file = file.name;
-      sizeError.isUserError = true;
-
-      sizeError.message = sprintf(
+      const message = sprintf(
         /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
         __(
           'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
@@ -95,17 +92,14 @@ function useUploader(refreshLibrary = true) {
         bytesToMB(file.size),
         bytesToMB(maxUpload)
       );
+      const sizeError = createError('SizeError', file.name, message);
+
       throw sizeError;
     }
 
     if (!isValidType(file)) {
-      const validError = new Error();
-      validError.isUserError = true;
-      validError.name = 'ValidError';
-      validError.file = file.name;
-
       /* translators: %s is a list of allowed file extensions. */
-      validError.message = createInterpolateElement(
+      const message = createInterpolateElement(
         sprintf(
           /* translators: %s: list of allowed file types. */
           __('Please choose only <b>%s</b> to upload.', 'web-stories'),
@@ -118,6 +112,8 @@ function useUploader(refreshLibrary = true) {
           b: <b />,
         }
       );
+      const validError = createError('ValidError', file.name, message);
+
       throw validError;
     }
 

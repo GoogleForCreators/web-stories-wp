@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useUploader user uploads an inavlid file 1`] = `
+<DocumentFragment>
+  Please choose only 
+  <b>
+    png, jpeg, jpg, gif, mp4
+  </b>
+   to upload.
+</DocumentFragment>
+`;
