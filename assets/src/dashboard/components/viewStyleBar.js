@@ -67,15 +67,7 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   align-items: center;
 `;
 
-const Label = styled.span`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight}px;
-  font-size: ${({ theme }) => theme.fonts.body2.size}px;
-  color: ${({ theme }) => theme.colors.gray500};
-`;
-
-export default function ViewStyleBar({ onPress, label, layoutStyle }) {
+export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
       <ToggleButton
@@ -88,13 +80,11 @@ export default function ViewStyleBar({ onPress, label, layoutStyle }) {
         {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
         {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
       </ToggleButton>
-      <Label>{label}</Label>
     </Container>
   );
 }
 
 ViewStyleBar.propTypes = {
   onPress: PropTypes.func,
-  label: PropTypes.string.isRequired,
   layoutStyle: PropTypes.oneOf([VIEW_STYLE.GRID, VIEW_STYLE.LIST]).isRequired,
 };

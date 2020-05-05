@@ -185,6 +185,22 @@ class Story_Post_Type {
 			PHP_INT_MAX,
 			2
 		);
+
+		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
+	 *
+	 * @param array $fields Array of allowed revision fields.
+	 * @param array $story Story post array.
+	 * @return array Array of allowed fields.
+	 */
+	public static function filter_revision_fields( $fields, $story ) {
+		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
+			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
+		}
+		return $fields;
 	}
 
 	/**
@@ -265,13 +281,21 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$post             = get_post();
-		$story_id         = ( $post ) ? $post->ID : null;
-		$rest_base        = self::POST_TYPE_SLUG;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+		$post                     = get_post();
+		$story_id                 = ( $post ) ? $post->ID : null;
+		$rest_base                = self::POST_TYPE_SLUG;
+		$has_publish_action       = false;
+		$has_assign_author_action = false;
+		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
 			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
+				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
+			}
+			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
+				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
+			}
 		}
 
 		// Media settings.
@@ -285,12 +309,14 @@ class Story_Post_Type {
 			// Leveraging the default WP post preview logic.
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
+
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
 			[
 				'id'     => 'edit-story',
 				'config' => [
+					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 					'isRTL'            => is_rtl(),
 					'timeFormat'       => get_option( 'time_format' ),
 					'allowedMimeTypes' => self::get_allowed_mime_types(),
@@ -300,6 +326,10 @@ class Story_Post_Type {
 					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 					'maxUpload'        => $max_upload_size,
 					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
+					'capabilities'     => [
+						'hasPublishAction'      => $has_publish_action,
+						'hasAssignAuthorAction' => $has_assign_author_action,
+					],
 					'api'              => [
 						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
 						'media'    => '/wp/v2/media',

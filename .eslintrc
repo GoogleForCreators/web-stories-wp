@@ -162,6 +162,7 @@
   "overrides": [
     {
       "files": [
+        "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/?(*.)test.js",
@@ -216,6 +217,7 @@
     },
     {
       "files": [
+        "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.js",
         "jest-puppeteer.config.js",

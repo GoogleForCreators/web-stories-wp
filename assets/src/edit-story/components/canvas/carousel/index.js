@@ -64,7 +64,7 @@ const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid: 'prev-navigation carousel next-navigation menu' auto / 53px 1fr 53px 53px;
+  grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
   background-color: ${({ theme }) => theme.colors.bg.v1};
   color: ${({ theme }) => theme.colors.fg.v1};
   width: 100%;
@@ -320,6 +320,7 @@ function Carousel() {
   return (
     <>
       <Wrapper>
+        <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}

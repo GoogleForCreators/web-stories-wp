@@ -81,6 +81,5 @@ export const resizeRules = {
 export const MEDIA_PANELS = [
   PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
-  PanelTypes.BACKGROUND_DISPLAY,
   PanelTypes.SIZE_POSITION,
 ];
