@@ -17,12 +17,14 @@
 /**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../testUtils/';
 import { TemplateNavBar } from '../';
 
-export default {
-  title: 'Dashboard/Components/TemplateNavigationBar',
-};
+describe('TemplateNavBar', () => {
+  it('should render nav bar for detail template view', () => {
+    const { getByRole } = renderWithTheme(<TemplateNavBar />);
+    const nav = getByRole('navigation');
 
-export const _defualt = () => {
-  return <TemplateNavBar title={'Demo'} />;
-};
+    expect(nav).toBeDefined();
+  });
+});

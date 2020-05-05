@@ -28,8 +28,36 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { BUTTON_TYPES, APP_ROUTES } from '../../constants';
-import BookmarkChip from '../../components/bookmark-chip';
-import { Nav, ActionLink } from './components';
+import { BookmarkChip, Button } from '../../components';
+
+const Nav = styled.nav`
+  ${({ theme }) => `
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: ${theme.borders.gray50};
+  background-color: ${theme.colors.white};
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: ${theme.navBar.height}px;
+
+  padding: 0 ${theme.pageGutter.large.desktop}px;
+
+  @media ${theme.breakpoint.tablet} {
+    padding: 0 ${theme.pageGutter.large.tablet}px;
+  }
+
+  @media ${theme.breakpoint.smallDisplayPhone} {
+    flex-wrap: wrap;
+    padding: 0 ${theme.pageGutter.small.min}px;
+  }
+  `}
+`;
+
+const ActionLink = styled(Button)`
+  padding: 0 24px;
+`;
 
 const Container = styled.div`
   display: flex;
