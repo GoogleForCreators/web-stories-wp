@@ -35,6 +35,7 @@ import {
   ScrollToTop,
   Layout,
   ToggleButtonGroup,
+  ToggleButtonGroupContainer,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -300,17 +301,19 @@ function MyStories() {
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () =>
-                        handleFilterStatusUpdate(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: status === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
+                <ToggleButtonGroupContainer>
+                  <ToggleButtonGroup
+                    buttons={STORY_STATUSES.map((storyStatus) => {
+                      return {
+                        handleClick: () =>
+                          handleFilterStatusUpdate(storyStatus.value),
+                        key: storyStatus.value,
+                        isActive: status === storyStatus.value,
+                        text: storyStatus.label,
+                      };
+                    })}
+                  />
+                </ToggleButtonGroupContainer>
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>

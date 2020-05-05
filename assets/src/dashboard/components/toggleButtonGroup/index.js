@@ -47,7 +47,7 @@ const AnimationBar = styled.div`
     width: ${selectedButtonWidth}px;
     margin-left: ${selectedButtonLeft}%;
     background-color:  ${theme.colors.bluePrimary600};
-    transition: all 0.3s ${BEZIER.outSine}; 
+    transition: all 0.3s ${BEZIER.outSine};
   `}
 `;
 AnimationBar.propTypes = {
@@ -81,6 +81,12 @@ const ToggleButton = styled.button`
 ToggleButton.propTypes = {
   isActive: PropTypes.bool,
 };
+
+export const ToggleButtonGroupContainer = styled.div`
+  display: block;
+  flex: 1;
+  height: 65%;
+`;
 
 const ToggleButtonGroup = ({ buttons }) => {
   const [selectedButton, setSelectedButton] = useState(null);

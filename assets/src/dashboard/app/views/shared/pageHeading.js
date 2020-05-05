@@ -46,7 +46,9 @@ const StyledHeader = styled(ViewHeader)`
 `;
 
 const Content = styled.div`
-  display: block;
+  display: flex;
+  align-items: ${({ centerContent }) =>
+    centerContent ? 'center' : 'flex-end'};
   height: 100%;
 `;
 
@@ -68,12 +70,14 @@ const SearchInner = styled.div`
   top: 0;
   right: 0;
   width: min(190px, 100%);
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const HeadingBodyWrapper = styled(BodyWrapper)`
   display: grid;
   grid-template-columns: 25% 50% 1fr;
-  align-items: start;
+  align-items: center;
   height: 75px;
   padding-bottom: 3px;
   border-bottom: ${({ theme }) => theme.subNavigationBar.border};
@@ -83,6 +87,7 @@ const PageHeading = ({
   children,
   defaultTitle,
   searchPlaceholder,
+  centerContent = false,
   filteredStories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
@@ -94,7 +99,7 @@ const PageHeading = ({
           <NavMenuButton showOnlyOnSmallViewport />
           {defaultTitle}
         </StyledHeader>
-        <Content>{children}</Content>
+        <Content centerContent={centerContent}>{children}</Content>
         <SearchContainer>
           <SearchInner>
             <TypeaheadSearch
@@ -115,6 +120,7 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  centerContent: PropTypes.bool,
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   filteredStories: StoriesPropType,

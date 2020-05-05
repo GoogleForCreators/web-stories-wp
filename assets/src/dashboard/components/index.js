@@ -62,7 +62,10 @@ export {
   TableTitleHeaderCell,
 } from './table';
 export { TemplateNavBar } from './templateNavBar';
-export { default as ToggleButtonGroup } from './toggleButtonGroup';
+export {
+  default as ToggleButtonGroup,
+  ToggleButtonGroupContainer,
+} from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
