@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Release Assets
 
 on:
   release:
@@ -27,11 +27,11 @@ jobs:
         uses: pat-s/always-upload-cache@v1.1.4
         with:
           path: node_modules
-          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-npm-${{ env.cache-name }}-
-            ${{ runner.OS }}-npm-
-            ${{ runner.OS }}-
+            ${{ runner.os }}-npm-${{ env.cache-name }}-
+            ${{ runner.os }}-npm-
+            ${{ runner.os }}-
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -49,12 +49,15 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          restore-keys: |
+            ${{ runner.os }}-composer-
+            ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         env:
-          CI: TRUE
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle plugin
         run: |
