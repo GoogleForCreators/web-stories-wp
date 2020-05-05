@@ -106,10 +106,9 @@ const Inner = styled.div`
 `;
 
 const Loading = styled.div`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  grid-column: 1 / span 2;
+  margin-bottom: 16px;
+  text-align: center;
   padding: 8px 80px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
   border-radius: 100px;
