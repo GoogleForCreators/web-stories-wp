@@ -42,14 +42,20 @@ const initialState = {
 const reducer = {
   load: (state, { payload }) => {
     const { type, color, stops, rotation, center, size, alpha } = payload;
+    const shouldReset =
+      type &&
+      type !== TYPE_SOLID &&
+      (state.type !== type || stops?.length !== state.stops?.length);
+    const maybeReset = shouldReset
+      ? { currentColor: stops[0].color, currentStopIndex: 0 }
+      : {};
     switch (type) {
       case TYPE_LINEAR:
         return {
           ...state,
+          ...maybeReset,
           type,
           regenerate: false,
-          currentColor: stops[0].color,
-          currentStopIndex: 0,
           stops,
           alpha: isNaN(alpha) ? state.alpha : alpha,
           rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
@@ -58,10 +64,9 @@ const reducer = {
       case TYPE_RADIAL:
         return {
           ...state,
+          ...maybeReset,
           type,
           regenerate: false,
-          currentColor: stops[0].color,
-          currentStopIndex: 0,
           stops,
           center: typeof center !== 'undefined' ? center : state.center,
           size: typeof size !== 'undefined' ? size : state.size,
@@ -71,10 +76,9 @@ const reducer = {
       case TYPE_CONIC:
         return {
           ...state,
+          ...maybeReset,
           type,
           regenerate: false,
-          currentColor: stops[0].color,
-          currentStopIndex: 0,
           stops,
           rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
           center: typeof center !== 'undefined' ? center : state.center,
