@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { forwardRef, createRef } from 'react';
 
 /**
  * Internal dependencies
@@ -115,14 +115,14 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const PageAreaSafeZone = styled.div`
   width: 100%;
   height: var(--page-height-px);
   overflow: visible;
-  position: relative;
+  position: absolute;
+  top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
 `;
 
 const PageAreaDangerZone = styled.div`
@@ -183,7 +183,7 @@ function useLayoutParams(containerRef) {
 
     let bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size / PAGE_RATIO <= maxHeight
+        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
     setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });
@@ -201,19 +201,21 @@ function useLayoutParamsCssVars() {
   };
 }
 
-const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
-  return (
-    <PageAreaFullbleedContainer>
-      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
-      {showDangerZone && (
-        <>
-          <PageAreaDangerZoneTop />
-          <PageAreaDangerZoneBottom />
-        </>
-      )}
-    </PageAreaFullbleedContainer>
-  );
-});
+const PageArea = forwardRef(
+  ({ children, showDangerZone, fullbleedRef = createRef() }, ref) => {
+    return (
+      <PageAreaFullbleedContainer ref={fullbleedRef}>
+        <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+        {showDangerZone && (
+          <>
+            <PageAreaDangerZoneTop />
+            <PageAreaDangerZoneBottom />
+          </>
+        )}
+      </PageAreaFullbleedContainer>
+    );
+  }
+);
 
 PageArea.propTypes = {
   children: PropTypes.node,

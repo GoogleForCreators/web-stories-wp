@@ -24,6 +24,9 @@ import {
   DEFAULT_EM,
 } from '../constants';
 
+const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
+
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
  *
@@ -72,10 +75,12 @@ export function dataToEditorX(x, pageWidth) {
  *
  * @param {number} y The value to be converted.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
+ * @param {boolean} useFullbleed Whether the value is relative to the fullbleed or the safezone of the page.
  * @return {number} The value in the "editor" space.
  */
-export function dataToEditorY(y, pageHeight) {
-  return editorPixels((y * pageHeight) / PAGE_HEIGHT);
+export function dataToEditorY(y, pageHeight, useFullbleed = false) {
+  const trueY = useFullbleed ? y - DANGER_ZONE_HEIGHT : y;
+  return editorPixels((trueY * pageHeight) / PAGE_HEIGHT);
 }
 
 /**
@@ -121,15 +126,9 @@ export function getBox(
   const displayFull = isFill || isBackground;
   return {
     x: dataToEditorX(displayFull ? 0 : x, pageWidth),
-    y: dataToEditorY(
-      displayFull ? -(PAGE_WIDTH / FULLBLEED_RATIO - PAGE_HEIGHT) / 2 : y,
-      pageHeight
-    ),
+    y: dataToEditorY(displayFull ? 0 : y, pageHeight, displayFull),
     width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
-    height: dataToEditorY(
-      displayFull ? PAGE_WIDTH / FULLBLEED_RATIO : height,
-      pageHeight
-    ),
+    height: dataToEditorY(displayFull ? FULLBLEED_HEIGHT : height, pageHeight),
     rotationAngle: displayFull ? 0 : rotationAngle,
   };
 }

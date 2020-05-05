@@ -41,7 +41,7 @@ function CanvasElementDropzone({ children }) {
     state: { activeDropTargetId },
   } = useDropTargets();
   const {
-    state: { pageContainer },
+    state: { fullbleedContainer },
   } = useCanvas();
   const {
     actions: { editorToDataX, editorToDataY },
@@ -54,7 +54,7 @@ function CanvasElementDropzone({ children }) {
           resource,
           offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
         } = JSON.parse(e.dataTransfer.getData('resource/media'));
-        const { x, y } = pageContainer?.getBoundingClientRect();
+        const { x, y } = fullbleedContainer?.getBoundingClientRect();
 
         insertElement(resource.type, {
           resource,
@@ -70,7 +70,7 @@ function CanvasElementDropzone({ children }) {
     },
     [
       activeDropTargetId,
-      pageContainer,
+      fullbleedContainer,
       insertElement,
       editorToDataX,
       editorToDataY,
