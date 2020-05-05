@@ -31,11 +31,10 @@ import {
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
-const getCurrentBp = (availableContainerSpace) => {
-  return descendingBreakpointKeys.reduce((current, bp) => {
+const getCurrentBp = (availableContainerSpace) =>
+  descendingBreakpointKeys.reduce((current, bp) => {
     return availableContainerSpace <= theme.breakpoint.raw[bp] ? bp : current;
   }, descendingBreakpointKeys[0]);
-};
 
 // To determine the size of a story page we take the default page size according to breakpoint
 // and then find the remaining width in the given space that the dashboard is showing stories in
