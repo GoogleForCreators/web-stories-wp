@@ -16,12 +16,17 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
 import { PAGE_RATIO } from '../constants';
 import theme from '../theme';
+import {
+  WP_LEFT_NAV_WIDTH,
+  DASHBOARD_LEFT_NAV_WIDTH,
+  VIEWPORT_WP_LEFT_NAV_HIDES,
+} from '../constants/pageStructure';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
@@ -32,15 +37,26 @@ const getCurrentBp = (availableContainerSpace) => {
   }, descendingBreakpointKeys[0]);
 };
 
-// this will break the detail template view
-const sizeFromWidth = (width, { respectSetWidth, availableContainerSpace }) => {
+// To determine the size of a story page we take the default page size according to breakpoint
+// and then find the remaining width in the given space that the dashboard is showing stories in
+// if the container isn't important to size then respectSetWidth catches it (thumbnails or isn't a grid)
+// otherwise, we're taking the available space we have and finding out how many items in the default size we can fit in a row
+// then we calculate the grid column gutter and the page gutter
+// subtract those values from the availableContainer space to get remaining space
+// divide the remaining space by the itemsInRow
+// attach that extra space to the width
+// get height by dividing new with by PAGE_RATIO
+const sizeFromWidth = (
+  width,
+  { bp, respectSetWidth, availableContainerSpace }
+) => {
   if (respectSetWidth) {
     return { width, height: width / PAGE_RATIO };
   }
-
   const itemsInRow = Math.floor(availableContainerSpace / width);
-  const columnGapWidth = 10 * itemsInRow;
-  const takenSpace = width * itemsInRow + columnGapWidth;
+  const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
+  const pageGutter = theme.pageHorizontalGutter[bp] * 2;
+  const takenSpace = width * itemsInRow + columnGapWidth + pageGutter;
   const remainingSpace = availableContainerSpace - takenSpace;
   const addToWidthValue = remainingSpace / itemsInRow;
 
@@ -51,20 +67,19 @@ const sizeFromWidth = (width, { respectSetWidth, availableContainerSpace }) => {
   };
 };
 
-const WP_LEFT_NAV_WIDTH = 38;
-const DASHBOARD_LEFT_NAV_WIDTH = 190;
-
-// NO MAGIC NUMBERS - set gutter by bp
-const getTrueInnerWidth = (bp) => {
+// we want to set the size of story pages based on the available space
+// this means we need to take the window.innerWidth value and remove the built in WP nav and the dashboard nav according to breakpoints
+const getTrueInnerWidth = () => {
   const { innerWidth } = window;
-  if (innerWidth >= 783 && innerWidth <= 1120) {
-    return innerWidth - WP_LEFT_NAV_WIDTH;
-  } else if (innerWidth >= 1120) {
-    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH - 40;
-  } else {
+  if (innerWidth >= theme.breakpoint.raw.tablet) {
+    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH;
+  } else if (innerWidth < VIEWPORT_WP_LEFT_NAV_HIDES) {
     return innerWidth;
+  } else {
+    return innerWidth - WP_LEFT_NAV_WIDTH;
   }
 };
+
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
@@ -86,12 +101,10 @@ export default function usePagePreviewSize(options = {}) {
     };
   }, [thumbnailMode, availableContainerSpace]);
 
-  useEffect(() => {
-    if (thumbnailMode) {
-      return () => {};
-    }
-    return setBp(getCurrentBp(availableContainerSpace));
-  }, [setBp, thumbnailMode, availableContainerSpace]);
+  useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
+    setBp,
+    availableContainerSpace,
+  ]);
 
   return useMemo(
     () => ({

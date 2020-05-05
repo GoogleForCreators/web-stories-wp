@@ -64,7 +64,7 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
     state: {
       queryParams: { id: templateId, isLocal },
