@@ -43,7 +43,6 @@ import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
-import WithTooltip from '../tooltip';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
@@ -205,16 +204,15 @@ function SizePositionPanel({
           }}
           disabled={isFill}
         />
-        <WithTooltip title={__('Constrain proportions', 'web-stories')}>
-          <Toggle
-            aria-label={__('Aspect ratio lock', 'web-stories')}
-            icon={<StyledLocked />}
-            uncheckedIcon={<StyledUnlocked />}
-            value={lockAspectRatio}
-            onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
-            disabled={isFill}
-          />
-        </WithTooltip>
+        <Toggle
+          aria-label={__('Aspect ratio lock', 'web-stories')}
+          title={__('Constrain proportions', 'web-stories')}
+          icon={<StyledLocked />}
+          uncheckedIcon={<StyledUnlocked />}
+          value={lockAspectRatio}
+          onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
+          disabled={isFill}
+        />
         <BoxedNumeric
           data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
@@ -252,13 +250,12 @@ function SizePositionPanel({
           />
         )}
         {canFill && isSingleElement && (
-          <WithTooltip title={__('Full bleed', 'web-stories')}>
-            <Toggle
-              icon={<Fullbleed />}
-              value={isFill}
-              onChange={(value) => pushUpdate({ isFill: value }, true)}
-            />
-          </WithTooltip>
+          <Toggle
+            title={__('Full bleed', 'web-stories')}
+            icon={<Fullbleed />}
+            value={isFill}
+            onChange={(value) => pushUpdate({ isFill: value }, true)}
+          />
         )}
       </Row>
     </SimplePanel>

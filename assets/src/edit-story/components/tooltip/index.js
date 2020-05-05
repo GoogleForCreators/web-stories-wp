@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useRef, useMemo } from 'react';
 
@@ -26,7 +26,7 @@ import { useState, useRef, useMemo } from 'react';
  * Internal dependencies
  */
 import { prettifyShortcut } from '../keyboard';
-import Popup from '../popup';
+import Popup, { Placement } from '../popup';
 
 const SPACING = 12;
 const PADDING = 4;
@@ -57,45 +57,47 @@ const Tooltip = styled.div`
   z-index: 9999;
 `;
 
+const TRANSPARENT_BORDER = css`6px solid transparent`;
+
 const TooltipArrow = styled.div`
   position: absolute;
   box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
   ${({ placement, theme }) => {
     switch (placement) {
-      case 'top':
-      case 'top-start':
-      case 'top-end':
+      case Placement.TOP:
+      case Placement.TOP_START:
+      case Placement.TOP_END:
         return `
           bottom: -6px;
           border-top: 6px solid ${theme.colors.bg.v0};
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
+          border-left: ${TRANSPARENT_BORDER};
+          border-right: ${TRANSPARENT_BORDER};
         `;
-      case 'bottom':
-      case 'bottom-start':
-      case 'bottom-end':
+      case Placement.BOTTOM:
+      case Placement.BOTTOM_START:
+      case Placement.BOTTOM_END:
         return `
           top: -6px;
           border-bottom: 6px solid ${theme.colors.bg.v0};
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
+          border-left: ${TRANSPARENT_BORDER};
+          border-right: ${TRANSPARENT_BORDER};
         `;
-      case 'left':
-      case 'left-start':
-      case 'left-end':
+      case Placement.LEFT:
+      case Placement.LEFT_START:
+      case Placement.LEFT_END:
         return `
           right: -6px;
-          border-top: 6px solid transparent;
-          border-bottom: 6px solid transparent;
+          border-top: ${TRANSPARENT_BORDER};
+          border-bottom: ${TRANSPARENT_BORDER};
           border-left: 6px solid ${theme.colors.bg.v0};
         `;
-      case 'right':
-      case 'right-start':
-      case 'right-end':
+      case Placement.RIGHT:
+      case Placement.RIGHT_START:
+      case Placement.RIGHT_END:
         return `
           left: -6px;
-          border-top: 6px solid transparent;
-          border-bottom: 6px solid transparent;
+          border-top: ${TRANSPARENT_BORDER};
+          border-bottom: ${TRANSPARENT_BORDER};
           border-right: 6px solid ${theme.colors.bg.v0};
         `;
       default:

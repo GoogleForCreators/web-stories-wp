@@ -30,29 +30,24 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
-import WithTooltip from '../../tooltip';
 
 function FlipControls({ value, onChange }) {
   return (
     <>
-      <WithTooltip title={__('Flip horizontally', 'web-stories')}>
-        <Toggle
-          title={__('Flip horizontally', 'web-stories')}
-          aria-label={__('Flip horizontally', 'web-stories')}
-          icon={<FlipHorizontal />}
-          value={value.horizontal === true}
-          onChange={(horizontal) => onChange({ ...value, horizontal })}
-        />
-      </WithTooltip>
-      <WithTooltip title={__('Flip vertically', 'web-stories')}>
-        <Toggle
-          title={__('Flip vertically', 'web-stories')}
-          aria-label={__('Flip vertically', 'web-stories')}
-          icon={<FlipVertical />}
-          value={value.vertical === true}
-          onChange={(vertical) => onChange({ ...value, vertical })}
-        />
-      </WithTooltip>
+      <Toggle
+        title={__('Flip horizontally', 'web-stories')}
+        aria-label={__('Flip horizontally', 'web-stories')}
+        icon={<FlipHorizontal />}
+        value={value.horizontal === true}
+        onChange={(horizontal) => onChange({ ...value, horizontal })}
+      />
+      <Toggle
+        title={__('Flip vertically', 'web-stories')}
+        aria-label={__('Flip vertically', 'web-stories')}
+        icon={<FlipVertical />}
+        value={value.vertical === true}
+        onChange={(vertical) => onChange({ ...value, vertical })}
+      />
     </>
   );
 }

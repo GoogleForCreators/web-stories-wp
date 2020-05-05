@@ -32,6 +32,25 @@ import {
  */
 import { SCROLLBAR_WIDTH } from '../../constants';
 
+export const Placement = {
+  // TOP
+  TOP: 'top',
+  TOP_START: 'top-start',
+  TOP_END: 'top-end',
+  // BOTTOM
+  BOTTOM: 'bottom',
+  BOTTOM_START: 'bottom-start',
+  BOTTOM_END: 'bottom-end',
+  // RIGHT
+  RIGHT: 'right',
+  RIGHT_START: 'right-start',
+  RIGHT_END: 'right-end',
+  // LEFT
+  LEFT: 'left',
+  LEFT_START: 'left-start',
+  LEFT_END: 'left-end',
+};
+
 const Container = styled.div.attrs(({ x, y }) => ({
   style: { left: `${x}px`, top: `${y}px` },
 }))`
@@ -85,12 +104,12 @@ function getXTransforms(placement) {
 function getYTransforms(placement) {
   if (
     placement.startsWith('top') ||
-    placement === 'right-end' ||
-    placement === 'left-end'
+    placement === Placement.RIGHT_END ||
+    placement === Placement.LEFT_END
   ) {
     return `-100%`;
   }
-  if (placement === 'right' || placement === 'left') {
+  if (placement === Placement.RIGHT || placement === Placement.LEFT) {
     return `-50%`;
   }
   return null;
@@ -111,25 +130,25 @@ function getTransforms(placement) {
 
 function getXOffset(placement, spacing = 0, anchorRect, dockRect, bodyRect) {
   switch (placement) {
-    case 'bottom-start':
-    case 'top-start':
-    case 'left':
-    case 'left-start':
-    case 'left-end':
+    case Placement.BOTTOM_START:
+    case Placement.TOP_START:
+    case Placement.LEFT:
+    case Placement.LEFT_END:
+    case Placement.LEFT_START:
       return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
-    case 'bottom-end':
-    case 'top-end':
-    case 'right':
-    case 'right-start':
-    case 'right-end':
+    case Placement.BOTTOM_END:
+    case Placement.TOP_END:
+    case Placement.RIGHT:
+    case Placement.RIGHT_END:
+    case Placement.RIGHT_START:
       return (
         bodyRect.left +
         (dockRect?.left || anchorRect.left) +
         anchorRect.width +
         spacing
       );
-    case 'bottom':
-    case 'top':
+    case Placement.BOTTOM:
+    case Placement.TOP:
       return (
         bodyRect.left +
         (dockRect?.left || anchorRect.left) +
@@ -142,20 +161,20 @@ function getXOffset(placement, spacing = 0, anchorRect, dockRect, bodyRect) {
 
 function getYOffset(placement, spacing = 0, anchorRect) {
   switch (placement) {
-    case 'bottom':
-    case 'bottom-start':
-    case 'bottom-end':
-    case 'left-end':
-    case 'right-end':
+    case Placement.BOTTOM:
+    case Placement.BOTTOM_START:
+    case Placement.BOTTOM_END:
+    case Placement.LEFT_END:
+    case Placement.RIGHT_END:
       return anchorRect.top + anchorRect.height + spacing;
-    case 'top':
-    case 'top-start':
-    case 'top-end':
-    case 'left-start':
-    case 'right-start':
+    case Placement.TOP:
+    case Placement.TOP_START:
+    case Placement.TOP_END:
+    case Placement.LEFT_START:
+    case Placement.RIGHT_START:
       return anchorRect.top - spacing;
-    case 'right':
-    case 'left':
+    case Placement.RIGHT:
+    case Placement.LEFT:
       return anchorRect.top + anchorRect.height / 2;
     default:
       return 0;
@@ -190,7 +209,14 @@ function getOffset(placement, spacing, anchor, dock, popup) {
   };
 }
 
-function Popup({ anchor, dock, children, placement, spacing, isOpen }) {
+function Popup({
+  anchor,
+  dock,
+  children,
+  placement = 'bottom',
+  spacing,
+  isOpen,
+}) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
