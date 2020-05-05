@@ -81,6 +81,13 @@ fi
 # Install and build.
 cd "$project_dir"
 
+echo "Building plugin"
+npm run build:js --silent
+npm run build:plugin --silent -- --prerelease
+
+echo "Bundling plugin"
+npm run bundle-plugin --silent -- --copy
+
 echo "Moving files to repository"
 rsync -avz --delete ./build/web-stories/ "$repo_dir/wp-content/plugins/web-stories/"
 git --no-pager log -1 --format="Build Web Stories plugin at %h: %s" > /tmp/commit-message.txt

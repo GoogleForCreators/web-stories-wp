@@ -60,12 +60,7 @@ deploy:
       branch: master
   - provider: script
     edge: true
-    # This script also runs `npm run build`.
-    script:
-      - npm run build:js --silent
-      - npm run build:plugin --silent -- --prerelease
-      - npm run bundle-plugin --silent -- --copy
-      - bin/deploy-to-test-environment.sh
+    script: bin/deploy-to-test-environment.sh
     on:
       branch: master
 
