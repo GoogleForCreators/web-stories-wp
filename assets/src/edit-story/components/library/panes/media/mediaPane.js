@@ -112,6 +112,7 @@ const Loading = styled.div`
   padding: 8px 80px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
   border-radius: 100px;
+  margin-top: auto;
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: 500;
