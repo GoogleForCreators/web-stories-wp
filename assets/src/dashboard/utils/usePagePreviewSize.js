@@ -17,6 +17,8 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * Internal dependencies
  */
@@ -85,6 +87,10 @@ export default function usePagePreviewSize(options = {}) {
     getTrueInnerWidth()
   );
 
+  const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
+    setAvailableContainerSpace(getTrueInnerWidth());
+  }, 800);
+
   const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
 
   useEffect(() => {
@@ -92,13 +98,13 @@ export default function usePagePreviewSize(options = {}) {
       return () => {};
     }
 
-    const handleResize = () => setAvailableContainerSpace(getTrueInnerWidth());
+    const handleResize = () => debounceAvailableContainerSpace();
 
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [thumbnailMode, availableContainerSpace]);
+  }, [thumbnailMode, availableContainerSpace, debounceAvailableContainerSpace]);
 
   useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
     setBp,
