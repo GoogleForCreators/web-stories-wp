@@ -17,11 +17,12 @@
 /**
  * Internal dependencies
  */
+import isPatternEqual from '../../../utils/isPatternEqual';
+import convertToCSS from '../../../utils/convertToCSS';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import createSolid from '../../../utils/createSolid';
-import convertToCSS from '../../../utils/convertToCSS';
 import objectPick from '../../../utils/objectPick';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
@@ -32,11 +33,9 @@ export function findMatchingColor(color, stylePresets, isText) {
     ? stylePresets.textColors
     : stylePresets.fillColors;
   const patternType = isText ? 'color' : 'background';
-  const toAdd = generatePatternStyles(color, patternType);
-  return colorsToMatch.find((value) => {
-    const existing = generatePatternStyles(value, patternType);
-    return Object.keys(toAdd).every((key) => existing[key] === toAdd[key]);
-  });
+  return colorsToMatch.find((value) =>
+    isPatternEqual(value, color, patternType)
+  );
 }
 
 export function findMatchingStylePreset(preset, stylePresets) {

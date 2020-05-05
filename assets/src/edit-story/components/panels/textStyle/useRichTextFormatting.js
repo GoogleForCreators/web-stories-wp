@@ -22,8 +22,7 @@ import { useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
+import isPatternEqual from '../../../utils/isPatternEqual';
 import useRichText from '../../richText/useRichText';
 import {
   getHTMLFormatters,
@@ -43,13 +42,7 @@ function isEqual(a, b) {
   // Note: `null` is a falsy object, that would cause an error if first
   // check is removed.
   const isPattern = a && typeof a === 'object' && (a.type || a.color);
-  if (!isPattern) {
-    return a === b;
-  }
-
-  const aStyle = convertToCSS(generatePatternStyles(a));
-  const bStyle = convertToCSS(generatePatternStyles(b));
-  return aStyle === bStyle;
+  return !isPattern ? a === b : isPatternEqual(a, b);
 }
 
 /**
