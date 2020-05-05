@@ -26,14 +26,17 @@ import { Button } from '../../../components';
 
 export const ContentContainer = styled.div`
   ${({ theme }) => `
-    padding: 0 ${theme.pageGutter.large.desktop}px;
+    padding-top: ${theme.navBar.height + 40}px;
+    margin: 0 ${theme.pageGutter.large.desktop}px;
+
 
     @media ${theme.breakpoint.tablet} {
-      padding: 0 ${theme.pageGutter.large.tablet}px;
+      padding-top: ${theme.navBar.height + 20}px;
+      margin: 0 ${theme.pageGutter.large.tablet}px;
     }
 
-    @media ${theme.breakpoint.largeDisplayPhone} {
-      padding: 0;
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.pageGutter.small.min}px;
     }
   `}
 `;
@@ -133,4 +136,20 @@ export const NavButton = styled(Button)`
       color: ${theme.colors.bluePrimary};
     }
   `}
+`;
+
+export const RowContainer = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 40px;
+  margin: 0 20px 0;
+`;
+
+export const SubHeading = styled.h2`
+  font-family: ${({ theme }) => theme.fonts.heading3.family};
+  font-size: ${({ theme }) => theme.fonts.heading3.size}px;
+  line-height: ${({ theme }) => theme.fonts.heading3.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing}em;
+  font-weight: 500;
+  margin: 0 0 20px 0;
 `;
