@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../utils';
+import { clamp, throttleToAnimationFrame } from '../../utils';
 
 export const SQUISH_LENGTH = 90;
 export const SQUISH_CSS_VAR = '--squish-progress';
@@ -56,13 +56,13 @@ const Provider = ({ children }) => {
     }
 
     let prevProgress;
-    const handleScroll = (e) => {
+    const handleScroll = throttleToAnimationFrame((e) => {
       const progress = clamp(e.target.scrollTop / SQUISH_LENGTH, [0, 1]);
       if (!(progress === 1 && prevProgress === 1)) {
-        dispatchSquishEvent(scrollFrameRef, progress);
+        dispatchSquishEvent(scrollFrameEl, progress);
       }
       prevProgress = progress;
-    };
+    });
 
     scrollFrameEl.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
