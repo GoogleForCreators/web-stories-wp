@@ -93,7 +93,7 @@ FontPreview.propTypes = {
   font: FontPropType,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
-  fontStyle: PropTypes.number,
+  fontStyle: PropTypes.string,
   onClick: PropTypes.func,
 };
 

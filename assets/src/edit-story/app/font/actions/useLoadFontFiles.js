@@ -44,7 +44,7 @@ function useLoadFontFiles() {
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {Array} props An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
+   * @param {Array} fonts An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
    * @return {Promise} Returns fonts loaded promise
    */
   const maybeEnqueueFontStyle = useCallback((fonts) => {
@@ -72,11 +72,10 @@ function useLoadFontFiles() {
 
             const appendFontLink = () => {
               return new Promise((resolve, reject) => {
-                const src = getGoogleFontURL([{ family, variants }]);
+                const src = getGoogleFontURL([{ family, variants }], 'auto');
                 const fontStylesheet = document.createElement('link');
-                const fontHref = src.replace('display=swap', 'display=auto');
                 fontStylesheet.id = elementId;
-                fontStylesheet.href = fontHref;
+                fontStylesheet.href = src;
                 fontStylesheet.rel = 'stylesheet';
                 fontStylesheet.type = 'text/css';
                 fontStylesheet.media = 'all';

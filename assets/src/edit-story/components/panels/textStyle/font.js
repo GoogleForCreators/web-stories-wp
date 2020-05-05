@@ -84,18 +84,19 @@ function FontControls({ selectedElements, pushUpdate }) {
                 ]),
               };
               const { weights } = fontObj;
-              await maybeEnqueueFontStyle(
-                selectedElements.map((e) => ({
-                  ...e,
-                  font: newFont,
-                }))
-              );
               // Find the nearest font weight from the available font weight list
               const newFontWeight = weights.reduce((a, b) =>
                 Math.abs(parseInt(b) - fontWeight) <
                 Math.abs(parseInt(a) - fontWeight)
                   ? b
                   : a
+              );
+              await maybeEnqueueFontStyle(
+                selectedElements.map((e) => ({
+                  ...e,
+                  font: newFont,
+                  fontWeight: newFontWeight,
+                }))
               );
 
               pushUpdate(
