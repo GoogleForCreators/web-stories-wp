@@ -21,7 +21,7 @@ import styled, { keyframes, css } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, memo } from 'react';
 
 /**
  * Internal dependencies
@@ -30,10 +30,8 @@ import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
 
 const styledTiles = css`
-  width: auto;
-  height: 100px;
+  width: 100%;
   transition: 0.2s transform, 0.15s opacity;
-  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
@@ -46,8 +44,12 @@ const Video = styled.video`
 `;
 
 const Container = styled.div`
-  position: relative;
   display: flex;
+  position: absolute;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  background: red;
+  contain: strict;
 `;
 
 const PlayIcon = styled(Play)`
@@ -117,6 +119,8 @@ const MediaElement = ({
   width: requestedWidth,
   height: requestedHeight,
   onInsert,
+  index,
+  style,
 }) => {
   const {
     src,
@@ -186,7 +190,19 @@ const MediaElement = ({
       }
     }
     return (
-      <Container>
+      <Container style={style} height={height} width={width}>
+        <span
+          style={{
+            position: 'absolute',
+            fontSize: 12,
+            lineHeight: 1,
+            background: 'rgba(0,0,0,.5)',
+          }}
+        >
+          {index} @ {Math.round(style.top)}px
+          <br />
+          {Math.random()}
+        </span>
         <Image
           key={src}
           src={imageSrc}
@@ -194,7 +210,7 @@ const MediaElement = ({
           width={width}
           height={height}
           alt={alt}
-          loading={'lazy'}
+          _loading={'lazy'}
           onClick={onClick}
           {...dropTargetsBindings}
         />
@@ -233,7 +249,11 @@ const MediaElement = ({
       onPointerEnter={pointerEnter}
       onPointerLeave={pointerLeave}
       onClick={onClick}
+      style={style}
+      height={height}
+      width={width}
     >
+      <span style={{ position: 'absolute' }}>{Math.random()}</span>
       <Video
         key={src}
         ref={mediaElement}
@@ -269,4 +289,5 @@ MediaElement.propTypes = {
   onInsert: PropTypes.func,
 };
 
-export default MediaElement;
+// Just for testing
+export default memo(MediaElement, () => true);

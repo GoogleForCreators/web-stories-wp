@@ -33,6 +33,8 @@ import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../';
 import Context from './context';
 
+export const MEDIA_PER_PAGE = 500;
+
 function APIProvider({ children }) {
   const {
     api: { stories, media, fonts, link, users, statuses },
@@ -122,14 +124,9 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum }) => {
+    async ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
-      const perPage = 100;
-      apiPath = addQueryArgs(apiPath, {
-        context: 'edit',
-        per_page: perPage,
-        page: pagingNum,
-      });
+      const perPage = MEDIA_PER_PAGE;
 
       if (mediaType) {
         apiPath = addQueryArgs(apiPath, { media_type: mediaType });
@@ -139,11 +136,48 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath, parse: false }).then(
-        async (response) => {
-          const jsonArray = await response.json();
-          return { data: jsonArray, headers: response.headers };
-        }
+      // Temporary solution: fetching more than 100 items (100 is WP limit)
+      const wpLimit = 100;
+      const pagesCount =
+        perPage <= wpLimit ? perPage : Math.ceil(perPage / wpLimit);
+      const loopPerPage = perPage <= wpLimit ? perPage : wpLimit;
+
+      const pagesPromises = Array(pagesCount)
+        .fill(0)
+        .map((_, i) => {
+          const loopIter = i + 1;
+          const page = (pagingNum - 1) * pagesCount + loopIter;
+
+          apiPath = addQueryArgs(apiPath, {
+            context: 'edit',
+            per_page: loopPerPage,
+            page,
+          });
+
+          return apiFetch({ path: apiPath, parse: false })
+            .then(async (response) => {
+              const jsonArray = await response.json();
+              const headers = response.headers;
+              const totalItems = parseInt(headers.get('X-WP-Total'));
+              const newHeaders = new Headers();
+              const totalPagesMod = Math.ceil(totalItems / perPage);
+              newHeaders.set('X-WP-TotalPages', totalPagesMod);
+              newHeaders.set('X-WP-Total', totalItems);
+              return { data: jsonArray, headers: newHeaders };
+            })
+            .catch(() => null);
+        });
+
+      const dataArr = await Promise.all(pagesPromises);
+      return dataArr.reduce(
+        (acc, result) => {
+          if (!result) {
+            return acc;
+          }
+          const { data, headers } = result;
+          return { data: [...acc.data, ...data], headers };
+        },
+        { data: [] }
       );
     },
     [media]

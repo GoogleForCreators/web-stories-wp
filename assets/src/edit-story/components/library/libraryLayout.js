@@ -32,7 +32,7 @@ import LibraryPanes from './libraryPanes';
 import LibraryTabs from './libraryTabs';
 
 const Layout = styled.div`
-  height: 100%;
+  height: calc(100vh - 32px);
   display: grid;
   grid:
     'tabs   ' ${HEADER_HEIGHT}px

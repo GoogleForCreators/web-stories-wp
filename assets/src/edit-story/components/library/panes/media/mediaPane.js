@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useEffect, useState, useMemo, memo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -28,7 +28,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import VirtualListWrapper from './VirtualListWrapper';
 import { useConfig } from '../../../../app/config';
 import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
@@ -42,26 +41,7 @@ import {
   getResourceFromMediaPicker,
 } from '../../../../app/media/utils';
 import paneId from './paneId';
-import MediaElement from './mediaElement';
-
-const Container = styled.div`
-  grid-area: infinitescroll;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr;
-  overflow: auto;
-  padding: 1em 1.5em 0 1.5em;
-`;
-
-const Column = styled.div`
-  position: relative;
-`;
-
-const Message = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 16px;
-  padding: 1em;
-`;
+import VirtualList from './virtualList';
 
 const FilterArea = styled.div`
   display: flex;
@@ -113,7 +93,6 @@ const FILTERS = [
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
-const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
@@ -188,16 +167,6 @@ function MediaPane(props) {
     return insertElement(resource.type, { resource, width });
   };
 
-  /**
-   * Check if number is odd or even.
-   *
-   * @param {number} n Number
-   * @return {boolean} Is even.
-   */
-  const isEven = (n) => {
-    return n % 2 === 0;
-  };
-
   const filterResource = useCallback(
     ({ mimeType, width, height }) => {
       const allowedMimeTypes = [
@@ -215,56 +184,33 @@ function MediaPane(props) {
     [allowedImageMimeTypes, allowedVideoMimeTypes, mediaType]
   );
 
-  const resources = media.filter(filterResource);
+  const resources = useMemo(() => media.filter(filterResource), [
+    media,
+    filterResource,
+  ]);
 
-  const refContainer = useRef();
-  const refContainerFooter = useRef();
-
-  useIntersectionEffect(
-    refContainerFooter,
-    {
-      root: refContainer,
-      rootMargin: '0px 0px 300px 0px',
-    },
-    (entry) => {
-      if (!isMediaLoaded || isMediaLoading) {
-        return;
-      }
-      if (!hasMore) {
-        return;
-      }
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      setNextPage();
-    },
-    [hasMore, isMediaLoading, isMediaLoaded]
-  );
-
-  const loadNextPage = (...args) => {
-    console.log({args})
+  const loadNextPage = () => {
     if (!isMediaLoaded || isMediaLoading) {
       return;
     }
     if (!hasMore) {
       return;
     }
-    setNextPage()
+
+    setNextPage();
   };
 
-  const [useIsScrolling, setUseIsScrolling] = useState(true)
-  const [simpleImage, setSimpleImage] = useState(true)
+  const [localScopeMedia, setLocalScopeMedia] = useState(false);
 
   return (
     <StyledPane id={paneId} {...props}>
+      <div style={{ position: 'absolute', top: 0, zIndex: 9999999 }}>
+        <button onClick={() => setLocalScopeMedia((v) => !v)}>
+          {localScopeMedia ? 'Disable' : 'Enable'} localScopeMedia (not global)
+        </button>
+      </div>
       <Inner>
         <Padding>
-          <div style={{ position: 'absolute', zIndex: 9, background: '#000' }}>
-            <button onClick={() => setUseIsScrolling(v => !v)}>{useIsScrolling ? 'Dis' : 'Ena'}.useIsScrolling</button>
-            <button onClick={() => setSimpleImage(v => !v)}>{simpleImage ? 'Dis' : 'Ena'}.simpleImage</button>
-            <pre>resources: {resources.length}</pre>
-          </div>
           <SearchInput
             value={searchTerm}
             placeholder={__('Search', 'web-stories')}
@@ -288,20 +234,12 @@ function MediaPane(props) {
           </FilterArea>
         </Padding>
 
-        {isMediaLoaded && !media.length ? (
-          <Message>{__('No media found', 'web-stories')}</Message>
-        ) : (
-          <Container ref={refContainer}>
-            <VirtualListWrapper
-              hasNextPage={hasMore}
-              isNextPageLoading={isMediaLoading}
-              items={resources}
-              loadNextPage={loadNextPage}
-              useIsScrolling={useIsScrolling}
-              simpleImage={simpleImage}
-            />
-          </Container>
-        )}
+        <VirtualList
+          resources={resources}
+          loadNextPage={loadNextPage}
+          localScopeMedia={localScopeMedia}
+          insertMediaElement={insertMediaElement}
+        />
       </Inner>
     </StyledPane>
   );

@@ -27,6 +27,7 @@ export const INITIAL_STATE = {
   processed: [],
   pagingNum: 1,
   totalPages: 1,
+  totalItems: null,
   hasMore: true,
   mediaType: '',
   searchTerm: '',
@@ -45,7 +46,14 @@ function reducer(state, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, mediaType, searchTerm, pagingNum, totalPages } = payload;
+      const {
+        media,
+        mediaType,
+        searchTerm,
+        pagingNum,
+        totalPages,
+        totalItems,
+      } = payload;
       if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
         const hasMore = pagingNum < totalPages;
         return {
@@ -53,6 +61,7 @@ function reducer(state, { type, payload }) {
           media: [...state.media, ...media],
           pagingNum,
           totalPages,
+          totalItems,
           hasMore,
           isMediaLoaded: true,
           isMediaLoading: false,

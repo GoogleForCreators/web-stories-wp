@@ -62,6 +62,7 @@ function MediaProvider({ children }) {
       getMedia({ mediaType: currentMediaType, searchTerm, pagingNum: p })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          const totalItems = parseInt(headers.get('X-WP-Total'));
           const mediaArray = data.map(getResourceFromAttachment);
           callback({
             media: mediaArray,
@@ -69,6 +70,7 @@ function MediaProvider({ children }) {
             searchTerm,
             pagingNum: p,
             totalPages,
+            totalItems,
           });
         })
         .catch(fetchMediaError);

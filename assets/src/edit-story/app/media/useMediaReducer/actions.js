@@ -29,10 +29,18 @@ export const fetchMediaSuccess = (dispatch) => ({
   searchTerm,
   pagingNum,
   totalPages,
+  totalItems,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, pagingNum, totalPages },
+    payload: {
+      media,
+      mediaType,
+      searchTerm,
+      pagingNum,
+      totalPages,
+      totalItems,
+    },
   });
 };
 
