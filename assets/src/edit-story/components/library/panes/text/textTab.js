@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  */
 import useLibrary from '../../useLibrary';
 import { Tab } from '../shared';
-import { dataFontEm } from '../../../../units';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
