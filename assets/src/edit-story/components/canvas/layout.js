@@ -201,22 +201,26 @@ function useLayoutParamsCssVars() {
   };
 }
 
-const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
-  return (
-    <PageAreaFullbleedContainer>
-      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
-      {showDangerZone && (
-        <>
-          <PageAreaDangerZoneTop />
-          <PageAreaDangerZoneBottom />
-        </>
-      )}
-    </PageAreaFullbleedContainer>
-  );
-});
+const PageArea = forwardRef(
+  ({ children, safeZoneChildren, showDangerZone = false }, ref) => {
+    return (
+      <PageAreaFullbleedContainer ref={ref}>
+        {children}
+        <PageAreaSafeZone>{safeZoneChildren}</PageAreaSafeZone>
+        {showDangerZone && (
+          <>
+            <PageAreaDangerZoneTop />
+            <PageAreaDangerZoneBottom />
+          </>
+        )}
+      </PageAreaFullbleedContainer>
+    );
+  }
+);
 
 PageArea.propTypes = {
   children: PropTypes.node,
+  safeZoneChildren: PropTypes.node,
   showDangerZone: PropTypes.bool,
 };
 

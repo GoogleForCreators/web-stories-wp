@@ -52,22 +52,25 @@ function DisplayLayer() {
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea ref={setPageContainer}>
-        {currentPage
-          ? currentPage.elements.map(({ id, ...rest }) => {
-              if (editingElement === id) {
-                return null;
-              }
-              return (
-                <DisplayElement
-                  key={id}
-                  element={{ id, ...rest }}
-                  page={currentPage}
-                />
-              );
-            })
-          : null}
-      </DisplayPageArea>
+      <DisplayPageArea
+        ref={setPageContainer}
+        safeZoneChildren={
+          currentPage
+            ? currentPage.elements.map(({ id, ...rest }) => {
+                if (editingElement === id) {
+                  return null;
+                }
+                return (
+                  <DisplayElement
+                    key={id}
+                    element={{ id, ...rest }}
+                    page={currentPage}
+                  />
+                );
+              })
+            : null
+        }
+      />
     </Layer>
   );
 }

@@ -98,9 +98,10 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef}>
-        <EditElement element={element} />
-      </EditPageArea>
+      <EditPageArea
+        ref={pageAreaRef}
+        safeZoneChildren={<EditElement element={element} />}
+      />
     </LayerWithGrayout>
   );
 }

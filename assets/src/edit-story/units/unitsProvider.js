@@ -42,9 +42,11 @@ function UnitsProvider({ pageSize, children }) {
       },
       actions: {
         dataToEditorX: (x) => dataToEditorX(x, pageWidth),
-        dataToEditorY: (y) => dataToEditorY(y, pageHeight),
+        dataToEditorY: (y, useFullbleed) =>
+          dataToEditorY(y, pageHeight, useFullbleed),
         editorToDataX: (x) => editorToDataX(x, pageWidth),
-        editorToDataY: (y) => editorToDataY(y, pageHeight),
+        editorToDataY: (y, useFullbleed) =>
+          editorToDataY(y, pageHeight, useFullbleed),
         getBox: (element) => getBox(element, pageWidth, pageHeight),
       },
     }),

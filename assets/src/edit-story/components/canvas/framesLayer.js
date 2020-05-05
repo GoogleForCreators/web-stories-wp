@@ -86,11 +86,14 @@ function FramesLayer() {
       // otherwise.
       tabIndex="-1"
     >
-      <FramesPageArea>
-        {currentPage &&
+      <FramesPageArea
+        safeZoneChildren={
+          currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
-          })}
+          })
+        }
+      >
         <Selection />
         {Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
