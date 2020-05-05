@@ -20,12 +20,12 @@ import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../constants';
 import theme from '../theme';
 import {
-  WP_LEFT_NAV_WIDTH,
   DASHBOARD_LEFT_NAV_WIDTH,
+  PAGE_RATIO,
   VIEWPORT_WP_LEFT_NAV_HIDES,
+  WP_LEFT_NAV_WIDTH,
 } from '../constants/pageStructure';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
