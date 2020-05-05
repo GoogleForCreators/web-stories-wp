@@ -47,7 +47,6 @@ function EditElement({ element }) {
     actions: { getBox },
   } = useUnits();
 
-  //eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Edit } = getDefinitionForType(type);
   const box = getBox(element);
 

@@ -40,7 +40,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     'resource',
     DEFAULT_RESOURCE
   );
-  const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
+  const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   return (
     <SimplePanel
@@ -51,7 +51,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
-          onChange={(value) => pushUpdate({ alt: value })}
+          onChange={(value) => pushUpdate({ alt: value || null })}
           clear
         />
       </Row>

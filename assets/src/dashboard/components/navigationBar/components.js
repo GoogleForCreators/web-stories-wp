@@ -29,7 +29,7 @@ export const Nav = styled.nav`
     position: relative;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid ${theme.colors.gray50};
+    border-bottom: ${theme.borders.gray50};
     display: flex;
     flex-direction: row;
     width: 100%;

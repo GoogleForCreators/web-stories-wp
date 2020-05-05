@@ -28,10 +28,13 @@ import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { UnitsProvider } from '../../../../edit-story/units';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 import {
-  FloatingTab,
   InfiniteScroller,
   ScrollToTop,
+  Layout,
+  ToggleButtonGroup,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -39,13 +42,10 @@ import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
 } from '../../../constants';
-import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import clamp from '../../../utils/clamp';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { ApiContext } from '../../api/apiProvider';
+import FontProvider from '../../font/fontProvider';
+import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
   BodyViewOptions,
@@ -55,28 +55,12 @@ import {
   StoryListView,
 } from '../shared';
 
-// TODO once we know what we want this filter container to look like on small view ports (when we get designs) these should be updated
-
-const FilterContainer = styled.fieldset`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-  padding-bottom: 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    & > label span {
-      border-radius: 0;
-      box-shadow: none !important;
-      padding: 0 10px 0 0;
-    }
-  }
-`;
-
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-size: ${({ theme }) => theme.fonts.body1.size}px;
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight}px;
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
 `;
@@ -95,7 +79,7 @@ function MyStories() {
     STORY_SORT_OPTIONS.LAST_MODIFIED
   );
   const [currentListSortDirection, setListSortDirection] = useState(
-    SORT_DIRECTION.ASC
+    SORT_DIRECTION.DESC
   );
 
   const { pageSize } = usePagePreviewSize({
@@ -103,17 +87,21 @@ function MyStories() {
   });
   const {
     actions: {
-      storyApi: { updateStory, fetchStories },
+      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      templateApi: { createTemplateFromStory },
     },
     state: {
       stories: {
         allPagesFetched,
+        isLoading,
         stories,
         storiesOrderById,
         totalStories,
         totalPages,
-        isLoading,
       },
+      tags,
+      categories,
+      users,
     },
   } = useContext(ApiContext);
 
@@ -157,7 +145,7 @@ function MyStories() {
     [setCurrentStorySort, setCurrentPageClamped]
   );
   const handleFilterStatusUpdate = useCallback(
-    (_, value) => {
+    (value) => {
       setCurrentPageClamped(1);
       setStatus(value);
     },
@@ -181,8 +169,13 @@ function MyStories() {
       setViewStyle(VIEW_STYLE.GRID);
     } else {
       setViewStyle(VIEW_STYLE.LIST);
+      if (currentStorySort === STORY_SORT_OPTIONS.NAME) {
+        setListSortDirection(SORT_DIRECTION.ASC);
+      } else {
+        setListSortDirection(SORT_DIRECTION.DESC);
+      }
     }
-  }, [viewStyle]);
+  }, [currentStorySort, viewStyle]);
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
@@ -195,7 +188,10 @@ function MyStories() {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
+            trashStory={trashStory}
             updateStory={updateStory}
+            createTemplateFromStory={createTemplateFromStory}
+            duplicateStory={duplicateStory}
             filteredStories={orderedStories}
             centerActionLabel={
               <>
@@ -214,23 +210,33 @@ function MyStories() {
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
+            tags={tags}
+            categories={categories}
+            users={users}
           />
         );
       default:
         return null;
     }
   }, [
+    duplicateStory,
+    createTemplateFromStory,
+    trashStory,
     viewStyle,
     updateStory,
     orderedStories,
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
+    tags,
+    categories,
+    users,
   ]);
 
   const storiesViewControls = useMemo(() => {
     return (
       <BodyViewOptions
+        showGridToggle
         listBarLabel={listBarLabel}
         layoutStyle={viewStyle}
         handleLayoutSelect={handleViewStyleBarButtonSelected}
@@ -254,7 +260,6 @@ function MyStories() {
     if (orderedStories.length > 0) {
       return (
         <BodyWrapper>
-          {storiesViewControls}
           {storiesView}
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -262,7 +267,6 @@ function MyStories() {
             allDataLoadedMessage={__('No more stories', 'web-stories')}
             onLoadMore={handleNewPageRequest}
           />
-          <ScrollToTop />
         </BodyWrapper>
       );
     } else if (typeaheadValue.length > 0) {
@@ -280,7 +284,6 @@ function MyStories() {
     allPagesFetched,
     handleNewPageRequest,
     typeaheadValue,
-    storiesViewControls,
     storiesView,
   ]);
 
@@ -288,28 +291,34 @@ function MyStories() {
     <FontProvider>
       <TransformProvider>
         <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={orderedStories}
-            handleTypeaheadChange={handleTypeaheadChange}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={handleFilterStatusUpdate}
-                name="my-stories-filter-selection"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-                inputType="radio"
+          <Layout.Provider>
+            <Layout.Squishable>
+              <PageHeading
+                defaultTitle={__('My Stories', 'web-stories')}
+                searchPlaceholder={__('Search Stories', 'web-stories')}
+                filteredStories={orderedStories}
+                handleTypeaheadChange={handleTypeaheadChange}
+                typeaheadValue={typeaheadValue}
               >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
+                <ToggleButtonGroup
+                  buttons={STORY_STATUSES.map((storyStatus) => {
+                    return {
+                      handleClick: () =>
+                        handleFilterStatusUpdate(storyStatus.value),
+                      key: storyStatus.value,
+                      isActive: status === storyStatus.value,
+                      text: storyStatus.label,
+                    };
+                  })}
+                />
+              </PageHeading>
+              {storiesViewControls}
+            </Layout.Squishable>
+            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
+            <Layout.Fixed>
+              <ScrollToTop />
+            </Layout.Fixed>
+          </Layout.Provider>
         </UnitsProvider>
       </TransformProvider>
     </FontProvider>

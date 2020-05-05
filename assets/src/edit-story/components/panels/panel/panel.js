@@ -123,10 +123,7 @@ function Panel({ resizeable, initialHeight, name, children }) {
 }
 
 Panel.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   name: PropTypes.string.isRequired,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,

@@ -59,6 +59,10 @@ describe('getStoryMarkup', () => {
             height: 221,
             rotationAngle: 1,
             content: 'Hello World',
+            font: {
+              family: 'Roboto',
+              service: 'fonts.google.com',
+            },
             color: {
               color: {
                 r: 255,

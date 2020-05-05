@@ -32,8 +32,8 @@ import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
-import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
+import { useHistory } from '../../history';
 
 /**
  * Custom hook to save story.
@@ -48,10 +48,12 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { saveStoryById },
   } = useAPI();
+  const {
+    actions: { resetNewChanges },
+  } = useHistory();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
-  const setPreventUnload = usePreventWindowUnload();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
@@ -79,7 +81,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         })
         .finally(() => {
           setIsSaving(false);
-          setPreventUnload('history', false);
+          resetNewChanges();
         });
     },
     [
@@ -91,7 +93,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       updateStory,
       refreshPostEditURL,
       showSnackbar,
-      setPreventUnload,
+      resetNewChanges,
     ]
   );
 

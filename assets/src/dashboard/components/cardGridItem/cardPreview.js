@@ -47,7 +47,7 @@ const EditControls = styled.div`
   padding: 0;
   opacity: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.overlay};
+  background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: 8px;
 
   &:hover {

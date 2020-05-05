@@ -49,7 +49,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	const EMPTY_STYLE_PRESETS = [
 		'fillColors' => [],
 		'textColors' => [],
-		'styles'     => [],
+		'textStyles' => [],
 	];
 
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
@@ -166,7 +166,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @return array Item schema as an array.
 	 */
@@ -210,5 +210,4 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
-
 }

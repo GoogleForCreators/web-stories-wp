@@ -61,10 +61,7 @@ function LibraryProvider({ children }) {
 }
 
 LibraryProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default LibraryProvider;

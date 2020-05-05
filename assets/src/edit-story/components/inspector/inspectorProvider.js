@@ -138,10 +138,7 @@ function InspectorProvider({ children }) {
 }
 
 InspectorProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default InspectorProvider;

@@ -28,7 +28,7 @@
  * Always includes the runtime as well as the amp-story extension.
  *
  * @param {Array} pages List of pages.
- * @return {Extension[]} List of used AMP extensions.
+ * @return {Array<Extension>} List of used AMP extensions.
  */
 const getUsedAmpExtensions = (pages) => {
   const extensions = [

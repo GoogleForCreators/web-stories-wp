@@ -145,10 +145,7 @@ function StoryProvider({ storyId, children }) {
 }
 
 StoryProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   storyId: PropTypes.number,
 };
 

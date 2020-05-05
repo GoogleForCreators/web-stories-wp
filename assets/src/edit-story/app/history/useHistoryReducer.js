@@ -63,6 +63,7 @@ const reducer = (size) => (state, { type, payload }) => {
     case REPLAY:
       return {
         ...state,
+        versionNumber: state.versionNumber + (state.offset - payload),
         replayState: state.entries[payload],
       };
 

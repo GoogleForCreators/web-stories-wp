@@ -17,13 +17,11 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import {
   Primary,
   Secondary,
@@ -34,15 +32,12 @@ import {
   Close,
   Eyedropper,
 } from '../';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderWithTheme } from '../../../testUtils';
 
 describe('Button', () => {
   describe('Primary', () => {
     it('should render <Primary /> button', () => {
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Primary>{"I'm a Primary button"}</Primary>
       );
       expect(getByText("I'm a Primary button")).toBeDefined();
@@ -51,7 +46,7 @@ describe('Button', () => {
     it('should simulate a click on <Primary /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Primary onClick={onClickMock}>{"I'm a Primary button"}</Primary>
       );
 
@@ -65,7 +60,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Primary /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Primary onClick={() => invokedMock()} isDisabled>
           {"I'm a Primary button"}
         </Primary>
@@ -81,7 +76,7 @@ describe('Button', () => {
 
   describe('Secondary', () => {
     it('should render <Secondary /> button', () => {
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Secondary>{"I'm a Secondary button"}</Secondary>
       );
       expect(getByText("I'm a Secondary button")).toBeDefined();
@@ -90,7 +85,7 @@ describe('Button', () => {
     it('should simulate a click on <Secondary /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Secondary onClick={onClickMock}>{"I'm a Secondary button"}</Secondary>
       );
 
@@ -104,7 +99,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Secondary /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Secondary onClick={() => invokedMock()} isDisabled>
           {"I'm a Secondary button"}
         </Secondary>
@@ -120,7 +115,7 @@ describe('Button', () => {
 
   describe('Outline', () => {
     it('should render <Outline /> button', () => {
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Outline>{"I'm an Outline button"}</Outline>
       );
       expect(getByText("I'm an Outline button")).toBeDefined();
@@ -129,7 +124,7 @@ describe('Button', () => {
     it('should simulate a click on <Outline /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Outline onClick={onClickMock}>{"I'm an Outline button"}</Outline>
       );
 
@@ -143,7 +138,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Outline /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = arrange(
+      const { getByText } = renderWithTheme(
         <Outline onClick={() => invokedMock()} isDisabled>
           {"I'm an Outline button"}
         </Outline>
@@ -159,14 +154,14 @@ describe('Button', () => {
 
   describe('Undo', () => {
     it('should render <Undo /> button', () => {
-      const { container } = arrange(<Undo />);
+      const { container } = renderWithTheme(<Undo />);
       expect(container).toBeDefined();
     });
 
     it('should simulate a click on <Undo /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Undo onClick={onClickMock} data-testid="testing" />
       );
 
@@ -180,7 +175,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Undo /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Undo onClick={() => invokedMock()} isDisabled data-testid="testing" />
       );
 
@@ -194,14 +189,14 @@ describe('Button', () => {
 
   describe('Redo', () => {
     it('should render <Redo /> button', () => {
-      const { container } = arrange(<Redo />);
+      const { container } = renderWithTheme(<Redo />);
       expect(container).toBeDefined();
     });
 
     it('should simulate a click on <Redo /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Redo onClick={onClickMock} data-testid="testing" />
       );
 
@@ -215,7 +210,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Redo /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Redo onClick={() => invokedMock()} isDisabled data-testid="testing" />
       );
 
@@ -229,14 +224,14 @@ describe('Button', () => {
 
   describe('GridView', () => {
     it('should render <GridView /> button', () => {
-      const { container } = arrange(<GridView />);
+      const { container } = renderWithTheme(<GridView />);
       expect(container).toBeDefined();
     });
 
     it('should simulate a click on <GridView /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <GridView onClick={onClickMock} data-testid="testing" />
       );
 
@@ -250,7 +245,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <GridView /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <GridView
           onClick={() => invokedMock()}
           isDisabled
@@ -268,14 +263,14 @@ describe('Button', () => {
 
   describe('Close', () => {
     it('should render <Close /> button', () => {
-      const { container } = arrange(<Close />);
+      const { container } = renderWithTheme(<Close />);
       expect(container).toBeDefined();
     });
 
     it('should simulate a click on <Close /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Close onClick={onClickMock} data-testid="testing" />
       );
 
@@ -289,7 +284,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Close /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Close onClick={() => invokedMock()} isDisabled data-testid="testing" />
       );
 
@@ -303,14 +298,14 @@ describe('Button', () => {
 
   describe('Eyedropper', () => {
     it('should render <Eyedropper /> button', () => {
-      const { container } = arrange(<Eyedropper />);
+      const { container } = renderWithTheme(<Eyedropper />);
       expect(container).toBeDefined();
     });
 
     it('should simulate a click on <Eyedropper /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Eyedropper onClick={onClickMock} data-testid="testing" />
       );
 
@@ -324,7 +319,7 @@ describe('Button', () => {
     it('should simulate a click on disabled <Eyedropper /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = arrange(
+      const { getAllByTestId } = renderWithTheme(
         <Eyedropper
           onClick={() => invokedMock()}
           isDisabled
