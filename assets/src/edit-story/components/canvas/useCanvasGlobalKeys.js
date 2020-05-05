@@ -19,7 +19,6 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
@@ -27,13 +26,12 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { useStory } from '../../app';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
-import { getDefinitionForType } from '../../elements';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import processPastedElements from '../../utils/processPastedElements';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import addElementsToClipboard from '../../utils/addElementsToClipboard';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
-
-const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
 function useCanvasGlobalKeys() {
   const {
@@ -47,53 +45,12 @@ function useCanvasGlobalKeys() {
 
   const copyCutHandler = useCallback(
     (evt) => {
-      const { type: eventType, clipboardData } = evt;
+      const { type: eventType } = evt;
 
       if (selectedElements.length === 0) {
         return;
       }
-
-      const payload = {
-        sentinel: 'story-elements',
-        // @todo: Ensure that there's no unserializable data here. The easiest
-        // would be to keep all serializable data together and all non-serializable
-        // in a separate property.
-        items: selectedElements.map((element) => ({
-          ...element,
-          basedOn: element.id,
-          id: undefined,
-        })),
-      };
-      const serializedPayload = JSON.stringify(payload).replace(
-        /--/g,
-        DOUBLE_DASH_ESCAPE
-      );
-
-      const textContent = selectedElements
-        .map(({ type, ...rest }) => {
-          const { TextContent } = getDefinitionForType(type);
-          if (TextContent) {
-            return TextContent({ ...rest });
-          }
-          return type;
-        })
-        .join('\n');
-
-      const htmlContent = selectedElements
-        .map(({ type, ...rest }) => {
-          const { Output } = getDefinitionForType(type);
-          return renderToStaticMarkup(
-            <Output element={rest} box={{ width: 100, height: 100 }} />
-          );
-        })
-        .join('\n');
-
-      clipboardData.setData('text/plain', textContent);
-      clipboardData.setData(
-        'text/html',
-        `<!-- ${serializedPayload} -->${htmlContent}`
-      );
-
+      addElementsToClipboard(selectedElements, evt);
       if (eventType === 'cut') {
         deleteSelectedElements();
       }
@@ -129,7 +86,6 @@ function useCanvasGlobalKeys() {
     [insertElement]
   );
 
-  // @todo This should be in global handler by UX, not just Canvas.
   const pasteHandler = useCallback(
     (evt) => {
       const { clipboardData } = evt;
@@ -178,11 +134,17 @@ function useCanvasGlobalKeys() {
     if (selectedElements.length === 0) {
       return;
     }
+    const placementDiff = 20;
+    const allowedBorderDistance = 20;
     const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
+      const cloneX = x + placementDiff;
+      const cloneY = y + placementDiff;
       return {
-        x: x + 10,
-        y: y + 10,
+        x: PAGE_WIDTH - cloneX > allowedBorderDistance ? cloneX : placementDiff,
+        y:
+          PAGE_HEIGHT - cloneY > allowedBorderDistance ? cloneY : placementDiff,
         id: uuidv4(),
+        basedOn: id,
         ...rest,
       };
     });
