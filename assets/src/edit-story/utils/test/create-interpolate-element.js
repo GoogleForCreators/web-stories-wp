@@ -29,6 +29,7 @@ describe('createInterpolateElement', () => {
   });
   it('returns same string when there are no tokens in the string', () => {
     const testString = 'This is a string';
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     const expectedElement = <>{testString}</>;
     expect(
       createInterpolateElement(testString, { someValue: <em /> })
@@ -54,6 +55,7 @@ describe('createInterpolateElement', () => {
       'string',
     () => {
       const testString = 'This is a <non_parsed/> string';
+      // eslint-disable-next-line react/jsx-no-useless-fragment
       const expectedElement = <>{testString}</>;
       expect(
         createInterpolateElement(testString, {
@@ -64,6 +66,7 @@ describe('createInterpolateElement', () => {
   );
   it('returns same string when there is spaces in the token', () => {
     const testString = 'This is a <spaced token/>string';
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     const expectedElement = <>{testString}</>;
     expect(
       createInterpolateElement(testString, { 'spaced token': <em /> })
