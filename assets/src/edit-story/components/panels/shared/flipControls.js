@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -32,36 +32,34 @@ import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
 
-const styledToggle = css`
+const ToggleContainer = styled.div`
   width: 36px;
   height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  float: left;
-`;
-
-const ToggleContainer = styled.div`
-  ${styledToggle}
-  margin-right: ${({ margin }) => (margin ? margin : '0px')};
+  margin-right: ${({ margin }) => (margin ? margin : 0)}px;
 `;
 
 const ControlsContainer = styled.div`
-  width: fit-content;
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
 `;
 
 /**
  * Get flip controls for flipping elements horizontally and vertically.
  *
- * @param {Object} value Element's flip object.
- * @param {Object} onChange Callback to flip element.
- * @param {number} margin Space between the two flip toggles (defaults to '8px').
- * @return {*} Element or null if does not map to video/image.
+ * @param {Object} props Component props.
+ * @param {Object} props.value Element's flip object.
+ * @param {function(boolean)} props.onChange Callback to flip element.
+ * @param {number} props.elementSpacing Space between the two flip toggles (defaults to 8).
+ * @return {*} Rendered component.
  */
-function FlipControls({ value, onChange, margin = '8px' }) {
+function FlipControls({ value, onChange, elementSpacing = 8 }) {
   return (
     <ControlsContainer>
-      <ToggleContainer margin={margin}>
+      <ToggleContainer margin={elementSpacing}>
         <Toggle
           title={__('Flip horizontally', 'web-stories')}
           aria-label={__('Flip horizontally', 'web-stories')}
@@ -86,7 +84,7 @@ function FlipControls({ value, onChange, margin = '8px' }) {
 FlipControls.propTypes = {
   value: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  margin: PropTypes.string,
+  elementSpacing: PropTypes.number,
 };
 
 export default FlipControls;

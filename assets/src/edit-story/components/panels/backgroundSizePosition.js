@@ -68,7 +68,7 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
         <FlipControls
           onChange={(value) => pushUpdate({ flip: value }, true)}
           value={flip}
-          margin={'36px'}
+          elementSpacing={36}
         />
       </Row>
     </SimplePanel>
