@@ -52,7 +52,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		wp_set_current_user( self::$subscriber_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
 		$results   = $post_type::get_editor_settings();
-		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
+		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
 
