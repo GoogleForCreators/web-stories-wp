@@ -173,6 +173,7 @@ async function runAxeTestsForStoriesEditor() {
       'landmark-unique',
       'page-has-heading-one',
       'region',
+      'scrollable-region-focusable',
     ],
   });
 }
@@ -200,5 +201,6 @@ afterEach(async () => {
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterAll(() => {
+  enablePageDialogAccept();
   removePageEvents();
 });

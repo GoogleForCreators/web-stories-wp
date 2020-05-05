@@ -374,7 +374,7 @@ jobs:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
-        run: npm run build:js
+        run: DISABLE_PREVENT=true npm run build:js
 
       - name: Start Docker environment
         run: npm run env:start

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { createNewStory } from '../utils';
 
 describe('Example Spec', () => {
   it('should be able to create a blank story', async () => {

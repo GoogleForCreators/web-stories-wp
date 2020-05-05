@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-module.exports = {
-  launch: {
-    devtools: process.env.PUPPETEER_DEVTOOLS === 'true',
-    headless: process.env.PUPPETEER_HEADLESS !== 'false',
-    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
-    product: process.env.PUPPETEER_PRODUCT || 'chrome',
-  },
-};
+/**
+ * Internal dependencies
+ */
+import { createNewStory } from '../../utils';
+
+describe('Inserting Media from Media Library', () => {
+  it('should insert an image by clicking on it', async () => {
+    await createNewStory();
+
+    // Clicking will only act on the first element.
+    await expect(page).toClick('[data-testid="mediaElement"]');
+
+    // Matches the element's frame layer,
+    // using it as an indicator for successful insertion.
+    await expect(page).toMatchElement('[data-testid="FramesLayer"]');
+  });
+});
