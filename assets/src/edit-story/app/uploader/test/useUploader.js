@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { render } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -58,35 +57,26 @@ describe('useUploader', () => {
         hasUploadMediaAction: false,
       },
     });
-    try {
+
+    expect(() => {
       uploadFile({});
-    } catch (e) {
-      // eslint-disable-next-line jest/no-try-expect
-      expect(e.message).toStrictEqual('Sorry, you are unable to upload files.');
-    }
+    }).toThrow('Sorry, you are unable to upload files.');
   });
   it('user uploads a to large file', () => {
     const { uploadFile } = setup({
       maxUpload: 2000000,
     });
-    try {
+    expect(() => {
       uploadFile({ size: 3000000 });
-    } catch (e) {
-      // eslint-disable-next-line jest/no-try-expect
-      expect(e.message).toStrictEqual(
-        'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
-      );
-    }
+    }).toThrow(
+      'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
+    );
   });
   it('user uploads an invalid file', () => {
     const { uploadFile } = setup({});
-    try {
+    expect(() => {
       uploadFile({ size: 20000, type: 'application/pdf' });
-    } catch (e) {
-      const { asFragment } = render(e.message);
-      // eslint-disable-next-line jest/no-try-expect
-      expect(asFragment()).toMatchSnapshot();
-    }
+    }).toThrow('Please choose only <b>png, jpeg, jpg, gif, mp4</b> to upload.');
   });
   it('isValidType is given an inavlid file', () => {
     const { isValidType } = setup({});

@@ -115,7 +115,9 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         fetchMedia({ pagingNum, mediaType }, setMedia);
       } catch (e) {
         showSnackbar({
-          message: e.message,
+          message: createInterpolateElement(e.message, {
+            b: <b />,
+          }),
         });
         localFiles.forEach(({ localResource, element }) => {
           if (onUploadFailure) {

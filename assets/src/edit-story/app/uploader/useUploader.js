@@ -23,7 +23,6 @@ import { useCallback } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -99,19 +98,15 @@ function useUploader(refreshLibrary = true) {
 
     if (!isValidType(file)) {
       /* translators: %s is a list of allowed file extensions. */
-      const message = createInterpolateElement(
-        sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
-        ),
-        {
-          b: <b />,
-        }
+      const message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only <b>%s</b> to upload.', 'web-stories'),
+        allowedFileTypes.join(
+          /* translators: delimiter used in a list */
+          __(', ', 'web-stories')
+        )
       );
+
       const validError = createError('ValidError', file.name, message);
 
       throw validError;
