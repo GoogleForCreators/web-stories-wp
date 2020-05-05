@@ -135,44 +135,50 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   const listRef = useRef();
   const inputRef = useRef();
   const currentActiveRef = useRef(0);
+  const otherFontsLengthRef = useRef(0);
+  const recentUsedFontsLengthRef = useRef(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const [menuFonts, setMenuFonts] = useState();
+
+  const isSearchResult = searchValue && searchValue !== '';
 
   // Recently used font options, clean up on refresh
   const recentUsedFonts = useMemo(() => {
     const fontsFromSlug = recentUsedFontValues.map((value) =>
       fonts.find((font) => font.value === value)
     );
-    return searchValue && searchValue !== ''
+    const resultArray = isSearchResult
       ? fontsFromSlug.filter(({ name }) =>
           name.toLowerCase().includes(searchValue.toLowerCase())
         )
       : fontsFromSlug;
-  }, [searchValue, recentUsedFontValues, fonts]);
+    recentUsedFontsLengthRef.current = resultArray.length;
+    return resultArray;
+  }, [searchValue, recentUsedFontValues, fonts, isSearchResult]);
 
   // Font options that start with search term
-  const otherFonts = useMemo(
-    () =>
-      searchValue && searchValue !== ''
-        ? fonts.filter(({ name }) =>
-            name.toLowerCase().startsWith(searchValue.toLowerCase())
-          )
-        : fonts,
-    [searchValue, fonts]
-  );
+  const otherFonts = useMemo(() => {
+    const resultArray = isSearchResult
+      ? fonts.filter(({ name }) =>
+          name.toLowerCase().startsWith(searchValue.toLowerCase())
+        )
+      : fonts;
+    otherFontsLengthRef.current = resultArray.length;
+    return resultArray;
+  }, [searchValue, fonts, isSearchResult]);
 
   // Font options that include search term but not start with
   const includeSearchFonts = useMemo(
     () =>
-      searchValue && searchValue !== ''
+      isSearchResult
         ? fonts.filter(
             ({ name }) =>
               name.toLowerCase().indexOf(searchValue.toLowerCase()) > 0
           )
         : [],
-    [searchValue, fonts]
+    [searchValue, fonts, isSearchResult]
   );
 
   useEffect(() => {
@@ -206,15 +212,19 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
     // If there is recent used fonts and current visible options index is on next list
     if (
-      recentUsedFonts.length > 0 &&
-      currentVisibleIndex > recentUsedFonts.length
+      recentUsedFontsLengthRef.current > 0 &&
+      currentVisibleIndex > recentUsedFontsLengthRef.current
     ) {
       scrollTop -= LIST_PADDING * 2;
       currentVisibleIndex =
-        Math.floor(scrollTop / FONT_ROW_HEIGHT) - recentUsedFonts.length;
+        Math.floor(scrollTop / FONT_ROW_HEIGHT) -
+        recentUsedFontsLengthRef.current;
     }
     // If there is other fonts and current visible options index is on next list
-    if (otherFonts.length > 0 && currentVisibleIndex > otherFonts.length) {
+    if (
+      otherFontsLengthRef.current > 0 &&
+      currentVisibleIndex > otherFontsLengthRef.current
+    ) {
       scrollTop -= LIST_PADDING * 2;
     }
     currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
@@ -225,7 +235,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
       currentActiveRef.current = currentVisibleIndex;
       setCurrentIndex(currentVisibleIndex);
     }
-  }, [otherFonts, recentUsedFonts]);
+  }, []);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -248,12 +258,16 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   );
 
   const handleSearchInput = useCallback(
-    (evt) => {
-      if (evt.keyCode === 13 && otherFonts.length > 0) {
-        handleItemClick(otherFonts[0].value);
+    ({ keyCode }) => {
+      if (keyCode === 13 && otherFonts.length > 0) {
+        const topFontValue =
+          recentUsedFonts.length > 0
+            ? recentUsedFonts[0].value
+            : otherFonts[0].value;
+        handleItemClick(topFontValue);
       }
     },
-    [otherFonts, handleItemClick]
+    [otherFonts, recentUsedFonts, handleItemClick]
   );
 
   const renderListWithOptions = (options) => {
@@ -279,6 +293,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
     <PickerContainer ref={pickerContainerRef}>
       <ExpandedTextInput
         ref={inputRef}
+        ariaLabel={__('Search Fonts', 'web-stories')}
         value={searchValue}
         placeholder={__('Search fonts', 'web-stories')}
         onChange={setSearchValue}

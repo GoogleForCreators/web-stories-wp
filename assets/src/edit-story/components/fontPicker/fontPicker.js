@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useDebouncedCallback } from 'use-debounce';
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
 import Popup from '../popup';
 import FontPickerContainer from './pickerContainer';
@@ -89,9 +88,12 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
 
   // Make some delay, since when click the dropdown again to close it, this function called before by useFocusOut
   // Causing reopen
-  const [closeFontPicker] = useDebouncedCallback(() => {
-    setIsOpen(false);
-  }, 100);
+  const closeFontPicker = useCallback(() => {
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 100);
+  }, []);
 
   const handleCurrentValue = useCallback(
     (option) => {

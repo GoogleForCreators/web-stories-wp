@@ -42,16 +42,19 @@ function FontProvider({ children }) {
 
   useLoadFonts({ fonts, setFonts });
 
-  const insertUsedFont = (value) => {
-    const findFontIndex = recentUsedFontValues.findIndex(
-      (fontValue) => fontValue === value
-    );
-    if (findFontIndex < 0) {
-      const newUsedFonts = recentUsedFontValues.slice();
-      newUsedFonts.push(value);
-      setRecentUsedFontValues(newUsedFonts);
-    }
-  };
+  const insertUsedFont = useCallback(
+    (value) => {
+      const findFontIndex = recentUsedFontValues.findIndex(
+        (fontValue) => fontValue === value
+      );
+      if (findFontIndex < 0) {
+        const newUsedFonts = recentUsedFontValues.slice();
+        newUsedFonts.push(value);
+        setRecentUsedFontValues(newUsedFonts);
+      }
+    },
+    [recentUsedFontValues]
+  );
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -115,32 +118,19 @@ function FontProvider({ children }) {
 
   const getMenuFonts = useCallback((fontFamilyList) => {
     const newFontList = fontFamilyList.filter(
-      (fontName) =>
-        loadedFontFamily.current.findIndex((name) => name === fontName) < 0
+      (fontName) => loadedFontFamily.current.indexOf(fontName) < 0
     );
     if (!newFontList?.length) {
       return new Promise((resolve) => resolve(''));
     }
     return fetch(
-      `${GOOGLE_MENU_FONT_URL}?family=${encodeURI(
+      `${GOOGLE_MENU_FONT_URL}?family=${encodeURIComponent(
         newFontList.join('|')
       )}&subset=menu`
-    )
-      .then((response) => response.body)
-      .then((body) => {
-        return body
-          .getReader()
-          .read()
-          .then(({ value }) => {
-            const decoder = new TextDecoder('utf-8');
-            const decodedResult = decoder.decode(value);
-            loadedFontFamily.current = [
-              ...loadedFontFamily.current,
-              ...newFontList,
-            ];
-            return decodedResult;
-          });
-      });
+    ).then((response) => {
+      loadedFontFamily.current = [...loadedFontFamily.current, ...newFontList];
+      return response.text();
+    });
   }, []);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
