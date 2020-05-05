@@ -28,63 +28,15 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { PAGE_WIDTH } from '../../../../constants';
-import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
+import { PRESETS, DEFAULT_FONT } from './textPresets';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
-
-const PRESETS = [
-  {
-    id: 'heading',
-    title: __('Heading', 'web-stories'),
-    content: __('Heading', 'web-stories'),
-    fontSize: dataFontEm(2),
-    fontWeight: 700,
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
-  },
-  {
-    id: 'subheading',
-    title: __('Subheading', 'web-stories'),
-    content: __('Subheading', 'web-stories'),
-    fontSize: dataFontEm(1.5),
-    fontWeight: 600,
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
-  },
-  {
-    id: 'body-text',
-    title: __('Body text', 'web-stories'),
-    content: __(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'web-stories'
-    ),
-    fontSize: dataFontEm(1.1),
-    fontWeight: 400,
-    font: {
-      family: 'Roboto',
-      service: 'fonts.google.com',
-    },
-  },
-];
-
-function getPresetById(id) {
-  for (let i = 0; i < PRESETS.length; i++) {
-    if (PRESETS[i].id === id) {
-      return PRESETS[i];
-    }
-  }
-  return null;
-}
 
 const SectionContent = styled.p``;
 
@@ -107,8 +59,7 @@ function TextPane(props) {
           <MainButton
             onClick={() =>
               insertElement('text', {
-                ...getPresetById('subheading'),
-                content: __('Fill in some text', 'web-stories'),
+                ...DEFAULT_FONT,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
