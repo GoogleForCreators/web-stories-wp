@@ -156,7 +156,7 @@ export const STORY_SORT_OPTIONS = {
   DATE_CREATED: 'date',
   LAST_MODIFIED: 'modified',
   LAST_OPENED: 'modified',
-  CREATED_BY: 'author',
+  CREATED_BY: 'story_author',
 };
 
 export const SORT_DIRECTION = {
