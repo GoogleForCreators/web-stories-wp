@@ -20,11 +20,15 @@ function CustomStyles() {
       amp-custom=""
       dangerouslySetInnerHTML={{
         __html: `
+              amp-story-grid-layer {
+                overflow: visible;
+              }
+
               .page-background-area,
               .page-background-overlay-area,
               .page-safe-area {
                 position: absolute;
-                overflow: hidden;
+                overflow: visible;
                 top: 0;
                 bottom: 0;
                 left: 0;

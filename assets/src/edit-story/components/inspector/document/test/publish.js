@@ -22,6 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import ConfigContext from '../../../../app/config/context';
 import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
 import PublishPanel from '../publish';
@@ -42,21 +43,25 @@ function setupPanel(
         featuredMediaUrl: '',
         publisherLogoUrl: '',
       },
-      capabilities,
     },
     actions: { updateStory },
   };
+
+  const config = { capabilities };
   const inspectorContextValue = {
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
   };
+
   const { getByText, getByRole, queryByText } = renderWithTheme(
-    <StoryContext.Provider value={storyContextValue}>
-      <InspectorContext.Provider value={inspectorContextValue}>
-        <PublishPanel />
-      </InspectorContext.Provider>
-    </StoryContext.Provider>
+    <ConfigContext.Provider value={config}>
+      <StoryContext.Provider value={storyContextValue}>
+        <InspectorContext.Provider value={inspectorContextValue}>
+          <PublishPanel />
+        </InspectorContext.Provider>
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
   return {
     getByText,

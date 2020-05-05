@@ -96,12 +96,11 @@ function PublishPanel() {
     state: {
       meta: { isSaving },
       story: { author, date, featuredMediaUrl, publisherLogoUrl },
-      capabilities,
     },
     actions: { updateStory },
   } = useStory();
 
-  const { timeFormat } = useConfig();
+  const { timeFormat, capabilities } = useConfig();
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimeNode = useRef();

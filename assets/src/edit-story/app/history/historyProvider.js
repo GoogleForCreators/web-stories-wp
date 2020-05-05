@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -40,23 +40,37 @@ function HistoryProvider({ children, size }) {
     versionNumber,
   } = useHistoryReducer(size);
 
+  const [hasNewChanges, setHasNewChanges] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
+  // The version number for the initially loaded (saved) state is 1.
+  const savedVersionNumber = useRef(1);
 
   useEffect(() => {
-    setPreventUnload('history', versionNumber - 1 > 0);
-
+    setPreventUnload('history', hasNewChanges);
     return () => setPreventUnload('history', false);
-  }, [setPreventUnload, versionNumber]);
+  }, [setPreventUnload, hasNewChanges]);
+
+  useEffect(() => {
+    setHasNewChanges(versionNumber !== savedVersionNumber.current);
+  }, [versionNumber]);
+
+  const resetNewChanges = useCallback(() => {
+    // When new changes are saved, let's track which version was saved.
+    savedVersionNumber.current = versionNumber;
+    setHasNewChanges(false);
+  }, [versionNumber]);
 
   const state = {
     state: {
       replayState,
+      hasNewChanges,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
     },
     actions: {
       appendToHistory,
       clearHistory,
+      resetNewChanges,
       undo,
       redo,
     },

@@ -48,6 +48,9 @@ export function reshapeStoryObject(editStoryURL) {
       title,
       modified,
       status,
+      tags,
+      categories,
+      author,
       story_data: storyData,
     } = originalStoryData;
     if (
@@ -63,6 +66,9 @@ export function reshapeStoryObject(editStoryURL) {
       title: title.rendered,
       modified: moment(modified),
       pages: storyData.pages,
+      tags,
+      categories,
+      author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       originalStoryData,
