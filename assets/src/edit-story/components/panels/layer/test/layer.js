@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { generateImage } from 'jsdom-screenshot';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../../theme';
 import StoryContext from '../../../../app/story/context';
 import Layer from '../layer';
 import { INSPECTOR_MAX_WIDTH } from '../../../../constants';
+import { renderWithTheme } from '../../../../testUtils';
 
 // Prevents white text on white background.
 // Sets max-width to force overflow.
@@ -50,14 +49,12 @@ function setupLayer({ layer }) {
     },
     actions: { setSelectedElementsById, toggleElementInSelection },
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
-      <StoryContext.Provider value={storyContextValue}>
-        <Wrapper>
-          <Layer layer={layer} />
-        </Wrapper>
-      </StoryContext.Provider>
-    </ThemeProvider>
+  const { getByText, container } = renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <Wrapper>
+        <Layer layer={layer} />
+      </Wrapper>
+    </StoryContext.Provider>
   );
 
   return {
