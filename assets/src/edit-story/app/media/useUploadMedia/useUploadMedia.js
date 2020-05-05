@@ -57,7 +57,10 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             file,
           }))
         );
-        localFiles = localFiles.filter((f) => f.localResource != null);
+
+        if (localFiles.any((f) => f.localResource == null)) {
+          throw new Error('Unsupported Media Type.');
+        }
 
         if (onLocalFile) {
           localFiles = localFiles.map(({ localResource, file }) => {
