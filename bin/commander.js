@@ -25,7 +25,7 @@ const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
 const STABLE_TAG_REGEX = /Stable tag:\s*(.+)/;
 
-const ASSETS_URL_CDN = 'https://google.github.io/web-stories-wp/plugin-assets';
+const ASSETS_URL_CDN = 'https://google.github.io/web-stories-wp/plugin-assets/';
 const ASSETS_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_ASSETS_URL',\s*([^)]*?)\s*\);/;
 
 const PLUGIN_DIR = process.cwd();
