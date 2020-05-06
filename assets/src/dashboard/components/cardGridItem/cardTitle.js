@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -76,6 +76,12 @@ const CardTitle = ({
     },
     [editMode]
   );
+
+  useEffect(() => {
+    if (inputContainerRef.current && editMode) {
+      inputContainerRef.current.firstChild?.focus();
+    }
+  }, [inputContainerRef, editMode]);
 
   const handleChange = useCallback(({ target }) => {
     setNewTitle(target.value);
