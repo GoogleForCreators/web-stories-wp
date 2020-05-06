@@ -29,7 +29,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import { TextInput } from '../input';
 import useFocusOut from '../../utils/useFocusOut';
 
@@ -41,7 +40,6 @@ const StyledCardTitle = styled.div`
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
   max-width: 80%;
-  height: ${CARD_TITLE_AREA_HEIGHT}px;
 `;
 
 const StyledTitle = styled.p`
