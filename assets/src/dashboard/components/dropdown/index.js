@@ -29,6 +29,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
@@ -37,7 +38,6 @@ import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { ColorDot } from '../colorDot';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;

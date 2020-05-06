@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+
 const PILL_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
@@ -43,52 +48,64 @@ Source: https://polished.js.org/docs/#hidevisually
 `;
 
 const PillContainer = styled.label`
-  display: inline-flex;
-  justify-content: center;
-  font-family: ${({ theme }) => theme.fonts.pill.family};
-  font-weight: ${({ theme }) => theme.fonts.pill.weight};
-  font-size: ${({ theme }) => `${theme.fonts.pill.size}px`};
-  line-height: ${({ theme }) => theme.fonts.pill.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.pill.letterSpacing}em;
+  ${({ theme }) => `
+    display: inline-flex;
+    justify-content: center;
+    font-family: ${theme.fonts.pill.family};
+    font-weight: ${theme.fonts.pill.weight};
+    font-size: ${theme.fonts.pill.size}px;
+    line-height: ${theme.fonts.pill.lineHeight}px;
+    letter-spacing: ${theme.fonts.pill.letterSpacing}em;
+  `}
 `;
 const PillLabel = styled.span`
-  cursor: pointer;
-  margin: auto;
-  width: 100%;
-  display: flex;
-  padding: 6px 16px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.gray600};
-  border: ${({ theme }) => theme.borders.gray50};
-  border-radius: ${({ theme }) => theme.button.borderRadius}px;
+  ${({ theme }) => `
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    display: flex;
+    padding: 3px 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.gray700};
+    border: ${theme.borders.gray50};
+    border-radius: ${theme.button.borderRadius}px;
+    
+    ${PillInput}:hover + &,
+    ${PillInput}:focus + &  {
+      background-color: ${theme.colors.blueLight};
+    }
 
-  ${PillInput}:checked + & {
-    background-color: ${({ theme }) => theme.colors.blueLight};
-    color: ${({ theme }) => theme.colors.bluePrimary};
-    border: ${({ theme }) => theme.borders.transparent};
-  }
+    ${PillInput}:checked + & {
+      background-color: ${theme.colors.blueLight};
+    }
 
-  ${PillInput}:focus + & {
-    border-color: ${({ theme }) => theme.colors.action};
-  }
-
-  ${PillInput}:disabled + & {
-    opacity: 0.6;
-    cursor: default;
-  }
+    ${PillInput}:disabled + & {
+      opacity: 0.6;
+      cursor: default;
+    }
+  `}
 `;
 
 const FloatingTabLabel = styled(PillLabel)`
   background-color: transparent;
-  padding: 10px 24px;
+  padding: 4px 16px;
   border-color: transparent;
 
   ${PillInput}:checked + & {
     box-shadow: ${({ theme }) => theme.floatingTab.shadow};
     background-color: transparent;
   }
+`;
+
+const ActiveChoiceIcon = styled(CloseIcon)`
+  background-color: ${({ theme }) => theme.colors.gray700};
+  color: ${({ theme }) => theme.colors.blueLight};
+  border-radius: 50%;
+  padding: 3px;
+  margin-left: 10px;
+  margin-right: -8px;
 `;
 
 const Pill = ({
@@ -112,7 +129,10 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      <Label>{children}</Label>
+      <Label>
+        {children}
+        {isSelected && <ActiveChoiceIcon width={16} height={16} />}
+      </Label>
     </PillContainer>
   );
 };
