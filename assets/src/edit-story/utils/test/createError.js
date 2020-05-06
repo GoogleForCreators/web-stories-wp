@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
-import '@testing-library/jest-dom';
-import 'jest-extended';
-
 /**
  * Internal dependencies
  */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+import createError from '../createError';
 
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
+describe('createError', () => {
+  it('should return an error', () => {
+    expect(() => {
+      throw createError('testing', 'test.jpg', 'hello there');
+    }).toThrow('hello there');
+  });
 });

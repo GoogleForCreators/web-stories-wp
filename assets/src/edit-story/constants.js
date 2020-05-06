@@ -36,6 +36,9 @@ export const ALLOWED_EDITOR_PAGE_WIDTHS = [440, 280, 240];
 
 export const FULLBLEED_RATIO = 9 / 16;
 
+export const COLOR_PRESETS_PER_ROW = 6;
+export const STYLE_PRESETS_PER_ROW = 3;
+
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;
 

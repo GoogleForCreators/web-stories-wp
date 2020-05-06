@@ -183,7 +183,7 @@ function useLayoutParams(containerRef) {
 
     let bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size / PAGE_RATIO <= maxHeight
+        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
     setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });

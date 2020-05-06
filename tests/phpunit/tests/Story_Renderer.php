@@ -214,9 +214,10 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
+		$placeholder              = \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER;
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
-				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER . '"></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
 			]
 		);
 
@@ -228,6 +229,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
 
 		$this->assertContains( 'attachment', $rendered );
-		$this->assertNotContains( \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $rendered );
+		$this->assertNotContains( $placeholder, $rendered );
+
 	}
 }
