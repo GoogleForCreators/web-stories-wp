@@ -46,15 +46,15 @@ function useCanvasGlobalKeys() {
   const copyCutHandler = useCallback(
     (evt) => {
       const { type: eventType } = evt;
-
       if (selectedElements.length === 0) {
         return;
       }
+
       addElementsToClipboard(selectedElements, evt);
+
       if (eventType === 'cut') {
         deleteSelectedElements();
       }
-
       evt.preventDefault();
     },
     [deleteSelectedElements, selectedElements]

@@ -33,6 +33,13 @@ const TAG_REPLACEMENTS = {
   i: 'em',
 };
 
+/**
+ * Gets content of one node.
+ *
+ * @param {string} content Content.
+ * @param {Node}   node Node to process.
+ * @return {string} Content.
+ */
 function getNodeContent(content, node) {
   const originalTag = node.tagName?.toLowerCase();
   const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
@@ -54,6 +61,13 @@ function getNodeContent(content, node) {
   return content;
 }
 
+/**
+ * Processes pasted node list.
+ *
+ * @param {NodeList} nodeList Node list to process.
+ * @param {string}   content Initial content.
+ * @return {string} Processed content.
+ */
 export function processPastedNodeList(nodeList, content) {
   const nodeArray = Array.from(nodeList);
   return nodeArray.reduce(getNodeContent, content);
@@ -101,6 +115,12 @@ export function processPastedElements(content, currentPage) {
   return foundElements;
 }
 
+/**
+ * Processes copied/cut content for finding elements to add to clipboard.
+ *
+ * @param {Array} elements Array of story elements.
+ * @param {Object} evt Copy/cut event object.
+ */
 export function addElementsToClipboard(elements, evt) {
   if (!elements.length || !evt) {
     return;
