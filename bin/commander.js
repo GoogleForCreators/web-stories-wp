@@ -55,8 +55,6 @@ function updateVersionNumbers(version = undefined, isPrerelease = false) {
     ? process.env.GITHUB_SHA.slice(0, 7)
     : execSync('git rev-parse --short=7 HEAD').toString().trim();
 
-  console.log(process.env.GITHUB_SHA, currentCommitHash);
-
   let pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
   const currentVersion = pluginFileContent.match(VERSION_REGEX)[1].trim();
 
