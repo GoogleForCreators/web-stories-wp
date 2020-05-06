@@ -38,13 +38,17 @@ import {
 import {
   PreviewPage,
   Table,
+  TableAuthorHeaderCell,
   TableBody,
   TableCell,
+  TableDateHeaderCell,
   TableHeader,
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
+  TableStatusCell,
+  TableStatusHeaderCell,
   TableTitleHeaderCell,
 } from '../../../components';
 import {
@@ -102,14 +106,6 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
-const LastModifiedTableHeaderCell = styled(TableHeaderCell)`
-  min-width: 160px;
-`;
-
-const AuthorTableHeaderCell = styled(TableHeaderCell)`
-  min-width: 110px;
-`;
-
 export default function StoryListView({
   stories,
   storySort,
@@ -149,7 +145,10 @@ export default function StoryListView({
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
             </TablePreviewHeaderCell>
-            <TableTitleHeaderCell>
+            <TableTitleHeaderCell
+              onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+            >
+              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
               <ArrowIcon
                 active={storySort === STORY_SORT_OPTIONS.NAME}
                 asc={sortDirection === SORT_DIRECTION.ASC}
@@ -157,7 +156,7 @@ export default function StoryListView({
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIcon>
             </TableTitleHeaderCell>
-            <AuthorTableHeaderCell>
+            <TableAuthorHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
@@ -171,10 +170,25 @@ export default function StoryListView({
               >
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
-            </AuthorTableHeaderCell>
+            </TableAuthorHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
-            <LastModifiedTableHeaderCell>
+            <TableDateHeaderCell>
+              <SelectableTitle
+                onClick={() =>
+                  onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
+                }
+              >
+                {__('Date Created', 'web-stories')}
+                <ArrowIconWithTitle
+                  active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
+                  asc={sortDirection === SORT_DIRECTION.DESC}
+                >
+                  <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                </ArrowIconWithTitle>
+              </SelectableTitle>
+            </TableDateHeaderCell>
+            <TableDateHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
@@ -183,12 +197,13 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.ASC}
+                  asc={sortDirection === SORT_DIRECTION.DESC}
                 >
                   <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
                 </ArrowIconWithTitle>
               </SelectableTitle>
-            </LastModifiedTableHeaderCell>
+            </TableDateHeaderCell>
+            <TableStatusHeaderCell />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -207,7 +222,11 @@ export default function StoryListView({
                 {metadataStringForIds(categories, story.categories)}
               </TableCell>
               <TableCell>{metadataStringForIds(tags, story.tags)}</TableCell>
+              <TableCell>{story.created.startOf('day').fromNow()}</TableCell>
               <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
+              <TableStatusCell>
+                {story.status === 'publish' && __('Published', 'web-stories')}
+              </TableStatusCell>
             </TableRow>
           ))}
         </TableBody>
