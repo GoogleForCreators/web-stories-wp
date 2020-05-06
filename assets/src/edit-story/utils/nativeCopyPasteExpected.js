@@ -15,12 +15,12 @@
  */
 
 /**
- * Checks if the current document has selection,
- * either by having text selected or being focused on a text/number input.
+ * Checks if the native copy paste should proceed,
+ * either if text is selected or if there's focus on a text/number input.
  *
- * @return {boolean} If selection found.
+ * @return {boolean} If native handling is expected.
  */
-function documentHasSelection() {
+function nativeCopyPasteExpected() {
   const { activeElement } = document;
   const { tagName, type, isContentEditable } = activeElement;
   const isInput = () => {
@@ -42,4 +42,4 @@ function documentHasSelection() {
   return range && !range.collapsed;
 }
 
-export default documentHasSelection;
+export default nativeCopyPasteExpected;

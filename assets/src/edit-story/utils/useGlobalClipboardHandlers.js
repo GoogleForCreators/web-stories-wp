@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import documentHasSelection from './documentHasSelection';
+import nativeCopyPasteExpected from './nativeCopyPasteExpected';
 
 /**
  * @param {function(!ClipboardEvent)} copyCutHandler
@@ -34,7 +34,7 @@ function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
       const { clipboardData } = evt;
 
       // Elements that either handle their own clipboard or have selection.
-      if (documentHasSelection()) {
+      if (nativeCopyPasteExpected()) {
         return;
       }
 
@@ -48,8 +48,7 @@ function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
 
     // We always use global handler for pasting.
     const pasteHandlerWrapper = (evt) => {
-      // Only proceed custom handling if there is no selection.
-      if (!documentHasSelection()) {
+      if (!nativeCopyPasteExpected()) {
         pasteHandler(evt);
       }
     };
