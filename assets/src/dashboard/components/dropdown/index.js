@@ -232,7 +232,6 @@ const Dropdown = ({
         <PopoverPanel
           isOpen={showMenu}
           title={placeholder}
-          onClose={() => setShowMenu(false)}
           items={items}
           onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
