@@ -17,49 +17,110 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../constants';
 import theme from '../theme';
+import {
+  DASHBOARD_LEFT_NAV_WIDTH,
+  PAGE_RATIO,
+  VIEWPORT_WP_LEFT_NAV_HIDES,
+  WP_LEFT_NAV_WIDTH,
+} from '../constants/pageStructure';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
-const getCurrentBp = () =>
-  descendingBreakpointKeys.reduce(
-    (current, bp) =>
-      window.innerWidth <= theme.breakpoint.raw[bp] ? bp : current,
-    descendingBreakpointKeys[0]
-  );
+const getCurrentBp = (availableContainerSpace) =>
+  descendingBreakpointKeys.reduce((current, bp) => {
+    return availableContainerSpace <= theme.breakpoint.raw[bp] ? bp : current;
+  }, descendingBreakpointKeys[0]);
 
-const sizeFromWidth = (width) => ({
+// To determine the size of a story page we take the default page size according to breakpoint
+// and then find the remaining width in the given space that the dashboard is showing stories in
+// if the container isn't important to size then respectSetWidth catches it (thumbnails or isn't a grid)
+// otherwise, we're taking the available space we have and finding out how many items in the default size we can fit in a row
+// then we calculate the grid column gutter and the page gutter
+// subtract those values from the availableContainer space to get remaining space
+// divide the remaining space by the itemsInRow
+// attach that extra space to the width
+// get height by dividing new with by PAGE_RATIO
+const sizeFromWidth = (
   width,
-  height: width / PAGE_RATIO,
-});
+  { bp, respectSetWidth, availableContainerSpace }
+) => {
+  if (respectSetWidth) {
+    return { width, height: width / PAGE_RATIO };
+  }
+  const itemsInRow = Math.floor(availableContainerSpace / width);
+  const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
+  const pageGutter = theme.pageHorizontalGutter[bp] * 2;
+  const takenSpace = width * itemsInRow + columnGapWidth + pageGutter;
+  const remainingSpace = availableContainerSpace - takenSpace;
+  const addToWidthValue = remainingSpace / itemsInRow;
+
+  const trueWidth = width + addToWidthValue;
+  return {
+    width: trueWidth,
+    height: trueWidth / PAGE_RATIO,
+  };
+};
+
+// we want to set the size of story pages based on the available space
+// this means we need to take the window.innerWidth value and remove the built in WP nav and the dashboard nav according to breakpoints
+const getTrueInnerWidth = () => {
+  const { innerWidth } = window;
+  if (innerWidth >= theme.breakpoint.raw.tablet) {
+    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH;
+  } else if (innerWidth < VIEWPORT_WP_LEFT_NAV_HIDES) {
+    return innerWidth;
+  } else {
+    return innerWidth - WP_LEFT_NAV_WIDTH;
+  }
+};
 
 export default function usePagePreviewSize(options = {}) {
-  const { thumbnailMode = false } = options;
-  const [bp, setBp] = useState(getCurrentBp());
+  const { thumbnailMode = false, isGrid } = options;
+  const [availableContainerSpace, setAvailableContainerSpace] = useState(
+    getTrueInnerWidth()
+  );
+
+  const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
+    setAvailableContainerSpace(getTrueInnerWidth());
+  }, 250);
+
+  const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
 
   useEffect(() => {
     if (thumbnailMode) {
       return () => {};
     }
 
-    const handleResize = () => setBp(getCurrentBp());
+    const handleResize = () => debounceAvailableContainerSpace();
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [thumbnailMode]);
+  }, [thumbnailMode, debounceAvailableContainerSpace]);
+
+  useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
+    availableContainerSpace,
+  ]);
 
   return useMemo(
     () => ({
       pageSize: sizeFromWidth(
-        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp]
+        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp],
+        {
+          respectSetWidth: !isGrid || thumbnailMode,
+          availableContainerSpace,
+          bp,
+        }
       ),
     }),
-    [bp, thumbnailMode]
+    [bp, isGrid, thumbnailMode, availableContainerSpace]
   );
 }

@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { PatternPropType } from '../../types';
 import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
+import createSolid from '../../utils/createSolid';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -102,6 +103,9 @@ function ColorPicker({
   useEffect(() => {
     if (color) {
       load(color);
+    } else {
+      // If no color given, load solid black
+      load(createSolid(0, 0, 0));
     }
   }, [color, load]);
 

@@ -34,17 +34,11 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-  bold: false,
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  fontWeight: 400,
   fontSize: 36,
-  fontStyle: 'normal',
   backgroundColor: createSolid(196, 196, 196),
-  color: createSolid(0, 0, 0),
-  letterSpacing: 0,
   lineHeight: 1.3,
   textAlign: 'initial',
-  textDecoration: 'none',
   padding: {
     vertical: 0,
     horizontal: 0,
