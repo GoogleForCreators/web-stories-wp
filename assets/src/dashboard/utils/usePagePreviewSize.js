@@ -104,10 +104,9 @@ export default function usePagePreviewSize(options = {}) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [thumbnailMode, availableContainerSpace, debounceAvailableContainerSpace]);
+  }, [thumbnailMode, debounceAvailableContainerSpace]);
 
   useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
-    setBp,
     availableContainerSpace,
   ]);
 
