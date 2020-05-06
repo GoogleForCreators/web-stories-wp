@@ -25,9 +25,11 @@ import { useCallback } from 'react';
  */
 import { useStory } from '../../app';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
-import processPastedNodeList from '../../utils/processPastedNodeList';
-import processPastedElements from '../../utils/processPastedElements';
-import addElementsToClipboard from '../../utils/addElementsToClipboard';
+import {
+  addElementsToClipboard,
+  processPastedElements,
+  processPastedNodeList,
+} from '../../utils/copyPaste';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
