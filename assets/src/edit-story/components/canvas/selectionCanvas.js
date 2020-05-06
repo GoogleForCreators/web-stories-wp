@@ -149,6 +149,8 @@ function SelectionCanvas({ children }) {
 
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
+      // QQQQQ: remove, debugging.
+      // throw new Error('CATASTROPHIC FAILURE ON LASSO');
       const [lx, ly, lwidth, lheight] = getLassoBox();
       const x = editorToDataX(lx - pageContainer.offsetLeft);
       const y = editorToDataY(ly - pageContainer.offsetTop);

@@ -25,9 +25,18 @@ import { createNewStory, exportData, popStats } from '../../utils';
 
 describe('Selection with new element', () => {
   let safezoneBox;
+  let errors;
 
   beforeEach(async () => {
     await createNewStory();
+
+    errors = [];
+    page.on('error', (error) => {
+      errors.push({cat: 'error', error});
+    });
+    page.on('pageerror', (error) => {
+      errors.push({cat: 'pageerror', error});
+    });
 
     // Click on a first media image.
     await expect(page).toClick('[data-testid="mediaElement"] img');
@@ -35,6 +44,10 @@ describe('Selection with new element', () => {
     // Find and measure the safe zone.
     const safezone = await expect(page).toMatchElement('[data-testid="FramesLayer"] [data-testid="safezone"]');
     safezoneBox = await safezone.boundingBox();
+  });
+
+  afterEach(() => {
+    expect(errors).toHaveLength(0);
   });
 
   it('should auto-select, unselect, and reselect via lasso', async () => {
