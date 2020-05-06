@@ -55,33 +55,36 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: ${({ theme, type }) => theme.dropdown[type].height}px;
-  width: auto;
-  padding: 10px 16px;
-  margin: 0;
-  background-color: ${({ theme, type, isOpen }) =>
-    theme.dropdown[type][isOpen ? 'activeBackground' : 'background']};
-  border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius}px;
-  border: ${({ theme, type }) => theme.dropdown[type].border};
-  color: ${({ theme }) => theme.colors.gray600};
-  cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
-  font-family: ${({ theme }) => theme.fonts.dropdown.family};
-  font-size: ${({ theme }) => theme.fonts.dropdown.size}px;
-  font-weight: ${({ theme }) => theme.fonts.dropdown.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing}em;
-  line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight}px;
+  ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 3px 10px;
+    margin: 0;
+    background-color: ${
+      theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+    };
+    border-radius: ${theme.dropdown[type].borderRadius}px;
+    border: ${theme.dropdown[type].border};
+    color: ${theme.colors.gray600};
+    cursor: ${disabled ? 'inherit' : 'pointer'};
+    font-family: ${theme.fonts.dropdown.family};
+    font-size: ${theme.fonts.dropdown.size}px;
+    font-weight: ${theme.fonts.dropdown.weight};
+    letter-spacing: ${theme.fonts.dropdown.letterSpacing}em;
+    line-height: ${theme.fonts.dropdown.lineHeight}px;
 
-  &:hover {
-    background-color: ${({ theme, type }) =>
-      theme.dropdown[type].activeBackground};
-  }
+    &:hover {
+      background-color: ${theme.dropdown[type].activeBackground};
+    }
 
-  &:disabled {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
+    background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
+
+    &:disabled {
+      color: ${theme.colors.gray400};
+    }
+  `}
 `;
 InnerDropdown.propTypes = {
   disabled: PropTypes.bool,
@@ -105,7 +108,7 @@ const DropdownIcon = styled.span`
   height: 100%;
   pointer-events: none;
   & > svg {
-    color: ${({ theme, type }) => theme.dropdown[type].arrowColor};
+    color: ${({ theme }) => theme.colors.gray500};
     width: 10px;
     height: 5px;
   }
@@ -117,7 +120,7 @@ const ClearButton = styled.div`
   justify-content: center;
   border: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.bluePrimary600};
+  color: ${({ theme }) => theme.colors.gray600};
   margin: 0 8px 0 0;
   padding: 0;
 `;
@@ -177,6 +180,7 @@ const Dropdown = ({
     };
     return value && getCurrentLabel();
   }, [value, items]);
+  const hasSelectedItems = selectedItems.length > 0;
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
@@ -186,18 +190,19 @@ const Dropdown = ({
           isOpen={showMenu}
           disabled={disabled}
           type={type}
+          hasSelectedItems={hasSelectedItems}
         >
           <InnerDropdownText>
             {currentLabel || (
               <>
-                {selectedItems.length > 0 && (
+                {hasSelectedItems && (
                   <ClearButton
                     tab-index={0}
                     data-testid="dropdown-clear-btn"
                     aria-label="Clear Button"
                     onClick={onClear}
                   >
-                    <CloseIcon width={13} height={13} />
+                    <CloseIcon width={10} height={10} />
                   </ClearButton>
                 )}
                 {selectedItems[0]?.hex ? (
