@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useRef, useMemo } from 'react';
 
@@ -57,7 +57,7 @@ const Tooltip = styled.div`
   z-index: 9999;
 `;
 
-const TRANSPARENT_BORDER = css`6px solid transparent`;
+const TRANSPARENT_BORDER = `6px solid transparent`;
 
 const TooltipArrow = styled.div`
   position: absolute;
