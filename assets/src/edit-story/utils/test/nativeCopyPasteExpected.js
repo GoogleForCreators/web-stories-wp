@@ -49,7 +49,7 @@ describe('nativeCopyPasteExpected', () => {
     incorrectInput.type = 'test';
     document.body.appendChild(incorrectInput);
     incorrectInput.focus();
-    expect(nativeCopyPasteExpected()).toBeNull();
+    expect(nativeCopyPasteExpected()).toBe(false);
 
     windowSpy.mockRestore();
   });

@@ -38,7 +38,7 @@ function nativeCopyPasteExpected() {
   const selection = window.getSelection();
   const range = selection.rangeCount ? selection.getRangeAt(0) : null;
 
-  return range && !range.collapsed;
+  return Boolean(range && !range.collapsed);
 }
 
 export default nativeCopyPasteExpected;
