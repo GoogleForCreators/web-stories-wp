@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-export { default as clamp } from './clamp';
-export { default as getCurrentYAxis } from './getCurrentYAxis';
-export { default as groupBy } from './groupBy';
-export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
-export { default as useFocusOut } from './useFocusOut';
-export { default as usePagePreviewSize } from './usePagePreviewSize';
-export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
+export default (callback) => {
+  let frameId = null;
+  return (...args) => {
+    if (frameId) {
+      cancelAnimationFrame(frameId);
+    }
+    frameId = requestAnimationFrame(() => {
+      frameId = null;
+      callback(...args);
+    });
+  };
+};
