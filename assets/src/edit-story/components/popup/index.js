@@ -51,9 +51,16 @@ export const Placement = {
   LEFT_END: 'left-end',
 };
 
-const Container = styled.div.attrs(({ x, y }) => ({
-  style: { left: `${x}px`, top: `${y}px` },
-}))`
+const Container = styled.div.attrs(
+  ({ x, y, width, height, fillWidth, fillHeight }) => ({
+    style: {
+      left: `${x}px`,
+      top: `${y}px`,
+      ...(fillWidth ? { width: `${width}px` } : {}),
+      ...(fillHeight ? { height: `${height}px` } : {}),
+    },
+  })
+)`
   position: fixed;
   z-index: 2147483646;
   ${({ placement }) => getTransforms(placement)}
@@ -206,6 +213,8 @@ function getOffset(placement, spacing, anchor, dock, popup) {
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
     y: Math.max(0, Math.min(offsetY, maxOffsetY)),
+    width: anchorRect.width,
+    height: anchorRect.height,
   };
 }
 
@@ -216,6 +225,8 @@ function Popup({
   placement = 'bottom',
   spacing,
   isOpen,
+  fillWidth = false,
+  fillHeight = false,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -258,7 +269,13 @@ function Popup({
 
   return popupState && isOpen
     ? createPortal(
-        <Container ref={popup} {...popupState.offset} placement={placement}>
+        <Container
+          ref={popup}
+          {...popupState.offset}
+          fillWidth={fillWidth}
+          fillHeight={fillHeight}
+          placement={placement}
+        >
           {children}
         </Container>,
         document.body

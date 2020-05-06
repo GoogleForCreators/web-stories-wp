@@ -34,8 +34,6 @@ import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
 import Popup from '../../popup';
 import DropDownList from './list';
 
-const DEFAULT_WIDTH = 240;
-
 const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -144,8 +142,8 @@ function DropDown({
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
-        width={DEFAULT_WIDTH}
-        placement={'bottom'}
+        placement={'bottom-end'}
+        fillWidth={true}
       >
         <DropDownList
           handleCurrentValue={handleCurrentValue}
