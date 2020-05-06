@@ -68,13 +68,10 @@ describe('useUploadMedia', () => {
     const setMedia = jest.fn();
     const fetchMedia = jest.fn();
 
-    // Used for sorted the media or newFiles for comparison in the end.
-    const sortBySrc = (a, b) => a.src.localeCompare(b.src);
-
-    const sortedExpectedSetMediaArgs = [
+    const expectedSetMediaArgs = [
       ...media,
       ...newFiles.filter(({ type }) => supportedLocalResource.includes(type)),
-    ].sort(sortBySrc);
+    ];
 
     // Simple implementation of getResourceFromLocalFile that will return
     // null on unsupported resources.
@@ -102,9 +99,9 @@ describe('useUploadMedia', () => {
 
     expect(setMedia).toHaveBeenCalledTimes(1);
 
-    const sortedMediaArgs = setMedia.mock.calls[0][0].media.sort(sortBySrc);
+    const setMediaArgs = setMedia.mock.calls[0][0].media;
 
     // Should have skipped every unsupported file.
-    expect(sortedMediaArgs).toStrictEqual(sortedExpectedSetMediaArgs);
+    expect(setMediaArgs).toIncludeSameMembers(expectedSetMediaArgs);
   });
 });
