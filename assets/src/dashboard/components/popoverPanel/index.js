@@ -70,14 +70,21 @@ const PillFieldset = styled.fieldset`
   }
 `;
 
+const Legend = styled.legend`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+`;
+
 const PopoverPanel = ({ isOpen, title, items, onSelect }) => {
   return (
     <Panel isOpen={isOpen}>
       {isOpen && (
-        <PillFieldset
-          data-testid={'pill-fieldset'}
-          aria-label={`options for ${title}`}
-        >
+        <PillFieldset data-testid={'pill-fieldset'}>
+          <Legend>{title}</Legend>
           {items.map(
             ({ label, selected, value, hex, disabled = false }, index) => {
               return (
