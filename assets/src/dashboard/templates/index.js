@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import getBeautyStoryData from './data/beauty';
 import getCookingStoryData from './data/cooking';
 import getDIYStoryData from './data/diy';
 import getEntertainmentStoryData from './data/entertainment';
@@ -26,6 +27,7 @@ import getTravelStoryData from './data/travel';
 
 export default function (config) {
   const { assetsURL } = config;
+  const beautyStoryData = getBeautyStoryData(assetsURL);
   const cookingStoryData = getCookingStoryData(assetsURL);
   const diyStoryData = getDIYStoryData(assetsURL);
   const entertainmentData = getEntertainmentStoryData(assetsURL);
@@ -53,7 +55,7 @@ export default function (config) {
       ],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-      pages: travelStoryData.pages,
+      pages: beautyStoryData.pages,
     },
     {
       id: 2,
