@@ -34,6 +34,7 @@ import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
+import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 
 const Space = styled.div`
@@ -51,7 +52,11 @@ function FontControls({ selectedElements, pushUpdate }) {
     ({ font }) => font?.family
   );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
-  const fontWeight = getCommonValue(selectedElements, 'fontWeight');
+
+  const {
+    textInfo: { fontWeight, isItalic },
+    handlers: { handleSelectFontWeight },
+  } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const {
     state: { fonts },
@@ -83,26 +88,18 @@ function FontControls({ selectedElements, pushUpdate }) {
                   'variants',
                 ]),
               };
-              const { weights } = fontObj;
-              // Find the nearest font weight from the available font weight list
-              const newFontWeight = weights.reduce((a, b) =>
-                Math.abs(parseInt(b) - fontWeight) <
-                Math.abs(parseInt(a) - fontWeight)
-                  ? b
-                  : a
-              );
+
               await maybeEnqueueFontStyle(
-                selectedElements.map((e) => ({
-                  ...e,
+                selectedElements.map(() => ({
                   font: newFont,
-                  fontWeight: newFontWeight,
+                  isItalic,
+                  fontWeight,
                 }))
               );
 
               pushUpdate(
                 {
                   font: newFont,
-                  fontWeight: parseInt(newFontWeight),
                 },
                 true
               );
@@ -116,17 +113,18 @@ function FontControls({ selectedElements, pushUpdate }) {
             <DropDown
               data-testid="font.weight"
               ariaLabel={__('Font weight', 'web-stories')}
+              placeholder={__('(multiple)', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
               onChange={async (value) => {
-                const newFontWeight = parseInt(value);
                 await maybeEnqueueFontStyle(
-                  selectedElements.map((e) => ({
-                    ...e,
-                    fontWeight: newFontWeight,
+                  selectedElements.map(({ font }) => ({
+                    font,
+                    isItalic,
+                    fontWeight: parseInt(value),
                   }))
                 );
-                pushUpdate({ fontWeight: newFontWeight }, true);
+                handleSelectFontWeight(value);
               }}
             />
             <Space />

@@ -25,6 +25,7 @@ import { act, fireEvent } from '@testing-library/react';
  */
 import TextStyle from '../textStyle';
 import FontContext from '../../../app/font/context';
+import RichTextContext from '../../richText/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import DropDown from '../../form/dropDown';
@@ -88,7 +89,11 @@ function Wrapper({ children }) {
         },
       }}
     >
-      {children}
+      <RichTextContext.Provider
+        value={{ state: {}, actions: { selectionActions: {} } }}
+      >
+        {children}
+      </RichTextContext.Provider>
     </FontContext.Provider>
   );
 }
@@ -112,7 +117,6 @@ describe('Panels/TextStyle', () => {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
-      fontWeight: 400,
       font: {
         family: 'ABeeZee',
       },
@@ -431,7 +435,6 @@ describe('Panels/TextStyle', () => {
             ],
             fallbacks: ['fallback1'],
           },
-          fontWeight: 400,
         },
         true
       );
@@ -440,7 +443,14 @@ describe('Panels/TextStyle', () => {
     it('should select font weight', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
       await act(() => controls['font.weight'].onChange('300'));
-      expect(pushUpdate).toHaveBeenCalledWith({ fontWeight: 300 }, true);
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="font-weight: 300">Hello world</span>',
+        },
+        true
+      );
     });
 
     it('should select font size', async () => {
@@ -477,27 +487,43 @@ describe('Panels/TextStyle', () => {
       const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
       const input = getByTestId('text.letterSpacing');
       fireEvent.change(input, { target: { value: '150' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ letterSpacing: 1.5 });
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="letter-spacing: 1.5em">Hello world</span>',
+        },
+        true
+      );
     });
 
     it('should set letterSpacing to empty', () => {
       const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
       const input = getByTestId('text.letterSpacing');
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ letterSpacing: '' });
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({
+        content: '<span style="letter-spacing: 1.5em">Hello world</span>',
+      });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: 'Hello world',
+        },
+        true
+      );
     });
   });
 
   describe('ColorControls', () => {
-    it('should render no color', () => {
+    it('should render default black color', () => {
       renderTextStyle([textElement]);
-      expect(controls['text.color'].value).toBeNull();
+      expect(controls['text.color'].value).toStrictEqual(createSolid(0, 0, 0));
     });
 
     it('should render a color', () => {
       const textWithColor = {
         ...textElement,
-        color: createSolid(255, 0, 0),
+        content: '<span style="color: rgb(255, 0, 0)">Hello world</span>',
       };
       renderTextStyle([textWithColor]);
       expect(controls['text.color'].value).toStrictEqual(
@@ -508,20 +534,26 @@ describe('Panels/TextStyle', () => {
     it('should set color', () => {
       const { pushUpdate } = renderTextStyle([textElement]);
       act(() => controls['text.color'].onChange(createSolid(0, 255, 0)));
-      expect(pushUpdate).toHaveBeenCalledWith(
-        { color: createSolid(0, 255, 0) },
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({
+        content: 'Hello world',
+      });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="color: #0f0">Hello world</span>',
+        },
         true
       );
     });
 
-    it('should set color with multi selection, same values', () => {
+    it('should detect color with multi selection, same values', () => {
       const textWithColor1 = {
         ...textElement,
-        color: createSolid(0, 0, 255),
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       const textWithColor2 = {
         ...textElement,
-        color: createSolid(0, 0, 255),
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       renderTextStyle([textWithColor1, textWithColor2]);
       expect(controls['text.color'].value).toStrictEqual(
@@ -532,11 +564,11 @@ describe('Panels/TextStyle', () => {
     it('should set color with multi selection, different values', () => {
       const textWithColor1 = {
         ...textElement,
-        color: createSolid(255, 0, 0),
+        content: '<span style="color: rgb(0, 0, 255)">Hello world</span>',
       };
       const textWithColor2 = {
         ...textElement,
-        color: createSolid(0, 255, 0),
+        content: '<span style="color: rgb(0, 255, 255)">Hello world</span>',
       };
       renderTextStyle([textWithColor1, textWithColor2]);
       expect(controls['text.color'].value).toStrictEqual(MULTIPLE_VALUE);

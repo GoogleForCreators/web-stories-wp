@@ -35,7 +35,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page1_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page1_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -204,7 +204,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page1_logo.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page1_logo.png`,
               width: 47,
               height: 15,
               poster: '',
@@ -472,7 +472,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page2_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page2_image1.jpg`,
               width: 220,
               height: 331,
               poster: '',
@@ -730,7 +730,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page3_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page3_image1.jpg`,
               width: 220,
               height: 275,
               poster: '',
@@ -765,7 +765,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page4_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page4_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -1017,7 +1017,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_up_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -1062,7 +1062,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page5_bg.jpg`,
               width: 220,
               height: 149,
               poster: '',
@@ -1254,7 +1254,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page5_image1.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page5_image1.png`,
               width: 137,
               height: 52,
               poster: '',
@@ -1375,7 +1375,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_up_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -1421,7 +1421,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page6_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page6_bg.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -1619,7 +1619,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page6_image1.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page6_image1.png`,
               width: 220,
               height: 371,
               poster: '',
@@ -1891,7 +1891,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page7_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page7_image1.jpg`,
               width: 220,
               height: 330,
               poster: '',
@@ -1926,7 +1926,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page8_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page8_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -2864,7 +2864,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page9_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image1.jpg`,
               width: 220,
               height: 165,
               poster: '',
@@ -2907,7 +2907,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page9_image2.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image2.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -2950,7 +2950,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page9_image3.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image3.jpg`,
               width: 220,
               height: 151,
               poster: '',
@@ -2993,7 +2993,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page9_image4.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image4.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -3036,7 +3036,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page9_image5.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image5.jpg`,
               width: 220,
               height: 330,
               poster: '',
@@ -3377,7 +3377,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page10_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image1.jpg`,
               width: 220,
               height: 112,
               poster: '',
@@ -3416,7 +3416,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page10_image2.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image2.jpg`,
               width: 220,
               height: 83,
               poster: '',
@@ -3459,7 +3459,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_page10_image3.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image3.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -3491,7 +3491,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_fb.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_fb.png`,
               width: 150,
               height: 300,
               posterId: 0,
@@ -3529,7 +3529,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_insta.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_insta.png`,
               width: 150,
               height: 156,
               posterId: 0,
@@ -3567,7 +3567,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_yt.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_yt.png`,
               width: 150,
               height: 106,
               posterId: 0,
@@ -3605,7 +3605,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/travel/travel_icon_tw.png`,
+              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_tw.png`,
               width: 150,
               height: 121,
               posterId: 0,

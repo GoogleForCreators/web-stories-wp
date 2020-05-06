@@ -58,7 +58,7 @@ export const Z_INDEX = {
   POPOVER_PANEL: 10,
 };
 
-export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
+export const PAGE_RATIO = PAGE_WIDTH / PAGE_HEIGHT;
 export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
@@ -156,7 +156,7 @@ export const STORY_SORT_OPTIONS = {
   DATE_CREATED: 'date',
   LAST_MODIFIED: 'modified',
   LAST_OPENED: 'modified',
-  CREATED_BY: 'author',
+  CREATED_BY: 'story_author',
 };
 
 export const SORT_DIRECTION = {

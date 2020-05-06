@@ -36,16 +36,15 @@ import TypeaheadOptions from '../typeaheadOptions';
 
 const SearchContainer = styled.div`
   display: flex;
+  align-items: flex-end;
   flex-direction: column;
-  border-radius: ${({ theme, isOpen }) =>
-    isOpen ? `${theme.expandedTypeahead.borderRadius}px` : 'none'};
+  border-radius: ${({ theme }) => `${theme.expandedTypeahead.borderRadius}px`};
   border: none;
-  box-shadow: ${({ theme, isOpen }) =>
-    isOpen ? theme.expandedTypeahead.boxShadow : 'none'};
+  background: none;
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    width: ${({ isExpanded }) => (isExpanded ? '272px' : '48px')};
-    transition: width 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    flex: ${({ isExpanded }) => (isExpanded ? '1 0 100%' : '0 1 40px')};
+    transition: flex 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
 `;
 SearchContainer.propTypes = {
@@ -58,16 +57,11 @@ const InputContainer = styled.div`
   display: flex;
   width: 100%;
   padding: 5px 8px;
-  border-radius: ${({ theme, isOpen }) =>
-    isOpen ? 'none' : `${theme.typeahead.borderRadius}px`};
-  border: none;
-  border-bottom: ${({ theme, isOpen }) => isOpen && theme.borders.gray50};
+  border-radius: ${({ theme }) => `${theme.typeahead.borderRadius}px`};
+  border: 1px solid ${({ theme }) => theme.colors.gray50};
   color: ${({ theme }) => theme.colors.gray500};
-  background-color: ${({ theme }) => theme.colors.gray50};
+  background-color: ${({ theme }) => theme.colors.gray25};
 `;
-InputContainer.propTypes = {
-  isOpen: PropTypes.bool,
-};
 
 const ControlVisibilityContainer = styled.div`
   position: relative;
@@ -94,7 +88,7 @@ const StyledInput = styled.input`
   letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing}em;
   font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
   text-overflow: ellipsis;
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.colors.gray900};
   background-color: transparent;
   border: none;
 
@@ -116,7 +110,7 @@ const SearchButton = styled.button`
   border: none;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.gray300};
-  height: 18px;
+  height: 16px;
   & > svg {
     height: 100%;
   }
@@ -133,7 +127,7 @@ const ClearInputButton = styled.button`
   padding: 0;
   color: ${({ theme }) => theme.colors.gray600};
   cursor: pointer;
-  height: 14px;
+  height: 12px;
 
   & > svg {
     height: 100%;
@@ -168,20 +162,6 @@ const TypeaheadInput = ({
   const isInputExpanded = useMemo(() => {
     return menuFocused || inputValue.length > 0;
   }, [menuFocused, inputValue]);
-
-  const filteredItems = useMemo(() => {
-    if (!isFiltering) {
-      return items;
-    }
-    return items.filter((item) => {
-      const lowerInputValue = inputValue.toLowerCase().trim();
-
-      return (
-        item.label.toLowerCase().includes(lowerInputValue) ||
-        item.value.toLowerCase().includes(lowerInputValue)
-      );
-    });
-  }, [items, inputValue, isFiltering]);
 
   const focusInput = useCallback(() => {
     inputRef.current.focus();
@@ -224,7 +204,7 @@ const TypeaheadInput = ({
       isOpen={isMenuOpen}
       isExpanded={isInputExpanded}
     >
-      <InputContainer isOpen={isMenuOpen}>
+      <InputContainer>
         <SearchButton
           onClick={() => {
             setMenuFocused(true);
@@ -267,9 +247,9 @@ const TypeaheadInput = ({
       {isMenuOpen && (
         <TypeaheadOptions
           isOpen={isMenuOpen}
-          items={filteredItems}
+          items={items}
           maxItemsVisible={maxItemsVisible}
-          onSelect={filteredItems && handleMenuItemSelect}
+          onSelect={items && handleMenuItemSelect}
         />
       )}
     </SearchContainer>

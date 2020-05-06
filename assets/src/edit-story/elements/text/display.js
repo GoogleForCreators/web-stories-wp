@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -29,22 +29,21 @@ import {
   elementFillContent,
   elementWithFont,
   elementWithBackgroundColor,
-  elementWithFontColor,
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
 import {
-  draftMarkupToContent,
-  getHighlightLineheight,
-  generateParagraphTextStyle,
-} from './util';
+  getHTMLFormatters,
+  getHTMLInfo,
+} from '../../components/richText/htmlManipulation';
+import createSolid from '../../utils/createSolid';
+import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
-  ${elementWithFontColor}
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
@@ -90,20 +89,11 @@ const FillElement = styled.p`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithBackgroundColor}
-  ${elementWithFontColor}
   ${elementWithTextParagraphStyle}
 `;
 
 function TextDisplay({
-  element: {
-    id,
-    bold,
-    content,
-    color,
-    backgroundColor,
-    backgroundTextMode,
-    ...rest
-  },
+  element: { id, content, backgroundColor, backgroundTextMode, ...rest },
   box: { width },
 }) {
   const ref = useRef(null);
@@ -112,10 +102,11 @@ function TextDisplay({
     actions: { dataToEditorY, dataToEditorX },
   } = useUnits();
 
-  const { font, fontWeight, fontStyle } = rest;
+  const { font } = rest;
+  const isItalic = useMemo(() => getHTMLInfo(content).isItalic, [content]);
+  const fontWeight = useMemo(() => getHTMLInfo(content).fontWeight, [content]);
 
   const props = {
-    color,
     font,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
       ? {}
@@ -128,16 +119,15 @@ function TextDisplay({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-
   useEffect(() => {
     maybeEnqueueFontStyle([
       {
         font,
         fontWeight,
-        fontStyle,
+        isItalic,
       },
     ]);
-  }, [font, fontWeight, fontStyle, maybeEnqueueFontStyle]);
+  }, [font, fontWeight, isItalic, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;
@@ -147,6 +137,13 @@ function TextDisplay({
       : '';
   });
 
+  // Setting the text color of the entire block to black essentially removes all inline
+  // color styling allowing us to apply transparent to all of them.
+  const contentWithoutColor = useMemo(
+    () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
+    [content]
+  );
+
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <HighlightWrapperElement ref={ref} {...props}>
@@ -155,7 +152,7 @@ function TextDisplay({
             <BackgroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: contentWithoutColor,
               }}
             />
           </MarginedElement>
@@ -165,7 +162,7 @@ function TextDisplay({
             <ForegroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </MarginedElement>
@@ -178,7 +175,7 @@ function TextDisplay({
     <FillElement
       ref={ref}
       dangerouslySetInnerHTML={{
-        __html: draftMarkupToContent(content, bold),
+        __html: content,
       }}
       {...props}
     />

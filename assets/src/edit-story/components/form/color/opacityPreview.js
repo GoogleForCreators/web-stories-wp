@@ -31,6 +31,7 @@ import { _x, __ } from '@wordpress/i18n';
  */
 import { PatternPropType } from '../../../types';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
+import { MULTIPLE_VALUE } from '../';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 import ColorBox from './colorBox';
@@ -47,7 +48,8 @@ const Input = styled(ColorBox).attrs({
 `;
 
 function OpacityPreview({ value, onChange }) {
-  const hasPreviewText = Boolean(getPreviewText(value));
+  const hasPreviewText =
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
   const postfix = _x('%', 'Percentage', 'web-stories');
   const [inputValue, setInputValue] = useState('');
   const ref = useRef();
@@ -91,7 +93,7 @@ function OpacityPreview({ value, onChange }) {
 }
 
 OpacityPreview.propTypes = {
-  value: PatternPropType,
+  value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
 };
 

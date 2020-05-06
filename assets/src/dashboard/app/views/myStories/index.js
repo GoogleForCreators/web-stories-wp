@@ -53,6 +53,7 @@ import {
   NoResults,
   StoryGridView,
   StoryListView,
+  HeaderToggleButtonContainer,
 } from '../shared';
 
 const DefaultBodyText = styled.p`
@@ -88,6 +89,7 @@ function MyStories() {
   const {
     actions: {
       storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      templateApi: { createTemplateFromStory },
     },
     state: {
       stories: {
@@ -98,6 +100,9 @@ function MyStories() {
         totalStories,
         totalPages,
       },
+      tags,
+      categories,
+      users,
     },
   } = useContext(ApiContext);
 
@@ -186,8 +191,9 @@ function MyStories() {
           <StoryGridView
             trashStory={trashStory}
             updateStory={updateStory}
+            createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
-            filteredStories={orderedStories}
+            stories={orderedStories}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
@@ -200,11 +206,14 @@ function MyStories() {
       case VIEW_STYLE.LIST:
         return (
           <StoryListView
-            filteredStories={orderedStories}
+            stories={orderedStories}
             storySort={currentStorySort}
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
+            tags={tags}
+            categories={categories}
+            users={users}
           />
         );
       default:
@@ -212,6 +221,7 @@ function MyStories() {
     }
   }, [
     duplicateStory,
+    createTemplateFromStory,
     trashStory,
     viewStyle,
     updateStory,
@@ -219,6 +229,9 @@ function MyStories() {
     currentStorySort,
     currentListSortDirection,
     handleNewStorySort,
+    tags,
+    categories,
+    users,
   ]);
 
   const storiesViewControls = useMemo(() => {
@@ -284,21 +297,23 @@ function MyStories() {
               <PageHeading
                 defaultTitle={__('My Stories', 'web-stories')}
                 searchPlaceholder={__('Search Stories', 'web-stories')}
-                filteredStories={orderedStories}
+                stories={orderedStories}
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () =>
-                        handleFilterStatusUpdate(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: status === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
+                <HeaderToggleButtonContainer>
+                  <ToggleButtonGroup
+                    buttons={STORY_STATUSES.map((storyStatus) => {
+                      return {
+                        handleClick: () =>
+                          handleFilterStatusUpdate(storyStatus.value),
+                        key: storyStatus.value,
+                        isActive: status === storyStatus.value,
+                        text: storyStatus.label,
+                      };
+                    })}
+                  />
+                </HeaderToggleButtonContainer>
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
