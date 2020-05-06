@@ -81,7 +81,7 @@ function TextTab(props) {
   const handleAddText = (evt) => {
     evt.stopPropagation();
     insertElement('text', {
-      ...DEFAULT_FONT('default-text'),
+      ...DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     });
   };
