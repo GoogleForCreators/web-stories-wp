@@ -15,22 +15,22 @@
  */
 
 /**
- * External dependencies
+ * Helper function to get create a js error.
+ *
+ * @param {string} name Error name.
+ * @param {string} fileName File name.
+ * @param {string} message Message in error.
+ * @return {Error} Error Object.
  */
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
-import '@testing-library/jest-dom';
+function createError(name, fileName, message) {
+  const validError = new Error();
 
-/**
- * Internal dependencies
- */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+  validError.name = name;
+  validError.file = fileName;
+  validError.isUserError = true;
+  validError.message = message;
 
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+  return validError;
+}
+
+export default createError;
