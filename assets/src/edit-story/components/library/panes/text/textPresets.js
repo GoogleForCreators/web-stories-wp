@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { dataFontEm } from '../../../../units';
 
-const DEFAULT_FONT = {
+const DEFAULT_PRESET = {
   id: 'default-text',
   content: __('Fill in some text', 'web-stories'),
   fontSize: dataFontEm(1.1),
@@ -73,4 +73,4 @@ const PRESETS = [
   },
 ];
 
-export { DEFAULT_FONT, PRESETS };
+export { DEFAULT_PRESET, PRESETS };

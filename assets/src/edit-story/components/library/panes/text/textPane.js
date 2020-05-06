@@ -33,7 +33,7 @@ import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
-import { PRESETS, DEFAULT_FONT } from './textPresets';
+import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
@@ -59,7 +59,7 @@ function TextPane(props) {
           <MainButton
             onClick={() =>
               insertElement('text', {
-                ...DEFAULT_FONT,
+                ...DEFAULT_PRESET,
                 width: DEFAULT_ELEMENT_WIDTH,
               })
             }
