@@ -38,14 +38,6 @@ describe('TextOutput', () => {
     const element = {
       id: '123',
       content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
       backgroundColor: {
         color: {
           r: 255,
@@ -58,9 +50,7 @@ describe('TextOutput', () => {
         family: 'Roboto',
       },
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
@@ -87,33 +77,21 @@ describe('TextOutput', () => {
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
       margin: '0px',
-      color: 'rgba(255, 255, 255, 0.5)',
       backgroundColor: 'rgba(255, 0, 0, 0.3)',
       fontSize: '0.242424em',
-      letterSpacing: '1.3em',
       textAlign: 'left',
-      textDecoration: 'none',
     });
   });
 
   it('should convert padding to percent of width', () => {
     const element = {
       id: '123',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-        },
-      },
       content: 'Content',
       font: {
         family: 'Roboto',
       },
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
@@ -140,55 +118,6 @@ describe('TextOutput', () => {
     });
   });
 
-  it('should apply <strong> tags if bold', () => {
-    const element = {
-      id: '123',
-      content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
-      backgroundColor: {
-        color: {
-          r: 255,
-          g: 0,
-          b: 0,
-          a: 0.3,
-        },
-      },
-      font: {
-        family: 'Roboto',
-      },
-      fontSize: 16,
-      letterSpacing: 1.3,
-      textAlign: 'left',
-      textDecoration: 'none',
-      type: 'text',
-      x: 10,
-      y: 10,
-      width: 50,
-      height: 50,
-      rotationAngle: 0,
-      padding: {
-        vertical: 0,
-        horizontal: 0,
-      },
-      bold: true,
-    };
-
-    const output = renderViaString(
-      <TextOutput
-        element={element}
-        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
-      />
-    );
-    expect(output.innerHTML).toBe('<strong>Content</strong>');
-  });
-
   it('should wrap font-family into quotes', () => {
     const element = {
       id: '123',
@@ -207,7 +136,6 @@ describe('TextOutput', () => {
         vertical: 0,
         horizontal: 0,
       },
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
@@ -238,7 +166,6 @@ describe('TextOutput', () => {
         vertical: 0,
         horizontal: 0,
       },
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
