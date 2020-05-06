@@ -39,6 +39,11 @@ getPrefixStylesInSelection.mockImplementation(() => [NONE]);
 describe('Color formatter', () => {
   const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
+  beforeEach(() => {
+    togglePrefixStyle.mockClear();
+    getPrefixStylesInSelection.mockClear();
+  });
+
   describe('elementToStyle', () => {
     function setup(element) {
       return elementToStyle(getDOMElement(element));
@@ -137,7 +142,7 @@ describe('Color formatter', () => {
       expect(setters.setColor).toStrictEqual(expect.any(Function));
     });
 
-    it('should invoke togglePrefixStyle with correct parameters', () => {
+    it('should invoke togglePrefixStyle correctly with non-black color', () => {
       const state = {};
       const color = createSolid(255, 0, 255);
       setters.setColor(state, color);
@@ -155,6 +160,18 @@ describe('Color formatter', () => {
       // Fourth argument is actual style to set
       const styleToSet = togglePrefixStyle.mock.calls[0][3];
       expect(styleToSet()).toStrictEqual(`${COLOR}-ff00ff64`);
+    });
+
+    it('should invoke togglePrefixStyle correctly with black color', () => {
+      const state = {};
+      const color = createSolid(0, 0, 0);
+      setters.setColor(state, color);
+
+      // Third argument is tester
+      const shouldSetStyle = togglePrefixStyle.mock.calls[0][2];
+      expect(shouldSetStyle()).toBe(false);
+
+      // Fourth argument is ignored
     });
   });
 });

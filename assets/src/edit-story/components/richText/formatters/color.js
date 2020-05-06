@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { getHexFromSolid, getSolidFromHex } from '../../../utils/patternUtils';
+import isPatternEqual from '../../../utils/isPatternEqual';
 import createSolidFromString from '../../../utils/createSolidFromString';
 import createSolid from '../../../utils/createSolid';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
@@ -77,9 +78,9 @@ function getColor(editorState) {
 }
 
 function setColor(editorState, color) {
-  // we set all colors - one could argue that opaque black
-  // was default, and wasn't necessary, but it's probably not worth the trouble
-  const shouldSetStyle = () => true;
+  // opaque black is default, and isn't necessary to set
+  const isBlack = isPatternEqual(createSolid(0, 0, 0), color);
+  const shouldSetStyle = () => !isBlack;
 
   // the style util manages conversion
   const getStyleToSet = () => colorToStyle(color);
