@@ -80,10 +80,13 @@ export const InnerDropdown = styled.button`
       background-color: ${theme.dropdown[type].activeBackground};
     }
 
+<<<<<<< HEAD
     &:focus {
       border: ${theme.borders.action};
     }
 
+=======
+>>>>>>> dropdown style adjusted to have blue bg for panels when selections are made and making all icons gray. space update to be narrower, no need for height
     background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
