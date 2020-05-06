@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-export { default as BodyWrapper } from './bodyWrapper';
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as NoResults } from './noResults';
-export {
-  default as PageHeading,
-  HeaderToggleButtonContainer,
-} from './pageHeading';
-export { default as StoryGridView } from './storyGridView';
-export { default as StoryListView } from './storyListView';
-export { default as TypeaheadSearch } from './typeaheadSearch';
+/**
+ * Helper function to get create a js error.
+ *
+ * @param {string} name Error name.
+ * @param {string} fileName File name.
+ * @param {string} message Message in error.
+ * @return {Error} Error Object.
+ */
+function createError(name, fileName, message) {
+  const validError = new Error();
+
+  validError.name = name;
+  validError.file = fileName;
+  validError.isUserError = true;
+  validError.message = message;
+
+  return validError;
+}
+
+export default createError;

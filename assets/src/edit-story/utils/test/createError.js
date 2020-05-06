@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import createError from '../createError';
 
-export { default as BodyWrapper } from './bodyWrapper';
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as NoResults } from './noResults';
-export {
-  default as PageHeading,
-  HeaderToggleButtonContainer,
-} from './pageHeading';
-export { default as StoryGridView } from './storyGridView';
-export { default as StoryListView } from './storyListView';
-export { default as TypeaheadSearch } from './typeaheadSearch';
+describe('createError', () => {
+  it('should return an error', () => {
+    expect(() => {
+      throw createError('testing', 'test.jpg', 'hello there');
+    }).toThrow('hello there');
+  });
+});

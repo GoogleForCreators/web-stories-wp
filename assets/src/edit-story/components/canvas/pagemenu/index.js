@@ -148,7 +148,7 @@ function PageMenu() {
             )}
           </PageCount>
           <Space />
-          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
+          <WithTooltip title={__('Delete page', 'web-stories')}>
             <Icon
               onClick={handleDeletePage}
               aria-label={__('Delete Page', 'web-stories')}

@@ -111,7 +111,7 @@ const AuthorTableHeaderCell = styled(TableHeaderCell)`
 `;
 
 export default function StoryListView({
-  filteredStories,
+  stories,
   storySort,
   handleSortChange,
   handleSortDirectionChange,
@@ -192,7 +192,7 @@ export default function StoryListView({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredStories.map((story) => (
+          {stories.map((story) => (
             <TableRow key={`story-${story.id}`}>
               <TablePreviewCell>
                 <PreviewContainer>
@@ -217,7 +217,7 @@ export default function StoryListView({
 }
 
 StoryListView.propTypes = {
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   tags: TagsPropType,
   categories: CategoriesPropType,
   users: UsersPropType,
