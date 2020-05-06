@@ -25,7 +25,8 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
-import { LAYER_DIRECTIONS, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import { LAYER_DIRECTIONS } from '../../constants';
+import { getPastedCoordinates } from '../../utils/copyPaste';
 
 const MOVE_COARSE_STEP = 10;
 
@@ -106,15 +107,9 @@ function useCanvasKeys(ref) {
     if (selectedElements.length === 0) {
       return;
     }
-    const placementDiff = 20;
-    const allowedBorderDistance = 20;
     const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
-      const cloneX = x + placementDiff;
-      const cloneY = y + placementDiff;
       return {
-        x: PAGE_WIDTH - cloneX > allowedBorderDistance ? cloneX : placementDiff,
-        y:
-          PAGE_HEIGHT - cloneY > allowedBorderDistance ? cloneY : placementDiff,
+        ...getPastedCoordinates(x, y),
         id: uuidv4(),
         basedOn: id,
         ...rest,

@@ -24,6 +24,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
  * Internal dependencies
  */
 import { getDefinitionForType } from '../elements';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import escapeHTML from './escapeHTML';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
@@ -97,8 +98,9 @@ export function processPastedElements(content, currentPage) {
       ...payload.items.map(({ x, y, basedOn, ...rest }) => {
         currentPage.elements.forEach((element) => {
           if (element.id === basedOn || element.basedOn === basedOn) {
-            x = Math.max(x, element.x + 60);
-            y = Math.max(y, element.y + 60);
+            const pastedXY = getPastedCoordinates(x, y);
+            x = pastedXY.x;
+            y = pastedXY.y;
           }
         });
         return {
@@ -116,7 +118,7 @@ export function processPastedElements(content, currentPage) {
 }
 
 /**
- * Processes copied/cut content for finding elements to add to clipboard.
+ * Processes copied/cut content for preparing elements to add to clipboard.
  *
  * @param {Array} elements Array of story elements.
  * @param {Object} evt Copy/cut event object.
@@ -166,4 +168,22 @@ export function addElementsToClipboard(elements, evt) {
     'text/html',
     `<!-- ${serializedPayload} -->${htmlContent}`
   );
+}
+
+/**
+ * Gets x, y values for cloned/pasted element, ensuring it's not added out of the page.
+ *
+ * @param {number} originX Original X.
+ * @param {number} originY Original Y.
+ * @return {{x: (number), y: (number)}} Coordinates.
+ */
+export function getPastedCoordinates(originX, originY) {
+  const placementDiff = 30;
+  const allowedBorderDistance = 20;
+  const x = originX + placementDiff;
+  const y = originY + placementDiff;
+  return {
+    x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
+    y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
+  };
 }
