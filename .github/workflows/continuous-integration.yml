@@ -436,6 +436,7 @@ jobs:
         run: |
           echo 'assets/images/templates' >> .distignore
           npm run build:js
+          echo $GITHUB_SHA
           npm run build:plugin -- --cdn
           npm run bundle-plugin web-stories-composer.zip -- --composer --skip-delete
           npm run bundle-plugin web-stories.zip -- --skip-delete
