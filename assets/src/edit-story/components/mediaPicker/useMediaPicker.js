@@ -100,7 +100,9 @@ export default function useMediaPicker({
     fileFrame.open();
 
     evt.preventDefault();
-    return false;
+
+    // Might be useful to return the media frame here.
+    return fileFrame;
   };
 
   return openMediaPicker;
