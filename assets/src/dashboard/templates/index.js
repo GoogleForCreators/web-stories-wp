@@ -19,6 +19,7 @@
  */
 import getCookingStoryData from './data/cooking';
 import getDIYStoryData from './data/diy';
+import getEntertainmentStoryData from './data/entertainment';
 import getFashionStoryData from './data/fashion';
 import getFitnessStoryData from './data/fitness';
 import getTravelStoryData from './data/travel';
@@ -27,6 +28,7 @@ export default function (config) {
   const { pluginDir } = config;
   const cookingStoryData = getCookingStoryData(pluginDir);
   const diyStoryData = getDIYStoryData(pluginDir);
+  const entertainmentData = getEntertainmentStoryData(pluginDir);
   const fashionStoryData = getFashionStoryData(pluginDir);
   const fitnessStoryData = getFitnessStoryData(pluginDir);
   const travelStoryData = getTravelStoryData(pluginDir);
@@ -99,7 +101,7 @@ export default function (config) {
       ],
       description:
         'Nam a tellus tortor. Aenean non mi porta quam feugiat vehicula in a lectus. Suspendisse eget justo ac quam.',
-      pages: travelStoryData.pages,
+      pages: entertainmentData.pages,
     },
     {
       id: 5,

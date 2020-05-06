@@ -144,6 +144,8 @@ class Story_Post_Type {
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
+
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
@@ -187,6 +189,25 @@ class Story_Post_Type {
 		);
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Add story_author as allowed orderby value for REST API.
+	 *
+	 * @param array         $query_params Array of allowed query params.
+	 * @param \WP_Post_Type $post_type Post type.
+	 * @return array Array of query params.
+	 */
+	public static function filter_rest_collection_params( $query_params, $post_type ) {
+		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
+			return $query_params;
+		}
+
+		if ( empty( $query_params['orderby'] ) ) {
+			return $query_params;
+		}
+		$query_params['orderby']['enum'][] = 'story_author';
+		return $query_params;
 	}
 
 	/**
