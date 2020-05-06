@@ -215,14 +215,23 @@ describe('copyPaste utils', () => {
           ...TEXT_ELEMENT,
           id: '1',
         },
-        {
-          ...IMAGE_ELEMENT,
-          id: '2',
-        },
       ];
       addElementsToClipboard(elements, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
+      expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
+      expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
+    });
+
+    it('should not add anything if none are passed', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+      addElementsToClipboard([], evt);
+      expect(setData).toHaveBeenCalledTimes(0);
     });
   });
 });
