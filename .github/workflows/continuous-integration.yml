@@ -169,19 +169,6 @@ jobs:
       - name: Detect coding standard violations (stylelint)
         run: npm run lint:css
 
-  bundle-size:
-    name: Bundle size check
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'push' }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: preactjs/compressed-size-action@v1
-        with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-          pattern: '{assets/js/*.js,assets/css/*.css}'
-          # Todo: compare final plugin ZIP file size too.
-          build-script: 'build:js'
-
   unit-js:
     name: JavaScript Unit Tests
     runs-on: ubuntu-latest
@@ -483,6 +470,14 @@ jobs:
         with:
           name: All ZIP Files
           path: build/*.zip
+
+      - name: Bundle size check
+        uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '{assets/js/*.js,assets/css/*.css,build/web-stories.zip}'
+          build-script: 'workflow:bundle-size'
+        if: ${{ github.event_name != 'push' }}
 
   deploy-to-wiki:
     name: Deploy QA artifacts
