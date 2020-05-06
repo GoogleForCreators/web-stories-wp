@@ -4373,8 +4373,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src:
-                'blob:http://localhost:8899/9805fd71-59f9-4ca2-b48d-08c0f83e0d6b',
+              src: `${imageBaseUrl}assets/images/templates/beauty/beauty_page9_story2.jpg`,
               width: 352,
               height: 528,
               title: 'beauty_page9_story2',
