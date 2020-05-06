@@ -87,9 +87,6 @@ const PillLabel = styled.span`
     ${PillInput}:hover + & {
       background-color: ${theme.colors.blueLight};
     }
-    ${PillInput}:focus + &  {
-      border: ${theme.borders.action};
-    }
 
     ${PillInput}:checked + & {
       background-color: ${theme.colors.blueLight};
