@@ -74,6 +74,7 @@ const BodyViewOptions = ({
         {layoutStyle === VIEW_STYLE.GRID && (
           <StorySortDropdownContainer>
             <SortDropdown
+              alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
               items={STORY_SORT_MENU_ITEMS}
               type={DROPDOWN_TYPES.TRANSPARENT_MENU}

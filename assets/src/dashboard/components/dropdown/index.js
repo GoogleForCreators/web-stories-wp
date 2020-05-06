@@ -51,7 +51,7 @@ export const DropdownContainer = styled.div`
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: ${({ alignment }) => alignment};
 `;
 
 export const InnerDropdown = styled.button`
@@ -123,6 +123,7 @@ const ClearButton = styled.div`
 `;
 
 const Dropdown = ({
+  alignment = 'center',
   ariaLabel,
   items,
   disabled,
@@ -179,7 +180,7 @@ const Dropdown = ({
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
-      <Label aria-label={ariaLabel}>
+      <Label aria-label={ariaLabel} alignment={alignment}>
         <InnerDropdown
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
@@ -242,6 +243,7 @@ const Dropdown = ({
 };
 
 Dropdown.propTypes = {
+  alignment: PropTypes.oneOf(['flex-start', 'center', 'flex-end']),
   ariaLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
