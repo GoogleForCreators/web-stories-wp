@@ -17,47 +17,33 @@
 /**
  * Internal dependencies
  */
-import { draftMarkupToContent, generateFontFamily } from '../util';
+import { generateFontFamily } from '../util';
 
 describe('Text/util', () => {
   describe('Text/util/generateFontFamily', () => {
     it('should return correct string value for font family', () => {
+      const fallbackArray = [];
       const expected = '"Baloo Bhaina 2"';
-      expect(generateFontFamily('Baloo Bhaina 2', [])).toStrictEqual(expected);
+      expect(
+        generateFontFamily({
+          family: 'Baloo Bhaina 2',
+          fallbacks: fallbackArray,
+        })
+      ).toStrictEqual(expected);
+      expect(generateFontFamily({ family: 'Baloo Bhaina 2' })).toStrictEqual(
+        expected
+      );
     });
 
     it('should return correct string value for font family with fallbacks', () => {
       const fallbackArray = ['foo', 'bar', 'sans-serif'];
       const expected = '"Baloo Bhaina 2","foo","bar",sans-serif';
-      expect(generateFontFamily('Baloo Bhaina 2', fallbackArray)).toStrictEqual(
-        expected
-      );
-    });
-  });
-
-  describe('Text/util/draftMarkupToContent', () => {
-    it('should return valid HTML for content', () => {
-      const input = '<em>Hello World!';
-      expect(draftMarkupToContent(input, false)).toStrictEqual(
-        '<em>Hello World!</em>'
-      );
-
-      const nestedInput = '<em>Hello <strong>World, again!';
-      expect(draftMarkupToContent(nestedInput, false)).toStrictEqual(
-        '<em>Hello <strong>World, again!</strong></em>'
-      );
-
-      const invalidInput = '<em>Hello</strong> world<u font="> not';
-      expect(draftMarkupToContent(invalidInput, false)).toStrictEqual(
-        '<em>Hello world</em>'
-      );
-    });
-
-    it('should add <strong> wrapper when bold', () => {
-      const input = 'Hello World!';
-      expect(draftMarkupToContent(input, true)).toStrictEqual(
-        '<strong>Hello World!</strong>'
-      );
+      expect(
+        generateFontFamily({
+          family: 'Baloo Bhaina 2',
+          fallbacks: fallbackArray,
+        })
+      ).toStrictEqual(expected);
     });
   });
 });

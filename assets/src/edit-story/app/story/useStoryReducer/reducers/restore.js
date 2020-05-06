@@ -28,13 +28,12 @@
  * @param {Object} payload New state to set.
  * @return {Object} New state
  */
-function restore(state, { pages, current, selection, story, capabilities }) {
+function restore(state, { pages, current, selection, story }) {
   if (!Array.isArray(pages) || pages.length === 0) {
     return state;
   }
 
   const newStory = typeof story === 'object' ? story : {};
-  const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const newCurrent = pages.some(({ id }) => id === current)
     ? current
     : pages[0].id;
@@ -45,7 +44,6 @@ function restore(state, { pages, current, selection, story, capabilities }) {
     current: newCurrent,
     selection: newSelection,
     story: newStory,
-    capabilities: newCapabilities,
   };
 }
 

@@ -17,6 +17,9 @@ dist: xenial
 
 language: php
 
+php:
+  - 7.3
+
 notifications:
   email:
     on_success: never
@@ -25,10 +28,8 @@ notifications:
 cache:
   directories:
     - $HOME/.cache/composer
-    - $HOME/.jest-cache
     - $HOME/.npm
     - $HOME/.nvm/.cache
-    - $HOME/.wp-cli/.cache
 
 branches:
   only:
@@ -39,120 +40,29 @@ env:
     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 install:
-  - set -e
-  - |
-    if [ "$JS" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      nvm install
-      npm ci
-    fi
-  - |
-    if ! [ -z $PUPPETEER_PRODUCT ] ; then
-      npm ci puppeteer
-    fi
-  - |
-    if [ "$PHP" = "1" ] || [ "$E2E" = "1" ] || [ "$DEPLOY_PLUGIN" = "1" ]; then
-      composer install --no-interaction
-    fi
-  - set +e
-
-before_script:
-  - set -e
-  - |
-    if [ "$COVERAGE" != "1" ]; then
-      phpenv config-rm xdebug.ini || echo "xdebug.ini does not exist."
-    fi
-  - set +e
+  - nvm install
+  - npm ci
+  - composer install --no-interaction
 
 script:
-  - set -e
-  - |
-    if [ "$JS" = "1" ]; then
-      if [ "$COVERAGE" = "1" ]; then
-        npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
-        bash <(curl -s https://codecov.io/bash) -cF javascript -f build/logs/lcov.info
-      else
-        npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache"
-      fi
-    fi
-  - |
-    if [ "$PHP" = "1" ]; then
-      bash bin/install-wp-tests.sh wordpress_test root '' localhost
-      if [ "$COVERAGE" = "1" ]; then
-        npm run test:php -- --coverage-clover build/logs/clover.xml
-        bash <(curl -s https://codecov.io/bash) -cF php -f build/logs/clover.xml
-      else
-        npm run test:php
-      fi
-    fi
-  - |
-    if [ "$E2E" = "1" ]; then
-      npm run build:js
-      npm run env:start
-      npm run test:e2e
-      npm run env:stop
-    fi
-  - set +e
+  - npm run build:js
 
-jobs:
-  fast_finish: true
-  # These need to be exact matches, including whitespace!
-  allow_failures:
-    # PHP unit tests (nightly, WordPress trunk)
-    - env: PHP=1 WP_VERSION=trunk
-      php: nightly
-  include:
-    - stage: test
-      name: JavaScript unit tests
-      php: 7.4
-      env: JS=1
-    - name: PHP unit tests (7.4, WordPress latest)
-      php: 7.4
-      env: PHP=1 WP_VERSION=latest
-    - name: PHP unit tests (7.3, WordPress latest)
-      php: 7.3
-      env: PHP=1 WP_VERSION=latest
-    - name: PHP unit tests (7.0, WordPress latest)
-      php: 7.0
-      env: PHP=1 WP_VERSION=latest
-    - name: PHP unit tests (5.6, WordPress latest)
-      php: 5.6
-      env: PHP=1 WP_VERSION=latest
-    - name: PHP unit tests (nightly, WordPress trunk)
-      php: nightly
-      env: PHP=1 WP_VERSION=trunk
-    - name: PHP and JavaScript unit tests (7.4, WordPress latest, with code coverage)
-      php: 7.4
-      env: JS=1 PHP=1 COVERAGE=1 WP_VERSION=latest
-    - name: E2E tests (Chromium)
-      php: 7.4
-      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=
-    - name: E2E tests (Firefox)
-      php: 7.4
-      env: E2E=1 WP_VERSION=latest PUPPETEER_SKIP_CHROMIUM_DOWNLOAD= PUPPETEER_PRODUCT=firefox
-    - stage: deploy
-      if: (NOT type IN (pull_request)) AND (branch = master)
-      php: 7.3
-      name: Deploy Storybook / Playground
-      env: DEPLOY_PLUGIN=1
-      before_deploy:
-        - npm run build:storybook
-      deploy:
-        - provider: pages
-          edge: true
-          github_token: $GITHUB_TOKEN
-          keep_history: true
-          local_dir: build/storybook
-          on:
-            branch: master
-        - provider: script
-          edge: true
-          # This script also runs `npm run build`.
-          script: bin/deploy-to-test-environment.sh
-          on:
-            branch: master
+before_deploy:
+  - npm run build:storybook
 
-services:
-  - mysql
+deploy:
+  - provider: pages
+    edge: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    local_dir: build/storybook
+    on:
+      branch: master
+  - provider: script
+    edge: true
+    script: bin/deploy-to-test-environment.sh
+    on:
+      branch: master
 
 addons:
   ssh_known_hosts: codeserver.dev.6b7f1eeb-705b-4201-864d-2007030c8372.drush.in:2222

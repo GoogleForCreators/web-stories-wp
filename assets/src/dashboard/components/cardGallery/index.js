@@ -23,7 +23,7 @@ import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../constants';
+import { PAGE_RATIO } from '../../constants/pageStructure';
 import { UnitsProvider } from '../../../edit-story/units';
 import {
   ActiveCard,
@@ -62,7 +62,7 @@ function CardGallery({ children }) {
   const activeCardSize = useMemo(
     () => ({
       width: activeCardWidth,
-      height: activeCardWidth * PAGE_RATIO,
+      height: activeCardWidth / PAGE_RATIO,
     }),
     [activeCardWidth]
   );
@@ -70,7 +70,7 @@ function CardGallery({ children }) {
   const miniCardSize = useMemo(
     () => ({
       width: miniCardWidth,
-      height: miniCardWidth * PAGE_RATIO,
+      height: miniCardWidth / PAGE_RATIO,
     }),
     [miniCardWidth]
   );
@@ -78,7 +78,7 @@ function CardGallery({ children }) {
   const miniWrapperCardSize = useMemo(
     () => ({
       width: miniCardWidth + CARD_WRAPPER_BUFFER,
-      height: miniCardWidth * PAGE_RATIO + CARD_WRAPPER_BUFFER,
+      height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
     }),
     [miniCardWidth]
   );
@@ -137,10 +137,7 @@ function CardGallery({ children }) {
 }
 
 CardGallery.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CardGallery;

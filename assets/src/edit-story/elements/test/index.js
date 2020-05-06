@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { createNewElement, createPage } from '../';
+
 describe('Element', () => {
   describe('createNewElement', () => {
     it('should create an element with just default attributes', () => {
@@ -40,11 +42,7 @@ describe('Element', () => {
       const textElement = createNewElement('text', atts);
       expect(textElement.rotationAngle).toStrictEqual(0);
       expect(textElement.width).toStrictEqual(100);
-      expect(textElement.fontFallback).toStrictEqual([
-        'Helvetica Neue',
-        'Helvetica',
-        'sans-serif',
-      ]);
+      expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
     });
 
     it('should throw if trying to create unknown element type', () => {

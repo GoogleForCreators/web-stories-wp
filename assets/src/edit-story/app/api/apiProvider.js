@@ -214,7 +214,8 @@ function APIProvider({ children }) {
   const getAllFonts = useCallback(() => {
     return apiFetch({ path: fonts }).then((data) =>
       data.map((font) => ({
-        value: font.name,
+        name: font.family,
+        value: font.family,
         ...font,
       }))
     );
@@ -249,10 +250,7 @@ function APIProvider({ children }) {
 }
 
 APIProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default APIProvider;

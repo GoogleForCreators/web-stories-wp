@@ -19,11 +19,6 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
-
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
@@ -52,14 +47,11 @@ export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
   LAYOUT_SQUISHABLE: 2,
-  LAYOUT_FIXED: 2,
+  LAYOUT_FIXED: 3,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
 };
-
-export const PAGE_RATIO = PAGE_HEIGHT / PAGE_WIDTH;
-export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
   MY_STORIES: '/',
@@ -156,7 +148,7 @@ export const STORY_SORT_OPTIONS = {
   DATE_CREATED: 'date',
   LAST_MODIFIED: 'modified',
   LAST_OPENED: 'modified',
-  CREATED_BY: 'author',
+  CREATED_BY: 'story_author',
 };
 
 export const SORT_DIRECTION = {

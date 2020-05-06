@@ -145,7 +145,7 @@ function MediaProvider({ children }) {
   const generatePoster = useCallback(() => {
     const looper = async () => {
       await media.reduce((accumulatorPromise, el) => {
-        return accumulatorPromise.then(() => processor(el));
+        return accumulatorPromise.then(() => el && processor(el));
       }, Promise.resolve());
     };
     if (media) {
@@ -173,10 +173,7 @@ function MediaProvider({ children }) {
 }
 
 MediaProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default MediaProvider;

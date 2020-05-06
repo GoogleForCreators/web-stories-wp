@@ -81,14 +81,11 @@ fi
 # Install and build.
 cd "$project_dir"
 
-echo "Starting build process..."
-
-echo "Installing npm dependencies"
-npm install --silent
-
 echo "Building plugin"
 npm run build:js --silent
 npm run build:plugin --silent -- --prerelease
+
+echo "Bundling plugin"
 npm run bundle-plugin --silent -- --copy
 
 echo "Moving files to repository"

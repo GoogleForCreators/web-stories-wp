@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
@@ -33,18 +34,11 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-  bold: false,
-  fontFamily: 'Roboto',
-  fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-  fontWeight: 400,
+  font: TEXT_ELEMENT_DEFAULT_FONT,
   fontSize: 36,
-  fontStyle: 'normal',
   backgroundColor: createSolid(196, 196, 196),
-  color: createSolid(0, 0, 0),
-  letterSpacing: 0,
   lineHeight: 1.3,
   textAlign: 'initial',
-  textDecoration: 'none',
   padding: {
     vertical: 0,
     horizontal: 0,

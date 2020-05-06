@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 
 import styled from 'styled-components';
+import { useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -31,12 +32,17 @@ import styled from 'styled-components';
 import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import {
+  BEZIER,
   BUTTON_TYPES,
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
 } from '../../constants';
+
+import useFocusOut from '../../utils/useFocusOut';
+import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
@@ -58,29 +64,75 @@ export const PageContent = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  left: ${({ fullWidth }) => (fullWidth ? '0' : 'max(15%, 190px)')};
+  left: ${({ fullWidth }) =>
+    fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    left: 0;
+  }
 `;
 
-export const LeftRailContainer = styled.nav`
+export const LeftRailContainer = styled.nav.attrs({
+  ['data-testid']: 'dashboard-left-rail',
+})`
   position: absolute;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   top: 0;
   bottom: 0;
-  width: max(15%, 190px);
+  width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
+  transition: transform 0.25s ${BEZIER.outCubic}, visibility 0.25s linear;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    padding-left: 0;
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+    transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
+  }
 `;
 
 export function LeftRail() {
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
+  const leftRailRef = useRef(null);
+  const upperContentRef = useRef(null);
+
+  const {
+    state: { sideBarVisible },
+    actions: { toggleSideBar },
+  } = useNavContext();
+
+  const onContainerClickCapture = useCallback(
+    ({ target }) => {
+      if (
+        target === leftRailRef.current ||
+        target === upperContentRef.current
+      ) {
+        return;
+      }
+      toggleSideBar();
+    },
+    [toggleSideBar, leftRailRef, upperContentRef]
+  );
+
+  const handleSideBarClose = useCallback(() => {
+    if (sideBarVisible) {
+      toggleSideBar();
+    }
+  }, [toggleSideBar, sideBarVisible]);
+
+  useFocusOut(leftRailRef, handleSideBarClose, [sideBarVisible]);
 
   return (
-    <LeftRailContainer>
-      <div>
+    <LeftRailContainer
+      onClickCapture={onContainerClickCapture}
+      ref={leftRailRef}
+      isOpen={sideBarVisible}
+    >
+      <div ref={upperContentRef}>
         <LogoPlaceholder />
         <Content>
           <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
@@ -122,3 +174,5 @@ export function LeftRail() {
     </LeftRailContainer>
   );
 }
+
+export { default as NavMenuButton } from './menuButton';

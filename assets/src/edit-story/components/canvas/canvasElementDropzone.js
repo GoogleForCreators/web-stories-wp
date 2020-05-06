@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { useDropTargets } from '../dropTargets';
 import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
@@ -95,7 +95,7 @@ function CanvasElementDropzone({ children }) {
 }
 
 CanvasElementDropzone.propTypes = {
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CanvasElementDropzone;

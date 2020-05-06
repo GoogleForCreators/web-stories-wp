@@ -24,34 +24,40 @@ import PropTypes from 'prop-types';
  */
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
-import { ViewHeader } from '../../../components';
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
+import { ViewHeader, NavMenuButton } from '../../../components';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
-  padding: 10px 0;
+  padding: 10px 0 0;
 `;
 
 const StyledHeader = styled(ViewHeader)`
-  display: inline-block;
-  width: 25%;
-  justify-content: baseline;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('38px', '24px', '--squish-progress')};
+  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
   white-space: nowrap;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
+  }
 `;
 
 const Content = styled.div`
-  display: inline-block;
-  justify-content: baseline;
-  width: 50%;
+  display: flex;
+  align-items: ${({ centerContent }) =>
+    centerContent ? 'center' : 'flex-end'};
+  height: 100%;
 `;
 
 const SearchContainer = styled.div`
   display: inline-block;
   vertical-align: baseline;
   position: relative;
-  width: 25%;
+  width: 100%;
   height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
@@ -64,33 +70,54 @@ const SearchInner = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: min(190px, 100%);
+  width: min(${DASHBOARD_LEFT_NAV_WIDTH}px, 100%);
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const HeadingBodyWrapper = styled(BodyWrapper)`
+  display: grid;
+  grid-template-columns: 25% 50% 1fr;
+  align-items: center;
+  height: 75px;
+  padding-bottom: 3px;
+  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+`;
+
+export const HeaderToggleButtonContainer = styled.div`
+  display: block;
+  flex: 1;
+  height: 65%;
 `;
 
 const PageHeading = ({
   children,
   defaultTitle,
   searchPlaceholder,
-  filteredStories = [],
+  centerContent = false,
+  stories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
   return (
     <Container>
-      <BodyWrapper>
-        <StyledHeader>{defaultTitle}</StyledHeader>
-        <Content>{children}</Content>
+      <HeadingBodyWrapper>
+        <StyledHeader>
+          <NavMenuButton showOnlyOnSmallViewport />
+          {defaultTitle}
+        </StyledHeader>
+        <Content centerContent={centerContent}>{children}</Content>
         <SearchContainer>
           <SearchInner>
             <TypeaheadSearch
               placeholder={searchPlaceholder}
               currentValue={typeaheadValue}
-              filteredStories={filteredStories}
+              stories={stories}
               handleChange={handleTypeaheadChange}
             />
           </SearchInner>
         </SearchContainer>
-      </BodyWrapper>
+      </HeadingBodyWrapper>
     </Container>
   );
 };
@@ -100,9 +127,10 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  centerContent: PropTypes.bool,
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };

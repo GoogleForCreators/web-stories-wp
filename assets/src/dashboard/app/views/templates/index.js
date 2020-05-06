@@ -38,6 +38,7 @@ import {
   ScrollToTop,
 } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
+
 import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
@@ -55,17 +56,18 @@ import {
 } from '../shared';
 import useTemplateFilters from './templateFilters';
 
-const ExploreFiltersContainer = styled.div`
-  padding: 0 20px 20px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
-  flex-direction: row;
+const HeadingDropdownsContainer = styled.div`
   display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
 
   ${DropdownContainer} {
-    margin-right: 15px;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 `;
-
 function TemplatesGallery() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
@@ -75,6 +77,7 @@ function TemplatesGallery() {
   );
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+    isGrid: viewStyle === VIEW_STYLE.GRID,
   });
   const {
     state: {
@@ -147,10 +150,10 @@ function TemplatesGallery() {
       return (
         <BodyWrapper>
           <StoryGridView
-            filteredStories={orderedTemplates}
-            centerActionLabel={__('View details', 'web-stories')}
+            stories={orderedTemplates}
+            centerActionLabel={__('View', 'web-stories')}
             bottomActionLabel={__('Use template', 'web-stories')}
-            updateStory={() => {}}
+            isTemplate
           />
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -179,44 +182,46 @@ function TemplatesGallery() {
           <Layout.Provider>
             <Layout.Squishable>
               <PageHeading
-                defaultTitle={__('Explore Templates', 'web-stories')}
+                centerContent
+                defaultTitle={__('Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
-                filteredStories={orderedTemplates}
+                stories={orderedTemplates}
                 handleTypeaheadChange={setTypeaheadValue}
                 typeaheadValue={typeaheadValue}
-              />
-              <ExploreFiltersContainer>
-                <Dropdown
-                  ariaLabel={__('Category Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Category', 'web-stories')}
-                  items={selectedCategories}
-                  onClear={clearAllCategories}
-                  onChange={onNewCategorySelected}
-                />
-                <Dropdown
-                  ariaLabel={__('Style Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Style', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
-                />
-                <Dropdown
-                  ariaLabel={__('Color Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Color', 'web-stories')}
-                  items={selectedColors}
-                  onClear={clearAllColors}
-                  onChange={onNewColorSelected}
-                />
-                <Dropdown
-                  ariaLabel={__('Layout Type Dropdown', 'web-stories')}
-                  type={DROPDOWN_TYPES.PANEL}
-                  placeholder={__('Layout Type', 'web-stories')}
-                  items={[]}
-                  onChange={() => {}}
-                />
-              </ExploreFiltersContainer>{' '}
+              >
+                <HeadingDropdownsContainer>
+                  <Dropdown
+                    ariaLabel={__('Category Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Category', 'web-stories')}
+                    items={selectedCategories}
+                    onClear={clearAllCategories}
+                    onChange={onNewCategorySelected}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Style Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Style', 'web-stories')}
+                    items={[]}
+                    onChange={() => {}}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Color Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Color', 'web-stories')}
+                    items={selectedColors}
+                    onClear={clearAllColors}
+                    onChange={onNewColorSelected}
+                  />
+                  <Dropdown
+                    ariaLabel={__('Layout Type Dropdown', 'web-stories')}
+                    type={DROPDOWN_TYPES.PANEL}
+                    placeholder={__('Layout Type', 'web-stories')}
+                    items={[]}
+                    onChange={() => {}}
+                  />
+                </HeadingDropdownsContainer>
+              </PageHeading>
               <BodyViewOptions
                 listBarLabel={listBarLabel}
                 layoutStyle={viewStyle}

@@ -42,18 +42,28 @@ const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
-    content: __('Heading', 'web-stories'),
+    content: `<span style="font-weight: 700">${__(
+      'Heading',
+      'web-stories'
+    )}</span>`,
     fontSize: dataFontEm(2),
-    fontWeight: 700,
-    fontFamily: 'Open Sans',
+    font: {
+      family: 'Open Sans',
+      service: 'fonts.google.com',
+    },
   },
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    content: __('Subheading', 'web-stories'),
+    content: `<span style="font-weight: 600">${__(
+      'Subheading',
+      'web-stories'
+    )}</span>`,
     fontSize: dataFontEm(1.5),
-    fontWeight: 600,
-    fontFamily: 'Open Sans',
+    font: {
+      family: 'Open Sans',
+      service: 'fonts.google.com',
+    },
   },
   {
     id: 'body-text',
@@ -63,8 +73,10 @@ const PRESETS = [
       'web-stories'
     ),
     fontSize: dataFontEm(1.1),
-    fontWeight: 400,
-    fontFamily: 'Roboto',
+    font: {
+      family: 'Roboto',
+      service: 'fonts.google.com',
+    },
   },
 ];
 

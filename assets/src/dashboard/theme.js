@@ -71,7 +71,7 @@ const colors = {
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
   gray100: `1px solid ${colors.gray100}`,
-  transparent: '1px solid none',
+  transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
 };
 
@@ -153,20 +153,13 @@ const theme = {
   fonts: {
     heading1: {
       family: themeFonts.primary,
-      size: 38,
-      minSize: 28,
+      size: 26,
+      minSize: 18,
       lineHeight: 53,
       minLineHeight: 43,
       letterSpacing: -0.005,
       minLetterSpacing: -0.01,
     },
-    // heading2 is not in use
-    // heading2: {
-    //   family: themeFonts.primary,
-    //   size: 24,
-    //   lineHeight: 34,
-    //   weight: 500,
-    // },
     heading3: {
       family: themeFonts.primary,
       size: 20,
@@ -280,9 +273,26 @@ const theme = {
       desktop: 20,
       min: 10,
     },
+    // specific to detail template
     large: {
       desktop: 80,
       tablet: 40,
+    },
+  },
+  pageHorizontalGutter: {
+    desktop: 20,
+    tablet: 20,
+    largeDisplayPhone: 20,
+    smallDisplayPhone: 10,
+    min: 10,
+  },
+  grid: {
+    columnGap: {
+      desktop: 10,
+      tablet: 10,
+      largeDisplayPhone: 10,
+      smallDisplayPhone: 10,
+      min: 10,
     },
   },
   previewWidth: {

@@ -20,6 +20,7 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
+  CREATE_TEMPLATE_FROM_STORY: 'create_template_from_story',
   LOADING_TEMPLATES: 'loading_templates',
   FETCH_TEMPLATES_SUCCESS: 'fetch_templates_success',
   FETCH_TEMPLATES_FAILURE: 'fetch_templates_failure',
@@ -38,6 +39,9 @@ export const defaultTemplatesState = {
 
 function templateReducer(state, action) {
   switch (action.type) {
+    case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY: {
+      return state;
+    }
     case ACTION_TYPES.LOADING_TEMPLATES: {
       return {
         ...state,
