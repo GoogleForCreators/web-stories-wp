@@ -39,7 +39,7 @@ function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
       }
 
       // Someone has already put something in the clipboard. Do not override.
-      if (clipboardData.types.length !== 0) {
+      if (clipboardData?.types?.length) {
         return;
       }
 
