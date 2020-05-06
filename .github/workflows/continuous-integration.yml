@@ -484,7 +484,7 @@ jobs:
           path: build/*.zip
 
   deploy-to-wiki:
-    name: Deploy artefacts to wiki for easier QA testing
+    name: Deploy QA artifacts
     runs-on: ubuntu-latest
     needs: build
     steps:
