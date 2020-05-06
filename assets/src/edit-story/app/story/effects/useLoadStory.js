@@ -26,18 +26,6 @@ import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
 import { migrate } from '../../../migration';
 
-/**
- * Get the permission by checking for fields in the REST API.
- *
- * @param {Object} post Current post object.
- * @param {Object} post._links Embed links
- * @param {string} field Requested field.
- * @return {boolean} If user has capability, defaults to false.
- */
-const getPerm = (post, field) => {
-  return Boolean(post?._links?.[field]);
-};
-
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore }) {
   const {
@@ -123,17 +111,12 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           defaultPageDuration: storyData?.defaultPageDuration,
         };
 
-        const hasPublishAction = getPerm(post, 'wp:action-publish');
-        const hasAssignAuthorAction = getPerm(post, 'wp:action-assign-author');
-
-        const capabilities = { hasPublishAction, hasAssignAuthorAction };
         // TODO read current page and selection from deeplink?
         restore({
           pages,
           story,
           selection: [],
           current: null, // will be set to first page by `restore`
-          capabilities,
         });
       });
     }

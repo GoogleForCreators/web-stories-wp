@@ -20,9 +20,9 @@
 import { TemplateNavBar } from '../';
 
 export default {
-  title: 'Dashboard/Components/TemplateNavigationBar',
+  title: 'Dashboard/Components/TemplateNavBar',
 };
 
-export const _defualt = () => {
-  return <TemplateNavBar title={'Demo'} />;
+export const _default = () => {
+  return <TemplateNavBar />;
 };

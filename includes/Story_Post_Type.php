@@ -144,6 +144,8 @@ class Story_Post_Type {
 		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
+
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
@@ -187,6 +189,25 @@ class Story_Post_Type {
 		);
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * Add story_author as allowed orderby value for REST API.
+	 *
+	 * @param array         $query_params Array of allowed query params.
+	 * @param \WP_Post_Type $post_type Post type.
+	 * @return array Array of query params.
+	 */
+	public static function filter_rest_collection_params( $query_params, $post_type ) {
+		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
+			return $query_params;
+		}
+
+		if ( empty( $query_params['orderby'] ) ) {
+			return $query_params;
+		}
+		$query_params['orderby']['enum'][] = 'story_author';
+		return $query_params;
 	}
 
 	/**
@@ -281,57 +302,12 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$post             = get_post();
-		$story_id         = ( $post ) ? $post->ID : null;
-		$rest_base        = self::POST_TYPE_SLUG;
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+		$settings = self::get_editor_settings();
 
-		if ( $post_type_object instanceof \WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		}
-
-		// Media settings.
-		$max_upload_size = wp_max_upload_size();
-		if ( ! $max_upload_size ) {
-			$max_upload_size = 0;
-		}
-
-		$preview_query_args = [
-			'preview_id'    => $story_id,
-			// Leveraging the default WP post preview logic.
-			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
-		];
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
-			[
-				'id'     => 'edit-story',
-				'config' => [
-					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-					'isRTL'            => is_rtl(),
-					'timeFormat'       => get_option( 'time_format' ),
-					'allowedMimeTypes' => self::get_allowed_mime_types(),
-					'allowedFileTypes' => self::get_allowed_file_types(),
-					'postType'         => self::POST_TYPE_SLUG,
-					'storyId'          => $story_id,
-					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
-					'maxUpload'        => $max_upload_size,
-					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
-					'api'              => [
-						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
-						'media'    => '/wp/v2/media',
-						'users'    => '/wp/v2/users',
-						'statuses' => '/wp/v2/statuses',
-						'fonts'    => '/web-stories/v1/fonts',
-						'link'     => '/web-stories/v1/link',
-					],
-					'metadata'         => [
-						'publisher'       => self::get_publisher_data(),
-						'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
-						'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
-					],
-				],
-			]
+			$settings
 		);
 
 		wp_register_style(
@@ -353,6 +329,79 @@ class Story_Post_Type {
 			wp_styles()->registered['wp-admin']->deps,
 			[ 'forms' ]
 		);
+	}
+
+	/**
+	 * Get edittor settings as an array.
+	 *
+	 * @return array
+	 */
+	public static function get_editor_settings() {
+		$post                     = get_post();
+		$story_id                 = ( $post ) ? $post->ID : null;
+		$rest_base                = self::POST_TYPE_SLUG;
+		$has_publish_action       = false;
+		$has_assign_author_action = false;
+		$has_upload_media_action  = current_user_can( 'upload_files' );
+		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( $post_type_object instanceof \WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
+				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
+			}
+			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
+				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
+			}
+		}
+
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
+		$preview_query_args = [
+			'preview_id'    => $story_id,
+			// Leveraging the default WP post preview logic.
+			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
+		];
+
+		$settings = [
+			'id'     => 'edit-story',
+			'config' => [
+				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+				'isRTL'            => is_rtl(),
+				'timeFormat'       => get_option( 'time_format' ),
+				'allowedMimeTypes' => self::get_allowed_mime_types(),
+				'allowedFileTypes' => self::get_allowed_file_types(),
+				'postType'         => self::POST_TYPE_SLUG,
+				'storyId'          => $story_id,
+				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
+				'maxUpload'        => $max_upload_size,
+				'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
+				'capabilities'     => [
+					'hasPublishAction'      => $has_publish_action,
+					'hasAssignAuthorAction' => $has_assign_author_action,
+					'hasUploadMediaAction'  => $has_upload_media_action,
+				],
+				'api'              => [
+					'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
+					'media'    => '/wp/v2/media',
+					'users'    => '/wp/v2/users',
+					'statuses' => '/wp/v2/statuses',
+					'fonts'    => '/web-stories/v1/fonts',
+					'link'     => '/web-stories/v1/link',
+				],
+				'metadata'         => [
+					'publisher'       => self::get_publisher_data(),
+					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+				],
+			],
+		];
+
+		return $settings;
 	}
 
 	/**

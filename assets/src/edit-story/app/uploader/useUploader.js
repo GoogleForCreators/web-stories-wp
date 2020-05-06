@@ -23,7 +23,6 @@ import { useCallback } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -31,6 +30,7 @@ import { createInterpolateElement } from '@wordpress/element';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import { useMedia } from '../media';
+import createError from '../../utils/createError';
 
 function useUploader(refreshLibrary = true) {
   const {
@@ -47,6 +47,7 @@ function useUploader(refreshLibrary = true) {
       video: allowedVideoMimeTypes,
     },
     allowedFileTypes,
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
@@ -67,14 +68,21 @@ function useUploader(refreshLibrary = true) {
   );
 
   const uploadFile = (file) => {
-    // TODO Add permission check here, see Gutenberg's userCan function.
-    if (!fileSizeCheck(file)) {
-      const sizeError = new Error();
-      sizeError.name = 'SizeError';
-      sizeError.file = file.name;
-      sizeError.isUserError = true;
+    if (!hasUploadMediaAction) {
+      const message = __(
+        'Sorry, you are unable to upload files.',
+        'web-stories'
+      );
+      const permissionError = createError(
+        'PermissionError',
+        file.name,
+        message
+      );
 
-      sizeError.message = sprintf(
+      throw permissionError;
+    }
+    if (!fileSizeCheck(file)) {
+      const message = sprintf(
         /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
         __(
           'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
@@ -83,29 +91,24 @@ function useUploader(refreshLibrary = true) {
         bytesToMB(file.size),
         bytesToMB(maxUpload)
       );
+      const sizeError = createError('SizeError', file.name, message);
+
       throw sizeError;
     }
 
     if (!isValidType(file)) {
-      const validError = new Error();
-      validError.isUserError = true;
-      validError.name = 'ValidError';
-      validError.file = file.name;
-
       /* translators: %s is a list of allowed file extensions. */
-      validError.message = createInterpolateElement(
-        sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
-        ),
-        {
-          b: <b />,
-        }
+      const message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s to upload.', 'web-stories'),
+        allowedFileTypes.join(
+          /* translators: delimiter used in a list */
+          __(', ', 'web-stories')
+        )
       );
+
+      const validError = createError('ValidError', file.name, message);
+
       throw validError;
     }
 

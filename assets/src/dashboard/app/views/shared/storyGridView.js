@@ -55,7 +55,7 @@ const StoryGrid = styled(CardGrid)`
 `;
 
 const StoryGridView = ({
-  filteredStories,
+  stories,
   centerActionLabel,
   bottomActionLabel,
   createTemplateFromStory,
@@ -117,7 +117,7 @@ const StoryGridView = ({
 
   return (
     <StoryGrid>
-      {filteredStories.map((story) => (
+      {stories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
             centerAction={{
@@ -160,7 +160,7 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,

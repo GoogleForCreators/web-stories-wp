@@ -53,6 +53,7 @@ import {
   NoResults,
   StoryGridView,
   StoryListView,
+  HeaderToggleButtonContainer,
 } from '../shared';
 
 const DefaultBodyText = styled.p`
@@ -192,7 +193,7 @@ function MyStories() {
             updateStory={updateStory}
             createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
-            filteredStories={orderedStories}
+            stories={orderedStories}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
@@ -205,7 +206,7 @@ function MyStories() {
       case VIEW_STYLE.LIST:
         return (
           <StoryListView
-            filteredStories={orderedStories}
+            stories={orderedStories}
             storySort={currentStorySort}
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
@@ -296,21 +297,23 @@ function MyStories() {
               <PageHeading
                 defaultTitle={__('My Stories', 'web-stories')}
                 searchPlaceholder={__('Search Stories', 'web-stories')}
-                filteredStories={orderedStories}
+                stories={orderedStories}
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () =>
-                        handleFilterStatusUpdate(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: status === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
+                <HeaderToggleButtonContainer>
+                  <ToggleButtonGroup
+                    buttons={STORY_STATUSES.map((storyStatus) => {
+                      return {
+                        handleClick: () =>
+                          handleFilterStatusUpdate(storyStatus.value),
+                        key: storyStatus.value,
+                        isActive: status === storyStatus.value,
+                        text: storyStatus.label,
+                      };
+                    })}
+                  />
+                </HeaderToggleButtonContainer>
               </PageHeading>
               {storiesViewControls}
             </Layout.Squishable>
