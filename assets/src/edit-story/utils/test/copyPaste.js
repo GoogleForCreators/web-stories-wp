@@ -183,6 +183,23 @@ describe('copyPaste utils', () => {
       });
     });
 
+    it('should ignore the elements comment if sentinel is not story-elements', () => {
+      const templateIncorrectSentinel = document.createElement('template');
+      const payload = JSON.stringify({
+        sentinel: 'foo',
+        items: [TEXT_ELEMENT, IMAGE_ELEMENT],
+      }).replace(/--/g, DOUBLE_DASH_ESCAPE);
+      templateIncorrectSentinel.innerHTML = `<!-- ${payload} -->`;
+
+      const processedElements = processPastedElements(
+        templateIncorrectSentinel.content,
+        {
+          elements: [],
+        }
+      );
+      expect(processedElements).toStrictEqual([]);
+    });
+
     it('should not find elements without a comment in document fragment', () => {
       const templateWithoutComment = document.createElement('template');
       const payload = JSON.stringify({
