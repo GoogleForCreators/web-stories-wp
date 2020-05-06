@@ -447,6 +447,7 @@ jobs:
 
       - name: Bundle plugin
         run: |
+          echo 'assets/images/templates' >> .distignore
           npm run build:js
           npm run build:plugin
           npm run bundle-plugin web-stories-composer.zip -- --composer --skip-delete
