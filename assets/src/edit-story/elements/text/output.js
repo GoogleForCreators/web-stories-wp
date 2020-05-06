@@ -18,33 +18,24 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
+import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import {
-  draftMarkupToContent,
-  generateParagraphTextStyle,
-  getHighlightLineheight,
-} from './util';
+import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
  */
 export function TextOutputWithUnits({
-  element: {
-    bold,
-    content,
-    color,
-    backgroundColor,
-    backgroundTextMode,
-    padding,
-    ...rest
-  },
+  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -78,8 +69,8 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...generatePatternStyles(color, 'color'),
     ...bgColor,
+    color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
 
@@ -138,6 +129,13 @@ export function TextOutputWithUnits({
     background: 'none',
   };
 
+  // Setting the text color of the entire block to black essentially removes all inline
+  // color styling allowing us to apply transparent to all of them.
+  const contentWithoutColor = useMemo(
+    () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
+    [content]
+  );
+
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
@@ -146,7 +144,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: contentWithoutColor,
               }}
             />
           </span>
@@ -156,7 +154,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </span>
@@ -169,7 +167,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }
