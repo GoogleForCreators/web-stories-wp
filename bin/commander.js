@@ -189,7 +189,7 @@ function generateZipFile(filename) {
   });
 }
 
-function bundlePlugin(target, copy, composer) {
+function bundlePlugin(target, copy, composer, skipDelete) {
   createBuildDir();
 
   if (!composer) {
@@ -211,7 +211,10 @@ function bundlePlugin(target, copy, composer) {
     return;
   }
 
-  deleteExistingZipFiles();
+  if (!skipDelete) {
+    deleteExistingZipFiles();
+  }
+
   generateZipFile(target);
 }
 
@@ -236,9 +239,10 @@ program
     'Only copy files to build/ folder without creating a ZIP file'
   )
   .option('--composer', 'Create Composer-ready ZIP file without PHP autoloader')
+  .option('--skip-delete', 'Do not delete existing ZIP file')
   .description('Bundle Web Stories plugin as ZIP file')
-  .action(async (filename, { copy, composer }) => {
-    await bundlePlugin(filename, copy, composer);
+  .action(async (filename, { copy, composer, skipDelete }) => {
+    await bundlePlugin(filename, copy, composer, skipDelete);
 
     console.log('Plugin successfully bundled!');
   });

@@ -449,15 +449,15 @@ jobs:
         run: |
           npm run build:js
           npm run build:plugin
-          npm run bundle-plugin web-stories.zip
-          npm run bundle-plugin web-stories-composer.zip -- --composer
+          npm run bundle-plugin web-stories-composer.zip -- --composer --skip-delete
+          npm run bundle-plugin web-stories.zip -- --skip-delete
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           NODE_ENV=development npx webpack
           npm run build:plugin
-          npm run bundle-plugin web-stories-dev.zip
+          npm run bundle-plugin web-stories-dev.zip -- --skip-delete
 
       - name: Upload full bundle
         uses: actions/upload-artifact@v2
