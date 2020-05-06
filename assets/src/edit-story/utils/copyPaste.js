@@ -77,8 +77,8 @@ export function processPastedNodeList(nodeList, content) {
 /**
  * Processes pasted content to find story elements.
  *
- * @param {string} content
- * @param {Object} currentPage
+ * @param {DocumentFragment} content NodeList representation of the content.
+ * @param {Object}           currentPage Current page.
  * @return {[]} Array of found elements.
  */
 export function processPastedElements(content, currentPage) {

@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { processPastedNodeList } from '../copyPaste';
+import { processPastedElements, processPastedNodeList } from '../copyPaste';
+import { PAGE_WIDTH } from '../../constants';
 
 const getNodeList = (content) => {
   const template = document.createElement('template');
@@ -76,6 +77,102 @@ describe('copyPaste utils', () => {
       expect(processPastedNodeList(nodeList, '')).toStrictEqual(
         '<strong>Hello <em>World</em>!</strong>'
       );
+    });
+  });
+
+  describe('processPastedElements', () => {
+    const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
+    const TEXT_ELEMENT = {
+      opacity: 100,
+      rotationAngle: 0,
+      type: 'text',
+      content: 'Fill in some text',
+      x: 91,
+      y: 23,
+      basedOn: 'text',
+    };
+    const IMAGE_ELEMENT = {
+      type: 'image',
+      x: PAGE_WIDTH,
+      y: 41,
+      width: 220,
+      height: 202,
+      basedOn: 'image',
+    };
+
+    let template;
+
+    beforeEach(() => {
+      template = document.createElement('template');
+      const payload = JSON.stringify({
+        sentinel: 'story-elements',
+        items: [TEXT_ELEMENT, IMAGE_ELEMENT],
+      }).replace(/--/g, DOUBLE_DASH_ESCAPE);
+      const htmlContent = '<div>Foo</div>';
+      const innerHTML = `<!-- ${payload} -->${htmlContent}`;
+
+      template.innerHTML = innerHTML;
+    });
+
+    it('should detect elements as expected', () => {
+      const processedElements = processPastedElements(template.content, {
+        elements: [],
+      });
+      expect(processedElements).toHaveLength(2);
+      expect(processedElements[0]).toStrictEqual({
+        ...TEXT_ELEMENT,
+        id: expect.any(String),
+      });
+      expect(processedElements[1]).toStrictEqual({
+        ...IMAGE_ELEMENT,
+        id: expect.any(String),
+      });
+    });
+
+    it('should set the position values based on the origin elements correctly', () => {
+      const currentPage = {
+        elements: [
+          {
+            id: 'text',
+          },
+          {
+            id: 'image',
+          },
+        ],
+      };
+      const processedElements = processPastedElements(
+        template.content,
+        currentPage
+      );
+      expect(processedElements[0]).toStrictEqual({
+        ...TEXT_ELEMENT,
+        x: 121,
+        y: 53,
+        id: expect.any(String),
+      });
+      expect(processedElements[1]).toStrictEqual({
+        ...IMAGE_ELEMENT,
+        x: 30,
+        y: 71,
+        id: expect.any(String),
+      });
+    });
+
+    it('should not find elements without a comment in document fragment', () => {
+      const templateWithoutComment = document.createElement('template');
+      const payload = JSON.stringify({
+        sentinel: 'story-elements',
+        items: [TEXT_ELEMENT, IMAGE_ELEMENT],
+      }).replace(/--/g, DOUBLE_DASH_ESCAPE);
+
+      templateWithoutComment.innerHTML = `${payload}`;
+      const processedElements = processPastedElements(
+        templateWithoutComment.content,
+        {
+          elements: [],
+        }
+      );
+      expect(processedElements).toStrictEqual([]);
     });
   });
 });
