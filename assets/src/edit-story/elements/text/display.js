@@ -127,14 +127,14 @@ function TextDisplay({
       : '';
   });
 
+  // Setting the text color of the entire block to black essentially removes all inline
+  // color styling allowing us to apply transparent to all of them.
+  const contentWithoutColor = useMemo(
+    () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
+    [content]
+  );
+
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
-    const foregroundContent = content;
-    // Setting the text color of the entire block to black essentially removes all inline
-    // color styling allowing us to apply transparent to all of them.
-    const backgroundContent = useMemo(
-      () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
-      [content]
-    );
     return (
       <HighlightWrapperElement ref={ref} {...props}>
         <HighlightElement {...props}>
@@ -142,7 +142,7 @@ function TextDisplay({
             <BackgroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: backgroundContent,
+                __html: contentWithoutColor,
               }}
             />
           </MarginedElement>
@@ -152,7 +152,7 @@ function TextDisplay({
             <ForegroundSpan
               {...props}
               dangerouslySetInnerHTML={{
-                __html: foregroundContent,
+                __html: content,
               }}
             />
           </MarginedElement>
