@@ -34,9 +34,7 @@ describe('useGlobalClipboardHandlers', () => {
     const windowSpy = jest.spyOn(global, 'window', 'get');
     windowSpy.mockImplementation(() => ({
       ...originalWindow,
-      getSelection() {
-        return false;
-      },
+      getSelection: () => false,
     }));
 
     renderHook(() => {

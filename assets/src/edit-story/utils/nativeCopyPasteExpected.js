@@ -25,10 +25,9 @@ function nativeCopyPasteExpected() {
   const { tagName, type, isContentEditable } = activeElement;
   const isInput = () => {
     return (
-      ('input' === tagName.toLowerCase() ||
-        'textarea' === tagName.toLowerCase() ||
-        'true' === isContentEditable) &&
-      ('text' === type || 'number' === type)
+      'textarea' === tagName.toLowerCase() ||
+      (('input' === tagName.toLowerCase() || 'true' === isContentEditable) &&
+        ('text' === type || 'number' === type))
     );
   };
 
