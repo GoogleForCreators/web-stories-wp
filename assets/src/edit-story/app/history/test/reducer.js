@@ -121,7 +121,7 @@ describe('reducer', () => {
       expect(result.entries).toHaveLength(initialState.entries.length);
     });
 
-    it('should set replay the current page relevant to the latest replayed change', () => {
+    it('should dynamically set the current page based on the relevant change', () => {
       const requestedState = { current: 2, pages: [{ id: 2, foo: 'foo' }] };
       const initialState = {
         ...EMPTY_STATE,
