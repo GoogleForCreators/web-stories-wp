@@ -79,6 +79,7 @@ describe('copyPaste utils', () => {
     mask: {
       type: 'rectangle',
     },
+    basedOn: 'shape',
     isBackground: true,
     backgroundColor: createSolid(1, 1, 1),
   };
@@ -145,7 +146,7 @@ describe('copyPaste utils', () => {
       template = document.createElement('template');
       const payload = JSON.stringify({
         sentinel: 'story-elements',
-        items: [TEXT_ELEMENT, IMAGE_ELEMENT],
+        items: [TEXT_ELEMENT, IMAGE_ELEMENT, SHAPE_ELEMENT],
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
       const htmlContent = '<div>Foo</div>';
       const innerHTML = `<!-- ${payload} -->${htmlContent}`;
@@ -157,13 +158,17 @@ describe('copyPaste utils', () => {
       const processedElements = processPastedElements(template.content, {
         elements: [],
       });
-      expect(processedElements).toHaveLength(2);
+      expect(processedElements).toHaveLength(3);
       expect(processedElements[0]).toStrictEqual({
         ...TEXT_ELEMENT,
         id: expect.any(String),
       });
       expect(processedElements[1]).toStrictEqual({
         ...IMAGE_ELEMENT,
+        id: expect.any(String),
+      });
+      expect(processedElements[2]).toStrictEqual({
+        ...SHAPE_ELEMENT,
         id: expect.any(String),
       });
     });
