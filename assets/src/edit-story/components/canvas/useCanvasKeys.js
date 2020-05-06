@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
-import { LAYER_DIRECTIONS } from '../../constants';
+import { LAYER_DIRECTIONS, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 
 const MOVE_COARSE_STEP = 10;
 
@@ -34,11 +35,13 @@ const MOVE_COARSE_STEP = 10;
 function useCanvasKeys(ref) {
   const {
     actions: {
+      addElements,
       arrangeSelection,
       clearSelection,
       deleteSelectedElements,
       updateSelectedElements,
     },
+    state: { selectedElements },
   } = useStory();
 
   // Return focus back to the canvas when another section loses the focus.
@@ -98,6 +101,29 @@ function useCanvasKeys(ref) {
       arrangeSelection({ position: getLayerDirection(key, shiftKey) }),
     [arrangeSelection]
   );
+
+  const cloneHandler = () => {
+    if (selectedElements.length === 0) {
+      return;
+    }
+    const placementDiff = 20;
+    const allowedBorderDistance = 20;
+    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
+      const cloneX = x + placementDiff;
+      const cloneY = y + placementDiff;
+      return {
+        x: PAGE_WIDTH - cloneX > allowedBorderDistance ? cloneX : placementDiff,
+        y:
+          PAGE_HEIGHT - cloneY > allowedBorderDistance ? cloneY : placementDiff,
+        id: uuidv4(),
+        basedOn: id,
+        ...rest,
+      };
+    });
+    addElements({ elements: clonedElements });
+  };
+
+  useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }
 
 function getArrowDir(key, pos, neg) {

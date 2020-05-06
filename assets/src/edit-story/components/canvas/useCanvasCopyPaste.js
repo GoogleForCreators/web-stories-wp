@@ -26,9 +26,7 @@ import { useCallback } from 'react';
 import { useStory } from '../../app';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import processPastedNodeList from '../../utils/processPastedNodeList';
-import { useGlobalKeyDownEffect } from '../keyboard';
 import processPastedElements from '../../utils/processPastedElements';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import addElementsToClipboard from '../../utils/addElementsToClipboard';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
@@ -105,7 +103,6 @@ function useCanvasGlobalKeys() {
             addedElements = rawPasteHandler(template.content);
           }
           if (addedElements) {
-            // @todo Should we always prevent default?
             evt.preventDefault();
           }
         }
@@ -130,29 +127,7 @@ function useCanvasGlobalKeys() {
     [elementPasteHandler, rawPasteHandler, uploadWithPreview]
   );
 
-  const cloneHandler = () => {
-    if (selectedElements.length === 0) {
-      return;
-    }
-    const placementDiff = 20;
-    const allowedBorderDistance = 20;
-    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
-      const cloneX = x + placementDiff;
-      const cloneY = y + placementDiff;
-      return {
-        x: PAGE_WIDTH - cloneX > allowedBorderDistance ? cloneX : placementDiff,
-        y:
-          PAGE_HEIGHT - cloneY > allowedBorderDistance ? cloneY : placementDiff,
-        id: uuidv4(),
-        basedOn: id,
-        ...rest,
-      };
-    });
-    addElements({ elements: clonedElements });
-  };
-
   useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
-  useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
 }
