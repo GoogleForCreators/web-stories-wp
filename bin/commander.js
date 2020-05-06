@@ -25,6 +25,9 @@ const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
 const STABLE_TAG_REGEX = /Stable tag:\s*(.+)/;
 
+const ASSETS_URL_CDN = 'https://google.github.io/web-stories-wp/plugin-assets';
+const ASSETS_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_ASSETS_URL',\s*([^)]*?)\s*\);/;
+
 const PLUGIN_DIR = process.cwd();
 const README_FILE = PLUGIN_DIR + '/readme.txt';
 const PLUGIN_FILE = PLUGIN_DIR + '/web-stories.php';
@@ -94,8 +97,25 @@ function updateVersionNumbers(version = undefined, isPrerelease = false) {
   }
 }
 
-function buildPlugin(isPrerelease) {
-  updateVersionNumbers(isPrerelease);
+function updateAssetsURL() {
+  let pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
+  const versionConstant = pluginFileContent.match(ASSETS_URL_CONSTANT_REGEX);
+
+  writeFileSync(
+    PLUGIN_FILE,
+    pluginFileContent.replace(
+      versionConstant[0],
+      `define( 'WEBSTORIES_ASSETS_URL', '${ASSETS_URL_CDN}' );`
+    )
+  );
+}
+
+function buildPlugin(version, isPrerelease, cdn) {
+  updateVersionNumbers(version, isPrerelease);
+
+  if (cdn) {
+    updateAssetsURL();
+  }
 }
 
 /**
@@ -223,9 +243,10 @@ program
   .alias('build')
   .arguments('[version]')
   .option('-p, --prerelease', 'Whether this is a pre-release')
+  .option('--cdn', 'Point assets URL to CDN')
   .description('Build Web Stories plugin')
-  .action(async (version, { prerelease }) => {
-    await buildPlugin(version, prerelease);
+  .action(async (version, { prerelease, cdn }) => {
+    await buildPlugin(version, prerelease, cdn);
 
     console.log('Plugin successfully built!');
   });
