@@ -41,7 +41,7 @@ export const _default = () => {
   return (
     <PageHeading
       centerContent={boolean('Center Inner Content', false)}
-      filteredStories={[]}
+      stories={[]}
       handleTypeaheadChange={(value) => action('Search with value: ', value)}
       defaultTitle={text('Page Heading', 'My Stories')}
       searchPlaceholder={text('Search Placeholder', 'Find Stories')}

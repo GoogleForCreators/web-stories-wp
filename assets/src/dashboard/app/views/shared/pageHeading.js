@@ -94,7 +94,7 @@ const PageHeading = ({
   defaultTitle,
   searchPlaceholder,
   centerContent = false,
-  filteredStories = [],
+  stories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
@@ -111,7 +111,7 @@ const PageHeading = ({
             <TypeaheadSearch
               placeholder={searchPlaceholder}
               currentValue={typeaheadValue}
-              filteredStories={filteredStories}
+              stories={stories}
               handleChange={handleTypeaheadChange}
             />
           </SearchInner>
@@ -129,7 +129,7 @@ PageHeading.propTypes = {
   centerContent: PropTypes.bool,
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };
