@@ -20,8 +20,8 @@ import createError from '../createError';
 
 describe('createError', () => {
   it('should return an error', () => {
-    expect(
-      createError('testing', 'test.jpg', 'hello there').toString()
-    ).toStrictEqual('testing: hello there');
+    expect(() => {
+      throw createError('testing', 'test.jpg', 'hello there');
+    }).toThrow('hello there');
   });
 });
