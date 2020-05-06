@@ -60,7 +60,8 @@ export const InnerDropdown = styled.button`
     justify-content: center;
     align-items: center;
     width: auto;
-    padding: 3px 10px;
+    padding: 3px 20px;
+    padding-left: ${hasSelectedItems ? '10px' : '20px'};
     margin: 0;
     background-color: ${
       theme.dropdown[type][isOpen ? 'activeBackground' : 'background']

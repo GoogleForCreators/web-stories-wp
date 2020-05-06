@@ -208,7 +208,7 @@ const theme = {
     },
     pill: {
       family: themeFonts.primary,
-      weight: 500,
+      weight: 400,
       size: 14,
       lineHeight: 20,
       letterSpacing: 0.01,
@@ -224,7 +224,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
+      weight: '400',
       letterSpacing: 0.01,
     },
     textInput: {
