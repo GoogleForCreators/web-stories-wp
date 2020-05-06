@@ -71,7 +71,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -96,8 +96,8 @@ jobs:
       - name: Annotate Code Linting Results
         uses: ataylorme/eslint-annotate-action@1.0.4
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          report-json: "build/lint-js-report.json"
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          report-json: 'build/lint-js-report.json'
 
   markdownlint:
     name: Markdown Code Style
@@ -113,7 +113,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -148,7 +148,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -328,7 +328,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -405,7 +405,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -447,18 +447,68 @@ jobs:
 
       - name: Bundle plugin
         run: |
+          npm run build:js
           npm run build:plugin
           npm run bundle-plugin web-stories.zip
           npm run bundle-plugin web-stories-composer.zip -- --composer
 
+      - name: Bundle development version
+        run: |
+          rm -rf assets/css/* assets/js/*
+          NODE_ENV=development npx webpack
+          npm run build:plugin
+          npm run bundle-plugin web-stories-dev.zip
+
       - name: Upload full bundle
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: web-stories.zip
           path: build/web-stories.zip
 
       - name: Upload composer bundle
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: web-stories-composer.zip
           path: build/web-stories-composer.zip
+
+      - name: Upload development bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-stories-dev.zip
+          path: build/web-stories-dev.zip
+
+      - name: Upload bundles in combined ZIP file
+        uses: actions/upload-artifact@v2
+        with:
+          name: All ZIP Files
+          path: build/*.zip
+
+  deploy-to-wiki:
+    name: Deploy artefacts to wiki for easier QA testing
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}.wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download combined ZIP file
+        uses: actions/download-artifact@v2
+        with:
+          name: All ZIP Files
+          path: ${{ github.ref }}
+
+      - name: Commit updates
+        run: |
+          git add .
+          git status
+          git commit -m "Build and publish ${{ github.ref }}"
+          git pull --no-edit --quiet
+          git push origin master
+        env:
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ github.actor }}

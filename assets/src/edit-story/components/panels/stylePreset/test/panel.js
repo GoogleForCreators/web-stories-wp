@@ -28,6 +28,7 @@ import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { getShapePresets, getTextPresets } from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+
 jest.mock('../utils');
 
 function setupPanel(extraStylePresets, extraStateProps) {
@@ -91,7 +92,6 @@ describe('Panels/StylePreset', () => {
     },
   };
   const STYLE_PRESET = {
-    color: TEST_COLOR_2,
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
   };
@@ -149,13 +149,13 @@ describe('Panels/StylePreset', () => {
       expect(newEditButton).toBeDefined();
     });
 
-    it('should add a text color preset', () => {
+    it('should add a text color preset if other text styles are default or missing', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
-            color: [TEST_COLOR_2],
+            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
             backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
             font: TEXT_ELEMENT_DEFAULT_FONT,
           },
@@ -193,6 +193,7 @@ describe('Panels/StylePreset', () => {
           {
             id: '1',
             type: 'text',
+            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
             ...STYLE_PRESET,
           },
         ],
@@ -204,7 +205,7 @@ describe('Panels/StylePreset', () => {
 
       getTextPresets.mockImplementation(() => {
         return {
-          textStyles: [STYLE_PRESET],
+          textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
         };
       });
 
@@ -217,7 +218,7 @@ describe('Panels/StylePreset', () => {
           stylePresets: {
             textColors: [],
             fillColors: [],
-            textStyles: [STYLE_PRESET],
+            textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
           },
         },
       });
@@ -365,10 +366,17 @@ describe('Panels/StylePreset', () => {
       expect(updateElementsById).toHaveBeenCalledTimes(1);
       expect(updateElementsById).toHaveBeenCalledWith({
         elementIds: ['1'],
-        properties: {
-          color: TEST_COLOR,
-        },
+        properties: expect.any(Function),
       });
+      const updaterFunction = updateElementsById.mock.calls[0][0].properties;
+      const partiallyBlueContent = {
+        content: 'Hello <span style="color: blue">World</span>',
+      };
+      const updatedContent = updaterFunction(partiallyBlueContent);
+      const expectedContent = {
+        content: '<span style="color: #010101">Hello World</span>',
+      };
+      expect(updatedContent).toStrictEqual(expectedContent);
     });
   });
 });
