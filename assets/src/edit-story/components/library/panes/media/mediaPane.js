@@ -310,7 +310,7 @@ function MediaPane(props) {
                   />
                 ))}
             </Column>
-            {hasMore && (
+            {isMediaLoading && (
               <Loading ref={refContainerFooter}>
                 {__('Loading…', 'web-stories')}
               </Loading>
