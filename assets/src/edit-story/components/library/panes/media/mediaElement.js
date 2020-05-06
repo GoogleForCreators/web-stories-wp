@@ -118,6 +118,7 @@ const MediaElement = ({
   onInsert,
 }) => {
   const {
+    id: resourceId,
     src,
     type,
     width: originalWidth,
@@ -185,7 +186,7 @@ const MediaElement = ({
       }
     }
     return (
-      <Container>
+      <Container data-testid="mediaElement" data-id={resourceId}>
         <Image
           key={src}
           src={imageSrc}

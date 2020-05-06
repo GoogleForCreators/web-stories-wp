@@ -96,6 +96,7 @@ function FrameElement({ element }) {
   return (
     <Wrapper
       ref={elementRef}
+      data-testid="frame"
       data-element-id={id}
       {...box}
       onMouseDown={(evt) => {

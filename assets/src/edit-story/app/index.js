@@ -20,6 +20,7 @@
 import { ThemeProvider, StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */

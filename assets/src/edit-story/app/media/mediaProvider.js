@@ -29,6 +29,9 @@ import useMediaReducer from './useMediaReducer';
 import useUploadMedia from './useUploadMedia';
 import Context from './context';
 import { getResourceFromAttachment } from './utils';
+import providerWithProfile from '../../utils/providerWithProfile';
+
+const Provider = providerWithProfile('MediaProvider', Context.Provider);
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
@@ -169,7 +172,7 @@ function MediaProvider({ children }) {
     },
   };
 
-  return <Context.Provider value={context}>{children}</Context.Provider>;
+  return <Provider value={context}>{children}</Provider>;
 }
 
 MediaProvider.propTypes = {

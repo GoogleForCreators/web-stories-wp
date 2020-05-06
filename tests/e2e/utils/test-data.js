@@ -14,5 +14,17 @@
  * limitations under the License.
  */
 
-export { createNewStory } from './create-new-story';
-export { exportData, popStats } from './test-data';
+export function exportData(page, name) {
+  return page.evaluate(
+    (name) => window.storyEditorExports && window.storyEditorExports[name],
+    name
+  );
+}
+
+export function popStats(page) {
+  return page.evaluate(() => {
+    const value = window.storyEditorStats;
+    window.storyEditorStats = null;
+    return value;
+  });
+}

@@ -33,6 +33,9 @@ import usePageBackgrounds from './effects/usePageBackgrounds';
 import useStoryReducer from './useStoryReducer';
 import useDeleteStory from './actions/useDeleteStory';
 import useAutoSave from './actions/useAutoSave';
+import providerWithProfile from '../../utils/providerWithProfile';
+
+const Provider = providerWithProfile('StoryProvider', Context.Provider);
 
 function StoryProvider({ storyId, children }) {
   const {
@@ -140,7 +143,7 @@ function StoryProvider({ storyId, children }) {
     },
   };
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return <Provider value={state}>{children}</Provider>;
 }
 
 StoryProvider.propTypes = {
