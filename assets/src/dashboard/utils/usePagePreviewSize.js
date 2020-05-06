@@ -89,7 +89,7 @@ export default function usePagePreviewSize(options = {}) {
 
   const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
     setAvailableContainerSpace(getTrueInnerWidth());
-  }, 800);
+  }, 250);
 
   const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
 
