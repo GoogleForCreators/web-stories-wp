@@ -145,7 +145,7 @@ function MediaProvider({ children }) {
   const generatePoster = useCallback(() => {
     const looper = async () => {
       await media.reduce((accumulatorPromise, el) => {
-        return accumulatorPromise.then(() => processor(el));
+        return accumulatorPromise.then(() => el && processor(el));
       }, Promise.resolve());
     };
     if (media) {

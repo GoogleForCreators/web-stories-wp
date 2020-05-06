@@ -181,6 +181,7 @@ function TemplatesGallery() {
           <Layout.Provider>
             <Layout.Squishable>
               <PageHeading
+                centerContent
                 defaultTitle={__('Templates', 'web-stories')}
                 searchPlaceholder={__('Template Stories', 'web-stories')}
                 filteredStories={orderedTemplates}
