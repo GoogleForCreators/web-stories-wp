@@ -227,7 +227,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11, vertical: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -240,7 +241,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -253,7 +255,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { vertical: 12 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -266,7 +269,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: '', vertical: '' },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -280,7 +284,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11, vertical: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -294,7 +299,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11, vertical: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -308,7 +314,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -322,7 +329,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -336,7 +344,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -350,7 +359,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { vertical: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -364,7 +374,8 @@ describe('Panels/TextStyle', () => {
         {
           locked: false,
         },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
