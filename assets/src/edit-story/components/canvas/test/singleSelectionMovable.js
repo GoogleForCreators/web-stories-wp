@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["rotateAndExpect"] }] */
-
 /**
  * External dependencies
  */
@@ -56,7 +54,7 @@ WrapperWithRef.propTypes = {
   children: PropTypes.node,
 };
 
-describe('Selection', () => {
+describe('singleSelectionMovable', () => {
   let updateSelectedElements;
   let target;
   let storyContext;
@@ -82,7 +80,7 @@ describe('Selection', () => {
     return render(
       <StoryContext.Provider value={storyContext}>
         <CanvasContext.Provider value={canvasContext}>
-          <Selection targetEl={target} selectedElement={element} />
+          <Selection />
         </CanvasContext.Provider>
       </StoryContext.Provider>,
       { wrapper: Wrapper }
