@@ -2,6 +2,11 @@
 
 Throughout the project some environment variables are in use:
 
+## Application
+
+**DISABLE_PREVENT** (bool):
+Set this environment variable to disable unwanted `beforeunload` dialogs when reloading or closing the browser. Mostly useful during development. Default: `false`
+
 ## Bundler
 
 **NODE_ENV** (`production`|`development`|`test`):
