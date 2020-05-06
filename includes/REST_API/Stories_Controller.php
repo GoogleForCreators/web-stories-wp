@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Dashboard;
 use Google\Web_Stories\Story_Post_Type;
 use stdClass;
 use WP_Error;
@@ -209,5 +210,41 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+	/**
+	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 *
+	 * @param string    $orderby Original orderby clause.
+	 * @param \WP_Query $query WP_Query object.
+	 * @return string Orderby clause.
+	 */
+	public function filter_posts_orderby( $orderby, $query ) {
+		global $wpdb;
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+			return $orderby;
+		}
+		if ( 'story_author' !== $query->get( 'orderby' ) ) {
+			return $orderby;
+		}
+
+		$current_user = get_current_user_id();
+		if ( ! $current_user ) {
+			return $orderby;
+		}
+		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC', $current_user );
+	}
+
+	/**
+	 * Retrieves a collection of web stories.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		$response = parent::get_items( $request );
+		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
+		return $response;
 	}
 }

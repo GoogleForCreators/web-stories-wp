@@ -28,36 +28,40 @@ import { KEYS, Z_INDEX } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const Menu = styled.ul`
-  width: 100%;
-  align-items: flex-start;
-  background-color: ${({ theme }) => theme.colors.white};
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  overflow: hidden;
-  padding: 0;
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
+  ${({ theme, isOpen }) => `
+    width: 100%;
+    align-items: flex-start;
+    background-color: ${theme.colors.white};
+    box-shadow: ${theme.expandedTypeahead.boxShadow};
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 0;
+    opacity: ${isOpen ? 1 : 0};
+    overflow: hidden;
+    padding: 5px 0;
+    pointer-events: ${isOpen ? 'auto' : 'none'};
+    z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
+  `}
 `;
 Menu.propTypes = {
   isOpen: PropTypes.bool,
 };
 
 const MenuItem = styled.li`
-  padding: 14px 16px 14px 44px;
-  background: ${({ isHovering, theme }) =>
-    isHovering ? theme.colors.gray50 : 'none'};
-  color: ${({ theme }) => theme.colors.gray700};
-  cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
-  display: flex;
-  font-family: ${({ theme }) => theme.fonts.typeaheadOptions.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadOptions.size}px;
-  line-height: ${({ theme }) => theme.fonts.typeaheadOptions.lineHeight}px;
-  font-weight: ${({ theme }) => theme.fonts.typeaheadOptions.weight};
-  letter-spacing: ${({ theme }) =>
-    theme.fonts.typeaheadOptions.letterSpacing}em;
-  width: 100%;
+  ${({ theme, isDisabled, isHovering }) => `
+    padding: 10px 20px;
+    background: ${isHovering ? theme.colors.gray25 : 'none'};
+    color: ${theme.colors.gray700};
+    cursor: ${isDisabled ? 'default' : 'pointer'};
+    display: flex;
+    font-family: ${theme.fonts.typeaheadOptions.family};
+    font-size: ${theme.fonts.typeaheadOptions.size}px;
+    line-height: ${theme.fonts.typeaheadOptions.lineHeight}px;
+    font-weight: ${theme.fonts.typeaheadOptions.weight};
+    letter-spacing: ${theme.fonts.typeaheadOptions.letterSpacing}em;
+    width: 100%;
+  `}
 `;
 
 MenuItem.propTypes = {

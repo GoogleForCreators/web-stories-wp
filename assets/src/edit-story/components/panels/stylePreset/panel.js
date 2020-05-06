@@ -24,6 +24,10 @@ import { useCallback, useEffect, useState } from 'react';
  */
 import { useStory } from '../../../app/story';
 import stripHTML from '../../../utils/stripHTML';
+import {
+  COLOR_PRESETS_PER_ROW,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../constants';
 import { Panel } from './../panel';
 import { getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
@@ -163,11 +167,24 @@ function StylePresetPanel() {
     }
   };
 
-  // @Todo confirm initial height.
+  const rowHeight = 35;
+
+  // Assume at least 2 rows if there's at least 1 preset:
+  // One for presets, one for the label.
+  const colorRows =
+    colorPresets.length > 0
+      ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
+      : 0;
+  const styleRows =
+    textStyles.length > 0
+      ? Math.max(2, textStyles.length / STYLE_PRESETS_PER_ROW)
+      : 0;
+  const initialHeight = (colorRows + styleRows) * rowHeight;
+
   return (
     <Panel
       name="stylepreset"
-      initialHeight={Math.min(200, window.innerHeight / 3)}
+      initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
       resizeable
     >
       <PresetsHeader
