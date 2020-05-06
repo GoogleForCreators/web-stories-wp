@@ -50,10 +50,10 @@ const DISTIGNORE_FILE = PLUGIN_DIR + '/.distignore';
  */
 function updateVersionNumbers(version = undefined, isPrerelease = false) {
   // Get the current commit hash. Used for pre-releases.
-  const currentCommitHash = execSync('git rev-parse HEAD')
-    .toString()
-    .trim()
-    .slice(0, 7);
+  // GITHUB_SHA is available during the GitHub Actions workflow.
+  const currentCommitHash = process.env.GITHUB_SHA
+    ? process.env.GITHUB_SHA.toString().trim().slice(0, 7)
+    : execSync('git rev-parse --short=7 HEAD');
 
   let pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
   const currentVersion = pluginFileContent.match(VERSION_REGEX)[1].trim();
