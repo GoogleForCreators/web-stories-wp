@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -31,23 +32,35 @@ import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal
 import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
 import Toggle from '../../form/toggle';
 
+const ToggleContainer = styled.div`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 function FlipControls({ value, onChange }) {
   return (
     <>
-      <Toggle
-        title={__('Flip horizontally', 'web-stories')}
-        aria-label={__('Flip horizontally', 'web-stories')}
-        icon={<FlipHorizontal />}
-        value={value.horizontal === true}
-        onChange={(horizontal) => onChange({ ...value, horizontal })}
-      />
-      <Toggle
-        title={__('Flip vertically', 'web-stories')}
-        aria-label={__('Flip vertically', 'web-stories')}
-        icon={<FlipVertical />}
-        value={value.vertical === true}
-        onChange={(vertical) => onChange({ ...value, vertical })}
-      />
+      <ToggleContainer>
+        <Toggle
+          title={__('Flip horizontally', 'web-stories')}
+          aria-label={__('Flip horizontally', 'web-stories')}
+          icon={<FlipHorizontal />}
+          value={value.horizontal === true}
+          onChange={(horizontal) => onChange({ ...value, horizontal })}
+        />
+      </ToggleContainer>
+      <ToggleContainer>
+        <Toggle
+          title={__('Flip vertically', 'web-stories')}
+          aria-label={__('Flip vertically', 'web-stories')}
+          icon={<FlipVertical />}
+          value={value.vertical === true}
+          onChange={(vertical) => onChange({ ...value, vertical })}
+        />
+      </ToggleContainer>
     </>
   );
 }
