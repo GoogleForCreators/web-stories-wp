@@ -55,9 +55,10 @@ const StoryGrid = styled(CardGrid)`
 `;
 
 const StoryGridView = ({
-  filteredStories,
+  stories,
   centerActionLabel,
   bottomActionLabel,
+  createTemplateFromStory,
   updateStory,
   trashStory,
   duplicateStory,
@@ -81,6 +82,10 @@ const StoryGridView = ({
           duplicateStory(story);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE:
+          createTemplateFromStory(story);
+          break;
+
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
           if (
             window.confirm(
@@ -99,7 +104,7 @@ const StoryGridView = ({
           break;
       }
     },
-    [trashStory, duplicateStory]
+    [createTemplateFromStory, duplicateStory, trashStory]
   );
 
   const handleOnRenameStory = useCallback(
@@ -112,7 +117,7 @@ const StoryGridView = ({
 
   return (
     <StoryGrid>
-      {filteredStories.map((story) => (
+      {stories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
             centerAction={{
@@ -155,9 +160,10 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
+  createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,
   trashStory: PropTypes.func,
   duplicateStory: PropTypes.func,

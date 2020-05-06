@@ -26,10 +26,10 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import { useFont } from '../../../app';
-import { DEFAULT_EDITOR_PAGE_HEIGHT, PAGE_HEIGHT } from '../../../constants';
+import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
 import { FontPropType } from '../../../types';
 
-const PREVIEW_EM_SCALE = DEFAULT_EDITOR_PAGE_HEIGHT / PAGE_HEIGHT;
+const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
 const Preview = styled.button`
   position: relative;

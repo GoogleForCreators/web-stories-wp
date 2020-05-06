@@ -25,13 +25,13 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { clamp, throttleToAnimationFrame } from '../../utils';
 
 export const SQUISH_LENGTH = 90;
 export const SQUISH_CSS_VAR = '--squish-progress';
-
-const generateThreshold = (steps) => {
-  return Array.from({ length: steps + 1 }, (_, i) => i / steps);
-};
 
 export const dispatchSquishEvent = (el, progress) => {
   /**
@@ -48,47 +48,46 @@ export const LayoutContext = createContext(null);
 const Provider = ({ children }) => {
   const [squishContentHeight, setSquishContentHeight] = useState(0);
   const scrollFrameRef = useRef(null);
-  const squishDriverRef = useRef(null);
 
   useLayoutEffect(() => {
-    const squishDriverEl = squishDriverRef.current;
     const scrollFrameEl = scrollFrameRef.current;
-    if (!(squishDriverEl || scrollFrameEl)) {
+    if (!scrollFrameEl) {
       return () => {};
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio) {
-            dispatchSquishEvent(squishDriverEl, 1 - entry.intersectionRatio);
-          }
-        });
-      },
-      {
-        root: scrollFrameEl,
-        threshold: generateThreshold(1000),
+    let prevProgress;
+    const handleScroll = throttleToAnimationFrame((e) => {
+      const progress = clamp(e.target.scrollTop / SQUISH_LENGTH, [0, 1]);
+      /**
+       * Only dispatch squish event if we're within
+       * the squish range.
+       */
+      if (!(progress === 1 && prevProgress === 1)) {
+        dispatchSquishEvent(scrollFrameEl, progress);
       }
-    );
+      prevProgress = progress;
+    });
 
-    observer.observe(squishDriverEl);
+    scrollFrameEl.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
-      observer.unobserve(squishDriverEl);
+      scrollFrameEl.removeEventListener('scroll', handleScroll, {
+        passive: true,
+      });
     };
   }, []);
 
   const addSquishListener = useCallback((listener) => {
-    if (!squishDriverRef.current) {
+    if (!scrollFrameRef.current) {
       return;
     }
-    squishDriverRef.current.addEventListener('squish', listener);
+    scrollFrameRef.current.addEventListener('squish', listener);
   }, []);
 
   const removeSquishListener = useCallback((listener) => {
-    if (!squishDriverRef.current) {
+    if (!scrollFrameRef.current) {
       return;
     }
-    squishDriverRef.current.removeEventListener('squish', listener);
+    scrollFrameRef.current.removeEventListener('squish', listener);
   }, []);
 
   const scrollToTop = useCallback(() => {
@@ -106,7 +105,6 @@ const Provider = ({ children }) => {
     () => ({
       state: {
         scrollFrameRef,
-        squishDriverRef,
         squishContentHeight,
       },
       actions: {

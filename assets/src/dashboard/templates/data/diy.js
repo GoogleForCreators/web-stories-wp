@@ -78,7 +78,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page1_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page1_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -379,7 +379,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_org_cross.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_org_cross.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -467,7 +467,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page2_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page2_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -654,7 +654,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page3_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page3_image1.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -956,7 +956,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -1101,7 +1101,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -1364,7 +1364,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_arrow.png`,
               width: 128,
               height: 128,
               posterId: 0,
@@ -1410,7 +1410,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page6_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page6_bg.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -1673,7 +1673,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_wh_cross.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_wh_cross.png`,
               width: 150,
               height: 158,
               posterId: 0,
@@ -1761,7 +1761,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -2012,7 +2012,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_up_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -2239,7 +2239,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page8_image1.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image1.jpg`,
               width: 220,
               height: 131,
               posterId: 0,
@@ -2278,7 +2278,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page8_image2.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image2.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -2324,7 +2324,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page8_image3.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image3.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -2736,7 +2736,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_arrow.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_arrow.png`,
               width: 128,
               height: 128,
               posterId: 0,
@@ -2782,7 +2782,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3375,7 +3375,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3414,7 +3414,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3457,7 +3457,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3500,7 +3500,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -4026,7 +4026,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_fb.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_fb.png`,
               width: 150,
               height: 300,
               posterId: 0,
@@ -4064,7 +4064,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_insta.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_insta.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -4102,7 +4102,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_yt.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_yt.png`,
               width: 150,
               height: 102,
               posterId: 0,
@@ -4140,7 +4140,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/diy/diy_icon_tw.png`,
+              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_tw.png`,
               width: 151,
               height: 119,
               posterId: 0,

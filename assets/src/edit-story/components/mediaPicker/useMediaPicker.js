@@ -28,6 +28,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useMedia from '../../app/media/useMedia';
+import { useConfig } from '../../app/config';
+import { useSnackbar } from '../../app/snackbar';
 
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
@@ -40,6 +42,10 @@ export default function useMediaPicker({
   const {
     actions: { uploadVideoPoster },
   } = useMedia();
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const { showSnackbar } = useSnackbar();
   useEffect(() => {
     // Work around that forces default tab as upload tab.
     wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
@@ -57,6 +63,17 @@ export default function useMediaPicker({
   }, [uploadVideoPoster]);
 
   const openMediaPicker = (evt) => {
+    // If a user does not have the rights to upload to the media library, do not show the media picker.
+    if (!hasUploadMediaAction) {
+      const message = __(
+        'Sorry, you are unable to upload files.',
+        'web-stories'
+      );
+      showSnackbar({ message });
+      evt.preventDefault();
+      return false;
+    }
+
     // Create the media frame.
     const fileFrame = wp.media({
       title,
@@ -83,6 +100,9 @@ export default function useMediaPicker({
     fileFrame.open();
 
     evt.preventDefault();
+
+    // Might be useful to return the media frame here.
+    return fileFrame;
   };
 
   return openMediaPicker;

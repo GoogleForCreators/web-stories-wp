@@ -26,23 +26,39 @@ import styled from 'styled-components';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
 
 const DashboardGrid = styled.div`
+  ${({ columnHeight, columnWidth, theme }) => `
   display: grid;
   width: 100%;
-  align-content: space-between;
-  grid-column-gap: 10px;
+  grid-column-gap: ${theme.grid.columnGap.desktop}px;
   grid-row-gap: 20px;
-  grid-template-columns: ${({ columnWidth }) =>
-    `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
+  grid-template-columns:
+    repeat(auto-fill, ${columnWidth}px);
+  grid-template-rows: minmax(${columnHeight}px, auto);
 
-  @media ${({ theme }) => theme.breakpoint.min} {
-    grid-template-columns: repeat(2, 1fr);
+  ${theme.breakpoint.tablet} {
+    grid-column-gap: ${theme.grid.columnGap.tablet}px;
   }
+  ${theme.breakpoint.largeDisplayPhone} {
+    grid-column-gap: ${theme.grid.columnGap.largeDisplayPhone}px;
+  }
+  ${theme.breakpoint.smallDisplayPhone} {
+    grid-column-gap: ${theme.grid.columnGap.smallDisplayPhone}px;
+  }
+  ${theme.breakpoint.min} {
+    grid-column-gap: ${theme.grid.columnGap.min}px;
+  }
+
+`}
 `;
 
 const CardGrid = ({ children }) => {
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
-  return <DashboardGrid columnWidth={pageSize.width}>{children}</DashboardGrid>;
+  return (
+    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
+      {children}
+    </DashboardGrid>
+  );
 };
 
 CardGrid.propTypes = {

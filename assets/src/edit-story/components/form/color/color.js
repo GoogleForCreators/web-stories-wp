@@ -64,7 +64,7 @@ function ColorInput({
 }
 
 ColorInput.propTypes = {
-  value: PatternPropType,
+  value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,

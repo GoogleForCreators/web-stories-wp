@@ -54,16 +54,13 @@ export const elementWithBackgroundColor = css`
     convertToCSS(generatePatternStyles(backgroundColor))};
 `;
 
-export const elementWithFontColor = css`
-  ${({ color }) => convertToCSS(generatePatternStyles(color, 'color'))};
-`;
-
 export const elementWithFont = css`
   white-space: pre-wrap;
   font-family: ${({ font }) => font?.family};
   font-style: ${({ fontStyle }) => fontStyle};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
+  color: #000000;
 `;
 
 /**
@@ -73,9 +70,7 @@ export const elementWithTextParagraphStyle = css`
   margin: ${({ margin }) => margin || 0};
   padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
-  letter-spacing: ${({ letterSpacing }) => letterSpacing};
   text-align: ${({ textAlign }) => textAlign};
-  text-decoration: ${({ textDecoration }) => textDecoration};
 `;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {

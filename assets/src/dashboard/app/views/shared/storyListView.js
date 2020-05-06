@@ -29,7 +29,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCallback } from 'react';
-import { StoriesPropType } from '../../../types';
+import {
+  CategoriesPropType,
+  StoriesPropType,
+  TagsPropType,
+  UsersPropType,
+} from '../../../types';
 import {
   PreviewPage,
   Table,
@@ -45,10 +50,10 @@ import {
 import {
   ICON_METRICS,
   ORDER_BY_SORT,
-  PAGE_RATIO,
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
 } from '../../../constants';
+import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
 
@@ -59,7 +64,7 @@ const ListView = styled.div`
 const PreviewContainer = styled.div`
   position: relative;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail * PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
   vertical-align: middle;
   display: inline-block;
 `;
@@ -78,7 +83,12 @@ const ArrowIcon = styled.div`
 `;
 
 const ArrowIconWithTitle = styled(ArrowIcon)`
+  display: ${({ active }) => (active ? 'inline' : 'none')};
   margin-left: 15px;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    margin-left: 5px;
+  }
 `;
 
 const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
@@ -92,13 +102,32 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
+const LastModifiedTableHeaderCell = styled(TableHeaderCell)`
+  min-width: 160px;
+`;
+
+const AuthorTableHeaderCell = styled(TableHeaderCell)`
+  min-width: 110px;
+`;
+
 export default function StoryListView({
-  filteredStories,
+  stories,
   storySort,
   handleSortChange,
   handleSortDirectionChange,
   sortDirection,
+  tags,
+  categories,
+  users,
 }) {
+  const metadataStringForIds = useCallback((metadata, ids) => {
+    const metadataString = ids
+      .reduce((memo, current) => [...memo, metadata[current]?.name], [])
+      .filter(Boolean)
+      .join(', ');
+    return metadataString === '' ? '—' : metadataString;
+  }, []);
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -128,7 +157,7 @@ export default function StoryListView({
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIcon>
             </TableTitleHeaderCell>
-            <TableHeaderCell>
+            <AuthorTableHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
@@ -142,29 +171,28 @@ export default function StoryListView({
               >
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
-            </TableHeaderCell>
+            </AuthorTableHeaderCell>
             <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
             <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>
+            <LastModifiedTableHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
               >
                 {__('Last Modified', 'web-stories')}
+                <ArrowIconWithTitle
+                  active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
+                >
+                  <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                </ArrowIconWithTitle>
               </SelectableTitle>
-
-              <ArrowIconWithTitle
-                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                asc={sortDirection === SORT_DIRECTION.ASC}
-              >
-                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
-              </ArrowIconWithTitle>
-            </TableHeaderCell>
+            </LastModifiedTableHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredStories.map((story) => (
+          {stories.map((story) => (
             <TableRow key={`story-${story.id}`}>
               <TablePreviewCell>
                 <PreviewContainer>
@@ -174,9 +202,11 @@ export default function StoryListView({
                 </PreviewContainer>
               </TablePreviewCell>
               <TableCell>{story.title}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
-              <TableCell>{__('—', 'web-stories')}</TableCell>
+              <TableCell>{users[story.author].name}</TableCell>
+              <TableCell>
+                {metadataStringForIds(categories, story.categories)}
+              </TableCell>
+              <TableCell>{metadataStringForIds(tags, story.tags)}</TableCell>
               <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
             </TableRow>
           ))}
@@ -187,7 +217,10 @@ export default function StoryListView({
 }
 
 StoryListView.propTypes = {
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
+  tags: TagsPropType,
+  categories: CategoriesPropType,
+  users: UsersPropType,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
   storySort: PropTypes.string.isRequired,
