@@ -69,6 +69,20 @@ describe('copyPaste utils', () => {
     },
   };
 
+  const SHAPE_ELEMENT = {
+    ...SHARED_DEFAULT_ATTRIBUTES,
+    type: 'shape',
+    x: 10,
+    y: 10,
+    width: 10,
+    height: 10,
+    mask: {
+      type: 'rectangle',
+    },
+    isBackground: true,
+    backgroundColor: createSolid(1, 1, 1),
+  };
+
   describe('processPastedNodeList', () => {
     it('should remove disallowed tags from pasted content', () => {
       const nodeList = getNodeList(
@@ -237,6 +251,27 @@ describe('copyPaste utils', () => {
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
+      expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
+    });
+
+    it('should add elements not containing any text correctly to clipboard', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+
+      const elements = [
+        {
+          ...SHAPE_ELEMENT,
+          id: '1',
+        },
+      ];
+      addElementsToClipboard(elements, evt);
+
+      expect(setData).toHaveBeenCalledTimes(2);
+      expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
       expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
     });
 
