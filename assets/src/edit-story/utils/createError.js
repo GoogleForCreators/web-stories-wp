@@ -15,6 +15,22 @@
  */
 
 /**
- * Internal dependencies
+ * Helper function to get create a js error.
+ *
+ * @param {string} name Error name.
+ * @param {string} fileName File name.
+ * @param {string} message Message in error.
+ * @return {Error} Error Object.
  */
-export { TemplateNavBar } from './templateNavBar';
+function createError(name, fileName, message) {
+  const validError = new Error();
+
+  validError.name = name;
+  validError.file = fileName;
+  validError.isUserError = true;
+  validError.message = message;
+
+  return validError;
+}
+
+export default createError;

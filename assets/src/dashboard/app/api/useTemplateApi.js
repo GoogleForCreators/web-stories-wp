@@ -166,17 +166,33 @@ const useTemplateApi = (dataAdapter, config) => {
     });
   }, []);
 
+  const fetchRelatedTemplates = useCallback(() => {
+    if (!state.templates) {
+      return [];
+    }
+    // this will return anywhere between 1 and 5 "related" templates
+    const randomStartingIndex = Math.floor(
+      Math.random() * state.templatesOrderById.length
+    );
+    return [...state.templatesOrderById]
+      .splice(randomStartingIndex, 5)
+      .map((id) => {
+        return state.templates[id];
+      });
+  }, [state.templatesOrderById, state.templates]);
+
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
       createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
-      fetchSavedTemplates,
-      fetchMyTemplates,
-      fetchMyTemplateById,
       fetchExternalTemplates,
       fetchExternalTemplateById,
+      fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
+      fetchSavedTemplates,
     }),
     [
       bookmarkTemplateById,
@@ -185,8 +201,9 @@ const useTemplateApi = (dataAdapter, config) => {
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,
       fetchExternalTemplates,
-      fetchMyTemplateById,
       fetchMyTemplates,
+      fetchMyTemplateById,
+      fetchRelatedTemplates,
       fetchSavedTemplates,
     ]
   );

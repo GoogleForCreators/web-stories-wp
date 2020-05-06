@@ -17,7 +17,7 @@
 // Important! This file cannot use `styled-components` or any stateful/context
 // React features to stay compatible with the "output" templates.
 
-/* eslint no-restricted-imports: ["error", { "paths": ["styled-components", "@wordpress/element"] }] */
+/* eslint no-restricted-imports: ["error", { "paths": ["styled-components"] }] */
 
 /**
  * External dependencies
