@@ -73,6 +73,7 @@ const borders = {
   gray100: `1px solid ${colors.gray100}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
+  action: `1px solid ${colors.action}`,
 };
 
 const theme = {

@@ -29,6 +29,8 @@ const PILL_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
 };
+const ACTIVE_CHOICE_ICON_SIZE = 16;
+const ACTIVE_CHOICE_LEFT_MARGIN = 4;
 
 const PillInput = styled.input`
   /*
@@ -58,23 +60,35 @@ const PillContainer = styled.label`
     letter-spacing: ${theme.fonts.pill.letterSpacing}em;
   `}
 `;
+
 const PillLabel = styled.span`
-  ${({ theme }) => `
+  ${({ theme, isSelected }) => `
     cursor: pointer;
-    margin: auto;
+    margin: auto 0;
     width: 100%;
     display: flex;
-    padding: 3px 10px;
+    padding: 3px;
+    padding-right: ${
+      isSelected
+        ? `${20 - ACTIVE_CHOICE_LEFT_MARGIN / 2 - ACTIVE_CHOICE_ICON_SIZE}px`
+        : '20px'
+    };
+    padding-left: ${
+      isSelected
+        ? `${ACTIVE_CHOICE_ICON_SIZE + ACTIVE_CHOICE_LEFT_MARGIN / 2}px`
+        : '20px'
+    };
     align-items: center;
-    justify-content: center;
     background-color: ${theme.colors.white};
     color: ${theme.colors.gray700};
     border: ${theme.borders.gray50};
     border-radius: ${theme.button.borderRadius}px;
-    
-    ${PillInput}:hover + &,
-    ${PillInput}:focus + &  {
+
+    ${PillInput}:hover + & {
       background-color: ${theme.colors.blueLight};
+    }
+    ${PillInput}:focus + &  {
+      border: ${theme.borders.action};
     }
 
     ${PillInput}:checked + & {
@@ -87,6 +101,9 @@ const PillLabel = styled.span`
     }
   `}
 `;
+PillLabel.propTypes = {
+  isSelected: PropTypes.bool,
+};
 
 const FloatingTabLabel = styled(PillLabel)`
   background-color: transparent;
@@ -104,8 +121,7 @@ const ActiveChoiceIcon = styled(CloseIcon)`
   color: ${({ theme }) => theme.colors.blueLight};
   border-radius: 50%;
   padding: 3px;
-  margin-left: 10px;
-  margin-right: -8px;
+  margin-left: ${ACTIVE_CHOICE_LEFT_MARGIN}px;
 `;
 
 const Pill = ({
@@ -129,9 +145,14 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      <Label>
+      <Label isSelected={isSelected}>
         {children}
-        {isSelected && <ActiveChoiceIcon width={16} height={16} />}
+        {isSelected && !floatingTab && (
+          <ActiveChoiceIcon
+            width={ACTIVE_CHOICE_ICON_SIZE}
+            height={ACTIVE_CHOICE_ICON_SIZE}
+          />
+        )}
       </Label>
     </PillContainer>
   );

@@ -89,6 +89,8 @@ export const InnerDropdown = styled.button`
 InnerDropdown.propTypes = {
   disabled: PropTypes.bool,
   isOpen: PropTypes.bool,
+  type: PropTypes.oneOf(Object.values(DROPDOWN_TYPES)),
+  hasSelectedItems: PropTypes.bool,
 };
 
 const InnerDropdownText = styled.span`
