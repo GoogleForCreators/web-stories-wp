@@ -33,7 +33,7 @@ import { Tab } from '../shared';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
-import { DEFAULT_FONT } from './textPresets';
+import { DEFAULT_PRESET } from './textPresets';
 
 // By default, the element span roughly the size of the text contained in it.
 // This is an approximation based on the sample text.
@@ -81,7 +81,7 @@ function TextTab(props) {
   const handleAddText = (evt) => {
     evt.stopPropagation();
     insertElement('text', {
-      ...DEFAULT_FONT,
+      ...DEFAULT_PRESET,
       width: DEFAULT_ELEMENT_WIDTH,
     });
   };
