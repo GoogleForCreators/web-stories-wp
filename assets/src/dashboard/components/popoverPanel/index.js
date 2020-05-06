@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
