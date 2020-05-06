@@ -474,7 +474,7 @@ jobs:
       - name: Upload development bundle
         uses: actions/upload-artifact@v2
         with:
-          name: web-stories-composer.zip
+          name: web-stories-dev.zip
           path: build/web-stories-dev.zip
 
       - name: Upload bundles in combined ZIP file
