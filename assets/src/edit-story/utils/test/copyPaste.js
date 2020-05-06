@@ -17,8 +17,16 @@
 /**
  * Internal dependencies
  */
-import { processPastedElements, processPastedNodeList } from '../copyPaste';
+import {
+  addElementsToClipboard,
+  processPastedElements,
+  processPastedNodeList,
+} from '../copyPaste';
 import { PAGE_WIDTH } from '../../constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media';
+import createSolid from '../createSolid';
 
 const getNodeList = (content) => {
   const template = document.createElement('template');
@@ -27,6 +35,40 @@ const getNodeList = (content) => {
 };
 
 describe('copyPaste utils', () => {
+  const TEXT_ELEMENT = {
+    ...SHARED_DEFAULT_ATTRIBUTES,
+    font: TEXT_ELEMENT_DEFAULT_FONT,
+    padding: {
+      horizontal: 0,
+      vertical: 0,
+    },
+    type: 'text',
+    content: 'Fill in some text',
+    x: 91,
+    y: 23,
+    basedOn: 'text',
+    width: 100,
+    height: 100,
+    color: createSolid(0, 0, 0),
+  };
+  const IMAGE_ELEMENT = {
+    ...SHARED_DEFAULT_ATTRIBUTES,
+    ...MEDIA_DEFAULT_ATTRIBUTES,
+    type: 'image',
+    x: PAGE_WIDTH,
+    y: 41,
+    width: 220,
+    height: 202,
+    basedOn: 'image',
+    resource: {
+      type: 'image',
+      mimeType: '',
+      src: '',
+      width: 1,
+      height: 1,
+    },
+  };
+
   describe('processPastedNodeList', () => {
     it('should remove disallowed tags from pasted content', () => {
       const nodeList = getNodeList(
@@ -82,23 +124,6 @@ describe('copyPaste utils', () => {
 
   describe('processPastedElements', () => {
     const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
-    const TEXT_ELEMENT = {
-      opacity: 100,
-      rotationAngle: 0,
-      type: 'text',
-      content: 'Fill in some text',
-      x: 91,
-      y: 23,
-      basedOn: 'text',
-    };
-    const IMAGE_ELEMENT = {
-      type: 'image',
-      x: PAGE_WIDTH,
-      y: 41,
-      width: 220,
-      height: 202,
-      basedOn: 'image',
-    };
 
     let template;
 
@@ -173,6 +198,31 @@ describe('copyPaste utils', () => {
         }
       );
       expect(processedElements).toStrictEqual([]);
+    });
+  });
+
+  describe('addElementsToClipboard', () => {
+    it('should add elements correctly to clipboard', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+
+      const elements = [
+        {
+          ...TEXT_ELEMENT,
+          id: '1',
+        },
+        {
+          ...IMAGE_ELEMENT,
+          id: '2',
+        },
+      ];
+      addElementsToClipboard(elements, evt);
+
+      expect(setData).toHaveBeenCalledTimes(2);
     });
   });
 });

@@ -145,20 +145,25 @@ export function addElementsToClipboard(elements, evt) {
   );
 
   const textContent = elements
-    .map(({ type, ...rest }) => {
+    .map((el) => {
+      const { type } = el;
       const { TextContent } = getDefinitionForType(type);
       if (TextContent) {
-        return TextContent({ ...rest });
+        return TextContent(el);
       }
       return type;
     })
     .join('\n');
 
   const htmlContent = elements
-    .map(({ type, ...rest }) => {
+    .map((el) => {
+      const { type, x, y, rotationAngle } = el;
       const { Output } = getDefinitionForType(type);
       return renderToStaticMarkup(
-        <Output element={rest} box={{ width: 100, height: 100 }} />
+        <Output
+          element={el}
+          box={{ width: 100, height: 100, x, y, rotationAngle }}
+        />
       );
     })
     .join('\n');
