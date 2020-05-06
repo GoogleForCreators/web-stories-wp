@@ -193,7 +193,7 @@ function MyStories() {
             updateStory={updateStory}
             createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
-            filteredStories={orderedStories}
+            stories={orderedStories}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
@@ -206,7 +206,7 @@ function MyStories() {
       case VIEW_STYLE.LIST:
         return (
           <StoryListView
-            filteredStories={orderedStories}
+            stories={orderedStories}
             storySort={currentStorySort}
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
@@ -297,7 +297,7 @@ function MyStories() {
               <PageHeading
                 defaultTitle={__('My Stories', 'web-stories')}
                 searchPlaceholder={__('Search Stories', 'web-stories')}
-                filteredStories={orderedStories}
+                stories={orderedStories}
                 handleTypeaheadChange={handleTypeaheadChange}
                 typeaheadValue={typeaheadValue}
               >

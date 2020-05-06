@@ -31,9 +31,11 @@ jest.mock('../../uploader', () => ({
 }));
 
 jest.mock('../../snackbar', () => ({
-  useSnackbar: jest.fn(() => ({
-    showSnackBar: jest.fn(),
-  })),
+  useSnackbar: () => {
+    return {
+      showSnackbar: jest.fn(),
+    };
+  },
 }));
 
 jest.mock('../../config', () => ({
@@ -53,14 +55,14 @@ describe('useUploadMedia', () => {
     const supportedLocalResource = ['image', 'video'];
 
     const media = [
-      { type: 'image', src: 'image1.jpg' },
-      { type: 'image', src: 'image2.jpg' },
-      { type: 'image', src: 'image3.jpg' },
+      { type: 'image/jpeg', src: 'image1.jpg' },
+      { type: 'image/jpeg', src: 'image2.jpg' },
+      { type: 'image/jpeg', src: 'image3.jpg' },
     ];
     const newFiles = [
-      { type: 'video', src: 'video1.mp4' },
-      { type: 'text', src: 'text.txt' }, // Unsupported File Format
-      { type: 'image', src: 'image5.jpg' },
+      { type: 'video/mp4', src: 'video1.mp4' },
+      { type: 'text/plain', src: 'text.txt' }, // Unsupported File Format
+      { type: 'image/jpeg', src: 'image5.jpg' },
     ];
 
     const pagingNum = 1;
