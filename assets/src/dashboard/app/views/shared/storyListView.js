@@ -56,6 +56,7 @@ import {
   ORDER_BY_SORT,
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
+  STORY_STATUS,
 } from '../../../constants';
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
@@ -109,6 +110,7 @@ const toggleSortLookup = {
 export default function StoryListView({
   stories,
   storySort,
+  storyStatus,
   handleSortChange,
   handleSortDirectionChange,
   sortDirection,
@@ -203,7 +205,7 @@ export default function StoryListView({
                 </ArrowIconWithTitle>
               </SelectableTitle>
             </TableDateHeaderCell>
-            <TableStatusHeaderCell />
+            {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -224,9 +226,11 @@ export default function StoryListView({
               <TableCell>{metadataStringForIds(tags, story.tags)}</TableCell>
               <TableCell>{story.created.startOf('day').fromNow()}</TableCell>
               <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
-              <TableStatusCell>
-                {story.status === 'publish' && __('Published', 'web-stories')}
-              </TableStatusCell>
+              {storyStatus !== STORY_STATUS.DRAFT && (
+                <TableStatusCell>
+                  {story.status === 'publish' && __('Published', 'web-stories')}
+                </TableStatusCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
@@ -243,5 +247,6 @@ StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
   storySort: PropTypes.string.isRequired,
+  storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   sortDirection: PropTypes.string.isRequired,
 };
