@@ -18,14 +18,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import removeInlineStyle from '../../utils/removeInlineStyle';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import getValidHTML from '../../utils/getValidHTML';
+import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
+import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
@@ -129,9 +130,12 @@ export function TextOutputWithUnits({
   };
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
-    const foregroundContent = getValidHTML(content);
-    const backgroundContent = getValidHTML(content, (node) =>
-      removeInlineStyle(node, 'color')
+    const foregroundContent = content;
+    // Setting the text color of the entire block to black essentially removes all inline
+    // color styling allowing us to apply transparent to all of them.
+    const backgroundContent = useMemo(
+      () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
+      [content]
     );
     return (
       <>
@@ -163,7 +167,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: getValidHTML(content) }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }

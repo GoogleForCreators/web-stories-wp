@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-const contentBuffer = document.createElement('div');
+const contentBuffer = document.createElement('template');
 
-export default function getValidHTML(string, callback = null) {
+export default function getValidHTML(string) {
   contentBuffer.innerHTML = string;
-  if (callback) {
-    callback(contentBuffer);
-  }
   return contentBuffer.innerHTML;
 }
