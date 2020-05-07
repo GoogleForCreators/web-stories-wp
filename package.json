@@ -40,7 +40,7 @@
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-moveable": "0.20.3",
-    "react-transition-group": "^4.4.0",
+    "react-transition-group": "^4.4.1",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.1.0",
     "use-debounce": "^3.4.2",
@@ -49,7 +49,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.3.0",
+    "@ampproject/toolbox-optimizer": "^2.3.1",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -66,7 +66,7 @@
     "@storybook/client-api": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@svgr/webpack": "^5.4.0",
-    "@testing-library/dom": "^7.3.0",
+    "@testing-library/dom": "^7.4.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^3.2.1",
@@ -76,7 +76,7 @@
     "@wordpress/eslint-plugin": "^5.1.0",
     "@wordpress/jest-console": "^3.6.0",
     "@wordpress/jest-puppeteer-axe": "^1.8.0",
-    "amphtml-validator": "^1.0.30",
+    "amphtml-validator": "^1.0.31",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
@@ -114,7 +114,7 @@
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^2.0.5",
-    "puppeteer": "^3.0.2",
+    "puppeteer": "^3.0.4",
     "react-test-renderer": "^16.13.1",
     "rtlcss-webpack-plugin": "^4.0.3",
     "source-map-loader": "^0.2.4",
@@ -176,7 +176,10 @@
     "test:e2e:watch": "npm run test:e2e -- --watch",
     "test:e2e:interactive": "PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
     "test:e2e:firefox": "PUPPETEER_PRODUCT=firefox WP_BASE_URL=http://localhost:8899 jest --runInBand --config=tests/e2e/jest.config.js",
-    "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e"
+    "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
+    "preworkflow:copy-template-assets": "mkdir -p build/storybook/plugin-assets/images",
+    "workflow:bundle-size": "",
+    "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates"
   },
   "husky": {
     "hooks": {

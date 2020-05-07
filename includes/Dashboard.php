@@ -150,7 +150,7 @@ class Dashboard {
 					'isRTL'        => is_rtl(),
 					'newStoryURL'  => $new_story_url,
 					'editStoryURL' => $edit_story_url,
-					'pluginDir'    => WEBSTORIES_PLUGIN_DIR_URL,
+					'assetsURL'    => WEBSTORIES_ASSETS_URL,
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
 						'stories'    => sprintf( '/wp/v2/%s', $rest_base ),
