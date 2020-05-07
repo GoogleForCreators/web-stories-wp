@@ -49,7 +49,7 @@ script:
 
 before_deploy:
   - npm run build:storybook
-  - npm workflow:copy-template-assets
+  - npm run workflow:copy-template-assets
 
 deploy:
   - provider: pages
