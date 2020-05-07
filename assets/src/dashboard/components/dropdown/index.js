@@ -80,6 +80,10 @@ export const InnerDropdown = styled.button`
       background-color: ${theme.dropdown[type].activeBackground};
     }
 
+    &:focus {
+      border: ${theme.borders.action};
+    }
+
     background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
@@ -233,6 +237,7 @@ const Dropdown = ({
           isOpen={showMenu}
           title={placeholder}
           items={items}
+          onClose={() => setShowMenu(false)}
           onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}

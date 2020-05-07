@@ -80,6 +80,10 @@ const PillLabel = styled.span`
       background-color: ${theme.colors.blueLight};
     }
 
+    ${PillInput}:focus + & { 
+      border: 1px solid ${theme.colors.action};
+    }
+
     ${PillInput}:checked + & {
       background-color: ${theme.colors.blueLight};
     }
@@ -134,7 +138,7 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      <Label isSelected={isSelected}>
+      <Label isSelected={isSelected} ariaHidden={true}>
         {children}
         {isSelected && !floatingTab && (
           <ActiveChoiceIcon

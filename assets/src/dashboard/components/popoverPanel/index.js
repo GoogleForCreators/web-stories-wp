@@ -19,10 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
@@ -70,39 +75,67 @@ const PillFieldset = styled.fieldset`
   }
 `;
 
+const visuallyHiddenStyles = {
+  position: 'absolute',
+  height: '1px',
+  width: '1px',
+  overflow: 'hidden',
+  clip: 'rect(1px, 1px, 1px, 1px)',
+  'white-space': 'nowrap',
+};
+
 const Legend = styled.legend`
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+  ${visuallyHiddenStyles}
 `;
 
-const PopoverPanel = ({ isOpen, title, items, onSelect }) => {
+const KeyboardCloseOnly = styled.button`
+  ${visuallyHiddenStyles}
+  &:focus {
+    clip: unset;
+    align-self: flex-end;
+    border: ${({ theme }) => theme.borders.action};
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+    > svg {
+      padding: 2px;
+    }
+  }
+`;
+
+const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
   return (
     <Panel isOpen={isOpen}>
       {isOpen && (
-        <PillFieldset data-testid={'pill-fieldset'}>
-          <Legend>{title}</Legend>
-          {items.map(
-            ({ label, selected, value, hex, disabled = false }, index) => {
-              return (
-                <Pill
-                  key={`${value}_${index}`}
-                  inputType="checkbox"
-                  name={`${title}_pillGroup_${value}`}
-                  onClick={onSelect}
-                  value={value}
-                  isSelected={selected}
-                  disabled={disabled}
-                >
-                  {hex ? <ColorDot color={hex} /> : label}
-                </Pill>
-              );
-            }
-          )}
-        </PillFieldset>
+        <>
+          <KeyboardCloseOnly
+            onClick={onClose}
+            ariaDescription={__('close menu', 'web-stories')}
+          >
+            <CloseIcon width={14} height="14" />
+          </KeyboardCloseOnly>
+          <PillFieldset data-testid={'pill-fieldset'}>
+            <Legend title={`options for ${title}`} />
+            {items.map(
+              ({ label, selected, value, hex, disabled = false }, index) => {
+                return (
+                  <Pill
+                    key={`${value}_${index}`}
+                    inputType="checkbox"
+                    name={`${title}_pillGroup_${value}`}
+                    onClick={onSelect}
+                    value={value}
+                    isSelected={selected}
+                    disabled={disabled}
+                  >
+                    {hex ? <ColorDot color={hex} /> : label}
+                  </Pill>
+                );
+              }
+            )}
+          </PillFieldset>
+        </>
       )}
     </Panel>
   );
@@ -111,6 +144,7 @@ const PopoverPanel = ({ isOpen, title, items, onSelect }) => {
 PopoverPanel.propTypes = {
   title: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
 };

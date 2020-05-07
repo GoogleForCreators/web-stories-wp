@@ -137,10 +137,10 @@ export const _panel = () => {
   return (
     <DropdownWrapper>
       <Dropdown
-        ariaLabel={text('ariaLabel', 'my dropdown description')}
+        ariaLabel={text('ariaLabel', 'my semantic label')}
         disabled={boolean('disabled')}
         type={DROPDOWN_TYPES.PANEL}
-        placeholder={text('placeholder', 'Category')}
+        placeholder={text('placeholder', 'My dropdown for categories')}
         items={statefulDemoData}
         onChange={(selectedValue) => {
           action(`clicked on dropdown item ${selectedValue}`)(selectedValue);

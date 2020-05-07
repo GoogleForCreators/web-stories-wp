@@ -76,6 +76,7 @@ export const _default = () => {
       isOpen={boolean('isOpen', true)}
       title={text('title', 'Category')}
       items={statefulDemoData}
+      onClose={(e) => action(`close button clicked`)(e)}
       onSelect={(_, selectedValue) => {
         action(`selected pill ${selectedValue}`)(selectedValue);
         updateDemoDataState(selectedValue);
