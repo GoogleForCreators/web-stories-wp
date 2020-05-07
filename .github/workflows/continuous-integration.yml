@@ -471,13 +471,20 @@ jobs:
           name: All ZIP Files
           path: build/*.zip
 
+  bundle-size:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Bundle size check
         uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: '{assets/js/*.js,assets/css/*.css,build/web-stories.zip}'
-          build-script: 'workflow:bundle-size'
-        if: ${{ github.event_name != 'push' }}
+          pattern: '{assets/js/*.js,assets/css/*.css}'
+          build-script: 'build:js'
 
   deploy-to-wiki:
     name: Deploy QA artifacts
