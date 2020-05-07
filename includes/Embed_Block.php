@@ -58,6 +58,8 @@ class Embed_Block {
 		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
 
+		$dependencies[] = 'amp-story-player';
+
 		wp_register_script(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::SCRIPT_HANDLE . '.js',
@@ -69,7 +71,7 @@ class Embed_Block {
 		wp_register_style(
 			self::STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::STYLE_HANDLE . '.css',
-			[],
+			[ 'amp-story-player' ],
 			$version
 		);
 
@@ -81,8 +83,8 @@ class Embed_Block {
 			'web-stories/embed',
 			[
 				'render_callback' => [ $this, 'render_block' ],
-				'editor_script'   => 'web-stories-embed-block',
-				'editor_style'    => 'web-stories-embed-block',
+				'editor_script'   => self::SCRIPT_HANDLE,
+				'editor_style'    => self::STYLE_HANDLE,
 			]
 		);
 
