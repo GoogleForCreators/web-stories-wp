@@ -15,7 +15,7 @@
  */
 export default function (imageBaseUrl) {
   return {
-    version: 16,
+    version: 17,
     pages: [
       {
         elements: [
@@ -125,9 +125,9 @@ export default function (imageBaseUrl) {
               local: false,
               sizes: [],
             },
-            x: 1,
+            x: -2,
             y: 550,
-            width: 438,
+            width: 444,
             height: 189,
             mask: {
               type: 'rectangle',
@@ -185,7 +185,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee',
               service: 'fonts.google.com',
@@ -194,9 +193,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -204,23 +201,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.09,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'FRESH\n&amp;&nbsp;\nBRIGHT',
             width: 360,
             height: 150,
             scale: 100,
@@ -232,6 +219,8 @@ export default function (imageBaseUrl) {
             id: '25b6f99b-3f69-4351-9e18-31b8ef1d1a61',
             x: 51,
             y: 488,
+            content:
+              '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
           },
           {
             opacity: 100,
@@ -242,7 +231,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -251,9 +239,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -261,33 +247,25 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'FRESH\n&amp;&nbsp;\nBRIGHT',
-            x: 45,
-            y: 488,
+            x: 46,
+            y: 486,
             width: 360,
-            height: 150,
+            height: 146,
             scale: 100,
             focalX: 50,
             focalY: 50,
             isFill: false,
             type: 'text',
             id: 'd886c844-5b5c-4b27-a9c3-332df2aed3f3',
+            content:
+              '<span style="color: #28292b">FRESH</span>\n&amp;&nbsp;\nBRIGHT',
           },
         ],
         backgroundElementId: '9ecb248e-2adc-4834-a270-01325263a30e',
@@ -332,7 +310,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee',
               service: 'fonts.google.com',
@@ -341,9 +318,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -351,23 +326,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.09,
             lineHeight: 1.1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'I\nWOKE\nUP\nLIKE\nTHIS\n”',
             width: 330,
             height: 552,
             scale: 100,
@@ -379,6 +344,8 @@ export default function (imageBaseUrl) {
             id: '51e3dfb3-fe95-4132-ade1-cd226982cf68',
             x: 65,
             y: 28,
+            content:
+              '<span style="color: #fff; letter-spacing: 0.09em">I</span>\n<span style="color: #fff; letter-spacing: 0.09em">WOKE</span>\n<span style="color: #fff; letter-spacing: 0.09em">UP</span>\n<span style="color: #fff; letter-spacing: 0.09em">LIKE</span>\n<span style="color: #fff; letter-spacing: 0.09em">THIS</span>\n<span style="color: #fff; letter-spacing: 0.09em">”</span>',
           },
           {
             opacity: 100,
@@ -389,7 +356,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -398,9 +364,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -408,23 +372,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'I\nWOKE\nUP\nLIKE\nTHIS\n”',
             x: 56,
             y: 28,
             width: 330,
@@ -435,6 +389,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '53004538-6bca-4ac6-810e-18bd81e84276',
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>',
           },
           {
             opacity: 100,
@@ -445,7 +401,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -463,9 +418,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -473,23 +426,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Beyoncé',
             x: 110,
             y: 580,
             width: 202,
@@ -500,6 +443,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '96e93ceb-accb-4c38-b603-7d616174e5d3',
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
           {
             opacity: 100,
@@ -849,7 +794,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -867,9 +811,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -877,23 +819,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Sun Protection\nDone Right',
             x: 60,
             y: 408,
             width: 320,
@@ -904,6 +836,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '8922e664-91d5-422d-86a8-8dda035c39d8',
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Sun Protection\nDone Right</span></span>',
           },
           {
             opacity: 100,
@@ -914,7 +848,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -942,9 +875,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -952,24 +883,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'We’ve done our research so you don’t have to. These sheer sun screens protect your skin from UVA and UVBs while also posing no harm to the environment.',
             x: 77,
             y: 495,
             width: 285,
@@ -980,6 +900,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'b93fdb3d-22a9-4f54-bcdc-5c9c0aa7117c',
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">We’ve done our research so you don’t have to. These sheer sun screens protect your skin from UVA and UVBs while also posing no harm to the environment.</span>',
           },
           {
             opacity: 100,
@@ -990,7 +912,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -1012,9 +933,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 700,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1022,23 +941,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             width: 160,
             height: 19,
             scale: 100,
@@ -1050,6 +959,8 @@ export default function (imageBaseUrl) {
             id: 'ce4c387a-a263-4664-a978-f465a5fe668f',
             x: 140,
             y: 621,
+            content:
+              '<span style="color: rgba(0, 0, 0, 1)"><span style="font-weight: 700">See Full Story</span></span>',
           },
           {
             opacity: 100,
@@ -1445,7 +1356,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -1463,9 +1373,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1473,23 +1381,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Exfoliating Cream',
             x: 76,
             y: 25,
             width: 202,
@@ -1500,6 +1398,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '74deb240-66ad-43e1-986d-7c9201800001',
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Exfoliating Cream</span></span>',
           },
           {
             opacity: 100,
@@ -1510,7 +1410,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -1528,9 +1427,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1538,23 +1435,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Gently remove dull\nskin naturally',
             x: 75,
             y: 49,
             width: 137,
@@ -1565,6 +1452,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '81f142c3-607d-416a-9ef8-b8d90bd334dd',
+            content:
+              '<span style="color: rgba(0, 0, 0, 1)">Gently remove dull\nskin naturally</span>',
           },
           {
             opacity: 100,
@@ -1575,7 +1464,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -1593,9 +1481,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1603,23 +1489,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '$38',
             width: 202,
             height: 20,
             scale: 100,
@@ -1631,6 +1507,8 @@ export default function (imageBaseUrl) {
             id: 'fe8c57c9-63eb-4c41-8cde-2f3b4dbb364f',
             x: 76,
             y: 98,
+            content:
+              '<span style="color: rgba(0, 0, 0, 1)"><span style="font-weight: 900">$38</span></span>',
           },
         ],
         backgroundElementId: '98d7eb94-0a2d-4dff-b1bc-83b1487d37ee',
@@ -1676,7 +1554,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee',
               service: 'fonts.google.com',
@@ -1685,9 +1562,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1695,25 +1570,15 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.09,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'GIFTS\nFOR\nUNDER',
             width: 360,
-            height: 146,
+            height: 150,
             scale: 100,
             focalX: 50,
             focalY: 50,
@@ -1723,6 +1588,8 @@ export default function (imageBaseUrl) {
             id: '65b49662-1ad8-4478-8fe9-98a7b60b2ea4',
             x: 42,
             y: 18,
+            content:
+              '<span style="color: #fff; letter-spacing: 0.09em">GIFTS</span>\n<span style="color: #fff; letter-spacing: 0.09em">FOR</span>\n<span style="color: #fff; letter-spacing: 0.09em">UNDER</span>',
           },
           {
             opacity: 100,
@@ -1733,7 +1600,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -1742,9 +1608,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1752,23 +1616,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'GIFTS\nFOR\nUNDER',
             width: 360,
             height: 146,
             scale: 100,
@@ -1780,6 +1634,8 @@ export default function (imageBaseUrl) {
             id: '20f12482-ebbd-469f-a4da-315da300cbc1',
             x: 36,
             y: 18,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">GIFTS\nFOR\nUNDER</span></span>',
           },
           {
             opacity: 100,
@@ -1790,7 +1646,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee',
               service: 'fonts.google.com',
@@ -1799,9 +1654,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1809,23 +1662,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.09,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '$20',
             width: 203,
             height: 84,
             scale: 100,
@@ -1837,6 +1680,8 @@ export default function (imageBaseUrl) {
             id: 'e4be23ed-5219-4df3-8cde-5a9a2e571f8f',
             x: 128,
             y: 180,
+            content:
+              '<span style="color: #fff; letter-spacing: 0.09em">$20</span>',
           },
           {
             opacity: 100,
@@ -1847,7 +1692,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -1856,9 +1700,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1866,23 +1708,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '$20',
             width: 203,
             height: 84,
             scale: 100,
@@ -1894,6 +1726,8 @@ export default function (imageBaseUrl) {
             id: '6ef90019-01ac-420c-851a-bd9486cd9092',
             x: 118,
             y: 180,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">$20</span></span>',
           },
           {
             opacity: 100,
@@ -1904,7 +1738,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -1913,9 +1746,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1923,23 +1754,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '*',
             width: 95,
             height: 84,
             scale: 100,
@@ -1951,6 +1772,8 @@ export default function (imageBaseUrl) {
             id: '4aa7d17d-97f9-4588-bc76-cadae99f64a0',
             x: 15,
             y: 51,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">*</span></span>',
           },
           {
             opacity: 100,
@@ -1961,7 +1784,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -1970,9 +1792,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1980,23 +1800,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '*',
             width: 95,
             height: 84,
             scale: 100,
@@ -2008,6 +1818,8 @@ export default function (imageBaseUrl) {
             id: '0ed12d81-7462-4451-9d8b-95dbc0f4591e',
             x: 331,
             y: 51,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">*</span></span>',
           },
           {
             opacity: 100,
@@ -2133,7 +1945,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -2142,9 +1953,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 114,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2152,23 +1961,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1',
             width: 140,
             height: 114,
             scale: 100,
@@ -2180,6 +1979,8 @@ export default function (imageBaseUrl) {
             id: '53c22575-7ab2-4c00-931d-b0a8b68b7464',
             x: 150,
             y: 24,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">1</span></span>',
           },
           {
             opacity: 100,
@@ -2190,7 +1991,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -2208,9 +2008,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2218,23 +2016,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Natural Beauty',
             width: 329,
             height: 52,
             scale: 100,
@@ -2246,6 +2034,8 @@ export default function (imageBaseUrl) {
             id: '6db599ec-da49-4694-ad37-9384644b0f8d',
             x: 56,
             y: 154,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Natural Beauty</span></span>',
           },
           {
             opacity: 100,
@@ -2256,7 +2046,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -2284,9 +2073,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2294,24 +2081,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'For that friend who barely wears makeup but likes to add a little sparkle.',
             width: 255,
             height: 36,
             scale: 100,
@@ -2323,6 +2099,8 @@ export default function (imageBaseUrl) {
             id: 'c7cb3455-9a2e-4af4-8098-e5f04567b377',
             x: 92,
             y: 223,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">For that friend who barely wears makeup but likes to add a little sparkle.</span>',
           },
           {
             opacity: 100,
@@ -2467,7 +2245,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -2495,9 +2272,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 500,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2505,23 +2280,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Buy Now',
             x: 258,
             y: 569,
             width: 160,
@@ -2532,6 +2297,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'b21c003f-d5ad-4829-8ebd-4fe39746ec36',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">Buy Now</span></span>',
           },
           {
             opacity: 100,
@@ -2542,7 +2309,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -2560,9 +2326,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2570,23 +2334,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Lid Shimmer $12',
             width: 202,
             height: 22,
             scale: 100,
@@ -2598,6 +2352,8 @@ export default function (imageBaseUrl) {
             id: 'ef299f55-6f0c-4a50-80e4-254eb5d0e633',
             x: 98,
             y: 558,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Lid Shimmer $12</span></span>',
           },
           {
             opacity: 100,
@@ -2608,7 +2364,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -2636,9 +2391,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2646,23 +2399,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'website.com',
             width: 255,
             height: 17,
             scale: 100,
@@ -2674,6 +2417,8 @@ export default function (imageBaseUrl) {
             id: 'd30b7bc0-5ff5-4fd0-87f2-970911904782',
             x: 98,
             y: 579,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">website.com</span>',
           },
         ],
         backgroundElementId: 'fe20d9ff-158b-4948-adae-cba1d9a2b25b',
@@ -2757,7 +2502,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -2766,9 +2510,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 194,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2776,23 +2518,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '*',
             width: 171,
             height: 194,
             scale: 100,
@@ -2804,6 +2536,8 @@ export default function (imageBaseUrl) {
             id: 'aff7e56b-0116-4ce5-9d7d-4a67d53a3084',
             x: -67,
             y: 0,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">*</span></span>',
           },
           {
             opacity: 100,
@@ -2987,7 +2721,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3015,9 +2748,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 500,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3025,23 +2756,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Buy Now',
             width: 160,
             height: 20,
             scale: 100,
@@ -3053,6 +2774,8 @@ export default function (imageBaseUrl) {
             id: '61b7afa6-8306-4656-b0f6-b47a43350b9a',
             x: 41,
             y: 260,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">Buy Now</span></span>',
           },
           {
             opacity: 100,
@@ -3063,7 +2786,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3081,9 +2803,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3091,23 +2811,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Lid Shimmer $12',
             width: 202,
             height: 22,
             scale: 100,
@@ -3119,6 +2829,8 @@ export default function (imageBaseUrl) {
             id: 'ac0add24-bf97-46a4-abe0-1241f0e91a20',
             x: 57,
             y: 593,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Lid Shimmer $12</span></span>',
           },
           {
             opacity: 100,
@@ -3129,7 +2841,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3157,9 +2868,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3167,23 +2876,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'website.com',
             width: 255,
             height: 17,
             scale: 100,
@@ -3195,6 +2894,8 @@ export default function (imageBaseUrl) {
             id: '479bdbea-1369-40c8-bcb7-96d82fb8b36c',
             x: 57,
             y: 614,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">website.com</span>',
           },
           {
             opacity: 100,
@@ -3205,7 +2906,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3223,9 +2923,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3233,23 +2931,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Lip Tattoo $18',
             width: 202,
             height: 22,
             scale: 100,
@@ -3261,6 +2949,8 @@ export default function (imageBaseUrl) {
             id: 'd07cf4f9-46d9-420c-aa06-ad4e406b7a42',
             x: 220,
             y: 249,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Lip Tattoo $18</span></span>',
           },
           {
             opacity: 100,
@@ -3271,7 +2961,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3299,9 +2988,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3309,23 +2996,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'website.com',
             width: 255,
             height: 17,
             scale: 100,
@@ -3337,6 +3014,8 @@ export default function (imageBaseUrl) {
             id: '6017e32e-c0fb-4ea3-8876-aaaa1b2bbef5',
             x: 220,
             y: 270,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">website.com</span>',
           },
           {
             opacity: 100,
@@ -3377,7 +3056,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3405,9 +3083,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 500,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3415,23 +3091,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Buy Now',
             width: 160,
             height: 20,
             scale: 100,
@@ -3443,6 +3109,8 @@ export default function (imageBaseUrl) {
             id: '3a38df92-03f4-4576-8d59-928c9412c39e',
             x: 254,
             y: 606,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">Buy Now</span></span>',
           },
         ],
         backgroundElementId: '17f22a0e-aae4-4eff-9cee-5020ca545950',
@@ -3488,7 +3156,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3506,9 +3173,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3516,23 +3181,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TV Inspired\nMake-up',
             width: 329,
             height: 79,
             scale: 100,
@@ -3544,6 +3199,8 @@ export default function (imageBaseUrl) {
             id: '7ad20266-6a32-4038-8ed7-d84b8f697532',
             x: 55,
             y: 72,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">TV Inspired\nMake-up</span></span>',
           },
           {
             opacity: 100,
@@ -3554,7 +3211,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3582,9 +3238,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3592,24 +3246,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Want to look like Hunter Schafer from “Euphoria”? We got’chyu, plus looks from the rest of the cast.',
             width: 255,
             height: 52,
             scale: 100,
@@ -3621,6 +3264,8 @@ export default function (imageBaseUrl) {
             id: '3eafb106-5681-4bba-9eef-b162d3364486',
             x: 92,
             y: 165,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)">Want to look like Hunter Schafer from “Euphoria”? We got’chyu, plus looks from the rest of the cast.</span>',
           },
           {
             opacity: 100,
@@ -3730,7 +3375,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -3758,9 +3402,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 500,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3768,23 +3410,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Get The Look',
             width: 160,
             height: 20,
             scale: 100,
@@ -3796,6 +3428,8 @@ export default function (imageBaseUrl) {
             id: 'a2cd4b99-da90-49e7-8a8d-25c54400b4a1',
             x: 140,
             y: 566,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">Get The Look</span></span>',
           },
           {
             opacity: 100,
@@ -3806,7 +3440,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3824,9 +3457,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 21,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3834,24 +3465,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend ☻ trend ☻ trend ☻ trend ☻',
             x: 39,
             y: 0,
             width: 710,
@@ -3862,6 +3482,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '609386ee-5a0f-4a59-b389-b3c639aa9f31',
+            content:
+              '<span style="letter-spacing: 0.0001em"><span style="color: rgba(255, 255, 255, 1)">trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend ☻ trend ☻ trend ☻ trend ☻</span></span>',
           },
           {
             opacity: 100,
@@ -3872,7 +3494,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 180,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3890,9 +3511,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 21,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3900,24 +3519,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              '☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ ',
             width: 710,
             height: 27,
             scale: 100,
@@ -3929,6 +3537,8 @@ export default function (imageBaseUrl) {
             id: 'c21af0fb-6b27-49b1-8bc4-ce7731829e9c',
             x: -305,
             y: 633,
+            content:
+              '<span style="letter-spacing: 0.0001em"><span style="color: rgba(255, 255, 255, 1)">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ </span></span>',
           },
           {
             opacity: 100,
@@ -3939,7 +3549,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 270,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -3957,9 +3566,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 21,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3967,24 +3574,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              '☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren',
             width: 710,
             height: 27,
             scale: 100,
@@ -3995,7 +3591,9 @@ export default function (imageBaseUrl) {
             basedOn: 'c21af0fb-6b27-49b1-8bc4-ce7731829e9c',
             id: '2eb4a001-9928-4906-9f42-ffd85eb76479',
             x: -340,
-            y: 255,
+            y: 248,
+            content:
+              '<span style="letter-spacing: 0.0001em"><span style="color: rgba(255, 255, 255, 1)">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren</span></span>',
           },
           {
             opacity: 100,
@@ -4006,7 +3604,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 450,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -4024,9 +3621,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 21,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4034,24 +3629,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              '☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren',
             width: 710,
             height: 27,
             scale: 100,
@@ -4062,7 +3646,9 @@ export default function (imageBaseUrl) {
             basedOn: '2eb4a001-9928-4906-9f42-ffd85eb76479',
             id: '6eec651a-1637-4e28-8932-d4cf52e41976',
             x: 71,
-            y: 375,
+            y: 382,
+            content:
+              '<span style="color: #fff">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren</span>',
           },
         ],
         backgroundElementId: 'bc3bdf9d-3f6d-428c-be02-82e004339ab4',
@@ -4115,9 +3701,9 @@ export default function (imageBaseUrl) {
               },
             },
             isFill: false,
-            x: -10,
+            x: 53,
             y: 607,
-            width: 460,
+            width: 411,
             height: 57,
             scale: 100,
             focalX: 50,
@@ -4137,7 +3723,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Bungee Shade',
               service: 'fonts.google.com',
@@ -4146,9 +3731,7 @@ export default function (imageBaseUrl) {
               styles: ['regular'],
               variants: [[0, 400]],
             },
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4156,23 +3739,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MORE\nSTORIES',
             width: 360,
             height: 97,
             scale: 100,
@@ -4184,6 +3757,8 @@ export default function (imageBaseUrl) {
             id: '2d2d9987-93c3-4c06-83c4-8e59dff41e48',
             x: 40,
             y: 0,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(40, 41, 43, 1)">MORE\nSTORIES</span></span>',
           },
           {
             opacity: 100,
@@ -4433,7 +4008,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -4451,9 +4025,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4461,23 +4033,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Top 10 Bronzing\nKits for Summer',
             width: 200,
             height: 35,
             scale: 100,
@@ -4489,6 +4051,8 @@ export default function (imageBaseUrl) {
             id: 'e5f86bbb-dd3e-431a-aae3-5a8e00cf6d0f',
             x: 185,
             y: 162,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Top 10 Bronzing\nKits for Summer</span></span>',
           },
           {
             opacity: 100,
@@ -4499,7 +4063,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -4517,9 +4080,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4527,23 +4088,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Use the Fenty\nShade Finder',
             width: 200,
             height: 35,
             scale: 100,
@@ -4555,6 +4106,8 @@ export default function (imageBaseUrl) {
             id: '6405d5d0-89ec-4f1e-976e-48eed941608d',
             x: 180,
             y: 475,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Use the Fenty\nShade Finder</span></span>',
           },
           {
             opacity: 100,
@@ -4565,7 +4118,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Chivo',
               service: 'fonts.google.com',
@@ -4583,9 +4135,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 900,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4593,23 +4143,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 40,
-                g: 41,
-                b: 43,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'This Year’s\nK-Beauty Trends',
             width: 200,
             height: 35,
             scale: 100,
@@ -4621,6 +4161,8 @@ export default function (imageBaseUrl) {
             id: '41f71d08-27df-4137-94b7-eaf0aec0d16c',
             x: 58,
             y: 320,
+            content:
+              '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">This Year’s\nK-Beauty Trends</span></span>',
           },
           {
             opacity: 100,
@@ -4631,7 +4173,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Raleway',
               service: 'fonts.google.com',
@@ -4659,9 +4200,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 500,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4669,23 +4208,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Follow Us',
             width: 100,
             height: 20,
             scale: 100,
@@ -4697,6 +4226,8 @@ export default function (imageBaseUrl) {
             id: '96a002db-b6ee-49f2-b8d1-53b1f016b397',
             x: 87,
             y: 622,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">Follow Us</span></span>',
           },
           {
             opacity: 100,
