@@ -85,7 +85,7 @@ npm run build:js
 
 ### Live reload
 
-We don't provide it OOTB. You can setup your own solution and `DISABLE_PREVENT=1 npm run dev` will help you with unwanted `beforeunload` alert.
+We don't provide it OOTB. You can setup your own solution and `DISABLE_PREVENT=true npm run dev` will help you with unwanted `beforeunload` alert.
 
 ### Testing
 
