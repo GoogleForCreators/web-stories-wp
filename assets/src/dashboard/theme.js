@@ -284,7 +284,7 @@ const theme = {
   pageHorizontalGutter: {
     desktop: 20,
     tablet: 20,
-    largeDisplayPhone: 20,
+    largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
   },
