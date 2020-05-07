@@ -73,7 +73,7 @@ export const PillLabel = styled.span`
   border: ${theme.borders.gray50};
   border-radius: ${theme.button.borderRadius}px;
 
-  ${PillInput}:hover + & {
+  ${PillInput}:enabled:hover + & {
     background-color: ${theme.colors.blueLight};
   }
 

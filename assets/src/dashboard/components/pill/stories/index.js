@@ -30,9 +30,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Pill from '../';
 import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
 import { PILL_LABEL_TYPES } from '../../../constants/components';
+import Pill from '../';
 
 export default {
   title: 'Dashboard/Components/Pill',

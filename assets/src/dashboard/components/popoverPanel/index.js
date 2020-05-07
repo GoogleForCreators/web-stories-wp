@@ -15,22 +15,33 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import { Z_INDEX } from '../../constants';
-import Pill from '../pill';
-import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { PILL_LABEL_TYPES } from '../../constants/components';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import Pill from '../pill';
+
+const visuallyHiddenStyles = {
+  position: 'absolute',
+  height: '1px',
+  width: '1px',
+  overflow: 'hidden',
+  clip: 'rect(1px, 1px, 1px, 1px)',
+  'white-space': 'nowrap',
+};
 
 export const Panel = styled.div`
   ${({ isNarrow, isOpen, theme }) => `
@@ -68,6 +79,7 @@ export const Panel = styled.div`
 `;
 
 Panel.propTypes = {
+  isNarrow: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
@@ -80,15 +92,6 @@ const PillFieldset = styled.fieldset`
     margin: 0 10px 14px 0;
   }
 `;
-
-const visuallyHiddenStyles = {
-  position: 'absolute',
-  height: '1px',
-  width: '1px',
-  overflow: 'hidden',
-  clip: 'rect(1px, 1px, 1px, 1px)',
-  'white-space': 'nowrap',
-};
 
 const Legend = styled.legend`
   ${visuallyHiddenStyles}
@@ -133,7 +136,7 @@ const PopoverPanel = ({
           <PillFieldset data-testid={'pill-fieldset'}>
             <Legend title={`options for ${title}`} />
             {items.map(
-              ({ label, selected, value, hex, disabled = false }, index) => {
+              ({ disabled = false, hex, label, selected, value }, index) => {
                 return (
                   <Pill
                     data-testid={'popover-pill'}
