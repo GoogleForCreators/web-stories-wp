@@ -81,7 +81,7 @@ const PillLabel = styled.span`
     }
 
     ${PillInput}:focus + & { 
-      border: 1px solid ${theme.colors.action};
+      border: ${theme.borders.action};
     }
 
     ${PillInput}:checked + & {
