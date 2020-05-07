@@ -82,6 +82,29 @@ class Embed_Block {
 		register_block_type(
 			'web-stories/embed',
 			[
+				'attributes'      => [
+					'url'    => [
+						'type' => 'url',
+					],
+					'title'  => [
+						'type' => 'string',
+					],
+					'poster' => [
+						'type' => 'string',
+					],
+					'width'  => [
+						'type'    => 'number',
+						'default' => 360,
+					],
+					'height' => [
+						'type'    => 'number',
+						'default' => 600,
+					],
+					'align'  => [
+						'type'    => 'string',
+						'default' => 'none',
+					],
+				],
 				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::STYLE_HANDLE,
@@ -121,30 +144,16 @@ class Embed_Block {
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) {
-		$defaults = [
-			'width'  => 360,
-			'height' => 600,
-			'align'  => 'none',
-			'url'    => '',
-			'poster' => '',
-			'title'  => '',
-		];
-
-		$args = wp_parse_args( $attributes, $defaults );
-
-		$url   = (string) $args['url'];
-		$title = (string) $args['title'];
-
 		// The only 2 mandatory attributes.
-		if ( ! $url || ! $title ) {
+		if ( empty( $attributes['url'] ) || empty( $attributes['title'] ) ) {
 			return '';
 		}
 
-		$width        = absint( $args['width'] );
-		$height       = absint( $args['height'] );
-		$poster       = esc_url( $args['poster'] );
-		$align        = sprintf( 'align%s', $args['align'] );
-		$player_style = sprintf( 'width: %spx; height: %spx', $width, $height );
+		$url          = (string) $attributes['url'];
+		$title        = (string) $attributes['title'];
+		$poster       = isset( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
+		$align        = sprintf( 'align%s', $attributes['align'] );
+		$player_style = sprintf( 'width: %dpx; height: %dpx', $attributes['width'], $attributes['height'] );
 		$poster_style = $poster ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		wp_enqueue_style( 'amp-story-player' );
