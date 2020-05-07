@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
-import { useIsKeyPressed, useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -83,26 +83,24 @@ function Numeric({
   const [dot, setDot] = useState(false);
   const ref = useRef();
 
-  const altPressed =
-    float && useIsKeyPressed(ref, { key: 'alt', editable: true });
-
   const handleUpDown = useCallback(
-    ({ key }) => {
+    ({ key, altKey }) => {
       if (isMultiple) {
         return;
       }
 
       let newValue;
+      const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
-        newValue = Big(value).plus(Big(altPressed ? 0.1 : 1));
+        newValue = Big(value).plus(diff);
       } else if (key === 'ArrowDown') {
         // Decrement value
-        newValue = Big(value).minus(Big(altPressed ? 0.1 : 1));
+        newValue = Big(value).minus(diff);
       }
       onChange(parseFloat(newValue.toString()));
     },
-    [onChange, value, isMultiple, altPressed]
+    [onChange, value, isMultiple, float]
   );
 
   useKeyDownEffect(
