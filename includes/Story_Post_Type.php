@@ -379,7 +379,6 @@ class Story_Post_Type {
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 				'maxUpload'        => $max_upload_size,
-				'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
 				'capabilities'     => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,

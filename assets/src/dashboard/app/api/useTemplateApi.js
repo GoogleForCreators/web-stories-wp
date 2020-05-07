@@ -61,7 +61,7 @@ export function reshapeTemplateObject(isLocal) {
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { pluginDir } = config;
+  const { assetsURL } = config;
 
   const createStoryFromTemplatePages = useCallback((pages) => {
     return Promise.resolve({ success: true, storyId: -1 });
@@ -116,7 +116,7 @@ const useTemplateApi = (dataAdapter, config) => {
         payload: true,
       });
 
-      const reshapedTemplates = getAllTemplates({ pluginDir }).map(
+      const reshapedTemplates = getAllTemplates({ assetsURL }).map(
         reshapeTemplateObject(false)
       );
       dispatch({
@@ -133,7 +133,7 @@ const useTemplateApi = (dataAdapter, config) => {
         type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
       });
     },
-    [pluginDir]
+    [assetsURL]
   );
 
   const fetchExternalTemplateById = useCallback(
