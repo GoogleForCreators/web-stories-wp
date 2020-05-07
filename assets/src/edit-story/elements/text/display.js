@@ -125,9 +125,10 @@ function TextDisplay({
         font,
         fontWeight,
         isItalic,
+        content,
       },
     ]);
-  }, [font, fontWeight, isItalic, maybeEnqueueFontStyle]);
+  }, [font, fontWeight, isItalic, content, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;

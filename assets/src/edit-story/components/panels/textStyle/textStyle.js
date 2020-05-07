@@ -143,10 +143,11 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconHeight={10}
           onChange={async (value) => {
             await maybeEnqueueFontStyle(
-              selectedElements.map(({ font }) => ({
+              selectedElements.map(({ font, content }) => ({
                 font,
                 isItalic: value,
                 fontWeight,
+                content,
               }))
             );
             handleClickItalic(value);

@@ -214,9 +214,10 @@ function TextEdit({
         font,
         fontWeight,
         isItalic,
+        content,
       },
     ]);
-  }, [font, fontWeight, isItalic, maybeEnqueueFontStyle]);
+  }, [font, fontWeight, isItalic, content, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>

@@ -30,7 +30,8 @@ const DEFAULT_FONT = {
     service: 'fonts.google.com',
   },
   fontWeight: 400,
-  fontStyle: 'normal',
+  isItalic: true,
+  content: 'Fill in some text',
 };
 
 describe('useLoadFontFiles', () => {

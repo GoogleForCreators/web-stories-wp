@@ -90,10 +90,11 @@ function FontControls({ selectedElements, pushUpdate }) {
               };
 
               await maybeEnqueueFontStyle(
-                selectedElements.map(() => ({
+                selectedElements.map(({ content }) => ({
                   font: newFont,
                   isItalic,
                   fontWeight,
+                  content,
                 }))
               );
 
@@ -118,10 +119,11 @@ function FontControls({ selectedElements, pushUpdate }) {
               value={fontWeight}
               onChange={async (value) => {
                 await maybeEnqueueFontStyle(
-                  selectedElements.map(({ font }) => ({
+                  selectedElements.map(({ font, content }) => ({
                     font,
                     isItalic,
                     fontWeight: parseInt(value),
+                    content,
                   }))
                 );
                 handleSelectFontWeight(value);

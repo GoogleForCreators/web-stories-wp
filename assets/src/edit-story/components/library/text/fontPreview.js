@@ -53,14 +53,7 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({
-  title,
-  font,
-  fontSize,
-  fontWeight,
-  fontStyle,
-  onClick,
-}) {
+function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -70,10 +63,10 @@ function FontPreview({
       {
         font,
         fontWeight,
-        fontStyle,
+        content,
       },
     ]);
-  }, [font, fontWeight, fontStyle, maybeEnqueueFontStyle]);
+  }, [font, fontWeight, content, maybeEnqueueFontStyle]);
 
   return (
     <Preview onClick={onClick}>
@@ -93,7 +86,7 @@ FontPreview.propTypes = {
   font: FontPropType,
   fontSize: PropTypes.number,
   fontWeight: PropTypes.number,
-  fontStyle: PropTypes.string,
+  content: PropTypes.string,
   onClick: PropTypes.func,
 };
 

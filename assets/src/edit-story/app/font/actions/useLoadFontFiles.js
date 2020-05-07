@@ -55,6 +55,7 @@ function useLoadFontFiles() {
             font: { family, service, variants },
             fontWeight,
             isItalic,
+            content,
           }) => {
             if (!family || service !== 'fonts.google.com') {
               return null;
@@ -89,8 +90,8 @@ function useLoadFontFiles() {
 
             const ensureFontLoaded = async () => {
               if (document?.fonts) {
-                await document.fonts.load(fontFaceSet);
-                return document.fonts.check(fontFaceSet);
+                await document.fonts.load(fontFaceSet, content || '');
+                return document.fonts.check(fontFaceSet, content || '');
               } else {
                 return null;
               }
