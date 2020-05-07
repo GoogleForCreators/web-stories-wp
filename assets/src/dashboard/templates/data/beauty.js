@@ -48,7 +48,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page1_bg.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page1_bg.png`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -77,7 +77,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page1_grid.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page1_grid.png`,
               width: 220,
               height: 163,
               posterId: 0,
@@ -115,7 +115,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page1_stroke.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page1_stroke.png`,
               width: 220,
               height: 95,
               posterId: 0,
@@ -153,7 +153,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page1_logo.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page1_logo.png`,
               width: 54,
               height: 10,
               posterId: 0,
@@ -516,7 +516,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page2_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page2_heart.png`,
               width: 28,
               height: 24,
               posterId: 0,
@@ -554,7 +554,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page2_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page2_heart.png`,
               width: 28,
               height: 24,
               posterId: 0,
@@ -593,7 +593,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page2_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page2_heart.png`,
               width: 28,
               height: 24,
               posterId: 0,
@@ -632,7 +632,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page2_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page2_heart.png`,
               width: 28,
               height: 24,
               posterId: 0,
@@ -671,7 +671,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page2_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page2_heart.png`,
               width: 28,
               height: 24,
               posterId: 0,
@@ -745,7 +745,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page3_brush.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page3_brush.png`,
               width: 220,
               height: 169,
               posterId: 0,
@@ -829,7 +829,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page3_figure.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page3_figure.jpg`,
               width: 220,
               height: 258,
               posterId: 0,
@@ -1096,7 +1096,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page3_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page3_arrow.png`,
               width: 7,
               height: 3,
               posterId: 0,
@@ -1156,7 +1156,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page4_bg.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page4_bg.png`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -1215,7 +1215,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page_4_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page_4_heart.png`,
               width: 11,
               height: 10,
               posterId: 0,
@@ -1284,7 +1284,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page_4_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page_4_heart.png`,
               width: 11,
               height: 10,
               posterId: 0,
@@ -1354,7 +1354,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page_4_heart.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page_4_heart.png`,
               width: 11,
               height: 10,
               posterId: 0,
@@ -2024,7 +2024,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page5_grid.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page5_grid.png`,
               width: 188,
               height: 163,
               posterId: 0,
@@ -2078,7 +2078,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page5_figure.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page5_figure.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -2339,7 +2339,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page6_grid.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page6_grid.png`,
               width: 133,
               height: 210,
               posterId: 0,
@@ -2406,7 +2406,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page6_figure.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page6_figure.jpg`,
               width: 220,
               height: 174,
               posterId: 0,
@@ -2725,7 +2725,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page7_grid.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page7_grid.png`,
               width: 220,
               height: 249,
               posterId: 0,
@@ -2895,7 +2895,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page7_product1.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page7_product1.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -2937,7 +2937,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page7_product2.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page7_product2.jpg`,
               width: 220,
               height: 184,
               posterId: 0,
@@ -3682,7 +3682,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page8_figure.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page8_figure.png`,
               width: 370,
               height: 492,
               id: 409,
@@ -4200,7 +4200,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story2-bg.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story2-bg.png`,
               width: 176,
               height: 71,
               posterId: 0,
@@ -4238,7 +4238,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story3-bg.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story3-bg.png`,
               width: 186,
               height: 76,
               posterId: 0,
@@ -4276,7 +4276,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story1-bg.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story1-bg.png`,
               width: 188,
               height: 69,
               posterId: 0,
@@ -4330,7 +4330,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story1.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story1.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -4373,7 +4373,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story2.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story2.jpg`,
               width: 352,
               height: 528,
               title: 'beauty_page9_story2',
@@ -4413,7 +4413,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_story3.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story3.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -4713,7 +4713,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_Instagram.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_Instagram.png`,
               width: 11,
               height: 12,
               posterId: 0,
@@ -4751,7 +4751,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_Facebook.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_Facebook.png`,
               width: 6,
               height: 11,
               posterId: 0,
@@ -4789,7 +4789,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_Youtube.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_Youtube.png`,
               width: 13,
               height: 9,
               posterId: 0,
@@ -4827,7 +4827,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}images/templates/beauty/beauty_page9_Twitter.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_Twitter.png`,
               width: 12,
               height: 10,
               posterId: 0,
