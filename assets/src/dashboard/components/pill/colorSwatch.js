@@ -32,7 +32,7 @@ const ColorSwatch = ({ isSelected = false, hex }) => {
       hex={hex}
       data-testid="swatch-pill-label"
     >
-      {isSelected && <ActiveSwatchIcon hex={hex} />}
+      <ActiveSwatchIcon hex={hex} />
     </SwatchLabel>
   );
 };

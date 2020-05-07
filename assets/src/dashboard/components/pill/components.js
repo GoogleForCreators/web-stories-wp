@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { BEZIER } from '../../constants';
 
 export const ACTIVE_CHOICE_ICON_SIZE = 16;
 export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
@@ -118,9 +119,13 @@ export const SwatchLabel = styled(PillLabel)`
     background-color: ${hex};
 
     ${PillInput}:checked + &,
-    ${PillInput}:enabled:hover + & { {
+    ${PillInput}:enabled:hover + & {
       background-color: ${hex};
+      > svg {
+        opacity: 1.0;
+      }
     }
+
   `}
 `;
 SwatchLabel.propTypes = {
@@ -132,11 +137,14 @@ export const ActiveSwatchIcon = styled(CheckmarkIcon).attrs(() => ({
   height: ACTIVE_CHOICE_ICON_SIZE,
 }))`
   position: absolute;
+  opacity: 0;
   margin: auto;
+  padding: 2px;
   color: ${({ theme, hex = '#000' }) =>
     hex.toLowerCase().includes('fff')
       ? theme.colors.black
       : theme.colors.white};
+  transition: opacity 0.2s ${BEZIER.outSine};
 `;
 
 ActiveSwatchIcon.propTypes = {
