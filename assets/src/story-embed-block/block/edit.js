@@ -73,8 +73,12 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         path: `web-stories/v1/embed?url=${urlObj.toString()}`,
       })
         .then((data) => {
-          setCannotEmbed(!data.title);
-          setStoryData(data);
+          const emptyData = !data.title;
+          setCannotEmbed(emptyData);
+
+          if (!emptyData) {
+            setStoryData(data);
+          }
         })
         .catch(() => {
           setCannotEmbed(true);
