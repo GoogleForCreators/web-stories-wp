@@ -20,3 +20,4 @@ export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as useFocusOut } from './useFocusOut';
 export { default as usePagePreviewSize } from './usePagePreviewSize';
+export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';

@@ -42,9 +42,11 @@ const PRESETS = [
   {
     id: 'heading',
     title: __('Heading', 'web-stories'),
-    content: __('Heading', 'web-stories'),
+    content: `<span style="font-weight: 700">${__(
+      'Heading',
+      'web-stories'
+    )}</span>`,
     fontSize: dataFontEm(2),
-    fontWeight: 700,
     font: {
       family: 'Open Sans',
       service: 'fonts.google.com',
@@ -53,9 +55,11 @@ const PRESETS = [
   {
     id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    content: __('Subheading', 'web-stories'),
+    content: `<span style="font-weight: 600">${__(
+      'Subheading',
+      'web-stories'
+    )}</span>`,
     fontSize: dataFontEm(1.5),
-    fontWeight: 600,
     font: {
       family: 'Open Sans',
       service: 'fonts.google.com',
@@ -69,7 +73,6 @@ const PRESETS = [
       'web-stories'
     ),
     fontSize: dataFontEm(1.1),
-    fontWeight: 400,
     font: {
       family: 'Roboto',
       service: 'fonts.google.com',
