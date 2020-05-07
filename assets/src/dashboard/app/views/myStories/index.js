@@ -85,6 +85,7 @@ function MyStories() {
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+    isGrid: viewStyle === VIEW_STYLE.GRID,
   });
   const {
     actions: {
@@ -208,6 +209,7 @@ function MyStories() {
           <StoryListView
             stories={orderedStories}
             storySort={currentStorySort}
+            storyStatus={status}
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
@@ -220,13 +222,14 @@ function MyStories() {
         return null;
     }
   }, [
-    duplicateStory,
-    createTemplateFromStory,
-    trashStory,
     viewStyle,
+    trashStory,
     updateStory,
+    createTemplateFromStory,
+    duplicateStory,
     orderedStories,
     currentStorySort,
+    status,
     currentListSortDirection,
     handleNewStorySort,
     tags,
@@ -291,38 +294,38 @@ function MyStories() {
   return (
     <FontProvider>
       <TransformProvider>
-        <UnitsProvider pageSize={pageSize}>
-          <Layout.Provider>
-            <Layout.Squishable>
-              <PageHeading
-                defaultTitle={__('My Stories', 'web-stories')}
-                searchPlaceholder={__('Search Stories', 'web-stories')}
-                stories={orderedStories}
-                handleTypeaheadChange={handleTypeaheadChange}
-                typeaheadValue={typeaheadValue}
-              >
-                <HeaderToggleButtonContainer>
-                  <ToggleButtonGroup
-                    buttons={STORY_STATUSES.map((storyStatus) => {
-                      return {
-                        handleClick: () =>
-                          handleFilterStatusUpdate(storyStatus.value),
-                        key: storyStatus.value,
-                        isActive: status === storyStatus.value,
-                        text: storyStatus.label,
-                      };
-                    })}
-                  />
-                </HeaderToggleButtonContainer>
-              </PageHeading>
-              {storiesViewControls}
-            </Layout.Squishable>
-            <Layout.Scrollable>{BodyContent}</Layout.Scrollable>
-            <Layout.Fixed>
-              <ScrollToTop />
-            </Layout.Fixed>
-          </Layout.Provider>
-        </UnitsProvider>
+        <Layout.Provider>
+          <Layout.Squishable>
+            <PageHeading
+              defaultTitle={__('My Stories', 'web-stories')}
+              searchPlaceholder={__('Search Stories', 'web-stories')}
+              stories={orderedStories}
+              handleTypeaheadChange={handleTypeaheadChange}
+              typeaheadValue={typeaheadValue}
+            >
+              <HeaderToggleButtonContainer>
+                <ToggleButtonGroup
+                  buttons={STORY_STATUSES.map((storyStatus) => {
+                    return {
+                      handleClick: () =>
+                        handleFilterStatusUpdate(storyStatus.value),
+                      key: storyStatus.value,
+                      isActive: status === storyStatus.value,
+                      text: storyStatus.label,
+                    };
+                  })}
+                />
+              </HeaderToggleButtonContainer>
+            </PageHeading>
+            {storiesViewControls}
+          </Layout.Squishable>
+          <Layout.Scrollable>
+            <UnitsProvider pageSize={pageSize}>{BodyContent}</UnitsProvider>
+          </Layout.Scrollable>
+          <Layout.Fixed>
+            <ScrollToTop />
+          </Layout.Fixed>
+        </Layout.Provider>
       </TransformProvider>
     </FontProvider>
   );

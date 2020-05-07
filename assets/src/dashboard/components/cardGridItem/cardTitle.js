@@ -22,14 +22,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
 import { TextInput } from '../input';
 import useFocusOut from '../../utils/useFocusOut';
 
@@ -41,7 +40,6 @@ const StyledCardTitle = styled.div`
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
   max-width: 80%;
-  height: ${CARD_TITLE_AREA_HEIGHT}px;
 `;
 
 const StyledTitle = styled.p`
@@ -78,6 +76,12 @@ const CardTitle = ({
     },
     [editMode]
   );
+
+  useEffect(() => {
+    if (inputContainerRef.current && editMode) {
+      inputContainerRef.current.firstChild?.focus();
+    }
+  }, [editMode]);
 
   const handleChange = useCallback(({ target }) => {
     setNewTitle(target.value);

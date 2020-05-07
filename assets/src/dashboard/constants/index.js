@@ -19,11 +19,6 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
-
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
@@ -58,9 +53,6 @@ export const Z_INDEX = {
   POPOVER_PANEL: 10,
 };
 
-export const PAGE_RATIO = PAGE_WIDTH / PAGE_HEIGHT;
-export const CARD_TITLE_AREA_HEIGHT = 80;
-
 export const APP_ROUTES = {
   MY_STORIES: '/',
   SAVED_TEMPLATES: '/saved-templates',
@@ -93,10 +85,16 @@ export const secondaryPaths = [
   },
 ];
 
+export const STORY_STATUS = {
+  ALL: 'publish,draft',
+  PUBLISHED: 'publish',
+  DRAFT: 'draft',
+};
+
 export const STORY_STATUSES = [
-  { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
-  { label: __('Drafts', 'web-stories'), value: 'draft' },
-  { label: __('Active Stories', 'web-stories'), value: 'publish' },
+  { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
+  { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
+  { label: __('Active Stories', 'web-stories'), value: STORY_STATUS.PUBLISHED },
   // { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
 

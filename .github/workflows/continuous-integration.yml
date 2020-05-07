@@ -169,19 +169,6 @@ jobs:
       - name: Detect coding standard violations (stylelint)
         run: npm run lint:css
 
-  bundle-size:
-    name: Bundle size check
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'push' }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: preactjs/compressed-size-action@v1
-        with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
-          pattern: '{assets/js/*.js,assets/css/*.css}'
-          # Todo: compare final plugin ZIP file size too.
-          build-script: 'build:js'
-
   unit-js:
     name: JavaScript Unit Tests
     runs-on: ubuntu-latest
@@ -447,17 +434,18 @@ jobs:
 
       - name: Bundle plugin
         run: |
+          echo 'assets/images/templates' >> .distignore
           npm run build:js
-          npm run build:plugin
-          npm run bundle-plugin web-stories.zip
-          npm run bundle-plugin web-stories-composer.zip -- --composer
+          npm run workflow:build-plugin -- --cdn
+          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
+          npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           NODE_ENV=development npx webpack
-          npm run build:plugin
-          npm run bundle-plugin web-stories-dev.zip
+          npm run workflow:build-plugin
+          npm run workflow:bundle-plugin web-stories-dev.zip -- --skip-delete
 
       - name: Upload full bundle
         uses: actions/upload-artifact@v2
@@ -483,8 +471,23 @@ jobs:
           name: All ZIP Files
           path: build/*.zip
 
+  bundle-size:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Bundle size check
+        uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '{assets/js/*.js,assets/css/*.css}'
+          build-script: 'build:js'
+
   deploy-to-wiki:
-    name: Deploy artefacts to wiki for easier QA testing
+    name: Deploy QA artifacts
     runs-on: ubuntu-latest
     needs: build
     steps:

@@ -77,6 +77,7 @@ function TemplatesGallery() {
   );
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
+    isGrid: viewStyle === VIEW_STYLE.GRID,
   });
   const {
     state: {

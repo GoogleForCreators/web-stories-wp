@@ -250,7 +250,7 @@ const theme = {
     table: {
       family: themeFonts.primary,
       size: 14,
-      weight: '500',
+      weight: 'normal',
       letterSpacing: 0.01,
     },
     typeaheadInput: {
@@ -272,10 +272,29 @@ const theme = {
     small: {
       desktop: 20,
       min: 10,
+      largeDisplayPhone: 10,
+      smallDisplayPhone: 10,
     },
+    // specific to detail template
     large: {
       desktop: 80,
       tablet: 40,
+    },
+  },
+  pageHorizontalGutter: {
+    desktop: 20,
+    tablet: 20,
+    largeDisplayPhone: 10,
+    smallDisplayPhone: 10,
+    min: 10,
+  },
+  grid: {
+    columnGap: {
+      desktop: 10,
+      tablet: 10,
+      largeDisplayPhone: 10,
+      smallDisplayPhone: 10,
+      min: 10,
     },
   },
   previewWidth: {

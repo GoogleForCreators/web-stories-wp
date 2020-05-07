@@ -23,7 +23,7 @@ import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../constants';
+import { PAGE_RATIO } from '../../constants/pageStructure';
 import { UnitsProvider } from '../../../edit-story/units';
 import {
   ActiveCard,

@@ -56,6 +56,8 @@ AnimationBar.propTypes = {
 };
 
 const ToggleButton = styled.button`
+  cursor: pointer;
+
   ${({ theme, isActive }) => `
     display: flex;
     flex-direction: column;
