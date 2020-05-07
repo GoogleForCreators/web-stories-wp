@@ -273,9 +273,26 @@ const theme = {
       desktop: 20,
       min: 10,
     },
+    // specific to detail template
     large: {
       desktop: 80,
       tablet: 40,
+    },
+  },
+  pageHorizontalGutter: {
+    desktop: 20,
+    tablet: 20,
+    largeDisplayPhone: 20,
+    smallDisplayPhone: 10,
+    min: 10,
+  },
+  grid: {
+    columnGap: {
+      desktop: 10,
+      tablet: 10,
+      largeDisplayPhone: 10,
+      smallDisplayPhone: 10,
+      min: 10,
     },
   },
   previewWidth: {

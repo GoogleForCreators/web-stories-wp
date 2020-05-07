@@ -19,11 +19,6 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
-
 export const BUTTON_TYPES = {
   CTA: 'cta',
   PRIMARY: 'primary',
@@ -57,9 +52,6 @@ export const Z_INDEX = {
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
 };
-
-export const PAGE_RATIO = PAGE_WIDTH / PAGE_HEIGHT;
-export const CARD_TITLE_AREA_HEIGHT = 80;
 
 export const APP_ROUTES = {
   MY_STORIES: '/',
