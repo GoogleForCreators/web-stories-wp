@@ -44,7 +44,7 @@ const EmbedPlaceholder = ({
         'web-stories'
       )}
     >
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} data-testid="embed-placeholder-form">
         <input
           type="url"
           value={value || ''}
