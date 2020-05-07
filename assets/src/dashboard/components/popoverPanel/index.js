@@ -62,7 +62,7 @@ export const Panel = styled.div`
 
     ${
       isNarrow
-        ? `width: 300px;`
+        ? `width: 260px;`
         : ` 
           width: ${theme.popoverPanel.desktopWidth}px;
           
