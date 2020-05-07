@@ -78,7 +78,7 @@ function SizePositionPanel({
 }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill');
+  const isFill = getCommonValue(selectedElements, 'isFill', false);
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
 
