@@ -81,7 +81,7 @@ const CardTitle = ({
     if (inputContainerRef.current && editMode) {
       inputContainerRef.current.firstChild?.focus();
     }
-  }, [inputContainerRef, editMode]);
+  }, [editMode]);
 
   const handleChange = useCallback(({ target }) => {
     setNewTitle(target.value);
