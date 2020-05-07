@@ -67,17 +67,9 @@ const PillLabel = styled.span`
     margin: auto 0;
     width: 100%;
     display: flex;
-    padding: 3px;
-    padding-right: ${
-      isSelected
-        ? `${20 - ACTIVE_CHOICE_LEFT_MARGIN / 2 - ACTIVE_CHOICE_ICON_SIZE}px`
-        : '20px'
-    };
-    padding-left: ${
-      isSelected
-        ? `${ACTIVE_CHOICE_ICON_SIZE + ACTIVE_CHOICE_LEFT_MARGIN / 2}px`
-        : '20px'
-    };
+    padding: 4px;
+    padding-right: ${isSelected ? '4px' : '20px'};
+    padding-left: ${isSelected ? `${ACTIVE_CHOICE_ICON_SIZE}px` : '20px'};
     align-items: center;
     background-color: ${theme.colors.white};
     color: ${theme.colors.gray700};
