@@ -66,7 +66,8 @@ const Button = styled.button`
 `;
 
 const replaceResourcesWithDummy = (state) => {
-  return {
+  let videosToReload = [];
+  const newState = {
     ...state,
     pages: state.pages.map((page) => ({
       ...page,
@@ -78,11 +79,7 @@ const replaceResourcesWithDummy = (state) => {
             newElement.resource.mimeType = 'video/mp4';
             newElement.resource.src = dummyVideo;
             newElement.resource.poster = dummyImage;
-
-            const videoEl = document.getElementById(`video-${newElement.id}`);
-            if (videoEl) {
-              videoEl.load();
-            }
+            videosToReload.push(newElement.id);
           }
           if (element.type === 'image') {
             newElement.resource.mimeType = 'image/png';
@@ -93,6 +90,8 @@ const replaceResourcesWithDummy = (state) => {
       }),
     })),
   };
+
+  return [newState, videosToReload];
 };
 
 function DevTools() {
@@ -118,7 +117,7 @@ function DevTools() {
     pages,
   };
   const storyData = isDummyResources
-    ? replaceResourcesWithDummy(reducerStateSlice)
+    ? replaceResourcesWithDummy(reducerStateSlice)[0]
     : reducerStateSlice;
 
   const toggleDummyResources = () => setIsDummyResources((v) => !v);
@@ -142,10 +141,18 @@ function DevTools() {
       story: { ...reducerState.story, ...inputState.story },
       capabilities: reducerState.capabilities,
     };
-    const stateWithDummyResources = isDummyResources
+    const [stateWithDummyResources, videosToReload] = isDummyResources
       ? replaceResourcesWithDummy(stateToRestore)
-      : stateToRestore;
+      : [stateToRestore];
     restore(stateWithDummyResources);
+    if (videosToReload.length > 0) {
+      videosToReload.forEach((videoId) => {
+        const videoEl = document.getElementById(`video-${videoId}`);
+        if (videoEl) {
+          videoEl.load();
+        }
+      });
+    }
     showSnackbar({ message: 'Story restored from input', timeout: 1200 });
   };
 
