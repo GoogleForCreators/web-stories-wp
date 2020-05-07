@@ -27,7 +27,7 @@ import { PillLabel, ActiveChoiceIcon } from './components';
 
 const DefaultPill = ({ children, isSelected = false }) => {
   return (
-    <PillLabel isSelected={isSelected}>
+    <PillLabel isSelected={isSelected} data-testid="default-pill-label">
       {children}
       {isSelected && <ActiveChoiceIcon />}
     </PillLabel>

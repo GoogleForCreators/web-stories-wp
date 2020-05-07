@@ -27,7 +27,9 @@ import { FloatingTabLabel } from './components';
 
 const floatingPill = ({ children, isSelected = false }) => {
   return (
-    <FloatingTabLabel isSelected={isSelected}>{children}</FloatingTabLabel>
+    <FloatingTabLabel isSelected={isSelected} data-testid="floating-pill-label">
+      {children}
+    </FloatingTabLabel>
   );
 };
 floatingPill.propTypes = {
