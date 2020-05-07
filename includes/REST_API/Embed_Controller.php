@@ -137,7 +137,7 @@ class Embed_Controller extends WP_REST_Controller {
 
 		if ( ! $html ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
 		}
 
 		$doc                      = new DOMDocument();
@@ -151,8 +151,14 @@ class Embed_Controller extends WP_REST_Controller {
 		$xpath = new DOMXpath( $doc );
 
 		$amp_story = $xpath->query( '//amp-story' );
-		$title     = $this->get_dom_attribute_content( $amp_story, 'title' );
-		$poster    = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
+
+		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
+			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+		}
+
+		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
+		$poster = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
 
 		$data = [
 			'title'  => $title ?: '',
