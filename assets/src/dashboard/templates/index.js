@@ -25,13 +25,13 @@ import getFitnessStoryData from './data/fitness';
 import getTravelStoryData from './data/travel';
 
 export default function (config) {
-  const { pluginDir } = config;
-  const cookingStoryData = getCookingStoryData(pluginDir);
-  const diyStoryData = getDIYStoryData(pluginDir);
-  const entertainmentData = getEntertainmentStoryData(pluginDir);
-  const fashionStoryData = getFashionStoryData(pluginDir);
-  const fitnessStoryData = getFitnessStoryData(pluginDir);
-  const travelStoryData = getTravelStoryData(pluginDir);
+  const { assetsURL } = config;
+  const cookingStoryData = getCookingStoryData(assetsURL);
+  const diyStoryData = getDIYStoryData(assetsURL);
+  const entertainmentData = getEntertainmentStoryData(assetsURL);
+  const fashionStoryData = getFashionStoryData(assetsURL);
+  const fitnessStoryData = getFitnessStoryData(assetsURL);
+  const travelStoryData = getTravelStoryData(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
