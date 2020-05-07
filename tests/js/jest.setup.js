@@ -21,7 +21,6 @@
 // See https://github.com/testing-library/jest-dom.
 import 'jest-extended';
 import '@testing-library/jest-dom';
-import 'jest-extended';
 
 // Allow using toBeEmpty which is also defined by jest-extended.
 // See https://github.com/facebook/jest/issues/9678.
