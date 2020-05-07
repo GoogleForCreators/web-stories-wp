@@ -40,6 +40,11 @@ import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { ColorDot } from '../colorDot';
 import { PILL_LABEL_TYPES } from '../../constants/components';
 
+const dropdownLabelType = {
+  [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
+  [DROPDOWN_TYPES.COLOR_PANEL]: PILL_LABEL_TYPES.SWATCH,
+};
+
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;
   transform: translateX(-50%);
@@ -236,11 +241,11 @@ const Dropdown = ({
         </InnerDropdown>
       </Label>
 
-      {type === DROPDOWN_TYPES.PANEL && (
+      {type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL ? (
         <PopoverPanel
           isOpen={showMenu}
           title={placeholder}
-          labelType={PILL_LABEL_TYPES.DEFAULT}
+          labelType={dropdownLabelType[type]}
           items={items}
           onClose={() => setShowMenu(false)}
           onSelect={(_, selectedValue) => {
@@ -248,36 +253,12 @@ const Dropdown = ({
           }}
           {...rest}
         />
-      )}
-
-      {type === DROPDOWN_TYPES.COLOR_PANEL && (
-        <PopoverPanel
-          isOpen={showMenu}
-          title={placeholder}
-          labelType={PILL_LABEL_TYPES.SWATCH}
-          items={items}
-          onClose={() => setShowMenu(false)}
-          onSelect={(_, selectedValue) => {
-            handleMenuItemSelect(selectedValue);
-          }}
-          {...rest}
-        />
-      )}
-
-      {type === DROPDOWN_TYPES.MENU && (
+      ) : (
         <StyledPopoverMenu
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
-        />
-      )}
-
-      {type === DROPDOWN_TYPES.TRANSPARENT_MENU && (
-        <StyledPopoverMenu
-          isOpen={showMenu}
-          items={items}
-          onSelect={handleMenuItemSelect}
-          framelessButton
+          framelessButton={type === DROPDOWN_TYPES.TRANSPARENT_MENU}
         />
       )}
     </DropdownContainer>
