@@ -228,7 +228,8 @@ export default function StoryListView({
               <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === 'publish' && __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.PUBLISHED &&
+                    __('Published', 'web-stories')}
                 </TableStatusCell>
               )}
             </TableRow>

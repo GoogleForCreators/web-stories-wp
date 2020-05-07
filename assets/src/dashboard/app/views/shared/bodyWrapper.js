@@ -23,11 +23,11 @@ const BodyWrapper = styled.div`
   margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.min}px`};
+    margin: ${({ theme }) => `0 ${theme.pageGutter.small.largeDisplayPhone}px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.min}px`};
+    margin: ${({ theme }) => `0 ${theme.pageGutter.small.smallDisplayPhone}px`};
   }
 `;
 

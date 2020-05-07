@@ -108,7 +108,7 @@ export const TableCell = styled.td`
 export const TableStatusCell = styled(TableCell)`
   display: table-cell;
   color: ${({ theme }) => theme.colors.gray400};
-  font-weight: bold;
+  font-weight: 500;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     display: none;
