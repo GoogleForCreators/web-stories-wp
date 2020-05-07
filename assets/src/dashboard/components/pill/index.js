@@ -33,7 +33,7 @@ import ColorSwatch from './colorSwatch';
 const Pill = ({
   children = null,
   inputType = PILL_INPUT_TYPES.CHECKBOX,
-  labelType = 'default',
+  labelType = PILL_LABEL_TYPES.DEFAULT,
   isSelected = false,
   name,
   onClick,
