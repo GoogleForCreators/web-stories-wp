@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 import { Z_INDEX } from '../../constants';
 import { Pill } from '../pill';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
 
 export const Panel = styled.div`
   ${({ isOpen, theme }) => `
@@ -52,10 +51,6 @@ export const Panel = styled.div`
 
     @media ${theme.breakpoint.tablet} {
       width: ${theme.popoverPanel.tabletWidth}px;
-    }
-
-    @media ${theme.breakpoint.desktop} {
-      width: ${theme.popoverPanel.desktopWidth}px;
     }
   `}
 `;
@@ -103,7 +98,14 @@ const KeyboardCloseOnly = styled.button`
   }
 `;
 
-const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
+const PopoverPanel = ({
+  onClose,
+  isOpen,
+  title,
+  items,
+  onSelect,
+  labelType,
+}) => {
   return (
     <Panel isOpen={isOpen}>
       {isOpen && (
@@ -129,8 +131,10 @@ const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
                     value={value}
                     isSelected={selected}
                     disabled={disabled}
+                    labelType={labelType}
+                    hex={hex}
                   >
-                    {hex ? <ColorDot color={hex} /> : label}
+                    {label}
                   </Pill>
                 );
               }
@@ -147,6 +151,7 @@ PopoverPanel.propTypes = {
   onSelect: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
+  labelType: PropTypes.string,
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
 };
 

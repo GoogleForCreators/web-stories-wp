@@ -24,13 +24,14 @@ import { __ } from '@wordpress/i18n';
  */
 import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { Pill, FloatingTab } from '../';
+import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/Pill',
@@ -175,6 +176,7 @@ export const _floatingTabs = () => {
             <FloatingTab
               key={value + index}
               inputType="checkbox"
+              labelType="floatingTab"
               name={value}
               onClick={(e, selectedValue) => {
                 action('on click selected')(selectedValue);
@@ -230,6 +232,31 @@ export const _radioGroup = () => {
           );
         }
       )}
+    </DemoFieldSet>
+  );
+};
+
+export const _colorSwatches = () => {
+  return (
+    <DemoFieldSet>
+      {TEMPLATE_COLOR_ITEMS.map(({ label, hex, value }, index) => {
+        return (
+          <Pill
+            ariaLabel={label}
+            key={value + index}
+            inputType="checkbox"
+            labelType="swatch"
+            hex={hex}
+            name={value}
+            onClick={(e, selectedValue) => {
+              action('on click selected')(selectedValue);
+            }}
+            value={value}
+            isSelected={boolean('isSelected')}
+            disabled={boolean('disabled')}
+          />
+        );
+      })}
     </DemoFieldSet>
   );
 };

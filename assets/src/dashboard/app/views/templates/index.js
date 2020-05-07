@@ -212,6 +212,7 @@ function TemplatesGallery() {
                     items={selectedColors}
                     onClear={clearAllColors}
                     onChange={onNewColorSelected}
+                    labelType="swatch"
                   />
                   <Dropdown
                     ariaLabel={__('Layout Type Dropdown', 'web-stories')}

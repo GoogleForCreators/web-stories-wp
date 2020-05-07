@@ -244,6 +244,7 @@ const Dropdown = ({
           onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
+          {...rest}
         />
       ) : (
         <StyledPopoverMenu

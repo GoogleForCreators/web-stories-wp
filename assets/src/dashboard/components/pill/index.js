@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
 
 const PILL_TYPES = {
   CHECKBOX: 'checkbox',
@@ -98,6 +99,33 @@ PillLabel.propTypes = {
   isSelected: PropTypes.bool,
 };
 
+const SwatchLabel = styled(PillLabel)`
+  ${({ hex }) => `
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    background-color: ${hex};
+
+    ${PillInput}:checked + &,
+    ${PillInput}:hover + & { {
+      background-color: ${hex};
+    }
+  `}
+`;
+
+const ActiveSwatchIcon = styled(CheckmarkIcon)`
+  position: absolute;
+  margin: auto;
+  color: ${({ theme, hex }) =>
+    hex.toLowerCase().includes('fff')
+      ? theme.colors.black
+      : theme.colors.white};
+`;
+
 const FloatingTabLabel = styled(PillLabel)`
   background-color: transparent;
   padding: 4px 16px;
@@ -120,14 +148,23 @@ const ActiveChoiceIcon = styled(CloseIcon)`
 const Pill = ({
   children,
   inputType = PILL_TYPES.CHECKBOX,
+  labelType = 'default',
   isSelected = false,
   name,
   onClick,
   floatingTab,
   value,
+  useCircle,
+  hex,
   ...rest
 }) => {
-  const Label = floatingTab ? FloatingTabLabel : PillLabel;
+  const labelTypes = {
+    floatingTab: FloatingTabLabel,
+    swatch: SwatchLabel,
+    default: PillLabel,
+  };
+
+  const Label = labelTypes[labelType];
   return (
     <PillContainer>
       <PillInput
@@ -138,10 +175,17 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      <Label isSelected={isSelected} aria-hidden={true}>
+      <Label hex={hex} isSelected={isSelected} aria-hidden={true}>
         {children}
-        {isSelected && !floatingTab && (
+        {isSelected && labelType === 'default' && (
           <ActiveChoiceIcon
+            width={ACTIVE_CHOICE_ICON_SIZE}
+            height={ACTIVE_CHOICE_ICON_SIZE}
+          />
+        )}
+        {isSelected && labelType === 'swatch' && (
+          <ActiveSwatchIcon
+            hex={hex}
             width={ACTIVE_CHOICE_ICON_SIZE}
             height={ACTIVE_CHOICE_ICON_SIZE}
           />
