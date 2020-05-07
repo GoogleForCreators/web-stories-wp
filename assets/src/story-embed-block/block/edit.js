@@ -45,7 +45,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
     url: outerURL,
     width = 360,
     height = 600,
-    align,
+    align = 'none',
     poster,
     title,
   } = attributes;
@@ -106,7 +106,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
       setEditingURL(false);
       if (url !== outerURL) {
-        setAttributes({ url, poster: null });
+        setAttributes({ url, poster: null, title: null });
       }
     },
     [setAttributes, url, outerURL]
@@ -136,7 +136,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (editingURL || isFetchingData || cannotEmbed) {
+  if (!url || !outerURL || editingURL || isFetchingData || cannotEmbed) {
     return (
       <EmbedPlaceholder
         icon={icon}
@@ -218,7 +218,7 @@ StoryEmbedEdit.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
     align: PropTypes.string,
-  }).isRequired,
+  }),
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
