@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils/';
-import { Pill } from '../';
+import Pill from '../';
 
 describe('Pill', () => {
   const pillText = 'text pill label';
