@@ -31,13 +31,13 @@ export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
 
 export const PillContainer = styled.label`
   ${({ theme }) => `
-  display: inline-flex;
-  justify-content: center;
-  font-family: ${theme.fonts.pill.family};
-  font-weight: ${theme.fonts.pill.weight};
-  font-size: ${theme.fonts.pill.size}px;
-  line-height: ${theme.fonts.pill.lineHeight}px;
-  letter-spacing: ${theme.fonts.pill.letterSpacing}em;
+    display: inline-flex;
+    justify-content: center;
+    font-family: ${theme.fonts.pill.family};
+    font-weight: ${theme.fonts.pill.weight};
+    font-size: ${theme.fonts.pill.size}px;
+    line-height: ${theme.fonts.pill.lineHeight}px;
+    letter-spacing: ${theme.fonts.pill.letterSpacing}em;
 `}
 `;
 

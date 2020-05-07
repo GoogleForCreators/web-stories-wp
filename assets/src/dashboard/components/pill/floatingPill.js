@@ -27,9 +27,7 @@ import { FloatingTabLabel } from './components';
 
 const floatingPill = ({ children, isSelected = false }) => {
   return (
-    <FloatingTabLabel isSelected={isSelected} ariaHidden={true}>
-      {children}
-    </FloatingTabLabel>
+    <FloatingTabLabel isSelected={isSelected}>{children}</FloatingTabLabel>
   );
 };
 floatingPill.propTypes = {

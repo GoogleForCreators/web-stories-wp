@@ -27,7 +27,7 @@ import { PillLabel, ActiveChoiceIcon } from './components';
 
 const DefaultPill = ({ children, isSelected = false }) => {
   return (
-    <PillLabel isSelected={isSelected} ariaHidden={true}>
+    <PillLabel isSelected={isSelected}>
       {children}
       {isSelected && <ActiveChoiceIcon />}
     </PillLabel>

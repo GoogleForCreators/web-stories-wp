@@ -120,7 +120,6 @@ const PopoverPanel = ({
   items,
   labelType,
   onSelect,
-  ...rest
 }) => {
   return (
     <Panel isOpen={isOpen} isNarrow={labelType === PILL_LABEL_TYPES.SWATCH}>
@@ -150,7 +149,6 @@ const PopoverPanel = ({
                     disabled={disabled}
                     hex={hex}
                     labelType={labelType}
-                    {...rest}
                   >
                     {label}
                   </Pill>
