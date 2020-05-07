@@ -198,7 +198,7 @@ function TextEdit({
   }, [font, maybeEnqueueFontStyle]);
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick}>
+    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}

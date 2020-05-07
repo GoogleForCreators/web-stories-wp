@@ -90,6 +90,7 @@ function EditLayerForElement({ element }) {
   return (
     <LayerWithGrayout
       ref={ref}
+      data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
       onPointerDown={(evt) => {
