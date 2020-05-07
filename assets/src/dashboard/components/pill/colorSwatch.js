@@ -27,7 +27,7 @@ import { SwatchLabel, ActiveSwatchIcon } from './components';
 
 const ColorSwatch = ({ isSelected = false, hex }) => {
   return (
-    <SwatchLabel isSelected={isSelected} hex={hex} ariaHidden={true}>
+    <SwatchLabel isSelected={isSelected} hex={hex}>
       {isSelected && <ActiveSwatchIcon hex={hex} />}
     </SwatchLabel>
   );

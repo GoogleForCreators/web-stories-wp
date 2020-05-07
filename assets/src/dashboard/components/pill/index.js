@@ -31,43 +31,41 @@ import FloatingPill from './floatingPill';
 import ColorSwatch from './colorSwatch';
 
 const Pill = ({
-  children,
+  children = null,
   inputType = PILL_INPUT_TYPES.CHECKBOX,
   labelType = 'default',
   isSelected = false,
   name,
   onClick,
-  floatingTab,
   value,
   hex,
-  ...rest
 }) => {
   const labelTypes = {
     [PILL_LABEL_TYPES.FLOATING]: FloatingPill,
     [PILL_LABEL_TYPES.SWATCH]: ColorSwatch,
     [PILL_LABEL_TYPES.DEFAULT]: DefaultPill,
   };
-
   const Label = labelTypes[labelType];
   return (
     <PillContainer>
       <PillInput
         type={inputType}
         name={name}
-        onChange={(e) => onClick(e, value)}
+        onChange={(e) => {
+          onClick(e, value);
+        }}
         value={value}
         checked={isSelected}
-        {...rest}
       />
       <Label hex={hex} isSelected={isSelected} aria-hidden={true}>
-        {children}
+        {labelType !== PILL_LABEL_TYPES.SWATCH && children}
       </Label>
     </PillContainer>
   );
 };
 
 Pill.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
@@ -75,7 +73,6 @@ Pill.propTypes = {
   labelType: PropTypes.oneOf(Object.values(PILL_LABEL_TYPES)),
   hex: PropTypes.string,
   isSelected: PropTypes.bool,
-  floatingTab: PropTypes.bool,
 };
 
 export default Pill;

@@ -29,16 +29,17 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { DROPDOWN_TYPES } from '../../constants';
+import { PILL_LABEL_TYPES } from '../../constants/components';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import { DROPDOWN_TYPES } from '../../constants';
+
+import { ColorDot } from '../colorDot';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
-import { PILL_LABEL_TYPES } from '../../constants/components';
 
 const dropdownLabelType = {
   [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
@@ -86,13 +87,10 @@ export const InnerDropdown = styled.button`
       background-color: ${theme.dropdown[type].activeBackground};
     }
 
-<<<<<<< HEAD
     &:focus {
       border: ${theme.borders.action};
     }
 
-=======
->>>>>>> dropdown style adjusted to have blue bg for panels when selections are made and making all icons gray. space update to be narrower, no need for height
     background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
@@ -251,7 +249,6 @@ const Dropdown = ({
           onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
-          {...rest}
         />
       ) : (
         <StyledPopoverMenu

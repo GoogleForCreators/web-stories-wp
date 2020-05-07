@@ -136,12 +136,13 @@ const PopoverPanel = ({
           <PillFieldset data-testid={'pill-fieldset'}>
             <Legend title={`options for ${title}`} />
             {items.map(
-              ({ disabled = false, hex, label, selected, value }, index) => {
+              ({ label, selected, value, hex, disabled = false }, index) => {
                 return (
                   <Pill
                     data-testid={'popover-pill'}
                     key={`${value}_${index}`}
                     inputType="checkbox"
+                    label={label}
                     name={`${title}_pillGroup_${value}`}
                     onClick={onSelect}
                     value={value}

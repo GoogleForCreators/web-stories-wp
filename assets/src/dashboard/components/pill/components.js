@@ -118,7 +118,7 @@ export const SwatchLabel = styled(PillLabel)`
     background-color: ${hex};
 
     ${PillInput}:checked + &,
-    ${PillInput}:hover + & { {
+    ${PillInput}:enabled:hover + & { {
       background-color: ${hex};
     }
   `}

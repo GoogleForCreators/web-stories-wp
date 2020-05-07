@@ -29,9 +29,9 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import PopoverPanel from '..';
 import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
 import { PILL_LABEL_TYPES } from '../../../constants/components';
+import PopoverPanel from '../';
 
 export default {
   title: 'Dashboard/Components/PopoverPanel',
