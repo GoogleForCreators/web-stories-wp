@@ -118,7 +118,7 @@ const PopoverPanel = ({
   isOpen,
   title,
   items,
-  labelType,
+  labelType = PILL_LABEL_TYPES.DEFAULT,
   onSelect,
 }) => {
   return (

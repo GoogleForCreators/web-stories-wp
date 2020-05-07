@@ -168,7 +168,7 @@ const Dropdown = ({
   };
 
   const handleMenuItemSelect = (item) => {
-    if (type === DROPDOWN_TYPES.PANEL) {
+    if (type === DROPDOWN_TYPES.PANEL || DROPDOWN_TYPES.COLOR_PANEL) {
       onChange(item);
       return;
     }

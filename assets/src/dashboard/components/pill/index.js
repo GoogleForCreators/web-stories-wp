@@ -39,6 +39,7 @@ const Pill = ({
   onClick,
   value,
   hex,
+  ...rest
 }) => {
   const labelTypes = {
     [PILL_LABEL_TYPES.FLOATING]: FloatingPill,
@@ -56,6 +57,7 @@ const Pill = ({
         }}
         value={value}
         checked={isSelected}
+        {...rest}
       />
       <Label hex={hex} isSelected={isSelected} aria-hidden={true}>
         {labelType !== PILL_LABEL_TYPES.SWATCH && children}
