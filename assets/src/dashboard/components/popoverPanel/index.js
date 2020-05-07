@@ -111,6 +111,7 @@ const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
         <>
           <KeyboardCloseOnly
             onClick={onClose}
+            data-testid={'popover-close-btn'}
             ariaDescription={__('close menu', 'web-stories')}
           >
             <CloseIcon width={14} height="14" />
@@ -121,6 +122,7 @@ const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
               ({ label, selected, value, hex, disabled = false }, index) => {
                 return (
                   <Pill
+                    data-testid={'popover-pill'}
                     key={`${value}_${index}`}
                     inputType="checkbox"
                     name={`${title}_pillGroup_${value}`}
