@@ -23,13 +23,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { MoreVerticalButton } from './cardItemMenu';
 import { ActionLabel } from './types';
 
 const StyledCard = styled.div`
   margin: 0;
-  width: ${({ cardSize }) => `${cardSize.width}px`};
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -39,13 +38,7 @@ const StyledCard = styled.div`
 `;
 
 const CardGridItem = ({ children, isTemplate }) => {
-  const { pageSize } = usePagePreviewSize();
-
-  return (
-    <StyledCard cardSize={pageSize} isTemplate={isTemplate}>
-      {children}
-    </StyledCard>
-  );
+  return <StyledCard isTemplate={isTemplate}>{children}</StyledCard>;
 };
 
 CardGridItem.propTypes = {

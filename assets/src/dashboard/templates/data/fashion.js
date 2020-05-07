@@ -79,7 +79,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page1_hero.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page1_hero.jpg`,
               width: 220,
               height: 297,
               posterId: 0,
@@ -159,7 +159,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page1_logotype.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page1_logotype.png`,
               width: 46,
               height: 12,
               posterId: 0,
@@ -338,7 +338,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page2_pinwheel_full.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page2_pinwheel_full.png`,
               width: 220,
               height: 220,
               posterId: 0,
@@ -376,7 +376,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page2_arrow.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page2_arrow.png`,
               width: 31,
               height: 24,
               posterId: 0,
@@ -465,7 +465,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page3_bg.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page3_bg.jpg`,
               width: 220,
               height: 261,
               posterId: 0,
@@ -741,7 +741,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page3_arrow.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page3_arrow.png`,
               width: 7,
               height: 3,
               posterId: 0,
@@ -1705,7 +1705,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page5_handbag.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page5_handbag.png`,
               width: 220,
               height: 194,
               posterId: 0,
@@ -1953,7 +1953,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page5_arrow.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page5_arrow.png`,
               width: 8,
               height: 4,
               posterId: 0,
@@ -2429,7 +2429,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2521,7 +2521,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2614,7 +2614,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2707,7 +2707,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2800,7 +2800,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2944,7 +2944,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_hero.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page7_hero.jpg`,
               width: 220,
               height: 274,
               posterId: 0,
@@ -3040,7 +3040,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_pinwheel.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page7_pinwheel.png`,
               width: 123,
               height: 123,
               posterId: 0,
@@ -3260,7 +3260,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_arrow.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page7_arrow.png`,
               width: 8,
               height: 4,
               posterId: 0,
@@ -3320,7 +3320,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page8_bg.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page8_bg.jpg`,
               width: 220,
               height: 291,
               posterId: 0,
@@ -3868,7 +3868,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page8_arrow.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page8_arrow.png`,
               width: 5,
               height: 5,
               posterId: 0,
@@ -4266,7 +4266,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item1-cropped.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_item1-cropped.png`,
               width: 43,
               height: 43,
               posterId: 0,
@@ -4309,7 +4309,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item2.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_item2.jpg`,
               width: 220,
               height: 331,
               posterId: 0,
@@ -4352,7 +4352,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item3.jpg`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_item3.jpg`,
               width: 229,
               height: 157,
               posterId: 0,
@@ -4448,7 +4448,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_facebook.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_facebook.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4486,7 +4486,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_instagram.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_instagram.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4524,7 +4524,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_youtube.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_youtube.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4562,7 +4562,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_twitter.png`,
+              src: `${imageBaseUrl}images/templates/fashion/fashion_page9_twitter.png`,
               width: 24,
               height: 24,
               posterId: 0,

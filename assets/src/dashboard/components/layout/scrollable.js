@@ -22,7 +22,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useLayoutContext from './useLayoutContext';
-import { SQUISH_LENGTH } from './provider';
 
 const ScrollContent = styled.div`
   position: absolute;
@@ -49,27 +48,13 @@ Inner.propTypes = {
   paddingTop: PropTypes.number,
 };
 
-const SquishRange = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: ${SQUISH_LENGTH}px;
-  pointer-events: none;
-`;
-
-SquishRange.propTypes = {
-  height: PropTypes.number,
-};
-
 const Scrollable = ({ children }) => {
   const {
-    state: { scrollFrameRef, squishDriverRef, squishContentHeight },
+    state: { scrollFrameRef, squishContentHeight },
   } = useLayoutContext();
 
   return (
     <ScrollContent ref={scrollFrameRef}>
-      <SquishRange ref={squishDriverRef} />
       <Inner paddingTop={squishContentHeight}>{children}</Inner>
     </ScrollContent>
   );
