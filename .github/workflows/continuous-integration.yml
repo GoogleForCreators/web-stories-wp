@@ -436,7 +436,7 @@ jobs:
         run: |
           echo 'assets/images/templates' >> .distignore
           npm run build:js
-          npm run workflow:build-plugin -- -cdn
+          npm run workflow:build-plugin -- --cdn
           npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
           npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
 
