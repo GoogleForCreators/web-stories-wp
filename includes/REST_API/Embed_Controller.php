@@ -106,12 +106,9 @@ class Embed_Controller extends WP_REST_Controller {
 			return json_decode( $data, true );
 		}
 
-		$title  = '';
-		$poster = '';
-
 		$data = [
-			'title'  => $title,
-			'poster' => $poster,
+			'title'  => '',
+			'poster' => '',
 		];
 
 		$args = [
