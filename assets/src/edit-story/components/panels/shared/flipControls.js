@@ -56,7 +56,7 @@ const ControlsContainer = styled.div`
  * @param {number} props.elementSpacing Space between the two flip toggles (defaults to 8).
  * @return {*} Rendered component.
  */
-function FlipControls({ value, onChange, elementSpacing = 8 }) {
+function FlipControls({ value, onChange, elementSpacing }) {
   return (
     <ControlsContainer>
       <ToggleContainer margin={elementSpacing}>
@@ -85,6 +85,10 @@ FlipControls.propTypes = {
   value: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   elementSpacing: PropTypes.number,
+};
+
+FlipControls.defaultProps = {
+  elementSpacing: 8,
 };
 
 export default FlipControls;
