@@ -48,5 +48,6 @@ describe('CardTitle', () => {
     );
 
     expect(getByTestId('title-rename-input')).toBeDefined();
+    expect(getByTestId('title-rename-input')).toHaveFocus();
   });
 });
