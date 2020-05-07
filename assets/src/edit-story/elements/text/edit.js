@@ -18,46 +18,26 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Editor, EditorState } from 'draft-js';
-import { stateFromHTML } from 'draft-js-import-html';
-import { stateToHTML } from 'draft-js-export-html';
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useCallback,
-} from 'react';
+import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory, useFont } from '../../app';
-import { useCanvas } from '../../components/canvas';
+import RichTextEditor from '../../components/richText/editor';
 import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
   elementWithBackgroundColor,
-  elementWithFontColor,
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import useFocusOut from '../../utils/useFocusOut';
 import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import {
-  draftMarkupToContent,
-  getFilteredState,
-  getHandleKeyCommand,
-  getSelectionForAll,
-  getSelectionForOffset,
-  generateParagraphTextStyle,
-  getHighlightLineheight,
-} from './util';
+import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
@@ -85,7 +65,6 @@ const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
   ${elementWithBackgroundColor}
-  ${elementWithFontColor}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -97,9 +76,7 @@ const TextBox = styled.div`
 function TextEdit({
   element: {
     id,
-    bold,
     content,
-    color,
     backgroundColor,
     backgroundTextMode,
     opacity,
@@ -115,7 +92,6 @@ function TextEdit({
   } = useUnits();
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    color,
     font,
     backgroundColor,
     opacity,
@@ -124,102 +100,53 @@ function TextEdit({
         rest.lineHeight,
         dataToEditorX(rest.padding?.vertical || 0)
       ),
-      color: createSolid(0, 0, 0),
       backgroundColor: createSolid(255, 255, 255),
     }),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
       backgroundColor: null,
     }),
   };
-  const wrapperRef = useRef(null);
-  const textBoxRef = useRef(null);
-  const editorRef = useRef(null);
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
   const {
     actions: { updateElementById },
   } = useStory();
-  const {
-    state: { editingElementState },
-  } = useCanvas();
+
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
 
-  const { offset, clearContent, selectAll } = editingElementState || {};
-  const initialState = useMemo(() => {
-    const contentWithBreaks = (content || '')
-      // Re-insert manual line-breaks for empty lines
-      .replace(/\n(?=\n)/g, '\n<br />')
-      .split('\n')
-      .map((s) => {
-        return `<p>${draftMarkupToContent(s, bold)}</p>`;
-      })
-      .join('');
-    let state = EditorState.createWithContent(stateFromHTML(contentWithBreaks));
-    if (clearContent) {
-      // If `clearContent` is specified, push the update to clear content so that
-      // it can be undone.
-      state = EditorState.push(state, stateFromHTML(''), 'remove-range');
-    }
-    let selection;
-    if (selectAll) {
-      selection = getSelectionForAll(state.getCurrentContent());
-    } else if (offset) {
-      selection = getSelectionForOffset(state.getCurrentContent(), offset);
-    }
-    if (selection) {
-      state = EditorState.forceSelection(state, selection);
-    }
-    return state;
-  }, [content, clearContent, selectAll, offset, bold]);
-  const [editorState, setEditorState] = useState(initialState);
+  const wrapperRef = useRef(null);
+  const textBoxRef = useRef(null);
+  const editorRef = useRef(null);
+  const contentRef = useRef();
   const editorHeightRef = useRef(0);
-
-  // This is to allow the finalizing useEffect to *not* depend on editorState,
-  // as would otherwise be a lint error.
-  const lastKnownState = useRef(null);
-
-  // This filters out illegal content (see `getFilteredState`)
-  // on paste and updates state accordingly.
-  // Furthermore it also sets initial selection if relevant.
-  const updateEditorState = useCallback(
-    (newEditorState) => {
-      const filteredState = getFilteredState(newEditorState, editorState);
-      lastKnownState.current = filteredState.getCurrentContent();
-      setEditorState(filteredState);
-    },
-    [editorState]
-  );
-
-  // Handle basic key commands such as bold, italic and underscore.
-  const handleKeyCommand = getHandleKeyCommand(updateEditorState);
 
   // Make sure to allow the user to click in the text box while working on the text.
   const onClick = (evt) => {
     const editor = editorRef.current;
     // Refocus the editor if the container outside it is clicked.
-    if (!editor.editorContainer.contains(evt.target)) {
+    if (!editor.getNode().contains(evt.target)) {
       editor.focus();
     }
     evt.stopPropagation();
   };
 
+  // Set focus when initially rendered.
+  useLayoutEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.focus();
+    }
+  }, []);
+
   const updateContent = useCallback(() => {
-    const newState = lastKnownState.current;
     const newHeight = editorHeightRef.current;
     wrapperRef.current.style.height = '';
-    if (newState) {
+    if (contentRef.current) {
       // Remove manual line breaks and remember to trim any trailing non-breaking space.
-      const properties = {
-        content: stateToHTML(lastKnownState.current, {
-          defaultBlockTag: null,
-        })
-          .replace(/<br ?\/?>/g, '')
-          .replace(/&nbsp;$/, ''),
-      };
+      const properties = { content: contentRef.current };
       // Recalculate the new height and offset.
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
@@ -245,24 +172,26 @@ function TextEdit({
     y,
   ]);
 
-  // Update content for element on focus out.
-  useFocusOut(textBoxRef, updateContent, [updateContent]);
-
   // Update content for element on unmount.
   useUnmount(updateContent);
 
-  // Set focus when initially rendered.
-  useLayoutEffect(() => {
-    editorRef.current.focus();
-  }, []);
-
-  // Remeasure the height on each content update.
-  useEffect(() => {
+  // A function to remeasure height
+  const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, [editorState, elementHeight]);
+  }, []);
+  // Invoke on each content update.
+  const handleUpdate = useCallback(
+    (newContent) => {
+      contentRef.current = newContent;
+      handleResize();
+    },
+    [handleResize]
+  );
+  // Also invoke if the raw element height ever changes
+  useEffect(handleResize, [elementHeight]);
 
   useEffect(() => {
     maybeEnqueueFontStyle(font);
@@ -271,11 +200,10 @@ function TextEdit({
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
       <TextBox ref={textBoxRef} {...textProps}>
-        <Editor
+        <RichTextEditor
           ref={editorRef}
-          onChange={updateEditorState}
-          editorState={editorState}
-          handleKeyCommand={handleKeyCommand}
+          content={content}
+          onChange={handleUpdate}
         />
       </TextBox>
     </Wrapper>

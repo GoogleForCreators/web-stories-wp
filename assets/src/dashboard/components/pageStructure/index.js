@@ -32,6 +32,7 @@ import { useCallback, useRef } from 'react';
 import Button from '../button';
 import { useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import {
   BEZIER,
   BUTTON_TYPES,
@@ -39,6 +40,7 @@ import {
   secondaryPaths,
   Z_INDEX,
 } from '../../constants';
+
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -62,7 +64,8 @@ export const PageContent = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  left: ${({ fullWidth }) => (fullWidth ? '0' : 'max(15%, 190px)')};
+  left: ${({ fullWidth }) =>
+    fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     left: 0;
@@ -78,7 +81,7 @@ export const LeftRailContainer = styled.nav.attrs({
   flex-direction: column;
   top: 0;
   bottom: 0;
-  width: max(15%, 190px);
+  width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.leftRail.border};
   z-index: ${Z_INDEX.LAYOUT_FIXED};

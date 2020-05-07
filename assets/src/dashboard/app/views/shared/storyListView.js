@@ -50,10 +50,10 @@ import {
 import {
   ICON_METRICS,
   ORDER_BY_SORT,
-  PAGE_RATIO,
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
 } from '../../../constants';
+import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
 

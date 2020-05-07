@@ -204,14 +204,10 @@ export const FontPropType = PropTypes.shape({
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
-  color: PatternPropType.isRequired,
   backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
   font: FontPropType.isRequired,
   fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
-  fontStyle: PropTypes.string,
-  letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
   padding: PropTypes.shape({
     horizontal: PropTypes.number,
@@ -219,7 +215,6 @@ StoryPropTypes.elements.text = PropTypes.shape({
     locked: PropTypes.bool,
   }),
   textAlign: PropTypes.string,
-  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
