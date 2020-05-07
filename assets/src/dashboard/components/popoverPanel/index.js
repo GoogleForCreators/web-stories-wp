@@ -112,7 +112,7 @@ const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
           <KeyboardCloseOnly
             onClick={onClose}
             data-testid={'popover-close-btn'}
-            ariaLabel={__('close menu', 'web-stories')}
+            aria-label={__('close menu', 'web-stories')}
           >
             <CloseIcon width={14} height="14" />
           </KeyboardCloseOnly>

@@ -138,7 +138,7 @@ const Pill = ({
         checked={isSelected}
         {...rest}
       />
-      <Label isSelected={isSelected} ariaHidden={true}>
+      <Label isSelected={isSelected} aria-hidden={true}>
         {children}
         {isSelected && !floatingTab && (
           <ActiveChoiceIcon
