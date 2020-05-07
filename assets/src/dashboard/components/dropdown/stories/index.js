@@ -31,7 +31,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Dropdown from '../';
-import { DROPDOWN_TYPES } from '../../../constants';
+import { DROPDOWN_TYPES, TEMPLATE_COLOR_ITEMS } from '../../../constants';
 
 const demoItems = [
   { value: '1', label: __('one', 'web-stories') },
@@ -41,6 +41,7 @@ const demoItems = [
 
 const DropdownWrapper = styled.div`
   width: 200px;
+  margin: 20px 50px;
 `;
 
 const FillerContainer = styled.div`
@@ -141,6 +142,43 @@ export const _panel = () => {
         disabled={boolean('disabled')}
         type={DROPDOWN_TYPES.PANEL}
         placeholder={text('placeholder', 'My dropdown for categories')}
+        items={statefulDemoData}
+        onChange={(selectedValue) => {
+          action(`clicked on dropdown item ${selectedValue}`)(selectedValue);
+          updateDemoDataState(selectedValue);
+        }}
+      />
+      <FillerContainer />
+    </DropdownWrapper>
+  );
+};
+
+export const _colorPanel = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
+  return (
+    <DropdownWrapper>
+      <Dropdown
+        ariaLabel={text('ariaLabel', 'choose colors to filter on')}
+        disabled={boolean('disabled')}
+        type={DROPDOWN_TYPES.COLOR_PANEL}
+        placeholder={text('placeholder', 'My dropdown for colors')}
         items={statefulDemoData}
         onChange={(selectedValue) => {
           action(`clicked on dropdown item ${selectedValue}`)(selectedValue);

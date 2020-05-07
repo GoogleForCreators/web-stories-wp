@@ -90,6 +90,14 @@ const theme = {
       arrowColor: colors.bluePrimary,
       height: 48,
     },
+    [DROPDOWN_TYPES.COLOR_PANEL]: {
+      background: 'transparent',
+      activeBackground: colors.gray25,
+      borderRadius: 40,
+      border: borders.gray50,
+      arrowColor: colors.bluePrimary,
+      height: 48,
+    },
     [DROPDOWN_TYPES.MENU]: {
       background: colors.gray25,
       activeBackground: colors.gray25,

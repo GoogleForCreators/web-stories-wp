@@ -30,8 +30,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Pill, FloatingTab } from '../';
+import Pill from '../';
 import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
 
 export default {
   title: 'Dashboard/Components/Pill',
@@ -173,10 +174,10 @@ export const _floatingTabs = () => {
       {statefulDemoData.map(
         ({ icon, label, selected, value, disabled }, index) => {
           return (
-            <FloatingTab
+            <Pill
               key={value + index}
               inputType="checkbox"
-              labelType="floatingTab"
+              labelType={PILL_LABEL_TYPES.FLOATING}
               name={value}
               onClick={(e, selectedValue) => {
                 action('on click selected')(selectedValue);
@@ -187,7 +188,7 @@ export const _floatingTabs = () => {
               disabled={disabled}
             >
               <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-            </FloatingTab>
+            </Pill>
           );
         }
       )}
@@ -237,22 +238,40 @@ export const _radioGroup = () => {
 };
 
 export const _colorSwatches = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
   return (
     <DemoFieldSet>
-      {TEMPLATE_COLOR_ITEMS.map(({ label, hex, value }, index) => {
+      {statefulDemoData.map(({ label, hex, value, selected }, index) => {
         return (
           <Pill
             ariaLabel={label}
             key={value + index}
             inputType="checkbox"
-            labelType="swatch"
+            labelType={PILL_LABEL_TYPES.SWATCH}
             hex={hex}
             name={value}
-            onClick={(e, selectedValue) => {
+            onClick={(_, selectedValue) => {
               action('on click selected')(selectedValue);
+              updateDemoDataState(selectedValue);
             }}
             value={value}
-            isSelected={boolean('isSelected')}
+            isSelected={selected}
             disabled={boolean('disabled')}
           />
         );

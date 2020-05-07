@@ -18,150 +18,34 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
+import { PILL_LABEL_TYPES, PILL_INPUT_TYPES } from '../../constants/components';
 
-const PILL_TYPES = {
-  CHECKBOX: 'checkbox',
-  RADIO: 'radio',
-};
-const ACTIVE_CHOICE_ICON_SIZE = 16;
-const ACTIVE_CHOICE_LEFT_MARGIN = 4;
+import { PillInput, PillContainer } from './components';
 
-const PillInput = styled.input`
-  /*
-Hide checkbox visually but remain accessible to screen readers.
-Source: https://polished.js.org/docs/#hidevisually
-*/
-  border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-`;
-
-const PillContainer = styled.label`
-  ${({ theme }) => `
-    display: inline-flex;
-    justify-content: center;
-    font-family: ${theme.fonts.pill.family};
-    font-weight: ${theme.fonts.pill.weight};
-    font-size: ${theme.fonts.pill.size}px;
-    line-height: ${theme.fonts.pill.lineHeight}px;
-    letter-spacing: ${theme.fonts.pill.letterSpacing}em;
-  `}
-`;
-
-const PillLabel = styled.span`
-  ${({ theme, isSelected }) => `
-    cursor: pointer;
-    margin: auto 0;
-    width: 100%;
-    display: flex;
-    padding: 4px;
-    padding-right: ${isSelected ? '4px' : '20px'};
-    padding-left: ${isSelected ? `${ACTIVE_CHOICE_ICON_SIZE}px` : '20px'};
-    align-items: center;
-    background-color: ${theme.colors.white};
-    color: ${theme.colors.gray700};
-    border: ${theme.borders.gray50};
-    border-radius: ${theme.button.borderRadius}px;
-
-    ${PillInput}:hover + & {
-      background-color: ${theme.colors.blueLight};
-    }
-
-    ${PillInput}:focus + & { 
-      border: ${theme.borders.action};
-    }
-
-    ${PillInput}:checked + & {
-      background-color: ${theme.colors.blueLight};
-    }
-
-    ${PillInput}:disabled + & {
-      opacity: 0.6;
-      cursor: default;
-    }
-  `}
-`;
-PillLabel.propTypes = {
-  isSelected: PropTypes.bool,
-};
-
-const SwatchLabel = styled(PillLabel)`
-  ${({ hex }) => `
-    padding: 0;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    background-color: ${hex};
-
-    ${PillInput}:checked + &,
-    ${PillInput}:hover + & { {
-      background-color: ${hex};
-    }
-  `}
-`;
-
-const ActiveSwatchIcon = styled(CheckmarkIcon)`
-  position: absolute;
-  margin: auto;
-  color: ${({ theme, hex }) =>
-    hex.toLowerCase().includes('fff')
-      ? theme.colors.black
-      : theme.colors.white};
-`;
-
-const FloatingTabLabel = styled(PillLabel)`
-  background-color: transparent;
-  padding: 4px 16px;
-  border-color: transparent;
-
-  ${PillInput}:checked + & {
-    box-shadow: ${({ theme }) => theme.floatingTab.shadow};
-    background-color: transparent;
-  }
-`;
-
-const ActiveChoiceIcon = styled(CloseIcon)`
-  background-color: ${({ theme }) => theme.colors.gray700};
-  color: ${({ theme }) => theme.colors.blueLight};
-  border-radius: 50%;
-  padding: 3px;
-  margin-left: ${ACTIVE_CHOICE_LEFT_MARGIN}px;
-`;
+import DefaultPill from './defaultPill';
+import FloatingPill from './floatingPill';
+import ColorSwatch from './colorSwatch';
 
 const Pill = ({
   children,
-  inputType = PILL_TYPES.CHECKBOX,
+  inputType = PILL_INPUT_TYPES.CHECKBOX,
   labelType = 'default',
   isSelected = false,
   name,
   onClick,
   floatingTab,
   value,
-  useCircle,
   hex,
   ...rest
 }) => {
   const labelTypes = {
-    floatingTab: FloatingTabLabel,
-    swatch: SwatchLabel,
-    default: PillLabel,
+    [PILL_LABEL_TYPES.FLOATING]: FloatingPill,
+    [PILL_LABEL_TYPES.SWATCH]: ColorSwatch,
+    [PILL_LABEL_TYPES.DEFAULT]: DefaultPill,
   };
 
   const Label = labelTypes[labelType];
@@ -177,19 +61,6 @@ const Pill = ({
       />
       <Label hex={hex} isSelected={isSelected} aria-hidden={true}>
         {children}
-        {isSelected && labelType === 'default' && (
-          <ActiveChoiceIcon
-            width={ACTIVE_CHOICE_ICON_SIZE}
-            height={ACTIVE_CHOICE_ICON_SIZE}
-          />
-        )}
-        {isSelected && labelType === 'swatch' && (
-          <ActiveSwatchIcon
-            hex={hex}
-            width={ACTIVE_CHOICE_ICON_SIZE}
-            height={ACTIVE_CHOICE_ICON_SIZE}
-          />
-        )}
       </Label>
     </PillContainer>
   );
@@ -200,12 +71,11 @@ Pill.propTypes = {
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  inputType: PropTypes.oneOf(Object.values(PILL_TYPES)),
+  inputType: PropTypes.oneOf(Object.values(PILL_INPUT_TYPES)),
+  labelType: PropTypes.oneOf(Object.values(PILL_LABEL_TYPES)),
+  hex: PropTypes.string,
   isSelected: PropTypes.bool,
   floatingTab: PropTypes.bool,
 };
 
-const FloatingTab = (props) => <Pill floatingTab {...props} />;
-FloatingTab.propTypes = Pill.propTypes;
-
-export { Pill, FloatingTab };
+export default Pill;

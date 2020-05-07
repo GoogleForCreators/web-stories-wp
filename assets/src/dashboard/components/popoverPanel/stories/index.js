@@ -31,6 +31,7 @@ import { boolean, text } from '@storybook/addon-knobs';
  */
 import PopoverPanel from '..';
 import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
 
 export default {
   title: 'Dashboard/Components/PopoverPanel',
@@ -110,7 +111,8 @@ export const _colorSwatchPanel = () => {
       isOpen={boolean('isOpen', true)}
       title={text('title', 'Category')}
       items={statefulDemoData}
-      labelType="swatch"
+      labelType={PILL_LABEL_TYPES.SWATCH}
+      onClose={(e) => action(`close button clicked`)(e)}
       onSelect={(_, selectedValue) => {
         action(`selected pill ${selectedValue}`)(selectedValue);
         updateDemoDataState(selectedValue);

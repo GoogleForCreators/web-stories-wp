@@ -28,11 +28,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Z_INDEX } from '../../constants';
-import { Pill } from '../pill';
+import Pill from '../pill';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { PILL_LABEL_TYPES } from '../../constants/components';
 
 export const Panel = styled.div`
-  ${({ isOpen, theme }) => `
+  ${({ isNarrow, isOpen, theme }) => `
     align-items: flex-start;
     background-color: ${theme.colors.white};
     border-radius: 8px;
@@ -47,10 +48,21 @@ export const Panel = styled.div`
     pointer-events: ${isOpen ? 'auto' : 'none'};
     transform: ${isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
     z-index: ${Z_INDEX.POPOVER_PANEL};
-    width: ${theme.popoverPanel.desktopWidth}px;
 
-    @media ${theme.breakpoint.tablet} {
-      width: ${theme.popoverPanel.tabletWidth}px;
+    ${
+      isNarrow
+        ? `width: 300px;`
+        : ` 
+          width: ${theme.popoverPanel.desktopWidth}px;
+          
+          @media ${theme.breakpoint.tablet} {
+            width: ${theme.popoverPanel.tabletWidth}px;
+          }
+
+           @media ${theme.breakpoint.desktop} {
+            width: ${theme.popoverPanel.desktopWidth}px;
+          }
+    `
     }
   `}
 `;
@@ -103,11 +115,12 @@ const PopoverPanel = ({
   isOpen,
   title,
   items,
-  onSelect,
   labelType,
+  onSelect,
+  ...rest
 }) => {
   return (
-    <Panel isOpen={isOpen}>
+    <Panel isOpen={isOpen} isNarrow={labelType === PILL_LABEL_TYPES.SWATCH}>
       {isOpen && (
         <>
           <KeyboardCloseOnly
@@ -131,8 +144,9 @@ const PopoverPanel = ({
                     value={value}
                     isSelected={selected}
                     disabled={disabled}
-                    labelType={labelType}
                     hex={hex}
+                    labelType={labelType}
+                    {...rest}
                   >
                     {label}
                   </Pill>
@@ -151,7 +165,7 @@ PopoverPanel.propTypes = {
   onSelect: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
-  labelType: PropTypes.string,
+  labelType: PropTypes.oneOf(Object.values(PILL_LABEL_TYPES)),
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
 };
 
