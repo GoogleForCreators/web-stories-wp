@@ -67,7 +67,7 @@ export const TableStatusHeaderCell = styled(TableHeaderCell)`
 `;
 
 export const TableAuthorHeaderCell = styled(TableHeaderCell)`
-  min-width: 100px;
+  min-width: 110px;
 `;
 
 export const TableTitleHeaderCell = styled(TableHeaderCell)`

@@ -23,7 +23,7 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -36,16 +36,10 @@ import {
   Layout,
   ToggleButtonGroup,
 } from '../../../components';
-import {
-  VIEW_STYLE,
-  STORY_STATUSES,
-  STORY_SORT_OPTIONS,
-  SORT_DIRECTION,
-} from '../../../constants';
+import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
-import { clamp, usePagePreviewSize } from '../../../utils/';
 import {
   BodyWrapper,
   BodyViewOptions,
@@ -55,6 +49,7 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
+import useStoryView from '../../../utils/useStoryView';
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -71,22 +66,6 @@ const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
 `;
 
 function MyStories() {
-  const [status, setStatus] = useState(STORY_STATUSES[0].value);
-  const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [currentStorySort, setCurrentStorySort] = useState(
-    STORY_SORT_OPTIONS.LAST_MODIFIED
-  );
-  const [currentListSortDirection, setListSortDirection] = useState(
-    SORT_DIRECTION.DESC
-  );
-
-  const { pageSize } = usePagePreviewSize({
-    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
-    isGrid: viewStyle === VIEW_STYLE.GRID,
-  });
   const {
     actions: {
       storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
@@ -107,77 +86,34 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
+  const { view, sort, filter, page, search } = useStoryView({
+    filters: STORY_STATUSES,
+    totalPages,
+  });
+
   useEffect(() => {
     fetchStories({
-      sortOption: currentStorySort,
-      searchTerm: typeaheadValue,
-      sortDirection: viewStyle === VIEW_STYLE.LIST && currentListSortDirection,
-      status,
-      page: currentPage,
+      sortOption: sort.value,
+      searchTerm: search.keyword,
+      sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
+      status: filter.value,
+      page: page.value,
     });
   }, [
-    viewStyle,
-    currentListSortDirection,
-    currentPage,
-    currentStorySort,
-    status,
-    typeaheadValue,
+    view.style,
+    sort.direction,
+    page.value,
+    sort.value,
+    filter.value,
+    search.keyword,
     fetchStories,
   ]);
-
-  const setCurrentPageClamped = useCallback(
-    (newPage) => {
-      const pageRange = [1, totalPages];
-      setCurrentPage(clamp(newPage, pageRange));
-    },
-    [totalPages]
-  );
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
-
-  const handleNewStorySort = useCallback(
-    (sort) => {
-      setCurrentStorySort(sort);
-      setCurrentPageClamped(1);
-    },
-    [setCurrentStorySort, setCurrentPageClamped]
-  );
-  const handleFilterStatusUpdate = useCallback(
-    (value) => {
-      setCurrentPageClamped(1);
-      setStatus(value);
-    },
-    [setCurrentPageClamped]
-  );
-
-  const handleNewPageRequest = useCallback(() => {
-    setCurrentPageClamped(currentPage + 1);
-  }, [currentPage, setCurrentPageClamped]);
-
-  const handleTypeaheadChange = useCallback(
-    (newTypeaheadValue) => {
-      setCurrentPageClamped(1);
-      setTypeaheadValue(newTypeaheadValue);
-    },
-    [setCurrentPageClamped, setTypeaheadValue]
-  );
-
-  const handleViewStyleBarButtonSelected = useCallback(() => {
-    if (viewStyle === VIEW_STYLE.LIST) {
-      setViewStyle(VIEW_STYLE.GRID);
-    } else {
-      setViewStyle(VIEW_STYLE.LIST);
-      if (currentStorySort === STORY_SORT_OPTIONS.NAME) {
-        setListSortDirection(SORT_DIRECTION.ASC);
-      } else {
-        setListSortDirection(SORT_DIRECTION.DESC);
-      }
-    }
-  }, [currentStorySort, viewStyle]);
 
   const listBarLabel = sprintf(
     /* translators: %s: number of stories */
@@ -186,7 +122,7 @@ function MyStories() {
   );
 
   const storiesView = useMemo(() => {
-    switch (viewStyle) {
+    switch (view.style) {
       case VIEW_STYLE.GRID:
         return (
           <StoryGridView
@@ -208,11 +144,11 @@ function MyStories() {
         return (
           <StoryListView
             stories={orderedStories}
-            storySort={currentStorySort}
-            storyStatus={status}
-            sortDirection={currentListSortDirection}
-            handleSortChange={handleNewStorySort}
-            handleSortDirectionChange={setListSortDirection}
+            storySort={sort.value}
+            storyStatus={filter.value}
+            sortDirection={sort.direction}
+            handleSortChange={sort.set}
+            handleSortDirectionChange={sort.setDirection}
             tags={tags}
             categories={categories}
             users={users}
@@ -222,16 +158,14 @@ function MyStories() {
         return null;
     }
   }, [
-    viewStyle,
+    view.style,
     trashStory,
     updateStory,
     createTemplateFromStory,
     duplicateStory,
     orderedStories,
-    currentStorySort,
-    status,
-    currentListSortDirection,
-    handleNewStorySort,
+    filter.value,
+    sort,
     tags,
     categories,
     users,
@@ -242,23 +176,17 @@ function MyStories() {
       <BodyViewOptions
         showGridToggle
         listBarLabel={listBarLabel}
-        layoutStyle={viewStyle}
-        handleLayoutSelect={handleViewStyleBarButtonSelected}
-        currentSort={currentStorySort}
-        handleSortChange={handleNewStorySort}
+        layoutStyle={view.style}
+        handleLayoutSelect={view.toggleStyle}
+        currentSort={sort.value}
+        handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
         )}
       />
     );
-  }, [
-    currentStorySort,
-    handleNewStorySort,
-    handleViewStyleBarButtonSelected,
-    listBarLabel,
-    viewStyle,
-  ]);
+  }, [sort, listBarLabel, view]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
@@ -269,12 +197,12 @@ function MyStories() {
             canLoadMore={!allPagesFetched}
             isLoading={isLoading}
             allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={handleNewPageRequest}
+            onLoadMore={page.requestNextPage}
           />
         </BodyWrapper>
       );
-    } else if (typeaheadValue.length > 0) {
-      return <NoResults typeaheadValue={typeaheadValue} />;
+    } else if (search.keyword.length > 0) {
+      return <NoResults typeaheadValue={search.keyword} />;
     }
 
     return (
@@ -286,8 +214,8 @@ function MyStories() {
     orderedStories.length,
     isLoading,
     allPagesFetched,
-    handleNewPageRequest,
-    typeaheadValue,
+    page.requestNextPage,
+    search.keyword,
     storiesView,
   ]);
 
@@ -300,17 +228,16 @@ function MyStories() {
               defaultTitle={__('My Stories', 'web-stories')}
               searchPlaceholder={__('Search Stories', 'web-stories')}
               stories={orderedStories}
-              handleTypeaheadChange={handleTypeaheadChange}
-              typeaheadValue={typeaheadValue}
+              handleTypeaheadChange={search.setKeyword}
+              typeaheadValue={search.keyword}
             >
               <HeaderToggleButtonContainer>
                 <ToggleButtonGroup
                   buttons={STORY_STATUSES.map((storyStatus) => {
                     return {
-                      handleClick: () =>
-                        handleFilterStatusUpdate(storyStatus.value),
+                      handleClick: () => filter.set(storyStatus.value),
                       key: storyStatus.value,
-                      isActive: status === storyStatus.value,
+                      isActive: filter.value === storyStatus.value,
                       text: storyStatus.label,
                     };
                   })}
@@ -320,7 +247,9 @@ function MyStories() {
             {storiesViewControls}
           </Layout.Squishable>
           <Layout.Scrollable>
-            <UnitsProvider pageSize={pageSize}>{BodyContent}</UnitsProvider>
+            <UnitsProvider pageSize={view.pageSize}>
+              {BodyContent}
+            </UnitsProvider>
           </Layout.Scrollable>
           <Layout.Fixed>
             <ScrollToTop />
