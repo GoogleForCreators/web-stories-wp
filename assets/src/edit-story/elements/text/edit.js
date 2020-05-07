@@ -191,7 +191,7 @@ function TextEdit({
     [handleResize]
   );
   // Also invoke if the raw element height ever changes
-  useEffect(handleResize, [elementHeight]);
+  useEffect(handleResize, [elementHeight, handleResize]);
 
   useEffect(() => {
     maybeEnqueueFontStyle(font);
