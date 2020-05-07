@@ -69,6 +69,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       setIsFetchingData(true);
       const urlObj = new URL(outerURL);
 
+      // @todo: Display better error to user depending on REST API response.
       apiFetch({
         path: `web-stories/v1/embed?url=${urlObj.toString()}`,
       })
