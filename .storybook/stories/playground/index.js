@@ -44,6 +44,11 @@ const config = {
     },
     poster: '',
   },
+  capabilities: {
+    hasUploadMediaAction: false,
+    hasAssignAuthorAction: false,
+    hasPublishAction: false,
+  },
 };
 
 export const _default = () => {

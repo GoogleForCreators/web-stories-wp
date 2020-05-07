@@ -17,18 +17,20 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
 import stripHTML from '../../../utils/stripHTML';
+import objectWithout from '../../../utils/objectWithout';
+import { Panel } from '../panel';
+import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import {
   COLOR_PRESETS_PER_ROW,
   STYLE_PRESETS_PER_ROW,
 } from '../../../constants';
-import { Panel } from './../panel';
 import { getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
@@ -123,16 +125,38 @@ function StylePresetPanel() {
     ]
   );
 
+  const extraPropsToAdd = useRef(null);
+  const miniPushUpdate = useCallback(
+    (updater) => {
+      updateElementsById({
+        elementIds: selectedElementIds,
+        properties: (oldProps) => ({
+          ...updater(oldProps),
+          ...extraPropsToAdd.current,
+        }),
+      });
+      extraPropsToAdd.current = null;
+    },
+    [selectedElementIds, updateElementsById]
+  );
+
+  const {
+    handlers: { handleSetColor },
+  } = useRichTextFormatting(selectedElements, miniPushUpdate);
+
   const handleApplyPreset = useCallback(
     (preset) => {
       if (isText) {
         // @todo Determine this in a better way.
         // Only style presets have background text mode set.
         const isStylePreset = preset.backgroundTextMode !== undefined;
-        updateElementsById({
-          elementIds: selectedElementIds,
-          properties: isStylePreset ? { ...preset } : { color: preset },
-        });
+        if (isStylePreset) {
+          extraPropsToAdd.current = objectWithout(preset, ['color']);
+          handleSetColor(preset.color);
+        } else {
+          extraPropsToAdd.current = null;
+          handleSetColor(preset);
+        }
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
@@ -140,7 +164,7 @@ function StylePresetPanel() {
         });
       }
     },
-    [isText, selectedElementIds, updateElementsById]
+    [isText, handleSetColor, selectedElementIds, updateElementsById]
   );
 
   const colorPresets = isText ? textColors : fillColors;
