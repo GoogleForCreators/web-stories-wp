@@ -35,7 +35,7 @@ import useUsersApi from './useUserApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL, pluginDir } = useConfig();
+  const { api, editStoryURL, assetsURL } = useConfig();
 
   const { users, api: usersApi } = useUsersApi(dataAdapter, {
     wpApi: api.users,
@@ -46,7 +46,7 @@ export default function ApiProvider({ children }) {
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
-    pluginDir,
+    assetsURL,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
