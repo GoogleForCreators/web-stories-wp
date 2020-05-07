@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 
 export const ACTIVE_CHOICE_ICON_SIZE = 16;
 export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
@@ -141,3 +142,14 @@ export const ActiveSwatchIcon = styled(CheckmarkIcon).attrs(() => ({
 ActiveSwatchIcon.propTypes = {
   hex: PropTypes.string.isRequired,
 };
+
+export const ActiveChoiceIcon = styled(CloseIcon).attrs(() => ({
+  width: ACTIVE_CHOICE_ICON_SIZE,
+  height: ACTIVE_CHOICE_ICON_SIZE,
+}))`
+  background-color: ${({ theme }) => theme.colors.gray700};
+  color: ${({ theme }) => theme.colors.blueLight};
+  border-radius: 50%;
+  padding: 3px;
+  margin-left: ${ACTIVE_CHOICE_LEFT_MARGIN}px;
+`;
