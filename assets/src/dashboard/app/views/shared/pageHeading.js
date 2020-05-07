@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  */
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import { ViewHeader, NavMenuButton } from '../../../components';
 import BodyWrapper from './bodyWrapper';
 import TypeaheadSearch from './typeaheadSearch';
@@ -69,7 +70,7 @@ const SearchInner = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: min(190px, 100%);
+  width: min(${DASHBOARD_LEFT_NAV_WIDTH}px, 100%);
   display: flex;
   justify-content: flex-end;
 `;
@@ -94,7 +95,7 @@ const PageHeading = ({
   defaultTitle,
   searchPlaceholder,
   centerContent = false,
-  filteredStories = [],
+  stories = [],
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
@@ -111,7 +112,7 @@ const PageHeading = ({
             <TypeaheadSearch
               placeholder={searchPlaceholder}
               currentValue={typeaheadValue}
-              filteredStories={filteredStories}
+              stories={stories}
               handleChange={handleTypeaheadChange}
             />
           </SearchInner>
@@ -129,7 +130,7 @@ PageHeading.propTypes = {
   centerContent: PropTypes.bool,
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };

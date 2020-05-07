@@ -40,6 +40,7 @@ import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 import { getCommonValue } from '../utils';
+import useRichTextFormatting from './useRichTextFormatting';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -62,11 +63,17 @@ const Space = styled.div`
 
 function StylePanel({ selectedElements, pushUpdate }) {
   const textAlign = getCommonValue(selectedElements, 'textAlign');
-  const letterSpacing = getCommonValue(selectedElements, 'letterSpacing');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
-  const fontStyle = getCommonValue(selectedElements, 'fontStyle');
-  const textDecoration = getCommonValue(selectedElements, 'textDecoration');
-  const bold = getCommonValue(selectedElements, 'bold');
+
+  const {
+    textInfo: { isBold, isItalic, isUnderline, letterSpacing },
+    handlers: {
+      handleClickBold,
+      handleClickItalic,
+      handleClickUnderline,
+      handleSetLetterSpacing,
+    },
+  } = useRichTextFormatting(selectedElements, pushUpdate);
 
   return (
     <>
@@ -83,18 +90,10 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <ExpandedNumeric
           data-testid="text.letterSpacing"
           ariaLabel={__('Letter-spacing', 'web-stories')}
-          value={
-            typeof letterSpacing === 'number'
-              ? Math.round(letterSpacing * 100)
-              : 0
-          }
+          value={letterSpacing}
           suffix={<HorizontalOffset />}
           symbol="%"
-          onChange={(value) =>
-            pushUpdate({
-              letterSpacing: typeof value === 'number' ? value / 100 : value,
-            })
-          }
+          onChange={handleSetLetterSpacing}
         />
       </Row>
       <Row>
@@ -128,28 +127,24 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <ToggleButton
           icon={<BoldIcon />}
-          value={bold === true}
+          value={isBold}
           iconWidth={9}
           iconHeight={10}
-          onChange={(value) => pushUpdate({ bold: value }, true)}
+          onChange={handleClickBold}
         />
         <ToggleButton
           icon={<ItalicIcon />}
-          value={fontStyle === 'italic'}
+          value={isItalic}
           iconWidth={10}
           iconHeight={10}
-          onChange={(value) =>
-            pushUpdate({ fontStyle: value ? 'italic' : 'normal' }, true)
-          }
+          onChange={handleClickItalic}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
-          value={textDecoration === 'underline'}
+          value={isUnderline}
           iconWidth={8}
           iconHeight={21}
-          onChange={(value) =>
-            pushUpdate({ textDecoration: value ? 'underline' : 'none' }, true)
-          }
+          onChange={handleClickUnderline}
         />
       </Row>
     </>
