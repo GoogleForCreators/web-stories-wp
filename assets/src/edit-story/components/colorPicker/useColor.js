@@ -20,7 +20,7 @@
 import useReduction from '../../utils/useReduction';
 import insertStop from './insertStop';
 import regenerateColor from './regenerateColor';
-import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL, TYPE_CONIC } from './constants';
+import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL } from './constants';
 
 const initialState = {
   type: TYPE_SOLID,
@@ -65,19 +65,6 @@ const reducer = {
           stops,
           center: typeof center !== 'undefined' ? center : state.center,
           size: typeof size !== 'undefined' ? size : state.size,
-          alpha: isNaN(alpha) ? state.alpha : alpha,
-        };
-
-      case TYPE_CONIC:
-        return {
-          ...state,
-          type,
-          regenerate: false,
-          currentColor: stops[0].color,
-          currentStopIndex: 0,
-          stops,
-          rotation: isNaN(rotation) ? 0 : rotation, // explicitly default to 0 here!
-          center: typeof center !== 'undefined' ? center : state.center,
           alpha: isNaN(alpha) ? state.alpha : alpha,
         };
 

@@ -40,9 +40,6 @@ function truncate(val, pos) {
  * For a radial gradient, return either center, size, both or none
  * depending on whether the values are set.
  *
- * For a conic gradient, return either center, start angle, both or none
- * depending on whether the values are set.
- *
  * @param {Object} pattern Gradient pattern description
  * @param {string} pattern.type Gradient type as a string
  * @param {number} pattern.rotation Gradient rotation between 0 and 1
@@ -64,15 +61,6 @@ function getGradientDescription({ type, rotation, center, size }) {
         return null;
       }
       return `${sizeString}${centerString}`.trim();
-
-    case 'conic': {
-      if (!rotation && !centerString) {
-        return null;
-      }
-      // Here we don't always need rotation, as default is 0turn
-      const fromRotationString = rotation ? `from ${rotation}turn` : '';
-      return `${fromRotationString}${centerString}`.trim();
-    }
     case 'linear':
       // Always include rotation and offset by .5turn, as default is .5turn(?)
       return `${((rotation || 0) + 0.5) % 1}turn`;
@@ -94,7 +82,7 @@ function getGradientDescription({ type, rotation, center, size }) {
  *
  * @return {Array} List of serialized stops
  */
-function getStopList(stops, alpha, isAngular) {
+function getStopList(stops, alpha, isAngular = false) {
   const getPosition = (val) =>
     isAngular ? `${truncate(val, 4)}turn` : `${truncate(val * 100, 2)}%`;
   const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a * alpha);
@@ -120,7 +108,7 @@ function generatePatternStyles(pattern = null, property = 'background') {
   }
 
   const { type = 'solid' } = pattern;
-  if (!['solid', 'radial', 'linear', 'conic'].includes(type)) {
+  if (!['solid', 'radial', 'linear'].includes(type)) {
     throw new Error(`Unknown pattern type: '${type}'`);
   }
 
@@ -142,7 +130,7 @@ function generatePatternStyles(pattern = null, property = 'background') {
   const { stops, alpha = 1 } = pattern;
   const func = `${type}-gradient`;
   const description = getGradientDescription(pattern);
-  const stopList = getStopList(stops, alpha, type === 'conic');
+  const stopList = getStopList(stops, alpha);
   const parms = description ? [description, ...stopList] : stopList;
   const value = `${func}(${parms.join(', ')})`;
   return { backgroundImage: value };

@@ -74,21 +74,18 @@ describe('<ColorPicker /> as it loads', () => {
       getSolidButton,
       getLinearButton,
       getRadialButton,
-      getConicButton,
       rerender,
     } = arrange();
 
     expect(getSolidButton()).toBeInTheDocument();
     expect(getLinearButton()).not.toBeInTheDocument();
     expect(getRadialButton()).not.toBeInTheDocument();
-    expect(getConicButton()).not.toBeInTheDocument();
 
     rerender({ hasGradient: true });
 
     expect(getSolidButton()).toBeInTheDocument();
     expect(getLinearButton()).toBeInTheDocument();
     expect(getRadialButton()).toBeInTheDocument();
-    expect(getConicButton()).toBeInTheDocument();
   });
 
   it('should have gradient line only if pattern is non-solid', () => {
