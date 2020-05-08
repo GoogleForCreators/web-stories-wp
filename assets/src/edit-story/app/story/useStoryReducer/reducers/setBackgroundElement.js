@@ -93,9 +93,9 @@ function setBackgroundElement(state, { elementId }) {
       (element) => {
         // Set isBackground for the element.
         if (element.id === elementId) {
-          element.opacity = 100;
           return {
             ...element,
+            opacity: 100,
             isBackground: true,
           };
         }
