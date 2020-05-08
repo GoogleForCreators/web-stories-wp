@@ -206,7 +206,6 @@ jobs:
         run: npm ci
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
