@@ -131,6 +131,9 @@ const theme = {
   typeahead: {
     borderRadius: 100,
   },
+  formatContainer: {
+    height: 44,
+  },
   expandedTypeahead: {
     borderRadius: 8,
     boxShadow:
