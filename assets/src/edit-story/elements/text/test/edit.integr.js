@@ -22,13 +22,13 @@ import { Editor, EditorState } from 'draft-js';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../app/test/_utils';
+import { Fixture, browserDebug } from '../../../app/test/_utils';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { getSelectionForAll } from '../util';
 
-describe('TextEdit integration', () => {
+describe.only('TextEdit integration', () => {
   let fixture;
   let editorStub;
 
@@ -131,6 +131,8 @@ describe('TextEdit integration', () => {
           expect(frame.innerHTML).toStrictEqual(
             '<strong>hello world!</strong>'
           );
+
+          await browserDebug();
         });
       });
     });

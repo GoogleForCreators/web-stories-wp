@@ -19,6 +19,7 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { render, act, fireEvent } from '@testing-library/react';
+import puppeteer from 'puppeteer';
 
 /**
  * Internal dependencies
@@ -345,4 +346,37 @@ function actPromise(value) {
       );
     },
   };
+}
+
+export async function browserDebug() {
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: null,
+  });
+  const page = await browser.newPage();
+  await page.evaluate((head, body) => {
+    document.open();
+    document.write('<!DOCTYPE html>');
+    document.write('<html>');
+
+    document.write('<head>');
+    document.write(`
+      <style>
+        body {
+          margin: 0;
+          width: 100vw;
+          height: 100vh;
+        }
+      </style>
+    `);
+    document.write(head);
+    document.write('</head>');
+
+    document.write('<body>');
+    document.write(body);
+    document.write('</body>');
+
+    document.write('</html>');
+    document.close();
+  }, document.head.innerHTML, document.body.innerHTML);
 }
