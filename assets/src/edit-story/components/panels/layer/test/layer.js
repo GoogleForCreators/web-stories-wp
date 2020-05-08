@@ -84,7 +84,10 @@ describe('Layer', () => {
       };
 
       setupLayer({ layer });
-      expect(await generateImage()).toMatchImageSnapshot();
+      expect(await generateImage()).toMatchImageSnapshot({
+        failureThreshold: 0.01,
+        failureThresholdType: 'percent',
+      });
     });
   });
 });
