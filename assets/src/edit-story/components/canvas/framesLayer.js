@@ -90,7 +90,13 @@ function FramesLayer() {
       <FramesPageArea>
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
-            return <FrameElement key={id} element={{ id, ...rest }} />;
+            return (
+              <FrameElement
+                key={id}
+                element={{ id, ...rest }}
+                data-testid="FrameElement"
+              />
+            );
           })}
         <Selection />
         {Boolean(draggingResource) &&
