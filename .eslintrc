@@ -199,8 +199,19 @@
     },
     {
       "files": [
-        "**/karma/**/*.js",
-        "**/test/**/*.karma.js"
+        "**/karma/**/*.js"
+      ],
+      "plugins": [
+        "header"
+      ],
+      "rules": {
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": [
+        "**/test/**/*.karma.js",
+        "tests/js/**/*.karma.js"
       ],
       "extends": [
         "plugin:jest/all"
