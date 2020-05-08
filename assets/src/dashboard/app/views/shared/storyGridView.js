@@ -140,7 +140,7 @@ const StoryGridView = ({
           {!isTemplate && (
             <DetailRow>
               <CardTitle
-                title={`${story.title} ${story.status}`}
+                title={story.title}
                 author={users[story.author].name}
                 status={story.status}
                 // this is fine according to the i18n package: https://developer.wordpress.com/themes/i18n/
