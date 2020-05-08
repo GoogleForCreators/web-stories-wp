@@ -39,7 +39,7 @@ import {
 import { StoriesPropType, UsersPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS, STORY_STATUS } from '../../../constants';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
-import { formatModifiedDate } from '../../../utils/getFormattedDateString';
+import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -148,7 +148,7 @@ const StoryGridView = ({
                 displayDate={`${__(
                   getDisplayDateVerb(story.status),
                   'web-stories'
-                )} ${formatModifiedDate(story.modified)}`}
+                )} ${getFormattedDisplayDate(story.modified)}`}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }

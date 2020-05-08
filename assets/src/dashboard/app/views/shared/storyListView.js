@@ -61,6 +61,7 @@ import {
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
+import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 const ListView = styled.div`
   width: 100%;
@@ -224,8 +225,8 @@ export default function StoryListView({
                 {metadataStringForIds(categories, story.categories)}
               </TableCell>
               <TableCell>{metadataStringForIds(tags, story.tags)}</TableCell>
-              <TableCell>{story.created.startOf('day').fromNow()}</TableCell>
-              <TableCell>{story.modified.startOf('day').fromNow()}</TableCell>
+              <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
+              <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
                   {story.status === STORY_STATUS.PUBLISHED &&

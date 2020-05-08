@@ -15,18 +15,32 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import moment from 'moment';
 
-export function isBeforeToday(dateString) {
-  const midnightTonight = moment(new Date()).startOf('day');
+export function isToday(momentString) {
+  const today = moment().startOf('day');
 
-  return dateString.isBefore(midnightTonight);
+  return momentString.isAfter(today);
 }
 
-export function formatModifiedDate(dateString) {
-  console.log('date string: ', dateString, typeof dateString);
+export function isYesterday(momentString) {
+  const yesterday = moment().subtract(1, 'days').date();
 
-  return dateString.fromNow();
+  return momentString.date() === yesterday;
+}
+
+export default function getFormattedDisplayDate(momentString) {
+  if (isToday(momentString)) {
+    return momentString.fromNow();
+  } else if (isYesterday(momentString)) {
+    return __('yesterday', 'web-stories');
+  }
+  return momentString.format('M/D/YYYY');
 }
