@@ -163,6 +163,7 @@
     {
       "files": [
         "__mocks__/**/*.js",
+        "**/karma/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/?(*.)test.js",
@@ -221,6 +222,7 @@
         "bin/**/*.js",
         "babel.config.js",
         "jest-puppeteer.config.js",
+        "karma.config.js",
         "webpack.config.js",
         ".storybook/*.js",
         "tests/js/*.js",

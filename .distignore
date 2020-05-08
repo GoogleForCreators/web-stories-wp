@@ -34,6 +34,7 @@ composer.json
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.js
+karma.config.js
 package.json
 package-lock.json
 phpcs.xml
