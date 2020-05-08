@@ -24,23 +24,24 @@ import { __ } from '@wordpress/i18n';
  */
 import moment from 'moment';
 
-export function isToday(momentString) {
+export function isToday(displayDate) {
   const today = moment().startOf('day');
 
-  return momentString.isAfter(today);
+  return displayDate.isAfter(today);
 }
 
-export function isYesterday(momentString) {
+export function isYesterday(displayDate) {
   const yesterday = moment().subtract(1, 'days').date();
 
-  return momentString.date() === yesterday;
+  return displayDate.date() === yesterday;
 }
 
-export default function getFormattedDisplayDate(momentString) {
-  if (isToday(momentString)) {
-    return momentString.fromNow();
-  } else if (isYesterday(momentString)) {
+export default function getFormattedDisplayDate(date) {
+  const displayDate = moment(date);
+  if (isToday(displayDate)) {
+    return moment(displayDate).fromNow();
+  } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-  return momentString.format('M/D/YYYY');
+  return displayDate.format('M/D/YYYY');
 }
