@@ -48,7 +48,7 @@ const Pill = ({
   };
   const Label = labelTypes[labelType];
   return (
-    <PillContainer>
+    <PillContainer isSelected={isSelected}>
       <PillInput
         type={inputType}
         name={name}

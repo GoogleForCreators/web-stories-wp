@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 
 import { SwatchLabel, ActiveSwatchIcon } from './components';
 
-const ColorSwatch = ({ isSelected = false, hex }) => {
+export default function ColorSwatch({ isSelected = false, hex }) {
   return (
     <SwatchLabel
       isSelected={isSelected}
@@ -35,11 +35,9 @@ const ColorSwatch = ({ isSelected = false, hex }) => {
       <ActiveSwatchIcon hex={hex} />
     </SwatchLabel>
   );
-};
+}
 
 ColorSwatch.propTypes = {
   hex: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
 };
-
-export default ColorSwatch;

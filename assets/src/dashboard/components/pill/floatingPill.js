@@ -25,16 +25,15 @@ import PropTypes from 'prop-types';
 
 import { FloatingTabLabel } from './components';
 
-const floatingPill = ({ children, isSelected = false }) => {
+export default function FloatingPill({ children, isSelected = false }) {
   return (
     <FloatingTabLabel isSelected={isSelected} data-testid="floating-pill-label">
       {children}
     </FloatingTabLabel>
   );
-};
-floatingPill.propTypes = {
+}
+
+FloatingPill.propTypes = {
   children: PropTypes.node.isRequired,
   isSelected: PropTypes.bool,
 };
-
-export default floatingPill;

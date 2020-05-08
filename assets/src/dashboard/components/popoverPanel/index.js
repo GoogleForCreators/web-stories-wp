@@ -31,20 +31,12 @@ import styled from 'styled-components';
 import { Z_INDEX } from '../../constants';
 import { PILL_LABEL_TYPES } from '../../constants/components';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import Pill from '../pill';
 
-const visuallyHiddenStyles = {
-  position: 'absolute',
-  height: '1px',
-  width: '1px',
-  overflow: 'hidden',
-  clip: 'rect(1px, 1px, 1px, 1px)',
-  'white-space': 'nowrap',
-};
-
-export const Panel = styled.div`
-  ${({ isNarrow, isOpen, theme }) => `
+export const Panel = styled.div(
+  ({ isNarrow, isOpen, theme }) => `
     align-items: flex-start;
     background-color: ${theme.colors.white};
     border-radius: 8px;
@@ -75,8 +67,8 @@ export const Panel = styled.div`
           }
     `
     }
-  `}
-`;
+  `
+);
 
 Panel.propTypes = {
   isNarrow: PropTypes.bool,

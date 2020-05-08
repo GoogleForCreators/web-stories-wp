@@ -17,24 +17,14 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
+import { css } from 'styled-components';
 
-import { PillLabel, ActiveChoiceIcon } from './components';
-
-export default function DefaultPill({ children, isSelected = false }) {
-  return (
-    <PillLabel isSelected={isSelected} data-testid="default-pill-label">
-      {children}
-      {isSelected && <ActiveChoiceIcon />}
-    </PillLabel>
-  );
-}
-
-DefaultPill.propTypes = {
-  children: PropTypes.node.isRequired,
-  isSelected: PropTypes.bool,
-};
+export const visuallyHiddenStyles = css`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+`;
