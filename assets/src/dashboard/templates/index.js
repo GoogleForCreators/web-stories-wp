@@ -23,6 +23,7 @@ import getEntertainmentStoryData from './data/entertainment';
 import getFashionStoryData from './data/fashion';
 import getFitnessStoryData from './data/fitness';
 import getTravelStoryData from './data/travel';
+import getWellbeingStoryData from './data/wellbeing';
 
 export default function (config) {
   const { assetsURL } = config;
@@ -32,6 +33,7 @@ export default function (config) {
   const fashionStoryData = getFashionStoryData(assetsURL);
   const fitnessStoryData = getFitnessStoryData(assetsURL);
   const travelStoryData = getTravelStoryData(assetsURL);
+  const wellbeingStoryData = getWellbeingStoryData(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -163,7 +165,7 @@ export default function (config) {
       ],
       description:
         'In lorem est, aliquam tempus justo nec, tincidunt aliquet diam. Fusce ut nisl ex. Nam mollis dolor non arcu.',
-      pages: travelStoryData.pages,
+      pages: wellbeingStoryData.pages,
     },
   ];
 }
