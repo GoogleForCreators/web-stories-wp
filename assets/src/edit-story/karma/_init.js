@@ -20,7 +20,23 @@ self.it.only = self.fit;
 self.describe.skip = self.xdescribe;
 self.it.skip = self.xit;
 
+let currentSpec;
 let rootEl;
+
+beforeAll(() => {
+  jasmine.getEnv().addReporter({
+    specStarted(result) {
+      currentSpec = result;
+    },
+    specDone(result) {
+      currentSpec = null;
+    },
+  });
+
+  window.karmaSnapshot = (name) => {
+    return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
+  };
+});
 
 beforeEach(() => {
   rootEl = document.createElement('test-root');

@@ -75,9 +75,10 @@ describe('TextEdit integration', () => {
         boldToggle = fixture.querySelector('[data-testid="boldToggle"]');
       });
 
-      it('should mount editor', () => {
+      it('should mount editor', async () => {
         expect(editor).toBeTruthy();
         expect(editLayer).toBeTruthy();
+        await karmaSnapshot();
       });
 
       it('should handle a commnad, exit and save', async () => {
@@ -89,6 +90,8 @@ describe('TextEdit integration', () => {
 
         expect(boldToggle.checked).toEqual(false);
 
+        await karmaSnapshot('before mod+b');
+
         // @todo: Linux uses ctrlKey.
         // @todo: would be preferable to be more semantic here. E.g.
         // `keys('mod+B')`.
@@ -98,6 +101,8 @@ describe('TextEdit integration', () => {
           keyCode: 66,
           metaKey: true,
         });
+
+        await karmaSnapshot('after mod+b');
 
         expect(boldToggle.checked).toEqual(true);
 

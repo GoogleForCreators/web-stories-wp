@@ -66,6 +66,7 @@
   }
 
   window.karmaPuppeteer = {
+    saveSnapshot: puppeteerFunction('saveSnapshot'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options
     click: withSelector('click'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
