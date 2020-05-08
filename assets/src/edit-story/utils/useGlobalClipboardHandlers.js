@@ -19,56 +19,38 @@
  */
 import { useEffect } from 'react';
 
-const BLACKLIST_CLIPBOARD_ELEMENTS = ['INPUT', 'TEXTAREA', 'BUTTON'];
+/**
+ * Internal dependencies
+ */
+import nativeCopyPasteExpected from './nativeCopyPasteExpected';
 
 /**
- * @param {?Element} container
  * @param {function(!ClipboardEvent)} copyCutHandler
  * @param {function(!ClipboardEvent)} pasteHandler
  */
-function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
+function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
   useEffect(() => {
-    if (!container) {
-      return undefined;
-    }
-
     const copyCutHandlerWrapper = (evt) => {
-      const { target, clipboardData } = evt;
+      const { clipboardData } = evt;
 
-      // Elements that either handle their own clipboard or use platform.
-      if (!isCopyPasteTarget(target)) {
-        return;
-      }
-
-      // A target can be anywhere in the container's full subtree, but not
-      // in its siblings.
-      if (!container.contains(target) && !target.contains(container)) {
+      // Elements that either handle their own clipboard or have selection.
+      if (nativeCopyPasteExpected()) {
         return;
       }
 
       // Someone has already put something in the clipboard. Do not override.
-      if (clipboardData.types.length !== 0) {
+      if (clipboardData?.types?.length) {
         return;
       }
 
       copyCutHandler(evt);
     };
 
+    // We always use global handler for pasting.
     const pasteHandlerWrapper = (evt) => {
-      const { target } = evt;
-
-      // Elements that either handle their own clipboard or use platform.
-      if (!isCopyPasteTarget(target)) {
-        return;
+      if (!nativeCopyPasteExpected()) {
+        pasteHandler(evt);
       }
-
-      // A target can be anywhere in the container's full subtree, but not
-      // in its siblings.
-      if (!container.contains(target) && !target.contains(container)) {
-        return;
-      }
-
-      pasteHandler(evt);
     };
 
     document.addEventListener('copy', copyCutHandlerWrapper);
@@ -79,20 +61,7 @@ function useClipboardHandlers(container, copyCutHandler, pasteHandler) {
       document.removeEventListener('cut', copyCutHandlerWrapper);
       document.removeEventListener('paste', pasteHandlerWrapper);
     };
-  }, [container, copyCutHandler, pasteHandler]);
+  }, [copyCutHandler, pasteHandler]);
 }
 
-/**
- * @param {?Element} target
- * @return {boolean} Where the target can be used for copy/paste. This mainly
- * ignores platform level targets.
- */
-function isCopyPasteTarget(target) {
-  return (
-    target &&
-    !BLACKLIST_CLIPBOARD_ELEMENTS.includes(target.tagName) &&
-    !target.closest('[contenteditable="true"]')
-  );
-}
-
-export default useClipboardHandlers;
+export default useGlobalClipboardHandlers;

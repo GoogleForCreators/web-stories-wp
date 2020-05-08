@@ -19,27 +19,24 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import useClipboardHandlers from '../../utils/useClipboardHandlers';
-import processPastedNodeList from '../../utils/processPastedNodeList';
-import { getDefinitionForType } from '../../elements';
+import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
+import {
+  addElementsToClipboard,
+  processPastedElements,
+  processPastedNodeList,
+} from '../../utils/copyPaste';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
-const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
-
-/**
- * @param {?Element} container
- */
-function useCanvasSelectionCopyPaste(container) {
+function useCanvasGlobalKeys() {
   const {
     state: { currentPage, selectedElements },
-    actions: { addElement, deleteSelectedElements },
+    actions: { addElements, deleteSelectedElements },
   } = useStory();
 
   const uploadWithPreview = useUploadWithPreview();
@@ -48,57 +45,16 @@ function useCanvasSelectionCopyPaste(container) {
 
   const copyCutHandler = useCallback(
     (evt) => {
-      const { type: eventType, clipboardData } = evt;
-
+      const { type: eventType } = evt;
       if (selectedElements.length === 0) {
         return;
       }
 
-      const payload = {
-        sentinel: 'story-elements',
-        // @todo: Ensure that there's no unserializable data here. The easiest
-        // would be to keep all serializable data together and all non-serializable
-        // in a separate property.
-        items: selectedElements.map((element) => ({
-          ...element,
-          basedOn: element.id,
-          id: undefined,
-        })),
-      };
-      const serializedPayload = JSON.stringify(payload).replace(
-        /--/g,
-        DOUBLE_DASH_ESCAPE
-      );
-
-      const textContent = selectedElements
-        .map(({ type, ...rest }) => {
-          const { TextContent } = getDefinitionForType(type);
-          if (TextContent) {
-            return TextContent({ ...rest });
-          }
-          return type;
-        })
-        .join('\n');
-
-      const htmlContent = selectedElements
-        .map(({ type, ...rest }) => {
-          const { Output } = getDefinitionForType(type);
-          return renderToStaticMarkup(
-            <Output element={rest} box={{ width: 100, height: 100 }} />
-          );
-        })
-        .join('\n');
-
-      clipboardData.setData('text/plain', textContent);
-      clipboardData.setData(
-        'text/html',
-        `<!-- ${serializedPayload} -->${htmlContent}`
-      );
+      addElementsToClipboard(selectedElements, evt);
 
       if (eventType === 'cut') {
         deleteSelectedElements();
       }
-
       evt.preventDefault();
     },
     [deleteSelectedElements, selectedElements]
@@ -106,38 +62,14 @@ function useCanvasSelectionCopyPaste(container) {
 
   const elementPasteHandler = useCallback(
     (content) => {
-      let foundElements = false;
-      for (let n = content.firstChild; n; n = n.nextSibling) {
-        if (n.nodeType !== /* COMMENT */ 8) {
-          continue;
-        }
-        const payload = JSON.parse(
-          n.nodeValue.replace(new RegExp(DOUBLE_DASH_ESCAPE, 'g'), '--')
-        );
-        if (payload.sentinel !== 'story-elements') {
-          continue;
-        }
-        foundElements = true;
-        payload.items.forEach(({ x, y, basedOn, ...rest }) => {
-          currentPage.elements.forEach((element) => {
-            if (element.id === basedOn || element.basedOn === basedOn) {
-              x = Math.max(x, element.x + 60);
-              y = Math.max(y, element.y + 60);
-            }
-          });
-          const element = {
-            ...rest,
-            basedOn,
-            id: uuidv4(),
-            x,
-            y,
-          };
-          addElement({ element });
-        });
+      const elements = processPastedElements(content, currentPage);
+      const foundElements = elements.length > 0;
+      if (foundElements) {
+        addElements({ elements });
       }
       return foundElements;
     },
-    [addElement, currentPage]
+    [addElements, currentPage]
   );
 
   const rawPasteHandler = useCallback(
@@ -146,7 +78,7 @@ function useCanvasSelectionCopyPaste(container) {
       // @todo Images.
       const copiedContent = processPastedNodeList(content.childNodes, '');
       if (copiedContent.trim().length) {
-        insertElement('text', { content: copiedContent });
+        insertElement('text', { id: uuidv4(), content: copiedContent });
         foundContent = true;
       }
       return foundContent;
@@ -154,7 +86,6 @@ function useCanvasSelectionCopyPaste(container) {
     [insertElement]
   );
 
-  // @todo This should be in global handler by UX, not just Canvas.
   const pasteHandler = useCallback(
     (evt) => {
       const { clipboardData } = evt;
@@ -174,7 +105,6 @@ function useCanvasSelectionCopyPaste(container) {
             addedElements = rawPasteHandler(template.content);
           }
           if (addedElements) {
-            // @todo Should we always prevent default?
             evt.preventDefault();
           }
         }
@@ -199,9 +129,9 @@ function useCanvasSelectionCopyPaste(container) {
     [elementPasteHandler, rawPasteHandler, uploadWithPreview]
   );
 
-  useClipboardHandlers(container, copyCutHandler, pasteHandler);
+  useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
 }
 
-export default useCanvasSelectionCopyPaste;
+export default useCanvasGlobalKeys;
