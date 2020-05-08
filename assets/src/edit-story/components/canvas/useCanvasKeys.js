@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -103,7 +103,7 @@ function useCanvasKeys(ref) {
     [arrangeSelection]
   );
 
-  const cloneHandler = () => {
+  const cloneHandler = useCallback(() => {
     if (selectedElements.length === 0) {
       return;
     }
@@ -116,7 +116,7 @@ function useCanvasKeys(ref) {
       };
     });
     addElements({ elements: clonedElements });
-  };
+  }, [addElements, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }
