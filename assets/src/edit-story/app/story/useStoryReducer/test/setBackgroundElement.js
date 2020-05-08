@@ -21,6 +21,27 @@ import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('setBackgroundElement', () => {
+  it('should set the given background opacity to 100', () => {
+    const { restore, setBackgroundElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '123', opacity: 20 }],
+          backgroundElementId: null,
+          backgroundOverlay: OverlayType.NONE,
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = setBackgroundElement({ elementId: '123' });
+
+    expect(result.pages[0].elements[0].opacity).toStrictEqual(100);
+  });
+
   it('should set the given background element and move it back', () => {
     const { restore, setBackgroundElement } = setupReducer();
 
@@ -46,7 +67,7 @@ describe('setBackgroundElement', () => {
       backgroundElementId: '456',
       backgroundOverlay: OverlayType.NONE,
       elements: [
-        { id: '456', isBackground: true },
+        { id: '456', isBackground: true, opacity: 100 },
         { id: '123' },
         { id: '789' },
       ],
@@ -85,7 +106,7 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
+            { id: '123', isBackground: true, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
@@ -112,7 +133,7 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
+            { id: '123', isBackground: true, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
@@ -140,7 +161,7 @@ describe('setBackgroundElement', () => {
           {
             id: '111',
             elements: [
-              { id: '123', isBackground: true },
+              { id: '123', isBackground: true, opacity: 100 },
               { id: '456' },
               { id: '789' },
             ],
@@ -159,7 +180,10 @@ describe('setBackgroundElement', () => {
         id: '111',
         backgroundElementId: '789',
         backgroundOverlay: OverlayType.NONE,
-        elements: [{ id: '789', isBackground: true }, { id: '456' }],
+        elements: [
+          { id: '789', isBackground: true, opacity: 100 },
+          { id: '456' },
+        ],
       });
     });
 
@@ -172,7 +196,7 @@ describe('setBackgroundElement', () => {
           {
             id: '111',
             elements: [
-              { id: '123', isBackground: true },
+              { id: '123', isBackground: true, opacity: 100 },
               { id: '456' },
               { id: '789' },
             ],
@@ -191,7 +215,10 @@ describe('setBackgroundElement', () => {
         id: '111',
         backgroundElementId: '789',
         backgroundOverlay: OverlayType.NONE,
-        elements: [{ id: '789', isBackground: true }, { id: '456' }],
+        elements: [
+          { id: '789', isBackground: true, opacity: 100 },
+          { id: '456' },
+        ],
       });
       expect(result.selection).toStrictEqual([]);
     });
