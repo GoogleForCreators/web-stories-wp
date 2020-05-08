@@ -30,7 +30,7 @@ const DEFAULT_FONT = {
     service: 'fonts.google.com',
   },
   fontWeight: 400,
-  isItalic: true,
+  fontStyle: 'normal',
   content: 'Fill in some text',
 };
 

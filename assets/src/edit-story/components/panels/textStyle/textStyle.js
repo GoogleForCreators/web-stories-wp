@@ -41,6 +41,7 @@ import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
+import stripHTML from '../../../utils/stripHTML';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const BoxedNumeric = styled(Numeric)`
@@ -143,12 +144,14 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconHeight={10}
           onChange={async (value) => {
             await maybeEnqueueFontStyle(
-              selectedElements.map(({ font, content }) => ({
-                font,
-                isItalic: value,
-                fontWeight,
-                content,
-              }))
+              selectedElements.map(({ font, content }) => {
+                return {
+                  font,
+                  fontStyle: value ? 'italic' : 'normal',
+                  fontWeight,
+                  content: stripHTML(content),
+                };
+              })
             );
             handleClickItalic(value);
           }}

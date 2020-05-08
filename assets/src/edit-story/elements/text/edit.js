@@ -43,6 +43,7 @@ import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
+import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
@@ -92,9 +93,15 @@ function TextEdit({
   },
   box: { x, y, height, rotationAngle },
 }) {
-  const { font, fontSize } = rest;
-  const isItalic = useMemo(() => getHTMLInfo(content).isItalic, [content]);
-  const fontWeight = useMemo(() => getHTMLInfo(content).fontWeight, [content]);
+  const { font } = rest;
+  const fontFaceSetConfigs = useMemo(
+    () => ({
+      fontStyle: getHTMLInfo(content).isItalic ? 'italic' : 'normal',
+      fontWeight: getHTMLInfo(content).fontWeight,
+      content: stripHTML(content),
+    }),
+    [content]
+  );
 
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
@@ -200,24 +207,16 @@ function TextEdit({
     [handleResize]
   );
   // Also invoke if the raw element height ever changes
-  useEffect(handleResize, [
-    elementHeight,
-    font,
-    fontWeight,
-    isItalic,
-    fontSize,
-  ]);
+  useEffect(handleResize, [elementHeight]);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
       {
+        ...fontFaceSetConfigs,
         font,
-        fontWeight,
-        isItalic,
-        content,
       },
     ]);
-  }, [font, fontWeight, isItalic, content, maybeEnqueueFontStyle]);
+  }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>

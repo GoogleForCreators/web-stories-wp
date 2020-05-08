@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 import { useFont } from '../../../app';
 import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
 import { FontPropType } from '../../../types';
+import stripHTML from '../../../utils/stripHTML';
 
 const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
@@ -63,7 +64,7 @@ function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
       {
         font,
         fontWeight,
-        content,
+        content: stripHTML(content),
       },
     ]);
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);

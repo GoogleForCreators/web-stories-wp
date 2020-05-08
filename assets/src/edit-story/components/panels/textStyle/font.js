@@ -34,6 +34,7 @@ import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
+import stripHTML from '../../../utils/stripHTML';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 
@@ -66,6 +67,7 @@ function FontControls({ selectedElements, pushUpdate }) {
     getFontByName,
     fontFamily,
   ]);
+  const fontStyle = isItalic ? 'italic' : 'normal';
 
   return (
     <>
@@ -90,12 +92,14 @@ function FontControls({ selectedElements, pushUpdate }) {
               };
 
               await maybeEnqueueFontStyle(
-                selectedElements.map(({ content }) => ({
-                  font: newFont,
-                  isItalic,
-                  fontWeight,
-                  content,
-                }))
+                selectedElements.map(({ content }) => {
+                  return {
+                    font: newFont,
+                    fontStyle,
+                    fontWeight,
+                    content: stripHTML(content),
+                  };
+                })
               );
 
               pushUpdate(
@@ -119,12 +123,14 @@ function FontControls({ selectedElements, pushUpdate }) {
               value={fontWeight}
               onChange={async (value) => {
                 await maybeEnqueueFontStyle(
-                  selectedElements.map(({ font, content }) => ({
-                    font,
-                    isItalic,
-                    fontWeight: parseInt(value),
-                    content,
-                  }))
+                  selectedElements.map(({ font, content }) => {
+                    return {
+                      font,
+                      fontStyle,
+                      fontWeight: parseInt(value),
+                      content: stripHTML(content),
+                    };
+                  })
                 );
                 handleSelectFontWeight(value);
               }}

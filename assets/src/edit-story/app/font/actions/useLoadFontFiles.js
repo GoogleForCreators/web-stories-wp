@@ -54,7 +54,7 @@ function useLoadFontFiles() {
           async ({
             font: { family, service, variants },
             fontWeight,
-            isItalic,
+            fontStyle,
             content,
           }) => {
             if (!family || service !== 'fonts.google.com') {
@@ -63,7 +63,6 @@ function useLoadFontFiles() {
 
             const handle = cleanForSlug(family);
             const elementId = `${handle}-css`;
-            const fontStyle = isItalic ? 'italic' : 'normal';
             const fontFaceSet = `
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
