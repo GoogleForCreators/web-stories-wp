@@ -237,17 +237,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         let newWidth = width;
         let newHeight = height;
         let updates = null;
-        if (updateForResizeEvent) {
-          updates = updateForResizeEvent(
-            selectedElement,
-            direction,
-            editorToDataX(newWidth),
-            editorToDataY(newHeight)
-          );
-        }
-        if (updates && updates.height) {
-          newHeight = dataToEditorY(updates.height);
-        }
 
         if (isResizingFromCorner) {
           if (newWidth < minWidth) {
@@ -261,6 +250,18 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         } else {
           newHeight = Math.max(newHeight, minHeight);
           newWidth = Math.max(newWidth, minWidth);
+        }
+
+        if (updateForResizeEvent) {
+          updates = updateForResizeEvent(
+            selectedElement,
+            direction,
+            editorToDataX(newWidth),
+            editorToDataY(newHeight)
+          );
+        }
+        if (updates && updates.height) {
+          newHeight = dataToEditorY(updates.height);
         }
 
         target.style.width = `${newWidth}px`;
