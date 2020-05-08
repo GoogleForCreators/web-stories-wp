@@ -31,8 +31,8 @@ import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 export const ACTIVE_CHOICE_ICON_SIZE = 16;
 export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
 
-export const PillContainer = styled.label`
-  ${({ theme }) => `
+export const PillContainer = styled.label(
+  ({ theme }) => `
     display: inline-flex;
     justify-content: center;
     font-family: ${theme.fonts.pill.family};
@@ -40,8 +40,8 @@ export const PillContainer = styled.label`
     font-size: ${theme.fonts.pill.size}px;
     line-height: ${theme.fonts.pill.lineHeight}px;
     letter-spacing: ${theme.fonts.pill.letterSpacing}em;
-`}
-`;
+`
+);
 
 export const PillInput = styled.input`
   ${visuallyHiddenStyles}
