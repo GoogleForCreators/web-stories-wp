@@ -34,6 +34,7 @@ export const DROPDOWN_TYPES = {
   TRANSPARENT_MENU: 'transparentMenu',
   MENU: 'menu',
   PANEL: 'panel',
+  COLOR_PANEL: 'color_panel',
 };
 
 export const KEYS = {

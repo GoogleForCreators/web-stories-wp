@@ -13,17 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-export const ColorDot = styled.div`
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin: 0 4px;
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.25);
-  border-radius: 13px;
-  background-color: ${({ color }) => color};
-`;
+/**
+ * Internal dependencies
+ */
+
+import { FloatingTabLabel } from './components';
+
+export default function FloatingPill({ children, isSelected = false }) {
+  return (
+    <FloatingTabLabel isSelected={isSelected} data-testid="floating-pill-label">
+      {children}
+    </FloatingTabLabel>
+  );
+}
+
+FloatingPill.propTypes = {
+  children: PropTypes.node.isRequired,
+  isSelected: PropTypes.bool,
+};
