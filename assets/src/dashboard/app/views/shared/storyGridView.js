@@ -35,10 +35,10 @@ import {
   CardPreviewContainer,
   ActionLabel,
   PreviewPage,
+  PreviewErrorBoundary,
 } from '../../../components';
-import { StoriesPropType, UsersPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS, STORY_STATUS } from '../../../constants';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import { StoriesPropType, UsersPropType } from '../../../types';
 import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 export const DetailRow = styled.div`
