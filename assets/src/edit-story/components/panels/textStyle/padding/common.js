@@ -15,13 +15,20 @@
  */
 
 /**
- * See https://craig.is/killing/mice#keys for the supported key codes.
+ * External dependencies
  */
-const keys = {
-  undo: 'mod+z',
-  redo: 'shift+mod+z',
-  delete: ['del', 'backspace'],
-  clone: 'mod+d',
-};
+import styled from 'styled-components';
 
-export default keys;
+/**
+ * Internal dependencies
+ */
+import { Numeric } from '../../../form';
+
+export const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+export const Space = styled.div`
+  flex: 0 0 10px;
+`;
