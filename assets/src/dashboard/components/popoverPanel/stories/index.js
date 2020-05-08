@@ -75,9 +75,9 @@ export const _default = () => {
     <PopoverPanel
       isOpen={boolean('isOpen', true)}
       title={text('title', 'Category')}
-      onClose={action('Close button selected')}
       items={statefulDemoData}
-      onSelect={(event, selectedValue) => {
+      onClose={(e) => action(`close button clicked`)(e)}
+      onSelect={(_, selectedValue) => {
         action(`selected pill ${selectedValue}`)(selectedValue);
         updateDemoDataState(selectedValue);
       }}

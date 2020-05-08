@@ -60,6 +60,10 @@ export {
   TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
+  TableAuthorHeaderCell,
+  TableDateHeaderCell,
+  TableStatusHeaderCell,
+  TableStatusCell,
 } from './table';
 export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';

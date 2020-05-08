@@ -17,14 +17,16 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
+import { getPastedCoordinates } from '../../utils/copyPaste';
 
 const MOVE_COARSE_STEP = 10;
 
@@ -34,11 +36,13 @@ const MOVE_COARSE_STEP = 10;
 function useCanvasKeys(ref) {
   const {
     actions: {
+      addElements,
       arrangeSelection,
       clearSelection,
       deleteSelectedElements,
       updateSelectedElements,
     },
+    state: { selectedElements },
   } = useStory();
 
   // Return focus back to the canvas when another section loses the focus.
@@ -98,6 +102,23 @@ function useCanvasKeys(ref) {
       arrangeSelection({ position: getLayerDirection(key, shiftKey) }),
     [arrangeSelection]
   );
+
+  const cloneHandler = useCallback(() => {
+    if (selectedElements.length === 0) {
+      return;
+    }
+    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
+      return {
+        ...getPastedCoordinates(x, y),
+        id: uuidv4(),
+        basedOn: id,
+        ...rest,
+      };
+    });
+    addElements({ elements: clonedElements });
+  }, [addElements, selectedElements]);
+
+  useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }
 
 function getArrowDir(key, pos, neg) {

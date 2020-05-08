@@ -14,14 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * See https://craig.is/killing/mice#keys for the supported key codes.
- */
-const keys = {
-  undo: 'mod+z',
-  redo: 'shift+mod+z',
-  delete: ['del', 'backspace'],
-  clone: 'mod+d',
-};
-
-export default keys;
+export { default } from './padding';

@@ -209,6 +209,7 @@ function MyStories() {
           <StoryListView
             stories={orderedStories}
             storySort={currentStorySort}
+            storyStatus={status}
             sortDirection={currentListSortDirection}
             handleSortChange={handleNewStorySort}
             handleSortDirectionChange={setListSortDirection}
@@ -221,13 +222,14 @@ function MyStories() {
         return null;
     }
   }, [
-    duplicateStory,
-    createTemplateFromStory,
-    trashStory,
     viewStyle,
+    trashStory,
     updateStory,
+    createTemplateFromStory,
+    duplicateStory,
     orderedStories,
     currentStorySort,
+    status,
     currentListSortDirection,
     handleNewStorySort,
     tags,

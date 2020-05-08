@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
+/**
+ * Environment variables
+ */
+const {
+  WP_USERNAME = 'admin',
+  WP_PASSWORD = 'password',
+  WP_BASE_URL = 'http://localhost:8899',
+} = process.env;
+
+// Explicitly set these environment variables if not already there.
+process.env.WP_USERNAME = WP_USERNAME;
+process.env.WP_PASSWORD = WP_PASSWORD;
+process.env.WP_BASE_URL = WP_BASE_URL;
+
 module.exports = {
   preset: 'jest-puppeteer',
   transform: {
