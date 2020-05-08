@@ -36,8 +36,8 @@ import {
   ActionLabel,
   PreviewPage,
 } from '../../../components';
-import { StoriesPropType } from '../../../types';
-import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
+import { StoriesPropType, UsersPropType } from '../../../types';
+import { STORY_CONTEXT_MENU_ACTIONS, STORY_STATUS } from '../../../constants';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 
 export const DetailRow = styled.div`
@@ -53,9 +53,12 @@ const StoryGrid = styled(CardGrid)`
     width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
   }
 `;
+const getDisplayDateVerb = (status) =>
+  status === STORY_STATUS.PUBLISHED ? 'Published' : 'Modified';
 
 const StoryGridView = ({
   stories,
+  users,
   centerActionLabel,
   bottomActionLabel,
   createTemplateFromStory,
@@ -136,8 +139,15 @@ const StoryGridView = ({
           {!isTemplate && (
             <DetailRow>
               <CardTitle
-                title={story.title}
-                modifiedDate={story.modified.startOf('day').fromNow()}
+                title={`${story.title} ${story.status}`}
+                author={users[story.author].name}
+                status={story.status}
+                // this is fine according to the i18n package: https://developer.wordpress.com/themes/i18n/
+                // eslint-disable-next-line @wordpress/i18n-no-variables
+                displayDate={`${__(
+                  getDisplayDateVerb(story.status),
+                  'web-stories'
+                )} ${story.modified.startOf('day').fromNow()}`}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }
@@ -161,6 +171,7 @@ const StoryGridView = ({
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
   stories: StoriesPropType,
+  users: UsersPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,

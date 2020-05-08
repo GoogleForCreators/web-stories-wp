@@ -31,15 +31,16 @@ import styled from 'styled-components';
  */
 import { TextInput } from '../input';
 import useFocusOut from '../../utils/useFocusOut';
+import { STORY_STATUS } from '../../constants';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
   font-size: ${({ theme }) => theme.fonts.storyGridItem.size}px;
-  font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
+  font-weight: 500;
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing}em;
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
-  max-width: 80%;
+  max-width: 90%;
 `;
 
 const StyledTitle = styled.p`
@@ -50,16 +51,29 @@ const StyledTitle = styled.p`
   text-overflow: ellipsis;
 `;
 
-const StyledDate = styled.p`
+const TitleBodyText = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-weight: ${({ theme }) => theme.fonts.storyGridItemSub.weight};
-  font-family: ${({ theme }) => theme.fonts.storyGridItemSub.family};
+  font-weight: 300;
+`;
+
+const DateHelperText = styled.span`
+  text-transform: uppercase;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray900};
+  &:after {
+    content: '-';
+    color: ${({ theme }) => theme.colors.gray500};
+    font-weight: 400;
+    padding: 0 0.25em;
+  }
 `;
 
 const CardTitle = ({
+  author,
   title,
-  modifiedDate,
+  status,
+  displayDate,
   editMode,
   onEditComplete,
   onEditCancel,
@@ -112,16 +126,23 @@ const CardTitle = ({
       ) : (
         <StyledTitle>{title}</StyledTitle>
       )}
-      <StyledDate>{`
-      ${__('Modified', 'web-stories')} ${modifiedDate} `}</StyledDate>
+      <TitleBodyText>
+        {status === STORY_STATUS.DRAFT && (
+          <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
+        )}
+        {displayDate}
+      </TitleBodyText>
+      <TitleBodyText>{author}</TitleBodyText>
     </StyledCardTitle>
   );
 };
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  author: PropTypes.string,
+  status: PropTypes.oneOf(Object.values(STORY_STATUS)),
   editMode: PropTypes.bool,
-  modifiedDate: PropTypes.string.isRequired,
+  displayDate: PropTypes.string.isRequired,
   onEditComplete: PropTypes.func.isRequired,
   onEditCancel: PropTypes.func.isRequired,
 };

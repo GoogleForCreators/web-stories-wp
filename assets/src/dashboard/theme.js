@@ -252,12 +252,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
       letterSpacing: 0.01,
-    },
-    storyGridItemSub: {
-      family: themeFonts.secondary,
-      weight: 'normal',
     },
     table: {
       family: themeFonts.primary,
