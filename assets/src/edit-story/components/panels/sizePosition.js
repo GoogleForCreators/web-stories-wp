@@ -34,6 +34,7 @@ import {
   Row,
   Numeric,
   Toggle,
+  ToggleButton,
   usePresubmitHandler,
   MULTIPLE_VALUE,
 } from '../form';
@@ -249,8 +250,12 @@ function SizePositionPanel({
           />
         )}
         {canFill && isSingleElement && (
-          <Toggle
+          <ToggleButton
             icon={<Fullbleed />}
+            title={__('Fill', 'web-stories')}
+            aria-label={__('Fill', 'web-stories')}
+            iconWidth={15}
+            iconHeight={15}
             value={isFill}
             onChange={(value) => pushUpdate({ isFill: value }, true)}
           />

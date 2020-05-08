@@ -85,10 +85,16 @@ export const secondaryPaths = [
   },
 ];
 
+export const STORY_STATUS = {
+  ALL: 'publish,draft',
+  PUBLISHED: 'publish',
+  DRAFT: 'draft',
+};
+
 export const STORY_STATUSES = [
-  { label: __('All Stories', 'web-stories'), value: 'publish,draft' },
-  { label: __('Drafts', 'web-stories'), value: 'draft' },
-  { label: __('Active Stories', 'web-stories'), value: 'publish' },
+  { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
+  { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
+  { label: __('Active Stories', 'web-stories'), value: STORY_STATUS.PUBLISHED },
   // { label: __('My Templates', 'web-stories'), value: 'template ' },
 ];
 

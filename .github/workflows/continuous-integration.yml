@@ -443,16 +443,16 @@ jobs:
         run: |
           echo 'assets/images/templates' >> .distignore
           npm run build:js
-          npm run build:plugin -- --cdn
-          npm run bundle-plugin web-stories-composer.zip -- --composer --skip-delete
-          npm run bundle-plugin web-stories.zip -- --skip-delete
+          npm run workflow:build-plugin -- --cdn
+          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
+          npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           NODE_ENV=development npx webpack
-          npm run build:plugin
-          npm run bundle-plugin web-stories-dev.zip -- --skip-delete
+          npm run workflow:build-plugin
+          npm run workflow:bundle-plugin web-stories-dev.zip -- --skip-delete
 
       - name: Upload full bundle
         uses: actions/upload-artifact@v2
@@ -478,13 +478,20 @@ jobs:
           name: All ZIP Files
           path: build/*.zip
 
+  bundle-size:
+    name: Bundle size check
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Bundle size check
         uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: '{assets/js/*.js,assets/css/*.css,build/web-stories.zip}'
-          build-script: 'workflow:bundle-size'
-        if: ${{ github.event_name != 'push' }}
+          pattern: '{assets/js/*.js,assets/css/*.css}'
+          build-script: 'build:js'
 
   deploy-to-wiki:
     name: Deploy QA artifacts

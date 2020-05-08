@@ -24,6 +24,11 @@ import { setDefaultOptions } from 'jsdom-screenshot';
 import 'jest-extended';
 import '@testing-library/jest-dom';
 
+// Allow using toBeEmpty which is also defined by jest-extended.
+// See https://github.com/facebook/jest/issues/9678.
+import { toBeEmpty as toBeEmptyNode } from '@testing-library/jest-dom/matchers';
+expect.extend({ toBeEmptyNode });
+
 /**
  * Internal dependencies
  */

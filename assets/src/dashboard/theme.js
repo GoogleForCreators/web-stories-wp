@@ -73,6 +73,7 @@ const borders = {
   gray100: `1px solid ${colors.gray100}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
+  action: `1px solid ${colors.action}`,
 };
 
 const theme = {
@@ -208,7 +209,7 @@ const theme = {
     },
     pill: {
       family: themeFonts.primary,
-      weight: 500,
+      weight: 400,
       size: 14,
       lineHeight: 20,
       letterSpacing: 0.01,
@@ -224,7 +225,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
+      weight: '400',
       letterSpacing: 0.01,
     },
     textInput: {
@@ -250,7 +251,7 @@ const theme = {
     table: {
       family: themeFonts.primary,
       size: 14,
-      weight: '500',
+      weight: 'normal',
       letterSpacing: 0.01,
     },
     typeaheadInput: {
@@ -272,6 +273,8 @@ const theme = {
     small: {
       desktop: 20,
       min: 10,
+      largeDisplayPhone: 10,
+      smallDisplayPhone: 10,
     },
     // specific to detail template
     large: {
@@ -282,7 +285,7 @@ const theme = {
   pageHorizontalGutter: {
     desktop: 20,
     tablet: 20,
-    largeDisplayPhone: 20,
+    largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
   },
