@@ -87,11 +87,13 @@ function setBackgroundElement(state, { elementId }) {
       }
     }
 
-    // Reorder elements
+    // Reorder elements and set element opacity to 100% because backgrounds
+    // cannot be transparent.
     const newElements = moveArrayElement(pageElements, elementPosition, 0).map(
       (element) => {
         // Set isBackground for the element.
         if (element.id === elementId) {
+          element.opacity = 100;
           return {
             ...element,
             isBackground: true,
