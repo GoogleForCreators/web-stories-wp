@@ -33,9 +33,18 @@ const webpackConfigArray = require('./webpack.config');
 
 module.exports = function (config) {
   config.set({
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-jasmine',
+      'karma-sourcemap-loader',
+      'karma-webpack',
+      require('./karma/karma-puppeteer-launcher'),
+      require('./karma/karma-puppeteer-client'),
+    ],
+
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'karma-puppeteer-client'],
 
     // Base path that will be used to resolve all patterns (eg. files, exclude).
     basePath: 'assets/src/edit-story',
@@ -98,7 +107,14 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['puppeteer'],
+
+    puppeteerLauncher: {
+      puppeteer: {
+        headless: config.headless || false,
+        slowMo: config.slowMo || 0,
+      },
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
