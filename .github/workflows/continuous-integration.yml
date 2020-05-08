@@ -211,7 +211,7 @@ jobs:
       - name: Run JavaScript unit tests
         run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
 
-      - namee: Upload mismatched image snapshots if found
+      - name: Upload mismatched image snapshots if found
         uses: actions/upload-artifact@v2
         with:
           name: Image Snapshots Diff Output.zip
