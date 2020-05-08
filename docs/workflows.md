@@ -1,8 +1,16 @@
-# Tooling & Infrastructure
+# Workflows
 
-## Workflows
+## Create plugin bundle
 
-### Update list of available fonts
+To create a build of the plugin for installing in WordPress as a ZIP package, run:
+
+```bash
+npm run build # Build JS
+npm run workflow:build-plugin # Updates version numbers and the like
+npm run workflow:bundle-plugin # Creates a ready-to-use ZIP file
+```
+
+## Update list of available fonts
 
 The project bundles an up-to-date list of available fonts from Google Fonts (plus some system fonts) that can be used in the editor.
 

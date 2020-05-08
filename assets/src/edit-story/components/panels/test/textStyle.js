@@ -199,11 +199,9 @@ describe('Panels/TextStyle', () => {
 
     it('should render default padding controls', () => {
       const { getByTestId, getByLabelText } = renderTextStyle([textElement]);
-      const horiz = getByTestId('padding.horizontal');
-      const vert = getByTestId('padding.vertical');
+      const multi = getByTestId('padding.multiple');
       const lock = getByLabelText(paddingRatioLockLabel);
-      expect(horiz.value).toBe('0');
-      expect(vert.value).toBe('0');
+      expect(multi.value).toBe('0');
       expect(lock).toBeChecked();
     });
 
@@ -228,25 +226,13 @@ describe('Panels/TextStyle', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
         textElement,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByTestId('padding.multiple');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11, locked: true },
-        DEFAULT_PADDING
-      );
-    });
-
-    it('should update vertical padding with lock', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-      ]);
-      const input = getByTestId('padding.vertical');
-      fireEvent.change(input, { target: { value: '12' } });
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        { vertical: 12, horizontal: 12, locked: true },
-        DEFAULT_PADDING
+        { horizontal: 11, vertical: 11 },
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -259,7 +245,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -272,7 +259,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { vertical: 12 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -280,12 +268,13 @@ describe('Panels/TextStyle', () => {
       const { getByTestId, pushUpdateForObject } = renderTextStyle([
         textElement,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByTestId('padding.multiple');
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: '', vertical: '', locked: true },
-        DEFAULT_PADDING
+        { horizontal: '', vertical: '' },
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -294,12 +283,13 @@ describe('Panels/TextStyle', () => {
         textElement,
         textSamePadding,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByTestId('padding.multiple');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11, locked: true },
-        DEFAULT_PADDING
+        { horizontal: 11, vertical: 11 },
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -308,12 +298,13 @@ describe('Panels/TextStyle', () => {
         textElement,
         textDifferentPadding,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByTestId('padding.multiple');
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11, locked: true },
-        DEFAULT_PADDING
+        { horizontal: 11, vertical: 11 },
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -327,7 +318,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -341,7 +333,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -355,7 +348,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { horizontal: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -369,7 +363,8 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         { vertical: 11 },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -383,7 +378,8 @@ describe('Panels/TextStyle', () => {
         {
           locked: false,
         },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        false
       );
     });
 
@@ -395,9 +391,12 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         {
+          horizontal: 0,
+          vertical: 0,
           locked: true,
         },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        true
       );
     });
 
@@ -410,9 +409,12 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         {
+          horizontal: 0,
+          vertical: 0,
           locked: true,
         },
-        DEFAULT_PADDING
+        DEFAULT_PADDING,
+        true
       );
     });
   });

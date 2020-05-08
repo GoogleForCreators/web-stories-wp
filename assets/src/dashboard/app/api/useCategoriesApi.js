@@ -53,8 +53,6 @@ export default function useCategoriesApi(dataAdapter, { wpApi }) {
         )
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
       setCategories({});
     }
   }, [dataAdapter, wpApi]);
