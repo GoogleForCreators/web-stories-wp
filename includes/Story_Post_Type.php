@@ -398,6 +398,15 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
+			'flags'  => [
+				/**
+				 * Description: Description of the sample flag.
+				 * Author: @diegovar
+				 * Issue: 12345
+				 * Creation date: 2020-05-10
+				 */
+				'sampleFlag' => false,
+			],
 		];
 
 		return $settings;

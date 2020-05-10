@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { Feature } from 'flagged';
 import { rgba } from 'polished';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
@@ -281,6 +282,9 @@ function MediaPane(props) {
             </MainButton>
           </FilterArea>
         </Padding>
+        <Feature name="sampleFlag">
+          <Message>{'This is a sample flag result'}</Message>
+        </Feature>
 
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
