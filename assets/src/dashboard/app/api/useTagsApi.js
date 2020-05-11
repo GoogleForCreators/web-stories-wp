@@ -53,8 +53,6 @@ export default function useTagsApi(dataAdapter, { wpApi }) {
         )
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
       setTags({});
     }
   }, [dataAdapter, wpApi]);

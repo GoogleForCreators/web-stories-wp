@@ -39,7 +39,7 @@ jobs:
       - name: Update list of Google Fonts
         env:
           GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
-        run: npm run build:fonts
+        run: npm run workflow:fonts
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2

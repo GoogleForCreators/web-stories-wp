@@ -24,13 +24,15 @@ import { __ } from '@wordpress/i18n';
  */
 import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Pill, FloatingTab } from '../';
+import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
+import Pill from '../';
 
 export default {
   title: 'Dashboard/Components/Pill',
@@ -172,9 +174,10 @@ export const _floatingTabs = () => {
       {statefulDemoData.map(
         ({ icon, label, selected, value, disabled }, index) => {
           return (
-            <FloatingTab
+            <Pill
               key={value + index}
               inputType="checkbox"
+              labelType={PILL_LABEL_TYPES.FLOATING}
               name={value}
               onClick={(e, selectedValue) => {
                 action('on click selected')(selectedValue);
@@ -185,7 +188,7 @@ export const _floatingTabs = () => {
               disabled={disabled}
             >
               <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-            </FloatingTab>
+            </Pill>
           );
         }
       )}
@@ -230,6 +233,49 @@ export const _radioGroup = () => {
           );
         }
       )}
+    </DemoFieldSet>
+  );
+};
+
+export const _colorSwatches = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
+  return (
+    <DemoFieldSet>
+      {statefulDemoData.map(({ label, hex, value, selected }, index) => {
+        return (
+          <Pill
+            ariaLabel={label}
+            key={value + index}
+            inputType="checkbox"
+            labelType={PILL_LABEL_TYPES.SWATCH}
+            hex={hex}
+            name={value}
+            onClick={(_, selectedValue) => {
+              action('on click selected')(selectedValue);
+              updateDemoDataState(selectedValue);
+            }}
+            value={value}
+            isSelected={selected}
+            disabled={boolean('disabled')}
+          />
+        );
+      })}
     </DemoFieldSet>
   );
 };

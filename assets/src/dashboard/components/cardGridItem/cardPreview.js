@@ -32,7 +32,7 @@ const PreviewPane = styled.div`
   position: relative;
   border-radius: 8px;
   height: ${({ cardSize }) => `${cardSize.height}px`};
-  width: ${({ cardSize }) => `${cardSize.width}px`};
+  width: 100%;
   overflow: hidden;
   z-index: -1;
 `;
@@ -89,7 +89,7 @@ const getActionAttributes = (targetAction) =>
     : { onClick: targetAction };
 
 const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   return (
     <>

@@ -27,7 +27,7 @@ import { useStory } from '../../app';
 import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
-import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
+import useCanvasCopyPaste from './useCanvasCopyPaste';
 import Context from './context';
 
 function CanvasProvider({ children }) {
@@ -133,7 +133,7 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  useCanvasSelectionCopyPaste(pageContainer);
+  useCanvasCopyPaste();
 
   const state = {
     state: {

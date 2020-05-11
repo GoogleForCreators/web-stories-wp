@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
         uses: pat-s/always-upload-cache@v1.1.4
@@ -61,9 +61,9 @@ jobs:
 
       - name: Bundle plugin
         run: |
-          npm run build:plugin
-          npm run bundle-plugin web-stories.zip
-          npm run bundle-plugin web-stories-composer.zip -- --composer
+          npm run workflow:build-plugin
+          npm run workflow:bundle-plugin web-stories.zip
+          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer
 
       - name: Get upload url
         run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"

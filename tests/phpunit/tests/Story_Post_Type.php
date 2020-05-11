@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2020 Google LLC
  *
@@ -19,10 +18,46 @@
 namespace Google\Web_Stories\Tests;
 
 class Story_Post_Type extends \WP_UnitTestCase {
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
+	protected static $admin_id;
+
+	/**
+	 * Subscriber user for test.
+	 *
+	 * @var int
+	 */
+	protected static $subscriber_id;
+
+	public static function wpSetUpBeforeClass( $factory ) {
+		self::$admin_id      = $factory->user->create(
+			[ 'role' => 'administrator' ]
+		);
+		self::$subscriber_id = $factory->user->create(
+			[ 'role' => 'subscriber' ]
+		);
+	}
 
 	public function setUp() {
 		parent::setUp();
 		do_action( 'init' );
+	}
+  
+	public function test_get_editor_settings_admin() {
+		wp_set_current_user( self::$admin_id );
+		$post_type = new \Google\Web_Stories\Story_Post_Type();
+		$results   = $post_type::get_editor_settings();
+		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
+	}
+
+	public function test_get_editor_settings_sub() {
+		wp_set_current_user( self::$subscriber_id );
+		$post_type = new \Google\Web_Stories\Story_Post_Type();
+		$results   = $post_type::get_editor_settings();
+		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
 	public function test_filter_rest_collection_params() {

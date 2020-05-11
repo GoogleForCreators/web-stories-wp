@@ -24,6 +24,7 @@ import {
   getTextPresets,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import objectWithout from '../../../../utils/objectWithout';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 describe('Panels/StylePreset/utils', () => {
@@ -164,12 +165,13 @@ describe('Panels/StylePreset/utils', () => {
           vertical: 0,
           horizontal: 0,
         },
-        color: TEST_COLOR,
+        content: '<span style="color: rgb(1,1,1)">Content</span>',
       },
       {
         type: 'text',
         x: 30,
-        ...stylePreset,
+        content: '<span style="color: rgb(2,2,2)">Content</span>',
+        ...objectWithout(stylePreset, ['color']),
       },
     ];
     const stylePresets = {
@@ -180,6 +182,64 @@ describe('Panels/StylePreset/utils', () => {
     const expected = {
       textColors: [TEST_COLOR],
       textStyles: [stylePreset],
+    };
+    const presets = getTextPresets(elements, stylePresets);
+    expect(presets).toStrictEqual(expected);
+  });
+
+  it('should ignore text color presets for multi-color text fields', () => {
+    const elements = [
+      {
+        type: 'text',
+        backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content:
+          '<span style="color: rgb(1,1,1)">O</span><span style="color: rgb(2,1,1)">K</span>',
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      textColors: [],
+      fillColors: [],
+    };
+    const expected = {
+      textColors: [],
+      textStyles: [],
+    };
+    const presets = getTextPresets(elements, stylePresets);
+    expect(presets).toStrictEqual(expected);
+  });
+
+  it('should use black color when adding text style preset for multi-color text fields', () => {
+    const stylePreset = {
+      ...STYLE_PRESET,
+      font: {
+        family: 'Foo',
+        fallbacks: ['Bar'],
+      },
+    };
+    const elements = [
+      {
+        type: 'text',
+        x: 30,
+        content:
+          '<span style="color: rgb(1,1,1)">O</span><span style="color: rgb(2,1,1)">K</span>',
+        ...objectWithout(stylePreset, ['color']),
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      textColors: [],
+      fillColors: [],
+    };
+    const expected = {
+      textColors: [],
+      textStyles: [
+        {
+          ...stylePreset,
+          color: { color: { r: 0, g: 0, b: 0 } },
+        },
+      ],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -199,7 +259,7 @@ describe('Panels/StylePreset/utils', () => {
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
         font: TEXT_ELEMENT_DEFAULT_FONT,
         foo: 'bar',
-        color: TEST_COLOR,
+        content: '<span style="color: rgb(1,1,1)">Content</span>',
         padding: {
           vertical: 0,
           horizontal: 0,
@@ -208,7 +268,8 @@ describe('Panels/StylePreset/utils', () => {
       {
         type: 'text',
         x: 30,
-        ...stylePreset,
+        content: '<span style="color: rgb(2,2,2)">Content</span>',
+        ...objectWithout(stylePreset, ['color']),
       },
     ];
     const stylePresets = {

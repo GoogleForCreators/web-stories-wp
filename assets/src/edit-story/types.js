@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  */
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE } from './constants';
+import MULTIPLE_VALUE from './components/form/multipleValue';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -201,25 +202,31 @@ export const FontPropType = PropTypes.shape({
   fallbacks: PropTypes.array,
 });
 
+export const PaddingPropType = PropTypes.shape({
+  horizontal: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+  vertical: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+  locked: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+});
+
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
-  color: PatternPropType.isRequired,
   backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
   font: FontPropType.isRequired,
   fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
-  fontStyle: PropTypes.string,
-  letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
-  padding: PropTypes.shape({
-    horizontal: PropTypes.number,
-    vertical: PropTypes.number,
-    locked: PropTypes.bool,
-  }),
+  padding: PaddingPropType,
   textAlign: PropTypes.string,
-  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({

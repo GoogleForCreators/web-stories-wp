@@ -83,7 +83,7 @@ cd "$project_dir"
 
 echo "Building plugin"
 npm run build:js --silent
-npm run build:plugin --silent -- --prerelease
+npm run build:plugin --silent -- --prerelease --cdn
 
 echo "Bundling plugin"
 npm run bundle-plugin --silent -- --copy

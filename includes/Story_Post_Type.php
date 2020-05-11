@@ -302,11 +302,47 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
+		$settings = self::get_editor_settings();
+
+		wp_localize_script(
+			self::WEB_STORIES_SCRIPT_HANDLE,
+			'webStoriesEditorSettings',
+			$settings
+		);
+
+		wp_register_style(
+			'roboto',
+			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		wp_enqueue_style(
+			self::WEB_STORIES_STYLE_HANDLE,
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
+			[ 'roboto' ],
+			$version
+		);
+
+		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
+		wp_styles()->registered['wp-admin']->deps = array_diff(
+			wp_styles()->registered['wp-admin']->deps,
+			[ 'forms' ]
+		);
+	}
+
+	/**
+	 * Get edittor settings as an array.
+	 *
+	 * @return array
+	 */
+	public static function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = self::POST_TYPE_SLUG;
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
+		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
@@ -331,62 +367,40 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			[
-				'id'     => 'edit-story',
-				'config' => [
-					'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-					'isRTL'            => is_rtl(),
-					'timeFormat'       => get_option( 'time_format' ),
-					'allowedMimeTypes' => self::get_allowed_mime_types(),
-					'allowedFileTypes' => self::get_allowed_file_types(),
-					'postType'         => self::POST_TYPE_SLUG,
-					'storyId'          => $story_id,
-					'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
-					'maxUpload'        => $max_upload_size,
-					'pluginDir'        => WEBSTORIES_PLUGIN_DIR_URL,
-					'capabilities'     => [
-						'hasPublishAction'      => $has_publish_action,
-						'hasAssignAuthorAction' => $has_assign_author_action,
-					],
-					'api'              => [
-						'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
-						'media'    => '/wp/v2/media',
-						'users'    => '/wp/v2/users',
-						'statuses' => '/wp/v2/statuses',
-						'fonts'    => '/web-stories/v1/fonts',
-						'link'     => '/web-stories/v1/link',
-					],
-					'metadata'         => [
-						'publisher'       => self::get_publisher_data(),
-						'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
-						'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
-					],
+		$settings = [
+			'id'     => 'edit-story',
+			'config' => [
+				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+				'isRTL'            => is_rtl(),
+				'timeFormat'       => get_option( 'time_format' ),
+				'allowedMimeTypes' => self::get_allowed_mime_types(),
+				'allowedFileTypes' => self::get_allowed_file_types(),
+				'postType'         => self::POST_TYPE_SLUG,
+				'storyId'          => $story_id,
+				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
+				'maxUpload'        => $max_upload_size,
+				'capabilities'     => [
+					'hasPublishAction'      => $has_publish_action,
+					'hasAssignAuthorAction' => $has_assign_author_action,
+					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
-			]
-		);
+				'api'              => [
+					'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
+					'media'    => '/wp/v2/media',
+					'users'    => '/wp/v2/users',
+					'statuses' => '/wp/v2/statuses',
+					'fonts'    => '/web-stories/v1/fonts',
+					'link'     => '/web-stories/v1/link',
+				],
+				'metadata'         => [
+					'publisher'       => self::get_publisher_data(),
+					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+				],
+			],
+		];
 
-		wp_register_style(
-			'roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
-
-		wp_enqueue_style(
-			self::WEB_STORIES_STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'roboto' ],
-			$version
-		);
-
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		return $settings;
 	}
 
 	/**

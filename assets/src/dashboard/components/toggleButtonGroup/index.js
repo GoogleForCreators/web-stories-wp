@@ -47,7 +47,7 @@ const AnimationBar = styled.div`
     width: ${selectedButtonWidth}px;
     margin-left: ${selectedButtonLeft}%;
     background-color:  ${theme.colors.bluePrimary600};
-    transition: all 0.3s ${BEZIER.outSine}; 
+    transition: all 0.3s ${BEZIER.outSine};
   `}
 `;
 AnimationBar.propTypes = {
@@ -56,6 +56,8 @@ AnimationBar.propTypes = {
 };
 
 const ToggleButton = styled.button`
+  cursor: pointer;
+
   ${({ theme, isActive }) => `
     display: flex;
     flex-direction: column;

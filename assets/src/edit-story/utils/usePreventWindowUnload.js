@@ -50,8 +50,8 @@ function usePreventWindowUnload() {
     },
     [context]
   );
-
   return setPreventUnload;
 }
 
-export default usePreventWindowUnload;
+const shouldDisablePrevent = process.env.DISABLE_PREVENT === 'true';
+export default shouldDisablePrevent ? () => () => {} : usePreventWindowUnload;

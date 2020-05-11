@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 15,
+    version: 17,
     pages: [
       {
         elements: [
@@ -35,7 +35,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page1_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page1_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -73,26 +73,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 38,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'EXPERIENCE',
             backgroundColor: {
               color: {
                 r: 196,
@@ -109,6 +96,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'd5ca2488-668b-4e21-a7d8-05c17084742b',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">EXPERIENCE</span>',
           },
           {
             font: {
@@ -124,26 +113,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 500,
             fontSize: 90,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'THAILAND',
             backgroundColor: {
               color: {
                 r: 196,
@@ -160,6 +136,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '3c00f665-e2ff-4393-aef4-6ca790f599fd',
+            content:
+              '<span style="font-weight: 500; color: #fff">THAILAND</span>',
           },
           {
             type: 'shape',
@@ -204,7 +182,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page1_logo.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page1_logo.png`,
               width: 47,
               height: 15,
               poster: '',
@@ -213,7 +191,7 @@ export default function (imageBaseUrl) {
               title: 'travel_page1_logo',
               alt: '',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 29,
             y: 605,
@@ -303,26 +281,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 500,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'YOUR BODY IS\nNOT A TEMPLE,\nIT\'S AN\nAMUSEMENT\nPARK."',
             backgroundColor: {
               color: {
                 r: 196,
@@ -339,6 +304,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'bfd53cf2-f8e8-41f0-8449-48772b5194bb',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">YOUR BODY IS\nNOT A TEMPLE,\nIT\'S AN\nAMUSEMENT\nPARK."</span></span>',
           },
           {
             font: {
@@ -354,26 +321,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 500,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '"',
             backgroundColor: {
               color: {
                 r: 196,
@@ -390,6 +344,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '90e3970e-a7be-4ecb-91a6-4f6065f28de1',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 500">"</span></span>',
           },
           {
             font: {
@@ -405,26 +361,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '– Anthony Bordain',
             backgroundColor: {
               color: {
                 r: 196,
@@ -441,6 +384,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '88df74ed-7334-4e91-957c-c48b8da344e4',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">– Anthony Bordain</span>',
           },
           {
             type: 'image',
@@ -472,7 +417,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page2_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page2_image1.jpg`,
               width: 220,
               height: 331,
               poster: '',
@@ -560,26 +505,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 31,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'LEARN\nMORE',
             backgroundColor: {
               color: {
                 r: 196,
@@ -596,6 +528,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '3cf17fb8-a5ae-4f32-8e5f-d3a0513215de',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">LEARN\nMORE</span>',
           },
           {
             font: {
@@ -611,27 +545,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content:
-              'The cheapest and most authentic way to experience Thai life. Prepare yourself, some like it hot!',
             backgroundColor: {
               color: {
                 r: 196,
@@ -648,6 +568,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '883808f1-b87b-4b35-b0f1-0945e0faef2e',
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">The cheapest and most authentic way to experience Thai life. Prepare yourself, some like it hot!</span>',
           },
           {
             font: {
@@ -663,26 +585,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'STREET\nFOOD',
             backgroundColor: {
               color: {
                 r: 196,
@@ -699,6 +608,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '6258d646-a291-498f-81ab-3095f352bb26',
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">STREET\nFOOD</span>',
           },
           {
             type: 'image',
@@ -730,7 +641,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page3_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page3_image1.jpg`,
               width: 220,
               height: 275,
               poster: '',
@@ -765,7 +676,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page4_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page4_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -831,26 +742,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'FLOATING MARKET',
             backgroundColor: {
               color: {
                 r: 196,
@@ -867,6 +765,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '1b892512-7510-4c09-a750-7dfd21ece74a',
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">FLOATING MARKET</span>',
           },
           {
             font: {
@@ -882,27 +782,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content:
-              'Experience the unique floating market, where all goods are sold from boats.',
             backgroundColor: {
               color: {
                 r: 196,
@@ -919,6 +805,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'd773e2ce-05a7-4195-a815-cfd66e93f66a',
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Experience the unique floating market, where all goods are sold from boats.</span>',
           },
           {
             type: 'shape',
@@ -963,26 +851,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'See Full Story',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1000,6 +875,8 @@ export default function (imageBaseUrl) {
             id: 'f30c61c9-1e27-4458-a149-d827c7fad147',
             x: 146,
             y: 619,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See Full Story</span>',
           },
           {
             type: 'image',
@@ -1017,7 +894,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_up_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -1056,13 +933,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             scale: 100,
-            focalX: 50,
-            focalY: 50,
+            focalX: 49.18364448416392,
+            focalY: 49.97767879474251,
             isFill: false,
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page5_bg.jpg`,
               width: 220,
               height: 149,
               poster: '',
@@ -1100,26 +977,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 38,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'CAPTURE',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1136,6 +1000,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '65283dae-40f2-4ace-8b0a-0d9f2066a38a',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">CAPTURE</span>',
           },
           {
             font: {
@@ -1151,26 +1017,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 90,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'BANGKOK',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1187,6 +1040,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '95c08a42-48cd-4112-b0e2-f24362adc7bc',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">BANGKOK</span>',
           },
           {
             font: {
@@ -1202,26 +1057,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Tips and tricks for caturing this iconic city in a day.',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1238,6 +1080,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '7dae1bd9-9f88-4ae8-93eb-f3d908cace09',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Tips and tricks for caturing this iconic city in a day.</span>',
           },
           {
             type: 'image',
@@ -1254,7 +1098,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page5_image1.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page5_image1.png`,
               width: 137,
               height: 52,
               poster: '',
@@ -1265,10 +1109,10 @@ export default function (imageBaseUrl) {
               local: false,
               sizes: {},
             },
-            x: 138,
-            y: 163,
-            width: 106,
-            height: 47,
+            x: 122,
+            y: 134,
+            width: 143,
+            height: 60,
             mask: {
               type: 'rectangle',
               name: 'Rectangle',
@@ -1321,26 +1165,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'See Full Story',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1358,6 +1189,8 @@ export default function (imageBaseUrl) {
             id: 'b563fdfc-f2e2-41a9-8010-c9b2b4a07302',
             x: 146,
             y: 619,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See Full Story</span>',
           },
           {
             type: 'image',
@@ -1375,7 +1208,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_up_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -1421,7 +1254,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page6_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page6_bg.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -1459,26 +1292,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'TOP 5\nCHIANG MAI',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1495,6 +1315,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'c40c8eae-e683-4fa6-a632-e1d652279a37',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">TOP 5\nCHIANG MAI</span>',
           },
           {
             font: {
@@ -1510,27 +1332,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.2,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content:
-              'If you only have one day to see as many sights as you can, we’ve compiled a list of walkable must-see destinations.',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1547,6 +1355,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'ca20176a-3245-4735-9b1c-66017aa9e528',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">If you only have one day to see as many sights as you can, we’ve compiled a list of walkable must-see destinations.</span>',
           },
           {
             type: 'shape',
@@ -1619,7 +1429,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page6_image1.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page6_image1.png`,
               width: 220,
               height: 371,
               poster: '',
@@ -1718,26 +1528,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 31,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'NO. 3',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1755,6 +1552,7 @@ export default function (imageBaseUrl) {
             id: '4f71e74f-fd3f-4840-9ea4-8c0f59363952',
             x: 339,
             y: 51.5,
+            content: '<span style="color: rgba(255, 255, 255, 1)">NO. 3</span>',
           },
           {
             font: {
@@ -1770,26 +1568,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'TEMPLE\nNAME',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1807,6 +1592,8 @@ export default function (imageBaseUrl) {
             id: '3932eb5c-e456-43d8-988d-4aa01dd4a8bd',
             x: 45,
             y: 440,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">TEMPLE\nNAME</span>',
           },
           {
             font: {
@@ -1822,27 +1609,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content:
-              'The courtyard around the 3 Kings Monument is the best place to give early morning Alms to the Monks in Central Chiang Mai.',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1860,6 +1633,8 @@ export default function (imageBaseUrl) {
             id: 'bc7d8800-b421-4a19-9db0-f594e9b0bd8d',
             x: 45,
             y: 545,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">The courtyard around the 3 Kings Monument is the best place to give early morning Alms to the Monks in Central Chiang Mai.</span>',
           },
           {
             type: 'image',
@@ -1891,7 +1666,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page7_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page7_image1.jpg`,
               width: 220,
               height: 330,
               poster: '',
@@ -1926,7 +1701,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page8_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page8_bg.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -1993,26 +1768,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 31,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'LEARN\nMORE',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2030,6 +1792,8 @@ export default function (imageBaseUrl) {
             id: '28b135fd-63b8-456c-985d-3dfe542fffd7',
             x: 335.5,
             y: 36,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">LEARN\nMORE</span>',
           },
           {
             type: 'shape',
@@ -2074,26 +1838,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'ISLAND\nHOPPING',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2111,6 +1862,8 @@ export default function (imageBaseUrl) {
             id: '30716193-c4ff-4619-b485-8108d250c8b8',
             x: 42,
             y: 51,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">ISLAND\nHOPPING</span>',
           },
           {
             font: {
@@ -2126,27 +1879,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content:
-              'The main island hopping hubs are Phuket, Krabi, Koh Phi Phi, and Koh Lipe. Other favorites include Ko Tao, Ko Pha-Ngan, Ko Samui and Surat Thani.',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2164,6 +1903,8 @@ export default function (imageBaseUrl) {
             id: '41d3069f-61de-4998-8487-036ea86917a6',
             x: 42,
             y: 171,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">The main island hopping hubs are Phuket, Krabi, Koh Phi Phi, and Koh Lipe. Other favorites include Ko Tao, Ko Pha-Ngan, Ko Samui and Surat Thani.</span>',
           },
         ],
         backgroundElementId: '3f23fce9-2fb5-4f17-acec-f0f6f524967d',
@@ -2213,26 +1954,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '1. PHUKET',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2250,6 +1978,7 @@ export default function (imageBaseUrl) {
             id: '5cb07f8c-750f-437b-981f-cc3228cdeffd',
             x: 183,
             y: 47,
+            content: '<span style="color: rgba(9, 66, 40, 1)">1. PHUKET</span>',
           },
           {
             font: {
@@ -2265,26 +1994,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '2. KOH PHI PHI',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2302,6 +2018,8 @@ export default function (imageBaseUrl) {
             id: '840cd415-bf08-4186-9649-932beb2e6778',
             x: 183,
             y: 180,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">2. KOH PHI PHI</span>',
           },
           {
             font: {
@@ -2317,26 +2035,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '3. KOH YAO YAI',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2354,6 +2059,8 @@ export default function (imageBaseUrl) {
             id: '2192d51d-a5e1-437e-a6a1-c7c2a1d7a7c4',
             x: 184,
             y: 306,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">3. KOH YAO YAI</span>',
           },
           {
             font: {
@@ -2369,26 +2076,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '4. KOH LIPE',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2406,6 +2100,8 @@ export default function (imageBaseUrl) {
             id: 'bbe6302e-87c0-49d2-b16b-ff787059c187',
             x: 183,
             y: 441,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">4. KOH LIPE</span>',
           },
           {
             font: {
@@ -2421,26 +2117,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '5. KO SAMUI',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2458,6 +2141,8 @@ export default function (imageBaseUrl) {
             id: '44db08e2-0900-40a6-9e52-3ab2325aeab2',
             x: 183,
             y: 576,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">5. KO SAMUI</span>',
           },
           {
             font: {
@@ -2473,26 +2158,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Start your journey here',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2510,6 +2182,8 @@ export default function (imageBaseUrl) {
             id: 'adc642e3-a739-4349-9646-cb06d88f51a4',
             x: 184,
             y: 76,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Start your journey here</span>',
           },
           {
             font: {
@@ -2525,26 +2199,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Scoot around the island',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2562,6 +2223,8 @@ export default function (imageBaseUrl) {
             id: '919e9a80-e851-49fe-9660-c67937a14e13',
             x: 182,
             y: 206,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Scoot around the island</span>',
           },
           {
             font: {
@@ -2577,26 +2240,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Snorkle with the fish',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2614,6 +2264,8 @@ export default function (imageBaseUrl) {
             id: '0ac04592-1df3-4d5a-896b-18c821c93c4a',
             x: 182,
             y: 333,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Snorkle with the fish</span>',
           },
           {
             font: {
@@ -2629,26 +2281,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Best red curry',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2666,6 +2305,8 @@ export default function (imageBaseUrl) {
             id: '63b0bbbf-6ef4-42c1-b017-d7db0db07039',
             x: 185,
             y: 467,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Best red curry</span>',
           },
           {
             font: {
@@ -2681,26 +2322,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'Semi-secluded island',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2718,6 +2346,8 @@ export default function (imageBaseUrl) {
             id: '300c43cc-b0b0-45de-97ba-1775028d50bb',
             x: 183,
             y: 599,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">Semi-secluded island</span>',
           },
           {
             type: 'shape',
@@ -2864,7 +2494,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page9_image1.jpg`,
               width: 220,
               height: 165,
               poster: '',
@@ -2907,7 +2537,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image2.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page9_image2.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -2950,7 +2580,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image3.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page9_image3.jpg`,
               width: 220,
               height: 151,
               poster: '',
@@ -2993,7 +2623,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image4.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page9_image4.jpg`,
               width: 220,
               height: 147,
               poster: '',
@@ -3036,7 +2666,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page9_image5.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page9_image5.jpg`,
               width: 220,
               height: 330,
               poster: '',
@@ -3153,26 +2783,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: '5 SPICIEST\nDISHES',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3190,6 +2807,8 @@ export default function (imageBaseUrl) {
             id: '7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f',
             x: 279,
             y: 230,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">5 SPICIEST\nDISHES</span>',
           },
           {
             font: {
@@ -3205,26 +2824,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'HIKES OFF THE BEATEN\nTRAIL',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3242,6 +2848,8 @@ export default function (imageBaseUrl) {
             id: 'cb201d61-faec-476e-9d72-14caf813197b',
             x: 279,
             y: 361,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">HIKES OFF THE BEATEN\nTRAIL</span>',
           },
           {
             font: {
@@ -3257,26 +2865,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'CATCH THE SWIMMING MONKEYS',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3294,6 +2889,8 @@ export default function (imageBaseUrl) {
             id: 'fcdc8182-cfb1-4010-82cd-91b5f235f0fc',
             x: 279,
             y: 494,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">CATCH THE SWIMMING MONKEYS</span>',
           },
           {
             font: {
@@ -3309,26 +2906,13 @@ export default function (imageBaseUrl) {
             },
             rotationAngle: 0,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 48,
-            fontStyle: 'normal',
-            color: {
-              color: {
-                r: 9,
-                g: 66,
-                b: 40,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
             },
-            content: 'MORE\nSTORIES',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3346,6 +2930,8 @@ export default function (imageBaseUrl) {
             id: 'e5272870-2b37-4bba-abcf-eab0ffc222a4',
             x: 40,
             y: 53,
+            content:
+              '<span style="color: rgba(9, 66, 40, 1)">MORE\nSTORIES</span>',
           },
           {
             type: 'image',
@@ -3377,7 +2963,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page10_image1.jpg`,
               width: 220,
               height: 112,
               poster: '',
@@ -3416,7 +3002,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image2.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page10_image2.jpg`,
               width: 220,
               height: 83,
               poster: '',
@@ -3459,7 +3045,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_page10_image3.jpg`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_page10_image3.jpg`,
               width: 220,
               height: 124,
               poster: '',
@@ -3491,7 +3077,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_fb.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_fb.png`,
               width: 150,
               height: 300,
               posterId: 0,
@@ -3529,7 +3115,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_insta.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_insta.png`,
               width: 150,
               height: 156,
               posterId: 0,
@@ -3567,7 +3153,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_yt.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_yt.png`,
               width: 150,
               height: 106,
               posterId: 0,
@@ -3605,7 +3191,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/travel/travel_icon_tw.png`,
+              src: `${imageBaseUrl}/images/templates/travel/travel_icon_tw.png`,
               width: 150,
               height: 121,
               posterId: 0,

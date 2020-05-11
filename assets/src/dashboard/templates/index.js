@@ -17,19 +17,25 @@
 /**
  * Internal dependencies
  */
+import getBeautyStoryData from './data/beauty';
 import getCookingStoryData from './data/cooking';
 import getDIYStoryData from './data/diy';
+import getEntertainmentStoryData from './data/entertainment';
 import getFashionStoryData from './data/fashion';
 import getFitnessStoryData from './data/fitness';
 import getTravelStoryData from './data/travel';
+import getWellbeingStoryData from './data/wellbeing';
 
 export default function (config) {
-  const { pluginDir } = config;
-  const cookingStoryData = getCookingStoryData(pluginDir);
-  const diyStoryData = getDIYStoryData(pluginDir);
-  const fashionStoryData = getFashionStoryData(pluginDir);
-  const fitnessStoryData = getFitnessStoryData(pluginDir);
-  const travelStoryData = getTravelStoryData(pluginDir);
+  const { assetsURL } = config;
+  const beautyStoryData = getBeautyStoryData(assetsURL);
+  const cookingStoryData = getCookingStoryData(assetsURL);
+  const diyStoryData = getDIYStoryData(assetsURL);
+  const entertainmentData = getEntertainmentStoryData(assetsURL);
+  const fashionStoryData = getFashionStoryData(assetsURL);
+  const fitnessStoryData = getFitnessStoryData(assetsURL);
+  const travelStoryData = getTravelStoryData(assetsURL);
+  const wellbeingStoryData = getWellbeingStoryData(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -51,7 +57,7 @@ export default function (config) {
       ],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-      pages: travelStoryData.pages,
+      pages: beautyStoryData.pages,
     },
     {
       id: 2,
@@ -99,7 +105,7 @@ export default function (config) {
       ],
       description:
         'Nam a tellus tortor. Aenean non mi porta quam feugiat vehicula in a lectus. Suspendisse eget justo ac quam.',
-      pages: travelStoryData.pages,
+      pages: entertainmentData.pages,
     },
     {
       id: 5,
@@ -161,7 +167,7 @@ export default function (config) {
       ],
       description:
         'In lorem est, aliquam tempus justo nec, tincidunt aliquet diam. Fusce ut nisl ex. Nam mollis dolor non arcu.',
-      pages: travelStoryData.pages,
+      pages: wellbeingStoryData.pages,
     },
   ];
 }
