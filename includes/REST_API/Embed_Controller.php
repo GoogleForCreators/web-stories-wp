@@ -69,10 +69,10 @@ class Embed_Controller extends WP_REST_Controller {
 					'permission_callback' => [ $this, 'get_proxy_item_permissions_check' ],
 					'args'                => [
 						'url' => [
-							'description'       => __( 'The URL for which to fetch embed data.', 'web-stories' ),
-							'type'              => 'string',
-							'required'          => true,
-							'sanitize_callback' => 'esc_url_raw',
+							'description' => __( 'The URL for which to fetch embed data.', 'web-stories' ),
+							'type'        => 'string',
+							'format'      => 'uri',
+							'required'    => true,
 						],
 					],
 				],
@@ -91,6 +91,10 @@ class Embed_Controller extends WP_REST_Controller {
 	 */
 	public function get_proxy_item( $request ) {
 		$url = untrailingslashit( $request['url'] );
+
+		if ( empty( $url ) ) {
+			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+		}
 
 		/**
 		 * Filters the link data TTL value.

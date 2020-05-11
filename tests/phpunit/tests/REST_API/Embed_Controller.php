@@ -29,9 +29,9 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	protected static $editor;
 	protected static $subscriber;
 
-	const INVALID_URL = 'https://www.notreallyawebsite.com/foobar.html';
-	const EMPTY_URL   = 'https://empty.example.com';
-	const VALID_URL   = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
+	const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
+	const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
+	const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -93,7 +93,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	public function mock_http_request( $preempt, $r, $url ) {
 		$this->request_count += 1;
 
-		if ( false !== strpos( $url, self::EMPTY_URL ) ) {
+		if ( false !== strpos( $url, self::VALID_URL_EMPTY_DOCUMENT ) ) {
 			return [
 				'response' => [
 					'code' => 200,
@@ -149,6 +149,18 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( $data['code'], 'rest_forbidden' );
 	}
 
+	public function test_url_empty_string() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/embed' );
+		$request->set_param( 'url', '' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertEquals( 404, $response->get_status() );
+		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+	}
+
 	public function test_invalid_url() {
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/embed' );
@@ -163,7 +175,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	public function test_empty_url() {
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/embed' );
-		$request->set_param( 'url', self::EMPTY_URL );
+		$request->set_param( 'url', self::VALID_URL_EMPTY_DOCUMENT );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
