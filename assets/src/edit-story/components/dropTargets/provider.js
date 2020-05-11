@@ -42,8 +42,8 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { combineElements },
     state: { currentPage },
+    actions: { combineElements },
   } = useStory();
 
   const getDropTargetFromCursor = useCallback(

@@ -37,18 +37,22 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
 
-  const {
-    actions: { updateElementsById },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
-      nodesById,
-    },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+  const { updateElementsById } = useStory((state) => ({
+    updateElementsById: state.actions.updateElementsById,
+  }));
+  const { canvasWidth, canvasHeight, nodesById } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+      },
+    }) => ({ canvasWidth, canvasHeight, nodesById })
+  );
+  const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
   const {
     actions: { pushTransform },
   } = useTransform();

@@ -58,16 +58,33 @@ const Lasso = styled.div`
 
 function SelectionCanvas({ children }) {
   const {
-    actions: { clearSelection },
     state: { selectedElements, currentPage },
+    actions: { clearSelection },
   } = useStory();
   const {
-    state: { fullbleedContainer, isEditing, nodesById },
-    actions: { clearEditing, selectIntersection },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+    fullbleedContainer,
+    isEditing,
+    nodesById,
+    clearEditing,
+    selectIntersection,
+  } = useCanvas(
+    ({
+      state: { fullbleedContainer, isEditing, nodesById },
+      actions: { clearEditing, selectIntersection },
+    }) => {
+      return {
+        fullbleedContainer,
+        isEditing,
+        nodesById,
+        clearEditing,
+        selectIntersection,
+      };
+    }
+  );
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const overlayRef = useRef(null);
   const lassoRef = useRef(null);

@@ -46,10 +46,13 @@ const Wrapper = styled.div`
 `;
 
 function PageNav({ isNext }) {
-  const {
-    state: { pages, currentPageIndex },
-    actions: { setCurrentPage },
-  } = useStory();
+  const { pages, currentPageIndex, setCurrentPage } = useStory(
+    ({ state: { pages, currentPageIndex }, actions: { setCurrentPage } }) => ({
+      pages,
+      currentPageIndex,
+      setCurrentPage,
+    })
+  );
   const { isRTL } = useConfig();
   const handleClick = useCallback(() => {
     const newPage = isNext

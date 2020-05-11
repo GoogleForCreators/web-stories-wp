@@ -58,9 +58,9 @@ const ReplacementContainer = styled.div`
 `;
 
 function DisplayElement({ element, previewMode, page }) {
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const [replacement, setReplacement] = useState(null);
 

@@ -54,13 +54,15 @@ const Space = styled.div`
 `;
 
 function PreviewButton() {
-  const {
-    state: {
-      meta: { isSaving },
-      story: { link, status },
-    },
-    actions: { autoSave, saveStory },
-  } = useStory();
+  const { isSaving, link, status, autoSave, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { link, status },
+      },
+      actions: { autoSave, saveStory },
+    }) => ({ isSaving, link, status, autoSave, saveStory })
+  );
   const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
@@ -161,16 +163,18 @@ function PreviewButton() {
 }
 
 function Publish() {
-  const {
-    state: {
-      meta: { isSaving },
-      story: { date, storyId },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+  const { isSaving, date, storyId, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { date, storyId },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, date, storyId, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
@@ -196,15 +200,17 @@ function Publish() {
 }
 
 function SwitchToDraft() {
-  const {
-    state: {
-      meta: { isSaving },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+  const { isSaving, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
 
   const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
     saveStory,
@@ -218,16 +224,18 @@ function SwitchToDraft() {
 }
 
 function Update() {
-  const {
-    state: {
-      meta: { isSaving },
-      story: { status },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+  const { isSaving, status, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { status },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, status, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const {
     state: { hasNewChanges },
   } = useHistory();
@@ -261,11 +269,9 @@ function Update() {
 }
 
 function Loading() {
-  const {
-    state: {
-      meta: { isSaving },
-    },
-  } = useStory();
+  const { isSaving } = useStory((state) => ({
+    isSaving: state.state.meta.isSaving,
+  }));
   return (
     <>
       {isSaving && <CircularProgress size={30} />}
@@ -275,11 +281,9 @@ function Loading() {
 }
 
 function Buttons() {
-  const {
-    state: {
-      story: { status },
-    },
-  } = useStory();
+  const { status } = useStory((state) => ({
+    status: state.state.story.status,
+  }));
   const isDraft = 'draft' === status;
   return (
     <ButtonList>

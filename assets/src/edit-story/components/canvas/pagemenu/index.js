@@ -111,12 +111,26 @@ function PageMenu() {
     actions: { undo, redo },
   } = useHistory();
   const {
-    state: { currentPageNumber, currentPage },
-    actions: { deleteCurrentPage, addPage },
-  } = useStory();
-  const {
-    state: { pageSize },
-  } = useCanvas();
+    currentPageNumber,
+    currentPage,
+    deleteCurrentPage,
+    addPage,
+  } = useStory(
+    ({
+      state: { currentPageNumber, currentPage },
+      actions: { deleteCurrentPage, addPage },
+    }) => {
+      return {
+        currentPageNumber,
+        currentPage,
+        deleteCurrentPage,
+        addPage,
+      };
+    }
+  );
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   const { isRTL } = useConfig();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [

@@ -47,12 +47,12 @@ const EditPageArea = withOverlay(styled(PageArea).attrs({
 `);
 
 function EditLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement: editingElementId },
-  } = useCanvas();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElement: editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElementId,
+  }));
 
   const editingElement =
     editingElementId &&
@@ -71,9 +71,9 @@ function EditLayerForElement({ element }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const focusCanvas = useFocusCanvas();
 
