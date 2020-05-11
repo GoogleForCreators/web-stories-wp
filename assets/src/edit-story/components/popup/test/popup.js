@@ -37,11 +37,11 @@ describe('Popup', () => {
   });
 
   it('should render popup in different placements', () => {
+    const anchorEl = document.createElement('div');
     const anchor = {
-      current: document.createElement('div'),
+      current: anchorEl,
     };
     document.body.append(anchor.current);
-
     Object.values(Placement).map((placement) => {
       const { getByText } = renderWithTheme(
         <Popup anchor={anchor} isOpen={true} placement={placement}>
