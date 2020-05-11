@@ -29,10 +29,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TextInput } from '../input';
-import useFocusOut from '../../utils/useFocusOut';
 import { STORY_STATUS } from '../../constants';
-import getFormattedDisplayDate from '../../utils/getFormattedDisplayDate';
+import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
+import { TextInput } from '../input';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
