@@ -75,12 +75,10 @@ export function dataToEditorX(x, pageWidth) {
  *
  * @param {number} y The value to be converted.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
- * @param {boolean} useFullbleed Whether the value is relative to the fullbleed or the safezone of the page.
  * @return {number} The value in the "editor" space.
  */
-export function dataToEditorY(y, pageHeight, useFullbleed = false) {
-  const trueY = useFullbleed ? y - DANGER_ZONE_HEIGHT : y;
-  return editorPixels((trueY * pageHeight) / PAGE_HEIGHT);
+export function dataToEditorY(y, pageHeight) {
+  return editorPixels((y * pageHeight) / PAGE_HEIGHT);
 }
 
 /**
@@ -126,7 +124,7 @@ export function getBox(
   const displayFull = isFill || isBackground;
   return {
     x: dataToEditorX(displayFull ? 0 : x, pageWidth),
-    y: dataToEditorY(displayFull ? 0 : y, pageHeight, displayFull),
+    y: dataToEditorY(displayFull ? -DANGER_ZONE_HEIGHT : y, pageHeight),
     width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
     height: dataToEditorY(displayFull ? FULLBLEED_HEIGHT : height, pageHeight),
     rotationAngle: displayFull ? 0 : rotationAngle,

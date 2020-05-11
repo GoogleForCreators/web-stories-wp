@@ -110,8 +110,18 @@ const Area = styled.div`
 // mechanisms.
 const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
-  overflowAllowed: false,
+  overflowAllowed: true,
 })`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PageAreaOverflowHidden = styled.div`
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,8 +131,8 @@ const PageAreaSafeZone = styled.div`
   width: 100%;
   height: var(--page-height-px);
   overflow: visible;
-  position: absolute;
-  top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
+  position: relative;
+  margin: auto 0;
 `;
 
 const PageAreaDangerZone = styled.div`
@@ -202,16 +212,22 @@ function useLayoutParamsCssVars() {
 }
 
 const PageArea = forwardRef(
-  ({ children, showDangerZone, fullbleedRef = createRef() }, ref) => {
+  (
+    { children, showDangerZone, fullbleedRef = createRef(), overlay = [] },
+    ref
+  ) => {
     return (
       <PageAreaFullbleedContainer ref={fullbleedRef}>
-        <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
-        {showDangerZone && (
-          <>
-            <PageAreaDangerZoneTop />
-            <PageAreaDangerZoneBottom />
-          </>
-        )}
+        <PageAreaOverflowHidden>
+          <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+          {showDangerZone && (
+            <>
+              <PageAreaDangerZoneTop />
+              <PageAreaDangerZoneBottom />
+            </>
+          )}
+        </PageAreaOverflowHidden>
+        {overlay}
       </PageAreaFullbleedContainer>
     );
   }
@@ -219,6 +235,7 @@ const PageArea = forwardRef(
 
 PageArea.propTypes = {
   children: PropTypes.node,
+  overlay: PropTypes.node,
   showDangerZone: PropTypes.bool,
 };
 
