@@ -156,11 +156,11 @@ export const STORY_CONTEXT_MENU_ITEMS = [
 export const ITEMS_PER_PAGE = 10;
 
 export const STORY_SORT_OPTIONS = {
-  NAME: 'title',
-  DATE_CREATED: 'date',
   LAST_MODIFIED: 'modified',
   LAST_OPENED: 'modified',
+  DATE_CREATED: 'date',
   CREATED_BY: 'story_author',
+  NAME: 'title',
 };
 
 export const SORT_DIRECTION = {
@@ -169,33 +169,34 @@ export const SORT_DIRECTION = {
 };
 
 export const ORDER_BY_SORT = {
-  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
-  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
   [STORY_SORT_OPTIONS.LAST_MODIFIED]: SORT_DIRECTION.DESC,
   [STORY_SORT_OPTIONS.LAST_OPENED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
   [STORY_SORT_OPTIONS.CREATED_BY]: SORT_DIRECTION.ASC,
+  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
 };
 
 export const STORY_SORT_MENU_ITEMS = [
   {
-    label: __('Name', 'web-stories'),
-    value: STORY_SORT_OPTIONS.NAME,
+    label: __('Last modified WIP', 'web-stories'), // default
+    value: STORY_SORT_OPTIONS.LAST_MODIFIED,
+  },
+  {
+    label: __('Last opened WIP', 'web-stories'),
+    value: STORY_SORT_OPTIONS.LAST_OPENED,
   },
   {
     label: __('Date created', 'web-stories'),
     value: STORY_SORT_OPTIONS.DATE_CREATED,
   },
+
   {
-    label: __('Last modified', 'web-stories'), // default
-    value: STORY_SORT_OPTIONS.LAST_MODIFIED,
-  },
-  {
-    label: __('Last opened', 'web-stories'),
-    value: STORY_SORT_OPTIONS.LAST_OPENED,
-  },
-  {
-    label: __('Created by', 'web-stories'), // owner first then alpha
+    label: __('Author', 'web-stories'),
     value: STORY_SORT_OPTIONS.CREATED_BY,
+  },
+  {
+    label: __('Title', 'web-stories'),
+    value: STORY_SORT_OPTIONS.NAME,
   },
 ];
 
