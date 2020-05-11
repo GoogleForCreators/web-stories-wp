@@ -259,7 +259,7 @@ class Embed_Controller extends WP_REST_Controller {
 		$amp_story = $xpath->query( '//amp-story' );
 
 		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
-			false;
+			return false;
 		}
 
 		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
