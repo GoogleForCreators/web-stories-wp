@@ -121,8 +121,13 @@ function TextEdit({
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
+  const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
+
+  useEffect(() => {
+    boxRef.current = { x, y };
+  }, [x, y]);
 
   // Make sure to allow the user to click in the text box while working on the text.
   const onClick = (evt) => {
@@ -157,20 +162,12 @@ function TextEdit({
           newHeight - height
         );
         properties.height = editorToDataY(newHeight);
-        properties.x = editorToDataX(x + dx);
-        properties.y = editorToDataY(y + dy);
+        properties.x = editorToDataX(boxRef.current.x + dx);
+        properties.y = editorToDataY(boxRef.current.y + dy);
       }
       setProperties(properties);
     }
-  }, [
-    editorToDataX,
-    editorToDataY,
-    height,
-    rotationAngle,
-    setProperties,
-    x,
-    y,
-  ]);
+  }, [editorToDataX, editorToDataY, height, rotationAngle, setProperties]);
 
   // Update content for element on unmount.
   useUnmount(updateContent);
