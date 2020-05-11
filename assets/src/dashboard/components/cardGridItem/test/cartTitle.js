@@ -27,7 +27,7 @@ describe('CardTitle', () => {
       <CardTitle
         title="Sample Story"
         displayDate="July 13"
-        onEditCancel={jest.fn()}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
       />
@@ -42,7 +42,7 @@ describe('CardTitle', () => {
       <CardTitle
         title="Sample Story"
         displayDate="July 13"
-        onEditCancel={jest.fn()}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
       />
@@ -58,7 +58,7 @@ describe('CardTitle', () => {
         title="Sample Story"
         displayDate="Modified July 13"
         status={STORY_STATUS.DRAFT}
-        onEditCancel={jest.fn()}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
       />
