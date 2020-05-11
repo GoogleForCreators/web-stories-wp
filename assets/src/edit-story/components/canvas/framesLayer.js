@@ -80,6 +80,7 @@ function FramesLayer() {
   return (
     <Layer
       ref={ref}
+      data-testid="FramesLayer"
       pointerEvents="none"
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard

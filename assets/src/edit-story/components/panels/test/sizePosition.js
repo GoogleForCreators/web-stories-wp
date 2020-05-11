@@ -67,6 +67,7 @@ describe('Panels/SizePosition', () => {
       return {
         isMedia: 'image' === type,
         canFlip: 'image' === type,
+        canFill: true,
       };
     });
   });
@@ -143,6 +144,12 @@ describe('Panels/SizePosition', () => {
         defaultFlip,
         true
       );
+    });
+
+    it('should update fill', () => {
+      const { getByTitle, pushUpdate } = renderSizePosition([defaultImage]);
+      fireEvent.click(getByTitle('Fill'));
+      expect(pushUpdate).toHaveBeenCalledWith({ isFill: true }, true);
     });
 
     it('should update width with lock ratio', () => {

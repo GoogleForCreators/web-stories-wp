@@ -29,7 +29,9 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import PopoverPanel from '..';
+import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
+import PopoverPanel from '../';
 
 export default {
   title: 'Dashboard/Components/PopoverPanel',
@@ -75,9 +77,43 @@ export const _default = () => {
     <PopoverPanel
       isOpen={boolean('isOpen', true)}
       title={text('title', 'Category')}
-      onClose={action('Close button selected')}
       items={statefulDemoData}
-      onSelect={(event, selectedValue) => {
+      onClose={(e) => action(`close button clicked`)(e)}
+      onSelect={(_, selectedValue) => {
+        action(`selected pill ${selectedValue}`)(selectedValue);
+        updateDemoDataState(selectedValue);
+      }}
+    />
+  );
+};
+
+export const _colorSwatchPanel = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
+  return (
+    <PopoverPanel
+      isOpen={boolean('isOpen', true)}
+      title={text('title', 'Category')}
+      items={statefulDemoData}
+      labelType={PILL_LABEL_TYPES.SWATCH}
+      onClose={(e) => action(`close button clicked`)(e)}
+      onSelect={(_, selectedValue) => {
         action(`selected pill ${selectedValue}`)(selectedValue);
         updateDemoDataState(selectedValue);
       }}

@@ -42,7 +42,7 @@ export {
   PageContent,
   NavMenuButton,
 } from './pageStructure';
-export { FloatingTab, Pill } from './pill';
+export { default as Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
@@ -60,6 +60,10 @@ export {
   TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
+  TableAuthorHeaderCell,
+  TableDateHeaderCell,
+  TableStatusHeaderCell,
+  TableStatusCell,
 } from './table';
 export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';

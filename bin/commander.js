@@ -25,6 +25,9 @@ const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
 const STABLE_TAG_REGEX = /Stable tag:\s*(.+)/;
 
+const ASSETS_URL_CDN = 'https://google.github.io/web-stories-wp/plugin-assets/';
+const ASSETS_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_ASSETS_URL',\s*([^)]*?)\s*\);/;
+
 const PLUGIN_DIR = process.cwd();
 const README_FILE = PLUGIN_DIR + '/readme.txt';
 const PLUGIN_FILE = PLUGIN_DIR + '/web-stories.php';
@@ -47,10 +50,10 @@ const DISTIGNORE_FILE = PLUGIN_DIR + '/.distignore';
  */
 function updateVersionNumbers(version = undefined, isPrerelease = false) {
   // Get the current commit hash. Used for pre-releases.
-  const currentCommitHash = execSync('git rev-parse HEAD')
-    .toString()
-    .trim()
-    .slice(0, 7);
+  // GITHUB_SHA is available during the GitHub Actions workflow.
+  const currentCommitHash = process.env.GITHUB_SHA
+    ? process.env.GITHUB_SHA.slice(0, 7)
+    : execSync('git rev-parse --short=7 HEAD').toString().trim();
 
   let pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
   const currentVersion = pluginFileContent.match(VERSION_REGEX)[1].trim();
@@ -94,8 +97,25 @@ function updateVersionNumbers(version = undefined, isPrerelease = false) {
   }
 }
 
-function buildPlugin(isPrerelease) {
-  updateVersionNumbers(isPrerelease);
+function updateAssetsURL() {
+  let pluginFileContent = readFileSync(PLUGIN_FILE, 'utf8');
+  const versionConstant = pluginFileContent.match(ASSETS_URL_CONSTANT_REGEX);
+
+  writeFileSync(
+    PLUGIN_FILE,
+    pluginFileContent.replace(
+      versionConstant[0],
+      `define( 'WEBSTORIES_ASSETS_URL', '${ASSETS_URL_CDN}' );`
+    )
+  );
+}
+
+function buildPlugin(version, isPrerelease, cdn) {
+  updateVersionNumbers(version, isPrerelease);
+
+  if (cdn) {
+    updateAssetsURL();
+  }
 }
 
 /**
@@ -189,7 +209,7 @@ function generateZipFile(filename) {
   });
 }
 
-function bundlePlugin(target, copy, composer) {
+function bundlePlugin(target, copy, composer, skipDelete) {
   createBuildDir();
 
   if (!composer) {
@@ -211,7 +231,10 @@ function bundlePlugin(target, copy, composer) {
     return;
   }
 
-  deleteExistingZipFiles();
+  if (!skipDelete) {
+    deleteExistingZipFiles();
+  }
+
   generateZipFile(target);
 }
 
@@ -220,9 +243,10 @@ program
   .alias('build')
   .arguments('[version]')
   .option('-p, --prerelease', 'Whether this is a pre-release')
+  .option('--cdn', 'Point assets URL to CDN')
   .description('Build Web Stories plugin')
-  .action(async (version, { prerelease }) => {
-    await buildPlugin(version, prerelease);
+  .action(async (version, { prerelease, cdn }) => {
+    await buildPlugin(version, prerelease, cdn);
 
     console.log('Plugin successfully built!');
   });
@@ -236,9 +260,10 @@ program
     'Only copy files to build/ folder without creating a ZIP file'
   )
   .option('--composer', 'Create Composer-ready ZIP file without PHP autoloader')
+  .option('--skip-delete', 'Do not delete existing ZIP file')
   .description('Bundle Web Stories plugin as ZIP file')
-  .action(async (filename, { copy, composer }) => {
-    await bundlePlugin(filename, copy, composer);
+  .action(async (filename, { copy, composer, skipDelete }) => {
+    await bundlePlugin(filename, copy, composer, skipDelete);
 
     console.log('Plugin successfully bundled!');
   });
