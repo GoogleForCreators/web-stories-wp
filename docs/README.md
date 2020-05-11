@@ -9,6 +9,7 @@
 
 * [Architecture](./architecture.md)
 * [Browser and device support](./browser-support.md)
+* [Code Reviews](./code-reviews.md)
 * [Code Style](./code-style.md)
 * [Environment Variables](./environment-variables.md)
 * [Migrations](./migrations.md)
