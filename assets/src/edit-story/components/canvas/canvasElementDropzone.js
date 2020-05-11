@@ -49,7 +49,13 @@ function CanvasElementDropzone({ children }) {
 
   const onDropHandler = useCallback(
     (e) => {
-      if (isDragType(e, 'resource/media') && !activeDropTargetId) {
+      // Handles onDrop for shapes.
+      if (isDragType(e, 'shape') && !activeDropTargetId) {
+        const props = JSON.parse(e.dataTransfer.getData('shape'));
+        insertElement('shape', props);
+      }
+      // Handles onDrop for media.
+      else if (isDragType(e, 'resource/media') && !activeDropTargetId) {
         const {
           resource,
           offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
@@ -63,10 +69,9 @@ function CanvasElementDropzone({ children }) {
           width: editorToDataX(offsetWidth),
           height: editorToDataY(offsetHeight),
         });
-
-        e.stopPropagation();
-        e.preventDefault();
       }
+      e.stopPropagation();
+      e.preventDefault();
     },
     [
       activeDropTargetId,
