@@ -149,7 +149,10 @@ function VideoFrame({ element, box }) {
     : __('Click to play', 'web-stories');
 
   const smallestDimension = Math.min(box.width, box.height);
-  const buttonSize = Math.max(Math.ceil(smallestDimension * 0.2), PLAY_BUTTON_MIN_SIZE);
+  const buttonSize = Math.max(
+    Math.ceil(smallestDimension * 0.2),
+    PLAY_BUTTON_MIN_SIZE
+  );
 
   return (
     <Wrapper
