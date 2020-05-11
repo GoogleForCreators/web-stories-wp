@@ -15,14 +15,26 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
 
-describe('Example Spec', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
+import { PillLabel, ActiveChoiceIcon } from './components';
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-  });
-});
+export default function DefaultPill({ children, isSelected = false }) {
+  return (
+    <PillLabel isSelected={isSelected} data-testid="default-pill-label">
+      {children}
+      {isSelected && <ActiveChoiceIcon />}
+    </PillLabel>
+  );
+}
+
+DefaultPill.propTypes = {
+  children: PropTypes.node.isRequired,
+  isSelected: PropTypes.bool,
+};

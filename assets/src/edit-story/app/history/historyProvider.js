@@ -30,8 +30,8 @@ import Context from './context';
 
 function HistoryProvider({ children, size }) {
   const {
-    replayState,
-    appendToHistory,
+    requestedState,
+    stateToHistory,
     clearHistory,
     offset,
     historyLength,
@@ -62,13 +62,13 @@ function HistoryProvider({ children, size }) {
 
   const state = {
     state: {
-      replayState,
       hasNewChanges,
+      requestedState,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
     },
     actions: {
-      appendToHistory,
+      stateToHistory,
       clearHistory,
       resetNewChanges,
       undo,

@@ -20,8 +20,8 @@ import styled from 'styled-components';
 
 export const ColorDot = styled.div`
   display: inline-block;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   margin: 0 4px;
   box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.25);
   border-radius: 13px;
