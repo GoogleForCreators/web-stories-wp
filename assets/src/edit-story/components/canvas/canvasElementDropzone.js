@@ -52,7 +52,12 @@ function CanvasElementDropzone({ children }) {
       // Handles onDrop for shapes.
       if (isDragType(e, 'shape') && !activeDropTargetId) {
         const props = JSON.parse(e.dataTransfer.getData('shape'));
-        insertElement('shape', props);
+        const { x, y } = pageContainer?.getBoundingClientRect();
+        insertElement('shape', {
+          ...props,
+          x: editorToDataX(e.clientX - x),
+          y: editorToDataY(e.clientY - y),
+        });
       }
       // Handles onDrop for media.
       else if (isDragType(e, 'resource/media') && !activeDropTargetId) {

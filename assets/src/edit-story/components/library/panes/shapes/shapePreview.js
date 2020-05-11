@@ -50,7 +50,7 @@ function ShapePreview(mask) {
   } = useLibrary();
 
   const {
-    actions: { handleDrag, handleDrop, setDraggingResource },
+    actions: { setDraggingResource },
   } = useDropTargets();
 
   // Creating a ref to the Path so that it can be used as a drag icon.
