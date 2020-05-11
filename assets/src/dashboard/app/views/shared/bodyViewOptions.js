@@ -39,7 +39,7 @@ const DisplayFormatContainer = styled.div`
 `;
 
 const StorySortDropdownContainer = styled.div`
-  margin: auto 0 auto auto;
+  margin: auto 8px;
   align-self: flex-end;
 `;
 
