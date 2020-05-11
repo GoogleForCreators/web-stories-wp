@@ -54,8 +54,6 @@ const StoryGrid = styled(CardGrid)`
     width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
   }
 `;
-const getDisplayDateVerb = (status) =>
-  status === STORY_STATUS.PUBLISHED ? 'Published' : 'Modified';
 
 const StoryGridView = ({
   stories,
@@ -141,19 +139,26 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                author={users[story.author].name}
                 status={story.status}
-                // this is fine according to the i18n package: https://developer.wordpress.com/themes/i18n/
-                // eslint-disable-next-line @wordpress/i18n-no-variables
-                displayDate={`${__(
-                  getDisplayDateVerb(story.status),
-                  'web-stories'
-                )} ${getFormattedDisplayDate(story.modified)}`}
+                author={users[story.author].name}
+                displayDate={
+                  story.status === STORY_STATUS.PUBLISHED
+                    ? sprintf(
+                        /* translators: %s: last modified date */
+                        __('Published %s', 'web-stories'),
+                        getFormattedDisplayDate(story.modified)
+                      )
+                    : sprintf(
+                        /* translators: %s: last modified date */
+                        __('Modified %s', 'web-stories'),
+                        getFormattedDisplayDate(story.modified)
+                      )
+                }
+                editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }
                 onEditCancel={() => setTitleRenameId(-1)}
-                editMode={titleRenameId === story.id}
               />
               <CardItemMenu
                 onMoreButtonSelected={setContextMenuId}
