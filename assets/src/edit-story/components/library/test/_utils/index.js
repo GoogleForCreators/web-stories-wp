@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { FlagsProvider } from 'flagged';
 import { act } from '@testing-library/react';
 
 /**
@@ -56,17 +55,15 @@ export async function arrange({ mediaResponse = [] }) {
   };
 
   const accessors = renderWithTheme(
-    <FlagsProvider features={{}}>
-      <ConfigProvider config={config}>
-        <APIContext.Provider value={apiContextValue}>
-          <FontProvider>
-            <MediaProvider>
-              <Library />
-            </MediaProvider>
-          </FontProvider>
-        </APIContext.Provider>
-      </ConfigProvider>
-    </FlagsProvider>
+    <ConfigProvider config={config}>
+      <APIContext.Provider value={apiContextValue}>
+        <FontProvider>
+          <MediaProvider>
+            <Library />
+          </MediaProvider>
+        </FontProvider>
+      </APIContext.Provider>
+    </ConfigProvider>
   );
 
   // Another option without allPromises:
