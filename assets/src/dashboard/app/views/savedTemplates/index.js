@@ -27,26 +27,26 @@ import { useRef } from 'react';
 /**
  * Internal dependencies
  */
-import getAllTemplates from '../../../templates';
-import {
-  BodyViewOptions,
-  BodyWrapper,
-  PageHeading,
-  StoryGridView,
-} from '../shared';
+import { TransformProvider } from '../../../../edit-story/components/transform';
+import { UnitsProvider } from '../../../../edit-story/units';
+import { InfiniteScroller, Layout } from '../../../components';
 import useStoryView, {
   PagePropTypes,
   SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
 } from '../../../utils/useStoryView';
-import { InfiniteScroller, Layout } from '../../../components';
+import getAllTemplates from '../../../templates';
 import { StoriesPropType } from '../../../types';
-import { UnitsProvider } from '../../../../edit-story/units';
 import { reshapeTemplateObject } from '../../api/useTemplateApi';
 import { useConfig } from '../../config';
-import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../font/fontProvider';
+import {
+  BodyViewOptions,
+  BodyWrapper,
+  PageHeading,
+  StoryGridView,
+} from '../shared';
 
 function Header({ search, stories, view, sort }) {
   const listBarLabel = sprintf(
