@@ -51,6 +51,7 @@ describe('Popup', () => {
 
       const popup = getByText(`Hello ${placement}!`);
       expect(popup).toBeDefined();
+      // TODO(wassgha): Better test on the actual placement
     });
   });
 
