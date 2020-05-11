@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import Popup, { Placement } from '../index';
+import Popup from '../index';
 import { renderWithTheme } from '../../../testUtils';
 
 describe('Popup', () => {
@@ -36,24 +36,9 @@ describe('Popup', () => {
     expect(popup).toBeDefined();
   });
 
-  it('should render popup in different placements', () => {
-    const anchorEl = document.createElement('div');
-    const anchor = {
-      current: anchorEl,
-    };
-    document.body.append(anchor.current);
-    Object.values(Placement).map((placement) => {
-      const { getByText } = renderWithTheme(
-        <Popup anchor={anchor} isOpen={true} placement={placement}>
-          {`Hello ${placement}!`}
-        </Popup>
-      );
+  // TODO(wassgha): Tests for different placements
 
-      const popup = getByText(`Hello ${placement}!`);
-      expect(popup).toBeDefined();
-      // TODO(wassgha): Better test on the actual placement
-    });
-  });
+  // TODO(wassgha): Test for default placement
 
   it('should not render popup when isOpen set to false', () => {
     const anchor = {
