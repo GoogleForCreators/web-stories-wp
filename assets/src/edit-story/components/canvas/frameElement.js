@@ -122,6 +122,7 @@ function FrameElement({ element }) {
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
+        data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>
           {Frame ? (

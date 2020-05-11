@@ -44,17 +44,53 @@ export const TableHeaderCell = styled.th`
 
 export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    display: none;
+  }
+`;
+
+export const TableDateHeaderCell = styled(TableHeaderCell)`
+  min-width: 160px;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    min-width: 150px;
+  }
+`;
+
+export const TableStatusHeaderCell = styled(TableHeaderCell)`
+  display: table-cell;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    display: none;
+  }
+`;
+
+export const TableAuthorHeaderCell = styled(TableHeaderCell)`
+  min-width: 110px;
 `;
 
 export const TableTitleHeaderCell = styled(TableHeaderCell)`
   padding-left: 0;
   width: 30%;
-  min-width: 220px;
+  min-width: 135px;
+
+  span {
+    display: none;
+    margin-right: 5px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    padding-left: ${({ theme }) => theme.table.headerCellPadding}px;
+    span {
+      display: inline;
+    }
+  }
 `;
 
 export const TableContentHeaderCell = styled(TableHeaderCell)`
   width: 17.5%;
-  min-width: 160px;
+  min-width: 150px;
 `;
 
 export const TableRow = styled.tr``;
@@ -62,24 +98,38 @@ export const TableRow = styled.tr``;
 export const TableCell = styled.td`
   padding: ${({ theme }) => theme.table.cellPadding}px;
   font-weight: ${({ theme }) => theme.fonts.table.weight};
+  font-size: ${({ theme }) => theme.fonts.table.size}px;
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
   line-height: ${({ theme }) => theme.table.headerContentSize}px;
 `;
 
+export const TableStatusCell = styled(TableCell)`
+  display: table-cell;
+  color: ${({ theme }) => theme.colors.gray400};
+  font-weight: 500;
+
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    display: none;
+  }
+`;
+
 export const TableTitleCell = styled(TableCell)`
   width: 30%;
-  min-width: 220px;
   word-wrap: break-word;
 `;
 
 export const TableContentCell = styled(TableCell)`
   width: 17.5%;
-  min-width: 160px;
+  min-width: 150px;
   word-wrap: break-word;
 `;
 
 export const TablePreviewCell = styled(TableCell)`
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    display: none;
+  }
 `;

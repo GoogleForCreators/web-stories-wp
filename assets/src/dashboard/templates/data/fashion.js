@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 15,
+    version: 17,
     pages: [
       {
         elements: [
@@ -79,7 +79,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page1_hero.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page1_hero.jpg`,
               width: 220,
               height: 297,
               posterId: 0,
@@ -87,7 +87,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page1_hero',
               alt: 'fashion_page1_hero',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -105,10 +105,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 99,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -116,23 +113,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.95,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'FASHION\nON THE GO',
             x: -190,
             y: 251,
             width: 610,
@@ -142,6 +129,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'a32c17e0-a46b-4821-bbdb-8dc064ac097d',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">FASHION\nON THE GO</span></span>',
           },
           {
             type: 'image',
@@ -159,7 +148,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page1_logotype.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page1_logotype.png`,
               width: 46,
               height: 12,
               posterId: 0,
@@ -167,7 +156,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page1_logotype',
               alt: 'fashion_page1_logotype',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 34,
             y: 31,
@@ -230,10 +219,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -241,24 +227,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              "“IF YOU CAN'T BE BETTER THAN YOUR COMPETITION, JUST DRESS BETTER”",
             x: 21,
             y: 11,
             width: 347,
@@ -268,6 +243,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: 'd773925c-2f95-44c0-9b0e-0743d45476f2',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(0, 0, 0, 1)">“IF YOU CAN\'T BE BETTER THAN YOUR COMPETITION, JUST DRESS BETTER”</span></span>',
           },
           {
             font: {
@@ -284,10 +261,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -295,23 +269,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 0,
-                g: 0,
-                b: 0,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '— ANNA\nWINTOUR',
             width: 347,
             height: 91,
             scale: 100,
@@ -322,6 +286,8 @@ export default function (imageBaseUrl) {
             id: '61d23551-31e3-4aad-ac15-b8fc5e4be2ec',
             x: 22,
             y: 543,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(0, 0, 0, 1)">— ANNA\nWINTOUR</span></span>',
           },
           {
             opacity: 100,
@@ -338,7 +304,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page2_pinwheel_full.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page2_pinwheel_full.png`,
               width: 220,
               height: 220,
               posterId: 0,
@@ -346,7 +312,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page2_pinwheel_full',
               alt: 'fashion_page2_pinwheel_full',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 220,
             y: 281,
@@ -376,7 +342,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page2_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page2_arrow.png`,
               width: 31,
               height: 24,
               posterId: 0,
@@ -384,7 +350,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page2_arrow',
               alt: 'fashion_page2_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 333,
             y: 399,
@@ -465,7 +431,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page3_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page3_bg.jpg`,
               width: 220,
               height: 261,
               posterId: 0,
@@ -473,7 +439,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page3_bg',
               alt: 'fashion_page3_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -537,10 +503,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 173,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -548,23 +511,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.93,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'S/S PREV\nIEW',
             x: 52,
             y: 1,
             width: 493,
@@ -574,6 +527,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '792955f1-699b-499a-bf65-d88b60d613af',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 236, 227, 1)">S/S PREV\nIEW</span></span>',
           },
           {
             font: {
@@ -590,10 +545,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -601,23 +553,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
-            letterSpacing: 0.02,
             lineHeight: 1.22,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'PREVIEW THE LATEST LOOKS OF THE SEASON',
             x: 61,
             y: 509,
             width: 240,
@@ -627,6 +569,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '9bd1600f-5d9d-4beb-bdfb-817b118a8852',
+            content:
+              '<span style="letter-spacing: 0.0002em"><span style="color: rgba(255, 236, 227, 1)">PREVIEW THE LATEST LOOKS OF THE SEASON</span></span>',
           },
           {
             opacity: 100,
@@ -637,7 +581,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -659,9 +602,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 700,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -669,23 +610,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             x: 140,
             y: 617,
             width: 160,
@@ -696,6 +627,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'd27e267e-5ee5-4b60-8c79-a9e3afa92d52',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">See Full Story</span></span>',
           },
           {
             opacity: 100,
@@ -741,7 +674,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page3_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page3_arrow.png`,
               width: 7,
               height: 3,
               posterId: 0,
@@ -749,7 +682,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page3_arrow',
               alt: 'fashion_page3_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 215.5,
             y: 591.5,
@@ -808,7 +741,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -830,9 +762,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -840,23 +770,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LOUIS\nVUITTON',
             x: 24,
             y: 32,
             width: 213,
@@ -867,6 +787,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '64b41c08-0817-4b98-aa55-0aaa9ea205e8',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">LOUIS\nVUITTON</span></span>',
           },
           {
             opacity: 100,
@@ -877,7 +799,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -893,9 +814,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -903,23 +822,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: 0.02,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'A RICH HISTORY',
             x: 24,
             y: 134,
             width: 174,
@@ -930,6 +839,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'a2a90d9e-2bce-44d3-95cd-77f33c55e144',
+            content:
+              '<span style="letter-spacing: 0.0002em"><span style="color: rgba(33, 33, 33, 1)">A RICH HISTORY</span></span>',
           },
           {
             opacity: 100,
@@ -940,7 +851,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -962,9 +872,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -972,23 +880,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LV MONOGRAM CANVAS',
             x: 130,
             y: 243,
             width: 281,
@@ -999,6 +897,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '8c45242f-9941-4fdc-b5de-3339a36585bf',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">LV MONOGRAM CANVAS</span></span>',
           },
           {
             opacity: 100,
@@ -1009,15 +909,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 120,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1025,23 +922,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1896',
             x: 181,
             y: 112,
             width: 237,
@@ -1052,6 +939,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'acb2ccae-1faf-4192-bf28-19614324ed25',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1896</span></span>',
           },
           {
             opacity: 100,
@@ -1062,15 +951,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 60,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1078,23 +964,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1901',
             x: 25,
             y: 261,
             width: 160,
@@ -1105,6 +981,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1901</span></span>',
           },
           {
             opacity: 100,
@@ -1115,7 +993,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -1137,9 +1014,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1147,23 +1022,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE STEAMER BAG',
             x: 28,
             y: 328,
             width: 237,
@@ -1174,6 +1039,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '2c548d81-abe2-4f74-9292-9910382fb293',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">THE STEAMER BAG</span></span>',
           },
           {
             opacity: 100,
@@ -1184,15 +1051,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 60,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1200,23 +1064,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1930',
             width: 160,
             height: 77,
             scale: 100,
@@ -1228,6 +1082,8 @@ export default function (imageBaseUrl) {
             id: '9156bf8e-3cdd-41fb-99c2-f6206f95ec1b',
             x: 251,
             y: 335,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1930</span></span>',
           },
           {
             opacity: 100,
@@ -1238,7 +1094,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -1260,9 +1115,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1270,23 +1123,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE KEEPALL BAG',
             width: 237,
             height: 30,
             scale: 100,
@@ -1298,6 +1141,8 @@ export default function (imageBaseUrl) {
             id: '78ef1efb-0ca7-4067-9a38-a646987fd096',
             x: 174,
             y: 402,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">THE KEEPALL BAG</span></span>',
           },
           {
             opacity: 100,
@@ -1308,7 +1153,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -1330,9 +1174,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1340,23 +1182,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE PAPILLION BAG',
             width: 281,
             height: 30,
             scale: 100,
@@ -1368,6 +1200,8 @@ export default function (imageBaseUrl) {
             id: 'f5593520-3bb3-49d6-bfbd-c9fe2af7ee51',
             x: 25,
             y: 536,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">THE PAPILLION BAG</span></span>',
           },
           {
             opacity: 100,
@@ -1378,15 +1212,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 120,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1394,23 +1225,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1966',
             width: 237,
             height: 156,
             scale: 100,
@@ -1422,6 +1243,8 @@ export default function (imageBaseUrl) {
             id: 'a10cc4c5-ee6f-43dd-a391-ce72a14a43b7',
             x: 25,
             y: 405,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1966</span></span>',
           },
           {
             opacity: 100,
@@ -1432,15 +1255,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 60,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1448,23 +1268,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1985',
             width: 160,
             height: 77,
             scale: 100,
@@ -1476,6 +1286,8 @@ export default function (imageBaseUrl) {
             id: '8c739a98-8a17-45f2-988a-935fc4e5ec33',
             x: 251,
             y: 534,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1985</span></span>',
           },
           {
             opacity: 100,
@@ -1486,7 +1298,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -1508,9 +1319,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1518,23 +1327,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'EPI LEATHER',
             width: 237,
             height: 30,
             scale: 100,
@@ -1546,6 +1345,8 @@ export default function (imageBaseUrl) {
             id: 'f17ac170-7428-4788-9f02-0a8704c1b8bf',
             x: 174,
             y: 601,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">EPI LEATHER</span></span>',
           },
         ],
         backgroundElementId: '178de0c9-6a64-450e-bc47-5f38e6884665',
@@ -1591,15 +1392,12 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 120,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1607,23 +1405,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'CARDIN —',
             x: -257,
             y: 319,
             width: 624,
@@ -1634,6 +1422,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'bad4432f-b82b-4579-bb2d-d9858f7feec2',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 236, 227, 1)">CARDIN —</span></span>',
           },
           {
             opacity: 100,
@@ -1644,15 +1434,12 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 120,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1660,24 +1447,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-                a: 0.35,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE HANDBAG',
             width: 844,
             height: 156,
             scale: 100,
@@ -1689,6 +1465,8 @@ export default function (imageBaseUrl) {
             id: '875e2b60-1738-425a-8d7d-95f648bb3af6',
             x: -367,
             y: -376,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 236, 227, 0.35)">THE HANDBAG</span></span>',
           },
           {
             opacity: 100,
@@ -1705,7 +1483,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page5_handbag.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page5_handbag.png`,
               width: 220,
               height: 194,
               posterId: 0,
@@ -1713,7 +1491,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page5_handbag',
               alt: 'fashion_page5_handbag',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 14,
             y: 114,
@@ -1766,15 +1544,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 22,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1782,23 +1557,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: 0.02,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'CARDIN',
             x: 162,
             y: 505,
             width: 160,
@@ -1809,6 +1574,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'f19846b4-b351-4607-a8f9-c7e69ff7a6f3',
+            content:
+              '<span style="letter-spacing: 0.0002em"><span style="color: rgba(255, 108, 74, 1)">CARDIN</span></span>',
           },
           {
             opacity: 100,
@@ -1819,7 +1586,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -1835,9 +1601,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 22,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1845,23 +1609,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
-            letterSpacing: 0.02,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE HANDBAG\n$450',
             width: 160,
             height: 54,
             scale: 100,
@@ -1873,6 +1627,8 @@ export default function (imageBaseUrl) {
             id: '61b42950-25ca-46cf-83bf-1e04cdc0cd94',
             x: 162,
             y: 532,
+            content:
+              '<span style="letter-spacing: 0.0002em"><span style="color: rgba(255, 236, 227, 1)">THE HANDBAG\n$450</span></span>',
           },
           {
             opacity: 100,
@@ -1883,7 +1639,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -1899,9 +1654,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1909,23 +1662,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
-            letterSpacing: 0.08,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LEARN MORE',
             width: 160,
             height: 17,
             scale: 100,
@@ -1937,6 +1680,8 @@ export default function (imageBaseUrl) {
             id: '67777589-1517-4a00-9e95-11e262bf02dd',
             x: 162,
             y: 625,
+            content:
+              '<span style="letter-spacing: 0.0008em"><span style="color: rgba(255, 236, 227, 1)">LEARN MORE</span></span>',
           },
           {
             opacity: 100,
@@ -1953,7 +1698,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page5_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page5_arrow.png`,
               width: 8,
               height: 4,
               posterId: 0,
@@ -1961,7 +1706,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page5_arrow',
               alt: 'fashion_page5_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 272,
             y: 628.5,
@@ -2020,15 +1765,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2036,23 +1778,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TOP 5\nCOLLECTIONS\nTHIS SEASON',
             x: 20,
             y: 10,
             width: 344,
@@ -2063,6 +1795,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '735394cc-0da6-479c-951d-14579f0766ef',
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">TOP 5\nCOLLECTIONS\nTHIS SEASON</span></span>',
           },
           {
             opacity: 100,
@@ -2073,7 +1807,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2095,9 +1828,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2105,23 +1836,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'RODARTE',
             width: 229,
             height: 46,
             scale: 100,
@@ -2133,6 +1854,8 @@ export default function (imageBaseUrl) {
             id: 'ecfb31af-00a8-4533-b86a-e268e7b2a573',
             x: 52,
             y: 235,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">RODARTE</span></span>',
           },
           {
             opacity: 100,
@@ -2143,7 +1866,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2165,9 +1887,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2175,23 +1895,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'CHANEL',
             width: 229,
             height: 46,
             scale: 100,
@@ -2203,6 +1913,8 @@ export default function (imageBaseUrl) {
             id: 'f40e6fac-12c9-4259-a5af-8de9d1fd1c64',
             x: 160,
             y: 314,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">CHANEL</span></span>',
           },
           {
             opacity: 100,
@@ -2213,7 +1925,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2235,9 +1946,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2245,23 +1954,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'RICK OWENS',
             width: 275,
             height: 46,
             scale: 100,
@@ -2273,6 +1972,8 @@ export default function (imageBaseUrl) {
             id: 'dc565020-6358-44d9-9aac-a8eb90e76415',
             x: 30,
             y: 398,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">RICK OWENS</span></span>',
           },
           {
             opacity: 100,
@@ -2283,7 +1984,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2305,9 +2005,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2315,23 +2013,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'PRADA',
             width: 159,
             height: 46,
             scale: 100,
@@ -2343,6 +2031,8 @@ export default function (imageBaseUrl) {
             id: 'd6fea8bd-8f0a-414b-a845-722d436a6d43',
             x: 134,
             y: 482,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">PRADA</span></span>',
           },
           {
             opacity: 100,
@@ -2353,7 +2043,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2375,9 +2064,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2385,23 +2072,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'BALENCIAGA',
             width: 300,
             height: 46,
             scale: 100,
@@ -2413,6 +2090,8 @@ export default function (imageBaseUrl) {
             id: '7726e175-d97f-42ed-bb2e-a581f4135332',
             x: 88,
             y: 561,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">BALENCIAGA</span></span>',
           },
           {
             opacity: 100,
@@ -2429,7 +2108,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2437,7 +2116,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page6_pinwheel-outline',
               alt: 'fashion_page6_pinwheel-outline',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 238.5,
             y: 207,
@@ -2461,15 +2140,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2477,23 +2153,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1',
             width: 43,
             height: 32,
             scale: 100,
@@ -2505,6 +2171,8 @@ export default function (imageBaseUrl) {
             id: '3873fcaf-3c89-43dd-ba61-47bfed747b3e',
             x: 244.5,
             y: 215,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1</span></span>',
           },
           {
             opacity: 100,
@@ -2521,7 +2189,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2529,7 +2197,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page6_pinwheel-outline',
               alt: 'fashion_page6_pinwheel-outline',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 55,
             height: 55,
@@ -2554,15 +2222,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2570,23 +2235,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '2',
             width: 25,
             height: 32,
             scale: 100,
@@ -2598,6 +2253,8 @@ export default function (imageBaseUrl) {
             id: 'e614554a-4201-4bdd-9ced-c5fe97c758c8',
             x: 140.5,
             y: 297.5,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">2</span></span>',
           },
           {
             opacity: 100,
@@ -2614,7 +2271,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2622,7 +2279,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page6_pinwheel-outline',
               alt: 'fashion_page6_pinwheel-outline',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 55,
             height: 55,
@@ -2647,15 +2304,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2663,23 +2317,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '3',
             width: 41,
             height: 32,
             scale: 100,
@@ -2691,6 +2335,8 @@ export default function (imageBaseUrl) {
             id: '53f8e685-93b5-4971-bb76-03d52602eb47',
             x: 291,
             y: 378,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">3</span></span>',
           },
           {
             opacity: 100,
@@ -2707,7 +2353,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2715,7 +2361,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page6_pinwheel-outline',
               alt: 'fashion_page6_pinwheel-outline',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 55,
             height: 55,
@@ -2740,15 +2386,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2756,23 +2399,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '4',
             width: 41,
             height: 32,
             scale: 100,
@@ -2784,6 +2417,8 @@ export default function (imageBaseUrl) {
             id: 'c8f479d6-429d-4ea4-93e8-ce8dfb37a5d5',
             x: 107.875,
             y: 465,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">4</span></span>',
           },
           {
             opacity: 100,
@@ -2800,7 +2435,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page6_pinwheel-outline.png`,
               width: 28,
               height: 28,
               posterId: 0,
@@ -2808,7 +2443,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page6_pinwheel-outline',
               alt: 'fashion_page6_pinwheel-outline',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 55,
             height: 55,
@@ -2833,15 +2468,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2849,23 +2481,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '5',
             width: 41,
             height: 32,
             scale: 100,
@@ -2877,6 +2499,8 @@ export default function (imageBaseUrl) {
             id: '175d2727-d683-4601-8405-f0a2ee56a654',
             x: 343,
             y: 544,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">5</span></span>',
           },
         ],
         backgroundElementId: 'dc3c80d7-8757-4231-826a-0d0c34f6e15e',
@@ -2944,7 +2568,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_hero.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page7_hero.jpg`,
               width: 220,
               height: 274,
               posterId: 0,
@@ -2952,7 +2576,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page7_hero',
               alt: 'fashion_page7_hero',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -2964,7 +2588,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -2986,9 +2609,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2996,23 +2617,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'CARDIN',
             width: 229,
             height: 46,
             scale: 100,
@@ -3024,6 +2635,8 @@ export default function (imageBaseUrl) {
             id: '9ce78e9e-7568-45de-bef3-1f9438a11568',
             x: 22,
             y: 417,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">CARDIN</span></span>',
           },
           {
             opacity: 100,
@@ -3040,7 +2653,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_pinwheel.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page7_pinwheel.png`,
               width: 123,
               height: 123,
               posterId: 0,
@@ -3048,7 +2661,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page7_pinwheel',
               alt: 'fashion_page7_pinwheel',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 28.75,
             y: 317,
@@ -3072,15 +2685,12 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3088,23 +2698,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1',
             width: 91,
             height: 72,
             scale: 100,
@@ -3116,6 +2716,8 @@ export default function (imageBaseUrl) {
             id: '8c86903b-0df0-4c1e-a75a-23f1e79522b3',
             x: 44.75,
             y: 334.5,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">1</span></span>',
           },
           {
             opacity: 100,
@@ -3126,7 +2728,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -3142,9 +2743,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3152,24 +2751,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus. Proin malesuada maximus felis, non lacinia est porttitor ante eget scelerisque.',
             x: 28,
             y: 484,
             width: 399,
@@ -3180,6 +2768,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '43b205d1-376b-4eaf-b493-e55d70f8703e',
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus. Proin malesuada maximus felis, non lacinia est porttitor ante eget scelerisque.</span>',
           },
           {
             opacity: 100,
@@ -3190,7 +2780,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -3206,9 +2795,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3216,23 +2803,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: 0.08,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LEARN MORE',
             width: 160,
             height: 17,
             scale: 100,
@@ -3244,6 +2821,8 @@ export default function (imageBaseUrl) {
             id: '46ec18b4-8061-467f-88a0-fb2abd494061',
             x: 29,
             y: 622,
+            content:
+              '<span style="letter-spacing: 0.0008em"><span style="color: rgba(33, 33, 33, 1)">LEARN MORE</span></span>',
           },
           {
             opacity: 100,
@@ -3260,7 +2839,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page7_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page7_arrow.png`,
               width: 8,
               height: 4,
               posterId: 0,
@@ -3268,7 +2847,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page7_arrow',
               alt: 'fashion_page7_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 137,
             y: 627,
@@ -3320,7 +2899,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page8_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page8_bg.jpg`,
               width: 220,
               height: 291,
               posterId: 0,
@@ -3328,7 +2907,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page8_bg',
               alt: 'fashion_page8_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             scale: 120,
             focalX: 54.19913419913419,
@@ -3343,15 +2922,12 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               service: 'fonts.google.com',
               family: 'Playfair Display',
               fallbacks: ['serif'],
             },
-            fontWeight: 400,
             fontSize: 120,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3359,23 +2935,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'GET THE LOOK',
             width: 897,
             height: 156,
             scale: 100,
@@ -3387,6 +2953,8 @@ export default function (imageBaseUrl) {
             id: 'faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5',
             x: -391,
             y: 175,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">GET THE LOOK</span></span>',
           },
           {
             opacity: 100,
@@ -3665,7 +3233,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -3687,9 +3254,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3697,23 +3262,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'CARDIN',
             x: 104,
             y: 481,
             width: 92,
@@ -3724,6 +3279,7 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'b141ca71-b4f8-474c-93d0-b2a0b439c83e',
+            content: '<span style="color: rgba(33, 33, 33, 1)">CARDIN</span>',
           },
           {
             opacity: 100,
@@ -3734,7 +3290,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -3750,9 +3305,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3760,23 +3313,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'The Everyday Boots',
             width: 136,
             height: 17,
             scale: 100,
@@ -3788,6 +3331,8 @@ export default function (imageBaseUrl) {
             id: '4c1eea44-cac5-45ba-bdc2-c6959c9edd76',
             x: 104,
             y: 501,
+            content:
+              '<span style="color: rgba(33, 33, 33, 1)">The Everyday Boots</span>',
           },
           {
             opacity: 100,
@@ -3798,7 +3343,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'DM Sans',
               service: 'fonts.google.com',
@@ -3814,9 +3358,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3824,23 +3366,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '$575',
             width: 136,
             height: 17,
             scale: 100,
@@ -3852,6 +3384,7 @@ export default function (imageBaseUrl) {
             id: 'bed8c7dc-aa6d-4fb9-b87d-b7bcb5911f93',
             x: 104,
             y: 531,
+            content: '<span style="color: rgba(33, 33, 33, 1)">$575</span>',
           },
           {
             opacity: 100,
@@ -3868,7 +3401,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page8_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page8_arrow.png`,
               width: 5,
               height: 5,
               posterId: 0,
@@ -3876,7 +3409,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page8_arrow',
               alt: 'fashion_page8_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 253,
             y: 537,
@@ -3935,7 +3468,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -3957,9 +3489,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 62,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3967,23 +3497,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.98,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MORE\nSTORIES',
             width: 258,
             height: 120,
             scale: 100,
@@ -3995,6 +3515,8 @@ export default function (imageBaseUrl) {
             id: '421f76ac-4c4d-4a44-ad77-622facf57db5',
             x: 53,
             y: 18,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">MORE\nSTORIES</span></span>',
           },
           {
             opacity: 100,
@@ -4005,7 +3527,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -4027,9 +3548,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4037,23 +3556,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'HOW TO PULL OFF THE\nALL DENIM LOOK',
             width: 237,
             height: 38,
             scale: 100,
@@ -4065,6 +3574,8 @@ export default function (imageBaseUrl) {
             id: '1043803d-625c-4b7a-a5ad-1cdecfbb1c62',
             x: 161,
             y: 206,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">HOW TO PULL OFF THE\nALL DENIM LOOK</span></span>',
           },
           {
             opacity: 100,
@@ -4075,7 +3586,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -4097,9 +3607,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4107,23 +3615,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE BEST STREET\nSTYLES FROM NYFW',
             width: 237,
             height: 38,
             scale: 100,
@@ -4135,6 +3633,8 @@ export default function (imageBaseUrl) {
             id: '87b77bd3-8bc3-44ca-af6f-661e45522a7c',
             x: 161,
             y: 312,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">THE BEST STREET\nSTYLES FROM NYFW</span></span>',
           },
           {
             opacity: 100,
@@ -4145,7 +3645,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -4167,9 +3666,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 18,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4177,23 +3674,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE LATEST TRENDS\nIN SNEAKER LAND',
             width: 237,
             height: 38,
             scale: 100,
@@ -4205,6 +3692,8 @@ export default function (imageBaseUrl) {
             id: '44e7aa5c-3fe0-43db-8d46-c0a4425eeb18',
             x: 159,
             y: 413,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">THE LATEST TRENDS\nIN SNEAKER LAND</span></span>',
           },
           {
             opacity: 10,
@@ -4266,7 +3755,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item1-cropped.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_item1-cropped.png`,
               width: 43,
               height: 43,
               posterId: 0,
@@ -4274,7 +3763,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_item1-cropped',
               alt: 'fashion_page9_item1-cropped',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -4309,7 +3798,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item2.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_item2.jpg`,
               width: 220,
               height: 331,
               posterId: 0,
@@ -4317,7 +3806,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_item2',
               alt: 'fashion_page9_item2',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -4352,7 +3841,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_item3.jpg`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_item3.jpg`,
               width: 229,
               height: 157,
               posterId: 0,
@@ -4360,7 +3849,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_item3',
               alt: 'fashion_page9_item3',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -4372,7 +3861,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Playfair Display',
               service: 'fonts.google.com',
@@ -4394,9 +3882,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4404,23 +3890,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1.1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'FOLLOW US',
             width: 237,
             height: 26,
             scale: 100,
@@ -4432,6 +3908,7 @@ export default function (imageBaseUrl) {
             id: '40a6fb22-daa4-4d78-8cdc-5ce6547d1d64',
             x: 102,
             y: 535,
+            content: '<span style="color: #212121">FOLLOW US</span>',
           },
           {
             opacity: 100,
@@ -4448,7 +3925,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_facebook.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_facebook.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4456,7 +3933,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_facebook',
               alt: 'fashion_page9_facebook',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 96,
             y: 574,
@@ -4486,7 +3963,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_instagram.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_instagram.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4494,7 +3971,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_instagram',
               alt: 'fashion_page9_instagram',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 162,
             y: 574,
@@ -4524,7 +4001,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_youtube.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_youtube.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4532,7 +4009,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_youtube',
               alt: 'fashion_page9_youtube',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 229,
             y: 574,
@@ -4562,7 +4039,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/fashion/fashion_page9_twitter.png`,
+              src: `${imageBaseUrl}/images/templates/fashion/fashion_page9_twitter.png`,
               width: 24,
               height: 24,
               posterId: 0,
@@ -4570,7 +4047,7 @@ export default function (imageBaseUrl) {
               title: 'fashion_page9_twitter',
               alt: 'fashion_page9_twitter',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 296,
             y: 573,

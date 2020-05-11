@@ -173,6 +173,7 @@ async function runAxeTestsForStoriesEditor() {
       'landmark-unique',
       'page-has-heading-one',
       'region',
+      'scrollable-region-focusable',
     ],
   });
 }
