@@ -172,11 +172,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const minHeight = dataToEditorY(resizeRules.minHeight);
   const aspectRatio = selectedElement.width / selectedElement.height;
 
+  const visuallyHideHandles =
+    selectedElement.width <= minWidth || selectedElement.height <= minHeight;
+
   return (
     <Movable
       className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
-        selectedElement.type === 'text' ? 'type-text' : ''
-      }`}
+        visuallyHideHandles ? 'visually-hide-handles' : ''
+      } ${selectedElement.type === 'text' ? 'type-text' : ''}`}
       zIndex={0}
       ref={moveable}
       target={targetEl}
