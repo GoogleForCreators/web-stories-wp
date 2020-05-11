@@ -45,8 +45,8 @@ MenuContainer.propTypes = {
 export const MenuItem = styled.li(
   ({ theme, isDisabled, isHovering }) => `
     padding: 5px 25px;
-    background: ${isHovering ? theme.colors.gray25 : 'none'};
-    color: ${theme.colors.gray700};
+    background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
+    color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     display: flex;
     font-family: ${theme.fonts.popoverMenu.family};
