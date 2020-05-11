@@ -97,20 +97,21 @@ describe('singleSelectionMovable', () => {
     moveable.onRotateEnd({ target });
   }
 
-  describe('should rotate', () => {
-    const cases = [
-      ['normally', { rotateTo: 45, expectedRotationAngle: 45 }],
-      ['through 360 degrees', { rotateTo: 370, expectedRotationAngle: 10 }],
-      ['through negative', { rotateTo: -370, expectedRotationAngle: 350 }],
-    ];
+  const rotateCases = [
+    ['normally', { rotateTo: 45, expectedRotationAngle: 45 }],
+    ['through 360 degrees', { rotateTo: 370, expectedRotationAngle: 10 }],
+    ['through negative', { rotateTo: -370, expectedRotationAngle: 350 }],
+  ];
 
-    it.each(cases)('%p', (_, { rotateTo, expectedRotationAngle }) => {
+  it.each(rotateCases)(
+    'should rotate %p',
+    (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
       performRotatation(rotateTo);
 
       expect(updateSelectedElements).toHaveBeenLastCalledWith({
         properties: { rotationAngle: expectedRotationAngle },
       });
-    });
-  });
+    }
+  );
 });
