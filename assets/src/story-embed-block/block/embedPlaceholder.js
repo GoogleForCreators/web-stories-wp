@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __, _x, sprintf } from '@wordpress/i18n';
 import { Button, Placeholder, ExternalLink } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
 
@@ -33,6 +33,7 @@ const EmbedPlaceholder = ({
   onSubmit,
   onChange,
   cannotEmbed,
+  errorMessage,
 }) => {
   return (
     <Placeholder
@@ -71,6 +72,16 @@ const EmbedPlaceholder = ({
         <div className="components-placeholder__error">
           <div className="components-placeholder__instructions">
             {__('Sorry, this content could not be embedded.', 'web-stories')}
+            {errorMessage && (
+              <>
+                {' '}
+                {sprintf(
+                  /* translators: %s: error message. */
+                  __('Reason: %s.', 'web-stories'),
+                  errorMessage
+                )}
+              </>
+            )}
           </div>
         </div>
       )}
@@ -85,6 +96,11 @@ EmbedPlaceholder.propTypes = {
   onSubmit: PropTypes.func,
   onChange: PropTypes.func,
   cannotEmbed: PropTypes.bool,
+  errorMessage: PropTypes.string,
+};
+
+EmbedPlaceholder.defaultProps = {
+  cannotEmbed: false,
 };
 
 export default EmbedPlaceholder;

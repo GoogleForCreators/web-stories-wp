@@ -95,7 +95,7 @@ class Embed_Controller extends WP_REST_Controller {
 		$url = untrailingslashit( $request['url'] );
 
 		if ( empty( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		/**
@@ -110,7 +110,7 @@ class Embed_Controller extends WP_REST_Controller {
 		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
 			if ( 'rest_invalid_story' === $data ) {
-				return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+				return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 			}
 
 			return rest_ensure_response( json_decode( $data, true ) );
@@ -140,21 +140,21 @@ class Embed_Controller extends WP_REST_Controller {
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			// Not saving the error response to cache since the error might be temporary.
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$html = wp_remote_retrieve_body( $response );
 
 		if ( ! $html ) {
 			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
-			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$data = $this->get_data_from_document( $html );
 
 		if ( ! $data ) {
 			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
-			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );

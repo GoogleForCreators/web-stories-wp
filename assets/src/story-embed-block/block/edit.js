@@ -51,57 +51,57 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   } = attributes;
 
   const [editingURL, setEditingURL] = useState(false);
-  const [url, setURL] = useState(outerURL);
+  const [localURL, setLocalURL] = useState(outerURL);
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [storyData, setStoryData] = useState({});
-  const [cannotEmbed, setCannotEmbed] = useState(false);
+  const [cannotEmbed, setCannotEmbed] = useState('');
 
   useEffect(() => {
-    setURL(outerURL);
+    setLocalURL(outerURL);
   }, [outerURL]);
 
-  useEffect(() => {
-    if (!outerURL) {
-      return;
-    }
+  const fetchStoryData = useCallback(
+    (url) => {
+      if (!url) {
+        return;
+      }
 
-    try {
-      setIsFetchingData(true);
-      const urlObj = new URL(outerURL);
+      try {
+        setIsFetchingData(true);
+        const urlObj = new URL(url);
 
-      // @todo: Display better error to user depending on REST API response.
-      apiFetch({
-        path: `web-stories/v1/embed?url=${urlObj.toString()}`,
-      })
-        .then((data) => {
-          const emptyData = !data.title;
-          setCannotEmbed(emptyData);
-
-          if (!emptyData) {
+        apiFetch({
+          path: `web-stories/v1/embed?url=${urlObj.toString()}`,
+        })
+          .then((data) => {
+            setCannotEmbed(!data?.title);
             setStoryData(data);
-          }
-        })
-        .catch(() => {
-          setCannotEmbed(true);
-        })
-        .finally(() => {
-          setIsFetchingData(false);
-        });
-    } catch {
-      setCannotEmbed(true);
-    }
-  }, [outerURL]);
+            setAttributes({
+              url: localURL,
+            });
+          })
+          .catch((data) => {
+            setStoryData(data);
+            setCannotEmbed(true);
+          })
+          .finally(() => {
+            setIsFetchingData(false);
+          });
+      } catch {
+        setCannotEmbed(true);
+      }
+    },
+    [setAttributes, localURL]
+  );
 
   useEffect(() => {
-    if (!storyData?.title) {
-      return;
+    if (storyData?.title || storyData?.poster) {
+      setAttributes({
+        title: storyData?.title,
+        poster: storyData?.poster,
+      });
     }
-
-    setAttributes({
-      url,
-      ...storyData,
-    });
-  }, [url, storyData, setAttributes]);
+  }, [outerURL, storyData, setAttributes]);
 
   const onSubmit = useCallback(
     (event) => {
@@ -110,11 +110,12 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       }
 
       setEditingURL(false);
-      if (url !== outerURL) {
-        setAttributes({ url, poster: null, title: null });
+      setCannotEmbed(false);
+      if (localURL !== outerURL) {
+        fetchStoryData(localURL);
       }
     },
-    [setAttributes, url, outerURL]
+    [localURL, outerURL, fetchStoryData]
   );
 
   const switchBackToURLInput = useCallback(() => {
@@ -141,15 +142,16 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (!url || !outerURL || editingURL || isFetchingData || cannotEmbed) {
+  if (!localURL || !outerURL || editingURL || cannotEmbed) {
     return (
       <EmbedPlaceholder
         icon={icon}
         label={label}
-        value={url}
+        value={localURL}
         onSubmit={onSubmit}
-        onChange={(event) => setURL(event.target.value)}
+        onChange={(event) => setLocalURL(event.target.value)}
         cannotEmbed={cannotEmbed}
+        errorMessage={storyData?.message}
       />
     );
   }
@@ -173,7 +175,6 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   return (
     <>
       <EmbedControls
-        showEditButton={true}
         switchBackToURLInput={switchBackToURLInput}
         poster={poster}
         title={title}

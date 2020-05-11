@@ -45,7 +45,6 @@ const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 const EmbedControls = (props) => {
   const {
     instanceId,
-    showEditButton,
     switchBackToURLInput,
     width,
     height,
@@ -77,14 +76,12 @@ const EmbedControls = (props) => {
     <>
       <BlockControls>
         <ToolbarGroup>
-          {showEditButton && (
-            <Button
-              className="components-toolbar__control"
-              label={__('Edit URL', 'web-stories')}
-              icon="edit"
-              onClick={switchBackToURLInput}
-            />
-          )}
+          <Button
+            className="components-toolbar__control"
+            label={__('Edit URL', 'web-stories')}
+            icon="edit"
+            onClick={switchBackToURLInput}
+          />
         </ToolbarGroup>
       </BlockControls>
       <InspectorControls>
@@ -182,7 +179,6 @@ const EmbedControls = (props) => {
 
 EmbedControls.propTypes = {
   instanceId: PropTypes.number,
-  showEditButton: PropTypes.bool,
   switchBackToURLInput: PropTypes.func,
   width: PropTypes.number,
   height: PropTypes.number,
