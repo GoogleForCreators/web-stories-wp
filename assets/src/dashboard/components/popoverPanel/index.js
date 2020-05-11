@@ -15,26 +15,28 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { Z_INDEX } from '../../constants';
-import { Pill } from '../pill';
+import { PILL_LABEL_TYPES } from '../../constants/components';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
+import Pill from '../pill';
 
-export const Panel = styled.div`
-  ${({ isOpen, theme }) => `
+export const Panel = styled.div(
+  ({ isNarrow, isOpen, theme }) => `
     align-items: flex-start;
     background-color: ${theme.colors.white};
     border-radius: 8px;
@@ -49,19 +51,27 @@ export const Panel = styled.div`
     pointer-events: ${isOpen ? 'auto' : 'none'};
     transform: ${isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(0, -1rem, 0)'};
     z-index: ${Z_INDEX.POPOVER_PANEL};
-    width: ${theme.popoverPanel.desktopWidth}px;
 
-    @media ${theme.breakpoint.tablet} {
-      width: ${theme.popoverPanel.tabletWidth}px;
-    }
+    ${
+      isNarrow
+        ? `width: 260px;`
+        : ` 
+          width: ${theme.popoverPanel.desktopWidth}px;
+          
+          @media ${theme.breakpoint.tablet} {
+            width: ${theme.popoverPanel.tabletWidth}px;
+          }
 
-    @media ${theme.breakpoint.desktop} {
-      width: ${theme.popoverPanel.desktopWidth}px;
+           @media ${theme.breakpoint.desktop} {
+            width: ${theme.popoverPanel.desktopWidth}px;
+          }
+    `
     }
-  `}
-`;
+  `
+);
 
 Panel.propTypes = {
+  isNarrow: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
@@ -74,15 +84,6 @@ const PillFieldset = styled.fieldset`
     margin: 0 10px 14px 0;
   }
 `;
-
-const visuallyHiddenStyles = {
-  position: 'absolute',
-  height: '1px',
-  width: '1px',
-  overflow: 'hidden',
-  clip: 'rect(1px, 1px, 1px, 1px)',
-  'white-space': 'nowrap',
-};
 
 const Legend = styled.legend`
   ${visuallyHiddenStyles}
@@ -104,9 +105,16 @@ const KeyboardCloseOnly = styled.button`
   }
 `;
 
-const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
+const PopoverPanel = ({
+  onClose,
+  isOpen,
+  title,
+  items,
+  labelType = PILL_LABEL_TYPES.DEFAULT,
+  onSelect,
+}) => {
   return (
-    <Panel isOpen={isOpen}>
+    <Panel isOpen={isOpen} isNarrow={labelType === PILL_LABEL_TYPES.SWATCH}>
       {isOpen && (
         <>
           <KeyboardCloseOnly
@@ -125,13 +133,16 @@ const PopoverPanel = ({ onClose, isOpen, title, items, onSelect }) => {
                     data-testid={'popover-pill'}
                     key={`${value}_${index}`}
                     inputType="checkbox"
+                    label={label}
                     name={`${title}_pillGroup_${value}`}
                     onClick={onSelect}
                     value={value}
                     isSelected={selected}
                     disabled={disabled}
+                    hex={hex}
+                    labelType={labelType}
                   >
-                    {hex ? <ColorDot color={hex} /> : label}
+                    {label}
                   </Pill>
                 );
               }
@@ -148,6 +159,7 @@ PopoverPanel.propTypes = {
   onSelect: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
+  labelType: PropTypes.oneOf(Object.values(PILL_LABEL_TYPES)),
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE),
 };
 

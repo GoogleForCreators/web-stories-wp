@@ -29,15 +29,22 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { DROPDOWN_TYPES } from '../../constants';
+import { PILL_LABEL_TYPES } from '../../constants/components';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import { DROPDOWN_TYPES } from '../../constants';
+
+import { ColorDot } from '../colorDot';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
+
+const dropdownLabelType = {
+  [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
+  [DROPDOWN_TYPES.COLOR_PANEL]: PILL_LABEL_TYPES.SWATCH,
+};
 
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;
@@ -161,7 +168,7 @@ const Dropdown = ({
   };
 
   const handleMenuItemSelect = (item) => {
-    if (type === DROPDOWN_TYPES.PANEL) {
+    if (type === DROPDOWN_TYPES.PANEL || DROPDOWN_TYPES.COLOR_PANEL) {
       onChange(item);
       return;
     }
@@ -232,10 +239,11 @@ const Dropdown = ({
         </InnerDropdown>
       </Label>
 
-      {type === DROPDOWN_TYPES.PANEL ? (
+      {type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL ? (
         <PopoverPanel
           isOpen={showMenu}
           title={placeholder}
+          labelType={dropdownLabelType[type]}
           items={items}
           onClose={() => setShowMenu(false)}
           onSelect={(_, selectedValue) => {
