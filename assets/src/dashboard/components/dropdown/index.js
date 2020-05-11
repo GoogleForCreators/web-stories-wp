@@ -62,7 +62,7 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
-  ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
+  ${({ theme, disabled, type, hasSelectedItems }) => `
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -71,8 +71,11 @@ export const InnerDropdown = styled.button`
     padding-left: ${hasSelectedItems ? '10px' : '20px'};
     margin: 0;
     background-color: ${
-      theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+      hasSelectedItems
+        ? theme.colors.blueLight
+        : theme.dropdown[type].background
     };
+
     border-radius: ${theme.dropdown[type].borderRadius}px;
     border: ${theme.dropdown[type].border};
     color: ${theme.colors.gray600};
@@ -83,15 +86,18 @@ export const InnerDropdown = styled.button`
     letter-spacing: ${theme.fonts.dropdown.letterSpacing}em;
     line-height: ${theme.fonts.dropdown.lineHeight}px;
 
-    &:hover {
-      background-color: ${theme.dropdown[type].activeBackground};
+    &:hover,
+    &:active {
+      background-color: ${
+        hasSelectedItems
+          ? theme.colors.blueLight
+          : theme.dropdown[type].activeBackground
+      };
     }
 
     &:focus {
       border: ${theme.borders.action};
     }
-
-    background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
       color: ${theme.colors.gray400};
@@ -255,7 +261,6 @@ const Dropdown = ({
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
-          framelessButton={type === DROPDOWN_TYPES.TRANSPARENT_MENU}
         />
       )}
     </DropdownContainer>

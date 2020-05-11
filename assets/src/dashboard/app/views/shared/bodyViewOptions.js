@@ -78,7 +78,7 @@ const BodyViewOptions = ({
               alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
               items={STORY_SORT_MENU_ITEMS}
-              type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+              type={DROPDOWN_TYPES.MENU}
               value={currentSort}
               onChange={(newSort) => handleSortChange(newSort.value)}
             />

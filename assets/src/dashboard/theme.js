@@ -89,7 +89,6 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.COLOR_PANEL]: {
       background: 'transparent',
@@ -97,23 +96,13 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.MENU]: {
-      background: colors.gray25,
-      activeBackground: colors.gray25,
+      background: 'transparent',
+      activeBackground: 'transparent',
       borderRadius: 4,
       border: 'none',
       arrowColor: colors.gray300,
-      height: 48,
-    },
-    [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
-      background: 'transparent',
-      activeBackground: 'transparent',
-      borderRadius: 0,
-      border: 'none',
-      arrowColor: colors.gray300,
-      height: 40,
     },
   },
   leftRail: {

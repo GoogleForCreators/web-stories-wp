@@ -29,7 +29,7 @@ const Popover = styled.div`
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
   background-color: transparent;
-  margin: 10px 0 0;
+  margin: 5px 0 0;
 `;
 
 Popover.propTypes = {
