@@ -32,29 +32,31 @@ export const MenuContainer = styled.ul`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
+  margin: 0;
   min-width: 210px;
   overflow: hidden;
-  padding: 0;
+  padding: 5px 0;
+  pointer-events: auto;
 `;
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const MenuItem = styled.li`
-  padding: 14px 16px;
-  background: ${({ isHovering, theme }) =>
-    isHovering ? theme.colors.gray50 : 'none'};
-  color: ${({ theme }) => theme.colors.gray700};
-  cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
-  display: flex;
-  font-family: ${({ theme }) => theme.fonts.popoverMenu.family};
-  font-size: ${({ theme }) => theme.fonts.popoverMenu.size}px;
-  line-height: ${({ theme }) => theme.fonts.popoverMenu.lineHeight}px;
-  font-weight: ${({ theme }) => theme.fonts.popoverMenu.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.popoverMenu.letterSpacing}em;
-  width: 100%;
-`;
+export const MenuItem = styled.li(
+  ({ theme, isDisabled, isHovering }) => `
+    padding: 5px 25px;
+    background: ${isHovering ? theme.colors.gray25 : 'none'};
+    color: ${theme.colors.gray700};
+    cursor: ${isDisabled ? 'default' : 'pointer'};
+    display: flex;
+    font-family: ${theme.fonts.popoverMenu.family};
+    font-size: ${theme.fonts.popoverMenu.size}px;
+    line-height: ${theme.fonts.popoverMenu.lineHeight}px;
+    font-weight: ${theme.fonts.popoverMenu.weight};
+    letter-spacing: ${theme.fonts.popoverMenu.letterSpacing}em;
+    width: 100%;
+  `
+);
 
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,

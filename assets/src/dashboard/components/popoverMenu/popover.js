@@ -28,6 +28,8 @@ const Popover = styled.div`
   z-index: ${Z_INDEX.POPOVER_MENU};
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+  background-color: transparent;
+  margin: 10px 0 0;
 `;
 
 Popover.propTypes = {
