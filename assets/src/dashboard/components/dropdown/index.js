@@ -62,7 +62,7 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
-  ${({ theme, disabled, type, hasSelectedItems }) => `
+  ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -73,7 +73,7 @@ export const InnerDropdown = styled.button`
     background-color: ${
       hasSelectedItems
         ? theme.colors.blueLight
-        : theme.dropdown[type].background
+        : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
     };
 
     border-radius: ${theme.dropdown[type].borderRadius}px;
@@ -86,8 +86,7 @@ export const InnerDropdown = styled.button`
     letter-spacing: ${theme.fonts.dropdown.letterSpacing}em;
     line-height: ${theme.fonts.dropdown.lineHeight}px;
 
-    &:hover,
-    &:active {
+    &:hover {
       background-color: ${
         hasSelectedItems
           ? theme.colors.blueLight

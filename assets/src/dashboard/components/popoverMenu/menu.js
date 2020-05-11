@@ -75,7 +75,7 @@ const Separator = styled.li`
   width: 100%;
 `;
 
-const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
+const Menu = ({ isOpen, items, onSelect }) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -151,7 +151,7 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
   }, []);
 
   return (
-    <MenuContainer framelessButton={framelessButton}>
+    <MenuContainer>
       {items.map((item, index) => {
         if (item.separator) {
           return renderSeparator(index);
@@ -166,7 +166,6 @@ export const MenuProps = {
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
-  framelessButton: PropTypes.bool,
 };
 
 Menu.propTypes = MenuProps;
