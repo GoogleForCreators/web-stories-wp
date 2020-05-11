@@ -32,6 +32,7 @@ import { UploadDropTarget, UploadDropTargetMessage } from '../uploadDropTarget';
 import { useMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
+const message = __('Upload to media library', 'web-stories');
 
 function LibraryUploadDropTarget({ children }) {
   const {
@@ -46,10 +47,7 @@ function LibraryUploadDropTarget({ children }) {
   return (
     <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
-      <UploadDropTargetMessage
-        id={MESSAGE_ID}
-        message={__('Upload to media library', 'web-stories')}
-      />
+      <UploadDropTargetMessage id={MESSAGE_ID} message={message} />
     </UploadDropTarget>
   );
 }

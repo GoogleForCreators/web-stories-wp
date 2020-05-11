@@ -37,6 +37,10 @@ import { Layer as CanvasLayer, PageArea } from './layout';
 import useUploadWithPreview from './useUploadWithPreview';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
+const message = __(
+  'Upload to media library and add to the page.',
+  'web-stories'
+);
 
 function CanvasUploadDropTarget({ children }) {
   const uploadWithPreview = useUploadWithPreview();
@@ -47,13 +51,7 @@ function CanvasUploadDropTarget({ children }) {
       <UploadDropTargetOverlay>
         <CanvasLayer>
           <PageArea>
-            <UploadDropTargetMessage
-              id={MESSAGE_ID}
-              message={__(
-                'Upload to media library and add to the page.',
-                'web-stories'
-              )}
-            />
+            <UploadDropTargetMessage id={MESSAGE_ID} message={message} />
           </PageArea>
         </CanvasLayer>
       </UploadDropTargetOverlay>
