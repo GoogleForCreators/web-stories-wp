@@ -32,7 +32,7 @@
     "moment": "^2.25.3",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",
-    "polished": "^3.6.2",
+    "polished": "^3.6.3",
     "prop-types": "^15.7.2",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
