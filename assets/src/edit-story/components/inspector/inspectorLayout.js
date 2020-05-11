@@ -52,11 +52,11 @@ const InspectorBackground = styled.div`
 function InspectorLayout() {
   const {
     actions: { setInspectorContentNode },
-    state: { inspectorRef },
+    refs: { inspector },
   } = useInspector();
-  useEscapeToBlurEffect(inspectorRef);
+  useEscapeToBlurEffect(inspector);
   return (
-    <Layout ref={inspectorRef}>
+    <Layout ref={inspector}>
       <TabsArea>
         <InspectorTabs />
       </TabsArea>

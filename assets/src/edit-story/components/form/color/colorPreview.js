@@ -94,7 +94,7 @@ function ColorPreview({
   const previewRef = useRef(null);
 
   const {
-    state: { inspectorRef },
+    refs: { inspector },
   } = useInspector();
 
   useEffect(() => setHexInputValue(previewText), [previewText]);
@@ -178,7 +178,7 @@ function ColorPreview({
       )}
       <Popup
         anchor={previewRef}
-        dock={inspectorRef}
+        dock={inspector}
         isOpen={pickerOpen}
         placement={'left-start'}
         spacing={spacing}

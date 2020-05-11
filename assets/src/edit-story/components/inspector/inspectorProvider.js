@@ -114,12 +114,14 @@ function InspectorProvider({ children }) {
 
   const state = {
     state: {
-      inspectorRef,
       tab,
       users,
       statuses,
       inspectorContentHeight,
       isUsersLoading,
+    },
+    refs: {
+      inspector: inspectorRef,
     },
     actions: {
       setTab,

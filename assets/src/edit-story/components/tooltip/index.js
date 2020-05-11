@@ -162,7 +162,7 @@ function WithTooltip({
         anchor={ref}
         placement={placement}
         spacing={spacing}
-        isOpen={shown}
+        isOpen={Boolean(shown && (shortcut || title))}
       >
         <Tooltip arrow={arrow} placement={placement} shown={shown}>
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}

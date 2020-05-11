@@ -26,11 +26,15 @@ import {
   useRef,
   useEffect,
 } from 'react';
-
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from '../../constants';
+import { getTransforms, getOffset } from './utils';
+
+/**
+ * Internal dependencies
+ */
 
 export const Placement = {
   // TOP
@@ -91,132 +95,6 @@ const Container = styled.div.attrs(
     border-radius: 6px;
   }
 `;
-
-function getXTransforms(placement) {
-  // left & right
-  if (placement.startsWith('left')) {
-    return `-100%`;
-  } else if (placement.startsWith('right')) {
-    return null;
-  }
-  // top & bottom
-  if (placement.endsWith('-start')) {
-    return null;
-  } else if (placement.endsWith('-end')) {
-    return `-100%`;
-  }
-  return `-50%`;
-}
-
-function getYTransforms(placement) {
-  if (
-    placement.startsWith('top') ||
-    placement === Placement.RIGHT_END ||
-    placement === Placement.LEFT_END
-  ) {
-    return `-100%`;
-  }
-  if (placement === Placement.RIGHT || placement === Placement.LEFT) {
-    return `-50%`;
-  }
-  return null;
-}
-
-// note that we cannot use percentage values for transforms, which
-// do not work correctly for rotated elements
-function getTransforms(placement) {
-  const xTransforms = getXTransforms(placement);
-  const yTransforms = getYTransforms(placement);
-  if (!xTransforms && !yTransforms) {
-    return '';
-  }
-  return `transform: ${xTransforms ? `translateX(${xTransforms})` : ``} ${
-    yTransforms ? `translateY(${yTransforms})` : ``
-  };`;
-}
-
-function getXOffset(placement, spacing = 0, anchorRect, dockRect, bodyRect) {
-  switch (placement) {
-    case Placement.BOTTOM_START:
-    case Placement.TOP_START:
-    case Placement.LEFT:
-    case Placement.LEFT_END:
-    case Placement.LEFT_START:
-      return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
-    case Placement.BOTTOM_END:
-    case Placement.TOP_END:
-    case Placement.RIGHT:
-    case Placement.RIGHT_END:
-    case Placement.RIGHT_START:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width +
-        spacing
-      );
-    case Placement.BOTTOM:
-    case Placement.TOP:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width / 2
-      );
-    default:
-      return 0;
-  }
-}
-
-function getYOffset(placement, spacing = 0, anchorRect) {
-  switch (placement) {
-    case Placement.BOTTOM:
-    case Placement.BOTTOM_START:
-    case Placement.BOTTOM_END:
-    case Placement.LEFT_END:
-    case Placement.RIGHT_END:
-      return anchorRect.top + anchorRect.height + spacing;
-    case Placement.TOP:
-    case Placement.TOP_START:
-    case Placement.TOP_END:
-    case Placement.LEFT_START:
-    case Placement.RIGHT_START:
-      return anchorRect.top - spacing;
-    case Placement.RIGHT:
-    case Placement.LEFT:
-      return anchorRect.top + anchorRect.height / 2;
-    default:
-      return 0;
-  }
-}
-
-function getOffset(placement, spacing, anchor, dock, popup) {
-  const anchorRect = anchor.current.getBoundingClientRect();
-  const bodyRect = document.body.getBoundingClientRect();
-  const popupRect = popup.current?.getBoundingClientRect();
-  const dockRect = dock?.current?.getBoundingClientRect();
-
-  const { height = 0 } = popupRect || {};
-  const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
-
-  // Horizontal
-  const offsetX = getXOffset(
-    placement,
-    spacingH,
-    anchorRect,
-    dockRect,
-    bodyRect
-  );
-  const maxOffsetX = bodyRect.width - spacingH;
-  // Vertical
-  const offsetY = getYOffset(placement, spacingV, anchorRect);
-  const maxOffsetY = bodyRect.height - height - spacingV;
-  // Clamp values
-  return {
-    x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: Math.max(0, Math.min(offsetY, maxOffsetY)),
-    width: anchorRect.width,
-    height: anchorRect.height,
-  };
-}
 
 function Popup({
   anchor,
