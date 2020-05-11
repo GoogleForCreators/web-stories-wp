@@ -117,7 +117,7 @@ class Embed_Controller extends WP_REST_Controller {
 		}
 
 		$data = $this->get_data_from_post( $url );
-		if ( is_array( $data ) ) {
+		if ( $data ) {
 			return rest_ensure_response( $data );
 		}
 
@@ -163,13 +163,13 @@ class Embed_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Retrieves the oEmbed response data for a given URL.
+	 * Retrieves the story metadata for a given URL on the current site.
 	 *
-	 * @param string $url  The URL that should be inspected for discovery `<link>` tags.
-	 * @return object|false oEmbed response data if the URL does belong to the current site. False otherwise.
+	 * @param string $url  The URL that should be inspected for metadata.
+	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
-			$switched_blog = false;
+		$switched_blog = false;
 
 		if ( is_multisite() ) {
 			$url_parts = wp_parse_args(
@@ -188,15 +188,15 @@ class Embed_Controller extends WP_REST_Controller {
 
 			// In case of subdirectory configs, set the path.
 			if ( ! is_subdomain_install() ) {
-				$path = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path = reset( $path );
-
-				if ( $path ) {
-					$qv['path'] = get_network()->path . $path . '/';
+				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
+				$path    = reset( $path );
+				$network = get_network();
+				if ( $path && $network instanceof \WP_Network ) {
+					$qv['path'] = $network->path . $path . '/';
 				}
 			}
 
-			$sites = get_sites( $qv );
+			$sites = (array) get_sites( $qv );
 			$site  = reset( $sites );
 
 			if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
@@ -235,7 +235,7 @@ class Embed_Controller extends WP_REST_Controller {
 			restore_current_blog();
 		}
 
-		return is_wp_error( $data ) ? false : $data;
+		return $data;
 	}
 
 	/**
