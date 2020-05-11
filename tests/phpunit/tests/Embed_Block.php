@@ -20,10 +20,10 @@ namespace Google\Web_Stories\Tests;
 use WP_Block_Type_Registry;
 
 class Embed_Block extends \WP_UnitTestCase {
-	public static function wpSetUpBeforeClass() {
-		foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $block_type ) {
-			WP_Block_Type_Registry::get_instance()->unregister( $block_type );
-		}
+	public function setUp() {
+		parent::setUp();
+
+		unregister_block_type( 'web-stories/embed' );
 	}
 
 	public function test_registers_block_type() {
