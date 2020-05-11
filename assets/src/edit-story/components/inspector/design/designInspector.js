@@ -26,21 +26,23 @@ import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 40px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: absolute;
+  flex-grow: 1;
+  min-height: 0;
 `;
 
 const TopPanels = styled.div`
-  flex: 1 1;
   overflow: auto;
-  overflow: overlay;
+  flex-grow: 1;
+  min-height: 0;
 `;
 
-const BottomPanels = styled.div`
-  flex: 0 0;
-`;
+const BottomPanels = styled.div``;
 
 function DesignInspector() {
   return (
