@@ -55,8 +55,8 @@ function CanvasElementDropzone({ children }) {
         const { x, y } = pageContainer?.getBoundingClientRect();
         insertElement('shape', {
           ...props,
-          x: editorToDataX(e.clientX - x),
-          y: editorToDataY(e.clientY - y),
+          x: editorToDataX(e.clientX - x - props.width / 2),
+          y: editorToDataY(e.clientY - y - props.height / 2),
         });
       }
       // Handles onDrop for media.
