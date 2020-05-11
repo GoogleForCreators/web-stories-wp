@@ -39,7 +39,7 @@ function LibraryUploadDropTarget({ children }) {
   }));
   const onDropHandler = useCallback(
     (files) => {
-      uploadMedia(files);
+      uploadMedia({ files });
     },
     [uploadMedia]
   );

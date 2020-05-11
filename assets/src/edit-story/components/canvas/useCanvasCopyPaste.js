@@ -30,8 +30,8 @@ import {
   processPastedElements,
   processPastedNodeList,
 } from '../../utils/copyPaste';
+import { useMedia } from '../../app/media';
 import useInsertElement from './useInsertElement';
-import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
   const {
@@ -54,7 +54,9 @@ function useCanvasGlobalKeys() {
     };
   });
 
-  const uploadWithPreview = useUploadWithPreview();
+  const { uploadWithPreview } = useMedia((state) => ({
+    uploadWithPreview: state.actions.uploadWithPreview,
+  }));
 
   const insertElement = useInsertElement();
 

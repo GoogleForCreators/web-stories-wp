@@ -173,6 +173,12 @@ function reducer(state, { type, payload }) {
       };
     }
 
+    case types.TRIGGER_UPLOAD_MEDIA:
+    case types.TRIGGER_UPLOAD_WITH_PREVIEW:
+    case types.TRIGGER_UPLOAD_VIDEO_POSTER:
+    case types.TRIGGER_GENERATE_POSTER:
+      return state;
+
     default:
       throw new Error(`Unknown media reducer action: ${type}`);
   }

@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-export { default as createResource } from './createResource';
-export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
-export { default as getResourceFromAttachment } from './getResourceFromAttachment';
-export { default as getResourceFromLocalFile } from './getResourceFromLocalFile';
-export { default as getResourceFromMediaPicker } from './getResourceFromMediaPicker';
-export { default as getTypeFromMime } from './getTypeFromMime';
-export { default as preloadImage } from './preloadImage';
+/**
+ * Internal dependencies
+ */
+import useUploadMediaMiddleware from './uploadMediaMiddleware';
+import useUploadVideoMiddleware from './uploadVideoMiddleware';
+
+export function useMiddleware({ getActions }) {
+  return [
+    useUploadMediaMiddleware({ getActions }),
+    useUploadVideoMiddleware({ getActions }),
+  ];
+}

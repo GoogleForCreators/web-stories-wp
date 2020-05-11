@@ -33,13 +33,15 @@ import {
   UploadDropTargetOverlay,
 } from '../uploadDropTarget';
 
+import { useMedia } from '../../app/media';
 import { Layer as CanvasLayer, PageArea } from './layout';
-import useUploadWithPreview from './useUploadWithPreview';
 
 const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
 function CanvasUploadDropTarget({ children }) {
-  const uploadWithPreview = useUploadWithPreview();
+  const { uploadWithPreview } = useMedia((state) => ({
+    uploadWithPreview: state.actions.uploadWithPreview,
+  }));
 
   return (
     <UploadDropTarget onDrop={uploadWithPreview} labelledBy={MESSAGE_ID}>

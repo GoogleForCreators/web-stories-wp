@@ -27,9 +27,50 @@ import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
-import useFocusCanvas from './useFocusCanvas';
+import { focusCanvas } from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
+
+/**
+ * @param {Object} resource The resource to verify/update.
+ * @param uploadVideoPoster
+ * @param {string} elementId The element's id to be updated once resource
+ * is complete.
+ */
+function backfillResource(resource, uploadVideoPoster) {
+  const { type, src, id, posterId } = resource;
+
+  // Generate video poster if one not set.
+  if (type === 'video' && id && !posterId) {
+    uploadVideoPoster(id, src);
+  }
+}
+
+/**
+ * @param {string} type The element's type.
+ * @param {Object} props The element's initial properties.
+ * @param addElement
+ * @param uploadVideoPoster
+ */
+function insertElement(type, props, { addElement, uploadVideoPoster }) {
+  const element = createElementForCanvas(type, props);
+  const { id, resource } = element;
+  addElement({ element });
+  if (resource) {
+    backfillResource(resource, uploadVideoPoster);
+  }
+  // Auto-play on insert.
+  if (type === 'video') {
+    setTimeout(() => {
+      const videoEl = document.getElementById(`video-${id}`);
+      if (videoEl) {
+        videoEl.play();
+      }
+    }, 0);
+  }
+  focusCanvas();
+  return element;
+}
 
 function useInsertElement() {
   const { addElement } = useStory((state) => ({
@@ -39,53 +80,11 @@ function useInsertElement() {
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
 
-  /**
-   * @param {Object} resource The resource to verify/update.
-   * @param {string} elementId The element's id to be updated once resource
-   * is complete.
-   */
-  const backfillResource = useCallback(
-    (resource) => {
-      const { type, src, id, posterId } = resource;
-
-      // Generate video poster if one not set.
-      if (type === 'video' && id && !posterId) {
-        uploadVideoPoster(id, src);
-      }
-    },
-    [uploadVideoPoster]
+  return useCallback(
+    (type, props) =>
+      insertElement(type, props, { addElement, uploadVideoPoster }),
+    [addElement, uploadVideoPoster]
   );
-
-  const focusCanvas = useFocusCanvas();
-
-  /**
-   * @param {string} type The element's type.
-   * @param {Object} props The element's initial properties.
-   */
-  const insertElement = useCallback(
-    (type, props) => {
-      const element = createElementForCanvas(type, props);
-      const { id, resource } = element;
-      addElement({ element });
-      if (resource) {
-        backfillResource(resource);
-      }
-      // Auto-play on insert.
-      if (type === 'video') {
-        setTimeout(() => {
-          const videoEl = document.getElementById(`video-${id}`);
-          if (videoEl) {
-            videoEl.play();
-          }
-        }, 0);
-      }
-      focusCanvas();
-      return element;
-    },
-    [addElement, backfillResource, focusCanvas]
-  );
-
-  return insertElement;
 }
 
 /**
@@ -210,4 +209,4 @@ function isNum(value) {
 }
 
 export default useInsertElement;
-export { createElementForCanvas };
+export { insertElement, createElementForCanvas };

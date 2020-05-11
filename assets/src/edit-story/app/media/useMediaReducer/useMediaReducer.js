@@ -17,11 +17,13 @@
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useMiddleware } from '../middleware';
+import { useReducerWithMiddleware } from '../../../utils/middleware';
 import reducer, { INITIAL_STATE } from './reducer';
 import * as actionsToWrap from './actions';
 
@@ -34,11 +36,25 @@ const wrapWithDispatch = (actions, dispatch) =>
     {}
   );
 
-function useMediaReducer() {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+function useMediaReducer({ uploadMediaRef }) {
+  const actionsRef = useRef();
+  const [state, dispatch] = useReducerWithMiddleware(reducer, INITIAL_STATE, {
+    middleware: useMiddleware({
+      getActions: useCallback(
+        () => ({
+          ...actionsRef.current,
+          uploadMedia: uploadMediaRef.current,
+        }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+      ),
+    }),
+  });
 
-  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
-
+  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), [
+    dispatch,
+  ]);
+  actionsRef.current = actions;
   return {
     state,
     actions,

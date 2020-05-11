@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { useCallback } from 'react';
-
-/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
@@ -27,25 +22,25 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app/api';
-import { useConfig } from '../config';
 import createError from '../../utils/createError';
 
-function useUploader(refreshLibrary = true) {
-  // TODO(https://github.com/google/web-stories-wp/issues/1703):
-  // MediaProvider uses useUploader which uses useMedia, which causes
-  // resetWithFetch to be null. useContextSelector throws an exception which
-  // makes this bug more noticable, so commenting this out until the issue
-  // is fixed.
-  const resetWithFetch = null;
+export function isValidType({ file, allowedMimeTypes }) {
+  return allowedMimeTypes.includes(file.type);
+}
 
-  // const { resetWithFetch } = useMedia((state) => ({
-  //   resetWithFetch: state.actions.resetWithFetch,
-  // }));
-
-  const {
-    actions: { uploadMedia },
-  } = useAPI();
+export function uploadFile({
+  file,
+  refreshLibrary = true,
+  state: { config, mediaType, searchTerm, pagingNum },
+  actions: {
+    getMedia,
+    resetFilters,
+    uploadMediaAPI,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+  },
+}) {
   const {
     storyId,
     maxUpload,
@@ -55,85 +50,69 @@ function useUploader(refreshLibrary = true) {
     },
     allowedFileTypes,
     capabilities: { hasUploadMediaAction },
-  } = useConfig();
+  } = config;
   const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
-  const isValidType = useCallback(
-    ({ type }) => {
-      return allowedMimeTypes.includes(type);
-    },
-    [allowedMimeTypes]
-  );
+  const fileSizeCheck = ({ size }) => size <= maxUpload;
 
-  const fileSizeCheck = useCallback(
-    ({ size }) => {
-      return size <= maxUpload;
-    },
-    [maxUpload]
-  );
+  if (!hasUploadMediaAction) {
+    const message = __('Sorry, you are unable to upload files.', 'web-stories');
+    const permissionError = createError('PermissionError', file.name, message);
 
-  const uploadFile = (file) => {
-    if (!hasUploadMediaAction) {
-      const message = __(
-        'Sorry, you are unable to upload files.',
+    throw permissionError;
+  }
+  if (!fileSizeCheck(file)) {
+    const message = sprintf(
+      /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+      __(
+        'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
         'web-stories'
-      );
-      const permissionError = createError(
-        'PermissionError',
-        file.name,
-        message
-      );
+      ),
+      bytesToMB(file.size),
+      bytesToMB(maxUpload)
+    );
+    const sizeError = createError('SizeError', file.name, message);
 
-      throw permissionError;
-    }
-    if (!fileSizeCheck(file)) {
-      const message = sprintf(
-        /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
-        __(
-          'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
-          'web-stories'
-        ),
-        bytesToMB(file.size),
-        bytesToMB(maxUpload)
-      );
-      const sizeError = createError('SizeError', file.name, message);
+    throw sizeError;
+  }
 
-      throw sizeError;
-    }
+  if (!isValidType({ file, allowedMimeTypes })) {
+    /* translators: %s is a list of allowed file extensions. */
+    const message = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to upload.', 'web-stories'),
+      allowedFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
 
-    if (!isValidType(file)) {
-      /* translators: %s is a list of allowed file extensions. */
-      const message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s to upload.', 'web-stories'),
-        allowedFileTypes.join(
-          /* translators: delimiter used in a list */
-          __(', ', 'web-stories')
-        )
-      );
+    const validError = createError('ValidError', file.name, message);
 
-      const validError = createError('ValidError', file.name, message);
+    throw validError;
+  }
 
-      throw validError;
-    }
-
-    const additionalData = {
-      post: storyId,
-    };
-
-    const promise = uploadMedia(file, additionalData);
-    if (refreshLibrary) {
-      promise.finally(resetWithFetch);
-    }
-    return promise;
+  const additionalData = {
+    post: storyId,
   };
 
-  return {
-    uploadFile,
-    isValidType,
-  };
+  const promise = uploadMediaAPI(file, additionalData);
+  if (refreshLibrary) {
+    promise.finally(() =>
+      resetWithFetch({
+        state: { config, mediaType, searchTerm, pagingNum },
+        actions: {
+          getMedia,
+          resetFilters,
+          uploadMediaAPI,
+          fetchMediaStart,
+          fetchMediaSuccess,
+          fetchMediaError,
+        },
+      })
+    );
+  }
+  return promise;
 }
-
-export default useUploader;

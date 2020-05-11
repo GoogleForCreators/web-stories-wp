@@ -15,98 +15,85 @@
  */
 
 /**
- * External dependencies
- */
-import { useCallback } from 'react';
-/**
  * Internal dependencies
  */
-import { useAPI } from '../../api';
-import { useStory } from '../../story';
-import { useConfig } from '../../config';
-import { useUploader } from '../../uploader';
+import { uploadFile } from '../../uploader/useUploader';
 import { preloadImage, getFirstFrameOfVideo } from './';
 
-function useUploadVideoFrame({ updateMediaElement }) {
-  const {
-    actions: { updateMedia },
-  } = useAPI();
-  const { uploadFile } = useUploader(false);
-  const { storyId } = useConfig();
-  const { updateElementsByResourceId } = useStory((state) => ({
-    updateElementsByResourceId: state.actions.updateElementsByResourceId,
-  }));
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
+export async function uploadVideoFrame({
+  id,
+  src,
+  state: { config, pagingNum, mediaType, searchTerm },
+  actions: {
+    getMedia,
+    uploadMediaAPI,
+    updateMedia,
+    updateElementsByResourceId,
+    resetFilters,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+    updateMediaElement,
+  },
+}) {
+  try {
+    const obj = await getFirstFrameOfVideo(src);
+    const {
+      id: posterId,
+      source_url: poster,
+      media_details: { width: posterWidth, height: posterHeight },
+    } = await uploadFile({
+      file: obj,
+      refreshLibrary: false,
+      state: { config, mediaType, searchTerm, pagingNum },
+      actions: {
+        getMedia,
+        resetFilters,
+        uploadMediaAPI,
+        fetchMediaStart,
+        fetchMediaSuccess,
+        fetchMediaError,
+      },
+    });
+    await updateMedia(posterId, {
+      meta: {
+        web_stories_is_poster: true,
+      },
+    });
+    await updateMedia(id, {
+      featured_media: posterId,
+      post: config.storyId,
+    });
 
-  const processData = async (id, src) => {
-    try {
-      const obj = await getFirstFrameOfVideo(src);
-      const {
-        id: posterId,
-        source_url: poster,
-        media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(obj);
-      await updateMedia(posterId, {
-        meta: {
-          web_stories_is_poster: true,
-        },
-      });
-      await updateMedia(id, {
-        featured_media: posterId,
-        post: storyId,
-      });
+    // Preload the full image in the browser to stop jumping around.
+    await preloadImage(poster);
 
-      // Preload the full image in the browser to stop jumping around.
-      await preloadImage(poster);
-
-      // Overwrite the original video dimensions. The poster reupload has more
-      // accurate dimensions of the video that includes orientation changes.
-      const newSize =
-        (posterWidth &&
-          posterHeight && {
-            width: posterWidth,
-            height: posterHeight,
-          }) ||
-        null;
-      const newState = ({ resource }) => ({
-        resource: {
-          ...resource,
-          posterId,
-          poster,
-          ...newSize,
-        },
-      });
-      setProperties(id, newState);
-      updateMediaElement({
-        id,
+    // Overwrite the original video dimensions. The poster reupload has more
+    // accurate dimensions of the video that includes orientation changes.
+    const newSize =
+      (posterWidth &&
+        posterHeight && {
+          width: posterWidth,
+          height: posterHeight,
+        }) ||
+      null;
+    const newState = ({ resource }) => ({
+      resource: {
+        ...resource,
         posterId,
         poster,
         ...newSize,
-      });
-    } catch (err) {
-      // TODO Display error message to user as video poster upload has as failed.
-    }
-  };
-
-  /**
-   * Uploads the video's first frame as an attachment.
-   *
-   */
-  const uploadVideoFrame = useCallback(processData, [
-    getFirstFrameOfVideo,
-    uploadFile,
-    updateMedia,
-    setProperties,
-  ]);
-
-  return {
-    uploadVideoFrame,
-  };
+      },
+    });
+    updateElementsByResourceId(id, newState);
+    updateMediaElement({
+      id,
+      posterId,
+      poster,
+      ...newSize,
+    });
+  } catch (err) {
+    // TODO Display error message to user as video poster upload has as failed.
+    console.warn(err);
+  }
 }
-
-export default useUploadVideoFrame;

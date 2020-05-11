@@ -80,3 +80,34 @@ export const setMedia = (dispatch) => ({ media }) => {
     payload: { media },
   });
 };
+
+export const uploadMedia = (dispatch) => ({
+  files,
+  setIsUploading,
+  onLocalFile,
+  onUploadedFile,
+  onUploadFailure,
+}) => {
+  dispatch({
+    type: types.TRIGGER_UPLOAD_MEDIA,
+    payload: {
+      files,
+      setIsUploading,
+      onLocalFile,
+      onUploadedFile,
+      onUploadFailure,
+    },
+  });
+};
+
+export const uploadWithPreview = (dispatch) => (files) => {
+  dispatch({ type: types.TRIGGER_UPLOAD_WITH_PREVIEW, payload: { files } });
+};
+
+export const uploadVideoPoster = (dispatch) => (id, src) => {
+  dispatch({ type: types.TRIGGER_UPLOAD_VIDEO_POSTER, payload: { id, src } });
+};
+
+export const generatePoster = (dispatch) => () => {
+  dispatch({ type: types.TRIGGER_GENERATE_POSTER });
+};
