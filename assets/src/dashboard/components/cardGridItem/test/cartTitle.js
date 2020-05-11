@@ -26,7 +26,7 @@ describe('CardTitle', () => {
     const { getByText, queryByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="July 13"
+        displayDate={new Date()}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
@@ -41,7 +41,7 @@ describe('CardTitle', () => {
     const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="July 13"
+        displayDate="01/20/2020"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
@@ -56,7 +56,7 @@ describe('CardTitle', () => {
     const { getByText } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="Modified July 13"
+        displayDate="4/30/2020"
         status={STORY_STATUS.DRAFT}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}

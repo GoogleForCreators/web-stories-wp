@@ -71,7 +71,7 @@ export const _default = () => {
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate="Modified 4/14/2020"
+          displayDate="4/4/2020"
           status={STORY_STATUS.DRAFT}
         />
       </CardGridItem>
@@ -98,7 +98,7 @@ export const _publishedStory = () => {
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate="Published 4/30/2020"
+          displayDate="4/19/2020"
           status={STORY_STATUS.PUBLISHED}
         />
       </CardGridItem>
@@ -129,7 +129,7 @@ export const _contextMenu = () => {
               title="Story Title"
               author="storybook author"
               status={STORY_STATUS.DRAFT}
-              displayDate="Modified 5 minutes ago"
+              displayDate={new Date()}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}

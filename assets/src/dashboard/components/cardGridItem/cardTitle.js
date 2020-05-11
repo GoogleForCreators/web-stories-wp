@@ -17,12 +17,12 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -32,6 +32,7 @@ import styled from 'styled-components';
 import { TextInput } from '../input';
 import useFocusOut from '../../utils/useFocusOut';
 import { STORY_STATUS } from '../../constants';
+import getFormattedDisplayDate from '../../utils/getFormattedDisplayDate';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
@@ -112,6 +113,20 @@ const CardTitle = ({
     [newTitle, onEditComplete, onEditCancel]
   );
 
+  const displayDateText = useMemo(() => {
+    return status === STORY_STATUS.PUBLISHED
+      ? sprintf(
+          /* translators: %s: last modified date */
+          __('Published %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        )
+      : sprintf(
+          /* translators: %s: last modified date */
+          __('Modified %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        );
+  }, [status, displayDate]);
+
   return (
     <StyledCardTitle>
       {editMode ? (
@@ -130,7 +145,7 @@ const CardTitle = ({
         {status === STORY_STATUS.DRAFT && (
           <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
         )}
-        {displayDate}
+        {displayDateText}
       </TitleBodyText>
       <TitleBodyText>{author}</TitleBodyText>
     </StyledCardTitle>

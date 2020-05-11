@@ -30,16 +30,15 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardTitle,
   CardItemMenu,
+  CardTitle,
   CardPreviewContainer,
   ActionLabel,
   PreviewPage,
   PreviewErrorBoundary,
 } from '../../../components';
-import { STORY_CONTEXT_MENU_ACTIONS, STORY_STATUS } from '../../../constants';
+import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 import { StoriesPropType, UsersPropType } from '../../../types';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -141,19 +140,7 @@ const StoryGridView = ({
                 title={story.title}
                 status={story.status}
                 author={users[story.author].name}
-                displayDate={
-                  story.status === STORY_STATUS.PUBLISHED
-                    ? sprintf(
-                        /* translators: %s: last modified date */
-                        __('Published %s', 'web-stories'),
-                        getFormattedDisplayDate(story.modified)
-                      )
-                    : sprintf(
-                        /* translators: %s: last modified date */
-                        __('Modified %s', 'web-stories'),
-                        getFormattedDisplayDate(story.modified)
-                      )
-                }
+                displayDate={story.modified}
                 editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
