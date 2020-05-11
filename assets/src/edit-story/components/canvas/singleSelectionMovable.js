@@ -43,18 +43,29 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
-  const {
-    actions: { updateSelectedElements },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
-      nodesById,
-    },
-  } = useCanvas();
-  const {
-    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+  const { updateSelectedElements } = useStory((state) => ({
+    updateSelectedElements: state.actions.updateSelectedElements,
+  }));
+  const { canvasWidth, canvasHeight, nodesById } = useCanvas((state) => {
+    const {
+      state: {
+        // eslint-disable-next-line no-shadow
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        // eslint-disable-next-line no-shadow
+        nodesById,
+      },
+    } = state;
+    return { canvasWidth, canvasHeight, nodesById };
+  });
+  const { getBox, editorToDataX, editorToDataY, dataToEditorY } = useUnits(
+    (state) => {
+      const {
+        // eslint-disable-next-line no-shadow
+        actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
+      } = state;
+      return { getBox, editorToDataX, editorToDataY, dataToEditorY };
+    }
+  );
   const {
     actions: { pushTransform },
   } = useTransform();

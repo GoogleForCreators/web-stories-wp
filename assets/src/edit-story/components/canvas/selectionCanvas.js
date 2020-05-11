@@ -57,17 +57,42 @@ const Lasso = styled.div`
 `;
 
 function SelectionCanvas({ children }) {
+  const { selectedElements, currentPage, clearSelection } = useStory(
+    (state) => {
+      const {
+        // eslint-disable-next-line no-shadow
+        state: { selectedElements, currentPage },
+        // eslint-disable-next-line no-shadow
+        actions: { clearSelection },
+      } = state;
+      return { selectedElements, currentPage, clearSelection };
+    }
+  );
   const {
-    actions: { clearSelection },
-    state: { selectedElements, currentPage },
-  } = useStory();
-  const {
-    state: { pageContainer, isEditing, nodesById },
-    actions: { clearEditing, selectIntersection },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+    pageContainer,
+    isEditing,
+    nodesById,
+    clearEditing,
+    selectIntersection,
+  } = useCanvas((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      state: { pageContainer, isEditing, nodesById },
+      // eslint-disable-next-line no-shadow
+      actions: { clearEditing, selectIntersection },
+    } = state;
+    return {
+      pageContainer,
+      isEditing,
+      nodesById,
+      clearEditing,
+      selectIntersection,
+    };
+  });
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const overlayRef = useRef(null);
   const lassoRef = useRef(null);

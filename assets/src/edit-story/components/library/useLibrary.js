@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelectorShallow } from '../../utils/context';
+import { useContextSelectorShallow } from '../../utils/context';
 import Context from './context';
 
 function useLibrary(selector) {
-  return useContextSelectorShallow(Context, selector ?? identity);
+  return useContextSelectorShallow(Context, selector);
 }
 
 export default useLibrary;

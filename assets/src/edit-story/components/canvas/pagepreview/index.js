@@ -76,9 +76,9 @@ const PreviewWrapper = styled.div`
 `;
 
 function PagePreview({ index, ...props }) {
-  const {
-    state: { pages },
-  } = useStory();
+  const { pages } = useStory((state) => ({
+    pages: state.state.pages,
+  }));
   const page = pages[index];
   const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;

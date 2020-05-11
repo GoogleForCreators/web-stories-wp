@@ -88,8 +88,17 @@ function TextEdit({
   const { font } = rest;
 
   const {
-    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-  } = useUnits();
+    dataToEditorX,
+    dataToEditorY,
+    editorToDataX,
+    editorToDataY,
+  } = useUnits((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+    } = state;
+    return { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY };
+  });
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -109,9 +118,9 @@ function TextEdit({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
 
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),

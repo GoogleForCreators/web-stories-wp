@@ -42,13 +42,13 @@ const DisplayPageArea = styled(PageArea).attrs({
 `;
 
 function DisplayLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement },
-    actions: { setPageContainer },
-  } = useCanvas();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElement, setPageContainer } = useCanvas((state) => ({
+    editingElement: state.state.editingElement,
+    setPageContainer: state.actions.setPageContainer,
+  }));
 
   return (
     <Layer pointerEvents="none">

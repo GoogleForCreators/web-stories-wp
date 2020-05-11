@@ -96,9 +96,9 @@ function SizePositionPanel({
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
-  const {
-    actions: { setBackgroundElement },
-  } = useStory();
+  const { setBackgroundElement } = useStory((state) => ({
+    setBackgroundElement: state.actions.setBackgroundElement,
+  }));
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);

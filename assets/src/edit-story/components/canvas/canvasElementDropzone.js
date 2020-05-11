@@ -37,15 +37,16 @@ const Container = styled.div`
 
 function CanvasElementDropzone({ children }) {
   const insertElement = useInsertElement();
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
-  const {
-    state: { pageContainer },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+  const { activeDropTargetId } = useDropTargets((state) => ({
+    activeDropTargetId: state.state.activeDropTargetId,
+  }));
+  const { pageContainer } = useCanvas((state) => ({
+    pageContainer: state.state.pageContainer,
+  }));
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const onDropHandler = useCallback(
     (e) => {

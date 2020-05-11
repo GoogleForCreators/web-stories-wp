@@ -29,9 +29,24 @@ import updateProperties from './updateProperties';
 
 function useDesignPanels() {
   const {
-    state: { selectedElementIds, selectedElements },
-    actions: { deleteSelectedElements, updateElementsById },
-  } = useStory();
+    selectedElementIds,
+    selectedElements,
+    deleteSelectedElements,
+    updateElementsById,
+  } = useStory((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      state: { selectedElementIds, selectedElements },
+      // eslint-disable-next-line no-shadow
+      actions: { deleteSelectedElements, updateElementsById },
+    } = state;
+    return {
+      selectedElementIds,
+      selectedElements,
+      deleteSelectedElements,
+      updateElementsById,
+    };
+  });
 
   const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
   const [submitHandlers, registerSubmitHandler] = useHandlers();

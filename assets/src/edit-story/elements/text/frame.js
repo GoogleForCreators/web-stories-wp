@@ -46,17 +46,18 @@ const Element = styled.p`
 `;
 
 function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
-  const {
-    actions: { dataToEditorX, dataToEditorY },
-  } = useUnits();
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
   const props = generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY);
-  const {
-    state: { selectedElementIds },
-  } = useStory();
+  const { selectedElementIds } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+  }));
 
-  const {
-    actions: { setEditingElementWithState },
-  } = useCanvas();
+  const { setEditingElementWithState } = useCanvas((state) => ({
+    setEditingElementWithState: state.actions.setEditingElementWithState,
+  }));
   const isElementSelected = selectedElementIds.includes(id);
   const isElementOnlySelection =
     isElementSelected && selectedElementIds.length === 1;

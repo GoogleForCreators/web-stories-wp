@@ -198,10 +198,17 @@ function calculatePageThumbSize(carouselSize) {
 }
 
 function Carousel() {
-  const {
-    state: { pages, currentPageId },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+  const { pages, currentPageId, setCurrentPage, arrangePage } = useStory(
+    (state) => {
+      const {
+        // eslint-disable-next-line no-shadow
+        state: { pages, currentPageId },
+        // eslint-disable-next-line no-shadow
+        actions: { setCurrentPage, arrangePage },
+      } = state;
+      return { pages, currentPageId, setCurrentPage, arrangePage };
+    }
+  );
   const { isRTL } = useConfig();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);

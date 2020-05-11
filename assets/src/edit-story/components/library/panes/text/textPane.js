@@ -92,9 +92,9 @@ function getPresetById(id) {
 const SectionContent = styled.p``;
 
 function TextPane(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
   return (
     <Pane id={paneId} {...props}>
       <SearchInput

@@ -37,10 +37,17 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    actions: { combineElements, updateElementById },
-    state: { currentPage },
-  } = useStory();
+  const { currentPage, combineElements, updateElementById } = useStory(
+    (state) => {
+      const {
+        // eslint-disable-next-line no-shadow
+        state: { currentPage },
+        // eslint-disable-next-line no-shadow
+        actions: { combineElements, updateElementById },
+      } = state;
+      return { currentPage, combineElements, updateElementById };
+    }
+  );
 
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {

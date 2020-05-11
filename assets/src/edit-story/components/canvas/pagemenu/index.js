@@ -110,9 +110,19 @@ function PageMenu() {
     actions: { undo, redo },
   } = useHistory();
   const {
-    state: { currentPageNumber, currentPage },
-    actions: { deleteCurrentPage, addPage },
-  } = useStory();
+    currentPageNumber,
+    currentPage,
+    deleteCurrentPage,
+    addPage,
+  } = useStory((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      state: { currentPageNumber, currentPage },
+      // eslint-disable-next-line no-shadow
+      actions: { deleteCurrentPage, addPage },
+    } = state;
+    return { currentPageNumber, currentPage, deleteCurrentPage, addPage };
+  });
   const { isRTL } = useConfig();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [

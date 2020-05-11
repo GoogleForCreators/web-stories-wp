@@ -29,9 +29,24 @@ function useLayerSelection(layer) {
   const { id: elementId } = layer;
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { setSelectedElementsById, toggleElementInSelection },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    setSelectedElementsById,
+    toggleElementInSelection,
+  } = useStory((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      state: { currentPage, selectedElementIds },
+      // eslint-disable-next-line no-shadow
+      actions: { setSelectedElementsById, toggleElementInSelection },
+    } = state;
+    return {
+      currentPage,
+      selectedElementIds,
+      setSelectedElementsById,
+      toggleElementInSelection,
+    };
+  });
 
   const focusCanvas = useFocusCanvas();
 

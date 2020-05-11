@@ -72,9 +72,9 @@ const QuickAction = styled.button`
 `;
 
 function TextTab(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const [isHoveringQuick, setIsHoveringQuick] = useState(false);
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);

@@ -51,9 +51,24 @@ function CanvasProvider({ children }) {
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory((state) => {
+    const {
+      // eslint-disable-next-line no-shadow
+      state: { currentPage, selectedElementIds },
+      // eslint-disable-next-line no-shadow
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    } = state;
+    return {
+      currentPage,
+      selectedElementIds,
+      toggleElementInSelection,
+      setSelectedElementsById,
+    };
+  });
 
   const handleSelectElement = useCallback(
     (elId, evt) => {

@@ -36,9 +36,10 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAllStatuses, getAllUsers },
   } = useAPI();
-  const {
-    state: { selectedElementIds, currentPage },
-  } = useStory();
+  const { selectedElementIds, currentPage } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+    currentPage: state.state.currentPage,
+  }));
 
   const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);

@@ -38,13 +38,32 @@ import Resize from './resize';
 
 function StylePresetPanel() {
   const {
-    state: {
+    selectedElementIds,
+    selectedElements,
+    stylePresets,
+    updateStory,
+    updateElementsById,
+  } = useStory((state) => {
+    const {
+      state: {
+        // eslint-disable-next-line no-shadow
+        selectedElementIds,
+        // eslint-disable-next-line no-shadow
+        selectedElements,
+        // eslint-disable-next-line no-shadow
+        story: { stylePresets },
+      },
+      // eslint-disable-next-line no-shadow
+      actions: { updateStory, updateElementsById },
+    } = state;
+    return {
       selectedElementIds,
       selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory, updateElementsById },
-  } = useStory();
+      stylePresets,
+      updateStory,
+      updateElementsById,
+    };
+  });
 
   const { fillColors, textColors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);

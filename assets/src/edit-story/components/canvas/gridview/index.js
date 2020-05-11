@@ -213,10 +213,17 @@ ThumbnailSizeControl.propTypes = {
 };
 
 function GridView() {
-  const {
-    state: { pages, currentPageIndex },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+  const { pages, currentPageIndex, setCurrentPage, arrangePage } = useStory(
+    (state) => {
+      const {
+        // eslint-disable-next-line no-shadow
+        state: { pages, currentPageIndex },
+        // eslint-disable-next-line no-shadow
+        actions: { setCurrentPage, arrangePage },
+      } = state;
+      return { pages, currentPageIndex, setCurrentPage, arrangePage };
+    }
+  );
   const [zoomLevel, setZoomLevel] = useState(2);
 
   const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;

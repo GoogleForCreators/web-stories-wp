@@ -95,9 +95,10 @@ function TextDisplay({
 }) {
   const ref = useRef(null);
 
-  const {
-    actions: { dataToEditorY, dataToEditorX },
-  } = useUnits();
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
 
   const { font } = rest;
 

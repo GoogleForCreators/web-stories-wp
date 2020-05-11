@@ -39,9 +39,9 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
-  const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+  const { uploadVideoPoster } = useMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
