@@ -245,7 +245,7 @@ StoryListView.propTypes = {
   stories: StoriesPropType,
   tags: TagsPropType,
   categories: CategoriesPropType,
-  users: UsersPropType,
+  users: UsersPropType.isRequired,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
   storySort: PropTypes.string.isRequired,

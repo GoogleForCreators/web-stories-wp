@@ -58,4 +58,4 @@ export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
   .isRequired;
-export const UsersPropType = PropTypes.objectOf(UserPropType).isRequired;
+export const UsersPropType = PropTypes.objectOf(UserPropType);

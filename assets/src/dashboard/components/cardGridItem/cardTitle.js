@@ -156,7 +156,7 @@ CardTitle.propTypes = {
   author: PropTypes.string,
   status: PropTypes.oneOf(Object.values(STORY_STATUS)),
   editMode: PropTypes.bool,
-  displayDate: PropTypes.string.isRequired,
+  displayDate: PropTypes.object.isRequired,
   onEditComplete: PropTypes.func.isRequired,
   onEditCancel: PropTypes.func.isRequired,
 };
