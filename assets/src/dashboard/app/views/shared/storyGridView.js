@@ -139,7 +139,7 @@ const StoryGridView = ({
               <CardTitle
                 title={story.title}
                 status={story.status}
-                author={users[story.author].name}
+                author={users[story.author]?.name}
                 displayDate={story.modified}
                 editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>

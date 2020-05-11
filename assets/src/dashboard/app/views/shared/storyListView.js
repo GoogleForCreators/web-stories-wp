@@ -220,7 +220,7 @@ export default function StoryListView({
                 </PreviewContainer>
               </TablePreviewCell>
               <TableCell>{story.title}</TableCell>
-              <TableCell>{users[story.author].name}</TableCell>
+              <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>
                 {metadataStringForIds(categories, story.categories)}
               </TableCell>

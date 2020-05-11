@@ -146,7 +146,7 @@ const CardTitle = ({
         )}
         {displayDateText}
       </TitleBodyText>
-      <TitleBodyText>{author}</TitleBodyText>
+      {author && <TitleBodyText>{author}</TitleBodyText>}
     </StyledCardTitle>
   );
 };
