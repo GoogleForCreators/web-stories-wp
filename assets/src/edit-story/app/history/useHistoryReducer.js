@@ -30,7 +30,7 @@ import reducer, {
 } from './reducer';
 
 function useHistoryReducer(size) {
-  // State has 3 parts:
+  // State has 4 parts:
   //
   // `state.entries` is an array of the last changes (up to `size`) to
   // the object with the most recent at position 0.
@@ -43,6 +43,10 @@ function useHistoryReducer(size) {
   // undo/redo to - it will be null except for the very short timespan
   // between the user pressing undo and the app updating to that desired
   // state.
+  //
+  // `state.versionNumber` tracks the version number of the state.
+  // The version number is increased whenever a new entry is added.
+  // Undo and redo decrease and increase the version number respectively.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
   const { entries, offset, requestedState, versionNumber } = state;

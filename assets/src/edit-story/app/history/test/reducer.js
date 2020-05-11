@@ -74,7 +74,7 @@ describe('reducer', () => {
       const initialState = {
         ...EMPTY_STATE,
         versionNumber: 3,
-        entries: [{ id: 1 }],
+        entries: [{ id: 1 }, { id: 2 }, { id: 3 }],
         offset: 2,
       };
       const newEntry = { id: 2 };
