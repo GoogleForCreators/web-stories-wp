@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelectorShallow } from '../../utils/context';
 import Context from './context';
 
-function useStory() {
-  return useContext(Context);
+function useStory(selector) {
+  return useContextSelectorShallow(Context, selector ?? identity);
 }
 
 export default useStory;

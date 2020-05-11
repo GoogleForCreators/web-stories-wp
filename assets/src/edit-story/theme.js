@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { useContext } from 'react';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from './constants';
+import { identity, useContextSelectorShallow } from './utils/context';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -76,8 +76,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(selector) {
+  return useContextSelectorShallow(ThemeContext, selector ?? identity);
 }
 
 const theme = {

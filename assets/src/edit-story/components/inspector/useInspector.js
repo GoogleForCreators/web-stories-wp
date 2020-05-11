@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelectorShallow } from '../../utils/context';
 import Context from './context';
 
-function useInspector() {
-  return useContext(Context);
+function useInspector(selector) {
+  return useContextSelectorShallow(Context, selector ?? identity);
 }
 
 export default useInspector;

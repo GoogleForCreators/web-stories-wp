@@ -29,13 +29,20 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
-import { useMedia } from '../media';
 import createError from '../../utils/createError';
 
 function useUploader(refreshLibrary = true) {
-  const {
-    actions: { resetWithFetch },
-  } = useMedia();
+  // TODO(https://github.com/google/web-stories-wp/issues/1703):
+  // MediaProvider uses useUploader which uses useMedia, which causes
+  // resetWithFetch to be null. useContextSelector throws an exception which
+  // makes this bug more noticable, so commenting this out until the issue
+  // is fixed.
+  const resetWithFetch = null;
+
+  // const { resetWithFetch } = useMedia((state) => ({
+  //   resetWithFetch: state.actions.resetWithFetch,
+  // }));
+
   const {
     actions: { uploadMedia },
   } = useAPI();

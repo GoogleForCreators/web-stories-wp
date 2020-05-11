@@ -68,3 +68,5 @@ export const useContextSelectorWithEqFn = (
  */
 export const useContextSelectorShallow = (context, selector) =>
   useContextSelectorWithEqFn(context, selector, { equalityFn: shallowEqual });
+
+export const identity = (state) => state;
