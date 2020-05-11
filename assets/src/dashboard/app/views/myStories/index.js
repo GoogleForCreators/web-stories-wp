@@ -131,6 +131,7 @@ function MyStories() {
             createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
             stories={orderedStories}
+            users={users}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
