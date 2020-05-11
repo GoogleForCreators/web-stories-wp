@@ -179,11 +179,6 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$expected = [
-			'title'  => '',
-			'poster' => '',
-		];
-
 		// Subsequent requests are cached and so it should not cause a request.
 		$response2 = rest_get_server()->dispatch( $request );
 		$data2     = $response2->get_data();
@@ -191,8 +186,8 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		$this->assertEquals( 404, $response->get_status() );
 		$this->assertEquals( $data['code'], 'rest_invalid_story' );
-		$this->assertNotEmpty( $data2 );
-		$this->assertEqualSetsWithIndex( $expected, $data2 );
+		$this->assertEquals( 404, $response2->get_status() );
+		$this->assertEquals( $data2['code'], 'rest_invalid_story' );
 	}
 
 	public function test_valid_url() {

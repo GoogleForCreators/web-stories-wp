@@ -30,8 +30,10 @@ use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use DOMXpath;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_Http;
+use WP_Post;
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -107,13 +109,17 @@ class Embed_Controller extends WP_REST_Controller {
 
 		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
-			return json_decode( $data, true );
+			if ( 'rest_invalid_story' === $data ) {
+				return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			}
+
+			return rest_ensure_response( json_decode( $data, true ) );
 		}
 
-		$data = [
-			'title'  => '',
-			'poster' => '',
-		];
+		$data = $this->get_data_from_post( $url );
+		if ( is_array( $data ) ) {
+			return rest_ensure_response( $data );
+		}
 
 		$args = [
 			'limit_response_size' => 153600, // 150 KB.
@@ -140,10 +146,106 @@ class Embed_Controller extends WP_REST_Controller {
 		$html = wp_remote_retrieve_body( $response );
 
 		if ( ! $html ) {
-			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
 			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
 		}
 
+		$data = $this->get_data_from_document( $html );
+
+		if ( ! $data ) {
+			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
+			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+		}
+
+		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+
+		return rest_ensure_response( $data );
+	}
+
+	/**
+	 * Retrieves the oEmbed response data for a given URL.
+	 *
+	 * @param string $url  The URL that should be inspected for discovery `<link>` tags.
+	 * @return object|false oEmbed response data if the URL does belong to the current site. False otherwise.
+	 */
+	private function get_data_from_post( $url ) {
+			$switched_blog = false;
+
+		if ( is_multisite() ) {
+			$url_parts = wp_parse_args(
+				wp_parse_url( $url ),
+				[
+					'host' => '',
+					'path' => '/',
+				]
+			);
+
+			$qv = [
+				'domain'                 => $url_parts['host'],
+				'path'                   => '/',
+				'update_site_meta_cache' => false,
+			];
+
+			// In case of subdirectory configs, set the path.
+			if ( ! is_subdomain_install() ) {
+				$path = explode( '/', ltrim( $url_parts['path'], '/' ) );
+				$path = reset( $path );
+
+				if ( $path ) {
+					$qv['path'] = get_network()->path . $path . '/';
+				}
+			}
+
+			$sites = get_sites( $qv );
+			$site  = reset( $sites );
+
+			if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
+				switch_to_blog( $site->blog_id );
+				$switched_blog = true;
+			}
+		}
+
+		if ( function_exists( 'wpcom_vip_url_to_postid' ) ) {
+			$post_id = wpcom_vip_url_to_postid( $url );
+		} else {
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
+			$post_id = url_to_postid( $url );
+		}
+
+		if ( ! $post_id ) {
+			if ( $switched_blog ) {
+				restore_current_blog();
+			}
+
+			return false;
+		}
+
+		$post = get_post( $post_id );
+		if ( ! $post instanceof WP_Post ) {
+			return false;
+		}
+
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+			return false;
+		}
+
+		$data = $this->get_data_from_document( $post->post_content );
+
+		if ( $switched_blog ) {
+			restore_current_blog();
+		}
+
+		return is_wp_error( $data ) ? false : $data;
+	}
+
+	/**
+	 * Parses an HTML document to and returns the story's title and poster.
+	 *
+	 * @param string $html HTML document markup.
+	 *
+	 * @return array|false Response data or false if document is not a story.
+	 */
+	private function get_data_from_document( $html ) {
 		$doc                      = new DOMDocument();
 		$doc->strictErrorChecking = false; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
@@ -157,21 +259,21 @@ class Embed_Controller extends WP_REST_Controller {
 		$amp_story = $xpath->query( '//amp-story' );
 
 		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
-			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return new WP_Error( 'rest_invalid_story', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			false;
 		}
 
 		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
 		$poster = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
 
-		$data = [
-			'title'  => $title ?: '',
+		// Title is required, poster is not.
+		if ( empty( $title ) ) {
+			return false;
+		}
+
+		return [
+			'title'  => $title,
 			'poster' => $poster ?: '',
 		];
-
-		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-
-		return rest_ensure_response( $data );
 	}
 
 	/**
