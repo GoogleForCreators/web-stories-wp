@@ -223,7 +223,7 @@ function TemplatesGallery() {
                 </HeadingDropdownsContainer>
               </PageHeading>
               <BodyViewOptions
-                listBarLabel={header.resultsLabel}
+                resultsLabel={header.resultsLabel}
                 layoutStyle={viewStyle}
                 handleLayoutSelect={handleViewStyleBarButtonSelected}
                 currentSort={currentTemplateSort}

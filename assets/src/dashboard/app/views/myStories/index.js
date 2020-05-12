@@ -182,7 +182,7 @@ function MyStories() {
     return (
       <BodyViewOptions
         showGridToggle
-        listBarLabel={header.resultsLabel}
+        resultsLabel={header.resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}

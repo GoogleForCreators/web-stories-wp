@@ -87,7 +87,7 @@ function Header({ filter, search, sort, stories, view }) {
         </HeaderToggleButtonContainer>
       </PageHeading>
       <BodyViewOptions
-        listBarLabel={header.resultsLabel}
+        resultsLabel={header.resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
         handleSortChange={sort.set}
