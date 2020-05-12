@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -43,8 +43,12 @@ import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
   STORY_SORT_OPTIONS,
+  DASHBOARD_VIEWS,
+  TEMPLATES_GALLERY_STATUS,
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
+import useGenericDashboardView from '../../../utils/useGenericDashboardView';
+
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -95,6 +99,13 @@ function TemplatesGallery() {
     },
   } = useContext(ApiContext);
 
+  const { header } = useGenericDashboardView({
+    isActiveSearch: Boolean(typeaheadValue),
+    totalResults: totalTemplates,
+    currentFilter: TEMPLATES_GALLERY_STATUS.ALL,
+    view: DASHBOARD_VIEWS.TEMPLATES_GALLERY,
+  });
+
   useEffect(() => {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
@@ -124,19 +135,6 @@ function TemplatesGallery() {
   const handleNewPageRequest = useCallback(() => {
     setCurrentPageClamped(currentPage + 1);
   }, [currentPage, setCurrentPageClamped]);
-
-  // TODO add support for filters
-  const listBarLabel = useMemo(
-    () =>
-      typeaheadValue
-        ? sprintf(
-            /* translators: %s: number of results */
-            _n('%s result', '%s results', totalTemplates, 'web-stories'),
-            totalTemplates
-          )
-        : __('Viewing all templates', 'web-stories'),
-    [totalTemplates, typeaheadValue]
-  );
 
   const {
     selectedCategories,
@@ -225,7 +223,7 @@ function TemplatesGallery() {
                 </HeadingDropdownsContainer>
               </PageHeading>
               <BodyViewOptions
-                listBarLabel={listBarLabel}
+                listBarLabel={header.resultsLabel}
                 layoutStyle={viewStyle}
                 handleLayoutSelect={handleViewStyleBarButtonSelected}
                 currentSort={currentTemplateSort}

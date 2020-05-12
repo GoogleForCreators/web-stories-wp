@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -39,7 +39,7 @@ import {
 import {
   VIEW_STYLE,
   STORY_STATUSES,
-  STORY_VIEWING_LABELS,
+  DASHBOARD_VIEWS,
 } from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import { ApiContext } from '../../api/apiProvider';
@@ -53,6 +53,7 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
+import useGenericDashboardView from '../../../utils/useGenericDashboardView';
 import useStoryView from '../../../utils/useStoryView';
 
 const DefaultBodyText = styled.p`
@@ -90,9 +91,16 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, sort, search, view } = useStoryView({
+  const { view, sort, filter, page, search } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
+  });
+
+  const { header } = useGenericDashboardView({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: totalStories,
+    view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
   useEffect(() => {
@@ -118,18 +126,6 @@ function MyStories() {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
-
-  const listBarLabel = useMemo(
-    () =>
-      search.keyword
-        ? sprintf(
-            /* translators: %s: number of results */
-            _n('%s result', '%s results', totalStories, 'web-stories'),
-            totalStories
-          )
-        : STORY_VIEWING_LABELS[filter.value],
-    [filter.value, search.keyword, totalStories]
-  );
 
   const storiesView = useMemo(() => {
     switch (view.style) {
@@ -186,7 +182,7 @@ function MyStories() {
     return (
       <BodyViewOptions
         showGridToggle
-        listBarLabel={listBarLabel}
+        listBarLabel={header.resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
@@ -197,7 +193,7 @@ function MyStories() {
         )}
       />
     );
-  }, [sort, listBarLabel, view]);
+  }, [sort, header.resultsLabel, view]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {

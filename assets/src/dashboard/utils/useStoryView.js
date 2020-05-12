@@ -145,7 +145,7 @@ export const ViewPropTypes = PropTypes.shape({
 });
 
 export const FilterPropTypes = PropTypes.shape({
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   set: PropTypes.func,
 });
 

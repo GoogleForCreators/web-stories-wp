@@ -18,6 +18,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+import { STORY_VIEWING_LABELS } from './stories';
+import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
+import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
 export const BUTTON_TYPES = {
   CTA: 'cta',
@@ -103,6 +109,17 @@ export const ICON_METRICS = {
 };
 
 export const ITEMS_PER_PAGE = 10;
+
+export const DASHBOARD_VIEWS = {
+  MY_STORIES: 'MY_STORIES',
+  SAVED_TEMPLATES: 'SAVED_TEMPLATES',
+  TEMPLATES_GALLERY: 'TEMPLATES_GALLERY',
+};
+export const RESULT_LABELS = {
+  [DASHBOARD_VIEWS.MY_STORIES]: { ...STORY_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
+};
 
 export * from './animation';
 export * from './direction';

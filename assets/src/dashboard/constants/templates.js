@@ -136,3 +136,11 @@ export const TEMPLATE_COLOR_ITEMS = [
     value: TEMPLATE_COLORS.PURPLE,
   },
 ];
+
+export const TEMPLATES_GALLERY_STATUS = {
+  ALL: 'ALL',
+};
+
+export const TEMPLATES_GALLERY_VIEWING_LABELS = {
+  [TEMPLATES_GALLERY_STATUS.ALL]: __('Viewing all templates', 'web-stories'),
+};

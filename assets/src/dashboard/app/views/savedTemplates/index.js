@@ -17,12 +17,12 @@
 /**
  * WordPress dependencies
  */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -34,10 +34,8 @@ import {
   Layout,
   ToggleButtonGroup,
 } from '../../../components';
-import {
-  SAVED_TEMPLATES_VIEWING_LABELS,
-  SAVED_TEMPLATES_STATUSES,
-} from '../../../constants';
+import { SAVED_TEMPLATES_STATUSES, DASHBOARD_VIEWS } from '../../../constants';
+import useGenericDashboardView from '../../../utils/useGenericDashboardView';
 import useStoryView, {
   FilterPropTypes,
   PagePropTypes,
@@ -59,17 +57,12 @@ import {
 } from '../shared';
 
 function Header({ filter, search, sort, stories, view }) {
-  const listBarLabel = useMemo(
-    () =>
-      search.keyword
-        ? sprintf(
-            /* translators: %s: number of results */
-            _n('%s result', '%s results', stories.length, 'web-stories'),
-            stories.length
-          )
-        : SAVED_TEMPLATES_VIEWING_LABELS[filter.value],
-    [filter.value, search.keyword, stories]
-  );
+  const { header } = useGenericDashboardView({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: stories.length,
+    view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
+  });
 
   return (
     <Layout.Squishable>
@@ -94,7 +87,7 @@ function Header({ filter, search, sort, stories, view }) {
         </HeaderToggleButtonContainer>
       </PageHeading>
       <BodyViewOptions
-        listBarLabel={listBarLabel}
+        listBarLabel={header.resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
         handleSortChange={sort.set}
