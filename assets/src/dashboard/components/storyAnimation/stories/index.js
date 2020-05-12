@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -36,7 +37,7 @@ const PlayButton = () => {
   return <button onClick={playWAAPIAnimations}>{label}</button>;
 };
 
-function TomatoSquare() {
+function ColorSquare({ color }) {
   return (
     <div
       style={{
@@ -45,11 +46,14 @@ function TomatoSquare() {
         right: 0,
         bottom: 0,
         left: 0,
-        backgroundColor: 'tomato',
+        backgroundColor: color,
       }}
     />
   );
 }
+ColorSquare.propTypes = {
+  color: PropTypes.string,
+};
 
 function SquareWrapper({ children }) {
   return (
@@ -71,12 +75,18 @@ SquareWrapper.propTypes = {
 
 const animations = [{ target: ['some-id'], type: 'bounce' }];
 export function _default() {
+  const [state, setState] = useState(0);
   return (
-    <StoryAnimation.Provider animations={animations}>
+    <StoryAnimation.Provider
+      animations={animations}
+      onWAAPIFinish={() => {
+        setState((v) => v + 1);
+      }}
+    >
       <PlayButton />
       <SquareWrapper>
         <StoryAnimation.WAAPIWrapper target="some-id">
-          <TomatoSquare />
+          <ColorSquare color={state % 2 ? 'tomato' : 'green'} />
         </StoryAnimation.WAAPIWrapper>
       </SquareWrapper>
     </StoryAnimation.Provider>

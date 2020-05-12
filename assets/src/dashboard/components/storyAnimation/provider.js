@@ -39,7 +39,7 @@ const WAAPIAnimationMachine = {
 };
 
 const WAAPIAnimationStateReducer = (state, action) => {
-  return WAAPIAnimationMachine[(state, action)] || state;
+  return WAAPIAnimationMachine[state][action] || state;
 };
 
 const createOnFinishPromise = (animation) => {
@@ -107,7 +107,7 @@ function Provider(props) {
    */
   useEffect(() => {
     let cancel = () => {};
-    if (['idle'].includes(WAAPIAnimationState)) {
+    if (['idle'].includes(WAAPIAnimationState) && WAAPIAnimations.length) {
       const cancelablePromise = new Promise((resolve, reject) => {
         cancel = reject;
         Promise.all(WAAPIAnimations.map(createOnFinishPromise)).then(() => {
@@ -116,9 +116,7 @@ function Provider(props) {
         });
       });
       cancelablePromise
-        .then(() => {
-          dispatchWAAPIAnimationState('complete');
-        })
+        .then(() => dispatchWAAPIAnimationState('complete'))
         .catch(() => {});
     }
     return cancel;
