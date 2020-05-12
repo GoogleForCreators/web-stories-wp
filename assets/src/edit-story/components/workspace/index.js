@@ -19,7 +19,6 @@
  */
 import Inspector from '../inspector';
 import Canvas from '../canvas';
-import { SidebarProvider } from '../sidebar';
 import CanvasProvider from '../canvas/canvasProvider';
 import RichTextProvider from '../richText/provider';
 import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
@@ -28,16 +27,14 @@ function Workspace() {
   return (
     <CanvasProvider>
       <RichTextProvider>
-        <SidebarProvider>
-          <WorkspaceLayout>
-            <CanvasArea>
-              <Canvas />
-            </CanvasArea>
-            <InspectorArea>
-              <Inspector />
-            </InspectorArea>
-          </WorkspaceLayout>
-        </SidebarProvider>
+        <WorkspaceLayout>
+          <CanvasArea>
+            <Canvas />
+          </CanvasArea>
+          <InspectorArea>
+            <Inspector />
+          </InspectorArea>
+        </WorkspaceLayout>
       </RichTextProvider>
     </CanvasProvider>
   );

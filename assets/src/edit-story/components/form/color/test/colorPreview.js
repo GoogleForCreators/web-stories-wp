@@ -23,7 +23,6 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
-import SidebarContext from '../../../sidebar/context';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
@@ -34,16 +33,8 @@ jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
 function arrange(children = null) {
-  const sidebarContextValue = {
-    actions: {
-      showColorPickerAt: jest.fn(),
-      hideSidebar: jest.fn(),
-    },
-  };
   const { getByRole, getByLabelText, queryByLabelText } = renderWithTheme(
-    <SidebarContext.Provider value={sidebarContextValue}>
-      {children}
-    </SidebarContext.Provider>
+    children
   );
   const button = getByLabelText(/edit/i);
   const input = queryByLabelText(/enter/i);
@@ -52,7 +43,7 @@ function arrange(children = null) {
     button,
     input,
     swatch,
-    ...sidebarContextValue.actions,
+    queryByLabelText,
   };
 }
 
@@ -136,11 +127,11 @@ describe('<ColorPreview />', () => {
     expect(input).toBeNull();
   });
 
-  it('should invoke callback with proper arguments when clicked', () => {
+  it('should open the color picker when clicked', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { a: 1 };
-    const { button, showColorPickerAt, hideSidebar } = arrange(
+    const { button, queryByLabelText } = arrange(
       <ColorPreview
         onChange={onChange}
         value={value}
@@ -153,19 +144,14 @@ describe('<ColorPreview />', () => {
 
     fireEvent.click(button);
 
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: value,
-      onChange,
-      hasGradient: true,
-      hasOpacity: false,
-      onClose: hideSidebar,
-    });
+    const previewButton = queryByLabelText(/solid pattern/i);
+    expect(previewButton).toBeDefined();
   });
 
-  it('should invoke callback correctly if multiple', () => {
+  it('should open the color picker when clicked if multiple', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
-    const { button, showColorPickerAt, hideSidebar } = arrange(
+    const { button, queryByLabelText } = arrange(
       <ColorPreview
         onChange={onChange}
         value={MULTIPLE_VALUE}
@@ -177,13 +163,8 @@ describe('<ColorPreview />', () => {
 
     fireEvent.click(button);
 
-    expect(showColorPickerAt).toHaveBeenCalledWith(expect.any(Object), {
-      color: null,
-      onChange,
-      hasGradient: true,
-      hasOpacity: true,
-      onClose: hideSidebar,
-    });
+    const previewButton = queryByLabelText(/solid pattern/i);
+    expect(previewButton).toBeDefined();
   });
 
   it('should invoke onChange when inputting valid hex', () => {
