@@ -123,10 +123,10 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current[currentValueIndex || 'firstChild']?.focus();
+      listRef.current[currentValueIndex]?.focus();
     }
     setHoveredIndex(currentValueIndex);
-  }, [currentValueIndex, isOpen, items]);
+  }, [currentValueIndex, isOpen]);
 
   const renderMenuItem = useCallback(
     (item, index) => {
