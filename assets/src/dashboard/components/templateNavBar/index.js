@@ -27,7 +27,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES, APP_ROUTES } from '../../constants';
+import { BUTTON_TYPES } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
 import { parentRoute } from '../../app/router/route';
 
