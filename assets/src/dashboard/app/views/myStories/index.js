@@ -36,7 +36,11 @@ import {
   Layout,
   ToggleButtonGroup,
 } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  STORY_VIEWING_LABELS,
+} from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
@@ -115,10 +119,16 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n('%s total story', '%s total stories', totalStories, 'web-stories'),
-    totalStories
+  const listBarLabel = useMemo(
+    () =>
+      search.keyword
+        ? sprintf(
+            /* translators: %s: number of stories */
+            _n('%s result', '%s results', totalStories, 'web-stories'),
+            totalStories
+          )
+        : STORY_VIEWING_LABELS[filter.value],
+    [filter.value, search.keyword, totalStories]
   );
 
   const storiesView = useMemo(() => {
