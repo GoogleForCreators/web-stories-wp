@@ -24,7 +24,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -158,7 +158,8 @@ const Dropdown = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
@@ -171,6 +172,14 @@ const Dropdown = ({
       setShowMenu(!showMenu);
     }
   };
+
+  useEffect(() => {
+    if (showMenu && dropdownRef.current) {
+      // we need to maintain focus of the dropdown component as a whole
+      // but the button should lose focus as menu is open and focus moves there
+      dropdownButtonRef.current.blur();
+    }
+  }, [showMenu]);
 
   const handleMenuItemSelect = (item) => {
     if (type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL) {
@@ -199,12 +208,21 @@ const Dropdown = ({
     };
     return value && getCurrentLabel();
   }, [value, items]);
+
+  const currentValueIndex = useMemo(() => {
+    const activeItem = items.find((item) => {
+      return item.value === value;
+    });
+    return items.indexOf(activeItem);
+  }, [items, value]);
+
   const hasSelectedItems = selectedItems.length > 0;
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
       <Label aria-label={ariaLabel} alignment={alignment}>
         <InnerDropdown
+          ref={dropdownButtonRef}
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
           disabled={disabled}
@@ -257,6 +275,7 @@ const Dropdown = ({
         />
       ) : (
         <StyledPopoverMenu
+          currentValueIndex={currentValueIndex}
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}

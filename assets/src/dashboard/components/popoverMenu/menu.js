@@ -75,8 +75,8 @@ const Separator = styled.li`
   width: 100%;
 `;
 
-const Menu = ({ isOpen, items, onSelect }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(0);
+const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(currentValueIndex);
   const listRef = useRef(null);
 
   // eslint-disable-next-line consistent-return
@@ -89,7 +89,7 @@ const Menu = ({ isOpen, items, onSelect }) => {
             if (hoveredIndex > 0) {
               setHoveredIndex(hoveredIndex - 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex - 1);
+                listRef.current.children[hoveredIndex - 1].focus();
               }
             }
             break;
@@ -99,7 +99,7 @@ const Menu = ({ isOpen, items, onSelect }) => {
             if (hoveredIndex < items.length - 1) {
               setHoveredIndex(hoveredIndex + 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex + 1);
+                listRef.current.children[hoveredIndex + 1].focus();
               }
             }
             break;
@@ -122,11 +122,11 @@ const Menu = ({ isOpen, items, onSelect }) => {
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollToItem(0);
+    if (listRef.current && isOpen) {
+      listRef.current[currentValueIndex || 'firstChild']?.focus();
     }
-    setHoveredIndex(0);
-  }, [items]);
+    setHoveredIndex(currentValueIndex);
+  }, [currentValueIndex, isOpen, items]);
 
   const renderMenuItem = useCallback(
     (item, index) => {
@@ -151,7 +151,7 @@ const Menu = ({ isOpen, items, onSelect }) => {
   }, []);
 
   return (
-    <MenuContainer>
+    <MenuContainer ref={listRef}>
       {items.map((item, index) => {
         if (item.separator) {
           return renderSeparator(index);
@@ -164,6 +164,7 @@ const Menu = ({ isOpen, items, onSelect }) => {
 
 export const MenuProps = {
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
+  currentValueIndex: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
 };
