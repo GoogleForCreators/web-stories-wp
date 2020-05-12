@@ -39,7 +39,7 @@ describe('reshapeStoryObject', () => {
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
+      title: { raw: 'Carlos Draft' },
       content: {
         rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
         protected: false,
@@ -82,7 +82,7 @@ describe('reshapeStoryObject', () => {
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
+      title: { raw: 'Carlos Draft' },
       content: {
         rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
         protected: false,
@@ -117,7 +117,7 @@ describe('reshapeStoryObject', () => {
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { rendered: 'Carlos Draft' },
+      title: { raw: 'Carlos Draft' },
       content: {
         rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
         protected: false,

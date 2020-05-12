@@ -15,7 +15,7 @@
  */
 export default function (imageBaseUrl) {
   return {
-    version: 15,
+    version: 17,
     pages: [
       {
         elements: [
@@ -77,7 +77,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page1_bg-alt.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page1_bg-alt.png`,
               width: 188,
               height: 334,
               posterId: 0,
@@ -85,7 +85,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page1_bg-alt',
               alt: 'fitness_page1_bg-alt',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -103,7 +103,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page1_logo.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page1_logo.png`,
               width: 123,
               height: 38,
               posterId: 0,
@@ -111,7 +111,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page1_logo',
               alt: 'fitness_page1_logo',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 1,
             y: 1,
@@ -135,7 +135,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -150,9 +149,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 190,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -160,23 +157,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.03,
             lineHeight: 0.74,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'NO\nDAYS\nOFF',
             x: 21,
             y: 240,
             width: 417,
@@ -187,6 +174,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '9fc66e49-85dd-477d-8bb9-30ae259bc7fe',
+            content:
+              '<span style="letter-spacing: -0.0003em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">NO\nDAYS\nOFF</span></span></span>',
           },
         ],
         backgroundElementId: '40b3440b-fdf1-4969-8469-4af6e9d49cb2',
@@ -238,7 +227,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page2_figure-formatted.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page2_figure-formatted.png`,
               width: 220,
               height: 350,
               posterId: 0,
@@ -246,7 +235,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page2_figure-formatted',
               alt: 'fitness_page2_figure-formatted',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 0,
             y: 0,
@@ -270,7 +259,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -285,9 +273,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 42,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -295,24 +281,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.03,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              '“DON’T BE AFRAID TO GIVE UP THE GOOD\n TO GO FOR THE GREAT.”',
             x: 80,
             y: 461,
             width: 303,
@@ -323,6 +298,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'e44d4b12-221b-4fbf-96be-8a3c81e26f7c',
+            content:
+              '<span style="letter-spacing: -0.0003em"><span style="color: rgba(255, 255, 255, 1)">“DON’T BE AFRAID TO GIVE UP THE GOOD\n TO GO FOR THE GREAT.”</span></span>',
           },
           {
             opacity: 100,
@@ -333,7 +310,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -348,9 +324,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -358,23 +332,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '-STEVE PREFONTAINE',
             width: 303,
             height: 20,
             scale: 100,
@@ -386,6 +350,8 @@ export default function (imageBaseUrl) {
             id: '7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb',
             x: 148,
             y: 600,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">-STEVE PREFONTAINE</span>',
           },
         ],
         backgroundElementId: '65bb259e-6b72-4009-af27-3c19ee9d34e7',
@@ -424,7 +390,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page3_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page3_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -432,7 +398,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page3_bg',
               alt: 'fitness_page3_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             scale: 150,
             focalX: 50,
@@ -447,7 +413,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -462,9 +427,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 190,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -472,23 +435,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 207,
-                g: 19,
-                b: 35,
-              },
-            },
-            letterSpacing: -0.03,
             lineHeight: 0.74,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'RUN',
             width: 301,
             height: 140,
             scale: 100,
@@ -500,6 +453,8 @@ export default function (imageBaseUrl) {
             id: '8e351291-f603-459c-883b-66ba0d036694',
             x: 69,
             y: 52,
+            content:
+              '<span style="letter-spacing: -0.0003em"><span style="color: rgba(207, 19, 35, 1)"><span style="font-weight: 600">RUN</span></span></span>',
           },
           {
             opacity: 100,
@@ -510,7 +465,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -525,9 +479,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -535,23 +487,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.74,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LIKE YOU\nMEAN IT',
             width: 427,
             height: 104,
             scale: 100,
@@ -563,6 +505,8 @@ export default function (imageBaseUrl) {
             id: 'b4571f66-24f3-4908-8c18-8ac378735fb9',
             x: 12,
             y: 159,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">LIKE YOU\nMEAN IT</span></span></span>',
           },
           {
             opacity: 100,
@@ -573,7 +517,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Hind',
               service: 'fonts.google.com',
@@ -588,9 +531,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -598,24 +539,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 136,
-                g: 136,
-                b: 136,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Our lead editor shares tips on\nhow to best start running',
             x: 119,
             y: 279,
             width: 202,
@@ -626,6 +556,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '002f9bfc-2f7a-45b0-b900-78251f2746f1',
+            content:
+              '<span style="color: rgba(136, 136, 136, 1)">Our lead editor shares tips on\nhow to best start running</span>',
           },
           {
             opacity: 100,
@@ -636,7 +568,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -658,9 +589,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 700,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -668,23 +597,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             x: 140,
             y: 632,
             width: 160,
@@ -695,6 +614,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '12bef1fe-a18d-4b9f-aa0b-fd718228e0fd',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">See Full Story</span></span>',
           },
           {
             opacity: 100,
@@ -740,16 +661,15 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_arrow.png',
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page3_arrow.png`,
               width: 7,
               height: 3,
               posterId: 0,
               id: 64,
-              title: 'fashion_page3_arrow',
-              alt: 'fashion_page3_arrow',
+              title: 'fitness_page3_arrow',
+              alt: 'fitness_page3_arrow',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 213,
             y: 600.5,
@@ -828,7 +748,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page4_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page4_bg.jpg`,
               width: 220,
               height: 288,
               posterId: 0,
@@ -836,7 +756,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page4_bg',
               alt: 'fitness_page4_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             scale: 100,
             focalX: 49.97721576668946,
@@ -873,7 +793,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page4_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page4_bg.jpg`,
               width: 220,
               height: 288,
               posterId: 0,
@@ -881,7 +801,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page4_bg',
               alt: 'fitness_page4_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -893,7 +813,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -908,9 +827,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 500,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -918,23 +835,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '5',
             x: 175,
             y: -81,
             width: 251,
@@ -945,6 +852,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '37864aea-dc9e-42c6-bcf2-c1fbc93de1b1',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">5</span></span>',
           },
           {
             opacity: 100,
@@ -955,7 +864,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -970,9 +878,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -980,23 +886,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.74,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TOP\nDISTANCE\nRUNNING\nSHOES',
             width: 332,
             height: 207,
             scale: 100,
@@ -1008,6 +904,8 @@ export default function (imageBaseUrl) {
             id: '7470ab2a-4a73-49aa-aaf5-74cfafb51adb',
             x: 20,
             y: 325,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">TOP\nDISTANCE\nRUNNING\nSHOES</span></span></span>',
           },
           {
             opacity: 100,
@@ -1018,7 +916,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Hind',
               service: 'fonts.google.com',
@@ -1033,9 +930,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1043,24 +938,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Hit the trails with the latest and greatest\nlightweight mid-distance shoes for the season.',
             width: 182,
             height: 80,
             scale: 100,
@@ -1072,6 +956,8 @@ export default function (imageBaseUrl) {
             id: '9832faa6-2c7e-43eb-b75a-b68051da626a',
             x: 20,
             y: 544,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Hit the trails with the latest and greatest\nlightweight mid-distance shoes for the season.</span>',
           },
         ],
         backgroundElementId: '0ed58ad7-eed6-4f1a-80a5-7ce92991677f',
@@ -1110,7 +996,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page5_bg.jpg`,
               width: 229,
               height: 157,
               posterId: 0,
@@ -1118,7 +1004,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page5_bg',
               alt: 'fitness_page5_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             scale: 100,
             focalX: 50,
@@ -1133,7 +1019,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1148,9 +1033,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1158,23 +1041,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.74,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'NIKE FLYKNIT FREE RN',
             width: 332,
             height: 106,
             scale: 100,
@@ -1186,6 +1059,8 @@ export default function (imageBaseUrl) {
             id: '09d35ab8-76f0-4252-838d-4eb54a99c2b3',
             x: 23,
             y: 20,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">NIKE FLYKNIT FREE RN</span></span></span>',
           },
           {
             opacity: 100,
@@ -1196,7 +1071,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Hind',
               service: 'fonts.google.com',
@@ -1211,9 +1085,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1221,24 +1093,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Ideal for runs up to 3 miles, the Nike Free RN Flyknit delivers a lightweight design and breathable slip so you can get in and hit your stride.',
             width: 196,
             height: 120,
             scale: 100,
@@ -1250,6 +1111,8 @@ export default function (imageBaseUrl) {
             id: '73bdf015-c3f1-41fb-bc24-79a1b881d914',
             x: 23,
             y: 143,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Ideal for runs up to 3 miles, the Nike Free RN Flyknit delivers a lightweight design and breathable slip so you can get in and hit your stride.</span>',
           },
           {
             opacity: 100,
@@ -1260,7 +1123,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1275,9 +1137,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 500,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1285,23 +1145,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.9,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '3',
             width: 251,
             height: 450,
             scale: 100,
@@ -1313,6 +1163,8 @@ export default function (imageBaseUrl) {
             id: 'a849f15a-ed9b-4589-abe0-c19da7abfcf4',
             x: 219,
             y: 283,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">3</span></span>',
           },
           {
             opacity: 100,
@@ -1352,7 +1204,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1367,9 +1218,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1377,23 +1226,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'BUY NOW',
             width: 80,
             height: 19,
             scale: 100,
@@ -1405,6 +1244,8 @@ export default function (imageBaseUrl) {
             id: 'd4bdc028-59aa-4adc-8762-570676202dc3',
             x: 27.5,
             y: 280.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">BUY NOW</span>',
           },
         ],
         backgroundElementId: '19e74314-7e11-49dd-ab9f-42155fb93091',
@@ -1443,7 +1284,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page6_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page6_bg.jpg`,
               width: 220,
               height: 165,
               posterId: 0,
@@ -1451,7 +1292,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page6_bg',
               alt: 'fitness_page6_bg',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             scale: 100,
             focalX: 50,
@@ -1472,7 +1313,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page6_watch.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page6_watch.png`,
               width: 220,
               height: 341,
               posterId: 0,
@@ -1480,7 +1321,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page6_watch',
               alt: 'fitness_page6_watch',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 28,
             y: -1,
@@ -1504,7 +1345,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1519,9 +1359,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1529,23 +1367,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 207,
-                g: 19,
-                b: 35,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.9,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE BEST',
             width: 269,
             height: 64,
             scale: 100,
@@ -1557,6 +1385,8 @@ export default function (imageBaseUrl) {
             id: '885a6a97-1fb8-4303-a27c-151395801c5b',
             x: 29,
             y: 22,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(207, 19, 35, 1)"><span style="font-weight: 600">THE BEST</span></span></span>',
           },
           {
             opacity: 100,
@@ -1567,7 +1397,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1582,9 +1411,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1592,23 +1419,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 26,
-                g: 26,
-                b: 26,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.9,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'RUNNING',
             width: 269,
             height: 64,
             scale: 100,
@@ -1620,6 +1437,8 @@ export default function (imageBaseUrl) {
             id: 'd67e50e4-6a13-49d7-ad18-0594b3a7a493',
             x: 29,
             y: 77,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(26, 26, 26, 1)"><span style="font-weight: 600">RUNNING</span></span></span>',
           },
           {
             opacity: 100,
@@ -1630,7 +1449,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1645,9 +1463,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1655,23 +1471,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 207,
-                g: 19,
-                b: 35,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.9,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TECH',
             width: 269,
             height: 64,
             scale: 100,
@@ -1683,6 +1489,8 @@ export default function (imageBaseUrl) {
             id: 'b2f87955-3372-4dde-bab0-08727084ec46',
             x: 28,
             y: 132,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(207, 19, 35, 1)"><span style="font-weight: 600">TECH</span></span></span>',
           },
           {
             opacity: 100,
@@ -1693,7 +1501,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1708,9 +1515,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1718,23 +1523,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 26,
-                g: 26,
-                b: 26,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'NIKE + APPLE WATCH',
             width: 429,
             height: 46,
             scale: 100,
@@ -1746,6 +1541,8 @@ export default function (imageBaseUrl) {
             id: 'c432d288-5b66-4c40-8141-060cc29f9ee6',
             x: 5,
             y: 518,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(26, 26, 26, 1)"><span style="font-weight: 600">NIKE + APPLE WATCH</span></span></span>',
           },
           {
             opacity: 100,
@@ -1756,7 +1553,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Hind',
               service: 'fonts.google.com',
@@ -1771,9 +1567,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1781,24 +1575,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 26,
-                g: 26,
-                b: 26,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.',
             width: 328,
             height: 80,
             scale: 100,
@@ -1810,6 +1593,8 @@ export default function (imageBaseUrl) {
             id: 'ae9a760a-a4e8-4759-8407-001b3eb243f3',
             x: 56,
             y: 564,
+            content:
+              '<span style="color: rgba(26, 26, 26, 1)">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>',
           },
         ],
         backgroundElementId: '05e35040-f294-42da-b67d-dfd39327b2d8',
@@ -1877,7 +1662,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page7_bg-formatted.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page7_bg-formatted.png`,
               width: 188,
               height: 334,
               posterId: 0,
@@ -1885,7 +1670,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page7_bg-formatted',
               alt: 'fitness_page7_bg-formatted',
               local: false,
-              sizes: [],
+              sizes: {},
             },
           },
           {
@@ -1897,7 +1682,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -1912,9 +1696,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 105,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1922,23 +1704,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 0.74,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'GEAR\nUP',
             width: 332,
             height: 154,
             scale: 100,
@@ -1950,6 +1722,8 @@ export default function (imageBaseUrl) {
             id: '5d25ecb0-3056-4597-ba08-44e958de6069',
             x: 18,
             y: 30,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">GEAR\nUP</span></span></span>',
           },
           {
             opacity: 100,
@@ -2199,7 +1973,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2214,9 +1987,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2224,23 +1995,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 26,
-                g: 26,
-                b: 26,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'BEATS X IN-EAR HEADPHONES',
             width: 229,
             height: 20,
             scale: 100,
@@ -2252,6 +2013,8 @@ export default function (imageBaseUrl) {
             id: '0884aabc-ca1e-4b37-a87b-68a6fbf377db',
             x: 99,
             y: 325,
+            content:
+              '<span style="color: rgba(26, 26, 26, 1)"><span style="font-weight: 600">BEATS X IN-EAR HEADPHONES</span></span>',
           },
           {
             opacity: 100,
@@ -2262,7 +2025,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Hind',
               service: 'fonts.google.com',
@@ -2277,9 +2039,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2287,24 +2047,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 26,
-                g: 26,
-                b: 26,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'With up to 8 hours of battery life and Fast Fuel charging, these earphones let you experience authentic, clear sound throughout your day.',
             width: 215,
             height: 94,
             scale: 100,
@@ -2316,6 +2065,8 @@ export default function (imageBaseUrl) {
             id: 'f24e628b-4f66-4815-9511-ac9adc04ace4',
             x: 113,
             y: 351,
+            content:
+              '<span style="color: rgba(26, 26, 26, 1)">With up to 8 hours of battery life and Fast Fuel charging, these earphones let you experience authentic, clear sound throughout your day.</span>',
           },
           {
             opacity: 100,
@@ -2356,7 +2107,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2371,9 +2121,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2381,23 +2129,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'BUY NOW',
             width: 80,
             height: 19,
             scale: 100,
@@ -2409,6 +2147,8 @@ export default function (imageBaseUrl) {
             id: '998771ef-0336-4f5e-bdea-fcc6a8491b58',
             x: 117.5,
             y: 477.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">BUY NOW</span>',
           },
         ],
         backgroundElementId: '1613baad-b2a9-42e7-b0a6-d2f4c6941f65',
@@ -2460,7 +2200,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_offsetblock.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_offsetblock.png`,
               width: 94,
               height: 76,
               posterId: 0,
@@ -2468,7 +2208,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_offsetblock',
               alt: 'fitness_page8_offsetblock',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 220,
             y: 483,
@@ -2498,7 +2238,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story3-formatted.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_story3-formatted.png`,
               width: 95,
               height: 97,
               posterId: 0,
@@ -2506,7 +2246,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story3-formatted',
               alt: 'fitness_page8_story3-formatted',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: -2,
             y: 412,
@@ -2536,7 +2276,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story1-formatted.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_story1-formatted.png`,
               width: 95,
               height: 97,
               posterId: 0,
@@ -2544,7 +2284,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story1-formatted',
               alt: 'fitness_page8_story1-formatted',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 0,
             y: 125,
@@ -2574,7 +2314,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_story2-formatted.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_story2-formatted.png`,
               width: 188,
               height: 97,
               posterId: 0,
@@ -2582,7 +2322,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story2-formatted',
               alt: 'fitness_page8_story2-formatted',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: -3,
             y: 237,
@@ -2606,7 +2346,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2621,9 +2360,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2631,23 +2368,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 207,
-                g: 19,
-                b: 35,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MORE',
             width: 332,
             height: 72,
             scale: 100,
@@ -2659,6 +2386,8 @@ export default function (imageBaseUrl) {
             id: '7447a2ba-a336-4618-beb2-8423ebc1ddc3',
             x: 12,
             y: 14,
+            content:
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(207, 19, 35, 1)"><span style="font-weight: 600">MORE</span></span></span>',
           },
           {
             opacity: 100,
@@ -2669,7 +2398,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2684,9 +2412,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 72,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2694,23 +2420,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: -0.01,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'STORIES',
             width: 332,
             height: 72,
             scale: 100,
@@ -2722,6 +2438,8 @@ export default function (imageBaseUrl) {
             id: 'cc3ac70e-1175-4b75-92eb-26f4656f4811',
             x: 11,
             y: 67,
+            content:
+              '<span style="font-weight: 600; color: #fff">STORIES</span>',
           },
           {
             opacity: 100,
@@ -2732,7 +2450,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2747,9 +2464,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2757,23 +2472,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'SWEAT RESISTENT\nEARBUDS',
             width: 146,
             height: 40,
             scale: 100,
@@ -2785,6 +2490,8 @@ export default function (imageBaseUrl) {
             id: '96fea994-b71e-442f-b611-16d73f520016',
             x: 257,
             y: 168,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">SWEAT RESISTENT\nEARBUDS</span></span>',
           },
           {
             opacity: 100,
@@ -2795,7 +2502,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2810,9 +2516,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2820,23 +2524,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '10 BEST CORE\nTRAINING EXERCISES',
             width: 146,
             height: 38,
             scale: 100,
@@ -2848,6 +2542,8 @@ export default function (imageBaseUrl) {
             id: '9b117b87-0269-4c4b-9e0d-8cdbcb0df89a',
             x: 34,
             y: 339,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">10 BEST CORE\nTRAINING EXERCISES</span></span>',
           },
           {
             opacity: 100,
@@ -2858,7 +2554,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2873,9 +2568,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2883,23 +2576,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TRIATHLON TRAINING\nIN THE SUMMER',
             width: 146,
             height: 38,
             scale: 100,
@@ -2911,6 +2594,8 @@ export default function (imageBaseUrl) {
             id: '03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3',
             x: 256,
             y: 463,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">TRIATHLON TRAINING\nIN THE SUMMER</span></span>',
           },
           {
             opacity: 100,
@@ -2921,7 +2606,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Teko',
               service: 'fonts.google.com',
@@ -2936,9 +2620,7 @@ export default function (imageBaseUrl) {
                 [0, 700],
               ],
             },
-            fontWeight: 600,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2946,23 +2628,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'SOCIAL',
             width: 146,
             height: 20,
             scale: 100,
@@ -2974,6 +2646,8 @@ export default function (imageBaseUrl) {
             id: '0e34db64-1382-4541-83a6-fe86d3c86cd9',
             x: 50,
             y: 624,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">SOCIAL</span></span>',
           },
           {
             opacity: 100,
@@ -2990,7 +2664,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Facebook.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_Facebook.png`,
               width: 6,
               height: 11,
               posterId: 0,
@@ -2998,7 +2672,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Facebook',
               alt: 'fitness_page8_Facebook',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 264,
             y: 616.5,
@@ -3028,7 +2702,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Instagram.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_Instagram.png`,
               width: 12,
               height: 12,
               posterId: 0,
@@ -3036,7 +2710,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Instagram',
               alt: 'fitness_page8_Instagram',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 294,
             y: 616.5,
@@ -3066,7 +2740,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Youtube.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_Youtube.png`,
               width: 13,
               height: 9,
               posterId: 0,
@@ -3074,7 +2748,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Youtube',
               alt: 'fitness_page8_Youtube',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 337,
             y: 620,
@@ -3104,7 +2778,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/assets/images/templates/fitness/fitness_page8_Twitter.png`,
+              src: `${imageBaseUrl}/images/templates/fitness/fitness_page8_Twitter.png`,
               width: 12,
               height: 10,
               posterId: 0,
@@ -3112,7 +2786,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Twitter',
               alt: 'fitness_page8_Twitter',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 379,
             y: 617.5,

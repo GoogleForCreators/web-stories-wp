@@ -19,14 +19,14 @@
  */
 import Inspector from '../inspector';
 import Canvas from '../canvas';
-import { SidebarProvider } from '../sidebar';
 import CanvasProvider from '../canvas/canvasProvider';
+import RichTextProvider from '../richText/provider';
 import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
   return (
     <CanvasProvider>
-      <SidebarProvider>
+      <RichTextProvider>
         <WorkspaceLayout>
           <CanvasArea>
             <Canvas />
@@ -35,7 +35,7 @@ function Workspace() {
             <Inspector />
           </InspectorArea>
         </WorkspaceLayout>
-      </SidebarProvider>
+      </RichTextProvider>
     </CanvasProvider>
   );
 }

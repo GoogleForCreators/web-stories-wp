@@ -177,7 +177,11 @@ function PublishPanel() {
           <StyledToggleIcon />
         </StyledButton>
       </Row>
-      <Popup anchor={dateFieldRef} isOpen={showDatePicker}>
+      <Popup
+        anchor={dateFieldRef}
+        isOpen={showDatePicker}
+        placement={'bottom-end'}
+      >
         <DateTime
           value={date}
           onChange={handleDateChange}

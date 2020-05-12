@@ -64,7 +64,7 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
-  const { pageSize } = usePagePreviewSize();
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
     state: {
       queryParams: { id: templateId, isLocal },
@@ -244,7 +244,7 @@ function TemplateDetail() {
                     </SubHeading>
                     <UnitsProvider pageSize={pageSize}>
                       <StoryGridView
-                        filteredStories={relatedTemplates}
+                        stories={relatedTemplates}
                         centerActionLabel={__('View', 'web-stories')}
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate

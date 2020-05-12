@@ -32,6 +32,7 @@ import {
 import BodyWrapper from './bodyWrapper';
 
 const DisplayFormatContainer = styled.div`
+  height: ${({ theme }) => theme.formatContainer.height}px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,6 +75,7 @@ const BodyViewOptions = ({
         {layoutStyle === VIEW_STYLE.GRID && (
           <StorySortDropdownContainer>
             <SortDropdown
+              alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
               items={STORY_SORT_MENU_ITEMS}
               type={DROPDOWN_TYPES.TRANSPARENT_MENU}
@@ -96,7 +98,7 @@ const BodyViewOptions = ({
 
 BodyViewOptions.propTypes = {
   currentSort: PropTypes.string.isRequired,
-  handleLayoutSelect: PropTypes.func.isRequired,
+  handleLayoutSelect: PropTypes.func,
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
   listBarLabel: PropTypes.string.isRequired,

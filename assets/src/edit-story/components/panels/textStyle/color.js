@@ -37,6 +37,7 @@ import { Color, Label, Row, ToggleButton } from '../../form';
 import { useKeyDownEffect } from '../../keyboard';
 import { useCommonColorValue, getCommonValue } from '../utils';
 import getColorPickerActions from '../utils/getColorPickerActions';
+import useRichTextFormatting from './useRichTextFormatting';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
@@ -79,7 +80,6 @@ const BUTTONS = [
 ];
 
 function ColorControls({ selectedElements, pushUpdate }) {
-  const color = useCommonColorValue(selectedElements, 'color');
   const backgroundColor = useCommonColorValue(
     selectedElements,
     'backgroundColor'
@@ -89,6 +89,11 @@ function ColorControls({ selectedElements, pushUpdate }) {
     'backgroundTextMode'
   );
   const fillRow = useRef();
+
+  const {
+    textInfo: { color },
+    handlers: { handleSetColor },
+  } = useRichTextFormatting(selectedElements, pushUpdate);
 
   useKeyDownEffect(
     fillRow,
@@ -113,14 +118,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <Color
           data-testid="text.color"
           value={color}
-          onChange={(value) =>
-            pushUpdate(
-              {
-                color: value,
-              },
-              true
-            )
-          }
+          onChange={handleSetColor}
           colorPickerActions={getColorPickerActions}
         />
       </Row>

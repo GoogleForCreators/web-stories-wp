@@ -25,9 +25,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
+import {
+  COLOR_PRESETS_PER_ROW,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../constants';
 
-const COLORS_PER_ROW = 6;
-const STYLES_PER_ROW = 3;
 const PRESET_HEIGHT = 35;
 
 const Group = styled.div`
@@ -75,7 +77,8 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
       // When the user navigates in the color presets using the arrow keys,
       // Let's change the active index accordingly, to indicate which preset should be focused
       if (groupRef.current) {
-        const rowLength = 'color' === type ? COLORS_PER_ROW : STYLES_PER_ROW;
+        const rowLength =
+          'color' === type ? COLOR_PRESETS_PER_ROW : STYLE_PRESETS_PER_ROW;
         const diff = getIndexDiff(key, rowLength);
         const maxIndex = presets.length - 1;
         const val = (activeIndex ?? 0) + diff;
@@ -91,7 +94,9 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
   );
 
   const buttonWidth =
-    'color' === type ? 100 / COLORS_PER_ROW : 100 / STYLES_PER_ROW;
+    'color' === type
+      ? 100 / COLOR_PRESETS_PER_ROW
+      : 100 / STYLE_PRESETS_PER_ROW;
   return (
     <>
       <Label>{label}</Label>

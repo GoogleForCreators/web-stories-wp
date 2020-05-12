@@ -23,7 +23,6 @@ import { useCallback, useState } from 'react';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -36,9 +35,10 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import createError from '../../../utils/createError';
 
 function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
-  const { uploadFile } = useUploader();
+  const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
   const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
@@ -51,12 +51,29 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
         setIsUploading(true);
         setPreventUnload('upload', true);
 
+        files.reverse().map((file) => {
+          if (!isValidType(file)) {
+            /* translators: %s is a list of allowed file extensions. */
+            const message = sprintf(
+              /* translators: %s: list of allowed file types. */
+              __('Please choose only %s to upload.', 'web-stories'),
+              allowedFileTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
+            );
+
+            throw createError('ValidError', file.name, message);
+          }
+        });
+
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
             localResource: await getResourceFromLocalFile(file),
             file,
           }))
         );
+        localFiles = localFiles.filter((f) => f.localResource != null);
 
         if (onLocalFile) {
           localFiles = localFiles.map(({ localResource, file }) => {
@@ -77,19 +94,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
 
         setIsUploading(false);
         showSnackbar({
-          message: createInterpolateElement(
-            sprintf(
-              /* translators: %s: list of allowed file types. */
-              __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedFileTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
-            ),
-            {
-              b: <b />,
-            }
-          ),
+          message: e.message,
         });
         return;
       }
@@ -140,6 +145,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       pagingNum,
       mediaType,
       uploadFile,
+      isValidType,
       setPreventUnload,
     ]
   );

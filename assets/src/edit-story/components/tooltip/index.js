@@ -20,40 +20,22 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { prettifyShortcut } from '../keyboard';
+import Popup, { Placement } from '../popup';
 
-const HORIZONTAL_SPACING = 12;
-const VERTICAL_SPACING = 42;
+const SPACING = 12;
 const PADDING = 4;
 
 const Wrapper = styled.div`
   position: relative;
 `;
 
-const Container = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  z-index: 1500;
-  pointer-events: none;
-  align-items: center;
-  justify-content: center;
-`;
-
-/**
- * To circumvent overflow: hidden; on the parent
- * container, we position the tooltip using
- * position: fixed; and offset using transforms
- */
 const Tooltip = styled.div`
-  position: fixed;
   background-color: ${({ theme }) => theme.colors.bg.v0};
   color: ${({ theme }) => theme.colors.fg.v1};
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -70,84 +52,58 @@ const Tooltip = styled.div`
   white-space: nowrap;
   will-change: transform;
   transition: 0.4s opacity;
-  ${({ placement }) =>
-    placement === 'top'
-      ? `
-        transform: translateY(-${VERTICAL_SPACING}px);
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'bottom'
-      ? `
-        transform: translateY(${VERTICAL_SPACING}px);
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'left'
-      ? `
-        transform: translateX(-100%);
-        align-self: flex-start;
-        margin-left: -${HORIZONTAL_SPACING}px;
-      `
-      : ``}
-  ${({ placement }) =>
-    placement === 'right'
-      ? `
-        transform: translateX(100%);
-        align-self: flex-end;
-        margin-left: ${HORIZONTAL_SPACING}px;
-      `
-      : ``}
-  opacity:  ${({ shown }) => (shown ? 1 : 0)};
+  opacity: ${({ shown }) => (shown ? 1 : 0)};
+  pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
+  z-index: 9999;
+`;
 
-  ${({ arrow, theme, placement }) =>
-    arrow &&
-    `&:after {
-      content: '';
-      position: absolute;
-      ${
-        placement === 'top'
-          ? `
-            bottom: -6px;
-            border-top: 6px solid ${theme.colors.bg.v0};
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-          `
-          : ``
-      }
-      ${
-        placement === 'bottom'
-          ? `
-            top: -6px;
-            border-bottom: 6px solid ${theme.colors.bg.v0};
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-          `
-          : ``
-      }
-      ${
-        placement === 'right'
-          ? `
-            left: -6px;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-right: 6px solid ${theme.colors.bg.v0};
-          `
-          : ``
-      }
-      ${
-        placement === 'left'
-          ? `
-            right: -6px;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-left: 6px solid ${theme.colors.bg.v0};
-          `
-          : ``
-      }
+const TRANSPARENT_BORDER = `6px solid transparent`;
 
-      box-shadow: 0px 6px 10px ${rgba(theme.colors.bg.v0, 0.1)};
-    }`}
+const TooltipArrow = styled.div`
+  position: absolute;
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  ${({ placement, theme }) => {
+    switch (placement) {
+      case Placement.TOP:
+      case Placement.TOP_START:
+      case Placement.TOP_END:
+        return `
+          bottom: -6px;
+          border-top: 6px solid ${theme.colors.bg.v0};
+          border-left: ${TRANSPARENT_BORDER};
+          border-right: ${TRANSPARENT_BORDER};
+        `;
+      case Placement.BOTTOM:
+      case Placement.BOTTOM_START:
+      case Placement.BOTTOM_END:
+        return `
+          top: -6px;
+          border-bottom: 6px solid ${theme.colors.bg.v0};
+          border-left: ${TRANSPARENT_BORDER};
+          border-right: ${TRANSPARENT_BORDER};
+        `;
+      case Placement.LEFT:
+      case Placement.LEFT_START:
+      case Placement.LEFT_END:
+        return `
+          right: -6px;
+          border-top: ${TRANSPARENT_BORDER};
+          border-bottom: ${TRANSPARENT_BORDER};
+          border-left: 6px solid ${theme.colors.bg.v0};
+        `;
+      case Placement.RIGHT:
+      case Placement.RIGHT_START:
+      case Placement.RIGHT_END:
+        return `
+          left: -6px;
+          border-top: ${TRANSPARENT_BORDER};
+          border-bottom: ${TRANSPARENT_BORDER};
+          border-right: 6px solid ${theme.colors.bg.v0};
+        `;
+      default:
+        return ``;
+    }
+  }}
 `;
 
 function WithTooltip({
@@ -163,34 +119,57 @@ function WithTooltip({
   ...props
 }) {
   const [shown, setShown] = useState(false);
+  const ref = useRef(null);
+  const spacing = useMemo(
+    () => ({
+      x:
+        placement.startsWith('left') || placement.startsWith('right')
+          ? SPACING
+          : 0,
+      y:
+        placement.startsWith('top') || placement.startsWith('bottom')
+          ? SPACING
+          : 0,
+    }),
+    [placement]
+  );
 
   return (
-    <Wrapper
-      {...props}
-      onPointerEnter={(e) => {
-        setShown(true);
-        onPointerEnter(e);
-      }}
-      onPointerLeave={(e) => {
-        setShown(false);
-        onPointerLeave(e);
-      }}
-      onFocus={(e) => {
-        setShown(true);
-        onFocus(e);
-      }}
-      onBlur={(e) => {
-        setShown(false);
-        onBlur(e);
-      }}
-    >
-      <Container placement={placement}>
+    <>
+      <Wrapper
+        onPointerEnter={(e) => {
+          setShown(true);
+          onPointerEnter(e);
+        }}
+        onPointerLeave={(e) => {
+          setShown(false);
+          onPointerLeave(e);
+        }}
+        onFocus={(e) => {
+          setShown(true);
+          onFocus(e);
+        }}
+        onBlur={(e) => {
+          setShown(false);
+          onBlur(e);
+        }}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Wrapper>
+      <Popup
+        anchor={ref}
+        placement={placement}
+        spacing={spacing}
+        isOpen={Boolean(shown && (shortcut || title))}
+      >
         <Tooltip arrow={arrow} placement={placement} shown={shown}>
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
+          <TooltipArrow placement={placement} />
         </Tooltip>
-      </Container>
-      {children}
-    </Wrapper>
+      </Popup>
+    </>
   );
 }
 

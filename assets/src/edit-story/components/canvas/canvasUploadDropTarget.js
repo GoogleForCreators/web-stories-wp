@@ -46,15 +46,17 @@ function CanvasUploadDropTarget({ children }) {
       {children}
       <UploadDropTargetOverlay>
         <CanvasLayer>
-          <PageArea>
-            <UploadDropTargetMessage
-              id={MESSAGE_ID}
-              message={__(
-                'Upload to media library and add to the page.',
-                'web-stories'
-              )}
-            />
-          </PageArea>
+          <PageArea
+            overlay={
+              <UploadDropTargetMessage
+                id={MESSAGE_ID}
+                message={__(
+                  'Upload to media library and add to the page.',
+                  'web-stories'
+                )}
+              />
+            }
+          />
         </CanvasLayer>
       </UploadDropTargetOverlay>
     </UploadDropTarget>

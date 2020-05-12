@@ -28,17 +28,17 @@ export default function TypeaheadSearch({
   placeholder = '',
   handleChange,
   currentValue = '',
-  filteredStories = [],
+  stories = [],
 }) {
   const typeaheadMenuOptions = useMemo(() => {
     // todo add different option sets, value and label won't always be the same
-    return filteredStories.map((filteredStory) => {
+    return stories.map((story) => {
       return {
-        label: filteredStory.title,
-        value: filteredStory.title,
+        label: story.title,
+        value: story.title,
       };
     });
-  }, [filteredStories]);
+  }, [stories]);
 
   return (
     <TypeaheadInput
@@ -56,7 +56,7 @@ TypeaheadSearch.propTypes = {
   placeholder: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   currentValue: PropTypes.string,
-  filteredStories: PropTypes.arrayOf(
+  stories: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

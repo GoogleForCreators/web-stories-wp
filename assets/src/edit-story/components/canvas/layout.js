@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { forwardRef, createRef } from 'react';
 
 /**
  * Internal dependencies
@@ -110,12 +110,21 @@ const Area = styled.div`
 // mechanisms.
 const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
-  overflowAllowed: false,
+  overflowAllowed: true,
 })`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+const PageAreaOverflowHidden = styled.div`
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -123,6 +132,7 @@ const PageAreaSafeZone = styled.div`
   height: var(--page-height-px);
   overflow: visible;
   position: relative;
+  margin: auto 0;
 `;
 
 const PageAreaDangerZone = styled.div`
@@ -183,7 +193,7 @@ function useLayoutParams(containerRef) {
 
     let bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size / PAGE_RATIO <= maxHeight
+        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
     setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });
@@ -201,22 +211,31 @@ function useLayoutParamsCssVars() {
   };
 }
 
-const PageArea = forwardRef(({ children, showDangerZone }, ref) => {
-  return (
-    <PageAreaFullbleedContainer>
-      <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
-      {showDangerZone && (
-        <>
-          <PageAreaDangerZoneTop />
-          <PageAreaDangerZoneBottom />
-        </>
-      )}
-    </PageAreaFullbleedContainer>
-  );
-});
+const PageArea = forwardRef(
+  (
+    { children, showDangerZone, fullbleedRef = createRef(), overlay = [] },
+    ref
+  ) => {
+    return (
+      <PageAreaFullbleedContainer ref={fullbleedRef}>
+        <PageAreaOverflowHidden>
+          <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+          {showDangerZone && (
+            <>
+              <PageAreaDangerZoneTop />
+              <PageAreaDangerZoneBottom />
+            </>
+          )}
+        </PageAreaOverflowHidden>
+        {overlay}
+      </PageAreaFullbleedContainer>
+    );
+  }
+);
 
 PageArea.propTypes = {
   children: PropTypes.node,
+  overlay: PropTypes.node,
   showDangerZone: PropTypes.bool,
 };
 

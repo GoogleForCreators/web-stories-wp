@@ -49,6 +49,7 @@ export function reshapeStoryObject(editStoryURL) {
       modified,
       status,
       tags,
+      date,
       categories,
       author,
       story_data: storyData,
@@ -63,8 +64,9 @@ export function reshapeStoryObject(editStoryURL) {
     return {
       id,
       status,
-      title: title.rendered,
+      title: title.raw,
       modified: moment(modified),
+      created: moment(date),
       pages: storyData.pages,
       tags,
       categories,

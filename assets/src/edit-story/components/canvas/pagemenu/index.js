@@ -38,6 +38,7 @@ import { ReactComponent as Add } from '../../../icons/add_page.svg';
 import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
 import { ReactComponent as Text } from '../../../icons/text_helper.svg';
 import WithTooltip from '../../tooltip';
+import useCanvas from '../useCanvas';
 
 const HEIGHT = 28;
 
@@ -113,6 +114,9 @@ function PageMenu() {
     state: { currentPageNumber, currentPage },
     actions: { deleteCurrentPage, addPage },
   } = useStory();
+  const {
+    state: { pageSize },
+  } = useCanvas();
   const { isRTL } = useConfig();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
@@ -140,15 +144,19 @@ function PageMenu() {
     <Wrapper>
       <Box>
         <Options>
-          <PageCount>
-            {sprintf(
-              /* translators: %s: Page number. */
-              __('Page %s', 'web-stories'),
-              currentPageNumber
-            )}
-          </PageCount>
-          <Space />
-          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
+          {pageSize.width > 280 && (
+            <>
+              <PageCount>
+                {sprintf(
+                  /* translators: %s: Page number. */
+                  __('Page %s', 'web-stories'),
+                  currentPageNumber
+                )}
+              </PageCount>
+              <Space />
+            </>
+          )}
+          <WithTooltip title={__('Delete page', 'web-stories')}>
             <Icon
               onClick={handleDeletePage}
               aria-label={__('Delete Page', 'web-stories')}

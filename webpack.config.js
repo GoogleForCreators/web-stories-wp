@@ -18,6 +18,7 @@
  * External dependencies
  */
 const path = require('path');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -97,6 +98,7 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
+    new webpack.EnvironmentPlugin({ DISABLE_PREVENT: false }),
   ].filter(Boolean),
   optimization: {
     minimizer: [

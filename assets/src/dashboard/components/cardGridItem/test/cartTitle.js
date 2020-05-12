@@ -19,14 +19,15 @@
  */
 import CardTitle from '../cardTitle';
 import { renderWithTheme } from '../../../testUtils';
+import { STORY_STATUS } from '../../../constants';
 
 describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
     const { getByText, queryByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        modifiedDate="July 13"
-        onEditCancel={jest.fn()}
+        displayDate={new Date()}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
       />
@@ -40,13 +41,29 @@ describe('CardTitle', () => {
     const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        modifiedDate="July 13"
-        onEditCancel={jest.fn()}
+        displayDate="01/20/2020"
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
       />
     );
 
     expect(getByTestId('title-rename-input')).toBeDefined();
+    expect(getByTestId('title-rename-input')).toHaveFocus();
+  });
+
+  it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        displayDate="4/30/2020"
+        status={STORY_STATUS.DRAFT}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+        editMode={false}
+      />
+    );
+
+    expect(getByText('draft')).toBeDefined();
   });
 });

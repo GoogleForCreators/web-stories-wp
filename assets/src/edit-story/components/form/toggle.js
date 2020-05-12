@@ -19,6 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import WithTooltip from '../tooltip';
 
 const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
   position: absolute;
@@ -71,18 +77,23 @@ function Toggle({
   onChange,
   boxed,
   expand,
+  title = null,
   ...rest
 }) {
+  const Wrapper = title ? WithTooltip : Fragment;
   return (
-    <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
-      <CheckBoxInput
-        checked={value}
-        onChange={() => onChange(!value)}
-        disabled={disabled}
-        {...rest}
-      />
-      <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
-    </ContainerLabel>
+    <Wrapper>
+      <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
+        <CheckBoxInput
+          checked={value}
+          onChange={() => onChange(!value)}
+          disabled={disabled}
+          title={title}
+          {...rest}
+        />
+        <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
+      </ContainerLabel>
+    </Wrapper>
   );
 }
 
@@ -94,6 +105,7 @@ Toggle.propTypes = {
   disabled: PropTypes.bool,
   boxed: PropTypes.bool,
   expand: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 Toggle.defaultProps = {

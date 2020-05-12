@@ -119,7 +119,7 @@ function createElementForCanvas(
     updateForResizeEvent,
   } = getDefinitionForType(type);
 
-  const attrs = { ...defaultAttributes, ...rest };
+  const attrs = { type, ...defaultAttributes, ...rest };
 
   // Width and height defaults. Width takes precedence.
   const ratio =
@@ -198,7 +198,6 @@ function createElementForCanvas(
         }
       : {}),
   });
-
   return element;
 }
 

@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { PatternPropType } from '../../types';
 import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
+import createSolid from '../../utils/createSolid';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -102,6 +103,9 @@ function ColorPicker({
   useEffect(() => {
     if (color) {
       load(color);
+    } else {
+      // If no color given, load solid black
+      load(createSolid(0, 0, 0));
     }
   }, [color, load]);
 
@@ -111,16 +115,19 @@ function ColorPicker({
 
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
-  const handleCloseAndRefocus = useCallback(() => {
-    // Ignore reason: In Jest, focus is always on document.body if not on any specific
-    // element, so it can never be falsy, as it can be in a real browser.
+  const handleCloseAndRefocus = useCallback(
+    (evt) => {
+      // Ignore reason: In Jest, focus is always on document.body if not on any specific
+      // element, so it can never be falsy, as it can be in a real browser.
 
-    // istanbul ignore else
-    if (previousFocus.current) {
-      previousFocus.current.focus();
-    }
-    onClose();
-  }, [onClose]);
+      // istanbul ignore else
+      if (previousFocus.current) {
+        previousFocus.current.focus();
+      }
+      onClose(evt);
+    },
+    [onClose]
+  );
 
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
 

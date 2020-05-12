@@ -30,15 +30,15 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardTitle,
   CardItemMenu,
+  CardTitle,
   CardPreviewContainer,
   ActionLabel,
   PreviewPage,
+  PreviewErrorBoundary,
 } from '../../../components';
-import { StoriesPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import { StoriesPropType, UsersPropType } from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -55,7 +55,8 @@ const StoryGrid = styled(CardGrid)`
 `;
 
 const StoryGridView = ({
-  filteredStories,
+  stories,
+  users,
   centerActionLabel,
   bottomActionLabel,
   createTemplateFromStory,
@@ -117,7 +118,7 @@ const StoryGridView = ({
 
   return (
     <StoryGrid>
-      {filteredStories.map((story) => (
+      {stories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
             centerAction={{
@@ -137,12 +138,14 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                modifiedDate={story.modified.startOf('day').fromNow()}
+                status={story.status}
+                author={users[story.author]?.name}
+                displayDate={story.modified}
+                editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }
                 onEditCancel={() => setTitleRenameId(-1)}
-                editMode={titleRenameId === story.id}
               />
               <CardItemMenu
                 onMoreButtonSelected={setContextMenuId}
@@ -160,7 +163,8 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
-  filteredStories: StoriesPropType,
+  stories: StoriesPropType,
+  users: UsersPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,

@@ -81,15 +81,12 @@ fi
 # Install and build.
 cd "$project_dir"
 
-echo "Starting build process..."
-
-echo "Installing npm dependencies"
-npm install --silent
-
 echo "Building plugin"
 npm run build:js --silent
-npm run build:plugin --silent -- --prerelease
-npm run bundle-plugin --silent -- --copy
+npm run workflow:build-plugin --silent -- --prerelease --cdn
+
+echo "Bundling plugin"
+npm run workflow:bundle-plugin --silent -- --copy
 
 echo "Moving files to repository"
 rsync -avz --delete ./build/web-stories/ "$repo_dir/wp-content/plugins/web-stories/"
