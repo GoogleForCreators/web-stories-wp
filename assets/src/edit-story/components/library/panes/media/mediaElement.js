@@ -29,6 +29,7 @@ import { useFeature } from 'flagged';
  */
 import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
+import useSmallestImage from './useSmallestImage';
 import DropDownMenu from './dropDownMenu';
 
 const styledTiles = css`
@@ -126,7 +127,6 @@ const MediaElement = ({
     type,
     width: originalWidth,
     height: originalHeight,
-    sizes,
     local,
     alt,
   } = resource;
@@ -216,17 +216,6 @@ const MediaElement = ({
   const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
-    let imageSrc = src;
-    if (sizes) {
-      const { web_stories_thumbnail: webStoriesThumbnail, large, full } = sizes;
-      if (webStoriesThumbnail && webStoriesThumbnail.source_url) {
-        imageSrc = webStoriesThumbnail.source_url;
-      } else if (large && large.source_url) {
-        imageSrc = large.source_url;
-      } else if (full && full.source_url) {
-        imageSrc = full.source_url;
-      }
-    }
     return (
       <Container
         data-testid="mediaElement"
@@ -236,7 +225,7 @@ const MediaElement = ({
       >
         <Image
           key={src}
-          src={imageSrc}
+          src={useSmallestImage(resource)}
           ref={mediaElement}
           width={width}
           height={height}
