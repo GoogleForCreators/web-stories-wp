@@ -66,26 +66,6 @@ const NumberInput = styled.input`
   }
 `;
 
-const SelectInput = styled.select`
-  font-size: 13px;
-  line-height: 1.38461538;
-  color: #32373c;
-  border-color: #7e8993;
-  box-shadow: none;
-  border-radius: 3px;
-  padding: 3px 24px 3px 8px;
-  min-height: 30px;
-  max-width: 25rem;
-  vertical-align: middle;
-  appearance: none;
-  background: #fff
-    url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E)
-    no-repeat right 5px top 55%;
-  background-size: 16px 16px;
-  cursor: pointer;
-  margin-right: 4px;
-`;
-
 const DateTimeSeparator = styled.span`
   display: inline-block;
   padding: 0 3px 0 0;
@@ -145,9 +125,6 @@ const PMButton = styled(Button)`
 function DateTimePicker({ currentTime, onChange, is12Hour }) {
   const selectedTime = currentTime ? moment(currentTime) : moment();
   const [state, setState] = useState({
-    day: selectedTime.format('DD'),
-    month: selectedTime.format('MM'),
-    year: selectedTime.format('YYYY'),
     minutes: selectedTime.format('mm'),
     am: selectedTime.format('A'),
     hours: selectedTime.format(is12Hour ? 'hh' : 'HH'),
@@ -208,36 +185,6 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
     changeDate(newDate);
   };
 
-  const updateDay = () => {
-    const { day, date } = state;
-    const value = parseInt(day);
-    if (isNaN(value) || value < 1 || value > 31 || day === value) {
-      return;
-    }
-    const newDate = date.clone().date(value);
-    changeDate(newDate);
-  };
-
-  const updateMonth = () => {
-    const { month, date } = state;
-    const value = parseInt(month);
-    if (isNaN(value) || value < 1 || value > 12 || month === value) {
-      return;
-    }
-    const newDate = date.clone().month(value - 1);
-    changeDate(newDate);
-  };
-
-  const updateYear = () => {
-    const { year, date } = state;
-    const value = parseInt(year);
-    if (isNaN(value) || value < 0 || value > 9999 || year === value) {
-      return;
-    }
-    const newDate = date.clone().year(value);
-    changeDate(newDate);
-  };
-
   const updateAmPm = (value) => () => {
     const { am, date, hours } = state;
     if (am === value) {
@@ -252,72 +199,8 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
     changeDate(newDate, { am: value });
   };
 
-  const renderDay = (day) => {
-    return (
-      <div key="render-day">
-        <NumberInput
-          aria-label={__('Day', 'web-stories')}
-          type="number"
-          value={day}
-          step={1}
-          min={1}
-          onChange={onChangeEvent('day')}
-          onBlur={updateDay}
-        />
-      </div>
-    );
-  };
-
-  const renderMonth = (month) => {
-    return (
-      <div key="render-month">
-        <SelectInput
-          aria-label={__('Month', 'web-stories')}
-          value={month}
-          onChange={onChangeEvent('month')}
-          onBlur={updateMonth}
-        >
-          <option value="01">{__('January', 'web-stories')}</option>
-          <option value="02">{__('February', 'web-stories')}</option>
-          <option value="03">{__('March', 'web-stories')}</option>
-          <option value="04">{__('April', 'web-stories')}</option>
-          <option value="05">{__('May', 'web-stories')}</option>
-          <option value="06">{__('June', 'web-stories')}</option>
-          <option value="07">{__('July', 'web-stories')}</option>
-          <option value="08">{__('August', 'web-stories')}</option>
-          <option value="09">{__('September', 'web-stories')}</option>
-          <option value="10">{__('October', 'web-stories')}</option>
-          <option value="11">{__('November', 'web-stories')}</option>
-          <option value="12">{__('December', 'web-stories')}</option>
-        </SelectInput>
-      </div>
-    );
-  };
-
-  const renderDayMonthFormat = (is12HourFormat) => {
-    const { day, month } = state;
-    const layout = [renderDay(day), renderMonth(month)];
-    return is12HourFormat ? layout : layout.reverse();
-  };
-
   return (
     <DateTimeWrapper>
-      <Fieldset>
-        <Legend>{__('Date', 'web-stories')}</Legend>
-        <InputRow>
-          {renderDayMonthFormat(is12Hour)}
-          <NumberInput
-            aria-label={__('Year', 'web-stories')}
-            type="number"
-            step={1}
-            value={state.year}
-            onChange={onChangeEvent('year')}
-            onBlur={updateYear}
-            width={55}
-          />
-        </InputRow>
-      </Fieldset>
-
       <Fieldset>
         <Legend>{__('Time', 'web-stories')}</Legend>
         <InputRow>

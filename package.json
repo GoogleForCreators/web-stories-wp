@@ -38,6 +38,7 @@
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-dates": "^21.8.0",
+    "react-datepicker": "^2.15.0",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-moveable": "^0.20.6",
