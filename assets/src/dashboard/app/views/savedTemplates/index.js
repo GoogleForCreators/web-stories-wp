@@ -50,6 +50,7 @@ import {
   PageHeading,
   StoryGridView,
 } from '../shared';
+import { STORY_SORT_MENU_ITEMS } from '../../../constants';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({
@@ -72,6 +73,7 @@ function Header({ filter, search, sort, stories, view }) {
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',

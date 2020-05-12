@@ -24,11 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Dropdown, ViewStyleBar } from '../../../components';
-import {
-  STORY_SORT_MENU_ITEMS,
-  DROPDOWN_TYPES,
-  VIEW_STYLE,
-} from '../../../constants';
+import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import BodyWrapper from './bodyWrapper';
 
 const DisplayFormatContainer = styled.div`
@@ -65,6 +61,7 @@ const BodyViewOptions = ({
   handleSortChange,
   resultsLabel,
   layoutStyle,
+  pageSortOptions = [],
   showGridToggle,
   sortDropdownAriaLabel,
 }) => (
@@ -77,7 +74,7 @@ const BodyViewOptions = ({
             <SortDropdown
               alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
-              items={STORY_SORT_MENU_ITEMS}
+              items={pageSortOptions}
               type={DROPDOWN_TYPES.MENU}
               value={currentSort}
               onChange={(newSort) => handleSortChange(newSort.value)}
@@ -102,6 +99,12 @@ BodyViewOptions.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
+  pageSortOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ),
   showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
