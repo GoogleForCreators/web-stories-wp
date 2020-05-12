@@ -40,7 +40,7 @@ function ComposableWrapper({ generators, hoistAnimation, children }) {
               </Composable>
             );
           };
-          Composed.propTypes = { children: PropTypes.children };
+          Composed.propTypes = { children: PropTypes.node };
           return Composed;
         },
         (props) => props.children

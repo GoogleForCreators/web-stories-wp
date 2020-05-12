@@ -147,7 +147,7 @@ function Provider(props) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.object.isRequired,
+  animations: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };
