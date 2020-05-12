@@ -125,15 +125,17 @@ function TemplatesGallery() {
     setCurrentPageClamped(currentPage + 1);
   }, [currentPage, setCurrentPageClamped]);
 
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n(
-      '%s total template',
-      '%s total templates',
-      totalTemplates,
-      'web-stories'
-    ),
-    totalTemplates
+  // TODO add support for filters
+  const listBarLabel = useMemo(
+    () =>
+      typeaheadValue
+        ? sprintf(
+            /* translators: %s: number of results */
+            _n('%s result', '%s results', totalTemplates, 'web-stories'),
+            totalTemplates
+          )
+        : __('Viewing all templates', 'web-stories'),
+    [totalTemplates, typeaheadValue]
   );
 
   const {
