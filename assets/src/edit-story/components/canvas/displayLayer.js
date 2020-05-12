@@ -47,12 +47,15 @@ function DisplayLayer() {
   } = useStory();
   const {
     state: { editingElement },
-    actions: { setPageContainer },
+    actions: { setPageContainer, setFullbleedContainer },
   } = useCanvas();
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea ref={setPageContainer}>
+      <DisplayPageArea
+        ref={setPageContainer}
+        fullbleedRef={setFullbleedContainer}
+      >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {
               if (editingElement === id) {
