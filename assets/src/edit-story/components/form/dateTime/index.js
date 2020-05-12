@@ -12,7 +12,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import DateTimePicker from './dateTimePicker';
+import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
@@ -26,11 +26,7 @@ const DateTimeWrapper = styled.div`
 function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
   return (
     <DateTimeWrapper ref={forwardedRef}>
-      <DateTimePicker
-        currentTime={value}
-        onChange={onChange}
-        is12Hour={is12Hour}
-      />
+      <TimePicker currentTime={value} onChange={onChange} is12Hour={is12Hour} />
       <DatePicker currentDate={value} onChange={onChange} />
     </DateTimeWrapper>
   );

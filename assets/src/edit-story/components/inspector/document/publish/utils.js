@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import moment from 'moment';
-
 export function getReadableDate(date, is12Hours = true) {
-  const displayDate = date ? moment(date) : moment();
+  const displayDate = date ? new Date(date) : new Date();
   if (is12Hours) {
-    return `${displayDate.format('MM')}/${displayDate.format(
-      'DD'
-    )}/${displayDate.format('YYYY')}`;
+    return `${displayDate.getMonth()}/${displayDate.getDay()}/${displayDate.getFullYear()}`;
   }
-  return `${displayDate.format('DD')}/${displayDate.format(
-    'MM'
-  )}/${displayDate.format('YYYY')}`;
+  return `${displayDate.getDate()}/${displayDate.getMonth()}/${displayDate.getFullYear()}`;
 }
 
 export function getReadableTime(date, is12Hours = true) {
-  const displayTime = date ? moment(date) : moment();
-  const hourFormat = is12Hours ? 'hh' : 'HH';
+  const displayTime = date ? new Date(date) : new Date();
+  const hours = is12Hours
+    ? displayTime.getHours() % 12 || 12
+    : displayTime.getHours();
   const am = is12Hours ? displayTime.format('A') : '';
-  return `${displayTime.format(hourFormat)}:${displayTime.format('mm')}${am}`;
+  return `${hours}:${displayTime.getMinutes()}${am}`;
 }
 
 export function is12Hour(timeFormat) {

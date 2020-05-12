@@ -25,11 +25,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
-/**
- * Internal dependencies
- */
-import getLocalDateTime from '../../../utils/getLocalDateTime';
-
 const CalendarWrapper = styled.div`
   min-height: 236px;
   border-top: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
@@ -39,7 +34,7 @@ function DatePicker({ currentDate, onChange }) {
   const nodeRef = useRef();
   const handleOnChange = useCallback(
     (newDate) => {
-      onChange(getLocalDateTime(newDate), /* Close calendar */ true);
+      onChange(newDate.toISOString(), /* Close calendar */ true);
     },
     [onChange]
   );

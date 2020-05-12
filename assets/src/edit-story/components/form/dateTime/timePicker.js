@@ -1,12 +1,23 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable header/header */
-/* Disable reason: This file is based on Gutenberg Datepicker */
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /**
  * External dependencies
  */
 import React, { useState } from 'react';
-import moment from 'moment';
 import styled, { css } from 'styled-components';
 
 /**
@@ -15,12 +26,7 @@ import styled, { css } from 'styled-components';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import { TIMEZONELESS_FORMAT } from '../../../constants';
-
-const DateTimeWrapper = styled.div`
+const TimeWrapper = styled.div`
   margin-bottom: 1em;
   padding: 0 20px;
 `;
@@ -66,7 +72,7 @@ const NumberInput = styled.input`
   }
 `;
 
-const DateTimeSeparator = styled.span`
+const TimeSeparator = styled.span`
   display: inline-block;
   padding: 0 3px 0 0;
   color: #555d66;
@@ -122,24 +128,21 @@ const PMButton = styled(Button)`
   border-radius: 0 3px 3px 0;
 `;
 
-function DateTimePicker({ currentTime, onChange, is12Hour }) {
-  const selectedTime = currentTime ? moment(currentTime) : moment();
+function TimePicker({ currentTime, onChange, is12Hour }) {
+  const selectedTime = currentTime ? new Date(currentTime) : new Date();
+  const initialHours = selectedTime.getHours();
   const [state, setState] = useState({
-    minutes: selectedTime.format('mm'),
-    am: selectedTime.format('A'),
-    hours: selectedTime.format(is12Hour ? 'hh' : 'HH'),
+    minutes: selectedTime.getMinutes(),
+    am: initialHours < 12 ? 'AM' : 'PM',
+    hours: is12Hour ? initialHours % 12 || 12 : initialHours,
     date: selectedTime,
   });
 
   const onChangeEvent = (prop) => (evt) => {
-    setState({ ...state, [prop]: evt.target.value });
-  };
-
-  const onChangeMinutes = (evt) => {
-    const minutes = evt.target.value;
+    const value = evt.target.value;
     setState({
       ...state,
-      minutes: minutes === '' ? '' : ('0' + minutes).slice(-2),
+      [prop]: value === '' ? '' : ('0' + value).slice(-2),
     });
   };
 
@@ -151,37 +154,37 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
     return is12Hour ? 1 : 0;
   };
 
+  const getHours = (value) => {
+    const { am } = state;
+    if (!is12Hour) {
+      return value;
+    }
+    return am === 'AM' ? value % 12 : ((value % 12) + 12) % 24;
+  };
+
   const changeDate = (newDate, props = {}) => {
-    const dateWithStartOfMinutes = newDate.clone().startOf('minute');
-    setState({ ...state, ...props, date: dateWithStartOfMinutes });
-    onChange(newDate.format(TIMEZONELESS_FORMAT));
+    setState({ ...state, ...props, date: newDate });
+    onChange(newDate.toISOString());
   };
 
   const updateMinutes = () => {
     const { minutes, date } = state;
-    const value = parseInt(minutes);
-    if (isNaN(value) || value < 0 || value > 59 || minutes === value) {
+    if (isNaN(minutes) || minutes < 0 || minutes > 59) {
       return;
     }
-    const newDate = date.clone().minutes(value);
+    const newDate = date;
+    newDate.setMinutes(minutes);
     changeDate(newDate);
   };
 
   const updateHours = () => {
-    const { am, hours, date } = state;
-    const value = parseInt(hours);
-    if (
-      isNaN(value) ||
-      (is12Hour && (value < 1 || value > 12)) ||
-      (!is12Hour && (value < 0 || value > 23)) ||
-      hours === value
-    ) {
+    const { hours, date } = state;
+    if (isNaN(hours) || hours < getMinHours() || hours > getMaxHours()) {
       return;
     }
 
-    const newDate = is12Hour
-      ? date.clone().hours(am === 'AM' ? value % 12 : ((value % 12) + 12) % 24)
-      : date.clone().hours(value);
+    const newDate = date;
+    newDate.setHours(getHours(hours));
     changeDate(newDate);
   };
 
@@ -190,17 +193,17 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
     if (am === value) {
       return;
     }
-    let newDate;
+    const newDate = date;
     if (value === 'PM') {
-      newDate = date.clone().hours(((parseInt(hours) % 12) + 12) % 24);
+      newDate.setHours(((hours % 12) + 12) % 24);
     } else {
-      newDate = date.clone().hours(parseInt(hours) % 12);
+      newDate.setHours(hours % 12);
     }
     changeDate(newDate, { am: value });
   };
 
   return (
-    <DateTimeWrapper>
+    <TimeWrapper>
       <Fieldset>
         <Legend>{__('Time', 'web-stories')}</Legend>
         <InputRow>
@@ -215,14 +218,14 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
-            <DateTimeSeparator>{':'}</DateTimeSeparator>
+            <TimeSeparator>{':'}</TimeSeparator>
             <NumberInput
               aria-label={__('Minutes', 'web-stories')}
               type="number"
               min={0}
               max={59}
               value={state.minutes}
-              onChange={onChangeMinutes}
+              onChange={onChangeEvent}
               onBlur={updateMinutes}
             />
           </InputGroup>
@@ -246,14 +249,14 @@ function DateTimePicker({ currentTime, onChange, is12Hour }) {
           )}
         </InputRow>
       </Fieldset>
-    </DateTimeWrapper>
+    </TimeWrapper>
   );
 }
 
-DateTimePicker.propTypes = {
+TimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   currentTime: PropTypes.string,
   is12Hour: PropTypes.bool,
 };
 
-export default DateTimePicker;
+export default TimePicker;
