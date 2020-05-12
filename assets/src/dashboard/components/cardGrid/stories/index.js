@@ -25,6 +25,7 @@ import { text } from '@storybook/addon-knobs';
  */
 import CardGrid from '../';
 import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
+import { STORY_STATUS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
@@ -53,7 +54,12 @@ const StorybookGridItem = (
     >
       <Card>{text('Sample Story Content', 'Sample Story')}</Card>
     </CardPreviewContainer>
-    <CardTitle title="Story Title" modifiedDate="12 days" />
+    <CardTitle
+      title="Story Title"
+      author={'Ron Weasley'}
+      status={STORY_STATUS.DRAFT}
+      displayDate={'Modified 2 minutes ago'}
+    />
   </CardGridItem>
 );
 

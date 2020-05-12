@@ -36,8 +36,8 @@ import MULTIPLE_VALUE from './multipleValue';
 
 const Container = styled.div`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
-  height: ${({ size }) => (size ? `${size}px` : '148px')};
   min-width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
+  height: ${({ size }) => (size ? `${size}px` : '148px')};
   min-height: ${({ size }) => (size ? `${size}px` : '148px')};
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
   border: none;

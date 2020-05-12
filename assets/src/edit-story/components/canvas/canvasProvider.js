@@ -39,6 +39,7 @@ function CanvasProvider({ children }) {
     height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
+  const [fullbleedContainer, setFullbleedContainer] = useState(null);
 
   const {
     nodesById,
@@ -103,6 +104,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
+        .filter(({ isFill, isBackground }) => !isFill && !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
@@ -136,6 +138,7 @@ function CanvasProvider({ children }) {
   const state = {
     state: {
       pageContainer,
+      fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
@@ -145,6 +148,7 @@ function CanvasProvider({ children }) {
     },
     actions: {
       setPageContainer,
+      setFullbleedContainer,
       setNodeForElement,
       setEditingElement: setEditingElementWithoutState,
       setEditingElementWithState,

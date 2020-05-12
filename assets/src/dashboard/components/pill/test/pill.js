@@ -23,7 +23,8 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils/';
-import { Pill } from '../';
+import Pill from '../';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
 
 describe('Pill', () => {
   const pillText = 'text pill label';
@@ -71,5 +72,51 @@ describe('Pill', () => {
     fireEvent.click(pill);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should render standard ${PILL_LABEL_TYPES.DEFAULT} pill label by default`, () => {
+    const { getByTestId } = renderWithTheme(
+      <Pill onClick={onClickMock} name="test_pill" value="test">
+        {pillText}
+      </Pill>
+    );
+
+    const label = getByTestId('default-pill-label');
+
+    expect(label).toBeDefined();
+  });
+
+  it(`should render standard ${PILL_LABEL_TYPES.SWATCH} pill label when labelType is 'swatch'`, () => {
+    const { getByTestId } = renderWithTheme(
+      <Pill
+        onClick={onClickMock}
+        name="test_pill"
+        value="test"
+        labelType={PILL_LABEL_TYPES.SWATCH}
+      >
+        {pillText}
+      </Pill>
+    );
+
+    const label = getByTestId('swatch-pill-label');
+
+    expect(label).toBeDefined();
+  });
+
+  it(`should render standard ${PILL_LABEL_TYPES.FLOATING} pill label when labelType is 'FLOATING'`, () => {
+    const { getByTestId } = renderWithTheme(
+      <Pill
+        onClick={onClickMock}
+        name="test_pill"
+        value="test"
+        labelType={PILL_LABEL_TYPES.FLOATING}
+      >
+        {pillText}
+      </Pill>
+    );
+
+    const label = getByTestId('floating-pill-label');
+
+    expect(label).toBeDefined();
   });
 });

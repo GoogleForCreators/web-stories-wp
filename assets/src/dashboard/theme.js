@@ -91,6 +91,14 @@ const theme = {
       arrowColor: colors.bluePrimary,
       height: 48,
     },
+    [DROPDOWN_TYPES.COLOR_PANEL]: {
+      background: 'transparent',
+      activeBackground: colors.gray25,
+      borderRadius: 40,
+      border: borders.gray50,
+      arrowColor: colors.bluePrimary,
+      height: 48,
+    },
     [DROPDOWN_TYPES.MENU]: {
       background: colors.gray25,
       activeBackground: colors.gray25,
@@ -122,6 +130,9 @@ const theme = {
   },
   typeahead: {
     borderRadius: 100,
+  },
+  formatContainer: {
+    height: 44,
   },
   expandedTypeahead: {
     borderRadius: 8,
@@ -241,12 +252,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
       letterSpacing: 0.01,
-    },
-    storyGridItemSub: {
-      family: themeFonts.secondary,
-      weight: 'normal',
     },
     table: {
       family: themeFonts.primary,
