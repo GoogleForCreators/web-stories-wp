@@ -19,12 +19,17 @@
  */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import ensureDoubleDigitNumber from '../../../utils/ensureDoubleDigitNumber';
 
 const TimeWrapper = styled.div`
   margin-bottom: 1em;
@@ -64,7 +69,8 @@ const NumberInput = styled.input`
   padding: 0;
   margin-right: 4px;
   text-align: center;
-  width: ${({ width }) => (width ? width : 35)}px;
+  width: 50%;
+  max-width: 50px;
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {
     margin: 0;
@@ -115,7 +121,7 @@ const Button = styled.button`
 `;
 
 const InputGroup = styled.div`
-  flex-basis: 96px;
+  flex-basis: 100%;
 `;
 
 const AMButton = styled(Button)`
@@ -139,10 +145,9 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   });
 
   const onChangeEvent = (prop) => (evt) => {
-    const value = evt.target.value;
     setState({
       ...state,
-      [prop]: value === '' ? '' : ('0' + value).slice(-2),
+      [prop]: evt.target.value,
     });
   };
 
@@ -214,7 +219,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={state.hours}
+              value={ensureDoubleDigitNumber(state.hours)}
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
@@ -224,7 +229,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               type="number"
               min={0}
               max={59}
-              value={state.minutes}
+              value={ensureDoubleDigitNumber(state.minutes)}
               onChange={onChangeEvent}
               onBlur={updateMinutes}
             />

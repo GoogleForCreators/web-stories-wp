@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import ensureDoubleDigitNumber from '../../../../utils/ensureDoubleDigitNumber';
+
 export function getReadableDate(date, is12Hours = true) {
   const displayDate = date ? new Date(date) : new Date();
+  const day = ensureDoubleDigitNumber(displayDate.getDate());
+  const month = ensureDoubleDigitNumber(displayDate.getMonth());
   if (is12Hours) {
-    return `${displayDate.getMonth()}/${displayDate.getDay()}/${displayDate.getFullYear()}`;
+    return `${month}/${day}/${displayDate.getFullYear()}`;
   }
-  return `${displayDate.getDate()}/${displayDate.getMonth()}/${displayDate.getFullYear()}`;
+  return `${day}/${month}/${displayDate.getFullYear()}`;
 }
 
 export function getReadableTime(date, is12Hours = true) {
@@ -27,8 +34,9 @@ export function getReadableTime(date, is12Hours = true) {
   const hours = is12Hours
     ? displayTime.getHours() % 12 || 12
     : displayTime.getHours();
+  const minutes = ensureDoubleDigitNumber(displayTime.getMinutes());
   const am = is12Hours ? displayTime.format('A') : '';
-  return `${hours}:${displayTime.getMinutes()}${am}`;
+  return `${ensureDoubleDigitNumber(hours)}:${minutes}${am}`;
 }
 
 export function is12Hour(timeFormat) {
