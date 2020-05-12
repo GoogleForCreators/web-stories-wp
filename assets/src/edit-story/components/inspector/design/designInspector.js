@@ -32,14 +32,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: absolute;
-  flex-grow: 1;
-  min-height: 0;
 `;
 
 const TopPanels = styled.div`
   overflow: auto;
-  flex-grow: 1;
-  min-height: 0;
 `;
 
 const BottomPanels = styled.div``;
