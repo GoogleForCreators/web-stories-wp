@@ -101,7 +101,7 @@ const theme = {
       background: 'transparent',
       activeBackground: 'transparent',
       borderRadius: 4,
-      border: 'none',
+      border: borders.transparent,
       arrowColor: colors.gray300,
     },
   },
