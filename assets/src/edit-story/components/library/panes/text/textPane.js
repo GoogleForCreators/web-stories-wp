@@ -38,57 +38,6 @@ import { PRESETS, DEFAULT_PRESET } from './textPresets';
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
 
-const PRESETS = [
-  {
-    id: 'heading',
-    title: __('Heading', 'web-stories'),
-    content: `<span style="font-weight: 700">${__(
-      'Heading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(2),
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
-  },
-  {
-    id: 'subheading',
-    title: __('Subheading', 'web-stories'),
-    content: `<span style="font-weight: 600">${__(
-      'Subheading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(1.5),
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
-  },
-  {
-    id: 'body-text',
-    title: __('Body text', 'web-stories'),
-    content: __(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'web-stories'
-    ),
-    fontSize: dataFontEm(1.1),
-    font: {
-      family: 'Roboto',
-      service: 'fonts.google.com',
-    },
-  },
-];
-
-function getPresetById(id) {
-  for (let i = 0; i < PRESETS.length; i++) {
-    if (PRESETS[i].id === id) {
-      return PRESETS[i];
-    }
-  }
-  return null;
-}
-
 const SectionContent = styled.p``;
 
 function TextPane(props) {
