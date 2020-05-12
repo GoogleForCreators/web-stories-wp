@@ -232,7 +232,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		if ( ! $current_user ) {
 			return $orderby;
 		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC', $current_user );
+		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC', $current_user );
 	}
 
 	/**
