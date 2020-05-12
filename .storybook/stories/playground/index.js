@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import App from '../../../assets/src/edit-story/app';
+import { createStory } from './_utils';
 
 export default {
   title: 'Playground|Stories Editor',
@@ -33,9 +34,12 @@ const config = {
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   storyId: 1234,
   api: {
-    stories: '',
+    stories: (storyId) => Promise.resolve(createStory({ id: storyId })),
     media: '',
     fonts: '',
+    link: '',
+    users: '',
+    statuses: '',
   },
   metadata: {
     publisher: {

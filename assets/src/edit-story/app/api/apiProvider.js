@@ -40,6 +40,9 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
+      if (stories instanceof Function) {
+        return stories({ storyId });
+      }
       const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
       return apiFetch({ path });
     },
