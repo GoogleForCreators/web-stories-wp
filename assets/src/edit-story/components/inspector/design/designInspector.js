@@ -26,16 +26,15 @@ import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
-  height: calc(100% - 40px);
-  width: 100%;
-  display: flex;
+  height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  position: absolute;
+  display: flex;
 `;
 
 const TopPanels = styled.div`
   overflow: auto;
+  flex: 1;
 `;
 
 const BottomPanels = styled.div``;
