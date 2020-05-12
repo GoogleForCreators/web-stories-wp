@@ -90,7 +90,7 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
-  const { view, sort, filter, page, search } = useStoryView({
+  const { filter, page, sort, search, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
@@ -123,7 +123,7 @@ function MyStories() {
     () =>
       search.keyword
         ? sprintf(
-            /* translators: %s: number of stories */
+            /* translators: %s: number of results */
             _n('%s result', '%s results', totalStories, 'web-stories'),
             totalStories
           )

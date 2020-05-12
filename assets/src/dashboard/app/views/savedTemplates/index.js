@@ -22,15 +22,24 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
-import { InfiniteScroller, Layout } from '../../../components';
+import {
+  InfiniteScroller,
+  Layout,
+  ToggleButtonGroup,
+} from '../../../components';
+import {
+  SAVED_TEMPLATES_VIEWING_LABELS,
+  SAVED_TEMPLATES_STATUSES,
+} from '../../../constants';
 import useStoryView, {
+  FilterPropTypes,
   PagePropTypes,
   SearchPropTypes,
   SortPropTypes,
@@ -44,21 +53,24 @@ import FontProvider from '../../font/fontProvider';
 import {
   BodyViewOptions,
   BodyWrapper,
+  HeaderToggleButtonContainer,
   PageHeading,
   StoryGridView,
 } from '../shared';
 
-function Header({ search, stories, view, sort }) {
-  const listBarLabel = sprintf(
-    /* translators: %s: number of templates */
-    _n(
-      '%s total template',
-      '%s total templates',
-      stories.length,
-      'web-stories'
-    ),
-    stories.length
+function Header({ filter, search, sort, stories, view }) {
+  const listBarLabel = useMemo(
+    () =>
+      search.keyword
+        ? sprintf(
+            /* translators: %s: number of results */
+            _n('%s result', '%s results', stories.length, 'web-stories'),
+            stories.length
+          )
+        : SAVED_TEMPLATES_VIEWING_LABELS[filter.value],
+    [filter.value, search.keyword, stories]
   );
+
   return (
     <Layout.Squishable>
       <PageHeading
@@ -67,7 +79,20 @@ function Header({ search, stories, view, sort }) {
         stories={stories}
         handleTypeaheadChange={search.setKeyword}
         typeaheadValue={search.keyword}
-      />
+      >
+        <HeaderToggleButtonContainer>
+          <ToggleButtonGroup
+            buttons={SAVED_TEMPLATES_STATUSES.map((savedTemplateStatus) => {
+              return {
+                handleClick: () => filter.set(savedTemplateStatus.value),
+                key: savedTemplateStatus.value,
+                isActive: filter.value === savedTemplateStatus.value,
+                text: savedTemplateStatus.label,
+              };
+            })}
+          />
+        </HeaderToggleButtonContainer>
+      </PageHeading>
       <BodyViewOptions
         listBarLabel={listBarLabel}
         layoutStyle={view.style}
@@ -111,8 +136,8 @@ function Content({ stories, view, page }) {
 
 function SavedTemplates() {
   const config = useConfig();
-  const { search, view, page, sort } = useStoryView({
-    filters: [],
+  const { filter, page, sort, search, view } = useStoryView({
+    filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
 
@@ -126,6 +151,7 @@ function SavedTemplates() {
   return (
     <Layout.Provider>
       <Header
+        filter={filter}
         view={view}
         search={search}
         stories={mockTemplates.current}
@@ -142,6 +168,7 @@ function SavedTemplates() {
 }
 
 Header.propTypes = {
+  filter: FilterPropTypes.isRequired,
   view: ViewPropTypes.isRequired,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
