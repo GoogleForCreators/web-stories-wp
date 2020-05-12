@@ -23,7 +23,11 @@
 import { fireEvent } from '@testing-library/react';
 import { SavedTemplatesContent, SavedTemplatesHeader } from '../index';
 import { renderWithTheme } from '../../../../testUtils';
-import { STORY_SORT_OPTIONS, VIEW_STYLE } from '../../../../constants';
+import {
+  STORY_SORT_OPTIONS,
+  VIEW_STYLE,
+  SAVED_TEMPLATES_STATUSES,
+} from '../../../../constants';
 import LayoutProvider from '../../../../components/layout/provider';
 
 const fakeStories = [
@@ -67,6 +71,7 @@ describe('<SavedTemplates />', function () {
     const { getByPlaceholderText, getByText } = renderWithTheme(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -78,7 +83,7 @@ describe('<SavedTemplates />', function () {
       </LayoutProvider>
     );
     expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
-    expect(getByText('3 total templates')).toBeInTheDocument();
+    expect(getByText('3 results')).toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', function () {
@@ -86,6 +91,7 @@ describe('<SavedTemplates />', function () {
     const { getByPlaceholderText } = renderWithTheme(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -107,6 +113,7 @@ describe('<SavedTemplates />', function () {
     const { getAllByText, getByText } = renderWithTheme(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: setSortFn }}
