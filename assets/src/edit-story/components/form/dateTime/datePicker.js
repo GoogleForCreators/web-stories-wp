@@ -20,6 +20,11 @@
 import { default as Calendar } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -46,6 +51,7 @@ function DatePicker({ currentDate, onChange }) {
         onChange={handleOnChange}
         inline
         showYearDropdown
+        todayButton={__('Today', 'web-stories')}
       />
     </CalendarWrapper>
   );

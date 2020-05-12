@@ -22,7 +22,7 @@ import ensureDoubleDigitNumber from '../../../../utils/ensureDoubleDigitNumber';
 export function getReadableDate(date, is12Hours = true) {
   const displayDate = date ? new Date(date) : new Date();
   const day = ensureDoubleDigitNumber(displayDate.getDate());
-  const month = ensureDoubleDigitNumber(displayDate.getMonth());
+  const month = ensureDoubleDigitNumber(displayDate.getMonth() + 1);
   if (is12Hours) {
     return `${month}/${day}/${displayDate.getFullYear()}`;
   }
