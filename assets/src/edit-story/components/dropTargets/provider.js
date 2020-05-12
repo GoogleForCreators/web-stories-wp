@@ -27,7 +27,13 @@ import { useTransform } from '../transform';
 import { useStory } from '../../app';
 import Context from './context';
 
-const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
+// These sources will not "merge" with sources that it is dropped into and
+// will simply be placed where the source is dropped. All other sources
+// can merge into drop targets.
+const SIMPLE_DROP_SOURCES = ['shape'];
+
+// All possible drop sources.
+const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video', 'shape'];
 const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
 
 function DropTargetsProvider({ children }) {
@@ -83,11 +89,17 @@ function DropTargetsProvider({ children }) {
   );
 
   /**
-   * Dragging elements
+   * Handles dragging elements that can merge with drop targets.
    */
   const handleDrag = useCallback(
     (resource, x, y, selfId = null) => {
       if (!isDropSource(resource?.type)) {
+        return;
+      }
+
+      // Simple drop sources do not require special interactions with drop targets
+      // they will simply be placed.
+      if (SIMPLE_DROP_SOURCES.contains('resource?.type')) {
         return;
       }
 
@@ -122,7 +134,11 @@ function DropTargetsProvider({ children }) {
   );
 
   /**
-   * Dropping and merging elements
+   * Dropping and merging elements.
+   *
+   * This will allow the dropped source to be dropped on all targets that are
+   * compatible with it, and show potential ways the source can merge with the
+   * target with a mask.
    */
   const handleDrop = useCallback(
     (resource, selfId = null) => {

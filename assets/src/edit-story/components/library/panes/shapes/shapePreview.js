@@ -50,7 +50,7 @@ function ShapePreview(mask) {
   } = useLibrary();
 
   const {
-    actions: { setDraggingResource },
+    actions: { handleDrop, setDraggingResource },
   } = useDropTargets();
 
   // Creating a ref to the Path so that it can be used as a drag icon.
@@ -81,11 +81,20 @@ function ShapePreview(mask) {
     </svg>
   );
 
+  const resource = { type: 'shape' };
   // Callback that sets the drag image and adds information about the shape
   // to be used in an [insertElement] call on the drop handler.
   const onDragStart = (e) => {
+    setDraggingResource(resource);
+
     e.dataTransfer.setDragImage(pathRef.current, 0, 0);
     e.dataTransfer.setData('shape', JSON.stringify(props));
+  };
+
+  const onDragEnd = (e) => {
+    e.preventDefault();
+    setDraggingResource(null);
+    handleDrop('shape');
   };
 
   return (
@@ -94,10 +103,10 @@ function ShapePreview(mask) {
       draggable={true}
       onClick={() => {
         // Shapes inserted with a specific size.
-        setDraggingResource('smth');
         insertElement('shape', props);
       }}
       onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
     >
       {svg}
     </ShapePreviewContainer>
