@@ -96,7 +96,7 @@ export const STORY_SORT_MENU_ITEMS = [
     value: STORY_SORT_OPTIONS.LAST_OPENED,
   },
   {
-    label: __('Created by', 'web-stories'), // owner first then alpha
+    label: __('Created by', 'web-stories'),
     value: STORY_SORT_OPTIONS.CREATED_BY,
   },
 ];
