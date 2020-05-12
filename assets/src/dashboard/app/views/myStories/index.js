@@ -42,6 +42,7 @@ import {
   DASHBOARD_VIEWS,
 } from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { useGenericDashboardView, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -53,8 +54,6 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
-import useGenericDashboardView from '../../../utils/useGenericDashboardView';
-import useStoryView from '../../../utils/useStoryView';
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};

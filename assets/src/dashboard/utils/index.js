@@ -20,5 +20,7 @@ export { default as getFormattedDisplayDate } from './getFormattedDisplayDate';
 export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as useFocusOut } from './useFocusOut';
+export { default as useGenericDashboardView } from './useGenericDashboardView';
 export { default as usePagePreviewSize } from './usePagePreviewSize';
+export { default as useStoryView } from './useStoryView';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
