@@ -152,6 +152,7 @@ function Timeline({
               </TimelineLabel>
               <TimelineBarContainer>
                 <TimelineBar
+                  title={`${animation.duration}ms`}
                   onClick={() => onAnimationSelect(animation.id)}
                   {...getOffsetAndWidth(
                     totalDuration,
