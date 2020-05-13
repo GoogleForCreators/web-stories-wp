@@ -40,6 +40,7 @@ import {
   VIEW_STYLE,
   STORY_STATUSES,
   DASHBOARD_VIEWS,
+  STORY_SORT_MENU_ITEMS,
 } from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import { useDashboardResultsLabel, useStoryView } from '../../../utils';
@@ -185,6 +186,7 @@ function MyStories() {
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',

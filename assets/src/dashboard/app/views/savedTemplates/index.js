@@ -30,7 +30,12 @@ import { useRef } from 'react';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { InfiniteScroller, Layout } from '../../../components';
-import { SAVED_TEMPLATES_STATUSES, DASHBOARD_VIEWS } from '../../../constants';
+import {
+  DASHBOARD_VIEWS,
+  SAVED_TEMPLATES_STATUSES,
+  STORY_SORT_MENU_ITEMS,
+} from '../../../constants';
+
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
   FilterPropTypes,
@@ -72,6 +77,7 @@ function Header({ filter, search, sort, stories, view }) {
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
