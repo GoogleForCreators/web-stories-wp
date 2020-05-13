@@ -28,34 +28,11 @@ import getFormattedDisplayDate, {
 } from '../getFormattedDisplayDate';
 
 describe('getFormattedDisplayDate', () => {
-  beforeEach(() => {
-    const time = moment().valueOf();
-    jest.spyOn(moment, 'now').mockImplementation().mockReturnValue(time);
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should return 2 minutes ago using a native date object', () => {
-    const dateString = moment(new Date() - 2 * 60000);
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('2 minutes ago');
-  });
-
   it('should return 2 minutes ago using moment', () => {
     const dateString = moment().subtract(2, 'minutes');
     const formattedDate = getFormattedDisplayDate(dateString);
 
     expect(formattedDate).toBe('2 minutes ago');
-  });
-
-  it('should return an hour ago using a native date object', () => {
-    const dateString = moment(new Date() - 60 * 60000);
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('an hour ago');
   });
 
   it('should return an hour ago using moment', () => {
@@ -65,25 +42,11 @@ describe('getFormattedDisplayDate', () => {
     expect(formattedDate).toBe('an hour ago');
   });
 
-  it('should return 2 hours ago using a native date object', () => {
-    const dateString = moment(new Date() - 120 * 60000);
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('2 hours ago');
-  });
-
   it('should return 2 hours ago using moment', () => {
-    const dateString = moment(new Date()).subtract(2, 'hours');
+    const dateString = moment().subtract(2, 'hours');
     const formattedDate = getFormattedDisplayDate(dateString);
 
     expect(formattedDate).toBe('2 hours ago');
-  });
-
-  it('should return yesterday using a native date object', () => {
-    const dateString = moment(new Date() - 1440 * 60000);
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('yesterday');
   });
 
   it('should return yesterday using moment', () => {
@@ -94,7 +57,7 @@ describe('getFormattedDisplayDate', () => {
   });
 
   it('should return 5/2/2020', () => {
-    const dateString = moment(new Date('5/2/2020'));
+    const dateString = moment('05-02-2020', 'MM-DD-YYYY');
     const formattedDate = getFormattedDisplayDate(dateString);
 
     expect(formattedDate).toBe('5/2/2020');
@@ -102,32 +65,25 @@ describe('getFormattedDisplayDate', () => {
 });
 
 describe('isToday', () => {
-  it('should return false that 5/2/2020 is today', () => {
-    const dateString = moment(new Date('5/2/2020'));
+  it('should return false that yesterday is today', () => {
+    const dateString = moment().subtract(1, 'days');
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(false);
   });
 
   it('should return true that 6am of today is today', () => {
-    const dateString = moment(new Date()).hours(6);
+    const dateString = moment().hours(6);
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(true);
   });
 
   it('should return true that 11pm of "today" is today', () => {
-    const dateString = moment(new Date()).hours(23);
+    const dateString = moment().hours(23);
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(true);
-  });
-
-  it('should return false that now minus 24 hours is not today', () => {
-    const dateString = moment(new Date() - 1440 * 60000);
-    const formattedDate = isToday(dateString);
-
-    expect(formattedDate).toBe(false);
   });
 });
 
