@@ -93,7 +93,7 @@ class Database_Upgrader {
 	 *
 	 * @return void
 	 */
-	protected function finish_up( $previous_version = null ) {
+	protected function finish_up( $previous_version ) {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, constant( 'WEBSTORIES_DB_VERSION' ) );
 	}
