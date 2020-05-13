@@ -46,6 +46,7 @@ export { default as Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
+export { default as PreviewErrorBoundary } from './previewErrorBoundary';
 export { default as ScrollToTop } from './scrollToTop';
 export {
   Table,

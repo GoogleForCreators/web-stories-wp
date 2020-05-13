@@ -39,6 +39,7 @@ function InspectorProvider({ children }) {
   const {
     state: { selectedElementIds, currentPage },
   } = useStory();
+  const inspectorRef = useRef(null);
 
   const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
@@ -118,6 +119,9 @@ function InspectorProvider({ children }) {
       statuses,
       inspectorContentHeight,
       isUsersLoading,
+    },
+    refs: {
+      inspector: inspectorRef,
     },
     actions: {
       setTab,
