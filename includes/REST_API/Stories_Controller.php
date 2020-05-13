@@ -250,6 +250,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			return $response;
 		}
 
+		if ( 'edit' !== $request['context'] ) {
+			return $response;
+		}
+
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
 		$args       = [];
@@ -352,15 +356,14 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		}
 
 		// Add counts for other statuses.
-		$headers                             = $response->get_headers();
-		$statuses                            = [ 'publish', 'draft' ];
-		$statuses_count                      = [ 'all' => $headers['X-WP-Total'] ];
-		$query_args_status                   = $query_args;
-		$query_args_status['posts_per_page'] = 1;
+		$headers                      = $response->get_headers();
+		$statuses                     = [ 'publish', 'draft' ];
+		$statuses_count               = [ 'all' => $headers['X-WP-Total'] ];
+		$query_args['posts_per_page'] = 1;
 		foreach ( $statuses as $status ) {
-			$posts_query                      = new WP_Query();
-			$query_args_status['post_status'] = [ $status ];
-			$posts_query->query( $query_args_status );
+			$posts_query               = new WP_Query();
+			$query_args['post_status'] = [ $status ];
+			$posts_query->query( $query_args );
 			$statuses_count[ $status ] = absint( $posts_query->found_posts );
 		}
 		// Encode the this array as headers do not support passing an array.
