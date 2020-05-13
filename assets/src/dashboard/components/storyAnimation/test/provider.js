@@ -16,12 +16,22 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
 import { createWrapperWithProps } from '../../../testUtils';
 import StoryAnimation, { useStoryAnimationContext } from '..';
+
+const defaultWAAPIAnimation = {
+  onfinish: null,
+  cancel: () => {},
+  play: () => {},
+};
+const mockWAAPIAnimation = (overrides = {}) => ({
+  ...defaultWAAPIAnimation,
+  ...overrides,
+});
 
 describe('StoryAnimation.Provider', () => {
   describe('getAnimationGenerators(target)', () => {
@@ -109,24 +119,145 @@ describe('StoryAnimation.Provider', () => {
   });
 
   describe('hoistWAAPIAnimation(WAAPIAnimation)', () => {
-    it('returns an unhoist function when called', () => {
+    it('returns a cleanup function when called', () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations: [],
         }),
       });
 
-      const {
-        actions: { hoistWAAPIAnimation },
-      } = result.current;
-
-      const unhoist = hoistWAAPIAnimation({});
-
+      let unhoist;
+      act(() => {
+        unhoist = result.current.actions.hoistWAAPIAnimation(
+          mockWAAPIAnimation()
+        );
+      });
       expect(typeof unhoist).toBe('function');
+    });
+
+    /**
+     * **Animation.cancel()**
+     *
+     * Clears all KeyframeEffects caused by this animation
+     * and aborts its playback.
+     *
+     * https://developer.mozilla.org/en-US/docs/Web/API/Animation/cancel
+     */
+    it('calls Animation.cancel() method on hoisted animation when cleanup performed', () => {
+      const { result } = renderHook(() => useStoryAnimationContext(), {
+        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+          animations: [],
+        }),
+      });
+
+      const cancel = jest.fn();
+      act(() => {
+        let unhoist;
+        unhoist = result.current.actions.hoistWAAPIAnimation(
+          mockWAAPIAnimation({ cancel })
+        );
+        unhoist();
+      });
+      expect(cancel).toHaveBeenCalledWith();
     });
   });
 
   describe('playWAAPIAnimations()', () => {
-    it.todo('calls all hoisted animations `play()` method once');
+    it('calls all hoisted Animation.play() methods when called', () => {
+      const { result } = renderHook(() => useStoryAnimationContext(), {
+        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+          animations: [],
+        }),
+      });
+
+      const numCalls = 10;
+      const play = jest.fn();
+      for (let i = 0; i < numCalls; i++) {
+        act(() => {
+          result.current.actions.hoistWAAPIAnimation(
+            mockWAAPIAnimation({ play })
+          );
+        });
+      }
+      act(() => result.current.actions.playWAAPIAnimations());
+      expect(play).toHaveBeenCalledTimes(numCalls);
+    });
+
+    it('excludes cleaned up animation methods when called', () => {
+      const { result } = renderHook(() => useStoryAnimationContext(), {
+        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+          animations: [],
+        }),
+      });
+
+      const numAnims = 10;
+      const unhoistIndex = numAnims / 2;
+      const animations = Array.from({ length: numAnims }, () =>
+        mockWAAPIAnimation({
+          play: jest.fn(),
+        })
+      );
+      const unhoists = animations.map((animation) => {
+        let unhoist;
+        act(() => {
+          unhoist = result.current.actions.hoistWAAPIAnimation(animation);
+        });
+        return unhoist;
+      });
+      act(() => {
+        unhoists[unhoistIndex]();
+      });
+      act(() => result.current.actions.playWAAPIAnimations());
+      animations.map(({ play }, i) => {
+        if (i === unhoistIndex) {
+          expect(play).toHaveBeenCalledTimes(0);
+        } else {
+          expect(play).toHaveBeenCalledTimes(1);
+        }
+      });
+    });
+  });
+
+  describe('events', () => {
+    describe('onWAAPIFinish', () => {
+      it('fires once each time all animations complete', async () => {
+        const onWAAPIFinish = jest.fn();
+        const { result } = renderHook(() => useStoryAnimationContext(), {
+          wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+            animations: [],
+            onWAAPIFinish,
+          }),
+        });
+
+        const animations = Array.from({ length: 10 }, () =>
+          mockWAAPIAnimation()
+        );
+        animations.forEach((animation) => {
+          act(() => {
+            result.current.actions.hoistWAAPIAnimation(animation);
+          });
+        });
+
+        const completeAllAnimations = async () => {
+          animations.forEach((animation) => {
+            animation.onfinish();
+          });
+          /**
+           * Needed to flush all promises and
+           * trigger dispatch from resolved promise
+           */
+          await act(async () => {
+            await new Promise((resolve) => resolve());
+          });
+        };
+
+        await completeAllAnimations();
+        expect(onWAAPIFinish).toHaveBeenCalledTimes(1);
+        await completeAllAnimations();
+        expect(onWAAPIFinish).toHaveBeenCalledTimes(2);
+        await completeAllAnimations();
+        expect(onWAAPIFinish).toHaveBeenCalledTimes(3);
+      });
+    });
   });
 });

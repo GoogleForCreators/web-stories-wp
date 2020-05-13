@@ -106,17 +106,21 @@ function Provider(props) {
    * animations complete.
    */
   useEffect(() => {
+    // WAAPIAnimations.forEach((animation) => {
+    //   // createOnFinishPromise
+    //   animation.onfinish = onWAAPIFinishRef.current;
+    // });
     let cancel = () => {};
     if ('idle' === WAAPIAnimationState && WAAPIAnimations.length) {
-      const cancelablePromise = new Promise((resolve, reject) => {
+      new Promise((resolve, reject) => {
         cancel = reject;
         Promise.all(WAAPIAnimations.map(createOnFinishPromise)).then(() => {
           cancel = () => {};
           resolve();
         });
-      });
-      cancelablePromise
+      })
         .then(() => dispatchWAAPIAnimationState('complete'))
+        /* needed if promise gets canceled to swallow the error */
         .catch(() => {});
     }
     return cancel;
@@ -125,7 +129,7 @@ function Provider(props) {
   onWAAPIFinishRef.current = props.onWAAPIFinish;
   useEffect(() => {
     if ('complete' === WAAPIAnimationState) {
-      onWAAPIFinishRef.current();
+      onWAAPIFinishRef.current?.();
       dispatchWAAPIAnimationState('reset');
     }
   }, [WAAPIAnimationState]);
