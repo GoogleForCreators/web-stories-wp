@@ -94,14 +94,14 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
 }) {
   const { font } = rest;
-  const fontFaceSetConfigs = useMemo(
-    () => ({
-      fontStyle: getHTMLInfo(content).isItalic ? 'italic' : 'normal',
-      fontWeight: getHTMLInfo(content).fontWeight,
+  const fontFaceSetConfigs = useMemo(() => {
+    const htmlInfo = getHTMLInfo(content);
+    return {
+      fontStyle: htmlInfo.isItalic ? 'italic' : 'normal',
+      fontWeight: htmlInfo.fontWeight,
       content: stripHTML(content),
-    }),
-    [content]
-  );
+    };
+  }, [content]);
 
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
