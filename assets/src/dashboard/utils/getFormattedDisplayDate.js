@@ -26,20 +26,18 @@ import moment from 'moment';
 
 export function isToday(displayDate) {
   const today = moment().startOf('day');
-
-  return displayDate.isAfter(today);
+  return displayDate.isSame(today, 'd');
 }
 
 export function isYesterday(displayDate) {
-  const yesterday = moment().subtract(1, 'days').date();
-
-  return displayDate.date() === yesterday;
+  const yesterday = moment().subtract(1, 'days').startOf('day');
+  return displayDate.isSame(yesterday, 'd');
 }
 
 export default function getFormattedDisplayDate(date) {
   const displayDate = moment.isMoment(date) ? date : moment(date);
   if (isToday(displayDate)) {
-    return moment(displayDate).fromNow();
+    return displayDate.fromNow();
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }

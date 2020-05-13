@@ -93,7 +93,7 @@ function Content({ stories, view, page }) {
                 stories={stories}
                 centerActionLabel={__('View', 'web-stories')}
                 bottomActionLabel={__('Use template', 'web-stories')}
-                isTemplate
+                isSavedTemplate
               />
               <InfiniteScroller
                 allDataLoadedMessage={__('No more templates.', 'web-stories')}

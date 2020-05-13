@@ -45,6 +45,7 @@ export const _default = () => {
       trashStory={action('trashStory button clicked')}
       duplicateStory={action('duplicateStory button clicked')}
       isTemplate={boolean('isTemplate')}
+      isSavedTemplate={boolean('isSavedTemplate')}
     />
   );
 };

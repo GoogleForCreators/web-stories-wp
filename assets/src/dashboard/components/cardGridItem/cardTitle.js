@@ -70,7 +70,7 @@ const DateHelperText = styled.span`
 `;
 
 const CardTitle = ({
-  author,
+  secondaryTitle,
   title,
   status,
   displayDate,
@@ -113,6 +113,9 @@ const CardTitle = ({
   );
 
   const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
     return status === STORY_STATUS.PUBLISHED
       ? sprintf(
           /* translators: %s: last modified date */
@@ -146,17 +149,17 @@ const CardTitle = ({
         )}
         {displayDateText}
       </TitleBodyText>
-      {author && <TitleBodyText>{author}</TitleBodyText>}
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
     </StyledCardTitle>
   );
 };
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
-  author: PropTypes.string,
+  secondaryTitle: PropTypes.string,
   status: PropTypes.oneOf(Object.values(STORY_STATUS)),
   editMode: PropTypes.bool,
-  displayDate: PropTypes.object.isRequired,
+  displayDate: PropTypes.object,
   onEditComplete: PropTypes.func.isRequired,
   onEditCancel: PropTypes.func.isRequired,
 };
