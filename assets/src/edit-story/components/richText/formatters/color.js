@@ -71,7 +71,7 @@ function getColor(editorState) {
     return MULTIPLE_VALUE;
   }
   const colorStyle = styles[0];
-  if (colorStyle === NONE) {
+  if (!styles.length || colorStyle === NONE) {
     return createSolid(0, 0, 0);
   }
   return styleToColor(colorStyle);

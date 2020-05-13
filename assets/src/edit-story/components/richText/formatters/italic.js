@@ -43,7 +43,7 @@ function stylesToCSS(styles) {
 
 function isItalic(editorState) {
   const styles = getPrefixStylesInSelection(editorState, ITALIC);
-  return !styles.includes(NONE);
+  return Boolean(styles.length) && !styles.includes(NONE);
 }
 
 function toggleItalic(editorState, flag) {

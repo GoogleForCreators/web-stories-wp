@@ -43,7 +43,7 @@ function stylesToCSS(styles) {
 
 function isUnderline(editorState) {
   const styles = getPrefixStylesInSelection(editorState, UNDERLINE);
-  return !styles.includes(NONE);
+  return Boolean(styles.length) && !styles.includes(NONE);
 }
 
 function toggleUnderline(editorState, flag) {

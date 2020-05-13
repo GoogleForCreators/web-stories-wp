@@ -106,7 +106,7 @@ function getFontWeight(editorState) {
   if (weights.length > 1) {
     return MULTIPLE_VALUE;
   }
-  return weights[0];
+  return weights[0] || NORMAL_WEIGHT;
 }
 
 function setFontWeight(editorState, weight) {
