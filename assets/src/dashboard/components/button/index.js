@@ -36,10 +36,9 @@ const StyledButton = styled.button`
   border: ${({ theme }) => theme.borders.transparent};
   border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
-  height: 40px;
   min-width: 100px;
   opacity: 0.75;
-  padding: 0 10px;
+  padding: 4px 16px;
   text-decoration: none;
 
   &:focus,
