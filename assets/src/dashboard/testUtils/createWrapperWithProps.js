@@ -13,6 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+function createWrapperWithProps(Wrapper, props) {
+  const WrapperWithProps = function ({ children }) {
+    return <Wrapper {...props}>{children}</Wrapper>;
+  };
+  WrapperWithProps.propTypes = { children: PropTypes.node };
+  return WrapperWithProps;
+}
+
+export default createWrapperWithProps;

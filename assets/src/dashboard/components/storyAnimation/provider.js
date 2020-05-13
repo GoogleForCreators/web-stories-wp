@@ -50,10 +50,10 @@ const createOnFinishPromise = (animation) => {
 
 function Provider(props) {
   const animationGeneratorMap = useMemo(() => {
-    return props.animations.reduce((map, animation) => {
-      const { target: targets, type, ...args } = animation;
+    return (props.animations || []).reduce((map, animation) => {
+      const { target, type, ...args } = animation;
 
-      targets.forEach((t) => {
+      (Array.isArray(target) ? target : [target]).forEach((t) => {
         const animationGenerators = map.get(t) || [];
         map.set(t, [...animationGenerators, (fn) => fn(type, args)]);
       });
@@ -107,7 +107,7 @@ function Provider(props) {
    */
   useEffect(() => {
     let cancel = () => {};
-    if (['idle'].includes(WAAPIAnimationState) && WAAPIAnimations.length) {
+    if ('idle' === WAAPIAnimationState && WAAPIAnimations.length) {
       const cancelablePromise = new Promise((resolve, reject) => {
         cancel = reject;
         Promise.all(WAAPIAnimations.map(createOnFinishPromise)).then(() => {
@@ -124,7 +124,7 @@ function Provider(props) {
 
   onWAAPIFinishRef.current = props.onWAAPIFinish;
   useEffect(() => {
-    if (['complete'].includes(WAAPIAnimationState)) {
+    if ('complete' === WAAPIAnimationState) {
       onWAAPIFinishRef.current();
       dispatchWAAPIAnimationState('reset');
     }
