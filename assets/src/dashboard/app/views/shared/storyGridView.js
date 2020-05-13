@@ -171,7 +171,7 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabelByStatus: ActionLabel,
+  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,

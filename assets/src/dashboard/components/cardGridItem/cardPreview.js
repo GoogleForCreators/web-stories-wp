@@ -54,7 +54,6 @@ const EditControls = styled.div`
   &:hover {
     opacity: 1;
   }
-
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
     a {
@@ -68,6 +67,9 @@ const EditControls = styled.div`
 
 const ActionContainer = styled.div`
   padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const EmptyActionContainer = styled(ActionContainer)`
