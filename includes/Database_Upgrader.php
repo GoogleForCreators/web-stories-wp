@@ -49,6 +49,8 @@ class Database_Upgrader {
 
 	/**
 	 * Hooked into admin_init and walks through an array of upgrade methods.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		$version  = get_option( self::OPTION, '0.0.0' );
@@ -77,6 +79,8 @@ class Database_Upgrader {
 
 	/**
 	 * First database migration.
+	 *
+	 * @return void
 	 */
 	protected function upgrade_1() {
 		// Do nothing.
