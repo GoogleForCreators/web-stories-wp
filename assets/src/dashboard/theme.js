@@ -106,10 +106,10 @@ const theme = {
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
+  },
+  pageStructure: {
+    initialTopMargin: 45,
   },
   text: {
     shadow: '0px 1px 1px rgba(0, 0, 0, 1)',

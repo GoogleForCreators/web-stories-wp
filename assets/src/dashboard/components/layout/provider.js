@@ -29,8 +29,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { clamp, throttleToAnimationFrame } from '../../utils';
+import theme from '../../theme';
 
-export const SQUISH_LENGTH = 90;
+export const SQUISH_LENGTH = theme.pageStructure.initialTopMargin;
 export const SQUISH_CSS_VAR = '--squish-progress';
 
 export const dispatchSquishEvent = (el, progress) => {
