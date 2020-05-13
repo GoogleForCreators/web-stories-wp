@@ -114,8 +114,11 @@ describe('PublishPanel', () => {
     expect(firstOfJanuary).toBeDefined();
 
     fireEvent.click(firstOfJanuary);
-    expect(updateStory).toHaveBeenCalledWith({
-      properties: { date: '2020-01-01T19:20:00.000Z' },
-    });
+    expect(updateStory).toHaveBeenCalledTimes(1);
+    const calledArg = updateStory.mock.calls[0][0];
+    const date = new Date(calledArg.properties.date);
+    expect(date.getMonth()).toStrictEqual(0);
+    expect(date.getDate()).toStrictEqual(1);
+    expect(date.getFullYear()).toStrictEqual(2020);
   });
 });
