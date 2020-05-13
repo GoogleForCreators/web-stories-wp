@@ -47,7 +47,7 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
-import useGenericDashboardView from '../../../utils/useGenericDashboardView';
+import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
@@ -99,7 +99,7 @@ function TemplatesGallery() {
     },
   } = useContext(ApiContext);
 
-  const { header } = useGenericDashboardView({
+  const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(typeaheadValue),
     totalResults: totalTemplates,
     currentFilter: TEMPLATES_GALLERY_STATUS.ALL,
@@ -223,7 +223,7 @@ function TemplatesGallery() {
                 </HeadingDropdownsContainer>
               </PageHeading>
               <BodyViewOptions
-                resultsLabel={header.resultsLabel}
+                resultsLabel={resultsLabel}
                 layoutStyle={viewStyle}
                 handleLayoutSelect={handleViewStyleBarButtonSelected}
                 currentSort={currentTemplateSort}

@@ -29,7 +29,7 @@ import { useMemo } from 'react';
  */
 import { RESULT_LABELS } from '../constants';
 
-export default function useGenericDashboardView({
+export default function useDashboardResultsLabel({
   isActiveSearch,
   currentFilter,
   totalResults,
@@ -45,12 +45,5 @@ export default function useGenericDashboardView({
       : RESULT_LABELS[view][currentFilter];
   }, [isActiveSearch, totalResults, view, currentFilter]);
 
-  return useMemo(
-    () => ({
-      header: {
-        resultsLabel,
-      },
-    }),
-    [resultsLabel]
-  );
+  return resultsLabel;
 }

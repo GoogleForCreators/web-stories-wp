@@ -29,13 +29,9 @@ import { useRef } from 'react';
  */
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
-import {
-  InfiniteScroller,
-  Layout,
-  ToggleButtonGroup,
-} from '../../../components';
+import { InfiniteScroller, Layout } from '../../../components';
 import { SAVED_TEMPLATES_STATUSES, DASHBOARD_VIEWS } from '../../../constants';
-import useGenericDashboardView from '../../../utils/useGenericDashboardView';
+import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
   FilterPropTypes,
   PagePropTypes,
@@ -51,13 +47,12 @@ import FontProvider from '../../font/fontProvider';
 import {
   BodyViewOptions,
   BodyWrapper,
-  HeaderToggleButtonContainer,
   PageHeading,
   StoryGridView,
 } from '../shared';
 
 function Header({ filter, search, sort, stories, view }) {
-  const { header } = useGenericDashboardView({
+  const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     currentFilter: filter.value,
     totalResults: stories.length,
@@ -72,22 +67,9 @@ function Header({ filter, search, sort, stories, view }) {
         stories={stories}
         handleTypeaheadChange={search.setKeyword}
         typeaheadValue={search.keyword}
-      >
-        <HeaderToggleButtonContainer>
-          <ToggleButtonGroup
-            buttons={SAVED_TEMPLATES_STATUSES.map((savedTemplateStatus) => {
-              return {
-                handleClick: () => filter.set(savedTemplateStatus.value),
-                key: savedTemplateStatus.value,
-                isActive: filter.value === savedTemplateStatus.value,
-                text: savedTemplateStatus.label,
-              };
-            })}
-          />
-        </HeaderToggleButtonContainer>
-      </PageHeading>
+      />
       <BodyViewOptions
-        resultsLabel={header.resultsLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
         handleSortChange={sort.set}

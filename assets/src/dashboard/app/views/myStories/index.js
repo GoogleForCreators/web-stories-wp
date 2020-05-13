@@ -42,7 +42,7 @@ import {
   DASHBOARD_VIEWS,
 } from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
-import { useGenericDashboardView, useStoryView } from '../../../utils';
+import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -95,7 +95,7 @@ function MyStories() {
     totalPages,
   });
 
-  const { header } = useGenericDashboardView({
+  const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     currentFilter: filter.value,
     totalResults: totalStories,
@@ -181,7 +181,7 @@ function MyStories() {
     return (
       <BodyViewOptions
         showGridToggle
-        resultsLabel={header.resultsLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
@@ -192,7 +192,7 @@ function MyStories() {
         )}
       />
     );
-  }, [sort, header.resultsLabel, view]);
+  }, [sort, resultsLabel, view]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
