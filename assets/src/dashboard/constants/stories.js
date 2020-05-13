@@ -106,13 +106,6 @@ export const STORY_ITEM_CENTER_ACTION_LABELS = {
   [STORY_STATUS.DRAFT]: __('Preview', 'web-stories'),
 };
 
-// export const STORY_STATUS = {
-//   ALL: 'publish,draft',
-//   PUBLISHED: 'publish',
-//   DRAFT: 'draft',
-//   TEMPLATE: 'template',
-// };
-
 export const STORY_STATUSES = [
   { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
   { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
