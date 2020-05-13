@@ -41,7 +41,7 @@ describe('CardTitle', () => {
     const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="01/20/2020"
+        displayDate="01/20/2021"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
