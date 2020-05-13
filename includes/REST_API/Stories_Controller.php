@@ -86,7 +86,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
-	 * @param int|WP_Post     $post Post object or post id.
+	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
@@ -243,24 +243,11 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function get_items( $request ) {
 		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		$response = parent::get_items( $request );
+		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
 
-		// @codeCoverageIgnoreStart
-		// Ensure a search string is set in case the orderby is set to 'relevance'.
-		if ( ! empty( $request['orderby'] ) && 'relevance' === $request['orderby'] && empty( $request['search'] ) ) {
-			return new WP_Error(
-				'rest_no_search_term_defined',
-				__( 'You need to define a search term to order by relevance.', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
-		}
-
-		// Ensure an include parameter is set in case the orderby is set to 'include'.
-		if ( ! empty( $request['orderby'] ) && 'include' === $request['orderby'] && empty( $request['include'] ) ) {
-			return new WP_Error(
-				'rest_orderby_include_missing_include',
-				__( 'You need to define an include parameter to order by include.', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
+		if ( is_wp_error( $response ) ) {
+			return $response;
 		}
 
 		// Retrieve the list of registered collection query parameters.
@@ -364,62 +351,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		$posts_query  = new WP_Query();
-		$query_result = $posts_query->query( $query_args );
-
-
-		// Allow access to all password protected posts if the context is edit.
-		if ( 'edit' === $request['context'] ) {
-			add_filter( 'post_password_required', '__return_false' );
-		}
-
-		$posts = [];
-
-		foreach ( $query_result as $post ) {
-			$_post = get_post( $post );
-			if ( ! $this->check_read_permission( $_post ) ) {
-				continue;
-			}
-
-			$data    = $this->prepare_item_for_response( $_post, $request );
-			$posts[] = $this->prepare_response_for_collection( $data );
-		}
-
-		// Reset filter.
-		if ( 'edit' === $request['context'] ) {
-			remove_filter( 'post_password_required', '__return_false' );
-		}
-
-		$page        = (int) $query_args['paged'];
-		$total_posts = $posts_query->found_posts;
-
-		if ( $total_posts < 1 ) {
-			// Out-of-bounds, run the query again without LIMIT for total count.
-			unset( $query_args['paged'] );
-
-			$count_query = new WP_Query();
-			$count_query->query( $query_args );
-			$total_posts = $count_query->found_posts;
-		}
-
-		$max_pages = ceil( $total_posts / (int) $posts_query->query_vars['posts_per_page'] );
-
-		if ( $page > $max_pages && $total_posts > 0 ) {
-			return new WP_Error(
-				'rest_post_invalid_page_number',
-				__( 'The page number requested is larger than the number of pages available.', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
-		}
-
-		$response = rest_ensure_response( $posts );
-
-		$response->header( 'X-WP-Total', (int) $total_posts );
-		$response->header( 'X-WP-TotalPages', (int) $max_pages );
-		// @codeCoverageIgnoreEnd
 		// Add counts for other statuses.
+		$headers                             = $response->get_headers();
 		$statuses                            = [ 'publish', 'draft' ];
-		$statuses_count                      = [ 'all' => (int) $total_posts ];
+		$statuses_count                      = [ 'all' => $headers['X-WP-Total'] ];
 		$query_args_status                   = $query_args;
 		$query_args_status['posts_per_page'] = 1;
 		foreach ( $statuses as $status ) {
@@ -429,30 +364,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$statuses_count[ $status ] = absint( $posts_query->found_posts );
 		}
 		// Encode the this array as headers do not support passing an array.
-		$response->header( 'X-WP-TotalByStatus', wp_json_encode( $statuses_count ) );
-		// @codeCoverageIgnoreStart
-		$request_params = $request->get_query_params();
-		$base           = add_query_arg( urlencode_deep( $request_params ), rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ) );
-
-		if ( $page > 1 ) {
-			$prev_page = $page - 1;
-
-			if ( $prev_page > $max_pages ) {
-				$prev_page = $max_pages;
-			}
-
-			$prev_link = add_query_arg( 'page', $prev_page, $base );
-			$response->link_header( 'prev', $prev_link );
+		$encoded_statuses = wp_json_encode( $statuses_count );
+		if ( $encoded_statuses ) {
+			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
-		if ( $max_pages > $page ) {
-			$next_page = $page + 1;
-			$next_link = add_query_arg( 'page', $next_page, $base );
-
-			$response->link_header( 'next', $next_link );
-		}
-		// @codeCoverageIgnoreEnd
-
-		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
 		return $response;
 	}
 }
