@@ -70,6 +70,7 @@ const ActionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  text-transform: uppercase;
 `;
 
 const EmptyActionContainer = styled(ActionContainer)`
