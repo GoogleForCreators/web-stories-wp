@@ -27,8 +27,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES, APP_ROUTES } from '../../constants';
+import { BUTTON_TYPES } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
+import { parentRoute } from '../../app/router/route';
 
 const Nav = styled.nav`
   ${({ theme }) => `
@@ -84,9 +85,7 @@ export function TemplateNavBar() {
   return (
     <Nav>
       <Container>
-        <CloseLink href={`#${APP_ROUTES.TEMPLATES_GALLERY}`}>
-          {__('Close', 'web-stories')}
-        </CloseLink>
+        <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
         <BookmarkToggle />
