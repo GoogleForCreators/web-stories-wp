@@ -54,7 +54,7 @@ function setupPanel(
     },
   };
 
-  const { getByText, getByRole, queryByText } = renderWithTheme(
+  const { getByText, getByRole, queryByText, getByLabelText } = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
@@ -66,7 +66,9 @@ function setupPanel(
   return {
     getByText,
     getByRole,
+    getByLabelText,
     queryByText,
+    updateStory,
   };
 }
 
@@ -95,11 +97,25 @@ describe('PublishPanel', () => {
   });
 
   it('should open Date picker when clicking on date', () => {
-    const { getByText, getByRole } = setupPanel();
+    const { getByText } = setupPanel();
     const element = getByText('01/01/2020');
 
     fireEvent.click(element);
-    const calendar = getByRole('application');
+    const calendar = getByText('January 2020');
     expect(calendar).toBeDefined();
+  });
+
+  it('should update the story when choosing a date from the calendar', () => {
+    const { getByText, getByLabelText, updateStory } = setupPanel();
+    const element = getByText('01/01/2020');
+
+    fireEvent.click(element);
+    const firstOfJanuary = getByLabelText('January 1, 2020');
+    expect(firstOfJanuary).toBeDefined();
+
+    fireEvent.click(firstOfJanuary);
+    expect(updateStory).toHaveBeenCalledWith({
+      properties: { date: '2020-01-01T19:20:00.000Z' },
+    });
   });
 });
