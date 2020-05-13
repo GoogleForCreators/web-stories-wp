@@ -93,7 +93,7 @@
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^23.10.0",
+    "eslint-plugin-jest": "^23.11.0",
     "eslint-plugin-jest-dom": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-markdown": "^1.0.2",
