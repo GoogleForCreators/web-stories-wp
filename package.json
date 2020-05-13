@@ -50,7 +50,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.3.1",
+    "@ampproject/toolbox-optimizer": "^2.4.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
