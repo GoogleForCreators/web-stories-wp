@@ -21,6 +21,7 @@ const keys = {
   undo: 'mod+z',
   redo: 'shift+mod+z',
   delete: ['del', 'backspace'],
+  clone: 'mod+d',
 };
 
 export default keys;

@@ -94,33 +94,35 @@ function FrameElement({ element }) {
   });
 
   return (
-    <Wrapper
-      ref={elementRef}
-      data-element-id={id}
-      {...box}
-      onMouseDown={(evt) => {
-        if (isSelected) {
-          elementRef.current.focus();
-        } else {
-          handleSelectElement(id, evt);
-        }
-        if (!isBackground) {
-          evt.stopPropagation();
-        }
-      }}
-      onFocus={(evt) => {
-        if (!isSelected) {
-          handleSelectElement(id, evt);
-        }
-      }}
-      tabIndex="0"
-      aria-labelledby={`layer-${id}`}
-      hasMask={isMaskable}
+    <WithLink
+      element={element}
+      active={selectedElementIds.length === 1 && isSelected}
+      dragging={Boolean(activeDropTargetId)}
+      anchorRef={elementRef}
     >
-      <WithLink
-        element={element}
-        active={selectedElementIds.length === 1 && isSelected}
-        dragging={Boolean(activeDropTargetId)}
+      <Wrapper
+        ref={elementRef}
+        data-element-id={id}
+        {...box}
+        onMouseDown={(evt) => {
+          if (isSelected) {
+            elementRef.current.focus();
+          } else {
+            handleSelectElement(id, evt);
+          }
+          if (!isBackground) {
+            evt.stopPropagation();
+          }
+        }}
+        onFocus={(evt) => {
+          if (!isSelected) {
+            handleSelectElement(id, evt);
+          }
+        }}
+        tabIndex="0"
+        aria-labelledby={`layer-${id}`}
+        hasMask={isMaskable}
+        data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>
           {Frame ? (
@@ -129,8 +131,8 @@ function FrameElement({ element }) {
             <EmptyFrame />
           )}
         </WithMask>
-      </WithLink>
-    </Wrapper>
+      </Wrapper>
+    </WithLink>
   );
 }
 

@@ -34,6 +34,7 @@ export const DROPDOWN_TYPES = {
   TRANSPARENT_MENU: 'transparentMenu',
   MENU: 'menu',
   PANEL: 'panel',
+  COLOR_PANEL: 'color_panel',
 };
 
 export const KEYS = {
@@ -57,9 +58,15 @@ export const APP_ROUTES = {
   MY_STORIES: '/',
   SAVED_TEMPLATES: '/saved-templates',
   TEMPLATES_GALLERY: '/templates-gallery',
-  TEMPLATE_DETAIL: '/template-detail',
+  TEMPLATE_DETAIL: 'template-detail',
+
   EDITOR_SETTINGS: '/editor-settings',
   SUPPORT: '/support',
+};
+
+export const NESTED_APP_ROUTES = {
+  TEMPLATES_GALLERY_DETAIL: `${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`,
+  SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
 export const primaryPaths = [

@@ -80,19 +80,16 @@ function FramesLayer() {
   return (
     <Layer
       ref={ref}
+      data-testid="FramesLayer"
       pointerEvents="none"
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
     >
-      <FramesPageArea>
-        {currentPage &&
-          currentPage.elements.map(({ id, ...rest }) => {
-            return <FrameElement key={id} element={{ id, ...rest }} />;
-          })}
-        <Selection />
-        {Boolean(draggingResource) &&
+      <FramesPageArea
+        overlay={
+          Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
           Object.keys(dropTargets).length > 0 && (
             <FrameSidebar>
@@ -100,7 +97,14 @@ function FramesLayer() {
                 {__('Drop targets are outlined in blue.', 'web-stories')}
               </Hint>
             </FrameSidebar>
-          )}
+          )
+        }
+      >
+        {currentPage &&
+          currentPage.elements.map(({ id, ...rest }) => {
+            return <FrameElement key={id} element={{ id, ...rest }} />;
+          })}
+        <Selection />
       </FramesPageArea>
     </Layer>
   );

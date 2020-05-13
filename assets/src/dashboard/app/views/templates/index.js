@@ -207,7 +207,7 @@ function TemplatesGallery() {
                   />
                   <Dropdown
                     ariaLabel={__('Color Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
+                    type={DROPDOWN_TYPES.COLOR_PANEL}
                     placeholder={__('Color', 'web-stories')}
                     items={selectedColors}
                     onClear={clearAllColors}

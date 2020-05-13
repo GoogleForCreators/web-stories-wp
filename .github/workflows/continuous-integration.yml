@@ -206,10 +206,16 @@ jobs:
         run: npm ci
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+
+      - name: Upload mismatched image snapshots if found
+        uses: actions/upload-artifact@v2
+        with:
+          name: Image Snapshots Diff Output.zip
+          path: assets/src/**/__image_snapshots__/__diff_output__/*
+        if: failure()
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
@@ -361,7 +367,7 @@ jobs:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
-        run: npm run build:js
+        run: DISABLE_PREVENT=true npm run build:js
 
       - name: Start Docker environment
         run: npm run env:start

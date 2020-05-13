@@ -19,24 +19,55 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { useLayoutEffect, useState, useRef } from 'react';
-
+import {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from 'react';
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from '../../constants';
+import { getTransforms, getOffset } from './utils';
 
-const DEFAULT_WIDTH = 270;
-const MAX_HEIGHT = 370;
+/**
+ * Internal dependencies
+ */
 
-const Container = styled.div.attrs(({ x, y }) => ({
-  style: { right: `${x}px`, top: `${y}px` },
-}))`
+export const Placement = {
+  // TOP
+  TOP: 'top',
+  TOP_START: 'top-start',
+  TOP_END: 'top-end',
+  // BOTTOM
+  BOTTOM: 'bottom',
+  BOTTOM_START: 'bottom-start',
+  BOTTOM_END: 'bottom-end',
+  // RIGHT
+  RIGHT: 'right',
+  RIGHT_START: 'right-start',
+  RIGHT_END: 'right-end',
+  // LEFT
+  LEFT: 'left',
+  LEFT_START: 'left-start',
+  LEFT_END: 'left-end',
+};
+
+const Container = styled.div.attrs(
+  ({ x, y, width, height, fillWidth, fillHeight }) => ({
+    style: {
+      left: `${x}px`,
+      top: `${y}px`,
+      ...(fillWidth ? { width: `${width}px` } : {}),
+      ...(fillHeight ? { height: `${height}px` } : {}),
+    },
+  })
+)`
   position: fixed;
   z-index: 2147483646;
-  width: ${({ width }) => width}px;
-  max-height: ${MAX_HEIGHT}px;
-  overflow: auto;
+  ${({ placement }) => getTransforms(placement)}
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
@@ -65,29 +96,40 @@ const Container = styled.div.attrs(({ x, y }) => ({
   }
 `;
 
-function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
+function Popup({
+  anchor,
+  dock,
+  children,
+  placement = 'bottom',
+  spacing,
+  isOpen,
+  fillWidth = false,
+  fillHeight = false,
+}) {
   const [popupState, setPopupState] = useState(null);
-  const containerRef = useRef();
+  const [mounted, setMounted] = useState(false);
+  const popup = useRef(null);
 
-  useLayoutEffect(() => {
-    function positionPopup(evt) {
-      // If scrolling within the popup, ignore.
-      if (evt && containerRef.current?.contains(evt.target)) {
+  const positionPopup = useCallback(
+    (evt) => {
+      if (!mounted) {
         return;
       }
-      const anchorRect = anchor.current.getBoundingClientRect();
-      const bodyRect = document.body.getBoundingClientRect();
 
-      // Note: This displays the popup right under the node, currently no variations implemented.
-      // @todo Needs to display above the anchor instead if possible in case of not having room below!
+      // If scrolling within the popup, ignore.
+      if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
+        return;
+      }
+
       setPopupState({
-        width,
-        offset: {
-          x: bodyRect.right - anchorRect.right,
-          y: anchorRect.bottom,
-        },
+        offset: getOffset(placement, spacing, anchor, dock, popup),
       });
-    }
+    },
+    [anchor, dock, placement, spacing, mounted]
+  );
+
+  useLayoutEffect(() => {
+    setMounted(true);
     positionPopup();
 
     // Adjust the position when scrolling or resizing.
@@ -97,11 +139,21 @@ function Popup({ anchor, children, width = DEFAULT_WIDTH, isOpen }) {
       window.removeEventListener('resize', positionPopup);
       document.removeEventListener('scroll', positionPopup, true);
     };
-  }, [anchor, width]);
+  }, [positionPopup]);
+
+  useEffect(() => {
+    positionPopup();
+  }, [placement, spacing, anchor, dock, popup, isOpen, positionPopup]);
 
   return popupState && isOpen
     ? createPortal(
-        <Container ref={containerRef} {...popupState.offset} width={width}>
+        <Container
+          ref={popup}
+          {...popupState.offset}
+          fillWidth={fillWidth}
+          fillHeight={fillHeight}
+          placement={placement}
+        >
           {children}
         </Container>,
         document.body

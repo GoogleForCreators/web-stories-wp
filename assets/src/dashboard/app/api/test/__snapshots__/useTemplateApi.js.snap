@@ -3,7 +3,7 @@
 exports[`reshapeTemplateObject should reshape object to match snapshot 1`] = `
 Object {
   "bottomTargetAction": [Function],
-  "centerTargetAction": "#/template-detail?id=1&isLocal=true",
+  "centerTargetAction": "template-detail?id=1&isLocal=true",
   "colors": Array [
     Object {
       "color": "#f3d9e1",
