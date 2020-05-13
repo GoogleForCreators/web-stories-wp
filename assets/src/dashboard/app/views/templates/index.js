@@ -46,6 +46,7 @@ import {
   TEMPLATES_GALLERY_STATUS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
   TEMPLATES_GALLERY_SORT_OPTIONS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
@@ -152,7 +153,9 @@ function TemplatesGallery() {
         <BodyWrapper>
           <StoryGridView
             stories={orderedTemplates}
-            centerActionLabel={__('View', 'web-stories')}
+            centerActionLabelByStatus={
+              TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+            }
             bottomActionLabel={__('Use template', 'web-stories')}
             isTemplate
           />

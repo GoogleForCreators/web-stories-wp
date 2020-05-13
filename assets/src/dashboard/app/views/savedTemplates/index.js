@@ -55,6 +55,7 @@ import {
   PageHeading,
   StoryGridView,
 } from '../shared';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({
@@ -97,7 +98,9 @@ function Content({ stories, view, page }) {
             <BodyWrapper>
               <StoryGridView
                 stories={stories}
-                centerActionLabel={__('View', 'web-stories')}
+                centerActionLabelByStatus={
+                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                }
                 bottomActionLabel={__('Use template', 'web-stories')}
                 isSavedTemplate
               />
