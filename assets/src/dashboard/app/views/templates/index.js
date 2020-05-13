@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -43,8 +43,12 @@ import {
   VIEW_STYLE,
   DROPDOWN_TYPES,
   STORY_SORT_OPTIONS,
+  DASHBOARD_VIEWS,
+  TEMPLATES_GALLERY_STATUS,
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
+import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
+
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -95,6 +99,13 @@ function TemplatesGallery() {
     },
   } = useContext(ApiContext);
 
+  const resultsLabel = useDashboardResultsLabel({
+    isActiveSearch: Boolean(typeaheadValue),
+    totalResults: totalTemplates,
+    currentFilter: TEMPLATES_GALLERY_STATUS.ALL,
+    view: DASHBOARD_VIEWS.TEMPLATES_GALLERY,
+  });
+
   useEffect(() => {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
@@ -124,17 +135,6 @@ function TemplatesGallery() {
   const handleNewPageRequest = useCallback(() => {
     setCurrentPageClamped(currentPage + 1);
   }, [currentPage, setCurrentPageClamped]);
-
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n(
-      '%s total template',
-      '%s total templates',
-      totalTemplates,
-      'web-stories'
-    ),
-    totalTemplates
-  );
 
   const {
     selectedCategories,
@@ -223,7 +223,7 @@ function TemplatesGallery() {
                 </HeadingDropdownsContainer>
               </PageHeading>
               <BodyViewOptions
-                listBarLabel={listBarLabel}
+                resultsLabel={resultsLabel}
                 layoutStyle={viewStyle}
                 handleLayoutSelect={handleViewStyleBarButtonSelected}
                 currentSort={currentTemplateSort}

@@ -63,14 +63,14 @@ const BodyViewOptions = ({
   currentSort,
   handleLayoutSelect,
   handleSortChange,
-  listBarLabel,
+  resultsLabel,
   layoutStyle,
   showGridToggle,
   sortDropdownAriaLabel,
 }) => (
   <BodyWrapper>
     <DisplayFormatContainer>
-      <Label>{listBarLabel}</Label>
+      <Label>{resultsLabel}</Label>
       <ControlsContainer>
         {layoutStyle === VIEW_STYLE.GRID && (
           <StorySortDropdownContainer>
@@ -86,7 +86,7 @@ const BodyViewOptions = ({
         )}
         {showGridToggle && (
           <ViewStyleBar
-            label={listBarLabel}
+            label={resultsLabel}
             layoutStyle={layoutStyle}
             onPress={handleLayoutSelect}
           />
@@ -101,7 +101,7 @@ BodyViewOptions.propTypes = {
   handleLayoutSelect: PropTypes.func,
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
-  listBarLabel: PropTypes.string.isRequired,
+  resultsLabel: PropTypes.string.isRequired,
   showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
