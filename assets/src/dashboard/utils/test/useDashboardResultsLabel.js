@@ -29,20 +29,20 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../constants';
 
-import useGenericDashboardView from '../useGenericDashboardView';
+import useDashboardResultsLabel from '../useDashboardResultsLabel';
 
-describe('useGenericGDashboardView()', function () {
+describe('useGenericResultsLabel()', function () {
   // my stories
   it(`should have default options initially selected for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: STORY_STATUS.ALL,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.ALL]
     );
   });
@@ -50,13 +50,13 @@ describe('useGenericGDashboardView()', function () {
   it(`should have options selected for ${DASHBOARD_VIEWS.MY_STORIES} when filtered to drafts`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: STORY_STATUS.DRAFT,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.DRAFT]
     );
   });
@@ -64,13 +64,13 @@ describe('useGenericGDashboardView()', function () {
   it(`should have options selected for ${DASHBOARD_VIEWS.MY_STORIES} when filtered to published stories`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: STORY_STATUS.PUBLISHED,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.PUBLISHED]
     );
   });
@@ -78,7 +78,7 @@ describe('useGenericGDashboardView()', function () {
   it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 4,
           currentFilter: STORY_STATUS.PUBLISHED,
@@ -86,13 +86,13 @@ describe('useGenericGDashboardView()', function () {
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe('4 results');
+    expect(result.current).toBe('4 results');
   });
 
   it(`should show "1 result" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 1,
           currentFilter: STORY_STATUS.PUBLISHED,
@@ -100,13 +100,13 @@ describe('useGenericGDashboardView()', function () {
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe('1 result');
+    expect(result.current).toBe('1 result');
   });
 
   it(`should show "0 results" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 0,
           currentFilter: STORY_STATUS.PUBLISHED,
@@ -114,20 +114,20 @@ describe('useGenericGDashboardView()', function () {
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe('0 results');
+    expect(result.current).toBe('0 results');
   });
 
   // saved templates
   it(`should have default options initially selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: SAVED_TEMPLATES_STATUS.ALL,
           view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][SAVED_TEMPLATES_STATUS.ALL]
     );
   });
@@ -135,13 +135,13 @@ describe('useGenericGDashboardView()', function () {
   it(`should have options selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES} when filtered to current user`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: SAVED_TEMPLATES_STATUS.CURRENT_USER,
           view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][
         SAVED_TEMPLATES_STATUS.CURRENT_USER
       ]
@@ -151,13 +151,13 @@ describe('useGenericGDashboardView()', function () {
   it(`should have options selected for ${DASHBOARD_VIEWS.SAVED_TEMPLATES} when filtered to bookmarked templates`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: SAVED_TEMPLATES_STATUS.BOOKMARKED,
           view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.SAVED_TEMPLATES][
         SAVED_TEMPLATES_STATUS.BOOKMARKED
       ]
@@ -167,7 +167,7 @@ describe('useGenericGDashboardView()', function () {
   it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.SAVED_TEMPLATES}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 30,
           currentFilter: SAVED_TEMPLATES_STATUS.BOOKMARKED,
@@ -175,7 +175,7 @@ describe('useGenericGDashboardView()', function () {
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe('30 results');
+    expect(result.current).toBe('30 results');
   });
 
   // template gallery
@@ -183,13 +183,13 @@ describe('useGenericGDashboardView()', function () {
   it(`should have default options initially selected for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           currentFilter: TEMPLATES_GALLERY_STATUS.ALL,
           view: DASHBOARD_VIEWS.TEMPLATES_GALLERY,
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe(
+    expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.TEMPLATES_GALLERY][
         TEMPLATES_GALLERY_STATUS.ALL
       ]
@@ -199,7 +199,7 @@ describe('useGenericGDashboardView()', function () {
   it(`should show counted results if isActiveSearch is true for ${DASHBOARD_VIEWS.TEMPLATES_GALLERY}`, function () {
     const { result } = renderHook(
       () =>
-        useGenericDashboardView({
+        useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 41,
           currentFilter: TEMPLATES_GALLERY_STATUS.ALL,
@@ -207,6 +207,6 @@ describe('useGenericGDashboardView()', function () {
         }),
       {}
     );
-    expect(result.current.header.resultsLabel).toBe('41 results');
+    expect(result.current).toBe('41 results');
   });
 });
