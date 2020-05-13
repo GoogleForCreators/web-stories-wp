@@ -104,6 +104,7 @@ export const STORY_STATUS = {
   ALL: 'publish,draft',
   PUBLISHED: 'publish',
   DRAFT: 'draft',
+  TEMPLATE: 'template',
 };
 
 export const STORY_STATUSES = [
