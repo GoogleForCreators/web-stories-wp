@@ -71,6 +71,7 @@ const CtaButton = styled(StyledButton)`
 `;
 
 const SecondaryButton = styled(StyledButton)`
+  border-radius: 0px;
   background-color: transparent;
   text-shadow: ${({ theme }) => theme.text.shadow};
 
@@ -87,7 +88,14 @@ const StyledChildren = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-bottom: ${({ isSecondary }) =>
+    isSecondary ? '0.1em solid currentColor' : 'none'};
 `;
+
+StyledChildren.propTypes = {
+  isSecondary: PropTypes.bool,
+};
 
 const Button = ({
   children,
@@ -110,7 +118,9 @@ const Button = ({
       disabled={isDisabled}
       {...rest}
     >
-      <StyledChildren>{children}</StyledChildren>
+      <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>
+        {children}
+      </StyledChildren>
     </StyledButtonByType>
   );
 };

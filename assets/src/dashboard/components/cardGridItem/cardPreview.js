@@ -74,12 +74,6 @@ const EmptyActionContainer = styled(ActionContainer)`
   padding: 40px;
 `;
 
-const CenterActionButton = styled(Button)`
-  width: 100%;
-  font-size: 22px;
-  line-height: 22px;
-`;
-
 const BottomActionButton = styled(Button)`
   width: 100%;
 `;
@@ -99,12 +93,12 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
         <EmptyActionContainer />
         {centerAction && (
           <ActionContainer>
-            <CenterActionButton
+            <Button
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
             >
               {centerAction.label}
-            </CenterActionButton>
+            </Button>
           </ActionContainer>
         )}
         <ActionContainer>
