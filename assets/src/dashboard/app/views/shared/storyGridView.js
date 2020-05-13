@@ -139,13 +139,13 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                status={story.status}
+                status={isSavedTemplate ? undefined : story.status}
                 secondaryTitle={
                   isSavedTemplate
                     ? __('Google', 'web-stories')
                     : users[story.author]?.name
                 }
-                displayDate={!isSavedTemplate && story.modified}
+                displayDate={isSavedTemplate ? undefined : story.modified}
                 editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
