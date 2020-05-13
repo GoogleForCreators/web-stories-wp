@@ -124,7 +124,7 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
         <FontPickerTitle>{value || placeholder}</FontPickerTitle>
         <DropDownIcon />
       </FontPickerSelect>
-      <Popup anchor={selectRef} isOpen={isOpen} width={DEFAULT_WIDTH}>
+      <Popup anchor={selectRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
         <FontPickerContainer
           handleCurrentValue={handleCurrentValue}
           onClose={closeFontPicker}

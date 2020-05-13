@@ -121,7 +121,7 @@ function FontProvider({ children }) {
       (fontName) => loadedFontFamily.current.indexOf(fontName) < 0
     );
     if (!newFontList?.length) {
-      return new Promise((resolve) => resolve(''));
+      return Promise.resolve('');
     }
     return fetch(
       `${GOOGLE_MENU_FONT_URL}?family=${encodeURIComponent(
