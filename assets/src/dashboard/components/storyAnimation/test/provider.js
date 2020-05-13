@@ -20,7 +20,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { createWrapperWithProps } from '../../../testUtils';
+import { createWrapperWithProps, flushPromiseQueue } from '../../../testUtils';
 import StoryAnimation, { useStoryAnimationContext } from '..';
 
 const defaultWAAPIAnimation = {
@@ -247,7 +247,7 @@ describe('StoryAnimation.Provider', () => {
            * trigger dispatch from resolved promise
            */
           await act(async () => {
-            await new Promise((resolve) => resolve());
+            await flushPromiseQueue();
           });
         };
 
