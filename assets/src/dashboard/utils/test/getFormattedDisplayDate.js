@@ -28,6 +28,15 @@ import getFormattedDisplayDate, {
 } from '../getFormattedDisplayDate';
 
 describe('getFormattedDisplayDate', () => {
+  beforeEach(() => {
+    const time = moment().valueOf();
+    jest.spyOn(moment, 'now').mockImplementation().mockReturnValue(time);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should return 2 minutes ago using a native date object', () => {
     const dateString = moment(new Date() - 2 * 60000);
     const formattedDate = getFormattedDisplayDate(dateString);
@@ -54,6 +63,20 @@ describe('getFormattedDisplayDate', () => {
     const formattedDate = getFormattedDisplayDate(dateString);
 
     expect(formattedDate).toBe('an hour ago');
+  });
+
+  it('should return 2 hours ago using a native date object', () => {
+    const dateString = moment(new Date() - 120 * 60000);
+    const formattedDate = getFormattedDisplayDate(dateString);
+
+    expect(formattedDate).toBe('2 hours ago');
+  });
+
+  it('should return 2 hours ago using moment', () => {
+    const dateString = moment(new Date()).subtract(2, 'hours');
+    const formattedDate = getFormattedDisplayDate(dateString);
+
+    expect(formattedDate).toBe('2 hours ago');
   });
 
   it('should return yesterday using a native date object', () => {
