@@ -35,13 +35,13 @@ import { ICON_METRICS, VIEW_STYLE } from '../constants';
 
 const Container = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 `;
 
 const ToggleButton = styled.button`
   border: none;
-  padding: 15px 15px 15px 0;
+  padding: 0;
   background: transparent;
   cursor: pointer;
 

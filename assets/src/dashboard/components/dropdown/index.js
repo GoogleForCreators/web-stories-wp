@@ -24,7 +24,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -71,8 +71,11 @@ export const InnerDropdown = styled.button`
     padding-left: ${hasSelectedItems ? '10px' : '20px'};
     margin: 0;
     background-color: ${
-      theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+      hasSelectedItems
+        ? theme.colors.blueLight
+        : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
     };
+
     border-radius: ${theme.dropdown[type].borderRadius}px;
     border: ${theme.dropdown[type].border};
     color: ${theme.colors.gray600};
@@ -84,14 +87,16 @@ export const InnerDropdown = styled.button`
     line-height: ${theme.fonts.dropdown.lineHeight}px;
 
     &:hover {
-      background-color: ${theme.dropdown[type].activeBackground};
+      background-color: ${
+        hasSelectedItems
+          ? theme.colors.blueLight
+          : theme.dropdown[type].activeBackground
+      };
     }
 
     &:focus {
       border: ${theme.borders.action};
     }
-
-    background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
       color: ${theme.colors.gray400};
@@ -153,7 +158,8 @@ const Dropdown = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
@@ -166,6 +172,14 @@ const Dropdown = ({
       setShowMenu(!showMenu);
     }
   };
+
+  useEffect(() => {
+    if (showMenu && dropdownRef.current) {
+      // we need to maintain focus of the dropdown component as a whole
+      // but the button should lose focus as menu is open and focus moves there
+      dropdownButtonRef.current.blur();
+    }
+  }, [showMenu]);
 
   const handleMenuItemSelect = (item) => {
     if (type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL) {
@@ -194,12 +208,21 @@ const Dropdown = ({
     };
     return value && getCurrentLabel();
   }, [value, items]);
+
+  const currentValueIndex = useMemo(() => {
+    const activeItem = items.find((item) => {
+      return item.value === value;
+    });
+    return items.indexOf(activeItem);
+  }, [items, value]);
+
   const hasSelectedItems = selectedItems.length > 0;
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
       <Label aria-label={ariaLabel} alignment={alignment}>
         <InnerDropdown
+          ref={dropdownButtonRef}
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
           disabled={disabled}
@@ -252,10 +275,10 @@ const Dropdown = ({
         />
       ) : (
         <StyledPopoverMenu
+          currentValueIndex={currentValueIndex}
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
-          framelessButton={type === DROPDOWN_TYPES.TRANSPARENT_MENU}
         />
       )}
     </DropdownContainer>

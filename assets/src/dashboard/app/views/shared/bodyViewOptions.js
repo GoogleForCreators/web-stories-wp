@@ -39,7 +39,7 @@ const DisplayFormatContainer = styled.div`
 `;
 
 const StorySortDropdownContainer = styled.div`
-  margin: auto 0 auto auto;
+  margin: auto 8px;
   align-self: flex-end;
 `;
 
@@ -78,7 +78,7 @@ const BodyViewOptions = ({
               alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
               items={STORY_SORT_MENU_ITEMS}
-              type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+              type={DROPDOWN_TYPES.MENU}
               value={currentSort}
               onChange={(newSort) => handleSortChange(newSort.value)}
             />

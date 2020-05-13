@@ -117,7 +117,7 @@ describe('<SavedTemplates />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getAllByText('Name')[0].parentElement);
+    fireEvent.click(getAllByText('Author')[0].parentElement);
     fireEvent.click(getByText('Last modified'));
 
     expect(setSortFn).toHaveBeenCalledWith('modified');
