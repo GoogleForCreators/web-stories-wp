@@ -92,7 +92,11 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$headers  = $response->get_headers();
 		$this->assertEquals( 10, $headers['X-WP-Total'] );
 		$statues        = $headers['X-WP-TotalByStatus'];
-		$statues_decode = json_decode( $statues );
+		$statues_decode = json_decode( $statues, true );
+
+		$this->assertArrayHasKey( 'all', $statues_decode );
+		$this->assertArrayHasKey( 'publish', $statues_decode );
+		$this->assertArrayHasKey( 'draft', $statues_decode );
 
 		$this->assertEquals( 10, $statues_decode['all'] );
 		$this->assertEquals( 7, $statues_decode['publish'] );
