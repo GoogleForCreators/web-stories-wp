@@ -71,4 +71,18 @@ describe('CardTitle', () => {
 
     expect(getByText('draft')).toBeDefined();
   });
+
+  it('should render Card Title with an author', () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        secondaryTitle="Harry Potter"
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+      />
+    );
+
+    expect(getByText('Harry Potter')).toBeInTheDocument();
+  });
 });
