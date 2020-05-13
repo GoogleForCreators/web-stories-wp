@@ -56,20 +56,6 @@ describe('getFormattedDisplayDate', () => {
     expect(formattedDate).toBe('an hour ago');
   });
 
-  it('should return 2 hours ago using a native date object', () => {
-    const dateString = moment(new Date() - 120 * 60000);
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('2 hours ago');
-  });
-
-  it('should return 2 hours ago using moment', () => {
-    const dateString = moment().subtract(2, 'hours');
-    const formattedDate = getFormattedDisplayDate(dateString);
-
-    expect(formattedDate).toBe('2 hours ago');
-  });
-
   it('should return yesterday using a native date object', () => {
     const dateString = moment(new Date() - 1440 * 60000);
     const formattedDate = getFormattedDisplayDate(dateString);
