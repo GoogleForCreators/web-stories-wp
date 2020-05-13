@@ -32,7 +32,7 @@ const DEFAULT_PRESET = {
     family: 'Roboto',
     service: 'fonts.google.com',
   },
-  lineHeight: '24px ',
+  lineHeight: '24px',
 };
 
 const PRESETS = [
