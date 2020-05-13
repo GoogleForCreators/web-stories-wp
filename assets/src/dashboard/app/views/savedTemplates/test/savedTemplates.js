@@ -116,7 +116,7 @@ describe('<SavedTemplates />', function () {
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: setSortFn }}
+          sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -124,7 +124,7 @@ describe('<SavedTemplates />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getAllByText('Author')[0].parentElement);
+    fireEvent.click(getAllByText('Created by')[0].parentElement);
     fireEvent.click(getByText('Last modified'));
 
     expect(setSortFn).toHaveBeenCalledWith('modified');
