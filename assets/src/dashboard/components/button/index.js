@@ -38,7 +38,7 @@ const StyledButton = styled.button`
   display: flex;
   min-width: 100px;
   opacity: 0.75;
-  padding: 4px 16px;
+  padding: 4px 12px;
   text-decoration: none;
 
   &:focus,

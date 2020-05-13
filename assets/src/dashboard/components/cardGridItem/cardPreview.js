@@ -74,10 +74,6 @@ const EmptyActionContainer = styled(ActionContainer)`
   padding: 40px;
 `;
 
-const BottomActionButton = styled(Button)`
-  width: 100%;
-`;
-
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
     ? { href: resolveRoute(targetAction), isLink: true }
@@ -102,11 +98,9 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
           </ActionContainer>
         )}
         <ActionContainer>
-          <BottomActionButton
-            {...getActionAttributes(bottomAction.targetAction)}
-          >
+          <Button {...getActionAttributes(bottomAction.targetAction)}>
             {bottomAction.label}
-          </BottomActionButton>
+          </Button>
         </ActionContainer>
       </EditControls>
     </>
