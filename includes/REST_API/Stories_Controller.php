@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-
 use Google\Web_Stories\Story_Post_Type;
 use stdClass;
 use WP_Query;
@@ -87,7 +86,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
-	 * @param WP_Post         $post Post object.
+	 * @param int|WP_Post     $post Post object or post id.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response Response object.
@@ -377,11 +376,12 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		$posts = [];
 
 		foreach ( $query_result as $post ) {
-			if ( ! $this->check_read_permission( $post ) ) {
+			$_post = get_post( $post );
+			if ( ! $this->check_read_permission( $_post ) ) {
 				continue;
 			}
 
-			$data    = $this->prepare_item_for_response( $post, $request );
+			$data    = $this->prepare_item_for_response( $_post, $request );
 			$posts[] = $this->prepare_response_for_collection( $data );
 		}
 
