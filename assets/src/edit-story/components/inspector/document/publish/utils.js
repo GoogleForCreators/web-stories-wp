@@ -15,9 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * Adds 0 in front of the number if it's less than 10.
+ *
+ * @param {number} number Number to check.
+ * @return {string} Converted number.
  */
-import ensureDoubleDigitNumber from '../../../../utils/ensureDoubleDigitNumber';
+function ensureDoubleDigitNumber(number) {
+  // This could also be done via 0 + value and slicing, however, comparison is faster.
+  return number < 10 ? '0' + number : String(number);
+}
 
 export function getReadableDate(date, is12Hours = true) {
   const displayDate = date ? new Date(date) : new Date();
@@ -35,8 +41,9 @@ export function getReadableTime(date, is12Hours = true) {
     ? displayTime.getHours() % 12 || 12
     : displayTime.getHours();
   const minutes = ensureDoubleDigitNumber(displayTime.getMinutes());
-  const am = is12Hours ? displayTime.format('A') : '';
-  return `${ensureDoubleDigitNumber(hours)}:${minutes}${am}`;
+  const am = displayTime.getHours() < 12 ? 'AM' : 'PM';
+  const displayedAm = is12Hours ? am : '';
+  return `${ensureDoubleDigitNumber(hours)}:${minutes}${displayedAm}`;
 }
 
 export function is12Hour(timeFormat) {

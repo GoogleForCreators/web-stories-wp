@@ -17,14 +17,8 @@
 /**
  * External dependencies
  */
-import { default as Calendar } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -37,22 +31,19 @@ const CalendarWrapper = styled.div`
 
 function DatePicker({ currentDate, onChange }) {
   const nodeRef = useRef();
+  const value = new Date(currentDate);
   const handleOnChange = useCallback(
     (newDate) => {
+      newDate.setHours(value.getHours());
+      newDate.setMinutes(value.getMinutes());
       onChange(newDate.toISOString(), /* Close calendar */ true);
     },
-    [onChange]
+    [value, onChange]
   );
 
   return (
     <CalendarWrapper ref={nodeRef}>
-      <Calendar
-        selected={Date.parse(currentDate)}
-        onChange={handleOnChange}
-        inline
-        showYearDropdown
-        todayButton={__('Today', 'web-stories')}
-      />
+      <Calendar value={value} onChange={handleOnChange} />
     </CalendarWrapper>
   );
 }

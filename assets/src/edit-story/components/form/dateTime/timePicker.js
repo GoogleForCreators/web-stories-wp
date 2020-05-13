@@ -26,11 +26,6 @@ import PropTypes from 'prop-types';
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import ensureDoubleDigitNumber from '../../../utils/ensureDoubleDigitNumber';
-
 const TimeWrapper = styled.div`
   margin-bottom: 1em;
   padding: 0 20px;
@@ -174,7 +169,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
 
   const updateMinutes = () => {
     const { minutes, date } = state;
-    if (isNaN(minutes) || minutes < 0 || minutes > 59) {
+    const value = parseInt(minutes);
+    if (isNaN(value) || value < 0 || value > 59) {
       return;
     }
     const newDate = date;
@@ -184,7 +180,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
 
   const updateHours = () => {
     const { hours, date } = state;
-    if (isNaN(hours) || hours < getMinHours() || hours > getMaxHours()) {
+    const value = parseInt(hours);
+    if (isNaN(value) || value < getMinHours() || value > getMaxHours()) {
       return;
     }
 
@@ -219,7 +216,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={ensureDoubleDigitNumber(state.hours)}
+              value={state.hours}
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
@@ -229,8 +226,8 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               type="number"
               min={0}
               max={59}
-              value={ensureDoubleDigitNumber(state.minutes)}
-              onChange={onChangeEvent}
+              value={state.minutes}
+              onChange={onChangeEvent('minutes')}
               onBlur={updateMinutes}
             />
           </InputGroup>
