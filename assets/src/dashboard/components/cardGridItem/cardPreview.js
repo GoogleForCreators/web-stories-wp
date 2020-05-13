@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { resolveRoute } from '../../app/router';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
@@ -85,7 +86,7 @@ const BottomActionButton = styled(Button)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { href: targetAction, isLink: true }
+    ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
 const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
