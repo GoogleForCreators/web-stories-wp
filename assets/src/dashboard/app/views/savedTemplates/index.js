@@ -34,8 +34,8 @@ import {
   DASHBOARD_VIEWS,
   SAVED_TEMPLATES_STATUSES,
   STORY_SORT_MENU_ITEMS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
-
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
   FilterPropTypes,
@@ -55,7 +55,6 @@ import {
   PageHeading,
   StoryGridView,
 } from '../shared';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({
