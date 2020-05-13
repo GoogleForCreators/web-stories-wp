@@ -37,7 +37,7 @@ export function isYesterday(displayDate) {
 }
 
 export default function getFormattedDisplayDate(date) {
-  const displayDate = moment(date);
+  const displayDate = moment.isMoment(date) ? date : moment(date);
   if (isToday(displayDate)) {
     return moment(displayDate).fromNow();
   } else if (isYesterday(displayDate)) {
