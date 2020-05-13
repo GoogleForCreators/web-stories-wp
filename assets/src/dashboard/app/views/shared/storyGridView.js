@@ -64,6 +64,7 @@ const StoryGridView = ({
   trashStory,
   duplicateStory,
   isTemplate,
+  isSavedTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -139,8 +140,12 @@ const StoryGridView = ({
               <CardTitle
                 title={story.title}
                 status={story.status}
-                author={users[story.author]?.name}
-                displayDate={story.modified}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={!isSavedTemplate && story.modified}
                 editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
@@ -163,6 +168,7 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
+  isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
   centerActionLabel: ActionLabel,
