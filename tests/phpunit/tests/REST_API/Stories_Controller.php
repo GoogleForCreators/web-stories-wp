@@ -35,7 +35,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
 
 		$factory->post->create_many(
-			3,
+			7,
 			[
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
@@ -44,7 +44,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		);
 
 		$factory->post->create_many(
-			7,
+			3,
 			[
 				'post_status' => 'draft',
 				'post_author' => self::$user_id,
