@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -128,22 +127,12 @@ const PMButton = styled(Button)`
   border-radius: 0 3px 3px 0;
 `;
 
-function TimePicker({ currentTime, onChange, is12Hour }) {
-  const selectedTime = currentTime ? new Date(currentTime) : new Date();
-  const initialHours = selectedTime.getHours();
-  // Track the local settings to avoid updating unnecessarily.
-  const timeSettings = useRef({
-    minutes: selectedTime.getMinutes(),
-    am: initialHours < 12 ? 'AM' : 'PM',
-    hours: is12Hour ? initialHours % 12 || 12 : initialHours,
-    date: selectedTime,
-  });
-
+function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
   const onChangeEvent = (prop) => (evt) => {
-    timeSettings.current = {
-      ...timeSettings.current,
-      [prop]: evt.target.value,
-    };
+    setLocalData({
+      ...localData,
+      [prop]: parseInt(evt.target.value),
+    });
   };
 
   const getMaxHours = () => {
@@ -155,7 +144,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const getHours = (value) => {
-    const { am } = timeSettings.current;
+    const { am } = localData;
     if (!is12Hour) {
       return value;
     }
@@ -163,12 +152,12 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const changeDate = (newDate, props = {}) => {
-    timeSettings.current = { ...timeSettings.current, ...props, date: newDate };
+    setLocalData({ ...localData, ...props, date: newDate });
     onChange(newDate.toISOString());
   };
 
   const updateMinutes = () => {
-    const { minutes, date } = timeSettings.current;
+    const { minutes, date } = localData;
     const value = parseInt(minutes);
     if (isNaN(value) || value < 0 || value > 59) {
       return;
@@ -179,7 +168,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const updateHours = () => {
-    const { hours, date } = timeSettings.current;
+    const { hours, date } = localData;
     const value = parseInt(hours);
     if (isNaN(value) || value < getMinHours() || value > getMaxHours()) {
       return;
@@ -191,7 +180,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const updateAmPm = (value) => () => {
-    const { am, date, hours } = timeSettings.current;
+    const { am, date, hours } = localData;
     if (am === value) {
       return;
     }
@@ -216,7 +205,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={timeSettings.current.hours}
+              value={parseInt(localData.hours)}
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
@@ -226,7 +215,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               type="number"
               min={0}
               max={59}
-              value={timeSettings.current.minutes}
+              value={parseInt(localData.minutes)}
               onChange={onChangeEvent('minutes')}
               onBlur={updateMinutes}
             />
@@ -235,14 +224,14 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
             <InputGroup>
               <AMButton
                 type="button"
-                isToggled={timeSettings.current.am === 'AM'}
+                isToggled={localData.am === 'AM'}
                 onClick={updateAmPm('AM')}
               >
                 {__('AM', 'web-stories')}
               </AMButton>
               <PMButton
                 type="button"
-                isToggled={timeSettings.current.am === 'PM'}
+                isToggled={localData.am === 'PM'}
                 onClick={updateAmPm('PM')}
               >
                 {__('PM', 'web-stories')}
@@ -257,8 +246,14 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
 
 TimePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
-  currentTime: PropTypes.string,
   is12Hour: PropTypes.bool,
+  localData: PropTypes.shape({
+    am: PropTypes.string.isRequired,
+    hours: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    date: PropTypes.instanceOf(Date).isRequired,
+  }).isRequired,
+  setLocalData: PropTypes.func.isRequired,
 };
 
 export default TimePicker;

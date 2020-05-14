@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -36,9 +37,22 @@ const DateTimeWrapper = styled.div`
 `;
 
 function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
+  const selectedTime = value ? new Date(value) : new Date();
+  const initialHours = selectedTime.getHours();
+  const [localData, setLocalData] = useState({
+    minutes: selectedTime.getMinutes(),
+    am: initialHours < 12 ? 'AM' : 'PM',
+    hours: is12Hour ? initialHours % 12 || 12 : initialHours,
+    date: selectedTime,
+  });
   return (
     <DateTimeWrapper ref={forwardedRef}>
-      <TimePicker currentTime={value} onChange={onChange} is12Hour={is12Hour} />
+      <TimePicker
+        localData={localData}
+        setLocalData={setLocalData}
+        onChange={onChange}
+        is12Hour={is12Hour}
+      />
       <DatePicker currentDate={value} onChange={onChange} />
     </DateTimeWrapper>
   );
