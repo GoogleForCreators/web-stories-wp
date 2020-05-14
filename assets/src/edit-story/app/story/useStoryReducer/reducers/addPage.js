@@ -27,6 +27,8 @@ import { isInsideRange } from './utils';
  *
  * Current page will be updated to point to the newly inserted page.
  *
+ * New page must have at least one element, the default background element.
+ *
  * Selection is cleared.
  *
  * @param {Object} state Current state
@@ -45,10 +47,12 @@ function addPage(state, { page, position }) {
 
   const { id } = page;
 
-  // Ensure new page has elements array and background id
+  // Ensure new page has at least one element
+  if (!page.elements?.length >= 1) {
+    return state;
+  }
+
   const newPage = {
-    elements: [],
-    backgroundElementId: null,
     backgroundOverlay: OverlayType.NONE,
     ...page,
   };
