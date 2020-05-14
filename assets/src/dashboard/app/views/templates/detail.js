@@ -44,7 +44,10 @@ import {
   TemplateNavBar,
   Layout,
 } from '../../../components';
-import { ICON_METRICS } from '../../../constants';
+import {
+  ICON_METRICS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
 
@@ -245,7 +248,9 @@ function TemplateDetail() {
                     <UnitsProvider pageSize={pageSize}>
                       <StoryGridView
                         stories={relatedTemplates}
-                        centerActionLabel={__('View', 'web-stories')}
+                        centerActionLabelByStatus={
+                          TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                        }
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate
                       />
