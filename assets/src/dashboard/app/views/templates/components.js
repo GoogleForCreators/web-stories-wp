@@ -137,6 +137,10 @@ export const NavButton = styled(Button)`
     &:hover, &:active, &:focus {
       background-color: ${theme.colors.gray600};
       color: ${theme.colors.white};
+      @media ${theme.breakpoint.largeDisplayPhone} {
+        color: ${theme.colors.gray900};
+        background-color: transparent;
+       }
     }
     transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   `}
@@ -175,12 +179,6 @@ export const SmallDisplayPagination = styled.div(
       display: flex;
       justify-content: flex-start;
       margin: 0 0 10px;
-      > ${NavButton} {
-        &:hover, &:active, &:focus {
-          color: ${theme.colors.gray900};
-          background-color: transparent;
-         }
-      }
     }
   `
 );
