@@ -27,6 +27,8 @@
  * If the second item is the default background element,
  * save a copy of the old element as appropriate and remove flag.
  *
+ * Updates selection to only include the second item after merge.
+ *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.firstId Element to take properties from
@@ -116,6 +118,7 @@ function combineElements(state, { firstId, secondId }) {
   return {
     ...state,
     pages: newPages,
+    selection: [secondId],
   };
 }
 
