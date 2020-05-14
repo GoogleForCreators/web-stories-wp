@@ -67,7 +67,13 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
-  const uploadFile = (file) => {
+  /**
+   * Uploads a file.
+   *
+   * @param {Object} file File object.
+   * @param {Object<string, string>} additionalData Additional data to send along.
+   */
+  const uploadFile = (file, additionalData) => {
     if (!hasUploadMediaAction) {
       const message = __(
         'Sorry, you are unable to upload files.',
@@ -112,11 +118,12 @@ function useUploader(refreshLibrary = true) {
       throw validError;
     }
 
-    const additionalData = {
+    const _additionalData = {
       post: storyId,
+      ...additionalData,
     };
 
-    const promise = uploadMedia(file, additionalData);
+    const promise = uploadMedia(file, _additionalData);
     if (refreshLibrary) {
       promise.finally(resetWithFetch);
     }
