@@ -366,7 +366,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $status ] = absint( $posts_query->found_posts );
 		}
-		// Encode the this array as headers do not support passing an array.
+		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
