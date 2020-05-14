@@ -133,6 +133,7 @@ export const NavButton = styled(Button)`
     color: ${theme.colors.gray600};
     background-color: transparent;
     border: ${theme.borders.transparent};
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
 
     &:hover, &:active, &:focus {
       background-color: ${theme.colors.gray600};
@@ -142,7 +143,6 @@ export const NavButton = styled(Button)`
         background-color: transparent;
        }
     }
-    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   `}
 `;
 
