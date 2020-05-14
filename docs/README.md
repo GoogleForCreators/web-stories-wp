@@ -12,6 +12,7 @@
 * [Code Style](./code-style.md)
 * [Environment Variables](./environment-variables.md)
 * [Migrations](./migrations.md)
+* [Design docs](./design-docs.md)
 
 ## Testing
 

@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import moment from 'moment';
+
+/**
  * Internal dependencies
  */
 import CardTitle from '../cardTitle';
@@ -26,7 +31,7 @@ describe('CardTitle', () => {
     const { getByText, queryByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate={new Date()}
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
@@ -41,7 +46,7 @@ describe('CardTitle', () => {
     const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="01/20/2020"
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
@@ -56,7 +61,7 @@ describe('CardTitle', () => {
     const { getByText } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        displayDate="4/30/2020"
+        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
         status={STORY_STATUS.DRAFT}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
@@ -65,5 +70,19 @@ describe('CardTitle', () => {
     );
 
     expect(getByText('draft')).toBeDefined();
+  });
+
+  it('should render Card Title with an author', () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        secondaryTitle="Harry Potter"
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+      />
+    );
+
+    expect(getByText('Harry Potter')).toBeInTheDocument();
   });
 });
