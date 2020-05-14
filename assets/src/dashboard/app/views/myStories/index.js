@@ -218,6 +218,30 @@ function MyStories() {
     storiesView,
   ]);
 
+  const HeaderToggleButtons = useMemo(() => {
+    if (orderedStories.length <= 0) {
+      return null;
+    }
+
+    return (
+      <HeaderToggleButtonContainer>
+        <ToggleButtonGroup
+          buttons={STORY_STATUSES.map((storyStatus) => {
+            return {
+              handleClick: () => filter.set(storyStatus.value),
+              key: storyStatus.value,
+              isActive: filter.value === storyStatus.value,
+              disabled: totalStoriesByStatus[storyStatus.status] <= 0,
+              text: `${storyStatus.label} (${
+                totalStoriesByStatus?.[storyStatus.status]
+              })`,
+            };
+          })}
+        />
+      </HeaderToggleButtonContainer>
+    );
+  }, [filter, orderedStories.length, totalStoriesByStatus]);
+
   return (
     <FontProvider>
       <TransformProvider>
@@ -230,22 +254,7 @@ function MyStories() {
               handleTypeaheadChange={search.setKeyword}
               typeaheadValue={search.keyword}
             >
-              <HeaderToggleButtonContainer>
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () => filter.set(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: filter.value === storyStatus.value,
-                      text: `${storyStatus.label} ${
-                        totalStoriesByStatus[storyStatus.status]
-                          ? `(${totalStoriesByStatus[storyStatus.status]})`
-                          : ''
-                      }`,
-                    };
-                  })}
-                />
-              </HeaderToggleButtonContainer>
+              {HeaderToggleButtons}
             </PageHeading>
             {storiesViewControls}
           </Layout.Squishable>
