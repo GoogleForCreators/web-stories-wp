@@ -54,7 +54,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const [localURL, setLocalURL] = useState(outerURL);
   const [isFetchingData, setIsFetchingData] = useState(false);
   const [storyData, setStoryData] = useState({});
-  const [cannotEmbed, setCannotEmbed] = useState('');
+  const [cannotEmbed, setCannotEmbed] = useState(false);
 
   useEffect(() => {
     setLocalURL(outerURL);
