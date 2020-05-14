@@ -219,7 +219,7 @@ function MyStories() {
   ]);
 
   const HeaderToggleButtons = useMemo(() => {
-    if (orderedStories.length <= 0) {
+    if (Object.keys(totalStoriesByStatus) === 0) {
       return null;
     }
 
@@ -240,7 +240,7 @@ function MyStories() {
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, orderedStories.length, totalStoriesByStatus]);
+  }, [filter, totalStoriesByStatus]);
 
   return (
     <FontProvider>
