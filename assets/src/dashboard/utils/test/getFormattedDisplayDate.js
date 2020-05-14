@@ -18,6 +18,7 @@
  * External dependencies
  */
 import moment from 'moment';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -28,6 +29,10 @@ import getFormattedDisplayDate, {
 } from '../getFormattedDisplayDate';
 
 describe('getFormattedDisplayDate', () => {
+  beforeEach(() => {
+    MockDate.set(moment('2013-02-08 09:30'));
+  });
+
   it('should return 2 minutes ago using moment', () => {
     const dateString = moment().subtract(2, 'minutes');
     const formattedDate = getFormattedDisplayDate(dateString);
