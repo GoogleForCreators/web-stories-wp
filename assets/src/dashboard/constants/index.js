@@ -18,6 +18,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+import { STORY_VIEWING_LABELS } from './stories';
+import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
+import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
 export const BUTTON_TYPES = {
   CTA: 'cta',
@@ -31,7 +37,6 @@ export const CHIP_TYPES = {
 };
 
 export const DROPDOWN_TYPES = {
-  TRANSPARENT_MENU: 'transparentMenu',
   MENU: 'menu',
   PANEL: 'panel',
   COLOR_PANEL: 'color_panel',
@@ -92,19 +97,6 @@ export const secondaryPaths = [
   },
 ];
 
-export const STORY_STATUS = {
-  ALL: 'publish,draft',
-  PUBLISHED: 'publish',
-  DRAFT: 'draft',
-};
-
-export const STORY_STATUSES = [
-  { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
-  { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
-  { label: __('Active Stories', 'web-stories'), value: STORY_STATUS.PUBLISHED },
-  // { label: __('My Templates', 'web-stories'), value: 'template ' },
-];
-
 export const VIEW_STYLE = {
   GRID: 'GRID',
   LIST: 'LIST',
@@ -116,90 +108,21 @@ export const ICON_METRICS = {
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
-export const STORY_CONTEXT_MENU_ACTIONS = {
-  OPEN_IN_EDITOR: 'open-in-editor-action',
-  PREVIEW: 'preview-action',
-  RENAME: 'rename-action',
-  DUPLICATE: 'duplicate-action',
-  CREATE_TEMPLATE: 'create-template-action',
-  DELETE: 'delete-story-action',
-};
-
-export const STORY_CONTEXT_MENU_ITEMS = [
-  {
-    label: __('Open in editor', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
-  },
-  {
-    label: __('Preview', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
-  },
-  { label: null, value: false, separator: true },
-  {
-    label: __('Rename', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
-  },
-  {
-    label: __('Duplicate', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
-  },
-  {
-    label: __('Create Template', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
-  },
-  { label: null, value: false, separator: true },
-  {
-    label: __('Delete Story', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
-  },
-];
-
 export const ITEMS_PER_PAGE = 10;
 
-export const STORY_SORT_OPTIONS = {
-  NAME: 'title',
-  DATE_CREATED: 'date',
-  LAST_MODIFIED: 'modified',
-  LAST_OPENED: 'modified',
-  CREATED_BY: 'story_author',
+export const DASHBOARD_VIEWS = {
+  MY_STORIES: 'MY_STORIES',
+  SAVED_TEMPLATES: 'SAVED_TEMPLATES',
+  TEMPLATES_GALLERY: 'TEMPLATES_GALLERY',
 };
-
-export const SORT_DIRECTION = {
-  ASC: 'asc',
-  DESC: 'desc',
+export const RESULT_LABELS = {
+  [DASHBOARD_VIEWS.MY_STORIES]: { ...STORY_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
+  [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
-
-export const ORDER_BY_SORT = {
-  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
-  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
-  [STORY_SORT_OPTIONS.LAST_MODIFIED]: SORT_DIRECTION.DESC,
-  [STORY_SORT_OPTIONS.LAST_OPENED]: SORT_DIRECTION.DESC,
-  [STORY_SORT_OPTIONS.CREATED_BY]: SORT_DIRECTION.ASC,
-};
-
-export const STORY_SORT_MENU_ITEMS = [
-  {
-    label: __('Name', 'web-stories'),
-    value: STORY_SORT_OPTIONS.NAME,
-  },
-  {
-    label: __('Date created', 'web-stories'),
-    value: STORY_SORT_OPTIONS.DATE_CREATED,
-  },
-  {
-    label: __('Last modified', 'web-stories'), // default
-    value: STORY_SORT_OPTIONS.LAST_MODIFIED,
-  },
-  {
-    label: __('Last opened', 'web-stories'),
-    value: STORY_SORT_OPTIONS.LAST_OPENED,
-  },
-  {
-    label: __('Created by', 'web-stories'), // owner first then alpha
-    value: STORY_SORT_OPTIONS.CREATED_BY,
-  },
-];
 
 export * from './animation';
 export * from './direction';
+export * from './savedTemplates';
+export * from './stories';
 export * from './templates';

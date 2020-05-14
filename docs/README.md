@@ -13,6 +13,7 @@
 * [Environment Variables](./environment-variables.md)
 * [Migrations](./migrations.md)
 * [Feature flags](./feature-flags.md)
+* [Design docs](./design-docs.md)
 
 ## Testing
 

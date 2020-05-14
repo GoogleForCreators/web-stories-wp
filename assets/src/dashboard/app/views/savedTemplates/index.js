@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -30,7 +30,15 @@ import { useRef } from 'react';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { InfiniteScroller, Layout } from '../../../components';
+import {
+  DASHBOARD_VIEWS,
+  SAVED_TEMPLATES_STATUSES,
+  STORY_SORT_MENU_ITEMS,
+} from '../../../constants';
+
+import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
+  FilterPropTypes,
   PagePropTypes,
   SearchPropTypes,
   SortPropTypes,
@@ -48,17 +56,14 @@ import {
   StoryGridView,
 } from '../shared';
 
-function Header({ search, stories, view, sort }) {
-  const listBarLabel = sprintf(
-    /* translators: %s: number of templates */
-    _n(
-      '%s total template',
-      '%s total templates',
-      stories.length,
-      'web-stories'
-    ),
-    stories.length
-  );
+function Header({ filter, search, sort, stories, view }) {
+  const resultsLabel = useDashboardResultsLabel({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: stories.length,
+    view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
+  });
+
   return (
     <Layout.Squishable>
       <PageHeading
@@ -69,9 +74,10 @@ function Header({ search, stories, view, sort }) {
         typeaheadValue={search.keyword}
       />
       <BodyViewOptions
-        listBarLabel={listBarLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -93,7 +99,7 @@ function Content({ stories, view, page }) {
                 stories={stories}
                 centerActionLabel={__('View', 'web-stories')}
                 bottomActionLabel={__('Use template', 'web-stories')}
-                isTemplate
+                isSavedTemplate
               />
               <InfiniteScroller
                 allDataLoadedMessage={__('No more templates.', 'web-stories')}
@@ -111,8 +117,8 @@ function Content({ stories, view, page }) {
 
 function SavedTemplates() {
   const config = useConfig();
-  const { search, view, page, sort } = useStoryView({
-    filters: [],
+  const { filter, page, sort, search, view } = useStoryView({
+    filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
 
@@ -126,6 +132,7 @@ function SavedTemplates() {
   return (
     <Layout.Provider>
       <Header
+        filter={filter}
         view={view}
         search={search}
         stories={mockTemplates.current}
@@ -142,6 +149,7 @@ function SavedTemplates() {
 }
 
 Header.propTypes = {
+  filter: FilterPropTypes.isRequired,
   view: ViewPropTypes.isRequired,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
