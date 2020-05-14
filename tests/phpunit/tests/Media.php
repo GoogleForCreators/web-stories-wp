@@ -52,4 +52,55 @@ class Media extends \WP_UnitTestCase {
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
 	}
+
+	public function test_delete_video_poster() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => $video_attachment_id,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+
+		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$this->assertNull( get_post( $poster_attachment_id ) );
+	}
+
+
+	public function test_delete_video_poster_when_attachment_is_deleted() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => $video_attachment_id,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+
+		wp_delete_attachment( $video_attachment_id );
+		$this->assertNull( get_post( $poster_attachment_id ) );
+	}
 }

@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Query;
+
 /**
  * Class Media
  */
@@ -116,6 +118,8 @@ class Media {
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+
+		add_action( 'delete_attachment', [ __CLASS__, 'delete_video_poster' ] );
 	}
 
 	/**
@@ -272,5 +276,46 @@ class Media {
 	public static function upload_mimes( array $mime_types ) {
 		$mime_types['svg'] = 'image/svg+xml';
 		return $mime_types;
+	}
+
+	/**
+	 * Deletes associated poster image when a video is deleted.
+	 *
+	 * This prevents the poster image from becoming an orphan because it is not
+	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @param int $attachment_id ID of the attachment to be deleted.
+	 *
+	 * @return void
+	 */
+	public static function delete_video_poster( $attachment_id ) {
+		remove_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
+		$query = new WP_Query(
+			[
+				'fields'         => 'ids',
+				'post_status'    => 'any',
+				'post_type'      => 'attachment',
+				'post_parent'    => $attachment_id,
+				// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'meta_query'     => [
+					[
+						'key'     => self::POSTER_POST_META_KEY,
+						'compare' => 'EXISTS',
+					],
+				],
+				'no_found_rows'  => true,
+				'posts_per_page' => 1,
+			]
+		);
+		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
+
+		/**
+		 * Post ID.
+		 *
+		 * @var int $post_id
+		 */
+		foreach ( $query->posts as $post_id ) {
+			wp_delete_post( $post_id );
+		}
 	}
 }
