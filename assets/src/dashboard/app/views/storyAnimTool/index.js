@@ -129,24 +129,32 @@ function StoryAnimTool() {
   const handleSelectElement = useCallback(
     (element) => {
       if (selectedElementIds[element.id]) {
-        delete selectedElementIds[element.id];
-      } else {
-        selectedElementIds[element.id] = element.id;
-      }
+        const {
+          [element.id]: removed,
+          ...remainingElementIds
+        } = selectedElementIds;
 
-      setSelectedElementIds({ ...selectedElementIds });
+        setSelectedElementIds(remainingElementIds);
+      } else {
+        setSelectedElementIds({
+          ...selectedElementIds,
+          [element.id]: element.id,
+        });
+      }
     },
     [selectedElementIds]
   );
 
   const handleAddOrUpdateAnimation = useCallback(
     (animation) => {
+      const story = { ...activeStory };
+
       const animationWithTargets = {
         ...animation,
         targets: [...Object.values(selectedElementIds)],
       };
 
-      const animations = activeStory.pages[activePageIndex].animations || [];
+      const animations = story.pages[activePageIndex].animations || [];
       const index = animations.findIndex(
         (a) => a.id === animationWithTargets.id
       );
@@ -159,13 +167,10 @@ function StoryAnimTool() {
         animations[index] = animationWithTargets;
       }
 
-      activeStory.pages[activePageIndex].animations = [...animations];
+      story.pages[activePageIndex].animations = [...animations];
 
-      setActiveStory({
-        ...activeStory,
-      });
-
-      saveActiveStoryUpdates(activeStory);
+      setActiveStory(story);
+      saveActiveStoryUpdates(story);
 
       // Deselect animation
       setActiveAnimation({});
