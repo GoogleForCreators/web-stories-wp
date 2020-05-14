@@ -168,7 +168,7 @@ function TemplateDetail() {
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
       >
-        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
       </NavButton>
     );
 
@@ -181,7 +181,7 @@ function TemplateDetail() {
           activeTemplateIndex === orderedTemplates.length - 1
         }
       >
-        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
       </NavButton>
     );
 

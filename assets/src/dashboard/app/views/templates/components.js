@@ -127,14 +127,18 @@ export const NavButton = styled(Button)`
     display: block;
     align-self: center;
     min-width: 0;
-    height: 40%;
-    color: ${theme.colors.gray900};
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: ${theme.colors.gray600};
     background-color: transparent;
-    border: none;
+    border: ${theme.borders.transparent};
 
     &:hover, &:active, &:focus {
-      color: ${theme.colors.bluePrimary};
+      background-color: ${theme.colors.gray600};
+      color: ${theme.colors.white};
     }
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   `}
 `;
 
