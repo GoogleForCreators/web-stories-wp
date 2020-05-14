@@ -30,7 +30,7 @@ import { useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import Button from '../button';
-import { useRouteHistory } from '../../app/router';
+import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import {
@@ -144,7 +144,7 @@ export function LeftRail() {
             <NavLink
               active={path.value === state.currentPath}
               key={path.value}
-              href={`#${path.value}`}
+              href={resolveRoute(path.value)}
             >
               {path.label}
             </NavLink>
@@ -156,7 +156,7 @@ export function LeftRail() {
             <NavLink
               active={path.value === state.currentPath}
               key={path.value}
-              href={`#${path.value}`}
+              href={resolveRoute(path.value)}
             >
               {path.label}
             </NavLink>
