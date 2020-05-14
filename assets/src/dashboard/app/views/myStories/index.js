@@ -78,7 +78,7 @@ function MyStories() {
         isLoading,
         stories,
         storiesOrderById,
-        totalStories,
+        totalStoriesByStatus,
         totalPages,
       },
       tags,
@@ -95,7 +95,7 @@ function MyStories() {
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     currentFilter: filter.value,
-    totalResults: totalStories,
+    totalResults: totalStoriesByStatus?.all,
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
