@@ -39,6 +39,45 @@ describe('updateElementById', () => {
     ]);
   });
 
+  it('should not allow updating reserved properties', () => {
+    const { restore, updateElementById } = setupReducer();
+
+    // Set an initial state with a current page with an element.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true, isDefaultBackground: true, x: 1 },
+            { id: '456' },
+          ],
+        },
+      ],
+      current: '111',
+    });
+
+    // only x=2 is allowed to be changed here
+    const result = updateElementById({
+      elementId: '123',
+      properties: {
+        x: 2,
+        id: '000',
+        isBackground: false,
+        isDefaultBackground: false,
+      },
+    });
+
+    expect(result.pages).toStrictEqual([
+      {
+        id: '111',
+        elements: [
+          { id: '123', isBackground: true, isDefaultBackground: true, x: 2 },
+          { id: '456' },
+        ],
+      },
+    ]);
+  });
+
   it('should ignore an unknown element (on the current page)', () => {
     const { restore, updateElementById } = setupReducer();
 
