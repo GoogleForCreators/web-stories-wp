@@ -29,7 +29,6 @@ import useLoadStory from './effects/useLoadStory';
 import useSaveStory from './actions/useSaveStory';
 import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
-import usePageBackgrounds from './effects/usePageBackgrounds';
 import useStoryReducer from './useStoryReducer';
 import useDeleteStory from './actions/useDeleteStory';
 import useAutoSave from './actions/useAutoSave';
@@ -91,13 +90,6 @@ function StoryProvider({ storyId, children }) {
   // These effects send updates to and restores state from history.
   useHistoryEntry({ pages, current, selection, story });
   useHistoryReplay({ restore });
-
-  // Ensure all pages have a background element at all times
-  usePageBackgrounds({
-    currentPage,
-    setBackgroundElement: api.setBackgroundElement,
-    addElement: api.addElement,
-  });
 
   // This action allows the user to save the story
   // (and it will have side-effects because saving can update url and status,
