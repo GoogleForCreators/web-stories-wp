@@ -13,51 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-jest.mock('..');
-jest.mock('../../../animations/animationParts');
 /**
  * External dependencies
  */
-import { render, within } from '@testing-library/react';
+import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { WAAPI } from '../../../animations/animationParts';
-import { useStoryAnimationContext } from '..';
-const { default: StoryAnimations } = jest.requireActual('..');
+import * as animationParts from '../../../animations/animationParts';
+import * as useStoryAnimationContext from '../useStoryAnimationContext';
+import StoryAnimation from '..';
 
-WAAPI.mockImplementation((type) => ({ children }) => (
-  <div data-testid={type}>{children}</div>
-));
+describe('StoryAnimation.WAAPIWrapper', () => {
+  it('renders composed animations top down', () => {
+    const WAAPIMock = jest.spyOn(animationParts, 'WAAPI');
+    const useStoryAnimationContextMock = jest.spyOn(
+      useStoryAnimationContext,
+      'default'
+    );
+    WAAPIMock.mockImplementation((type) => ({ children }) => (
+      <div data-testid={type}>{children}</div>
+    ));
+    useStoryAnimationContextMock.mockReturnValue({
+      state: {
+        getAnimationGenerators: () => [
+          (fn) => fn('anim-1', {}),
+          (fn) => fn('anim-2', {}),
+          (fn) => fn('anim-3', {}),
+        ],
+      },
+      actions: {
+        hoistWAAPIAnimation: () => () => {},
+      },
+    });
 
-const types = ['anim-1', 'anim-2', 'anim-3'];
-
-useStoryAnimationContext.mockReturnValue({
-  state: {
-    getAnimationGenerators: () => types.map((type) => (fn) => fn(type, {})),
-  },
-  actions: {
-    hoistWAAPIAnimation: () => () => {},
-  },
-});
-
-describe('StoryAnimations.WAAPIWrapper', () => {
-  it('renders ascending generated animations top down', () => {
-    const { getByTestId } = render(
-      <StoryAnimations.Provider animations={[]}>
-        <StoryAnimations.WAAPIWrapper target="_">
-          <div />
-        </StoryAnimations.WAAPIWrapper>
-      </StoryAnimations.Provider>
+    const { container } = render(
+      <StoryAnimation.Provider animations={[]}>
+        <div data-testid="story-element-wrapper">
+          <StoryAnimation.WAAPIWrapper target="_">
+            <div data-testid="inner-content" />
+          </StoryAnimation.WAAPIWrapper>
+        </div>
+      </StoryAnimation.Provider>
     );
 
-    for (let i = 0; i < types.length; i++) {
-      const parent = getByTestId(types[i]);
-      for (let j = 0; j < types.length; j++) {
-        expect(within(parent).getAllByTestId(types[j])).toHaveLength(
-          i > j ? 0 : 1
-        );
-      }
-    }
+    expect(container.firstChild).toMatchInlineSnapshot(`
+      <div
+        data-testid="story-element-wrapper"
+      >
+        <div
+          data-testid="anim-1"
+        >
+          <div
+            data-testid="anim-2"
+          >
+            <div
+              data-testid="anim-3"
+            >
+              <div
+                data-testid="inner-content"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+
+    WAAPIMock.mockRestore();
+    useStoryAnimationContextMock.mockRestore();
   });
 });

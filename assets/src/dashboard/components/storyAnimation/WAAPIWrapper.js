@@ -53,7 +53,7 @@ function ComposableWrapper({ generators, hoistAnimation, children }) {
 ComposableWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   generators: PropTypes.arrayOf(PropTypes.func),
-  hoistAnimation: PropTypes.func,
+  hoistAnimation: PropTypes.func.isRequired,
 };
 
 function WAAPIWrapper({ children, target }) {
