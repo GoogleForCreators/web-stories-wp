@@ -70,8 +70,8 @@ function getColor(editorState) {
   if (styles.length > 1) {
     return MULTIPLE_VALUE;
   }
-  const colorStyle = styles[0];
-  if (!styles.length || colorStyle === NONE) {
+  const colorStyle = styles[0] ?? NONE;
+  if (colorStyle === NONE) {
     return createSolid(0, 0, 0);
   }
   return styleToColor(colorStyle);

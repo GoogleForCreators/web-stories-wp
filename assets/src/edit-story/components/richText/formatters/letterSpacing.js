@@ -62,8 +62,8 @@ function getLetterSpacing(editorState) {
   if (styles.length > 1) {
     return MULTIPLE_VALUE;
   }
-  const spacingStyle = styles[0];
-  if (!styles.length || spacingStyle === NONE) {
+  const spacingStyle = styles[0] ?? NONE;
+  if (spacingStyle === NONE) {
     return 0;
   }
   return styleToLetterSpacing(spacingStyle);
