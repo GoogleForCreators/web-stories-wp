@@ -32,7 +32,7 @@ import './style.css'; // This way the general editor styles are loaded before al
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
- * @param flags
+ * @param {Object} flags    The flags for the application.
  */
 const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
