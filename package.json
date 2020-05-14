@@ -29,6 +29,7 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "history": "^4.10.1",
+    "mockdate": "^2.0.5",
     "moment": "^2.25.3",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",
