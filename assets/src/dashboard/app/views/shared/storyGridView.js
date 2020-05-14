@@ -57,7 +57,7 @@ const StoryGrid = styled(CardGrid)`
 const StoryGridView = ({
   stories,
   users,
-  centerActionLabel,
+  centerActionLabelByStatus,
   bottomActionLabel,
   createTemplateFromStory,
   updateStory,
@@ -124,7 +124,7 @@ const StoryGridView = ({
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
-              label: centerActionLabel,
+              label: centerActionLabelByStatus[story.status],
             }}
             bottomAction={{
               targetAction: story.bottomTargetAction,
@@ -171,7 +171,7 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabel: ActionLabel,
+  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,
