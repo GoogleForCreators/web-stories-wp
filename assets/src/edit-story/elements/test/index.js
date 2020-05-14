@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { createNewElement, createPage } from '../';
+import { createNewElement, createPage, duplicatePage } from '../';
 
 describe('Element', () => {
   describe('createNewElement', () => {
@@ -54,12 +54,17 @@ describe('Element', () => {
   describe('createPage', () => {
     it('should create a Page element with default background element', () => {
       const page = createPage();
-      expect(page.backgroundElementId).toBeDefined();
-      expect(page.elements).toHaveLength(1);
-      expect(page.elements[0].id).toStrictEqual(page.backgroundElementId);
+      expect(page.elements).toStrictEqual([
+        expect.objectContaining({
+          isBackground: true,
+          isDefaultBackground: true,
+        }),
+      ]);
     });
+  });
 
-    it('should generate new ids when duplicating a page (including bg)', () => {
+  describe('duplicatePage', () => {
+    it('should generate new ids (including bg)', () => {
       const oldElements = [
         { id: 'abc001', isBackground: true, x: 10, y: 20, type: 'shape' },
         { id: 'abc002', x: 110, y: 120, type: 'text' },
@@ -68,20 +73,16 @@ describe('Element', () => {
       const oldPage = {
         id: 'abc000',
         type: 'page',
-        backgroundElementId: oldElements[0].id,
         elements: oldElements,
         otherProperty: '45',
       };
-      const newPage = createPage(oldPage);
+      const newPage = duplicatePage(oldPage);
 
       // Expect same structure but new id's!
       expect(newPage).toStrictEqual({
         id: expect.not.stringMatching(oldPage.id),
         type: 'page',
         otherProperty: '45',
-        backgroundElementId: expect.not.stringMatching(
-          oldPage.backgroundElementId
-        ),
         elements: [
           expect.objectContaining({
             id: expect.not.stringMatching(oldElements[0].id),
@@ -104,8 +105,6 @@ describe('Element', () => {
           }),
         ],
       });
-      // And bg ids to match
-      expect(newPage.elements[0].id).toStrictEqual(newPage.backgroundElementId);
     });
   });
 });
