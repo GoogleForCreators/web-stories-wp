@@ -17,29 +17,33 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { sprintf, _n } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import moment from 'moment';
+import { useMemo } from 'react';
 
-export function isToday(displayDate) {
-  const today = moment().startOf('day');
-  return displayDate.isSame(today, 'd');
-}
+/**
+ * Internal dependencies
+ */
+import { RESULT_LABELS } from '../constants';
 
-export function isYesterday(displayDate) {
-  const yesterday = moment().subtract(1, 'days').startOf('day');
-  return displayDate.isSame(yesterday, 'd');
-}
+export default function useDashboardResultsLabel({
+  isActiveSearch,
+  currentFilter,
+  totalResults,
+  view,
+}) {
+  const resultsLabel = useMemo(() => {
+    return isActiveSearch
+      ? sprintf(
+          /* translators: %s: number of results */
+          _n('%s result', '%s results', totalResults, 'web-stories'),
+          totalResults
+        )
+      : RESULT_LABELS[view][currentFilter];
+  }, [isActiveSearch, totalResults, view, currentFilter]);
 
-export default function getFormattedDisplayDate(date) {
-  const displayDate = moment.isMoment(date) ? date : moment(date);
-  if (isToday(displayDate)) {
-    return displayDate.fromNow();
-  } else if (isYesterday(displayDate)) {
-    return __('yesterday', 'web-stories');
-  }
-  return displayDate.format('M/D/YYYY');
+  return resultsLabel;
 }

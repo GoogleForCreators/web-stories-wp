@@ -51,7 +51,7 @@ export function reshapeTemplateObject(isLocal) {
     tags,
     colors,
     pages,
-    centerTargetAction: `#${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
+    centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
     bottomTargetAction: () => {},
   });
 }
