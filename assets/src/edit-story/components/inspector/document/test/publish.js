@@ -54,7 +54,13 @@ function setupPanel(
     },
   };
 
-  const { getByText, getByRole, queryByText, getByLabelText } = renderWithTheme(
+  const {
+    getByText,
+    getByRole,
+    queryByText,
+    getByLabelText,
+    queryByLabelText,
+  } = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
@@ -68,6 +74,7 @@ function setupPanel(
     getByRole,
     getByLabelText,
     queryByText,
+    queryByLabelText,
     updateStory,
   };
 }
@@ -120,5 +127,21 @@ describe('PublishPanel', () => {
     expect(date.getMonth()).toStrictEqual(0);
     expect(date.getDate()).toStrictEqual(1);
     expect(date.getFullYear()).toStrictEqual(2020);
+  });
+
+  it('should open the calendar via keyboard events', () => {
+    const { getByText, queryByLabelText } = setupPanel();
+
+    let dateInCalendar = queryByLabelText('January 1, 2020');
+    expect(dateInCalendar).toBeNull();
+
+    const element = getByText('01/01/2020');
+    fireEvent.keyDown(element, {
+      key: 'Enter',
+      which: 13,
+    });
+
+    dateInCalendar = queryByLabelText('January 1, 2020');
+    expect(dateInCalendar).toBeDefined();
   });
 });
