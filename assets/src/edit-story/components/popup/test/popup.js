@@ -34,8 +34,11 @@ describe('Popup', () => {
 
     const popup = getByText('Hello World!');
     expect(popup).toBeDefined();
-    expect(popup).toHaveAttribute('width', '270');
   });
+
+  // TODO(wassgha): Tests for different placements
+
+  // TODO(wassgha): Test for default placement
 
   it('should not render popup when isOpen set to false', () => {
     const anchor = {

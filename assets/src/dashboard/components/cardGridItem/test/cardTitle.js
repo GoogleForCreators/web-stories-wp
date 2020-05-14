@@ -15,18 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import moment from 'moment';
+
+/**
  * Internal dependencies
  */
 import CardTitle from '../cardTitle';
 import { renderWithTheme } from '../../../testUtils';
+import { STORY_STATUS } from '../../../constants';
 
 describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
     const { getByText, queryByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        modifiedDate="July 13"
-        onEditCancel={jest.fn()}
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
       />
@@ -40,8 +46,8 @@ describe('CardTitle', () => {
     const { getByTestId } = renderWithTheme(
       <CardTitle
         title="Sample Story"
-        modifiedDate="July 13"
-        onEditCancel={jest.fn()}
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
       />
@@ -49,5 +55,34 @@ describe('CardTitle', () => {
 
     expect(getByTestId('title-rename-input')).toBeDefined();
     expect(getByTestId('title-rename-input')).toHaveFocus();
+  });
+
+  it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        status={STORY_STATUS.DRAFT}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+        editMode={false}
+      />
+    );
+
+    expect(getByText('draft')).toBeDefined();
+  });
+
+  it('should render Card Title with an author', () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        secondaryTitle="Harry Potter"
+        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+      />
+    );
+
+    expect(getByText('Harry Potter')).toBeInTheDocument();
   });
 });

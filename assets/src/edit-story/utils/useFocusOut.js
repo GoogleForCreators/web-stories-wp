@@ -29,7 +29,7 @@ function useFocusOut(ref, callback, deps) {
     const onFocusOut = (evt) => {
       // If focus moves somewhere outside the node, callback time!
       if (evt.relatedTarget && !node.contains(evt.relatedTarget)) {
-        callback();
+        callback(evt);
       }
     };
 
@@ -37,7 +37,7 @@ function useFocusOut(ref, callback, deps) {
       // If something outside the target node is clicked, callback time!
       const isInNode = node.contains(evt.target);
       if (!isInNode) {
-        callback();
+        callback(evt);
       }
     };
 

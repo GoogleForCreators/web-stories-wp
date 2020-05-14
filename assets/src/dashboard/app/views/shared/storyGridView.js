@@ -30,15 +30,15 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardTitle,
   CardItemMenu,
+  CardTitle,
   CardPreviewContainer,
   ActionLabel,
   PreviewPage,
+  PreviewErrorBoundary,
 } from '../../../components';
-import { StoriesPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import { StoriesPropType, UsersPropType } from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -56,6 +56,7 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
+  users,
   centerActionLabel,
   bottomActionLabel,
   createTemplateFromStory,
@@ -63,6 +64,7 @@ const StoryGridView = ({
   trashStory,
   duplicateStory,
   isTemplate,
+  isSavedTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -137,12 +139,18 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                modifiedDate={story.modified.startOf('day').fromNow()}
+                status={story?.status}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={story?.modified}
+                editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }
                 onEditCancel={() => setTitleRenameId(-1)}
-                editMode={titleRenameId === story.id}
               />
               <CardItemMenu
                 onMoreButtonSelected={setContextMenuId}
@@ -160,7 +168,9 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
+  isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
+  users: UsersPropType,
   centerActionLabel: ActionLabel,
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,

@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -36,8 +36,14 @@ import {
   Layout,
   ToggleButtonGroup,
 } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  DASHBOARD_VIEWS,
+  STORY_SORT_MENU_ITEMS,
+} from '../../../constants';
 import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
@@ -49,7 +55,6 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
-import useStoryView from '../../../utils/useStoryView';
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -91,6 +96,13 @@ function MyStories() {
     totalPages,
   });
 
+  const resultsLabel = useDashboardResultsLabel({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: totalStories,
+    view: DASHBOARD_VIEWS.MY_STORIES,
+  });
+
   useEffect(() => {
     fetchStories({
       sortOption: sort.value,
@@ -115,12 +127,6 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n('%s total story', '%s total stories', totalStories, 'web-stories'),
-    totalStories
-  );
-
   const storiesView = useMemo(() => {
     switch (view.style) {
       case VIEW_STYLE.GRID:
@@ -131,6 +137,7 @@ function MyStories() {
             createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
             stories={orderedStories}
+            users={users}
             centerActionLabel={
               <>
                 <PlayArrowIcon />
@@ -175,10 +182,11 @@ function MyStories() {
     return (
       <BodyViewOptions
         showGridToggle
-        listBarLabel={listBarLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -186,7 +194,7 @@ function MyStories() {
         )}
       />
     );
-  }, [sort, listBarLabel, view]);
+  }, [sort, resultsLabel, view]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {

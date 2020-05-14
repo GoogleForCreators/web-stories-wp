@@ -15,17 +15,35 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { sprintf, _n } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
-import { useContext } from 'react';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
-import Context from './context';
+import { RESULT_LABELS } from '../constants';
 
-function useSidebar() {
-  return useContext(Context);
+export default function useDashboardResultsLabel({
+  isActiveSearch,
+  currentFilter,
+  totalResults,
+  view,
+}) {
+  const resultsLabel = useMemo(() => {
+    return isActiveSearch
+      ? sprintf(
+          /* translators: %s: number of results */
+          _n('%s result', '%s results', totalResults, 'web-stories'),
+          totalResults
+        )
+      : RESULT_LABELS[view][currentFilter];
+  }, [isActiveSearch, totalResults, view, currentFilter]);
+
+  return resultsLabel;
 }
-
-export default useSidebar;
