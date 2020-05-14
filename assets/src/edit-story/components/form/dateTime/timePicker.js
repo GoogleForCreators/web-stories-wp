@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useState } from 'react';
+import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -108,10 +108,10 @@ const Button = styled.button`
   ${({ isToggled }) =>
     isToggled &&
     `
-		background: #edeff0;
-    border-color: #8f98a1;
-    box-shadow: inset 0 2px 5px -3px #555d66;
-	`}
+  background: #edeff0;
+  border-color: #8f98a1;
+  box-shadow: inset 0 2px 5px -3px #555d66;
+  `}
 `;
 
 const InputGroup = styled.div`
@@ -131,7 +131,8 @@ const PMButton = styled(Button)`
 function TimePicker({ currentTime, onChange, is12Hour }) {
   const selectedTime = currentTime ? new Date(currentTime) : new Date();
   const initialHours = selectedTime.getHours();
-  const [state, setState] = useState({
+  // Track the local settings to avoid updating unnecessarily.
+  const timeSettings = useRef({
     minutes: selectedTime.getMinutes(),
     am: initialHours < 12 ? 'AM' : 'PM',
     hours: is12Hour ? initialHours % 12 || 12 : initialHours,
@@ -139,10 +140,10 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   });
 
   const onChangeEvent = (prop) => (evt) => {
-    setState({
-      ...state,
+    timeSettings.current = {
+      ...timeSettings.current,
       [prop]: evt.target.value,
-    });
+    };
   };
 
   const getMaxHours = () => {
@@ -154,7 +155,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const getHours = (value) => {
-    const { am } = state;
+    const { am } = timeSettings.current;
     if (!is12Hour) {
       return value;
     }
@@ -162,12 +163,12 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const changeDate = (newDate, props = {}) => {
-    setState({ ...state, ...props, date: newDate });
+    timeSettings.current = { ...timeSettings.current, ...props, date: newDate };
     onChange(newDate.toISOString());
   };
 
   const updateMinutes = () => {
-    const { minutes, date } = state;
+    const { minutes, date } = timeSettings.current;
     const value = parseInt(minutes);
     if (isNaN(value) || value < 0 || value > 59) {
       return;
@@ -178,7 +179,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const updateHours = () => {
-    const { hours, date } = state;
+    const { hours, date } = timeSettings.current;
     const value = parseInt(hours);
     if (isNaN(value) || value < getMinHours() || value > getMaxHours()) {
       return;
@@ -190,7 +191,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
   };
 
   const updateAmPm = (value) => () => {
-    const { am, date, hours } = state;
+    const { am, date, hours } = timeSettings.current;
     if (am === value) {
       return;
     }
@@ -215,7 +216,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               step={1}
               min={getMinHours()}
               max={getMaxHours()}
-              value={state.hours}
+              value={timeSettings.current.hours}
               onChange={onChangeEvent('hours')}
               onBlur={updateHours}
             />
@@ -225,7 +226,7 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
               type="number"
               min={0}
               max={59}
-              value={state.minutes}
+              value={timeSettings.current.minutes}
               onChange={onChangeEvent('minutes')}
               onBlur={updateMinutes}
             />
@@ -234,14 +235,14 @@ function TimePicker({ currentTime, onChange, is12Hour }) {
             <InputGroup>
               <AMButton
                 type="button"
-                isToggled={state.am === 'AM'}
+                isToggled={timeSettings.current.am === 'AM'}
                 onClick={updateAmPm('AM')}
               >
                 {__('AM', 'web-stories')}
               </AMButton>
               <PMButton
                 type="button"
-                isToggled={state.am === 'PM'}
+                isToggled={timeSettings.current.am === 'PM'}
                 onClick={updateAmPm('PM')}
               >
                 {__('PM', 'web-stories')}
