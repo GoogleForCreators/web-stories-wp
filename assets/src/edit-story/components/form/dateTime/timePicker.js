@@ -74,7 +74,6 @@ const NumberInput = styled.input`
 `;
 
 const TimeSeparator = styled.span`
-  display: inline-block;
   padding: 0 3px 0 0;
   color: #555d66;
 `;

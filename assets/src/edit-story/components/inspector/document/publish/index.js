@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Row, DropDown, DateTime, Label, Media, Required } from '../../../form';
-import { SimplePanel } from '../../../panels/panel';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
 import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
@@ -38,6 +37,9 @@ import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { useConfig } from '../../../../app/config';
 import Popup from '../../../popup';
+import PanelTitle from '../../../panels/panel/shared/title';
+import PanelContent from '../../../panels/panel/shared/content';
+import Panel from '../../../panels/panel/panel';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const LabelWrapper = styled.div`
@@ -154,96 +156,99 @@ function PublishPanel() {
   const authorLabel = __('Author', 'web-stories');
   const use12HourFormat = is12Hour(timeFormat);
   return (
-    <SimplePanel name="publishing" title={__('Publishing', 'web-stories')}>
-      <Row>
-        <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
-        <StyledButton
-          aria-pressed={showDatePicker}
-          aria-haspopup={true}
-          aria-expanded={showDatePicker}
-          onClick={(e) => {
-            e.preventDefault();
-            if (!showDatePicker) {
-              // Handle only opening the datepicker since onFocusOut deals with closing.
-              setShowDatePicker(true);
-            }
-          }}
-          ref={dateFieldRef}
-        >
-          <DateWrapper>
-            <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
-            <Time>{getReadableTime(date, use12HourFormat)}</Time>
-          </DateWrapper>
-          <StyledToggleIcon />
-        </StyledButton>
-      </Row>
-      <Popup
-        anchor={dateFieldRef}
-        isOpen={showDatePicker}
-        placement={'bottom-end'}
-      >
-        <DateTime
-          value={date}
-          onChange={handleDateChange}
-          is12Hour={use12HourFormat}
-          forwardedRef={dateTimeNode}
-        />
-      </Popup>
-      {capabilities && capabilities.hasAssignAuthorAction && users && (
+    <Panel name="publishing">
+      <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
+      <PanelContent padding={'10px 10px 10px 20px'}>
         <Row>
-          <FieldLabel>{authorLabel}</FieldLabel>
-          {isUsersLoading ? (
-            <DropDown
-              ariaLabel={authorLabel}
-              placeholder={__('Loading…', 'web-stories')}
-              disabled
-              lightMode={true}
-            />
-          ) : (
-            <DropDown
-              ariaLabel={authorLabel}
-              options={users}
-              value={author}
-              disabled={isSaving}
-              onChange={handleChangeValue('author')}
-              lightMode={true}
-            />
-          )}
+          <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
+          <StyledButton
+            aria-pressed={showDatePicker}
+            aria-haspopup={true}
+            aria-expanded={showDatePicker}
+            onClick={(e) => {
+              e.preventDefault();
+              if (!showDatePicker) {
+                // Handle only opening the datepicker since onFocusOut deals with closing.
+                setShowDatePicker(true);
+              }
+            }}
+            ref={dateFieldRef}
+          >
+            <DateWrapper>
+              <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
+              <Time>{getReadableTime(date, use12HourFormat)}</Time>
+            </DateWrapper>
+            <StyledToggleIcon />
+          </StyledButton>
         </Row>
-      )}
-      <Row>
-        {/* @todo Replace this with selection to choose between publisher logos */}
-        <LabelWrapper>
-          <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
-          <Required />
-        </LabelWrapper>
-        <MediaWrapper>
-          <Media
-            value={publisherLogoUrl}
-            onChange={handleChangePublisherLogo}
-            title={__('Select as publisher logo', 'web-stories')}
-            buttonInsertText={__('Select as publisher logo', 'web-stories')}
-            type={'image'}
-            size={80}
+        <Popup
+          anchor={dateFieldRef}
+          isOpen={showDatePicker}
+          placement={'bottom-end'}
+        >
+          <DateTime
+            value={date}
+            onChange={handleDateChange}
+            is12Hour={use12HourFormat}
+            forwardedRef={dateTimeNode}
           />
-        </MediaWrapper>
-      </Row>
-      <Row>
-        <LabelWrapper>
-          <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
-          <Required />
-        </LabelWrapper>
-        <MediaWrapper>
-          <Media
-            value={featuredMediaUrl}
-            onChange={handleChangeCover}
-            title={__('Select as cover image', 'web-stories')}
-            buttonInsertText={__('Select as cover image', 'web-stories')}
-            type={'image'}
-          />
-        </MediaWrapper>
-      </Row>
-    </SimplePanel>
+        </Popup>
+        {capabilities && capabilities.hasAssignAuthorAction && users && (
+          <Row>
+            <FieldLabel>{authorLabel}</FieldLabel>
+            {isUsersLoading ? (
+              <DropDown
+                ariaLabel={authorLabel}
+                placeholder={__('Loading…', 'web-stories')}
+                disabled
+                lightMode={true}
+              />
+            ) : (
+              <DropDown
+                ariaLabel={authorLabel}
+                options={users}
+                value={author}
+                disabled={isSaving}
+                onChange={handleChangeValue('author')}
+                lightMode={true}
+              />
+            )}
+          </Row>
+        )}
+        <Row>
+          {/* @todo Replace this with selection to choose between publisher logos */}
+          <LabelWrapper>
+            <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
+            <Required />
+          </LabelWrapper>
+          <MediaWrapper>
+            <Media
+              value={publisherLogoUrl}
+              onChange={handleChangePublisherLogo}
+              title={__('Select as publisher logo', 'web-stories')}
+              buttonInsertText={__('Select as publisher logo', 'web-stories')}
+              type={'image'}
+              size={80}
+            />
+          </MediaWrapper>
+        </Row>
+        <Row>
+          <LabelWrapper>
+            <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
+            <Required />
+          </LabelWrapper>
+          <MediaWrapper>
+            <Media
+              value={featuredMediaUrl}
+              onChange={handleChangeCover}
+              title={__('Select as cover image', 'web-stories')}
+              buttonInsertText={__('Select as cover image', 'web-stories')}
+              type={'image'}
+            />
+          </MediaWrapper>
+        </Row>
+      </PanelContent>
+    </Panel>
   );
 }
 
