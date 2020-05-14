@@ -15,14 +15,17 @@
  */
 
 /**
- * Internal dependencies
- */
-import deleteElements from './deleteElements';
-import updateElements from './updateElements';
-
-/**
  * Combine elements by taking properties from a first item and
- * adding them to the given second item
+ * adding them to the given second item, then remove first item.
+ *
+ * First item has to be an element with a resource (some media element),
+ * otherwise nothing happens.
+ *
+ * If second item is background element, copy some extra properties not
+ * relevant while background, but relevant if unsetting as background.
+ *
+ * If the second item is the default background element,
+ * save a copy of the old element as appropriate and remove flag.
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
@@ -35,12 +38,28 @@ function combineElements(state, { firstId, secondId }) {
     return state;
   }
 
-  const page = state.pages.find(({ id }) => id === state.current);
-  const element = page.elements.find(({ id }) => id === firstId);
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+  const page = state.pages[pageIndex];
+  const elementPosition = page.elements.findIndex(({ id }) => id === firstId);
+  const element = page.elements[elementPosition];
 
-  if (!element || !element.resource) {
+  const secondElementPosition = page.elements.findIndex(
+    ({ id }) => id === secondId
+  );
+  const secondElement = page.elements[secondElementPosition];
+
+  if (!element || !element.resource || !secondElement) {
     return state;
   }
+
+  const newPageProps = secondElement.isDefaultBackground
+    ? {
+        defaultBackgroundElement: {
+          ...secondElement,
+          id: firstId,
+        },
+      }
+    : {};
 
   const {
     resource,
@@ -48,20 +67,56 @@ function combineElements(state, { firstId, secondId }) {
     focalX = 50,
     focalY = 50,
     isFill = false,
+    width,
+    height,
+    x,
+    y,
   } = element;
 
-  const updatedState = updateElements(state, {
-    elementIds: [secondId],
-    properties: {
-      resource,
-      type: resource.type,
-      scale,
-      focalX,
-      focalY,
-      isFill,
-    },
-  });
-  return deleteElements(updatedState, { elementIds: [firstId] });
+  const newElement = {
+    ...secondElement,
+    resource,
+    type: resource.type,
+    scale,
+    focalX,
+    focalY,
+    isFill,
+    // Only remember these for backgrounds, as they're ignored while being background
+    ...(secondElement.isBackground
+      ? {
+          width,
+          height,
+          x,
+          y,
+        }
+      : {}),
+    // Only unset if it was set
+    ...(secondElement.isDefaultBackground
+      ? { isDefaultBackground: false }
+      : {}),
+  };
+
+  // Elements are now
+  const elements = page.elements
+    .filter(({ id }) => id !== firstId)
+    .map((el) => (el.id === secondId ? newElement : el));
+
+  const newPage = {
+    ...page,
+    elements,
+    ...newPageProps,
+  };
+
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    newPage,
+    ...state.pages.slice(pageIndex + 1),
+  ];
+
+  return {
+    ...state,
+    pages: newPages,
+  };
 }
 
 export default combineElements;
