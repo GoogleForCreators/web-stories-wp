@@ -157,3 +157,30 @@ export const SubHeading = styled.h2`
   font-weight: 500;
   margin: 0 0 20px 0;
 `;
+
+export const LargeDisplayPagination = styled.div(
+  ({ theme }) => `
+    display: flex;
+    @media ${theme.breakpoint.largeDisplayPhone} {
+      display: none;
+    }
+  `
+);
+
+export const SmallDisplayPagination = styled.div(
+  ({ theme }) => `
+    display: none;
+    @media ${theme.breakpoint.largeDisplayPhone} {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      margin: 0 0 10px;
+      > ${NavButton} {
+        &:hover, &:active, &:focus {
+          color: ${theme.colors.gray900};
+          background-color: transparent;
+         }
+      }
+    }
+  `
+);

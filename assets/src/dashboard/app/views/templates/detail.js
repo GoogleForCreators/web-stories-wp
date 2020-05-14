@@ -57,9 +57,11 @@ import {
   ColumnContainer,
   Column,
   DetailContainer,
+  LargeDisplayPagination,
   MetadataContainer,
   NavButton,
   RowContainer,
+  SmallDisplayPagination,
   SubHeading,
   Text,
   Title,
@@ -210,9 +212,15 @@ function TemplateDetail() {
             </Layout.Fixed>
             <Layout.Scrollable>
               <ContentContainer>
+                <SmallDisplayPagination>
+                  {PrevButton}
+                  {NextButton}
+                </SmallDisplayPagination>
                 <ColumnContainer>
                   <Column>
-                    {PrevButton}
+                    <LargeDisplayPagination>
+                      {PrevButton}
+                    </LargeDisplayPagination>
                     <CardGallery>{previewPages}</CardGallery>
                   </Column>
                   <Column>
@@ -237,7 +245,9 @@ function TemplateDetail() {
                         <ColorList colors={template.colors} size={30} />
                       </MetadataContainer>
                     </DetailContainer>
-                    {NextButton}
+                    <LargeDisplayPagination>
+                      {NextButton}
+                    </LargeDisplayPagination>
                   </Column>
                 </ColumnContainer>
                 {relatedTemplates.length > 0 && (
