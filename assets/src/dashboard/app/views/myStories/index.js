@@ -237,7 +237,11 @@ function MyStories() {
                       handleClick: () => filter.set(storyStatus.value),
                       key: storyStatus.value,
                       isActive: filter.value === storyStatus.value,
-                      text: storyStatus.label,
+                      text: `${storyStatus.label} ${
+                        totalStoriesByStatus[storyStatus.status]
+                          ? `(${totalStoriesByStatus[storyStatus.status]})`
+                          : ''
+                      }`,
                     };
                   })}
                 />
