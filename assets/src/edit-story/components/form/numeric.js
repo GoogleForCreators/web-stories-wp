@@ -45,6 +45,7 @@ const StyledInput = styled(Input)`
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};
+  cursor: inherit;
 `;
 
 const Container = styled.div`
@@ -59,8 +60,10 @@ const Container = styled.div`
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
   flex-basis: ${({ flexBasis }) => flexBasis}px;
+  user-select: none;
 
-  ${({ disabled }) => disabled && `opacity: 0.3`};
+  ${({ disabled }) => disabled && `opacity: 0.3;`}
+  ${({ scrub }) => scrub && `cursor: ew-resize;`}
 `;
 
 function Numeric({
@@ -76,6 +79,7 @@ function Numeric({
   flexBasis,
   ariaLabel,
   disabled,
+  scrub,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -112,11 +116,86 @@ function Numeric({
 
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
+  const changeCallback = useCallback(
+    (newValue, e) => {
+      if (newValue === '') {
+        onChange('', e);
+      } else {
+        setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
+        const valueAsNumber = float ? parseFloat(newValue) : parseInt(newValue);
+        if (!isNaN(valueAsNumber)) {
+          onChange(valueAsNumber, e);
+        }
+      }
+    },
+    [onChange, float]
+  );
+
+  const submitCallback = useCallback(
+    (e) => {
+      if (e.target.form) {
+        e.target.form.dispatchEvent(
+          new window.Event('submit', { cancelable: true })
+        );
+      }
+      if (onBlur) {
+        onBlur();
+      }
+      handleBlur();
+    },
+    [onBlur, handleBlur]
+  );
+
+  const [scrubbing, setScrubbing] = useState(false);
+  const [scrubbed, setScrubbed] = useState(false);
+
+  const mouseUpCallback = useCallback(
+    (e) => {
+      setScrubbing(false);
+      if (scrubbed) {
+        submitCallback(e);
+      } else if (!focused && ref.current.contains(e.target)) {
+        handleFocus();
+      }
+    },
+    [focused, scrubbed, handleFocus, ref, submitCallback]
+  );
+
+  const scrubProps = {
+    onMouseMove: useCallback(
+      (e) => {
+        if (!scrubbing || focused) {
+          return;
+        }
+        if (!scrubbed) {
+          setScrubbed(true);
+        }
+        changeCallback(value + e.movementX, e);
+      },
+      [scrubbing, scrubbed, focused, changeCallback, value]
+    ),
+    onMouseUp: mouseUpCallback,
+    onMouseDown: (e) => {
+      setScrubbing(true);
+      setScrubbed(false);
+      // Clear this scrubbing event as soon as mouse is released
+      // `setTimeout` is currently required to not break functionality.
+      e.target.ownerDocument.addEventListener(
+        'mouseup',
+        () => window.setTimeout(() => mouseUpCallback(e), 0, null),
+        { once: true, capture: true }
+      );
+      e.preventDefault();
+    },
+  };
+
   return (
     <Container
       className={`${className}`}
       flexBasis={flexBasis}
       disabled={disabled}
+      scrub={scrub}
+      {...(scrub && scrubProps)}
     >
       {label}
       {prefix}
@@ -134,32 +213,10 @@ function Numeric({
         aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
-        onChange={(evt) => {
-          const newValue = evt.target.value;
-          if (newValue === '') {
-            onChange('', evt);
-          } else {
-            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
-            const valueAsNumber = float
-              ? parseFloat(newValue)
-              : parseInt(newValue);
-            if (!isNaN(valueAsNumber)) {
-              onChange(valueAsNumber, evt);
-            }
-          }
-        }}
-        onBlur={(evt) => {
-          if (evt.target.form) {
-            evt.target.form.dispatchEvent(
-              new window.Event('submit', { cancelable: true })
-            );
-          }
-          if (onBlur) {
-            onBlur();
-          }
-          handleBlur();
-        }}
+        onChange={(e) => changeCallback(e.target.value, e)}
+        onBlur={submitCallback}
         onFocus={handleFocus}
+        draggable="false"
       />
       {suffix}
     </Container>
@@ -180,6 +237,7 @@ Numeric.propTypes = {
   textCenter: PropTypes.bool,
   ariaLabel: PropTypes.string,
   float: PropTypes.bool,
+  scrub: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
@@ -190,6 +248,7 @@ Numeric.defaultProps = {
   textCenter: false,
   float: false,
   ariaLabel: __('Standard input', 'web-stories'),
+  scrub: true,
 };
 
 export default Numeric;
