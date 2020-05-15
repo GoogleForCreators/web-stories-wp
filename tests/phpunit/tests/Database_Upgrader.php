@@ -27,6 +27,6 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	public function test_init() {
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$object->init();
-		$this->assertSame( constant( 'WEBSTORIES_DB_VERSION' ), get_option( $object::OPTION ) );
+		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
 	}
 }

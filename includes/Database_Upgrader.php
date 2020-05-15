@@ -95,6 +95,6 @@ class Database_Upgrader {
 	 */
 	protected function finish_up( $previous_version ) {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
-		update_option( self::OPTION, constant( 'WEBSTORIES_DB_VERSION' ) );
+		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
 	}
 }
