@@ -57,13 +57,14 @@ function FontProvider({ children }) {
     getAllFonts().then(setFonts);
   }, [getAllFonts]);
 
-  const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
+  const maybeEnqueueFontStyle = useLoadFontFiles();
 
   const state = {
     state: {
       fonts,
     },
     actions: {
+      getFontByName,
       maybeEnqueueFontStyle,
     },
   };
