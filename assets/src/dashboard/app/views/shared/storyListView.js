@@ -68,11 +68,14 @@ const ListView = styled.div`
 `;
 
 const PreviewContainer = styled.div`
+  display: inline-block;
   position: relative;
+  overflow: hidden;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
   height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
   vertical-align: middle;
-  display: inline-block;
+  border-radius: 4px;
+  border: ${({ theme }) => theme.storyPreview.border};
 `;
 
 const ArrowIcon = styled.div`

@@ -72,3 +72,4 @@ export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
+export { default as Tooltip } from './tooltip';

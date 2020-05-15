@@ -128,6 +128,14 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  storyPreview: {
+    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
+    border: `1px solid ${colors.gray75}`,
+  },
+  tooltip: {
+    background: colors.gray900,
+    color: colors.white,
+  },
   navBar: {
     height: 64,
   },
