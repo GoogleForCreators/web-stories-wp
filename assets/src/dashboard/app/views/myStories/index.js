@@ -78,7 +78,7 @@ function MyStories() {
         isLoading,
         stories,
         storiesOrderById,
-        totalStories,
+        totalStoriesByStatus,
         totalPages,
       },
       tags,
@@ -95,7 +95,7 @@ function MyStories() {
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     currentFilter: filter.value,
-    totalResults: totalStories,
+    totalResults: totalStoriesByStatus?.all,
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
@@ -218,6 +218,35 @@ function MyStories() {
     storiesView,
   ]);
 
+  const HeaderToggleButtons = useMemo(() => {
+    if (
+      totalStoriesByStatus &&
+      Object.keys(totalStoriesByStatus).length === 0
+    ) {
+      return null;
+    }
+
+    return (
+      <HeaderToggleButtonContainer>
+        <ToggleButtonGroup
+          buttons={STORY_STATUSES.map((storyStatus) => {
+            return {
+              handleClick: () => filter.set(storyStatus.value),
+              key: storyStatus.value,
+              isActive: filter.value === storyStatus.value,
+              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
+              text: `${storyStatus.label} ${
+                totalStoriesByStatus?.[storyStatus.status]
+                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
+                  : ''
+              }`,
+            };
+          })}
+        />
+      </HeaderToggleButtonContainer>
+    );
+  }, [filter, totalStoriesByStatus]);
+
   return (
     <FontProvider>
       <TransformProvider>
@@ -230,18 +259,7 @@ function MyStories() {
               handleTypeaheadChange={search.setKeyword}
               typeaheadValue={search.keyword}
             >
-              <HeaderToggleButtonContainer>
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () => filter.set(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: filter.value === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
-              </HeaderToggleButtonContainer>
+              {HeaderToggleButtons}
             </PageHeading>
             {storiesViewControls}
           </Layout.Squishable>
