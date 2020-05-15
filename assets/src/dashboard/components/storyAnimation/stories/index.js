@@ -74,8 +74,8 @@ SquareWrapper.propTypes = {
 };
 
 const animations = [
-  { target: ['some-id'], type: 'bounce', duration: 1000 },
-  { target: ['some-id'], type: 'bounce', delay: 1000 },
+  { targets: ['some-id'], type: 'bounce', duration: 1000 },
+  { targets: ['some-id'], type: 'bounce', delay: 1000 },
 ];
 export function _default() {
   const [state, setState] = useState(0);

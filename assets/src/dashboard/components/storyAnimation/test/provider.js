@@ -37,11 +37,12 @@ describe('StoryAnimation.Provider', () => {
   describe('getAnimationGenerators(target)', () => {
     it('calls all generators for a target', () => {
       const target = 'some-target';
+      const targets = [target];
       const animations = [
-        { target, type: 'TYPE1' },
-        { target, type: 'TYPE2' },
-        { target: 'other-target', type: 'TYPE1' },
-        { target: [target, 'other-target'], type: 'TYPE5' },
+        { targets, type: 'TYPE1' },
+        { targets, type: 'TYPE2' },
+        { targets: ['other-target'], type: 'TYPE1' },
+        { targets: [target, 'other-target'], type: 'TYPE5' },
       ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {
@@ -61,12 +62,13 @@ describe('StoryAnimation.Provider', () => {
 
     it('calls generators for a target in ascending order', () => {
       const target = 'some-target';
+      const targets = [target];
       const args = { someProp: 1 };
       const type = ['TYPE1', 'TYPE2', 'TYPE3'];
       const animations = [
-        { target, type: type[0], ...args },
-        { target, type: type[1], ...args },
-        { target, type: type[2], ...args },
+        { targets, type: type[0], ...args },
+        { targets, type: type[1], ...args },
+        { targets, type: type[2], ...args },
       ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {
@@ -88,6 +90,7 @@ describe('StoryAnimation.Provider', () => {
 
     it('calls generators for a target with propper args', () => {
       const target = 'some-target';
+      const targets = [target];
       const type = 'SOME_TYPE';
       const args = [
         { bounces: 3 },
@@ -95,9 +98,9 @@ describe('StoryAnimation.Provider', () => {
         { blinks: 2, offset: 20, blarks: 6 },
       ];
       const animations = [
-        { target, type: type, ...args[0] },
-        { target, type: type, ...args[1] },
-        { target, type: type, ...args[2] },
+        { targets, type: type, ...args[0] },
+        { targets, type: type, ...args[1] },
+        { targets, type: type, ...args[2] },
       ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {

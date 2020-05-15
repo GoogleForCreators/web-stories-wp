@@ -48,19 +48,19 @@ const createOnFinishPromise = (animation) => {
   });
 };
 
-function Provider(props) {
+function Provider({ animations, children, onWAAPIFinish }) {
   const animationGeneratorMap = useMemo(() => {
-    return (props.animations || []).reduce((map, animation) => {
-      const { target, type, ...args } = animation;
+    return (animations || []).reduce((map, animation) => {
+      const { targets, type, ...args } = animation;
 
-      (Array.isArray(target) ? target : [target]).forEach((t) => {
+      (targets || []).forEach((t) => {
         const animationGenerators = map.get(t) || [];
         map.set(t, [...animationGenerators, (fn) => fn(type, args)]);
       });
 
       return map;
     }, new Map());
-  }, [props.animations]);
+  }, [animations]);
 
   const getAnimationGenerators = useCallback(
     (target) => {
@@ -72,27 +72,24 @@ function Provider(props) {
   /**
    * WAAPI interface
    */
-  const onWAAPIFinishRef = useRef(props.onWAAPIFinish);
+  const onWAAPIFinishRef = useRef(onWAAPIFinish);
   const [WAAPIAnimationState, dispatchWAAPIAnimationState] = useReducer(
     WAAPIAnimationStateReducer,
     'idle'
   );
-  const WAAPIAnimationMap = useMemo(() => new Map(), []);
+  const WAAPIAnimationMap = useRef(new Map());
   const [WAAPIAnimations, setWAAPIAnimations] = useState([]);
 
-  const hoistWAAPIAnimation = useCallback(
-    (WAPPIAnimation) => {
-      const symbol = Symbol();
-      WAAPIAnimationMap.set(symbol, WAPPIAnimation);
-      setWAAPIAnimations(Array.from(WAAPIAnimationMap.values()));
-      return () => {
-        WAPPIAnimation?.cancel();
-        WAAPIAnimationMap.delete(symbol);
-        setWAAPIAnimations(Array.from(WAAPIAnimationMap.values()));
-      };
-    },
-    [WAAPIAnimationMap]
-  );
+  const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
+    const symbol = Symbol();
+    WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+    setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
+    return () => {
+      WAPPIAnimation?.cancel();
+      WAAPIAnimationMap.current.delete(symbol);
+      setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
+    };
+  }, []);
 
   const playWAAPIAnimations = useCallback(() => {
     WAAPIAnimations.forEach((animation) => animation?.play());
@@ -106,10 +103,6 @@ function Provider(props) {
    * animations complete.
    */
   useEffect(() => {
-    // WAAPIAnimations.forEach((animation) => {
-    //   // createOnFinishPromise
-    //   animation.onfinish = onWAAPIFinishRef.current;
-    // });
     let cancel = () => {};
     if ('idle' === WAAPIAnimationState && WAAPIAnimations.length) {
       new Promise((resolve, reject) => {
@@ -126,7 +119,7 @@ function Provider(props) {
     return cancel;
   }, [WAAPIAnimations, WAAPIAnimationState]);
 
-  onWAAPIFinishRef.current = props.onWAAPIFinish;
+  onWAAPIFinishRef.current = onWAAPIFinish;
   useEffect(() => {
     if ('complete' === WAAPIAnimationState) {
       onWAAPIFinishRef.current?.();
@@ -147,7 +140,7 @@ function Provider(props) {
     [getAnimationGenerators, hoistWAAPIAnimation, playWAAPIAnimations]
   );
 
-  return <Context.Provider value={value}>{props.children}</Context.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 Provider.propTypes = {
