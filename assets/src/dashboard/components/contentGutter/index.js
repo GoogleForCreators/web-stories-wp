@@ -19,22 +19,22 @@
  */
 import styled from 'styled-components';
 
-export const StandardViewContentGutter = styled.div`
-  margin: ${({ theme }) => `0 ${theme.standardViewContentGutter.desktop}px`};
+export const StandardViewContentGutter = styled.div(
+  ({ theme }) => `
+    margin: 0 ${theme.standardViewContentGutter.desktop}px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) =>
-      `0 ${theme.standardViewContentGutter.largeDisplayPhone}px`};
-  }
+    @media ${theme.breakpoint.largeDisplayPhone} {
+      margin: 0 ${theme.standardViewContentGutter.largeDisplayPhone}px;
+    }
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) =>
-      `0 ${theme.standardViewContentGutter.smallDisplayPhone}px`};
-  }
-`;
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.standardViewContentGutter.smallDisplayPhone}px;
+    }
+  `
+);
 
-export const DetailViewContentGutter = styled.div`
-  ${({ theme }) => `
+export const DetailViewContentGutter = styled.div(
+  ({ theme }) => `
     padding-top: ${
       theme.navBar.height + theme.detailViewContentGutter.desktop / 2
     }px;
@@ -51,5 +51,5 @@ export const DetailViewContentGutter = styled.div`
     @media ${theme.breakpoint.smallDisplayPhone} {
       margin: 0 ${theme.detailViewContentGutter.min}px;
     }
-  `}
-`;
+  `
+);
