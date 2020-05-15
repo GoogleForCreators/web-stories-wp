@@ -163,11 +163,15 @@
     {
       "files": [
         "__mocks__/**/*.js",
-        "**/karma/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
         "**/?(*.)test.js",
-        "tests/js/**/*.js"
+        "tests/js/**/*.js",
+      ],
+      "excludedFiles": [
+        "**/karma/**/*.js",
+        "**/test/**/*.karma.js",
+        "tests/js/**/*.karma.js"
       ],
       "extends": [
         "plugin:jest/all",
@@ -190,6 +194,35 @@
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
+        "testing-library/no-debug": "error",
+        "testing-library/no-dom-import": "error"
+      }
+    },
+    {
+      "files": [
+        "**/karma/**/*.js",
+        "**/test/**/*.karma.js",
+        "tests/js/**/*.karma.js"
+      ],
+      "extends": [
+        "plugin:jest/all"
+      ],
+      "plugins": [
+        "jsx-a11y",
+        "header",
+        "testing-library"
+      ],
+      "rules": {
+        "jest/lowercase-name": [
+          "error",
+          {
+            "ignore": ["describe"]
+          }
+        ],
+        "jest/no-hooks": "off",
+        "jest/prefer-expect-assertions": "off",
+        "jest/prefer-inline-snapshots": "off",
+        "jest/prefer-strict-equal": "off",
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
       }
