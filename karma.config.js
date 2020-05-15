@@ -65,8 +65,8 @@ module.exports = function (config) {
           ...webpackConfig.output,
           path: path.resolve(process.cwd(), 'assets', 'testjs'),
         },
-        // @todo: DependencyExtractionWebpackPlugin fails here for some reason.
-        // Does it help at all for tests?
+        // WP's DependencyExtractionWebpackPlugin is not needed for tests and
+        // otherwise has some failures.
         plugins: webpackConfig.plugins.filter(
           (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
         ),
