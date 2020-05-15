@@ -356,15 +356,25 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		}
 
 		// Add counts for other statuses.
-		$headers                      = $response->get_headers();
-		$statuses                     = [ 'publish', 'draft' ];
-		$statuses_count               = [ 'all' => $headers['X-WP-Total'] ];
-		$query_args['posts_per_page'] = 1;
-		foreach ( $statuses as $status ) {
+		$statuses = [
+			'all'     => [ 'publish', 'draft' ],
+			'publish' => 'publish',
+			'draft'   => 'draft',
+		];
+
+		$statuses_count = [];
+
+		// Strip down query for speed.
+		$query_args['fields']                 = 'ids';
+		$query_args['posts_per_page']         = 1;
+		$query_args['update_post_meta_cache'] = false;
+		$query_args['update_post_meta_cache'] = false;
+
+		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
-			$query_args['post_status'] = [ $status ];
+			$query_args['post_status'] = $status;
 			$posts_query->query( $query_args );
-			$statuses_count[ $status ] = absint( $posts_query->found_posts );
+			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
