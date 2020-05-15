@@ -261,14 +261,12 @@ const theme = {
       letterSpacing: 0.01,
     },
   },
-  pageGutter: {
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
     largeDisplayPhone: 10,

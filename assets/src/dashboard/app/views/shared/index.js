@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { default as BodyWrapper } from './bodyWrapper';
+export { default as StandardViewContentGutter } from './standardViewContentGutter';
 export { default as BodyViewOptions } from './bodyViewOptions';
 export { default as NoResults } from './noResults';
 export {

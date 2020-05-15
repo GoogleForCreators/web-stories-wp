@@ -53,7 +53,7 @@ import { StoryGridView } from '../shared';
 
 import {
   ByLine,
-  ContentContainer,
+  DetailViewContentGutters,
   ColumnContainer,
   Column,
   DetailContainer,
@@ -211,7 +211,7 @@ function TemplateDetail() {
               <TemplateNavBar />
             </Layout.Fixed>
             <Layout.Scrollable>
-              <ContentContainer>
+              <DetailViewContentGutters>
                 <SmallDisplayPagination>
                   {PrevButton}
                   {NextButton}
@@ -267,7 +267,7 @@ function TemplateDetail() {
                     </UnitsProvider>
                   </RowContainer>
                 )}
-              </ContentContainer>
+              </DetailViewContentGutters>
             </Layout.Scrollable>
           </Layout.Provider>
         </TransformProvider>

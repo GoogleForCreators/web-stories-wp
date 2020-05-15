@@ -48,10 +48,11 @@ export const DetailRow = styled.div`
 
 const StoryGrid = styled(CardGrid)`
   width: ${({ theme }) =>
-    `calc(100% - ${theme.pageHorizontalGutter.desktop}px)`};
+    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageHorizontalGutter.min}px)`};
+    width: ${({ theme }) =>
+      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
   }
 `;
 

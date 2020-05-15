@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
  */
 import { Dropdown, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
-import BodyWrapper from './bodyWrapper';
+import StandardViewContentGutter from './standardViewContentGutter';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.formatContainer.height}px;
@@ -65,7 +65,7 @@ const BodyViewOptions = ({
   showGridToggle,
   sortDropdownAriaLabel,
 }) => (
-  <BodyWrapper>
+  <StandardViewContentGutter>
     <DisplayFormatContainer>
       <Label>{resultsLabel}</Label>
       <ControlsContainer>
@@ -90,7 +90,7 @@ const BodyViewOptions = ({
         )}
       </ControlsContainer>
     </DisplayFormatContainer>
-  </BodyWrapper>
+  </StandardViewContentGutter>
 );
 
 BodyViewOptions.propTypes = {

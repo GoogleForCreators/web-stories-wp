@@ -19,18 +19,18 @@
  */
 import styled from 'styled-components';
 
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageHorizontalGutter.desktop}px`};
+const StandardViewContentGutter = styled.div`
+  margin: ${({ theme }) => `0 ${theme.standardViewContentGutter.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     margin: ${({ theme }) =>
-      `0 ${theme.pageHorizontalGutter.largeDisplayPhone}px`};
+      `0 ${theme.standardViewContentGutter.largeDisplayPhone}px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     margin: ${({ theme }) =>
-      `0 ${theme.pageHorizontalGutter.smallDisplayPhone}px`};
+      `0 ${theme.standardViewContentGutter.smallDisplayPhone}px`};
   }
 `;
 
-export default BodyWrapper;
+export default StandardViewContentGutter;

@@ -54,7 +54,7 @@ import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  BodyWrapper,
+  StandardViewContentGutter,
   PageHeading,
   NoResults,
   StoryGridView,
@@ -152,7 +152,7 @@ function TemplatesGallery() {
   const BodyContent = useMemo(() => {
     if (totalTemplates > 0) {
       return (
-        <BodyWrapper>
+        <StandardViewContentGutter>
           <StoryGridView
             stories={orderedTemplates}
             centerActionLabelByStatus={
@@ -167,7 +167,7 @@ function TemplatesGallery() {
             allDataLoadedMessage={__('No more templates', 'web-stories')}
             onLoadMore={handleNewPageRequest}
           />
-        </BodyWrapper>
+        </StandardViewContentGutter>
       );
     }
 

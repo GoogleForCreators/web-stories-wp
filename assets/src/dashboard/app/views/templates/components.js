@@ -24,19 +24,23 @@ import styled from 'styled-components';
  */
 import { Button } from '../../../components';
 
-export const ContentContainer = styled.div`
+export const DetailViewContentGutters = styled.div`
   ${({ theme }) => `
-    padding-top: ${theme.navBar.height + 40}px;
-    margin: 0 ${theme.pageGutter.large.desktop}px;
+    padding-top: ${
+      theme.navBar.height + theme.detailViewContentGutter.desktop / 2
+    }px;
+    margin: 0 ${theme.detailViewContentGutter.desktop}px;
 
 
     @media ${theme.breakpoint.tablet} {
-      padding-top: ${theme.navBar.height + 20}px;
-      margin: 0 ${theme.pageGutter.large.tablet}px;
+      padding-top: ${
+        theme.navBar.height + theme.detailViewContentGutter.tablet / 2
+      }px;
+      margin: 0 ${theme.detailViewContentGutter.desktop}px;
     }
 
     @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.pageHorizontalGutter.min}px;
+      margin: 0 ${theme.detailViewContentGutter.min}px;
     }
   `}
 `;
@@ -63,12 +67,12 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.pageHorizontalGutter.desktop}px;
+      padding-left: ${theme.standardViewContentGutter.desktop}px;
     }
 
     @media ${theme.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.pageHorizontalGutter.min}px;
+        padding-left: ${theme.standardViewContentGutter.min}px;
       }
     }
 

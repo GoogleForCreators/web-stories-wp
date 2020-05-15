@@ -43,15 +43,15 @@ const Nav = styled.nav`
   width: 100%;
   height: ${theme.navBar.height}px;
 
-  padding: 0 ${theme.pageGutter.large.desktop}px;
+  padding: 0 ${theme.detailViewContentGutter.desktop}px;
 
   @media ${theme.breakpoint.tablet} {
-    padding: 0 ${theme.pageGutter.large.tablet}px;
+    padding: 0 ${theme.detailViewContentGutter.tablet}px;
   }
 
   @media ${theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.pageHorizontalGutter.min}px;
+    padding: 0 ${theme.detailViewContentGutter.min}px;
   }
   `}
 `;

@@ -51,7 +51,7 @@ import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import {
   BodyViewOptions,
-  BodyWrapper,
+  StandardViewContentGutter,
   PageHeading,
   StoryGridView,
 } from '../shared';
@@ -94,7 +94,7 @@ function Content({ stories, view, page }) {
       <FontProvider>
         <TransformProvider>
           <UnitsProvider pageSize={view.pageSize}>
-            <BodyWrapper>
+            <StandardViewContentGutter>
               <StoryGridView
                 stories={stories}
                 centerActionLabelByStatus={
@@ -109,7 +109,7 @@ function Content({ stories, view, page }) {
                 canLoadMore={false}
                 onLoadMore={page.requestNextPage}
               />
-            </BodyWrapper>
+            </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>

@@ -47,7 +47,7 @@ import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  BodyWrapper,
+  StandardViewContentGutter,
   BodyViewOptions,
   PageHeading,
   NoResults,
@@ -190,7 +190,7 @@ function MyStories() {
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <BodyWrapper>
+        <StandardViewContentGutter>
           {storiesView}
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -198,7 +198,7 @@ function MyStories() {
             allDataLoadedMessage={__('No more stories', 'web-stories')}
             onLoadMore={page.requestNextPage}
           />
-        </BodyWrapper>
+        </StandardViewContentGutter>
       );
     } else if (search.keyword.length > 0) {
       return <NoResults typeaheadValue={search.keyword} />;
