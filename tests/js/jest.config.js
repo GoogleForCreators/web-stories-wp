@@ -14,16 +14,22 @@
  * limitations under the License.
  */
 
-const path = require('path');
+/**
+ * External dependencies
+ */
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = {
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default {
   rootDir: '../../',
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
   moduleNameMapper: {
-    '\\.svg': path.join(__dirname, '/svgrMock.js'),
-    '\\.css': path.join(__dirname, '/styleMock.js'),
+    '\\.svg': join(__dirname, '/svgrMock.js'),
+    '\\.css': join(__dirname, '/styleMock.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',

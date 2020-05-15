@@ -28,7 +28,7 @@ tests
 .travis.yml
 .travis_deploy_key
 .travis_deploy_key.enc
-babel.config.js
+babel.config.cjs
 codecov.yml
 composer.json
 composer.lock
@@ -40,4 +40,4 @@ phpcs.xml
 phpstan.neon.dist
 phpunit.xml.dist
 README.md
-webpack.config.js
+webpack.config.cjs

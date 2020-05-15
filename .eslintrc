@@ -219,7 +219,7 @@
       "files": [
         "__mocks__/**/*.js",
         "bin/**/*.js",
-        "babel.config.js",
+        "babel.config.cjs",
         "jest-puppeteer.config.js",
         "webpack.config.js",
         ".storybook/*.js",

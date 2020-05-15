@@ -15,8 +15,23 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import getFontFallback from '../getFontFallback';
 
-enableFetchMocks();
+describe('getFontFallback', () => {
+  const categories = [
+    ['handwriting', 'cursive'],
+    ['display', 'cursive'],
+    ['sans-serif', 'sans-serif'],
+    ['monospace', 'monospace'],
+    ['serif', 'serif'],
+    ['invalid', 'serif'],
+  ];
+  it.each(categories)(
+    'should return expected fallback for category "%s"',
+    (category, expected) => {
+      expect(getFontFallback(category)).toStrictEqual(expected);
+    }
+  );
+});

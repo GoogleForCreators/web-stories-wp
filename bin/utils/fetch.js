@@ -17,6 +17,31 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import https from 'https';
 
-enableFetchMocks();
+/**
+ * Simple utility function to make GET requests.
+ *
+ * Used to fetch data from the Google Fonts API.
+ *
+ * @param {string} url URL to request.
+ * @return {Promise<string>} Result.
+ */
+function fetch(url) {
+  return new Promise((resolve, reject) => {
+    const data = [];
+
+    https
+      .get(url, (res) => {
+        if (res.statusCode < 200 || res.statusCode > 299) {
+          reject(new Error('Error: ' + res.statusCode));
+        }
+
+        res.on('data', data.push);
+        res.on('end', () => resolve(data.join('')));
+      })
+      .on('error', reject);
+  });
+}
+
+export default fetch;

@@ -17,6 +17,25 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import { dirname, basename } from 'path';
+import { execSync } from 'child_process';
 
-enableFetchMocks();
+/**
+ * Generates a ZIP file.
+ *
+ * Ensures the folder in the final ZIP file is always named "web-stories".
+ *
+ * @param {string} source Full path to the source directory that should be zipped.
+ * @param {string} zipName Desired file name.
+ */
+function generateZipFile(source, zipName) {
+  const pluginFolder = basename(source); // web-stories
+  const cwd = dirname(source); // /full/path/to/build
+
+  execSync(`zip -r ${zipName} ${pluginFolder}`, {
+    cwd,
+    stdio: ['pipe', 'pipe', 'ignore'],
+  });
+}
+
+export default generateZipFile;

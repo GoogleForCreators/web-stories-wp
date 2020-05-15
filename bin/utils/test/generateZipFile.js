@@ -17,6 +17,26 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import { execSync } from 'child_process';
 
-enableFetchMocks();
+/**
+ * Internal dependencies
+ */
+import generateZipFile from '../generateZipFile';
+
+jest.mock('child_process');
+
+describe('generateZipFile', () => {
+  it('should ZIP the web-stories directory', () => {
+    generateZipFile(
+      '/full/path/to/build/web-stories',
+      'web-stories-stable.zip'
+    );
+    expect(execSync).toHaveBeenLastCalledWith(
+      'zip -r web-stories-stable.zip web-stories',
+      expect.objectContaining({
+        cwd: '/full/path/to/build',
+      })
+    );
+  });
+});

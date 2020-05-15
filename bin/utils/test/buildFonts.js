@@ -15,21 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __setMockFiles, readFileSync } from 'fs';
+
+/**
  * Internal dependencies
  */
-import SYSTEM_FONTS from '../systemFonts';
+import { SYSTEM_FONTS } from '../constants';
+import buildFonts from '../buildFonts';
+import fetch from '../fetch';
 
 jest.mock('fs');
+jest.mock('../fetch');
 
-jest.spyOn(process, 'cwd').mockReturnValue('');
-const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
-
-// As downloaded from Google Fonts API.
-const ABEZEE_FONT_BEFORE = {
-  family: 'ABeeZee',
-  variants: ['regular', 'italic'],
-  category: 'sans-serif',
-};
+fetch.mockImplementation(() =>
+  Promise.resolve(
+    JSON.stringify([
+      {
+        family: 'ABeeZee',
+        variants: ['regular', 'italic'],
+        category: 'sans-serif',
+      },
+    ])
+  )
+);
 
 const ABEZEE_FONT_AFTER = {
   family: 'ABeeZee',
@@ -43,30 +53,20 @@ const ABEZEE_FONT_AFTER = {
   service: 'fonts.google.com',
 };
 
-describe('Build Fonts', () => {
+describe('buildFonts', () => {
   const MOCK_FILE_INFO = {
-    '/includes/data/fonts.json': JSON.stringify([ABEZEE_FONT_BEFORE]),
+    '/includes/data/fonts.json': '',
   };
 
   beforeEach(() => {
-    require('fs').__setMockFiles(MOCK_FILE_INFO);
+    __setMockFiles(MOCK_FILE_INFO);
   });
 
-  it('should combine system fonts with pre-existing list of Google Fonts', () => {
-    const contentBefore = JSON.parse(
-      require('fs').readFileSync('/includes/data/fonts.json')
-    );
+  it('should combine system fonts with pre-existing list of Google Fonts', async () => {
+    await buildFonts('/includes/data/fonts.json');
 
-    require('../build-fonts.js');
-
-    const contentAfter = JSON.parse(
-      require('fs').readFileSync('/includes/data/fonts.json')
-    );
-
-    expect(contentAfter).toHaveLength(
-      contentBefore.length + SYSTEM_FONTS.length
-    );
+    const contentAfter = JSON.parse(readFileSync('/includes/data/fonts.json'));
+    expect(contentAfter).toHaveLength(1 + SYSTEM_FONTS.length);
     expect(contentAfter).toContainEqual(ABEZEE_FONT_AFTER);
-    expect(mockExit).toHaveBeenCalledWith(0);
   });
 });

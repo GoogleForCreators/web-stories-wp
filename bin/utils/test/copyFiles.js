@@ -17,6 +17,21 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import { execSync } from 'child_process';
 
-enableFetchMocks();
+/**
+ * Internal dependencies
+ */
+import copyFiles from '../copyFiles';
+
+jest.mock('child_process');
+
+describe('copyFiles', () => {
+  it('should sync source files to target', () => {
+    copyFiles('foo', 'foo/target', ['bar.txt', 'baz/']);
+    expect(execSync).toHaveBeenLastCalledWith(
+      `rsync -a --exclude 'bar.txt' --exclude 'baz/' foo/ foo/target/`,
+      expect.anything()
+    );
+  });
+});

@@ -5,6 +5,7 @@
   "description": "Visual storytelling for WordPress.",
   "author": "Google",
   "license": "Apache-2.0",
+  "type": "module",
   "keywords": [
     "amp",
     "stories",
@@ -139,9 +140,9 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "NODE_ENV=production webpack",
+    "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
     "predev": "rm -rf assets/css/* assets/js/*",
-    "dev": "webpack --watch",
+    "dev": "webpack --config webpack.config.cjs --watch",
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
@@ -166,7 +167,7 @@
     "storybook:build": "build-storybook -c .storybook -o build/storybook --quiet",
     "test": "npm-run-all --parallel test:*",
     "test:js": "jest --config=tests/js/jest.config.js",
-    "test:js:coverage": "npm run test:js -- --collectCoverage && open build/logs/lcov-report/index.html",
+    "test:js:coverage": "npm run test:js -- --collectCoverage; open build/logs/lcov-report/index.html",
     "test:js:debug": "node --inspect-brk node_modules/.bin/jest --config=tests/js/jest.config.js",
     "test:js:help": "npm run test:js -- --help",
     "test:js:watch": "npm run test:js -- --watch",
@@ -182,10 +183,10 @@
     "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=tests/e2e/jest.config.js",
     "preworkflow:copy-template-assets": "mkdir -p build/storybook/plugin-assets/images",
     "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates",
-    "workflow:build-plugin": "./bin/commander.js build",
-    "workflow:bundle-plugin": "./bin/commander.js bundle",
+    "workflow:version": "./bin/commander.js version",
+    "workflow:build-plugin": "./bin/commander.js build-plugin",
     "preworkflow:fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",
-    "workflow:fonts": "./bin/build-fonts.js"
+    "workflow:fonts": "./bin/commander.js build-fonts"
   },
   "husky": {
     "hooks": {

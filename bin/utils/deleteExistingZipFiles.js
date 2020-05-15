@@ -17,6 +17,22 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import { readdirSync, unlinkSync } from 'fs';
 
-enableFetchMocks();
+/**
+ * Removes all existing ZIP files in the build folder.
+ *
+ * @param {string} buildDir Path to the build directory.
+ */
+function deleteExistingZipFiles(buildDir) {
+  const fileNamePattern = /^.*\.zip$/;
+  const zipFiles = readdirSync(buildDir).filter((file) =>
+    fileNamePattern.test(file)
+  );
+
+  for (const file of zipFiles) {
+    unlinkSync(`${buildDir}/${file}`);
+  }
+}
+
+export default deleteExistingZipFiles;

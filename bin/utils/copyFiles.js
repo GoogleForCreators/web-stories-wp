@@ -17,6 +17,24 @@
 /**
  * External dependencies
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+import { execSync } from 'child_process';
 
-enableFetchMocks();
+/**
+ * Copies all files minuses ignored ones from source to target directory.
+ *
+ * @param {string} source Path to source directory.
+ * @param {string} target Path to target directory.
+ * @param {Array<string>} ignoredFiles List of ignored files.
+ */
+function copyFiles(source, target, ignoredFiles) {
+  const excludeList = ignoredFiles
+    .map((file) => `--exclude '${file}'`)
+    .join(' ');
+
+  // Copy plugin folder to temporary location.
+  execSync(`rsync -a ${excludeList} ${source}/ ${target}/`, {
+    stdio: ['pipe', 'pipe', 'ignore'],
+  });
+}
+
+export default copyFiles;
