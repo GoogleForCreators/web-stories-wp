@@ -45,7 +45,7 @@ export const DetailViewContentGutter = styled.div`
       padding-top: ${
         theme.navBar.height + theme.detailViewContentGutter.tablet / 2
       }px;
-      margin: 0 ${theme.detailViewContentGutter.desktop}px;
+      margin: 0 ${theme.detailViewContentGutter.tablet}px;
     }
 
     @media ${theme.breakpoint.smallDisplayPhone} {
