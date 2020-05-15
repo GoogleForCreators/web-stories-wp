@@ -65,10 +65,12 @@ import useTemplateFilters from './templateFilters';
 const HeadingDropdownsContainer = styled.div`
   display: flex;
   align-items: baseline;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 
   ${DropdownContainer} {
-    margin-right: 10px;
+    margin: 0 10px;
     &:last-child {
       margin-right: 0;
     }
@@ -203,26 +205,12 @@ function TemplatesGallery() {
                     onChange={onNewCategorySelected}
                   />
                   <Dropdown
-                    ariaLabel={__('Style Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Style', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
-                  />
-                  <Dropdown
                     ariaLabel={__('Color Dropdown', 'web-stories')}
                     type={DROPDOWN_TYPES.COLOR_PANEL}
                     placeholder={__('Color', 'web-stories')}
                     items={selectedColors}
                     onClear={clearAllColors}
                     onChange={onNewColorSelected}
-                  />
-                  <Dropdown
-                    ariaLabel={__('Layout Type Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Layout Type', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
                   />
                 </HeadingDropdownsContainer>
               </PageHeading>
