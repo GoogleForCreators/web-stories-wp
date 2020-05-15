@@ -368,7 +368,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		$query_args['fields']                 = 'ids';
 		$query_args['posts_per_page']         = 1;
 		$query_args['update_post_meta_cache'] = false;
-		$query_args['update_post_meta_cache'] = false;
+		$query_args['update_post_term_cache'] = false;
 
 		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
