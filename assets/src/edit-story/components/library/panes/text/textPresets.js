@@ -22,17 +22,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { dataFontEm } from '../../../../units';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../==../../app/font/defaultFonts';
 
 const DEFAULT_PRESET = {
   id: 'default-text',
-  content: __('Fill in some text', 'web-stories'),
+  content: `<span style="font-weight: 400">${__(
+    'Fill in some text',
+    'web-stories'
+  )}</span>`,
   fontSize: dataFontEm(1),
-  fontWeight: 400,
-  font: {
-    family: 'Roboto',
-    service: 'fonts.google.com',
-  },
-  lineHeight: '24px',
+  font: TEXT_ELEMENT_DEFAULT_FONT,
+  lineHeight: 1.5,
 };
 
 const PRESETS = [
@@ -70,10 +70,7 @@ const PRESETS = [
       'web-stories'
     ),
     fontSize: dataFontEm(1.1),
-    font: {
-      family: 'Roboto',
-      service: 'fonts.google.com',
-    },
+    font: TEXT_ELEMENT_DEFAULT_FONT,
   },
 ];
 
