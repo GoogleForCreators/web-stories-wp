@@ -41,8 +41,8 @@ import {
   STORY_STATUSES,
   DASHBOARD_VIEWS,
   STORY_SORT_MENU_ITEMS,
+  STORY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
-import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
 import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
@@ -64,10 +64,6 @@ const DefaultBodyText = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
-`;
-
-const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
-  margin-right: 9px;
 `;
 
 function MyStories() {
@@ -138,12 +134,7 @@ function MyStories() {
             duplicateStory={duplicateStory}
             stories={orderedStories}
             users={users}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
+            centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
             bottomActionLabel={__('Open in editor', 'web-stories')}
           />
         );

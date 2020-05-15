@@ -23,10 +23,16 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
+import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
+
+export const DashboardStatusesPropType = PropTypes.oneOf([
+  ...Object.values(STORY_STATUS),
+  ...Object.values(TEMPLATES_GALLERY_STATUS),
+]);
 
 export const StoryPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  status: PropTypes.oneOf(['publish', 'draft', 'template']).isRequired,
+  status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,
