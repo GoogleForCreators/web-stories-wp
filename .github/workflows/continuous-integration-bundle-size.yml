@@ -1,4 +1,4 @@
-name: CI
+name: Bundle size check
 
 on:
   pull_request:

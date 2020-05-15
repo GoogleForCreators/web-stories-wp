@@ -1,4 +1,4 @@
-name: CI
+name: JS Unit Tests
 
 on:
   push:

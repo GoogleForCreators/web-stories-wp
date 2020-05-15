@@ -1,4 +1,4 @@
-name: CI
+name: PHP Lints
 
 on:
   push:
