@@ -292,12 +292,14 @@ class Media {
 		remove_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
 		$query = new WP_Query(
 			[
-				'fields'         => 'ids',
-				'post_status'    => 'any',
-				'post_type'      => 'attachment',
-				'post_parent'    => $attachment_id,
-				'no_found_rows'  => true,
-				'posts_per_page' => 10,
+				'fields'                 => 'ids',
+				'post_status'            => 'any',
+				'post_type'              => 'attachment',
+				'post_parent'            => $attachment_id,
+				'no_found_rows'          => true,
+				'posts_per_page'         => 10,
+				'ignore_sticky_posts'    => true,
+				'update_post_term_cache' => false,
 			]
 		);
 		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
