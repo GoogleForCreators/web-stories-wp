@@ -203,26 +203,12 @@ function TemplatesGallery() {
                     onChange={onNewCategorySelected}
                   />
                   <Dropdown
-                    ariaLabel={__('Style Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Style', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
-                  />
-                  <Dropdown
                     ariaLabel={__('Color Dropdown', 'web-stories')}
                     type={DROPDOWN_TYPES.COLOR_PANEL}
                     placeholder={__('Color', 'web-stories')}
                     items={selectedColors}
                     onClear={clearAllColors}
                     onChange={onNewColorSelected}
-                  />
-                  <Dropdown
-                    ariaLabel={__('Layout Type Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Layout Type', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
                   />
                 </HeadingDropdownsContainer>
               </PageHeading>
