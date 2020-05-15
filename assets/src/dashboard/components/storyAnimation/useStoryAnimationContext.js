@@ -13,6 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
+/**
+ * Internal dependencies
+ */
+import { StoryAnimationContext } from './provider';
+
+function useStoryAnimationContext() {
+  const context = useContext(StoryAnimationContext);
+  if (!context) {
+    throw new Error(
+      'Must use `useStoryAnimationContext()` within <StoryAnimation.Provider />'
+    );
+  }
+  return context;
+}
+
+export default useStoryAnimationContext;
