@@ -65,10 +65,12 @@ import useTemplateFilters from './templateFilters';
 const HeadingDropdownsContainer = styled.div`
   display: flex;
   align-items: baseline;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 
   ${DropdownContainer} {
-    margin-right: 10px;
+    margin: 0 10px;
     &:last-child {
       margin-right: 0;
     }
