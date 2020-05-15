@@ -296,15 +296,8 @@ class Media {
 				'post_status'    => 'any',
 				'post_type'      => 'attachment',
 				'post_parent'    => $attachment_id,
-				// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'meta_query'     => [
-					[
-						'key'     => self::POSTER_POST_META_KEY,
-						'compare' => 'EXISTS',
-					],
-				],
 				'no_found_rows'  => true,
-				'posts_per_page' => 1,
+				'posts_per_page' => 10,
 			]
 		);
 		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
@@ -315,7 +308,11 @@ class Media {
 		 * @var int $post_id
 		 */
 		foreach ( $query->posts as $post_id ) {
-			wp_delete_post( $post_id );
+			// Used in favor of slow meta queries.
+			$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
+			if ( $is_poster ) {
+				wp_delete_attachment( $post_id, true );
+			}
 		}
 	}
 }
