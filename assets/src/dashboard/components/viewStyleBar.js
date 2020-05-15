@@ -24,7 +24,6 @@ import { __ } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -70,10 +69,9 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
 `;
 
 export default function ViewStyleBar({ onPress, layoutStyle }) {
-  const toggleRef = useRef();
   return (
-    <Container ref={toggleRef}>
-      <Tooltip label={VIEW_STYLE_LABELS[layoutStyle]}>
+    <Container>
+      <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
         <ToggleButton
           aria-label={__(
             'Toggle between showing stories as a grid or list.',

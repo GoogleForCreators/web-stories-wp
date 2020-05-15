@@ -19,19 +19,22 @@
  */
 import propTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 
 export const Content = styled.div`
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
-  width: max-content;
   position: absolute;
-  right: 0;
   border-radius: 2px;
   padding: 10px;
+  white-space: nowrap;
   background: ${({ theme }) => theme.tooltip.background};
   color: ${({ theme }) => theme.tooltip.color};
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity linear 200ms;
+`;
+
+const ContentWrapper = styled.div`
+  display: inline-flex;
 `;
 
 export const Container = styled.div.attrs({
@@ -42,20 +45,76 @@ export const Container = styled.div.attrs({
   width: inherit;
 `;
 
-export default function Tooltip({ children, label }) {
+export default function Tooltip({ children, content, position }) {
+  const containerRef = useRef();
+  const contentRef = useRef();
+  const previousContent = useRef();
   const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    if (content != previousContent.current) {
+      setShowTooltip(false);
+    }
+
+    previousContent.current = content;
+  }, [content]);
+
+  const offset = useMemo(() => {
+    if (!showTooltip) {
+      return {};
+    }
+    let metrics = {};
+
+    if (!contentRef.current || !containerRef.current) {
+      return metrics;
+    }
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const contentRect = contentRef.current.getBoundingClientRect();
+
+    if (position === 'left') {
+      metrics = {
+        left: containerRect.left - contentRect.left,
+        top: containerRect.height + 1,
+      };
+    } else if (position === 'right') {
+      metrics = {
+        left: containerRect.width - contentRect.width,
+        top: containerRect.height + 1,
+      };
+    } else if (position === 'center') {
+      metrics = {
+        left: (containerRect.width - contentRect.width) / 2,
+        top: containerRect.height + 1,
+      };
+    }
+    return metrics;
+  }, [position, showTooltip]);
+
   return (
     <Container
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      {children}
-      <Content visible={showTooltip}>{label}</Content>
+      <ContentWrapper ref={containerRef}>{children}</ContentWrapper>
+      <Content
+        ref={contentRef}
+        style={offset}
+        position={position}
+        visible={showTooltip}
+      >
+        {content}
+      </Content>
     </Container>
   );
 }
 
 Tooltip.propTypes = {
   children: propTypes.node.isRequired,
-  label: propTypes.string.isRequired,
+  content: propTypes.node.isRequired,
+  position: propTypes.oneOf(['left', 'right', 'center']).isRequired,
+};
+
+Tooltip.defaultProps = {
+  position: 'left',
 };

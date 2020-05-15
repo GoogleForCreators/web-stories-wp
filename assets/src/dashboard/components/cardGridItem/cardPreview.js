@@ -31,7 +31,7 @@ import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
-  border-radius: 8px;
+  border-radius: 4px;
   height: ${({ cardSize }) => `${cardSize.height}px`};
   box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.storyPreview.border};
