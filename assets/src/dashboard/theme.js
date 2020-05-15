@@ -106,9 +106,6 @@ const theme = {
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
   },
   text: {

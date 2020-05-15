@@ -32,6 +32,7 @@ import styled from 'styled-components';
 import { STORY_STATUS } from '../../constants';
 import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
+import { DashboardStatusesPropType } from '../../types';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
@@ -157,7 +158,7 @@ const CardTitle = ({
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
   secondaryTitle: PropTypes.string,
-  status: PropTypes.oneOf(Object.values(STORY_STATUS)),
+  status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
   displayDate: PropTypes.object,
   onEditComplete: PropTypes.func.isRequired,

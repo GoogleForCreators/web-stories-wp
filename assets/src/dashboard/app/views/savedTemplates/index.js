@@ -34,8 +34,8 @@ import {
   DASHBOARD_VIEWS,
   SAVED_TEMPLATES_STATUSES,
   STORY_SORT_MENU_ITEMS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
-
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
   FilterPropTypes,
@@ -97,7 +97,9 @@ function Content({ stories, view, page }) {
             <BodyWrapper>
               <StoryGridView
                 stories={stories}
-                centerActionLabel={__('View', 'web-stories')}
+                centerActionLabelByStatus={
+                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                }
                 bottomActionLabel={__('Use template', 'web-stories')}
                 isSavedTemplate
               />

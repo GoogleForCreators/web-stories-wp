@@ -56,10 +56,6 @@ const Nav = styled.nav`
   `}
 `;
 
-const ActionLink = styled(Button)`
-  padding: 0 24px;
-`;
-
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -89,9 +85,9 @@ export function TemplateNavBar() {
       </Container>
       <Container>
         <BookmarkToggle />
-        <ActionLink type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
+        <Button type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
           {__('USE TEMPLATE', 'web-stories')}
-        </ActionLink>
+        </Button>
       </Container>
     </Nav>
   );

@@ -19,50 +19,71 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import Button from '../button';
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: ${({ theme }) => theme.leftRail.contentPadding}px;
-`;
-
-export const NavLink = styled.a`
-  margin: 0 0 20px ${({ theme }) => theme.leftRail.inset}px;
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size}px;
-  font-weight: ${({ active }) => (active ? '500' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.tab.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.tab.letterSpacing}em;
-  text-decoration: none;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.gray900 : theme.colors.gray600};
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    font-size: ${({ theme }) => theme.fonts.tab.minSize}px;
+  margin: 20px 0;
+  > * {
+    margin: 20px;
   }
 `;
 
-export const Rule = styled.div`
-  height: 1px;
-  margin-left: ${({ theme }) =>
-    theme.leftRail.contentPadding + theme.leftRail.inset}px;
-  background-color: ${({ theme }) => theme.colors.gray50};
+export const NavButton = styled(Button)`
+  margin-bottom: 0;
 `;
 
-export const AppInfo = styled.div`
-  margin-left: ${({ theme }) => theme.leftRail.inset}px;
-  color: ${({ theme }) => theme.colors.gray500};
-  font-family: ${({ theme }) => theme.fonts.smallLabel.family};
-  font-size: ${({ theme }) => theme.fonts.smallLabel.size}px;
-  letter-spacing: ${({ theme }) => theme.fonts.smallLabel.letterSpacing};
-`;
+export const NavLink = styled.a(
+  ({ theme, active }) => `
+    padding: 4px 20px;
+    margin: 4px 0;
+    font-family: ${theme.fonts.tab.family};
+    font-size: ${theme.fonts.tab.size}px;
+    font-weight: ${active ? '500' : 'normal'};
+    line-height: ${theme.fonts.tab.lineHeight}px;
+    letter-spacing: ${theme.fonts.tab.letterSpacing}em;
+    text-decoration: none;
+    color: ${active ? theme.colors.gray900 : theme.colors.gray600};
 
-export const LogoPlaceholder = styled.div`
-  height: 40px;
-  width: 145px;
-  margin: ${({ theme }) => theme.leftRail.logoMargin};
-  background-color: ${({ theme }) => theme.colors.gray100};
-`;
+    &:focus {
+      color: ${active ? theme.colors.gray900 : theme.colors.gray600};
+    }
+    &:hover {
+      color: ${active ? theme.colors.gray900 : theme.colors.gray600};
+      background-color: ${theme.colors.gray50};
+    }
+    @media ${theme.breakpoint.min} {
+      font-size: ${theme.fonts.tab.minSize}px;
+    }
+  `
+);
+
+export const Rule = styled.div(
+  ({ theme }) => `
+    height: 1px;
+    margin-left: 20px;
+    background-color: ${theme.colors.gray50};
+  `
+);
+
+export const AppInfo = styled.div(
+  ({ theme }) => `
+    color: ${theme.colors.gray500};
+    font-family: ${theme.fonts.smallLabel.family};
+    font-size: ${theme.fonts.smallLabel.size}px;
+    letter-spacing: ${theme.fonts.smallLabel.letterSpacing};
+  `
+);
+
+export const LogoPlaceholder = styled.div(
+  ({ theme }) => `
+    height: 40px;
+    width: 145px;
+    margin: ${theme.leftRail.logoMargin};
+    background-color: ${theme.colors.gray100};
+  `
+);
