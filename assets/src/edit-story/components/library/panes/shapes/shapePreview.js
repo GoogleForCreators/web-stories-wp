@@ -26,7 +26,6 @@ import styled from 'styled-components';
 import useLibrary from '../../useLibrary';
 import createSolid from '../../../../utils/createSolid';
 import { PAGE_WIDTH } from '../../../../constants';
-import { useDropTargets } from '../../../../app';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -48,10 +47,6 @@ function ShapePreview(mask) {
   const {
     actions: { insertElement },
   } = useLibrary();
-
-  const {
-    actions: { handleDrop, setDraggingResource },
-  } = useDropTargets();
 
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
@@ -81,20 +76,11 @@ function ShapePreview(mask) {
     </svg>
   );
 
-  const resource = { type: 'shape' };
   // Callback that sets the drag image and adds information about the shape
   // to be used in an [insertElement] call on the drop handler.
   const onDragStart = (e) => {
-    setDraggingResource(resource);
-
     e.dataTransfer.setDragImage(pathRef.current, 0, 0);
     e.dataTransfer.setData('shape', JSON.stringify(props));
-  };
-
-  const onDragEnd = (e) => {
-    e.preventDefault();
-    setDraggingResource(null);
-    handleDrop('shape');
   };
 
   return (
@@ -106,7 +92,6 @@ function ShapePreview(mask) {
         insertElement('shape', props);
       }}
       onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
     >
       {svg}
     </ShapePreviewContainer>
