@@ -219,7 +219,10 @@ function MyStories() {
   ]);
 
   const HeaderToggleButtons = useMemo(() => {
-    if (Object.keys(totalStoriesByStatus).length === 0) {
+    if (
+      totalStoriesByStatus &&
+      Object.keys(totalStoriesByStatus).length === 0
+    ) {
       return null;
     }
 
@@ -231,10 +234,12 @@ function MyStories() {
               handleClick: () => filter.set(storyStatus.value),
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
-              disabled: totalStoriesByStatus[storyStatus.status] <= 0,
-              text: `${storyStatus.label} (${
+              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
+              text: `${storyStatus.label} ${
                 totalStoriesByStatus?.[storyStatus.status]
-              })`,
+                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
+                  : ''
+              }`,
             };
           })}
         />
