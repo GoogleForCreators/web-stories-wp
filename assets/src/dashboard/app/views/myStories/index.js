@@ -219,7 +219,7 @@ function MyStories() {
   ]);
 
   const HeaderToggleButtons = useMemo(() => {
-    if (Object.keys(totalStoriesByStatus) === 0) {
+    if (Object.keys(totalStoriesByStatus).length === 0) {
       return null;
     }
 

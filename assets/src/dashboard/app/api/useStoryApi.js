@@ -123,10 +123,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           parse: false,
         });
 
-        const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
-        const totalStoriesByStatus = JSON.parse(
-          response.headers.get('X-WP-TotalByStatus')
-        );
+        const totalPages =
+          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
+
+        const totalStoriesByStatus =
+          response.headers &&
+          JSON.parse(response.headers.get('X-WP-TotalByStatus'));
 
         const serverStoryResponse = await response.json();
 
