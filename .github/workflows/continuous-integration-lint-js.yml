@@ -9,7 +9,6 @@ on:
 
 jobs:
   lint-js:
-    name: JavaScript Coding Standards
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

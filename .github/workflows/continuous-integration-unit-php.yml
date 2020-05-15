@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: PHP Unit Tests (PHP ${{ matrix.php }})
+    name: PHP ${{ matrix.php }}
     runs-on: ubuntu-latest
     services:
       mysql:

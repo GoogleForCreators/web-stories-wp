@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-    name: Build plugin
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

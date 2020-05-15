@@ -9,7 +9,6 @@ on:
 
 jobs:
   lint-md:
-    name: Markdown Code Style
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -5,7 +5,6 @@ on:
 
 jobs:
   bundle-size:
-    name: Bundle size check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

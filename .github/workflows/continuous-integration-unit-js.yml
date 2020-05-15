@@ -1,4 +1,4 @@
-name: JS Unit Tests
+name: JavaScript Unit Tests
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 
 jobs:
   unit-js:
-    name: JavaScript Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

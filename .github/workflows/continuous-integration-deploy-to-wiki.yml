@@ -9,7 +9,6 @@ on:
 
 jobs:
   deploy-to-wiki:
-    name: Deploy QA artifacts
     runs-on: ubuntu-latest
     needs: build
     steps:
