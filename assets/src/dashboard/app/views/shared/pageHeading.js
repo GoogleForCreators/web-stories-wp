@@ -25,8 +25,11 @@ import PropTypes from 'prop-types';
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import { ViewHeader, NavMenuButton } from '../../../components';
-import StandardViewContentGutter from './standardViewContentGutter';
+import {
+  ViewHeader,
+  NavMenuButton,
+  StandardViewContentGutter,
+} from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`

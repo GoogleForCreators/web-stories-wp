@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 
-const StandardViewContentGutter = styled.div`
+export const StandardViewContentGutter = styled.div`
   margin: ${({ theme }) => `0 ${theme.standardViewContentGutter.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
@@ -33,4 +33,23 @@ const StandardViewContentGutter = styled.div`
   }
 `;
 
-export default StandardViewContentGutter;
+export const DetailViewContentGutter = styled.div`
+  ${({ theme }) => `
+    padding-top: ${
+      theme.navBar.height + theme.detailViewContentGutter.desktop / 2
+    }px;
+    margin: 0 ${theme.detailViewContentGutter.desktop}px;
+
+
+    @media ${theme.breakpoint.tablet} {
+      padding-top: ${
+        theme.navBar.height + theme.detailViewContentGutter.tablet / 2
+      }px;
+      margin: 0 ${theme.detailViewContentGutter.desktop}px;
+    }
+
+    @media ${theme.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.detailViewContentGutter.min}px;
+    }
+  `}
+`;

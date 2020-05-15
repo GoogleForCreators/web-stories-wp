@@ -39,6 +39,7 @@ import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
   ColorList,
+  DetailViewContentGutter,
   PreviewPage,
   Pill,
   TemplateNavBar,
@@ -53,7 +54,6 @@ import { StoryGridView } from '../shared';
 
 import {
   ByLine,
-  DetailViewContentGutters,
   ColumnContainer,
   Column,
   DetailContainer,
@@ -211,7 +211,7 @@ function TemplateDetail() {
               <TemplateNavBar />
             </Layout.Fixed>
             <Layout.Scrollable>
-              <DetailViewContentGutters>
+              <DetailViewContentGutter>
                 <SmallDisplayPagination>
                   {PrevButton}
                   {NextButton}
@@ -267,7 +267,7 @@ function TemplateDetail() {
                     </UnitsProvider>
                   </RowContainer>
                 )}
-              </DetailViewContentGutters>
+              </DetailViewContentGutter>
             </Layout.Scrollable>
           </Layout.Provider>
         </TransformProvider>

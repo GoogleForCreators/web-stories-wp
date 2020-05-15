@@ -36,6 +36,7 @@ import {
   Dropdown,
   InfiniteScroller,
   ScrollToTop,
+  StandardViewContentGutter,
 } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 
@@ -54,7 +55,6 @@ import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  StandardViewContentGutter,
   PageHeading,
   NoResults,
   StoryGridView,

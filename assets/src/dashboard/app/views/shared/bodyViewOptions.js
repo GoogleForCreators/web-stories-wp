@@ -23,9 +23,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Dropdown, ViewStyleBar } from '../../../components';
+import {
+  Dropdown,
+  StandardViewContentGutter,
+  ViewStyleBar,
+} from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
-import StandardViewContentGutter from './standardViewContentGutter';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.formatContainer.height}px;

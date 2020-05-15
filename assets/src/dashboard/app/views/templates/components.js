@@ -24,27 +24,6 @@ import styled from 'styled-components';
  */
 import { Button } from '../../../components';
 
-export const DetailViewContentGutters = styled.div`
-  ${({ theme }) => `
-    padding-top: ${
-      theme.navBar.height + theme.detailViewContentGutter.desktop / 2
-    }px;
-    margin: 0 ${theme.detailViewContentGutter.desktop}px;
-
-
-    @media ${theme.breakpoint.tablet} {
-      padding-top: ${
-        theme.navBar.height + theme.detailViewContentGutter.tablet / 2
-      }px;
-      margin: 0 ${theme.detailViewContentGutter.desktop}px;
-    }
-
-    @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.detailViewContentGutter.min}px;
-    }
-  `}
-`;
-
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
     display: flex;

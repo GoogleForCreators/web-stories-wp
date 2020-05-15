@@ -29,7 +29,11 @@ import { useRef } from 'react';
  */
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
-import { InfiniteScroller, Layout } from '../../../components';
+import {
+  InfiniteScroller,
+  Layout,
+  StandardViewContentGutter,
+} from '../../../components';
 import {
   DASHBOARD_VIEWS,
   SAVED_TEMPLATES_STATUSES,
@@ -49,12 +53,7 @@ import { StoriesPropType } from '../../../types';
 import { reshapeTemplateObject } from '../../api/useTemplateApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import {
-  BodyViewOptions,
-  StandardViewContentGutter,
-  PageHeading,
-  StoryGridView,
-} from '../shared';
+import { BodyViewOptions, PageHeading, StoryGridView } from '../shared';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({

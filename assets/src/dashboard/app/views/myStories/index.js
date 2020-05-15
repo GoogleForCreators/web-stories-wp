@@ -34,6 +34,7 @@ import {
   InfiniteScroller,
   ScrollToTop,
   Layout,
+  StandardViewContentGutter,
   ToggleButtonGroup,
 } from '../../../components';
 import {
@@ -47,7 +48,6 @@ import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  StandardViewContentGutter,
   BodyViewOptions,
   PageHeading,
   NoResults,
