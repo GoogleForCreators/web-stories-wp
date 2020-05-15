@@ -20,14 +20,16 @@
 import styled from 'styled-components';
 
 const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
+  margin: ${({ theme }) => `0 ${theme.pageHorizontalGutter.desktop}px`};
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.largeDisplayPhone}px`};
+    margin: ${({ theme }) =>
+      `0 ${theme.pageHorizontalGutter.largeDisplayPhone}px`};
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.smallDisplayPhone}px`};
+    margin: ${({ theme }) =>
+      `0 ${theme.pageHorizontalGutter.smallDisplayPhone}px`};
   }
 `;
 

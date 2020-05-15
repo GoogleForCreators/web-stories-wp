@@ -262,12 +262,6 @@ const theme = {
     },
   },
   pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-    },
     // specific to detail template
     large: {
       desktop: 80,

@@ -60,7 +60,7 @@ const SearchContainer = styled.div`
   width: 100%;
   height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
+    left: ${({ theme }) => `${theme.pageHorizontalGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }

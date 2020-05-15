@@ -51,7 +51,7 @@ const Nav = styled.nav`
 
   @media ${theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.pageGutter.small.min}px;
+    padding: 0 ${theme.pageHorizontalGutter.min}px;
   }
   `}
 `;

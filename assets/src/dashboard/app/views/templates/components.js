@@ -36,7 +36,7 @@ export const ContentContainer = styled.div`
     }
 
     @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.pageGutter.small.min}px;
+      margin: 0 ${theme.pageHorizontalGutter.min}px;
     }
   `}
 `;
@@ -63,12 +63,12 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.pageGutter.small.desktop}px;
+      padding-left: ${theme.pageHorizontalGutter.desktop}px;
     }
 
     @media ${theme.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.pageGutter.small.min}px;
+        padding-left: ${theme.pageHorizontalGutter.min}px;
       }
     }
 
