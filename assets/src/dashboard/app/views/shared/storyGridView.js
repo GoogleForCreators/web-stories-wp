@@ -47,23 +47,26 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.desktop}px)`};
+  width: ${({ theme }) =>
+    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
+    width: ${({ theme }) =>
+      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
   }
 `;
 
 const StoryGridView = ({
   stories,
   users,
-  centerActionLabel,
+  centerActionLabelByStatus,
   bottomActionLabel,
   createTemplateFromStory,
   updateStory,
   trashStory,
   duplicateStory,
   isTemplate,
+  isSavedTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -123,7 +126,7 @@ const StoryGridView = ({
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
-              label: centerActionLabel,
+              label: centerActionLabelByStatus[story.status],
             }}
             bottomAction={{
               targetAction: story.bottomTargetAction,
@@ -138,9 +141,13 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                status={story.status}
-                author={users[story.author]?.name}
-                displayDate={story.modified}
+                status={story?.status}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={story?.modified}
                 editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
@@ -163,9 +170,10 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
+  isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabel: ActionLabel,
+  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,

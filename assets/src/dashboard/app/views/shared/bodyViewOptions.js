@@ -23,13 +23,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Dropdown, ViewStyleBar } from '../../../components';
 import {
-  STORY_SORT_MENU_ITEMS,
-  DROPDOWN_TYPES,
-  VIEW_STYLE,
-} from '../../../constants';
-import BodyWrapper from './bodyWrapper';
+  Dropdown,
+  StandardViewContentGutter,
+  ViewStyleBar,
+} from '../../../components';
+import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.formatContainer.height}px;
@@ -39,7 +38,7 @@ const DisplayFormatContainer = styled.div`
 `;
 
 const StorySortDropdownContainer = styled.div`
-  margin: auto 0 auto auto;
+  margin: auto 8px;
   align-self: flex-end;
 `;
 
@@ -63,22 +62,23 @@ const BodyViewOptions = ({
   currentSort,
   handleLayoutSelect,
   handleSortChange,
-  listBarLabel,
+  resultsLabel,
   layoutStyle,
+  pageSortOptions = [],
   showGridToggle,
   sortDropdownAriaLabel,
 }) => (
-  <BodyWrapper>
+  <StandardViewContentGutter>
     <DisplayFormatContainer>
-      <Label>{listBarLabel}</Label>
+      <Label>{resultsLabel}</Label>
       <ControlsContainer>
         {layoutStyle === VIEW_STYLE.GRID && (
           <StorySortDropdownContainer>
             <SortDropdown
               alignment="flex-end"
               ariaLabel={sortDropdownAriaLabel}
-              items={STORY_SORT_MENU_ITEMS}
-              type={DROPDOWN_TYPES.TRANSPARENT_MENU}
+              items={pageSortOptions}
+              type={DROPDOWN_TYPES.MENU}
               value={currentSort}
               onChange={(newSort) => handleSortChange(newSort.value)}
             />
@@ -86,14 +86,14 @@ const BodyViewOptions = ({
         )}
         {showGridToggle && (
           <ViewStyleBar
-            label={listBarLabel}
+            label={resultsLabel}
             layoutStyle={layoutStyle}
             onPress={handleLayoutSelect}
           />
         )}
       </ControlsContainer>
     </DisplayFormatContainer>
-  </BodyWrapper>
+  </StandardViewContentGutter>
 );
 
 BodyViewOptions.propTypes = {
@@ -101,7 +101,13 @@ BodyViewOptions.propTypes = {
   handleLayoutSelect: PropTypes.func,
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
-  listBarLabel: PropTypes.string.isRequired,
+  resultsLabel: PropTypes.string.isRequired,
+  pageSortOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ),
   showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };

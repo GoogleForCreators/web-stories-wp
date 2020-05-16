@@ -32,29 +32,31 @@ export const MenuContainer = styled.ul`
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  margin: ${({ framelessButton }) => (framelessButton ? '0' : '20px 0')};
+  margin: 0;
   min-width: 210px;
   overflow: hidden;
-  padding: 0;
+  padding: 5px 0;
+  pointer-events: auto;
 `;
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const MenuItem = styled.li`
-  padding: 14px 16px;
-  background: ${({ isHovering, theme }) =>
-    isHovering ? theme.colors.gray50 : 'none'};
-  color: ${({ theme }) => theme.colors.gray700};
-  cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
-  display: flex;
-  font-family: ${({ theme }) => theme.fonts.popoverMenu.family};
-  font-size: ${({ theme }) => theme.fonts.popoverMenu.size}px;
-  line-height: ${({ theme }) => theme.fonts.popoverMenu.lineHeight}px;
-  font-weight: ${({ theme }) => theme.fonts.popoverMenu.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.popoverMenu.letterSpacing}em;
-  width: 100%;
-`;
+export const MenuItem = styled.li(
+  ({ theme, isDisabled, isHovering }) => `
+    padding: 5px 25px;
+    background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
+    color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    cursor: ${isDisabled ? 'default' : 'pointer'};
+    display: flex;
+    font-family: ${theme.fonts.popoverMenu.family};
+    font-size: ${theme.fonts.popoverMenu.size}px;
+    line-height: ${theme.fonts.popoverMenu.lineHeight}px;
+    font-weight: ${theme.fonts.popoverMenu.weight};
+    letter-spacing: ${theme.fonts.popoverMenu.letterSpacing}em;
+    width: 100%;
+  `
+);
 
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,
@@ -73,8 +75,8 @@ const Separator = styled.li`
   width: 100%;
 `;
 
-const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(0);
+const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(currentValueIndex);
   const listRef = useRef(null);
 
   // eslint-disable-next-line consistent-return
@@ -87,7 +89,7 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
             if (hoveredIndex > 0) {
               setHoveredIndex(hoveredIndex - 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex - 1);
+                listRef.current.children[hoveredIndex - 1].focus();
               }
             }
             break;
@@ -97,7 +99,7 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
             if (hoveredIndex < items.length - 1) {
               setHoveredIndex(hoveredIndex + 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex + 1);
+                listRef.current.children[hoveredIndex + 1].focus();
               }
             }
             break;
@@ -120,11 +122,11 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollToItem(0);
+    if (listRef.current && isOpen) {
+      listRef.current[currentValueIndex]?.focus();
     }
-    setHoveredIndex(0);
-  }, [items]);
+    setHoveredIndex(currentValueIndex);
+  }, [currentValueIndex, isOpen]);
 
   const renderMenuItem = useCallback(
     (item, index) => {
@@ -149,7 +151,7 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
   }, []);
 
   return (
-    <MenuContainer framelessButton={framelessButton}>
+    <MenuContainer ref={listRef}>
       {items.map((item, index) => {
         if (item.separator) {
           return renderSeparator(index);
@@ -162,9 +164,9 @@ const Menu = ({ isOpen, items, onSelect, framelessButton }) => {
 
 export const MenuProps = {
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
+  currentValueIndex: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
-  framelessButton: PropTypes.bool,
 };
 
 Menu.propTypes = MenuProps;

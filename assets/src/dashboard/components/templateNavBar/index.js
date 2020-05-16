@@ -43,21 +43,17 @@ const Nav = styled.nav`
   width: 100%;
   height: ${theme.navBar.height}px;
 
-  padding: 0 ${theme.pageGutter.large.desktop}px;
+  padding: 0 ${theme.detailViewContentGutter.desktop}px;
 
   @media ${theme.breakpoint.tablet} {
-    padding: 0 ${theme.pageGutter.large.tablet}px;
+    padding: 0 ${theme.detailViewContentGutter.tablet}px;
   }
 
   @media ${theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.pageGutter.small.min}px;
+    padding: 0 ${theme.detailViewContentGutter.min}px;
   }
   `}
-`;
-
-const ActionLink = styled(Button)`
-  padding: 0 24px;
 `;
 
 const Container = styled.div`
@@ -89,9 +85,9 @@ export function TemplateNavBar() {
       </Container>
       <Container>
         <BookmarkToggle />
-        <ActionLink type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
+        <Button type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
           {__('USE TEMPLATE', 'web-stories')}
-        </ActionLink>
+        </Button>
       </Container>
     </Nav>
   );

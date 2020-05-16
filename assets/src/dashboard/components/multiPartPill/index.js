@@ -33,7 +33,9 @@ const PillContainer = styled.div`
 const PillPart = styled.div`
   display: flex;
   align-items: center;
-
+  span {
+    border-bottom: none;
+  }
   &:nth-child(n + 2) {
     &:before {
       content: '';
