@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce';
 import useFocusOut from '../../utils/useFocusOut';
 import { useFont } from '../../app/font';
 import { TextInput } from '../form';
@@ -139,6 +140,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   const recentUsedFontsLengthRef = useRef(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchInputValue, setSearchInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [menuFonts, setMenuFonts] = useState();
 
@@ -260,14 +262,25 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   const handleSearchInput = useCallback(
     ({ keyCode }) => {
       if (keyCode === 13 && otherFonts.length > 0) {
-        const topFontValue =
-          recentUsedFonts.length > 0
-            ? recentUsedFonts[0].value
-            : otherFonts[0].value;
+        const topFont =
+          recentUsedFonts[0] || otherFonts[0] || includeSearchFonts[0];
+        const topFontValue = topFont.value;
         handleItemClick(topFontValue);
       }
     },
-    [otherFonts, recentUsedFonts, handleItemClick]
+    [otherFonts, recentUsedFonts, includeSearchFonts, handleItemClick]
+  );
+
+  const [handleSearchValue] = useDebouncedCallback((value) => {
+    setSearchValue(value);
+  }, 800);
+
+  const handleSearchInputChange = useCallback(
+    (value) => {
+      setSearchInputValue(value);
+      handleSearchValue(value);
+    },
+    [handleSearchValue]
   );
 
   const renderListWithOptions = (options) => {
@@ -294,9 +307,9 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
       <ExpandedTextInput
         ref={inputRef}
         ariaLabel={__('Search Fonts', 'web-stories')}
-        value={searchValue}
+        value={searchInputValue}
         placeholder={__('Search fonts', 'web-stories')}
-        onChange={setSearchValue}
+        onChange={handleSearchInputChange}
         onKeyDown={handleSearchInput}
         color="white"
         clear
