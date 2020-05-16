@@ -13,6 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+/**
+ * Internal dependencies
+ */
+import { ANIMATION_TYPES } from '../constants';
+import { WAAPIBounce } from './bounce';
+
+function throughput() {
+  return ({ children }) => children;
+}
+
+export function WAAPI(type, args) {
+  const generator =
+    {
+      [ANIMATION_TYPES.BOUNCE]: WAAPIBounce,
+    }[type] || throughput;
+
+  return generator(args);
+}

@@ -37,6 +37,7 @@ import {
   TemplateDetail,
   TemplatesGalleryView,
   SavedTemplatesView,
+  StoryAnimTool,
 } from './views';
 
 const AppContent = () => {
@@ -74,6 +75,10 @@ const AppContent = () => {
         <Route
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
           component={<TemplateDetail />}
+        />
+        <Route
+          path={APP_ROUTES.STORY_ANIM_TOOL}
+          component={<StoryAnimTool />}
         />
       </PageContent>
     </AppFrame>

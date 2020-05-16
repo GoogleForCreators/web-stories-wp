@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+export const WAAPIAnimationProps = {
+  children: PropTypes.node.isRequired,
+  hoistAnimation: PropTypes.func,
+};
