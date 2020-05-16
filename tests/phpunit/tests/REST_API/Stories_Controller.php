@@ -86,11 +86,10 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
 		$request->set_param( 'author', self::$user_id );
-		$request->set_param( 'status', [ 'publish', 'draft' ] );
+		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
-		$response = rest_get_server()->dispatch( $request );
-		$headers  = $response->get_headers();
-		$this->assertEquals( 10, $headers['X-WP-Total'] );
+		$response       = rest_get_server()->dispatch( $request );
+		$headers        = $response->get_headers();
 		$statues        = $headers['X-WP-TotalByStatus'];
 		$statues_decode = json_decode( $statues, true );
 
@@ -101,6 +100,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 10, $statues_decode['all'] );
 		$this->assertEquals( 7, $statues_decode['publish'] );
 		$this->assertEquals( 3, $statues_decode['draft'] );
+
+		$this->assertEquals( 3, $headers['X-WP-Total'] );
 	}
 
 	public function test_get_item_schema() {

@@ -67,6 +67,7 @@ export const APP_ROUTES = {
 
   EDITOR_SETTINGS: '/editor-settings',
   SUPPORT: '/support',
+  STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
 export const NESTED_APP_ROUTES = {

@@ -24,23 +24,6 @@ import styled from 'styled-components';
  */
 import { Button } from '../../../components';
 
-export const ContentContainer = styled.div`
-  ${({ theme }) => `
-    padding-top: ${theme.navBar.height + 40}px;
-    margin: 0 ${theme.pageGutter.large.desktop}px;
-
-
-    @media ${theme.breakpoint.tablet} {
-      padding-top: ${theme.navBar.height + 20}px;
-      margin: 0 ${theme.pageGutter.large.tablet}px;
-    }
-
-    @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.pageGutter.small.min}px;
-    }
-  `}
-`;
-
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
     display: flex;
@@ -63,12 +46,12 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.pageGutter.small.desktop}px;
+      padding-left: ${theme.standardViewContentGutter.desktop}px;
     }
 
     @media ${theme.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.pageGutter.small.min}px;
+        padding-left: ${theme.standardViewContentGutter.min}px;
       }
     }
 

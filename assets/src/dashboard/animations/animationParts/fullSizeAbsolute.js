@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+export default styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
