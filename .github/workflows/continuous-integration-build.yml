@@ -72,7 +72,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack webpack --config webpack.config.cjs
+          NODE_ENV=development npx webpack --config webpack.config.cjs
           npm run workflow:version -- --nightly
           npm run workflow:build-plugin -- --cdn --zip web-stories-dev.zip
 
