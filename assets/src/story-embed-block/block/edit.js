@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState, useEffect } from '@wordpress/element';
+import { useCallback, useState, useEffect, useRef } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { ResizableBox } from '@wordpress/components';
@@ -56,9 +56,21 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const [storyData, setStoryData] = useState({});
   const [cannotEmbed, setCannotEmbed] = useState(false);
 
+  const showLoadingIndicator = isFetchingData;
+  const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
+
+  const ref = useRef();
+
   useEffect(() => {
     setLocalURL(outerURL);
   }, [outerURL]);
+
+  useEffect(() => {
+    if (ref.current && global.ampStoryPlayer) {
+      const player = new global.ampStoryPlayer(global, ref.current);
+      player.load();
+    }
+  }, [showLoadingIndicator, showPlaceholder]);
 
   const fetchStoryData = useCallback(
     (url) => {
@@ -133,7 +145,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const { toggleSelection } = useDispatch('core/block-editor');
 
-  if (isFetchingData) {
+  if (showLoadingIndicator) {
     return <EmbedLoadinng />;
   }
 
@@ -142,7 +154,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   const label = __('Web Story URL', 'web-stories');
 
-  if (!localURL || !outerURL || editingURL || cannotEmbed) {
+  if (showPlaceholder) {
     return (
       <EmbedPlaceholder
         icon={icon}
@@ -209,7 +221,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
             });
           }}
         >
-          <StoryPlayer url={outerURL} title={title} poster={poster} />
+          <StoryPlayer url={outerURL} title={title} poster={poster} ref={ref} />
         </ResizableBox>
       </div>
     </>

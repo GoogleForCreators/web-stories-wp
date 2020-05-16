@@ -19,9 +19,15 @@
  */
 import PropTypes from 'prop-types';
 
-function StoryPlayer({ url, title, poster, width, height }) {
+/**
+ * WordPress dependencies
+ */
+import { forwardRef } from '@wordpress/element';
+
+function StoryPlayer({ url, title, poster, width, height }, ref) {
   return (
     <amp-story-player
+      ref={ref}
       style={{
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
@@ -47,4 +53,6 @@ StoryPlayer.propTypes = {
   height: PropTypes.number,
 };
 
-export default StoryPlayer;
+const StoryPlayerWithRef = forwardRef(StoryPlayer);
+
+export default StoryPlayerWithRef;
