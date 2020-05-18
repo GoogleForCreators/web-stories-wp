@@ -43,6 +43,7 @@ export const Container = styled.div.attrs({
   position: relative;
   height: inherit;
   width: inherit;
+  display: inline-flex;
 `;
 
 export default function Tooltip({ children, content, position }) {
