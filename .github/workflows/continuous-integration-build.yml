@@ -79,19 +79,19 @@ jobs:
       - name: Upload full bundle
         uses: actions/upload-artifact@v2
         with:
-          name: web-stories.zip
+          name: web-stories
           path: build/web-stories.zip
 
       - name: Upload composer bundle
         uses: actions/upload-artifact@v2
         with:
-          name: web-stories-composer.zip
+          name: web-stories-composer
           path: build/web-stories-composer.zip
 
       - name: Upload development bundle
         uses: actions/upload-artifact@v2
         with:
-          name: web-stories-dev.zip
+          name: web-stories-dev
           path: build/web-stories-dev.zip
 
       - name: Upload bundles in combined ZIP file
