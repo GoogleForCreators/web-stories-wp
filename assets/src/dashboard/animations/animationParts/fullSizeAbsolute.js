@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
-export { default as SidebarProvider } from './provider';
-export { default as useSidebar } from './use';
+export default styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;

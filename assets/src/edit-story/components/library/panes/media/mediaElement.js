@@ -18,10 +18,10 @@
  * External dependencies
  */
 import styled, { keyframes, css } from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { memo, useState, useRef, useMemo } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -269,4 +269,4 @@ MediaElement.propTypes = {
   onInsert: PropTypes.func,
 };
 
-export default MediaElement;
+export default memo(MediaElement);

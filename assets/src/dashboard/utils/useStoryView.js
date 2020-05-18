@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -133,3 +134,35 @@ export default function useStoryView({ filters, totalPages }) {
     ]
   );
 }
+
+export const ViewPropTypes = PropTypes.shape({
+  style: PropTypes.oneOf(Object.values(VIEW_STYLE)),
+  toggleStyle: PropTypes.func,
+  pageSize: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }),
+});
+
+export const FilterPropTypes = PropTypes.shape({
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  set: PropTypes.func,
+});
+
+export const SortPropTypes = PropTypes.shape({
+  value: PropTypes.oneOf(Object.values(STORY_SORT_OPTIONS)),
+  set: PropTypes.func,
+  direction: PropTypes.oneOf(Object.values(SORT_DIRECTION)),
+  setDirection: PropTypes.func,
+});
+
+export const PagePropTypes = PropTypes.shape({
+  value: PropTypes.number,
+  set: PropTypes.func,
+  requestNextPage: PropTypes.func,
+});
+
+export const SearchPropTypes = PropTypes.shape({
+  keyword: PropTypes.string,
+  setKeyword: PropTypes.func,
+});

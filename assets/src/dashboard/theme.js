@@ -89,7 +89,6 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.COLOR_PANEL]: {
       background: 'transparent',
@@ -97,29 +96,16 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.MENU]: {
-      background: colors.gray25,
-      activeBackground: colors.gray25,
-      borderRadius: 4,
-      border: 'none',
-      arrowColor: colors.gray300,
-      height: 48,
-    },
-    [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
       activeBackground: 'transparent',
-      borderRadius: 0,
-      border: 'none',
+      borderRadius: 4,
+      border: borders.transparent,
       arrowColor: colors.gray300,
-      height: 40,
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
   },
   text: {
@@ -130,6 +116,9 @@ const theme = {
   },
   typeahead: {
     borderRadius: 100,
+  },
+  formatContainer: {
+    height: 44,
   },
   expandedTypeahead: {
     borderRadius: 8,
@@ -249,12 +238,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
       letterSpacing: 0.01,
-    },
-    storyGridItemSub: {
-      family: themeFonts.secondary,
-      weight: 'normal',
     },
     table: {
       family: themeFonts.primary,
@@ -277,20 +261,12 @@ const theme = {
       letterSpacing: 0.01,
     },
   },
-  pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-    },
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
     largeDisplayPhone: 10,

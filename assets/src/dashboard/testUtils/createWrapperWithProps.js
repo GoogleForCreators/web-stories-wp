@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useSidebar() {
-  return useContext(Context);
+function createWrapperWithProps(Wrapper, props) {
+  const WrapperWithProps = function ({ children }) {
+    return <Wrapper {...props}>{children}</Wrapper>;
+  };
+  WrapperWithProps.propTypes = { children: PropTypes.node };
+  return WrapperWithProps;
 }
 
-export default useSidebar;
+export default createWrapperWithProps;

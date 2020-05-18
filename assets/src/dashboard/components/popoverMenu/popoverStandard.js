@@ -25,7 +25,7 @@ import Shadow from './shadow';
 
 const PopoverStandard = ({ className, children, isOpen }) => {
   return (
-    <Popover isOpen={isOpen} className={className}>
+    <Popover isOpen={isOpen} className={className} data-testid="popover-menu">
       <Shadow />
       {children}
     </Popover>

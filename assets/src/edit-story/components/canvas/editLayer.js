@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -109,4 +109,4 @@ EditLayerForElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
 };
 
-export default EditLayer;
+export default memo(EditLayer);

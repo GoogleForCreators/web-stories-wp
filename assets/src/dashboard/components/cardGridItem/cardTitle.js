@@ -17,29 +17,31 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { STORY_STATUS } from '../../constants';
+import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
-import useFocusOut from '../../utils/useFocusOut';
+import { DashboardStatusesPropType } from '../../types';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
   font-size: ${({ theme }) => theme.fonts.storyGridItem.size}px;
-  font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
+  font-weight: 500;
   letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing}em;
   line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
-  max-width: 80%;
+  max-width: 90%;
 `;
 
 const StyledTitle = styled.p`
@@ -50,16 +52,29 @@ const StyledTitle = styled.p`
   text-overflow: ellipsis;
 `;
 
-const StyledDate = styled.p`
+const TitleBodyText = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-weight: ${({ theme }) => theme.fonts.storyGridItemSub.weight};
-  font-family: ${({ theme }) => theme.fonts.storyGridItemSub.family};
+  font-weight: 300;
+`;
+
+const DateHelperText = styled.span`
+  text-transform: uppercase;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray900};
+  &:after {
+    content: '-';
+    color: ${({ theme }) => theme.colors.gray500};
+    font-weight: 400;
+    padding: 0 0.25em;
+  }
 `;
 
 const CardTitle = ({
+  secondaryTitle,
   title,
-  modifiedDate,
+  status,
+  displayDate,
   editMode,
   onEditComplete,
   onEditCancel,
@@ -98,6 +113,23 @@ const CardTitle = ({
     [newTitle, onEditComplete, onEditCancel]
   );
 
+  const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
+    return status === STORY_STATUS.PUBLISHED
+      ? sprintf(
+          /* translators: %s: last modified date */
+          __('Published %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        )
+      : sprintf(
+          /* translators: %s: last modified date */
+          __('Modified %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        );
+  }, [status, displayDate]);
+
   return (
     <StyledCardTitle>
       {editMode ? (
@@ -112,16 +144,23 @@ const CardTitle = ({
       ) : (
         <StyledTitle>{title}</StyledTitle>
       )}
-      <StyledDate>{`
-      ${__('Modified', 'web-stories')} ${modifiedDate} `}</StyledDate>
+      <TitleBodyText>
+        {status === STORY_STATUS.DRAFT && (
+          <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
+        )}
+        {displayDateText}
+      </TitleBodyText>
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
     </StyledCardTitle>
   );
 };
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  secondaryTitle: PropTypes.string,
+  status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
-  modifiedDate: PropTypes.string.isRequired,
+  displayDate: PropTypes.object,
   onEditComplete: PropTypes.func.isRequired,
   onEditCancel: PropTypes.func.isRequired,
 };

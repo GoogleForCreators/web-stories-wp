@@ -13,22 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function flushPromiseQueue() {
+  return new Promise((resolve) => resolve());
+}
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.largeDisplayPhone}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.smallDisplayPhone}px`};
-  }
-`;
-
-export default BodyWrapper;
+export default flushPromiseQueue;

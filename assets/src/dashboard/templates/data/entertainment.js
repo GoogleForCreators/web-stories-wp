@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 16,
+    version: 17,
     pages: [
       {
         elements: [
@@ -99,7 +99,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -127,9 +126,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 74,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -137,23 +134,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.7,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'WEEKLY',
             x: 92,
             y: 0,
             width: 292,
@@ -164,6 +151,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'c7a5dbe5-43f8-4510-8741-7e3900e3d487',
+            content:
+              '<span style="font-weight: 700; color: #fff">WEEKLY</span>',
           },
           {
             opacity: 10,
@@ -174,7 +163,6 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -202,9 +190,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 74,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -212,23 +198,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.8,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'ENTERTAINMENT',
             width: 626,
             height: 59,
             scale: 100,
@@ -240,6 +216,8 @@ export default function (imageBaseUrl) {
             id: '3970117d-3e7f-4eb0-94c6-a90873ba11c5',
             x: -284,
             y: 323.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">ENTERTAINMENT</span></span>',
           },
           {
             opacity: 100,
@@ -250,7 +228,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -278,9 +255,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 74,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -288,23 +263,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.8,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'ENTERTAINMENT',
             width: 626,
             height: 59,
             scale: 100,
@@ -316,6 +281,8 @@ export default function (imageBaseUrl) {
             id: 'd3c1350e-1e2f-4f43-ae55-7fac7fd59932',
             x: 101,
             y: 278.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">ENTERTAINMENT</span></span>',
           },
           {
             opacity: 10,
@@ -326,7 +293,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 180,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -354,9 +320,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 74,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -364,23 +328,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.7,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'WEEKLY',
             width: 292,
             height: 51,
             scale: 100,
@@ -392,6 +346,8 @@ export default function (imageBaseUrl) {
             id: '0b0ba715-00b7-4b12-8c51-2fa4035bca6b',
             x: 58,
             y: 609,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">WEEKLY</span></span>',
           },
           {
             opacity: 100,
@@ -504,92 +460,7 @@ export default function (imageBaseUrl) {
               title: 'ent_page2_image1',
               alt: 'ent_page2_image1',
               local: false,
-              sizes: {
-                medium: {
-                  file: 'ent_page2_image1-200x300.jpg',
-                  width: 200,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-200x300.jpg`,
-                },
-                large: {
-                  file: 'ent_page2_image1-683x1024.jpg',
-                  width: 683,
-                  height: 1024,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-683x1024.jpg`,
-                },
-                thumbnail: {
-                  file: 'ent_page2_image1-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-150x150.jpg`,
-                },
-                medium_large: {
-                  file: 'ent_page2_image1-768x1152.jpg',
-                  width: 768,
-                  height: 1152,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-768x1152.jpg`,
-                },
-                '1536x1536': {
-                  file: 'ent_page2_image1-1024x1536.jpg',
-                  width: 1024,
-                  height: 1536,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-1024x1536.jpg`,
-                },
-                '2048x2048': {
-                  file: 'ent_page2_image1-1365x2048.jpg',
-                  width: 1365,
-                  height: 2048,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-1365x2048.jpg`,
-                },
-                'post-thumbnail': {
-                  file: 'ent_page2_image1-1200x1800.jpg',
-                  width: 1200,
-                  height: 1800,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-1200x1800.jpg`,
-                },
-                'web-stories-poster-portrait': {
-                  file: 'ent_page2_image1-696x928.jpg',
-                  width: 696,
-                  height: 928,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-696x928.jpg`,
-                },
-                'web-stories-poster-square': {
-                  file: 'ent_page2_image1-928x928.jpg',
-                  width: 928,
-                  height: 928,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-928x928.jpg`,
-                },
-                'web-stories-poster-landscape': {
-                  file: 'ent_page2_image1-928x696.jpg',
-                  width: 928,
-                  height: 696,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-928x696.jpg`,
-                },
-                web_stories_thumbnail: {
-                  file: 'ent_page2_image1-150x225.jpg',
-                  width: 150,
-                  height: 225,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-150x225.jpg`,
-                },
-                full: {
-                  file: 'ent_page2_image1-scaled.jpg',
-                  width: 1707,
-                  height: 2560,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page2_image1-scaled.jpg`,
-                },
-              },
+              sizes: {},
             },
           },
           {
@@ -601,7 +472,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -629,9 +499,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 87,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -639,23 +507,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 141,
-                g: 141,
-                b: 141,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE TOP 10',
             width: 483,
             height: 21,
             scale: 100,
@@ -667,6 +525,8 @@ export default function (imageBaseUrl) {
             id: '26df8c19-b913-441a-bff1-bf1b677cb159',
             x: -21.5,
             y: 639,
+            content:
+              '<span style="color: rgba(141, 141, 141, 1)"><span style="font-weight: 700">THE TOP 10</span></span>',
           },
           {
             opacity: 100,
@@ -677,7 +537,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -705,9 +564,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 87,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -715,23 +572,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 199,
-                g: 196,
-                b: 196,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE TOP 10',
             width: 483,
             height: 21,
             scale: 100,
@@ -743,6 +590,8 @@ export default function (imageBaseUrl) {
             id: '5bfb51c9-3d47-4a78-be2c-776db5143bc9',
             x: -21.5,
             y: 610,
+            content:
+              '<span style="color: rgba(199, 196, 196, 1)"><span style="font-weight: 700">THE TOP 10</span></span>',
           },
           {
             opacity: 100,
@@ -753,7 +602,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -781,9 +629,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 87,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -791,23 +637,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.8,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'THE TOP 10',
             width: 483,
             height: 69,
             scale: 100,
@@ -819,6 +655,8 @@ export default function (imageBaseUrl) {
             id: '5efefa69-c1d0-4331-905b-3936d866f0eb',
             x: -21.5,
             y: 533,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">THE TOP 10</span></span>',
           },
           {
             opacity: 100,
@@ -829,7 +667,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -857,9 +694,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -867,23 +702,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'New Artists',
             x: 67,
             y: 33,
             width: 204,
@@ -894,6 +719,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '74ea4aa6-1165-42cf-9849-90ab25e6b76e',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">New Artists</span>',
           },
         ],
         backgroundElementId: '7a27a752-537d-4dcd-9677-5926437c0e19',
@@ -939,7 +766,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -967,9 +793,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 370,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -977,24 +801,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 78,
-                g: 20,
-                b: 80,
-                a: 0.5,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'PINK',
             width: 885,
             height: 370,
             scale: 100,
@@ -1006,6 +819,8 @@ export default function (imageBaseUrl) {
             id: '741cf9c1-5c4e-400a-88d1-f8d85988d103',
             x: -273,
             y: 185,
+            content:
+              '<span style="color: rgba(78, 20, 80, 0.5)"><span style="font-weight: 700">PINK</span></span>',
           },
           {
             opacity: 100,
@@ -1016,7 +831,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1044,9 +858,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 370,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1054,24 +866,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 78,
-                g: 20,
-                b: 80,
-                a: 1,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'PINK',
             width: 885,
             height: 370,
             scale: 100,
@@ -1083,6 +884,8 @@ export default function (imageBaseUrl) {
             id: '942add2b-e206-4802-bf78-64bd514ab574',
             x: -314,
             y: 172,
+            content:
+              '<span style="color: rgba(78, 20, 80, 1)"><span style="font-weight: 700">PINK</span></span>',
           },
           {
             opacity: 100,
@@ -1093,7 +896,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1121,9 +923,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 184,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1131,23 +931,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '"',
             width: 81,
             height: 184,
             scale: 100,
@@ -1159,6 +949,8 @@ export default function (imageBaseUrl) {
             id: 'a8a8df4d-5750-4508-9698-69226f88a94f',
             x: -1,
             y: 0,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">"</span></span>',
           },
           {
             opacity: 100,
@@ -1169,7 +961,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1197,9 +988,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 58,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1207,23 +996,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: "IS NOT\nJUST A\nCOLOR,\nIT'S AN\nATTITUDE!",
             width: 296,
             height: 283,
             scale: 100,
@@ -1235,6 +1014,8 @@ export default function (imageBaseUrl) {
             id: '37fa4bdd-2898-4b95-bf2a-ae0d4e474f47',
             x: 72,
             y: 209,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">IS NOT\nJUST A\nCOLOR,\nIT\'S AN\nATTITUDE!</span></span>',
           },
           {
             opacity: 100,
@@ -1245,7 +1026,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1273,9 +1053,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 58,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1283,23 +1061,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 0,
-                b: 214,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'PINK',
             width: 150,
             height: 48,
             scale: 100,
@@ -1311,6 +1079,8 @@ export default function (imageBaseUrl) {
             id: '9de815af-b64d-4fda-966c-78f938df0f83',
             x: 71,
             y: 162,
+            content:
+              '<span style="color: rgba(255, 0, 214, 1)"><span style="font-weight: 700">PINK</span></span>',
           },
           {
             opacity: 100,
@@ -1321,7 +1091,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1349,9 +1118,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1359,23 +1126,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '– Miley Cyrus',
             width: 220,
             height: 19,
             scale: 100,
@@ -1387,6 +1144,8 @@ export default function (imageBaseUrl) {
             id: '8bef4ffe-0a36-4444-ac4c-48b548217cb9',
             x: 148,
             y: 537,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">– Miley Cyrus</span>',
           },
         ],
         backgroundElementId: '03d49bf5-7b5e-4d7c-b09e-7c3ebde20c94',
@@ -1474,7 +1233,6 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1502,9 +1260,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 98,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1512,23 +1268,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'SPOTLIGHT',
             width: 538,
             height: 81,
             scale: 100,
@@ -1540,6 +1286,8 @@ export default function (imageBaseUrl) {
             id: '2ed3fa60-d97a-4641-b858-a024163090aa',
             x: 136,
             y: 350.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">SPOTLIGHT</span></span>',
           },
           {
             opacity: 100,
@@ -1550,7 +1298,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1578,9 +1325,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1588,23 +1333,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Toronto-based new rapper',
             width: 291,
             height: 64,
             scale: 100,
@@ -1616,6 +1351,8 @@ export default function (imageBaseUrl) {
             id: 'e23cd5e4-d0c9-436d-a1b1-b91dcf909373',
             x: 42,
             y: 436,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Toronto-based new rapper</span>',
           },
           {
             opacity: 100,
@@ -1626,7 +1363,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1654,9 +1390,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1664,24 +1398,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.43,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.',
             width: 355,
             height: 80,
             scale: 100,
@@ -1693,6 +1416,8 @@ export default function (imageBaseUrl) {
             id: 'fc016a73-3d6f-43a3-8542-6de6651a2829',
             x: 42,
             y: 518,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.</span>',
           },
           {
             opacity: 100,
@@ -1703,7 +1428,6 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1731,9 +1455,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 74,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1741,23 +1463,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'SPOTLIGHT',
             width: 404,
             height: 61,
             scale: 100,
@@ -1769,6 +1481,8 @@ export default function (imageBaseUrl) {
             id: '17fff8ec-3742-4837-bbcb-6f547744c46a',
             x: -175,
             y: 172,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">SPOTLIGHT</span></span>',
           },
         ],
         backgroundElementId: '87fe44ec-dfa5-450c-8250-1859f8e4fe07',
@@ -1886,7 +1600,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1914,9 +1627,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1924,23 +1635,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'New Album Review',
             width: 291,
             height: 63,
             scale: 100,
@@ -1952,6 +1653,8 @@ export default function (imageBaseUrl) {
             id: 'fd434caf-7752-47d3-b41b-0a1048f116a8',
             x: 39,
             y: 396,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">New Album Review</span>',
           },
           {
             opacity: 100,
@@ -1962,7 +1665,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -1990,9 +1692,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2000,24 +1700,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.43,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.',
             width: 355,
             height: 75,
             scale: 100,
@@ -2029,6 +1718,8 @@ export default function (imageBaseUrl) {
             id: 'ff9a77cf-c942-4a04-84ea-d7134d97f360',
             x: 39,
             y: 488,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.</span>',
           },
           {
             opacity: 100,
@@ -2129,7 +1820,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2157,9 +1847,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2167,23 +1855,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See More',
             width: 91,
             height: 14,
             scale: 100,
@@ -2195,6 +1873,8 @@ export default function (imageBaseUrl) {
             id: 'd61d1f44-9af9-4cdc-8912-caf2aa0c4993',
             x: 292,
             y: 600,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See More</span>',
           },
           {
             opacity: 100,
@@ -2219,7 +1899,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_white_star',
               alt: 'ent_icon_white_star',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 39,
             y: 600,
@@ -2257,7 +1937,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_white_star',
               alt: 'ent_icon_white_star',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 16,
             height: 15,
@@ -2296,7 +1976,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_white_star',
               alt: 'ent_icon_white_star',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 16,
             height: 15,
@@ -2335,7 +2015,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_gray_star',
               alt: 'ent_icon_gray_star',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 90,
             y: 600,
@@ -2373,7 +2053,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_gray_star',
               alt: 'ent_icon_gray_star',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             width: 16,
             height: 15,
@@ -2398,7 +2078,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2426,9 +2105,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'italic',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2436,23 +2113,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '3 out of 5',
             width: 80,
             height: 12,
             scale: 100,
@@ -2464,6 +2131,8 @@ export default function (imageBaseUrl) {
             id: 'ed850d1c-3f8f-4154-ad72-a90d30dc836d',
             x: 145,
             y: 602,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-style: italic">3 out of 5</span></span>',
           },
         ],
         backgroundElementId: '923c69d0-84f6-4223-8f7e-8fd7f0d0363f',
@@ -2536,92 +2205,7 @@ export default function (imageBaseUrl) {
               title: 'ent_page6_image1',
               alt: 'ent_page6_image1',
               local: false,
-              sizes: {
-                medium: {
-                  file: 'ent_page6_image1-200x300.jpg',
-                  width: 200,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-200x300.jpg`,
-                },
-                large: {
-                  file: 'ent_page6_image1-683x1024.jpg',
-                  width: 683,
-                  height: 1024,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-683x1024.jpg`,
-                },
-                thumbnail: {
-                  file: 'ent_page6_image1-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-150x150.jpg`,
-                },
-                medium_large: {
-                  file: 'ent_page6_image1-768x1152.jpg',
-                  width: 768,
-                  height: 1152,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-768x1152.jpg`,
-                },
-                '1536x1536': {
-                  file: 'ent_page6_image1-1024x1536.jpg',
-                  width: 1024,
-                  height: 1536,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-1024x1536.jpg`,
-                },
-                '2048x2048': {
-                  file: 'ent_page6_image1-1365x2048.jpg',
-                  width: 1365,
-                  height: 2048,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-1365x2048.jpg`,
-                },
-                'post-thumbnail': {
-                  file: 'ent_page6_image1-1200x1800.jpg',
-                  width: 1200,
-                  height: 1800,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-1200x1800.jpg`,
-                },
-                'web-stories-poster-portrait': {
-                  file: 'ent_page6_image1-696x928.jpg',
-                  width: 696,
-                  height: 928,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-696x928.jpg`,
-                },
-                'web-stories-poster-square': {
-                  file: 'ent_page6_image1-928x928.jpg',
-                  width: 928,
-                  height: 928,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-928x928.jpg`,
-                },
-                'web-stories-poster-landscape': {
-                  file: 'ent_page6_image1-928x696.jpg',
-                  width: 928,
-                  height: 696,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-928x696.jpg`,
-                },
-                web_stories_thumbnail: {
-                  file: 'ent_page6_image1-150x225.jpg',
-                  width: 150,
-                  height: 225,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-150x225.jpg`,
-                },
-                full: {
-                  file: 'ent_page6_image1-scaled.jpg',
-                  width: 1707,
-                  height: 2560,
-                  mime_type: 'image/jpeg',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_page6_image1-scaled.jpg`,
-                },
-              },
+              sizes: {},
             },
             basedOn: '7f6f6565-2e46-4ef5-964c-d6c44350416d',
             id: '9bcf8de4-b888-486b-93cb-f27bc58c637d',
@@ -2637,7 +2221,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2665,9 +2248,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2675,23 +2256,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Summer Hits',
             width: 291,
             height: 31,
             scale: 100,
@@ -2703,6 +2274,8 @@ export default function (imageBaseUrl) {
             id: '883294a7-1863-4ef1-b3b3-05f4e99f027c',
             x: 44,
             y: 23,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Summer Hits</span>',
           },
           {
             opacity: 100,
@@ -2713,7 +2286,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2741,9 +2313,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2751,24 +2321,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.43,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit ...',
             width: 355,
             height: 38,
             scale: 100,
@@ -2780,6 +2339,8 @@ export default function (imageBaseUrl) {
             id: '7807179c-ca03-44f5-b164-de59858ed73b',
             x: 44,
             y: 67,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit ...</span>',
           },
           {
             opacity: 100,
@@ -2790,7 +2351,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -2812,9 +2372,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2822,23 +2380,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             width: 291,
             height: 14,
             scale: 100,
@@ -2850,6 +2398,8 @@ export default function (imageBaseUrl) {
             id: 'b618a51e-2b45-43d5-9007-4c761ac4341b',
             x: 75,
             y: 616,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See Full Story</span>',
           },
           {
             opacity: 100,
@@ -2860,7 +2410,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2888,9 +2437,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2898,23 +2445,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 141,
-                g: 141,
-                b: 141,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.2,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'OUT NOW',
             width: 412,
             height: 16,
             scale: 100,
@@ -2926,6 +2463,8 @@ export default function (imageBaseUrl) {
             id: '99964f56-048a-4e9c-bc0c-79ff8f9e32d5',
             x: 43,
             y: 426,
+            content:
+              '<span style="color: rgba(141, 141, 141, 1)"><span style="font-weight: 700">OUT NOW</span></span>',
           },
           {
             opacity: 100,
@@ -2936,7 +2475,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -2964,9 +2502,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2974,23 +2510,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 199,
-                g: 196,
-                b: 196,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.25,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'OUT NOW',
             width: 412,
             height: 21,
             scale: 100,
@@ -3002,6 +2528,8 @@ export default function (imageBaseUrl) {
             id: '7134bc0d-5c49-40fb-ac4a-dac7dc45dccf',
             x: 43,
             y: 448,
+            content:
+              '<span style="color: rgba(199, 196, 196, 1)"><span style="font-weight: 700">OUT NOW</span></span>',
           },
           {
             opacity: 100,
@@ -3012,7 +2540,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -3040,9 +2567,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 84,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3050,23 +2575,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.8,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'OUT NOW',
             width: 412,
             height: 67,
             scale: 100,
@@ -3078,6 +2593,8 @@ export default function (imageBaseUrl) {
             id: '842c2576-5887-4eb2-a9ba-93a6eea67b7d',
             x: 43,
             y: 474,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">OUT NOW</span></span>',
           },
           {
             opacity: 100,
@@ -3132,29 +2649,7 @@ export default function (imageBaseUrl) {
               title: 'ent_icon_up_arrow',
               alt: 'ent_icon_up_arrow',
               local: false,
-              sizes: {
-                thumbnail: {
-                  file: 'ent_icon_up_arrow-150x138.png',
-                  width: 150,
-                  height: 138,
-                  mime_type: 'image/png',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_icon_up_arrow-150x138.png`,
-                },
-                web_stories_thumbnail: {
-                  file: 'ent_icon_up_arrow-150x69.png',
-                  width: 150,
-                  height: 69,
-                  mime_type: 'image/png',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_icon_up_arrow-150x69.png`,
-                },
-                full: {
-                  file: 'ent_icon_up_arrow.png',
-                  width: 299,
-                  height: 138,
-                  mime_type: 'image/png',
-                  source_url: `${imageBaseUrl}/images/templates/ent/ent_icon_up_arrow.png`,
-                },
-              },
+              sizes: {},
             },
             x: 213,
             y: 587,
@@ -3325,7 +2820,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -3347,9 +2841,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3357,23 +2849,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             width: 291,
             height: 14,
             scale: 100,
@@ -3385,6 +2867,8 @@ export default function (imageBaseUrl) {
             id: 'b9dd5baa-4aec-4e63-a471-2ae0ce728f09',
             x: 75,
             y: 616,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See Full Story</span>',
           },
           {
             opacity: 100,
@@ -3395,7 +2879,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -3423,9 +2906,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3433,23 +2914,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Behind the Scenes',
             width: 291,
             height: 63,
             scale: 100,
@@ -3461,6 +2932,8 @@ export default function (imageBaseUrl) {
             id: '0fdf2c26-3138-41cf-ae7c-e508635ae6fe',
             x: 44,
             y: 403,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Behind the Scenes</span>',
           },
           {
             opacity: 100,
@@ -3471,7 +2944,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -3499,9 +2971,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3509,24 +2979,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.43,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.',
             width: 355,
             height: 75,
             scale: 100,
@@ -3538,6 +2997,8 @@ export default function (imageBaseUrl) {
             id: 'b0d4ee54-76eb-4050-821d-5d11181b6a2c',
             x: 42,
             y: 478,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.</span>',
           },
         ],
         backgroundElementId: 'f1d3853d-aa0a-4bfc-8b40-d09c94153814',
@@ -3829,7 +3290,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -3857,9 +3317,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3867,23 +3325,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MURDER MYSTERY',
             width: 227,
             height: 24,
             scale: 100,
@@ -3895,6 +3343,8 @@ export default function (imageBaseUrl) {
             id: '2942198b-fcac-4d56-bc37-b5a16de50651',
             x: 3,
             y: 282,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">MURDER MYSTERY</span></span>',
           },
           {
             opacity: 100,
@@ -3935,7 +3385,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -3963,9 +3412,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3973,23 +3420,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'DOCUMENTARY',
             width: 205,
             height: 24,
             scale: 100,
@@ -4001,6 +3438,8 @@ export default function (imageBaseUrl) {
             id: '787be6c3-3d2d-4d08-9db1-801e2f1bf7f1',
             x: 6,
             y: 449,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">DOCUMENTARY</span></span>',
           },
           {
             opacity: 100,
@@ -4041,7 +3480,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4069,9 +3507,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 24,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4079,23 +3515,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'POLITICAL BIOPIC',
             width: 250,
             height: 24,
             scale: 100,
@@ -4107,6 +3533,8 @@ export default function (imageBaseUrl) {
             id: 'b2b65d7c-5689-4c40-a40e-5a9a628bc04e',
             x: 7,
             y: 618,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">POLITICAL BIOPIC</span></span>',
           },
           {
             opacity: 100,
@@ -4117,7 +3545,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4145,9 +3572,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 32,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4155,23 +3580,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'This summer’s must-see blockbusters',
             width: 245,
             height: 96,
             scale: 100,
@@ -4183,6 +3598,8 @@ export default function (imageBaseUrl) {
             id: '97bead85-66e2-4ea0-af98-8b1305d41884',
             x: 48,
             y: 40,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">This summer’s must-see blockbusters</span>',
           },
         ],
         backgroundElementId: '777737d1-e79e-4f4e-9708-cf5a41962d77',
@@ -4508,7 +3925,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4536,9 +3952,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 80,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4546,23 +3960,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.83,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MORE&nbsp;\nSTORIES',
             width: 327,
             height: 132,
             scale: 100,
@@ -4574,6 +3978,8 @@ export default function (imageBaseUrl) {
             id: '4f12d40d-d1c9-488f-a4f8-48e81f141c27',
             x: -5,
             y: 20,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">MORE&nbsp;\nSTORIES</span></span>',
           },
           {
             opacity: 100,
@@ -4584,7 +3990,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4612,9 +4017,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4622,23 +4025,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'OUR TOP PICKS&nbsp;\nFOR THE GRAMMY’S',
             width: 155,
             height: 28,
             scale: 100,
@@ -4650,6 +4043,8 @@ export default function (imageBaseUrl) {
             id: 'c6c185a6-32d1-42ed-b376-5733abe06f55',
             x: 222,
             y: 198,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">OUR TOP PICKS&nbsp;\nFOR THE GRAMMY’S</span></span>',
           },
           {
             opacity: 100,
@@ -4660,7 +4055,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4688,9 +4082,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4698,23 +4090,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'MARVEL’S NEWEST SUPERHERO',
             width: 155,
             height: 25,
             scale: 100,
@@ -4726,6 +4108,8 @@ export default function (imageBaseUrl) {
             id: '9379053f-520a-4138-9720-dd14e3115431',
             x: 221,
             y: 344,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">MARVEL’S NEWEST SUPERHERO</span></span>',
           },
           {
             opacity: 100,
@@ -4736,7 +4120,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4764,9 +4147,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 700,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4774,23 +4155,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'FIRST LOOK AT J-LO’S NEW MOVIE',
             width: 155,
             height: 25,
             scale: 100,
@@ -4802,6 +4173,8 @@ export default function (imageBaseUrl) {
             id: '9300db37-ac48-4bfc-b91b-0ffb4da5f8d0',
             x: 221,
             y: 482,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">FIRST LOOK AT J-LO’S NEW MOVIE</span></span>',
           },
           {
             opacity: 100,
@@ -4900,7 +4273,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -4928,9 +4300,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4938,23 +4308,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See More',
             width: 91,
             height: 14,
             scale: 100,
@@ -4966,6 +4326,8 @@ export default function (imageBaseUrl) {
             id: '7cb85853-5318-455d-8f48-2f4056e66dac',
             x: 220,
             y: 244,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See More</span>',
           },
           {
             opacity: 100,
@@ -5066,7 +4428,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -5094,9 +4455,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5104,23 +4463,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See More',
             width: 91,
             height: 14,
             scale: 100,
@@ -5132,6 +4481,8 @@ export default function (imageBaseUrl) {
             id: '8c1e025b-365c-4025-a965-0040228ebfc3',
             x: 221.5,
             y: 393.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See More</span>',
           },
           {
             opacity: 100,
@@ -5232,7 +4583,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Poppins',
               service: 'fonts.google.com',
@@ -5260,9 +4610,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 14,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5270,23 +4618,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See More',
             width: 91,
             height: 14,
             scale: 100,
@@ -5298,6 +4636,8 @@ export default function (imageBaseUrl) {
             id: '8a619e42-8416-43d3-a1ab-6767452594ec',
             x: 221.5,
             y: 530.5,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See More</span>',
           },
         ],
         backgroundElementId: 'ffce028c-042d-4b3c-a489-3cc31162ed10',
