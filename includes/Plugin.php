@@ -61,6 +61,11 @@ class Plugin {
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
 
+		// Migrations.
+
+		$database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
+
 		// Gutenberg Blocks.
 		$embed_block = new Embed_Block();
 		add_action( 'init', [ $embed_block, 'init' ] );
