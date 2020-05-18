@@ -19,7 +19,7 @@
 * [Manual Testing (QA)](./testing-qa.md)
 * [End-to-End Tests](./e2e-tests.md)
 * [Unit Tests](./unit-tests.md)
-* [Staging Environment](./staging-environment.md)
+* [Testing Environments](./testing-environments.md)
 
 ## Tooling & Infrastructure
 
