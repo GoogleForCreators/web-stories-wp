@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -44,18 +44,21 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA);
   const insertElement = useInsertElement();
 
-  const state = {
-    state: {
-      tab,
-    },
-    actions: {
-      setTab,
-      insertElement,
-    },
-    data: {
-      tabs: TABS,
-    },
-  };
+  const state = useMemo(
+    () => ({
+      state: {
+        tab,
+      },
+      actions: {
+        setTab,
+        insertElement,
+      },
+      data: {
+        tabs: TABS,
+      },
+    }),
+    [tab, insertElement]
+  );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

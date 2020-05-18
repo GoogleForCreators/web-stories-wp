@@ -23,14 +23,25 @@ import styled from 'styled-components';
  */
 import { Z_INDEX } from '../../constants';
 
-const Popover = styled.div`
-  position: absolute;
-  z-index: ${Z_INDEX.POPOVER_MENU};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
-  background-color: transparent;
-  margin: 5px 0 0;
-`;
+const Popover = styled.div(
+  ({ isOpen }) => `
+    position: absolute;
+    display: none;
+    margin: 5px 0 0;
+    opacity: 0; 
+    background-color: transparent;
+    pointer-events: none;
+    ${
+      isOpen &&
+      `
+        display: block;
+        z-index: ${Z_INDEX.POPOVER_MENU};
+        opacity: 1;
+        pointer-events: auto;
+      `
+    }
+  `
+);
 
 Popover.propTypes = {
   className: PropTypes.string,

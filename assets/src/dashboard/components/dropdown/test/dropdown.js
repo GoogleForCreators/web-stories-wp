@@ -29,8 +29,8 @@ describe('Dropdown', () => {
   ];
   const onClickMock = jest.fn();
 
-  it('should render a <Dropdown /> by default', () => {
-    const { getByRole } = renderWithTheme(
+  it('should render a <Dropdown /> button by default', () => {
+    const wrapper = renderWithTheme(
       <Dropdown
         placeholder="placeholder text"
         ariaLabel="my dropdown test"
@@ -41,11 +41,10 @@ describe('Dropdown', () => {
       />
     );
 
-    const DropdownButton = getByRole('button');
-    const DropdownPopoverMenu = getByRole('list');
-
+    const DropdownButton = wrapper.getByRole('button');
+    const PopoverMenu = wrapper.getByTestId('popover-menu');
+    const DropdownMenu = window.getComputedStyle(PopoverMenu).display;
     expect(DropdownButton).toBeDefined();
-
-    expect(DropdownPopoverMenu).toBeDefined();
+    expect(DropdownMenu).toBe('none');
   });
 });

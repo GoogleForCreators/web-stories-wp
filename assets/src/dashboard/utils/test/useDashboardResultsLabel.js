@@ -32,6 +32,18 @@ import {
 import useDashboardResultsLabel from '../useDashboardResultsLabel';
 
 describe('useGenericResultsLabel()', function () {
+  it(`should return an empty string to display if there is no currentFilter supplied`, function () {
+    const { result } = renderHook(
+      () =>
+        useDashboardResultsLabel({
+          currentFilter: null,
+          view: DASHBOARD_VIEWS.MY_STORIES,
+        }),
+      {}
+    );
+    expect(result.current).toBe('');
+  });
+
   // my stories
   it(`should have default options initially selected for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
     const { result } = renderHook(

@@ -36,13 +36,14 @@ export default function useDashboardResultsLabel({
   view,
 }) {
   const resultsLabel = useMemo(() => {
+    const defaultLabel = RESULT_LABELS[view]?.[currentFilter] || '';
     return isActiveSearch
       ? sprintf(
           /* translators: %s: number of results */
           _n('%s result', '%s results', totalResults, 'web-stories'),
           totalResults
         )
-      : RESULT_LABELS[view][currentFilter];
+      : defaultLabel;
   }, [isActiveSearch, totalResults, view, currentFilter]);
 
   return resultsLabel;
