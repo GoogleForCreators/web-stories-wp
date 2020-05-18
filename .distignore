@@ -8,6 +8,7 @@ bin
 build
 docs
 node_modules
+patches
 tests
 .browserslistrc
 .distignore

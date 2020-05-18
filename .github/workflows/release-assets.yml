@@ -54,20 +54,20 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle plugin
         run: |
-          npm run workflow:build-plugin
-          npm run workflow:bundle-plugin web-stories.zip
-          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer
-
-      - name: Get upload url
-        run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
-        id: release
+          echo 'assets/images/templates' >> .distignore
+          npm run build:js
+          npm run workflow:build-plugin -- --cdn
+          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
+          npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
 
       - name: Upload full bundle
         uses: actions/upload-release-asset@v1
