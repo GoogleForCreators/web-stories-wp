@@ -170,8 +170,7 @@
       ],
       "excludedFiles": [
         "**/karma/**/*.js",
-        "**/test/**/*.karma.js",
-        "tests/js/**/*.karma.js"
+        "**/test/**/*.karma.js"
       ],
       "extends": [
         "plugin:jest/all",
@@ -201,8 +200,7 @@
     {
       "files": [
         "**/karma/**/*.js",
-        "**/test/**/*.karma.js",
-        "tests/js/**/*.karma.js"
+        "**/test/**/*.karma.js"
       ],
       "extends": [
         "plugin:jest/all"

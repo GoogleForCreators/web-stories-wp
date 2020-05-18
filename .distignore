@@ -4,6 +4,7 @@
 .storybook
 __mocks__
 assets/src
+assets/testjs
 bin
 build
 docs
