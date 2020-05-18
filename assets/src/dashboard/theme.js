@@ -128,6 +128,15 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  storyPreview: {
+    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
+    border: `1px solid ${colors.gray75}`,
+    borderRadius: 4,
+  },
+  tooltip: {
+    background: colors.gray900,
+    color: colors.white,
+  },
   navBar: {
     height: 64,
   },
@@ -261,20 +270,12 @@ const theme = {
       letterSpacing: 0.01,
     },
   },
-  pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-    },
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
     largeDisplayPhone: 10,

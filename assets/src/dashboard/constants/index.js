@@ -67,6 +67,7 @@ export const APP_ROUTES = {
 
   EDITOR_SETTINGS: '/editor-settings',
   SUPPORT: '/support',
+  STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
 export const NESTED_APP_ROUTES = {
@@ -100,6 +101,11 @@ export const secondaryPaths = [
 export const VIEW_STYLE = {
   GRID: 'GRID',
   LIST: 'LIST',
+};
+
+export const VIEW_STYLE_LABELS = {
+  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
 };
 
 export const ICON_METRICS = {
