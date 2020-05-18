@@ -171,6 +171,7 @@ function Publish() {
   const {
     state: { isUploading },
   } = useMedia();
+  const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
@@ -183,8 +184,12 @@ function Publish() {
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
+
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
+    <Primary
+      onClick={handlePublish}
+      isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+    >
       {text}
     </Primary>
   );
