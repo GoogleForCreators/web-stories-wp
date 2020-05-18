@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { memo } from 'react';
 
 /**
  * Internal dependencies
@@ -75,4 +76,4 @@ function DisplayLayer() {
   );
 }
 
-export default DisplayLayer;
+export default memo(DisplayLayer);

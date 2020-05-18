@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { memo } from 'react';
+
+/**
  * Internal dependencies
  */
 import Header from '../header';
@@ -57,4 +62,4 @@ function NavLayer() {
   );
 }
 
-export default NavLayer;
+export default memo(NavLayer);

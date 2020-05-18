@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -62,4 +62,4 @@ function CanvasLayout() {
   );
 }
 
-export default CanvasLayout;
+export default memo(CanvasLayout);

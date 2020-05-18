@@ -49,6 +49,7 @@ export const _default = () => {
             },
             key: storyStatus.value,
             isActive: status === storyStatus.value,
+            disabled: storyStatus.status === 'publish',
             text: storyStatus.label,
           };
         })}
