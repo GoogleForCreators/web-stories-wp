@@ -150,6 +150,22 @@ class Embed_Block {
 			return '';
 		}
 
+		if ( is_feed() ) {
+			return $this->render_block_feed( $attributes, $content );
+		}
+
+		return $this->render_block_html( $attributes, $content );
+	}
+
+	/**
+	 * Renders the block type output in default context.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string Rendered block type output.
+	 */
+	protected function render_block_html( array $attributes, $content ) {
 		$url          = (string) $attributes['url'];
 		$title        = (string) $attributes['title'];
 		$poster       = isset( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
@@ -163,8 +179,8 @@ class Embed_Block {
 		ob_start();
 		?>
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-		<amp-story-player
-			style="<?php echo esc_attr( $player_style ); ?>"
+			<amp-story-player
+				style="<?php echo esc_attr( $player_style ); ?>"
 			>
 				<a
 					href="<?php echo esc_url( $url ); ?>"
@@ -173,6 +189,30 @@ class Embed_Block {
 					<?php echo esc_html( $title ); ?>
 				</a>
 			</amp-story-player>
+		</div>
+		<?php
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Renders the block type output in an RSS feed context.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content    Block content.
+	 *
+	 * @return string Rendered block type output.
+	 */
+	protected function render_block_feed( array $attributes, $content ) {
+		$url   = (string) $attributes['url'];
+		$title = (string) $attributes['title'];
+
+		ob_start();
+		?>
+		<div class="wp-block-web-stories-embed">
+			<a href="<?php echo esc_url( $url ); ?>">
+				<?php echo esc_html( $title ); ?>
+			</a>
 		</div>
 		<?php
 
