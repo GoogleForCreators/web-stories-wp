@@ -82,6 +82,13 @@ class Media {
 	const POSTER_POST_META_KEY = 'web_stories_is_poster';
 
 	/**
+	 * The poster id post meta key.
+	 *
+	 * @var string
+	 */
+	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
@@ -94,6 +101,19 @@ class Media {
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'type'              => 'boolean',
 				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::POSTER_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
@@ -289,32 +309,19 @@ class Media {
 	 * @return void
 	 */
 	public static function delete_video_poster( $attachment_id ) {
-		remove_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
-		$query = new WP_Query(
-			[
-				'fields'                 => 'ids',
-				'post_status'            => 'any',
-				'post_type'              => 'attachment',
-				'post_parent'            => $attachment_id,
-				'no_found_rows'          => true,
-				'posts_per_page'         => 10,
-				'ignore_sticky_posts'    => true,
-				'update_post_term_cache' => false,
-			]
-		);
-		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
+		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
+		if ( empty( $post_id ) ) {
+			return;
+		}
 
-		/**
-		 * Post ID.
-		 *
-		 * @var int $post_id
-		 */
-		foreach ( $query->posts as $post_id ) {
-			// Used in favor of slow meta queries.
-			$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
-			if ( $is_poster ) {
-				wp_delete_attachment( $post_id, true );
-			}
+		if ( ! wp_attachment_is_image( $post_id ) ) {
+			return;
+		}
+
+		// Used in favor of slow meta queries.
+		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
+		if ( $is_poster ) {
+			wp_delete_attachment( $post_id, true );
 		}
 	}
 }
