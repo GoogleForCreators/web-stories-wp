@@ -32,7 +32,7 @@ import { renderWithTheme } from '../../../../testUtils/index';
 jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
 
-describe('textPane', () => {
+describe('TextPane', () => {
   const insertElement = jest.fn();
   beforeAll(() => {
     useLibrary.mockImplementation(() => ({

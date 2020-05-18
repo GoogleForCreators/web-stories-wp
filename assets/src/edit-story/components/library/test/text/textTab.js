@@ -31,7 +31,7 @@ import { renderWithTheme } from '../../../../testUtils/index';
 jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
 
-describe('textTab', () => {
+describe('TextTab', () => {
   const insertElement = jest.fn();
   beforeAll(() => {
     useLibrary.mockImplementation(() => ({
@@ -41,7 +41,7 @@ describe('textTab', () => {
     }));
   });
 
-  it('should insert text with default text style on pressing quick action', async () => {
+  it('should insert text with default text style on shortcut click', async () => {
     const getAllFontsPromise = Promise.resolve([]);
     const apiContextValue = {
       actions: {
