@@ -17,6 +17,12 @@
   font-size: 13px;
 }
 
+/* Placeholder */
+
+.wp-block-web-stories-embed .components-placeholder__learn-more {
+  margin-top: 1em;
+}
+
 /* Actual Edit Component */
 
 .wp-block-web-stories-embed
