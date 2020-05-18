@@ -45,6 +45,7 @@ function setupPanel(
   };
   const inspectorContextValue = {
     actions: { loadUsers },
+    state: {},
   };
   const { getByText, queryByText } = renderWithTheme(
     <ConfigContext.Provider value={config}>
@@ -77,7 +78,7 @@ describe('StatusPanel', () => {
     const { queryByText } = setupPanel({
       hasPublishAction: false,
     });
-    expect(queryByText('Draft')).toBeNull();
+    expect(queryByText('Public')).toBeNull();
   });
 
   it('should update the story when clicking on status', () => {
