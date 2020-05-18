@@ -34,7 +34,6 @@ function setupPanel(
 ) {
   const updateStory = jest.fn();
   const deleteStory = jest.fn();
-  const loadStatuses = jest.fn();
   const loadUsers = jest.fn();
 
   const config = { timeFormat: 'g:i a', capabilities };
@@ -44,23 +43,8 @@ function setupPanel(
     },
     actions: { updateStory, deleteStory },
   };
-  const statuses = [
-    {
-      value: 'draft',
-      name: 'Draft',
-    },
-    {
-      value: 'publish',
-      name: 'Public',
-    },
-    {
-      value: 'private',
-      name: 'Private',
-    },
-  ];
   const inspectorContextValue = {
-    actions: { loadStatuses, loadUsers },
-    state: { statuses },
+    actions: { loadUsers },
   };
   const { getByText, queryByText } = renderWithTheme(
     <ConfigContext.Provider value={config}>
