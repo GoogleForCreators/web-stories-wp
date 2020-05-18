@@ -32,7 +32,6 @@ const DEFAULT_PRESET = {
   )}</span>`,
   fontSize: dataFontEm(1),
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  lineHeight: 1.5,
 };
 
 const PRESETS = [
