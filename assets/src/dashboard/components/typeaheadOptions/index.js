@@ -48,8 +48,8 @@ Menu.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-const MenuItem = styled.li`
-  ${({ theme, isDisabled, isHovering }) => `
+const MenuItem = styled.li(
+  ({ theme, isDisabled, isHovering }) => `
     padding: 10px 20px;
     background: ${isHovering ? theme.colors.gray25 : 'none'};
     color: ${theme.colors.gray700};
@@ -61,9 +61,8 @@ const MenuItem = styled.li`
     font-weight: ${theme.fonts.typeaheadOptions.weight};
     letter-spacing: ${theme.fonts.typeaheadOptions.letterSpacing}em;
     width: 100%;
-  `}
-`;
-
+  `
+);
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,
   isHovering: PropTypes.bool,

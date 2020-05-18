@@ -31,6 +31,10 @@ export {
   useNavContext,
 } from '../components/navProvider';
 export { default as ColorList } from './colorList';
+export {
+  DetailViewContentGutter,
+  StandardViewContentGutter,
+} from './contentGutter';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { TextInput } from './input';
