@@ -58,7 +58,7 @@ class Database_Upgrader {
 		$version  = get_option( self::OPTION, '0.0.0' );
 		$routines = [
 			'1.0.0' => 'upgrade_1',
-			'2.0.0' => 'v_2_remove_conic_style_presets',
+			'2.0.0' => 'v_2_replace_conic_style_presets',
 		];
 
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
