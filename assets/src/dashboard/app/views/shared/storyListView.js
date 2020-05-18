@@ -74,7 +74,7 @@ const PreviewContainer = styled.div`
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
   height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
   vertical-align: middle;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   border: ${({ theme }) => theme.storyPreview.border};
 `;
 
