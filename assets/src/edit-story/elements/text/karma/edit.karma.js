@@ -78,7 +78,7 @@ describe('TextEdit integration', () => {
       it('should mount editor', async () => {
         expect(editor).toBeTruthy();
         expect(editLayer).toBeTruthy();
-        await karmaSnapshot();
+        await fixture.snapshot();
       });
 
       it('should handle a commnad, exit and save', async () => {
@@ -90,7 +90,7 @@ describe('TextEdit integration', () => {
 
         expect(boldToggle.checked).toEqual(false);
 
-        await karmaSnapshot('before mod+b');
+        await fixture.snapshot('before mod+b');
 
         // @todo: Linux uses ctrlKey.
         // @todo: would be preferable to be more semantic here. E.g.
@@ -102,7 +102,7 @@ describe('TextEdit integration', () => {
           metaKey: true,
         });
 
-        await karmaSnapshot('after mod+b');
+        await fixture.snapshot('after mod+b');
 
         expect(boldToggle.checked).toEqual(true);
 
